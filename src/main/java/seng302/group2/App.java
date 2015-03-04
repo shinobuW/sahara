@@ -39,6 +39,7 @@ public class App extends Application
         System.out.println( "Hello World!" );
         System.out.println( "Senpai was here." );
 	System.out.println( "Spooky :^)" );
+        System.out.println( "Checked out in Netbeans IDE" );
 
         launch(args);
     }
