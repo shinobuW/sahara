@@ -6,7 +6,6 @@
 package seng302.group2;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -48,10 +47,8 @@ public final class Scenes {
         grid.add(hbBtn, 1, 4);
         
         //The button event handler
-        btn.setOnAction((event) -> {
-            // Gets the stage of the scene of the button
-            Stage stage = (Stage) btn.getScene().getWindow();
-            // Set the new scene of the stage
+        btn.setOnAction((ActionEvent event) -> {
+	    Stage stage = (Stage) btn.getScene().getWindow();
             stage.setScene(Scenes.getDemoScene());
         });
 
@@ -101,7 +98,7 @@ public final class Scenes {
         // The back button
         Button btnBack = new Button("Back");
         //The back button event handler
-        btnBack.setOnAction((event) -> {
+        btnBack.setOnAction((ActionEvent) -> {
             Stage stage = (Stage) btnBack.getScene().getWindow();
             stage.setScene(Scenes.getInitialScene());
         });

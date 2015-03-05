@@ -19,13 +19,14 @@ public class App extends Application
      * @param primaryStage 
      */
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage)
+    {
         // The title of the window
         primaryStage.setTitle("JavaFX Form");
         
         // Set the scene of the stage to the initial scene
         primaryStage.setScene(Scenes.getInitialScene());
-        
+		
         // Show the stage/window
         primaryStage.show();
     }
@@ -34,12 +35,13 @@ public class App extends Application
      * The main entry of the project
      * @param args 
      */
-    public static void main( String[] args )
+    public static void main(String[] args)
     {
         System.out.println( "Hello World!" );
         System.out.println( "Senpai was here." );
-	System.out.println( "Spooky :^)" );
+        System.out.println( "Spooky :^)" );
         System.out.println( "Checked out in Netbeans IDE" );
+	System.out.println( "Mostly conforms to coding standards 8^)\nNo idea what the EOF thing is in Scenes and why it only happens for that button" );
 
         launch(args);
     }
