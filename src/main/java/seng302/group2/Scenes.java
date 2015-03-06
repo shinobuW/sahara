@@ -61,7 +61,7 @@ public final class Scenes {
         //The button event handler
         btn.setOnAction((ActionEvent ActionEvent) -> {
 	    Stage stage = (Stage) btn.getScene().getWindow();
-            stage.setScene(Scenes.getStudentsTestScene());
+            stage.setScene(Scenes.getStudentsTestScene());  // Don't know why it expects EOF here..
         });
 
         return new Scene(grid, 400, 275);
@@ -163,7 +163,7 @@ public final class Scenes {
 		    "Lew",
 		    Date.valueOf("1995-03-06"),
 		    "123 Fake Street",
-		    new ArrayList<String>()));
+		    new ArrayList<>()));
         });
 	
 	// The sign in button
@@ -186,9 +186,10 @@ public final class Scenes {
                 ArrayList<Student> list = (ArrayList) ois.readObject();
 
                 students.clear();
-                for (Student s : list){
-                    students.add(s);
-                }
+		list.stream().forEach((s) ->
+		{
+		    students.add(s);
+		});
 
                 ois.close();
             }
@@ -207,15 +208,16 @@ public final class Scenes {
                 FileOutputStream fout = new FileOutputStream("list.dat");
                 ObjectOutputStream oos = new ObjectOutputStream(fout);
                 
-                ArrayList<Student> list = new ArrayList<Student>();
-                for (Student s : students){
-                    list.add(s);
-                }
+                ArrayList<Student> list = new ArrayList<>();
+		students.stream().forEach((s) ->
+		{
+		    list.add(s);
+		});
                 
                 oos.writeObject(list);
                 oos.close();
             }
-            catch (FileNotFoundException e) { 
+            catch (FileNotFoundException e) {		
                 e.printStackTrace(); 
             }
             catch (IOException e) { 
