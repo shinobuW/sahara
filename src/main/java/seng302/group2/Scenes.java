@@ -37,8 +37,10 @@ import seng302.group2.actors.Student;
  * A class for holding JavaFX scenes used in the project
  * @author Jordane Lew (jml168)
  */
-public final class Scenes {
-    public static Scene getInitialScene() {
+public final class Scenes
+{
+    public static Scene getInitialScene()
+    {
         // Set up a grid pane for everything in the window
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -73,7 +75,8 @@ public final class Scenes {
      * @return A new demo scene
      * @author Jordane Lew (jml168)
      */
-    public static Scene getDemoScene() {
+    public static Scene getDemoScene()
+    {
         // Set up the grid pane
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -135,7 +138,8 @@ public final class Scenes {
      * @return A new demo scene
      * @author Jordane Lew (jml168)
      */
-    public static Scene getStudentsTestScene() {
+    public static Scene getStudentsTestScene()
+    {
         // Set up the grid pane
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
