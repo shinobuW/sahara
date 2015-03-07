@@ -54,11 +54,12 @@
         <module name="LeftCurly">
             <property name="maxLineLength" value="100"/>
             <property name="option" value="nl" />
+            <!--<property name="tokens" value="CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, LITERAL_DO, STATIC_INIT, INSTANCE_INIT, LITERAL_CATCH"/>-->
         </module>
-        <module name="RightCurly"/>
+        <!--<module name="RightCurly"/>-->
         <module name="RightCurly">
             <property name="option" value="alone"/>
-            <property name="tokens" value="CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, LITERAL_DO, STATIC_INIT, INSTANCE_INIT"/>
+            <!--<property name="tokens" value="CLASS_DEF, METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, LITERAL_DO, STATIC_INIT, INSTANCE_INIT, LITERAL_CATCH"/>-->
         </module>
         <module name="WhitespaceAround">
             <property name="allowEmptyConstructors" value="true"/>
@@ -119,7 +120,7 @@
             <property name="basicOffset" value="4"/>
             <property name="braceAdjustment" value="0"/>
             <property name="caseIndent" value="4"/>
-            <property name="throwsIndent" value="4"/>
+            <!--<property name="throwsIndent" value="4"/> - Not supported in Maven check-->
         </module>
         <module name="MethodParamPad"/>
         <module name="OperatorWrap">

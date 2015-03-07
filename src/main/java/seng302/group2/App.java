@@ -41,9 +41,7 @@ public class App extends Application
         System.out.println( "Senpai was here." );
         System.out.println( "Spooky :^)" );
         System.out.println( "Checked out in Netbeans IDE" );
-	System.out.println( "Mostly conforms to coding standards 8^)\nNo idea"
-		+ "what the EOF thing is in Scenes and why it only happens for"
-		+ "that button" );
+	System.out.println( "EOF errors are caused by Java8 lambda expressions - ignore them" );
 
         launch(args);
     }

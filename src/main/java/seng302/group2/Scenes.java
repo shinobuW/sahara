@@ -15,7 +15,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -61,10 +60,11 @@ public final class Scenes
         grid.add(hbBtn, 1, 4);
         
         //The button event handler
-        btn.setOnAction((ActionEvent ActionEvent) -> {
-	    Stage stage = (Stage) btn.getScene().getWindow();
-            stage.setScene(Scenes.getStudentsTestScene());  // Don't know why it expects EOF here..
-        });
+        btn.setOnAction((event) ->
+            {
+                Stage stage = (Stage) btn.getScene().getWindow();
+                stage.setScene(Scenes.getStudentsTestScene());
+            });
 
         return new Scene(grid, 400, 275);
     }
@@ -108,20 +108,22 @@ public final class Scenes
         // The sign in button
         Button btn = new Button("Sign in");
         //The button event handler
-        btn.setOnAction((event) -> {
-            actiontarget.setFill(Color.FIREBRICK);
-            actiontarget.setText("Sign in button pressed");
-            pwBox.setText("");
-            userTextField.setText("");
-        });
+        btn.setOnAction((event) ->
+            {
+                actiontarget.setFill(Color.FIREBRICK);
+                actiontarget.setText("Sign in button pressed");
+                pwBox.setText("");
+                userTextField.setText("");
+            });
         
         // The back button
         Button btnBack = new Button("Back");
         //The back button event handler
-        btnBack.setOnAction((ActionEvent) -> {
-            Stage stage = (Stage) btnBack.getScene().getWindow();
-            stage.setScene(Scenes.getInitialScene());
-        });
+        btnBack.setOnAction((event) ->
+            {
+                Stage stage = (Stage) btnBack.getScene().getWindow();
+                stage.setScene(Scenes.getInitialScene());
+            });
         
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
@@ -162,72 +164,80 @@ public final class Scenes
         // The sign in button
         Button btnAdd = new Button("Add Student");
         //The button event handler
-        btnAdd.setOnAction((event) -> {
-	    students.add(new Student("Jordane",
-		    "Lew",
-		    Date.valueOf("1995-03-06"),
-		    "123 Fake Street",
-		    new ArrayList<>()));
-        });
+        btnAdd.setOnAction((event) ->
+            {
+                students.add(new Student("Jordane",
+                        "Lew",
+                        Date.valueOf("1995-03-06"),
+                        "123 Fake Street",
+                        new ArrayList<>()));
+            });
 	
 	// The sign in button
         Button btnDelete = new Button("Delete Student");
         //The button event handler
-        btnDelete.setOnAction((event) -> {
-	    students.remove((Student)
-		    StudentsView.getSelectionModel().getSelectedItem());
-        });
+        btnDelete.setOnAction((event) ->
+            {
+                students.remove((Student)
+                        StudentsView.getSelectionModel().getSelectedItem());
+            });
         
         // The save button
         Button btnSave = new Button("Load");
         //The save button event handler
-        btnSave.setOnAction((ActionEvent ActionEvent) -> {
-	    /*unserialize arraylist */
-            System.out.println("unserializing list");
-            try {
-                FileInputStream fin = new FileInputStream("list.dat");
-                ObjectInputStream ois = new ObjectInputStream(fin);
-                ArrayList<Student> list = (ArrayList) ois.readObject();
+        btnSave.setOnAction((event) ->
+            {
+                /*unserialize arraylist */
+                System.out.println("unserializing list");
+                try
+                {
+                    FileInputStream fin = new FileInputStream("list.dat");
+                    ObjectInputStream ois = new ObjectInputStream(fin);
+                    ArrayList<Student> list = (ArrayList) ois.readObject();
 
-                students.clear();
-		list.stream().forEach((s) ->
-		{
-		    students.add(s);
-		});
-
-                ois.close();
-            }
-            catch (IOException | ClassNotFoundException e) { 
-                e.printStackTrace(); 
-            }
-        });
+                    students.clear();
+                    list.stream().forEach((student) ->
+                        {
+                            students.add(student);
+                        });
+                    ois.close();
+                }
+                catch (IOException | ClassNotFoundException e)
+                { 
+                    e.printStackTrace(); 
+                }
+            });
         
         // The load button
         Button btnLoad = new Button("Save");
         //The save button event handler
-        btnLoad.setOnAction((ActionEvent ActionEvent) -> {
-	    /*serialize arraylist*/
-            try {
-                System.out.println("serializing list");
-                FileOutputStream fout = new FileOutputStream("list.dat");
-                ObjectOutputStream oos = new ObjectOutputStream(fout);
-                
-                ArrayList<Student> list = new ArrayList<>();
-		students.stream().forEach((s) ->
-		{
-		    list.add(s);
-		});
-                
-                oos.writeObject(list);
-                oos.close();
-            }
-            catch (FileNotFoundException e) {		
-                e.printStackTrace(); 
-            }
-            catch (IOException e) { 
-                e.printStackTrace(); 
-            }
-        });
+        btnLoad.setOnAction((event) ->
+            {
+                /*serialize arraylist*/
+                try
+                {
+                    System.out.println("serializing list");
+                    FileOutputStream fout = new FileOutputStream("list.dat");
+                    ObjectOutputStream oos = new ObjectOutputStream(fout);
+
+                    ArrayList<Student> list = new ArrayList<>();
+                    students.stream().forEach((student) ->
+                        {
+                            list.add(student);
+                        });
+
+                    oos.writeObject(list);
+                    oos.close();
+                }
+                catch (FileNotFoundException e)
+                {		
+                    e.printStackTrace(); 
+                }
+                catch (IOException e)
+                { 
+                    e.printStackTrace(); 
+                }
+            });
         
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
