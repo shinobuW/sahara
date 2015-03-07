@@ -1,4 +1,4 @@
-package seng302.group2;
+package seng302.group2.actors;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class StudentTest 
     extends TestCase
 {
     /**
@@ -15,7 +15,7 @@ public class AppTest
      *
      * @param testName name of the test case
      */
-    public AppTest( String testName )
+    public StudentTest( String testName )
     {
         super( testName );
     }
@@ -25,14 +25,15 @@ public class AppTest
      */
     public static Test suite()
     {
-        return new TestSuite( AppTest.class );
+        return new TestSuite( StudentTest.class );
     }
 
     /**
-     * A Rigorous Test :-)
+     * Tests that a student's full name is returned correctly by getFullName()
      */
-    public void testApp()
+    public void testGetFullName()
     {
-        assertTrue( true );
+        Student student = new Student("Foo", "Bar");
+        assertEquals("Foo Bar", student.getFullName());
     }
 }
