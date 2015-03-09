@@ -26,7 +26,15 @@
 	      </manifestEntries>
 	    </transformer>
 	  </transformers>
+          
+          <!-- The following two lines have been added to shut NetBeans up about
+          project issues relating to internal classes not being able to be found
+          when using the jar artifact in compilation -->
+          <shadedArtifactAttached>true</shadedArtifactAttached>
+          <shadedClassifierName>launcher</shadedClassifierName>
         </configuration>
+        
+        
         
         <executions>
           <execution>
