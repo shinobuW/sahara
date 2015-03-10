@@ -30,7 +30,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import seng302.group2.actors.Student;
+import seng302.group2.team.person.Person;
 
 /**
  * A class for holding JavaFX scenes used in the project
@@ -155,7 +155,7 @@ public final class Scenes
         grid.add(scenetitle, 0, 0, 2, 1);
         
         // An observable list of students for display
-	ObservableList<Student> students = FXCollections.observableArrayList();
+	ObservableList<Person> students = FXCollections.observableArrayList();
 	
 	ListView StudentsView = new ListView();
 	StudentsView.setItems(students);
@@ -166,11 +166,7 @@ public final class Scenes
         //The button event handler
         btnAdd.setOnAction((event) ->
             {
-                students.add(new Student("Jordane",
-                        "Lew",
-                        Date.valueOf("1995-03-06"),
-                        "123 Fake Street",
-                        new ArrayList<>()));
+                students.add(new Person());
             });
 	
 	// The sign in button
@@ -178,7 +174,7 @@ public final class Scenes
         //The button event handler
         btnDelete.setOnAction((event) ->
             {
-                students.remove((Student)
+                students.remove((Person)
                         StudentsView.getSelectionModel().getSelectedItem());
             });
         
@@ -193,7 +189,7 @@ public final class Scenes
                 {
                     FileInputStream fin = new FileInputStream("list.dat");
                     ObjectInputStream ois = new ObjectInputStream(fin);
-                    ArrayList<Student> list = (ArrayList) ois.readObject();
+                    ArrayList<Person> list = (ArrayList) ois.readObject();
 
                     students.clear();
                     list.stream().forEach((student) ->
@@ -220,7 +216,7 @@ public final class Scenes
                     FileOutputStream fout = new FileOutputStream("list.dat");
                     ObjectOutputStream oos = new ObjectOutputStream(fout);
 
-                    ArrayList<Student> list = new ArrayList<>();
+                    ArrayList<Person> list = new ArrayList<>();
                     students.stream().forEach((student) ->
                         {
                             list.add(student);
