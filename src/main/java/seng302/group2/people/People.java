@@ -1,7 +1,7 @@
 /*
  * SENG302 Group 2
  */
-package people;
+package seng302.group2.people;
 
 /**
  *
