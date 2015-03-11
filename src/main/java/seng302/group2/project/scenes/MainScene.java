@@ -96,7 +96,7 @@ public final class MainScene
                 Scene thisScene = (Scene) btn.getScene();
                 try
                 {
-                    Project.Save(thisScene, proj);
+                    Project.save(thisScene, proj);
                 }
                 catch (IOException e)
                 {

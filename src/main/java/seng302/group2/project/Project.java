@@ -37,7 +37,7 @@ public class Project
      * @param project The project to save
      * @throws IOException Error initializing the FileWriter for the file
      */
-    public static void Save(Scene scene, Project project) throws IOException
+    public static void save(Scene scene, Project project) throws IOException
     {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
