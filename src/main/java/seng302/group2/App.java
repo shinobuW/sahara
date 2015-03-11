@@ -50,10 +50,6 @@ public class App extends Application
     public static void main(String[] args)
     {
         System.out.println( "Hello World!" );
-        System.out.println( "Senpai was here." );
-        System.out.println( "Spooky :^)" );
-        System.out.println( "Checked out in Netbeans IDE" );
-	System.out.println( "EOF errors are caused by Java8 lambda expressions - ignore them" );
 
         launch(args);
     }

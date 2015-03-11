@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- *
+ * A series of tests relating to Projects
  * @author Jordane Lew (jml168)
  */
 public class ProjectTest
@@ -18,7 +18,6 @@ public class ProjectTest
 {
     /**
      * Create the test case
-     *
      * @param testName name of the test case
      */
     public ProjectTest( String testName )
@@ -35,7 +34,7 @@ public class ProjectTest
     }
 
     /**
-     * A Rigorous Test :-)
+     * A simple test for the Project constructors
      */
     public void testProjectConstructors()
     {

@@ -5,16 +5,12 @@
  */
 package seng302.group2.project.scenes;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -24,6 +20,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import seng302.group2.App;
 import seng302.group2.project.Project;
+import seng302.group2.project.scenes.menu.MainMenuBar;
 
 /**
  * A class for holding JavaFX scenes used in the project
@@ -37,68 +34,8 @@ public final class MainScene
         VBox root = new VBox();
         
         
-        // <editor-fold defaultstate="collapsed" desc="Menu">
-        
-        // The menus and menu bar creation
-        Menu fileMenu = new Menu("File");
-        MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().add(fileMenu);
+        MenuBar menuBar = MainMenuBar.getMainMenuBar();
         root.getChildren().add(new StackPane(menuBar));
-        
-        // Create 'New...' MenuItem
-        Menu newProjectBranch = new Menu("New...");
-
-        MenuItem newProjectItem = new MenuItem("Project");
-        newProjectItem.setOnAction((event) ->
-            {
-                // Add project code
-            });
-        newProjectBranch.getItems().add(newProjectItem);
-
-        // Create 'Open' MenuItem
-        MenuItem openItem = new MenuItem("Open");
-        openItem.setOnAction((event) ->
-            {
-                try
-                {
-                    Project.loadProject();
-                }
-                catch (FileNotFoundException e)
-                {
-                    System.out.println("TODO: File doesn't exist");
-                }
-                catch (IOException e)
-                {
-                    System.out.println("TODO: Error reading from file");
-                }
-            });
-        
-        // Create 'Open' MenuItem
-        MenuItem saveItem = new MenuItem("Save");
-        saveItem.setOnAction((event) ->
-            {
-                try
-                {
-                    Project.saveCurrentProject();
-                }
-                catch (IOException e)
-                {
-                    System.out.println("TODO: Error writing to file");
-                }
-            });
-        
-        // Create 'Quit' MenuItem
-        MenuItem quitProgramItem = new MenuItem("Quit");
-        quitProgramItem.setOnAction((event) ->
-            {
-                System.exit(0);
-            });
-        
-        // Add MenuItems to Menu
-        fileMenu.getItems().addAll(newProjectBranch, openItem,
-                saveItem, new SeparatorMenuItem(), quitProgramItem);
-        
-        // </editor-fold>
         
         
         // <editor-fold defaultstate="collapsed" desc="Information Grid">

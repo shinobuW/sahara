@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import seng302.group2.App;
 
 /**
- * Basic project class
+ * Basic project class that acts as the root object for Sahara
  * @author Jordane Lew (jml168)
  */
 public class Project
@@ -110,7 +110,7 @@ public class Project
     
     
     /**
-     * Saves the given project as a file
+     * Saves the current project as a file specified by the user
      * @throws IOException Error initializing the FileWriter for the file
      */
     public static void saveCurrentProject() throws IOException
@@ -124,16 +124,21 @@ public class Project
         File selectedFile = fileChooser.showSaveDialog(new Stage());
         if (selectedFile != null)
         {
-            Writer writer = new FileWriter(selectedFile);
-
-            Gson gson = new GsonBuilder().create();
-            gson.toJson(App.currentProject, writer);
-
-            writer.close();
+            try (Writer writer = new FileWriter(selectedFile))
+            {
+                Gson gson = new GsonBuilder().create();
+                gson.toJson(App.currentProject, writer);
+                writer.close();
+            }
         }
     }
     
     
+    /**
+     * Loads a project specified by the user
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
     public static void loadProject() throws FileNotFoundException, IOException
     {
         FileChooser fileChooser = new FileChooser();
@@ -145,12 +150,12 @@ public class Project
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         if (selectedFile != null)
         {
-            Reader reader = new FileReader(selectedFile);
-
-            Gson gson = new GsonBuilder().create();
-            App.currentProject = gson.fromJson(reader, Project.class);
-
-            reader.close();
+            try (Reader reader = new FileReader(selectedFile))
+            {
+                Gson gson = new GsonBuilder().create();
+                App.currentProject = gson.fromJson(reader, Project.class);
+                reader.close();
+            }
         }
     }
 }
