@@ -8,8 +8,8 @@ import java.awt.Toolkit;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.stage.Stage;
+import seng302.group2.project.Project;
 import seng302.group2.project.scenes.MainScene;
-
 
 /**
  * Hello world!
@@ -17,6 +17,9 @@ import seng302.group2.project.scenes.MainScene;
  */
 public class App extends Application
 {
+    public Project currentProject;
+    
+    
     /**
      * The GUI setup and launch of the project
      * @param primaryStage 
@@ -24,6 +27,8 @@ public class App extends Application
     @Override
     public void start(Stage primaryStage)
     {
+        
+        
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         
         // The title of the window

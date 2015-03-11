@@ -5,6 +5,7 @@
  */
 package seng302.group2.project.scenes;
 
+import java.io.IOException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import seng302.group2.project.Project;
 
 /**
  * A class for holding JavaFX scenes used in the project
@@ -81,7 +83,7 @@ public final class MainScene
             // At top-left (0, 0), spanning 2 columns and 1 row
 
         // A button to switch to the demo scene
-        Button btn = new Button("Switch to demo scene");
+        Button btn = new Button("Save Test Project");
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btn);
@@ -90,6 +92,16 @@ public final class MainScene
         //The button event handler
         btn.setOnAction((event) ->
             {
+                Project proj = new Project("shortname", "A full name", "A description");
+                Scene thisScene = (Scene) btn.getScene();
+                try
+                {
+                    Project.Save(thisScene, proj);
+                }
+                catch (IOException e)
+                {
+                    System.out.println(e.toString());
+                }
                 /*Stage stage = (Stage) btn.getScene().getWindow();
                 stage.setScene(Scenes.getStudentsTestScene());*/
             });
