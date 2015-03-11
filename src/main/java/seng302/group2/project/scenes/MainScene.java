@@ -5,6 +5,7 @@
  */
 package seng302.group2.project.scenes;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -54,6 +55,38 @@ public final class MainScene
             });
         newProjectBranch.getItems().add(newProjectItem);
 
+        // Create 'Open' MenuItem
+        MenuItem openItem = new MenuItem("Open");
+        openItem.setOnAction((event) ->
+            {
+                try
+                {
+                    Project.loadProject();
+                }
+                catch (FileNotFoundException e)
+                {
+                    System.out.println("TODO: File doesn't exist");
+                }
+                catch (IOException e)
+                {
+                    System.out.println("TODO: Error reading from file");
+                }
+            });
+        
+        // Create 'Open' MenuItem
+        MenuItem saveItem = new MenuItem("Save");
+        saveItem.setOnAction((event) ->
+            {
+                try
+                {
+                    Project.saveCurrentProject();
+                }
+                catch (IOException e)
+                {
+                    System.out.println("TODO: Error writing to file");
+                }
+            });
+        
         // Create 'Quit' MenuItem
         MenuItem quitProgramItem = new MenuItem("Quit");
         quitProgramItem.setOnAction((event) ->
@@ -62,12 +95,13 @@ public final class MainScene
             });
         
         // Add MenuItems to Menu
-        fileMenu.getItems().addAll(newProjectBranch, new SeparatorMenuItem(), quitProgramItem);
+        fileMenu.getItems().addAll(newProjectBranch, openItem,
+                saveItem, new SeparatorMenuItem(), quitProgramItem);
         
         // </editor-fold>
         
         
-        //<editor-fold defaultstate="collapsed" desc="Information Grid">
+        // <editor-fold defaultstate="collapsed" desc="Information Grid">
         
         // Set up a grid pane for displaying information in the window
         GridPane informationGrid = new GridPane();
