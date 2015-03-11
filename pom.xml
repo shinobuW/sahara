@@ -52,7 +52,7 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>2.9.1</version>
         
-	<dependencies>
+          <dependencies>
             <dependency>
               <groupId>com.puppycrawl.tools</groupId>
               <artifactId>checkstyle</artifactId>
@@ -95,6 +95,14 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    
+    <!-- GSON Dependency -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.2.4</version>
+  </dependency>
+  
   </dependencies>
     <reporting>
         <plugins>
