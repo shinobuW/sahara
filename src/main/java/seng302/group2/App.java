@@ -17,8 +17,8 @@ import seng302.group2.project.scenes.MainScene;
  */
 public class App extends Application
 {
-    public Project currentProject;
     
+    public static Project currentProject;
     
     /**
      * The GUI setup and launch of the project
@@ -26,9 +26,7 @@ public class App extends Application
      */
     @Override
     public void start(Stage primaryStage)
-    {
-        
-        
+    {        
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         
         // The title of the window
@@ -40,7 +38,7 @@ public class App extends Application
         
         // Set the scene of the stage to the initial scene
         primaryStage.setScene(MainScene.getMainScene());
-	
+
         // Show the stage/window
         primaryStage.show();
     }

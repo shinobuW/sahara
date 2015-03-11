@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import seng302.group2.App;
 import seng302.group2.project.Project;
 
 /**
@@ -93,10 +94,11 @@ public final class MainScene
         btn.setOnAction((event) ->
             {
                 Project proj = new Project("shortname", "A full name", "A description");
-                Scene thisScene = (Scene) btn.getScene();
+                App.currentProject = proj;
+                
                 try
                 {
-                    Project.save(thisScene, proj);
+                    Project.saveCurrentProject();
                 }
                 catch (IOException e)
                 {

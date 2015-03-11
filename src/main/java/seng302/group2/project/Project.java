@@ -6,13 +6,16 @@ package seng302.group2.project;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
-import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import seng302.group2.App;
 
 /**
  *
@@ -33,28 +36,46 @@ public class Project
     
     /**
      * Saves the given project as a file
-     * @param scene The current scene to display the dialog
-     * @param project The project to save
      * @throws IOException Error initializing the FileWriter for the file
      */
-    public static void save(Scene scene, Project project) throws IOException
+    public static void saveCurrentProject() throws IOException
     {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
+        fileChooser.setTitle("Save Project");
         fileChooser.getExtensionFilters().addAll(
             new ExtensionFilter("Project Files", "*.proj")
         );
         
-        File selectedFile = fileChooser.showSaveDialog((Stage) scene.getWindow());
+        File selectedFile = fileChooser.showSaveDialog(new Stage());
         if (selectedFile != null)
         {
             Writer writer = new FileWriter(selectedFile);
 
             Gson gson = new GsonBuilder().create();
-            gson.toJson(project, writer);
+            gson.toJson(App.currentProject, writer);
 
             writer.close();
         }
+    }
+    
+    
+    public static void loadProject() throws FileNotFoundException, IOException
+    {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Project");
+        fileChooser.getExtensionFilters().addAll(
+            new ExtensionFilter("Project Files", "*.proj")
+        );
         
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        if (selectedFile != null)
+        {
+            Reader reader = new FileReader(selectedFile);
+
+            Gson gson = new GsonBuilder().create();
+            App.currentProject = gson.fromJson(reader, Project.class);
+
+            reader.close();
+        }
     }
 }
