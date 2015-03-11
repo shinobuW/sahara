@@ -18,21 +18,96 @@ import javafx.stage.Stage;
 import seng302.group2.App;
 
 /**
- *
- * @author cvs20
+ * Basic project class
+ * @author Jordane Lew (jml168)
  */
 public class Project
 {
     private String shortName;
-    private String fullName;
+    private String longName;
     private String description;
-        
+    
+    
+    /**
+     * Basic project constructor
+     * @param shortName
+     * @param fullName
+     * @param description 
+     */
     public Project(String shortName, String fullName, String description)
     {
         this.shortName = shortName;
-        this.fullName = fullName;
+        this.longName = fullName;
         this.description = description;
     }
+    
+    // <editor-fold defaultstate="collapsed" desc="Getters">
+    
+    /**
+     * Gets a project's short name
+     * @return The short name of the project
+     */
+    public String getShortName()
+    {
+        return this.shortName;
+    }
+    
+    
+    /**
+     * Gets a project's long name
+     * @return The long name of the project
+     */
+    public String getLongName()
+    {
+        return this.longName;
+    }
+    
+    
+    /**
+     * Gets a project's description
+     * @return The description of the project
+     */
+    public String getDescription()
+    {
+        return this.description;
+    }
+    
+    // </editor-fold>
+    
+    
+    // <editor-fold defaultstate="collapsed" desc="Setters">
+    
+    /**
+     * Sets a project's short name
+     * @param shortName The new short name for the project
+     */
+    public void setShortName(String shortName)
+    {
+        this.shortName = shortName;
+    }
+    
+    
+    /**
+     * Sets a project's long name
+     * @param longName The new long name for the project
+     */
+    public void setLongName(String longName)
+    {
+        this.longName = longName;
+    }
+    
+    
+    /**
+     * Sets a project's description
+     * @param description The new description for the project
+     */
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+    
+    //</editor-fold>
+    
     
     /**
      * Saves the given project as a file

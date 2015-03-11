@@ -1,4 +1,4 @@
-package seng302.group2.project;
+package seng302.group2;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
