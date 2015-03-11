@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -36,6 +38,21 @@ public final class Scenes
         MenuBar menuBar = new MenuBar();
         menuBar.getMenus().add(fileMenu);
         root.getChildren().add(new StackPane(menuBar));
+        
+        // Create 'New...' MenuItem
+        Menu newProjectItem = new Menu("New...");
+        /*Add functionality here
+        */
+        
+        // Create 'Quit' MenuItem
+        MenuItem quitProgramItem = new MenuItem("Quit");
+        quitProgramItem.setOnAction((event) ->
+            {
+                System.exit(0);
+            });
+        
+        // Add MenuItems to Menu
+        fileMenu.getItems().addAll(newProjectItem, new SeparatorMenuItem(), quitProgramItem);
         
         
         // Set up a grid pane for everything in the window
