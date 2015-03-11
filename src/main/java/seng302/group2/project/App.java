@@ -3,6 +3,8 @@
  */
 package seng302.group2.project;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.stage.Stage;
@@ -22,12 +24,18 @@ public class App extends Application
     @Override
     public void start(Stage primaryStage)
     {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        
         // The title of the window
         primaryStage.setTitle("JavaFX Form");
+        primaryStage.setWidth(0.8 * screenSize.getWidth());
+        primaryStage.setHeight(0.8 * screenSize.getHeight());
+        primaryStage.setMinHeight(0.25 * screenSize.getWidth());
+        primaryStage.setMinWidth(0.25 * screenSize.getWidth());
         
         // Set the scene of the stage to the initial scene
-        primaryStage.setScene(Scenes.getInitialScene());
-		
+        primaryStage.setScene(Scenes.getMainScene());
+	
         // Show the stage/window
         primaryStage.show();
     }

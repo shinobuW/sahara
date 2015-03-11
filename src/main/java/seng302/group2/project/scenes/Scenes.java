@@ -5,31 +5,19 @@
  */
 package seng302.group2.project.scenes;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import seng302.group2.project.team.person.Person;
 
 /**
  * A class for holding JavaFX scenes used in the project
@@ -37,35 +25,50 @@ import seng302.group2.project.team.person.Person;
  */
 public final class Scenes
 {
-    public static Scene getInitialScene()
+    public static Scene getMainScene()
     {
-        // Set up a grid pane for everything in the window
-        GridPane grid = new GridPane();
-        grid.setAlignment(Pos.CENTER);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(25,25,25,25));
+        // The root window box
+        VBox root = new VBox();
         
+        
+        // The menus and menu bar creation
+        Menu fileMenu = new Menu("File");
+        MenuBar menuBar = new MenuBar();
+        menuBar.getMenus().add(fileMenu);
+        root.getChildren().add(new StackPane(menuBar));
+        
+        
+        // Set up a grid pane for everything in the window
+        GridPane informationGrid = new GridPane();
+        root.getChildren().add(informationGrid);
+        informationGrid.setAlignment(Pos.CENTER);
+        informationGrid.setHgap(10);
+        informationGrid.setVgap(10);
+        informationGrid.setPadding(new Insets(25,25,25,25));
+        
+
         // Adds a title to the grid
         Text scenetitle = new Text("Welcome");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        grid.add(scenetitle, 0, 0, 2, 1); // At top-left (0, 0), spanning 2 columns and 1 row
+        informationGrid.add(scenetitle, 0, 0, 2, 1);
+            // At top-left (0, 0), spanning 2 columns and 1 row
 
         // A button to switch to the demo scene
         Button btn = new Button("Switch to demo scene");
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btn);
-        grid.add(hbBtn, 1, 4);
+        informationGrid.add(hbBtn, 1, 4);
         
         //The button event handler
         btn.setOnAction((event) ->
             {
-                Stage stage = (Stage) btn.getScene().getWindow();
-                stage.setScene(Scenes.getStudentsTestScene());
+                /*Stage stage = (Stage) btn.getScene().getWindow();
+                stage.setScene(Scenes.getStudentsTestScene());*/
             });
 
-        return new Scene(grid, 400, 275);
+        
+        return new Scene(root);
     }
     
     
@@ -74,7 +77,7 @@ public final class Scenes
      * @return A new demo scene
      * @author Jordane Lew (jml168)
      */
-    public static Scene getDemoScene()
+    /*public static Scene getDemoScene()
     {
         // Set up the grid pane
         GridPane grid = new GridPane();
@@ -131,7 +134,7 @@ public final class Scenes
         grid.add(hbBtn, 1, 4);
           
         return new Scene(grid, 400, 275);
-    }
+    }*/
     
     
     /**
@@ -139,7 +142,7 @@ public final class Scenes
      * @return A new demo scene
      * @author Jordane Lew (jml168)
      */
-    public static Scene getStudentsTestScene()
+    /*public static Scene getStudentsTestScene()
     {
         // Set up the grid pane
         GridPane grid = new GridPane();
@@ -183,7 +186,7 @@ public final class Scenes
         btnSave.setOnAction((event) ->
             {
                 /*unserialize arraylist */
-                System.out.println("unserializing list");
+                /*System.out.println("unserializing list");
                 try
                 {
                     FileInputStream fin = new FileInputStream("list.dat");
@@ -209,7 +212,7 @@ public final class Scenes
         btnLoad.setOnAction((event) ->
             {
                 /*serialize arraylist*/
-                try
+                /*try
                 {
                     System.out.println("serializing list");
                     FileOutputStream fout = new FileOutputStream("list.dat");
@@ -243,5 +246,5 @@ public final class Scenes
         grid.add(hbBtn, 0, 4, 2, 1);
           
         return new Scene(grid, 400, 275);
-    }
+    } */
 }
