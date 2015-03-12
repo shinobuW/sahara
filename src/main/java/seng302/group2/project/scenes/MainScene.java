@@ -85,7 +85,7 @@ public final class MainScene
         
         // </editor-fold>
         
-        TreeView display = ListDisplay.getListDisplay();
+        TreeView display = ListDisplay.getProjectTree();
         content.getChildren().add(display);
         content.getChildren().add(informationGrid);
 

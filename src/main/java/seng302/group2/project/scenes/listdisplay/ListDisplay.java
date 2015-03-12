@@ -9,7 +9,6 @@ package seng302.group2.project.scenes.listdisplay;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import seng302.group2.App;
-import seng302.group2.project.Project;
 import seng302.group2.project.team.person.Person;
 
 /**
@@ -19,33 +18,38 @@ import seng302.group2.project.team.person.Person;
 public class ListDisplay
 {
     
-   
-    
-    public static TreeView getListDisplay() 
+    public static TreeItem getPeopleTree()
     {
-    
-        
-        Person newP1 = new Person();
-        Person newP2 = new Person();
-        
-        Project proj = new Project("shortname", "longname", "desc");
-        proj.addPerson(newP1);
-        proj.addPerson(newP2);
-        
-        App.currentProject = proj;
-
-        TreeItem<Object> rootItem = new TreeItem<>(proj);
-        rootItem.setExpanded(true);
-        Project rootProject = (Project) rootItem.getValue();
-        for (Person person : rootProject.getPeople()) 
+        TreeItem<Object> peopleItem = new TreeItem<>("People");
+        for (Person person : App.currentProject.getPeople()) 
         {
             TreeItem<Object> personItem = new TreeItem<>(person);            
-            rootItem.getChildren().add(personItem);
-        }        
-        TreeView<Object> tree = new TreeView<>(rootItem);        
+            peopleItem.getChildren().add(personItem);
+        }
+        return peopleItem;
+    }
+    
+    public static TreeView getProjectTree() 
+    {
+        /*
+        App.currentProject = new Project("shortname", "longname", "desc");
+        App.currentProject.addPerson(new Person());
+        App.currentProject.addPerson(new Person());
+                */
         
-       // primaryStage.setScene(new Scene(root, 300, 250));
-        //primaryStage.show();
+        // Return a non-populated TreeView if there is no project open
+        if (App.currentProject == null)
+        {
+            return new TreeView();
+        }
+
+        TreeItem<Object> projectItem = new TreeItem<>(App.currentProject);
+        projectItem.setExpanded(true);
+        
+        // Adds people to the tree
+        projectItem.getChildren().add(ListDisplay.getPeopleTree());
+        
+        TreeView<Object> tree = new TreeView<>(projectItem);        
         return tree;
     }
 }
