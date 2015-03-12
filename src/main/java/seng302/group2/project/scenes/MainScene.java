@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -21,6 +22,7 @@ import javafx.scene.text.Text;
 import seng302.group2.App;
 import seng302.group2.project.Project;
 import seng302.group2.project.scenes.menu.MainMenuBar;
+import seng302.group2.project.scenes.listdisplay.ListDisplay;
 
 /**
  * A class for holding JavaFX scenes used in the project
@@ -32,6 +34,7 @@ public final class MainScene
     {
         // The root window box
         VBox root = new VBox();
+        HBox content = new HBox();
         
         
         MenuBar menuBar = MainMenuBar.getMainMenuBar();
@@ -42,7 +45,8 @@ public final class MainScene
         
         // Set up a grid pane for displaying information in the window
         GridPane informationGrid = new GridPane();
-        root.getChildren().add(informationGrid);
+        root.getChildren().add(content);
+        
         informationGrid.setAlignment(Pos.CENTER);
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);
@@ -80,6 +84,10 @@ public final class MainScene
             });
         
         // </editor-fold>
+        
+        TreeView display = ListDisplay.getListDisplay();
+        content.getChildren().add(display);
+        content.getChildren().add(informationGrid);
 
         
         return new Scene(root);

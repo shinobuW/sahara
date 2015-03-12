@@ -12,10 +12,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.ArrayList;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import seng302.group2.App;
+import seng302.group2.project.team.person.Person;
 
 /**
  * Basic project class that acts as the root object for Sahara
@@ -26,6 +28,7 @@ public class Project
     private String shortName;
     private String longName;
     private String description;
+    private ArrayList<Person> people = new ArrayList<Person>();
     
     
     /**
@@ -71,6 +74,17 @@ public class Project
     {
         return this.description;
     }
+    
+    
+    /**
+     * Gets a project's list of Persons
+     * @return The short name of the project
+     */
+    public ArrayList<Person> getPeople()
+    {
+        return this.people;
+    }
+    
     
     // </editor-fold>
     
@@ -157,5 +171,22 @@ public class Project
                 reader.close();
             }
         }
+    }
+    
+    
+    /**
+     * Adds a Person to the Project's list of Persons
+     * @param person 
+     */
+    public void addPerson(Person person)
+    {
+        this.people.add(person);
+    }
+    
+    
+    @Override
+    public String toString()
+    {
+        return this.shortName;
     }
 }
