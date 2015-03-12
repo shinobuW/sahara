@@ -189,6 +189,8 @@ public class Project
                 reader.close();
             }
         }
+        
+        App.refreshMainScene();
     }
     
     
