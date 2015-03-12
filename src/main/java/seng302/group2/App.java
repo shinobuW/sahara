@@ -18,7 +18,7 @@ import seng302.group2.scenes.MainScene;
  */
 public class App extends Application
 {
-    public static Project currentProject;
+    public static Project currentProject = Project.newBlankProject();
     public static Stage mainStage;
     public static Scene mainScene;
     

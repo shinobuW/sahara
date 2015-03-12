@@ -18,6 +18,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import seng302.group2.App;
 import seng302.group2.project.team.person.Person;
+import seng302.group2.scenes.listdisplay.TreeViewData;
 
 /**
  * Basic project class that acts as the root object for Sahara and represents a real-world project
@@ -29,6 +30,17 @@ public class Project
     private String longName;
     private String description;
     private ArrayList<Person> people = new ArrayList<Person>();
+    private TreeViewData treeViewItem = null;
+
+    public TreeViewData getTreeViewItem()
+    {
+        return treeViewItem;
+    }
+    
+    public void setTreeViewItem(TreeViewData treeViewItem)
+    {
+        this.treeViewItem = treeViewItem;
+    }
     
     
     /**
@@ -147,6 +159,9 @@ public class Project
             // return;
         }
         
+        TreeViewData tmp = App.currentProject.getTreeViewItem();
+        App.currentProject.setTreeViewItem(null);
+        
         // Prime a FileChooser
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Project");
@@ -165,6 +180,8 @@ public class Project
                 writer.close();
             }
         }
+        
+        App.currentProject.setTreeViewItem(tmp);
     }
     
     
@@ -205,7 +222,11 @@ public class Project
     public void addPerson(Person person)
     {
         this.people.add(person);
-        App.refreshMainScene();
+        // Add it to the display menu as well
+        this.treeViewItem.getChildren().add(
+                new TreeViewData(person.getShortName(), person, person.getClass()
+                ));
+        //App.refreshMainScene();
     }
     
     

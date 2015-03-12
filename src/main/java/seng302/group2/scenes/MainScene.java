@@ -7,12 +7,14 @@ package seng302.group2.scenes;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import static javafx.collections.FXCollections.observableArrayList;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -22,7 +24,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import seng302.group2.App;
 import seng302.group2.project.team.person.Person;
-import seng302.group2.scenes.listdisplay.ListDisplay;
+import seng302.group2.scenes.listdisplay.TreeViewData;
+import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.scenes.menu.MainMenuBar;
 
 /**
@@ -88,7 +91,23 @@ public class MainScene
         
         // </editor-fold>
 
-        TreeView display = ListDisplay.getProjectTree();
+        // Old: TreeView display = ListDisplay.getProjectTree();  // (Manual)
+        // Create the display menu from the project tree
+        TreeViewWithItems display = new TreeViewWithItems(new TreeItem());
+        ObservableList<TreeViewData> children = observableArrayList();
+        
+        TreeViewData projectTree = new TreeViewData(
+                    App.currentProject.getShortName(),
+                    App.currentProject,
+                    App.currentProject.getClass()
+                );
+        
+        children.add(projectTree);
+        
+        display.setItems(children);
+        display.setShowRoot(false);
+        
+        
         content.getChildren().add(display);
         content.getChildren().add(informationGrid);
 
