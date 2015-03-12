@@ -4,14 +4,14 @@
 package seng302.group2.project.team.person;
 
 import java.util.Date;
+import seng302.group2.App;
 
 /**
- *
- * @author cvs20
+ * A basic class to represent a Person in the real world.
+ * @author crw73
  */
 public class Person
 {
-    
     private String shortName;
     private String firstName;
     private String lastName;
@@ -20,24 +20,38 @@ public class Person
     private Date birthDate = new Date();
     
     /**
-     * Basic project constructor
-     * @param shortName
-     * @param firstName
-     * @param lastName
-     * @param email
-     * @param birthDate
-     * @param description 
+     * Basic person constructor with all fields
+     * @param shortName A unique short name to identify a Person
+     * @param firstName The first name of the Person
+     * @param lastName The last name of the Person
+     * @param email The email of the Person
+     * @param birthDate A description of the Person
+     * @param description The date of birth of a Person
      */
     public Person(String shortName, String firstName, String lastName, String email, 
             String description, Date birthDate)
     {
-        this.shortName = shortName;
+        // Check for duplicates and change if neccessary to keep short names unique
+        String newShortName = shortName;
+        int i = 0;
+        for (Person person : App.currentProject.getPeople())
+        {
+            if (person.getShortName().equals(newShortName))
+            {
+                i++;
+                newShortName = shortName + "~" + String.valueOf(i);
+            }
+        }
+        
+        // Continue constructing
+        this.shortName = newShortName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.description = description;
         this.birthDate = birthDate;
     }
+    
     
     // <editor-fold defaultstate="collapsed" desc="Getters">
 
@@ -98,6 +112,7 @@ public class Person
     
     //</editor-fold>
     
+    
     // <editor-fold defaultstate="collapsed" desc="Setters">
     
      /**
@@ -156,15 +171,11 @@ public class Person
     
         //</editor-fold>
     
-    /**
-     * Creates and returns a new person
-     * @return A new person
-     */
-    public static Person newPerson()
-    {
-        return new Person("Untitled", "John", "Doe", "null", "", new Date(01, 01, 1990));
-    }
     
+    /**
+     * An overridden version for the String representation of a Person
+     * @return The short name of the Person
+     */
     @Override
     public String toString()
     {

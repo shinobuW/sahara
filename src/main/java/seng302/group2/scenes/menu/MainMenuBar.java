@@ -34,7 +34,7 @@ public class MainMenuBar
         MenuItem newProjectItem = new MenuItem("Project");
         newProjectItem.setOnAction((event) ->
             {
-                App.currentProject = Project.newProject();
+                App.currentProject = Project.newBlankProject();
                 App.refreshMainScene();
             });
         newProjectBranch.getItems().add(newProjectItem);

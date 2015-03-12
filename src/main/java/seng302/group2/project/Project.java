@@ -20,7 +20,7 @@ import seng302.group2.App;
 import seng302.group2.project.team.person.Person;
 
 /**
- * Basic project class that acts as the root object for Sahara
+ * Basic project class that acts as the root object for Sahara and represents a real-world project
  * @author Jordane Lew (jml168)
  */
 public class Project
@@ -33,9 +33,9 @@ public class Project
     
     /**
      * Basic project constructor
-     * @param shortName
-     * @param fullName
-     * @param description 
+     * @param shortName A unique short name to identify the Project
+     * @param fullName The full Project name
+     * @param description A description of the Project
      */
     public Project(String shortName, String fullName, String description)
     {
@@ -127,10 +127,10 @@ public class Project
      * Creates and returns a new project
      * @return A new project
      */
-    public static Project newProject()
+    public static Project newBlankProject()
     {
         // Maybe show a dialog and ask for details?
-        return new Project("Untitled", "Untitled Project", "");
+        return new Project("Untitled", "Untitled Project", "A blank project.");
     }
     
     
@@ -143,16 +143,18 @@ public class Project
         // If there is no current project open, display a dialog and skip saving
         if (App.currentProject == null)
         {
-            // Display dialog that no project is open
+            // TODO: Display dialog that no project is open
             // return;
         }
         
+        // Prime a FileChooser
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Project");
         fileChooser.getExtensionFilters().addAll(
             new ExtensionFilter("Project Files", "*.proj")
         );
         
+        // Open the FileChooser and try loading the user selected Project
         File selectedFile = fileChooser.showSaveDialog(new Stage());
         if (selectedFile != null)
         {
@@ -173,12 +175,14 @@ public class Project
      */
     public static void loadProject() throws FileNotFoundException, IOException
     {
+        // Prime a FileChooser
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Project");
         fileChooser.getExtensionFilters().addAll(
             new ExtensionFilter("Project Files", "*.proj")
         );
         
+        // Open the FileChooser and try saving the Project as the user specifies
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         if (selectedFile != null)
         {
@@ -201,9 +205,14 @@ public class Project
     public void addPerson(Person person)
     {
         this.people.add(person);
+        App.refreshMainScene();
     }
     
     
+    /**
+     * An overridden version for the String representation of a Project
+     * @return The short name of the Project
+     */
     @Override
     public String toString()
     {

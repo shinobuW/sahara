@@ -18,12 +18,14 @@ import seng302.group2.scenes.MainScene;
  */
 public class App extends Application
 {
-    
     public static Project currentProject;
     public static Stage mainStage;
     public static Scene mainScene;
     
     
+    /**
+     * Refreshes the main scene GUI
+     */
     public static void refreshMainScene()
     {
         App.mainScene = MainScene.getMainScene();
@@ -50,7 +52,6 @@ public class App extends Application
         // Set the scene of the stage to the initial scene
         App.mainScene = MainScene.getMainScene();
         primaryStage.setScene(App.mainScene);
-        
         mainStage = primaryStage;
 
         // Show the stage/window
@@ -63,8 +64,7 @@ public class App extends Application
      */
     public static void main(String[] args)
     {
-        System.out.println( "Hello World!" );
-
+        System.out.println("Hello World, Welcome to Sahara!");
         launch(args);
     }
 }

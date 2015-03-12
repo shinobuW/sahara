@@ -5,7 +5,8 @@
  */
 package seng302.group2.scenes;
 
-import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,7 +21,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import seng302.group2.App;
-import seng302.group2.project.Project;
+import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.listdisplay.ListDisplay;
 import seng302.group2.scenes.menu.MainMenuBar;
 
@@ -59,7 +60,7 @@ public class MainScene
             // At top-left (0, 0), spanning 2 columns and 1 row
 
         // A button to switch to the demo scene
-        Button btn = new Button("Save Test Project");
+        Button btn = new Button("Make Test Person");
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(btn);
@@ -68,23 +69,25 @@ public class MainScene
         //The button event handler
         btn.setOnAction((event) ->
             {
-                Project proj = new Project("shortname", "A full name", "A description");
-                App.currentProject = proj;
+                String birthDatePattern = "dd/MM/yyyy";
                 
                 try
                 {
-                    Project.saveCurrentProject();
+                    Person newPerson = new Person("shawty", "first", "last", "a@b.com", "desc",
+                            new SimpleDateFormat(birthDatePattern).parse("29/05/1985"));
+                    App.currentProject.addPerson(newPerson);
                 }
-                catch (IOException e)
+                catch (ParseException e)
                 {
-                    System.out.println(e.toString());
                 }
+                
+                
                 /*Stage stage = (Stage) btn.getScene().getWindow();
                 stage.setScene(Scenes.getStudentsTestScene());*/
             });
         
         // </editor-fold>
-        
+
         TreeView display = ListDisplay.getProjectTree();
         content.getChildren().add(display);
         content.getChildren().add(informationGrid);
