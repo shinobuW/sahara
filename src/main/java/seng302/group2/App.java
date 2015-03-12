@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import seng302.group2.project.Project;
 import seng302.group2.project.scenes.MainScene;
@@ -19,6 +20,16 @@ public class App extends Application
 {
     
     public static Project currentProject;
+    public static Stage mainStage;
+    public static Scene mainScene;
+    
+    
+    public static void refreshMainScene()
+    {
+        App.mainScene = MainScene.getMainScene();
+        mainStage.setScene(App.mainScene);
+    }
+    
     
     /**
      * The GUI setup and launch of the project
@@ -26,7 +37,7 @@ public class App extends Application
      */
     @Override
     public void start(Stage primaryStage)
-    {        
+    {   
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         
         // The title of the window
@@ -37,10 +48,13 @@ public class App extends Application
         primaryStage.setMinWidth(0.25 * screenSize.getWidth());
         
         // Set the scene of the stage to the initial scene
-        primaryStage.setScene(MainScene.getMainScene());
+        App.mainScene = MainScene.getMainScene();
+        primaryStage.setScene(App.mainScene);
+        
+        mainStage = primaryStage;
 
         // Show the stage/window
-        primaryStage.show();
+        mainStage.show();
     }
     
     /**

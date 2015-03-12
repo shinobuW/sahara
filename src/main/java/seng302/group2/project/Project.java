@@ -124,11 +124,29 @@ public class Project
     
     
     /**
+     * Creates and returns a new project
+     * @return A new project
+     */
+    public static Project newProject()
+    {
+        // Maybe show a dialog and ask for details?
+        return new Project("Untitled", "Untitled Project", "");
+    }
+    
+    
+    /**
      * Saves the current project as a file specified by the user
      * @throws IOException Error initializing the FileWriter for the file
      */
     public static void saveCurrentProject() throws IOException
     {
+        // If there is no current project open, display a dialog and skip saving
+        if (App.currentProject == null)
+        {
+            // Display dialog that no project is open
+            // return;
+        }
+        
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Project");
         fileChooser.getExtensionFilters().addAll(
