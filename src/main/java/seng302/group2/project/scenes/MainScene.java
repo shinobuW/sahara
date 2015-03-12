@@ -28,7 +28,7 @@ import seng302.group2.project.scenes.listdisplay.ListDisplay;
  * A class for holding JavaFX scenes used in the project
  * @author Jordane Lew (jml168)
  */
-public final class MainScene
+public class MainScene
 {
     public static Scene getMainScene()
     {

@@ -11,6 +11,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import seng302.group2.App;
 import seng302.group2.project.Project;
 
 /**
@@ -33,7 +34,8 @@ public class MainMenuBar
         MenuItem newProjectItem = new MenuItem("Project");
         newProjectItem.setOnAction((event) ->
             {
-                // Add project code
+                App.currentProject = Project.newProject();
+                App.refreshMainScene();
             });
         newProjectBranch.getItems().add(newProjectItem);
 

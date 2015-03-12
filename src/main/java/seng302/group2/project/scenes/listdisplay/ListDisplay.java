@@ -35,7 +35,7 @@ public class ListDisplay
         App.currentProject = new Project("shortname", "longname", "desc");
         App.currentProject.addPerson(new Person());
         App.currentProject.addPerson(new Person());
-                */
+        */
         
         // Return a non-populated TreeView if there is no project open
         if (App.currentProject == null)
