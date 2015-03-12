@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package seng302.group2.project.scenes.listdisplay;
-
+package seng302.group2.scenes.listdisplay;
 
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -17,7 +16,6 @@ import seng302.group2.project.team.person.Person;
  */
 public class ListDisplay
 {
-    
     /**
      * Gets a TreeItem for People Tree
      * @return The Collapsible TreeItem for People Tree

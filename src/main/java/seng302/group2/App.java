@@ -10,7 +10,7 @@ import static javafx.application.Application.launch;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import seng302.group2.project.Project;
-import seng302.group2.project.scenes.MainScene;
+import seng302.group2.scenes.MainScene;
 
 /**
  * Hello world!

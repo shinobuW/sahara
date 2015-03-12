@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package seng302.group2.project.scenes;
+package seng302.group2.scenes;
 
 import java.io.IOException;
 import javafx.geometry.Insets;
@@ -21,8 +21,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import seng302.group2.App;
 import seng302.group2.project.Project;
-import seng302.group2.project.scenes.menu.MainMenuBar;
-import seng302.group2.project.scenes.listdisplay.ListDisplay;
+import seng302.group2.scenes.listdisplay.ListDisplay;
+import seng302.group2.scenes.menu.MainMenuBar;
 
 /**
  * A class for holding JavaFX scenes used in the project

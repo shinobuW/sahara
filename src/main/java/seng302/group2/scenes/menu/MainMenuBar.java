@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package seng302.group2.project.scenes.menu;
+package seng302.group2.scenes.menu;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
