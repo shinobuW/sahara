@@ -37,7 +37,7 @@ public class PersonTest extends TestCase
      */
     public void testPersonConstructors()
     {
-        Person pers = new Person();
+        //Person pers = new Person();
         // TODO implement Person constructor test(s)
     }
 }

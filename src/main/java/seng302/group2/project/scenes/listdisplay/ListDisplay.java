@@ -18,6 +18,10 @@ import seng302.group2.project.team.person.Person;
 public class ListDisplay
 {
     
+    /**
+     * Gets a TreeItem for People Tree
+     * @return The Collapsible TreeItem for People Tree
+     */
     public static TreeItem getPeopleTree()
     {
         TreeItem<Object> peopleItem = new TreeItem<>("People");
@@ -29,6 +33,10 @@ public class ListDisplay
         return peopleItem;
     }
     
+    /**
+     * Gets a TreeItem for Project Tree
+     * @return The Collapsible TreeItem for Project Tree
+     */
     public static TreeView getProjectTree() 
     {
         /*
