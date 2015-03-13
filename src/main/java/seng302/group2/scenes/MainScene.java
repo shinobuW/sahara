@@ -72,14 +72,7 @@ public class MainScene
         //The button event handler
         btn.setOnAction((event) ->
             {
-                try
-                {
-                    App.currentProject.addPerson(new Person());
-                }
-                catch (ParseException e)
-                {
-                    // Can't parse birthDate to Date properly
-                }
+                App.currentProject.addPerson(new Person());
             });
         
         // </editor-fold>

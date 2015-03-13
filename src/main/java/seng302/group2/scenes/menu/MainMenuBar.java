@@ -45,14 +45,7 @@ public class MainMenuBar
         MenuItem newPersonItem = new MenuItem("Person");
         newPersonItem.setOnAction((event) -> 
             {
-                try
-                {
-                    App.currentProject.addPerson(new Person());
-                }
-                catch (ParseException e)
-                {
-                    // Can't parse birthDate to Date properly
-                }
+                App.currentProject.addPerson(new Person());
             });
         
        
