@@ -7,12 +7,15 @@ package seng302.group2.scenes.menu;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import seng302.group2.App;
 import seng302.group2.project.Project;
+import seng302.group2.project.team.person.Person;
 
 /**
  *
@@ -38,6 +41,27 @@ public class MainMenuBar
                 App.refreshMainScene();
             });
         newProjectBranch.getItems().add(newProjectItem);
+        
+        MenuItem newPersonItem = new MenuItem("Person");
+        newPersonItem.setOnAction((event) -> 
+            {
+                String birthDatePattern = "dd/MM/yyyy";
+                try
+                {
+                    Person newPerson = new Person("shawty", "first", "last",
+                            "a@b.com", "desc",
+                            new SimpleDateFormat(birthDatePattern).parse("29/05/1985"));
+                    App.currentProject.addPerson(newPerson);
+                }
+                catch (ParseException e)
+                {
+                }
+            });
+        
+       
+        newProjectBranch.getItems().add(newPersonItem);
+        
+        
 
         // Create 'Open' MenuItem
         MenuItem openItem = new MenuItem("Open");
