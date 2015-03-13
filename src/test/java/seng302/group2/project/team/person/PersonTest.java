@@ -5,6 +5,7 @@
  */
 package seng302.group2.project.team.person;
 
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -37,6 +38,14 @@ public class PersonTest extends TestCase
      */
     public void testPersonConstructors()
     {
+        Person pers = new Person();
+        Assert.assertEquals("lastName", pers.getLastName());
+        Assert.assertEquals("firstName", pers.getFirstname());
+        Assert.assertEquals("unnamed", pers.getShortName());
+        Assert.assertEquals("", pers.getEmail());
+        Assert.assertEquals("", pers.getDescription());
+        Assert.assertNotNull(pers.getBirthDate());
+        
         //Person pers = new Person();
         // TODO implement Person constructor test(s)
     }

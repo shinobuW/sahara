@@ -31,7 +31,7 @@ public class Person extends TreeViewItem implements Serializable
      * Basic Person constructor
      * @throws ParseException 
      */
-    public Person() throws ParseException
+    public Person()
     {
         super("unnamed");
         this.shortName = "unnamed";
@@ -39,7 +39,14 @@ public class Person extends TreeViewItem implements Serializable
         this.lastName = "lastName";
         this.email = "";
         this.description = "";
-        this.birthDate = new SimpleDateFormat(birthDatePattern).parse("29/05/1985");
+        try
+        {
+            this.birthDate = new SimpleDateFormat(birthDatePattern).parse("29/05/1985");
+        }
+        catch (ParseException e)
+        {
+            System.out.println("Error parsing date");
+        }
     }
     
     
