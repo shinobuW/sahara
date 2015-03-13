@@ -19,6 +19,36 @@ public class TreeViewData implements HierarchyData<TreeViewData>
     private String name;
     private Object object;
     private Class type;
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public void setObject(Object object)
+    {
+        this.object = object;
+    }
+
+    public void setType(Class type)
+    {
+        this.type = type;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public Object getObject()
+    {
+        return object;
+    }
+
+    public Class getType()
+    {
+        return type;
+    }
     private ObservableList<TreeViewData> children = observableArrayList();
     
     

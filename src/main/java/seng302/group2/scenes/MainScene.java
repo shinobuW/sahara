@@ -23,8 +23,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import seng302.group2.App;
-import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.listdisplay.TreeViewData;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.scenes.listdisplay.TreeViewPerson;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.scenes.menu.MainMenuBar;
 
@@ -76,7 +77,8 @@ public class MainScene
                 
                 try
                 {
-                    Person newPerson = new Person("shawty", "first", "last", "a@b.com", "desc",
+                    TreeViewPerson newPerson = new TreeViewPerson("shawty", "first", "last",
+                            "a@b.com", "desc",
                             new SimpleDateFormat(birthDatePattern).parse("29/05/1985"));
                     App.currentProject.addPerson(newPerson);
                 }
@@ -94,15 +96,17 @@ public class MainScene
         // Old: TreeView display = ListDisplay.getProjectTree();  // (Manual)
         // Create the display menu from the project tree
         TreeViewWithItems display = new TreeViewWithItems(new TreeItem());
-        ObservableList<TreeViewData> children = observableArrayList();
+        ObservableList<TreeViewItem> children = observableArrayList();
         
+        /*
         TreeViewData projectTree = new TreeViewData(
                     App.currentProject.getShortName(),
                     App.currentProject,
                     App.currentProject.getClass()
                 );
+        */
         
-        children.add(projectTree);
+        children.add(App.currentProject);
         
         display.setItems(children);
         display.setShowRoot(false);

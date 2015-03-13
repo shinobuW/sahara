@@ -12,35 +12,25 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.ArrayList;
+import static javafx.collections.FXCollections.observableArrayList;
+import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import seng302.group2.App;
-import seng302.group2.project.team.person.Person;
-import seng302.group2.scenes.listdisplay.TreeViewData;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.scenes.listdisplay.TreeViewPerson;
 
 /**
  * Basic project class that acts as the root object for Sahara and represents a real-world project
  * @author Jordane Lew (jml168)
  */
-public class Project
+public class Project extends TreeViewItem
 {
     private String shortName;
     private String longName;
     private String description;
-    private ArrayList<Person> people = new ArrayList<Person>();
-    private TreeViewData treeViewItem = null;
-
-    public TreeViewData getTreeViewItem()
-    {
-        return treeViewItem;
-    }
-    
-    public void setTreeViewItem(TreeViewData treeViewItem)
-    {
-        this.treeViewItem = treeViewItem;
-    }
+    private ObservableList<TreeViewItem> people = observableArrayList();
     
     
     /**
@@ -51,6 +41,7 @@ public class Project
      */
     public Project(String shortName, String fullName, String description)
     {
+        super(shortName);
         this.shortName = shortName;
         this.longName = fullName;
         this.description = description;
@@ -92,7 +83,7 @@ public class Project
      * Gets a project's list of Persons
      * @return The short name of the project
      */
-    public ArrayList<Person> getPeople()
+    public ObservableList<TreeViewItem> getPeople()
     {
         return this.people;
     }
@@ -158,9 +149,7 @@ public class Project
             // TODO: Display dialog that no project is open
             // return;
         }
-        
-        TreeViewData tmp = App.currentProject.getTreeViewItem();
-        App.currentProject.setTreeViewItem(null);
+
         
         // Prime a FileChooser
         FileChooser fileChooser = new FileChooser();
@@ -180,8 +169,6 @@ public class Project
                 writer.close();
             }
         }
-        
-        App.currentProject.setTreeViewItem(tmp);
     }
     
     
@@ -219,13 +206,14 @@ public class Project
      * Adds a Person to the Project's list of Persons
      * @param person 
      */
-    public void addPerson(Person person)
+    public void addPerson(TreeViewPerson person)
     {
         this.people.add(person);
+        
         // Add it to the display menu as well
-        this.treeViewItem.getChildren().add(
+        /*this.treeViewItem.getChildren().add(
                 new TreeViewData(person.getShortName(), person, person.getClass()
-                ));
+                ));*/
         //App.refreshMainScene();
     }
     
@@ -238,5 +226,12 @@ public class Project
     public String toString()
     {
         return this.shortName;
+    }
+    
+    
+    @Override
+    public ObservableList<TreeViewItem> getChildren()
+    {
+        return people;
     }
 }
