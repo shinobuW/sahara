@@ -36,6 +36,9 @@ public class Project extends TreeViewItem implements Serializable
     private ArrayList<TreeViewItem> serializablePeople = new ArrayList<>();
     
     
+    /**
+     * Basic Project constructor
+     */
     public Project()
     {
         super("Untitled");

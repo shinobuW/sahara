@@ -27,6 +27,10 @@ public class Person extends TreeViewItem implements Serializable
     private Date birthDate = new Date();
     
     
+    /**
+     * Basic Person constructor
+     * @throws ParseException 
+     */
     public Person() throws ParseException
     {
         super("unnamed");
