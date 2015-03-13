@@ -58,6 +58,7 @@ public class App extends Application
         mainStage.show();
     }
     
+    
     /**
      * The main entry of the project
      * @param args 

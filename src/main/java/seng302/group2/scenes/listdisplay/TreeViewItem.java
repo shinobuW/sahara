@@ -9,7 +9,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 
 /**
- *
+ * The basic structure of a TreeView item
  * @author Jordane
  */
 public class TreeViewItem implements HierarchyData<TreeViewItem>
@@ -18,12 +18,20 @@ public class TreeViewItem implements HierarchyData<TreeViewItem>
     private ObservableList<TreeViewItem> children = observableArrayList();
 
     
+    /**
+     * Constructor for a TreeViewItem
+     * @param itemName The name of the TreeViewItem
+     */
     public TreeViewItem(String itemName)
     {
         this.itemName = itemName;
     }
     
     
+    /**
+     * Gets the children of the TreeViewItem
+     * @return The items of the TreeViewItem
+     */
     @Override
     public ObservableList<TreeViewItem> getChildren()
     {
@@ -31,6 +39,10 @@ public class TreeViewItem implements HierarchyData<TreeViewItem>
     }
     
     
+    /**
+     * Gets the string representation of the TreeViewItem
+     * @return The TreeViewItem name
+     */
     @Override
     public String toString()
     {

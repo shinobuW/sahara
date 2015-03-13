@@ -18,8 +18,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import seng302.group2.App;
+import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.TreeViewPerson;
 
 /**
  * Basic project class that acts as the root object for Sahara and represents a real-world project
@@ -150,7 +150,6 @@ public class Project extends TreeViewItem
             // return;
         }
 
-        
         // Prime a FileChooser
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Project");
@@ -206,7 +205,7 @@ public class Project extends TreeViewItem
      * Adds a Person to the Project's list of Persons
      * @param person 
      */
-    public void addPerson(TreeViewPerson person)
+    public void addPerson(Person person)
     {
         this.people.add(person);
         
@@ -215,6 +214,21 @@ public class Project extends TreeViewItem
                 new TreeViewData(person.getShortName(), person, person.getClass()
                 ));*/
         //App.refreshMainScene();
+    }
+    
+    
+    /**
+     * Gets a list of categories of the project based on the project's lists
+     * @return A list of categories of the project
+     */
+    public ObservableList<TreeViewItem> getCategories()
+    {
+        ObservableList<TreeViewItem> root = observableArrayList();
+        
+        Category people = new Category("People");
+        root.add(people);
+        
+        return root;
     }
     
     
@@ -229,9 +243,13 @@ public class Project extends TreeViewItem
     }
     
     
+    /**
+     * Gets the children (categories) of the project
+     * @return the children (categories) of the project
+     */
     @Override
     public ObservableList<TreeViewItem> getChildren()
     {
-        return people;
+        return getCategories();
     }
 }

@@ -12,10 +12,10 @@ import javafx.collections.ObservableList;
 import javafx.collections.WeakListChangeListener;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
- 
 import java.util.HashMap;
 import java.util.Map;
  
+
 /**
  * This class extends the {@link TreeView} to use items as a data source.
  * This allows you to treat a {@link TreeView} in a similar way as a
@@ -25,11 +25,10 @@ import java.util.Map;
  * Each change in the underlying data (adding, removing, sorting) will then be automatically
  * reflected in the UI.
  *
- * @author Christian Schudt
+ * @author Christian Schudt (modified by Jordane Lew)
  */
 public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> 
 {
- 
     /**
      * Keep hard references for each listener, so that they don't get garbage collected too soon.
      */
@@ -45,13 +44,18 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
  
     private ObjectProperty<ObservableList<? extends T>> items =
             new SimpleObjectProperty<ObservableList<? extends T>>(this, "items");
- 
+    
+    
+    /**
+     * Constructor for a TreeViewWithItems
+     */
     public TreeViewWithItems() 
     {
         super();
         init();
     }
  
+    
     /**
      * Creates the tree view.
      *
@@ -63,6 +67,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
         super(root);
         init();
     }
+    
  
     /**
      * Initializes the tree view.
@@ -95,6 +100,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
         });
     }
  
+    
     /**
      * Removes all listener from a root.
      *
@@ -114,8 +120,9 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
         }
     }
  
+    
     /**
-     * Updates the items.
+     * Updates the items
      */
     private void updateItems() 
     {
@@ -136,11 +143,10 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
         }
     }
  
+    
     /**
-     * Gets a 
-{@link javafx.collections.ListChangeListener} for a  
-{@link TreeItem}. It listens to changes on the underlying list and updates the UI accordingly.
-     *
+     * Gets a {@link javafx.collections.ListChangeListener} for a {@link TreeItem}. It listens to
+     * changes on the underlying list and updates the UI accordingly.
      * @param treeItemChildren The associated tree item's children list.
      * @return The listener.
      */
@@ -199,10 +205,10 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
             }
         };
     }
+    
  
     /**
      * Removes the listener recursively.
-     *
      * @param item The tree item.
      */
     private TreeItem<T> removeRecursively(TreeItem<T> item) 
@@ -222,10 +228,10 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
         }
         return item;
     }
+    
  
     /**
      * Adds the children to the tree recursively.
-     *
      * @param value The initial value.
      * @return The tree item.
      */
@@ -253,15 +259,20 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
         }
         return treeItem;
     }
- 
+    
+    
+    /**
+     * Gets the observable list of items
+     * @return The observable list of items
+     */
     public ObservableList<? extends T> getItems() 
     {
         return items.get();
     }
  
+    
     /**
      * Sets items for the tree.
-     *
      * @param items The list.
      */
     public void setItems(ObservableList<? extends T> items) 

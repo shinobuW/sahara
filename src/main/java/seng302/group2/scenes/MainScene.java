@@ -23,11 +23,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import seng302.group2.App;
-import seng302.group2.scenes.listdisplay.TreeViewData;
+import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.TreeViewPerson;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.scenes.menu.MainMenuBar;
+
 
 /**
  * A class for holding JavaFX scenes used in the project
@@ -40,7 +40,6 @@ public class MainScene
         // The root window box
         VBox root = new VBox();
         HBox content = new HBox();
-        
         
         MenuBar menuBar = MainMenuBar.getMainMenuBar();
         root.getChildren().add(new StackPane(menuBar));
@@ -61,7 +60,7 @@ public class MainScene
         Text scenetitle = new Text("Welcome");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         informationGrid.add(scenetitle, 0, 0, 2, 1);
-            // At top-left (0, 0), spanning 2 columns and 1 row
+        // At top-left (0, 0), spanning 2 columns and 1 row
 
         // A button to switch to the demo scene
         Button btn = new Button("Make Test Person");
@@ -77,7 +76,7 @@ public class MainScene
                 
                 try
                 {
-                    TreeViewPerson newPerson = new TreeViewPerson("shawty", "first", "last",
+                    Person newPerson = new Person("shawty", "first", "last",
                             "a@b.com", "desc",
                             new SimpleDateFormat(birthDatePattern).parse("29/05/1985"));
                     App.currentProject.addPerson(newPerson);
@@ -111,11 +110,9 @@ public class MainScene
         display.setItems(children);
         display.setShowRoot(false);
         
-        
         content.getChildren().add(display);
         content.getChildren().add(informationGrid);
 
-        
         return new Scene(root);
     }
 }

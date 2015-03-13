@@ -5,12 +5,13 @@ package seng302.group2.project.team.person;
 
 import java.util.Date;
 import seng302.group2.App;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 /**
  * A basic class to represent a Person in the real world.
  * @author crw73
  */
-public class Person
+public class Person extends TreeViewItem
 {
     private String shortName;
     private String firstName;
@@ -31,12 +32,15 @@ public class Person
     public Person(String shortName, String firstName, String lastName, String email, 
             String description, Date birthDate)
     {
+        // Initialize as a TreeViewItem
+        super(shortName);
+        
         // Check for duplicates and change if neccessary to keep short names unique
         String newShortName = shortName;
         int i = 0;
-        for (Person person : App.currentProject.getPeople())
+        for (TreeViewItem person : App.currentProject.getPeople())
         {
-            if (person.getShortName().equals(newShortName))
+            if (person.toString().equals(newShortName))
             {
                 i++;
                 newShortName = shortName + "~" + String.valueOf(i);
@@ -181,5 +185,4 @@ public class Person
     {
         return this.shortName;
     }
-    
 }
