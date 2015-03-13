@@ -15,8 +15,16 @@ import javafx.collections.ObservableList;
 public class TreeViewItem implements HierarchyData<TreeViewItem>
 {
     private String itemName;
-    private ObservableList<TreeViewItem> children = observableArrayList();
+    private transient ObservableList<TreeViewItem> children = observableArrayList();
 
+    
+    /**
+     * Blank constructor
+     */
+    public TreeViewItem()
+    {
+    }
+    
     
     /**
      * Constructor for a TreeViewItem

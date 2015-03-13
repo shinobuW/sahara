@@ -3,7 +3,11 @@
  */
 package seng302.group2.project.team.person;
 
+import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import javafx.collections.ObservableList;
 import seng302.group2.App;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
@@ -11,14 +15,29 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
  * A basic class to represent a Person in the real world.
  * @author crw73
  */
-public class Person extends TreeViewItem
+public class Person extends TreeViewItem implements Serializable
 {
+    public static String birthDatePattern = "dd/MM/yyyy";
+    
     private String shortName;
     private String firstName;
     private String lastName;
     private String email;
     private String description;
     private Date birthDate = new Date();
+    
+    
+    public Person() throws ParseException
+    {
+        super("unnamed");
+        this.shortName = "unnamed";
+        this.firstName = "firstName";
+        this.lastName = "lastName";
+        this.email = "";
+        this.description = "";
+        this.birthDate = new SimpleDateFormat(birthDatePattern).parse("29/05/1985");
+    }
+    
     
     /**
      * Basic person constructor with all fields
@@ -174,6 +193,17 @@ public class Person extends TreeViewItem
     }
     
         //</editor-fold>
+    
+    
+    /**
+     * Gets the children of the TreeViewItem
+     * @return The items of the TreeViewItem
+     */
+    @Override
+    public ObservableList<TreeViewItem> getChildren()
+    {
+        return null;
+    }
     
     
     /**

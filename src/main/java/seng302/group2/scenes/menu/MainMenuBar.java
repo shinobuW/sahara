@@ -45,16 +45,13 @@ public class MainMenuBar
         MenuItem newPersonItem = new MenuItem("Person");
         newPersonItem.setOnAction((event) -> 
             {
-                String birthDatePattern = "dd/MM/yyyy";
                 try
                 {
-                    Person newPerson = new Person("shawty", "first", "last",
-                            "a@b.com", "desc",
-                            new SimpleDateFormat(birthDatePattern).parse("29/05/1985"));
-                    App.currentProject.addPerson(newPerson);
+                    App.currentProject.addPerson(new Person());
                 }
                 catch (ParseException e)
                 {
+                    // Can't parse birthDate to Date properly
                 }
             });
         
@@ -73,11 +70,11 @@ public class MainMenuBar
                 }
                 catch (FileNotFoundException e)
                 {
-                    System.out.println("TODO: File doesn't exist");
+                    e.printStackTrace();
                 }
                 catch (IOException e)
                 {
-                    System.out.println("TODO: Error reading from file");
+                    e.printStackTrace();
                 }
             });
         
@@ -91,7 +88,7 @@ public class MainMenuBar
                 }
                 catch (IOException e)
                 {
-                    System.out.println("TODO: Error writing to file");
+                    e.printStackTrace();
                 }
             });
         

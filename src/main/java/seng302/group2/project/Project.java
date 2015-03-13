@@ -11,7 +11,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.Serializable;
 import java.io.Writer;
+import java.util.ArrayList;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
@@ -25,12 +27,23 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
  * Basic project class that acts as the root object for Sahara and represents a real-world project
  * @author Jordane Lew (jml168)
  */
-public class Project extends TreeViewItem
+public class Project extends TreeViewItem implements Serializable
 {
     private String shortName;
     private String longName;
     private String description;
-    private ObservableList<TreeViewItem> people = observableArrayList();
+    private transient ObservableList<TreeViewItem> people = observableArrayList();
+    private ArrayList<TreeViewItem> serializablePeople = new ArrayList<>();
+    
+    
+    public Project()
+    {
+        super("Untitled");
+        this.shortName = "Untitled";
+        this.longName = "Untitled Project";
+        this.description = "A blank project.";
+        this.serializablePeople = new ArrayList<>();
+    }
     
     
     /**
@@ -127,17 +140,6 @@ public class Project extends TreeViewItem
     
     
     /**
-     * Creates and returns a new project
-     * @return A new project
-     */
-    public static Project newBlankProject()
-    {
-        // Maybe show a dialog and ask for details?
-        return new Project("Untitled", "Untitled Project", "A blank project.");
-    }
-    
-    
-    /**
      * Saves the current project as a file specified by the user
      * @throws IOException Error initializing the FileWriter for the file
      */
@@ -149,7 +151,9 @@ public class Project extends TreeViewItem
             // TODO: Display dialog that no project is open
             // return;
         }
-
+        
+        Project.preSerialization();
+        
         // Prime a FileChooser
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Project");
@@ -161,6 +165,13 @@ public class Project extends TreeViewItem
         File selectedFile = fileChooser.showSaveDialog(new Stage());
         if (selectedFile != null)
         {
+            /* JAVA SERIALIZATION
+            FileOutputStream fileOutStream = new FileOutputStream(selectedFile);
+            ObjectOutputStream  objOutStream = new ObjectOutputStream(fileOutStream);
+            objOutStream.writeObject(App.currentProject);
+            */
+            
+            /* GSON SERIALIZATION */
             try (Writer writer = new FileWriter(selectedFile))
             {
                 Gson gson = new GsonBuilder().create();
@@ -189,12 +200,30 @@ public class Project extends TreeViewItem
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         if (selectedFile != null)
         {
+            /* JAVA DESERIALIZATION
+            FileInputStream fileInpStream = new FileInputStream(selectedFile);
+            InputStream buffer = new BufferedInputStream(fileInpStream);
+            ObjectInput objInput = new ObjectInputStream(buffer);
+            
+            try
+            {
+                App.currentProject = (Project) objInput.readObject();
+            }
+            catch (ClassNotFoundException e)
+            {
+                // Class not found
+            }
+            */
+            
+            /* GSON DESERIALIZATION */
             try (Reader reader = new FileReader(selectedFile))
             {
                 Gson gson = new GsonBuilder().create();
                 App.currentProject = gson.fromJson(reader, Project.class);
                 reader.close();
             }
+            
+            Project.postDeserialization();
         }
         
         App.refreshMainScene();
@@ -229,6 +258,39 @@ public class Project extends TreeViewItem
         root.add(people);
         
         return root;
+    }
+    
+    
+    /**
+     * Perform pre-serialization steps
+     * - Transform ObservableLists into ArrayLists for serialization
+     */
+    public static void preSerialization()
+    {
+        App.currentProject.serializablePeople.clear();
+        for (TreeViewItem item : App.currentProject.people)
+        {
+            App.currentProject.serializablePeople.add(item);
+        }
+        
+        // Also for any other deeper observables
+    }
+    
+    
+    /**
+     * Perform post-deserialization steps
+     * - Transform ArrayLists back into ObservableLists
+     */
+    public static void postDeserialization()
+    {
+        App.currentProject.people = observableArrayList();
+        for (TreeViewItem item : App.currentProject.serializablePeople)
+        {
+            App.currentProject.people.add(item);
+        }
+        
+        // Also for any other deeper observables
+        // eg. for (TreeViewItem item : App.currentProject.team.people) {...}
     }
     
     

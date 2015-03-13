@@ -103,6 +103,13 @@
       <version>2.2.4</version>
   </dependency>
   
+  <dependency>
+    <groupId>xstream</groupId>
+    <artifactId>xstream</artifactId>
+    <version>1.2.2</version>
+  </dependency>
+
+  
   </dependencies>
     <reporting>
         <plugins>

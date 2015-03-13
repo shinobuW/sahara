@@ -72,22 +72,14 @@ public class MainScene
         //The button event handler
         btn.setOnAction((event) ->
             {
-                String birthDatePattern = "dd/MM/yyyy";
-                
                 try
                 {
-                    Person newPerson = new Person("shawty", "first", "last",
-                            "a@b.com", "desc",
-                            new SimpleDateFormat(birthDatePattern).parse("29/05/1985"));
-                    App.currentProject.addPerson(newPerson);
+                    App.currentProject.addPerson(new Person());
                 }
                 catch (ParseException e)
                 {
+                    // Can't parse birthDate to Date properly
                 }
-                
-                
-                /*Stage stage = (Stage) btn.getScene().getWindow();
-                stage.setScene(Scenes.getStudentsTestScene());*/
             });
         
         // </editor-fold>
