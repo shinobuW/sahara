@@ -21,6 +21,7 @@ public class App extends Application
     public static Project currentProject = new Project();
     public static Stage mainStage;
     public static Scene mainScene;
+    public static Object selectedTreeItem = null;
     
     
     /**

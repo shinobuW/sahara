@@ -14,6 +14,8 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import java.util.HashMap;
 import java.util.Map;
+import seng302.group2.App;
+import seng302.group2.project.Project;
  
 
 /**
@@ -98,6 +100,20 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                 updateItems();
             }
         });
+        
+        /* Sets the App.selectedTreeItem when a new selection is made */
+        this.getSelectionModel().selectedItemProperty().addListener(new ChangeListener()
+            {
+                @Override
+                public void changed(ObservableValue observable, Object oldValue, Object newValue)
+                {
+                    TreeItem<Object> selectedItem = (TreeItem<Object>) newValue;
+                    //System.out.println("Selected Object = " + selectedItem.getValue());
+                    //System.out.println("Selected Class = " + selectedItem.getValue().getClass());
+                    App.selectedTreeItem = selectedItem.getValue();
+                    // TODO: Call the update information here -- to show the selected item
+                }
+            });
     }
  
     
@@ -279,4 +295,5 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
     {
         this.items.set(items);
     }
+
 }

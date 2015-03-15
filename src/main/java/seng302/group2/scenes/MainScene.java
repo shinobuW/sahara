@@ -5,8 +5,6 @@
  */
 package seng302.group2.scenes;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
