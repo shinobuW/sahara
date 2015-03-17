@@ -7,15 +7,15 @@ package seng302.group2.scenes.menu;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.stage.Stage;
 import seng302.group2.App;
 import seng302.group2.project.Project;
 import seng302.group2.project.team.person.Person;
+import seng302.group2.scenes.ConfirmSaveScene;
 
 /**
  *
@@ -37,7 +37,13 @@ public class MainMenuBar
         MenuItem newProjectItem = new MenuItem("Project");
         newProjectItem.setOnAction((event) ->
             {
-                App.currentProject = new Project();
+                Stage confirmSaveBox = new Stage();
+                int cancelled = ConfirmSaveScene.confirmSave(confirmSaveBox);
+                //if (cancelled == 0)
+                //{
+                    App.currentProject = new Project();
+                //}
+
                 App.refreshMainScene();
             });
         newProjectBranch.getItems().add(newProjectItem);
@@ -89,6 +95,8 @@ public class MainMenuBar
         MenuItem quitProgramItem = new MenuItem("Quit");
         quitProgramItem.setOnAction((event) ->
             {
+                //Stage confirmSaveBox = new Stage();
+                //int cancelled = ConfirmSaveScene.confirmSave(confirmSaveBox);
                 System.exit(0);
             });
         

@@ -5,6 +5,8 @@ package seng302.group2.project;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.awt.Dialog;
+import java.awt.JobAttributes.DialogType;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,6 +16,7 @@ import java.io.Reader;
 import java.io.Serializable;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Optional;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
