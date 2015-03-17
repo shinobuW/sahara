@@ -44,7 +44,7 @@ public class App extends Application
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         
         // The title of the window
-        primaryStage.setTitle("JavaFX Form");
+        primaryStage.setTitle("Sahara");
         primaryStage.setWidth(0.75 * screenSize.getWidth());
         primaryStage.setHeight(0.75 * screenSize.getHeight());
         primaryStage.setMinHeight(0.25 * screenSize.getWidth());

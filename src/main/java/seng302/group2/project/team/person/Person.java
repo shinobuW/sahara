@@ -103,7 +103,7 @@ public class Person extends TreeViewItem implements Serializable
      * Gets a person's first name
      * @return The first name of the person
      */
-    public String getFirstname()
+    public String getFirstName()
     {
         return this.firstName;
     }
@@ -162,7 +162,7 @@ public class Person extends TreeViewItem implements Serializable
      * Sets a person's first name
      * @param firstName
      */
-    public void setFirstname(String firstName)
+    public void setFirstName(String firstName)
     {
         this.firstName = firstName;
     }

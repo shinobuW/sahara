@@ -13,16 +13,15 @@ import junit.framework.TestSuite;
  * A series of tests relating to Projects
  * @author Jordane Lew (jml168)
  */
-public class ProjectTest
-    extends TestCase
+public class ProjectTest extends TestCase
 {
     /**
      * Create the test case
      * @param testName name of the test case
      */
-    public ProjectTest( String testName )
+    public ProjectTest(String testName)
     {
-        super( testName );
+        super(testName);
     }
 
     /**
@@ -30,7 +29,7 @@ public class ProjectTest
      */
     public static Test suite()
     {
-        return new TestSuite( ProjectTest.class );
+        return new TestSuite(ProjectTest.class);
     }
 
     /**
