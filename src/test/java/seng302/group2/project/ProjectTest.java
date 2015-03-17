@@ -16,6 +16,7 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 /**
  * A series of tests relating to Projects
  * @author Jordane Lew (jml168)
+ * @author Bronson McNaughton (btm38)
  */
 public class ProjectTest extends TestCase
 {
@@ -37,7 +38,7 @@ public class ProjectTest extends TestCase
     }
 
     /**
-     * A simple test for the Project constructors & getters
+     * A simple test for the Project constructors & getters.
      */
     public void testProjectConstructors()
     {
@@ -58,6 +59,9 @@ public class ProjectTest extends TestCase
         assertEquals("aShortName", proj2.toString());
     }
     
+    /**
+     * Tests Projects' setter methods.
+     */
     public void testProjectSetters()
     {
         Project proj = new Project();
@@ -71,6 +75,9 @@ public class ProjectTest extends TestCase
         assertEquals("aShortName", proj.toString());
     }
     
+    /**
+     * Tests Projects' AddPerson method.
+     */
     public void testAddPerson()
     {
         Project proj = new Project();
@@ -79,9 +86,7 @@ public class ProjectTest extends TestCase
         
         ObservableList<TreeViewItem> people = observableArrayList();
         people.add(pers);
-        
-       
+
         assertEquals(people, proj.getPeople());
-        
     }
 }

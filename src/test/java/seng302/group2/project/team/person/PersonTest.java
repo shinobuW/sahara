@@ -19,7 +19,7 @@ import junit.framework.TestSuite;
 public class PersonTest extends TestCase
 {
     /**
-     * Create the test case
+     * Create the test case.
      * @param testName name of the test case
      */
     public PersonTest(String testName)
@@ -36,7 +36,7 @@ public class PersonTest extends TestCase
     }
 
     /**
-     * A simple test for the Project constructors
+     * A simple test for the Project constructors & getters.
      */
     public void testPersonConstructors()
     {
@@ -72,6 +72,9 @@ public class PersonTest extends TestCase
         Assert.assertEquals("btm38", pers3.toString());
     }
     
+    /**
+     * Tests for Persons' setter methods.
+     */
     public void testPersonSetters()
     {
         Person pers = new Person();
