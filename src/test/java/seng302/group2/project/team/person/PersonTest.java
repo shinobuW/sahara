@@ -47,7 +47,7 @@ public class PersonTest extends TestCase
         Assert.assertEquals("", pers.getEmail());
         Assert.assertEquals("", pers.getDescription());
         Assert.assertNotNull(pers.getBirthDate());
-        Assert.assertEquals(pers.toString(), "unnamed");
+        Assert.assertEquals("unnamed", pers.toString());
         
         Person pers2 = new Person("btm38", "Bronson", "McNaughton", "btm38@gmail.com", 
                 "A really cool dude",  new Date(1994, 12, 19)); 
@@ -57,7 +57,7 @@ public class PersonTest extends TestCase
         Assert.assertEquals("btm38@gmail.com", pers2.getEmail());
         Assert.assertEquals("A really cool dude", pers2.getDescription());
         Assert.assertEquals(new Date(1994, 12, 19), pers2.getBirthDate());
-        Assert.assertEquals(pers2.toString(), "btm38");
+        Assert.assertEquals("btm38", pers2.toString());
         
         Person pers3 = new Person("btm38", "Billy", "Mays", "billymays@gmail.com", 
                 "Pretty cool, but not as cool as Bronson",  new Date(1958, 7, 20)); 
@@ -69,7 +69,7 @@ public class PersonTest extends TestCase
         Assert.assertEquals("billymays@gmail.com", pers3.getEmail());
         Assert.assertEquals("Pretty cool, but not as cool as Bronson", pers3.getDescription());
         Assert.assertEquals(new Date(1958, 7, 20), pers3.getBirthDate());    
-        Assert.assertEquals(pers3.toString(), "btm38");
+        Assert.assertEquals("btm38", pers3.toString());
     }
     
     public void testPersonSetters()
@@ -88,6 +88,6 @@ public class PersonTest extends TestCase
         Assert.assertEquals("btm38@gmail.com", pers.getEmail());
         Assert.assertEquals("A really cool dude", pers.getDescription());
         Assert.assertEquals(new Date(1994, 12, 19), pers.getBirthDate());
-        Assert.assertEquals(pers.toString(), "btm38");
+        Assert.assertEquals("btm38", pers.toString());
     }
 }
