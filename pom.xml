@@ -104,12 +104,11 @@
   </dependency>
   
   <dependency>
-    <groupId>xstream</groupId>
-    <artifactId>xstream</artifactId>
-    <version>1.2.2</version>
+      <groupId>org.controlsfx</groupId>
+      <artifactId>controlsfx</artifactId>
+      <version>8.20.8</version>
   </dependency>
 
-  
   </dependencies>
     <reporting>
         <plugins>
