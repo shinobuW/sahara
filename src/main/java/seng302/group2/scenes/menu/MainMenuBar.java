@@ -41,7 +41,7 @@ public class MainMenuBar
                 int cancelled = ConfirmSaveScene.confirmSave(confirmSaveBox);
                 //if (cancelled == 0)
                 //{
-                    App.currentProject = new Project();
+                App.currentProject = new Project();
                 //}
 
                 App.refreshMainScene();

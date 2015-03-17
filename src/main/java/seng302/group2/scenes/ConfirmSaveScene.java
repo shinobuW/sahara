@@ -87,7 +87,7 @@ public class ConfirmSaveScene
         cancelButton.setOnAction(new EventHandler<ActionEvent>()
         {
             @Override
-            public void handle(ActionEvent e)
+            public void handle(ActionEvent event)
             {
                 confirmSaveBox.close();
             }
