@@ -29,7 +29,6 @@ public class Person extends TreeViewItem implements Serializable
     
     /**
      * Basic Person constructor
-     * @throws ParseException 
      */
     public Person()
     {

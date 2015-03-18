@@ -5,7 +5,6 @@ package seng302.group2;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.application.Platform;
@@ -17,6 +16,7 @@ import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.project.Project;
+import seng302.group2.project.Project.SaveLoadResult;
 import seng302.group2.scenes.MainScene;
 
 /**
@@ -61,6 +61,8 @@ public class App extends Application
         App.mainScene = MainScene.getMainScene();
         primaryStage.setScene(App.mainScene);
         mainStage = primaryStage;
+        
+        // Exit button handling
         Platform.setImplicitExit(false);
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() 
         {
@@ -73,15 +75,15 @@ public class App extends Application
                 
                 if (response == Dialog.ACTION_YES)
                 {
-                    try
+                    SaveLoadResult saved = Project.saveProject(App.currentProject);
+                    if (saved == SaveLoadResult.SUCCESS)
                     {
-                        Project.saveCurrentProject();
+                        System.exit(0);
                     }
-                    catch (IOException ex)
+                    else
                     {
-                        ex.printStackTrace();
+                        event.consume();
                     }
-                    System.exit(0);
                 }
                 else if (response == Dialog.ACTION_NO)
                 {

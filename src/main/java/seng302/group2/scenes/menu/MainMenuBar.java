@@ -17,6 +17,7 @@ import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.project.Project;
+import seng302.group2.project.Project.SaveLoadResult;
 import seng302.group2.project.team.person.Person;
 
 /**
@@ -39,6 +40,13 @@ public class MainMenuBar
         MenuItem newProjectItem = new MenuItem("Project");
         newProjectItem.setOnAction((ActionEvent event) ->
             {
+                if (App.currentProject == null)
+                {
+                    App.currentProject = new Project();
+                    App.refreshMainScene();
+                    return;
+                }
+                
                 Action response = Dialogs.create()
                     .title("Save Project?")
                     .message("Would you like to save your changes to the current project?")
@@ -46,16 +54,12 @@ public class MainMenuBar
                 
                 if (response == Dialog.ACTION_YES)
                 {
-                    try
+                    SaveLoadResult saved = Project.saveProject(App.currentProject);
+                    if (saved == SaveLoadResult.SUCCESS)
                     {
-                        Project.saveCurrentProject();
+                        App.currentProject = new Project();
+                        App.refreshMainScene();
                     }
-                    catch (IOException ex)
-                    {
-                        ex.printStackTrace();
-                    }
-                    App.currentProject = new Project();
-                    App.refreshMainScene();
                 }
                 else if (response == Dialog.ACTION_NO)
                 {
@@ -80,32 +84,14 @@ public class MainMenuBar
         MenuItem openItem = new MenuItem("Open");
         openItem.setOnAction((event) ->
             {
-                try
-                {
-                    Project.loadProject();
-                }
-                catch (FileNotFoundException e)
-                {
-                    e.printStackTrace();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
+                Project.loadProject();
             });
         
         // Create 'Open' MenuItem
         MenuItem saveItem = new MenuItem("Save");
         saveItem.setOnAction((event) ->
             {
-                try
-                {
-                    Project.saveCurrentProject();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
+                Project.saveProject(App.currentProject);
             });
         
         // Create 'Quit' MenuItem
@@ -119,15 +105,11 @@ public class MainMenuBar
                 
                 if (response == Dialog.ACTION_YES)
                 {
-                    try
+                    SaveLoadResult saved = Project.saveProject(App.currentProject);
+                    if (saved == SaveLoadResult.SUCCESS)
                     {
-                        Project.saveCurrentProject();
+                        System.exit(0);
                     }
-                    catch (IOException ex)
-                    {
-                        ex.printStackTrace();
-                    }
-                    System.exit(0);
                 }
                 else if (response == Dialog.ACTION_NO)
                 {

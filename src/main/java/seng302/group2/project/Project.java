@@ -5,8 +5,6 @@ package seng302.group2.project;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.awt.Dialog;
-import java.awt.JobAttributes.DialogType;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -16,7 +14,6 @@ import java.io.Reader;
 import java.io.Serializable;
 import java.io.Writer;
 import java.util.ArrayList;
-import java.util.Optional;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
@@ -38,6 +35,14 @@ public class Project extends TreeViewItem implements Serializable
     private transient ObservableList<TreeViewItem> people = observableArrayList();
     private ArrayList<TreeViewItem> serializablePeople = new ArrayList<>();
     
+    public enum SaveLoadResult
+    {
+        SUCCESS,
+        NULLPROJECT,
+        IOEXCEPTION,
+        NOFILESELECTED,  // Cancelled in save
+        FILENOTFOUND  // File doesn't exist when opening
+    }
     
     /**
      * Basic Project constructor
@@ -147,18 +152,18 @@ public class Project extends TreeViewItem implements Serializable
     
     /**
      * Saves the current project as a file specified by the user
-     * @throws IOException Error initializing the FileWriter for the file
+     * @return The corresponding SaveLoadResult status of the process
      */
-    public static void saveCurrentProject() throws IOException
+    public static SaveLoadResult saveProject(Project project)
     {
         // If there is no current project open, display a dialog and skip saving
-        if (App.currentProject == null)
+        if (project == null)
         {
             // TODO: Display dialog that no project is open
-            // return;
+            return SaveLoadResult.NULLPROJECT;
         }
         
-        Project.preSerialization();
+        project = Project.preSerialization(project);
         
         // Prime a FileChooser
         FileChooser fileChooser = new FileChooser();
@@ -171,29 +176,33 @@ public class Project extends TreeViewItem implements Serializable
         File selectedFile = fileChooser.showSaveDialog(new Stage());
         if (selectedFile != null)
         {
-            /* JAVA SERIALIZATION
-            FileOutputStream fileOutStream = new FileOutputStream(selectedFile);
-            ObjectOutputStream  objOutStream = new ObjectOutputStream(fileOutStream);
-            objOutStream.writeObject(App.currentProject);
-            */
-            
+           
             /* GSON SERIALIZATION */
             try (Writer writer = new FileWriter(selectedFile))
             {
                 Gson gson = new GsonBuilder().create();
-                gson.toJson(App.currentProject, writer);
+                gson.toJson(project, writer);
                 writer.close();
+                return SaveLoadResult.SUCCESS;
             }
+            catch (IOException e)
+            {
+                return SaveLoadResult.IOEXCEPTION;
+            }
+        }
+        else
+        {
+            // No file selected (cancelled action)
+            return SaveLoadResult.NOFILESELECTED;
         }
     }
     
     
     /**
-     * Loads a project specified by the user
-     * @throws FileNotFoundException
-     * @throws IOException 
+     * Loads a project specified by the user into App.currentProject
+     * @return The corresponding SaveLoadResult status of the process
      */
-    public static void loadProject() throws FileNotFoundException, IOException
+    public static SaveLoadResult loadProject()
     {
         // Prime a FileChooser
         FileChooser fileChooser = new FileChooser();
@@ -206,21 +215,7 @@ public class Project extends TreeViewItem implements Serializable
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         if (selectedFile != null)
         {
-            /* JAVA DESERIALIZATION
-            FileInputStream fileInpStream = new FileInputStream(selectedFile);
-            InputStream buffer = new BufferedInputStream(fileInpStream);
-            ObjectInput objInput = new ObjectInputStream(buffer);
-            
-            try
-            {
-                App.currentProject = (Project) objInput.readObject();
-            }
-            catch (ClassNotFoundException e)
-            {
-                // Class not found
-            }
-            */
-            
+           
             /* GSON DESERIALIZATION */
             try (Reader reader = new FileReader(selectedFile))
             {
@@ -228,11 +223,23 @@ public class Project extends TreeViewItem implements Serializable
                 App.currentProject = gson.fromJson(reader, Project.class);
                 reader.close();
             }
+            catch (FileNotFoundException e)
+            {
+                return SaveLoadResult.FILENOTFOUND;
+            }
+            catch (IOException e)
+            {
+                return SaveLoadResult.IOEXCEPTION;
+            }
             
             Project.postDeserialization();
+            App.refreshMainScene();
+            return SaveLoadResult.SUCCESS;
         }
-        
-        App.refreshMainScene();
+        else
+        {
+            return SaveLoadResult.FILENOTFOUND;
+        }
     }
     
     
@@ -271,15 +278,17 @@ public class Project extends TreeViewItem implements Serializable
      * Perform pre-serialization steps
      * - Transform ObservableLists into ArrayLists for serialization
      */
-    public static void preSerialization()
+    public static Project preSerialization(Project project)
     {
-        App.currentProject.serializablePeople.clear();
-        for (TreeViewItem item : App.currentProject.people)
+        project.serializablePeople.clear();
+        for (TreeViewItem item : project.people)
         {
-            App.currentProject.serializablePeople.add(item);
+            project.serializablePeople.add(item);
         }
         
-        // Also for any other deeper observables
+        // Also perform again for any other deeper observables
+        
+        return project;
     }
     
     

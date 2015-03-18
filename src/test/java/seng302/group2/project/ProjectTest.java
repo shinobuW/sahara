@@ -76,7 +76,7 @@ public class ProjectTest extends TestCase
     }
     
     /**
-     * Tests Projects' AddPerson method.
+     * Tests that people are correctly added to projects through the addPerson() method.
      */
     public void testAddPerson()
     {
@@ -89,4 +89,5 @@ public class ProjectTest extends TestCase
 
         assertEquals(people, proj.getPeople());
     }
+    
 }
