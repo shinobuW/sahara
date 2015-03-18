@@ -7,15 +7,17 @@ package seng302.group2.scenes.menu;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import javafx.event.ActionEvent;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.stage.Stage;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.project.Project;
 import seng302.group2.project.team.person.Person;
-import seng302.group2.scenes.ConfirmSaveScene;
 
 /**
  *
@@ -35,16 +37,31 @@ public class MainMenuBar
         Menu newProjectBranch = new Menu("New");
 
         MenuItem newProjectItem = new MenuItem("Project");
-        newProjectItem.setOnAction((event) ->
+        newProjectItem.setOnAction((ActionEvent event) ->
             {
-                Stage confirmSaveBox = new Stage();
-                int cancelled = ConfirmSaveScene.confirmSave(confirmSaveBox);
-                //if (cancelled == 0)
-                //{
-                App.currentProject = new Project();
-                //}
-
-                App.refreshMainScene();
+                Action response = Dialogs.create()
+                    .title("Save Project?")
+                    .message("Would you like to save your changes to the current project?")
+                    .showConfirm();
+                
+                if (response == Dialog.ACTION_YES)
+                {
+                    try
+                    {
+                        Project.saveCurrentProject();
+                    }
+                    catch (IOException ex)
+                    {
+                        ex.printStackTrace();
+                    }
+                    App.currentProject = new Project();
+                    App.refreshMainScene();
+                }
+                else if (response == Dialog.ACTION_NO)
+                {
+                    App.currentProject = new Project();
+                    App.refreshMainScene();
+                }
             });
         newProjectBranch.getItems().add(newProjectItem);
         
@@ -95,9 +112,27 @@ public class MainMenuBar
         MenuItem quitProgramItem = new MenuItem("Quit");
         quitProgramItem.setOnAction((event) ->
             {
-                //Stage confirmSaveBox = new Stage();
-                //int cancelled = ConfirmSaveScene.confirmSave(confirmSaveBox);
-                System.exit(0);
+                Action response = Dialogs.create()
+                    .title("Save Project?")
+                    .message("Would you like to save your changes to the current project?")
+                    .showConfirm();
+                
+                if (response == Dialog.ACTION_YES)
+                {
+                    try
+                    {
+                        Project.saveCurrentProject();
+                    }
+                    catch (IOException ex)
+                    {
+                        ex.printStackTrace();
+                    }
+                    System.exit(0);
+                }
+                else if (response == Dialog.ACTION_NO)
+                {
+                    System.exit(0);
+                }
             });
         
         // Add MenuItems to Menu

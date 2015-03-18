@@ -5,10 +5,17 @@ package seng302.group2;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
 import seng302.group2.project.Project;
 import seng302.group2.scenes.MainScene;
 
@@ -54,7 +61,39 @@ public class App extends Application
         App.mainScene = MainScene.getMainScene();
         primaryStage.setScene(App.mainScene);
         mainStage = primaryStage;
-
+        Platform.setImplicitExit(false);
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() 
+        {
+            public void handle(WindowEvent event)
+            {
+                Action response = Dialogs.create()
+                    .title("Save Project?")
+                    .message("Would you like to save your changes to the current project?")
+                    .showConfirm();
+                
+                if (response == Dialog.ACTION_YES)
+                {
+                    try
+                    {
+                        Project.saveCurrentProject();
+                    }
+                    catch (IOException ex)
+                    {
+                        ex.printStackTrace();
+                    }
+                    System.exit(0);
+                }
+                else if (response == Dialog.ACTION_NO)
+                {
+                    System.exit(0);
+                }
+                else
+                {
+                    event.consume();
+                }
+            }
+        });
+        
         // Show the stage/window
         mainStage.show();
     }
