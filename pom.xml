@@ -11,6 +11,7 @@
   <build>
     <plugins>
         
+      <!-- Maven plugins build -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
@@ -34,8 +35,6 @@
           <shadedClassifierName>launcher</shadedClassifierName>
         </configuration>
         
-        
-        
         <executions>
           <execution>
             <phase>package</phase>
@@ -46,6 +45,7 @@
         </executions>
       </plugin>
       
+      <!-- Maven jar build -->
       <plugin>
       <!-- Build an executable JAR -->
       <groupId>org.apache.maven.plugins</groupId>
@@ -63,6 +63,7 @@
     </plugin>
       
       
+      <!-- Checkstyle build -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
@@ -100,6 +101,45 @@
         </configuration>
       </plugin>
       
+      
+      <!-- AppAssembler build -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>appassembler-maven-plugin</artifactId>
+        <version>1.9</version>
+        
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>assemble</goal>
+            </goals>
+          </execution>
+        </executions>
+        
+        <configuration>
+          <!-- Generate bin scripts for windows and unix pr default -->
+          <platforms>
+            <platform>windows</platform>
+            <platform>unix</platform>
+          </platforms>
+          
+          <binFileExtensions>
+           <unix>.sh</unix>
+          </binFileExtensions>
+          
+          <programs>
+            <program>
+              <mainClass>seng302.group2.App</mainClass>
+              <id>Sahara</id>
+            </program>
+          </programs>
+          <useWildcardClassPath>true</useWildcardClassPath>
+          <repositoryLayout>flat</repositoryLayout>
+        </configuration>
+      </plugin>
+      
+      
     </plugins>
   </build>
   
@@ -119,11 +159,20 @@
       <version>2.2.4</version>
   </dependency>
   
+  <!-- ControlsFX Dependency -->
   <dependency>
       <groupId>org.controlsfx</groupId>
       <artifactId>controlsfx</artifactId>
       <version>8.20.8</version>
   </dependency>
+  
+  <!-- AppAssembler Dependency -->
+  <dependency>
+      <groupId>org.codehaus.mojo</groupId>
+      <artifactId>appassembler-maven-plugin</artifactId>
+      <version>1.9</version>
+  </dependency>
+
 
   </dependencies>
     <reporting>
