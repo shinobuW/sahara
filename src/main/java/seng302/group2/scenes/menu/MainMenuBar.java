@@ -12,13 +12,13 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.project.Project;
-import seng302.group2.project.Project.SaveLoadResult;
-import seng302.group2.project.team.person.Person;
+import seng302.group2.scenes.ConfirmSaveScene;
 
 /**
  *
@@ -72,7 +72,7 @@ public class MainMenuBar
         MenuItem newPersonItem = new MenuItem("Person");
         newPersonItem.setOnAction((event) -> 
             {
-                App.currentProject.addPerson(new Person());
+                CreatePersonDialog.show();
             });
         
        
