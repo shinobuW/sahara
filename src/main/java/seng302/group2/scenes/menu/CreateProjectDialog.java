@@ -57,7 +57,7 @@ public class CreateProjectDialog
                 else
                 {
                     event.consume();
-                };
+                }
             });
         
         dialog.setResizable(false);
