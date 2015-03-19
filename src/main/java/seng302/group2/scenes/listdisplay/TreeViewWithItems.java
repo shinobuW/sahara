@@ -111,7 +111,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     //System.out.println("Selected Object = " + selectedItem.getValue());
                     //System.out.println("Selected Class = " + selectedItem.getValue().getClass());
                     App.selectedTreeItem = selectedItem.getValue();
-                    // TODO: Call the update information here -- to show the selected item
+                    //TODO: Call the update information here -- to show the selected item on grid?
                 }
             });
     }

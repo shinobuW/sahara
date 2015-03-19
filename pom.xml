@@ -113,6 +113,7 @@
             <phase>package</phase>
             <goals>
               <goal>assemble</goal>
+              <goal>generate-daemons</goal>
             </goals>
           </execution>
         </executions>
@@ -127,6 +128,25 @@
           <binFileExtensions>
            <unix>.sh</unix>
           </binFileExtensions>
+          
+          <daemons>
+            <daemon>
+                <id>app</id>
+                <mainClass>seng302.group2.App</mainClass>
+                <platforms>
+                    <platform>jsw</platform>
+                </platforms>
+                <generatorConfigurations>
+                    <generatorConfiguration>
+                        <generator>jsw</generator>
+                        <includes>
+                            <include>linux-x86-32</include>
+                            <include>wrapper-windows-x86-32</include>
+                        </includes>
+                    </generatorConfiguration>
+                </generatorConfigurations>
+            </daemon>
+        </daemons>
           
           <programs>
             <program>

@@ -19,6 +19,9 @@ import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
@@ -159,7 +162,11 @@ public class Project extends TreeViewItem implements Serializable
         // If there is no current project open, display a dialog and skip saving
         if (project == null)
         {
-            // TODO: Display dialog that no project is open
+            Action response = Dialogs.create()
+                    .title("No open project")
+                    .message("There is currently no project open to save")
+                    .showWarning();
+                    
             return SaveLoadResult.NULLPROJECT;
         }
         
