@@ -161,7 +161,7 @@ public class Project extends TreeViewItem implements Serializable
      * Saves the current project as a file specified by the user
      * @return The corresponding SaveLoadResult status of the process
      */
-    public static SaveLoadResult saveProject(Project project)
+    public static SaveLoadResult saveProject(Project project, boolean saveAs)
     {
         // If there is no current project open, display a dialog and skip saving
         if (project == null)
@@ -176,39 +176,44 @@ public class Project extends TreeViewItem implements Serializable
         
         project = Project.preSerialization(project);
         
-        // Prime a FileChooser
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save Project");
-        fileChooser.getExtensionFilters().addAll(
-            new ExtensionFilter("Project Files", "*.proj")
-        );
+        if (project.lastSaveLocation == null || project.lastSaveLocation.equals("")
+                || saveAs)
+        {
+            // Prime a FileChooser
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save Project");
+            fileChooser.getExtensionFilters().addAll(
+                new ExtensionFilter("Project Files", "*.proj")
+            );
+
+            // Open the FileChooser to choose the save location of the project
+            File selectedFile = fileChooser.showSaveDialog(new Stage());
+            project.lastSaveLocation = selectedFile.toString();
+            
+            // Ensure the extension is .proj (Linux issue)
+            if (!project.lastSaveLocation.endsWith(".proj"))
+            {
+                project.lastSaveLocation = project.lastSaveLocation + ".proj";
+            }
+        }
         
-        // Open the FileChooser and try loading the user selected Project
-        File selectedFile = fileChooser.showSaveDialog(new Stage());
-        if (selectedFile != null)
+        /* GSON SERIALIZATION */
+        try (Writer writer = new FileWriter(project.lastSaveLocation))
         {
-            /* GSON SERIALIZATION */
-            try (Writer writer = new FileWriter(selectedFile))
-            {
-                Gson gson = new GsonBuilder().create();
-                gson.toJson(project, writer);
-                writer.close();
-                return SaveLoadResult.SUCCESS;
-            }
-            catch (IOException e)
-            {
-                Action response = Dialogs.create()
-                    .title("Error Saving")
-                    .message("An error occurred while trying to save the file")
-                    .showException(e);
-                return SaveLoadResult.IOEXCEPTION;
-            }
+            Gson gson = new GsonBuilder().create();
+            gson.toJson(project, writer);
+            writer.close();
+            return SaveLoadResult.SUCCESS;
         }
-        else
+        catch (IOException e)
         {
-            // No file selected (cancelled action)
-            return SaveLoadResult.NOFILESELECTED;
+            Action response = Dialogs.create()
+                .title("Error Saving")
+                .message("An error occurred while trying to save the file")
+                .showException(e);
+            return SaveLoadResult.IOEXCEPTION;
         }
+
     }
     
     

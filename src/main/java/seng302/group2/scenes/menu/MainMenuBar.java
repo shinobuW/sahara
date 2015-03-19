@@ -53,7 +53,7 @@ public class MainMenuBar
                 
                 if (response == Dialog.ACTION_YES)
                 {
-                    SaveLoadResult saved = Project.saveProject(App.currentProject);
+                    SaveLoadResult saved = Project.saveProject(App.currentProject, false);
                     if (saved == SaveLoadResult.SUCCESS)
                     {
                         CreateProjectDialog.show();
@@ -90,7 +90,7 @@ public class MainMenuBar
         MenuItem saveItem = new MenuItem("Save");
         saveItem.setOnAction((event) ->
             {
-                Project.saveProject(App.currentProject);
+                Project.saveProject(App.currentProject, false);
             });
         
         // Create 'Quit' MenuItem
@@ -104,7 +104,7 @@ public class MainMenuBar
                 
                 if (response == Dialog.ACTION_YES)
                 {
-                    SaveLoadResult saved = Project.saveProject(App.currentProject);
+                    SaveLoadResult saved = Project.saveProject(App.currentProject, false);
                     if (saved == SaveLoadResult.SUCCESS)
                     {
                         System.exit(0);
