@@ -20,7 +20,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.project.team.person.Person;
@@ -73,6 +72,7 @@ public class Project extends TreeViewItem implements Serializable
         this.longName = fullName;
         this.description = description;
     }
+    
     
     // <editor-fold defaultstate="collapsed" desc="Getters">
     
@@ -183,7 +183,6 @@ public class Project extends TreeViewItem implements Serializable
         File selectedFile = fileChooser.showSaveDialog(new Stage());
         if (selectedFile != null)
         {
-           
             /* GSON SERIALIZATION */
             try (Writer writer = new FileWriter(selectedFile))
             {
@@ -194,6 +193,10 @@ public class Project extends TreeViewItem implements Serializable
             }
             catch (IOException e)
             {
+                Action response = Dialogs.create()
+                    .title("Error Saving")
+                    .message("An error occurred while trying to save the file")
+                    .showException(e);
                 return SaveLoadResult.IOEXCEPTION;
             }
         }
@@ -222,7 +225,6 @@ public class Project extends TreeViewItem implements Serializable
         File selectedFile = fileChooser.showOpenDialog(new Stage());
         if (selectedFile != null)
         {
-           
             /* GSON DESERIALIZATION */
             try (Reader reader = new FileReader(selectedFile))
             {
@@ -232,10 +234,18 @@ public class Project extends TreeViewItem implements Serializable
             }
             catch (FileNotFoundException e)
             {
+                Action response = Dialogs.create()
+                    .title("File Not Found")
+                    .message("The specified file could not be found.")
+                    .showWarning();
                 return SaveLoadResult.FILENOTFOUND;
             }
             catch (IOException e)
             {
+                Action response = Dialogs.create()
+                    .title("Error Loading")
+                    .message("An error occurred while trying to load the file.")
+                    .showException(e);
                 return SaveLoadResult.IOEXCEPTION;
             }
             
@@ -245,7 +255,7 @@ public class Project extends TreeViewItem implements Serializable
         }
         else
         {
-            return SaveLoadResult.FILENOTFOUND;
+            return SaveLoadResult.FILENOTFOUND;  // Was null, probably cancelled action?
         }
     }
     
@@ -257,12 +267,6 @@ public class Project extends TreeViewItem implements Serializable
     public void addPerson(Person person)
     {
         this.people.add(person);
-        
-        // Add it to the display menu as well
-        /*this.treeViewItem.getChildren().add(
-                new TreeViewData(person.getShortName(), person, person.getClass()
-                ));*/
-        //App.refreshMainScene();
     }
     
     
@@ -272,10 +276,18 @@ public class Project extends TreeViewItem implements Serializable
      */
     public ObservableList<TreeViewItem> getCategories()
     {
+        // Prime the list
         ObservableList<TreeViewItem> root = observableArrayList();
         
+        // Make the categories
         Category people = new Category("People");
-        root.add(people);
+        //Category teams = new Category("Teams");
+        //Category skills = new Category("Skills");
+        
+        // Add the categories
+        root.add(people); //teams.add(people)
+        //root.add(teams);
+        //root.add(skills);
         
         return root;
     }
@@ -283,7 +295,9 @@ public class Project extends TreeViewItem implements Serializable
     
     /**
      * Perform pre-serialization steps
-     * - Transform ObservableLists into ArrayLists for serialization
+     * 1) Transform ObservableLists into ArrayLists for serialization
+     * @param project The project for intended serialization
+     * @return A serializable version of the given project
      */
     public static Project preSerialization(Project project)
     {
@@ -300,8 +314,8 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Perform post-deserialization steps
-     * - Transform ArrayLists back into ObservableLists
+     * Perform post-deserialization steps (performs on App.currentProject for now).
+     * 1) Transform ArrayLists back into ObservableLists
      */
     public static void postDeserialization()
     {

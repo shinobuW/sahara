@@ -84,8 +84,8 @@ public class CreatePersonDialog
     
     private String[] validation()
     {
-        String[] errorList = new String[10];
-        
+        // TODO Shinobu: What even? See to use ControlsFX validation as well.
+        String[] errorList = new String[10];      
         return errorList;
     }
 }
