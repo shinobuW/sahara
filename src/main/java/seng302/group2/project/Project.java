@@ -34,9 +34,13 @@ public class Project extends TreeViewItem implements Serializable
     private String shortName;
     private String longName;
     private String description;
+    private String lastSaveLocation = null;
     private transient ObservableList<TreeViewItem> people = observableArrayList();
     private ArrayList<TreeViewItem> serializablePeople = new ArrayList<>();
     
+    /**
+     * Enumerable save and load statuses
+     */
     public enum SaveLoadResult
     {
         SUCCESS,

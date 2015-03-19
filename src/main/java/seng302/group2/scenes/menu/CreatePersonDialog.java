@@ -5,20 +5,16 @@
  */
 package seng302.group2.scenes.menu;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import org.controlsfx.control.action.Action;
+import javafx.scene.layout.HBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
 import seng302.group2.project.team.person.Person;
-import static seng302.group2.project.team.person.Person.birthDatePattern;
 
 /**
  *
@@ -39,7 +35,13 @@ public class CreatePersonDialog
         TextField emailField = new TextField();
         TextField descriptionField = new TextField();
         TextField birthdateField = new TextField();
+        
         Button btnCreate = new Button("Create");
+        Button btnCancel = new Button("Cancel");
+        HBox buttons = new HBox();
+        buttons.spacingProperty().setValue(10);
+        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
+        buttons.getChildren().addAll(btnCreate, btnCancel);
         
         grid.add(new Label("Short Name"), 0, 0);
         grid.add(shortNameField, 1, 0);
@@ -49,11 +51,11 @@ public class CreatePersonDialog
         grid.add(lastNameField, 1, 2);
         grid.add(new Label("Email"), 0, 3);
         grid.add(emailField, 1, 3);
-        grid.add(new Label("BirthDate"), 0, 4);
+        grid.add(new Label("Birth Date"), 0, 4);
         grid.add(birthdateField, 1, 4);
         grid.add(new Label("Description"), 0, 5);
         grid.add(descriptionField, 1, 5);
-        grid.add(btnCreate, 1, 6);
+        grid.add(buttons, 1, 6);
         
         
         String birthDatePattern = "dd/MM/yyyy";
@@ -73,6 +75,11 @@ public class CreatePersonDialog
                         birthDate);
                 System.out.println(firstName + "Testing");
                 App.currentProject.addPerson(person);
+                dialog.hide();
+            });
+        
+        btnCancel.setOnAction((event) ->
+            {
                 dialog.hide();
             });
         
