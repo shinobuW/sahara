@@ -5,6 +5,8 @@
  */
 package seng302.group2.scenes.menu;
 
+import seng302.group2.scenes.dialog.CreateProjectDialog;
+import seng302.group2.scenes.dialog.CreatePersonDialog;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;

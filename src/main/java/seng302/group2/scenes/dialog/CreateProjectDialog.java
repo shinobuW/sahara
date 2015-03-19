@@ -1,4 +1,4 @@
-package seng302.group2.scenes.menu;
+package seng302.group2.scenes.dialog;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
