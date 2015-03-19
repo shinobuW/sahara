@@ -5,20 +5,17 @@
  */
 package seng302.group2.scenes.menu;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.project.Project;
-import seng302.group2.scenes.ConfirmSaveScene;
+import seng302.group2.project.Project.SaveLoadResult;
 
 /**
  *
