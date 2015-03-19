@@ -1,10 +1,12 @@
 package seng302.group2.scenes.dialog;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
@@ -29,7 +31,14 @@ public class CreateProjectDialog
         TextArea descriptionField = new TextArea();
         descriptionField.setPrefRowCount(15);
         descriptionField.setWrapText(true);
+        
         Button btnCreate = new Button("Create");
+        Button btnCancel = new Button("Cancel");
+        
+        HBox buttons = new HBox();
+        buttons.spacingProperty().setValue(10);
+        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
+        buttons.getChildren().addAll(btnCreate, btnCancel);
         
         grid.add(new Label("Short Name: "), 0, 0);
         grid.add(shortNameField, 1, 0);
@@ -37,7 +46,7 @@ public class CreateProjectDialog
         grid.add(longNameField, 1, 1);
         grid.add(new Label("Project Description: "), 0, 2);
         grid.add(descriptionField, 1, 2);
-        grid.add(btnCreate, 1, 3);
+        grid.add(buttons, 1, 3);
         
         btnCreate.setOnAction((event) ->
             {
@@ -58,6 +67,11 @@ public class CreateProjectDialog
                 {
                     event.consume();
                 }
+            });
+        
+        btnCancel.setOnAction((event) ->
+            {
+                dialog.hide();
             });
         
         dialog.setResizable(false);
