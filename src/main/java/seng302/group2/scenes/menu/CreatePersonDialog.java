@@ -26,7 +26,8 @@ import static seng302.group2.project.team.person.Person.birthDatePattern;
  */
 public class CreatePersonDialog
 {
-    public static void show() {
+    public static void show()
+    {
         Dialog dialog = new Dialog(null, "Create New Person");
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -67,8 +68,9 @@ public class CreatePersonDialog
                 String email = emailField.getText();
                 String description = descriptionField.getText();
                 String birthdateString = birthdateField.getText();
-        
-                Person person = new Person(shortName, firstName, lastName, email, description, birthDate);
+                
+                Person person = new Person(shortName, firstName, lastName, email, description,
+                        birthDate);
                 System.out.println(firstName + "Testing");
                 App.currentProject.addPerson(person);
                 dialog.hide();
@@ -80,7 +82,8 @@ public class CreatePersonDialog
         dialog.show();        
     }
     
-    private String[] validation() {
+    private String[] validation()
+    {
         String[] errorList = new String[10];
         
         return errorList;
