@@ -176,8 +176,7 @@ public class Project extends TreeViewItem implements Serializable
         
         project = Project.preSerialization(project);
         
-        if (project.lastSaveLocation == null || project.lastSaveLocation.equals("")
-                || saveAs)
+        if (saveAs || project.lastSaveLocation == null || project.lastSaveLocation.equals(""))
         {
             // Prime a FileChooser
             FileChooser fileChooser = new FileChooser();
@@ -188,6 +187,10 @@ public class Project extends TreeViewItem implements Serializable
 
             // Open the FileChooser to choose the save location of the project
             File selectedFile = fileChooser.showSaveDialog(new Stage());
+            if (selectedFile == null)
+            {
+                return SaveLoadResult.FILENOTFOUND;  // Most likely user cancelation;
+            }
             project.lastSaveLocation = selectedFile.toString();
             
             // Ensure the extension is .proj (Linux issue)

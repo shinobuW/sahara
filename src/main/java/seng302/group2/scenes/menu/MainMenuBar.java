@@ -86,11 +86,18 @@ public class MainMenuBar
                 Project.loadProject();
             });
         
-        // Create 'Open' MenuItem
+        // Create 'Save' MenuItem
         MenuItem saveItem = new MenuItem("Save");
         saveItem.setOnAction((event) ->
             {
                 Project.saveProject(App.currentProject, false);
+            });
+        
+        // Create 'Save As' MenuItem
+        MenuItem saveAsItem = new MenuItem("Save As...");
+        saveAsItem.setOnAction((event) ->
+            {
+                Project.saveProject(App.currentProject, true);
             });
         
         // Create 'Quit' MenuItem
@@ -118,7 +125,7 @@ public class MainMenuBar
         
         // Add MenuItems to Menu
         fileMenu.getItems().addAll(newProjectBranch, openItem,
-                saveItem, new SeparatorMenuItem(), quitProgramItem);
+                saveItem, saveAsItem, new SeparatorMenuItem(), quitProgramItem);
         
         return menuBar;
     }
