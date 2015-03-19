@@ -49,8 +49,6 @@ public class ProjectTest extends TestCase
         assertEquals("A blank project.", proj.getDescription());
         assertEquals("Untitled", proj.toString());
         assertEquals(people, proj.getPeople());
-        // assertEquals(null, proj.getChildren());
-        // assertEquals(null, proj.getCategories());
         
         Project proj2 = new Project("aShortName", "aLongName", "aDescription");
         assertEquals("aShortName", proj2.getShortName());
@@ -88,6 +86,10 @@ public class ProjectTest extends TestCase
         people.add(pers);
 
         assertEquals(people, proj.getPeople());
+        
+        proj.addPerson(pers);
+        proj.addPerson(pers);
+        assertEquals(3, proj.getPeople().size());
     }
     
 }
