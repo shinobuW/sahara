@@ -5,8 +5,6 @@
  */
 package seng302.group2.scenes.menu;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -18,7 +16,6 @@ import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.project.Project;
 import seng302.group2.project.Project.SaveLoadResult;
-import seng302.group2.project.team.person.Person;
 
 /**
  *
@@ -72,7 +69,7 @@ public class MainMenuBar
         MenuItem newPersonItem = new MenuItem("Person");
         newPersonItem.setOnAction((event) -> 
             {
-                App.currentProject.addPerson(new Person());
+                CreatePersonDialog.show();
             });
         
        
