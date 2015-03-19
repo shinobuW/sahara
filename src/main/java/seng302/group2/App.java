@@ -38,6 +38,23 @@ public class App extends Application
     {
         App.mainScene = MainScene.getMainScene();
         mainStage.setScene(App.mainScene);
+        App.refreshWindowTitle();
+    }
+    
+    
+    /**
+     * Refreshes the title of the window to show the name of the current project, if any
+     */
+    public static void refreshWindowTitle()
+    {
+        if (App.currentProject == null)
+        {
+            App.mainStage.titleProperty().set("Sahara");
+        }
+        else
+        {
+            App.mainStage.titleProperty().set("Sahara: " + App.currentProject.getLongName());
+        }
     }
     
     
@@ -97,6 +114,7 @@ public class App extends Application
         });
         
         // Show the stage/window
+        App.refreshWindowTitle();
         mainStage.show();
     }
     
