@@ -54,13 +54,13 @@ public class MainMenuBar
                     SaveLoadResult saved = Project.saveProject(App.currentProject);
                     if (saved == SaveLoadResult.SUCCESS)
                     {
-                        App.currentProject = new Project();
+                        CreateProjectDialog.show();
                         App.refreshMainScene();
                     }
                 }
                 else if (response == Dialog.ACTION_NO)
                 {
-                    App.currentProject = new Project();
+                    CreateProjectDialog.show();
                     App.refreshMainScene();
                 }
             });
