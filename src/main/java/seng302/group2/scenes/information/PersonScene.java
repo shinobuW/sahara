@@ -8,6 +8,7 @@ package seng302.group2.scenes.information;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
+import seng302.group2.App;
 
 /**
  * A class for displaying the Person Scene
@@ -20,13 +21,14 @@ public class PersonScene
     public static GridPane getPersonScene()
     {
         
-        GridPane personGrid = new GridPane();
-        personGrid.setAlignment(Pos.CENTER);
-        personGrid.setHgap(10);
-        personGrid.setVgap(10);
-        personGrid.setPadding(new Insets(25,25,25,25));
+        App.informationGrid = new GridPane();
         
-        return personGrid;
+        App.informationGrid.setAlignment(Pos.CENTER);
+        App.informationGrid.setHgap(10);
+        App.informationGrid.setVgap(10);
+        App.informationGrid.setPadding(new Insets(25,25,25,25));
+        
+        return App.informationGrid;
     }
     
 }

@@ -10,6 +10,9 @@ import static javafx.application.Application.launch;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.TreeItem;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.controlsfx.control.action.Action;
@@ -25,10 +28,12 @@ import seng302.group2.scenes.MainScene;
  */
 public class App extends Application
 {
+    public static HBox content = new HBox();
     public static Project currentProject = new Project();
+    public static GridPane informationGrid = new GridPane();
     public static Stage mainStage;
     public static Scene mainScene;
-    public static Object selectedTreeItem = null;
+    public static TreeItem selectedTreeItem = new TreeItem();
     
     
     /**
