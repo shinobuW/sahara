@@ -16,6 +16,7 @@ import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
+import seng302.group2.Global;
 import seng302.group2.project.Project;
 import seng302.group2.project.Project.SaveLoadResult;
 
@@ -31,11 +32,11 @@ public class MainMenuBar
         MenuItem newProjectItem = new MenuItem("Project");
         newProjectItem.setOnAction((ActionEvent event) ->
             {
-                if (App.currentProject == null || !App.currentProject.getHasUnsavedChanges())
+                if (Global.currentProject == null || !Global.currentProject.getHasUnsavedChanges())
                 {
                     CreateProjectDialog.show();
                     App.refreshMainScene();
-                    App.undoRedoMan.emptyAll();
+                    Global.undoRedoMan.emptyAll();
                     return;
                 }
                
@@ -46,7 +47,7 @@ public class MainMenuBar
                 
                 if (response == Dialog.ACTION_YES)
                 {
-                    SaveLoadResult saved = Project.saveProject(App.currentProject, false);
+                    SaveLoadResult saved = Project.saveProject(Global.currentProject, false);
                     if (saved == SaveLoadResult.SUCCESS)
                     {
                         CreateProjectDialog.show();
@@ -80,7 +81,7 @@ public class MainMenuBar
         MenuItem openItem = new MenuItem("Open");
         openItem.setOnAction((event) ->
             {
-                if (!App.currentProject.getHasUnsavedChanges())
+                if (!Global.currentProject.getHasUnsavedChanges())
                 {
                     Project.loadProject();
                     return;
@@ -92,7 +93,7 @@ public class MainMenuBar
                 
                 if (response == Dialog.ACTION_YES)
                 {
-                    SaveLoadResult saved = Project.saveProject(App.currentProject, false);
+                    SaveLoadResult saved = Project.saveProject(Global.currentProject, false);
                     if (saved == SaveLoadResult.SUCCESS)
                     {
                         Project.loadProject();
@@ -115,7 +116,7 @@ public class MainMenuBar
         MenuItem saveItem = new MenuItem("Save");
         saveItem.setOnAction((event) ->
             {
-                Project.saveProject(App.currentProject, false);
+                Project.saveProject(Global.currentProject, false);
             });
         
         return saveItem;
@@ -128,7 +129,7 @@ public class MainMenuBar
         MenuItem saveAsItem = new MenuItem("Save As...");
         saveAsItem.setOnAction((event) ->
             {
-                Project.saveProject(App.currentProject, true);
+                Project.saveProject(Global.currentProject, true);
             });
         
         return saveAsItem;
@@ -140,7 +141,7 @@ public class MainMenuBar
         MenuItem quitProgramItem = new MenuItem("Quit");
         quitProgramItem.setOnAction((event) ->
             {
-                if (!App.currentProject.getHasUnsavedChanges())
+                if (!Global.currentProject.getHasUnsavedChanges())
                 {
                     System.exit(0);
                 }   
@@ -151,7 +152,7 @@ public class MainMenuBar
 
                 if (response == Dialog.ACTION_YES)
                 {
-                    SaveLoadResult saved = Project.saveProject(App.currentProject, false);
+                    SaveLoadResult saved = Project.saveProject(Global.currentProject, false);
                     if (saved == SaveLoadResult.SUCCESS)
                     {
                         System.exit(0);
@@ -173,7 +174,7 @@ public class MainMenuBar
         MenuItem undoItem = new MenuItem("Undo");
         undoItem.setOnAction((event) ->
             {
-                App.undoRedoMan.undo();
+                Global.undoRedoMan.undo();
             });
         
         return undoItem;
@@ -186,7 +187,7 @@ public class MainMenuBar
         MenuItem redoItem = new MenuItem("Redo");
         redoItem.setOnAction((event) ->
             {
-                App.undoRedoMan.redo();
+                Global.undoRedoMan.redo();
             });
         
         return redoItem;
@@ -234,7 +235,7 @@ public class MainMenuBar
                 
         editMenu.setOnShowing((event) ->
             {
-                if (!App.undoRedoMan.canRedo())
+                if (!Global.undoRedoMan.canRedo())
                 {
                     redoItem.setDisable(true);
                 }
@@ -243,7 +244,7 @@ public class MainMenuBar
                     redoItem.setDisable(false);
                 }
                 
-                if (!App.undoRedoMan.canUndo())
+                if (!Global.undoRedoMan.canUndo())
                 {
                     undoItem.setDisable(true);
                 }

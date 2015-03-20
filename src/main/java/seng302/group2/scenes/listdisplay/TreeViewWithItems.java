@@ -15,6 +15,7 @@ import javafx.scene.control.TreeView;
 import java.util.HashMap;
 import java.util.Map;
 import seng302.group2.App;
+import seng302.group2.Global;
 import seng302.group2.project.Project;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.information.PersonScene;
@@ -111,18 +112,18 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                 public void changed(ObservableValue observable, Object oldValue, Object newValue)
                 {
                     TreeItem<Object> selectedItem = (TreeItem<Object>) newValue;
-                    App.selectedTreeItem = selectedItem;
+                    Global.selectedTreeItem = selectedItem;
                     //System.out.println(App.selectedTreeItem.getValue().getClass());  // testing
                     
                     //Updates the display pane to be pane for the selectItem
-                    if (App.selectedTreeItem.getValue() instanceof Person)
+                    if (Global.selectedTreeItem.getValue() instanceof Person)
                     {
                         App.content.getChildren().remove(App.informationGrid);
                         PersonScene.getPersonScene();
                         App.content.getChildren().add(App.informationGrid);
 
                     }
-                    else if (App.selectedTreeItem.getValue() instanceof Project)
+                    else if (Global.selectedTreeItem.getValue() instanceof Project)
                     {
                         App.content.getChildren().remove(App.informationGrid);
                         ProjectScene.getProjectScene();

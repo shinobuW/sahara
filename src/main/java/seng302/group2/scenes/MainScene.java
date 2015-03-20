@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import static seng302.group2.App.content;
 import static seng302.group2.App.informationGrid;
+import seng302.group2.Global;
 import seng302.group2.project.Project;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.information.PersonScene;
@@ -39,11 +40,11 @@ public class MainScene
         MenuBar menuBar = MainMenuBar.getMainMenuBar();
         root.getChildren().add(new StackPane(menuBar));
         
-        if (App.selectedTreeItem.getValue() instanceof Project)
+        if (Global.selectedTreeItem.getValue() instanceof Project)
         {
             ProjectScene.getProjectScene();
         }
-        else if (App.selectedTreeItem.getValue() instanceof Person)
+        else if (Global.selectedTreeItem.getValue() instanceof Person)
         {
             PersonScene.getPersonScene();
         }
@@ -55,7 +56,7 @@ public class MainScene
         ObservableList<TreeViewItem> children = observableArrayList();
 
         
-        children.add(App.currentProject);
+        children.add(Global.currentProject);
         
         treeView.setItems(children);
         treeView.setShowRoot(false);

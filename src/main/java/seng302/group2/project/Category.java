@@ -6,7 +6,7 @@
 package seng302.group2.project;
 
 import javafx.collections.ObservableList;
-import seng302.group2.App;
+import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 /**
@@ -48,7 +48,7 @@ public class Category extends TreeViewItem
     {
         if (name.equals("People"))
         {
-            return App.currentProject.getPeople();
+            return Global.currentProject.getPeople();
         }
         
         return null;

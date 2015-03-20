@@ -9,7 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
-import seng302.group2.App;
+import seng302.group2.Global;
 import seng302.group2.project.Project;
 
 /**
@@ -58,7 +58,7 @@ public class CreateProjectDialog
                 if (valid == 1)
                 {
                     Project project = new Project(shortName, longName, description);
-                    App.currentProject = project;
+                    Global.currentProject = project;
                     dialog.hide();
                 }
                 else

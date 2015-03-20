@@ -14,7 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.App;
 import static seng302.group2.App.informationGrid;
-import static seng302.group2.App.selectedTreeItem;
+import static seng302.group2.Global.selectedTreeItem;
 import seng302.group2.project.team.person.Person;
 
 /**

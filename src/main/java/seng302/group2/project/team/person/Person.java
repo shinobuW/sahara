@@ -8,7 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javafx.collections.ObservableList;
-import seng302.group2.App;
+import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 /**
@@ -79,7 +79,7 @@ public class Person extends TreeViewItem implements Serializable
     {
         String newShortName = shortName;
         int i = 0;
-        for (TreeViewItem person : App.currentProject.getPeople())
+        for (TreeViewItem person : Global.currentProject.getPeople())
         {
             if (person.toString().equals(newShortName))
             {

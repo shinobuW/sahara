@@ -17,7 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import org.controlsfx.dialog.Dialog;
-import seng302.group2.App;
+import seng302.group2.Global;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
@@ -117,7 +117,7 @@ public class CreatePersonDialog
                     final Date birthDate = stringToDate(birthdateString);
                     Person person = new Person(shortName, firstName, lastName, email, description,
                         birthDate);
-                    App.currentProject.addPerson(person);
+                    Global.currentProject.addPerson(person);
                     dialog.hide();
                 }
                 else 
@@ -226,7 +226,7 @@ public class CreatePersonDialog
  
         String newShortName = shortName;
         int i = 0;
-        for (TreeViewItem person : App.currentProject.getPeople())
+        for (TreeViewItem person : Global.currentProject.getPeople())
         {
             if (person.toString().equals(newShortName))
             {

@@ -6,7 +6,7 @@
 package seng302.group2.util.undoredo;
 
 import java.util.Date;
-import seng302.group2.App;
+import seng302.group2.Global;
 import seng302.group2.project.Project;
 import seng302.group2.project.team.person.Person;
 
@@ -76,7 +76,7 @@ public class UndoRedoPerformer
                     person.setShortName((String) item.getUndoAction().getValue());
                     break;
                 case PERSON:
-                    App.currentProject.getPeople().remove((Person) item.getHost());
+                    Global.currentProject.getPeople().remove((Person) item.getHost());
                     break;
                 case PERSON_FIRSTNAME:
                     person.setFirstName((String) item.getUndoAction().getValue());
@@ -139,7 +139,7 @@ public class UndoRedoPerformer
             switch (item.getRedoAction().getProperty())
             {
                 case PERSON:
-                    App.currentProject.getPeople().add((Person) item.getHost());
+                    Global.currentProject.getPeople().add((Person) item.getHost());
                     break;
                 case PERSON_SHORTNAME:
                     person.setShortName((String) item.getRedoAction().getValue());

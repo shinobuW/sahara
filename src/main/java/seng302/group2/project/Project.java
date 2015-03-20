@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
+import seng302.group2.Global;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.UndoRedoAction;
@@ -238,7 +239,7 @@ public class Project extends TreeViewItem implements Serializable
             Gson gson = new GsonBuilder().create();
             gson.toJson(project, writer);
             writer.close();
-            App.currentProject.setUnchanged();
+            Global.currentProject.setUnchanged();
             return SaveLoadResult.SUCCESS;
         }
         catch (IOException e)
@@ -254,7 +255,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Loads a project specified by the user into App.currentProject
+     * Loads a project specified by the user into Global.currentProject
      * @return The corresponding SaveLoadResult status of the process
      */
     public static SaveLoadResult loadProject()
@@ -274,7 +275,7 @@ public class Project extends TreeViewItem implements Serializable
             try (Reader reader = new FileReader(selectedFile))
             {
                 Gson gson = new GsonBuilder().create();
-                App.currentProject = gson.fromJson(reader, Project.class);
+                Global.currentProject = gson.fromJson(reader, Project.class);
                 reader.close();
             }
             catch (FileNotFoundException e)
@@ -296,7 +297,7 @@ public class Project extends TreeViewItem implements Serializable
             
             Project.postDeserialization();
             App.refreshMainScene();
-            App.undoRedoMan.emptyAll();
+            Global.undoRedoMan.emptyAll();
             return SaveLoadResult.SUCCESS;
         }
         else
@@ -313,7 +314,7 @@ public class Project extends TreeViewItem implements Serializable
     public void addPerson(Person person)
     {
         // Add the undo action to the stack
-        App.undoRedoMan.add(new UndoableItem(
+        Global.undoRedoMan.add(new UndoableItem(
                 person,
                 new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null), 
                 new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null)
@@ -367,19 +368,19 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Perform post-deserialization steps (performs on App.currentProject for now).
+     * Perform post-deserialization steps (performs on Global.currentProject for now).
      * 1) Transform ArrayLists back into ObservableLists
      */
     public static void postDeserialization()
     {
-        App.currentProject.people = observableArrayList();
-        for (Person item : App.currentProject.serializablePeople)
+        Global.currentProject.people = observableArrayList();
+        for (Person item : Global.currentProject.serializablePeople)
         {
-            App.currentProject.people.add(item);
+            Global.currentProject.people.add(item);
         }
         
         // Also for any other deeper observables
-        // eg. for (TreeViewItem item : App.currentProject.team.people) {...}
+        // eg. for (TreeViewItem item : Global.currentProject.team.people) {...}
     }
     
     

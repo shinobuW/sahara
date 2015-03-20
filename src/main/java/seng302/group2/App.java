@@ -34,9 +34,12 @@ public class App extends Application
     
     public static Stage mainStage;
     public static Scene mainScene;
+    
+    /* Moved into Global
     public static Project currentProject = new Project();
     public static TreeItem selectedTreeItem = new TreeItem();
     public static UndoRedoManager undoRedoMan = new UndoRedoManager();
+    */
     
     
     /**
@@ -56,20 +59,24 @@ public class App extends Application
      */
     public static void refreshWindowTitle()
     {
-        if (App.currentProject == null)
+        if (App.mainStage == null)
+        {
+            return;
+        }
+        if (Global.currentProject == null)
         {
             App.mainStage.titleProperty().set("Sahara");
         }
         else
         {
-            if (App.currentProject.getHasUnsavedChanges())
+            if (Global.currentProject.getHasUnsavedChanges())
             {
-                App.mainStage.titleProperty().set("Sahara: " + App.currentProject.getLongName() 
+                App.mainStage.titleProperty().set("Sahara: " + Global.currentProject.getLongName() 
                         + "*");
             }
             else
             {
-                App.mainStage.titleProperty().set("Sahara: " + App.currentProject.getLongName());
+                App.mainStage.titleProperty().set("Sahara: " + Global.currentProject.getLongName());
             }
         }
     }
@@ -102,7 +109,7 @@ public class App extends Application
         {
             public void handle(WindowEvent event)
             {
-                if (!App.currentProject.getHasUnsavedChanges())
+                if (!Global.currentProject.getHasUnsavedChanges())
                 {
                     System.exit(0);
                 }    
@@ -113,7 +120,7 @@ public class App extends Application
                 
                 if (response == Dialog.ACTION_YES)
                 {
-                    SaveLoadResult saved = Project.saveProject(App.currentProject, false);
+                    SaveLoadResult saved = Project.saveProject(Global.currentProject, false);
                     if (saved == SaveLoadResult.SUCCESS)
                     {
                         System.exit(0);
