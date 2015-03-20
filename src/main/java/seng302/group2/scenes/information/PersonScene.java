@@ -41,8 +41,8 @@ public class PersonScene
         informationGrid.add(new Label("Short Name: " + currentPerson.getShortName()), 0, 1);
         informationGrid.add(new Label("Email Address: " + currentPerson.getEmail()), 0, 3);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        informationGrid.add(new Label("Birth Date: " + dateFormat.format(currentPerson.getBirthDate())), 
-                0, 4);
+        informationGrid.add(new Label("Birth Date: " 
+                + dateFormat.format(currentPerson.getBirthDate())), 0, 4);
         informationGrid.add(new Label("Description: " + currentPerson.getDescription()), 0, 5);
         
         
