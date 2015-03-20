@@ -3,6 +3,7 @@
  */
 package seng302.group2.project;
 
+import seng302.group2.scenes.listdisplay.Category;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.File;

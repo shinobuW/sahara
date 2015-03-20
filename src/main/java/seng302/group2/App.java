@@ -10,7 +10,7 @@ import static javafx.application.Application.launch;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.TreeItem;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -21,7 +21,6 @@ import org.controlsfx.dialog.Dialogs;
 import seng302.group2.project.Project;
 import seng302.group2.project.Project.SaveLoadResult;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.util.undoredo.UndoRedoManager;
 
 /**
  * Hello world!
@@ -97,6 +96,7 @@ public class App extends Application
         primaryStage.setHeight(0.75 * screenSize.getHeight());
         primaryStage.setMinHeight(0.25 * screenSize.getWidth());
         primaryStage.setMinWidth(0.25 * screenSize.getWidth());
+        primaryStage.getIcons().add(new Image("file:images/icon.png"));
         
         // Set the scene of the stage to the initial scene
         App.mainScene = MainScene.getMainScene();

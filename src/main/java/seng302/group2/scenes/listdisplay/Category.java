@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package seng302.group2.project;
+package seng302.group2.scenes.listdisplay;
 
 import javafx.collections.ObservableList;
 import seng302.group2.Global;

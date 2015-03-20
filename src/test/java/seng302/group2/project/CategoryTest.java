@@ -5,6 +5,7 @@
  */
 package seng302.group2.project;
 
+import seng302.group2.scenes.listdisplay.Category;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
