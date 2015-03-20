@@ -25,17 +25,9 @@ import seng302.group2.project.Project.SaveLoadResult;
  */
 public class MainMenuBar
 {
-    public static MenuBar getMainMenuBar()
+    
+    private static MenuItem createProjectItem() 
     {
-    // The menus and menu bar creation
-        MenuBar menuBar = new MenuBar();
-        
-        Menu fileMenu = new Menu("File");
-        menuBar.getMenus().add(fileMenu);
-
-        // Create 'New >' sub-menu
-        Menu newProjectBranch = new Menu("New");
-
         MenuItem newProjectItem = new MenuItem("Project");
         newProjectItem.setOnAction((ActionEvent event) ->
             {
@@ -67,20 +59,21 @@ public class MainMenuBar
                     App.refreshMainScene();
                 }
             });
-        
-        newProjectBranch.getItems().add(newProjectItem);
-        
+        return newProjectItem;
+    }
+    
+    private static MenuItem createPersonItem() 
+    {
         MenuItem newPersonItem = new MenuItem("Person");
         newPersonItem.setOnAction((event) -> 
             {
                 CreatePersonDialog.show();
             });
-        
-       
-        newProjectBranch.getItems().add(newPersonItem);
-        
-        
-
+        return newPersonItem;
+    }
+    
+    private static MenuItem createOpenItem()
+    {
         // Create 'Open' MenuItem
         MenuItem openItem = new MenuItem("Open");
         openItem.setOnAction((event) ->
@@ -110,7 +103,11 @@ public class MainMenuBar
                     //App.refreshMainScene();
                 }   
             });
-        
+        return openItem;
+    }
+    
+    private static MenuItem createSaveItem() 
+    {
         // Create 'Save' MenuItem
         MenuItem saveItem = new MenuItem("Save");
         saveItem.setOnAction((event) ->
@@ -118,6 +115,11 @@ public class MainMenuBar
                 Project.saveProject(App.currentProject, false);
             });
         
+        return saveItem;
+    }
+    
+    private static MenuItem createSaveAsItem()
+    {
         // Create 'Save As' MenuItem
         MenuItem saveAsItem = new MenuItem("Save As...");
         saveAsItem.setOnAction((event) ->
@@ -125,7 +127,11 @@ public class MainMenuBar
                 Project.saveProject(App.currentProject, true);
             });
         
-        // Create 'Quit' MenuItem
+        return saveAsItem;
+    }
+    
+    private static MenuItem createQuitItem()
+    {
         MenuItem quitProgramItem = new MenuItem("Quit");
         quitProgramItem.setOnAction((event) ->
             {
@@ -152,9 +158,11 @@ public class MainMenuBar
                 }
             });      
         
-        Menu editMenu = new Menu("Edit");
-        menuBar.getMenus().add(editMenu);
-
+        return quitProgramItem;
+    }
+    
+    private static MenuItem createUndoItem()
+    {
         // Create 'Undo' MenuItem
         MenuItem undoItem = new MenuItem("Undo");
         undoItem.setOnAction((event) ->
@@ -162,6 +170,11 @@ public class MainMenuBar
                 App.undoRedoMan.undo();
             });
         
+        return undoItem;
+    }
+    
+    private static MenuItem createRedoItem()
+    {
         // Create 'Redo' MenuItem
         MenuItem redoItem = new MenuItem("Redo");
         redoItem.setOnAction((event) ->
@@ -169,7 +182,39 @@ public class MainMenuBar
                 App.undoRedoMan.redo();
             });
         
+        return redoItem;
+    }
+    
+    public static MenuBar getMainMenuBar()
+    {
+    // The menus and menu bar creation
+        MenuBar menuBar = new MenuBar();
         
+        Menu fileMenu = new Menu("File");
+        menuBar.getMenus().add(fileMenu);
+
+        // Create 'New >' sub-menu
+        Menu newProjectBranch = new Menu("New");
+
+        //Create MenuItems for New submenu
+        MenuItem newProjectItem = createProjectItem();
+        MenuItem newPersonItem = createPersonItem();
+        MenuItem openItem = createOpenItem();
+        MenuItem saveItem = createSaveItem();
+        MenuItem saveAsItem = createSaveAsItem();
+        MenuItem quitProgramItem = createQuitItem();
+        
+        newProjectBranch.getItems().add(newProjectItem);
+        newProjectBranch.getItems().add(newPersonItem);
+
+        // Create 'Edit >' sub-menu
+        Menu editMenu = new Menu("Edit");
+        menuBar.getMenus().add(editMenu);
+
+        //Create MenuItems for Edit submenu
+        MenuItem undoItem = createUndoItem();
+        MenuItem redoItem = createRedoItem();
+       
         
         // Add MenuItems to Menu
         fileMenu.getItems().addAll(newProjectBranch, openItem,
@@ -198,9 +243,7 @@ public class MainMenuBar
                     undoItem.setDisable(false);
                 }
             });
-        
-
-        
+               
         return menuBar;
     }
 }
