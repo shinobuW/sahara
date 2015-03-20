@@ -37,6 +37,7 @@ public class App extends Application
     public static Project currentProject = new Project();
     public static TreeItem selectedTreeItem = new TreeItem();
     public static UndoRedoManager undoRedoMan = new UndoRedoManager();
+    public static boolean projectChanged = false;
     
     
     /**
@@ -62,7 +63,15 @@ public class App extends Application
         }
         else
         {
-            App.mainStage.titleProperty().set("Sahara: " + App.currentProject.getLongName());
+            if (App.projectChanged)
+            {
+                App.mainStage.titleProperty().set("Sahara: " + App.currentProject.getLongName() 
+                        + "*");
+            }
+            else
+            {
+                App.mainStage.titleProperty().set("Sahara: " + App.currentProject.getLongName());
+            }
         }
     }
     
@@ -94,6 +103,10 @@ public class App extends Application
         {
             public void handle(WindowEvent event)
             {
+                if (App.projectChanged == false)
+                {
+                    System.exit(0);
+                }    
                 Action response = Dialogs.create()
                     .title("Save Project?")
                     .message("Would you like to save your changes to the current project?")

@@ -7,6 +7,7 @@ package seng302.group2.util.undoredo;
 
 import java.util.EmptyStackException;
 import java.util.Stack;
+import seng302.group2.App;
 
 /**
  * A class for managing undo and redo actions.
@@ -108,6 +109,8 @@ public class UndoRedoManager
         undoStack.add(item);
         //redoStack.empty();
         redoStack = new Stack<>();
+        App.projectChanged = true;
+        App.refreshWindowTitle();
     }
 
 }
