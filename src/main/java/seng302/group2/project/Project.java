@@ -266,7 +266,7 @@ public class Project extends TreeViewItem implements Serializable
             
             Project.postDeserialization();
             App.refreshMainScene();
-            App.refreshWindowTitle();
+            App.undoRedoMan.emptyAll();
             return SaveLoadResult.SUCCESS;
         }
         else

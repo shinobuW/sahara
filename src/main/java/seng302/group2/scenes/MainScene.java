@@ -34,7 +34,6 @@ public class MainScene
     {
         // The root window box
         VBox root = new VBox();
-        
         MenuBar menuBar = MainMenuBar.getMainMenuBar();
         root.getChildren().add(new StackPane(menuBar));
         

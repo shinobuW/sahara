@@ -43,6 +43,7 @@ public class MainMenuBar
                 {
                     App.currentProject = new Project();
                     App.refreshMainScene();
+                    App.undoRedoMan.emptyAll();
                     return;
                 }
                 

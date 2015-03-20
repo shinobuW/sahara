@@ -44,6 +44,7 @@ public class App extends Application
      */
     public static void refreshMainScene()
     {
+        App.content = new HBox();
         App.mainScene = MainScene.getMainScene();
         mainStage.setScene(App.mainScene);
         App.refreshWindowTitle();

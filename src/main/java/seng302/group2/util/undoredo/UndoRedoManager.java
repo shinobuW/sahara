@@ -26,6 +26,20 @@ public class UndoRedoManager
         undoStack =  new Stack<>();
         redoStack = new Stack<>();
     }
+    
+    
+    /**
+     * Empties the undo and redo stacks
+     */
+    public void emptyAll()
+    {
+        /*
+        undoStack.empty();
+        redoStack.empty();
+        */
+        undoStack =  new Stack<>();
+        redoStack = new Stack<>();
+    }
 
     
     /**
@@ -92,7 +106,8 @@ public class UndoRedoManager
     public void add(UndoableItem item)
     {
         undoStack.add(item);
-        redoStack.empty();
+        //redoStack.empty();
+        redoStack = new Stack<>();
     }
 
 }
