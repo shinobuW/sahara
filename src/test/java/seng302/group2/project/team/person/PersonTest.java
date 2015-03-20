@@ -48,6 +48,7 @@ public class PersonTest extends TestCase
         Assert.assertEquals("", pers.getDescription());
         Assert.assertNotNull(pers.getBirthDate());
         Assert.assertEquals("unnamed", pers.toString());
+        Assert.assertEquals(null, pers.getChildren());
         
         Person pers2 = new Person("btm38", "Bronson", "McNaughton", "btm38@gmail.com", 
                 "A really cool dude",  new Date(1994, 12, 19)); 
