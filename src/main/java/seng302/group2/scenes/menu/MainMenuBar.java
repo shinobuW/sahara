@@ -62,6 +62,7 @@ public class MainMenuBar
         return newProjectItem;
     }
     
+    
     private static MenuItem createPersonItem() 
     {
         MenuItem newPersonItem = new MenuItem("Person");
@@ -71,6 +72,7 @@ public class MainMenuBar
             });
         return newPersonItem;
     }
+    
     
     private static MenuItem createOpenItem()
     {
@@ -106,6 +108,7 @@ public class MainMenuBar
         return openItem;
     }
     
+    
     private static MenuItem createSaveItem() 
     {
         // Create 'Save' MenuItem
@@ -118,6 +121,7 @@ public class MainMenuBar
         return saveItem;
     }
     
+    
     private static MenuItem createSaveAsItem()
     {
         // Create 'Save As' MenuItem
@@ -129,6 +133,7 @@ public class MainMenuBar
         
         return saveAsItem;
     }
+    
     
     private static MenuItem createQuitItem()
     {
@@ -161,6 +166,7 @@ public class MainMenuBar
         return quitProgramItem;
     }
     
+    
     private static MenuItem createUndoItem()
     {
         // Create 'Undo' MenuItem
@@ -172,6 +178,7 @@ public class MainMenuBar
         
         return undoItem;
     }
+    
     
     private static MenuItem createRedoItem()
     {
@@ -185,6 +192,10 @@ public class MainMenuBar
         return redoItem;
     }
     
+    /**
+     * Creates the Menu Bar for the Scene
+     * @return The MenuBar with all required items.
+     */
     public static MenuBar getMainMenuBar()
     {
     // The menus and menu bar creation
@@ -214,15 +225,13 @@ public class MainMenuBar
         //Create MenuItems for Edit submenu
         MenuItem undoItem = createUndoItem();
         MenuItem redoItem = createRedoItem();
-       
-        
+              
         // Add MenuItems to Menu
         fileMenu.getItems().addAll(newProjectBranch, openItem,
                 saveItem, saveAsItem, new SeparatorMenuItem(), quitProgramItem);
         
         editMenu.getItems().addAll(undoItem, redoItem);
-        
-        
+                
         editMenu.setOnShowing((event) ->
             {
                 if (!App.undoRedoMan.canRedo())

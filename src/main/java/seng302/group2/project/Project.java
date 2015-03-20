@@ -39,7 +39,7 @@ public class Project extends TreeViewItem implements Serializable
     private String description;
     private String lastSaveLocation = null;
     private transient ObservableList<TreeViewItem> people = observableArrayList();
-    private ArrayList<TreeViewItem> serializablePeople = new ArrayList<>();
+    private ArrayList<Person> serializablePeople = new ArrayList<>();
     
     /**
      * Enumerable save and load statuses
@@ -326,9 +326,9 @@ public class Project extends TreeViewItem implements Serializable
     public static Project preSerialization(Project project)
     {
         project.serializablePeople.clear();
-        for (TreeViewItem item : project.people)
+        for (Object item : project.people)
         {
-            project.serializablePeople.add(item);
+            project.serializablePeople.add((Person)item);
         }
         
         // Also perform again for any other deeper observables
@@ -344,7 +344,7 @@ public class Project extends TreeViewItem implements Serializable
     public static void postDeserialization()
     {
         App.currentProject.people = observableArrayList();
-        for (TreeViewItem item : App.currentProject.serializablePeople)
+        for (Person item : App.currentProject.serializablePeople)
         {
             App.currentProject.people.add(item);
         }

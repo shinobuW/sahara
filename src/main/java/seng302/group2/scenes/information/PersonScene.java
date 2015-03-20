@@ -24,6 +24,10 @@ import seng302.group2.project.team.person.Person;
 public class PersonScene
 {
     
+    /**
+     * Gets the Person information display
+     * @return The Person information display
+     */
     public static GridPane getPersonScene()
     {
         
@@ -38,7 +42,7 @@ public class PersonScene
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
         
         informationGrid.add(title, 0, 0);
-        informationGrid.add(new Label("Short Name: " + currentPerson.getShortName()), 0, 1);
+        informationGrid.add(new Label("Short Name: " + currentPerson.getShortName()), 0, 2);
         informationGrid.add(new Label("Email Address: " + currentPerson.getEmail()), 0, 3);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         informationGrid.add(new Label("Birth Date: " 

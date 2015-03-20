@@ -112,6 +112,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                 {
                     TreeItem<Object> selectedItem = (TreeItem<Object>) newValue;
                     App.selectedTreeItem = selectedItem;
+                    //System.out.println(App.selectedTreeItem.getValue().getClass());  // testing
                     
                     //Updates the display pane to be pane for the selectItem
                     if (App.selectedTreeItem.getValue() instanceof Person)

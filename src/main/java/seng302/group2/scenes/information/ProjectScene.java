@@ -23,6 +23,10 @@ import seng302.group2.project.Project;
 public class ProjectScene
 {
     
+    /**
+     * Gets the Project information display
+     * @return The Project information display
+     */
     public static GridPane getProjectScene()
     {
         
@@ -37,8 +41,8 @@ public class ProjectScene
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
         
         informationGrid.add(title, 0, 0);
-        informationGrid.add(new Label("Short Name: " + currentProject.getShortName()), 0, 1);
-        informationGrid.add(new Label("Email Address: " + currentProject.getDescription()), 0, 2);
+        informationGrid.add(new Label("Short Name: " + currentProject.getShortName()), 0, 2);
+        informationGrid.add(new Label("Email Address: " + currentProject.getDescription()), 0, 3);
  
         return App.informationGrid;
     }
