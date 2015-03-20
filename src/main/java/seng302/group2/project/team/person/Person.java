@@ -64,17 +64,7 @@ public class Person extends TreeViewItem implements Serializable
         // Initialize as a TreeViewItem
         super(shortName);
         
-        // Check for duplicates and change if neccessary to keep short names unique
-        String newShortName = shortName;
-        int i = 0;
-        for (TreeViewItem person : App.currentProject.getPeople())
-        {
-            if (person.toString().equals(newShortName))
-            {
-                i++;
-                newShortName = shortName + "~" + String.valueOf(i);
-            }
-        }
+        String newShortName = validateShortName(shortName);
         
         // Continue constructing
         this.shortName = newShortName;
@@ -85,6 +75,20 @@ public class Person extends TreeViewItem implements Serializable
         this.birthDate = birthDate;
     }
     
+    public String validateShortName(String shortName) 
+    {
+        String newShortName = shortName;
+        int i = 0;
+        for (TreeViewItem person : App.currentProject.getPeople())
+        {
+            if (person.toString().equals(newShortName))
+            {
+                i++;
+                newShortName = shortName + "~" + String.valueOf(i);
+            }
+        }
+        return newShortName;
+    }
     
     // <editor-fold defaultstate="collapsed" desc="Getters">
 
