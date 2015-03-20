@@ -22,7 +22,7 @@ import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 /**
- *
+ *Class to create a pop up dialog for creating a person
  * @author swi67
  */
 public class CreatePersonDialog
@@ -100,15 +100,14 @@ public class CreatePersonDialog
                 boolean dateCorrect = validateDate(birthdateString, birthdateField,
                         dateError);
                 boolean emailCorrect = validateEmail(email, emailField,  emailError);
-                boolean shortNameCorrect = validateName(shortName, shortNameField,shortNameError,
-                        "Short Name"); 
+                boolean isShortNameUnique = validateShortName(shortName, shortNameError,
+                        shortNameField);
+                boolean shortNameCorrect = validateShortName(shortName, 
+                        shortNameError, shortNameField); 
                 boolean firstNameCorrect = validateName(firstName, firstNameField, firstNameError,
                         "first name");
                 boolean lastNameCorrect = validateName(lastName, lastNameField, lastNameError,
                         "last name");
-                boolean isShortNameUnique = validateUniqueShortName(shortName, shortNameError,
-                        shortNameField);
-                
                 
 
                 //Create new person if all fields are correct
@@ -118,7 +117,6 @@ public class CreatePersonDialog
                     final Date birthDate = stringToDate(birthdateString);
                     Person person = new Person(shortName, firstName, lastName, email, description,
                         birthDate);
-                    System.out.println(firstName + "Testing");
                     App.currentProject.addPerson(person);
                     dialog.hide();
                 }
@@ -173,11 +171,9 @@ public class CreatePersonDialog
         try
         {
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            System.out.println(df);
             df.setLenient(false);
             df.parse(birthDateString);
             Date birthDate = df.parse(birthDateString);
-            System.out.println(birthDate);
             correctFormat = true;
         }
         catch (ParseException e)
@@ -222,10 +218,11 @@ public class CreatePersonDialog
     }
     
     
-    public static boolean validateUniqueShortName(String shortName, Label shortNameError,
+    public static boolean validateShortName(String shortName, Label shortNameError,
             TextField shortNameField) 
     {
         boolean isUnique = true;
+        boolean isEmpty = true;
  
         String newShortName = shortName;
         int i = 0;
@@ -233,18 +230,29 @@ public class CreatePersonDialog
         {
             if (person.toString().equals(newShortName))
             {
-                shortNameError.setText("*Short Name taken");
-                shortNameField.setStyle("-fx-border-color: red;");
                 isUnique = false;
             }
             else 
             {
-                shortNameError.setText(null);
-                shortNameField.setStyle(null);
                 isUnique = true;
             }
         }
-        return isUnique;
+        
+        if (shortName.isEmpty())
+        {
+            shortNameError.setText("*Enter a short name");
+            shortNameField.setStyle("-fx-border-color: red;");
+            return false;
+        }
+        else if (!isUnique)
+        {
+            shortNameError.setText("*Short Name taken");
+            shortNameField.setStyle("-fx-border-color: red;");
+            return false;
+        }
+        shortNameError.setText(null);
+        shortNameField.setStyle(null);        
+        return true;
     }
     
     
@@ -254,11 +262,9 @@ public class CreatePersonDialog
         try
         {
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            System.out.println(df);
             df.setLenient(false);
             df.parse(birthDateString);
             birthDate = df.parse(birthDateString);
-            System.out.println(birthDate);
         }
         catch (ParseException e)
         {
