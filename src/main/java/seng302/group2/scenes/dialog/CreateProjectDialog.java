@@ -7,7 +7,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
@@ -59,7 +58,6 @@ public class CreateProjectDialog
                 if (valid == 1)
                 {
                     Project project = new Project(shortName, longName, description);
-                    System.out.println("Testing" + shortName);
                     App.currentProject = project;
                     dialog.hide();
                 }
