@@ -16,6 +16,9 @@ import java.util.HashMap;
 import java.util.Map;
 import seng302.group2.App;
 import seng302.group2.project.Project;
+import seng302.group2.project.team.person.Person;
+import seng302.group2.scenes.information.PersonScene;
+import seng302.group2.scenes.information.ProjectScene;
  
 
 /**
@@ -108,10 +111,23 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                 public void changed(ObservableValue observable, Object oldValue, Object newValue)
                 {
                     TreeItem<Object> selectedItem = (TreeItem<Object>) newValue;
-                    //System.out.println("Selected Object = " + selectedItem.getValue());
-                    //System.out.println("Selected Class = " + selectedItem.getValue().getClass());
-                    App.selectedTreeItem = selectedItem.getValue();
-                    //TODO: Call the update information here -- to show the selected item on grid?
+                    App.selectedTreeItem = selectedItem;
+                    
+                    //Updates the display pane to be pane for the selectItem
+                    if (App.selectedTreeItem.getValue() instanceof Person)
+                    {
+                        App.content.getChildren().remove(App.informationGrid);
+                        PersonScene.getPersonScene();
+                        App.content.getChildren().add(App.informationGrid);
+
+                    }
+                    else if (App.selectedTreeItem.getValue() instanceof Project)
+                    {
+                        App.content.getChildren().remove(App.informationGrid);
+                        ProjectScene.getProjectScene();
+                        App.content.getChildren().add(App.informationGrid);
+
+                    }
                 }
             });
     }

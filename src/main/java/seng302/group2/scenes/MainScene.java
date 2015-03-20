@@ -7,21 +7,18 @@ package seng302.group2.scenes;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TreeItem;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import seng302.group2.App;
+import static seng302.group2.App.content;
+import static seng302.group2.App.informationGrid;
+import seng302.group2.project.Project;
 import seng302.group2.project.team.person.Person;
+import seng302.group2.scenes.information.PersonScene;
+import seng302.group2.scenes.information.ProjectScene;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.scenes.menu.MainMenuBar;
@@ -37,47 +34,23 @@ public class MainScene
     {
         // The root window box
         VBox root = new VBox();
-        HBox content = new HBox();
         
         MenuBar menuBar = MainMenuBar.getMainMenuBar();
         root.getChildren().add(new StackPane(menuBar));
         
+        if (App.selectedTreeItem.getValue() instanceof Project)
+        {
+            ProjectScene.getProjectScene();
+        }
+        else if (App.selectedTreeItem.getValue() instanceof Person)
+        {
+            PersonScene.getPersonScene();
+        }
         
-        // <editor-fold defaultstate="collapsed" desc="Information Grid">
-        
-        // Set up a grid pane for displaying information in the window
-        GridPane informationGrid = new GridPane();
-        root.getChildren().add(content);
-        
-        informationGrid.setAlignment(Pos.CENTER);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);
-        informationGrid.setPadding(new Insets(25,25,25,25));
-        
-        // Adds a title to the grid
-        Text scenetitle = new Text("Welcome");
-        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        informationGrid.add(scenetitle, 0, 0, 2, 1);
-        // At top-left (0, 0), spanning 2 columns and 1 row
-
-        // A button to switch to the demo scene
-        Button btn = new Button("Make Test Person");
-        HBox hbBtn = new HBox(10);
-        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn.getChildren().add(btn);
-        informationGrid.add(hbBtn, 1, 4);
-        
-        //The button event handler
-        btn.setOnAction((event) ->
-            {
-                App.currentProject.addPerson(new Person());
-            });
-        
-        // </editor-fold>
 
         // Old: TreeView display = ListDisplay.getProjectTree();  // (Manual)
         // Create the display menu from the project tree
-        TreeViewWithItems display = new TreeViewWithItems(new TreeItem());
+        TreeViewWithItems treeView = new TreeViewWithItems(new TreeItem());
         ObservableList<TreeViewItem> children = observableArrayList();
         
         /*
@@ -90,11 +63,12 @@ public class MainScene
         
         children.add(App.currentProject);
         
-        display.setItems(children);
-        display.setShowRoot(false);
+        treeView.setItems(children);
+        treeView.setShowRoot(false);
         
-        content.getChildren().add(display);
+        content.getChildren().add(treeView);
         content.getChildren().add(informationGrid);
+        root.getChildren().add(content);
 
         return new Scene(root);
     }
