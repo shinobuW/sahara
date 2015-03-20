@@ -9,11 +9,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
 import seng302.group2.project.team.person.Person;
@@ -43,7 +45,14 @@ public class CreatePersonDialog
         TextArea descriptionField = new TextArea();
         TextField birthdateField = new TextField();
         birthdateField.setPromptText("dd/mm/yyyy");
+        
         Button btnCreate = new Button("Create");
+        Button btnCancel = new Button("Cancel");
+        
+        HBox buttons = new HBox();
+        buttons.spacingProperty().setValue(10);
+        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
+        buttons.getChildren().addAll(btnCreate, btnCancel);
         
         Label shortNameError = new Label();
         Label firstNameError = new Label();
@@ -68,13 +77,13 @@ public class CreatePersonDialog
         grid.add(emailField, 1, 3);
         grid.add(emailError, 2, 3, 10, 1);
         
-        grid.add(new Label("BirthDate"), 0, 4);
+        grid.add(new Label("Birth Date"), 0, 4);
         grid.add(birthdateField, 1, 4);
         grid.add(dateError, 2, 4, 18, 1);
         
         grid.add(new Label("Description"), 0, 5);
         grid.add(descriptionField, 1, 5);
-        grid.add(btnCreate, 1, 6);
+        grid.add(buttons, 1, 6);
         
         Date birthDate = new Date();
         
@@ -101,6 +110,8 @@ public class CreatePersonDialog
                         "last name");
                 boolean isShortNameUnique = validateUniqueShortName(shortName, shortNameError,
                         shortNameField);
+                
+                
 
                 //Create new person if all fields are correct
                 if (dateCorrect && emailCorrect && shortNameCorrect && firstNameCorrect 
@@ -118,6 +129,11 @@ public class CreatePersonDialog
                 }
             });
         
+        btnCancel.setOnAction((event) ->
+            {
+                dialog.hide();
+            });
+                
         dialog.setResizable(false);
         dialog.setIconifiable(false);
         dialog.setContent(grid);
@@ -146,7 +162,7 @@ public class CreatePersonDialog
         return matcher.matches();
     }
     
-    private static boolean validateDate(String birthDateString, Date birthdate, TextField dateField,
+    private static boolean validateDate(String birthDateString, Date birthDate, TextField dateField,
             Label birthdateError)
     {
         //Checks whether the birth date format is correct
@@ -157,9 +173,11 @@ public class CreatePersonDialog
         try
         {
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            System.out.println(df);
             df.setLenient(false);
             df.parse(birthDateString);
-            birthdate = df.parse(birthDateString);
+            birthDate = df.parse(birthDateString);
+            System.out.println(birthDate);
             correctFormat = true;
         }
         catch (ParseException e)
@@ -175,7 +193,7 @@ public class CreatePersonDialog
         }
         else 
         {
-            System.out.println(birthdate.getMonth());
+            System.out.println(birthDate.getMonth());
             dateField.setStyle(null);
             birthdateError.setText(null);
         }
