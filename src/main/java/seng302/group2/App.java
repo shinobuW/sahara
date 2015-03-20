@@ -21,6 +21,7 @@ import org.controlsfx.dialog.Dialogs;
 import seng302.group2.project.Project;
 import seng302.group2.project.Project.SaveLoadResult;
 import seng302.group2.scenes.MainScene;
+import seng302.group2.util.undoredo.UndoRedoManager;
 
 /**
  * Hello world!
@@ -29,11 +30,14 @@ import seng302.group2.scenes.MainScene;
 public class App extends Application
 {
     public static HBox content = new HBox();
-    public static Project currentProject = new Project();
     public static GridPane informationGrid = new GridPane();
+    
     public static Stage mainStage;
     public static Scene mainScene;
+    public static Project currentProject = new Project();
     public static TreeItem selectedTreeItem = new TreeItem();
+    public static UndoRedoManager undoRedoMan = new UndoRedoManager();
+    public static boolean projectChanged = false;
     
     
     /**
@@ -41,6 +45,7 @@ public class App extends Application
      */
     public static void refreshMainScene()
     {
+        App.content = new HBox();
         App.mainScene = MainScene.getMainScene();
         mainStage.setScene(App.mainScene);
         App.refreshWindowTitle();
@@ -58,7 +63,15 @@ public class App extends Application
         }
         else
         {
-            App.mainStage.titleProperty().set("Sahara: " + App.currentProject.getLongName());
+            if (App.projectChanged)
+            {
+                App.mainStage.titleProperty().set("Sahara: " + App.currentProject.getLongName() 
+                        + "*");
+            }
+            else
+            {
+                App.mainStage.titleProperty().set("Sahara: " + App.currentProject.getLongName());
+            }
         }
     }
     
@@ -90,6 +103,10 @@ public class App extends Application
         {
             public void handle(WindowEvent event)
             {
+                if (App.projectChanged == false)
+                {
+                    System.exit(0);
+                }    
                 Action response = Dialogs.create()
                     .title("Save Project?")
                     .message("Would you like to save your changes to the current project?")

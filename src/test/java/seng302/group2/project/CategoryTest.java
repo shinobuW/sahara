@@ -20,9 +20,9 @@ public class CategoryTest extends TestCase
      * Create the test case
      * @param testName name of the test case
      */
-    public CategoryTest( String testName )
+    public CategoryTest(String testName)
     {
-        super( testName );
+        super(testName);
     }
 
     /**
@@ -30,7 +30,7 @@ public class CategoryTest extends TestCase
      */
     public static Test suite()
     {
-        return new TestSuite( CategoryTest.class );
+        return new TestSuite(CategoryTest.class);
     }
 
     /**
