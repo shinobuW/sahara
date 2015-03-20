@@ -84,9 +84,7 @@ public class CreatePersonDialog
         grid.add(new Label("Description"), 0, 5);
         grid.add(descriptionField, 1, 5);
         grid.add(buttons, 1, 6);
-        
-        Date birthDate = new Date();
-        
+           
         //"Create" button event
         btnCreate.setOnAction((event) ->
             {
@@ -99,7 +97,7 @@ public class CreatePersonDialog
                 String birthdateString = birthdateField.getText();
                 
                 //Validation & Error messages
-                boolean dateCorrect = validateDate(birthdateString, birthDate, birthdateField,
+                boolean dateCorrect = validateDate(birthdateString, birthdateField,
                         dateError);
                 boolean emailCorrect = validateEmail(email, emailField,  emailError);
                 boolean shortNameCorrect = validateName(shortName, shortNameField,shortNameError,
@@ -117,6 +115,7 @@ public class CreatePersonDialog
                 if (dateCorrect && emailCorrect && shortNameCorrect && firstNameCorrect 
                         && lastNameCorrect && isShortNameUnique) 
                 {
+                    final Date birthDate = stringToDate(birthdateString);
                     Person person = new Person(shortName, firstName, lastName, email, description,
                         birthDate);
                     System.out.println(firstName + "Testing");
@@ -140,6 +139,7 @@ public class CreatePersonDialog
         dialog.show();        
     }
     
+    
     private static boolean validateEmail(String email, TextField emailField, Label emailError)
     {
         //Checks whether the email is correct format
@@ -162,21 +162,21 @@ public class CreatePersonDialog
         return matcher.matches();
     }
     
-    private static boolean validateDate(String birthDateString, Date birthDate, TextField dateField,
+    
+    private static boolean validateDate(String birthDateString, TextField dateField,
             Label birthdateError)
     {
         //Checks whether the birth date format is correct
         //Error message shown and TextField border changed to red if incorrect
         //Returns true if correct format
         boolean correctFormat = false;
-
         try
         {
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             System.out.println(df);
             df.setLenient(false);
             df.parse(birthDateString);
-            birthDate = df.parse(birthDateString);
+            Date birthDate = df.parse(birthDateString);
             System.out.println(birthDate);
             correctFormat = true;
         }
@@ -185,7 +185,6 @@ public class CreatePersonDialog
             System.out.println("Error parsing date");
         }
 
-
         if (!correctFormat) 
         {
             dateField.setStyle("-fx-border-color: red;");
@@ -193,7 +192,6 @@ public class CreatePersonDialog
         }
         else 
         {
-            System.out.println(birthDate.getMonth());
             dateField.setStyle(null);
             birthdateError.setText(null);
         }
@@ -223,6 +221,7 @@ public class CreatePersonDialog
         return correctName;
     }
     
+    
     public static boolean validateUniqueShortName(String shortName, Label shortNameError,
             TextField shortNameField) 
     {
@@ -247,7 +246,24 @@ public class CreatePersonDialog
         }
         return isUnique;
     }
-
-        
-
+    
+    
+    private static Date stringToDate(String birthDateString)
+    {
+        Date birthDate = new Date();
+        try
+        {
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            System.out.println(df);
+            df.setLenient(false);
+            df.parse(birthDateString);
+            birthDate = df.parse(birthDateString);
+            System.out.println(birthDate);
+        }
+        catch (ParseException e)
+        {
+            System.out.println("Error parsing date");
+        }
+        return birthDate;
+    }
 }
