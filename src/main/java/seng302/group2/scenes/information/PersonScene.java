@@ -5,6 +5,7 @@
  */
 package seng302.group2.scenes.information;
 
+import java.text.SimpleDateFormat;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -38,10 +39,11 @@ public class PersonScene
         
         informationGrid.add(title, 0, 0);
         informationGrid.add(new Label("Short Name: " + currentPerson.getShortName()), 0, 1);
-        informationGrid.add(new Label("Email Address: " + currentPerson.getEmail()), 0, 2);
-        informationGrid.add(new Label("Birth Date: " + currentPerson.getBirthDate().toString()), 
-                0, 3);
-        informationGrid.add(new Label("Description: " + currentPerson.getDescription()), 0, 4);
+        informationGrid.add(new Label("Email Address: " + currentPerson.getEmail()), 0, 3);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        informationGrid.add(new Label("Birth Date: " + dateFormat.format(currentPerson.getBirthDate())), 
+                0, 4);
+        informationGrid.add(new Label("Description: " + currentPerson.getDescription()), 0, 5);
         
         
         return App.informationGrid;
