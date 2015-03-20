@@ -46,5 +46,5 @@ public class PersonScene
         
         return App.informationGrid;
     }
-    
+
 }

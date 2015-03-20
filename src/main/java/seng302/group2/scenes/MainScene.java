@@ -5,6 +5,8 @@
  */
 package seng302.group2.scenes;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -65,6 +67,19 @@ public class MainScene
         
         treeView.setItems(children);
         treeView.setShowRoot(false);
+        
+        root.heightProperty().addListener(new ChangeListener<Number>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Number> arg0,
+                    Number arg1, Number arg2) 
+            {
+                App.content.setPrefHeight(arg2.doubleValue());
+            }
+        });
+        
+        content.boundsInParentProperty();
+        informationGrid.boundsInParentProperty();
         
         content.getChildren().add(treeView);
         content.getChildren().add(informationGrid);
