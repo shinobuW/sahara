@@ -209,6 +209,7 @@ public class Project extends TreeViewItem implements Serializable
             Gson gson = new GsonBuilder().create();
             gson.toJson(project, writer);
             writer.close();
+            App.projectChanged = false;
             return SaveLoadResult.SUCCESS;
         }
         catch (IOException e)

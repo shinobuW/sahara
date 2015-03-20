@@ -39,14 +39,14 @@ public class MainMenuBar
         MenuItem newProjectItem = new MenuItem("Project");
         newProjectItem.setOnAction((ActionEvent event) ->
             {
-                if (App.currentProject == null)
+                if (App.currentProject == null || App.projectChanged == false)
                 {
-                    App.currentProject = new Project();
+                    CreateProjectDialog.show();
                     App.refreshMainScene();
                     App.undoRedoMan.emptyAll();
                     return;
                 }
-                
+               
                 Action response = Dialogs.create()
                     .title("Save Project?")
                     .message("Would you like to save your changes to the current project?")
@@ -67,6 +67,7 @@ public class MainMenuBar
                     App.refreshMainScene();
                 }
             });
+        
         newProjectBranch.getItems().add(newProjectItem);
         
         MenuItem newPersonItem = new MenuItem("Person");
@@ -84,7 +85,30 @@ public class MainMenuBar
         MenuItem openItem = new MenuItem("Open");
         openItem.setOnAction((event) ->
             {
-                Project.loadProject();
+                if (App.projectChanged == false)
+                {
+                    Project.loadProject();
+                    return;
+                }
+                Action response = Dialogs.create()
+                    .title("Save Project?")
+                    .message("Would you like to save your changes to the current project?")
+                    .showConfirm();
+                
+                if (response == Dialog.ACTION_YES)
+                {
+                    SaveLoadResult saved = Project.saveProject(App.currentProject, false);
+                    if (saved == SaveLoadResult.SUCCESS)
+                    {
+                        Project.loadProject();
+                        //App.refreshMainScene();
+                    }
+                }
+                else if (response == Dialog.ACTION_NO)
+                {
+                    Project.loadProject();
+                    //App.refreshMainScene();
+                }   
             });
         
         // Create 'Save' MenuItem
@@ -105,11 +129,15 @@ public class MainMenuBar
         MenuItem quitProgramItem = new MenuItem("Quit");
         quitProgramItem.setOnAction((event) ->
             {
+                if (App.projectChanged == false)
+                {
+                    System.exit(0);
+                }   
                 Action response = Dialogs.create()
                     .title("Save Project?")
                     .message("Would you like to save your changes to the current project?")
                     .showConfirm();
-                
+
                 if (response == Dialog.ACTION_YES)
                 {
                     SaveLoadResult saved = Project.saveProject(App.currentProject, false);
@@ -122,10 +150,7 @@ public class MainMenuBar
                 {
                     System.exit(0);
                 }
-            });
-        
-        
-        
+            });      
         
         Menu editMenu = new Menu("Edit");
         menuBar.getMenus().add(editMenu);
