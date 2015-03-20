@@ -21,6 +21,7 @@ import org.controlsfx.dialog.Dialogs;
 import seng302.group2.project.Project;
 import seng302.group2.project.Project.SaveLoadResult;
 import seng302.group2.scenes.MainScene;
+import seng302.group2.util.undoredo.UndoRedoManager;
 
 /**
  * Hello world!
@@ -29,11 +30,13 @@ import seng302.group2.scenes.MainScene;
 public class App extends Application
 {
     public static HBox content = new HBox();
-    public static Project currentProject = new Project();
     public static GridPane informationGrid = new GridPane();
+    
     public static Stage mainStage;
     public static Scene mainScene;
+    public static Project currentProject = new Project();
     public static TreeItem selectedTreeItem = new TreeItem();
+    public static UndoRedoManager undoRedoMan = new UndoRedoManager();
     
     
     /**

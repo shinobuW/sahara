@@ -20,7 +20,7 @@ import seng302.group2.project.Project;
 import seng302.group2.project.Project.SaveLoadResult;
 
 /**
- *
+ * The main menu bar of the project window(s).
  * @author Jordane Lew (jml168)
  */
 public class MainMenuBar
@@ -32,7 +32,7 @@ public class MainMenuBar
         
         Menu fileMenu = new Menu("File");
         menuBar.getMenus().add(fileMenu);
-        
+
         // Create 'New >' sub-menu
         Menu newProjectBranch = new Menu("New");
 
@@ -123,9 +123,57 @@ public class MainMenuBar
                 }
             });
         
+        
+        
+        
+        Menu editMenu = new Menu("Edit");
+        menuBar.getMenus().add(editMenu);
+
+        // Create 'Undo' MenuItem
+        MenuItem undoItem = new MenuItem("Undo");
+        undoItem.setOnAction((event) ->
+            {
+                App.undoRedoMan.undo();
+            });
+        
+        // Create 'Redo' MenuItem
+        MenuItem redoItem = new MenuItem("Redo");
+        redoItem.setOnAction((event) ->
+            {
+                App.undoRedoMan.redo();
+            });
+        
+        
+        
         // Add MenuItems to Menu
         fileMenu.getItems().addAll(newProjectBranch, openItem,
                 saveItem, saveAsItem, new SeparatorMenuItem(), quitProgramItem);
+        
+        editMenu.getItems().addAll(undoItem, redoItem);
+        
+        
+        editMenu.setOnShowing((event) ->
+            {
+                if (!App.undoRedoMan.canRedo())
+                {
+                    redoItem.setDisable(true);
+                }
+                else
+                {
+                    redoItem.setDisable(false);
+                }
+                
+                if (!App.undoRedoMan.canUndo())
+                {
+                    undoItem.setDisable(true);
+                }
+                else
+                {
+                    undoItem.setDisable(false);
+                }
+            });
+        
+
         
         return menuBar;
     }

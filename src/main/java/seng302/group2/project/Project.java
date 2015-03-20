@@ -24,6 +24,9 @@ import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.undoredo.UndoRedoAction;
+import seng302.group2.util.undoredo.UndoRedoPerformer;
+import seng302.group2.util.undoredo.UndoableItem;
 
 /**
  * Basic project class that acts as the root object for Sahara and represents a real-world project
@@ -279,6 +282,13 @@ public class Project extends TreeViewItem implements Serializable
      */
     public void addPerson(Person person)
     {
+        // Add the undo action to the stack
+        App.undoRedoMan.add(new UndoableItem(
+                person,
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null), 
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null)
+                ));
+        
         this.people.add(person);
     }
     

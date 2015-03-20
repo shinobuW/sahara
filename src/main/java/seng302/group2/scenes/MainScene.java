@@ -52,14 +52,7 @@ public class MainScene
         // Create the display menu from the project tree
         TreeViewWithItems treeView = new TreeViewWithItems(new TreeItem());
         ObservableList<TreeViewItem> children = observableArrayList();
-        
-        /*
-        TreeViewData projectTree = new TreeViewData(
-                    App.currentProject.getShortName(),
-                    App.currentProject,
-                    App.currentProject.getClass()
-                );
-        */
+
         
         children.add(App.currentProject);
         
