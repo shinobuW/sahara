@@ -109,7 +109,7 @@ public class UndoRedoManager
         undoStack.add(item);
         //redoStack.empty();
         redoStack = new Stack<>();
-        App.projectChanged = true;
+        App.currentProject.setChanged();
         App.refreshWindowTitle();
     }
 

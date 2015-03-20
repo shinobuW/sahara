@@ -31,7 +31,7 @@ public class MainMenuBar
         MenuItem newProjectItem = new MenuItem("Project");
         newProjectItem.setOnAction((ActionEvent event) ->
             {
-                if (App.currentProject == null || App.projectChanged == false)
+                if (App.currentProject == null || !App.currentProject.getHasUnsavedChanges())
                 {
                     CreateProjectDialog.show();
                     App.refreshMainScene();
@@ -80,7 +80,7 @@ public class MainMenuBar
         MenuItem openItem = new MenuItem("Open");
         openItem.setOnAction((event) ->
             {
-                if (App.projectChanged == false)
+                if (!App.currentProject.getHasUnsavedChanges())
                 {
                     Project.loadProject();
                     return;
@@ -140,7 +140,7 @@ public class MainMenuBar
         MenuItem quitProgramItem = new MenuItem("Quit");
         quitProgramItem.setOnAction((event) ->
             {
-                if (App.projectChanged == false)
+                if (!App.currentProject.getHasUnsavedChanges())
                 {
                     System.exit(0);
                 }   

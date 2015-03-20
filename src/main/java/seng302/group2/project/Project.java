@@ -38,6 +38,7 @@ public class Project extends TreeViewItem implements Serializable
     private String longName;
     private String description;
     private String lastSaveLocation = null;
+    private transient boolean hasUnsavedChanges = false;
     private transient ObservableList<TreeViewItem> people = observableArrayList();
     private ArrayList<Person> serializablePeople = new ArrayList<>();
     
@@ -84,6 +85,16 @@ public class Project extends TreeViewItem implements Serializable
     // <editor-fold defaultstate="collapsed" desc="Getters">
     
     /**
+     * Gets if the project has unsaved changes.
+     * @return If the project has unsaved changes
+     */
+    public boolean getHasUnsavedChanges()
+    {
+        return hasUnsavedChanges;
+    }
+    
+    
+    /**
      * Gets a project's short name
      * @return The short name of the project
      */
@@ -127,6 +138,24 @@ public class Project extends TreeViewItem implements Serializable
     
     
     // <editor-fold defaultstate="collapsed" desc="Setters">
+    
+    /**
+     * Marks the project as not having unsaved changes
+     */
+    public void setUnchanged()
+    {
+        this.hasUnsavedChanges = false;
+    }
+    
+    
+    /**
+     * Marks the project as having unsaved changes
+     */
+    public void setChanged()
+    {
+        this.hasUnsavedChanges = true;
+    }
+    
     
     /**
      * Sets a project's short name
@@ -209,7 +238,7 @@ public class Project extends TreeViewItem implements Serializable
             Gson gson = new GsonBuilder().create();
             gson.toJson(project, writer);
             writer.close();
-            App.projectChanged = false;
+            App.currentProject.setUnchanged();
             return SaveLoadResult.SUCCESS;
         }
         catch (IOException e)

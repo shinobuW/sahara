@@ -37,7 +37,6 @@ public class App extends Application
     public static Project currentProject = new Project();
     public static TreeItem selectedTreeItem = new TreeItem();
     public static UndoRedoManager undoRedoMan = new UndoRedoManager();
-    public static boolean projectChanged = false;
     
     
     /**
@@ -63,7 +62,7 @@ public class App extends Application
         }
         else
         {
-            if (App.projectChanged)
+            if (App.currentProject.getHasUnsavedChanges())
             {
                 App.mainStage.titleProperty().set("Sahara: " + App.currentProject.getLongName() 
                         + "*");
@@ -103,7 +102,7 @@ public class App extends Application
         {
             public void handle(WindowEvent event)
             {
-                if (App.projectChanged == false)
+                if (!App.currentProject.getHasUnsavedChanges())
                 {
                     System.exit(0);
                 }    
