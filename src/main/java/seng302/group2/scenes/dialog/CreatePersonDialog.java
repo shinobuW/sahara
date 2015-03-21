@@ -7,6 +7,7 @@ package seng302.group2.scenes.dialog;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -150,7 +151,7 @@ public class CreatePersonDialog
         if (!matcher.matches()) 
         {
             emailField.setStyle("-fx-border-color: red;");
-            emailError.setText("*Incorrect Format");
+            emailError.setText("*Incorrect email format");
         }
         else 
         {
@@ -160,13 +161,14 @@ public class CreatePersonDialog
         return matcher.matches();
     }
     
-    
+    /**
+     * Checks whether the birth date format is correct
+     * Shows error message and red borders if incorrect
+     * @return true if correct format
+    **/
     private static boolean validateDate(String birthDateString, TextField dateField,
             Label birthdateError)
     {
-        //Checks whether the birth date format is correct
-        //Error message shown and TextField border changed to red if incorrect
-        //Returns true if correct format
         boolean correctFormat = false;
         try
         {
@@ -175,6 +177,12 @@ public class CreatePersonDialog
             df.parse(birthDateString);
             Date birthDate = df.parse(birthDateString);
             correctFormat = true;
+            if (birthDate.after( Date.from(Instant.now())))
+            {
+                dateField.setStyle("-fx-border-color: red;");
+                birthdateError.setText("*This is not a valid birth date");
+                return false;
+            }
         }
         catch (ParseException e)
         {
