@@ -5,9 +5,9 @@
  */
 package seng302.group2.scenes.listdisplay;
 
+import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 /**
  *
@@ -46,11 +46,12 @@ public class Category extends TreeViewItem
     @Override
     public ObservableList<TreeViewItem> getChildren()
     {
-        if (name.equals("People"))
+        switch (name)
         {
-            return Global.currentProject.getPeople();
+            case "People":
+                return Global.currentProject.getPeople();
+            default:
+                return null;
         }
-        
-        return null;
     }
 }

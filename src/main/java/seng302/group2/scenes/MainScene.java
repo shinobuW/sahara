@@ -49,7 +49,6 @@ public class MainScene
             PersonScene.getPersonScene();
         }
         
-
         // Old: TreeView display = ListDisplay.getProjectTree();  // (Manual)
         // Create the display menu from the project tree
         TreeViewWithItems treeView = new TreeViewWithItems(new TreeItem());
@@ -62,7 +61,6 @@ public class MainScene
         treeView.setShowRoot(false);
         
         root.heightProperty().addListener(new ChangeListener<Number>() {
-
             @Override
             public void changed(ObservableValue<? extends Number> arg0,
                     Number arg1, Number arg2) 

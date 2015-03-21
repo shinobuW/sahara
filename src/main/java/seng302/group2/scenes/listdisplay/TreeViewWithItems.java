@@ -32,6 +32,7 @@ import seng302.group2.scenes.information.ProjectScene;
  * reflected in the UI.
  *
  * @author Christian Schudt (modified by Jordane Lew)
+ * @param <T> The type of treeview items
  */
 public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> 
 {
@@ -53,7 +54,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
     
     
     /**
-     * Constructor for a TreeViewWithItems
+     * Creates the tree view.
      */
     public TreeViewWithItems() 
     {
@@ -63,7 +64,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
  
     
     /**
-     * Creates the tree view.
+     * Creates the tree view with a given root.
      *
      * @param root The root tree item.
      * @see TreeView#TreeView(javafx.scene.control.TreeItem)
