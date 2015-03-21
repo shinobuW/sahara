@@ -42,7 +42,7 @@ public class ProjectScene
         
         informationGrid.add(title, 0, 0);
         informationGrid.add(new Label("Short Name: " + currentProject.getShortName()), 0, 2);
-        informationGrid.add(new Label("Email Address: " + currentProject.getDescription()), 0, 3);
+        informationGrid.add(new Label("Description: " + currentProject.getDescription()), 0, 3);
  
         return App.informationGrid;
     }
