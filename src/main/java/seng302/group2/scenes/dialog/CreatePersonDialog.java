@@ -7,7 +7,6 @@ package seng302.group2.scenes.dialog;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.Date;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,7 +19,14 @@ import javafx.scene.layout.HBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
 import seng302.group2.project.team.person.Person;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.validation.DateValidator;
+import seng302.group2.util.validation.EmailValidator;
+import seng302.group2.util.validation.NameValidator;
+import seng302.group2.util.validation.ShortNameValidator;
+import static seng302.group2.util.validation.ValidationStatus.OUT_OF_RANGE;
+import static seng302.group2.util.validation.ValidationStatus.PATTERN_MISMATCH;
+import static seng302.group2.util.validation.ValidationStatus.VALID;
+
 
 /**
  *Class to create a pop up dialog for creating a person
@@ -139,132 +145,131 @@ public class CreatePersonDialog
     }
     
     
-    private static boolean validateEmail(String email, TextField emailField, Label emailError)
+    /**
+     * Checks whether the email is correct format
+     * Error message shown and TextField border changed to red if incorrect
+     * @param email the email address
+     * @param emailField the email text field
+     * @param emailError the email error field
+     * @return whether or not the email is valid
+     */
+    public static boolean validateEmail(String email, TextField emailField, Label emailError)
     {
-        //Checks whether the email is correct format
-        //Error message shown and TextField border changed to red if incorrect
-        //Returns true if correct format
-        String emailPattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\."
-                + "[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
-        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(emailPattern);
-        java.util.regex.Matcher matcher = pattern.matcher(email);
-        if (!matcher.matches()) 
+        switch (EmailValidator.validEmail(email))
         {
-            emailField.setStyle("-fx-border-color: red;");
-            emailError.setText("*Incorrect email format");
+            case VALID:
+                emailError.setText(null);
+                emailField.setStyle(null);
+                return true;
+            case INVALID:
+                emailField.setStyle("-fx-border-color: red;");
+                emailError.setText("*Not a valid email address");
+                return false;
+            default:
+                emailError.setText("*Not a valid email address");
+                emailField.setStyle("-fx-border-color: red;");
+                return false;
         }
-        else 
-        {
-            emailError.setText(null);
-            emailField.setStyle(null);
-        }
-        return matcher.matches();
     }
+    
     
     /**
      * Checks whether the birth date format is correct
      * Shows error message and red borders if incorrect
      * @return true if correct format
     **/
-    private static boolean validateDate(String birthDateString, TextField dateField,
+    public static boolean validateDate(String birthDateString, TextField dateField,
             Label birthdateError)
     {
-        boolean correctFormat = false;
-        try
+        switch (DateValidator.isValidDateString(birthDateString))
         {
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            df.setLenient(false);
-            df.parse(birthDateString);
-            Date birthDate = df.parse(birthDateString);
-            correctFormat = true;
-            if (birthDate.after( Date.from(Instant.now())))
-            {
+            case VALID:
+                dateField.setStyle(null);
+                birthdateError.setText(null);
+                return true;
+            case OUT_OF_RANGE:
                 dateField.setStyle("-fx-border-color: red;");
                 birthdateError.setText("*This is not a valid birth date");
                 return false;
-            }
+            case PATTERN_MISMATCH:
+                dateField.setStyle("-fx-border-color: red;");
+                birthdateError.setText("*Format must be dd/MM/yyyy e.g 12/03/1990");
+                return false;
+            default:
+                birthdateError.setText("*Not a valid birth date");
+                dateField.setStyle("-fx-border-color: red;");
+                return false;
         }
-        catch (ParseException e)
-        {
-            System.out.println("Error parsing date");
-        }
-
-        if (!correctFormat) 
-        {
-            dateField.setStyle("-fx-border-color: red;");
-            birthdateError.setText("*Format must be dd/MM/yyyy e.g 12/03/1990");
-        }
-        else 
-        {
-            dateField.setStyle(null);
-            birthdateError.setText(null);
-        }
-        return correctFormat;
     }
 
     
+    /**
+     * Checks whether the name is valid
+     * @param name the name
+     * @param nameTextField the text field
+     * @param error the error label
+     * @param nameType the name type
+     * @return If the name is valid
+     */
     public static boolean validateName(String name, TextField nameTextField,
             Label error, String nameType) 
     {
-        //Checks whether the specified field is empty
-        //Shows error message and changes the field border colour to red
-        boolean correctName;
-        if (name.isEmpty()) 
+        switch (NameValidator.validateName(name))
         {
-            error.setText("*Enter a " + nameType);
-            nameTextField.setStyle("-fx-border-color: red;");
-            name.getClass().getResource("text-field-red-border.css");
-            correctName = false;
+            case VALID:
+                nameTextField.setStyle(null);
+                error.setText(null);
+                return true;
+            case INVALID:
+                error.setText("*Enter a " + nameType);
+                nameTextField.setStyle("-fx-border-color: red;");
+                return false;
+            default:
+                error.setText("*Not a valid " + nameType);
+                nameTextField.setStyle("-fx-border-color: red;");
+                return false;
         }
-        else 
-        {
-            nameTextField.setStyle(null);
-            error.setText(null);
-            correctName = true;
-        }
-        return correctName;
     }
     
     
+    /**
+     * Checks whether a given short name is valid (unique and not null/empty)
+     * @param shortName the short name
+     * @param shortNameError the error label
+     * @param shortNameField the text field
+     * @return If the short name is valid
+     */
     public static boolean validateShortName(String shortName, Label shortNameError,
             TextField shortNameField) 
     {
-        boolean isUnique = true;
-        boolean isEmpty = true;
- 
-        String newShortName = shortName;
-        int i = 0;
-        for (TreeViewItem person : Global.currentProject.getPeople())
+        switch (ShortNameValidator.validateShortName(shortName))
         {
-            if (person.toString().equals(newShortName))
-            {
-                isUnique = false;
-            }
-            else 
-            {
-                isUnique = true;
-            }
+            case VALID:
+                shortNameError.setText(null);
+                shortNameField.setStyle(null);   
+                return true;
+            case NON_UNIQUE:
+                shortNameError.setText("*Short Name taken");
+                shortNameField.setStyle("-fx-border-color: red;");
+                return false;
+            case INVALID:
+                shortNameError.setText("*Enter a short name");
+                shortNameField.setStyle("-fx-border-color: red;");
+                return false;
+            default:
+                shortNameError.setText("*Not a valid short name");
+                shortNameField.setStyle("-fx-border-color: red;");
+                return false;
         }
-        
-        if (shortName.isEmpty())
-        {
-            shortNameError.setText("*Enter a short name");
-            shortNameField.setStyle("-fx-border-color: red;");
-            return false;
-        }
-        else if (!isUnique)
-        {
-            shortNameError.setText("*Short Name taken");
-            shortNameField.setStyle("-fx-border-color: red;");
-            return false;
-        }
-        shortNameError.setText(null);
-        shortNameField.setStyle(null);        
-        return true;
     }
     
     
-    private static Date stringToDate(String birthDateString)
+    /**
+     * Converts strings to dates
+     * @param birthDateString the birth date string
+     * @return the parsed date
+     */
+    public static Date stringToDate(String birthDateString)
     {
         Date birthDate = new Date();
         try
