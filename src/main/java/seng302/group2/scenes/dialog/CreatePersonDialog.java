@@ -36,7 +36,7 @@ public class CreatePersonDialog
 {
     public static void show()
     {
-        //Initialise Dialog and GridPane
+        // Initialise Dialog and GridPane
         Dialog dialog = new Dialog(null, "Create New Person");
         GridPane grid = new GridPane();
         grid.setHgap(20);
@@ -44,7 +44,7 @@ public class CreatePersonDialog
         Insets insets = new Insets(20, 20, 20, 20);
         grid.setPadding(insets);
         
-        //Initialise Input fields
+        // Initialise Input fields
         TextField shortNameField = new TextField();
         TextField firstNameField = new TextField();
         TextField lastNameField = new TextField();
@@ -67,7 +67,7 @@ public class CreatePersonDialog
         Label dateError = new Label();
         Label emailError = new Label();
         
-        //Add elements to grid
+        // Add elements to grid
         grid.add(new Label("Short Name"), 0, 0);
         grid.add(shortNameField, 1, 0);
         grid.add(shortNameError, 2, 0, 10, 1);
@@ -92,10 +92,10 @@ public class CreatePersonDialog
         grid.add(descriptionField, 1, 5);
         grid.add(buttons, 1, 6);
            
-        //"Create" button event
+        // "Create" button event
         btnCreate.setOnAction((event) ->
             {
-                //Get user input
+                // Get user input
                 String firstName = firstNameField.getText();
                 String lastName = lastNameField.getText();
                 String shortName = shortNameField.getText();
@@ -103,7 +103,7 @@ public class CreatePersonDialog
                 String description = descriptionField.getText();
                 String birthdateString = birthdateField.getText();
                 
-                //Validation & Error messages
+                // Validation & Error messages
                 boolean dateCorrect = validateDate(birthdateString, birthdateField,
                         dateError);
                 boolean emailCorrect = validateEmail(email, emailField,  emailError);
@@ -115,9 +115,8 @@ public class CreatePersonDialog
                         "first name");
                 boolean lastNameCorrect = validateName(lastName, lastNameField, lastNameError,
                         "last name");
-                
 
-                //Create new person if all fields are correct
+                // Create new person if all fields are correct
                 if (dateCorrect && emailCorrect && shortNameCorrect && firstNameCorrect 
                         && lastNameCorrect && isShortNameUnique) 
                 {
