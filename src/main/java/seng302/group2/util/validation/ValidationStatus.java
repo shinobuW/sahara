@@ -17,4 +17,3 @@ public enum ValidationStatus
     OUT_OF_RANGE,
     NON_UNIQUE
 }
-

@@ -36,7 +36,7 @@ public class PersonTest extends TestCase
     }
 
     /**
-     * A simple test for the Project constructors & getters.
+     * A simple test for the Person constructors
      */
     public void testPersonConstructors()
     {

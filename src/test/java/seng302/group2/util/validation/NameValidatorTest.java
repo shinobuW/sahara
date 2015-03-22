@@ -5,14 +5,12 @@
  */
 package seng302.group2.util.validation;
 
+import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static seng302.group2.util.validation.ValidationStatus.INVALID;
-import static seng302.group2.util.validation.ValidationStatus.VALID;
 
 /**
  *
@@ -51,8 +49,8 @@ public class NameValidatorTest
     @Test
     public void testValidateName()
     {
-        assertEquals(INVALID, NameValidator.validateName(""));
-        assertEquals(VALID, NameValidator.validateName("Greg"));
+        Assert.assertEquals(ValidationStatus.INVALID, NameValidator.validateName(""));
+        Assert.assertEquals(ValidationStatus.VALID, NameValidator.validateName("Greg"));
     }
     
 }

@@ -5,15 +5,13 @@
  */
 package seng302.group2.util.validation;
 
+import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static seng302.group2.util.validation.ValidationStatus.OUT_OF_RANGE;
-import static seng302.group2.util.validation.ValidationStatus.PATTERN_MISMATCH;
-import static seng302.group2.util.validation.ValidationStatus.VALID;
+
 
 /**
  *
@@ -52,9 +50,10 @@ public class DateValidatorTest
     @Test
     public void testIsValidDateString()
     {
-        assertEquals(PATTERN_MISMATCH, DateValidator.isValidDateString(""));
-        assertEquals(OUT_OF_RANGE, DateValidator.isValidDateString("12/12/9999"));
-        assertEquals(VALID, DateValidator.isValidDateString("20/03/2015"));
+        Assert.assertEquals(ValidationStatus.PATTERN_MISMATCH, DateValidator.isValidDateString(""));
+        Assert.assertEquals(ValidationStatus.OUT_OF_RANGE,
+                DateValidator.isValidDateString("12/12/9999"));
+        Assert.assertEquals(ValidationStatus.VALID, DateValidator.isValidDateString("20/03/2015"));
     }
     
 }

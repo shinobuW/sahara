@@ -8,9 +8,6 @@ package seng302.group2.util.validation;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
-import static seng302.group2.util.validation.ValidationStatus.OUT_OF_RANGE;
-import static seng302.group2.util.validation.ValidationStatus.PATTERN_MISMATCH;
-import static seng302.group2.util.validation.ValidationStatus.VALID;
 
 /**
  *
@@ -29,16 +26,16 @@ public class DateValidator
             Date parsedBirthDate = datePattern.parse(birthDate);
             if (parsedBirthDate.after( Date.from(Instant.now())))
             {
-                return OUT_OF_RANGE;
+                return ValidationStatus.OUT_OF_RANGE;
             }
             else
             {
-                return VALID;
+                return ValidationStatus.VALID;
             }
         }
         catch (Exception ex)
         {
-            return PATTERN_MISMATCH;
+            return ValidationStatus.PATTERN_MISMATCH;
         }
 
     }

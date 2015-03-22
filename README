@@ -1,6 +1,24 @@
-You must first have Java installed, you can get it at 
+-------------------------
+SENG302: Group 2
+Shinobi Solutions: Sahara
+-------------------------
 
-To run the program on linux:
-Double click run.sh and click run
+Running Sahara
+--------------
+The project may be run in two ways:
+1) Opening the "program\project-2-1.0-SNAPSHOT-launcher.jar" with Java Runtime 8 - the build artifact
+	On linux, the .jar file may need to be marked as executable before running (chmod +X)
+2) Executing the OS script launchers found in "program\bin\" - built with Appsembler
+	.bat for Windows, and .sh for Linux
+	Again, on linux, the .sh file may need to be marked as executable before running (chmod +X)
 
-To run the program on windows:
+
+User Guide Documentation
+------------------------
+The user guide can be found at this link: https://docs.google.com/document/d/1Gvh4mk2yfHKMIPcY9Pbi6zXbqfUQ7aNOuFC8xzdiovE/edit?usp=sharing
+For convenience, the user guide has also been downloaded as a PDF and added to the /doc directory, though this may be outdated as changes are made on the online document
+
+
+Other Documentation
+-------------------
+The user acceptance/manual testing document can also be found in the /doc directory as an .xlsx Excel file, and as a view-only PDF

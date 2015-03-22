@@ -5,15 +5,12 @@
  */
 package seng302.group2.util.validation;
 
+import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
-import static seng302.group2.util.validation.ValidationStatus.INVALID;
-import static seng302.group2.util.validation.ValidationStatus.NON_UNIQUE;
-import static seng302.group2.util.validation.ValidationStatus.VALID;
 
 /**
  *
@@ -52,9 +49,10 @@ public class ShortNameValidatorTest
     @Test
     public void testIsValidPerson()
     {
-        assertEquals(INVALID, ShortNameValidator.validateShortName(""));
-        assertEquals(NON_UNIQUE, ShortNameValidator.validateShortName("btm38"));
-        assertEquals(VALID, ShortNameValidator.validateShortName("new"));
+        Assert.assertEquals(ValidationStatus.INVALID, ShortNameValidator.validateShortName(""));
+        Assert.assertEquals(ValidationStatus.NON_UNIQUE,
+                ShortNameValidator.validateShortName("btm38"));
+        Assert.assertEquals(ValidationStatus.VALID, ShortNameValidator.validateShortName("new"));
     }
     
 }

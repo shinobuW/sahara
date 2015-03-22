@@ -7,9 +7,7 @@ package seng302.group2.util.validation;
 
 import seng302.group2.Global;
 import seng302.group2.project.team.person.Person;
-import static seng302.group2.util.validation.ValidationStatus.INVALID;
-import static seng302.group2.util.validation.ValidationStatus.NON_UNIQUE;
-import static seng302.group2.util.validation.ValidationStatus.VALID;
+
 
 /**
  *
@@ -19,14 +17,14 @@ public class ShortNameValidator
 {
     /**
      * Checks whether a person's short name is valid (unique and not null/empty).
-     * @param shortName
-     * @return 
+     * @param shortName The short name to validate
+     * @return Validation status representing if the short name is valid
      */
     public static ValidationStatus validateShortName(String shortName)
     {
-        if (NameValidator.validateName(shortName) == INVALID)
+        if (NameValidator.validateName(shortName) == ValidationStatus.INVALID)
         {
-            return INVALID;
+            return ValidationStatus.INVALID;
         }
         
         for (Object object : Global.currentProject.getPeople())
@@ -36,7 +34,7 @@ public class ShortNameValidator
                 Person person = (Person) object;
                 if (person.getShortName().equals(shortName))
                 {
-                    return NON_UNIQUE;
+                    return ValidationStatus.NON_UNIQUE;
                 }
             }
             catch (Exception ex)
@@ -44,6 +42,6 @@ public class ShortNameValidator
                 continue;
             }
         }
-        return VALID;
+        return ValidationStatus.VALID;
     }
 }

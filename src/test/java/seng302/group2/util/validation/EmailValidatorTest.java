@@ -6,17 +6,16 @@
 package seng302.group2.util.validation;
 
 import java.util.Date;
+import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.project.Project;
 import seng302.group2.project.team.person.Person;
-import static seng302.group2.util.validation.ValidationStatus.INVALID;
-import static seng302.group2.util.validation.ValidationStatus.VALID;
+
 
 /**
  *
@@ -59,8 +58,8 @@ public class EmailValidatorTest
     @Test
     public void testValidEmail()
     {
-        assertEquals(INVALID, EmailValidator.validEmail(""));
-        assertEquals(VALID, EmailValidator.validEmail("abc@gmail.com"));
+        Assert.assertEquals(ValidationStatus.INVALID, EmailValidator.validEmail(""));
+        Assert.assertEquals(ValidationStatus.VALID, EmailValidator.validEmail("abc@gmail.com"));
     }
     
 }

@@ -193,6 +193,8 @@ public class Project extends TreeViewItem implements Serializable
     
     /**
      * Saves the current project as a file specified by the user
+     * @param project The project to save
+     * @param saveAs If acting as save as
      * @return The corresponding SaveLoadResult status of the process
      */
     public static SaveLoadResult saveProject(Project project, boolean saveAs)
@@ -310,7 +312,7 @@ public class Project extends TreeViewItem implements Serializable
     
     /**
      * Adds a Person to the Project's list of Persons
-     * @param person 
+     * @param person The person to add
      */
     public void addPerson(Person person)
     {
@@ -335,12 +337,12 @@ public class Project extends TreeViewItem implements Serializable
         ObservableList<TreeViewItem> root = observableArrayList();
         
         // Make the categories
-        Category people = new Category("People");
+        Category peopleCategory = new Category("People");
         //Category teams = new Category("Teams");
         //Category skills = new Category("Skills");
         
         // Add the categories
-        root.add(people); //teams.add(people)
+        root.add(peopleCategory); //teams.add(people)
         //root.add(teams);
         //root.add(skills);
         

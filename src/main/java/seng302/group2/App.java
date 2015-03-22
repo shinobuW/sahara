@@ -83,7 +83,7 @@ public class App extends Application
     
     /**
      * The GUI setup and launch of the project
-     * @param primaryStage 
+     * @param primaryStage primary stage
      */
     @Override
     public void start(Stage primaryStage)
@@ -149,7 +149,7 @@ public class App extends Application
     
     /**
      * The main entry of the project
-     * @param args 
+     * @param args arguments
      */
     public static void main(String[] args)
     {

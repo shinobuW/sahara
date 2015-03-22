@@ -154,7 +154,7 @@ public class Person extends TreeViewItem implements Serializable
     
      /**
      * Sets a person's short name
-     * @param shortName
+     * @param shortName the short name to set
      */
     public void setShortName(String shortName)
     {
@@ -163,7 +163,7 @@ public class Person extends TreeViewItem implements Serializable
     
     /**
      * Sets a person's first name
-     * @param firstName
+     * @param firstName the first name to set
      */
     public void setFirstName(String firstName)
     {
@@ -172,7 +172,7 @@ public class Person extends TreeViewItem implements Serializable
     
     /**
      * Gets a person's last name
-     * @param lastName
+     * @param lastName the last name to set
      */
     public void setLastName(String lastName)
     {
@@ -181,7 +181,7 @@ public class Person extends TreeViewItem implements Serializable
     
     /**
      * Gets a person's email
-     * @param email
+     * @param email the email to set
      */
     public void setEmail(String email)
     {
@@ -190,7 +190,7 @@ public class Person extends TreeViewItem implements Serializable
     
     /**
      * Gets a person's description
-     * @param description
+     * @param description the description to set
      */
     public void setDescription(String description)
     {
@@ -199,7 +199,7 @@ public class Person extends TreeViewItem implements Serializable
     
     /**
      * Gets a person's birth date
-     * @param birthDate
+     * @param birthDate the birth date to set
      */
     public void setBirthDate(Date birthDate)
     {

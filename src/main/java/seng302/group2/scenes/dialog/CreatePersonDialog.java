@@ -175,6 +175,9 @@ public class CreatePersonDialog
     /**
      * Checks whether the birth date format is correct
      * Shows error message and red borders if incorrect
+     * @param birthDateString the birth date string to try parse
+     * @param dateField the date GUI field
+     * @param birthdateError the birth date error GUI label
      * @return true if correct format
     **/
     public static boolean validateDate(String birthDateString, TextField dateField,

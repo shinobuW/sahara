@@ -245,6 +245,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
     /**
      * Removes the listener recursively.
      * @param item The tree item.
+     * @return the item removed
      */
     private TreeItem<T> removeRecursively(TreeItem<T> item) 
     {

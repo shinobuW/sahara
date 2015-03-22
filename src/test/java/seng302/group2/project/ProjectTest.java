@@ -37,9 +37,7 @@ public class ProjectTest extends TestCase
         return new TestSuite(ProjectTest.class);
     }
 
-    /**
-     * A simple test for the Project constructors & getters.
-     */
+    // A simple test for the Project constructors & getters.
     public void testProjectConstructors()
     {
         Project proj = new Project();
@@ -57,9 +55,7 @@ public class ProjectTest extends TestCase
         assertEquals("aShortName", proj2.toString());
     }
     
-    /**
-     * Tests Projects' setter methods.
-     */
+    // Tests Projects' setter methods.
     public void testProjectSetters()
     {
         Project proj = new Project();

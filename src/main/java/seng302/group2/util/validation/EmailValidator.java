@@ -5,9 +5,6 @@
  */
 package seng302.group2.util.validation;
 
-import static seng302.group2.util.validation.ValidationStatus.INVALID;
-import static seng302.group2.util.validation.ValidationStatus.VALID;
-
 /**
  *
  * @author Jordane
@@ -31,11 +28,11 @@ public class EmailValidator
         java.util.regex.Matcher matcher = pattern.matcher(email);
         if (matcher.matches())
         {
-            return VALID;
+            return ValidationStatus.VALID;
         }
         else
         {
-            return INVALID;
+            return ValidationStatus.INVALID;
         }
     }
 }

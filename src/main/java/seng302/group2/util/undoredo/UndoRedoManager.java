@@ -103,7 +103,7 @@ public class UndoRedoManager
     
     /**
      * Adds a new item into the undo stack
-     * @param item 
+     * @param item The undoable item to add to the stack
      */
     public void add(UndoableItem item)
     {

@@ -45,6 +45,14 @@
                 <exec.executable>java</exec.executable>
             </properties>
         </action>
+        <action>
+            <actionName>CUSTOM-Clean build site</actionName>
+            <displayName>Clean build site</displayName>
+            <goals>
+                <goal>clean:clean</goal>
+                <goal>site:site</goal>
+            </goals>
+        </action>
         
         
         
