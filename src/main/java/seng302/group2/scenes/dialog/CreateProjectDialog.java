@@ -11,11 +11,13 @@ import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.Global;
 import seng302.group2.project.Project;
+import seng302.group2.scenes.control.LimitedTextField;
 
 /**
  *
  * @author David Moseley drm127
  */
+@SuppressWarnings("deprecation")
 public class CreateProjectDialog 
 {
     public static void show()
@@ -25,7 +27,7 @@ public class CreateProjectDialog
         grid.setHgap(10);
         grid.setVgap(10);
         
-        TextField shortNameField = new TextField();
+        TextField shortNameField = new LimitedTextField(20);
         TextField longNameField = new TextField();
         TextArea descriptionField = new TextArea();
         descriptionField.setPrefRowCount(15);

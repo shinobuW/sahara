@@ -19,6 +19,7 @@ import javafx.scene.layout.HBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
 import seng302.group2.project.team.person.Person;
+import seng302.group2.scenes.control.LimitedTextField;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.util.validation.EmailValidator;
 import seng302.group2.util.validation.NameValidator;
@@ -27,11 +28,11 @@ import static seng302.group2.util.validation.ValidationStatus.OUT_OF_RANGE;
 import static seng302.group2.util.validation.ValidationStatus.PATTERN_MISMATCH;
 import static seng302.group2.util.validation.ValidationStatus.VALID;
 
-
 /**
  *Class to create a pop up dialog for creating a person
  * @author swi67
  */
+@SuppressWarnings("deprecation")
 public class CreatePersonDialog
 {
     public static void show()
@@ -45,7 +46,7 @@ public class CreatePersonDialog
         grid.setPadding(insets);
         
         // Initialise Input fields
-        TextField shortNameField = new TextField();
+        TextField shortNameField = new LimitedTextField(20);
         TextField firstNameField = new TextField();
         TextField lastNameField = new TextField();
         TextField emailField = new TextField();

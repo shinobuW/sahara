@@ -24,9 +24,9 @@ import seng302.group2.project.Project.SaveLoadResult;
  * The main menu bar of the project window(s).
  * @author Jordane Lew (jml168)
  */
+@SuppressWarnings("deprecation")
 public class MainMenuBar
 {
-    
     private static MenuItem createProjectItem() 
     {
         MenuItem newProjectItem = new MenuItem("Project");

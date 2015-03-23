@@ -20,6 +20,7 @@ import seng302.group2.project.Project;
  * A class for displaying the Project Scene
  * @author crw73
  */
+@SuppressWarnings("deprecation")
 public class ProjectScene
 {
     
