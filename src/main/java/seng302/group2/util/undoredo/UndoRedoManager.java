@@ -57,6 +57,7 @@ public class UndoRedoManager
         }
         catch (EmptyStackException ex)
         {
+            System.out.println("The undo stack is empty");
         }
         return false;
     }
@@ -75,6 +76,7 @@ public class UndoRedoManager
         }
         catch (EmptyStackException ex)
         {
+            System.out.println("The redo stack is empty");
         }
         return false;
     }
@@ -87,6 +89,8 @@ public class UndoRedoManager
         UndoableItem item = undoStack.pop();
         UndoRedoPerformer.undo(item);
         redoStack.push(item);
+        Global.currentProject.setChanged();
+        App.refreshWindowTitle();
     }
     
     
@@ -98,6 +102,8 @@ public class UndoRedoManager
         UndoableItem item = redoStack.pop();
         UndoRedoPerformer.redo(item);
         undoStack.push(item);
+        Global.currentProject.setChanged();
+        App.refreshWindowTitle();
     }
     
     

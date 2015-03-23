@@ -20,7 +20,6 @@ import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -34,6 +33,7 @@ import seng302.group2.util.undoredo.UndoableItem;
  * Basic project class that acts as the root object for Sahara and represents a real-world project
  * @author Jordane Lew (jml168)
  */
+@SuppressWarnings("deprecation")
 public class Project extends TreeViewItem implements Serializable
 {
     private String shortName;
@@ -202,7 +202,7 @@ public class Project extends TreeViewItem implements Serializable
         // If there is no current project open, display a dialog and skip saving
         if (project == null)
         {
-            Action response = Dialogs.create()
+            Dialogs.create()
                     .title("No open project")
                     .message("There is currently no project open to save")
                     .showWarning();
@@ -243,11 +243,12 @@ public class Project extends TreeViewItem implements Serializable
             gson.toJson(project, writer);
             writer.close();
             Global.currentProject.setUnchanged();
+            App.refreshWindowTitle();
             return SaveLoadResult.SUCCESS;
         }
         catch (IOException e)
         {
-            Action response = Dialogs.create()
+            Dialogs.create()
                 .title("Error Saving")
                 .message("An error occurred while trying to save the file")
                 .showException(e);
@@ -283,7 +284,7 @@ public class Project extends TreeViewItem implements Serializable
             }
             catch (FileNotFoundException e)
             {
-                Action response = Dialogs.create()
+                Dialogs.create()
                     .title("File Not Found")
                     .message("The specified file could not be found.")
                     .showWarning();
@@ -291,7 +292,7 @@ public class Project extends TreeViewItem implements Serializable
             }
             catch (IOException e)
             {
-                Action response = Dialogs.create()
+                Dialogs.create()
                     .title("Error Loading")
                     .message("An error occurred while trying to load the file.")
                     .showException(e);
