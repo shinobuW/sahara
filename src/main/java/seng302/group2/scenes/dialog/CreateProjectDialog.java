@@ -12,6 +12,7 @@ import org.controlsfx.dialog.Dialogs;
 import seng302.group2.Global;
 import seng302.group2.project.Project;
 import seng302.group2.scenes.control.LimitedTextField;
+import seng302.group2.scenes.control.RequiredField;
 
 /**
  *
@@ -41,11 +42,11 @@ public class CreateProjectDialog
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnCreate, btnCancel);
         
-        grid.add(new Label("Short Name: "), 0, 0);
+        grid.add(new RequiredField(new Label("Short Name")), 0, 0);
         grid.add(shortNameField, 1, 0);
-        grid.add(new Label("Longer Name: "), 0, 1);
+        grid.add(new RequiredField(new Label("Longer Name")), 0, 1);
         grid.add(longNameField, 1, 1);
-        grid.add(new Label("Project Description: "), 0, 2);
+        grid.add(new RequiredField(new Label("Project Description")), 0, 2);
         grid.add(descriptionField, 1, 2);
         grid.add(buttons, 1, 3);
         

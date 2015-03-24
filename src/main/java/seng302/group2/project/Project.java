@@ -40,7 +40,7 @@ public class Project extends TreeViewItem implements Serializable
     private String longName;
     private String description;
     private String lastSaveLocation = null;
-    private transient boolean hasUnsavedChanges = false;
+    private transient boolean hasUnsavedChanges = true;
     private transient ObservableList<TreeViewItem> people = observableArrayList();
     private ArrayList<Person> serializablePeople = new ArrayList<>();
     
@@ -385,6 +385,9 @@ public class Project extends TreeViewItem implements Serializable
         
         // Also for any other deeper observables
         // eg. for (TreeViewItem item : Global.currentProject.team.people) {...}
+
+        // Unset saved changes flag, we just opened the project.
+        Global.currentProject.hasUnsavedChanges = false;
     }
     
     

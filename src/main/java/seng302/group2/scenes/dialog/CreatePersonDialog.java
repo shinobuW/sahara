@@ -20,13 +20,11 @@ import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.control.LimitedTextField;
+import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.util.validation.EmailValidator;
 import seng302.group2.util.validation.NameValidator;
 import seng302.group2.util.validation.ShortNameValidator;
-import static seng302.group2.util.validation.ValidationStatus.OUT_OF_RANGE;
-import static seng302.group2.util.validation.ValidationStatus.PATTERN_MISMATCH;
-import static seng302.group2.util.validation.ValidationStatus.VALID;
 
 /**
  *Class to create a pop up dialog for creating a person
@@ -69,23 +67,23 @@ public class CreatePersonDialog
         Label emailError = new Label();
         
         // Add elements to grid
-        grid.add(new Label("Short Name"), 0, 0);
+        grid.add(new RequiredField(new Label("Short Name")), 0, 0);
         grid.add(shortNameField, 1, 0);
         grid.add(shortNameError, 2, 0, 10, 1);
         
-        grid.add(new Label("First Name"), 0, 1);
+        grid.add(new RequiredField(new Label("First Name")), 0, 1);
         grid.add(firstNameField, 1, 1);
         grid.add(firstNameError, 2, 1, 10, 1);
         
-        grid.add(new Label("Last Name"), 0, 2);
+        grid.add(new RequiredField(new Label("Last Name")), 0, 2);
         grid.add(lastNameField, 1, 2);
         grid.add(lastNameError, 2, 2, 10, 1);
         
-        grid.add(new Label("Email"), 0, 3);
+        grid.add(new RequiredField(new Label("Email")), 0, 3);
         grid.add(emailField, 1, 3);
         grid.add(emailError, 2, 3, 10, 1);
         
-        grid.add(new Label("Birth Date"), 0, 4);
+        grid.add(new RequiredField(new Label("Birth Date")), 0, 4);
         grid.add(birthdateField, 1, 4);
         grid.add(dateError, 2, 4, 18, 1);
         
