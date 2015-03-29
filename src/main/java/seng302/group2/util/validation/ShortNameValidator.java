@@ -26,6 +26,10 @@ public class ShortNameValidator
         {
             return ValidationStatus.INVALID;
         }
+        if (shortName.length() > 20)
+        {
+            return ValidationStatus.OUT_OF_RANGE;
+        }
         
         for (Object object : Global.currentProject.getPeople())
         {

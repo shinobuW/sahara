@@ -11,6 +11,11 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import seng302.group2.Global;
+import seng302.group2.project.Project;
+import seng302.group2.project.team.person.Person;
+
+import java.util.Date;
 
 /**
  *
@@ -22,26 +27,16 @@ public class ShortNameValidatorTest
     public ShortNameValidatorTest()
     {
     }
-    
+
     @BeforeClass
     public static void setUpClass()
     {
+        Global.currentProject = new Project();
+        Person pers = new Person("btm38", "McNaughton", "Bronson", "btm38@gmail.com",
+                "A really cool dude", new Date(1994, 12, 19));
+        Global.currentProject.addPerson(pers);
     }
-    
-    @AfterClass
-    public static void tearDownClass()
-    {
-    }
-    
-    @Before
-    public void setUp()
-    {
-    }
-    
-    @After
-    public void tearDown()
-    {
-    }
+
 
     /**
      * Test of isValidPerson method, of class ShortNameValidator.
@@ -53,6 +48,8 @@ public class ShortNameValidatorTest
         Assert.assertEquals(ValidationStatus.NON_UNIQUE,
                 ShortNameValidator.validateShortName("btm38"));
         Assert.assertEquals(ValidationStatus.VALID, ShortNameValidator.validateShortName("new"));
+        Assert.assertEquals(ValidationStatus.OUT_OF_RANGE, ShortNameValidator.validateShortName("this is much more" +
+                "than 20 characters long"));
     }
     
 }

@@ -250,11 +250,15 @@ public class CreatePersonDialog
                 shortNameField.setStyle(null);   
                 return true;
             case NON_UNIQUE:
-                shortNameError.setText("*Short Name taken");
+                shortNameError.setText("*Short name taken");
                 shortNameField.setStyle("-fx-border-color: red;");
                 return false;
             case INVALID:
                 shortNameError.setText("*Enter a short name");
+                shortNameField.setStyle("-fx-border-color: red;");
+                return false;
+            case OUT_OF_RANGE:
+                shortNameError.setText("*Short name must be 20 characters or less");
                 shortNameField.setStyle("-fx-border-color: red;");
                 return false;
             default:

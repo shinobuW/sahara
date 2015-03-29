@@ -11,6 +11,11 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import seng302.group2.Global;
+import seng302.group2.project.Project;
+import seng302.group2.project.team.person.Person;
+
+import java.util.Date;
 
 /**
  *
@@ -22,26 +27,7 @@ public class NameValidatorTest
     public NameValidatorTest()
     {
     }
-    
-    @BeforeClass
-    public static void setUpClass()
-    {
-    }
-    
-    @AfterClass
-    public static void tearDownClass()
-    {
-    }
-    
-    @Before
-    public void setUp()
-    {
-    }
-    
-    @After
-    public void tearDown()
-    {
-    }
+
 
     /**
      * Test of validateName method, of class NameValidator.
