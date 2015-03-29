@@ -86,11 +86,12 @@ public class UndoRedoManager
      */
     public void undo()
     {
+        if(!canUndo())
+            return;
         UndoableItem item = undoStack.pop();
         UndoRedoPerformer.undo(item);
         redoStack.push(item);
-        Global.currentProject.setChanged();
-        App.refreshWindowTitle();
+        Global.setCurrentProjectChanged();
     }
     
     
@@ -99,11 +100,12 @@ public class UndoRedoManager
      */
     public void redo()
     {
+        if(!canRedo())
+            return;
         UndoableItem item = redoStack.pop();
         UndoRedoPerformer.redo(item);
         undoStack.push(item);
-        Global.currentProject.setChanged();
-        App.refreshWindowTitle();
+        Global.setCurrentProjectChanged();
     }
     
     
@@ -116,8 +118,26 @@ public class UndoRedoManager
         undoStack.add(item);
         //redoStack.empty();
         redoStack = new Stack<>();
-        Global.currentProject.setChanged();
-        App.refreshWindowTitle();
+        Global.setCurrentProjectChanged();
     }
 
+
+    /**
+     * Gets the current state of the undo stack
+     * @return The current undo stack
+     */
+    public Stack getUndoStack()
+    {
+        return undoStack;
+    }
+
+
+    /**
+     * Gets the current state of the redo stack
+     * @return The current redo stack
+     */
+    public Stack getRedoStack()
+    {
+        return redoStack;
+    }
 }

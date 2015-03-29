@@ -18,4 +18,25 @@ public final class Global
     public static Project currentProject = new Project();
     public static TreeItem selectedTreeItem = new TreeItem();
     public static UndoRedoManager undoRedoMan = new UndoRedoManager();
+
+    public static boolean appRunning()
+    {
+        try
+        {
+            App.refreshWindowTitle();
+        }
+        catch (Exception ex)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public static void setCurrentProjectChanged()
+    {
+        if (Global.appRunning()) {
+            currentProject.setChanged();
+            App.refreshWindowTitle();
+        }
+    }
 }
