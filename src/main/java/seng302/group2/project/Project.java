@@ -242,8 +242,7 @@ public class Project extends TreeViewItem implements Serializable
             Gson gson = new GsonBuilder().create();
             gson.toJson(project, writer);
             writer.close();
-            Global.currentProject.setUnchanged();
-            App.refreshWindowTitle();
+            Global.setCurrentProjectUnchanged();
             return SaveLoadResult.SUCCESS;
         }
         catch (IOException e)
@@ -300,7 +299,10 @@ public class Project extends TreeViewItem implements Serializable
             }
             
             Project.postDeserialization();
-            App.refreshMainScene();
+            if (Global.appRunning())
+            {
+                App.refreshMainScene();
+            }
             Global.undoRedoMan.emptyAll();
             return SaveLoadResult.SUCCESS;
         }

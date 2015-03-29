@@ -35,10 +35,6 @@ public class UndoRedoManager
      */
     public void emptyAll()
     {
-        /*
-        undoStack.empty();
-        redoStack.empty();
-        */
         undoStack =  new Stack<>();
         redoStack = new Stack<>();
     }
@@ -86,8 +82,10 @@ public class UndoRedoManager
      */
     public void undo()
     {
-        if(!canUndo())
+        if (!canUndo())
+        {
             return;
+        }
         UndoableItem item = undoStack.pop();
         UndoRedoPerformer.undo(item);
         redoStack.push(item);
@@ -100,8 +98,10 @@ public class UndoRedoManager
      */
     public void redo()
     {
-        if(!canRedo())
+        if (!canRedo())
+        {
             return;
+        }
         UndoableItem item = redoStack.pop();
         UndoRedoPerformer.redo(item);
         undoStack.push(item);
