@@ -2,15 +2,15 @@ package seng302.group2.scenes.dialog;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
+import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
 import seng302.group2.Global;
 import seng302.group2.project.Project;
+import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.LimitedTextField;
 import seng302.group2.scenes.control.RequiredField;
 
@@ -24,14 +24,15 @@ public class CreateProjectDialog
     public static void show()
     {
         Dialog dialog = new Dialog(null, "Create New Project");
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
+        VBox grid = new VBox();
+        grid.spacingProperty().setValue(10);
+        Insets insets = new Insets(20, 20, 20, 20);
+        grid.setPadding(insets);
         
         TextField shortNameField = new LimitedTextField(20);
         TextField longNameField = new TextField();
         TextArea descriptionField = new TextArea();
-        descriptionField.setPrefRowCount(15);
+        descriptionField.setPrefRowCount(5);
         descriptionField.setWrapText(true);
         
         Button btnCreate = new Button("Create");
@@ -42,13 +43,10 @@ public class CreateProjectDialog
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnCreate, btnCancel);
         
-        grid.add(new RequiredField(new Label("Short Name")), 0, 0);
-        grid.add(shortNameField, 1, 0);
-        grid.add(new RequiredField(new Label("Longer Name")), 0, 1);
-        grid.add(longNameField, 1, 1);
-        grid.add(new RequiredField(new Label("Project Description")), 0, 2);
-        grid.add(descriptionField, 1, 2);
-        grid.add(buttons, 1, 3);
+        grid.getChildren().add(new RequiredField("Short Name"));
+        grid.getChildren().add(new RequiredField("Long Name"));
+        grid.getChildren().add(new CustomTextArea("Project Description"));
+        grid.getChildren().add(buttons);
         
         btnCreate.setOnAction((event) ->
             {
@@ -85,19 +83,7 @@ public class CreateProjectDialog
     {
         int valid = 0;
         
-        if (shortName.equals("") || longName.equals("") || description.equals(""))
-        {
-            Dialogs.create()
-                .title("Need more info!")
-                .message("You must enter a short name, long name, and"
-                        + " description for your new project.")
-                .showInformation();
-        }
-        else
-        {
-            valid = 1;
-        }
-        
+        valid = 1;
         return valid;
         
     }

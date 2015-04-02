@@ -14,11 +14,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
 import seng302.group2.project.team.person.Person;
+import seng302.group2.scenes.control.CustomTextArea;
+import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.LimitedTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.util.validation.DateValidator;
@@ -37,9 +39,8 @@ public class CreatePersonDialog
     {
         // Initialise Dialog and GridPane
         Dialog dialog = new Dialog(null, "Create New Person");
-        GridPane grid = new GridPane();
-        grid.setHgap(20);
-        grid.setVgap(10);
+        VBox grid = new VBox();
+        grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
         grid.setPadding(insets);
         
@@ -67,35 +68,31 @@ public class CreatePersonDialog
         Label emailError = new Label();
         
         // Add elements to grid
-        grid.add(new RequiredField(new Label("Short Name")), 0, 0);
-        grid.add(shortNameField, 1, 0);
-        grid.add(shortNameError, 2, 0, 10, 1);
+        RequiredField shortNameCustomField = new RequiredField("Short Name");
+        RequiredField firstNameCustomField = new RequiredField("First Name");
+        RequiredField lastNameCustomField = new RequiredField("Last Name");
+        CustomTextField emailTextField = new CustomTextField("Email");
+        CustomTextField customBirthDate = new CustomTextField("Birth Date");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Description");
         
-        grid.add(new RequiredField(new Label("First Name")), 0, 1);
-        grid.add(firstNameField, 1, 1);
-        grid.add(firstNameError, 2, 1, 10, 1);
-        
-        grid.add(new RequiredField(new Label("Last Name")), 0, 2);
-        grid.add(lastNameField, 1, 2);
-        grid.add(lastNameError, 2, 2, 10, 1);
-        
-        grid.add(new RequiredField(new Label("Email")), 0, 3);
-        grid.add(emailField, 1, 3);
-        grid.add(emailError, 2, 3, 10, 1);
-        
-        grid.add(new RequiredField(new Label("Birth Date")), 0, 4);
-        grid.add(birthdateField, 1, 4);
-        grid.add(dateError, 2, 4, 18, 1);
-        
-        grid.add(new Label("Description"), 0, 5);
-        grid.add(descriptionField, 1, 5);
-        grid.add(buttons, 1, 6);
+        grid.getChildren().add(shortNameCustomField);
+        grid.getChildren().add(firstNameCustomField);  
+        grid.getChildren().add(lastNameCustomField);  
+        grid.getChildren().add(emailTextField);  
+        grid.getChildren().add(customBirthDate);  
+        grid.getChildren().add(descriptionTextArea);  
+       
+        grid.getChildren().add(buttons);
            
         // "Create" button event
         btnCreate.setOnAction((event) ->
             {
+                validateShortName(shortNameCustomField);
+                validateName(firstNameCustomField);
+                validateName(lastNameCustomField);
+                        
                 // Get user input
-                String firstName = firstNameField.getText();
+                /*String firstName = firstNameField.getText();
                 String lastName = lastNameField.getText();
                 String shortName = shortNameField.getText();
                 String email = emailField.getText();
@@ -128,7 +125,9 @@ public class CreatePersonDialog
                 else 
                 {
                     btnCreate.disableProperty();
-                }
+                }*/
+                
+                
             });
         
         btnCancel.setOnAction((event) ->
@@ -212,22 +211,18 @@ public class CreatePersonDialog
      * @param nameType the name type
      * @return If the name is valid
      */
-    public static boolean validateName(String name, TextField nameTextField,
-            Label error, String nameType) 
+    public static boolean validateName(RequiredField nameField) 
     {
-        switch (NameValidator.validateName(name))
+        switch (NameValidator.validateName(nameField.getText()))
         {
             case VALID:
-                nameTextField.setStyle(null);
-                error.setText(null);
+                nameField.hideErrorField();
                 return true;
             case INVALID:
-                error.setText("*Enter a " + nameType);
-                nameTextField.setStyle("-fx-border-color: red;");
+                nameField.showErrorField("* Please insert a name");
                 return false;
             default:
-                error.setText("*Not a valid " + nameType);
-                nameTextField.setStyle("-fx-border-color: red;");
+                nameField.showErrorField("* Not a valid name");
                 return false;
         }
     }
@@ -235,35 +230,30 @@ public class CreatePersonDialog
     
     /**
      * Checks whether a given short name is valid (unique and not null/empty)
-     * @param shortName the short name
-     * @param shortNameError the error label
-     * @param shortNameField the text field
+     * @param shortNameField is a short name field
      * @return If the short name is valid
-     */
-    public static boolean validateShortName(String shortName, Label shortNameError,
-            TextField shortNameField) 
+     */   
+    
+    public static boolean validateShortName(RequiredField shortNameField) 
     {
-        switch (ShortNameValidator.validateShortName(shortName))
+        switch (ShortNameValidator.validateShortName(shortNameField.getText()))
         {
             case VALID:
-                shortNameError.setText(null);
-                shortNameField.setStyle(null);   
+                //shortNameError.setText(null);
+                //shortNameField.setStyle(null); 
+                shortNameField.hideErrorField();
                 return true;
             case NON_UNIQUE:
-                shortNameError.setText("*Short name taken");
-                shortNameField.setStyle("-fx-border-color: red;");
+                shortNameField.showErrorField("* Short name has already been taken");
                 return false;
             case INVALID:
-                shortNameError.setText("*Enter a short name");
-                shortNameField.setStyle("-fx-border-color: red;");
+                shortNameField.showErrorField("* Not a valid short name");
                 return false;
             case OUT_OF_RANGE:
-                shortNameError.setText("*Short name must be 20 characters or less");
-                shortNameField.setStyle("-fx-border-color: red;");
+                shortNameField.showErrorField("* Short names must be less than 20 characters long");
                 return false;
             default:
-                shortNameError.setText("*Not a valid short name");
-                shortNameField.setStyle("-fx-border-color: red;");
+                shortNameField.showErrorField("* Not a valid short name");
                 return false;
         }
     }

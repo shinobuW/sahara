@@ -1,6 +1,5 @@
 package seng302.group2.scenes.control;
 
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -13,31 +12,49 @@ import javafx.scene.paint.Color;
 public class RequiredField extends VBox
 {
     String errorMessage = "";
-    TextField errorMessageText = new TextField();
+    TextField inputText = new TextField();
+    Label errorMessageText = new Label();
 
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
      * asterisk.
      * @param node The node field that is required
      */
-    public RequiredField(Node node)
+    public RequiredField(String name)
     {
         this.errorMessageText.setText(errorMessage);
 
-        HBox detail = new HBox();
-        Label aster = new Label("*");
+        HBox labelBox = new HBox();
+        labelBox.setPrefWidth(175);
+        labelBox.spacingProperty().setValue(0);
+        
+        Label aster = new Label(" * ");
         aster.setTextFill(Color.web("#ff0000"));
-        detail.getChildren().addAll(node, aster);
+        
+        errorMessageText.setTextFill(Color.web("#ff0000"));
+        
+        labelBox.getChildren().addAll(new Label(name), aster);
+        
+        HBox entry = new HBox();
+        entry.setPrefWidth(175);
+        entry.getChildren().addAll(labelBox, inputText);
 
-        this.getChildren().add(node);
+        this.getChildren().add(entry);
     }
 
+    
+    public String getText()
+    {
+        return this.inputText.getText();
+    }
+    
 
     /**
      * Shows the error field
      */
     public void showErrorField()
     {
+        inputText.setStyle("-fx-border-color: red;");
         this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
         this.getChildren().add(errorMessageText);
     }
@@ -59,6 +76,7 @@ public class RequiredField extends VBox
      */
     public void hideErrorField()
     {
+        inputText.setStyle(null);
         this.getChildren().remove(errorMessageText);
     }
 }
