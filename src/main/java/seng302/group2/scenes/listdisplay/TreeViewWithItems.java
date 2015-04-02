@@ -117,19 +117,22 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     //System.out.println(App.selectedTreeItem.getValue().getClass());  // testing
                     
                     //Updates the display pane to be pane for the selectItem
-                    if (Global.selectedTreeItem.getValue() instanceof Person)
+                    if (Global.appRunning())
                     {
-                        App.content.getChildren().remove(App.informationGrid);
-                        PersonScene.getPersonScene();
-                        App.content.getChildren().add(App.informationGrid);
+                        if (Global.selectedTreeItem.getValue() instanceof Person)
+                        {
+                            App.content.getChildren().remove(App.informationGrid);
+                            PersonScene.getPersonScene();
+                            App.content.getChildren().add(App.informationGrid);
 
-                    }
-                    else if (Global.selectedTreeItem.getValue() instanceof Project)
-                    {
-                        App.content.getChildren().remove(App.informationGrid);
-                        ProjectScene.getProjectScene();
-                        App.content.getChildren().add(App.informationGrid);
+                        }
+                        else if (Global.selectedTreeItem.getValue() instanceof Project)
+                        {
+                            App.content.getChildren().remove(App.informationGrid);
+                            ProjectScene.getProjectScene();
+                            App.content.getChildren().add(App.informationGrid);
 
+                        }
                     }
                 }
             });

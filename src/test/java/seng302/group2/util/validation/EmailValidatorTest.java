@@ -16,9 +16,11 @@ import seng302.group2.Global;
 import seng302.group2.project.Project;
 import seng302.group2.project.team.person.Person;
 
+import static org.junit.Assert.assertEquals;
+
 
 /**
- *
+ * A test for the Email validation class
  * @author Jordane
  */
 public class EmailValidatorTest
@@ -36,21 +38,7 @@ public class EmailValidatorTest
                 "A really cool dude", new Date(1994, 12, 19));
         Global.currentProject.addPerson(pers);
     }
-    
-    @AfterClass
-    public static void tearDownClass()
-    {
-    }
-    
-    @Before
-    public void setUp()
-    {
-    }
-    
-    @After
-    public void tearDown()
-    {
-    }
+
 
     /**
      * Test of validEmail method, of class EmailValidator.
@@ -58,8 +46,8 @@ public class EmailValidatorTest
     @Test
     public void testValidEmail()
     {
-        Assert.assertEquals(ValidationStatus.INVALID, EmailValidator.validEmail(""));
-        Assert.assertEquals(ValidationStatus.VALID, EmailValidator.validEmail("abc@gmail.com"));
+        assertEquals(ValidationStatus.INVALID, EmailValidator.validEmail(""));
+        assertEquals(ValidationStatus.VALID, EmailValidator.validEmail("abc@gmail.com"));
     }
     
 }
