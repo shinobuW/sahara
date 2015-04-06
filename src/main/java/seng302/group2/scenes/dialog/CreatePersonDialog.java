@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
 import seng302.group2.project.team.person.Person;
+import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
@@ -56,7 +57,7 @@ public class CreatePersonDialog
         RequiredField firstNameCustomField = new RequiredField("First Name");
         RequiredField lastNameCustomField = new RequiredField("Last Name");
         CustomTextField emailTextField = new CustomTextField("Email");
-        CustomTextField customBirthDate = new CustomTextField("Birth Date");
+        CustomDateField customBirthDate = new CustomDateField("Birth Date");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description");
         
         grid.getChildren().add(shortNameCustomField);
@@ -146,6 +147,10 @@ public class CreatePersonDialog
     public static boolean validateDate(String birthDateString, TextField dateField,
             Label birthdateError)
     {
+        // It is okay for the field to be blank, otherwise validate
+        if (birthDateString.equals(""))
+            return true;
+
         switch (DateValidator.isValidDateString(birthDateString))
         {
             case VALID:

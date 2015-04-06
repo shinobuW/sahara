@@ -1,4 +1,4 @@
-package seng302.group2.scenes.dialog;
+package seng302.group2.scenes.control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
  *
  * Created by Codie on 02/04/2015
  */
-public class CustomBrithDate extends VBox
+public class CustomDateField extends VBox
 {
     String errorMessage = "";
     TextField inputText = new TextField();
@@ -17,9 +17,9 @@ public class CustomBrithDate extends VBox
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
      * asterisk.
-     * @param node The node field that is required
+     * @param name The label for the date field
      */
-    public CustomBrithDate(String name)
+    public CustomDateField(String name)
     {
         this.errorMessageText.setText(errorMessage);
         inputText.setPromptText("dd/mm/yyyy");
@@ -34,5 +34,11 @@ public class CustomBrithDate extends VBox
         entry.getChildren().addAll(labelBox, inputText);
 
         this.getChildren().add(entry);
+    }
+
+
+    public String getText()
+    {
+        return inputText.getText();
     }
 }
