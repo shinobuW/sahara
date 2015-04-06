@@ -149,7 +149,9 @@ public class CreatePersonDialog
     {
         // It is okay for the field to be blank, otherwise validate
         if (birthDateString.equals(""))
+        {
             return true;
+        }
 
         switch (DateValidator.isValidDateString(birthDateString))
         {
