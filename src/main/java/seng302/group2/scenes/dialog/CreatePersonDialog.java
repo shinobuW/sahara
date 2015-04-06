@@ -12,7 +12,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -21,7 +20,6 @@ import seng302.group2.Global;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
-import seng302.group2.scenes.control.LimitedTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.util.validation.EmailValidator;
@@ -45,14 +43,6 @@ public class CreatePersonDialog
         grid.setPadding(insets);
         
         // Initialise Input fields
-        TextField shortNameField = new LimitedTextField(20);
-        TextField firstNameField = new TextField();
-        TextField lastNameField = new TextField();
-        TextField emailField = new TextField();
-        TextArea descriptionField = new TextArea();
-        TextField birthdateField = new TextField();
-        birthdateField.setPromptText("dd/mm/yyyy");
-        
         Button btnCreate = new Button("Create");
         Button btnCancel = new Button("Cancel");
         
@@ -60,12 +50,6 @@ public class CreatePersonDialog
         buttons.spacingProperty().setValue(10);
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnCreate, btnCancel);
-        
-        Label shortNameError = new Label();
-        Label firstNameError = new Label();
-        Label lastNameError = new Label();
-        Label dateError = new Label();
-        Label emailError = new Label();
         
         // Add elements to grid
         RequiredField shortNameCustomField = new RequiredField("Short Name");
@@ -81,41 +65,25 @@ public class CreatePersonDialog
         grid.getChildren().add(emailTextField);  
         grid.getChildren().add(customBirthDate);  
         grid.getChildren().add(descriptionTextArea);  
-       
         grid.getChildren().add(buttons);
            
         // "Create" button event
         btnCreate.setOnAction((event) ->
             {
-                validateShortName(shortNameCustomField);
-                validateName(firstNameCustomField);
-                validateName(lastNameCustomField);
-                        
-                // Get user input
-                /*String firstName = firstNameField.getText();
-                String lastName = lastNameField.getText();
-                String shortName = shortNameField.getText();
-                String email = emailField.getText();
-                String description = descriptionField.getText();
-                String birthdateString = birthdateField.getText();
+                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctFirstName = validateName(firstNameCustomField);
+                boolean correctLastName = validateName(lastNameCustomField);
                 
-                // Validation & Error messages
-                boolean dateCorrect = validateDate(birthdateString, birthdateField,
-                        dateError);
-                boolean emailCorrect = validateEmail(email, emailField,  emailError);
-                boolean isShortNameUnique = validateShortName(shortName, shortNameError,
-                        shortNameField);
-                boolean shortNameCorrect = validateShortName(shortName, 
-                        shortNameError, shortNameField); 
-                boolean firstNameCorrect = validateName(firstName, firstNameField, firstNameError,
-                        "first name");
-                boolean lastNameCorrect = validateName(lastName, lastNameField, lastNameError,
-                        "last name");
-
-                // Create new person if all fields are correct
-                if (dateCorrect && emailCorrect && shortNameCorrect && firstNameCorrect 
-                        && lastNameCorrect && isShortNameUnique) 
+                if (correctShortName && correctFirstName && correctLastName)
                 {
+                    //get user input
+                    String firstName = firstNameCustomField.getText();
+                    String lastName = lastNameCustomField.getText();
+                    String shortName = shortNameCustomField.getText();
+                    String email = emailTextField.getText();
+                    String description = descriptionTextArea.getAccessibleText();
+                    String birthdateString = customBirthDate.getText();
+                    
                     final Date birthDate = stringToDate(birthdateString);
                     Person person = new Person(shortName, firstName, lastName, email, description,
                         birthDate);
@@ -125,9 +93,7 @@ public class CreatePersonDialog
                 else 
                 {
                     btnCreate.disableProperty();
-                }*/
-                
-                
+                } 
             });
         
         btnCancel.setOnAction((event) ->
@@ -147,28 +113,27 @@ public class CreatePersonDialog
      * Error message shown and TextField border changed to red if incorrect
      * @param email the email address
      * @param emailField the email text field
-     * @param emailError the email error field
      * @return whether or not the email is valid
      */
-    public static boolean validateEmail(String email, TextField emailField, Label emailError)
-    {
-        switch (EmailValidator.validEmail(email))
-        {
-            case VALID:
-                emailError.setText(null);
-                emailField.setStyle(null);
-                return true;
-            case INVALID:
-                emailField.setStyle("-fx-border-color: red;");
-                emailError.setText("*Not a valid email address");
-                return false;
-            default:
-                emailError.setText("*Not a valid email address");
-                emailField.setStyle("-fx-border-color: red;");
-                return false;
-        }
-    }
-    
+//    public static boolean validateEmail(String email, CustomTextField emailField)
+//    {
+//        switch (EmailValidator.validEmail(email))
+//        {
+//            case VALID:
+//                emailField.setStyle(null);
+//                return true;
+//            case INVALID:
+//                emailField.setStyle("-fx-border-color: red;");
+//                emailField.showErrorField("Not a valid email address");
+//                emailError.setText("*Not a valid email address");
+//                return false;
+//            default:
+//                emailError.setText("*Not a valid email address");
+//                emailField.setStyle("-fx-border-color: red;");
+//                return false;
+//        }
+//    }
+//    
     
     /**
      * Checks whether the birth date format is correct
@@ -205,10 +170,7 @@ public class CreatePersonDialog
     
     /**
      * Checks whether the name is valid
-     * @param name the name
-     * @param nameTextField the text field
-     * @param error the error label
-     * @param nameType the name type
+     * @param nameField the text field
      * @return If the name is valid
      */
     public static boolean validateName(RequiredField nameField) 
@@ -257,7 +219,7 @@ public class CreatePersonDialog
                 return false;
         }
     }
-    
+   
     
     /**
      * Converts strings to dates
