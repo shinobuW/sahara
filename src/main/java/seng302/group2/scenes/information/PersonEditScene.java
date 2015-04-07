@@ -9,39 +9,46 @@ import java.text.SimpleDateFormat;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Cell;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+import javafx.scene.layout.HBox;
 import seng302.group2.App;
 import static seng302.group2.App.informationGrid;
-import seng302.group2.Global;
 import static seng302.group2.Global.selectedTreeItem;
 import seng302.group2.project.team.person.Person;
-import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 
 /**
  *
  * @author swi67
  */
-public class EditPersonScene
+public class PersonEditScene
 {
-    public static GridPane getPersonScene()
+    /**
+     * Gets the Person Edit information display
+     * @return The Person Edit information display
+     */
+    public static GridPane getPersonEditScene()
     {
-        informationGrid = new GridPane();
         Person currentPerson = (Person) selectedTreeItem.getValue();
+
+        informationGrid = new GridPane();
         TextField shortNameField = new TextField();
         TextField firstNameField = new TextField();
         TextField lastNameField = new TextField();
         TextField emailField = new TextField();
         TextField birthDateField = new TextField();
         TextField descriptionField = new TextField();
-//        TextField s = new TextField();
+
         Button btnSave = new Button("Save");
         Button btnCancel = new Button("Cancel");
-        
+
+        HBox buttons = new HBox();
+        buttons.spacingProperty().setValue(10);
+        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
+        buttons.getChildren().addAll(btnSave, btnCancel);
+
+
         informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);
@@ -73,8 +80,14 @@ public class EditPersonScene
         informationGrid.add(descriptionField, 1, 5);
         descriptionField.setText(currentPerson.getDescription());
         
-        informationGrid.add(btnSave, 1, 6);
-        informationGrid.add(btnCancel, 2, 6);
+        informationGrid.add(buttons, 1, 6);
+
+        btnCancel.setOnAction((event) ->
+        {
+            App.content.getChildren().remove(App.informationGrid);
+            PersonScene.getPersonScene();
+            App.content.getChildren().add(App.informationGrid);
+        });
         
         btnSave.setOnAction((event) ->
             {
@@ -84,7 +97,7 @@ public class EditPersonScene
                 currentPerson.setDescription(descriptionField.getText());
                 currentPerson.setEmail(emailField.getText());
            
-                String birthdate = birthDateField.getText();
+                //String birthdate = birthDateField.getText();
                 
                 App.content.getChildren().remove(App.informationGrid);
                 PersonScene.getPersonScene();
@@ -92,12 +105,7 @@ public class EditPersonScene
 
             });
         
-        btnCancel.setOnAction((event) -> 
-            {
-                App.content.getChildren().remove(App.informationGrid);
-                PersonScene.getPersonScene();
-                App.content.getChildren().add(App.informationGrid);
-            });
+
         
         return App.informationGrid;
     }
