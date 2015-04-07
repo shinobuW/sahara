@@ -64,28 +64,28 @@ public class ProjectEditScene
             });
 
         btnSave.setOnAction((event) ->
-        {
-            boolean correctShortName = validateShortName(shortNameCustomField);
-            boolean correctLongName = validateName(longNameCustomField);
-
-
-            if (correctShortName && correctLongName)
             {
-                currentProject.setDescription(descriptionTextArea.getText());
-                currentProject.setShortName(shortNameCustomField.getText());
-                currentProject.setLongName(longNameCustomField.getText());
-                App.content.getChildren().remove(App.informationGrid);
-                ProjectScene.getProjectScene();
-                App.content.getChildren().add(App.informationGrid);
-
-            }
-            else
-            {
-                event.consume();
-            }
+                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctLongName = validateName(longNameCustomField);
 
 
-        });
+                if (correctShortName && correctLongName)
+                {
+                    currentProject.setDescription(descriptionTextArea.getText());
+                    currentProject.setShortName(shortNameCustomField.getText());
+                    currentProject.setLongName(longNameCustomField.getText());
+                    App.content.getChildren().remove(App.informationGrid);
+                    ProjectScene.getProjectScene();
+                    App.content.getChildren().add(App.informationGrid);
+
+                }
+                else
+                {
+                    event.consume();
+                }
+
+
+            });
 
         return App.informationGrid;
     }
