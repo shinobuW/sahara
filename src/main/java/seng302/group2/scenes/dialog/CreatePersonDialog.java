@@ -145,8 +145,9 @@ public class CreatePersonDialog
     public static boolean validateDate(CustomDateField customBirthDate)
     {
         // It is okay for the field to be blank, otherwise validate
-        if(customBirthDate == null) 
+        if (customBirthDate.getText().isEmpty()) 
         {
+            customBirthDate.hideErrorField();
             return true;
         }
         System.out.print(customBirthDate.getText());

@@ -46,6 +46,7 @@ public class DateValidatorTest
 
     /**
      * Test of isValidDateString method, of class DateValidator.
+     *
      */
     @Test
     public void testIsValidDateString()

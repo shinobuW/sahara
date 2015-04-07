@@ -35,14 +35,8 @@ public class DateValidator
         }
         catch (Exception ex)
         {
-            if (birthDate == "")
-            {
-                return ValidationStatus.VALID;
-            }
-            else
-            {
-                 return ValidationStatus.PATTERN_MISMATCH;
-            }    
+            return ValidationStatus.PATTERN_MISMATCH;
+              
         }
     }
 }
