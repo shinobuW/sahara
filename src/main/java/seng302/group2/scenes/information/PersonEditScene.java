@@ -83,11 +83,11 @@ public class PersonEditScene
         informationGrid.add(buttons, 1, 6);
 
         btnCancel.setOnAction((event) ->
-        {
-            App.content.getChildren().remove(App.informationGrid);
-            PersonScene.getPersonScene();
-            App.content.getChildren().add(App.informationGrid);
-        });
+            {
+                App.content.getChildren().remove(App.informationGrid);
+                PersonScene.getPersonScene();
+                App.content.getChildren().add(App.informationGrid);
+            });
         
         btnSave.setOnAction((event) ->
             {
