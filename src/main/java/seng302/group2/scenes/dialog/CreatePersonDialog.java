@@ -11,8 +11,6 @@ import java.util.Date;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
@@ -23,7 +21,6 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.util.validation.DateValidator;
-import seng302.group2.util.validation.EmailValidator;
 import seng302.group2.util.validation.NameValidator;
 import seng302.group2.util.validation.ShortNameValidator;
 
@@ -71,6 +68,7 @@ public class CreatePersonDialog
         // "Create" button event
         btnCreate.setOnAction((event) ->
             {
+                boolean correctDate = validateDate(customBirthDate);
                 boolean correctShortName = validateShortName(shortNameCustomField);
                 boolean correctFirstName = validateName(firstNameCustomField);
                 boolean correctLastName = validateName(lastNameCustomField);
@@ -144,33 +142,28 @@ public class CreatePersonDialog
      * @param birthdateError the birth date error GUI label
      * @return true if correct format
     **/
-    public static boolean validateDate(String birthDateString, TextField dateField,
-            Label birthdateError)
+    public static boolean validateDate(CustomDateField customBirthDate)
     {
         // It is okay for the field to be blank, otherwise validate
-        if (birthDateString.equals(""))
+        if(customBirthDate == null) 
         {
             return true;
         }
-
-        switch (DateValidator.isValidDateString(birthDateString))
+        System.out.print(customBirthDate.getText());
+        
+        switch (DateValidator.isValidDateString(customBirthDate.getText()))
         {
             case VALID:
-                dateField.setStyle(null);
-                birthdateError.setText(null);
+                customBirthDate.hideErrorField();
                 return true;
             case OUT_OF_RANGE:
-                dateField.setStyle("-fx-border-color: red;");
-                birthdateError.setText("*This is not a valid birth date");
+                customBirthDate.showErrorField("* This is not a valid birth date");
                 return false;
             case PATTERN_MISMATCH:
-                dateField.setStyle("-fx-border-color: red;");
-                birthdateError.setText("*Format must be dd/MM/yyyy e.g 12/03/1990");
+                customBirthDate.showErrorField("* Format must be dd/MM/yyyy e.g 12/03/1990");
                 return false;
             default:
-                birthdateError.setText("*Not a valid birth date");
-                dateField.setStyle("-fx-border-color: red;");
-                return false;
+                return true;
         }
     }
 

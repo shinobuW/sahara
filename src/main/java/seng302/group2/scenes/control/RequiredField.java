@@ -66,6 +66,7 @@ public class RequiredField extends VBox
      */
     public void showErrorField(String errorMessage)
     {
+        inputText.setStyle("-fx-border-color: red;");
         this.errorMessageText.setText(errorMessage);
         showErrorField();
     }

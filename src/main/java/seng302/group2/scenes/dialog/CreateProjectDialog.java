@@ -13,6 +13,9 @@ import seng302.group2.project.Project;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.LimitedTextField;
 import seng302.group2.scenes.control.RequiredField;
+import static seng302.group2.scenes.dialog.CreatePersonDialog.validateName;
+import static seng302.group2.scenes.dialog.CreatePersonDialog.validateShortName;
+import seng302.group2.util.validation.ShortNameValidator;
 
 /**
  *
@@ -28,13 +31,7 @@ public class CreateProjectDialog
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
         grid.setPadding(insets);
-        
-        TextField shortNameField = new LimitedTextField(20);
-        TextField longNameField = new TextField();
-        TextArea descriptionField = new TextArea();
-        descriptionField.setPrefRowCount(5);
-        descriptionField.setWrapText(true);
-        
+               
         Button btnCreate = new Button("Create");
         Button btnCancel = new Button("Cancel");
         
@@ -43,20 +40,25 @@ public class CreateProjectDialog
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnCreate, btnCancel);
         
-        grid.getChildren().add(new RequiredField("Short Name"));
-        grid.getChildren().add(new RequiredField("Long Name"));
-        grid.getChildren().add(new CustomTextArea("Project Description"));
+        RequiredField shortNameCustomField = new RequiredField("Short Name");
+        RequiredField longNameCustomField = new RequiredField("Long Name");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description");
+        
+        grid.getChildren().add(shortNameCustomField);
+        grid.getChildren().add(longNameCustomField);
+        grid.getChildren().add(descriptionTextArea);
         grid.getChildren().add(buttons);
         
         btnCreate.setOnAction((event) ->
             {
-                String shortName = shortNameField.getText();
-                String longName = longNameField.getText();
-                String description = descriptionField.getText();
+                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctLongName = validateName(longNameCustomField);
                 
-                int valid = validation(shortName, longName, description);
+                String shortName = shortNameCustomField.getText();
+                String longName = longNameCustomField.getText();
+                String description = descriptionTextArea.getText();
                 
-                if (valid == 1)
+                if (correctShortName && correctLongName)
                 {
                     Project project = new Project(shortName, longName, description);
                     Global.currentProject = project;
@@ -77,14 +79,5 @@ public class CreateProjectDialog
         dialog.setIconifiable(false);
         dialog.setContent(grid);
         dialog.show();
-    }
-    
-    private static int validation(String shortName, String longName, String description)
-    {
-        int valid = 0;
-        
-        valid = 1;
-        return valid;
-        
     }
 }
