@@ -49,5 +49,10 @@ public class CustomTextArea extends VBox
 
         this.getChildren().add(entry);
     }
+    
+    public String getText()
+    {
+        return this.inputText.getText();
+    }
 }
 

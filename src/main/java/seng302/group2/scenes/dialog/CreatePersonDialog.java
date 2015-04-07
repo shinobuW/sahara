@@ -82,7 +82,7 @@ public class CreatePersonDialog
                     String lastName = lastNameCustomField.getText();
                     String shortName = shortNameCustomField.getText();
                     String email = emailTextField.getText();
-                    String description = descriptionTextArea.getAccessibleText();
+                    String description = descriptionTextArea.getText();
                     String birthdateString = customBirthDate.getText();
                     
                     final Date birthDate = stringToDate(birthdateString);
