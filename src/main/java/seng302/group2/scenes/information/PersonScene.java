@@ -33,7 +33,7 @@ public class PersonScene
         
         Person currentPerson = (Person) selectedTreeItem.getValue();
         informationGrid = new GridPane();
-        
+
         informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);
@@ -41,13 +41,17 @@ public class PersonScene
         Label title = new Label(currentPerson.getFirstName() + " " + currentPerson.getLastName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
         
-        informationGrid.add(title, 0, 0);
-        informationGrid.add(new Label("Short Name: " + currentPerson.getShortName()), 0, 2);
-        informationGrid.add(new Label("Email Address: " + currentPerson.getEmail()), 0, 3);
+        informationGrid.add(title, 0, 0, 10, 1);
+        informationGrid.add(new Label("Short Name: "), 0, 2);
+        informationGrid.add(new Label("Email Address: "), 0, 3);
+        informationGrid.add(new Label("Birth Date: "), 0, 4);
+        informationGrid.add(new Label("Description: "), 0, 5);
+
+        informationGrid.add(new Label(currentPerson.getShortName()), 1, 2);
+        informationGrid.add(new Label( currentPerson.getEmail()), 1, 3);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        informationGrid.add(new Label("Birth Date: " 
-                + dateFormat.format(currentPerson.getBirthDate())), 0, 4);
-        informationGrid.add(new Label("Description: " + currentPerson.getDescription()), 0, 5);
+        informationGrid.add(new Label(dateFormat.format(currentPerson.getBirthDate())), 1, 4);
+        informationGrid.add(new Label(currentPerson.getDescription()), 1, 5);
         
         
         return App.informationGrid;

@@ -19,11 +19,11 @@ import seng302.group2.project.Project;
 /**
  * A class for displaying the Project Scene
  * @author crw73
+ * @author btm38
  */
 @SuppressWarnings("deprecation")
 public class ProjectScene
 {
-    
     /**
      * Gets the Project information display
      * @return The Project information display
@@ -33,18 +33,20 @@ public class ProjectScene
         
         Project currentProject = (Project) selectedTreeItem.getValue();
         informationGrid = new GridPane();
-        
+
         informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);
         informationGrid.setPadding(new Insets(25,25,25,25));
         Label title = new Label(currentProject.getLongName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
-        
-        informationGrid.add(title, 0, 0);
-        informationGrid.add(new Label("Short Name: " + currentProject.getShortName()), 0, 2);
-        informationGrid.add(new Label("Description: " + currentProject.getDescription()), 0, 3);
- 
+
+        informationGrid.add(title, 0, 0, 10, 1);
+        informationGrid.add(new Label("Short Name: "), 0, 2);
+        informationGrid.add(new Label("Description: "), 0, 3);
+
+        informationGrid.add(new Label(currentProject.getShortName()), 1, 2);
+        informationGrid.add(new Label(currentProject.getDescription()), 1, 3);
         return App.informationGrid;
     }
  
