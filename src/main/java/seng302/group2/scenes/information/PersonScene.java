@@ -40,7 +40,7 @@ public class PersonScene
         informationGrid.setPadding(new Insets(25,25,25,25));
         Label title = new Label(currentPerson.getFirstName() + " " + currentPerson.getLastName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
-        
+
         informationGrid.add(title, 0, 0, 10, 1);
         informationGrid.add(new Label("Short Name: "), 0, 2);
         informationGrid.add(new Label("Email Address: "), 0, 3);

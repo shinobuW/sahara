@@ -7,6 +7,7 @@ package seng302.group2.scenes.information;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -41,12 +42,23 @@ public class ProjectScene
         Label title = new Label(currentProject.getLongName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
-        informationGrid.add(title, 0, 0, 10, 1);
+        Button btnEdit = new Button("Edit");
+
+        informationGrid.add(title, 0, 0, 3, 1);
         informationGrid.add(new Label("Short Name: "), 0, 2);
         informationGrid.add(new Label("Description: "), 0, 3);
 
         informationGrid.add(new Label(currentProject.getShortName()), 1, 2);
         informationGrid.add(new Label(currentProject.getDescription()), 1, 3);
+        informationGrid.add(btnEdit, 1, 4);
+
+        btnEdit.setOnAction((event) ->
+            {
+                App.content.getChildren().remove(App.informationGrid);
+                ProjectEditScene.getProjectEditScene();
+                App.content.getChildren().add(App.informationGrid);
+            });
+
         return App.informationGrid;
     }
  
