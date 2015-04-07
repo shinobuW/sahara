@@ -16,19 +16,21 @@ import java.util.Date;
 public class DateValidator
 {
     private static SimpleDateFormat datePattern = new SimpleDateFormat("dd/MM/yyyy");
-    
+     
     public static ValidationStatus isValidDateString(String birthDate)
     {
         datePattern.setLenient(false);
-
-        String[] date = birthDate.split("/"); //returns an array with the day, month and year
-        String year = date[2];
-        
-        if (year.length() != 4)
+       
+        if (birthDate.matches("[0-9/]+")) 
         {
-            return ValidationStatus.PATTERN_MISMATCH;
+            String[] date = birthDate.split("/"); //returns an array with the day, month and year
+            String year = date[2];
+
+            if (year.length() != 4)
+            {
+                return ValidationStatus.PATTERN_MISMATCH;
+            }
         }
-        
         try
         {
             Date parsedBirthDate = datePattern.parse(birthDate);

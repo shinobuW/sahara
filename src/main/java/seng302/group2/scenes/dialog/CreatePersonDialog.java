@@ -146,16 +146,7 @@ public class CreatePersonDialog
             customBirthDate.hideErrorField();
             return true;
         }
-        
-        String birthDate = customBirthDate.getText();
-        String[] date = birthDate.split("/"); //returns an array with the day, month and year
-        String year = date[2];
-        
-        if (year.length() != 4)
-        {
-            customBirthDate.showErrorField("* Format must be dd/MM/yyyy e.g 12/03/1990");
-        }
-        
+
         switch (DateValidator.isValidDateString(customBirthDate.getText()))
         {
             case VALID:
