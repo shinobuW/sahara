@@ -12,7 +12,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
- *
  * Created by Codie on 02/04/2015
  */
 public class CustomTextArea extends VBox
@@ -49,12 +48,24 @@ public class CustomTextArea extends VBox
 
         this.getChildren().add(entry);
     }
-    
+
+    /**
+     * Gets the text inside the text field.
+     * @return The text inside the text field
+     */
     public String getText()
     {
         return this.inputText.getText();
     }
-    
+
+    /**
+     * Sets the text inside the text field.
+     * @param text To be set inside the text field.
+     */
+    public void setText(String text)
+    {
+        this.inputText.setText(text);
+    }
 
     /**
      * Shows the error field

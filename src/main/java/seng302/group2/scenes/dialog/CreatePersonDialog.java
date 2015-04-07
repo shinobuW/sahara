@@ -96,9 +96,7 @@ public class CreatePersonDialog
             });
         
         btnCancel.setOnAction((event) ->
-            {
-                dialog.hide();
-            });
+                dialog.hide());
                 
         dialog.setResizable(false);
         dialog.setIconifiable(false);
@@ -171,7 +169,7 @@ public class CreatePersonDialog
      * @param nameField the text field
      * @return If the name is valid
      */
-    public static boolean validateName(RequiredField nameField) 
+    public static boolean validateName(RequiredField nameField)
     {
         switch (NameValidator.validateName(nameField.getText()))
         {
@@ -194,7 +192,7 @@ public class CreatePersonDialog
      * @return If the short name is valid
      */   
     
-    public static boolean validateShortName(RequiredField shortNameField) 
+    public static boolean validateShortName(RequiredField shortNameField)
     {
         switch (ShortNameValidator.validateShortName(shortNameField.getText()))
         {
