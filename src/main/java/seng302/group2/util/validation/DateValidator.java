@@ -21,6 +21,14 @@ public class DateValidator
     {
         datePattern.setLenient(false);
 
+        String[] date = birthDate.split("/"); //returns an array with the day, month and year
+        String year = date[2];
+        
+        if (year.length() != 4)
+        {
+            return ValidationStatus.PATTERN_MISMATCH;
+        }
+        
         try
         {
             Date parsedBirthDate = datePattern.parse(birthDate);

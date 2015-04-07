@@ -137,9 +137,7 @@ public class CreatePersonDialog
     /**
      * Checks whether the birth date format is correct
      * Shows error message and red borders if incorrect
-     * @param birthDateString the birth date string to try parse
-     * @param dateField the date GUI field
-     * @param birthdateError the birth date error GUI label
+     * @param customBirthDate the birth date error GUI label
      * @return true if correct format
     **/
     public static boolean validateDate(CustomDateField customBirthDate)
@@ -150,7 +148,15 @@ public class CreatePersonDialog
             customBirthDate.hideErrorField();
             return true;
         }
-        System.out.print(customBirthDate.getText());
+        
+        String birthDate = customBirthDate.getText();
+        String[] date = birthDate.split("/"); //returns an array with the day, month and year
+        String year = date[2];
+        
+        if (year.length() != 4)
+        {
+            customBirthDate.showErrorField("* Format must be dd/MM/yyyy e.g 12/03/1990");
+        }
         
         switch (DateValidator.isValidDateString(customBirthDate.getText()))
         {
