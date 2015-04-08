@@ -6,21 +6,26 @@
 package seng302.group2.scenes.information;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import static seng302.group2.App.informationGrid;
 import seng302.group2.Global;
 import static seng302.group2.Global.selectedTreeItem;
 import seng302.group2.project.team.person.Person;
+import seng302.group2.scenes.control.CustomDateField;
+import seng302.group2.scenes.control.CustomTextArea;
+import seng302.group2.scenes.control.CustomTextField;
+import seng302.group2.scenes.control.RequiredField;
+import static seng302.group2.scenes.dialog.CreatePersonDialog.stringToDate;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 
@@ -39,13 +44,18 @@ public class PersonEditScene
         Person currentPerson = (Person) selectedTreeItem.getValue();
 
         informationGrid = new GridPane();
-        TextField shortNameField = new TextField();
-        TextField firstNameField = new TextField();
-        TextField lastNameField = new TextField();
-        TextField emailField = new TextField();
-        TextField birthDateField = new TextField();
-        TextField descriptionField = new TextField();
-
+        VBox grid = new VBox();
+        grid.spacingProperty().setValue(10);
+        Insets insets = new Insets(20, 20, 20, 20);
+        grid.setPadding(insets);
+        
+        RequiredField shortNameCustomField = new RequiredField("Short Name");
+        RequiredField firstNameCustomField = new RequiredField("First Name");
+        RequiredField lastNameCustomField = new RequiredField("Last Name");
+        CustomTextField emailTextField = new CustomTextField("Email");
+        CustomDateField customBirthDate = new CustomDateField("Birth Date");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Description");
+        
         Button btnSave = new Button("Save");
         Button btnCancel = new Button("Cancel");
 
@@ -54,39 +64,27 @@ public class PersonEditScene
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-
         informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        informationGrid.setPadding(new Insets(25,25,50,50));
+        informationGrid.getChildren().add(grid);
         
-        informationGrid.add(new Label("First Name: "), 0, 0);
-        informationGrid.add(firstNameField, 1, 0);
-        firstNameField.setText(currentPerson.getFirstName());
+        informationGrid.add(shortNameCustomField, 0, 0);
+        informationGrid.add(firstNameCustomField, 0, 1);
+        informationGrid.add(lastNameCustomField, 0, 2);
+        informationGrid.add(emailTextField, 0, 3);
+        informationGrid.add(customBirthDate, 0, 4);
+        informationGrid.add(descriptionTextArea, 0, 5);
+        informationGrid.add(buttons, 0, 6);
         
-        informationGrid.add(new Label("Last Name: "), 0, 1);
-        informationGrid.add(lastNameField, 1, 1);
-        lastNameField.setText(currentPerson.getLastName());
-        
-        informationGrid.add(new Label("Short Name: "), 0, 2);
-        informationGrid.add(shortNameField, 1, 2);
-        shortNameField.setText(currentPerson.getShortName());
-        
-        informationGrid.add(new Label("Email Address: "), 0, 3);
-        informationGrid.add(emailField, 1, 3);
-        emailField.setText(currentPerson.getEmail());
-        
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        
-        informationGrid.add(new Label("Birth Date: "), 0, 4);
-        informationGrid.add(birthDateField, 1, 4);
-        birthDateField.setText(dateFormat.format(currentPerson.getBirthDate()));
-        
-        informationGrid.add(new Label("Description: "), 0, 5);
-        informationGrid.add(descriptionField, 1, 5);
-        descriptionField.setText(currentPerson.getDescription());
-        
-        informationGrid.add(buttons, 1, 6);
+        firstNameCustomField.setText(currentPerson.getFirstName());
+        lastNameCustomField.setText(currentPerson.getLastName());
+        shortNameCustomField.setText(currentPerson.getShortName());
+        //emailTextField.setText(currentPerson.getEmail());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");     
+        //customBirthDate.setText(dateFormat.format(currentPerson.getBirthDate()));
+        descriptionTextArea.setText(currentPerson.getDescription());;
 
         btnCancel.setOnAction((event) ->
             {
@@ -97,12 +95,17 @@ public class PersonEditScene
         
         btnSave.setOnAction((event) ->
             {
-                currentPerson.setFirstName(firstNameField.getText());
-                currentPerson.setShortName(shortNameField.getText());
-                currentPerson.setLastName(lastNameField.getText());
-                currentPerson.setDescription(descriptionField.getText());
-                currentPerson.setEmail(emailField.getText());
-           
+                //set Person proprties
+                final Date birthDate = stringToDate(customBirthDate.getText());
+                    
+                currentPerson.setFirstName(firstNameCustomField.getText());
+                currentPerson.setShortName(shortNameCustomField.getText());
+                currentPerson.setLastName(lastNameCustomField.getText());
+                currentPerson.setDescription(descriptionTextArea.getText());
+                currentPerson.setEmail(emailTextField.getText());
+                currentPerson.setBirthDate(birthDate);
+                    
+
                 //String birthdate = birthDateField.getText();
                 App.content.getChildren().remove(App.treeView);
                 App.content.getChildren().remove(App.informationGrid);
@@ -118,8 +121,6 @@ public class PersonEditScene
                 App.content.getChildren().add(App.informationGrid);
                 App.treeView.getSelectionModel().select(selectedTreeItem);
             });
-        
-
         
         return App.informationGrid;
     }
