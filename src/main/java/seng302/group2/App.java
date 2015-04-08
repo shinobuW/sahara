@@ -10,6 +10,7 @@ import static javafx.application.Application.launch;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -21,6 +22,7 @@ import org.controlsfx.dialog.Dialogs;
 import seng302.group2.project.Project;
 import seng302.group2.project.Project.SaveLoadResult;
 import seng302.group2.scenes.MainScene;
+import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 
 /**
  * Hello world!
@@ -30,6 +32,7 @@ public class App extends Application
 {
     public static HBox content = new HBox();
     public static GridPane informationGrid = new GridPane();
+    public static TreeViewWithItems treeView = new TreeViewWithItems(new TreeItem());
     
     public static Stage mainStage;
     public static Scene mainScene;
