@@ -51,14 +51,14 @@ public class MainScene
         
         // Old: TreeView display = ListDisplay.getProjectTree();  // (Manual)
         // Create the display menu from the project tree
-        TreeViewWithItems treeView = new TreeViewWithItems(new TreeItem());
+        
         ObservableList<TreeViewItem> children = observableArrayList();
 
         
         children.add(Global.currentProject);
         
-        treeView.setItems(children);
-        treeView.setShowRoot(false);
+        App.treeView.setItems(children);
+        App.treeView.setShowRoot(false);
         
         root.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -72,7 +72,7 @@ public class MainScene
         content.boundsInParentProperty();
         informationGrid.boundsInParentProperty();
         
-        content.getChildren().add(treeView);
+        content.getChildren().add(App.treeView);
         content.getChildren().add(informationGrid);
         root.getChildren().add(content);
 

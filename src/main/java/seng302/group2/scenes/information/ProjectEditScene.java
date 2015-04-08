@@ -1,8 +1,11 @@
 package seng302.group2.scenes.information;
 
+import static javafx.collections.FXCollections.observableArrayList;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import seng302.group2.App;
@@ -10,9 +13,12 @@ import seng302.group2.project.Project;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import static seng302.group2.App.informationGrid;
+import seng302.group2.Global;
 import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.dialog.CreatePersonDialog.validateName;
 import static seng302.group2.scenes.dialog.CreatePersonDialog.validateShortName;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 
 /**
  * Created by btm38 on 7/04/15.
@@ -74,16 +80,25 @@ public class ProjectEditScene
                     currentProject.setDescription(descriptionTextArea.getText());
                     currentProject.setShortName(shortNameCustomField.getText());
                     currentProject.setLongName(longNameCustomField.getText());
+                    App.content.getChildren().remove(App.treeView);
                     App.content.getChildren().remove(App.informationGrid);
                     ProjectScene.getProjectScene();
+                    App.treeView = new TreeViewWithItems(new TreeItem());
+                    ObservableList<TreeViewItem> children = observableArrayList();
+                    children.add(Global.currentProject);
+
+                    App.treeView.setItems(children);
+                    App.treeView.setShowRoot(false);
+
+                    App.content.getChildren().add(App.treeView);
                     App.content.getChildren().add(App.informationGrid);
+                    App.treeView.getSelectionModel().select(selectedTreeItem);
 
                 }
                 else
                 {
                     event.consume();
                 }
-
 
             });
 
