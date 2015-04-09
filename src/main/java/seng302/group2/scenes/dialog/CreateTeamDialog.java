@@ -24,6 +24,10 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 @SuppressWarnings("deprecation")
 public class CreateTeamDialog 
 {
+    
+    /*
+    * Displays the Dialog box for creating a Team
+    */
     public static void show()
     {
         Dialog dialog = new Dialog(null, "Create New Skill");

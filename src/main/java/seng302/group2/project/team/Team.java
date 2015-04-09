@@ -4,12 +4,11 @@
 package seng302.group2.project.team;
 
 import java.io.Serializable;
-import java.util.Date;
 import javafx.collections.ObservableList;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 /**
- * A basic class to represent a Person in the real world.
+ * A basic class to represent a Team in the real world.
  * @author crw73
  */
 public class Team extends TreeViewItem implements Serializable
@@ -21,7 +20,7 @@ public class Team extends TreeViewItem implements Serializable
     
     
     /**
-     * Basic Person constructor
+     * Basic Team constructor
      */
     public Team()
     {
@@ -32,15 +31,11 @@ public class Team extends TreeViewItem implements Serializable
     
     
     /**
-     * Basic person constructor with all fields
-     * @param shortName A unique short name to identify a Person
-     * @param firstName The first name of the Person
-     * @param lastName The last name of the Person
-     * @param email The email of the Person
-     * @param birthDate A description of the Person
-     * @param description The date of birth of a Person
+     * Basic team constructor with all fields
+     * @param shortName A unique short name to identify a Team
+     * @param description of a Team
      */
-    public Team(String shortName, String descriptionDate)
+    public Team(String shortName, String description)
     {
         // Initialize as a TreeViewItem
         super(shortName);
@@ -51,8 +46,8 @@ public class Team extends TreeViewItem implements Serializable
        
     // <editor-fold defaultstate="collapsed" desc="Getters"> 
     /**
-     * Gets the person's short name
-     * @return The short name of the person
+     * Gets the Team's short name
+     * @return The short name of the team
      */
     public String getShortName()
     {
@@ -60,8 +55,8 @@ public class Team extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets the person's description
-     * @return The description of the person
+     * Gets the team's description
+     * @return The description of the team
      */
     public String getDescription()
     {
@@ -73,7 +68,7 @@ public class Team extends TreeViewItem implements Serializable
     
     // <editor-fold defaultstate="collapsed" desc="Setters">
     /**
-     * Sets the person's short name
+     * Sets the team's short name
      * @param shortName the short name to set
      */
     public void setShortName(String shortName)
@@ -82,7 +77,7 @@ public class Team extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets the person's description
+     * Gets the team's description
      * @param description the description to set
      */
     public void setDescription(String description)
@@ -105,8 +100,8 @@ public class Team extends TreeViewItem implements Serializable
     
     
     /**
-     * An overridden version for the String representation of a Person
-     * @return The short name of the Person
+     * An overridden version for the String representation of a Team
+     * @return The short name of the Team
      */
     @Override
     public String toString()
