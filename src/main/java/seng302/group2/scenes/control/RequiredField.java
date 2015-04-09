@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 /**
- * This class creates a VBox and inserts a TextField and Label
+ * //TODO
  * Created by Jordane on 24/03/2015.
  */
 public class RequiredField extends VBox
