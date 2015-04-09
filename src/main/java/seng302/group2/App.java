@@ -31,8 +31,6 @@ import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 public class App extends Application
 {
     public static HBox content = new HBox();
-    public static GridPane informationGrid = new GridPane();
-    public static TreeViewWithItems treeView = new TreeViewWithItems(new TreeItem());
     
     public static Stage mainStage;
     public static Scene mainScene;

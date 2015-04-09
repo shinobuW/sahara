@@ -13,9 +13,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.App;
-import static seng302.group2.App.informationGrid;
 import static seng302.group2.Global.selectedTreeItem;
 import seng302.group2.project.Project;
+import static seng302.group2.scenes.MainScene.informationGrid;
 
 /**
  * A class for displaying the Project Scene
@@ -54,12 +54,12 @@ public class ProjectScene
 
         btnEdit.setOnAction((event) ->
             {
-                App.content.getChildren().remove(App.informationGrid);
+                App.content.getChildren().remove(informationGrid);
                 ProjectEditScene.getProjectEditScene();
-                App.content.getChildren().add(App.informationGrid);
+                App.content.getChildren().add(informationGrid);
             });
 
-        return App.informationGrid;
+        return informationGrid;
     }
  
 }

@@ -12,9 +12,11 @@ import seng302.group2.App;
 import seng302.group2.project.Project;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import static seng302.group2.App.informationGrid;
 import seng302.group2.Global;
 import static seng302.group2.Global.selectedTreeItem;
+import seng302.group2.scenes.MainScene;
+import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.treeView;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import static seng302.group2.util.validation.NameValidator.validateName;
@@ -63,9 +65,9 @@ public class ProjectEditScene
 
         btnCancel.setOnAction((event) ->
             {
-                App.content.getChildren().remove(App.informationGrid);
+                App.content.getChildren().remove(informationGrid);
                 ProjectScene.getProjectScene();
-                App.content.getChildren().add(App.informationGrid);
+                App.content.getChildren().add(informationGrid);
 
             });
 
@@ -80,19 +82,19 @@ public class ProjectEditScene
                     currentProject.setDescription(descriptionTextArea.getText());
                     currentProject.setShortName(shortNameCustomField.getText());
                     currentProject.setLongName(longNameCustomField.getText());
-                    App.content.getChildren().remove(App.treeView);
-                    App.content.getChildren().remove(App.informationGrid);
+                    App.content.getChildren().remove(treeView);
+                    App.content.getChildren().remove(informationGrid);
                     ProjectScene.getProjectScene();
-                    App.treeView = new TreeViewWithItems(new TreeItem());
+                    MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
                     children.add(Global.currentProject);
 
-                    App.treeView.setItems(children);
-                    App.treeView.setShowRoot(false);
+                    MainScene.treeView.setItems(children);
+                    MainScene.treeView.setShowRoot(false);
 
-                    App.content.getChildren().add(App.treeView);
-                    App.content.getChildren().add(App.informationGrid);
-                    App.treeView.getSelectionModel().select(selectedTreeItem);
+                    App.content.getChildren().add(treeView);
+                    App.content.getChildren().add(informationGrid);
+                    MainScene.treeView.getSelectionModel().select(selectedTreeItem);
 
                 }
                 else
@@ -102,6 +104,6 @@ public class ProjectEditScene
 
             });
 
-        return App.informationGrid;
+        return informationGrid;
     }
 }

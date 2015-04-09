@@ -16,10 +16,12 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import seng302.group2.App;
-import static seng302.group2.App.informationGrid;
 import seng302.group2.Global;
 import static seng302.group2.Global.selectedTreeItem;
 import seng302.group2.project.team.person.Person;
+import seng302.group2.scenes.MainScene;
+import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.treeView;
 import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
@@ -84,9 +86,9 @@ public class PersonEditScene
 
         btnCancel.setOnAction((event) ->
             {
-                App.content.getChildren().remove(App.informationGrid);
+                App.content.getChildren().remove(informationGrid);
                 PersonScene.getPersonScene();
-                App.content.getChildren().add(App.informationGrid);
+                App.content.getChildren().add(informationGrid);
             });
         
         btnSave.setOnAction((event) ->
@@ -119,19 +121,19 @@ public class PersonEditScene
 
 
                     //String birthdate = birthDateField.getText();
-                    App.content.getChildren().remove(App.treeView);
-                    App.content.getChildren().remove(App.informationGrid);
+                    App.content.getChildren().remove(treeView);
+                    App.content.getChildren().remove(informationGrid);
                     PersonScene.getPersonScene();
-                    App.treeView = new TreeViewWithItems(new TreeItem());
+                    MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
                     children.add(Global.currentProject);
 
-                    App.treeView.setItems(children);
-                    App.treeView.setShowRoot(false);
+                    MainScene.treeView.setItems(children);
+                    MainScene.treeView.setShowRoot(false);
 
-                    App.content.getChildren().add(App.treeView);
-                    App.content.getChildren().add(App.informationGrid);
-                    App.treeView.getSelectionModel().select(selectedTreeItem);
+                    App.content.getChildren().add(treeView);
+                    App.content.getChildren().add(informationGrid);
+                    MainScene.treeView.getSelectionModel().select(selectedTreeItem);
                 }
                 else
                 {
@@ -139,6 +141,6 @@ public class PersonEditScene
                 }
             });
         
-        return App.informationGrid;
+        return informationGrid;
     }
 }

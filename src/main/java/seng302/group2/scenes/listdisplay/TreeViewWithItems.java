@@ -19,6 +19,7 @@ import seng302.group2.Global;
 import seng302.group2.project.Project;
 import seng302.group2.project.skills.Skill;
 import seng302.group2.project.team.person.Person;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.information.PersonScene;
 import seng302.group2.scenes.information.ProjectScene;
 import seng302.group2.scenes.information.SkillScene;
@@ -123,23 +124,23 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     {
                         if (Global.selectedTreeItem.getValue() instanceof Person)
                         {
-                            App.content.getChildren().remove(App.informationGrid);
+                            App.content.getChildren().remove(MainScene.informationGrid);
                             PersonScene.getPersonScene();
-                            App.content.getChildren().add(App.informationGrid);
+                            App.content.getChildren().add(MainScene.informationGrid);
 
                         }
                         else if (Global.selectedTreeItem.getValue() instanceof Project)
                         {
-                            App.content.getChildren().remove(App.informationGrid);
+                            App.content.getChildren().remove(MainScene.informationGrid);
                             ProjectScene.getProjectScene();
-                            App.content.getChildren().add(App.informationGrid);
+                            App.content.getChildren().add(MainScene.informationGrid);
 
                         }
                         else if (Global.selectedTreeItem.getValue() instanceof Skill)
                         {
-                            App.content.getChildren().remove(App.informationGrid);
+                            App.content.getChildren().remove(MainScene.informationGrid);
                             SkillScene.getSkillScene();
-                            App.content.getChildren().add(App.informationGrid);
+                            App.content.getChildren().add(MainScene.informationGrid);
                         }
                     }
                 }

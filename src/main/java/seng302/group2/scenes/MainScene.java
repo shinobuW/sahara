@@ -11,11 +11,12 @@ import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.TreeItem;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import static seng302.group2.App.content;
-import static seng302.group2.App.informationGrid;
 import seng302.group2.Global;
 import seng302.group2.project.Project;
 import seng302.group2.project.skills.Skill;
@@ -24,6 +25,7 @@ import seng302.group2.scenes.information.PersonScene;
 import seng302.group2.scenes.information.ProjectScene;
 import seng302.group2.scenes.information.SkillScene;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.scenes.menu.MainMenuBar;
 
 
@@ -33,6 +35,9 @@ import seng302.group2.scenes.menu.MainMenuBar;
  */
 public class MainScene
 {
+    public static TreeViewWithItems treeView = new TreeViewWithItems(new TreeItem());
+    public static GridPane informationGrid = new GridPane();
+    
     public static Scene getMainScene()
     {
         // The root window box
@@ -61,8 +66,8 @@ public class MainScene
         
         children.add(Global.currentProject);
         
-        App.treeView.setItems(children);
-        App.treeView.setShowRoot(false);
+        treeView.setItems(children);
+        treeView.setShowRoot(false);
         
         root.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -76,7 +81,7 @@ public class MainScene
         content.boundsInParentProperty();
         informationGrid.boundsInParentProperty();
         
-        content.getChildren().add(App.treeView);
+        content.getChildren().add(treeView);
         content.getChildren().add(informationGrid);
         root.getChildren().add(content);
 
