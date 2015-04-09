@@ -26,6 +26,9 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import static seng302.group2.scenes.dialog.CreatePersonDialog.stringToDate;
+import static seng302.group2.scenes.dialog.CreatePersonDialog.validateDate;
+import static seng302.group2.scenes.dialog.CreatePersonDialog.validateName;
+import static seng302.group2.scenes.dialog.CreatePersonDialog.validateShortName;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 
@@ -44,18 +47,11 @@ public class PersonEditScene
         Person currentPerson = (Person) selectedTreeItem.getValue();
 
         informationGrid = new GridPane();
-        VBox grid = new VBox();
-        grid.spacingProperty().setValue(10);
-        Insets insets = new Insets(20, 20, 20, 20);
-        grid.setPadding(insets);
-        
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        RequiredField firstNameCustomField = new RequiredField("First Name");
-        RequiredField lastNameCustomField = new RequiredField("Last Name");
-        CustomTextField emailTextField = new CustomTextField("Email");
-        CustomDateField customBirthDate = new CustomDateField("Birth Date");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Description");
-        
+        informationGrid.setAlignment(Pos.TOP_LEFT);
+        informationGrid.setHgap(10);
+        informationGrid.setVgap(10);
+        informationGrid.setPadding(new Insets(25,25,25,25));
+    
         Button btnSave = new Button("Save");
         Button btnCancel = new Button("Cancel");
 
@@ -63,12 +59,21 @@ public class PersonEditScene
         buttons.spacingProperty().setValue(10);
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnSave, btnCancel);
-
-        informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);
-        informationGrid.setPadding(new Insets(25,25,50,50));
-        informationGrid.getChildren().add(grid);
+        
+        RequiredField shortNameCustomField = new RequiredField("Short Name", 300);
+        RequiredField firstNameCustomField = new RequiredField("First Name", 300);
+        RequiredField lastNameCustomField = new RequiredField("Last Name", 300);
+        CustomTextField emailTextField = new CustomTextField("Email");
+        CustomDateField customBirthDate = new CustomDateField("Birth Date");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Description");
+        
+        firstNameCustomField.setText(currentPerson.getFirstName());
+        lastNameCustomField.setText(currentPerson.getLastName());
+        shortNameCustomField.setText(currentPerson.getShortName());
+        emailTextField.setText(currentPerson.getEmail());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");     
+        customBirthDate.setText(dateFormat.format(currentPerson.getBirthDate()));
+        descriptionTextArea.setText(currentPerson.getDescription());;
         
         informationGrid.add(shortNameCustomField, 0, 0);
         informationGrid.add(firstNameCustomField, 0, 1);
@@ -77,14 +82,6 @@ public class PersonEditScene
         informationGrid.add(customBirthDate, 0, 4);
         informationGrid.add(descriptionTextArea, 0, 5);
         informationGrid.add(buttons, 0, 6);
-        
-        firstNameCustomField.setText(currentPerson.getFirstName());
-        lastNameCustomField.setText(currentPerson.getLastName());
-        shortNameCustomField.setText(currentPerson.getShortName());
-        emailTextField.setText(currentPerson.getEmail());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");     
-        //customBirthDate.setText(dateFormat.format(currentPerson.getBirthDate()));
-        descriptionTextArea.setText(currentPerson.getDescription());;
 
         btnCancel.setOnAction((event) ->
             {
@@ -95,31 +92,52 @@ public class PersonEditScene
         
         btnSave.setOnAction((event) ->
             {
-                //set Person proprties
-                final Date birthDate = stringToDate(customBirthDate.getText());
-                    
-                currentPerson.setFirstName(firstNameCustomField.getText());
-                currentPerson.setShortName(shortNameCustomField.getText());
-                currentPerson.setLastName(lastNameCustomField.getText());
-                currentPerson.setDescription(descriptionTextArea.getText());
-                currentPerson.setEmail(emailTextField.getText());
-                currentPerson.setBirthDate(birthDate);
-                    
-
-                //String birthdate = birthDateField.getText();
-                App.content.getChildren().remove(App.treeView);
-                App.content.getChildren().remove(App.informationGrid);
-                PersonScene.getPersonScene();
-                App.treeView = new TreeViewWithItems(new TreeItem());
-                ObservableList<TreeViewItem> children = observableArrayList();
-                children.add(Global.currentProject);
-
-                App.treeView.setItems(children);
-                App.treeView.setShowRoot(false);
+                boolean correctDate = validateDate(customBirthDate);
+                boolean correctFirstName = validateName(firstNameCustomField);
+                boolean correctLastName = validateName(lastNameCustomField);
+                boolean correctShortName;
                 
-                App.content.getChildren().add(App.treeView);
-                App.content.getChildren().add(App.informationGrid);
-                App.treeView.getSelectionModel().select(selectedTreeItem);
+                if (shortNameCustomField.getText().equals(currentPerson.getShortName()))
+                {
+                    correctShortName = true;
+                }
+                else
+                {
+                    correctShortName = validateShortName(shortNameCustomField);
+                }
+                
+                if (correctShortName && correctFirstName && correctLastName)
+                {
+                    //set Person proprties
+                    final Date birthDate = stringToDate(customBirthDate.getText());
+
+                    currentPerson.setFirstName(firstNameCustomField.getText());
+                    currentPerson.setShortName(shortNameCustomField.getText());
+                    currentPerson.setLastName(lastNameCustomField.getText());
+                    currentPerson.setDescription(descriptionTextArea.getText());
+                    currentPerson.setEmail(emailTextField.getText());
+                    currentPerson.setBirthDate(birthDate);
+
+
+                    //String birthdate = birthDateField.getText();
+                    App.content.getChildren().remove(App.treeView);
+                    App.content.getChildren().remove(App.informationGrid);
+                    PersonScene.getPersonScene();
+                    App.treeView = new TreeViewWithItems(new TreeItem());
+                    ObservableList<TreeViewItem> children = observableArrayList();
+                    children.add(Global.currentProject);
+
+                    App.treeView.setItems(children);
+                    App.treeView.setShowRoot(false);
+
+                    App.content.getChildren().add(App.treeView);
+                    App.content.getChildren().add(App.informationGrid);
+                    App.treeView.getSelectionModel().select(selectedTreeItem);
+                }
+                else
+                {
+                    event.consume();
+                }
             });
         
         return App.informationGrid;
