@@ -19,6 +19,7 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.project.Project;
 import seng302.group2.project.Project.SaveLoadResult;
+import seng302.group2.scenes.dialog.CreateSkillDialog;
 
 /**
  * The main menu bar of the project window(s).
@@ -74,6 +75,15 @@ public class MainMenuBar
         return newPersonItem;
     }
     
+    private static MenuItem createSkillItem()
+    {
+        MenuItem newSkillItem = new MenuItem("Skill");
+        newSkillItem.setOnAction((event) ->
+            {
+                CreateSkillDialog.show();
+            });
+        return newSkillItem;
+    }
     
     private static MenuItem createOpenItem()
     {
@@ -211,6 +221,7 @@ public class MainMenuBar
         //Create MenuItems for New submenu
         MenuItem newProjectItem = createProjectItem();
         MenuItem newPersonItem = createPersonItem();
+        MenuItem newSkillItem = createSkillItem();
         MenuItem openItem = createOpenItem();
         MenuItem saveItem = createSaveItem();
         MenuItem saveAsItem = createSaveAsItem();
@@ -218,6 +229,7 @@ public class MainMenuBar
         
         newProjectBranch.getItems().add(newProjectItem);
         newProjectBranch.getItems().add(newPersonItem);
+        newProjectBranch.getItems().add(newSkillItem);
 
         // Create 'Edit >' sub-menu
         Menu editMenu = new Menu("Edit");

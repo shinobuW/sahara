@@ -37,8 +37,7 @@ public class Skill extends TreeViewItem implements Serializable
      * @param shortName A unique short name to identify a Skill
      * @param description The Description of a skill
      */
-    public Skill(String shortName, String firstName, String lastName, String email, 
-            String description, Date birthDate)
+    public Skill(String shortName, String description)
     {
         // Initialize as a TreeViewItem
         super(shortName);
@@ -100,9 +99,9 @@ public class Skill extends TreeViewItem implements Serializable
     {
         String newShortName = shortName;
         int i = 0;
-        for (TreeViewItem person : Global.currentProject.getPeople())
+        for (TreeViewItem skill : Global.currentProject.getSkills())
         {
-            if (person.toString().equals(newShortName))
+            if (skill.toString().equals(newShortName))
             {
                 i++;
                 newShortName = shortName + "~" + String.valueOf(i);

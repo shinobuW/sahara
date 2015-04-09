@@ -8,6 +8,7 @@ package seng302.group2.util.undoredo;
 import java.util.Date;
 import seng302.group2.Global;
 import seng302.group2.project.Project;
+import seng302.group2.project.skills.Skill;
 import seng302.group2.project.team.person.Person;
 
 /**
@@ -34,6 +35,10 @@ public class UndoRedoPerformer
         PERSON_EMAIL,
         PERSON_DESCRIPTION,
         PERSON_BIRTHDATE,
+        
+        SKILL,
+        SKILL_SHORTNAME,
+        SKILL_DESCRIPTION,
     }
 
     
@@ -99,7 +104,26 @@ public class UndoRedoPerformer
             }
         }
         
-
+        /* Skill Actions */
+        else if (objClass == Skill.class)
+        {
+            Skill skill = (Skill) item.getHost();
+            switch (item.getUndoAction().getProperty())
+            {
+                case SKILL:
+                    Global.currentProject.getSkills().remove((Skill) item.getHost());
+                    break;
+                case SKILL_SHORTNAME:
+                    skill.setShortName((String) item.getUndoAction().getValue());
+                    break;
+                case SKILL_DESCRIPTION:
+                    skill.setDescription((String) item.getUndoAction().getValue());
+                    break;
+                default:
+                    System.out.println("Undo on skill with this property not implemented (yet?)");
+                    break;                    
+            }
+        }
     }
 
     
@@ -162,6 +186,27 @@ public class UndoRedoPerformer
                 default:
                     System.out.println("Redo on person with this property not implemented (yet?)");
                     break;
+            }
+        }
+        
+        /* Skill Actions */
+        else if (objClass == Skill.class)
+        {
+            Skill skill = (Skill) item.getHost();
+            switch (item.getRedoAction().getProperty())
+            {
+                case SKILL:
+                    Global.currentProject.getSkills().add((Skill) item.getHost());
+                    break;
+                case SKILL_SHORTNAME:
+                    skill.setShortName((String) item.getRedoAction().getValue());
+                    break;
+                case SKILL_DESCRIPTION:
+                    skill.setDescription((String) item.getRedoAction().getValue());
+                    break;
+                default:
+                    System.out.println("Redo on skill with this property not implemented (yet?)");
+                    break;                   
             }
         }
     }

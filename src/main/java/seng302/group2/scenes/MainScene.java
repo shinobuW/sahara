@@ -11,7 +11,6 @@ import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.TreeItem;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
@@ -19,11 +18,12 @@ import static seng302.group2.App.content;
 import static seng302.group2.App.informationGrid;
 import seng302.group2.Global;
 import seng302.group2.project.Project;
+import seng302.group2.project.skills.Skill;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.information.PersonScene;
 import seng302.group2.scenes.information.ProjectScene;
+import seng302.group2.scenes.information.SkillScene;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.scenes.menu.MainMenuBar;
 
 
@@ -47,6 +47,10 @@ public class MainScene
         else if (Global.selectedTreeItem.getValue() instanceof Person)
         {
             PersonScene.getPersonScene();
+        }
+        else if (Global.selectedTreeItem.getValue() instanceof Skill)
+        {
+            SkillScene.getSkillScene();
         }
         
         // Old: TreeView display = ListDisplay.getProjectTree();  // (Manual)

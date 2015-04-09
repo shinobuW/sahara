@@ -17,9 +17,11 @@ import java.util.Map;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.project.Project;
+import seng302.group2.project.skills.Skill;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.information.PersonScene;
 import seng302.group2.scenes.information.ProjectScene;
+import seng302.group2.scenes.information.SkillScene;
  
 
 /**
@@ -132,6 +134,12 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                             ProjectScene.getProjectScene();
                             App.content.getChildren().add(App.informationGrid);
 
+                        }
+                        else if (Global.selectedTreeItem.getValue() instanceof Skill)
+                        {
+                            App.content.getChildren().remove(App.informationGrid);
+                            SkillScene.getSkillScene();
+                            App.content.getChildren().add(App.informationGrid);
                         }
                     }
                 }

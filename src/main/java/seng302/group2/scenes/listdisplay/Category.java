@@ -50,6 +50,8 @@ public class Category extends TreeViewItem
         {
             case "People":
                 return Global.currentProject.getPeople();
+            case "Skills":
+                return Global.currentProject.getSkills();
             default:
                 return null;
         }
