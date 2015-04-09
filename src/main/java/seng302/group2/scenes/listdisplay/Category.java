@@ -5,7 +5,6 @@
  */
 package seng302.group2.scenes.listdisplay;
 
-import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 
@@ -52,6 +51,8 @@ public class Category extends TreeViewItem
                 return Global.currentProject.getPeople();
             case "Skills":
                 return Global.currentProject.getSkills();
+            case "Teams":
+                return Global.currentProject.getTeams();
             default:
                 return null;
         }

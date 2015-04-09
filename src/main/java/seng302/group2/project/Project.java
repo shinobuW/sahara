@@ -24,6 +24,7 @@ import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.project.skills.Skill;
+import seng302.group2.project.team.Team;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.UndoRedoAction;
@@ -42,6 +43,8 @@ public class Project extends TreeViewItem implements Serializable
     private String description;
     private String lastSaveLocation = null;
     private transient boolean hasUnsavedChanges = true;
+    private transient ObservableList<TreeViewItem> teams = observableArrayList();
+    private ArrayList<Person> serializableTeam = new ArrayList<>();
     private transient ObservableList<TreeViewItem> people = observableArrayList();
     private ArrayList<Person> serializablePeople = new ArrayList<>();
     private transient ObservableList<TreeViewItem> skills = observableArrayList();
@@ -70,6 +73,7 @@ public class Project extends TreeViewItem implements Serializable
         this.description = "A blank project.";
         this.serializablePeople = new ArrayList<>();
         this.serializableSkills = new ArrayList<>();
+        this.serializableTeam = new ArrayList<>();
     }
     
     
@@ -146,6 +150,15 @@ public class Project extends TreeViewItem implements Serializable
     public ObservableList<TreeViewItem> getSkills()
     {
         return this.skills;
+    }
+    
+    /**
+     * Gets the project's list of Skills
+     * @return The skills associated with a project
+     */
+    public ObservableList<TreeViewItem> getTeams()
+    {
+        return this.teams;
     }
     
     // </editor-fold>
@@ -359,6 +372,22 @@ public class Project extends TreeViewItem implements Serializable
     }
     
     /**
+     * Adds a Skill to the Project's list of Skills
+     * @param skill The skill to add
+     */
+    public void addTeam(Team team)
+    {
+        //Add the undo action to the stack
+        Global.undoRedoMan.add(new UndoableItem(
+                team,
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL, null)
+                ));
+        
+        this.teams.add(team);
+    }
+    
+    /**
      * Gets a list of categories of the project based on the project's lists
      * @return A list of categories of the project
      */
@@ -369,13 +398,13 @@ public class Project extends TreeViewItem implements Serializable
         
         // Make the categories
         Category peopleCategory = new Category("People");
-        //Category teams = new Category("Teams");
         Category skillCategory = new Category("Skills");
+        Category teamsCategory = new Category("Teams");
         
         // Add the categories
         root.add(peopleCategory); //teams.add(people)
-        //root.add(teams);
         root.add(skillCategory);
+        root.add(teamsCategory);
         
         return root;
     }
@@ -401,6 +430,13 @@ public class Project extends TreeViewItem implements Serializable
             project.serializableSkills.add((Skill)item);
         }
         
+        project.serializableTeam.clear();
+        for (Object item : project.teams)
+        {
+            project.serializableTeam.add((Person)item);
+        }
+        
+        
         // Also perform again for any other deeper observables
         
         return project;
@@ -424,6 +460,14 @@ public class Project extends TreeViewItem implements Serializable
         {
             Global.currentProject.skills.add(item);
         }
+        
+        Global.currentProject.teams = observableArrayList();
+        for (Person item : Global.currentProject.serializableTeam)
+        {
+            Global.currentProject.teams.add(item);
+        }
+        
+        
         // Also for any other deeper observables
         // eg. for (TreeViewItem item : Global.currentProject.team.people) {...}
 
