@@ -60,12 +60,12 @@ public class PersonEditScene
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnSave, btnCancel);
         
-        RequiredField shortNameCustomField = new RequiredField("Short Name", 300);
-        RequiredField firstNameCustomField = new RequiredField("First Name", 300);
-        RequiredField lastNameCustomField = new RequiredField("Last Name", 300);
+        RequiredField shortNameCustomField = new RequiredField("Short Name");
+        RequiredField firstNameCustomField = new RequiredField("First Name");
+        RequiredField lastNameCustomField = new RequiredField("Last Name");
         CustomTextField emailTextField = new CustomTextField("Email");
         CustomDateField customBirthDate = new CustomDateField("Birth Date");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Description");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Description", 300);
         
         firstNameCustomField.setText(currentPerson.getFirstName());
         lastNameCustomField.setText(currentPerson.getLastName());

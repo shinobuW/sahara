@@ -52,8 +52,8 @@ public class SkillEditScene
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name", 300);
-        CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description");
+        RequiredField shortNameCustomField = new RequiredField("Short Name");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description", 300);
         
         shortNameCustomField.setText(currentSkill.getShortName());
         descriptionTextArea.setText(currentSkill.getDescription());

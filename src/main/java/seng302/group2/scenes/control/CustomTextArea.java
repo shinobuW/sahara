@@ -49,6 +49,35 @@ public class CustomTextArea extends VBox
         this.getChildren().add(entry);
     }
 
+        /**
+     * Creates a required label HBox inside of the VBox containing a Label with an appended red
+     * asterisk.
+     * @param name The node field that is required
+     * @param width The width of the area
+     */
+    public CustomTextArea(String name, int width)
+    {
+        this.errorMessageText.setText(errorMessage);
+        inputText.setWrapText(true);
+        inputText.setPrefRowCount(5);
+        
+         
+        HBox labelBox = new HBox();
+        labelBox.setPrefWidth(175);
+        labelBox.spacingProperty().setValue(0);
+                
+        labelBox.getChildren().addAll(new Label(name));
+        
+        Insets insets = new Insets(0, 0, 5, 0);
+        labelBox.setPadding(insets);
+        
+        VBox entry = new VBox();
+        entry.setPrefWidth(width);
+        entry.getChildren().addAll(labelBox, inputText);
+
+        this.getChildren().add(entry);
+    }
+    
     /**
      * Gets the text inside the text field.
      * @return The text inside the text field

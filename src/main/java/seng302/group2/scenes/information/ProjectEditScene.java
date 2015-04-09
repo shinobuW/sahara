@@ -47,9 +47,9 @@ public class ProjectEditScene
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name", 300);
-        RequiredField longNameCustomField = new RequiredField("Long Name", 300);
-        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description");
+        RequiredField shortNameCustomField = new RequiredField("Short Name");
+        RequiredField longNameCustomField = new RequiredField("Long Name");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description", 300);
         
         shortNameCustomField.setText(currentProject.getShortName());
         longNameCustomField.setText(currentProject.getLongName());

@@ -43,34 +43,6 @@ public class RequiredField extends VBox
     }
 
     /**
-     * Creates a required label HBox inside of the VBox containing a Label with an appended red
-     * asterisk. Allows for a width to be specified.
-     * @param name The node field that is required
-     * @param width The width of the required field box
-     */
-    public RequiredField(String name, int width)
-    {
-        this.errorMessageText.setText(errorMessage);
-
-        HBox labelBox = new HBox();
-        labelBox.setPrefWidth(175);
-        labelBox.spacingProperty().setValue(10);
-
-        Label aster = new Label(" * ");
-        aster.setTextFill(Color.web("#ff0000"));
-
-        errorMessageText.setTextFill(Color.web("#ff0000"));
-
-        labelBox.getChildren().addAll(new Label(name), aster);
-
-        HBox entry = new HBox();
-        entry.setPrefWidth(width);
-        entry.getChildren().addAll(labelBox, inputText);
-
-        this.getChildren().add(entry);
-    }
-
-    /**
      * Returns the text inside the text field of the RequiredField.
      * @return The text of the text field
      */
