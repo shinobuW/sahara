@@ -42,6 +42,11 @@ public class CustomTextField extends VBox
         return this.inputText.getText();
     }
     
+    public void setText(String text)
+    {
+        this.inputText.setText(text);
+    }
+    
 
     /**
      * Shows the error field

@@ -81,7 +81,7 @@ public class PersonEditScene
         firstNameCustomField.setText(currentPerson.getFirstName());
         lastNameCustomField.setText(currentPerson.getLastName());
         shortNameCustomField.setText(currentPerson.getShortName());
-        //emailTextField.setText(currentPerson.getEmail());
+        emailTextField.setText(currentPerson.getEmail());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");     
         //customBirthDate.setText(dateFormat.format(currentPerson.getBirthDate()));
         descriptionTextArea.setText(currentPerson.getDescription());;
