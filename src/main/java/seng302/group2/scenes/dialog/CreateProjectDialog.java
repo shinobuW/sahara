@@ -2,8 +2,6 @@ package seng302.group2.scenes.dialog;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -11,11 +9,9 @@ import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
 import seng302.group2.project.Project;
 import seng302.group2.scenes.control.CustomTextArea;
-import seng302.group2.scenes.control.LimitedTextField;
 import seng302.group2.scenes.control.RequiredField;
-import static seng302.group2.scenes.dialog.CreatePersonDialog.validateName;
-import static seng302.group2.scenes.dialog.CreatePersonDialog.validateShortName;
-import seng302.group2.util.validation.ShortNameValidator;
+import static seng302.group2.util.validation.NameValidator.validateName;
+import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  *

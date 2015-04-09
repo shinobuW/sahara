@@ -1,18 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package seng302.group2.project.skills;
 
 import java.io.Serializable;
-import java.util.Date;
 import javafx.collections.ObservableList;
-import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 /**
- *
+ * A basic class to represent skills a person may have
  * @author crw73
  */
 public class Skill extends TreeViewItem implements Serializable
@@ -42,16 +35,11 @@ public class Skill extends TreeViewItem implements Serializable
         // Initialize as a TreeViewItem
         super(shortName);
         
-        String newShortName = validateShortName(shortName);
-        
-        // Continue constructing
-        this.shortName = newShortName;
+        this.shortName = shortName;
         this.description = description;
     }
         
-    // <editor-fold defaultstate="collapsed" desc="Getters">
-
-    
+    // <editor-fold defaultstate="collapsed" desc="Getters"> 
     /**
      * Gets a skills short name
      * @return The short name of the skill
@@ -74,7 +62,6 @@ public class Skill extends TreeViewItem implements Serializable
     
     
     // <editor-fold defaultstate="collapsed" desc="Setters">
-    
      /**
      * Sets a skills short name
      * @param shortName the short name to set
@@ -94,23 +81,7 @@ public class Skill extends TreeViewItem implements Serializable
     }
   
     //</editor-fold>
-    
-    public String validateShortName(String shortName) 
-    {
-        String newShortName = shortName;
-        int i = 0;
-        for (TreeViewItem skill : Global.currentProject.getSkills())
-        {
-            if (skill.toString().equals(newShortName))
-            {
-                i++;
-                newShortName = shortName + "~" + String.valueOf(i);
-            }
-        }
-        return newShortName;
-    }
-    
-    
+        
     /**
      * Gets the children of the TreeViewItem
      * @return The items of the TreeViewItem

@@ -20,9 +20,9 @@ import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.util.validation.DateValidator;
-import seng302.group2.util.validation.NameValidator;
-import seng302.group2.util.validation.ShortNameValidator;
+import static seng302.group2.util.validation.DateValidator.validateBirthDate;
+import static seng302.group2.util.validation.NameValidator.validateName;
+import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  *Class to create a pop up dialog for creating a person
@@ -68,7 +68,7 @@ public class CreatePersonDialog
         // "Create" button event
         btnCreate.setOnAction((event) ->
             {
-                boolean correctDate = validateDate(customBirthDate);
+                boolean correctDate = validateBirthDate(customBirthDate);
                 boolean correctShortName = validateShortName(shortNameCustomField);
                 boolean correctFirstName = validateName(firstNameCustomField);
                 boolean correctLastName = validateName(lastNameCustomField);
@@ -132,91 +132,8 @@ public class CreatePersonDialog
 //    }
 //    
     
-    /**
-     * Checks whether the birth date format is correct
-     * Shows error message and red borders if incorrect
-     * @param customBirthDate the birth date error GUI label
-     * @return true if correct format
-    **/
-    public static boolean validateDate(CustomDateField customBirthDate)
-    {
-        // It is okay for the field to be blank, otherwise validate
-        if (customBirthDate.getText().isEmpty()) 
-        {
-            customBirthDate.hideErrorField();
-            return true;
-        }
 
-        switch (DateValidator.isValidDateString(customBirthDate.getText()))
-        {
-            case VALID:
-                customBirthDate.hideErrorField();
-                return true;
-            case OUT_OF_RANGE:
-                customBirthDate.showErrorField("* This is not a valid birth date");
-                return false;
-            case PATTERN_MISMATCH:
-                customBirthDate.showErrorField("* Format must be dd/MM/yyyy e.g 12/03/1990");
-                return false;
-            default:
-                return true;
-        }
-    }
 
-    
-    /**
-     * Checks whether the name is valid
-     * @param nameField the text field
-     * @return If the name is valid
-     */
-    public static boolean validateName(RequiredField nameField)
-    {
-        switch (NameValidator.validateName(nameField.getText()))
-        {
-            case VALID:
-                nameField.hideErrorField();
-                return true;
-            case INVALID:
-                nameField.showErrorField("* Please insert a name");
-                return false;
-            default:
-                nameField.showErrorField("* Not a valid name");
-                return false;
-        }
-    }
-    
-    
-    /**
-     * Checks whether a given short name is valid (unique and not null/empty)
-     * @param shortNameField is a short name field
-     * @return If the short name is valid
-     */   
-    
-    public static boolean validateShortName(RequiredField shortNameField)
-    {
-        switch (ShortNameValidator.validateShortName(shortNameField.getText()))
-        {
-            case VALID:
-                //shortNameError.setText(null);
-                //shortNameField.setStyle(null); 
-                shortNameField.hideErrorField();
-                return true;
-            case NON_UNIQUE:
-                shortNameField.showErrorField("* Short name has already been taken");
-                return false;
-            case INVALID:
-                shortNameField.showErrorField("* Not a valid short name");
-                return false;
-            case OUT_OF_RANGE:
-                shortNameField.showErrorField("* Short names must be less than 20 characters long");
-                return false;
-            default:
-                shortNameField.showErrorField("* Not a valid short name");
-                return false;
-        }
-    }
-   
-    
     /**
      * Converts strings to dates
      * @param birthDateString the birth date string

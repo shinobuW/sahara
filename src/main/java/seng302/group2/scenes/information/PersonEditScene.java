@@ -15,7 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import static seng302.group2.App.informationGrid;
 import seng302.group2.Global;
@@ -26,11 +25,11 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import static seng302.group2.scenes.dialog.CreatePersonDialog.stringToDate;
-import static seng302.group2.scenes.dialog.CreatePersonDialog.validateDate;
-import static seng302.group2.scenes.dialog.CreatePersonDialog.validateName;
-import static seng302.group2.scenes.dialog.CreatePersonDialog.validateShortName;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
+import static seng302.group2.util.validation.DateValidator.validateBirthDate;
+import static seng302.group2.util.validation.NameValidator.validateName;
+import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  *
@@ -92,7 +91,7 @@ public class PersonEditScene
         
         btnSave.setOnAction((event) ->
             {
-                boolean correctDate = validateDate(customBirthDate);
+                boolean correctDate = validateBirthDate(customBirthDate);
                 boolean correctFirstName = validateName(firstNameCustomField);
                 boolean correctLastName = validateName(lastNameCustomField);
                 boolean correctShortName;

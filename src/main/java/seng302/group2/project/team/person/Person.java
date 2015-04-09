@@ -8,7 +8,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javafx.collections.ObservableList;
-import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 /**
@@ -64,37 +63,17 @@ public class Person extends TreeViewItem implements Serializable
         // Initialize as a TreeViewItem
         super(shortName);
         
-        String newShortName = validateShortName(shortName);
-        
-        // Continue constructing
-        this.shortName = newShortName;
+        this.shortName = shortName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.description = description;
         this.birthDate = birthDate;
     }
-    
-    public String validateShortName(String shortName) 
-    {
-        String newShortName = shortName;
-        int i = 0;
-        for (TreeViewItem person : Global.currentProject.getPeople())
-        {
-            if (person.toString().equals(newShortName))
-            {
-                i++;
-                newShortName = shortName + "~" + String.valueOf(i);
-            }
-        }
-        return newShortName;
-    }
-    
-    // <editor-fold defaultstate="collapsed" desc="Getters">
-
-    
+       
+    // <editor-fold defaultstate="collapsed" desc="Getters"> 
     /**
-     * Gets a person's short name
+     * Gets the person's short name
      * @return The short name of the person
      */
     public String getShortName()
@@ -103,7 +82,7 @@ public class Person extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets a person's first name
+     * Gets the person's first name
      * @return The first name of the person
      */
     public String getFirstName()
@@ -112,7 +91,7 @@ public class Person extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets a person's last name
+     * Gets the person's last name
      * @return The last name of the person
      */
     public String getLastName()
@@ -121,7 +100,7 @@ public class Person extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets a person's email
+     * Gets the person's email
      * @return The email of the person
      */
     public String getEmail()
@@ -130,7 +109,7 @@ public class Person extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets a person's description
+     * Gets the person's description
      * @return The description of the person
      */
     public String getDescription()
@@ -139,7 +118,7 @@ public class Person extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets a person's birth date
+     * Gets the person's birth date
      * @return The birth date of the person
      */
     public Date getBirthDate()
@@ -151,9 +130,8 @@ public class Person extends TreeViewItem implements Serializable
     
     
     // <editor-fold defaultstate="collapsed" desc="Setters">
-    
-     /**
-     * Sets a person's short name
+    /**
+     * Sets the person's short name
      * @param shortName the short name to set
      */
     public void setShortName(String shortName)
@@ -162,7 +140,7 @@ public class Person extends TreeViewItem implements Serializable
     }
     
     /**
-     * Sets a person's first name
+     * Sets the person's first name
      * @param firstName the first name to set
      */
     public void setFirstName(String firstName)
@@ -171,7 +149,7 @@ public class Person extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets a person's last name
+     * Gets the person's last name
      * @param lastName the last name to set
      */
     public void setLastName(String lastName)
@@ -180,7 +158,7 @@ public class Person extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets a person's email
+     * Gets the person's email
      * @param email the email to set
      */
     public void setEmail(String email)
@@ -189,7 +167,7 @@ public class Person extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets a person's description
+     * Gets the person's description
      * @param description the description to set
      */
     public void setDescription(String description)
@@ -198,7 +176,7 @@ public class Person extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets a person's birth date
+     * Gets the person's birth date
      * @param birthDate the birth date to set
      */
     public void setBirthDate(Date birthDate)

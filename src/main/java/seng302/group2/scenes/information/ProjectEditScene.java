@@ -15,10 +15,10 @@ import seng302.group2.scenes.control.RequiredField;
 import static seng302.group2.App.informationGrid;
 import seng302.group2.Global;
 import static seng302.group2.Global.selectedTreeItem;
-import static seng302.group2.scenes.dialog.CreatePersonDialog.validateName;
-import static seng302.group2.scenes.dialog.CreatePersonDialog.validateShortName;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
+import static seng302.group2.util.validation.NameValidator.validateName;
+import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * Created by btm38 on 7/04/15.

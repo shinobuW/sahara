@@ -16,8 +16,7 @@ public class CustomDateField extends VBox
     Label errorMessageText = new Label();
 
     /**
-     * Creates a required label HBox inside of the VBox containing a Label with an appended red
-     * asterisk.
+     * Creates a label & and a text field with date layout prompts.
      * @param name The label for the date field
      */
     public CustomDateField(String name)
@@ -37,12 +36,20 @@ public class CustomDateField extends VBox
         this.getChildren().add(entry);
     }
 
-
+    /**
+     * Returns the text inside the text field of the CustomDateField.
+     * @return The text of the text field
+     */
     public String getText()
     {
         return this.inputText.getText();
     }
     
+    
+    /**
+     * Sets the text inside the text field of the CustomDateField.
+     * @param text the text to be inserted into the text field
+     */
     public void setText(String text)
     {
         this.inputText.setText(text);

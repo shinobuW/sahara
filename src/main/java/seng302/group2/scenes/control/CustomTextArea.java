@@ -79,17 +79,18 @@ public class CustomTextArea extends VBox
     }
     
     /**
-     * Gets the text inside the text field.
-     * @return The text inside the text field
+     * Returns the text inside the text field of the CustomTextArea.
+     * @return The text of the text field
      */
     public String getText()
     {
         return this.inputText.getText();
     }
 
+    
     /**
-     * Sets the text inside the text field.
-     * @param text To be set inside the text field.
+     * Sets the text inside the text field of the CustomTextArea.
+     * @param text the text to be inserted into the text field
      */
     public void setText(String text)
     {

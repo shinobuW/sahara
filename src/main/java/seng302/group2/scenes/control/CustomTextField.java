@@ -17,7 +17,7 @@ public class CustomTextField extends VBox
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
      * asterisk.
-     * @param node The node field that is required
+     * @param name The node field that is required
      */
     public CustomTextField(String name)
     {
@@ -36,12 +36,20 @@ public class CustomTextField extends VBox
         this.getChildren().add(entry);
     }
     
-    
+    /**
+     * Returns the text inside the text field of the CustomTextField.
+     * @return The text of the text field
+     */
     public String getText()
     {
         return this.inputText.getText();
     }
     
+    
+    /**
+     * Sets the text inside the text field of the CustomTextField.
+     * @param text the text to be inserted into the text field
+     */
     public void setText(String text)
     {
         this.inputText.setText(text);

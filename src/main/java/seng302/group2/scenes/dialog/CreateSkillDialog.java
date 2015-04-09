@@ -15,7 +15,7 @@ import seng302.group2.Global;
 import seng302.group2.project.skills.Skill;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import static seng302.group2.scenes.dialog.CreatePersonDialog.validateShortName;
+import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  *

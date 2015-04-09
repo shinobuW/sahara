@@ -55,8 +55,8 @@ public class Project extends TreeViewItem implements Serializable
         SUCCESS,
         NULLPROJECT,
         IOEXCEPTION,
-        NOFILESELECTED,  // Cancelled in save
-        FILENOTFOUND  // File doesn't exist when opening
+        NOFILESELECTED,     // Cancelled in save
+        FILENOTFOUND        // File doesn't exist when opening
     }
     
     /**
@@ -92,7 +92,7 @@ public class Project extends TreeViewItem implements Serializable
     
     /**
      * Gets if the project has unsaved changes.
-     * @return If the project has unsaved changes
+     * @return true or false depending if the project has unsaved changes
      */
     public boolean getHasUnsavedChanges()
     {
@@ -101,7 +101,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Gets a project's short name
+     * Gets the project's short name
      * @return The short name of the project
      */
     public String getShortName()
@@ -111,7 +111,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Gets a project's long name
+     * Gets the project's long name
      * @return The long name of the project
      */
     public String getLongName()
@@ -121,7 +121,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Gets a project's description
+     * Gets the project's description
      * @return The description of the project
      */
     public String getDescription()
@@ -131,7 +131,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Gets a project's list of Persons
+     * Gets the project's list of Persons
      * @return The people associated with the project
      */
     public ObservableList<TreeViewItem> getPeople()
@@ -140,7 +140,7 @@ public class Project extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets a project's list of Skills
+     * Gets the project's list of Skills
      * @return The skills associated with a project
      */
     public ObservableList<TreeViewItem> getSkills()
@@ -172,7 +172,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Sets a project's short name
+     * Sets the project's short name
      * @param shortName The new short name for the project
      */
     public void setShortName(String shortName)
@@ -182,7 +182,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Sets a project's long name
+     * Sets the project's long name
      * @param longName The new long name for the project
      */
     public void setLongName(String longName)
@@ -192,7 +192,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Sets a project's description
+     * Sets the project's description
      * @param description The new description for the project
      */
     public void setDescription(String description)
