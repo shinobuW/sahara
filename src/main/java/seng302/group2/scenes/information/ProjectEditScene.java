@@ -34,7 +34,6 @@ public class ProjectEditScene
 
         Project currentProject = (Project) selectedTreeItem.getValue();
         informationGrid = new GridPane();
-
         informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);
@@ -48,11 +47,12 @@ public class ProjectEditScene
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        shortNameCustomField.setText(currentProject.getShortName());
+        RequiredField shortNameCustomField = new RequiredField("Short Name", 300);
         RequiredField longNameCustomField = new RequiredField("Long Name", 300);
-        longNameCustomField.setText(currentProject.getLongName());
         CustomTextArea descriptionTextArea = new CustomTextArea("Project Description");
+        
+        shortNameCustomField.setText(currentProject.getShortName());
+        longNameCustomField.setText(currentProject.getLongName());
         descriptionTextArea.setText(currentProject.getDescription());
 
         informationGrid.add(shortNameCustomField, 0, 0);
