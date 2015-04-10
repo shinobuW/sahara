@@ -41,6 +41,7 @@ public class MainScene
 {
     public static TreeViewWithItems treeView = new TreeViewWithItems(new TreeItem());
     public static GridPane informationGrid = new GridPane();
+    public static boolean menuHidden = false;
     
     public static Scene getMainScene()
     {
@@ -98,7 +99,12 @@ public class MainScene
         informationGrid.boundsInParentProperty();
 
         content.getChildren().removeAll(treeView, informationGrid);
-        content.getChildren().addAll(treeView, informationGrid);
+
+        if (!menuHidden)
+        {
+            content.getChildren().add(treeView);
+        }
+        content.getChildren().add(informationGrid);
 
         root.getChildren().remove(content);
         root.getChildren().add(content);

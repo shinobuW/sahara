@@ -8,6 +8,7 @@ package seng302.group2.scenes.menu;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.dialog.CreateProjectDialog;
 import seng302.group2.scenes.dialog.CreatePersonDialog;
 import javafx.event.ActionEvent;
@@ -244,6 +245,32 @@ public class MainMenuBar
                 KeyCombination.SHORTCUT_DOWN));
         return redoItem;
     }
+
+
+    private static MenuItem createToggleTreeItem()
+    {
+        MenuItem toggleItem = new MenuItem("Toggle Menu");
+        toggleItem.setOnAction((event) ->
+            {
+                if (Global.appRunning())
+                {
+                    if (MainScene.menuHidden)
+                    {
+                        MainScene.menuHidden = false;
+                    }
+                    else
+                    {
+                        MainScene.menuHidden = true;
+                    }
+                    App.refreshMainScene();
+                }
+            });
+
+        toggleItem.setAccelerator(new KeyCodeCombination(KeyCode.M,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
+        return toggleItem;
+    }
     
     /**
      * Creates the Menu Bar for the Scene
@@ -275,6 +302,7 @@ public class MainMenuBar
         newProjectBranch.getItems().add(newSkillItem);
         newProjectBranch.getItems().add(newTeamItem);
 
+
         // Create 'Edit >' sub-menu
         Menu editMenu = new Menu("Edit");
         menuBar.getMenus().add(editMenu);
@@ -283,6 +311,16 @@ public class MainMenuBar
         MenuItem undoItem = createUndoItem();
         MenuItem redoItem = createRedoItem();
               
+
+        // Create 'Display >' sub-menu
+        Menu displayMenu = new Menu("Display");
+        menuBar.getMenus().add(displayMenu);
+
+        // Create MenuItems for Display submenu
+        MenuItem toggleTree = createToggleTreeItem();
+        displayMenu.getItems().addAll(toggleTree);
+
+
         // Add MenuItems to Menu
         fileMenu.getItems().addAll(newProjectBranch, openItem,
                 saveItem, saveAsItem, new SeparatorMenuItem(), quitProgramItem);
