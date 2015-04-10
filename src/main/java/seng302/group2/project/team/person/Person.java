@@ -223,8 +223,35 @@ public class Person extends TreeViewItem implements Serializable
                 ));
         
         this.skills.add(skill);
-    }    
-    
+    }
+
+
+    /**
+     * Prepares a person to be serialized.
+     */
+    public void prepSerialization()
+    {
+        serializableSkills.clear();
+        for (Object item : skills)
+        {
+            this.serializableSkills.add((Skill) item);
+        }
+    }
+
+
+    /**
+     * Deserialization post-processing.
+     */
+    public void postSerialization()
+    {
+        skills.clear();
+        for (Object item : serializableSkills)
+        {
+            this.skills.add((Skill) item);
+        }
+    }
+
+
     /**
      * Removes a Skill from the Person's list of Skills
      * @param skill The skill to remove

@@ -23,7 +23,7 @@ import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.information.PersonScene;
 import seng302.group2.scenes.information.ProjectScene;
 import seng302.group2.scenes.information.SkillScene;
- 
+
 
 /**
  * This class extends the {@link TreeView} to use items as a data source.
@@ -37,78 +37,78 @@ import seng302.group2.scenes.information.SkillScene;
  * @author Christian Schudt (modified by Jordane Lew)
  * @param <T> The type of treeview items
  */
-public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> 
+public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
 {
     /**
      * Keep hard references for each listener, so that they don't get garbage collected too soon.
      */
     private final Map<TreeItem<T>, ListChangeListener<T>> hardReferences = new HashMap<TreeItem<T>,
             ListChangeListener<T>>();
- 
+
     /**
      * Also store a reference from each tree item to its weak listeners, so that the listener can be
      * removed, when the tree item gets removed.
      */
     private final Map<TreeItem<T>, WeakListChangeListener<T>> weakListeners =
             new HashMap<TreeItem<T>, WeakListChangeListener<T>>();
- 
+
     private ObjectProperty<ObservableList<? extends T>> items =
             new SimpleObjectProperty<ObservableList<? extends T>>(this, "items");
-    
-    
+
+
     /**
      * Creates the tree view.
      */
-    public TreeViewWithItems() 
+    public TreeViewWithItems()
     {
         super();
         init();
     }
- 
-    
+
+
     /**
      * Creates the tree view with a given root.
      *
      * @param root The root tree item.
      * @see TreeView#TreeView(javafx.scene.control.TreeItem)
      */
-    public TreeViewWithItems(TreeItem<T> root) 
+    public TreeViewWithItems(TreeItem<T> root)
     {
         super(root);
         init();
     }
-    
- 
+
+
     /**
      * Initializes the tree view.
      */
-    private void init() 
+    private void init()
     {
-        rootProperty().addListener(new ChangeListener<TreeItem<T>>() 
+        rootProperty().addListener(new ChangeListener<TreeItem<T>>()
         {
             @Override
             public void changed(ObservableValue<? extends TreeItem<T>> observableValue,
-                    TreeItem<T> oldRoot, TreeItem<T> newRoot) 
+                    TreeItem<T> oldRoot, TreeItem<T> newRoot)
             {
                 clear(oldRoot);
                 updateItems();
             }
         });
- 
+
         setItems(FXCollections.<T>observableArrayList());
- 
+
         /* Do not use ChangeListener, because it won't trigger if old list equals new list (but in
         fact different references). */
-        items.addListener(new InvalidationListener() 
+        items.addListener(new InvalidationListener()
         {
             @Override
-            public void invalidated(Observable observable) 
+            public void invalidated(Observable observable)
             {
                 clear(getRoot());
                 updateItems();
             }
         });
-        
+
         /* Sets the App.selectedTreeItem when a new selection is made */
         this.getSelectionModel().selectedItemProperty().addListener(new ChangeListener()
             {
@@ -118,10 +118,17 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     TreeItem<Object> selectedItem = (TreeItem<Object>) newValue;
                     Global.selectedTreeItem = selectedItem;
                     //System.out.println(App.selectedTreeItem.getValue().getClass());  // testing
-                    
+
                     //Updates the display pane to be pane for the selectItem
                     if (Global.appRunning())
                     {
+                        if (Global.selectedTreeItem == null)
+                        {
+                            // Nothing is selected, make a default selection?
+                            App.content.getChildren().remove(MainScene.informationGrid);
+                            ProjectScene.getProjectScene();
+                            App.content.getChildren().add(MainScene.informationGrid);
+                        }
                         if (Global.selectedTreeItem.getValue() instanceof Person)
                         {
                             App.content.getChildren().remove(MainScene.informationGrid);
@@ -146,41 +153,41 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                 }
             });
     }
- 
-    
+
+
     /**
      * Removes all listener from a root.
      *
      * @param root The root.
      */
-    private void clear(TreeItem<T> root) 
+    private void clear(TreeItem<T> root)
     {
-        if (root != null) 
+        if (root != null)
         {
-            for (TreeItem<T> treeItem : root.getChildren()) 
+            for (TreeItem<T> treeItem : root.getChildren())
             {
                 removeRecursively(treeItem);
             }
- 
+
             removeRecursively(root);
             root.getChildren().clear();
         }
     }
- 
-    
+
+
     /**
      * Updates the items
      */
-    private void updateItems() 
+    private void updateItems()
     {
- 
-        if (getItems() != null) 
+
+        if (getItems() != null)
         {
-            for (T value : getItems()) 
+            for (T value : getItems())
             {
                 getRoot().getChildren().add(addRecursively(value));
             }
- 
+
             ListChangeListener<T> rootListener = getListChangeListener(getRoot().getChildren());
             WeakListChangeListener<T> weakListChangeListener =
                     new WeakListChangeListener<T>(rootListener);
@@ -189,8 +196,8 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
             getItems().addListener(weakListChangeListener);
         }
     }
- 
-    
+
+
     /**
      * Gets a {@link javafx.collections.ListChangeListener} for a {@link TreeItem}. It listens to
      * changes on the underlying list and updates the UI accordingly.
@@ -198,52 +205,52 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
      * @return The listener.
      */
     private ListChangeListener<T> getListChangeListener(
-            final ObservableList<TreeItem<T>> treeItemChildren) 
+            final ObservableList<TreeItem<T>> treeItemChildren)
     {
-        return new ListChangeListener<T>() 
+        return new ListChangeListener<T>()
         {
             @Override
-            public void onChanged(final Change<? extends T> change) 
+            public void onChanged(final Change<? extends T> change)
             {
-                while (change.next()) 
+                while (change.next())
                 {
-                    if (change.wasUpdated()) 
+                    if (change.wasUpdated())
                     {
                         // http://javafx-jira.kenai.com/browse/RT-23434
                         continue;
                     }
-                    if (change.wasRemoved()) 
+                    if (change.wasRemoved())
                     {
-                        for (int i = change.getRemovedSize() - 1; i >= 0; i--) 
+                        for (int i = change.getRemovedSize() - 1; i >= 0; i--)
                         {
                             removeRecursively(treeItemChildren.remove(change.getFrom() + i));
                         }
                     }
                     // If items have been added
-                    if (change.wasAdded()) 
+                    if (change.wasAdded())
                     {
                         // Get the new items
-                        for (int i = change.getFrom(); i < change.getTo(); i++) 
+                        for (int i = change.getFrom(); i < change.getTo(); i++)
                         {
                             treeItemChildren.add(i, addRecursively(change.getList().get(i)));
                         }
                     }
                     // If the list was sorted.
-                    if (change.wasPermutated()) 
+                    if (change.wasPermutated())
                     {
                         // Store the new order.
                         Map<Integer, TreeItem<T>> tempMap = new HashMap<Integer, TreeItem<T>>();
- 
-                        for (int i = change.getTo() - 1; i >= change.getFrom(); i--) 
+
+                        for (int i = change.getTo() - 1; i >= change.getFrom(); i--)
                         {
                             int a = change.getPermutation(i);
                             tempMap.put(a, treeItemChildren.remove(i));
                         }
- 
+
                         getSelectionModel().clearSelection();
- 
+
                         // Add the items in the new order.
-                        for (int i = change.getFrom(); i < change.getTo(); i++) 
+                        for (int i = change.getFrom(); i < change.getTo(); i++)
                         {
                             treeItemChildren.add(tempMap.remove(i));
                         }
@@ -252,78 +259,78 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
             }
         };
     }
-    
- 
+
+
     /**
      * Removes the listener recursively.
      * @param item The tree item.
      * @return the item removed
      */
-    private TreeItem<T> removeRecursively(TreeItem<T> item) 
+    private TreeItem<T> removeRecursively(TreeItem<T> item)
     {
-        if (item.getValue() != null && item.getValue().getChildren() != null) 
+        if (item.getValue() != null && item.getValue().getChildren() != null)
         {
- 
-            if (weakListeners.containsKey(item)) 
+
+            if (weakListeners.containsKey(item))
             {
                 item.getValue().getChildren().removeListener(weakListeners.remove(item));
                 hardReferences.remove(item);
             }
-            for (TreeItem<T> treeItem : item.getChildren()) 
+            for (TreeItem<T> treeItem : item.getChildren())
             {
                 removeRecursively(treeItem);
             }
         }
         return item;
     }
-    
- 
+
+
     /**
      * Adds the children to the tree recursively.
      * @param value The initial value.
      * @return The tree item.
      */
-    private TreeItem<T> addRecursively(T value) 
+    private TreeItem<T> addRecursively(T value)
     {
- 
+
         TreeItem<T> treeItem = new TreeItem<T>();
         treeItem.setValue(value);
         treeItem.setExpanded(true);
- 
-        if (value != null && value.getChildren() != null) 
+
+        if (value != null && value.getChildren() != null)
         {
             ListChangeListener<T> listChangeListener =
                     getListChangeListener(treeItem.getChildren());
             WeakListChangeListener<T> weakListener =
                     new WeakListChangeListener<T>(listChangeListener);
             value.getChildren().addListener(weakListener);
- 
+
             hardReferences.put(treeItem, listChangeListener);
             weakListeners.put(treeItem, weakListener);
-            for (T child : value.getChildren()) 
+            for (T child : value.getChildren())
             {
                 treeItem.getChildren().add(addRecursively(child));
             }
         }
         return treeItem;
     }
-    
-    
+
+
     /**
      * Gets the observable list of items
      * @return The observable list of items
      */
-    public ObservableList<? extends T> getItems() 
+    public ObservableList<? extends T> getItems()
     {
         return items.get();
     }
- 
-    
+
+
     /**
      * Sets items for the tree.
      * @param items The list.
      */
-    public void setItems(ObservableList<? extends T> items) 
+    public void setItems(ObservableList<? extends T> items)
     {
         this.items.set(items);
     }
