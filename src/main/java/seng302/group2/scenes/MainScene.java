@@ -80,9 +80,11 @@ public class MainScene
         
         content.boundsInParentProperty();
         informationGrid.boundsInParentProperty();
-        
-        content.getChildren().add(treeView);
-        content.getChildren().add(informationGrid);
+
+        content.getChildren().removeAll(treeView, informationGrid);
+        content.getChildren().addAll(treeView, informationGrid);
+
+        root.getChildren().remove(content);
         root.getChildren().add(content);
 
         return new Scene(root);
