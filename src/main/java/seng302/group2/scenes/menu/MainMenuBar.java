@@ -66,7 +66,9 @@ public class MainMenuBar
                 }
             });
 
-        newProjectItem.setAccelerator(new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN, KeyCombination.SHORTCUT_DOWN));
+        newProjectItem.setAccelerator(new KeyCodeCombination(KeyCode.N,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return newProjectItem;
     }
     
@@ -78,7 +80,9 @@ public class MainMenuBar
             {
                 CreatePersonDialog.show();
             });
-        newPersonItem.setAccelerator(new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_DOWN, KeyCombination.SHORTCUT_DOWN));
+        newPersonItem.setAccelerator(new KeyCodeCombination(KeyCode.P,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return newPersonItem;
     }
     
@@ -89,7 +93,9 @@ public class MainMenuBar
             {
                 CreateSkillDialog.show();
             });
-        newSkillItem.setAccelerator(new KeyCodeCombination(KeyCode.K, KeyCombination.CONTROL_DOWN, KeyCombination.SHORTCUT_DOWN));
+        newSkillItem.setAccelerator(new KeyCodeCombination(KeyCode.K,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return newSkillItem;
     }
     
@@ -100,7 +106,9 @@ public class MainMenuBar
             {
                 CreateTeamDialog.show();
             });
-        newTeamItem.setAccelerator(new KeyCodeCombination(KeyCode.T, KeyCombination.CONTROL_DOWN, KeyCombination.SHORTCUT_DOWN));
+        newTeamItem.setAccelerator(new KeyCodeCombination(KeyCode.T,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return newTeamItem;
     }
     
@@ -135,7 +143,8 @@ public class MainMenuBar
                     //App.refreshMainScene();
                 }   
             });
-        openItem.setAccelerator(new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN, KeyCombination.SHORTCUT_DOWN));
+        openItem.setAccelerator(new KeyCodeCombination(KeyCode.O,
+                KeyCombination.CONTROL_DOWN, KeyCombination.SHORTCUT_DOWN));
         return openItem;
     }
     
@@ -149,7 +158,9 @@ public class MainMenuBar
                 Project.saveProject(Global.currentProject, false);
             });
 
-        saveItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN, KeyCombination.SHORTCUT_DOWN));
+        saveItem.setAccelerator(new KeyCodeCombination(KeyCode.S,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return saveItem;
     }
     
@@ -163,7 +174,10 @@ public class MainMenuBar
                 Project.saveProject(Global.currentProject, true);
             });
 
-        saveAsItem.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN, KeyCombination.SHORTCUT_DOWN));
+        saveAsItem.setAccelerator(new KeyCodeCombination(KeyCode.S,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHIFT_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return saveAsItem;
     }
     
@@ -209,7 +223,9 @@ public class MainMenuBar
                 Global.undoRedoMan.undo();
             });
 
-        undoItem.setAccelerator(new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN, KeyCombination.SHORTCUT_DOWN));
+        undoItem.setAccelerator(new KeyCodeCombination(KeyCode.Z,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return undoItem;
     }
     
@@ -223,7 +239,9 @@ public class MainMenuBar
                 Global.undoRedoMan.redo();
             });
 
-        redoItem.setAccelerator(new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN, KeyCombination.SHORTCUT_DOWN));
+        redoItem.setAccelerator(new KeyCodeCombination(KeyCode.Y,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return redoItem;
     }
     
