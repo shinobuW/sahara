@@ -9,6 +9,7 @@ import java.util.Date;
 import seng302.group2.Global;
 import seng302.group2.project.Project;
 import seng302.group2.project.skills.Skill;
+import seng302.group2.project.team.Team;
 import seng302.group2.project.team.person.Person;
 
 /**
@@ -39,6 +40,10 @@ public class UndoRedoPerformer
         SKILL,
         SKILL_SHORTNAME,
         SKILL_DESCRIPTION,
+        
+        TEAM,
+        TEAM_SHORTNAME,
+        TEAM_DESCRIPTION,
     }
 
     
@@ -124,6 +129,27 @@ public class UndoRedoPerformer
                     break;                    
             }
         }
+        
+        /* Team Actions */
+        else if (objClass == Team.class)
+        {
+            Team team = (Team) item.getHost();
+            switch (item.getUndoAction().getProperty())
+            {
+                case TEAM:
+                    Global.currentProject.getTeams().remove((Team) item.getHost());
+                    break;
+                case TEAM_SHORTNAME:
+                    team.setShortName((String) item.getUndoAction().getValue());
+                    break;
+                case TEAM_DESCRIPTION:
+                    team.setDescription((String) item.getUndoAction().getValue());
+                    break;
+                default:
+                    System.out.println("Undo on skill with this property not implemented (yet?)");
+                    break;                    
+            }
+        }
     }
 
     
@@ -203,6 +229,27 @@ public class UndoRedoPerformer
                     break;
                 case SKILL_DESCRIPTION:
                     skill.setDescription((String) item.getRedoAction().getValue());
+                    break;
+                default:
+                    System.out.println("Redo on skill with this property not implemented (yet?)");
+                    break;                   
+            }
+        }
+        
+        /* Team Actions */
+        else if (objClass == Team.class)
+        {
+            Team team = (Team) item.getHost();
+            switch (item.getRedoAction().getProperty())
+            {
+                case TEAM:
+                    Global.currentProject.getTeams().add((Team) item.getHost());
+                    break;
+                case TEAM_SHORTNAME:
+                    team.setShortName((String) item.getRedoAction().getValue());
+                    break;
+                case TEAM_DESCRIPTION:
+                    team.setDescription((String) item.getRedoAction().getValue());
                     break;
                 default:
                     System.out.println("Redo on skill with this property not implemented (yet?)");

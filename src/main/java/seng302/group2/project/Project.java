@@ -44,7 +44,7 @@ public class Project extends TreeViewItem implements Serializable
     private String lastSaveLocation = null;
     private transient boolean hasUnsavedChanges = true;
     private transient ObservableList<TreeViewItem> teams = observableArrayList();
-    private ArrayList<Person> serializableTeam = new ArrayList<>();
+    private ArrayList<Team> serializableTeam = new ArrayList<>();
     private transient ObservableList<TreeViewItem> people = observableArrayList();
     private ArrayList<Person> serializablePeople = new ArrayList<>();
     private transient ObservableList<TreeViewItem> skills = observableArrayList();
@@ -153,8 +153,8 @@ public class Project extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets the project's list of Skills
-     * @return The skills associated with a project
+     * Gets the project's list of Teams
+     * @return The teams associated with a project
      */
     public ObservableList<TreeViewItem> getTeams()
     {
@@ -372,16 +372,16 @@ public class Project extends TreeViewItem implements Serializable
     }
     
     /**
-     * Adds a Skill to the Project's list of Skills
-     * @param skill The skill to add
+     * Adds a Skill to the Project's list of Teams
+     * @param team The team to add
      */
     public void addTeam(Team team)
     {
         //Add the undo action to the stack
         Global.undoRedoMan.add(new UndoableItem(
                 team,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL, null)
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM, null)
                 ));
         
         this.teams.add(team);
@@ -433,7 +433,7 @@ public class Project extends TreeViewItem implements Serializable
         project.serializableTeam.clear();
         for (Object item : project.teams)
         {
-            project.serializableTeam.add((Person)item);
+            project.serializableTeam.add((Team)item);
         }
         
         
@@ -462,7 +462,7 @@ public class Project extends TreeViewItem implements Serializable
         }
         
         Global.currentProject.teams = observableArrayList();
-        for (Person item : Global.currentProject.serializableTeam)
+        for (Team item : Global.currentProject.serializableTeam)
         {
             Global.currentProject.teams.add(item);
         }

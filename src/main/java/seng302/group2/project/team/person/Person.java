@@ -6,9 +6,16 @@ package seng302.group2.project.team.person;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
+import seng302.group2.Global;
+import seng302.group2.project.skills.Skill;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.undoredo.UndoRedoAction;
+import seng302.group2.util.undoredo.UndoRedoPerformer;
+import seng302.group2.util.undoredo.UndoableItem;
 
 /**
  * A basic class to represent a Person in the real world.
@@ -24,7 +31,9 @@ public class Person extends TreeViewItem implements Serializable
     private String email;
     private String description;
     private Date birthDate = new Date();
-    
+    private transient ObservableList<Skill> skills = observableArrayList();
+    private ArrayList<Skill> serializableSkills = new ArrayList<>();
+
     
     /**
      * Basic Person constructor
@@ -126,6 +135,20 @@ public class Person extends TreeViewItem implements Serializable
         return this.birthDate;
     }
     
+    /**
+     * Gets the person's list of Skills
+     * @return The skills associated with a person
+     */
+    public ObservableList<Skill> getSkills()
+    {
+        this.serializableSkills.clear();
+        for (Object item : this.skills)
+        {
+            this.serializableSkills.add((Skill)item);
+        }
+        return this.skills;
+    }
+    
     //</editor-fold>
     
     
@@ -186,6 +209,36 @@ public class Person extends TreeViewItem implements Serializable
     
         //</editor-fold>
     
+    /**
+     * Adds a Skill to the Person's list of Skills
+     * @param skill The skill to add
+     */
+    public void addSkill(Skill skill)
+    {
+        //Add the undo action to the stack
+        Global.undoRedoMan.add(new UndoableItem(
+                skill,
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL, null)
+                ));
+        
+        this.skills.add(skill);
+    }    
+    
+    /**
+     * Removes a Skill from the Person's list of Skills
+     * @param skill The skill to remove
+     */
+    public void removeSkill(Skill skill)
+    {
+        //Add the undo action to the stack
+        Global.undoRedoMan.add(new UndoableItem(
+                skill,
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL, null)
+                ));
+        this.skills.remove(skill);
+    }    
     
     /**
      * Gets the children of the TreeViewItem
