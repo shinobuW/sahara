@@ -34,7 +34,7 @@ public class CreatePersonDialog
     public static void show()
     {
         // Initialise Dialog and GridPane
-        Dialog dialog = new Dialog(null, "Create New Person");
+        Dialog dialog = new Dialog(null, "New Person");
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);

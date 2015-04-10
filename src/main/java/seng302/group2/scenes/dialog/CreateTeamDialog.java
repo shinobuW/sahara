@@ -30,7 +30,7 @@ public class CreateTeamDialog
     */
     public static void show()
     {
-        Dialog dialog = new Dialog(null, "Create New Skill");
+        Dialog dialog = new Dialog(null, "New Team");
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);

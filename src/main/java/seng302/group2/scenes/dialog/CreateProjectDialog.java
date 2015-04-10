@@ -22,7 +22,7 @@ public class CreateProjectDialog
 {
     public static void show()
     {
-        Dialog dialog = new Dialog(null, "Create New Project");
+        Dialog dialog = new Dialog(null, "New Project");
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
