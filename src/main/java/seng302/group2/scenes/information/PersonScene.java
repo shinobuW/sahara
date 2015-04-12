@@ -101,7 +101,6 @@ public class PersonScene
                 
                 for (Skill item : selectedSkills)
                 {
-                    System.out.println(item);
                     currentPerson.addSkill(item);
                 }
                 
@@ -119,14 +118,9 @@ public class PersonScene
             {
                 ObservableList<Skill> selectedSkills = 
                         personSkillsBox.getSelectionModel().getSelectedItems();
-                System.out.println(selectedSkills.get(0));
-                System.out.println(selectedSkills.get(1));
-                System.out.println(selectedSkills.get(2));
-                
 
                 for (int i = selectedSkills.size() - 1; i >= 0 ; i--)
                 {
-                    System.out.println(selectedSkills.get(i) + "   " + i);
                     currentPerson.removeSkill(selectedSkills.get(i));
                 }
                 
