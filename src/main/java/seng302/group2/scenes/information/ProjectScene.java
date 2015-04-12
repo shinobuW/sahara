@@ -31,8 +31,8 @@ public class ProjectScene
      */
     public static GridPane getProjectScene()
     {
-        
         Project currentProject = (Project) selectedTreeItem.getValue();
+
         informationGrid = new GridPane();
 
         informationGrid.setAlignment(Pos.TOP_LEFT);

@@ -40,8 +40,8 @@ public class PersonScene
      */
     public static GridPane getPersonScene()
     {
-        
         Person currentPerson = (Person) selectedTreeItem.getValue();
+
         informationGrid = new GridPane();
         
         informationGrid.setAlignment(Pos.TOP_LEFT);
@@ -52,8 +52,8 @@ public class PersonScene
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
         Button btnEdit = new Button("Edit");
-        Button btnAdd = new Button("Add");
-        Button btnDelete = new Button("Delete");
+        Button btnAdd = new Button("<-");
+        Button btnDelete = new Button("->");
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         
         VBox skillsButtons = new VBox();
@@ -68,7 +68,7 @@ public class PersonScene
         ObservableList<Skill> dialogSkills = observableArrayList();
         for (TreeViewItem projectSkill : currentProject.getSkills())
         {
-            if (!currentPerson.getSkills().contains((Skill)projectSkill))
+            if (!currentPerson.getSkills().contains(projectSkill))
             {
                 dialogSkills.add((Skill)projectSkill);
             }

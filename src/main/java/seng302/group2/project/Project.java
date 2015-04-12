@@ -235,7 +235,7 @@ public class Project extends TreeViewItem implements Serializable
             return SaveLoadResult.NULLPROJECT;
         }
         
-        project = Project.preSerialization(project);
+        project = Project.prepSerialization(project);
         
         if (saveAs || project.lastSaveLocation == null || project.lastSaveLocation.equals(""))
         {
@@ -416,7 +416,7 @@ public class Project extends TreeViewItem implements Serializable
      * @param project The project for intended serialization
      * @return A serializable version of the given project
      */
-    public static Project preSerialization(Project project)
+    public static Project prepSerialization(Project project)
     {
         project.serializablePeople.clear();
         for (Object item : project.people)
@@ -436,7 +436,13 @@ public class Project extends TreeViewItem implements Serializable
             project.serializableTeam.add((Team)item);
         }
         
-        
+        // Prepare for the serialization of persons
+        for (Object item : project.people)
+        {
+            Person person = (Person) item;
+            person.prepSerialization();
+        }
+
         // Also perform again for any other deeper observables
         
         return project;
@@ -466,8 +472,15 @@ public class Project extends TreeViewItem implements Serializable
         {
             Global.currentProject.teams.add(item);
         }
-        
-        
+
+        // Prepare for the serialization of persons
+        for (Object item : Global.currentProject.serializablePeople)
+        {
+            Person person = (Person) item;
+            person.postSerialization();
+        }
+
+
         // Also for any other deeper observables
         // eg. for (TreeViewItem item : Global.currentProject.team.people) {...}
 

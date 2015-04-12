@@ -5,6 +5,10 @@
  */
 package seng302.group2.scenes.menu;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.dialog.CreateProjectDialog;
 import seng302.group2.scenes.dialog.CreatePersonDialog;
 import javafx.event.ActionEvent;
@@ -62,6 +66,10 @@ public class MainMenuBar
                     App.refreshMainScene();
                 }
             });
+
+        newProjectItem.setAccelerator(new KeyCodeCombination(KeyCode.N,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return newProjectItem;
     }
     
@@ -73,6 +81,9 @@ public class MainMenuBar
             {
                 CreatePersonDialog.show();
             });
+        newPersonItem.setAccelerator(new KeyCodeCombination(KeyCode.P,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return newPersonItem;
     }
     
@@ -83,6 +94,9 @@ public class MainMenuBar
             {
                 CreateSkillDialog.show();
             });
+        newSkillItem.setAccelerator(new KeyCodeCombination(KeyCode.K,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return newSkillItem;
     }
     
@@ -93,6 +107,9 @@ public class MainMenuBar
             {
                 CreateTeamDialog.show();
             });
+        newTeamItem.setAccelerator(new KeyCodeCombination(KeyCode.T,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return newTeamItem;
     }
     
@@ -127,6 +144,8 @@ public class MainMenuBar
                     //App.refreshMainScene();
                 }   
             });
+        openItem.setAccelerator(new KeyCodeCombination(KeyCode.O,
+                KeyCombination.CONTROL_DOWN, KeyCombination.SHORTCUT_DOWN));
         return openItem;
     }
     
@@ -139,7 +158,10 @@ public class MainMenuBar
             {
                 Project.saveProject(Global.currentProject, false);
             });
-        
+
+        saveItem.setAccelerator(new KeyCodeCombination(KeyCode.S,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return saveItem;
     }
     
@@ -152,7 +174,11 @@ public class MainMenuBar
             {
                 Project.saveProject(Global.currentProject, true);
             });
-        
+
+        saveAsItem.setAccelerator(new KeyCodeCombination(KeyCode.S,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHIFT_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return saveAsItem;
     }
     
@@ -197,7 +223,10 @@ public class MainMenuBar
             {
                 Global.undoRedoMan.undo();
             });
-        
+
+        undoItem.setAccelerator(new KeyCodeCombination(KeyCode.Z,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return undoItem;
     }
     
@@ -210,8 +239,37 @@ public class MainMenuBar
             {
                 Global.undoRedoMan.redo();
             });
-        
+
+        redoItem.setAccelerator(new KeyCodeCombination(KeyCode.Y,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return redoItem;
+    }
+
+
+    private static MenuItem createToggleTreeItem()
+    {
+        MenuItem toggleItem = new MenuItem("Toggle Menu");
+        toggleItem.setOnAction((event) ->
+            {
+                if (Global.appRunning())
+                {
+                    if (MainScene.menuHidden)
+                    {
+                        MainScene.menuHidden = false;
+                    }
+                    else
+                    {
+                        MainScene.menuHidden = true;
+                    }
+                    App.refreshMainScene();
+                }
+            });
+
+        toggleItem.setAccelerator(new KeyCodeCombination(KeyCode.M,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
+        return toggleItem;
     }
     
     /**
@@ -244,6 +302,7 @@ public class MainMenuBar
         newProjectBranch.getItems().add(newSkillItem);
         newProjectBranch.getItems().add(newTeamItem);
 
+
         // Create 'Edit >' sub-menu
         Menu editMenu = new Menu("Edit");
         menuBar.getMenus().add(editMenu);
@@ -252,6 +311,16 @@ public class MainMenuBar
         MenuItem undoItem = createUndoItem();
         MenuItem redoItem = createRedoItem();
               
+
+        // Create 'Display >' sub-menu
+        Menu displayMenu = new Menu("Display");
+        menuBar.getMenus().add(displayMenu);
+
+        // Create MenuItems for Display submenu
+        MenuItem toggleTree = createToggleTreeItem();
+        displayMenu.getItems().addAll(toggleTree);
+
+
         // Add MenuItems to Menu
         fileMenu.getItems().addAll(newProjectBranch, openItem,
                 saveItem, saveAsItem, new SeparatorMenuItem(), quitProgramItem);
