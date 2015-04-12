@@ -18,11 +18,13 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.project.Project;
 import seng302.group2.project.skills.Skill;
+import seng302.group2.project.team.Team;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.information.PersonScene;
 import seng302.group2.scenes.information.ProjectScene;
 import seng302.group2.scenes.information.SkillScene;
+import seng302.group2.scenes.information.TeamScene;
 
 
 /**
@@ -147,6 +149,12 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         {
                             App.content.getChildren().remove(MainScene.informationGrid);
                             SkillScene.getSkillScene();
+                            App.content.getChildren().add(MainScene.informationGrid);
+                        }
+                        else if (Global.selectedTreeItem.getValue() instanceof Team)
+                        {
+                            App.content.getChildren().remove(MainScene.informationGrid);
+                            TeamScene.getTeamScene();
                             App.content.getChildren().add(MainScene.informationGrid);
                         }
                     }
