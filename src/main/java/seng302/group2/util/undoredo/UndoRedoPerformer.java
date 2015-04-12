@@ -6,11 +6,14 @@
 package seng302.group2.util.undoredo;
 
 import java.util.Date;
+import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.project.Project;
 import seng302.group2.project.skills.Skill;
 import seng302.group2.project.team.Team;
 import seng302.group2.project.team.person.Person;
+import static seng302.group2.scenes.MainScene.informationGrid;
+import seng302.group2.scenes.information.PersonScene;
 
 /**
  * A class that handles the ugly undo/redo work behind the scenes on undoable items.
@@ -40,6 +43,8 @@ public class UndoRedoPerformer
         SKILL,
         SKILL_SHORTNAME,
         SKILL_DESCRIPTION,
+        SKILL_ADD_PERSON,
+        SKILL_DEL_PERSON,
         
         TEAM,
         TEAM_SHORTNAME,
@@ -113,6 +118,7 @@ public class UndoRedoPerformer
         else if (objClass == Skill.class)
         {
             Skill skill = (Skill) item.getHost();
+            Person currentPerson = (Person) item.getUndoAction().getValue();
             switch (item.getUndoAction().getProperty())
             {
                 case SKILL:
@@ -123,6 +129,18 @@ public class UndoRedoPerformer
                     break;
                 case SKILL_DESCRIPTION:
                     skill.setDescription((String) item.getUndoAction().getValue());
+                    break;
+                case SKILL_ADD_PERSON:
+                    currentPerson.getSkills().remove(skill);
+                    App.content.getChildren().remove(informationGrid);
+                    PersonScene.getPersonScene(currentPerson);
+                    App.content.getChildren().add(informationGrid);
+                    break;
+                case SKILL_DEL_PERSON:
+                    currentPerson.getSkills().add(skill);
+                    App.content.getChildren().remove(informationGrid);
+                    PersonScene.getPersonScene(currentPerson);
+                    App.content.getChildren().add(informationGrid);
                     break;
                 default:
                     System.out.println("Undo on skill with this property not implemented (yet?)");
@@ -219,6 +237,7 @@ public class UndoRedoPerformer
         else if (objClass == Skill.class)
         {
             Skill skill = (Skill) item.getHost();
+            Person currentPerson = (Person) item.getUndoAction().getValue();
             switch (item.getRedoAction().getProperty())
             {
                 case SKILL:
@@ -229,6 +248,18 @@ public class UndoRedoPerformer
                     break;
                 case SKILL_DESCRIPTION:
                     skill.setDescription((String) item.getRedoAction().getValue());
+                    break;
+                case SKILL_ADD_PERSON:
+                    currentPerson.getSkills().add(skill);
+                    App.content.getChildren().remove(informationGrid);
+                    PersonScene.getPersonScene(currentPerson);
+                    App.content.getChildren().add(informationGrid);
+                    break;
+                case SKILL_DEL_PERSON:
+                    currentPerson.getSkills().remove(skill);
+                    App.content.getChildren().remove(informationGrid);
+                    PersonScene.getPersonScene(currentPerson);
+                    App.content.getChildren().add(informationGrid);
                     break;
                 default:
                     System.out.println("Redo on skill with this property not implemented (yet?)");

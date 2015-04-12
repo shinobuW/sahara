@@ -132,7 +132,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         if (Global.selectedTreeItem.getValue() instanceof Person)
                         {
                             App.content.getChildren().remove(MainScene.informationGrid);
-                            PersonScene.getPersonScene();
+                            PersonScene.getPersonScene((Person) Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
 
                         }

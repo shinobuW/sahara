@@ -87,7 +87,7 @@ public class PersonEditScene
         btnCancel.setOnAction((event) ->
             {
                 App.content.getChildren().remove(informationGrid);
-                PersonScene.getPersonScene();
+                PersonScene.getPersonScene(currentPerson);
                 App.content.getChildren().add(informationGrid);
             });
         
@@ -123,7 +123,7 @@ public class PersonEditScene
                     //String birthdate = birthDateField.getText();
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
-                    PersonScene.getPersonScene();
+                    PersonScene.getPersonScene(currentPerson);
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
                     children.add(Global.currentProject);

@@ -11,13 +11,10 @@ import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 import seng302.group2.App;
 import static seng302.group2.App.content;
 import seng302.group2.Global;
@@ -27,7 +24,6 @@ import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.information.PersonScene;
 import seng302.group2.scenes.information.ProjectScene;
 import seng302.group2.scenes.information.SkillScene;
-import seng302.group2.scenes.listdisplay.RootTreeCell;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.scenes.menu.MainMenuBar;
@@ -56,7 +52,7 @@ public class MainScene
         }
         else if (Global.selectedTreeItem.getValue() instanceof Person)
         {
-            PersonScene.getPersonScene();
+            PersonScene.getPersonScene((Person) Global.selectedTreeItem.getValue());
         }
         else if (Global.selectedTreeItem.getValue() instanceof Skill)
         {
