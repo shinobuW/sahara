@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.google.gson.graph;
+package seng302.group2.util.serialization;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
