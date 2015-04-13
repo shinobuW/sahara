@@ -23,11 +23,13 @@ import seng302.group2.project.Project;
 import seng302.group2.project.Project.SaveLoadResult;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
+import seng302.group2.util.config.ConfigLoader;
 
 /**
  * Hello world!
  * (With an added extra ;))
  */
+@SuppressWarnings("deprecation")
 public class App extends Application
 {
     public static HBox content = new HBox();
@@ -88,7 +90,7 @@ public class App extends Application
      */
     @Override
     public void start(Stage primaryStage)
-    {   
+    {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         
         // The title of the window
@@ -103,6 +105,9 @@ public class App extends Application
         App.mainScene = MainScene.getMainScene();
         primaryStage.setScene(App.mainScene);
         mainStage = primaryStage;
+
+        // Load the config
+        ConfigLoader.loadConfig();
         
         // Exit button handling
         Platform.setImplicitExit(false);
@@ -110,6 +115,7 @@ public class App extends Application
         {
             public void handle(WindowEvent event)
             {
+                ConfigLoader.saveConfig();
                 if (!Global.currentProject.getHasUnsavedChanges())
                 {
                     System.exit(0);
