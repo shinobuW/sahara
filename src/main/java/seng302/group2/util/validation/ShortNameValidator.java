@@ -6,6 +6,8 @@
 package seng302.group2.util.validation;
 
 import seng302.group2.Global;
+import seng302.group2.project.skills.Skill;
+import seng302.group2.project.team.Team;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.control.RequiredField;
 
@@ -76,6 +78,38 @@ public class ShortNameValidator
                 continue;
             }
         }
+        
+        for (Object object : Global.currentProject.getSkills())
+        {
+            try
+            {
+                Skill skill = (Skill) object;
+                if (skill.getShortName().equals(shortName))
+                {
+                    return ValidationStatus.NON_UNIQUE;
+                }
+            }
+            catch (Exception ex)    
+            {
+                continue;
+            }    
+        }
+        
+        for (Object object : Global.currentProject.getTeams())
+        {
+            try
+            {
+                Team team = (Team) object;
+                if (team.getShortName().equals(shortName))
+                {
+                    return ValidationStatus.NON_UNIQUE;
+                }
+            }
+            catch (Exception ex)    
+            {
+                continue;
+            }    
+        }        
         return ValidationStatus.VALID;
     }
 }
