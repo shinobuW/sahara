@@ -128,8 +128,8 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         {
                             // Nothing is selected, make a default selection?
                             App.content.getChildren().remove(MainScene.informationGrid);
-                            ProjectScene.getProjectScene((Project)
-                                    Global.selectedTreeItem.getValue());
+                            //ProjectScene.getProjectScene((Project)
+                                        //Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
                         }
                         if (Global.selectedTreeItem.getValue() instanceof Person)
