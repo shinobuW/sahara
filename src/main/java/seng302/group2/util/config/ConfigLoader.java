@@ -4,9 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.Global;
-import seng302.group2.project.Project;
 
-import java.io.*;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 
 /**
  * Handles the loading and saving of Global configuration and settings of the application
@@ -38,8 +41,8 @@ public class ConfigLoader
         {
             Dialogs.create()
                     .title("Error Saving")
-                    .message("An error occurred while trying to save Sahara's configuration " +
-                            "settings")
+                    .message("An error occurred while trying to save Sahara's configuration "
+                            + "settings")
                     .showException(e);
         }
     }
