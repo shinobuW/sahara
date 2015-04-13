@@ -128,7 +128,8 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         {
                             // Nothing is selected, make a default selection?
                             App.content.getChildren().remove(MainScene.informationGrid);
-                            ProjectScene.getProjectScene();
+                            ProjectScene.getProjectScene((Project)
+                                    Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
                         }
                         if (Global.selectedTreeItem.getValue() instanceof Person)
@@ -141,20 +142,21 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         else if (Global.selectedTreeItem.getValue() instanceof Project)
                         {
                             App.content.getChildren().remove(MainScene.informationGrid);
-                            ProjectScene.getProjectScene();
+                            ProjectScene.getProjectScene((Project) 
+                                    Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
 
                         }
                         else if (Global.selectedTreeItem.getValue() instanceof Skill)
                         {
                             App.content.getChildren().remove(MainScene.informationGrid);
-                            SkillScene.getSkillScene();
+                            SkillScene.getSkillScene((Skill) Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
                         }
                         else if (Global.selectedTreeItem.getValue() instanceof Team)
                         {
                             App.content.getChildren().remove(MainScene.informationGrid);
-                            TeamScene.getTeamScene();
+                            TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
                         }
                     }

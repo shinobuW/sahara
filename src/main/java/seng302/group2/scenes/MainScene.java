@@ -50,7 +50,7 @@ public class MainScene
         
         if (Global.selectedTreeItem.getValue() instanceof Project)
         {
-            ProjectScene.getProjectScene();
+            ProjectScene.getProjectScene((Project) Global.selectedTreeItem.getValue());
         }
         else if (Global.selectedTreeItem.getValue() instanceof Person)
         {
@@ -58,11 +58,11 @@ public class MainScene
         }
         else if (Global.selectedTreeItem.getValue() instanceof Skill)
         {
-            SkillScene.getSkillScene();
+            SkillScene.getSkillScene((Skill) Global.selectedTreeItem.getValue());
         }
         else if (Global.selectedTreeItem.getValue() instanceof Team)
         {
-            TeamScene.getTeamScene();
+            TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
         }
         
         // Old: TreeView display = ListDisplay.getProjectTree();  // (Manual)

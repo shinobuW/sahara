@@ -14,6 +14,7 @@ import seng302.group2.project.team.Team;
 import seng302.group2.project.team.person.Person;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import seng302.group2.scenes.information.PersonScene;
+import seng302.group2.scenes.information.TeamScene;
 
 /**
  * A class that handles the ugly undo/redo work behind the scenes on undoable items.
@@ -39,6 +40,8 @@ public class UndoRedoPerformer
         PERSON_EMAIL,
         PERSON_DESCRIPTION,
         PERSON_BIRTHDATE,
+        PERSON_ADD_TEAM,
+        PERSON_DEL_TEAM,
         
         SKILL,
         SKILL_SHORTNAME,
@@ -107,6 +110,20 @@ public class UndoRedoPerformer
                     break;
                 case PERSON_BIRTHDATE:
                     person.setBirthDate((Date) item.getUndoAction().getValue());
+                    break;
+                case PERSON_ADD_TEAM:
+                    Team currentTeam = (Team) item.getUndoAction().getValue();
+                    currentTeam.getPeople().remove(person);
+                    App.content.getChildren().remove(informationGrid);
+                    TeamScene.getTeamScene(currentTeam);
+                    App.content.getChildren().add(informationGrid);
+                    break;
+                case PERSON_DEL_TEAM:
+                    currentTeam = (Team) item.getUndoAction().getValue();
+                    currentTeam.getPeople().add(person);
+                    App.content.getChildren().remove(informationGrid);
+                    TeamScene.getTeamScene(currentTeam);
+                    App.content.getChildren().add(informationGrid);
                     break;
                 default:
                     System.out.println("Undo on person with this property not implemented (yet?)");
@@ -226,6 +243,20 @@ public class UndoRedoPerformer
                     break;
                 case PERSON_BIRTHDATE:
                     person.setBirthDate((Date) item.getRedoAction().getValue());
+                    break;
+                case PERSON_ADD_TEAM:
+                    Team currentTeam = (Team) item.getUndoAction().getValue();
+                    currentTeam.getPeople().add(person);
+                    App.content.getChildren().remove(informationGrid);
+                    TeamScene.getTeamScene(currentTeam);
+                    App.content.getChildren().add(informationGrid);
+                    break;
+                case PERSON_DEL_TEAM:
+                    currentTeam = (Team) item.getUndoAction().getValue();
+                    currentTeam.getPeople().remove(person);
+                    App.content.getChildren().remove(informationGrid);
+                    TeamScene.getTeamScene(currentTeam);
+                    App.content.getChildren().add(informationGrid);
                     break;
                 default:
                     System.out.println("Redo on person with this property not implemented (yet?)");

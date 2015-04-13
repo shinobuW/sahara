@@ -33,8 +33,8 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 public class TeamEditScene
 {
     /**
-     * Gets the Skill Edit information display
-     * @return The Skill Edit information display
+     * Gets the Team Edit information display
+     * @return The Team Edit information display
      */
     public static GridPane getTeamEditScene()
     {
@@ -68,7 +68,7 @@ public class TeamEditScene
         btnCancel.setOnAction((event) ->
             {
                 App.content.getChildren().remove(informationGrid);
-                TeamScene.getTeamScene();
+                TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
                 App.content.getChildren().add(informationGrid);
 
             });
@@ -84,7 +84,7 @@ public class TeamEditScene
                     currentTeam.setShortName(shortNameCustomField.getText());
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
-                    TeamScene.getTeamScene();
+                    TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
                     children.add(Global.currentProject);

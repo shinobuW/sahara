@@ -68,7 +68,7 @@ public class SkillEditScene
         btnCancel.setOnAction((event) ->
             {
                 App.content.getChildren().remove(informationGrid);
-                SkillScene.getSkillScene();
+                SkillScene.getSkillScene((Skill) Global.selectedTreeItem.getValue());
                 App.content.getChildren().add(informationGrid);
 
             });
@@ -84,7 +84,7 @@ public class SkillEditScene
                     currentSkill.setShortName(shortNameCustomField.getText());
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
-                    SkillScene.getSkillScene();
+                    SkillScene.getSkillScene((Skill) Global.selectedTreeItem.getValue());
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
                     children.add(Global.currentProject);

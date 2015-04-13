@@ -39,8 +39,6 @@ public class PersonScene
      */
     public static GridPane getPersonScene(Person currentPerson)
     {
-        System.out.println("PersonScene refreshed");
-
         informationGrid = new GridPane();
         
         informationGrid.setAlignment(Pos.TOP_LEFT);
@@ -67,10 +65,8 @@ public class PersonScene
         ObservableList<Skill> dialogSkills = observableArrayList();
         for (TreeViewItem projectSkill : currentProject.getSkills())
         {
-            System.out.println((Skill)projectSkill);
             if (!currentPerson.getSkills().contains(projectSkill))
             {
-                System.out.println((Skill)projectSkill + " after");
                 dialogSkills.add((Skill)projectSkill);
             }
         }
@@ -95,12 +91,10 @@ public class PersonScene
 
         informationGrid.add(skillsBox, 2, 6);
         
-        ObservableList<Skill> selectedSkills = 
-                        skillsBox.getSelectionModel().getSelectedItems();
-        
-        //System.out.println(skillsBox.getItems().get(0) + " 0");
         btnAdd.setOnAction((event) ->
             {
+                ObservableList<Skill> selectedSkills = 
+                        skillsBox.getSelectionModel().getSelectedItems();
                 for (Skill item : selectedSkills)
                 {
                     currentPerson.addSkill(item);
@@ -118,6 +112,8 @@ public class PersonScene
         
         btnDelete.setOnAction((event) ->
             {
+                ObservableList<Skill> selectedSkills = 
+                        personSkillsBox.getSelectionModel().getSelectedItems();
                 for (int i = selectedSkills.size() - 1; i >= 0 ; i--)
                 {
                     currentPerson.removeSkill(selectedSkills.get(i));
