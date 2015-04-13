@@ -7,6 +7,7 @@ package seng302.group2;
 
 import javafx.scene.control.TreeItem;
 import seng302.group2.project.Project;
+import seng302.group2.util.config.Configuration;
 import seng302.group2.util.undoredo.UndoRedoManager;
 
 /**
@@ -18,6 +19,7 @@ public final class Global
     public static Project currentProject = new Project();
     public static TreeItem selectedTreeItem = new TreeItem();
     public static UndoRedoManager undoRedoMan = new UndoRedoManager();
+    public static String lastSaveLocation = "";
 
 
     /**
