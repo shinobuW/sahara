@@ -29,10 +29,8 @@ public class ProjectScene
      * Gets the Project information display
      * @return The Project information display
      */
-    public static GridPane getProjectScene()
+    public static GridPane getProjectScene(Project currentProject)
     {
-        Project currentProject = (Project) selectedTreeItem.getValue();
-
         informationGrid = new GridPane();
 
         informationGrid.setAlignment(Pos.TOP_LEFT);

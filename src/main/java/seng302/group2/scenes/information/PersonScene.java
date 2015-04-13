@@ -20,7 +20,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.App;
 import static seng302.group2.Global.currentProject;
-import static seng302.group2.Global.selectedTreeItem;
 import seng302.group2.project.skills.Skill;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.MainScene;
@@ -38,10 +37,8 @@ public class PersonScene
      * Gets the Person information display
      * @return The Person information display
      */
-    public static GridPane getPersonScene()
+    public static GridPane getPersonScene(Person currentPerson)
     {
-        Person currentPerson = (Person) selectedTreeItem.getValue();
-
         informationGrid = new GridPane();
         
         informationGrid.setAlignment(Pos.TOP_LEFT);
@@ -98,10 +95,8 @@ public class PersonScene
             {
                 ObservableList<Skill> selectedSkills = 
                         skillsBox.getSelectionModel().getSelectedItems();
-                
                 for (Skill item : selectedSkills)
                 {
-                    System.out.println(item);
                     currentPerson.addSkill(item);
                 }
                 
@@ -119,11 +114,9 @@ public class PersonScene
             {
                 ObservableList<Skill> selectedSkills = 
                         personSkillsBox.getSelectionModel().getSelectedItems();
-                
-                for (Skill item : selectedSkills)
+                for (int i = selectedSkills.size() - 1; i >= 0 ; i--)
                 {
-                    System.out.println(item);
-                    currentPerson.removeSkill(item);
+                    currentPerson.removeSkill(selectedSkills.get(i));
                 }
                 
                 dialogSkills.clear();

@@ -16,7 +16,7 @@ import javafx.scene.layout.HBox;
 import seng302.group2.App;
 import seng302.group2.Global;
 import static seng302.group2.Global.selectedTreeItem;
-import seng302.group2.project.skills.Skill;
+import seng302.group2.project.team.Team;
 import seng302.group2.scenes.MainScene;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
@@ -28,18 +28,18 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 
 /**
  *
- * @author drm127
+ * @author crw73
  */
-public class SkillEditScene
+public class TeamEditScene
 {
     /**
-     * Gets the Skill Edit information display
-     * @return The Skill Edit information display
+     * Gets the Team Edit information display
+     * @return The Team Edit information display
      */
-    public static GridPane getSkillEditScene()
+    public static GridPane getTeamEditScene()
     {
 
-        Skill currentSkill = (Skill) selectedTreeItem.getValue();
+        Team currentTeam = (Team) selectedTreeItem.getValue();
         informationGrid = new GridPane();
         informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
@@ -57,8 +57,8 @@ public class SkillEditScene
         RequiredField shortNameCustomField = new RequiredField("Short Name");
         CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description", 300);
         
-        shortNameCustomField.setText(currentSkill.getShortName());
-        descriptionTextArea.setText(currentSkill.getDescription());
+        shortNameCustomField.setText(currentTeam.getShortName());
+        descriptionTextArea.setText(currentTeam.getDescription());
 
         informationGrid.add(shortNameCustomField, 0, 0);
         informationGrid.add(descriptionTextArea, 0, 1);
@@ -68,7 +68,7 @@ public class SkillEditScene
         btnCancel.setOnAction((event) ->
             {
                 App.content.getChildren().remove(informationGrid);
-                SkillScene.getSkillScene((Skill) Global.selectedTreeItem.getValue());
+                TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
                 App.content.getChildren().add(informationGrid);
 
             });
@@ -80,11 +80,11 @@ public class SkillEditScene
 
                 if (correctShortName)
                 {
-                    currentSkill.setDescription(descriptionTextArea.getText());
-                    currentSkill.setShortName(shortNameCustomField.getText());
+                    currentTeam.setDescription(descriptionTextArea.getText());
+                    currentTeam.setShortName(shortNameCustomField.getText());
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
-                    SkillScene.getSkillScene((Skill) Global.selectedTreeItem.getValue());
+                    TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
                     children.add(Global.currentProject);

@@ -66,7 +66,7 @@ public class ProjectEditScene
         btnCancel.setOnAction((event) ->
             {
                 App.content.getChildren().remove(informationGrid);
-                ProjectScene.getProjectScene();
+                ProjectScene.getProjectScene((Project) Global.selectedTreeItem.getValue());
                 App.content.getChildren().add(informationGrid);
 
             });
@@ -84,7 +84,7 @@ public class ProjectEditScene
                     currentProject.setLongName(longNameCustomField.getText());
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
-                    ProjectScene.getProjectScene();
+                    ProjectScene.getProjectScene((Project) Global.selectedTreeItem.getValue());
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
                     children.add(Global.currentProject);

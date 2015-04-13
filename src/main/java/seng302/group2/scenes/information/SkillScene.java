@@ -28,10 +28,8 @@ public class SkillScene
      * Gets the Skill information display
      * @return The Skill information display
      */
-    public static GridPane getSkillScene()
+    public static GridPane getSkillScene(Skill currentSkill)
     {
-        
-        Skill currentSkill = (Skill) selectedTreeItem.getValue();
         informationGrid = new GridPane();
 
         informationGrid.setAlignment(Pos.TOP_LEFT);

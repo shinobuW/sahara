@@ -18,11 +18,13 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.project.Project;
 import seng302.group2.project.skills.Skill;
+import seng302.group2.project.team.Team;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.information.PersonScene;
 import seng302.group2.scenes.information.ProjectScene;
 import seng302.group2.scenes.information.SkillScene;
+import seng302.group2.scenes.information.TeamScene;
 
 
 /**
@@ -126,27 +128,35 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         {
                             // Nothing is selected, make a default selection?
                             App.content.getChildren().remove(MainScene.informationGrid);
-                            ProjectScene.getProjectScene();
+                            ProjectScene.getProjectScene((Project)
+                                    Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
                         }
                         if (Global.selectedTreeItem.getValue() instanceof Person)
                         {
                             App.content.getChildren().remove(MainScene.informationGrid);
-                            PersonScene.getPersonScene();
+                            PersonScene.getPersonScene((Person) Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
 
                         }
                         else if (Global.selectedTreeItem.getValue() instanceof Project)
                         {
                             App.content.getChildren().remove(MainScene.informationGrid);
-                            ProjectScene.getProjectScene();
+                            ProjectScene.getProjectScene((Project) 
+                                    Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
 
                         }
                         else if (Global.selectedTreeItem.getValue() instanceof Skill)
                         {
                             App.content.getChildren().remove(MainScene.informationGrid);
-                            SkillScene.getSkillScene();
+                            SkillScene.getSkillScene((Skill) Global.selectedTreeItem.getValue());
+                            App.content.getChildren().add(MainScene.informationGrid);
+                        }
+                        else if (Global.selectedTreeItem.getValue() instanceof Team)
+                        {
+                            App.content.getChildren().remove(MainScene.informationGrid);
+                            TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
                         }
                     }

@@ -218,8 +218,8 @@ public class Person extends TreeViewItem implements Serializable
         //Add the undo action to the stack
         Global.undoRedoMan.add(new UndoableItem(
                 skill,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL, null)
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_ADD_PERSON, this),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_ADD_PERSON, this)
                 ));
         
         this.skills.add(skill);
@@ -261,8 +261,8 @@ public class Person extends TreeViewItem implements Serializable
         //Add the undo action to the stack
         Global.undoRedoMan.add(new UndoableItem(
                 skill,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL, null)
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON, this),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON, this)
                 ));
         this.skills.remove(skill);
     }    
