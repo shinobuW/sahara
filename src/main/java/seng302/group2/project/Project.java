@@ -5,7 +5,7 @@ package seng302.group2.project;
 
 import seng302.group2.scenes.listdisplay.Category;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -27,6 +27,7 @@ import seng302.group2.project.skills.Skill;
 import seng302.group2.project.team.Team;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
@@ -41,10 +42,13 @@ public class Project extends TreeViewItem implements Serializable
     private String shortName;
     private String longName;
     private String description;
+
     private String lastSaveLocation = null;
     private transient boolean hasUnsavedChanges = true;
+    private static Gson gson = SerialBuilder.getBuilder();
+
     private transient ObservableList<TreeViewItem> teams = observableArrayList();
-    private ArrayList<Team> serializableTeam = new ArrayList<>();
+    private ArrayList<Team> serializableTeams = new ArrayList<>();
     private transient ObservableList<TreeViewItem> people = observableArrayList();
     private ArrayList<Person> serializablePeople = new ArrayList<>();
     private transient ObservableList<TreeViewItem> skills = observableArrayList();
@@ -73,7 +77,7 @@ public class Project extends TreeViewItem implements Serializable
         this.description = "A blank project.";
         this.serializablePeople = new ArrayList<>();
         this.serializableSkills = new ArrayList<>();
-        this.serializableTeam = new ArrayList<>();
+        this.serializableTeams = new ArrayList<>();
     }
     
     
@@ -264,7 +268,7 @@ public class Project extends TreeViewItem implements Serializable
         /* GSON SERIALIZATION */
         try (Writer writer = new FileWriter(project.lastSaveLocation))
         {
-            Gson gson = new GsonBuilder().create();
+            //Gson gson = new GsonBuilder().create();
             gson.toJson(project, writer);
             writer.close();
             Global.setCurrentProjectUnchanged();
@@ -302,7 +306,7 @@ public class Project extends TreeViewItem implements Serializable
             /* GSON DESERIALIZATION */
             try (Reader reader = new FileReader(selectedFile))
             {
-                Gson gson = new GsonBuilder().create();
+                //Gson gson = new GsonBuilder().create();
                 Global.currentProject = gson.fromJson(reader, Project.class);
                 reader.close();
             }
@@ -430,17 +434,24 @@ public class Project extends TreeViewItem implements Serializable
             project.serializableSkills.add((Skill)item);
         }
         
-        project.serializableTeam.clear();
+        project.serializableTeams.clear();
         for (Object item : project.teams)
         {
-            project.serializableTeam.add((Team)item);
+            project.serializableTeams.add((Team) item);
         }
         
-        // Prepare for the serialization of persons
+        // Prepare for the serialization of persons (skills)
         for (Object item : project.people)
         {
             Person person = (Person) item;
             person.prepSerialization();
+        }
+
+        // Prepare for the serialization of teams (people)
+        for (Object item : project.teams)
+        {
+            Team team = (Team) item;
+            team.prepSerialization();
         }
 
         // Also perform again for any other deeper observables
@@ -468,7 +479,7 @@ public class Project extends TreeViewItem implements Serializable
         }
         
         Global.currentProject.teams = observableArrayList();
-        for (Team item : Global.currentProject.serializableTeam)
+        for (Team item : Global.currentProject.serializableTeams)
         {
             Global.currentProject.teams.add(item);
         }
@@ -478,6 +489,13 @@ public class Project extends TreeViewItem implements Serializable
         {
             Person person = (Person) item;
             person.postSerialization();
+        }
+
+        // Prepare for the serialization of teams
+        for (Object item : Global.currentProject.serializableTeams)
+        {
+            Team team = (Team) item;
+            team.postSerialization();
         }
 
 

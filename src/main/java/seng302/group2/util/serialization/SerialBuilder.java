@@ -2,7 +2,6 @@ package seng302.group2.util.serialization;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.graph.GraphAdapterBuilder;
 import javafx.collections.ObservableList;
 import seng302.group2.project.Project;
 import seng302.group2.project.skills.Skill;

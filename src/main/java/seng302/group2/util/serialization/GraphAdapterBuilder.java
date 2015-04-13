@@ -57,7 +57,8 @@ public final class GraphAdapterBuilder
 
     public GraphAdapterBuilder addType(Type type)
     {
-        final ObjectConstructor<?> objectConstructor = constructorConstructor.get(TypeToken.get(type));
+        final ObjectConstructor<?> objectConstructor =
+                constructorConstructor.get(TypeToken.get(type));
         InstanceCreator<Object> instanceCreator = new InstanceCreator<Object>()
         {
             public Object createInstance(Type type)
@@ -141,7 +142,8 @@ public final class GraphAdapterBuilder
                         graph = new Graph(new IdentityHashMap<Object, Element<?>>());
                     }
 
-                    @SuppressWarnings("unchecked") // graph.map guarantees consistency between value and T
+                    @SuppressWarnings("unchecked")
+                    // graph.map guarantees consistency between value and T
                             Element<T> element = (Element<T>) graph.map.get(value);
                     if (element == null)
                     {
@@ -163,11 +165,13 @@ public final class GraphAdapterBuilder
                                 current.write(out);
                             }
                             out.endObject();
-                        } finally
+                        }
+                        finally
                         {
                             graphThreadLocal.remove();
                         }
-                    } else
+                    }
+                    else
                     {
                         out.value(element.id);
                     }
@@ -229,9 +233,10 @@ public final class GraphAdapterBuilder
                     }
                     try
                     {
-                        @SuppressWarnings("unchecked") // graph.map guarantees consistency between value and T
+                        @SuppressWarnings("unchecked")
+                        // graph.map guarantees consistency between value and T
                                 Element<T> element = (Element<T>) graph.map.get(currentName);
-                        // now that we know the typeAdapter for this name, go from JsonElement to 'T'
+                        // we know the typeAdapter for this name, go from JsonElement to 'T'
                         if (element.value == null)
                         {
                             element.typeAdapter = typeAdapter;
