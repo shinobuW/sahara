@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Serializable;
 import java.io.Writer;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
@@ -42,8 +43,8 @@ public class Project extends TreeViewItem implements Serializable
     private String shortName;
     private String longName;
     private String description;
-
     private String lastSaveLocation = null;
+
     private transient boolean hasUnsavedChanges = true;
     private static Gson gson = SerialBuilder.getBuilder();
 
@@ -245,6 +246,11 @@ public class Project extends TreeViewItem implements Serializable
         {
             // Prime a FileChooser
             FileChooser fileChooser = new FileChooser();
+            if (Global.lastSaveLocation != null)
+            {
+                fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
+            }
+            fileChooser.setInitialFileName(project.shortName);
             fileChooser.setTitle("Save Project");
             fileChooser.getExtensionFilters().addAll(
                 new ExtensionFilter("Project Files", "*.proj")
@@ -272,6 +278,12 @@ public class Project extends TreeViewItem implements Serializable
             gson.toJson(project, writer);
             writer.close();
             Global.setCurrentProjectUnchanged();
+            Global.lastSaveLocation = Paths.get(project.lastSaveLocation).getParent().toString();
+
+            //TESTING
+            System.out.println("PROJECT LOCATION: " + project.lastSaveLocation);
+            System.out.println("GLOBAL LOCATION: " + Global.lastSaveLocation);
+
             return SaveLoadResult.SUCCESS;
         }
         catch (IOException e)
@@ -295,6 +307,10 @@ public class Project extends TreeViewItem implements Serializable
         // Prime a FileChooser
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Project");
+        if (Global.lastSaveLocation != null)
+        {
+            fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
+        }
         fileChooser.getExtensionFilters().addAll(
             new ExtensionFilter("Project Files", "*.proj")
         );

@@ -25,6 +25,7 @@ import seng302.group2.project.Project;
 import seng302.group2.project.Project.SaveLoadResult;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
 import seng302.group2.scenes.dialog.CreateTeamDialog;
+import seng302.group2.util.config.ConfigLoader;
 
 /**
  * The main menu bar of the project window(s).
@@ -188,6 +189,7 @@ public class MainMenuBar
         MenuItem quitProgramItem = new MenuItem("Quit");
         quitProgramItem.setOnAction((event) ->
             {
+                ConfigLoader.saveConfig();
                 if (!Global.currentProject.getHasUnsavedChanges())
                 {
                     System.exit(0);
