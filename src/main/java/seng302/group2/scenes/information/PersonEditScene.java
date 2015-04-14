@@ -6,6 +6,7 @@
 package seng302.group2.scenes.information;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
@@ -29,6 +30,9 @@ import seng302.group2.scenes.control.RequiredField;
 import static seng302.group2.scenes.dialog.CreatePersonDialog.stringToDate;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
+import seng302.group2.util.undoredo.UndoRedoAction;
+import seng302.group2.util.undoredo.UndoRedoPerformer;
+import seng302.group2.util.undoredo.UndoableItem;
 import static seng302.group2.util.validation.DateValidator.validateBirthDate;
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
@@ -43,10 +47,8 @@ public class PersonEditScene
      * Gets the Person Edit information scene.
      * @return The Person Edit information scene
      */
-    public static GridPane getPersonEditScene()
+    public static GridPane getPersonEditScene(Person currentPerson)
     {
-        Person currentPerson = (Person) selectedTreeItem.getValue();
-
         informationGrid = new GridPane();
         informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
@@ -111,7 +113,91 @@ public class PersonEditScene
                 {
                     //set Person proprties
                     final Date birthDate = stringToDate(customBirthDate.getText());
+                    
+                    ArrayList<UndoableItem> undoActions = new ArrayList<>();
+                    
+                    if (firstNameCustomField.getText() != currentPerson.getFirstName())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentPerson,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PERSON_FIRSTNAME, 
+                                        currentPerson.getFirstName()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PERSON_FIRSTNAME, 
+                                        firstNameCustomField.getText())));
+                    }
+                    
+                    if (lastNameCustomField.getText() != currentPerson.getLastName())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentPerson,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PERSON_LASTNAME, 
+                                        currentPerson.getLastName()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PERSON_LASTNAME, 
+                                        lastNameCustomField.getText())));
+                    }
+                    
+                    if (shortNameCustomField.getText() != currentPerson.getShortName())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentPerson,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PERSON_SHORTNAME, 
+                                        currentPerson.getShortName()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PERSON_SHORTNAME, 
+                                        shortNameCustomField.getText())));
+                    }
+                    
+                    if (descriptionTextArea.getText() != currentPerson.getDescription())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentPerson,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PERSON_DESCRIPTION, 
+                                        currentPerson.getDescription()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PERSON_DESCRIPTION, 
+                                        descriptionTextArea.getText())));
+                    }
+                    
+                    if (emailTextField.getText() != currentPerson.getEmail())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentPerson,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PERSON_EMAIL, 
+                                        currentPerson.getEmail()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PERSON_EMAIL, 
+                                        emailTextField.getText())));
+                    }                    
 
+                    if (stringToDate(customBirthDate.getText()) != currentPerson.getBirthDate())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentPerson,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PERSON_BIRTHDATE, 
+                                        currentPerson.getBirthDate()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PERSON_BIRTHDATE, 
+                                        stringToDate(customBirthDate.getText()))));
+                    }  
+                    
+                    Global.undoRedoMan.add(new UndoableItem(
+                        currentPerson,
+                        new UndoRedoAction(
+                                UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT,
+                                undoActions), 
+                        new UndoRedoAction(
+                                UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT, 
+                                undoActions)
+                        ));
+                    
                     currentPerson.setFirstName(firstNameCustomField.getText());
                     currentPerson.setShortName(shortNameCustomField.getText());
                     currentPerson.setLastName(lastNameCustomField.getText());

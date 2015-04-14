@@ -5,6 +5,7 @@
  */
 package seng302.group2.util.undoredo;
 
+import java.util.ArrayList;
 import java.util.Date;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -42,6 +43,7 @@ public class UndoRedoPerformer
         PERSON_BIRTHDATE,
         PERSON_ADD_TEAM,
         PERSON_DEL_TEAM,
+        PERSON_EDIT,
         
         SKILL,
         SKILL_SHORTNAME,
@@ -124,6 +126,13 @@ public class UndoRedoPerformer
                     App.content.getChildren().remove(informationGrid);
                     TeamScene.getTeamScene(currentTeam);
                     App.content.getChildren().add(informationGrid);
+                    break;
+                case PERSON_EDIT:
+                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
+                            item.getUndoAction().getValue()) 
+                    {
+                        UndoRedoPerformer.undo(undoAction);
+                    }
                     break;
                 default:
                     System.out.println("Undo on person with this property not implemented (yet?)");
@@ -257,6 +266,13 @@ public class UndoRedoPerformer
                     App.content.getChildren().remove(informationGrid);
                     TeamScene.getTeamScene(currentTeam);
                     App.content.getChildren().add(informationGrid);
+                    break;
+                case PERSON_EDIT:
+                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
+                            item.getUndoAction().getValue()) 
+                    {
+                        UndoRedoPerformer.redo(undoAction);
+                    }
                     break;
                 default:
                     System.out.println("Redo on person with this property not implemented (yet?)");

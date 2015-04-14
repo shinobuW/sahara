@@ -15,6 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.App;
 import static seng302.group2.Global.currentProject;
+import static seng302.group2.Global.selectedTreeItem;
 import seng302.group2.project.skills.Skill;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.MainScene;
@@ -51,6 +52,7 @@ public class PersonScene
         VBox skillsButtons = new VBox();
         skillsButtons.getChildren().add(btnAdd);
         skillsButtons.getChildren().add(btnDelete);
+        skillsButtons.setAlignment(Pos.CENTER);
         
         
         ListView personSkillsBox = new ListView(currentPerson.getSkills());
@@ -129,7 +131,7 @@ public class PersonScene
         btnEdit.setOnAction((event) ->
             {
                 App.content.getChildren().remove(MainScene.informationGrid);
-                PersonEditScene.getPersonEditScene();
+                PersonEditScene.getPersonEditScene(currentPerson);
                 App.content.getChildren().add(MainScene.informationGrid);
                 
             });
