@@ -27,15 +27,10 @@ public class RootTreeCell extends TreeCell<String>
     public RootTreeCell()
     {
         MenuItem newPersonMenu = new MenuItem("New");
-        
-        
-        
         MenuItem editMenu = new MenuItem("Edit");
         MenuItem deleteMenu = new MenuItem("Delete");
         
-        rootContextMenu.getItems().add(newPersonMenu);
-        rootContextMenu.getItems().add(editMenu);
-        rootContextMenu.getItems().add(deleteMenu);
+        rootContextMenu.getItems().addAll(newPersonMenu, editMenu, deleteMenu);
         
         newPersonMenu.setOnAction((ActionEvent event) ->
             {
