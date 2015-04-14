@@ -18,20 +18,23 @@ import seng302.group2.scenes.control.RequiredField;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
- *
+ * Class to create a pop up dialog for creating a skill.
  * @author drm127
  */
 @SuppressWarnings("deprecation")
 public class CreateSkillDialog 
 {
+    /**
+     * Displays the Dialog box for creating a skill.
+     */
     public static void show()
-    {
+    {       
         Dialog dialog = new Dialog(null, "New Skill");
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
         grid.setPadding(insets);
-               
+
         Button btnCreate = new Button("Create");
         Button btnCancel = new Button("Cancel");
         

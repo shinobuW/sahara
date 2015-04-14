@@ -7,7 +7,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 /**
- * //TODO
+ * Creates a custom  text field where the box may not be empty 
+ * and appropriate error messages are displayed when required.
  * Created by Jordane on 24/03/2015.
  */
 public class RequiredField extends VBox
@@ -64,7 +65,7 @@ public class RequiredField extends VBox
     
 
     /**
-     * Shows the error field
+     * Shows the error field.
      */
     public void showErrorField()
     {
@@ -87,7 +88,7 @@ public class RequiredField extends VBox
 
 
     /**
-     * Hides the error field
+     * Hides the error field.
      */
     public void hideErrorField()
     {

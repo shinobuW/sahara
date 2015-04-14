@@ -18,16 +18,15 @@ import seng302.group2.scenes.control.RequiredField;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
- *
+ * Class to create a pop up dialog for creating a team.
  * @author crw73
  */
 @SuppressWarnings("deprecation")
 public class CreateTeamDialog 
 {
-    
-    /*
-    * Displays the Dialog box for creating a Team
-    */
+    /**
+     * Displays the Dialog box for creating a Team.
+     */
     public static void show()
     {
         Dialog dialog = new Dialog(null, "New Team");

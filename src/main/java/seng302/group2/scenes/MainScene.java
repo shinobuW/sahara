@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package seng302.group2.scenes;
 
 import javafx.beans.value.ChangeListener;
@@ -41,6 +36,10 @@ public class MainScene
     public static GridPane informationGrid = new GridPane();
     public static boolean menuHidden = false;
     
+    /**
+     * //TODO
+     * @return 
+     */
     public static Scene getMainScene()
     {
         // The root window box

@@ -23,13 +23,14 @@ import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
+ * A class for displaying the project edit scene.
  * Created by btm38 on 7/04/15.
  */
 public class ProjectEditScene
 {
     /**
-     * Gets the Project Edit information display
-     * @return The Project Edit information display
+     * Gets the project edit information scene.
+     * @return The Project Edit information scene
      */
     public static GridPane getProjectEditScene()
     {

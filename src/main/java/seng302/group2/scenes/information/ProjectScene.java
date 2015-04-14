@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package seng302.group2.scenes.information;
 
 import javafx.geometry.Insets;
@@ -26,8 +21,8 @@ import static seng302.group2.scenes.MainScene.informationGrid;
 public class ProjectScene
 {
     /**
-     * Gets the Project information display
-     * @return The Project information display
+     * Gets the Project information scene
+     * @return The Project information scene
      */
     public static GridPane getProjectScene(Project currentProject)
     {

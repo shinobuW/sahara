@@ -27,14 +27,14 @@ import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
- *
+ * A class for displaying the team edit scene.
  * @author crw73
  */
 public class TeamEditScene
 {
     /**
-     * Gets the Team Edit information display
-     * @return The Team Edit information display
+     * Gets the Team Edit information scene.
+     * @return The Team Edit information scene
      */
     public static GridPane getTeamEditScene()
     {

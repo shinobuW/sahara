@@ -34,7 +34,7 @@ import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
 
 /**
- * Basic project class that acts as the root object for Sahara and represents a real-world project
+ * Basic project class that acts as the root object for Sahara and represents a real-world project.
  * @author Jordane Lew (jml168)
  */
 @SuppressWarnings("deprecation")
@@ -56,7 +56,7 @@ public class Project extends TreeViewItem implements Serializable
     private ArrayList<Skill> serializableSkills = new ArrayList<>();
     
     /**
-     * Enumerable save and load statuses
+     * Enumerable save and load statuses.
      */
     public enum SaveLoadResult
     {
@@ -68,7 +68,7 @@ public class Project extends TreeViewItem implements Serializable
     }
     
     /**
-     * Basic Project constructor
+     * Basic Project constructor.
      */
     public Project()
     {
@@ -83,7 +83,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Basic project constructor
+     * Basic project constructor.
      * @param shortName A unique short name to identify the Project
      * @param fullName The full Project name
      * @param description A description of the Project
@@ -110,7 +110,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Gets the project's short name
+     * Gets the project's short name.
      * @return The short name of the project
      */
     public String getShortName()
@@ -120,7 +120,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Gets the project's long name
+     * Gets the project's long name.
      * @return The long name of the project
      */
     public String getLongName()
@@ -130,7 +130,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Gets the project's description
+     * Gets the project's description.
      * @return The description of the project
      */
     public String getDescription()
@@ -140,7 +140,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Gets the project's list of Persons
+     * Gets the project's list of Persons.
      * @return The people associated with the project
      */
     public ObservableList<TreeViewItem> getPeople()
@@ -149,7 +149,7 @@ public class Project extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets the project's list of Skills
+     * Gets the project's list of Skills.
      * @return The skills associated with a project
      */
     public ObservableList<TreeViewItem> getSkills()
@@ -158,7 +158,7 @@ public class Project extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets the project's list of Teams
+     * Gets the project's list of Teams.
      * @return The teams associated with a project
      */
     public ObservableList<TreeViewItem> getTeams()
@@ -172,7 +172,7 @@ public class Project extends TreeViewItem implements Serializable
     // <editor-fold defaultstate="collapsed" desc="Setters">
     
     /**
-     * Marks the project as not having unsaved changes
+     * Marks the project as not having unsaved changes.
      */
     public void setUnchanged()
     {
@@ -181,7 +181,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Marks the project as having unsaved changes
+     * Marks the project as having unsaved changes.
      */
     public void setChanged()
     {
@@ -190,7 +190,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Sets the project's short name
+     * Sets the project's short name.
      * @param shortName The new short name for the project
      */
     public void setShortName(String shortName)
@@ -200,7 +200,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Sets the project's long name
+     * Sets the project's long name.
      * @param longName The new long name for the project
      */
     public void setLongName(String longName)
@@ -210,7 +210,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Sets the project's description
+     * Sets the project's description.
      * @param description The new description for the project
      */
     public void setDescription(String description)
@@ -222,7 +222,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Saves the current project as a file specified by the user
+     * Saves the current project as a file specified by the user.
      * @param project The project to save
      * @param saveAs If acting as save as
      * @return The corresponding SaveLoadResult status of the process
@@ -299,7 +299,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Loads a project specified by the user into Global.currentProject
+     * Loads a project specified by the user into Global.currentProject.
      * @return The corresponding SaveLoadResult status of the process
      */
     public static SaveLoadResult loadProject()
@@ -359,7 +359,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Adds a Person to the Project's list of Persons
+     * Adds a Person to the Project's list of Persons.
      * @param person The person to add
      */
     public void addPerson(Person person)
@@ -376,7 +376,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Adds a Skill to the Project's list of Skills
+     * Adds a Skill to the Project's list of Skills.
      * @param skill The skill to add
      */
     public void addSkill(Skill skill)
@@ -392,7 +392,7 @@ public class Project extends TreeViewItem implements Serializable
     }
     
     /**
-     * Adds a Skill to the Project's list of Teams
+     * Adds a Skill to the Project's list of Teams.
      * @param team The team to add
      */
     public void addTeam(Team team)
@@ -408,7 +408,7 @@ public class Project extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets a list of categories of the project based on the project's lists
+     * Gets a list of categories of the project based on the project's lists.
      * @return A list of categories of the project
      */
     public ObservableList<TreeViewItem> getCategories()
@@ -432,7 +432,7 @@ public class Project extends TreeViewItem implements Serializable
     
     /**
      * Perform pre-serialization steps
-     * 1) Transform ObservableLists into ArrayLists for serialization
+     * 1) Transform ObservableLists into ArrayLists for serialization.
      * @param project The project for intended serialization
      * @return A serializable version of the given project
      */
@@ -524,7 +524,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * An overridden version for the String representation of a Project
+     * An overridden version for the String representation of a Project.
      * @return The short name of the Project
      */
     @Override
@@ -535,7 +535,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Gets the children (categories) of the project
+     * Gets the children (categories) of the project.
      * @return the children (categories) of the project
      */
     @Override

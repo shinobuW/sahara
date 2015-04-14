@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package seng302.group2.scenes.information;
 
 import javafx.geometry.Insets;
@@ -18,15 +13,15 @@ import seng302.group2.project.skills.Skill;
 import static seng302.group2.scenes.MainScene.informationGrid;
 
 /**
- *
+ * A class for displaying the skill scene
  * @author drm127
  */
 @SuppressWarnings("deprecation")
 public class SkillScene
 {
     /**
-     * Gets the Skill information display
-     * @return The Skill information display
+     * Gets the Skill information scene
+     * @return The Skill information scene
      */
     public static GridPane getSkillScene(Skill currentSkill)
     {

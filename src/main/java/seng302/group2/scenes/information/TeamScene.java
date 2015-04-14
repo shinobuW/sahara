@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package seng302.group2.scenes.information;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -25,14 +20,14 @@ import static seng302.group2.scenes.MainScene.informationGrid;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 /**
- *
+ * A class for displaying the team scene.
  * @author crw73
  */
 public class TeamScene
 {
      /**
-     * Gets the Team information display
-     * @return The Team information display
+     * Gets the Team information scene.
+     * @return The Team information scene
      */
     public static GridPane getTeamScene(Team currentTeam)
     {

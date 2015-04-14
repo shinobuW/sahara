@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
-import seng302.group2.project.skills.Skill;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.UndoRedoAction;
@@ -113,7 +112,7 @@ public class Team extends TreeViewItem implements Serializable
         //</editor-fold>
     
     /**
-     * Adds a Person to the Teams's list of Members
+     * Adds a Person to the Teams list of Members
      * @param person The person to add
      */
     public void addPerson(Person person)

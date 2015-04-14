@@ -34,14 +34,14 @@ import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
- *
+ * A class for displaying the person edit scene.
  * @author swi67
  */
 public class PersonEditScene
 {
     /**
-     * Gets the Person Edit information display
-     * @return The Person Edit information display
+     * Gets the Person Edit information scene.
+     * @return The Person Edit information scene
      */
     public static GridPane getPersonEditScene()
     {

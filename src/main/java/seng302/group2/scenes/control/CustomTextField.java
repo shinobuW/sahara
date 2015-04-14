@@ -5,7 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 /**
- *
+ * Creates a custom text field which displays appropriate error messages when required.
  * Created by Codie on 02/04/2015
  */
 public class CustomTextField extends VBox
@@ -57,7 +57,7 @@ public class CustomTextField extends VBox
     
 
     /**
-     * Shows the error field
+     * Shows the error field.
      */
     public void showErrorField()
     {
@@ -68,7 +68,7 @@ public class CustomTextField extends VBox
 
 
     /**
-     * Shows the error field with the with the given text
+     * Shows the error field with the with the given text.
      * @param errorMessage The error message to show
      */
     public void showErrorField(String errorMessage)
@@ -79,7 +79,7 @@ public class CustomTextField extends VBox
 
 
     /**
-     * Hides the error field
+     * Hides the error field.
      */
     public void hideErrorField()
     {

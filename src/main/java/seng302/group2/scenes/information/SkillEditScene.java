@@ -27,13 +27,13 @@ import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
- *
+ * A class for displaying the skill edit scene.
  * @author drm127
  */
 public class SkillEditScene
 {
     /**
-     * Gets the Skill Edit information display
+     * Gets the Skill Edit information scene.
      * @return The Skill Edit information display
      */
     public static GridPane getSkillEditScene()

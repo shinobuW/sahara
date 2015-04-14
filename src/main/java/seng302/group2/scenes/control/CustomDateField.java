@@ -6,7 +6,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 /**
- *
+ * Creates a custom date field which displays appropriate error messages when required.
  * Created by Codie on 02/04/2015
  */
 public class CustomDateField extends VBox
@@ -57,7 +57,7 @@ public class CustomDateField extends VBox
     
 
     /**
-     * Shows the error field
+     * Shows the error field.
      */
     public void showErrorField()
     {
@@ -80,7 +80,7 @@ public class CustomDateField extends VBox
 
 
     /**
-     * Hides the error field
+     * Hides the error field.
      */
     public void hideErrorField()
     {

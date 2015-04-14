@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package seng302.group2.scenes.menu;
 
 import javafx.scene.input.KeyCode;
@@ -34,6 +29,10 @@ import seng302.group2.util.config.ConfigLoader;
 @SuppressWarnings("deprecation")
 public class MainMenuBar
 {
+    /**
+     * Creates a menu item "Project" and sets the on action event if "Project" is clicked.
+     * @return MenuItem Project
+     */
     private static MenuItem createProjectItem() 
     {
         MenuItem newProjectItem = new MenuItem("Project");
@@ -74,7 +73,10 @@ public class MainMenuBar
         return newProjectItem;
     }
     
-    
+    /**
+     * Creates a menu item "Person" and sets the on action event if "Person" is clicked.
+     * @return MenuItem Person
+     */
     private static MenuItem createPersonItem() 
     {
         MenuItem newPersonItem = new MenuItem("Person");
@@ -88,6 +90,10 @@ public class MainMenuBar
         return newPersonItem;
     }
     
+    /**
+     * Creates a menu item "Skill" and sets the on action event if "Skill" is clicked.
+     * @return MenuItem Skill
+     */
     private static MenuItem createSkillItem()
     {
         MenuItem newSkillItem = new MenuItem("Skill");
@@ -101,6 +107,10 @@ public class MainMenuBar
         return newSkillItem;
     }
     
+    /**
+     * Creates a menu item "Team" and sets the on action event if "Team" is clicked.
+     * @return MenuItem Team
+     */
     private static MenuItem createTeamItem()
     {
         MenuItem newTeamItem = new MenuItem("Team");
@@ -114,6 +124,10 @@ public class MainMenuBar
         return newTeamItem;
     }
     
+    /**
+     * Creates a menu item "Open" and sets the on action event if "Open" is clicked.
+     * @return MenuItem Open
+     */
     private static MenuItem createOpenItem()
     {
         // Create 'Open' MenuItem
@@ -150,7 +164,10 @@ public class MainMenuBar
         return openItem;
     }
     
-    
+    /**
+     * Creates a menu item "Save" and sets the on action event if "Save" is clicked.
+     * @return MenuItem Save
+     */
     private static MenuItem createSaveItem() 
     {
         // Create 'Save' MenuItem
@@ -166,7 +183,10 @@ public class MainMenuBar
         return saveItem;
     }
     
-    
+    /**
+     * Creates a menu item "SaveAs" and sets the on action event if "SaveAs" is clicked.
+     * @return MenuItem SaveAs
+     */
     private static MenuItem createSaveAsItem()
     {
         // Create 'Save As' MenuItem
@@ -183,7 +203,10 @@ public class MainMenuBar
         return saveAsItem;
     }
     
-    
+    /**
+     * Creates a menu item "Quit" and sets the on action event if "Quit" is clicked.
+     * @return MenuItem Quit
+     */
     private static MenuItem createQuitItem()
     {
         MenuItem quitProgramItem = new MenuItem("Quit");
@@ -216,7 +239,10 @@ public class MainMenuBar
         return quitProgramItem;
     }
     
-    
+    /**
+     * Creates a menu item "Undo" and sets the on action event if "Undo" is clicked.
+     * @return MenuItem Undo
+     */
     private static MenuItem createUndoItem()
     {
         // Create 'Undo' MenuItem
@@ -232,7 +258,10 @@ public class MainMenuBar
         return undoItem;
     }
     
-    
+    /**
+     * Creates a menu item "Redo" and sets the on action event if "Redo" is clicked.
+     * @return MenuItem Redo
+     */
     private static MenuItem createRedoItem()
     {
         // Create 'Redo' MenuItem
@@ -248,7 +277,10 @@ public class MainMenuBar
         return redoItem;
     }
 
-
+    /**
+     * Creates a menu item "Toggle Tree" and sets the on action event if "Toggle Tree" is clicked.
+     * @return MenuItem ToggleTree
+     */
     private static MenuItem createToggleTreeItem()
     {
         MenuItem toggleItem = new MenuItem("Toggle Menu");

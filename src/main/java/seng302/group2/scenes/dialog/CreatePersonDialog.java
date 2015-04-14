@@ -25,12 +25,15 @@ import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
- *Class to create a pop up dialog for creating a person
+ * Class to create a pop up dialog for creating a person.
  * @author swi67
  */
 @SuppressWarnings("deprecation")
 public class CreatePersonDialog
 {
+    /**
+     * Displays the Dialog box for creating a person.
+     */
     public static void show()
     {
         // Initialise Dialog and GridPane
@@ -65,7 +68,7 @@ public class CreatePersonDialog
         grid.getChildren().add(descriptionTextArea);  
         grid.getChildren().add(buttons);
            
-        // "Create" button event
+        // Create button event
         btnCreate.setOnAction((event) ->
             {
                 boolean correctDate = validateBirthDate(customBirthDate);
@@ -95,6 +98,7 @@ public class CreatePersonDialog
                 } 
             });
         
+        // Cancel button event
         btnCancel.setOnAction((event) ->
                 dialog.hide());
                 

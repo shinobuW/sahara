@@ -26,8 +26,7 @@ import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.util.config.ConfigLoader;
 
 /**
- * Hello world!
- * (With an added extra ;))
+ * TODO
  */
 @SuppressWarnings("deprecation")
 public class App extends Application
@@ -45,7 +44,7 @@ public class App extends Application
     
     
     /**
-     * Refreshes the main scene GUI
+     * Refreshes the main scene GUI.
      */
     public static void refreshMainScene()
     {
@@ -57,7 +56,7 @@ public class App extends Application
     
     
     /**
-     * Refreshes the title of the window to show the name of the current project, if any
+     * Refreshes the title of the window to show the name of the current project, if any.
      */
     public static void refreshWindowTitle()
     {
@@ -85,7 +84,7 @@ public class App extends Application
     
     
     /**
-     * The GUI setup and launch of the project
+     * The GUI setup and launch of the project.
      * @param primaryStage primary stage
      */
     @Override
@@ -155,7 +154,7 @@ public class App extends Application
     
     
     /**
-     * The main entry of the project
+     * The main entry of the project.
      * @param args arguments
      */
     public static void main(String[] args)

@@ -14,12 +14,15 @@ import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
- *
+ * Class to create a pop up dialog for creating a project.
  * @author David Moseley drm127
  */
 @SuppressWarnings("deprecation")
 public class CreateProjectDialog 
 {
+    /**
+     * Displays the Dialog box for creating a project.
+     */
     public static void show()
     {
         Dialog dialog = new Dialog(null, "New Project");

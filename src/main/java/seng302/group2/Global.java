@@ -7,11 +7,10 @@ package seng302.group2;
 
 import javafx.scene.control.TreeItem;
 import seng302.group2.project.Project;
-import seng302.group2.util.config.Configuration;
 import seng302.group2.util.undoredo.UndoRedoManager;
 
 /**
- *
+ * TODO
  * @author Jordane
  */
 public final class Global
@@ -23,9 +22,9 @@ public final class Global
 
 
     /**
-     * Checks if the app is running (via context of the App).
+     * Checks if the app is running (via context of the App)
      * This method is to stop NullExceptions when testing because there is no App context.
-     * @return
+     * @return true if the app is running, else false.
      */
     public static boolean appRunning()
     {
@@ -46,7 +45,7 @@ public final class Global
 
 
     /**
-     * Mark the current project as changed
+     * Mark the current project as changed.
      */
     public static void setCurrentProjectChanged()
     {
@@ -59,7 +58,7 @@ public final class Global
 
 
     /**
-     * Mark the current project as unchanged
+     * Mark the current project as unchanged.
      */
     public static void setCurrentProjectUnchanged()
     {
