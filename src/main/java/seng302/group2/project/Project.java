@@ -79,6 +79,10 @@ public class Project extends TreeViewItem implements Serializable
         this.serializablePeople = new ArrayList<>();
         this.serializableSkills = new ArrayList<>();
         this.serializableTeams = new ArrayList<>();
+	Team temp = new Team("Unassigned People", 
+					"All the people unassigned to a team");
+	serializableTeams.add(temp);
+	teams.add(temp);
     }
     
     
@@ -94,6 +98,10 @@ public class Project extends TreeViewItem implements Serializable
         this.shortName = shortName;
         this.longName = fullName;
         this.description = description;
+	Team temp = new Team("Unassigned People", 
+					"All the people unassigned to a team");
+	serializableTeams.add(temp);
+	teams.add(temp);
     }
     
     

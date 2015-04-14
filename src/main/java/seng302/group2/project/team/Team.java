@@ -9,6 +9,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.project.team.person.Person;
+import seng302.group2.project.team.role.Role;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
@@ -24,6 +25,8 @@ public class Team extends TreeViewItem implements Serializable
     
     private String shortName;
     private String description;
+    private Person scrumMaster;
+    private Person productOwner;
     private transient ObservableList<Person> people = observableArrayList();
     private ArrayList<Person> serializablePeople = new ArrayList<>();
     
@@ -76,7 +79,6 @@ public class Team extends TreeViewItem implements Serializable
      * Gets the team's list of members
      * @return The ObservableList of Persons
      */
-
     public ObservableList<Person> getPeople()
     {
         this.serializablePeople.clear();
@@ -86,6 +88,23 @@ public class Team extends TreeViewItem implements Serializable
         }
         return this.people;
     }
+    
+    /**Get the team's Product Owner
+     * @return The Product Owner
+     */
+    public Person getProductOwner()
+    {
+        return this.productOwner;
+    }
+    
+    /**Get the team's Scrum Master
+    * @return The Scrum Master
+    */
+    public Person getScrumMaster()
+    {
+        return this.scrumMaster;
+    }
+    
     
     //</editor-fold>
     
@@ -107,6 +126,26 @@ public class Team extends TreeViewItem implements Serializable
     public void setDescription(String description)
     {
         this.description = description;
+    }
+    
+    /**
+    * Gets the team's Scrum Master
+    * @param person the person to set
+    */
+    public void setScrumMaster(Person person)
+    {
+        this.scrumMaster = person;
+        person.setRole(new Role("Scrum Master", true, false));
+    }
+    
+    /**
+    * Gets the team's Product Owner
+    * @param person the person to set
+    */
+    public void setProductOwner(Person person)
+    {
+        this.productOwner = person;
+        person.setRole(new Role("Product Owner", false, true));
     }
     
         //</editor-fold>
