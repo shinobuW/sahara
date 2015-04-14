@@ -13,6 +13,7 @@ import seng302.group2.project.Project;
 import seng302.group2.project.skills.Skill;
 import seng302.group2.project.team.Team;
 import seng302.group2.project.team.person.Person;
+import seng302.group2.scenes.MainScene;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import seng302.group2.scenes.information.PersonScene;
 import seng302.group2.scenes.information.TeamScene;
@@ -133,6 +134,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
+                    PersonScene.refreshPersonScene(person);
                     break;
                 default:
                     System.out.println("Undo on person with this property not implemented (yet?)");
@@ -273,6 +275,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
+                    PersonScene.refreshPersonScene(person);
                     break;
                 default:
                     System.out.println("Redo on person with this property not implemented (yet?)");
