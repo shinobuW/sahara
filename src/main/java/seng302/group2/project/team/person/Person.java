@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.project.skills.Skill;
 import seng302.group2.project.team.Team;
+import seng302.group2.project.team.role.Role;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
@@ -35,6 +36,7 @@ public class Person extends TreeViewItem implements Serializable
     private transient ObservableList<Skill> skills = observableArrayList();
     private ArrayList<Skill> serializableSkills = new ArrayList<>();
     private Team currentTeam;
+    private Role role;
 
     
     /**
@@ -160,6 +162,15 @@ public class Person extends TreeViewItem implements Serializable
     }
     
     /**
+    * Gets the person's current role.
+    * @return The current role
+    */
+    public Role getRole()
+    {
+        return this.role;
+    }
+    
+    /**
      * Gets the person's list of Skills.
      * @return The skills associated with a person
      */
@@ -238,6 +249,15 @@ public class Person extends TreeViewItem implements Serializable
     public void setTeam(Team team)
     {
         this.currentTeam = team;
+    }
+    
+    /**
+    * Sets the person's current team
+    * @param role the role to set
+    */
+    public void setRole(Role role)
+    {
+        this.role = role;
     }
     
         //</editor-fold>
