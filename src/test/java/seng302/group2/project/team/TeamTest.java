@@ -9,6 +9,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import seng302.group2.project.team.person.Person;
+import seng302.group2.project.team.role.RoleType;
 
 /**
  * A series of tests relating to Teams
@@ -43,6 +45,8 @@ public class TeamTest extends TestCase
         Assert.assertEquals("", team.getDescription());
         Assert.assertEquals("unnamed", team.toString());
         Assert.assertEquals(null, team.getChildren());
+        Assert.assertEquals(null, team.getScrumMaster());
+        Assert.assertEquals(null, team.getProductOwner());
         
         Team team2 = new Team("Arctic Falcon", "An awesome team name"); 
         Assert.assertEquals("Arctic Falcon", team2.getShortName());
@@ -57,11 +61,20 @@ public class TeamTest extends TestCase
     public void testTeamSetters()
     {
         Team team = new Team();
+        Person po = new Person();
+        po.setShortName("Chardonnay");
         team.setShortName("Arctic Falcon");
         team.setDescription("An awesome team name");
+        team.setScrumMaster(new Person());
+        team.setProductOwner(po);
         
         Assert.assertEquals("Arctic Falcon", team.getShortName());
         Assert.assertEquals("An awesome team name", team.getDescription());
         Assert.assertEquals("Arctic Falcon", team.toString());
+        
+        Assert.assertEquals("Chardonnay", team.getProductOwner().getShortName());
+        Assert.assertEquals("unnamed", team.getScrumMaster().getShortName());
+        Assert.assertEquals(RoleType.ProductOwner, team.getProductOwner().getRole().getType());
+        Assert.assertEquals(RoleType.ScrumMaster, team.getScrumMaster().getRole().getType());
     }
 }
