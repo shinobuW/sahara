@@ -13,8 +13,7 @@ public class Role
 {
     private String shortName;
     private String description;
-    private Boolean isScrumMaster;
-    private Boolean isProductOwner;
+    private RoleType type;
     
     
     public Role(String shortName)
@@ -22,11 +21,10 @@ public class Role
         this.shortName = shortName;
     }
     
-    public Role(String shortName, Boolean scrumMaster, Boolean productOwner)
+    public Role(String shortName, RoleType type)
     {
         this.shortName = shortName;
-        this.isScrumMaster = scrumMaster;
-        this.isProductOwner = productOwner;
+        this.type = type;
     }
     // <editor-fold defaultstate="collapsed" desc="Getters">
      /**
@@ -47,14 +45,13 @@ public class Role
         return this.description;
     }
     
-    public Boolean getIsScrumMaster()
+    /**
+     * Gets the type of role
+     * @return Type of role
+     */
+    public RoleType getType()
     {
-        return this.isScrumMaster;
-    }
-    
-    public Boolean getIsProductOwner()
-    {
-        return this.isProductOwner;
+        return this.type;
     }
     
     //</editor-fold>
@@ -79,21 +76,12 @@ public class Role
     }
     
     /**
-    * Sets/un-sets the role as a Scrum Master
-    * @param scrumMaster boolean to set
+    * Sets the type of role
+    * @param type RoleType to set
     */
-    public void setIsScrumMaster(Boolean scrumMaster)
+    public void setType(RoleType type)
     {
-        this.isScrumMaster = scrumMaster;
-    }
-    
-    /**
-    * Sets/un-sets the role as a Product Owner
-    * @param productOwner boolean to set
-    */
-    public void setIsProductOwner(Boolean productOwner)
-    {
-        this.isProductOwner = productOwner;
+        this.type = type;
     }
     
     //</editor-fold>  
