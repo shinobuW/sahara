@@ -69,7 +69,7 @@ public class ElementTreeContextMenu extends ContextMenu
         switch (categoryName)
         {
             case "Person":           
-                PersonEditScene.getPersonEditScene();
+                PersonEditScene.getPersonEditScene((Person) Global.selectedTreeItem.getValue());
                 break;
             case "Skill":
                 SkillEditScene.getSkillEditScene();
