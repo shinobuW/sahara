@@ -75,16 +75,18 @@ public class PersonScene
         informationGrid.add(new Label("Email Address: "), 0, 3);
         informationGrid.add(new Label("Birth Date: "), 0, 4);
         informationGrid.add(new Label("Description: "), 0, 5);
-        informationGrid.add(personSkillsBox, 0, 6);
+        informationGrid.add(new Label("Team: "), 0, 6);
+        informationGrid.add(personSkillsBox, 0, 7);
         
         informationGrid.add(new Label(currentPerson.getShortName()), 1, 2);
         informationGrid.add(new Label(currentPerson.getEmail()), 1,3);
         informationGrid.add(new Label(dateFormat.format(currentPerson.getBirthDate())), 1, 4);
         informationGrid.add(new Label(currentPerson.getDescription()), 1, 5);
-        informationGrid.add(skillsButtons,1,6);
-        informationGrid.add(btnEdit,1,8);
+        informationGrid.add(new Label(currentPerson.getTeam()), 1, 6);
+        informationGrid.add(skillsButtons,1,7);
+        informationGrid.add(btnEdit,1,9);
 
-        informationGrid.add(skillsBox, 2, 6);
+        informationGrid.add(skillsBox, 2, 7);
         
         btnAdd.setOnAction((event) ->
             {

@@ -125,6 +125,7 @@ public class Team extends TreeViewItem implements Serializable
                 ));
         
         this.people.add(person);
+        person.setTeam(this);
     }
     
     /**
@@ -141,6 +142,7 @@ public class Team extends TreeViewItem implements Serializable
                 ));
         
         this.people.remove(person);
+        person.setTeam(null);
     }
     
     /**

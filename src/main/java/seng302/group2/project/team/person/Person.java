@@ -12,6 +12,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.project.skills.Skill;
+import seng302.group2.project.team.Team;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
@@ -33,6 +34,7 @@ public class Person extends TreeViewItem implements Serializable
     private Date birthDate = new Date();
     private transient ObservableList<Skill> skills = observableArrayList();
     private ArrayList<Skill> serializableSkills = new ArrayList<>();
+    private Team currentTeam;
 
     
     /**
@@ -46,6 +48,7 @@ public class Person extends TreeViewItem implements Serializable
         this.lastName = "lastName";
         this.email = "";
         this.description = "";
+        this.currentTeam = null;
         try
         {
             this.birthDate = new SimpleDateFormat(birthDatePattern).parse("29/05/1985");
@@ -78,6 +81,7 @@ public class Person extends TreeViewItem implements Serializable
         this.email = email;
         this.description = description;
         this.birthDate = birthDate;
+        this.currentTeam = null;
     }
        
     // <editor-fold defaultstate="collapsed" desc="Getters"> 
@@ -127,16 +131,32 @@ public class Person extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets the person's birth date
+     * Gets the person's birth date.
      * @return The birth date of the person
      */
     public Date getBirthDate()
     {
         return this.birthDate;
     }
+
+    /**
+     * Gets the person's current team's name.
+     * @return The name of the team the person is currently in
+     */
+    public String getTeam()
+    {
+        if (this.currentTeam == null)
+        {
+            return "";
+        }
+        else
+        {
+            return this.currentTeam.getShortName();
+        }
+    }
     
     /**
-     * Gets the person's list of Skills
+     * Gets the person's list of Skills.
      * @return The skills associated with a person
      */
     public ObservableList<Skill> getSkills()
@@ -172,7 +192,7 @@ public class Person extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets the person's last name
+     * Sets the person's last name
      * @param lastName the last name to set
      */
     public void setLastName(String lastName)
@@ -181,7 +201,7 @@ public class Person extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets the person's email
+     * Sets the person's email
      * @param email the email to set
      */
     public void setEmail(String email)
@@ -190,7 +210,7 @@ public class Person extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets the person's description
+     * Sets the person's description
      * @param description the description to set
      */
     public void setDescription(String description)
@@ -199,12 +219,21 @@ public class Person extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets the person's birth date
+     * Sets the person's birth date
      * @param birthDate the birth date to set
      */
     public void setBirthDate(Date birthDate)
     {
         this.birthDate = birthDate;
+    }
+    
+    /**
+     * Sets the person's current team
+     * @param team the team the person has been added too
+     */
+    public void setTeam(Team team)
+    {
+        this.currentTeam = team;
     }
     
         //</editor-fold>
