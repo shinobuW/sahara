@@ -15,17 +15,39 @@ public class Role
     private String description;
     private RoleType type;
     
-    
-    public Role(String shortName)
+    /**Basic Role constructor
+     */
+    public Role()
     {
-        this.shortName = shortName;
+        this.shortName = "role Name";
+        this.description = "";
+        this.type = RoleType.Others;
     }
     
+    /**Role Constructor 
+     * 
+     * @param shortName short name to be set 
+     * @param type type of role to be set
+     */
     public Role(String shortName, RoleType type)
     {
         this.shortName = shortName;
         this.type = type;
     }
+    
+    /**Role Constructor
+     * @param shortName short name to be set
+     * @param type type of role to be set
+     * @param description brief description of role
+     */
+    public Role(String shortName, RoleType type, String description)
+    {
+        this.shortName = shortName;
+        this.description = description;
+        this.type = type;
+    }
+    
+
     // <editor-fold defaultstate="collapsed" desc="Getters">
      /**
      * Gets the Role's short name
@@ -70,7 +92,7 @@ public class Role
     * Sets the role's short name
     * @param description the short name to set
     */
-    public void setDesciption(String description)
+    public void setDescription(String description)
     {
         this.description = description;
     }
@@ -85,4 +107,9 @@ public class Role
     }
     
     //</editor-fold>  
+    
+    public String toString()
+    {
+        return this.shortName;
+    }
 }
