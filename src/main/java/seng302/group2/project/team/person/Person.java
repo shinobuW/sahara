@@ -82,6 +82,10 @@ public class Person extends TreeViewItem implements Serializable
         this.description = description;
         this.birthDate = birthDate;
         this.currentTeam = null;
+	if (Global.currentProject != null)
+	{
+	    this.currentTeam = (Team) Global.currentProject.getTeams().get(0);
+	}
     }
        
     // <editor-fold defaultstate="collapsed" desc="Getters"> 
