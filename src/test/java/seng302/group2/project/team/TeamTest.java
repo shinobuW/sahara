@@ -36,7 +36,7 @@ public class TeamTest extends TestCase
     /**
      * A simple test for the Team constructors
      */
-    public void testSkillConstructors()
+    public void testTeamConstructors()
     {
         Team team = new Team();
         Assert.assertEquals("unnamed", team.getShortName());
@@ -54,7 +54,7 @@ public class TeamTest extends TestCase
     /**
      * Tests for Teams' setter methods.
      */
-    public void testPersonSetters()
+    public void testTeamSetters()
     {
         Team team = new Team();
         team.setShortName("Arctic Falcon");
