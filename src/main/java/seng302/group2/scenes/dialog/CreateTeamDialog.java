@@ -60,7 +60,7 @@ public class CreateTeamDialog
                 if (correctShortName)
                 {
                     Team team = new Team(shortName, description);
-                    Global.currentProject.addTeam(team);
+                    Global.currentProject.add(team);
                     dialog.hide();
                 }
                 else

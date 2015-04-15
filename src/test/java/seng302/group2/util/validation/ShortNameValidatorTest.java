@@ -6,9 +6,6 @@
 package seng302.group2.util.validation;
 
 import junit.framework.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import seng302.group2.Global;
@@ -34,7 +31,7 @@ public class ShortNameValidatorTest
         Global.currentProject = new Project();
         Person pers = new Person("btm38", "McNaughton", "Bronson", "btm38@gmail.com",
                 "A really cool dude", new Date(1994, 12, 19));
-        Global.currentProject.addPerson(pers);
+        Global.currentProject.add(pers);
     }
 
 

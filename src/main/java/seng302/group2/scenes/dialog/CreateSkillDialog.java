@@ -60,7 +60,7 @@ public class CreateSkillDialog
                 if (correctShortName)
                 {
                     Skill skill = new Skill(shortName, description);
-                    Global.currentProject.addSkill(skill);
+                    Global.currentProject.add(skill);
                     dialog.hide();
                 }
                 else

@@ -71,21 +71,21 @@ public class ProjectTest extends TestCase
     
     //TODO: Revise me
     /**
-     * Tests that people are correctly added to projects through the addPerson() method.
+     * Tests that people are correctly added to projects through the add() method.
      */
     public void testAddPerson()
     {
         Project proj = new Project();
         Person pers = new Person();
-        proj.addPerson(pers);
+        proj.add(pers);
         
         ObservableList<TreeViewItem> people = observableArrayList();
         people.add(pers);
 
         assertEquals(people, proj.getPeople());
         
-        proj.addPerson(pers);
-        proj.addPerson(pers);
+        proj.add(pers);
+        proj.add(pers);
         assertEquals(3, proj.getPeople().size());
     }
     

@@ -144,17 +144,17 @@ public class ElementTreeContextMenu extends ContextMenu
             switch (category)
             {
                 case PERSON:
-                    Global.currentProject.getPeople().remove(Global.selectedTreeItem.getValue());
+                    Global.currentProject.remove((Person) Global.selectedTreeItem.getValue());
                     break;
                 case PROJECT:
                     //TODO: Check if valid after project/workspace refactoring and uncomment
-                    //Global.currentProject.getProjects().remove(Global.selectedTreeItem.getValue());
+                    //Global.currentProject.remove((Project) Global.selectedTreeItem.getValue());
                     break;
                 case TEAM:
-                    Global.currentProject.getTeams().remove(Global.selectedTreeItem.getValue());
+                    Global.currentProject.remove((Team) Global.selectedTreeItem.getValue());
                     break;
                 case SKILL:
-                    Global.currentProject.getSkills().remove(Global.selectedTreeItem.getValue());
+                    Global.currentProject.remove((Skill) Global.selectedTreeItem.getValue());
                     break;
                 case OTHER:
                     System.out.println("Can't delete unknown selected class");

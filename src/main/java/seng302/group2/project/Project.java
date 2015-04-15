@@ -372,7 +372,7 @@ public class Project extends TreeViewItem implements Serializable
      * Adds a Person to the Project's list of Persons.
      * @param person The person to add
      */
-    public void addPerson(Person person)
+    public void add(Person person)
     {
         // Add the undo action to the stack
         Global.undoRedoMan.add(new UndoableItem(
@@ -383,13 +383,30 @@ public class Project extends TreeViewItem implements Serializable
         
         this.people.add(person);
     }
+
+
+    /**
+     * Removes a Person to the Project's list of Persons.
+     * @param person The person to remove
+     */
+    public void remove(Person person)
+    {
+        // TODO: UndoRedo stack items for removals of whole people
+        /*Global.undoRedoMan.add(new UndoableItem(
+                person,
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null)
+        ));*/
+
+        this.people.remove(person);
+    }
     
     
     /**
      * Adds a Skill to the Project's list of Skills.
      * @param skill The skill to add
      */
-    public void addSkill(Skill skill)
+    public void add(Skill skill)
     {
         //Add the undo action to the stack
         Global.undoRedoMan.add(new UndoableItem(
@@ -400,12 +417,30 @@ public class Project extends TreeViewItem implements Serializable
         
         this.skills.add(skill);
     }
-    
+
+
     /**
-     * Adds a Skill to the Project's list of Teams.
+     * Removes a Skill to the Project's list of Skills.
+     * @param skill The skill to remove
+     */
+    public void remove(Skill skill)
+    {
+        // TODO: UndoRedo stack items for removals of whole skills
+        /*Global.undoRedoMan.add(new UndoableItem(
+                person,
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null)
+        ));*/
+
+        this.skills.remove(skill);
+    }
+
+
+    /**
+     * Adds a Team to the Project's list of Teams.
      * @param team The team to add
      */
-    public void addTeam(Team team)
+    public void add(Team team)
     {
         //Add the undo action to the stack
         Global.undoRedoMan.add(new UndoableItem(
@@ -416,6 +451,24 @@ public class Project extends TreeViewItem implements Serializable
         
         this.teams.add(team);
     }
+
+
+    /**
+     * Removes a Team to the Project's list of Teams.
+     * @param team The team to remove
+     */
+    public void remove(Team team)
+    {
+        // TODO: UndoRedo stack items for removals of whole teams
+        /*Global.undoRedoMan.add(new UndoableItem(
+                person,
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null)
+        ));*/
+
+        this.skills.remove(team);
+    }
+
     
     /**
      * Gets a list of categories of the project based on the project's lists.

@@ -84,7 +84,7 @@ public class CreatePersonDialog
                     final Date birthDate = stringToDate(birthdateString);
                     Person person = new Person(shortName, firstName, lastName, email, description,
                         birthDate);
-                    Global.currentProject.addPerson(person);
+                    Global.currentProject.add(person);
                     dialog.hide();
                 }
                 else 
