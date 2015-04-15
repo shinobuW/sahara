@@ -60,13 +60,8 @@ public class CreatePersonDialog
         CustomDateField customBirthDate = new CustomDateField("Birth Date");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description");
         
-        grid.getChildren().add(shortNameCustomField);
-        grid.getChildren().add(firstNameCustomField);  
-        grid.getChildren().add(lastNameCustomField);  
-        grid.getChildren().add(emailTextField);  
-        grid.getChildren().add(customBirthDate);  
-        grid.getChildren().add(descriptionTextArea);  
-        grid.getChildren().add(buttons);
+        grid.getChildren().addAll(shortNameCustomField,firstNameCustomField,lastNameCustomField,
+                emailTextField,customBirthDate,descriptionTextArea,buttons);
            
         // Create button event
         btnCreate.setOnAction((event) ->

@@ -108,6 +108,7 @@ public class Role
     
     //</editor-fold>  
     
+    @Override
     public String toString()
     {
         return this.shortName;
