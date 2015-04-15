@@ -1,7 +1,6 @@
 package seng302.group2.scenes.information;
 
 import java.text.SimpleDateFormat;
-import java.util.concurrent.Callable;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -91,7 +90,8 @@ public class PersonScene
         informationGrid.add(new Label(currentPerson.getDescription()), 1, 5);
         informationGrid.add(new Label(currentPerson.getTeam()), 1, 6);
         
-        String roleString = currentPerson.getRole() == null ? "" : currentPerson.getRole().toString();
+        String roleString = currentPerson.getRole() == null ? "" : 
+                currentPerson.getRole().toString();
         informationGrid.add(new Label(roleString), 1, 7);
         informationGrid.add(skillsButtons,1,8);
         informationGrid.add(btnEdit,1,9);
