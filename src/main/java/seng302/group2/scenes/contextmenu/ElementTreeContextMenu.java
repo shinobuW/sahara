@@ -116,6 +116,7 @@ public class ElementTreeContextMenu extends ContextMenu
                 break;
             case PROJECT:
                 ProjectEditScene.getProjectEditScene();
+                break;
             case OTHER:
                 System.out.println("The category was not correctly recognized");
                 break;
