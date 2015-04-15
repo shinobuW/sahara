@@ -5,11 +5,15 @@
  */
 package seng302.group2.project.team.role;
 
+import java.io.Serializable;
+import javafx.collections.ObservableList;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
+
 /**
  *
  * @author swi67
  */
-public class Role
+public class Role extends TreeViewItem implements Serializable
 {
     private String shortName;
     private String description;
@@ -19,6 +23,8 @@ public class Role
      */
     public Role()
     {
+        // Initialize as a TreeViewItem
+        super("unnamed");
         this.shortName = "role Name";
         this.description = "";
         this.type = RoleType.Others;
@@ -31,6 +37,8 @@ public class Role
      */
     public Role(String shortName, RoleType type)
     {
+        // Initialize as a TreeViewItem
+        super(shortName);
         this.shortName = shortName;
         this.type = type;
     }
@@ -42,6 +50,8 @@ public class Role
      */
     public Role(String shortName, RoleType type, String description)
     {
+        // Initialize as a TreeViewItem
+        super(shortName);
         this.shortName = shortName;
         this.description = description;
         this.type = type;
@@ -107,6 +117,16 @@ public class Role
     }
     
     //</editor-fold>  
+    
+     /**
+     * Gets the children of the TreeViewItem
+     * @return The items of the TreeViewItem
+     */
+    @Override
+    public ObservableList<TreeViewItem> getChildren()
+    {
+        return null;
+    }
     
     @Override
     public String toString()
