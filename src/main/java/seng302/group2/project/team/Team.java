@@ -30,6 +30,8 @@ public class Team extends TreeViewItem implements Serializable
     private Person productOwner;
     private transient ObservableList<Person> people = observableArrayList();
     private ArrayList<Person> serializablePeople = new ArrayList<>();
+    private transient ObservableList<Role> roles = observableArrayList();
+    private ArrayList<Role> serializableRoles = new ArrayList<>();
     
     
     /**
@@ -88,6 +90,19 @@ public class Team extends TreeViewItem implements Serializable
             this.serializablePeople.add((Person)item);
         }
         return this.people;
+    }
+    
+    /**Gets the team's list of roles
+     * @return The observable list of roles
+     */
+    public ObservableList<Role> getRoles()
+    {
+        this.serializableRoles.clear();
+        for (Object item : this.roles)
+        {
+            this.serializableRoles.add((Role)item);
+        }
+        return this.roles;
     }
     
     /**Get the team's Product Owner
@@ -183,6 +198,16 @@ public class Team extends TreeViewItem implements Serializable
         
         this.people.remove(person);
         person.setTeam(null);
+    }
+    
+    /**Adds the role to the team's list of Roles
+     * @param role Role to add 
+     */
+    public void addRole(Role role)
+    {
+        // Add the undo action to the stack
+        //TO DO 
+        this.roles.add(role);
     }
     
     /**
