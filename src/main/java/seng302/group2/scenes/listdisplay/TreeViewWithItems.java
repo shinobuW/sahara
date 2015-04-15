@@ -128,7 +128,8 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     //Updates the display pane to be pane for the selectItem
                     if (Global.appRunning())
                     {
-                        if (Global.selectedTreeItem == null || Global.selectedTreeItem.getValue() == null)
+                        if (Global.selectedTreeItem == null
+                                || Global.selectedTreeItem.getValue() == null)
                         {
                             // Nothing is selected, make a default selection?
                             App.content.getChildren().remove(MainScene.informationGrid);
