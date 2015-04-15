@@ -254,8 +254,9 @@ public class Project extends TreeViewItem implements Serializable
         {
             // Prime a FileChooser
             FileChooser fileChooser = new FileChooser();
-            if (Global.lastSaveLocation != null)
+            if (Global.lastSaveLocation != null && Global.lastSaveLocation != "")
             {
+                System.out.println("last save dir: " + Global.lastSaveLocation);
                 fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
             }
             fileChooser.setInitialFileName(project.shortName);
@@ -315,8 +316,9 @@ public class Project extends TreeViewItem implements Serializable
         // Prime a FileChooser
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Project");
-        if (Global.lastSaveLocation != null)
+        if (Global.lastSaveLocation != null && Global.lastSaveLocation != "")
         {
+            System.out.println("last save dir: " + Global.lastSaveLocation);
             fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
         }
         fileChooser.getExtensionFilters().addAll(

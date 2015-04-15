@@ -13,7 +13,7 @@ public final class Global
     public static Project currentProject = new Project();
     public static TreeItem selectedTreeItem = new TreeItem();
     public static UndoRedoManager undoRedoMan = new UndoRedoManager();
-    public static String lastSaveLocation = "";
+    public static String lastSaveLocation = "/";
 
 
     /**
