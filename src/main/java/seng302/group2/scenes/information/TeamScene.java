@@ -42,17 +42,9 @@ public class TeamScene
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
         Button btnEdit = new Button("Edit");
-        Button btnAdd = new Button("<-");
-        Button btnDelete = new Button("->");
-        
-        VBox peopleButtons = new VBox();
-        peopleButtons.getChildren().add(btnAdd);
-        peopleButtons.getChildren().add(btnDelete);
-        
         
         ListView teamsPeopleBox = new ListView(currentTeam.getPeople());
         teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        
         
         ObservableList<Person> dialogSkills = observableArrayList();
         for (TreeViewItem projectPerson : Global.currentProject.getPeople())
@@ -63,69 +55,21 @@ public class TeamScene
             }
         }
                 
-        ListView membersBox = new ListView(dialogSkills);
-        membersBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-
         informationGrid.add(title, 0, 0, 3, 1);
         informationGrid.add(new Label("Description: "), 0, 2);
         informationGrid.add(teamsPeopleBox, 0, 3);
-
         
         informationGrid.add(new Label(currentTeam.getDescription()), 1, 2);
         informationGrid.add(btnEdit, 1, 4);
-        informationGrid.add(peopleButtons, 1, 3);
-        
-        informationGrid.add(membersBox, 2, 3);
 
-        
-        
-        btnAdd.setOnAction((event) ->
-            {
-                ObservableList<Person> selectedPeople = 
-                        membersBox.getSelectionModel().getSelectedItems();
-                for (Person item : selectedPeople)
-                {
-                    currentTeam.addPerson(item);
-                }
-                
-                dialogSkills.clear();
-                for (TreeViewItem projectPeople : Global.currentProject.getPeople())
-                {
-                    if (!currentTeam.getPeople().contains((Person)projectPeople))
-                    {
-                        dialogSkills.add((Person)projectPeople);
-                    }
-                }
-            });
-        
-        btnDelete.setOnAction((event) ->
-            {
-                ObservableList<Person> selectedPeople = 
-                        teamsPeopleBox.getSelectionModel().getSelectedItems();
-                System.out.println(selectedPeople.size());
-                for (int i = selectedPeople.size() - 1; i >= 0 ; i--)
-                {
-                    currentTeam.removePerson(selectedPeople.get(i));
-                }
-                
-                dialogSkills.clear();
-                for (TreeViewItem projectPeople : Global.currentProject.getPeople())
-                {
-                    if (!currentTeam.getPeople().contains((Person)projectPeople))
-                    {
-                        dialogSkills.add((Person)projectPeople);
-                    }
-                }
-            });        
-        
         btnEdit.setOnAction((event) ->
             {
                 App.content.getChildren().remove(informationGrid);
                 TeamEditScene.getTeamEditScene(currentTeam);
                 App.content.getChildren().add(informationGrid);
             });
-
+        
+        
         return informationGrid;
     }
  

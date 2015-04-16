@@ -5,19 +5,22 @@
  */
 package seng302.group2.scenes.information;
 
-import java.util.ArrayList;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
 import static seng302.group2.Global.selectedTreeItem;
 import seng302.group2.project.team.Team;
+import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.MainScene;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
@@ -25,9 +28,6 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
-import seng302.group2.util.undoredo.UndoRedoAction;
-import seng302.group2.util.undoredo.UndoRedoPerformer;
-import seng302.group2.util.undoredo.UndoableItem;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -43,6 +43,7 @@ public class TeamEditScene
     public static GridPane getTeamEditScene(Team currentTeam)
     {
 
+        //Team currentTeam = (Team) selectedTreeItem.getValue();
         informationGrid = new GridPane();
         informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
@@ -62,12 +63,80 @@ public class TeamEditScene
         
         shortNameCustomField.setText(currentTeam.getShortName());
         descriptionTextArea.setText(currentTeam.getDescription());
+        
+        Button btnAdd = new Button("<-");
+        Button btnDelete = new Button("->");
+        
+        VBox peopleButtons = new VBox();
+        peopleButtons.getChildren().add(btnAdd);
+        peopleButtons.getChildren().add(btnDelete);
+        
+        
+        ListView teamsPeopleBox = new ListView(currentTeam.getPeople());
+        teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        
+        
+        ObservableList<Person> dialogSkills = observableArrayList();
+        for (TreeViewItem projectPerson : Global.currentProject.getPeople())
+        {
+            if (!currentTeam.getPeople().contains(projectPerson))
+            {
+                dialogSkills.add((Person)projectPerson);
+            }
+        }
+                
+        ListView membersBox = new ListView(dialogSkills);
+        membersBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         informationGrid.add(shortNameCustomField, 0, 0);
         informationGrid.add(descriptionTextArea, 0, 1);
-        informationGrid.add(buttons, 0,2);
+        informationGrid.add(buttons, 0,3);
+        informationGrid.add(teamsPeopleBox, 0, 2);
 
 
+        informationGrid.add(peopleButtons, 1, 2);
+        
+        informationGrid.add(membersBox, 2, 2);
+        
+        btnAdd.setOnAction((event) ->
+            {
+                ObservableList<Person> selectedPeople = 
+                        membersBox.getSelectionModel().getSelectedItems();
+                for (Person item : selectedPeople)
+                {
+                    currentTeam.addPerson(item);
+                }
+                
+                dialogSkills.clear();
+                for (TreeViewItem projectPeople : Global.currentProject.getPeople())
+                {
+                    if (!currentTeam.getPeople().contains((Person)projectPeople))
+                    {
+                        dialogSkills.add((Person)projectPeople);
+                    }
+                }
+            });
+        
+        btnDelete.setOnAction((event) ->
+            {
+                ObservableList<Person> selectedPeople = 
+                        teamsPeopleBox.getSelectionModel().getSelectedItems();
+                System.out.println(selectedPeople.size());
+                for (int i = selectedPeople.size() - 1; i >= 0 ; i--)
+                {
+                    currentTeam.removePerson(selectedPeople.get(i));
+                }
+                
+                dialogSkills.clear();
+                for (TreeViewItem projectPeople : Global.currentProject.getPeople())
+                {
+                    if (!currentTeam.getPeople().contains((Person)projectPeople))
+                    {
+                        dialogSkills.add((Person)projectPeople);
+                    }
+                }
+            });        
+        
         btnCancel.setOnAction((event) ->
             {
                 App.content.getChildren().remove(informationGrid);
@@ -78,62 +147,16 @@ public class TeamEditScene
 
         btnSave.setOnAction((event) ->
             {
-                boolean correctShortName;
-                
-                if (shortNameCustomField.getText().equals(currentTeam.getShortName()))
-                {
-                    correctShortName = true;
-                }
-                else
-                {
-                    correctShortName = validateShortName(shortNameCustomField);
-                }
+                boolean correctShortName = validateShortName(shortNameCustomField);
 
 
                 if (correctShortName)
                 {
-                    // Build Undo/Redo edit array.
-                    ArrayList<UndoableItem> undoActions = new ArrayList<>();
-                    if (shortNameCustomField.getText() != currentTeam.getShortName())
-                    {
-                        undoActions.add(new UndoableItem(
-                                currentTeam,
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.TEAM_SHORTNAME, 
-                                        currentTeam.getShortName()),
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.TEAM_SHORTNAME, 
-                                        shortNameCustomField.getText())));
-                    }
-                    
-                    if (descriptionTextArea.getText() != currentTeam.getDescription())
-                    {
-                        undoActions.add(new UndoableItem(
-                                currentTeam,
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION, 
-                                        currentTeam.getDescription()),
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION, 
-                                        descriptionTextArea.getText())));
-                    }
-                        
-                    Global.undoRedoMan.add(new UndoableItem(
-                        currentTeam,
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.TEAM_EDIT,
-                                undoActions), 
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.TEAM_EDIT, 
-                                undoActions)
-                        ));                    
-                    
-                    // Save the edits.
                     currentTeam.setDescription(descriptionTextArea.getText());
                     currentTeam.setShortName(shortNameCustomField.getText());
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
-                    TeamScene.getTeamScene(currentTeam);
+                    TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
                     children.add(Global.currentProject);

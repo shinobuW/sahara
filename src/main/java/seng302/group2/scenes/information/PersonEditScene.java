@@ -13,12 +13,17 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
+import static seng302.group2.Global.currentProject;
 import static seng302.group2.Global.selectedTreeItem;
+import seng302.group2.project.skills.Skill;
 import seng302.group2.project.team.person.Person;
 import seng302.group2.scenes.MainScene;
 import static seng302.group2.scenes.MainScene.informationGrid;
@@ -63,6 +68,31 @@ public class PersonEditScene
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnSave, btnCancel);
         
+        Button btnAdd = new Button("<-");
+        Button btnDelete = new Button("->");
+        
+        VBox skillsButtons = new VBox();
+        skillsButtons.getChildren().add(btnAdd);
+        skillsButtons.getChildren().add(btnDelete);
+        skillsButtons.setAlignment(Pos.CENTER);
+        
+        
+        ListView personSkillsBox = new ListView(currentPerson.getSkills());
+        personSkillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        
+        
+        ObservableList<Skill> dialogSkills = observableArrayList();
+        for (TreeViewItem projectSkill : currentProject.getSkills())
+        {
+            if (!currentPerson.getSkills().contains(projectSkill))
+            {
+                dialogSkills.add((Skill)projectSkill);
+            }
+        }
+                
+        ListView skillsBox = new ListView(dialogSkills);
+        skillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        
         RequiredField shortNameCustomField = new RequiredField("Short Name");
         RequiredField firstNameCustomField = new RequiredField("First Name");
         RequiredField lastNameCustomField = new RequiredField("Last Name");
@@ -76,7 +106,7 @@ public class PersonEditScene
         emailTextField.setText(currentPerson.getEmail());
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");     
         customBirthDate.setText(dateFormat.format(currentPerson.getBirthDate()));
-        descriptionTextArea.setText(currentPerson.getDescription());;
+        descriptionTextArea.setText(currentPerson.getDescription());
         
         informationGrid.add(shortNameCustomField, 0, 0);
         informationGrid.add(firstNameCustomField, 0, 1);
@@ -84,8 +114,51 @@ public class PersonEditScene
         informationGrid.add(emailTextField, 0, 3);
         informationGrid.add(customBirthDate, 0, 4);
         informationGrid.add(descriptionTextArea, 0, 5);
-        informationGrid.add(buttons, 0, 6);
+        informationGrid.add(personSkillsBox, 0, 6);
+        informationGrid.add(buttons, 0, 7);
+        
+        informationGrid.add(skillsButtons,1,6);
 
+        informationGrid.add(skillsBox, 2, 6);
+        
+        btnAdd.setOnAction((event) ->
+            {
+                ObservableList<Skill> selectedSkills = 
+                        skillsBox.getSelectionModel().getSelectedItems();
+                for (Skill item : selectedSkills)
+                {
+                    currentPerson.addSkill(item);
+                }
+                
+                dialogSkills.clear();
+                for (TreeViewItem projectSkill : currentProject.getSkills())
+                {
+                    if (!currentPerson.getSkills().contains((Skill)projectSkill))
+                    {
+                        dialogSkills.add((Skill)projectSkill);
+                    }
+                }
+            });
+        
+        btnDelete.setOnAction((event) ->
+            {
+                ObservableList<Skill> selectedSkills = 
+                        personSkillsBox.getSelectionModel().getSelectedItems();
+                for (int i = selectedSkills.size() - 1; i >= 0 ; i--)
+                {
+                    currentPerson.removeSkill(selectedSkills.get(i));
+                }
+                
+                dialogSkills.clear();
+                for (TreeViewItem projectSkill : currentProject.getSkills())
+                {
+                    if (!currentPerson.getSkills().contains((Skill)projectSkill))
+                    {
+                        dialogSkills.add((Skill)projectSkill);
+                    }
+                }
+            });        
+        
         btnCancel.setOnAction((event) ->
             {
                 App.content.getChildren().remove(informationGrid);
@@ -111,10 +184,11 @@ public class PersonEditScene
                 
                 if (correctShortName && correctFirstName && correctLastName)
                 {
+                    //set Person proprties
                     final Date birthDate = stringToDate(customBirthDate.getText());
                     
-                    // Build Undo/Redo edit array.
                     ArrayList<UndoableItem> undoActions = new ArrayList<>();
+                    
                     if (firstNameCustomField.getText() != currentPerson.getFirstName())
                     {
                         undoActions.add(new UndoableItem(
@@ -197,7 +271,6 @@ public class PersonEditScene
                                 undoActions)
                         ));
                     
-                    // Save the edits.
                     currentPerson.setFirstName(firstNameCustomField.getText());
                     currentPerson.setShortName(shortNameCustomField.getText());
                     currentPerson.setLastName(lastNameCustomField.getText());
@@ -205,6 +278,8 @@ public class PersonEditScene
                     currentPerson.setEmail(emailTextField.getText());
                     currentPerson.setBirthDate(birthDate);
 
+
+                    //String birthdate = birthDateField.getText();
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
                     PersonScene.getPersonScene(currentPerson);

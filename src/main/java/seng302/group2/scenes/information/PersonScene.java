@@ -48,32 +48,10 @@ public class PersonScene
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
         Button btnEdit = new Button("Edit");
-        Button btnAdd = new Button("<-");
-        Button btnDelete = new Button("->");
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        
-        VBox skillsButtons = new VBox();
-        skillsButtons.getChildren().add(btnAdd);
-        skillsButtons.getChildren().add(btnDelete);
-        skillsButtons.setAlignment(Pos.CENTER);
-        
-        
+    
         ListView personSkillsBox = new ListView(currentPerson.getSkills());
         personSkillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        
-        
-        ObservableList<Skill> dialogSkills = observableArrayList();
-        for (TreeViewItem projectSkill : currentProject.getSkills())
-        {
-            if (!currentPerson.getSkills().contains(projectSkill))
-            {
-                dialogSkills.add((Skill)projectSkill);
-            }
-        }
-                
-        ListView skillsBox = new ListView(dialogSkills);
-        skillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
         
         informationGrid.add(title, 0, 0, 3, 1);
         informationGrid.add(new Label("Short Name: "), 0, 2);
@@ -93,48 +71,7 @@ public class PersonScene
         String roleString = currentPerson.getRole() == null ? "" : 
                 currentPerson.getRole().toString();
         informationGrid.add(new Label(roleString), 1, 7);
-        informationGrid.add(skillsButtons,1,8);
-        informationGrid.add(btnEdit,1,9);
-
-        informationGrid.add(skillsBox, 2, 8);
-        
-        btnAdd.setOnAction((event) ->
-            {
-                ObservableList<Skill> selectedSkills = 
-                        skillsBox.getSelectionModel().getSelectedItems();
-                for (Skill item : selectedSkills)
-                {
-                    currentPerson.addSkill(item);
-                }
-                
-                dialogSkills.clear();
-                for (TreeViewItem projectSkill : currentProject.getSkills())
-                {
-                    if (!currentPerson.getSkills().contains((Skill)projectSkill))
-                    {
-                        dialogSkills.add((Skill)projectSkill);
-                    }
-                }
-            });
-        
-        btnDelete.setOnAction((event) ->
-            {
-                ObservableList<Skill> selectedSkills = 
-                        personSkillsBox.getSelectionModel().getSelectedItems();
-                for (int i = selectedSkills.size() - 1; i >= 0 ; i--)
-                {
-                    currentPerson.removeSkill(selectedSkills.get(i));
-                }
-                
-                dialogSkills.clear();
-                for (TreeViewItem projectSkill : currentProject.getSkills())
-                {
-                    if (!currentPerson.getSkills().contains((Skill)projectSkill))
-                    {
-                        dialogSkills.add((Skill)projectSkill);
-                    }
-                }
-            });
+       
         
         btnEdit.setOnAction((event) ->
             {
