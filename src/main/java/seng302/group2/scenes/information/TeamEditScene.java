@@ -5,6 +5,7 @@
  */
 package seng302.group2.scenes.information;
 
+import java.util.ArrayList;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -24,6 +25,9 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
+import seng302.group2.util.undoredo.UndoRedoAction;
+import seng302.group2.util.undoredo.UndoRedoPerformer;
+import seng302.group2.util.undoredo.UndoableItem;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -36,10 +40,9 @@ public class TeamEditScene
      * Gets the Team Edit information scene.
      * @return The Team Edit information scene
      */
-    public static GridPane getTeamEditScene()
+    public static GridPane getTeamEditScene(Team currentTeam)
     {
 
-        Team currentTeam = (Team) selectedTreeItem.getValue();
         informationGrid = new GridPane();
         informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
@@ -80,6 +83,42 @@ public class TeamEditScene
 
                 if (correctShortName)
                 {
+                    
+                    ArrayList<UndoableItem> undoActions = new ArrayList<>();
+                    if (shortNameCustomField.getText() != currentTeam.getShortName())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentTeam,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.TEAM_SHORTNAME, 
+                                        currentTeam.getShortName()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.TEAM_SHORTNAME, 
+                                        shortNameCustomField.getText())));
+                    }
+                    
+                    if (descriptionTextArea.getText() != currentTeam.getDescription())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentTeam,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION, 
+                                        currentTeam.getDescription()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION, 
+                                        descriptionTextArea.getText())));
+                    }
+                        
+                    Global.undoRedoMan.add(new UndoableItem(
+                        currentTeam,
+                        new UndoRedoAction(
+                                UndoRedoPerformer.UndoRedoProperty.TEAM_EDIT,
+                                undoActions), 
+                        new UndoRedoAction(
+                                UndoRedoPerformer.UndoRedoProperty.TEAM_EDIT, 
+                                undoActions)
+                        ));                    
+                    
                     currentTeam.setDescription(descriptionTextArea.getText());
                     currentTeam.setShortName(shortNameCustomField.getText());
                     App.content.getChildren().remove(treeView);

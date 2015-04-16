@@ -109,10 +109,10 @@ public class ElementTreeContextMenu extends ContextMenu
                 PersonEditScene.getPersonEditScene((Person) Global.selectedTreeItem.getValue());
                 break;
             case SKILL:
-                SkillEditScene.getSkillEditScene();
+                SkillEditScene.getSkillEditScene((Skill) Global.selectedTreeItem.getValue());
                 break;
             case TEAM:
-                TeamEditScene.getTeamEditScene();
+                TeamEditScene.getTeamEditScene((Team) Global.selectedTreeItem.getValue());
                 break;
             case PROJECT:
                 ProjectEditScene.getProjectEditScene();

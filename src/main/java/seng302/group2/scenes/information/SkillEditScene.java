@@ -5,6 +5,7 @@
  */
 package seng302.group2.scenes.information;
 
+import java.util.ArrayList;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -24,6 +25,9 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
+import seng302.group2.util.undoredo.UndoRedoAction;
+import seng302.group2.util.undoredo.UndoRedoPerformer;
+import seng302.group2.util.undoredo.UndoableItem;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -36,10 +40,10 @@ public class SkillEditScene
      * Gets the Skill Edit information scene.
      * @return The Skill Edit information display
      */
-    public static GridPane getSkillEditScene()
+    public static GridPane getSkillEditScene(Skill currentSkill)
     {
 
-        Skill currentSkill = (Skill) selectedTreeItem.getValue();
+ 
         informationGrid = new GridPane();
         informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
@@ -80,6 +84,45 @@ public class SkillEditScene
 
                 if (correctShortName)
                 {
+                    ArrayList<UndoableItem> undoActions = new ArrayList<>();
+                    
+                    if (shortNameCustomField.getText() != currentSkill.getShortName())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentSkill,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.SKILL_SHORTNAME,
+                                        currentSkill.getShortName()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.SKILL_SHORTNAME,
+                                        shortNameCustomField.getText())));
+                    }
+                    
+                    if (descriptionTextArea.getText() != currentSkill.getDescription())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentSkill,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.SKILL_DESCRIPTION,
+                                        currentSkill.getDescription()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.SKILL_DESCRIPTION,
+                                        descriptionTextArea.getText())));
+                    }
+                           
+                    Global.undoRedoMan.add(new UndoableItem(
+                        currentSkill,
+                        new UndoRedoAction(
+                                UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT,
+                                undoActions), 
+                        new UndoRedoAction(
+                                UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT, 
+                                undoActions)
+                        ));                    
+    
+                            
+                            
+                            
                     currentSkill.setDescription(descriptionTextArea.getText());
                     currentSkill.setShortName(shortNameCustomField.getText());
                     App.content.getChildren().remove(treeView);

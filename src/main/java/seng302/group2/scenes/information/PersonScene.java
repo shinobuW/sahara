@@ -162,6 +162,5 @@ public class PersonScene
 	App.content.getChildren().add(MainScene.treeView);
 	App.content.getChildren().add(MainScene.informationGrid);
 	MainScene.treeView.getSelectionModel().select(selectedTreeItem);
-
     }
 }
