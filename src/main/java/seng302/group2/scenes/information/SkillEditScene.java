@@ -79,7 +79,16 @@ public class SkillEditScene
 
         btnSave.setOnAction((event) ->
             {
-                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctShortName;
+                
+                if (shortNameCustomField.getText().equals(currentSkill.getShortName()))
+                {
+                    correctShortName = true;
+                }
+                else
+                {
+                    correctShortName = validateShortName(shortNameCustomField);
+                }
 
 
                 if (correctShortName)
