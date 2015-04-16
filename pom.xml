@@ -105,9 +105,9 @@
             <encoding>UTF-8</encoding>
             <consoleOutput>true</consoleOutput>
             <includeTestSourceDirectory>false</includeTestSourceDirectory>
-            <failsOnError>true</failsOnError>
-            <violationSeverity>info</violationSeverity>
-            <failOnViolation>true</failOnViolation>
+            <failsOnError>false</failsOnError>
+            <violationSeverity>warning</violationSeverity>
+            <failOnViolation>false</failOnViolation>
             <logViolationsToConsole>true</logViolationsToConsole>
           </configuration>
         </plugin>
@@ -141,25 +141,6 @@
             <binFileExtensions>
              <unix>.sh</unix>
             </binFileExtensions>
-
-            <!--<daemons>
-              <daemon>
-                  <id>app</id>
-                  <mainClass>seng302.group2.App</mainClass>
-                  <platforms>
-                      <platform>jsw</platform>
-                  </platforms>
-                  <generatorConfigurations>
-                      <generatorConfiguration>
-                          <generator>jsw</generator>
-                          <includes>
-                              <include>linux-x86-32</include>
-                              <include>wrapper-windows-x86-32</include>
-                          </includes>
-                      </generatorConfiguration>
-                  </generatorConfigurations>
-              </daemon>
-          </daemons>-->
 
             <programs>
               <program>
@@ -274,13 +255,13 @@
 
             <!-- PMD -->
             <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-pmd-plugin</artifactId>
-            <version>3.4</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.4</version>
                 <configuration>
-                <linkXref>true</linkXref>
-                <targetjdk>1.8</targetjdk>
-                <minimumtokencount>100</minimumtokencount>
+                    <!--<linkXref>true</linkXref>
+                    <targetjdk>1.8</targetjdk>
+                    <minimumtokencount>100</minimumtokencount>-->
                     <rulesets>
                         <ruleset>/rulesets/java/basic.xml</ruleset>
                         <ruleset>/rulesets/java/imports.xml</ruleset>
@@ -290,10 +271,11 @@
                         <ruleset>/rulesets/java/junit.xml</ruleset>
                         <ruleset>/rulesets/java/unusedcode.xml</ruleset>
                     </rulesets>
-                <includeXmlInSite>true</includeXmlInSite>
-                <sourceEncoding>utf-8</sourceEncoding>
+                    <includeXmlInSite>true</includeXmlInSite>
+                    <sourceEncoding>utf-8</sourceEncoding>
                 </configuration>
             </plugin>
+
         </plugins>
     </reporting>
 
