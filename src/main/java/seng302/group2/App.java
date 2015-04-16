@@ -26,7 +26,7 @@ import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.util.config.ConfigLoader;
 
 /**
- * TODO
+ * The entry method of Sahara.
  */
 @SuppressWarnings("deprecation")
 public class App extends Application
@@ -117,7 +117,9 @@ public class App extends Application
                 ConfigLoader.saveConfig();
                 if (!Global.currentProject.getHasUnsavedChanges())
                 {
+                    System.out.println("no unsaved changes");
                     System.exit(0);
+                    return;
                 }    
                 Action response = Dialogs.create()
                     .title("Save Project?")
