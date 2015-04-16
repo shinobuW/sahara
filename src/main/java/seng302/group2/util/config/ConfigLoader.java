@@ -35,7 +35,6 @@ public class ConfigLoader
             Gson gson = new GsonBuilder().create();
             gson.toJson(config, writer);
             writer.close();
-            Global.setCurrentProjectUnchanged();
         }
         catch (IOException e)
         {
