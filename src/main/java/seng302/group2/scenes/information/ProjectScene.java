@@ -48,7 +48,7 @@ public class ProjectScene
         btnEdit.setOnAction((event) ->
             {
                 App.content.getChildren().remove(informationGrid);
-                ProjectEditScene.getProjectEditScene();
+                ProjectEditScene.getProjectEditScene(currentProject);
                 App.content.getChildren().add(informationGrid);
             });
 

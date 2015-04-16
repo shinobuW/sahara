@@ -1,5 +1,6 @@
 package seng302.group2.scenes.information;
 
+import java.util.ArrayList;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -19,6 +20,9 @@ import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
+import seng302.group2.util.undoredo.UndoRedoAction;
+import seng302.group2.util.undoredo.UndoRedoPerformer;
+import seng302.group2.util.undoredo.UndoableItem;
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
@@ -32,10 +36,10 @@ public class ProjectEditScene
      * Gets the project edit information scene.
      * @return The Project Edit information scene
      */
-    public static GridPane getProjectEditScene()
+    public static GridPane getProjectEditScene(Project currentProject)
     {
 
-        Project currentProject = (Project) selectedTreeItem.getValue();
+
         informationGrid = new GridPane();
         informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
@@ -80,12 +84,60 @@ public class ProjectEditScene
 
                 if (correctShortName && correctLongName)
                 {
+                    // Build Undo/Redo edit array.
+                    ArrayList<UndoableItem> undoActions = new ArrayList<>();                    
+                    if (shortNameCustomField.getText() != currentProject.getShortName())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentProject,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_SHORTNAME, 
+                                        currentProject.getShortName()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_SHORTNAME, 
+                                        shortNameCustomField.getText())));
+                    }
+                    
+                    if (longNameCustomField.getText() != currentProject.getLongName())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentProject,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_LONGNAME, 
+                                        currentProject.getDescription()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_LONGNAME, 
+                                        longNameCustomField.getText())));                        
+                    }
+                    if (descriptionTextArea.getText() != currentProject.getDescription())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentProject,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_DESCRIPTION, 
+                                        currentProject.getDescription()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_DESCRIPTION, 
+                                        descriptionTextArea.getText())));
+                    }
+                    
+                    Global.undoRedoMan.add(new UndoableItem(
+                        currentProject,
+                        new UndoRedoAction(
+                                UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT,
+                                undoActions), 
+                        new UndoRedoAction(
+                                UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT, 
+                                undoActions)
+                        ));   
+                    
+                    // Save the edits.
                     currentProject.setDescription(descriptionTextArea.getText());
                     currentProject.setShortName(shortNameCustomField.getText());
                     currentProject.setLongName(longNameCustomField.getText());
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
-                    ProjectScene.getProjectScene((Project) Global.selectedTreeItem.getValue());
+                    ProjectScene.getProjectScene(currentProject);
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
                     children.add(Global.currentProject);

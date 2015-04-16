@@ -13,11 +13,10 @@ import seng302.group2.project.Project;
 import seng302.group2.project.skills.Skill;
 import seng302.group2.project.team.Team;
 import seng302.group2.project.team.person.Person;
-import seng302.group2.scenes.MainScene;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import seng302.group2.scenes.information.PersonScene;
 import seng302.group2.scenes.information.TeamScene;
-
+import seng302.group2.scenes.information.SkillScene;
 /**
  * A class that handles the ugly undo/redo work behind the scenes on undoable items.
  * @author jml168
@@ -34,6 +33,7 @@ public class UndoRedoPerformer
         PROJECT_SHORTNAME,
         PROJECT_LONGNAME,
         PROJECT_DESCRIPTION,
+        PROJECT_EDIT,
 
         PERSON,
         PERSON_SHORTNAME,
@@ -51,10 +51,12 @@ public class UndoRedoPerformer
         SKILL_DESCRIPTION,
         SKILL_ADD_PERSON,
         SKILL_DEL_PERSON,
+        SKILL_EDIT,
         
         TEAM,
         TEAM_SHORTNAME,
         TEAM_DESCRIPTION,
+        TEAM_EDIT,
     }
 
     
@@ -81,6 +83,14 @@ public class UndoRedoPerformer
                 case PROJECT_DESCRIPTION:
                     proj.setDescription((String) item.getUndoAction().getValue());
                     break;
+                case PROJECT_EDIT:
+                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
+                            item.getUndoAction().getValue()) 
+                    {
+                        UndoRedoPerformer.undo(undoAction);
+                    }
+                    //ProjectScene.refreshProjectScene(proj);
+                    break; 
                 default:
                     System.out.println("Undo on project with this property not implemented (yet?)");
                     break;
@@ -170,6 +180,14 @@ public class UndoRedoPerformer
                     PersonScene.getPersonScene(currentPerson);
                     App.content.getChildren().add(informationGrid);
                     break;
+                case SKILL_EDIT:
+                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
+                            item.getUndoAction().getValue()) 
+                    {
+                        UndoRedoPerformer.undo(undoAction);
+                    }
+                    SkillScene.refreshSkillScene(skill);
+                    break;
                 default:
                     System.out.println("Undo on skill with this property not implemented (yet?)");
                     break;                    
@@ -190,6 +208,14 @@ public class UndoRedoPerformer
                     break;
                 case TEAM_DESCRIPTION:
                     team.setDescription((String) item.getUndoAction().getValue());
+                    break;
+                case TEAM_EDIT:
+                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
+                            item.getUndoAction().getValue()) 
+                    {
+                        UndoRedoPerformer.undo(undoAction);
+                    }
+                    //TeamScene.refreshTeamScene(team);
                     break;
                 default:
                     System.out.println("Undo on skill with this property not implemented (yet?)");
@@ -222,6 +248,14 @@ public class UndoRedoPerformer
                 case PROJECT_DESCRIPTION:
                     proj.setDescription((String) item.getRedoAction().getValue());
                     break;
+                case PROJECT_EDIT:
+                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
+                            item.getUndoAction().getValue()) 
+                    {
+                        UndoRedoPerformer.redo(undoAction);
+                    }
+                    //ProjectScene.refreshProjectScene(proj);
+                    break;     
                 default:
                     System.out.println("Redo on project with this property not implemented (yet?)");
                     break;
@@ -287,7 +321,7 @@ public class UndoRedoPerformer
         else if (objClass == Skill.class)
         {
             Skill skill = (Skill) item.getHost();
-            Person currentPerson = (Person) item.getUndoAction().getValue();
+            Person currentPerson = (Person) item.getUndoAction().getValue(); //Why is this here?
             switch (item.getRedoAction().getProperty())
             {
                 case SKILL:
@@ -311,6 +345,14 @@ public class UndoRedoPerformer
                     PersonScene.getPersonScene(currentPerson);
                     App.content.getChildren().add(informationGrid);
                     break;
+                case SKILL_EDIT:
+                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
+                            item.getUndoAction().getValue()) 
+                    {
+                        UndoRedoPerformer.redo(undoAction);
+                    }
+                    SkillScene.refreshSkillScene(skill);
+                    break;
                 default:
                     System.out.println("Redo on skill with this property not implemented (yet?)");
                     break;                   
@@ -331,6 +373,14 @@ public class UndoRedoPerformer
                     break;
                 case TEAM_DESCRIPTION:
                     team.setDescription((String) item.getRedoAction().getValue());
+                    break;
+                case TEAM_EDIT:
+                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
+                            item.getUndoAction().getValue()) 
+                    {
+                        UndoRedoPerformer.redo(undoAction);
+                    }
+                    //TeamScene.refreshTeamScene(team);    
                     break;
                 default:
                     System.out.println("Redo on skill with this property not implemented (yet?)");

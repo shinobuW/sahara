@@ -1,16 +1,24 @@
 package seng302.group2.scenes.information;
 
+import static javafx.collections.FXCollections.observableArrayList;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.App;
+import seng302.group2.Global;
 import static seng302.group2.Global.selectedTreeItem;
 import seng302.group2.project.skills.Skill;
+import seng302.group2.project.team.person.Person;
+import seng302.group2.scenes.MainScene;
 import static seng302.group2.scenes.MainScene.informationGrid;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 
 /**
  * A class for displaying the skill scene
@@ -45,11 +53,27 @@ public class SkillScene
         btnEdit.setOnAction((event) ->
             {
                 App.content.getChildren().remove(informationGrid);
-                SkillEditScene.getSkillEditScene();
+                SkillEditScene.getSkillEditScene(currentSkill);
                 App.content.getChildren().add(informationGrid);
             });
 
         return informationGrid;
     }
  
+    public static void refreshSkillScene(Skill skill)
+    {
+	App.content.getChildren().remove(MainScene.informationGrid);
+	App.content.getChildren().remove(MainScene.treeView);
+	SkillScene.getSkillScene(skill);
+	MainScene.treeView = new TreeViewWithItems(new TreeItem());
+	ObservableList<TreeViewItem> children = observableArrayList();
+	children.add(Global.currentProject);
+
+	MainScene.treeView.setItems(children);
+	MainScene.treeView.setShowRoot(false);
+	App.content.getChildren().add(MainScene.treeView);
+	App.content.getChildren().add(MainScene.informationGrid);
+	MainScene.treeView.getSelectionModel().select(selectedTreeItem);
+    }
 }
+    

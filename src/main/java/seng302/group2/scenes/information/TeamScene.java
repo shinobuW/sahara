@@ -122,7 +122,7 @@ public class TeamScene
         btnEdit.setOnAction((event) ->
             {
                 App.content.getChildren().remove(informationGrid);
-                TeamEditScene.getTeamEditScene();
+                TeamEditScene.getTeamEditScene(currentTeam);
                 App.content.getChildren().add(informationGrid);
             });
 
