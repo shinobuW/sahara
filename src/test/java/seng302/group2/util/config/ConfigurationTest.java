@@ -9,7 +9,9 @@ import seng302.group2.Global;
  */
 public class ConfigurationTest extends TestCase
 {
-
+    /**
+     * Test that the configuration updates to the values of the runtime state (used before saving)
+     */
     public void testUpdateConfiguration()
     {
         String testLocation = "/aTestLocation/";
@@ -27,7 +29,11 @@ public class ConfigurationTest extends TestCase
         Assert.assertEquals(config.getLastSaveLocation(), anotherTestLocation);
     }
 
-    public void testUpdateRuntime() throws Exception
+
+    /**
+     * Test that the runtime updates to the values of the configuration (used after loading)
+     */
+    public void testUpdateRuntime()
     {
         String testLocation = "/aTestLocation/";
         String anotherTestLocation = "/anotherTestLocation/";

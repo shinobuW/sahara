@@ -37,4 +37,24 @@ public class Configuration
     {
         Global.lastSaveLocation = this.lastSaveLocation;
     }
+
+
+    /**
+     * Gets the configuration's last save location
+     * @return
+     */
+    public String getLastSaveLocation()
+    {
+        return lastSaveLocation;
+    }
+
+
+    /**
+     * Sets the configuration's last save location
+     * @param lastSaveLocation
+     */
+    public void setLastSaveLocation(String lastSaveLocation)
+    {
+        this.lastSaveLocation = lastSaveLocation;
+    }
 }
