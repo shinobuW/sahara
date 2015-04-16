@@ -111,11 +111,10 @@ public class PersonEditScene
                 
                 if (correctShortName && correctFirstName && correctLastName)
                 {
-                    //set Person proprties
                     final Date birthDate = stringToDate(customBirthDate.getText());
                     
+                    // Build Undo/Redo edit array.
                     ArrayList<UndoableItem> undoActions = new ArrayList<>();
-                    
                     if (firstNameCustomField.getText() != currentPerson.getFirstName())
                     {
                         undoActions.add(new UndoableItem(
@@ -198,6 +197,7 @@ public class PersonEditScene
                                 undoActions)
                         ));
                     
+                    // Save the edits.
                     currentPerson.setFirstName(firstNameCustomField.getText());
                     currentPerson.setShortName(shortNameCustomField.getText());
                     currentPerson.setLastName(lastNameCustomField.getText());
@@ -205,8 +205,6 @@ public class PersonEditScene
                     currentPerson.setEmail(emailTextField.getText());
                     currentPerson.setBirthDate(birthDate);
 
-
-                    //String birthdate = birthDateField.getText();
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
                     PersonScene.getPersonScene(currentPerson);

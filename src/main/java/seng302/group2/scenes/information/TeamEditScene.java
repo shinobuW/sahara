@@ -92,7 +92,7 @@ public class TeamEditScene
 
                 if (correctShortName)
                 {
-                    
+                    // Build Undo/Redo edit array.
                     ArrayList<UndoableItem> undoActions = new ArrayList<>();
                     if (shortNameCustomField.getText() != currentTeam.getShortName())
                     {
@@ -128,11 +128,12 @@ public class TeamEditScene
                                 undoActions)
                         ));                    
                     
+                    // Save the edits.
                     currentTeam.setDescription(descriptionTextArea.getText());
                     currentTeam.setShortName(shortNameCustomField.getText());
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
-                    TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
+                    TeamScene.getTeamScene(currentTeam);
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
                     children.add(Global.currentProject);

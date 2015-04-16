@@ -93,8 +93,8 @@ public class SkillEditScene
 
                 if (correctShortName)
                 {
-                    ArrayList<UndoableItem> undoActions = new ArrayList<>();
-                    
+                    // Build Undo/Redo edit array.
+                    ArrayList<UndoableItem> undoActions = new ArrayList<>();          
                     if (shortNameCustomField.getText() != currentSkill.getShortName())
                     {
                         undoActions.add(new UndoableItem(
@@ -127,16 +127,15 @@ public class SkillEditScene
                         new UndoRedoAction(
                                 UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT, 
                                 undoActions)
-                        ));                    
-    
+                        ));                      
                             
-                            
-                            
+                    // Save the edits.        
                     currentSkill.setDescription(descriptionTextArea.getText());
                     currentSkill.setShortName(shortNameCustomField.getText());
+                    
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
-                    SkillScene.getSkillScene((Skill) Global.selectedTreeItem.getValue());
+                    SkillScene.getSkillScene(currentSkill);
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
                     children.add(Global.currentProject);

@@ -36,10 +36,10 @@ public class ProjectEditScene
      * Gets the project edit information scene.
      * @return The Project Edit information scene
      */
-    public static GridPane getProjectEditScene()
+    public static GridPane getProjectEditScene(Project currentProject)
     {
 
-        Project currentProject = (Project) selectedTreeItem.getValue();
+
         informationGrid = new GridPane();
         informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
@@ -84,7 +84,7 @@ public class ProjectEditScene
 
                 if (correctShortName && correctLongName)
                 {
-
+                    // Build Undo/Redo edit array.
                     ArrayList<UndoableItem> undoActions = new ArrayList<>();                    
                     if (shortNameCustomField.getText() != currentProject.getShortName())
                     {
@@ -131,12 +131,13 @@ public class ProjectEditScene
                                 undoActions)
                         ));   
                     
+                    // Save the edits.
                     currentProject.setDescription(descriptionTextArea.getText());
                     currentProject.setShortName(shortNameCustomField.getText());
                     currentProject.setLongName(longNameCustomField.getText());
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
-                    ProjectScene.getProjectScene((Project) Global.selectedTreeItem.getValue());
+                    ProjectScene.getProjectScene(currentProject);
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
                     children.add(Global.currentProject);

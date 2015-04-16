@@ -115,7 +115,7 @@ public class ElementTreeContextMenu extends ContextMenu
                 TeamEditScene.getTeamEditScene((Team) Global.selectedTreeItem.getValue());
                 break;
             case PROJECT:
-                ProjectEditScene.getProjectEditScene();
+                ProjectEditScene.getProjectEditScene((Project) Global.selectedTreeItem.getValue());
                 break;
             case OTHER:
                 System.out.println("The category was not correctly recognized");
