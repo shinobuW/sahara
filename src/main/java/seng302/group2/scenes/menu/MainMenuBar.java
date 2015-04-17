@@ -212,28 +212,7 @@ public class MainMenuBar
         MenuItem quitProgramItem = new MenuItem("Quit");
         quitProgramItem.setOnAction((event) ->
             {
-                ConfigLoader.saveConfig();
-                if (!Global.currentProject.getHasUnsavedChanges())
-                {
-                    System.exit(0);
-                }   
-                Action response = Dialogs.create()
-                    .title("Save Project?")
-                    .message("Would you like to save your changes to the current project?")
-                    .showConfirm();
-
-                if (response == Dialog.ACTION_YES)
-                {
-                    SaveLoadResult saved = Project.saveProject(Global.currentProject, false);
-                    if (saved == SaveLoadResult.SUCCESS)
-                    {
-                        System.exit(0);
-                    }
-                }
-                else if (response == Dialog.ACTION_NO)
-                {
-                    System.exit(0);
-                }
+                App.exitApp();
             });      
         
         return quitProgramItem;

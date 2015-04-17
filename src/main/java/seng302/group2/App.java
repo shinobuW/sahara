@@ -114,37 +114,8 @@ public class App extends Application
         {
             public void handle(WindowEvent event)
             {
-                ConfigLoader.saveConfig();
-                if (!Global.currentProject.getHasUnsavedChanges())
-                {
-                    System.exit(0);
-                    return;  // Clean from a method POV
-                }    
-                Action response = Dialogs.create()
-                    .title("Save Project?")
-                    .message("Would you like to save your changes to the current project?")
-                    .showConfirm();
-                
-                if (response == Dialog.ACTION_YES)
-                {
-                    SaveLoadResult saved = Project.saveProject(Global.currentProject, false);
-                    if (saved == SaveLoadResult.SUCCESS)
-                    {
-                        System.exit(0);
-                    }
-                    else
-                    {
-                        event.consume();
-                    }
-                }
-                else if (response == Dialog.ACTION_NO)
-                {
-                    System.exit(0);
-                }
-                else
-                {
-                    event.consume();
-                }
+                exitApp();
+                event.consume();
             }
         });
         
@@ -152,7 +123,38 @@ public class App extends Application
         App.refreshWindowTitle();
         mainStage.show();
     }
-    
+
+
+    public static void exitApp()
+    {
+        ConfigLoader.saveConfig();
+        if (!Global.currentProject.getHasUnsavedChanges())
+        {
+            System.exit(0);
+            return;  // Clean from a method POV
+        }
+
+        Action response = Dialogs.create()
+                .title("Save Project?")
+                .message("Would you like to save your changes to the current project?")
+                .showConfirm();
+
+        if (response == Dialog.ACTION_YES)
+        {
+            SaveLoadResult saved = Project.saveProject(Global.currentProject, false);
+            if (saved == SaveLoadResult.SUCCESS)
+            {
+                // Save configuration again as settings may change on save of project
+                ConfigLoader.saveConfig();
+                System.exit(0);
+            }
+        }
+        else if (response == Dialog.ACTION_NO)
+        {
+            System.exit(0);
+        }
+    }
+
     
     /**
      * The main entry of the project.
