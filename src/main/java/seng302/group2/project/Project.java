@@ -266,7 +266,19 @@ public class Project extends TreeViewItem implements Serializable
             );
 
             // Open the FileChooser to choose the save location of the project
-            File selectedFile = fileChooser.showSaveDialog(new Stage());
+            File selectedFile = null;
+            try
+            {
+                selectedFile = fileChooser.showSaveDialog(new Stage());
+            }
+            catch (IllegalArgumentException e)
+            {
+                // The file directory is invalid, try again with 'root'
+                System.out.println("Bad directory");
+                fileChooser.setInitialDirectory(new File("/"));
+                selectedFile = fileChooser.showSaveDialog(new Stage());
+            }
+
             if (selectedFile == null)
             {
                 return SaveLoadResult.FILENOTFOUND;  // Most likely user cancelation;
@@ -326,7 +338,19 @@ public class Project extends TreeViewItem implements Serializable
         );
         
         // Open the FileChooser and try saving the Project as the user specifies
-        File selectedFile = fileChooser.showOpenDialog(new Stage());
+        File selectedFile = null;
+        try
+        {
+            selectedFile = fileChooser.showOpenDialog(new Stage());
+        }
+        catch (IllegalArgumentException e)
+        {
+            // The file directory is invalid, try again with 'root'
+            System.out.println("Bad directory");
+            fileChooser.setInitialDirectory(new File("/"));
+            selectedFile = fileChooser.showOpenDialog(new Stage());
+        }
+
         if (selectedFile != null)
         {
             /* GSON DESERIALIZATION */
