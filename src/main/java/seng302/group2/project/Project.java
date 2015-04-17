@@ -281,7 +281,7 @@ public class Project extends TreeViewItem implements Serializable
 
             if (selectedFile == null)
             {
-                return SaveLoadResult.FILENOTFOUND;  // Most likely user cancelation;
+                return SaveLoadResult.FILENOTFOUND;  // Most likely user cancellation
             }
             project.lastSaveLocation = selectedFile.toString();
             
