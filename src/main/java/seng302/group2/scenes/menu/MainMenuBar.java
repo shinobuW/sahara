@@ -267,14 +267,7 @@ public class MainMenuBar
             {
                 if (Global.appRunning())
                 {
-                    if (MainScene.menuHidden)
-                    {
-                        MainScene.menuHidden = false;
-                    }
-                    else
-                    {
-                        MainScene.menuHidden = true;
-                    }
+                    MainScene.menuHidden = !MainScene.menuHidden;
                     App.refreshMainScene();
                 }
             });
