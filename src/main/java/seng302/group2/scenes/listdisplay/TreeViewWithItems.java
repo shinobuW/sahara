@@ -17,6 +17,7 @@ import java.util.Map;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 import seng302.group2.workspace.person.Person;
@@ -115,7 +116,8 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
             }
         });
 
-        /* Sets the App.selectedTreeItem when a new selection is made */
+        /* Sets the App.selectedTreeItem when a new selection is made, and sets the information
+         * shown in the main pane to the selected item's details */
         this.getSelectionModel().selectedItemProperty().addListener(new ChangeListener()
             {
                 @Override
@@ -145,13 +147,21 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                             setContextMenu(new ElementTreeContextMenu());
 
                         }
+                        else if (Global.selectedTreeItem.getValue() instanceof Project)
+                        {
+                            App.content.getChildren().remove(MainScene.informationGrid);
+                            //TODO: ProjectScene.getProjectScene(
+                            //      (Project) Global.selectedTreeItem.getValue());
+                            App.content.getChildren().add(MainScene.informationGrid);
+                            setContextMenu(new ElementTreeContextMenu());
+
+                        }
                         else if (Global.selectedTreeItem.getValue() instanceof Workspace)
                         {
                             App.content.getChildren().remove(MainScene.informationGrid);
                             WorkspaceScene.getWorkspaceScene((Workspace)
                                     Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
-
                         }
                         else if (Global.selectedTreeItem.getValue() instanceof Skill)
                         {

@@ -43,6 +43,8 @@ public class Category extends TreeViewItem
     {
         switch (name)
         {
+            case "Projects":
+                return Global.currentWorkspace.getProjects();
             case "People":
                 return Global.currentWorkspace.getPeople();
             case "Skills":

@@ -20,6 +20,7 @@ import seng302.group2.Global;
 import seng302.group2.workspace.Workspace.SaveLoadResult;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
 import seng302.group2.scenes.dialog.CreateTeamDialog;
+import seng302.group2.workspace.project.Project;
 
 /**
  * The main menu bar of the workspace window(s).
@@ -72,6 +73,25 @@ public class MainMenuBar
                 KeyCombination.SHORTCUT_DOWN));
         return newWorkspaceItem;
     }
+
+
+    /**
+     * Creates a menu item "Workspace" and sets the on action event if "Workspace" is clicked.
+     * @return MenuItem Workspace
+     */
+    private static MenuItem createProjectItem()
+    {
+        MenuItem newProjectItem = new MenuItem("Project");
+        newProjectItem.setOnAction((ActionEvent event) ->
+                Global.currentWorkspace.add(new Project()));
+
+        /*newProjectItem.setAccelerator(new KeyCodeCombination(KeyCode.P,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));*/
+
+        return newProjectItem;
+    }
+
     
     /**
      * Creates a menu item "Person" and sets the on action event if "Person" is clicked.
@@ -277,17 +297,21 @@ public class MainMenuBar
         // Create 'New >' sub-menu
         Menu newBranch = new Menu("New");
 
-        //Create MenuItems for New submenu
+        // Create MenuItems for New submenu
         MenuItem newWorkspaceItem = createWorkspaceItem();
+        MenuItem newProjectItem = createProjectItem();
         MenuItem newPersonItem = createPersonItem();
         MenuItem newSkillItem = createSkillItem();
         MenuItem newTeamItem = createTeamItem();
+
+        // Create other items for file menu
         MenuItem openItem = createOpenItem();
         MenuItem saveItem = createSaveItem();
         MenuItem saveAsItem = createSaveAsItem();
         MenuItem quitProgramItem = createQuitItem();
         
         newBranch.getItems().add(newWorkspaceItem);
+        newBranch.getItems().add(newProjectItem);
         newBranch.getItems().add(newPersonItem);
         newBranch.getItems().add(newSkillItem);
         newBranch.getItems().add(newTeamItem);

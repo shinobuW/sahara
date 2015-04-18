@@ -7,6 +7,7 @@ import seng302.group2.scenes.dialog.CreatePersonDialog;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
 import seng302.group2.scenes.dialog.CreateTeamDialog;
 import seng302.group2.scenes.listdisplay.Category;
+import seng302.group2.workspace.project.Project;
 
 /**
  * Created by Jordane on 14/04/2015.
@@ -38,6 +39,11 @@ public class CategoryTreeContextMenu extends ContextMenu
     {
         switch (category)
         {
+            case "Projects":
+                //TODO: Actual gui popup
+                Global.currentWorkspace.add(new Project());
+                //CreateProjectDialog.show();
+                break;
             case "People":
                 CreatePersonDialog.show();
                 break;

@@ -91,10 +91,10 @@ public class WorkspaceEditScene
                         undoActions.add(new UndoableItem(
                                 currentWorkspace,
                                 new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_SHORTNAME, 
+                                        UndoRedoPerformer.UndoRedoProperty.WORKSPACE_SHORTNAME,
                                         currentWorkspace.getShortName()),
                                 new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_SHORTNAME, 
+                                        UndoRedoPerformer.UndoRedoProperty.WORKSPACE_SHORTNAME,
                                         shortNameCustomField.getText())));
                     }
                     
@@ -103,10 +103,10 @@ public class WorkspaceEditScene
                         undoActions.add(new UndoableItem(
                                 currentWorkspace,
                                 new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_LONGNAME, 
+                                        UndoRedoPerformer.UndoRedoProperty.WORKSPACE_LONGNAME,
                                         currentWorkspace.getDescription()),
                                 new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_LONGNAME, 
+                                        UndoRedoPerformer.UndoRedoProperty.WORKSPACE_LONGNAME,
                                         longNameCustomField.getText())));                        
                     }
                     if (descriptionTextArea.getText() != currentWorkspace.getDescription())
@@ -114,20 +114,20 @@ public class WorkspaceEditScene
                         undoActions.add(new UndoableItem(
                                 currentWorkspace,
                                 new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_DESCRIPTION, 
+                                        UndoRedoPerformer.UndoRedoProperty.WORKSPACE_DESCRIPTION,
                                         currentWorkspace.getDescription()),
                                 new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_DESCRIPTION, 
+                                        UndoRedoPerformer.UndoRedoProperty.WORKSPACE_DESCRIPTION,
                                         descriptionTextArea.getText())));
                     }
                     
                     Global.undoRedoMan.add(new UndoableItem(
                             currentWorkspace,
                         new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT,
+                                UndoRedoPerformer.UndoRedoProperty.WORKSPACE_EDIT,
                                 undoActions), 
                         new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT, 
+                                UndoRedoPerformer.UndoRedoProperty.WORKSPACE_EDIT,
                                 undoActions)
                         ));   
                     

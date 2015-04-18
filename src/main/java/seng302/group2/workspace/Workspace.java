@@ -152,8 +152,18 @@ public class Workspace extends TreeViewItem implements Serializable
     {
         return this.description;
     }
-    
-    
+
+
+    /**
+     * Gets the workspace's list of projects.
+     * @return The projects associated with the workspace
+     */
+    public ObservableList<TreeViewItem> getProjects()
+    {
+        return this.projects;
+    }
+
+
     /**
      * Gets the workspace's list of Persons.
      * @return The people associated with the workspace
@@ -513,7 +523,7 @@ public class Workspace extends TreeViewItem implements Serializable
                 new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT, null)
         ));
 
-        this.teams.add(project);
+        this.projects.add(project);
     }
 
 
