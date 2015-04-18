@@ -77,22 +77,23 @@ public class Workspace extends TreeViewItem implements Serializable
      */
     public Workspace()
     {
-        super("Untitled");
-        this.shortName = "Untitled";
+        super("Workspace");
+        this.shortName = "Workspace";
         this.longName = "Untitled Workspace";
         this.description = "A blank workspace.";
         this.serializablePeople = new ArrayList<>();
         this.serializableSkills = new ArrayList<>();
         this.serializableTeams = new ArrayList<>();
-	Team temp = new Team("Unassigned People", 
-					"All the people unassigned to a team");
-	serializableTeams.add(temp);
-	teams.add(temp);
+
+        Team temp = new Team("Unassigned",
+                        "A team for unassigned people");
+        serializableTeams.add(temp);
+        teams.add(temp);
     }
     
     
     /**
-     * Basic workspace constructor.
+     * Basic workspace constructor with input.
      * @param shortName A unique short name to identify the Workspace
      * @param fullName The full Workspace name
      * @param description A description of the Workspace
