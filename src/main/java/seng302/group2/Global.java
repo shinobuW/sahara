@@ -4,6 +4,8 @@ import javafx.scene.control.TreeItem;
 import seng302.group2.util.undoredo.UndoRedoManager;
 import seng302.group2.workspace.Workspace;
 
+import java.text.SimpleDateFormat;
+
 /**
  * TODO
  * @author Jordane
@@ -14,6 +16,7 @@ public final class Global
     public static TreeItem selectedTreeItem = new TreeItem();
     public static UndoRedoManager undoRedoMan = new UndoRedoManager();
     public static String lastSaveLocation = "/";
+    public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 
     /**

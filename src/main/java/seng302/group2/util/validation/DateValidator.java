@@ -21,6 +21,11 @@ public class DateValidator
      
     public static ValidationStatus isValidDateString(String birthDate)
     {
+        if (birthDate.isEmpty())
+        {
+            return ValidationStatus.NULL;
+        }
+
         datePattern.setLenient(false);
         try
         {
@@ -57,16 +62,12 @@ public class DateValidator
     **/
     public static boolean validateBirthDate(CustomDateField customBirthDate)
     {
-        // It is okay for the field to be blank, otherwise validate
-        if (customBirthDate.getText().isEmpty()) 
-        {
-            customBirthDate.hideErrorField();
-            return true;
-        }
-
         switch (DateValidator.isValidDateString(customBirthDate.getText()))
         {
             case VALID:
+                customBirthDate.hideErrorField();
+                return true;
+            case NULL:
                 customBirthDate.hideErrorField();
                 return true;
             case OUT_OF_RANGE:

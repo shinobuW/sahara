@@ -73,7 +73,7 @@ public class CreatePersonDialog
                 boolean correctFirstName = validateName(firstNameCustomField);
                 boolean correctLastName = validateName(lastNameCustomField);
                 
-                if (correctShortName && correctFirstName && correctLastName)
+                if (correctDate && correctShortName && correctFirstName && correctLastName)
                 {
                     //get user input
                     String firstName = firstNameCustomField.getText();
@@ -81,9 +81,19 @@ public class CreatePersonDialog
                     String shortName = shortNameCustomField.getText();
                     String email = emailTextField.getText();
                     String description = descriptionTextArea.getText();
+
                     String birthdateString = customBirthDate.getText();
-                    
-                    final Date birthDate = stringToDate(birthdateString);
+
+                    Date birthDate;
+                    if (birthdateString.isEmpty())
+                    {
+                        birthDate = null;
+                    }
+                    else
+                    {
+                        birthDate = stringToDate(birthdateString);
+                    }
+
                     Person person = new Person(shortName, firstName, lastName, email, description,
                         birthDate);
                     Global.currentWorkspace.add(person);

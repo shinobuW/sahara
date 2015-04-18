@@ -106,8 +106,9 @@ public class PersonEditScene
         lastNameCustomField.setText(currentPerson.getLastName());
         shortNameCustomField.setText(currentPerson.getShortName());
         emailTextField.setText(currentPerson.getEmail());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");     
-        customBirthDate.setText(dateFormat.format(currentPerson.getBirthDate()));
+
+        customBirthDate.setText(currentPerson.getDateString());
+
         descriptionTextArea.setText(currentPerson.getDescription());
         
         informationGrid.add(shortNameCustomField, 0, 0);

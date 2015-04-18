@@ -15,5 +15,6 @@ public enum ValidationStatus
     INVALID,
     PATTERN_MISMATCH,
     OUT_OF_RANGE,
-    NON_UNIQUE
+    NON_UNIQUE,
+    NULL
 }

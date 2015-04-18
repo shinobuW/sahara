@@ -59,7 +59,9 @@ public class PersonScene
         
         informationGrid.add(new Label(currentPerson.getShortName()), 1, 2);
         informationGrid.add(new Label(currentPerson.getEmail()), 1,3);
-        informationGrid.add(new Label(dateFormat.format(currentPerson.getBirthDate())), 1, 4);
+
+        informationGrid.add(new Label(currentPerson.getDateString()), 1, 4);
+
         informationGrid.add(new Label(currentPerson.getDescription()), 1, 5);
         informationGrid.add(new Label(currentPerson.getTeam()), 1, 6);
         

@@ -307,6 +307,26 @@ public class Person extends TreeViewItem implements Serializable
     }
 
 
+    public String getDateString()
+    {
+        if (birthDate == null)
+        {
+            return "";
+        }
+        else
+        {
+            try
+            {
+                return Global.dateFormat.format(this.getBirthDate());
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error parsing date");
+                return "";
+            }
+        }
+    }
+
     /**
      * Removes a Skill from the Person's list of Skills
      * @param skill The skill to remove
