@@ -115,7 +115,9 @@ public class ElementTreeContextMenu extends ContextMenu
                 TeamEditScene.getTeamEditScene((Team) Global.selectedTreeItem.getValue());
                 break;
             case PROJECT:
-                WorkspaceEditScene.getProjectEditScene((Workspace) Global.selectedTreeItem.getValue());
+                // TODO: Project, not Workspace
+                WorkspaceEditScene.getProjectEditScene(
+                        (Workspace) Global.selectedTreeItem.getValue());
                 break;
             case OTHER:
                 System.out.println("The category was not correctly recognized");
@@ -148,8 +150,8 @@ public class ElementTreeContextMenu extends ContextMenu
                     Global.currentWorkspace.remove((Person) Global.selectedTreeItem.getValue());
                     break;
                 case PROJECT:
-                    //TODO: Check if valid after workspace/workspace refactoring and uncomment
-                    //Global.currentWorkspace.remove((Workspace) Global.selectedTreeItem.getValue());
+                    //TODO: Check if valid after project/workspace refactoring and uncomment
+                    //Global.currentWorkspace.remove((Project) Global.selectedTreeItem.getValue());
                     break;
                 case TEAM:
                     Global.currentWorkspace.remove((Team) Global.selectedTreeItem.getValue());

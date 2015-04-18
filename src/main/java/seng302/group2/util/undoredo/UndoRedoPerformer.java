@@ -92,7 +92,7 @@ public class UndoRedoPerformer
                     //WorkspaceScene.refreshProjectScene(proj);
                     break; 
                 default:
-                    System.out.println("Undo on workspace with this property not implemented (yet?)");
+                    System.out.println("Undo with this property not implemented (yet?)");
                     break;
             }
         }
@@ -257,7 +257,7 @@ public class UndoRedoPerformer
                     //WorkspaceScene.refreshProjectScene(proj);
                     break;     
                 default:
-                    System.out.println("Redo on workspace with this property not implemented (yet?)");
+                    System.out.println("Redo with this property not implemented (yet?)");
                     break;
             }
         }

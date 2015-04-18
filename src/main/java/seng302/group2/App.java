@@ -74,7 +74,8 @@ public class App extends Application
             }
             else
             {
-                App.mainStage.titleProperty().set("Sahara: " + Global.currentWorkspace.getLongName());
+                App.mainStage.titleProperty().set("Sahara: "
+                        + Global.currentWorkspace.getLongName());
             }
         }
     }

@@ -34,7 +34,8 @@ import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
 
 /**
- * Basic workspace class that acts as the root object for Sahara and represents a real-world workspace.
+ * Basic workspace class that acts as the root object for Sahara and represents a real-world
+ * company or work group space.
  * @author Jordane Lew (jml168)
  */
 @SuppressWarnings("deprecation")
@@ -507,7 +508,7 @@ public class Workspace extends TreeViewItem implements Serializable
         ObservableList<TreeViewItem> root = observableArrayList();
         
         // Make the categories
-        Category projectCategory = new Category ("Projects");
+        Category projectCategory = new Category("Projects");
         Category peopleCategory = new Category("People");
         Category teamsCategory = new Category("Teams");
         Category rolesCategory = new Category("Roles");

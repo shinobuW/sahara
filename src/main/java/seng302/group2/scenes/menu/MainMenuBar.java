@@ -37,7 +37,8 @@ public class MainMenuBar
         MenuItem newProjectItem = new MenuItem("Workspace");
         newProjectItem.setOnAction((ActionEvent event) ->
             {
-                if (Global.currentWorkspace == null || !Global.currentWorkspace.getHasUnsavedChanges())
+                if (Global.currentWorkspace == null
+                        || !Global.currentWorkspace.getHasUnsavedChanges())
                 {
                     CreateProjectDialog.show();
                     App.refreshMainScene();
