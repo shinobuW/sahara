@@ -125,23 +125,23 @@ public class PersonEditScene
         informationGrid.add(skillsBox, 2, 6);
         
         btnAdd.setOnAction((event) ->
-        {
-            ObservableList<Skill> selectedSkills =
-                    skillsBox.getSelectionModel().getSelectedItems();
-            for (Skill item : selectedSkills)
             {
-                currentPerson.addSkill(item);
-            }
-
-            dialogSkills.clear();
-            for (TreeViewItem projectSkill : currentWorkspace.getSkills())
-            {
-                if (!currentPerson.getSkills().contains((Skill) projectSkill))
+                ObservableList<Skill> selectedSkills =
+                        skillsBox.getSelectionModel().getSelectedItems();
+                for (Skill item : selectedSkills)
                 {
-                    dialogSkills.add((Skill) projectSkill);
+                    currentPerson.addSkill(item);
                 }
-            }
-        });
+
+                dialogSkills.clear();
+                for (TreeViewItem projectSkill : currentWorkspace.getSkills())
+                {
+                    if (!currentPerson.getSkills().contains((Skill) projectSkill))
+                    {
+                        dialogSkills.add((Skill) projectSkill);
+                    }
+                }
+            });
         
         btnDelete.setOnAction((event) ->
             {
