@@ -5,11 +5,11 @@
  */
 package seng302.group2.workspace;
 
-import seng302.group2.scenes.listdisplay.Category;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import seng302.group2.scenes.listdisplay.Category;
 
 /**
  * A series of tests relating to Category

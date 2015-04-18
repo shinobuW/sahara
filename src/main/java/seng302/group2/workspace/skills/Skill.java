@@ -1,8 +1,9 @@
 package seng302.group2.workspace.skills;
 
-import java.io.Serializable;
 import javafx.collections.ObservableList;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+
+import java.io.Serializable;
 
 /**
  * A basic class to represent skills a person may have

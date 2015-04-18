@@ -5,19 +5,21 @@
  */
 package seng302.group2.util.undoredo;
 
-import java.util.ArrayList;
-import java.util.Date;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.information.PersonScene;
+import seng302.group2.scenes.information.SkillScene;
+import seng302.group2.scenes.information.TeamScene;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
-import seng302.group2.workspace.person.Person;
+
+import java.util.ArrayList;
+import java.util.Date;
+
 import static seng302.group2.scenes.MainScene.informationGrid;
-import seng302.group2.scenes.information.PersonScene;
-import seng302.group2.scenes.information.TeamScene;
-import seng302.group2.scenes.information.SkillScene;
 /**
  * A class that handles the ugly undo/redo work behind the scenes on undoable items.
  * @author jml168

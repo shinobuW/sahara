@@ -5,7 +5,6 @@
  */
 package seng302.group2.scenes.information;
 
-import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,16 +17,18 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
-import static seng302.group2.Global.selectedTreeItem;
-import seng302.group2.workspace.team.Team;
-import seng302.group2.workspace.person.Person;
 import seng302.group2.scenes.MainScene;
-import static seng302.group2.scenes.MainScene.informationGrid;
-import static seng302.group2.scenes.MainScene.treeView;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
+import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.team.Team;
+
+import static javafx.collections.FXCollections.observableArrayList;
+import static seng302.group2.Global.selectedTreeItem;
+import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.treeView;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**

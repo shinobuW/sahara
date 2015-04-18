@@ -3,10 +3,7 @@
  */
 package seng302.group2;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -17,10 +14,12 @@ import javafx.stage.WindowEvent;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
-import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.Workspace.SaveLoadResult;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.util.config.ConfigLoader;
+import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.Workspace.SaveLoadResult;
+
+import java.awt.*;
 
 /**
  * The executable class for Sahara.

@@ -8,7 +8,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.App;
-import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.project.Project;
 
 import static seng302.group2.scenes.MainScene.informationGrid;

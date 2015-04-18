@@ -4,6 +4,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import seng302.group2.Global;
 import seng302.group2.scenes.dialog.CreatePersonDialog;
+import seng302.group2.scenes.dialog.CreateProjectDialog;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
 import seng302.group2.scenes.dialog.CreateTeamDialog;
 import seng302.group2.scenes.listdisplay.Category;
@@ -40,9 +41,7 @@ public class CategoryTreeContextMenu extends ContextMenu
         switch (category)
         {
             case "Projects":
-                //TODO: Actual gui popup
-                Global.currentWorkspace.add(new Project());
-                //CreateProjectDialog.show();
+                CreateProjectDialog.show();
                 break;
             case "People":
                 CreatePersonDialog.show();

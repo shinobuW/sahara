@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package seng302.group2.scenes.dialog;
 
 import javafx.geometry.Insets;
@@ -14,23 +9,24 @@ import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.project.Project;
 
+import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
- * Class to create a pop up dialog for creating a skill.
- * @author drm127
+ * Class to create a pop up dialog for creating a workspace.
+ * @author Jordane Lew jml168
  */
 @SuppressWarnings("deprecation")
-public class CreateSkillDialog 
+public class CreateProjectDialog
 {
     /**
-     * Displays the Dialog box for creating a skill.
+     * Displays the Dialog box for creating a workspace.
      */
     public static void show()
-    {       
-        Dialog dialog = new Dialog(null, "New Skill");
+    {
+        Dialog dialog = new Dialog(null, "New Project");
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
@@ -38,43 +34,47 @@ public class CreateSkillDialog
 
         Button btnCreate = new Button("Create");
         Button btnCancel = new Button("Cancel");
-        
+
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnCreate, btnCancel);
-        
+
         RequiredField shortNameCustomField = new RequiredField("Short Name");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description");
-        
+        RequiredField longNameCustomField = new RequiredField("Long Name");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description");
+
         grid.getChildren().add(shortNameCustomField);
+        grid.getChildren().add(longNameCustomField);
         grid.getChildren().add(descriptionTextArea);
         grid.getChildren().add(buttons);
-        
+
         btnCreate.setOnAction((event) ->
+        {
+            boolean correctShortName = validateShortName(shortNameCustomField);
+            boolean correctLongName = validateName(longNameCustomField);
+
+            String shortName = shortNameCustomField.getText();
+            String longName = longNameCustomField.getText();
+            String description = descriptionTextArea.getText();
+
+            if (correctShortName && correctLongName)
             {
-                boolean correctShortName = validateShortName(shortNameCustomField);
-                
-                String shortName = shortNameCustomField.getText();
-                String description = descriptionTextArea.getText();
-                
-                if (correctShortName)
-                {
-                    Skill skill = new Skill(shortName, description);
-                    Global.currentWorkspace.add(skill);
-                    dialog.hide();
-                }
-                else
-                {
-                    event.consume();
-                }
-            });
-        
-        btnCancel.setOnAction((event) ->
-            {
+                Project project = new Project(shortName, longName, description);
+                Global.currentWorkspace.add(project);
                 dialog.hide();
-            });
-        
+            }
+            else
+            {
+                event.consume();
+            }
+        });
+
+        btnCancel.setOnAction((event) ->
+        {
+            dialog.hide();
+        });
+
         dialog.setResizable(false);
         dialog.setIconifiable(false);
         dialog.setContent(grid);

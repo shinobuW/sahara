@@ -3,21 +3,23 @@
  */
 package seng302.group2.workspace.person;
 
+import javafx.collections.ObservableList;
+import seng302.group2.Global;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.undoredo.UndoRedoAction;
+import seng302.group2.util.undoredo.UndoRedoPerformer;
+import seng302.group2.util.undoredo.UndoableItem;
+import seng302.group2.workspace.role.Role;
+import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
+
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
 import static javafx.collections.FXCollections.observableArrayList;
-import javafx.collections.ObservableList;
-import seng302.group2.Global;
-import seng302.group2.workspace.skills.Skill;
-import seng302.group2.workspace.team.Team;
-import seng302.group2.workspace.role.Role;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.util.undoredo.UndoRedoAction;
-import seng302.group2.util.undoredo.UndoRedoPerformer;
-import seng302.group2.util.undoredo.UndoableItem;
 
 /**
  * A basic class to represent a Person in the real world.

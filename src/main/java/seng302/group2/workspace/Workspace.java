@@ -3,20 +3,7 @@
  */
 package seng302.group2.workspace;
 
-import seng302.group2.scenes.listdisplay.Category;
 import com.google.gson.Gson;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Serializable;
-import java.io.Writer;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -24,15 +11,22 @@ import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.skills.Skill;
-import seng302.group2.workspace.team.Team;
-import seng302.group2.workspace.person.Person;
+import seng302.group2.scenes.listdisplay.Category;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
+import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
+
+import java.io.*;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * Basic workspace class that acts as the root object for Sahara and represents a real-world

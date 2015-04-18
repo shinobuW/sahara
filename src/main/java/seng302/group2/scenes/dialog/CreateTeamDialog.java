@@ -12,9 +12,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
-import seng302.group2.workspace.team.Team;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.workspace.team.Team;
+
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**

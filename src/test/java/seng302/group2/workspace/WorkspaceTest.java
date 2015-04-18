@@ -5,13 +5,14 @@
  */
 package seng302.group2.workspace;
 
-import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import seng302.group2.workspace.person.Person;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.person.Person;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * A series of tests relating to Workspaces

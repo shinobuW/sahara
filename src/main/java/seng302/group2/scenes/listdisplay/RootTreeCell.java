@@ -4,12 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.cell.TextFieldTreeCell;
-import seng302.group2.App;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.dialog.CreatePersonDialog;
-import seng302.group2.scenes.information.PersonEditScene;
 
 /**
  *

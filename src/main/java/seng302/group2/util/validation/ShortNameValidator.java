@@ -6,10 +6,10 @@
 package seng302.group2.util.validation;
 
 import seng302.group2.Global;
+import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
-import seng302.group2.workspace.person.Person;
-import seng302.group2.scenes.control.RequiredField;
 
 
 /**

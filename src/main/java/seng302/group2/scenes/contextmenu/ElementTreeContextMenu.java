@@ -1,6 +1,5 @@
 package seng302.group2.scenes.contextmenu;
 
-import java.text.MessageFormat;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import org.controlsfx.control.action.Action;
@@ -8,16 +7,17 @@ import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.MainScene;
+import seng302.group2.scenes.information.PersonEditScene;
+import seng302.group2.scenes.information.SkillEditScene;
+import seng302.group2.scenes.information.TeamEditScene;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
-import seng302.group2.workspace.person.Person;
-import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.information.PersonEditScene;
-import seng302.group2.scenes.information.WorkspaceEditScene;
-import seng302.group2.scenes.information.SkillEditScene;
-import seng302.group2.scenes.information.TeamEditScene;
+
+import java.text.MessageFormat;
 
 /**
  *ContextMenu class for instances of Person, Skill and Team

@@ -1,26 +1,22 @@
 package seng302.group2.scenes.menu;
 
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import seng302.group2.workspace.Workspace;
-import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.dialog.CreateWorkspaceDialog;
-import seng302.group2.scenes.dialog.CreatePersonDialog;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.MainScene;
+import seng302.group2.scenes.dialog.*;
+import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.Workspace.SaveLoadResult;
-import seng302.group2.scenes.dialog.CreateSkillDialog;
-import seng302.group2.scenes.dialog.CreateTeamDialog;
-import seng302.group2.workspace.project.Project;
 
 /**
  * The main menu bar of the workspace window(s).
@@ -83,7 +79,7 @@ public class MainMenuBar
     {
         MenuItem newProjectItem = new MenuItem("Project");
         newProjectItem.setOnAction((ActionEvent event) ->
-                Global.currentWorkspace.add(new Project()));
+                CreateProjectDialog.show());
 
         /*newProjectItem.setAccelerator(new KeyCodeCombination(KeyCode.P,
                 KeyCombination.CONTROL_DOWN,

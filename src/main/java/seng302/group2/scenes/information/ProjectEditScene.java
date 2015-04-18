@@ -1,7 +1,5 @@
 package seng302.group2.scenes.information;
 
-import java.util.ArrayList;
-import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,13 +8,10 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import seng302.group2.App;
+import seng302.group2.Global;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.Global;
-import static seng302.group2.Global.selectedTreeItem;
-import seng302.group2.scenes.MainScene;
-import static seng302.group2.scenes.MainScene.informationGrid;
-import static seng302.group2.scenes.MainScene.treeView;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.util.undoredo.UndoRedoAction;
@@ -24,6 +19,12 @@ import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.workspace.project.Project;
 
+import java.util.ArrayList;
+
+import static javafx.collections.FXCollections.observableArrayList;
+import static seng302.group2.Global.selectedTreeItem;
+import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.treeView;
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 

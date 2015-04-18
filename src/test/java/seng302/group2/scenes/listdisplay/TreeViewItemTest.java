@@ -5,9 +5,10 @@
  */
 package seng302.group2.scenes.listdisplay;
 
-import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import junit.framework.TestCase;
+
+import static javafx.collections.FXCollections.observableArrayList;
 import static org.junit.Assert.assertNotEquals;
 
 /**

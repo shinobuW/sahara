@@ -2,7 +2,6 @@ package seng302.group2.scenes;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
@@ -11,19 +10,21 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
-import static seng302.group2.App.content;
 import seng302.group2.Global;
-import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.skills.Skill;
-import seng302.group2.workspace.team.Team;
-import seng302.group2.workspace.person.Person;
 import seng302.group2.scenes.information.PersonScene;
-import seng302.group2.scenes.information.WorkspaceScene;
 import seng302.group2.scenes.information.SkillScene;
 import seng302.group2.scenes.information.TeamScene;
+import seng302.group2.scenes.information.WorkspaceScene;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.scenes.menu.MainMenuBar;
+import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
+
+import static javafx.collections.FXCollections.observableArrayList;
+import static seng302.group2.App.content;
 
 
 /**

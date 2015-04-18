@@ -1,8 +1,8 @@
 package seng302.group2;
 
 import javafx.scene.control.TreeItem;
-import seng302.group2.workspace.Workspace;
 import seng302.group2.util.undoredo.UndoRedoManager;
+import seng302.group2.workspace.Workspace;
 
 /**
  * TODO

@@ -12,19 +12,20 @@ import javafx.collections.ObservableList;
 import javafx.collections.WeakListChangeListener;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import java.util.HashMap;
-import java.util.Map;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.information.*;
-import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.skills.Skill;
-import seng302.group2.workspace.team.Team;
-import seng302.group2.workspace.person.Person;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.contextmenu.CategoryTreeContextMenu;
 import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
+import seng302.group2.scenes.information.*;
+import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**

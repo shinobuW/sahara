@@ -5,10 +5,11 @@
  */
 package seng302.group2.util.validation;
 
+import seng302.group2.scenes.control.CustomDateField;
+
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
-import seng302.group2.scenes.control.CustomDateField;
 
 /**
  *

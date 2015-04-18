@@ -3,13 +3,8 @@ package seng302.group2.util.config;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.controlsfx.dialog.Dialogs;
-import seng302.group2.Global;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 
 /**
  * Handles the loading and saving of Global configuration and settings of the application

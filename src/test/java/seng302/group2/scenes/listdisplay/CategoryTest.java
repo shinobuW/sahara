@@ -7,6 +7,7 @@ package seng302.group2.scenes.listdisplay;
 
 import javafx.collections.ObservableList;
 import junit.framework.TestCase;
+
 import static org.junit.Assert.assertNotEquals;
 
 /**

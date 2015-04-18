@@ -3,11 +3,11 @@ package seng302.group2.util.serialization;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.collections.ObservableList;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
-import seng302.group2.workspace.person.Person;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 /**
  * Created by Jordane on 12/04/2015.

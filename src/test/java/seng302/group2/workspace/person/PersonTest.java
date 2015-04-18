@@ -5,11 +5,12 @@
  */
 package seng302.group2.workspace.person;
 
-import java.util.Date;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
+import java.util.Date;
 
 /**
  * A series of tests relating to Persons

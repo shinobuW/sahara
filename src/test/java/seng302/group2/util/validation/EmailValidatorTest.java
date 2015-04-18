@@ -5,13 +5,13 @@
  */
 package seng302.group2.util.validation;
 
-import java.util.Date;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
+
+import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 

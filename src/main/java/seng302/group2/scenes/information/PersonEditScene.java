@@ -5,10 +5,6 @@
  */
 package seng302.group2.scenes.information;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -21,23 +17,29 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
-import static seng302.group2.Global.currentWorkspace;
-import static seng302.group2.Global.selectedTreeItem;
-import seng302.group2.workspace.skills.Skill;
-import seng302.group2.workspace.person.Person;
 import seng302.group2.scenes.MainScene;
-import static seng302.group2.scenes.MainScene.informationGrid;
-import static seng302.group2.scenes.MainScene.treeView;
 import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
-import static seng302.group2.scenes.dialog.CreatePersonDialog.stringToDate;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
+import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.skills.Skill;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import static javafx.collections.FXCollections.observableArrayList;
+import static seng302.group2.Global.currentWorkspace;
+import static seng302.group2.Global.selectedTreeItem;
+import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.treeView;
+import static seng302.group2.scenes.dialog.CreatePersonDialog.stringToDate;
 import static seng302.group2.util.validation.DateValidator.validateBirthDate;
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
