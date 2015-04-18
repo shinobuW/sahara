@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.information.*;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
@@ -24,10 +25,6 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.contextmenu.CategoryTreeContextMenu;
 import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
-import seng302.group2.scenes.information.PersonScene;
-import seng302.group2.scenes.information.WorkspaceScene;
-import seng302.group2.scenes.information.SkillScene;
-import seng302.group2.scenes.information.TeamScene;
 
 
 /**
@@ -150,8 +147,8 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         else if (Global.selectedTreeItem.getValue() instanceof Project)
                         {
                             App.content.getChildren().remove(MainScene.informationGrid);
-                            //TODO: ProjectScene.getProjectScene(
-                            //      (Project) Global.selectedTreeItem.getValue());
+                            ProjectScene.getProjectScene(
+                                    (Project) Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
                             setContextMenu(new ElementTreeContextMenu());
 

@@ -35,7 +35,7 @@ public class Person extends TreeViewItem implements Serializable
     private Date birthDate = new Date();
     private transient ObservableList<Skill> skills = observableArrayList();
     private ArrayList<Skill> serializableSkills = new ArrayList<>();
-    private Team currentTeam;
+    private Team team;
     private Role role;
 
     
@@ -50,7 +50,7 @@ public class Person extends TreeViewItem implements Serializable
         this.lastName = "lastName";
         this.email = "";
         this.description = "";
-        this.currentTeam = null;
+        this.team = null;
         try
         {
             this.birthDate = new SimpleDateFormat(birthDatePattern).parse("29/05/1985");
@@ -83,10 +83,10 @@ public class Person extends TreeViewItem implements Serializable
         this.email = email;
         this.description = description;
         this.birthDate = birthDate;
-        this.currentTeam = null;
+        this.team = null;
 	if (Global.currentWorkspace != null)
 	{
-	    this.currentTeam = (Team) Global.currentWorkspace.getTeams().get(0);
+	    this.team = (Team) Global.currentWorkspace.getTeams().get(0);
 	}
     }
        
@@ -151,13 +151,13 @@ public class Person extends TreeViewItem implements Serializable
      */
     public String getTeam()
     {
-        if (this.currentTeam == null)
+        if (this.team == null)
         {
             return "";
         }
         else
         {
-            return this.currentTeam.getShortName();
+            return this.team.getShortName();
         }
     }
     
@@ -248,7 +248,7 @@ public class Person extends TreeViewItem implements Serializable
      */
     public void setTeam(Team team)
     {
-        this.currentTeam = team;
+        this.team = team;
     }
     
     /**

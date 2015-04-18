@@ -123,7 +123,7 @@ public class ElementTreeContextMenu extends ContextMenu
             case PROJECT:
                 // TODO: Project, not Workspace
                 /*
-                WorkspaceEditScene.getProjectEditScene(
+                WorkspaceEditScene.getWorkspaceEditScene(
                         (Project) Global.selectedTreeItem.getValue());
                         */
                 break;

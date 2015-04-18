@@ -36,7 +36,7 @@ public class WorkspaceEditScene
      * Gets the workspace edit information scene.
      * @return The Workspace Edit information scene
      */
-    public static GridPane getProjectEditScene(Workspace currentWorkspace)
+    public static GridPane getWorkspaceEditScene(Workspace currentWorkspace)
     {
 
 
