@@ -58,6 +58,7 @@ public class Team extends TreeViewItem implements Serializable
         this.shortName = shortName;
         this.description = description;
     }
+
        
     // <editor-fold defaultstate="collapsed" desc="Getters"> 
     /**
@@ -165,6 +166,7 @@ public class Team extends TreeViewItem implements Serializable
     }
     
         //</editor-fold>
+
     
     /**
      * Adds a Person to the Teams list of Members
@@ -182,6 +184,7 @@ public class Team extends TreeViewItem implements Serializable
         this.people.add(person);
         person.setTeam(this);
     }
+
     
     /**
      * Removes a Person to the Workspace's list of Members
@@ -199,17 +202,19 @@ public class Team extends TreeViewItem implements Serializable
         this.people.remove(person);
         person.setTeam(null);
     }
-    
+
+
     /**Adds the role to the team's list of Roles
      * @param role Role to add 
      */
     public void addRole(Role role)
     {
         // Add the undo action to the stack
-        //TO DO 
+        // TODO
         this.roles.add(role);
     }
-    
+
+
     /**
      * Prepares a Team to be serialized.
      */

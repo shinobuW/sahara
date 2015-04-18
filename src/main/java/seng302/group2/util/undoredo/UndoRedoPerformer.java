@@ -10,6 +10,7 @@ import java.util.Date;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 import seng302.group2.workspace.person.Person;
@@ -29,6 +30,12 @@ public class UndoRedoPerformer
      */
     public static enum UndoRedoProperty
     {
+        WORKSPACE,
+        WORKSPACE_SHORTNAME,
+        WORKSPACE_LONGNAME,
+        WORKSPACE_DESCRIPTION,
+        WORKSPACE_EDIT,
+
         PROJECT,
         PROJECT_SHORTNAME,
         PROJECT_LONGNAME,
@@ -74,16 +81,16 @@ public class UndoRedoPerformer
             Workspace proj = (Workspace) item.getHost();
             switch (item.getUndoAction().getProperty())
             {
-                case PROJECT_SHORTNAME:
+                case WORKSPACE_SHORTNAME:
                     proj.setShortName((String) item.getUndoAction().getValue());
                     break;
-                case PROJECT_LONGNAME:
+                case WORKSPACE_LONGNAME:
                     proj.setLongName((String) item.getUndoAction().getValue());
                     break;
-                case PROJECT_DESCRIPTION:
+                case WORKSPACE_DESCRIPTION:
                     proj.setDescription((String) item.getUndoAction().getValue());
                     break;
-                case PROJECT_EDIT:
+                case WORKSPACE_EDIT:
                     for (UndoableItem undoAction : (ArrayList<UndoableItem>)
                             item.getUndoAction().getValue()) 
                     {
@@ -96,7 +103,38 @@ public class UndoRedoPerformer
                     break;
             }
         }
-        
+
+        /* Project actions */
+        if (objClass == Project.class)
+        {
+            Project proj = (Project) item.getHost();
+            switch (item.getUndoAction().getProperty())
+            {
+                case PROJECT:
+                    Global.currentWorkspace.getProjects().remove((Project) item.getHost());
+                    break;
+                case PROJECT_SHORTNAME:
+                    proj.setShortName((String) item.getUndoAction().getValue());
+                    break;
+                case PROJECT_LONGNAME:
+                    proj.setLongName((String) item.getUndoAction().getValue());
+                    break;
+                case PROJECT_DESCRIPTION:
+                    proj.setDescription((String) item.getUndoAction().getValue());
+                    break;
+                case PROJECT_EDIT:
+                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
+                            item.getUndoAction().getValue())
+                    {
+                        UndoRedoPerformer.undo(undoAction);
+                    }
+                    break;
+                default:
+                    System.out.println("Undo with this property not implemented (yet?)");
+                    break;
+            }
+        }
+
         /* Person actions */
         else if (objClass == Person.class)
         {
@@ -239,16 +277,16 @@ public class UndoRedoPerformer
             Workspace proj = (Workspace) item.getHost();
             switch (item.getRedoAction().getProperty())
             {
-                case PROJECT_SHORTNAME:
+                case WORKSPACE_SHORTNAME:
                     proj.setShortName((String) item.getRedoAction().getValue());
                     break;
-                case PROJECT_LONGNAME:
+                case WORKSPACE_LONGNAME:
                     proj.setLongName((String) item.getRedoAction().getValue());
                     break;
-                case PROJECT_DESCRIPTION:
+                case WORKSPACE_DESCRIPTION:
                     proj.setDescription((String) item.getRedoAction().getValue());
                     break;
-                case PROJECT_EDIT:
+                case WORKSPACE_EDIT:
                     for (UndoableItem undoAction : (ArrayList<UndoableItem>)
                             item.getUndoAction().getValue()) 
                     {

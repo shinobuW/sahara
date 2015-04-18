@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 import seng302.group2.workspace.person.Person;
@@ -56,8 +57,8 @@ public class Workspace extends TreeViewItem implements Serializable
     private ArrayList<Person> serializablePeople = new ArrayList<>();
     private transient ObservableList<TreeViewItem> skills = observableArrayList();
     private ArrayList<Skill> serializableSkills = new ArrayList<>();
-    //private transient ObservableList<TreeViewItem> projects = observableArrayList();
-    //private ArrayList<Project> serializableProjects = new ArrayList<>();
+    private transient ObservableList<TreeViewItem> projects = observableArrayList();
+    private ArrayList<Project> serializableProjects = new ArrayList<>();
 
 
     /**
@@ -77,22 +78,23 @@ public class Workspace extends TreeViewItem implements Serializable
      */
     public Workspace()
     {
-        super("Untitled");
-        this.shortName = "Untitled";
+        super("Workspace");
+        this.shortName = "Untitled Workspace";
         this.longName = "Untitled Workspace";
         this.description = "A blank workspace.";
         this.serializablePeople = new ArrayList<>();
         this.serializableSkills = new ArrayList<>();
         this.serializableTeams = new ArrayList<>();
-	Team temp = new Team("Unassigned People", 
-					"All the people unassigned to a team");
-	serializableTeams.add(temp);
-	teams.add(temp);
+
+        Team temp = new Team("Unassigned",
+                        "A team for unassigned people");
+        serializableTeams.add(temp);
+        teams.add(temp);
     }
     
     
     /**
-     * Basic workspace constructor.
+     * Basic workspace constructor with input.
      * @param shortName A unique short name to identify the Workspace
      * @param fullName The full Workspace name
      * @param description A description of the Workspace
@@ -150,8 +152,18 @@ public class Workspace extends TreeViewItem implements Serializable
     {
         return this.description;
     }
-    
-    
+
+
+    /**
+     * Gets the workspace's list of projects.
+     * @return The projects associated with the workspace
+     */
+    public ObservableList<TreeViewItem> getProjects()
+    {
+        return this.projects;
+    }
+
+
     /**
      * Gets the workspace's list of Persons.
      * @return The people associated with the workspace
@@ -494,7 +506,41 @@ public class Workspace extends TreeViewItem implements Serializable
                 new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null)
         ));*/
 
-        this.skills.remove(team);
+        this.teams.remove(team);
+    }
+
+
+    /**
+     * Adds a Project to the Workspace's list of Projects.
+     * @param project The team to add
+     */
+    public void add(Project project)
+    {
+        //Add the undo action to the stack
+        Global.undoRedoMan.add(new UndoableItem(
+                project,
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT, null)
+        ));
+
+        this.projects.add(project);
+    }
+
+
+    /**
+     * Removes a Project to the Workspace's list of Projects.
+     * @param project The project to remove
+     */
+    public void remove(Project project)
+    {
+        // TODO: UndoRedo stack items for removals of whole projects
+        /*Global.undoRedoMan.add(new UndoableItem(
+                person,
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null)
+        ));*/
+
+        this.projects.remove(project);
     }
 
     
@@ -537,6 +583,12 @@ public class Workspace extends TreeViewItem implements Serializable
         for (Object item : workspace.people)
         {
             workspace.serializablePeople.add((Person)item);
+        }
+
+        workspace.serializableProjects.clear();
+        for (Object item : workspace.projects)
+        {
+            workspace.serializableProjects.add((Project)item);
         }
         
         workspace.serializableSkills.clear();

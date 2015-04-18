@@ -10,7 +10,6 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import seng302.group2.App;
-import seng302.group2.workspace.Workspace;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.Global;
@@ -23,23 +22,23 @@ import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
+import seng302.group2.workspace.project.Project;
+
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
- * A class for displaying the workspace edit scene.
- * Created by btm38 on 7/04/15.
+ * A class for displaying the project edit scene.
+ * Created by jml168 on 7/04/15.
  */
-public class WorkspaceEditScene
+public class ProjectEditScene
 {
     /**
      * Gets the workspace edit information scene.
      * @return The Workspace Edit information scene
      */
-    public static GridPane getWorkspaceEditScene(Workspace currentWorkspace)
+    public static GridPane getProjectEditScene(Project currentProject)
     {
-
-
         informationGrid = new GridPane();
         informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
@@ -57,10 +56,10 @@ public class WorkspaceEditScene
         RequiredField shortNameCustomField = new RequiredField("Short Name");
         RequiredField longNameCustomField = new RequiredField("Long Name");
         CustomTextArea descriptionTextArea = new CustomTextArea("Workspace Description", 300);
-        
-        shortNameCustomField.setText(currentWorkspace.getShortName());
-        longNameCustomField.setText(currentWorkspace.getLongName());
-        descriptionTextArea.setText(currentWorkspace.getDescription());
+
+        shortNameCustomField.setText(currentProject.getShortName());
+        longNameCustomField.setText(currentProject.getLongName());
+        descriptionTextArea.setText(currentProject.getDescription());
 
         informationGrid.add(shortNameCustomField, 0, 0);
         informationGrid.add(longNameCustomField, 0, 1);
@@ -71,7 +70,7 @@ public class WorkspaceEditScene
         btnCancel.setOnAction((event) ->
             {
                 App.content.getChildren().remove(informationGrid);
-                WorkspaceScene.getWorkspaceScene((Workspace) Global.selectedTreeItem.getValue());
+                ProjectScene.getProjectScene((Project) Global.selectedTreeItem.getValue());
                 App.content.getChildren().add(informationGrid);
 
             });
@@ -85,59 +84,60 @@ public class WorkspaceEditScene
                 if (correctShortName && correctLongName)
                 {
                     // Build Undo/Redo edit array.
-                    ArrayList<UndoableItem> undoActions = new ArrayList<>();                    
-                    if (shortNameCustomField.getText() != currentWorkspace.getShortName())
+                    ArrayList<UndoableItem> undoActions = new ArrayList<>();
+                    if (shortNameCustomField.getText() != currentProject.getShortName())
                     {
                         undoActions.add(new UndoableItem(
-                                currentWorkspace,
+                                currentProject,
                                 new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.WORKSPACE_SHORTNAME,
-                                        currentWorkspace.getShortName()),
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_SHORTNAME,
+                                        currentProject.getShortName()),
                                 new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.WORKSPACE_SHORTNAME,
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_SHORTNAME,
                                         shortNameCustomField.getText())));
                     }
-                    
-                    if (longNameCustomField.getText() != currentWorkspace.getLongName())
+
+                    if (longNameCustomField.getText() != currentProject.getLongName())
                     {
                         undoActions.add(new UndoableItem(
-                                currentWorkspace,
+                                currentProject,
                                 new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.WORKSPACE_LONGNAME,
-                                        currentWorkspace.getDescription()),
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_LONGNAME,
+                                        currentProject.getDescription()),
                                 new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.WORKSPACE_LONGNAME,
-                                        longNameCustomField.getText())));                        
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_LONGNAME,
+                                        longNameCustomField.getText())));
                     }
-                    if (descriptionTextArea.getText() != currentWorkspace.getDescription())
+
+                    if (descriptionTextArea.getText() != currentProject.getDescription())
                     {
                         undoActions.add(new UndoableItem(
-                                currentWorkspace,
+                                currentProject,
                                 new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.WORKSPACE_DESCRIPTION,
-                                        currentWorkspace.getDescription()),
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_DESCRIPTION,
+                                        currentProject.getDescription()),
                                 new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.WORKSPACE_DESCRIPTION,
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_DESCRIPTION,
                                         descriptionTextArea.getText())));
                     }
-                    
+
                     Global.undoRedoMan.add(new UndoableItem(
-                            currentWorkspace,
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.WORKSPACE_EDIT,
-                                undoActions), 
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.WORKSPACE_EDIT,
-                                undoActions)
-                        ));   
-                    
+                            currentProject,
+                            new UndoRedoAction(
+                                    UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT,
+                                    undoActions),
+                            new UndoRedoAction(
+                                    UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT,
+                                    undoActions)
+                    ));
+
                     // Save the edits.
-                    currentWorkspace.setDescription(descriptionTextArea.getText());
-                    currentWorkspace.setShortName(shortNameCustomField.getText());
-                    currentWorkspace.setLongName(longNameCustomField.getText());
+                    currentProject.setDescription(descriptionTextArea.getText());
+                    currentProject.setShortName(shortNameCustomField.getText());
+                    currentProject.setLongName(longNameCustomField.getText());
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
-                    WorkspaceScene.getWorkspaceScene(currentWorkspace);
+                    ProjectScene.getProjectScene(currentProject);
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
                     children.add(Global.currentWorkspace);
@@ -148,13 +148,11 @@ public class WorkspaceEditScene
                     App.content.getChildren().add(treeView);
                     App.content.getChildren().add(informationGrid);
                     MainScene.treeView.getSelectionModel().select(selectedTreeItem);
-
                 }
                 else
                 {
                     event.consume();
                 }
-
             });
 
         return informationGrid;

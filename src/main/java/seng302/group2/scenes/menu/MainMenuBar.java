@@ -5,7 +5,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.dialog.CreateProjectDialog;
+import seng302.group2.scenes.dialog.CreateWorkspaceDialog;
 import seng302.group2.scenes.dialog.CreatePersonDialog;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Menu;
@@ -20,6 +20,7 @@ import seng302.group2.Global;
 import seng302.group2.workspace.Workspace.SaveLoadResult;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
 import seng302.group2.scenes.dialog.CreateTeamDialog;
+import seng302.group2.workspace.project.Project;
 
 /**
  * The main menu bar of the workspace window(s).
@@ -32,46 +33,65 @@ public class MainMenuBar
      * Creates a menu item "Workspace" and sets the on action event if "Workspace" is clicked.
      * @return MenuItem Workspace
      */
-    private static MenuItem createProjectItem() 
+    private static MenuItem createWorkspaceItem()
     {
-        MenuItem newProjectItem = new MenuItem("Workspace");
-        newProjectItem.setOnAction((ActionEvent event) ->
+        MenuItem newWorkspaceItem = new MenuItem("Workspace");
+        newWorkspaceItem.setOnAction((ActionEvent event) ->
             {
                 if (Global.currentWorkspace == null
                         || !Global.currentWorkspace.getHasUnsavedChanges())
                 {
-                    CreateProjectDialog.show();
+                    CreateWorkspaceDialog.show();
                     App.refreshMainScene();
                     Global.undoRedoMan.emptyAll();
                     return;
                 }
-               
+
                 Action response = Dialogs.create()
-                    .title("Save Workspace?")
-                    .message("Would you like to save your changes to the current workspace?")
-                    .showConfirm();
-                
+                        .title("Save Workspace?")
+                        .message("Would you like to save your changes to the current workspace?")
+                        .showConfirm();
+
                 if (response == Dialog.ACTION_YES)
                 {
                     SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
                     if (saved == SaveLoadResult.SUCCESS)
                     {
-                        CreateProjectDialog.show();
+                        CreateWorkspaceDialog.show();
                         App.refreshMainScene();
                     }
                 }
                 else if (response == Dialog.ACTION_NO)
                 {
-                    CreateProjectDialog.show();
+                    CreateWorkspaceDialog.show();
                     App.refreshMainScene();
                 }
             });
 
-        newProjectItem.setAccelerator(new KeyCodeCombination(KeyCode.N,
+        newWorkspaceItem.setAccelerator(new KeyCodeCombination(KeyCode.N,
                 KeyCombination.CONTROL_DOWN,
                 KeyCombination.SHORTCUT_DOWN));
+        return newWorkspaceItem;
+    }
+
+
+    /**
+     * Creates a menu item "Workspace" and sets the on action event if "Workspace" is clicked.
+     * @return MenuItem Workspace
+     */
+    private static MenuItem createProjectItem()
+    {
+        MenuItem newProjectItem = new MenuItem("Project");
+        newProjectItem.setOnAction((ActionEvent event) ->
+                Global.currentWorkspace.add(new Project()));
+
+        /*newProjectItem.setAccelerator(new KeyCodeCombination(KeyCode.P,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));*/
+
         return newProjectItem;
     }
+
     
     /**
      * Creates a menu item "Person" and sets the on action event if "Person" is clicked.
@@ -80,10 +100,8 @@ public class MainMenuBar
     private static MenuItem createPersonItem() 
     {
         MenuItem newPersonItem = new MenuItem("Person");
-        newPersonItem.setOnAction((event) -> 
-            {
-                CreatePersonDialog.show();
-            });
+        newPersonItem.setOnAction((event) ->
+                CreatePersonDialog.show());
         newPersonItem.setAccelerator(new KeyCodeCombination(KeyCode.P,
                 KeyCombination.CONTROL_DOWN,
                 KeyCombination.SHORTCUT_DOWN));
@@ -98,9 +116,7 @@ public class MainMenuBar
     {
         MenuItem newSkillItem = new MenuItem("Skill");
         newSkillItem.setOnAction((event) ->
-            {
-                CreateSkillDialog.show();
-            });
+                CreateSkillDialog.show());
         newSkillItem.setAccelerator(new KeyCodeCombination(KeyCode.K,
                 KeyCombination.CONTROL_DOWN,
                 KeyCombination.SHORTCUT_DOWN));
@@ -115,9 +131,7 @@ public class MainMenuBar
     {
         MenuItem newTeamItem = new MenuItem("Team");
         newTeamItem.setOnAction((event) ->
-            {
-                CreateTeamDialog.show();
-            });
+                CreateTeamDialog.show());
         newTeamItem.setAccelerator(new KeyCodeCombination(KeyCode.T,
                 KeyCombination.CONTROL_DOWN,
                 KeyCombination.SHORTCUT_DOWN));
@@ -173,9 +187,7 @@ public class MainMenuBar
         // Create 'Save' MenuItem
         MenuItem saveItem = new MenuItem("Save");
         saveItem.setOnAction((event) ->
-            {
-                Workspace.saveWorkspace(Global.currentWorkspace, false);
-            });
+                Workspace.saveWorkspace(Global.currentWorkspace, false));
 
         saveItem.setAccelerator(new KeyCodeCombination(KeyCode.S,
                 KeyCombination.CONTROL_DOWN,
@@ -192,9 +204,7 @@ public class MainMenuBar
         // Create 'Save As' MenuItem
         MenuItem saveAsItem = new MenuItem("Save As...");
         saveAsItem.setOnAction((event) ->
-            {
-                Workspace.saveWorkspace(Global.currentWorkspace, true);
-            });
+                Workspace.saveWorkspace(Global.currentWorkspace, true));
 
         saveAsItem.setAccelerator(new KeyCodeCombination(KeyCode.S,
                 KeyCombination.CONTROL_DOWN,
@@ -211,9 +221,7 @@ public class MainMenuBar
     {
         MenuItem quitProgramItem = new MenuItem("Quit");
         quitProgramItem.setOnAction((event) ->
-            {
-                App.exitApp();
-            });      
+                App.exitApp());
         
         return quitProgramItem;
     }
@@ -227,9 +235,7 @@ public class MainMenuBar
         // Create 'Undo' MenuItem
         MenuItem undoItem = new MenuItem("Undo");
         undoItem.setOnAction((event) ->
-            {
-                Global.undoRedoMan.undo();
-            });
+                Global.undoRedoMan.undo());
 
         undoItem.setAccelerator(new KeyCodeCombination(KeyCode.Z,
                 KeyCombination.CONTROL_DOWN,
@@ -246,9 +252,7 @@ public class MainMenuBar
         // Create 'Redo' MenuItem
         MenuItem redoItem = new MenuItem("Redo");
         redoItem.setOnAction((event) ->
-            {
-                Global.undoRedoMan.redo();
-            });
+                Global.undoRedoMan.redo());
 
         redoItem.setAccelerator(new KeyCodeCombination(KeyCode.Y,
                 KeyCombination.CONTROL_DOWN,
@@ -291,22 +295,26 @@ public class MainMenuBar
         menuBar.getMenus().add(fileMenu);
 
         // Create 'New >' sub-menu
-        Menu newProjectBranch = new Menu("New");
+        Menu newBranch = new Menu("New");
 
-        //Create MenuItems for New submenu
+        // Create MenuItems for New submenu
+        MenuItem newWorkspaceItem = createWorkspaceItem();
         MenuItem newProjectItem = createProjectItem();
         MenuItem newPersonItem = createPersonItem();
         MenuItem newSkillItem = createSkillItem();
         MenuItem newTeamItem = createTeamItem();
+
+        // Create other items for file menu
         MenuItem openItem = createOpenItem();
         MenuItem saveItem = createSaveItem();
         MenuItem saveAsItem = createSaveAsItem();
         MenuItem quitProgramItem = createQuitItem();
         
-        newProjectBranch.getItems().add(newProjectItem);
-        newProjectBranch.getItems().add(newPersonItem);
-        newProjectBranch.getItems().add(newSkillItem);
-        newProjectBranch.getItems().add(newTeamItem);
+        newBranch.getItems().add(newWorkspaceItem);
+        newBranch.getItems().add(newProjectItem);
+        newBranch.getItems().add(newPersonItem);
+        newBranch.getItems().add(newSkillItem);
+        newBranch.getItems().add(newTeamItem);
 
 
         // Create 'Edit >' sub-menu
@@ -328,7 +336,7 @@ public class MainMenuBar
 
 
         // Add MenuItems to Menu
-        fileMenu.getItems().addAll(newProjectBranch, openItem,
+        fileMenu.getItems().addAll(newBranch, openItem,
                 saveItem, saveAsItem, new SeparatorMenuItem(), quitProgramItem);
         
         editMenu.getItems().addAll(undoItem, redoItem);

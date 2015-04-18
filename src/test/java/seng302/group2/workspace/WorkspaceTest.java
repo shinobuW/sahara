@@ -14,7 +14,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 /**
- * A series of tests relating to Projects
+ * A series of tests relating to Workspaces
  * @author Jordane Lew (jml168)
  * @author Bronson McNaughton (btm38)
  */
@@ -38,14 +38,14 @@ public class WorkspaceTest extends TestCase
     }
 
     // A simple test for the Workspace constructors & getters.
-    public void testProjectConstructors()
+    public void testWorkspaceConstructors()
     {
         Workspace proj = new Workspace();
         ObservableList<TreeViewItem> people = observableArrayList();
-        assertEquals("Untitled", proj.getShortName());
+        assertEquals("Untitled Workspace", proj.getShortName());
         assertEquals("Untitled Workspace", proj.getLongName());
         assertEquals("A blank workspace.", proj.getDescription());
-        assertEquals("Untitled", proj.toString());
+        assertEquals("Untitled Workspace", proj.toString());
         assertEquals(people, proj.getPeople());
         
         Workspace proj2 = new Workspace("aShortName", "aLongName", "aDescription");
@@ -56,7 +56,7 @@ public class WorkspaceTest extends TestCase
     }
     
     // Tests Projects' setter methods.
-    public void testProjectSetters()
+    public void testWorkspaceSetters()
     {
         Workspace proj = new Workspace();
         proj.setShortName("aShortName");
@@ -69,7 +69,7 @@ public class WorkspaceTest extends TestCase
         assertEquals("aShortName", proj.toString());
     }
     
-    //TODO: Revise me
+
     /**
      * Tests that people are correctly added to projects through the add() method.
      */

@@ -9,6 +9,7 @@ import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 import seng302.group2.workspace.person.Person;
@@ -35,6 +36,7 @@ public class ElementTreeContextMenu extends ContextMenu
         SKILL,
         TEAM,
         PROJECT,
+        WORKSPACE,
         OTHER  // For anything else, or unresolved.
     }
 
@@ -88,6 +90,10 @@ public class ElementTreeContextMenu extends ContextMenu
         }
         else if (Global.selectedTreeItem.getValue().getClass() == Workspace.class)
         {
+            selectedCategory = Categories.WORKSPACE;
+        }
+        else if (Global.selectedTreeItem.getValue().getClass() == Project.class)
+        {
             selectedCategory = Categories.PROJECT;
         }
 
@@ -116,8 +122,10 @@ public class ElementTreeContextMenu extends ContextMenu
                 break;
             case PROJECT:
                 // TODO: Project, not Workspace
-                WorkspaceEditScene.getProjectEditScene(
-                        (Workspace) Global.selectedTreeItem.getValue());
+                /*
+                WorkspaceEditScene.getWorkspaceEditScene(
+                        (Project) Global.selectedTreeItem.getValue());
+                        */
                 break;
             case OTHER:
                 System.out.println("The category was not correctly recognized");
@@ -150,8 +158,7 @@ public class ElementTreeContextMenu extends ContextMenu
                     Global.currentWorkspace.remove((Person) Global.selectedTreeItem.getValue());
                     break;
                 case PROJECT:
-                    //TODO: Check if valid after project/workspace refactoring and uncomment
-                    //Global.currentWorkspace.remove((Project) Global.selectedTreeItem.getValue());
+                    Global.currentWorkspace.remove((Project) Global.selectedTreeItem.getValue());
                     break;
                 case TEAM:
                     Global.currentWorkspace.remove((Team) Global.selectedTreeItem.getValue());

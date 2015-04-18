@@ -68,7 +68,6 @@ public class TeamScene
                 App.content.getChildren().add(informationGrid);
             });
         
-        
         return informationGrid;
     }
  

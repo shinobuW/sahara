@@ -18,7 +18,7 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  * @author David Moseley drm127
  */
 @SuppressWarnings("deprecation")
-public class CreateProjectDialog 
+public class CreateWorkspaceDialog
 {
     /**
      * Displays the Dialog box for creating a workspace.
