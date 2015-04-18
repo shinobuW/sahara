@@ -5,7 +5,6 @@
  */
 package seng302.group2.util.validation;
 
-import java.io.SyncFailedException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
@@ -25,7 +24,7 @@ public class DateValidator
         try
         {
             String[] date = birthDate.split("/"); //returns an array with the day, month and year
-            String year = date[date.length-1];
+            String year = date[date.length - 1];
             if (year.length() != 4)
             {
                 return ValidationStatus.PATTERN_MISMATCH;
@@ -33,7 +32,7 @@ public class DateValidator
 
             Date parsedBirthDate = datePattern.parse(birthDate);
 
-            if (parsedBirthDate.after( Date.from(Instant.now())))
+            if (parsedBirthDate.after(Date.from(Instant.now())))
             {
                 return ValidationStatus.OUT_OF_RANGE;
             }
