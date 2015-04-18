@@ -12,7 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
-import seng302.group2.project.skills.Skill;
+import seng302.group2.workspace.skills.Skill;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
@@ -60,7 +60,7 @@ public class CreateSkillDialog
                 if (correctShortName)
                 {
                     Skill skill = new Skill(shortName, description);
-                    Global.currentProject.add(skill);
+                    Global.currentWorkspace.add(skill);
                     dialog.hide();
                 }
                 else

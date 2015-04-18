@@ -1,4 +1,4 @@
-package seng302.group2.project.skills;
+package seng302.group2.workspace.skills;
 
 import java.io.Serializable;
 import javafx.collections.ObservableList;
@@ -22,7 +22,6 @@ public class Skill extends TreeViewItem implements Serializable
         super("unnamed");
         this.shortName = "unnamed";
         this.description = "no description";
-       
     }
     
      /**

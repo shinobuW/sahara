@@ -16,15 +16,15 @@ import java.util.HashMap;
 import java.util.Map;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.project.Project;
-import seng302.group2.project.skills.Skill;
-import seng302.group2.project.team.Team;
-import seng302.group2.project.team.person.Person;
+import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.contextmenu.CategoryTreeContextMenu;
 import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
 import seng302.group2.scenes.information.PersonScene;
-import seng302.group2.scenes.information.ProjectScene;
+import seng302.group2.scenes.information.WorkspaceScene;
 import seng302.group2.scenes.information.SkillScene;
 import seng302.group2.scenes.information.TeamScene;
 
@@ -133,7 +133,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         {
                             // Nothing is selected, make a default selection?
                             App.content.getChildren().remove(MainScene.informationGrid);
-                            //ProjectScene.getProjectScene((Project)
+                            //WorkspaceScene.getWorkspaceScene((Workspace)
                                         //Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
                         }
@@ -145,10 +145,10 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                             setContextMenu(new ElementTreeContextMenu());
 
                         }
-                        else if (Global.selectedTreeItem.getValue() instanceof Project)
+                        else if (Global.selectedTreeItem.getValue() instanceof Workspace)
                         {
                             App.content.getChildren().remove(MainScene.informationGrid);
-                            ProjectScene.getProjectScene((Project) 
+                            WorkspaceScene.getWorkspaceScene((Workspace)
                                     Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
 

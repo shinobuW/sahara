@@ -17,7 +17,7 @@ import javafx.scene.layout.HBox;
 import seng302.group2.App;
 import seng302.group2.Global;
 import static seng302.group2.Global.selectedTreeItem;
-import seng302.group2.project.skills.Skill;
+import seng302.group2.workspace.skills.Skill;
 import seng302.group2.scenes.MainScene;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
@@ -138,7 +138,7 @@ public class SkillEditScene
                     SkillScene.getSkillScene(currentSkill);
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
-                    children.add(Global.currentProject);
+                    children.add(Global.currentWorkspace);
 
                     MainScene.treeView.setItems(children);
                     MainScene.treeView.setShowRoot(false);

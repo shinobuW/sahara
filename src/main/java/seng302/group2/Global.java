@@ -1,7 +1,7 @@
 package seng302.group2;
 
 import javafx.scene.control.TreeItem;
-import seng302.group2.project.Project;
+import seng302.group2.workspace.Workspace;
 import seng302.group2.util.undoredo.UndoRedoManager;
 
 /**
@@ -10,7 +10,7 @@ import seng302.group2.util.undoredo.UndoRedoManager;
  */
 public final class Global
 {
-    public static Project currentProject = new Project();
+    public static Workspace currentWorkspace = new Workspace();
     public static TreeItem selectedTreeItem = new TreeItem();
     public static UndoRedoManager undoRedoMan = new UndoRedoManager();
     public static String lastSaveLocation = "/";
@@ -40,26 +40,26 @@ public final class Global
 
 
     /**
-     * Mark the current project as changed.
+     * Mark the current workspace as changed.
      */
     public static void setCurrentProjectChanged()
     {
         if (Global.appRunning())
         {
-            currentProject.setChanged();
+            currentWorkspace.setChanged();
             App.refreshWindowTitle();
         }
     }
 
 
     /**
-     * Mark the current project as unchanged.
+     * Mark the current workspace as unchanged.
      */
-    public static void setCurrentProjectUnchanged()
+    public static void setCurrentWorkspaceUnchanged()
     {
         if (Global.appRunning())
         {
-            currentProject.setUnchanged();
+            currentWorkspace.setUnchanged();
             App.refreshWindowTitle();
         }
     }

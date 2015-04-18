@@ -8,23 +8,23 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.App;
-import static seng302.group2.Global.selectedTreeItem;
-import seng302.group2.project.Project;
+import seng302.group2.workspace.Workspace;
+
 import static seng302.group2.scenes.MainScene.informationGrid;
 
 /**
- * A class for displaying the Project Scene
+ * A class for displaying the Workspace Scene
  * @author crw73
  * @author btm38
  */
 @SuppressWarnings("deprecation")
-public class ProjectScene
+public class WorkspaceScene
 {
     /**
-     * Gets the Project information scene
-     * @return The Project information scene
+     * Gets the Workspace information scene
+     * @return The Workspace information scene
      */
-    public static GridPane getProjectScene(Project currentProject)
+    public static GridPane getWorkspaceScene(Workspace currentWorkspace)
     {
         informationGrid = new GridPane();
 
@@ -32,7 +32,7 @@ public class ProjectScene
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);
         informationGrid.setPadding(new Insets(25,25,25,25));
-        Label title = new Label(currentProject.getLongName());
+        Label title = new Label(currentWorkspace.getLongName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
         Button btnEdit = new Button("Edit");
@@ -41,14 +41,14 @@ public class ProjectScene
         informationGrid.add(new Label("Short Name: "), 0, 2);
         informationGrid.add(new Label("Description: "), 0, 3);
 
-        informationGrid.add(new Label(currentProject.getShortName()), 1, 2);
-        informationGrid.add(new Label(currentProject.getDescription()), 1, 3);
+        informationGrid.add(new Label(currentWorkspace.getShortName()), 1, 2);
+        informationGrid.add(new Label(currentWorkspace.getDescription()), 1, 3);
         informationGrid.add(btnEdit, 1, 4);
 
         btnEdit.setOnAction((event) ->
             {
                 App.content.getChildren().remove(informationGrid);
-                ProjectEditScene.getProjectEditScene(currentProject);
+                WorkspaceEditScene.getProjectEditScene(currentWorkspace);
                 App.content.getChildren().add(informationGrid);
             });
 

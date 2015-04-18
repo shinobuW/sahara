@@ -1,7 +1,7 @@
 /*
  * SENG302 Group 2
  */
-package seng302.group2.project.team.person;
+package seng302.group2.workspace.person;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -11,9 +11,9 @@ import java.util.Date;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
-import seng302.group2.project.skills.Skill;
-import seng302.group2.project.team.Team;
-import seng302.group2.project.team.role.Role;
+import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.role.Role;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
@@ -84,9 +84,9 @@ public class Person extends TreeViewItem implements Serializable
         this.description = description;
         this.birthDate = birthDate;
         this.currentTeam = null;
-	if (Global.currentProject != null)
+	if (Global.currentWorkspace != null)
 	{
-	    this.currentTeam = (Team) Global.currentProject.getTeams().get(0);
+	    this.currentTeam = (Team) Global.currentWorkspace.getTeams().get(0);
 	}
     }
        

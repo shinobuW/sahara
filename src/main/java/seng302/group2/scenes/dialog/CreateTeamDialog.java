@@ -12,7 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
-import seng302.group2.project.team.Team;
+import seng302.group2.workspace.team.Team;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
@@ -60,7 +60,7 @@ public class CreateTeamDialog
                 if (correctShortName)
                 {
                     Team team = new Team(shortName, description);
-                    Global.currentProject.add(team);
+                    Global.currentWorkspace.add(team);
                     dialog.hide();
                 }
                 else

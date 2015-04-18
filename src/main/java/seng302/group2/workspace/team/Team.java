@@ -1,16 +1,16 @@
 /*
  * SENG302 Group 2
  */
-package seng302.group2.project.team;
+package seng302.group2.workspace.team;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
-import seng302.group2.project.team.person.Person;
-import seng302.group2.project.team.role.Role;
-import seng302.group2.project.team.role.RoleType;
+import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.role.Role;
+import seng302.group2.workspace.role.RoleType;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
@@ -184,7 +184,7 @@ public class Team extends TreeViewItem implements Serializable
     }
     
     /**
-     * Removes a Person to the Project's list of Members
+     * Removes a Person to the Workspace's list of Members
      * @param person The person to remove
      */
     public void removePerson(Person person)

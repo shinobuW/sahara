@@ -1,7 +1,7 @@
 /*
  * SENG302 Group 2
  */
-package seng302.group2.project;
+package seng302.group2.workspace;
 
 import seng302.group2.scenes.listdisplay.Category;
 import com.google.gson.Gson;
@@ -24,9 +24,9 @@ import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.project.skills.Skill;
-import seng302.group2.project.team.Team;
-import seng302.group2.project.team.person.Person;
+import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.UndoRedoAction;
@@ -34,11 +34,11 @@ import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
 
 /**
- * Basic project class that acts as the root object for Sahara and represents a real-world project.
+ * Basic workspace class that acts as the root object for Sahara and represents a real-world workspace.
  * @author Jordane Lew (jml168)
  */
 @SuppressWarnings("deprecation")
-public class Project extends TreeViewItem implements Serializable
+public class Workspace extends TreeViewItem implements Serializable
 {
     private String shortName;
     private String longName;
@@ -48,34 +48,38 @@ public class Project extends TreeViewItem implements Serializable
     private transient boolean hasUnsavedChanges = true;
     private static Gson gson = SerialBuilder.getBuilder();
 
+    // Workspace elements
     private transient ObservableList<TreeViewItem> teams = observableArrayList();
     private ArrayList<Team> serializableTeams = new ArrayList<>();
     private transient ObservableList<TreeViewItem> people = observableArrayList();
     private ArrayList<Person> serializablePeople = new ArrayList<>();
     private transient ObservableList<TreeViewItem> skills = observableArrayList();
     private ArrayList<Skill> serializableSkills = new ArrayList<>();
-    
+    //private transient ObservableList<TreeViewItem> projects = observableArrayList();
+    //private ArrayList<Project> serializableProjects = new ArrayList<>();
+
+
     /**
      * Enumerable save and load statuses.
      */
     public enum SaveLoadResult
     {
         SUCCESS,
-        NULLPROJECT,
+        NULLWORKSPACE,
         IOEXCEPTION,
         NOFILESELECTED,     // Cancelled in save
         FILENOTFOUND        // File doesn't exist when opening
     }
     
     /**
-     * Basic Project constructor.
+     * Basic Workspace constructor.
      */
-    public Project()
+    public Workspace()
     {
         super("Untitled");
         this.shortName = "Untitled";
-        this.longName = "Untitled Project";
-        this.description = "A blank project.";
+        this.longName = "Untitled Workspace";
+        this.description = "A blank workspace.";
         this.serializablePeople = new ArrayList<>();
         this.serializableSkills = new ArrayList<>();
         this.serializableTeams = new ArrayList<>();
@@ -87,12 +91,12 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Basic project constructor.
-     * @param shortName A unique short name to identify the Project
-     * @param fullName The full Project name
-     * @param description A description of the Project
+     * Basic workspace constructor.
+     * @param shortName A unique short name to identify the Workspace
+     * @param fullName The full Workspace name
+     * @param description A description of the Workspace
      */
-    public Project(String shortName, String fullName, String description)
+    public Workspace(String shortName, String fullName, String description)
     {
         super(shortName);
         this.shortName = shortName;
@@ -108,8 +112,8 @@ public class Project extends TreeViewItem implements Serializable
     // <editor-fold defaultstate="collapsed" desc="Getters">
     
     /**
-     * Gets if the project has unsaved changes.
-     * @return true or false depending if the project has unsaved changes
+     * Gets if the workspace has unsaved changes.
+     * @return true or false depending if the workspace has unsaved changes
      */
     public boolean getHasUnsavedChanges()
     {
@@ -118,8 +122,8 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Gets the project's short name.
-     * @return The short name of the project
+     * Gets the workspace's short name.
+     * @return The short name of the workspace
      */
     public String getShortName()
     {
@@ -128,8 +132,8 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Gets the project's long name.
-     * @return The long name of the project
+     * Gets the workspace's long name.
+     * @return The long name of the workspace
      */
     public String getLongName()
     {
@@ -138,8 +142,8 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Gets the project's description.
-     * @return The description of the project
+     * Gets the workspace's description.
+     * @return The description of the workspace
      */
     public String getDescription()
     {
@@ -148,8 +152,8 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Gets the project's list of Persons.
-     * @return The people associated with the project
+     * Gets the workspace's list of Persons.
+     * @return The people associated with the workspace
      */
     public ObservableList<TreeViewItem> getPeople()
     {
@@ -157,8 +161,8 @@ public class Project extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets the project's list of Skills.
-     * @return The skills associated with a project
+     * Gets the workspace's list of Skills.
+     * @return The skills associated with a workspace
      */
     public ObservableList<TreeViewItem> getSkills()
     {
@@ -166,8 +170,8 @@ public class Project extends TreeViewItem implements Serializable
     }
     
     /**
-     * Gets the project's list of Teams.
-     * @return The teams associated with a project
+     * Gets the workspace's list of Teams.
+     * @return The teams associated with a workspace
      */
     public ObservableList<TreeViewItem> getTeams()
     {
@@ -180,7 +184,7 @@ public class Project extends TreeViewItem implements Serializable
     // <editor-fold defaultstate="collapsed" desc="Setters">
     
     /**
-     * Marks the project as not having unsaved changes.
+     * Marks the workspace as not having unsaved changes.
      */
     public void setUnchanged()
     {
@@ -189,7 +193,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Marks the project as having unsaved changes.
+     * Marks the workspace as having unsaved changes.
      */
     public void setChanged()
     {
@@ -198,8 +202,8 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Sets the project's short name.
-     * @param shortName The new short name for the project
+     * Sets the workspace's short name.
+     * @param shortName The new short name for the workspace
      */
     public void setShortName(String shortName)
     {
@@ -208,8 +212,8 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Sets the project's long name.
-     * @param longName The new long name for the project
+     * Sets the workspace's long name.
+     * @param longName The new long name for the workspace
      */
     public void setLongName(String longName)
     {
@@ -218,8 +222,8 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Sets the project's description.
-     * @param description The new description for the project
+     * Sets the workspace's description.
+     * @param description The new description for the workspace
      */
     public void setDescription(String description)
     {
@@ -230,27 +234,27 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Saves the current project as a file specified by the user.
-     * @param project The project to save
+     * Saves the current workspace as a file specified by the user.
+     * @param workspace The workspace to save
      * @param saveAs If acting as save as
      * @return The corresponding SaveLoadResult status of the process
      */
-    public static SaveLoadResult saveProject(Project project, boolean saveAs)
+    public static SaveLoadResult saveWorkspace(Workspace workspace, boolean saveAs)
     {
-        // If there is no current project open, display a dialog and skip saving
-        if (project == null)
+        // If there is no current workspace open, display a dialog and skip saving
+        if (workspace == null)
         {
             Dialogs.create()
-                    .title("No open project")
-                    .message("There is currently no project open to save")
+                    .title("No open workspace")
+                    .message("There is currently no workspace open to save")
                     .showWarning();
                     
-            return SaveLoadResult.NULLPROJECT;
+            return SaveLoadResult.NULLWORKSPACE;
         }
         
-        project = Project.prepSerialization(project);
+        workspace = Workspace.prepSerialization(workspace);
         
-        if (saveAs || project.lastSaveLocation == null || project.lastSaveLocation.equals(""))
+        if (saveAs || workspace.lastSaveLocation == null || workspace.lastSaveLocation.equals(""))
         {
             // Prime a FileChooser
             FileChooser fileChooser = new FileChooser();
@@ -259,13 +263,13 @@ public class Project extends TreeViewItem implements Serializable
                 System.out.println("last save dir: " + Global.lastSaveLocation);
                 fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
             }
-            fileChooser.setInitialFileName(project.shortName);
-            fileChooser.setTitle("Save Project");
+            fileChooser.setInitialFileName(workspace.shortName);
+            fileChooser.setTitle("Save Workspace");
             fileChooser.getExtensionFilters().addAll(
-                new ExtensionFilter("Project Files", "*.proj")
+                new ExtensionFilter("Workspace Files", "*.proj")
             );
 
-            // Open the FileChooser to choose the save location of the project
+            // Open the FileChooser to choose the save location of the workspace
             File selectedFile = null;
             try
             {
@@ -283,26 +287,26 @@ public class Project extends TreeViewItem implements Serializable
             {
                 return SaveLoadResult.FILENOTFOUND;  // Most likely user cancellation
             }
-            project.lastSaveLocation = selectedFile.toString();
+            workspace.lastSaveLocation = selectedFile.toString();
             
             // Ensure the extension is .proj (Linux issue)
-            if (!project.lastSaveLocation.endsWith(".proj"))
+            if (!workspace.lastSaveLocation.endsWith(".proj"))
             {
-                project.lastSaveLocation = project.lastSaveLocation + ".proj";
+                workspace.lastSaveLocation = workspace.lastSaveLocation + ".proj";
             }
         }
         
         /* GSON SERIALIZATION */
-        try (Writer writer = new FileWriter(project.lastSaveLocation))
+        try (Writer writer = new FileWriter(workspace.lastSaveLocation))
         {
             //Gson gson = new GsonBuilder().create();
-            gson.toJson(project, writer);
+            gson.toJson(workspace, writer);
             writer.close();
-            Global.setCurrentProjectUnchanged();
-            Global.lastSaveLocation = Paths.get(project.lastSaveLocation).getParent().toString();
+            Global.setCurrentWorkspaceUnchanged();
+            Global.lastSaveLocation = Paths.get(workspace.lastSaveLocation).getParent().toString();
 
             //TESTING
-            System.out.println("PROJECT LOCATION: " + project.lastSaveLocation);
+            System.out.println("WORKSPACE LOCATION: " + workspace.lastSaveLocation);
             System.out.println("GLOBAL LOCATION: " + Global.lastSaveLocation);
 
             return SaveLoadResult.SUCCESS;
@@ -320,24 +324,24 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Loads a project specified by the user into Global.currentProject.
+     * Loads a workspace specified by the user into Global.currentWorkspace.
      * @return The corresponding SaveLoadResult status of the process
      */
-    public static SaveLoadResult loadProject()
+    public static SaveLoadResult loadWorkspace()
     {
         // Prime a FileChooser
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Project");
+        fileChooser.setTitle("Open Workspace");
         if (Global.lastSaveLocation != null && Global.lastSaveLocation != "")
         {
             System.out.println("last save dir: " + Global.lastSaveLocation);
             fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
         }
         fileChooser.getExtensionFilters().addAll(
-            new ExtensionFilter("Project Files", "*.proj")
+            new ExtensionFilter("Workspace Files", "*.proj")
         );
         
-        // Open the FileChooser and try saving the Project as the user specifies
+        // Open the FileChooser and try saving the Workspace as the user specifies
         File selectedFile = null;
         try
         {
@@ -356,8 +360,7 @@ public class Project extends TreeViewItem implements Serializable
             /* GSON DESERIALIZATION */
             try (Reader reader = new FileReader(selectedFile))
             {
-                //Gson gson = new GsonBuilder().create();
-                Global.currentProject = gson.fromJson(reader, Project.class);
+                Global.currentWorkspace = gson.fromJson(reader, Workspace.class);
                 reader.close();
             }
             catch (FileNotFoundException e)
@@ -377,7 +380,7 @@ public class Project extends TreeViewItem implements Serializable
                 return SaveLoadResult.IOEXCEPTION;
             }
             
-            Project.postDeserialization();
+            Workspace.postDeserialization();
             if (Global.appRunning())
             {
                 App.refreshMainScene();
@@ -393,7 +396,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Adds a Person to the Project's list of Persons.
+     * Adds a Person to the Workspace's list of Persons.
      * @param person The person to add
      */
     public void add(Person person)
@@ -410,12 +413,12 @@ public class Project extends TreeViewItem implements Serializable
 
 
     /**
-     * Removes a Person to the Project's list of Persons.
+     * Removes a Person to the Workspace's list of Persons.
      * @param person The person to remove
      */
     public void remove(Person person)
     {
-        // TODO: UndoRedo stack items for removals of whole people
+        // TODO: UndoRedo stack items for REMOVALS of whole people
         /*Global.undoRedoMan.add(new UndoableItem(
                 person,
                 new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null),
@@ -427,7 +430,7 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Adds a Skill to the Project's list of Skills.
+     * Adds a Skill to the Workspace's list of Skills.
      * @param skill The skill to add
      */
     public void add(Skill skill)
@@ -444,7 +447,7 @@ public class Project extends TreeViewItem implements Serializable
 
 
     /**
-     * Removes a Skill to the Project's list of Skills.
+     * Removes a Skill to the Workspace's list of Skills.
      * @param skill The skill to remove
      */
     public void remove(Skill skill)
@@ -461,7 +464,7 @@ public class Project extends TreeViewItem implements Serializable
 
 
     /**
-     * Adds a Team to the Project's list of Teams.
+     * Adds a Team to the Workspace's list of Teams.
      * @param team The team to add
      */
     public void add(Team team)
@@ -478,7 +481,7 @@ public class Project extends TreeViewItem implements Serializable
 
 
     /**
-     * Removes a Team to the Project's list of Teams.
+     * Removes a Team to the Workspace's list of Teams.
      * @param team The team to remove
      */
     public void remove(Team team)
@@ -495,8 +498,8 @@ public class Project extends TreeViewItem implements Serializable
 
     
     /**
-     * Gets a list of categories of the project based on the project's lists.
-     * @return A list of categories of the project
+     * Gets a list of categories of the workspace based on the workspace's lists.
+     * @return A list of categories of the workspace
      */
     public ObservableList<TreeViewItem> getCategories()
     {
@@ -504,15 +507,19 @@ public class Project extends TreeViewItem implements Serializable
         ObservableList<TreeViewItem> root = observableArrayList();
         
         // Make the categories
+        Category projectCategory = new Category ("Projects");
         Category peopleCategory = new Category("People");
-        Category skillCategory = new Category("Skills");
         Category teamsCategory = new Category("Teams");
+        Category rolesCategory = new Category("Roles");
+        Category skillCategory = new Category("Skills");
         
         // Add the categories
-        root.add(peopleCategory); //teams.add(people)
-        root.add(skillCategory);
+        root.add(projectCategory);
+        root.add(peopleCategory);
         root.add(teamsCategory);
-        
+        root.add(rolesCategory);
+        root.add(skillCategory);
+
         return root;
     }
     
@@ -520,38 +527,38 @@ public class Project extends TreeViewItem implements Serializable
     /**
      * Perform pre-serialization steps
      * 1) Transform ObservableLists into ArrayLists for serialization.
-     * @param project The project for intended serialization
-     * @return A serializable version of the given project
+     * @param workspace The workspace for intended serialization
+     * @return A serializable version of the given workspace
      */
-    public static Project prepSerialization(Project project)
+    public static Workspace prepSerialization(Workspace workspace)
     {
-        project.serializablePeople.clear();
-        for (Object item : project.people)
+        workspace.serializablePeople.clear();
+        for (Object item : workspace.people)
         {
-            project.serializablePeople.add((Person)item);
+            workspace.serializablePeople.add((Person)item);
         }
         
-        project.serializableSkills.clear();
-        for (Object item : project.skills)
+        workspace.serializableSkills.clear();
+        for (Object item : workspace.skills)
         {
-            project.serializableSkills.add((Skill)item);
+            workspace.serializableSkills.add((Skill)item);
         }
         
-        project.serializableTeams.clear();
-        for (Object item : project.teams)
+        workspace.serializableTeams.clear();
+        for (Object item : workspace.teams)
         {
-            project.serializableTeams.add((Team) item);
+            workspace.serializableTeams.add((Team) item);
         }
         
         // Prepare for the serialization of persons (skills)
-        for (Object item : project.people)
+        for (Object item : workspace.people)
         {
             Person person = (Person) item;
             person.prepSerialization();
         }
 
         // Prepare for the serialization of teams (people)
-        for (Object item : project.teams)
+        for (Object item : workspace.teams)
         {
             Team team = (Team) item;
             team.prepSerialization();
@@ -559,43 +566,43 @@ public class Project extends TreeViewItem implements Serializable
 
         // Also perform again for any other deeper observables
         
-        return project;
+        return workspace;
     }
     
     
     /**
-     * Perform post-deserialization steps (performs on Global.currentProject for now).
+     * Perform post-deserialization steps (performs on Global.currentWorkspace for now).
      * 1) Transform ArrayLists back into ObservableLists
      */
     public static void postDeserialization()
     {
-        Global.currentProject.people = observableArrayList();
-        for (Person item : Global.currentProject.serializablePeople)
+        Global.currentWorkspace.people = observableArrayList();
+        for (Person item : Global.currentWorkspace.serializablePeople)
         {
-            Global.currentProject.people.add(item);
+            Global.currentWorkspace.people.add(item);
         }
         
-        Global.currentProject.skills = observableArrayList();
-        for (Skill item : Global.currentProject.serializableSkills)
+        Global.currentWorkspace.skills = observableArrayList();
+        for (Skill item : Global.currentWorkspace.serializableSkills)
         {
-            Global.currentProject.skills.add(item);
+            Global.currentWorkspace.skills.add(item);
         }
         
-        Global.currentProject.teams = observableArrayList();
-        for (Team item : Global.currentProject.serializableTeams)
+        Global.currentWorkspace.teams = observableArrayList();
+        for (Team item : Global.currentWorkspace.serializableTeams)
         {
-            Global.currentProject.teams.add(item);
+            Global.currentWorkspace.teams.add(item);
         }
 
         // Prepare for the serialization of persons
-        for (Object item : Global.currentProject.serializablePeople)
+        for (Object item : Global.currentWorkspace.serializablePeople)
         {
             Person person = (Person) item;
             person.postSerialization();
         }
 
         // Prepare for the serialization of teams
-        for (Object item : Global.currentProject.serializableTeams)
+        for (Object item : Global.currentWorkspace.serializableTeams)
         {
             Team team = (Team) item;
             team.postSerialization();
@@ -603,16 +610,16 @@ public class Project extends TreeViewItem implements Serializable
 
 
         // Also for any other deeper observables
-        // eg. for (TreeViewItem item : Global.currentProject.team.people) {...}
+        // eg. for (TreeViewItem item : Global.currentWorkspace.team.people) {...}
 
-        // Unset saved changes flag, we just opened the project.
-        Global.currentProject.hasUnsavedChanges = false;
+        // Unset saved changes flag, we just opened the workspace.
+        Global.currentWorkspace.hasUnsavedChanges = false;
     }
     
     
     /**
-     * An overridden version for the String representation of a Project.
-     * @return The short name of the Project
+     * An overridden version for the String representation of a Workspace.
+     * @return The short name of the Workspace
      */
     @Override
     public String toString()
@@ -622,8 +629,8 @@ public class Project extends TreeViewItem implements Serializable
     
     
     /**
-     * Gets the children (categories) of the project.
-     * @return the children (categories) of the project
+     * Gets the children (categories) of the workspace.
+     * @return the children (categories) of the workspace
      */
     @Override
     public ObservableList<TreeViewItem> getChildren()

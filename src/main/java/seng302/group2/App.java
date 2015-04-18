@@ -10,19 +10,16 @@ import static javafx.application.Application.launch;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
-import seng302.group2.project.Project;
-import seng302.group2.project.Project.SaveLoadResult;
+import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.Workspace.SaveLoadResult;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.util.config.ConfigLoader;
 
 /**
@@ -37,7 +34,7 @@ public class App extends Application
     public static Scene mainScene;
     
     /* Moved into Global
-    public static Project currentProject = new Project();
+    public static Workspace currentWorkspace = new Workspace();
     public static TreeItem selectedTreeItem = new TreeItem();
     public static UndoRedoManager undoRedoMan = new UndoRedoManager();
     */
@@ -56,7 +53,7 @@ public class App extends Application
     
     
     /**
-     * Refreshes the title of the window to show the name of the current project, if any.
+     * Refreshes the title of the window to show the name of the current workspace, if any.
      */
     public static void refreshWindowTitle()
     {
@@ -64,27 +61,27 @@ public class App extends Application
         {
             return;
         }
-        if (Global.currentProject == null)
+        if (Global.currentWorkspace == null)
         {
             App.mainStage.titleProperty().set("Sahara");
         }
         else
         {
-            if (Global.currentProject.getHasUnsavedChanges())
+            if (Global.currentWorkspace.getHasUnsavedChanges())
             {
-                App.mainStage.titleProperty().set("Sahara: " + Global.currentProject.getLongName() 
+                App.mainStage.titleProperty().set("Sahara: " + Global.currentWorkspace.getLongName()
                         + "*");
             }
             else
             {
-                App.mainStage.titleProperty().set("Sahara: " + Global.currentProject.getLongName());
+                App.mainStage.titleProperty().set("Sahara: " + Global.currentWorkspace.getLongName());
             }
         }
     }
     
     
     /**
-     * The GUI setup and launch of the project.
+     * The GUI setup and launch of the workspace.
      * @param primaryStage primary stage
      */
     @Override
@@ -128,23 +125,23 @@ public class App extends Application
     public static void exitApp()
     {
         ConfigLoader.saveConfig();
-        if (!Global.currentProject.getHasUnsavedChanges())
+        if (!Global.currentWorkspace.getHasUnsavedChanges())
         {
             System.exit(0);
             return;  // Clean from a method POV
         }
 
         Action response = Dialogs.create()
-                .title("Save Project?")
-                .message("Would you like to save your changes to the current project?")
+                .title("Save Workspace?")
+                .message("Would you like to save your changes to the current workspace?")
                 .showConfirm();
 
         if (response == Dialog.ACTION_YES)
         {
-            SaveLoadResult saved = Project.saveProject(Global.currentProject, false);
+            SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
             if (saved == SaveLoadResult.SUCCESS)
             {
-                // Save configuration again as settings may change on save of project
+                // Save configuration again as settings may change on save of workspace
                 ConfigLoader.saveConfig();
                 System.exit(0);
             }
@@ -157,7 +154,7 @@ public class App extends Application
 
     
     /**
-     * The main entry of the project.
+     * The main entry of the workspace.
      * @param args arguments
      */
     public static void main(String[] args)

@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package seng302.group2.project.team;
+package seng302.group2.workspace.team;
 
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import seng302.group2.project.team.person.Person;
-import seng302.group2.project.team.role.RoleType;
+import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.role.RoleType;
 
 /**
  * A series of tests relating to Teams

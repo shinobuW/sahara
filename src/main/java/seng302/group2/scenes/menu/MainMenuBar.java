@@ -3,6 +3,7 @@ package seng302.group2.scenes.menu;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import seng302.group2.workspace.Workspace;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.dialog.CreateProjectDialog;
 import seng302.group2.scenes.dialog.CreatePersonDialog;
@@ -16,29 +17,27 @@ import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.project.Project;
-import seng302.group2.project.Project.SaveLoadResult;
+import seng302.group2.workspace.Workspace.SaveLoadResult;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
 import seng302.group2.scenes.dialog.CreateTeamDialog;
-import seng302.group2.util.config.ConfigLoader;
 
 /**
- * The main menu bar of the project window(s).
+ * The main menu bar of the workspace window(s).
  * @author Jordane Lew (jml168)
  */
 @SuppressWarnings("deprecation")
 public class MainMenuBar
 {
     /**
-     * Creates a menu item "Project" and sets the on action event if "Project" is clicked.
-     * @return MenuItem Project
+     * Creates a menu item "Workspace" and sets the on action event if "Workspace" is clicked.
+     * @return MenuItem Workspace
      */
     private static MenuItem createProjectItem() 
     {
-        MenuItem newProjectItem = new MenuItem("Project");
+        MenuItem newProjectItem = new MenuItem("Workspace");
         newProjectItem.setOnAction((ActionEvent event) ->
             {
-                if (Global.currentProject == null || !Global.currentProject.getHasUnsavedChanges())
+                if (Global.currentWorkspace == null || !Global.currentWorkspace.getHasUnsavedChanges())
                 {
                     CreateProjectDialog.show();
                     App.refreshMainScene();
@@ -47,13 +46,13 @@ public class MainMenuBar
                 }
                
                 Action response = Dialogs.create()
-                    .title("Save Project?")
-                    .message("Would you like to save your changes to the current project?")
+                    .title("Save Workspace?")
+                    .message("Would you like to save your changes to the current workspace?")
                     .showConfirm();
                 
                 if (response == Dialog.ACTION_YES)
                 {
-                    SaveLoadResult saved = Project.saveProject(Global.currentProject, false);
+                    SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
                     if (saved == SaveLoadResult.SUCCESS)
                     {
                         CreateProjectDialog.show();
@@ -134,28 +133,28 @@ public class MainMenuBar
         MenuItem openItem = new MenuItem("Open");
         openItem.setOnAction((event) ->
             {
-                if (!Global.currentProject.getHasUnsavedChanges())
+                if (!Global.currentWorkspace.getHasUnsavedChanges())
                 {
-                    Project.loadProject();
+                    Workspace.loadWorkspace();
                     return;
                 }
                 Action response = Dialogs.create()
-                    .title("Save Project?")
-                    .message("Would you like to save your changes to the current project?")
+                    .title("Save Workspace?")
+                    .message("Would you like to save your changes to the current workspace?")
                     .showConfirm();
                 
                 if (response == Dialog.ACTION_YES)
                 {
-                    SaveLoadResult saved = Project.saveProject(Global.currentProject, false);
+                    SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
                     if (saved == SaveLoadResult.SUCCESS)
                     {
-                        Project.loadProject();
+                        Workspace.loadWorkspace();
                         //App.refreshMainScene();
                     }
                 }
                 else if (response == Dialog.ACTION_NO)
                 {
-                    Project.loadProject();
+                    Workspace.loadWorkspace();
                     //App.refreshMainScene();
                 }   
             });
@@ -174,7 +173,7 @@ public class MainMenuBar
         MenuItem saveItem = new MenuItem("Save");
         saveItem.setOnAction((event) ->
             {
-                Project.saveProject(Global.currentProject, false);
+                Workspace.saveWorkspace(Global.currentWorkspace, false);
             });
 
         saveItem.setAccelerator(new KeyCodeCombination(KeyCode.S,
@@ -193,7 +192,7 @@ public class MainMenuBar
         MenuItem saveAsItem = new MenuItem("Save As...");
         saveAsItem.setOnAction((event) ->
             {
-                Project.saveProject(Global.currentProject, true);
+                Workspace.saveWorkspace(Global.currentWorkspace, true);
             });
 
         saveAsItem.setAccelerator(new KeyCodeCombination(KeyCode.S,

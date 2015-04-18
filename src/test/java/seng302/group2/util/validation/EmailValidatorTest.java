@@ -10,8 +10,8 @@ import java.util.Date;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import seng302.group2.Global;
-import seng302.group2.project.Project;
-import seng302.group2.project.team.person.Person;
+import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.person.Person;
 
 import static org.junit.Assert.assertEquals;
 
@@ -30,10 +30,10 @@ public class EmailValidatorTest
     @BeforeClass
     public static void setUpClass()
     {
-        Global.currentProject = new Project();
+        Global.currentWorkspace = new Workspace();
         Person pers = new Person("btm38", "McNaughton", "Bronson", "btm38@gmail.com",
                 "A really cool dude", new Date(1994, 12, 19));
-        Global.currentProject.add(pers);
+        Global.currentWorkspace.add(pers);
     }
 
 

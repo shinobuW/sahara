@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package seng302.group2.project;
+package seng302.group2.workspace;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import seng302.group2.project.team.person.Person;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 /**
@@ -18,13 +18,13 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
  * @author Jordane Lew (jml168)
  * @author Bronson McNaughton (btm38)
  */
-public class ProjectTest extends TestCase
+public class WorkspaceTest extends TestCase
 {
     /**
      * Create the test case
      * @param testName name of the test case
      */
-    public ProjectTest(String testName)
+    public WorkspaceTest(String testName)
     {
         super(testName);
     }
@@ -34,21 +34,21 @@ public class ProjectTest extends TestCase
      */
     public static Test suite()
     {
-        return new TestSuite(ProjectTest.class);
+        return new TestSuite(WorkspaceTest.class);
     }
 
-    // A simple test for the Project constructors & getters.
+    // A simple test for the Workspace constructors & getters.
     public void testProjectConstructors()
     {
-        Project proj = new Project();
+        Workspace proj = new Workspace();
         ObservableList<TreeViewItem> people = observableArrayList();
         assertEquals("Untitled", proj.getShortName());
-        assertEquals("Untitled Project", proj.getLongName());
-        assertEquals("A blank project.", proj.getDescription());
+        assertEquals("Untitled Workspace", proj.getLongName());
+        assertEquals("A blank workspace.", proj.getDescription());
         assertEquals("Untitled", proj.toString());
         assertEquals(people, proj.getPeople());
         
-        Project proj2 = new Project("aShortName", "aLongName", "aDescription");
+        Workspace proj2 = new Workspace("aShortName", "aLongName", "aDescription");
         assertEquals("aShortName", proj2.getShortName());
         assertEquals("aLongName", proj2.getLongName());
         assertEquals("aDescription", proj2.getDescription());    
@@ -58,7 +58,7 @@ public class ProjectTest extends TestCase
     // Tests Projects' setter methods.
     public void testProjectSetters()
     {
-        Project proj = new Project();
+        Workspace proj = new Workspace();
         proj.setShortName("aShortName");
         proj.setLongName("aLongName");
         proj.setDescription("aDescription");
@@ -75,7 +75,7 @@ public class ProjectTest extends TestCase
      */
     public void testAddPerson()
     {
-        Project proj = new Project();
+        Workspace proj = new Workspace();
         Person pers = new Person();
         proj.add(pers);
         

@@ -9,13 +9,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.project.team.Team;
-import seng302.group2.project.team.person.Person;
+import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.person.Person;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
@@ -47,7 +46,7 @@ public class TeamScene
         teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
         ObservableList<Person> dialogSkills = observableArrayList();
-        for (TreeViewItem projectPerson : Global.currentProject.getPeople())
+        for (TreeViewItem projectPerson : Global.currentWorkspace.getPeople())
         {
             if (!currentTeam.getPeople().contains(projectPerson))
             {

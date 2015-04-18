@@ -15,7 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
-import seng302.group2.project.team.person.Person;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
@@ -84,7 +84,7 @@ public class CreatePersonDialog
                     final Date birthDate = stringToDate(birthdateString);
                     Person person = new Person(shortName, firstName, lastName, email, description,
                         birthDate);
-                    Global.currentProject.add(person);
+                    Global.currentWorkspace.add(person);
                     dialog.hide();
                 }
                 else 

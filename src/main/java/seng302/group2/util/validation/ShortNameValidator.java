@@ -6,9 +6,9 @@
 package seng302.group2.util.validation;
 
 import seng302.group2.Global;
-import seng302.group2.project.skills.Skill;
-import seng302.group2.project.team.Team;
-import seng302.group2.project.team.person.Person;
+import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.scenes.control.RequiredField;
 
 
@@ -63,7 +63,7 @@ public class ShortNameValidator
             return ValidationStatus.OUT_OF_RANGE;
         }
         
-        for (Object object : Global.currentProject.getPeople())
+        for (Object object : Global.currentWorkspace.getPeople())
         {
             try
             {
@@ -79,7 +79,7 @@ public class ShortNameValidator
             }
         }
         
-        for (Object object : Global.currentProject.getSkills())
+        for (Object object : Global.currentWorkspace.getSkills())
         {
             try
             {
@@ -95,7 +95,7 @@ public class ShortNameValidator
             }    
         }
         
-        for (Object object : Global.currentProject.getTeams())
+        for (Object object : Global.currentWorkspace.getTeams())
         {
             try
             {

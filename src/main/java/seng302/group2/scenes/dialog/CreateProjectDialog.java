@@ -7,25 +7,25 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
-import seng302.group2.project.Project;
+import seng302.group2.workspace.Workspace;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
- * Class to create a pop up dialog for creating a project.
+ * Class to create a pop up dialog for creating a workspace.
  * @author David Moseley drm127
  */
 @SuppressWarnings("deprecation")
 public class CreateProjectDialog 
 {
     /**
-     * Displays the Dialog box for creating a project.
+     * Displays the Dialog box for creating a workspace.
      */
     public static void show()
     {
-        Dialog dialog = new Dialog(null, "New Project");
+        Dialog dialog = new Dialog(null, "New Workspace");
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
@@ -41,7 +41,7 @@ public class CreateProjectDialog
         
         RequiredField shortNameCustomField = new RequiredField("Short Name");
         RequiredField longNameCustomField = new RequiredField("Long Name");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Workspace Description");
         
         grid.getChildren().add(shortNameCustomField);
         grid.getChildren().add(longNameCustomField);
@@ -59,8 +59,8 @@ public class CreateProjectDialog
                 
                 if (correctShortName && correctLongName)
                 {
-                    Project project = new Project(shortName, longName, description);
-                    Global.currentProject = project;
+                    Workspace workspace = new Workspace(shortName, longName, description);
+                    Global.currentWorkspace = workspace;
                     dialog.hide();
                 }
                 else

@@ -19,8 +19,8 @@ import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
 import static seng302.group2.Global.selectedTreeItem;
-import seng302.group2.project.team.Team;
-import seng302.group2.project.team.person.Person;
+import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.scenes.MainScene;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
@@ -77,7 +77,7 @@ public class TeamEditScene
         
         
         ObservableList<Person> dialogSkills = observableArrayList();
-        for (TreeViewItem projectPerson : Global.currentProject.getPeople())
+        for (TreeViewItem projectPerson : Global.currentWorkspace.getPeople())
         {
             if (!currentTeam.getPeople().contains(projectPerson))
             {
@@ -108,7 +108,7 @@ public class TeamEditScene
                 }
                 
                 dialogSkills.clear();
-                for (TreeViewItem projectPeople : Global.currentProject.getPeople())
+                for (TreeViewItem projectPeople : Global.currentWorkspace.getPeople())
                 {
                     if (!currentTeam.getPeople().contains((Person)projectPeople))
                     {
@@ -128,7 +128,7 @@ public class TeamEditScene
                 }
                 
                 dialogSkills.clear();
-                for (TreeViewItem projectPeople : Global.currentProject.getPeople())
+                for (TreeViewItem projectPeople : Global.currentWorkspace.getPeople())
                 {
                     if (!currentTeam.getPeople().contains((Person)projectPeople))
                     {
@@ -159,7 +159,7 @@ public class TeamEditScene
                     TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
-                    children.add(Global.currentProject);
+                    children.add(Global.currentWorkspace);
 
                     MainScene.treeView.setItems(children);
                     MainScene.treeView.setShowRoot(false);

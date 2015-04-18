@@ -1,7 +1,7 @@
 package seng302.group2.util.undoredo;
 
 import junit.framework.TestCase;
-import seng302.group2.project.team.person.Person;
+import seng302.group2.workspace.person.Person;
 
 import java.util.Stack;
 

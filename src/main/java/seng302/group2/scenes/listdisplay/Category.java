@@ -5,7 +5,7 @@ import seng302.group2.Global;
 
 /**
  * Category item in the list display, uses as a header for all the elements of one type, ie 
- * "People" for all persons within the project.
+ * "People" for all persons within the workspace.
  * @author Jordane
  */
 public class Category extends TreeViewItem
@@ -44,11 +44,11 @@ public class Category extends TreeViewItem
         switch (name)
         {
             case "People":
-                return Global.currentProject.getPeople();
+                return Global.currentWorkspace.getPeople();
             case "Skills":
-                return Global.currentProject.getSkills();
+                return Global.currentWorkspace.getSkills();
             case "Teams":
-                return Global.currentProject.getTeams();
+                return Global.currentWorkspace.getTeams();
             default:
                 return null;
         }

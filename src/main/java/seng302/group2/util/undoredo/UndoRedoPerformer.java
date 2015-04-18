@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.project.Project;
-import seng302.group2.project.skills.Skill;
-import seng302.group2.project.team.Team;
-import seng302.group2.project.team.person.Person;
+import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.person.Person;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import seng302.group2.scenes.information.PersonScene;
 import seng302.group2.scenes.information.TeamScene;
@@ -68,10 +68,10 @@ public class UndoRedoPerformer
     {
         Class objClass = item.getHost().getClass();
         
-        /* Project actions */
-        if (objClass == Project.class)
+        /* Workspace actions */
+        if (objClass == Workspace.class)
         {
-            Project proj = (Project) item.getHost();
+            Workspace proj = (Workspace) item.getHost();
             switch (item.getUndoAction().getProperty())
             {
                 case PROJECT_SHORTNAME:
@@ -89,10 +89,10 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
-                    //ProjectScene.refreshProjectScene(proj);
+                    //WorkspaceScene.refreshProjectScene(proj);
                     break; 
                 default:
-                    System.out.println("Undo on project with this property not implemented (yet?)");
+                    System.out.println("Undo on workspace with this property not implemented (yet?)");
                     break;
             }
         }
@@ -107,7 +107,7 @@ public class UndoRedoPerformer
                     person.setShortName((String) item.getUndoAction().getValue());
                     break;
                 case PERSON:
-                    Global.currentProject.getPeople().remove((Person) item.getHost());
+                    Global.currentWorkspace.getPeople().remove((Person) item.getHost());
                     break;
                 case PERSON_FIRSTNAME:
                     person.setFirstName((String) item.getUndoAction().getValue());
@@ -160,7 +160,7 @@ public class UndoRedoPerformer
             switch (item.getUndoAction().getProperty())
             {
                 case SKILL:
-                    Global.currentProject.getSkills().remove((Skill) item.getHost());
+                    Global.currentWorkspace.getSkills().remove((Skill) item.getHost());
                     break;
                 case SKILL_SHORTNAME:
                     skill.setShortName((String) item.getUndoAction().getValue());
@@ -201,7 +201,7 @@ public class UndoRedoPerformer
             switch (item.getUndoAction().getProperty())
             {
                 case TEAM:
-                    Global.currentProject.getTeams().remove((Team) item.getHost());
+                    Global.currentWorkspace.getTeams().remove((Team) item.getHost());
                     break;
                 case TEAM_SHORTNAME:
                     team.setShortName((String) item.getUndoAction().getValue());
@@ -233,10 +233,10 @@ public class UndoRedoPerformer
     {
         Class objClass = item.getHost().getClass();
         
-        /* Project actions */
-        if (objClass == Project.class)
+        /* Workspace actions */
+        if (objClass == Workspace.class)
         {
-            Project proj = (Project) item.getHost();
+            Workspace proj = (Workspace) item.getHost();
             switch (item.getRedoAction().getProperty())
             {
                 case PROJECT_SHORTNAME:
@@ -254,10 +254,10 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
-                    //ProjectScene.refreshProjectScene(proj);
+                    //WorkspaceScene.refreshProjectScene(proj);
                     break;     
                 default:
-                    System.out.println("Redo on project with this property not implemented (yet?)");
+                    System.out.println("Redo on workspace with this property not implemented (yet?)");
                     break;
             }
         }
@@ -269,7 +269,7 @@ public class UndoRedoPerformer
             switch (item.getRedoAction().getProperty())
             {
                 case PERSON:
-                    Global.currentProject.getPeople().add((Person) item.getHost());
+                    Global.currentWorkspace.getPeople().add((Person) item.getHost());
                     break;
                 case PERSON_SHORTNAME:
                     person.setShortName((String) item.getRedoAction().getValue());
@@ -325,7 +325,7 @@ public class UndoRedoPerformer
             switch (item.getRedoAction().getProperty())
             {
                 case SKILL:
-                    Global.currentProject.getSkills().add((Skill) item.getHost());
+                    Global.currentWorkspace.getSkills().add((Skill) item.getHost());
                     break;
                 case SKILL_SHORTNAME:
                     skill.setShortName((String) item.getRedoAction().getValue());
@@ -366,7 +366,7 @@ public class UndoRedoPerformer
             switch (item.getRedoAction().getProperty())
             {
                 case TEAM:
-                    Global.currentProject.getTeams().add((Team) item.getHost());
+                    Global.currentWorkspace.getTeams().add((Team) item.getHost());
                     break;
                 case TEAM_SHORTNAME:
                     team.setShortName((String) item.getRedoAction().getValue());

@@ -17,7 +17,7 @@ import javafx.scene.text.FontWeight;
 import seng302.group2.App;
 import seng302.group2.Global;
 import static seng302.group2.Global.selectedTreeItem;
-import seng302.group2.project.team.role.Role;
+import seng302.group2.workspace.role.Role;
 import seng302.group2.scenes.MainScene;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
@@ -61,7 +61,7 @@ public class RoleScene
 	RoleScene.getRoleScene(role);
 	MainScene.treeView = new TreeViewWithItems(new TreeItem());
 	ObservableList<TreeViewItem> children = observableArrayList();
-	children.add(Global.currentProject);
+	children.add(Global.currentWorkspace);
 
 	MainScene.treeView.setItems(children);
 	MainScene.treeView.setShowRoot(false);

@@ -13,12 +13,12 @@ import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import static seng302.group2.App.content;
 import seng302.group2.Global;
-import seng302.group2.project.Project;
-import seng302.group2.project.skills.Skill;
-import seng302.group2.project.team.Team;
-import seng302.group2.project.team.person.Person;
+import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.scenes.information.PersonScene;
-import seng302.group2.scenes.information.ProjectScene;
+import seng302.group2.scenes.information.WorkspaceScene;
 import seng302.group2.scenes.information.SkillScene;
 import seng302.group2.scenes.information.TeamScene;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
@@ -27,7 +27,7 @@ import seng302.group2.scenes.menu.MainMenuBar;
 
 
 /**
- * A class for holding JavaFX scenes used in the project
+ * A class for holding JavaFX scenes used in the workspace
  * @author Jordane Lew (jml168)
  */
 public class MainScene
@@ -47,9 +47,9 @@ public class MainScene
         MenuBar menuBar = MainMenuBar.getMainMenuBar();
         root.getChildren().add(new StackPane(menuBar));
         
-        if (Global.selectedTreeItem.getValue() instanceof Project)
+        if (Global.selectedTreeItem.getValue() instanceof Workspace)
         {
-            ProjectScene.getProjectScene((Project) Global.selectedTreeItem.getValue());
+            WorkspaceScene.getWorkspaceScene((Workspace) Global.selectedTreeItem.getValue());
         }
         else if (Global.selectedTreeItem.getValue() instanceof Person)
         {
@@ -65,12 +65,12 @@ public class MainScene
         }
         
         // Old: TreeView display = ListDisplay.getProjectTree();  // (Manual)
-        // Create the display menu from the project tree
+        // Create the display menu from the workspace tree
         
         ObservableList<TreeViewItem> children = observableArrayList();
 
         
-        children.add(Global.currentProject);
+        children.add(Global.currentWorkspace);
         
 
         

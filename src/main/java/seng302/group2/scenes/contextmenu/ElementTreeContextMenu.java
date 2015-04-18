@@ -8,13 +8,13 @@ import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.project.Project;
-import seng302.group2.project.skills.Skill;
-import seng302.group2.project.team.Team;
-import seng302.group2.project.team.person.Person;
+import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.information.PersonEditScene;
-import seng302.group2.scenes.information.ProjectEditScene;
+import seng302.group2.scenes.information.WorkspaceEditScene;
 import seng302.group2.scenes.information.SkillEditScene;
 import seng302.group2.scenes.information.TeamEditScene;
 
@@ -86,7 +86,7 @@ public class ElementTreeContextMenu extends ContextMenu
         {
             selectedCategory = Categories.TEAM;
         }
-        else if (Global.selectedTreeItem.getValue().getClass() == Project.class)
+        else if (Global.selectedTreeItem.getValue().getClass() == Workspace.class)
         {
             selectedCategory = Categories.PROJECT;
         }
@@ -115,7 +115,7 @@ public class ElementTreeContextMenu extends ContextMenu
                 TeamEditScene.getTeamEditScene((Team) Global.selectedTreeItem.getValue());
                 break;
             case PROJECT:
-                ProjectEditScene.getProjectEditScene((Project) Global.selectedTreeItem.getValue());
+                WorkspaceEditScene.getProjectEditScene((Workspace) Global.selectedTreeItem.getValue());
                 break;
             case OTHER:
                 System.out.println("The category was not correctly recognized");
@@ -145,17 +145,17 @@ public class ElementTreeContextMenu extends ContextMenu
             switch (category)
             {
                 case PERSON:
-                    Global.currentProject.remove((Person) Global.selectedTreeItem.getValue());
+                    Global.currentWorkspace.remove((Person) Global.selectedTreeItem.getValue());
                     break;
                 case PROJECT:
-                    //TODO: Check if valid after project/workspace refactoring and uncomment
-                    //Global.currentProject.remove((Project) Global.selectedTreeItem.getValue());
+                    //TODO: Check if valid after workspace/workspace refactoring and uncomment
+                    //Global.currentWorkspace.remove((Workspace) Global.selectedTreeItem.getValue());
                     break;
                 case TEAM:
-                    Global.currentProject.remove((Team) Global.selectedTreeItem.getValue());
+                    Global.currentWorkspace.remove((Team) Global.selectedTreeItem.getValue());
                     break;
                 case SKILL:
-                    Global.currentProject.remove((Skill) Global.selectedTreeItem.getValue());
+                    Global.currentWorkspace.remove((Skill) Global.selectedTreeItem.getValue());
                     break;
                 case OTHER:
                     System.out.println("Can't delete unknown selected class");

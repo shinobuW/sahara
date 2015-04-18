@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package seng302.group2.project.team.person;
+package seng302.group2.workspace.person;
 
 import java.util.Date;
 import junit.framework.Assert;

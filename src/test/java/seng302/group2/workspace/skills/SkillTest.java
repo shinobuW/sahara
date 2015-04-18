@@ -1,4 +1,4 @@
-package seng302.group2.project.skills;
+package seng302.group2.workspace.skills;
 
 import junit.framework.Assert;
 import junit.framework.Test;
