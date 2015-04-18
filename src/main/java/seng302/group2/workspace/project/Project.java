@@ -100,4 +100,15 @@ public class Project extends TreeViewItem implements Serializable
     {
         this.description = description;
     }
+
+
+    /**
+     * An overridden version for the String representation of a Workspace.
+     * @return The short name of the Workspace
+     */
+    @Override
+    public String toString()
+    {
+        return this.shortName;
+    }
 }

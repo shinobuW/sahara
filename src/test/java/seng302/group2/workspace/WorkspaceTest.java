@@ -42,10 +42,10 @@ public class WorkspaceTest extends TestCase
     {
         Workspace proj = new Workspace();
         ObservableList<TreeViewItem> people = observableArrayList();
-        assertEquals("Untitled", proj.getShortName());
+        assertEquals("Untitled Workspace", proj.getShortName());
         assertEquals("Untitled Workspace", proj.getLongName());
         assertEquals("A blank workspace.", proj.getDescription());
-        assertEquals("Untitled", proj.toString());
+        assertEquals("Untitled Workspace", proj.toString());
         assertEquals(people, proj.getPeople());
         
         Workspace proj2 = new Workspace("aShortName", "aLongName", "aDescription");

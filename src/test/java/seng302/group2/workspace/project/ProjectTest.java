@@ -32,10 +32,10 @@ public class ProjectTest extends TestCase
     public void testProjectConstructors()
     {
         Project proj = new Project();
-        assertEquals("Untitled", proj.getShortName());
-        assertEquals("Untitled Workspace", proj.getLongName());
-        assertEquals("A blank workspace.", proj.getDescription());
-        assertEquals("Untitled", proj.toString());
+        assertEquals("Untitled Project", proj.getShortName());
+        assertEquals("Untitled Project", proj.getLongName());
+        assertEquals("A blank project.", proj.getDescription());
+        assertEquals("Untitled Project", proj.toString());
 
         Project proj2 = new Project("aShortName", "aLongName", "aDescription");
         assertEquals("aShortName", proj2.getShortName());
