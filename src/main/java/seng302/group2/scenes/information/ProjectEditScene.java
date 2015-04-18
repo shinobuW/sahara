@@ -68,92 +68,92 @@ public class ProjectEditScene
 
 
         btnCancel.setOnAction((event) ->
-        {
-            App.content.getChildren().remove(informationGrid);
-            ProjectScene.getProjectScene((Project) Global.selectedTreeItem.getValue());
-            App.content.getChildren().add(informationGrid);
+            {
+                App.content.getChildren().remove(informationGrid);
+                ProjectScene.getProjectScene((Project) Global.selectedTreeItem.getValue());
+                App.content.getChildren().add(informationGrid);
 
-        });
+            });
 
         btnSave.setOnAction((event) ->
-        {
-            boolean correctShortName = validateShortName(shortNameCustomField);
-            boolean correctLongName = validateName(longNameCustomField);
-
-
-            if (correctShortName && correctLongName)
             {
-                // Build Undo/Redo edit array.
-                ArrayList<UndoableItem> undoActions = new ArrayList<>();
-                if (shortNameCustomField.getText() != currentProject.getShortName())
+                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctLongName = validateName(longNameCustomField);
+
+
+                if (correctShortName && correctLongName)
                 {
-                    undoActions.add(new UndoableItem(
+                    // Build Undo/Redo edit array.
+                    ArrayList<UndoableItem> undoActions = new ArrayList<>();
+                    if (shortNameCustomField.getText() != currentProject.getShortName())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentProject,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_SHORTNAME,
+                                        currentProject.getShortName()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_SHORTNAME,
+                                        shortNameCustomField.getText())));
+                    }
+
+                    if (longNameCustomField.getText() != currentProject.getLongName())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentProject,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_LONGNAME,
+                                        currentProject.getDescription()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_LONGNAME,
+                                        longNameCustomField.getText())));
+                    }
+
+                    if (descriptionTextArea.getText() != currentProject.getDescription())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentProject,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_DESCRIPTION,
+                                        currentProject.getDescription()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_DESCRIPTION,
+                                        descriptionTextArea.getText())));
+                    }
+
+                    Global.undoRedoMan.add(new UndoableItem(
                             currentProject,
                             new UndoRedoAction(
-                                    UndoRedoPerformer.UndoRedoProperty.PROJECT_SHORTNAME,
-                                    currentProject.getShortName()),
+                                    UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT,
+                                    undoActions),
                             new UndoRedoAction(
-                                    UndoRedoPerformer.UndoRedoProperty.PROJECT_SHORTNAME,
-                                    shortNameCustomField.getText())));
-                }
+                                    UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT,
+                                    undoActions)
+                    ));
 
-                if (longNameCustomField.getText() != currentProject.getLongName())
+                    // Save the edits.
+                    currentProject.setDescription(descriptionTextArea.getText());
+                    currentProject.setShortName(shortNameCustomField.getText());
+                    currentProject.setLongName(longNameCustomField.getText());
+                    App.content.getChildren().remove(treeView);
+                    App.content.getChildren().remove(informationGrid);
+                    ProjectScene.getProjectScene(currentProject);
+                    MainScene.treeView = new TreeViewWithItems(new TreeItem());
+                    ObservableList<TreeViewItem> children = observableArrayList();
+                    children.add(Global.currentWorkspace);
+
+                    MainScene.treeView.setItems(children);
+                    MainScene.treeView.setShowRoot(false);
+
+                    App.content.getChildren().add(treeView);
+                    App.content.getChildren().add(informationGrid);
+                    MainScene.treeView.getSelectionModel().select(selectedTreeItem);
+                }
+                else
                 {
-                    undoActions.add(new UndoableItem(
-                            currentProject,
-                            new UndoRedoAction(
-                                    UndoRedoPerformer.UndoRedoProperty.PROJECT_LONGNAME,
-                                    currentProject.getDescription()),
-                            new UndoRedoAction(
-                                    UndoRedoPerformer.UndoRedoProperty.PROJECT_LONGNAME,
-                                    longNameCustomField.getText())));
+                    event.consume();
                 }
-
-                if (descriptionTextArea.getText() != currentProject.getDescription())
-                {
-                    undoActions.add(new UndoableItem(
-                            currentProject,
-                            new UndoRedoAction(
-                                    UndoRedoPerformer.UndoRedoProperty.PROJECT_DESCRIPTION,
-                                    currentProject.getDescription()),
-                            new UndoRedoAction(
-                                    UndoRedoPerformer.UndoRedoProperty.PROJECT_DESCRIPTION,
-                                    descriptionTextArea.getText())));
-                }
-
-                Global.undoRedoMan.add(new UndoableItem(
-                        currentProject,
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT,
-                                undoActions),
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT,
-                                undoActions)
-                ));
-
-                // Save the edits.
-                currentProject.setDescription(descriptionTextArea.getText());
-                currentProject.setShortName(shortNameCustomField.getText());
-                currentProject.setLongName(longNameCustomField.getText());
-                App.content.getChildren().remove(treeView);
-                App.content.getChildren().remove(informationGrid);
-                ProjectScene.getProjectScene(currentProject);
-                MainScene.treeView = new TreeViewWithItems(new TreeItem());
-                ObservableList<TreeViewItem> children = observableArrayList();
-                children.add(Global.currentWorkspace);
-
-                MainScene.treeView.setItems(children);
-                MainScene.treeView.setShowRoot(false);
-
-                App.content.getChildren().add(treeView);
-                App.content.getChildren().add(informationGrid);
-                MainScene.treeView.getSelectionModel().select(selectedTreeItem);
-            }
-            else
-            {
-                event.consume();
-            }
-        });
+            });
 
         return informationGrid;
     }
