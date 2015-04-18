@@ -36,36 +36,36 @@ public class MainMenuBar
     {
         MenuItem newWorkspaceItem = new MenuItem("Workspace");
         newWorkspaceItem.setOnAction((ActionEvent event) ->
-        {
-            if (Global.currentWorkspace == null
-                    || !Global.currentWorkspace.getHasUnsavedChanges())
             {
-                CreateWorkspaceDialog.show();
-                App.refreshMainScene();
-                Global.undoRedoMan.emptyAll();
-                return;
-            }
+                if (Global.currentWorkspace == null
+                        || !Global.currentWorkspace.getHasUnsavedChanges())
+                {
+                    CreateWorkspaceDialog.show();
+                    App.refreshMainScene();
+                    Global.undoRedoMan.emptyAll();
+                    return;
+                }
 
-            Action response = Dialogs.create()
-                    .title("Save Workspace?")
-                    .message("Would you like to save your changes to the current workspace?")
-                    .showConfirm();
+                Action response = Dialogs.create()
+                        .title("Save Workspace?")
+                        .message("Would you like to save your changes to the current workspace?")
+                        .showConfirm();
 
-            if (response == Dialog.ACTION_YES)
-            {
-                SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
-                if (saved == SaveLoadResult.SUCCESS)
+                if (response == Dialog.ACTION_YES)
+                {
+                    SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
+                    if (saved == SaveLoadResult.SUCCESS)
+                    {
+                        CreateWorkspaceDialog.show();
+                        App.refreshMainScene();
+                    }
+                }
+                else if (response == Dialog.ACTION_NO)
                 {
                     CreateWorkspaceDialog.show();
                     App.refreshMainScene();
                 }
-            }
-            else if (response == Dialog.ACTION_NO)
-            {
-                CreateWorkspaceDialog.show();
-                App.refreshMainScene();
-            }
-        });
+            });
 
         newWorkspaceItem.setAccelerator(new KeyCodeCombination(KeyCode.N,
                 KeyCombination.CONTROL_DOWN,
@@ -80,10 +80,8 @@ public class MainMenuBar
     private static MenuItem createPersonItem() 
     {
         MenuItem newPersonItem = new MenuItem("Person");
-        newPersonItem.setOnAction((event) -> 
-            {
-                CreatePersonDialog.show();
-            });
+        newPersonItem.setOnAction((event) ->
+                CreatePersonDialog.show());
         newPersonItem.setAccelerator(new KeyCodeCombination(KeyCode.P,
                 KeyCombination.CONTROL_DOWN,
                 KeyCombination.SHORTCUT_DOWN));
@@ -98,9 +96,7 @@ public class MainMenuBar
     {
         MenuItem newSkillItem = new MenuItem("Skill");
         newSkillItem.setOnAction((event) ->
-            {
-                CreateSkillDialog.show();
-            });
+                CreateSkillDialog.show());
         newSkillItem.setAccelerator(new KeyCodeCombination(KeyCode.K,
                 KeyCombination.CONTROL_DOWN,
                 KeyCombination.SHORTCUT_DOWN));
@@ -115,9 +111,7 @@ public class MainMenuBar
     {
         MenuItem newTeamItem = new MenuItem("Team");
         newTeamItem.setOnAction((event) ->
-            {
-                CreateTeamDialog.show();
-            });
+                CreateTeamDialog.show());
         newTeamItem.setAccelerator(new KeyCodeCombination(KeyCode.T,
                 KeyCombination.CONTROL_DOWN,
                 KeyCombination.SHORTCUT_DOWN));
@@ -173,9 +167,7 @@ public class MainMenuBar
         // Create 'Save' MenuItem
         MenuItem saveItem = new MenuItem("Save");
         saveItem.setOnAction((event) ->
-            {
-                Workspace.saveWorkspace(Global.currentWorkspace, false);
-            });
+                Workspace.saveWorkspace(Global.currentWorkspace, false));
 
         saveItem.setAccelerator(new KeyCodeCombination(KeyCode.S,
                 KeyCombination.CONTROL_DOWN,
@@ -192,9 +184,7 @@ public class MainMenuBar
         // Create 'Save As' MenuItem
         MenuItem saveAsItem = new MenuItem("Save As...");
         saveAsItem.setOnAction((event) ->
-            {
-                Workspace.saveWorkspace(Global.currentWorkspace, true);
-            });
+                Workspace.saveWorkspace(Global.currentWorkspace, true));
 
         saveAsItem.setAccelerator(new KeyCodeCombination(KeyCode.S,
                 KeyCombination.CONTROL_DOWN,
@@ -211,9 +201,7 @@ public class MainMenuBar
     {
         MenuItem quitProgramItem = new MenuItem("Quit");
         quitProgramItem.setOnAction((event) ->
-            {
-                App.exitApp();
-            });      
+                App.exitApp());
         
         return quitProgramItem;
     }
@@ -227,9 +215,7 @@ public class MainMenuBar
         // Create 'Undo' MenuItem
         MenuItem undoItem = new MenuItem("Undo");
         undoItem.setOnAction((event) ->
-            {
-                Global.undoRedoMan.undo();
-            });
+                Global.undoRedoMan.undo());
 
         undoItem.setAccelerator(new KeyCodeCombination(KeyCode.Z,
                 KeyCombination.CONTROL_DOWN,
@@ -246,9 +232,7 @@ public class MainMenuBar
         // Create 'Redo' MenuItem
         MenuItem redoItem = new MenuItem("Redo");
         redoItem.setOnAction((event) ->
-            {
-                Global.undoRedoMan.redo();
-            });
+                Global.undoRedoMan.redo());
 
         redoItem.setAccelerator(new KeyCodeCombination(KeyCode.Y,
                 KeyCombination.CONTROL_DOWN,
