@@ -50,30 +50,28 @@ public class CreateProjectDialog
         grid.getChildren().add(buttons);
 
         btnCreate.setOnAction((event) ->
-        {
-            boolean correctShortName = validateShortName(shortNameCustomField);
-            boolean correctLongName = validateName(longNameCustomField);
-
-            String shortName = shortNameCustomField.getText();
-            String longName = longNameCustomField.getText();
-            String description = descriptionTextArea.getText();
-
-            if (correctShortName && correctLongName)
             {
-                Project project = new Project(shortName, longName, description);
-                Global.currentWorkspace.add(project);
-                dialog.hide();
-            }
-            else
-            {
-                event.consume();
-            }
-        });
+                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctLongName = validateName(longNameCustomField);
+
+                String shortName = shortNameCustomField.getText();
+                String longName = longNameCustomField.getText();
+                String description = descriptionTextArea.getText();
+
+                if (correctShortName && correctLongName)
+                {
+                    Project project = new Project(shortName, longName, description);
+                    Global.currentWorkspace.add(project);
+                    dialog.hide();
+                }
+                else
+                {
+                    event.consume();
+                }
+            });
 
         btnCancel.setOnAction((event) ->
-        {
-            dialog.hide();
-        });
+                dialog.hide());
 
         dialog.setResizable(false);
         dialog.setIconifiable(false);
