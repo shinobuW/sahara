@@ -24,16 +24,15 @@ public class DateValidator
         datePattern.setLenient(false);
         try
         {
-            Date parsedBirthDate = datePattern.parse(birthDate);
-            if(birthDate.matches("[0-9/]+"))
+            String[] date = birthDate.split("/"); //returns an array with the day, month and year
+            String year = date[date.length-1];
+            if (year.length() != 4)
             {
-                String[] date = birthDate.split("/"); //returns an array with the day, month and year
-                String year = date[2];
-                if (year.length() != 4)
-                {
-                    return ValidationStatus.PATTERN_MISMATCH;
-                }
+                return ValidationStatus.PATTERN_MISMATCH;
             }
+
+            Date parsedBirthDate = datePattern.parse(birthDate);
+
             if (parsedBirthDate.after( Date.from(Instant.now())))
             {
                 return ValidationStatus.OUT_OF_RANGE;

@@ -5,13 +5,10 @@
  */
 package seng302.group2.util.validation;
 
-import junit.framework.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
+import org.junit.*;
+
+import static junit.framework.TestCase.assertEquals;
 
 /**
  *
@@ -51,10 +48,12 @@ public class DateValidatorTest
     @Test
     public void testIsValidDateString()
     {
-        Assert.assertEquals(ValidationStatus.PATTERN_MISMATCH, DateValidator.isValidDateString(""));
-        Assert.assertEquals(ValidationStatus.OUT_OF_RANGE,
+        assertEquals(ValidationStatus.PATTERN_MISMATCH, DateValidator.isValidDateString(""));
+        assertEquals(ValidationStatus.OUT_OF_RANGE,
                 DateValidator.isValidDateString("12/12/9999"));
-        Assert.assertEquals(ValidationStatus.VALID, DateValidator.isValidDateString("20/03/2015"));
+        assertEquals(ValidationStatus.VALID, DateValidator.isValidDateString("20/03/2015"));
+        assertEquals(ValidationStatus.PATTERN_MISMATCH,
+                DateValidator.isValidDateString("20/03/15"));
     }
     
 }
