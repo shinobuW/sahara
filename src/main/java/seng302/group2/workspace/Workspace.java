@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 import seng302.group2.workspace.person.Person;
@@ -56,8 +57,8 @@ public class Workspace extends TreeViewItem implements Serializable
     private ArrayList<Person> serializablePeople = new ArrayList<>();
     private transient ObservableList<TreeViewItem> skills = observableArrayList();
     private ArrayList<Skill> serializableSkills = new ArrayList<>();
-    //private transient ObservableList<TreeViewItem> projects = observableArrayList();
-    //private ArrayList<Project> serializableProjects = new ArrayList<>();
+    private transient ObservableList<TreeViewItem> projects = observableArrayList();
+    private ArrayList<Project> serializableProjects = new ArrayList<>();
 
 
     /**
@@ -495,7 +496,41 @@ public class Workspace extends TreeViewItem implements Serializable
                 new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null)
         ));*/
 
-        this.skills.remove(team);
+        this.teams.remove(team);
+    }
+
+
+    /**
+     * Adds a Project to the Workspace's list of Projects.
+     * @param project The team to add
+     */
+    public void add(Project project)
+    {
+        //Add the undo action to the stack
+        Global.undoRedoMan.add(new UndoableItem(
+                project,
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT, null)
+        ));
+
+        this.teams.add(project);
+    }
+
+
+    /**
+     * Removes a Project to the Workspace's list of Projects.
+     * @param project The project to remove
+     */
+    public void remove(Project project)
+    {
+        // TODO: UndoRedo stack items for removals of whole projects
+        /*Global.undoRedoMan.add(new UndoableItem(
+                person,
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null)
+        ));*/
+
+        this.projects.remove(project);
     }
 
     
