@@ -5,6 +5,7 @@
  */
 package seng302.group2.util.validation;
 
+import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomDateField;
 
 import java.text.SimpleDateFormat;
@@ -17,8 +18,6 @@ import java.util.Date;
  */
 public class DateValidator
 {
-    private static SimpleDateFormat datePattern = new SimpleDateFormat("dd/MM/yyyy");
-     
     public static ValidationStatus isValidDateString(String birthDate)
     {
         if (birthDate.isEmpty())
@@ -26,7 +25,7 @@ public class DateValidator
             return ValidationStatus.NULL;
         }
 
-        datePattern.setLenient(false);
+        Global.datePattern.setLenient(false);
         try
         {
             String[] date = birthDate.split("/"); //returns an array with the day, month and year
@@ -36,7 +35,7 @@ public class DateValidator
                 return ValidationStatus.PATTERN_MISMATCH;
             }
 
-            Date parsedBirthDate = datePattern.parse(birthDate);
+            Date parsedBirthDate = Global.datePattern.parse(birthDate);
 
             if (parsedBirthDate.after(Date.from(Instant.now())))
             {
@@ -53,7 +52,8 @@ public class DateValidator
 
         }
     }
-    
+
+
     /**
      * Checks whether the birth date format is correct
      * Shows error message and red borders if incorrect

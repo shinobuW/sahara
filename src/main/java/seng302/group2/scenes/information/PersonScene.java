@@ -43,7 +43,6 @@ public class PersonScene
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
         Button btnEdit = new Button("Edit");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     
         ListView personSkillsBox = new ListView(currentPerson.getSkills());
         personSkillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

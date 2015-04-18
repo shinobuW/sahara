@@ -53,14 +53,7 @@ public class Person extends TreeViewItem implements Serializable
         this.email = "";
         this.description = "";
         this.team = null;
-        try
-        {
-            this.birthDate = new SimpleDateFormat(birthDatePattern).parse("29/05/1985");
-        }
-        catch (ParseException e)
-        {
-            System.out.println("Error parsing date");
-        }
+        this.birthDate = null;
     }
     
     
@@ -317,7 +310,7 @@ public class Person extends TreeViewItem implements Serializable
         {
             try
             {
-                return Global.dateFormat.format(this.getBirthDate());
+                return Global.datePattern.format(this.getBirthDate());
             }
             catch (Exception e)
             {

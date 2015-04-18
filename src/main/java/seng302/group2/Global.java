@@ -16,7 +16,7 @@ public final class Global
     public static TreeItem selectedTreeItem = new TreeItem();
     public static UndoRedoManager undoRedoMan = new UndoRedoManager();
     public static String lastSaveLocation = "/";
-    public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    public static SimpleDateFormat datePattern = new SimpleDateFormat("dd/MM/yyyy");
 
 
     /**

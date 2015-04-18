@@ -81,9 +81,10 @@ public class MainMenuBar
         newProjectItem.setOnAction((ActionEvent event) ->
                 CreateProjectDialog.show());
 
-        /*newProjectItem.setAccelerator(new KeyCodeCombination(KeyCode.P,
+        newProjectItem.setAccelerator(new KeyCodeCombination(KeyCode.P,
                 KeyCombination.CONTROL_DOWN,
-                KeyCombination.SHORTCUT_DOWN));*/
+                KeyCombination.SHIFT_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
 
         return newProjectItem;
     }

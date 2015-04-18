@@ -125,23 +125,23 @@ public class PersonEditScene
         informationGrid.add(skillsBox, 2, 6);
         
         btnAdd.setOnAction((event) ->
+        {
+            ObservableList<Skill> selectedSkills =
+                    skillsBox.getSelectionModel().getSelectedItems();
+            for (Skill item : selectedSkills)
             {
-                ObservableList<Skill> selectedSkills = 
-                        skillsBox.getSelectionModel().getSelectedItems();
-                for (Skill item : selectedSkills)
+                currentPerson.addSkill(item);
+            }
+
+            dialogSkills.clear();
+            for (TreeViewItem projectSkill : currentWorkspace.getSkills())
+            {
+                if (!currentPerson.getSkills().contains((Skill) projectSkill))
                 {
-                    currentPerson.addSkill(item);
+                    dialogSkills.add((Skill) projectSkill);
                 }
-                
-                dialogSkills.clear();
-                for (TreeViewItem projectSkill : currentWorkspace.getSkills())
-                {
-                    if (!currentPerson.getSkills().contains((Skill)projectSkill))
-                    {
-                        dialogSkills.add((Skill)projectSkill);
-                    }
-                }
-            });
+            }
+        });
         
         btnDelete.setOnAction((event) ->
             {
@@ -185,10 +185,18 @@ public class PersonEditScene
                     correctShortName = validateShortName(shortNameCustomField);
                 }
                 
-                if (correctShortName && correctFirstName && correctLastName)
+                if (correctDate && correctShortName && correctFirstName && correctLastName)
                 {
                     //set Person proprties
-                    final Date birthDate = stringToDate(customBirthDate.getText());
+                    Date birthDate;
+                    if (customBirthDate.getText().isEmpty())
+                    {
+                        birthDate = null;
+                    }
+                    else
+                    {
+                        birthDate = stringToDate(customBirthDate.getText());
+                    }
                     
                     ArrayList<UndoableItem> undoActions = new ArrayList<>();
                     
