@@ -574,6 +574,12 @@ public class Workspace extends TreeViewItem implements Serializable
         {
             workspace.serializablePeople.add((Person)item);
         }
+
+        workspace.serializableProjects.clear();
+        for (Object item : workspace.projects)
+        {
+            workspace.serializableProjects.add((Project)item);
+        }
         
         workspace.serializableSkills.clear();
         for (Object item : workspace.skills)
