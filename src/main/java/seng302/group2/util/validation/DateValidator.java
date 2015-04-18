@@ -5,6 +5,7 @@
  */
 package seng302.group2.util.validation;
 
+import java.io.SyncFailedException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
@@ -21,20 +22,18 @@ public class DateValidator
     public static ValidationStatus isValidDateString(String birthDate)
     {
         datePattern.setLenient(false);
-       
-        if (birthDate.matches("[0-9/]+")) 
-        {
-            String[] date = birthDate.split("/"); //returns an array with the day, month and year
-            String year = date[2];
-
-            if (year.length() != 4)
-            {
-                return ValidationStatus.PATTERN_MISMATCH;
-            }
-        }
         try
         {
             Date parsedBirthDate = datePattern.parse(birthDate);
+            if(birthDate.matches("[0-9/]+"))
+            {
+                String[] date = birthDate.split("/"); //returns an array with the day, month and year
+                String year = date[2];
+                if (year.length() != 4)
+                {
+                    return ValidationStatus.PATTERN_MISMATCH;
+                }
+            }
             if (parsedBirthDate.after( Date.from(Instant.now())))
             {
                 return ValidationStatus.OUT_OF_RANGE;
@@ -47,7 +46,7 @@ public class DateValidator
         catch (Exception ex)
         {
             return ValidationStatus.PATTERN_MISMATCH;
-              
+
         }
     }
     
