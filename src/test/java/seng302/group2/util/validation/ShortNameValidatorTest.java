@@ -20,17 +20,22 @@ import java.util.Date;
  */
 public class ShortNameValidatorTest
 {
-    
-    public ShortNameValidatorTest()
-    {
-    }
-
     @BeforeClass
-    public static void setUpClass()
+    public void setUp()
     {
+        Date dob = new Date();
+        try
+        {
+            dob = Global.datePattern.parse("19/12/1994");
+        }
+        catch (ParseException e)
+        {
+            fail("Date parsing error, needs fixing");
+        }
+
         Global.currentWorkspace = new Workspace();
         Person pers = new Person("btm38", "McNaughton", "Bronson", "btm38@gmail.com",
-                "A really cool dude", new Date(1994, 12, 19));
+        "A really cool dude", dob);
         Global.currentWorkspace.add(pers);
     }
 
