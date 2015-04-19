@@ -5,7 +5,6 @@
  */
 package seng302.group2.workspace.team;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -41,17 +40,17 @@ public class TeamTest extends TestCase
     public void testTeamConstructors()
     {
         Team team = new Team();
-        Assert.assertEquals("unnamed", team.getShortName());
-        Assert.assertEquals("", team.getDescription());
-        Assert.assertEquals("unnamed", team.toString());
-        Assert.assertEquals(null, team.getChildren());
-        Assert.assertEquals(null, team.getScrumMaster());
-        Assert.assertEquals(null, team.getProductOwner());
+        assertEquals("unnamed", team.getShortName());
+        assertEquals("", team.getDescription());
+        assertEquals("unnamed", team.toString());
+        assertEquals(null, team.getChildren());
+        assertEquals(null, team.getScrumMaster());
+        assertEquals(null, team.getProductOwner());
         
         Team team2 = new Team("Arctic Falcon", "An awesome team name"); 
-        Assert.assertEquals("Arctic Falcon", team2.getShortName());
-        Assert.assertEquals("An awesome team name", team2.getDescription());
-        Assert.assertEquals("Arctic Falcon", team2.toString());
+        assertEquals("Arctic Falcon", team2.getShortName());
+        assertEquals("An awesome team name", team2.getDescription());
+        assertEquals("Arctic Falcon", team2.toString());
         
     }
     
@@ -68,13 +67,13 @@ public class TeamTest extends TestCase
         team.setScrumMaster(new Person());
         team.setProductOwner(po);
         
-        Assert.assertEquals("Arctic Falcon", team.getShortName());
-        Assert.assertEquals("An awesome team name", team.getDescription());
-        Assert.assertEquals("Arctic Falcon", team.toString());
+        assertEquals("Arctic Falcon", team.getShortName());
+        assertEquals("An awesome team name", team.getDescription());
+        assertEquals("Arctic Falcon", team.toString());
         
-        Assert.assertEquals("Chardonnay", team.getProductOwner().getShortName());
-        Assert.assertEquals("unnamed", team.getScrumMaster().getShortName());
-        Assert.assertEquals(RoleType.ProductOwner, team.getProductOwner().getRole().getType());
-        Assert.assertEquals(RoleType.ScrumMaster, team.getScrumMaster().getRole().getType());
+        assertEquals("Chardonnay", team.getProductOwner().getShortName());
+        assertEquals("unnamed", team.getScrumMaster().getShortName());
+        assertEquals(RoleType.ProductOwner, team.getProductOwner().getRole().getType());
+        assertEquals(RoleType.ScrumMaster, team.getScrumMaster().getRole().getType());
     }
 }

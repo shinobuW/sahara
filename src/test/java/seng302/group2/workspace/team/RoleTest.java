@@ -5,7 +5,6 @@
  */
 package seng302.group2.workspace.team;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -41,18 +40,18 @@ public class RoleTest extends TestCase
     public void testRoleConstructors()
     {
         Role role = new Role();
-        Assert.assertEquals("role Name", role.getShortName());
-        Assert.assertEquals("", role.getDescription());
-        Assert.assertEquals("role Name", role.toString());
+        assertEquals("role Name", role.getShortName());
+        assertEquals("", role.getDescription());
+        assertEquals("role Name", role.toString());
         
         Role role2 = new Role("QA", RoleType.Others);
-        Assert.assertEquals("QA", role2.getShortName());
-        Assert.assertEquals(RoleType.Others, role2.getType());
+        assertEquals("QA", role2.getShortName());
+        assertEquals(RoleType.Others, role2.getType());
         
         Role role3 = new Role("Dev2", RoleType.Dev, "Developer");
-        Assert.assertEquals("Dev2", role3.getShortName());
-        Assert.assertEquals(RoleType.Dev, role3.getType());
-        Assert.assertEquals("Developer", role3.getDescription());
+        assertEquals("Dev2", role3.getShortName());
+        assertEquals(RoleType.Dev, role3.getType());
+        assertEquals("Developer", role3.getDescription());
     }
     
     /**
@@ -65,8 +64,8 @@ public class RoleTest extends TestCase
         role.setDescription("Manual Testing");
         role.setType(RoleType.Others);
         
-        Assert.assertEquals("Tester", role.getShortName());
-        Assert.assertEquals("Manual Testing", role.getDescription());
-        Assert.assertEquals(RoleType.Others, role.getType());
+        assertEquals("Tester", role.getShortName());
+        assertEquals("Manual Testing", role.getDescription());
+        assertEquals(RoleType.Others, role.getType());
     }
 }

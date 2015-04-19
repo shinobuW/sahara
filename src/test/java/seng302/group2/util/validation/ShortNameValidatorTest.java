@@ -1,52 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package seng302.group2.util.validation;
 
-import junit.framework.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import seng302.group2.Global;
-import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.person.Person;
-
-import java.util.Date;
+import junit.framework.TestCase;
 
 /**
- *
- * @author Jordane
+ * Tests that the short name validator works as expected
+ * Created by Jordane on 19/04/2015.
  */
-public class ShortNameValidatorTest
+public class ShortNameValidatorTest extends TestCase
 {
-    
-    public ShortNameValidatorTest()
-    {
-    }
-
-    @BeforeClass
-    public static void setUpClass()
-    {
-        Global.currentWorkspace = new Workspace();
-        Person pers = new Person("btm38", "McNaughton", "Bronson", "btm38@gmail.com",
-                "A really cool dude", new Date(1994, 12, 19));
-        Global.currentWorkspace.add(pers);
-    }
-
 
     /**
-     * Test of isValidPerson method, of class ShortNameValidator.
+     * A test to see if names are being validated properly
      */
-    @Test
-    public void testIsValidPerson()
+    public void testValidateShortName()
     {
-        Assert.assertEquals(ValidationStatus.INVALID, ShortNameValidator.validateShortName(""));
-        Assert.assertEquals(ValidationStatus.NON_UNIQUE,
+        assertEquals(ValidationStatus.INVALID, ShortNameValidator.validateShortName(""));
+        assertEquals(ValidationStatus.NON_UNIQUE,
                 ShortNameValidator.validateShortName("btm38"));
-        Assert.assertEquals(ValidationStatus.VALID, ShortNameValidator.validateShortName("new"));
-        Assert.assertEquals(ValidationStatus.OUT_OF_RANGE, ShortNameValidator.validateShortName("this is much more" +
+        assertEquals(ValidationStatus.VALID, ShortNameValidator.validateShortName("new"));
+        assertEquals(ValidationStatus.OUT_OF_RANGE, ShortNameValidator.validateShortName("this is much more" +
                 "than 20 characters long"));
     }
-    
 }

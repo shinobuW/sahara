@@ -1,6 +1,5 @@
 package seng302.group2.workspace.skills;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -34,15 +33,15 @@ public class SkillTest extends TestCase
     public void testSkillConstructors()
     {
         Skill skill = new Skill();
-        Assert.assertEquals("unnamed", skill.getShortName());
-        Assert.assertEquals("no description", skill.getDescription());
-        Assert.assertEquals("unnamed", skill.toString());
-        Assert.assertEquals(null, skill.getChildren());
+        assertEquals("unnamed", skill.getShortName());
+        assertEquals("no description", skill.getDescription());
+        assertEquals("unnamed", skill.toString());
+        assertEquals(null, skill.getChildren());
         
         Skill skill2 = new Skill("C#", "A better language than Java"); 
-        Assert.assertEquals("C#", skill2.getShortName());
-        Assert.assertEquals("A better language than Java", skill2.getDescription());
-        Assert.assertEquals("C#", skill2.toString());
+        assertEquals("C#", skill2.getShortName());
+        assertEquals("A better language than Java", skill2.getDescription());
+        assertEquals("C#", skill2.toString());
         
     }
     
@@ -55,9 +54,8 @@ public class SkillTest extends TestCase
         skill.setShortName("C#");
         skill.setDescription("A better language than Java");
         
-        Assert.assertEquals("C#", skill.getShortName());
-        Assert.assertEquals("A better language than Java", skill.getDescription());
-        Assert.assertEquals("C#", skill.toString());
+        assertEquals("C#", skill.getShortName());
+        assertEquals("A better language than Java", skill.getDescription());
+        assertEquals("C#", skill.toString());
     }
- 
 }

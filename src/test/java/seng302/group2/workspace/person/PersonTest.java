@@ -5,11 +5,12 @@
  */
 package seng302.group2.workspace.person;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import seng302.group2.Global;
 
+import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -41,38 +42,52 @@ public class PersonTest extends TestCase
      */
     public void testPersonConstructors()
     {
+        Date dob = new Date();
+
+        try
+        {
+            dob = Global.datePattern.parse("19/12/1994");
+        }
+        catch (ParseException e)
+        {
+            fail("Date parsing error, needs fixing");
+        }
+
         Person pers = new Person();
-        Assert.assertEquals("lastName", pers.getLastName());
-        Assert.assertEquals("firstName", pers.getFirstName());
-        Assert.assertEquals("unnamed", pers.getShortName());
-        Assert.assertEquals("", pers.getEmail());
-        Assert.assertEquals("", pers.getDescription());
-        Assert.assertNull(pers.getBirthDate());
-        Assert.assertEquals("unnamed", pers.toString());
-        Assert.assertEquals(null, pers.getChildren());
-        
+        assertEquals("lastName", pers.getLastName());
+        assertEquals("firstName", pers.getFirstName());
+        assertEquals("unnamed", pers.getShortName());
+        assertEquals("", pers.getEmail());
+        assertEquals("", pers.getDescription());
+        assertNull(pers.getBirthDate());
+        assertEquals("unnamed", pers.toString());
+        assertEquals(null, pers.getChildren());
+        assertEquals("", pers.getDateString());
+
         Person pers2 = new Person("btm38", "Bronson", "McNaughton", "btm38@gmail.com", 
-                "A really cool dude",  new Date(1994, 12, 19)); 
-        Assert.assertEquals("McNaughton", pers2.getLastName());
-        Assert.assertEquals("Bronson", pers2.getFirstName());
-        Assert.assertEquals("btm38", pers2.getShortName());
-        Assert.assertEquals("btm38@gmail.com", pers2.getEmail());
-        Assert.assertEquals("A really cool dude", pers2.getDescription());
-        Assert.assertNotNull(pers2.getBirthDate());
-        Assert.assertEquals(new Date(1994, 12, 19), pers2.getBirthDate());
-        Assert.assertEquals("btm38", pers2.toString());
+                "A really cool dude", dob);
+        assertEquals("McNaughton", pers2.getLastName());
+        assertEquals("Bronson", pers2.getFirstName());
+        assertEquals("btm38", pers2.getShortName());
+        assertEquals("btm38@gmail.com", pers2.getEmail());
+        assertEquals("A really cool dude", pers2.getDescription());
+        assertNotNull(pers2.getBirthDate());
+        assertEquals(dob, pers2.getBirthDate());
+        assertEquals("btm38", pers2.toString());
+        assertEquals("19/12/1994", pers2.getDateString());
         
         Person pers3 = new Person("btm38", "Billy", "Mays", "billymays@gmail.com", 
                 "Pretty cool, but not as cool as Bronson", null);
-        Assert.assertEquals("Mays", pers3.getLastName());
-        Assert.assertEquals("Billy", pers3.getFirstName());
+        assertEquals("Mays", pers3.getLastName());
+        assertEquals("Billy", pers3.getFirstName());
         // Should this be btm38~1? There is code written to prevent unique names yet does not seem
         // to be working.
-        Assert.assertEquals("btm38", pers3.getShortName());
-        Assert.assertEquals("billymays@gmail.com", pers3.getEmail());
-        Assert.assertEquals("Pretty cool, but not as cool as Bronson", pers3.getDescription());
-        Assert.assertNull(pers3.getBirthDate());
-        Assert.assertEquals("btm38", pers3.toString());
+        assertEquals("btm38", pers3.getShortName());
+        assertEquals("billymays@gmail.com", pers3.getEmail());
+        assertEquals("Pretty cool, but not as cool as Bronson", pers3.getDescription());
+        assertNull(pers3.getBirthDate());
+        assertEquals("btm38", pers3.toString());
+        assertEquals("", pers3.getDateString());
     }
     
     /**
@@ -80,20 +95,32 @@ public class PersonTest extends TestCase
      */
     public void testPersonSetters()
     {
+        Date dob = new Date();
+
+        try
+        {
+            dob = Global.datePattern.parse("19/12/1994");
+        }
+        catch (ParseException e)
+        {
+            fail("Date parsing error, needs fixing");
+        }
+
         Person pers = new Person();
         pers.setShortName("btm38");
         pers.setLastName("McNaughton");
         pers.setFirstName("Bronson");
         pers.setEmail("btm38@gmail.com");
         pers.setDescription("A really cool dude");
-        pers.setBirthDate(new Date(1994, 12, 19));
+        pers.setBirthDate(dob);
         
-        Assert.assertEquals("McNaughton", pers.getLastName());
-        Assert.assertEquals("Bronson", pers.getFirstName());
-        Assert.assertEquals("btm38", pers.getShortName());
-        Assert.assertEquals("btm38@gmail.com", pers.getEmail());
-        Assert.assertEquals("A really cool dude", pers.getDescription());
-        Assert.assertEquals(new Date(1994, 12, 19), pers.getBirthDate());
-        Assert.assertEquals("btm38", pers.toString());
+        assertEquals("McNaughton", pers.getLastName());
+        assertEquals("Bronson", pers.getFirstName());
+        assertEquals("btm38", pers.getShortName());
+        assertEquals("btm38@gmail.com", pers.getEmail());
+        assertEquals("A really cool dude", pers.getDescription());
+        assertEquals(dob, pers.getBirthDate());
+        assertEquals("19/12/1994", pers.getDateString());
+        assertEquals("btm38", pers.toString());
     }
 }
