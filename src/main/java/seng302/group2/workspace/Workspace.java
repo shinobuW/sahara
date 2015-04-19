@@ -79,11 +79,9 @@ public class Workspace extends TreeViewItem implements Serializable
         this.serializablePeople = new ArrayList<>();
         this.serializableSkills = new ArrayList<>();
         this.serializableTeams = new ArrayList<>();
-
-        Team temp = new Team("Unassigned",
-                        "A team for unassigned people");
-        serializableTeams.add(temp);
-        teams.add(temp);
+        
+        Team unassignedTeam = Team.createUnassignedTeam();
+        this.add(unassignedTeam);
     }
     
     
@@ -99,10 +97,9 @@ public class Workspace extends TreeViewItem implements Serializable
         this.shortName = shortName;
         this.longName = fullName;
         this.description = description;
-	Team temp = new Team("Unassigned People", 
-					"All the people unassigned to a team");
-	serializableTeams.add(temp);
-	teams.add(temp);
+        
+        Team unassignedTeam = Team.createUnassignedTeam();
+        this.add(unassignedTeam);
     }
     
     
@@ -476,6 +473,12 @@ public class Workspace extends TreeViewItem implements Serializable
      */
     public void add(Team team)
     {
+        if (team.isUnassignedTeam())
+        {
+            this.teams.add(team);
+            return;
+        }
+        
         //Add the undo action to the stack
         Global.undoRedoMan.add(new UndoableItem(
                 team,

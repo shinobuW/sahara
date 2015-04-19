@@ -14,8 +14,6 @@ import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -79,10 +77,6 @@ public class Person extends TreeViewItem implements Serializable
         this.description = description;
         this.birthDate = birthDate;
         this.team = null;
-	if (Global.currentWorkspace != null)
-	{
-	    this.team = (Team) Global.currentWorkspace.getTeams().get(0);
-	}
     }
        
     // <editor-fold defaultstate="collapsed" desc="Getters"> 
@@ -144,16 +138,25 @@ public class Person extends TreeViewItem implements Serializable
      * Gets the person's current team's name.
      * @return The name of the team the person is currently in
      */
-    public String getTeam()
+    public String getTeamName()
     {
         if (this.team == null)
         {
-            return "";
+            return "Unassigned";
         }
         else
         {
             return this.team.getShortName();
         }
+    }
+    
+    /**
+     * Gets the person's team
+     * @return The person's team
+     */
+    public Team getTeam()
+    {
+        return this.team;
     }
     
     /**
@@ -299,7 +302,10 @@ public class Person extends TreeViewItem implements Serializable
         }
     }
 
-
+    /**
+     * Gets the persons birth date as a string
+     * @return The persons birth date as a string
+     */
     public String getDateString()
     {
         if (birthDate == null)

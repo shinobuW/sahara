@@ -74,6 +74,18 @@ public class TeamEditScene
         
         
         ListView teamsPeopleBox = new ListView(currentTeam.getPeople());
+        if (currentTeam.isUnassignedTeam())
+        {
+            for (TreeViewItem person : Global.currentWorkspace.getPeople())
+            {
+                Person castedPerson = (Person) person;
+                if (castedPerson.getTeam() == null)
+                {
+                    teamsPeopleBox.getItems().add((Person) person);
+                }
+            }
+        }
+        
         teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
         
@@ -83,6 +95,17 @@ public class TeamEditScene
             if (!currentTeam.getPeople().contains(projectPerson))
             {
                 dialogSkills.add((Person)projectPerson);
+            }
+        }
+        if (currentTeam.isUnassignedTeam())
+        {
+            for (TreeViewItem person : Global.currentWorkspace.getPeople())
+            {
+                Person castedPerson = (Person) person;
+                if (castedPerson.getTeamName() == null)
+                {
+                    teamsPeopleBox.getItems().remove((Person) person);
+                }
             }
         }
                 
@@ -148,9 +171,17 @@ public class TeamEditScene
 
         btnSave.setOnAction((event) ->
             {
-                boolean correctShortName = validateShortName(shortNameCustomField);
-
-
+                boolean correctShortName;
+                
+                if (shortNameCustomField.getText().equals(currentTeam.getShortName()))
+                {
+                    correctShortName = true;
+                }
+                else
+                {
+                    correctShortName = validateShortName(shortNameCustomField);
+                }
+                
                 if (correctShortName)
                 {
                     currentTeam.setDescription(descriptionTextArea.getText());

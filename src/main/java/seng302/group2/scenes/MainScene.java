@@ -38,8 +38,8 @@ public class MainScene
     public static boolean menuHidden = false;
     
     /**
-     * //TODO
-     * @return 
+     * Gets the Main Scene for display in the GUI
+     * @return The Main Scene.
      */
     public static Scene getMainScene()
     {

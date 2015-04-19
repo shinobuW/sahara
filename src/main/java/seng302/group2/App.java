@@ -20,6 +20,7 @@ import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.Workspace.SaveLoadResult;
 
 import java.awt.*;
+import seng302.group2.workspace.team.Team;
 
 /**
  * The executable class for Sahara.
@@ -86,7 +87,7 @@ public class App extends Application
      */
     @Override
     public void start(Stage primaryStage)
-    {
+    {        
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         
         // The title of the window
@@ -154,7 +155,7 @@ public class App extends Application
 
     
     /**
-     * The main entry of the workspace.
+     * The main entry of the application.
      * @param args arguments
      */
     public static void main(String[] args)

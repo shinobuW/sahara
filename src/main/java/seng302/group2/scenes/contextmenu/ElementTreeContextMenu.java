@@ -66,6 +66,18 @@ public class ElementTreeContextMenu extends ContextMenu
             });
 
         this.getItems().addAll(editItem, deleteItem);
+        if (selectedCategory == Categories.TEAM)
+        {
+            Team selectedTeam = (Team) Global.selectedTreeItem.getValue();
+            if (selectedTeam.isUnassignedTeam())
+            {
+                editItem.setDisable(true);
+            }
+            else
+            {
+                editItem.setDisable(false);
+            }
+        }
     }
 
 

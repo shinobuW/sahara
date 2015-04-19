@@ -34,6 +34,7 @@ public class Team extends TreeViewItem implements Serializable
     private ArrayList<Person> serializablePeople = new ArrayList<>();
     private transient ObservableList<Role> roles = observableArrayList();
     private ArrayList<Role> serializableRoles = new ArrayList<>();
+    private boolean unassigned = false;
     
     
     /**
@@ -186,10 +187,36 @@ public class Team extends TreeViewItem implements Serializable
         this.people.add(person);
         person.setTeam(this);
     }
+    
+    
+    /**
+     * Adds the 'Unassigned' team to the workspace.
+     */
+    public static Team createUnassignedTeam()
+    {
+        Team temp = new Team("Unassigned", 
+                "All the people unassigned to a team");
+        temp.unassigned = true;
+	return temp;
+    }
+    
+    
+    /**
+     * Returns if the team is the team of unassigned people
+     * @return if the team is the unassigned team
+     */
+    public boolean isUnassignedTeam()
+    {
+        if (this.unassigned)
+        {
+            return true;
+        }
+        return false;
+    }
 
     
     /**
-     * Removes a Person to the Workspace's list of Members
+     * Removes a Person from the Team's of Members
      * @param person The person to remove
      */
     public void removePerson(Person person)

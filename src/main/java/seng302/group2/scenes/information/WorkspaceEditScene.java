@@ -80,10 +80,26 @@ public class WorkspaceEditScene
 
         btnSave.setOnAction((event) ->
             {
-                boolean correctShortName = validateShortName(shortNameCustomField);
-                boolean correctLongName = validateName(longNameCustomField);
-
-
+                boolean correctShortName;
+                boolean correctLongName;   
+                
+                if (shortNameCustomField.getText().equals(currentWorkspace.getShortName()))
+                {
+                    correctShortName = true;
+                }
+                else
+                {
+                    correctShortName = validateShortName(shortNameCustomField);
+                }
+                
+                if (longNameCustomField.getText().equals(currentWorkspace.getLongName()))
+                {
+                    correctLongName = true;
+                }
+                else
+                {
+                    correctLongName = validateShortName(longNameCustomField);
+                }
                 if (correctShortName && correctLongName)
                 {
                     // Build Undo/Redo edit array.

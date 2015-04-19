@@ -14,7 +14,6 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.workspace.person.Person;
 
-import java.text.SimpleDateFormat;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.Global.selectedTreeItem;
@@ -62,7 +61,7 @@ public class PersonScene
         informationGrid.add(new Label(currentPerson.getDateString()), 1, 4);
 
         informationGrid.add(new Label(currentPerson.getDescription()), 1, 5);
-        informationGrid.add(new Label(currentPerson.getTeam()), 1, 6);
+        informationGrid.add(new Label(currentPerson.getTeamName()), 1, 6);
         
         String roleString = currentPerson.getRole() == null ? "" : 
                 currentPerson.getRole().toString();

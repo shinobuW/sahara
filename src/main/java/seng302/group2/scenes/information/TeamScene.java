@@ -1,5 +1,6 @@
 package seng302.group2.scenes.information;
 
+import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,12 +13,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.App;
 import seng302.group2.Global;
+import static seng302.group2.scenes.MainScene.informationGrid;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.team.Team;
-
-import static javafx.collections.FXCollections.observableArrayList;
-import static seng302.group2.scenes.MainScene.informationGrid;
 
 /**
  * A class for displaying the team scene.
@@ -42,16 +41,37 @@ public class TeamScene
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
         Button btnEdit = new Button("Edit");
+        if (currentTeam.isUnassignedTeam())
+        {
+            btnEdit.setDisable(true);
+        }
+        else
+        {
+            btnEdit.setDisable(false);
+        }
         
+        
+        if (currentTeam.isUnassignedTeam())
+        {
+            for (TreeViewItem person : Global.currentWorkspace.getPeople())
+            {
+                Person castedPerson = (Person) person;
+                if (castedPerson.getTeam() == null)
+                {
+                    currentTeam.addPerson(castedPerson);
+                }
+            }
+        }
         ListView teamsPeopleBox = new ListView(currentTeam.getPeople());
+        
         teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
-        ObservableList<Person> dialogSkills = observableArrayList();
+        ObservableList<Person> dialogPeople = observableArrayList();
         for (TreeViewItem projectPerson : Global.currentWorkspace.getPeople())
         {
             if (!currentTeam.getPeople().contains(projectPerson))
             {
-                dialogSkills.add((Person)projectPerson);
+                dialogPeople.add((Person)projectPerson);
             }
         }
                 

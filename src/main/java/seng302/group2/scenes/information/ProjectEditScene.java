@@ -78,9 +78,27 @@ public class ProjectEditScene
 
         btnSave.setOnAction((event) ->
             {
-                boolean correctShortName = validateShortName(shortNameCustomField);
-                boolean correctLongName = validateName(longNameCustomField);
-
+              
+                boolean correctShortName;
+                boolean correctLongName;   
+                
+                if (shortNameCustomField.getText().equals(currentProject.getShortName()))
+                {
+                    correctShortName = true;
+                }
+                else
+                {
+                    correctShortName = validateShortName(shortNameCustomField);
+                }
+                
+                if (longNameCustomField.getText().equals(currentProject.getLongName()))
+                {
+                    correctLongName = true;
+                }
+                else
+                {
+                    correctLongName = validateShortName(longNameCustomField);
+                }
 
                 if (correctShortName && correctLongName)
                 {
