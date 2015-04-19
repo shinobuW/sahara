@@ -6,7 +6,9 @@
 package seng302.group2.util.validation;
 
 
+import junit.framework.*;
 import org.junit.*;
+import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 
@@ -55,4 +57,5 @@ public class DateValidatorTest
         assertEquals(ValidationStatus.PATTERN_MISMATCH,
                 DateValidator.isValidDateString("20/03/15"));
     }
+    
 }

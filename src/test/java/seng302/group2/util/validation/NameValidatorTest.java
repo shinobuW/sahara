@@ -5,10 +5,8 @@
  */
 package seng302.group2.util.validation;
 
-
+import junit.framework.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -28,7 +26,8 @@ public class NameValidatorTest
     @Test
     public void testValidateName()
     {
-        assertEquals(ValidationStatus.INVALID, NameValidator.validateName(""));
-        assertEquals(ValidationStatus.VALID, NameValidator.validateName("Greg"));
+        Assert.assertEquals(ValidationStatus.INVALID, NameValidator.validateName(""));
+        Assert.assertEquals(ValidationStatus.VALID, NameValidator.validateName("Greg"));
     }
+    
 }

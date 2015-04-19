@@ -1,12 +1,10 @@
 package seng302.group2.util.config;
 
 import junit.framework.TestCase;
+import org.junit.Assert;
 import seng302.group2.Global;
 
-import static org.junit.Assert.assertNotEquals;
-
 /**
- * Tests configuration methods for synchronising between runtime and config settings
  * Created by Jordane on 16/04/2015.
  */
 public class ConfigurationTest extends TestCase
@@ -23,12 +21,12 @@ public class ConfigurationTest extends TestCase
         config.setLastSaveLocation(testLocation);
         Global.lastSaveLocation = anotherTestLocation;
 
-        assertNotEquals(config.getLastSaveLocation(), Global.lastSaveLocation);
+        Assert.assertNotEquals(config.getLastSaveLocation(), Global.lastSaveLocation);
 
         config.updateConfiguration();
 
-        assertEquals(config.getLastSaveLocation(), Global.lastSaveLocation);
-        assertEquals(config.getLastSaveLocation(), anotherTestLocation);
+        Assert.assertEquals(config.getLastSaveLocation(), Global.lastSaveLocation);
+        Assert.assertEquals(config.getLastSaveLocation(), anotherTestLocation);
     }
 
 
@@ -44,11 +42,11 @@ public class ConfigurationTest extends TestCase
         config.setLastSaveLocation(testLocation);
         Global.lastSaveLocation = anotherTestLocation;
 
-        assertNotEquals(config.getLastSaveLocation(), Global.lastSaveLocation);
+        Assert.assertNotEquals(config.getLastSaveLocation(), Global.lastSaveLocation);
 
         config.updateRuntime();
 
-        assertEquals(config.getLastSaveLocation(), Global.lastSaveLocation);
-        assertEquals(config.getLastSaveLocation(), testLocation);
+        Assert.assertEquals(config.getLastSaveLocation(), Global.lastSaveLocation);
+        Assert.assertEquals(config.getLastSaveLocation(), testLocation);
     }
 }
