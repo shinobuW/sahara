@@ -1,6 +1,13 @@
 package seng302.group2.util.validation;
 
 import junit.framework.TestCase;
+import org.junit.BeforeClass;
+import seng302.group2.Global;
+import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.person.Person;
+
+import java.text.ParseException;
+import java.util.Date;
 
 /**
  * Tests that the short name validator works as expected
@@ -8,6 +15,25 @@ import junit.framework.TestCase;
  */
 public class ShortNameValidatorTest extends TestCase
 {
+    @BeforeClass
+    public void setUp()
+    {
+        Date dob = new Date();
+        try
+        {
+            dob = Global.datePattern.parse("19/12/1994");
+        }
+        catch (ParseException e)
+        {
+            fail("Date parsing error, needs fixing");
+        }
+
+        Global.currentWorkspace = new Workspace();
+        Person pers = new Person("btm38", "McNaughton", "Bronson", "btm38@gmail.com",
+        "A really cool dude", dob);
+        Global.currentWorkspace.add(pers);
+    }
+
 
     /**
      * A test to see if names are being validated properly
