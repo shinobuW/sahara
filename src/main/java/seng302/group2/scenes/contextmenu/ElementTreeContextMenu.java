@@ -18,6 +18,8 @@ import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.text.MessageFormat;
+import seng302.group2.workspace.role.Role;
+import seng302.group2.workspace.role.RoleType;
 
 /**
  *ContextMenu class for instances of Person, Skill and Team
@@ -37,6 +39,7 @@ public class ElementTreeContextMenu extends ContextMenu
         TEAM,
         PROJECT,
         WORKSPACE,
+        ROLE,
         OTHER  // For anything else, or unresolved.
     }
 
@@ -66,16 +69,34 @@ public class ElementTreeContextMenu extends ContextMenu
             });
 
         this.getItems().addAll(editItem, deleteItem);
+        
         if (selectedCategory == Categories.TEAM)
         {
             Team selectedTeam = (Team) Global.selectedTreeItem.getValue();
             if (selectedTeam.isUnassignedTeam())
             {
                 editItem.setDisable(true);
+                deleteItem.setDisable(true);
             }
             else
             {
                 editItem.setDisable(false);
+                deleteItem.setDisable(false);
+            }
+        }
+        
+        if (selectedCategory == Categories.ROLE)
+        {
+            Role selectedRole = (Role) Global.selectedTreeItem.getValue();
+            if (!selectedRole.isDefault())
+            {
+                editItem.setDisable(true);
+                deleteItem.setDisable(true);
+            }
+            else
+            {
+                editItem.setDisable(false);
+                deleteItem.setDisable(false);
             }
         }
     }
@@ -107,6 +128,10 @@ public class ElementTreeContextMenu extends ContextMenu
         else if (Global.selectedTreeItem.getValue().getClass() == Project.class)
         {
             selectedCategory = Categories.PROJECT;
+        }
+        else if (Global.selectedTreeItem.getValue().getClass() == Role.class)
+        {
+            selectedCategory = Categories.ROLE;
         }
 
         return selectedCategory;

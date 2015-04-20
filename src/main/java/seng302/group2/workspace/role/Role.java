@@ -18,6 +18,7 @@ public class Role extends TreeViewItem
     private String shortName;
     private String description;
     private RoleType type;
+    private boolean defaultRole;
     
     /**Basic Role constructor
      */
@@ -86,6 +87,15 @@ public class Role extends TreeViewItem
         return this.type;
     }
     
+    /** 
+     * Gets the default state of the role
+     * @return whether the role is a default role or not
+     */
+    public boolean isDefault()
+    {
+        return this.defaultRole;
+    }
+    
     //</editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Setters">
@@ -114,6 +124,14 @@ public class Role extends TreeViewItem
     public void setType(RoleType type)
     {
         this.type = type;
+    }
+    
+    /** Set the default state of the role
+     * @param isDefault Boolean type of default to set 
+     */
+    public void setDefault(boolean isDefault)
+    {
+        this.defaultRole = isDefault;
     }
     
     //</editor-fold>  
