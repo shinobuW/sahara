@@ -66,7 +66,7 @@ public class PersonScene
         String roleString = currentPerson.getRole() == null ? "" : 
                 currentPerson.getRole().toString();
         informationGrid.add(new Label(roleString), 1, 7);
-       
+        informationGrid.add(btnEdit, 1, 10);
         
         btnEdit.setOnAction((event) ->
             {
