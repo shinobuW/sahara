@@ -19,6 +19,8 @@ public class Release
     private Date estimatedReleaseDate;
     private Project project;
     
+    /** Basic constructor
+     */
     public Release()
     {
         this.shortName = "Untitled Release";
@@ -27,12 +29,22 @@ public class Release
         this.project = new Project();
     }
     
+    /** Constructor
+     * @param shortName short name to be set
+     * @param project project to be set
+     */
     public Release(String shortName, Project project)
     {
         this.shortName = shortName;
         this.project = project;
     }
     
+    /**Constructor
+     * @param shortName short name to be set
+     * @param description description to be set
+     * @param releaseDate release date to be set
+     * @param project project to be set
+     */
     public Release(String shortName, String description, Date releaseDate, Project project)
     {
         this.shortName = shortName;
