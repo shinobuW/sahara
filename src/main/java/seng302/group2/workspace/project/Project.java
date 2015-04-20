@@ -3,6 +3,10 @@ package seng302.group2.workspace.project;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import static javafx.collections.FXCollections.observableArrayList;
+import javafx.collections.ObservableList;
+import seng302.group2.workspace.release.Release;
 
 /**
  * A class representing real-world projects
@@ -13,6 +17,8 @@ public class Project extends TreeViewItem implements Serializable
     private String shortName;
     private String longName;
     private String description;
+    private transient ObservableList<Release> releases = observableArrayList();
+    private ArrayList<Release> serializableReleases = new ArrayList<>();
 
 
     /**
@@ -41,7 +47,7 @@ public class Project extends TreeViewItem implements Serializable
         this.description = description;
     }
 
-
+ // <editor-fold defaultstate="collapsed" desc="Getters"> 
     /**
      * Gets the short name of the project
      * @return Short name of the project
@@ -51,6 +57,39 @@ public class Project extends TreeViewItem implements Serializable
         return shortName;
     }
 
+    /**
+     * Gets the long name of the project
+     * @return The long name of the project
+     */
+    public String getLongName()
+    {
+        return longName;
+    }
+    
+    /**
+     * Gets the releases of the project
+     * @return list of releases
+     */
+    public ObservableList<Release> getReleases()
+    {
+        this.serializableReleases.clear();
+        for (Object item : this.releases)
+        {
+            this.serializableReleases.add((Release)item);
+        }
+        return this.releases;
+    }
+    
+    /**
+     * Gets the description of the project
+     * @return The description of the project
+     */
+    public String getDescription()
+    {
+        return description;
+    }
+    
+    //</editor-fold>
 
     /**
      * Sets the short name of the project
@@ -60,18 +99,8 @@ public class Project extends TreeViewItem implements Serializable
     {
         this.shortName = shortName;
     }
-
-
-    /**
-     * Gets the long name of the project
-     * @return The long name of the project
-     */
-    public String getLongName()
-    {
-        return longName;
-    }
-
-
+    
+    // <editor-fold defaultstate="collapsed" desc="Setters"> 
     /**
      * Sets the long name of the project
      * @param longName The long name to set to the project
@@ -81,17 +110,6 @@ public class Project extends TreeViewItem implements Serializable
         this.longName = longName;
     }
 
-
-    /**
-     * Gets the description of the project
-     * @return The description of the project
-     */
-    public String getDescription()
-    {
-        return description;
-    }
-
-
     /**
      * Sets the description of the project
      * @param description The description to set to the project
@@ -100,7 +118,44 @@ public class Project extends TreeViewItem implements Serializable
     {
         this.description = description;
     }
+    
+    //</editor-fold>
+    
+    /** 
+     * Add Release to Project
+     * @param release release to be added
+     */
+    public void addRelease(Release release)
+    {
+        //Add the undo action to the stack
+        //TODO UNDO REDO
+        this.releases.add(release);
+    }
+    
+     /**
+     * Prepares a project to be serialized.
+     */
+    public void prepSerialization()
+    {
+        serializableReleases.clear();
+        for (Object item : releases)
+        {
+            this.serializableReleases.add((Release) item);
+        }
+    }
 
+
+    /**
+     * Deserialization post-processing.
+     */
+    public void postSerialization()
+    {
+        releases.clear();
+        for (Object item : serializableReleases)
+        {
+            this.releases.add((Release) item);
+        }
+    }
 
     /**
      * An overridden version for the String representation of a Workspace.
