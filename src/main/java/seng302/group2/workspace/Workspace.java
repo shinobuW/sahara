@@ -27,6 +27,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import seng302.group2.workspace.role.Role;
+import seng302.group2.workspace.role.RoleType;
 
 /**
  * Basic workspace class that acts as the root object for Sahara and represents a real-world
@@ -53,6 +55,8 @@ public class Workspace extends TreeViewItem implements Serializable
     private ArrayList<Skill> serializableSkills = new ArrayList<>();
     private transient ObservableList<TreeViewItem> projects = observableArrayList();
     private ArrayList<Project> serializableProjects = new ArrayList<>();
+    private transient ObservableList<TreeViewItem> roles = observableArrayList();
+    private ArrayList<Role> serializableRoles = new ArrayList();
 
 
     /**
@@ -79,9 +83,19 @@ public class Workspace extends TreeViewItem implements Serializable
         this.serializablePeople = new ArrayList<>();
         this.serializableSkills = new ArrayList<>();
         this.serializableTeams = new ArrayList<>();
+        this.serializableRoles = new ArrayList<>();
         
         Team unassignedTeam = Team.createUnassignedTeam();
         this.add(unassignedTeam);
+        
+        Role scrumMaster = new Role("Scrum Master", RoleType.ScrumMaster);
+        this.add(scrumMaster);
+        
+        Role productOwner = new Role("Product Owner", RoleType.ProductOwner);
+        this.add(productOwner);
+        
+        Role teamMember = new Role("Team Member", RoleType.TeamMember);
+        this.add(teamMember);
     }
     
     
@@ -100,6 +114,15 @@ public class Workspace extends TreeViewItem implements Serializable
         
         Team unassignedTeam = Team.createUnassignedTeam();
         this.add(unassignedTeam);
+        
+        Role scrumMaster = new Role("Scrum Master", RoleType.ScrumMaster);
+        this.add(scrumMaster);
+        
+        Role productOwner = new Role("Product Owner", RoleType.ProductOwner);
+        this.add(productOwner);
+        
+        Role teamMember = new Role("Team Member", RoleType.TeamMember);
+        this.add(teamMember);
     }
     
     
@@ -180,6 +203,15 @@ public class Workspace extends TreeViewItem implements Serializable
     public ObservableList<TreeViewItem> getTeams()
     {
         return this.teams;
+    }
+    
+    /**
+     * Gets the workspace's list of Roles
+     * @return the Roles associated with a workspace
+     */
+    public ObservableList<TreeViewItem> getRoles()
+    {
+        return this.roles;
     }
     
     // </editor-fold>
@@ -539,6 +571,34 @@ public class Workspace extends TreeViewItem implements Serializable
 
         this.projects.remove(project);
     }
+    
+    /**
+     * Adds a Role to the Workspace's list of Roles.
+     * @param role The role to add
+     */
+    public void add(Role role)
+    {
+        if (role.getType() == RoleType.ScrumMaster || role.getType() == RoleType.ProductOwner 
+                || role.getType() == RoleType.TeamMember)
+        {
+            this.roles.add(role);
+            return;
+        }
+        //Add the undo action to the stack
+        //TODO undoredo role stuff
+
+        this.roles.add(role);
+    }
+    
+        /**
+     * Removes a Role to the Workspace's list of Roles.
+     * @param project The project to remove
+     */
+    public void remove(Role role)
+    {
+        // TODO: UndoRedo stack items for removals of roles
+        this.roles.remove(role);
+    }
 
     
     /**
@@ -600,6 +660,12 @@ public class Workspace extends TreeViewItem implements Serializable
             workspace.serializableTeams.add((Team) item);
         }
         
+        workspace.serializableRoles.clear();
+        for (Object item: workspace.roles)
+        {
+            workspace.serializableRoles.add((Role) item);
+        }
+        
         // Prepare for the serialization of persons (skills)
         for (Object item : workspace.people)
         {
@@ -643,6 +709,12 @@ public class Workspace extends TreeViewItem implements Serializable
         {
             Global.currentWorkspace.teams.add(item);
         }
+        
+        Global.currentWorkspace.roles = observableArrayList();
+        for (Role item : Global.currentWorkspace.serializableRoles)
+        {
+            Global.currentWorkspace.roles.add(item);
+        }
 
         // Prepare for the serialization of persons
         for (Object item : Global.currentWorkspace.serializablePeople)
@@ -657,8 +729,6 @@ public class Workspace extends TreeViewItem implements Serializable
             Team team = (Team) item;
             team.postSerialization();
         }
-
-
         // Also for any other deeper observables
         // eg. for (TreeViewItem item : Global.currentWorkspace.team.people) {...}
 

@@ -51,6 +51,8 @@ public class Category extends TreeViewItem
                 return Global.currentWorkspace.getSkills();
             case "Teams":
                 return Global.currentWorkspace.getTeams();
+            case "Roles":
+                return Global.currentWorkspace.getRoles();
             default:
                 return null;
         }

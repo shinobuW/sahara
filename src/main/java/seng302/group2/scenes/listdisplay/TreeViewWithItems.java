@@ -26,6 +26,7 @@ import seng302.group2.workspace.team.Team;
 
 import java.util.HashMap;
 import java.util.Map;
+import seng302.group2.workspace.role.Role;
 
 
 /**
@@ -178,6 +179,13 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         else if (Global.selectedTreeItem.getValue() instanceof Category)
                         {
                             setContextMenu(new CategoryTreeContextMenu());
+                        }
+                        else if (Global.selectedTreeItem.getValue() instanceof Role)
+                        {
+                            App.content.getChildren().remove(MainScene.informationGrid);
+                            RoleScene.getRoleScene((Role) Global.selectedTreeItem.getValue());
+                            App.content.getChildren().add(MainScene.informationGrid);
+                            setContextMenu(new ElementTreeContextMenu()); 
                         }
                     }
                 }

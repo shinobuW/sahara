@@ -8,13 +8,12 @@ package seng302.group2.workspace.role;
 import javafx.collections.ObservableList;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
-import java.io.Serializable;
 
 /**
  *
  * @author swi67
  */
-public class Role extends TreeViewItem implements Serializable
+public class Role extends TreeViewItem 
 {
     private String shortName;
     private String description;

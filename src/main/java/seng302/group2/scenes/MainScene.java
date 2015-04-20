@@ -25,6 +25,8 @@ import seng302.group2.workspace.team.Team;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.App.content;
+import seng302.group2.scenes.information.RoleScene;
+import seng302.group2.workspace.role.Role;
 
 
 /**
@@ -63,6 +65,10 @@ public class MainScene
         else if (Global.selectedTreeItem.getValue() instanceof Team)
         {
             TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
+        }
+        else if (Global.selectedTreeItem.getValue() instanceof Role)
+        {
+            RoleScene.getRoleScene((Role) Global.selectedTreeItem.getValue());
         }
         
         // Old: TreeView display = ListDisplay.getProjectTree();  // (Manual)
