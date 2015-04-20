@@ -35,7 +35,7 @@ public class ReleaseScene
      * @param currentRelease selected Release
      * @return information pane
      */
-     public static GridPane getReleaseScene(Release currentRelease)
+    public static GridPane getReleaseScene(Release currentRelease)
     {
         informationGrid = new GridPane();
 

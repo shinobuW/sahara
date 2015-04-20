@@ -37,7 +37,7 @@ import seng302.group2.workspace.release.Release;
  */
 public class ReleaseEditScene
 {
-     public static GridPane getReleaseEditScene(Release currentRelease)
+    public static GridPane getReleaseEditScene(Release currentRelease)
     {
         informationGrid = new GridPane();
         informationGrid.setAlignment(Pos.TOP_LEFT);
