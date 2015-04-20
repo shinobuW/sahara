@@ -49,7 +49,7 @@ public class ReleaseTest extends TestCase
         
         Project testProject = new Project();
         Release release2 = new Release("Test2", testProject);
-        Assert.assertEquals("Test2", release1.getShortName());
+        Assert.assertEquals("Test2", release2.getShortName());
         Assert.assertEquals("Untitled Project", release2.getProject().getShortName());
         
         Release release3 = new Release("Test", "description", new Date("12/12/2020"), testProject);
