@@ -6,13 +6,15 @@
 package seng302.group2.workspace.release;
 
 import java.util.Date;
+import javafx.collections.ObservableList;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.project.Project;
 
 /**
  *
  * @author Shinobu
  */
-public class Release
+public class Release extends TreeViewItem
 {
     private String shortName;
     private String description;
@@ -128,6 +130,12 @@ public class Release
         this.project = project;
     }
      //</editor-fold>
+    
+    @Override
+    public ObservableList<TreeViewItem> getChildren()
+    {
+        return null;
+    }
     
     @Override
     public String toString()
