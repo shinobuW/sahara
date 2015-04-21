@@ -11,6 +11,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -35,8 +36,11 @@ public class CustomComboBox extends VBox
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(165);
         labelBox.spacingProperty().setValue(0);
-                
-        labelBox.getChildren().addAll(new Label(name));
+        
+        Label aster = new Label(" * ");
+        aster.setTextFill(Color.web("#ff0000"));
+        
+        labelBox.getChildren().addAll(new Label(name), aster);
         
         HBox entry = new HBox();
         entry.setPrefWidth(175);
