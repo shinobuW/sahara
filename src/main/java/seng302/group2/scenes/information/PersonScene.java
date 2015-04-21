@@ -45,6 +45,8 @@ public class PersonScene
     
         ListView personSkillsBox = new ListView(currentPerson.getSkills());
         personSkillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        final Separator separator = new Separator();
         
         informationGrid.add(title, 0, 0, 3, 1);
         informationGrid.add(new Label("Short Name: "), 0, 2);
@@ -53,20 +55,22 @@ public class PersonScene
         informationGrid.add(new Label("Description: "), 0, 5);
         informationGrid.add(new Label("Team: "), 0, 6);
         informationGrid.add(new Label("Role: "), 0, 7);
-        informationGrid.add(personSkillsBox, 0, 8);
+        informationGrid.add(separator, 0, 8, 4, 1);
+        informationGrid.add(new Label("Skills: "), 0, 9);
+        informationGrid.add(personSkillsBox, 0, 10, 2, 1);
         
-        informationGrid.add(new Label(currentPerson.getShortName()), 1, 2);
-        informationGrid.add(new Label(currentPerson.getEmail()), 1,3);
+        informationGrid.add(new Label(currentPerson.getShortName()), 1, 2, 5, 1);
+        informationGrid.add(new Label(currentPerson.getEmail()), 1, 3, 5, 1);
 
-        informationGrid.add(new Label(currentPerson.getDateString()), 1, 4);
+        informationGrid.add(new Label(currentPerson.getDateString()), 1, 4, 5, 1);
 
-        informationGrid.add(new Label(currentPerson.getDescription()), 1, 5);
-        informationGrid.add(new Label(currentPerson.getTeamName()), 1, 6);
+        informationGrid.add(new Label(currentPerson.getDescription()), 1, 5, 5, 1);
+        informationGrid.add(new Label(currentPerson.getTeamName()), 1, 6, 5, 1);
         
         String roleString = currentPerson.getRole() == null ? "" : 
                 currentPerson.getRole().toString();
-        informationGrid.add(new Label(roleString), 1, 7);
-        informationGrid.add(btnEdit, 1, 10);
+        informationGrid.add(new Label(roleString), 1, 7, 5, 1);
+        informationGrid.add(btnEdit, 3, 11);
         
         btnEdit.setOnAction((event) ->
             {
