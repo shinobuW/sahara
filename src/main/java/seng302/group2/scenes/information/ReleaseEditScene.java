@@ -6,13 +6,11 @@
 package seng302.group2.scenes.information;
 
 import java.util.ArrayList;
-import javafx.collections.FXCollections;
 import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -22,6 +20,7 @@ import static seng302.group2.Global.selectedTreeItem;
 import seng302.group2.scenes.MainScene;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
+import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
@@ -56,9 +55,13 @@ public class ReleaseEditScene
         RequiredField shortNameCustomField = new RequiredField("Short Name");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description", 300);
         CustomDateField releaseDateField = new CustomDateField("Estimated Release Date");
-        ObservableList<String> options = 
-                FXCollections.observableArrayList(Global.currentWorkspace.getProjects().toString());
-        final ComboBox projectCombobox = new ComboBox(options);
+        
+        CustomComboBox projectComboBox = new CustomComboBox("Project");
+        
+        for (TreeViewItem project : Global.currentWorkspace.getProjects())
+        {
+            projectComboBox.addToComboBox(project.toString());
+        }
         
         shortNameCustomField.setText(currentRelease.getShortName());
         descriptionTextArea.setText(currentRelease.getDescription());
@@ -66,7 +69,7 @@ public class ReleaseEditScene
         informationGrid.add(shortNameCustomField, 0, 0);
         informationGrid.add(descriptionTextArea, 0, 1);
         informationGrid.add(releaseDateField, 0, 2);
-        informationGrid.add(projectCombobox, 0, 3);
+        informationGrid.add(projectComboBox, 0, 3);
         informationGrid.add(buttons, 0,4);
         
         btnCancel.setOnAction((event) ->
@@ -74,7 +77,6 @@ public class ReleaseEditScene
                 App.content.getChildren().remove(informationGrid);
                 ReleaseScene.getReleaseScene((Release) Global.selectedTreeItem.getValue());
                 App.content.getChildren().add(informationGrid);
-
             });
 
         btnSave.setOnAction((event) ->
