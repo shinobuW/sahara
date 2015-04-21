@@ -175,6 +175,7 @@ public class UndoRedoPerformer
                     App.content.getChildren().remove(informationGrid);
                     TeamScene.getTeamScene(currentTeam);
                     App.content.getChildren().add(informationGrid);
+                    System.out.println(currentTeam.toString() + person.toString());
                     break;
                 case PERSON_DEL_TEAM:
                     currentTeam = (Team) item.getUndoAction().getValue();

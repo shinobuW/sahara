@@ -50,7 +50,17 @@ public class Person extends TreeViewItem implements Serializable
         this.lastName = "lastName";
         this.email = "";
         this.description = "";
-        this.team = null;
+        
+        for (TreeViewItem team : Global.currentWorkspace.getTeams())
+        {
+            Team castedTeam = (Team) team;
+            if (castedTeam.isUnassignedTeam())
+            {
+                this.team = castedTeam;
+                break; // Only one unassigned team
+            }
+        }
+        
         this.birthDate = null;
     }
     
@@ -76,7 +86,15 @@ public class Person extends TreeViewItem implements Serializable
         this.email = email;
         this.description = description;
         this.birthDate = birthDate;
-        this.team = null;
+        for (TreeViewItem team : Global.currentWorkspace.getTeams())
+        {
+            Team castedTeam = (Team) team;
+            if (castedTeam.isUnassignedTeam())
+            {
+                this.team = castedTeam;
+                break; // Only one unassigned team
+            }
+        }
     }
        
     // <editor-fold defaultstate="collapsed" desc="Getters"> 

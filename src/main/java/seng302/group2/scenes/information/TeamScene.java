@@ -55,7 +55,7 @@ public class TeamScene
                 Person castedPerson = (Person) person;
                 if (castedPerson.getTeam() == null)
                 {
-                    currentTeam.addPerson(castedPerson);
+                    currentTeam.addPerson(castedPerson, false);
                 }
             }
         }
