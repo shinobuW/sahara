@@ -67,6 +67,8 @@ public class UndoRedoPerformer
         TEAM,
         TEAM_SHORTNAME,
         TEAM_DESCRIPTION,
+        TEAM_ADD_PROJECT,
+        TEAM_DEL_PROJECT,
         TEAM_EDIT,
     }
 
@@ -251,6 +253,20 @@ public class UndoRedoPerformer
                     break;
                 case TEAM_DESCRIPTION:
                     team.setDescription((String) item.getUndoAction().getValue());
+                    break;
+                case TEAM_ADD_PROJECT:
+                    Project currentProject = (Project) item.getUndoAction().getValue();
+                    currentProject.getTeams().remove(team);
+                    App.content.getChildren().remove(informationGrid);
+                    ProjectScene.getProjectScene(currentProject);
+                    App.content.getChildren().add(informationGrid);
+                    break;
+                case TEAM_DEL_PROJECT:
+                    currentProject = (Project) item.getUndoAction().getValue();
+                    currentProject.getTeams().add(team);
+                    App.content.getChildren().remove(informationGrid);
+                    ProjectScene.getProjectScene(currentProject);
+                    App.content.getChildren().add(informationGrid);
                     break;
                 case TEAM_EDIT:
                     for (UndoableItem undoAction : (ArrayList<UndoableItem>)
@@ -444,6 +460,20 @@ public class UndoRedoPerformer
                     break;
                 case TEAM_DESCRIPTION:
                     team.setDescription((String) item.getRedoAction().getValue());
+                    break;
+                case TEAM_ADD_PROJECT:
+                    Project currentProject = (Project) item.getUndoAction().getValue();
+                    currentProject.getTeams().add(team);
+                    App.content.getChildren().remove(informationGrid);
+                    ProjectScene.getProjectScene(currentProject);
+                    App.content.getChildren().add(informationGrid);
+                    break;
+                case TEAM_DEL_PROJECT:
+                    currentProject = (Project) item.getUndoAction().getValue();
+                    currentProject.getTeams().remove(team);
+                    App.content.getChildren().remove(informationGrid);
+                    ProjectScene.getProjectScene(currentProject);
+                    App.content.getChildren().add(informationGrid);
                     break;
                 case TEAM_EDIT:
                     for (UndoableItem undoAction : (ArrayList<UndoableItem>)
