@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static seng302.group2.scenes.MainScene.informationGrid;
+import seng302.group2.scenes.information.ProjectScene;
+import seng302.group2.scenes.information.WorkspaceScene;
 /**
  * A class that handles the ugly undo/redo work behind the scenes on undoable items.
  * @author jml168
@@ -98,7 +100,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
-                    //WorkspaceScene.refreshProjectScene(proj);
+                    WorkspaceScene.refreshWorkspaceScene(proj);
                     break; 
                 default:
                     System.out.println("Undo with this property not implemented (yet?)");
@@ -130,6 +132,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
+                    ProjectScene.refreshProjectScene(proj);
                     break;
                 default:
                     System.out.println("Undo with this property not implemented (yet?)");
@@ -294,7 +297,35 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
-                    //WorkspaceScene.refreshProjectScene(proj);
+                    WorkspaceScene.refreshWorkspaceScene(proj);
+                    break;     
+                default:
+                    System.out.println("Redo with this property not implemented (yet?)");
+                    break;
+            }
+        }
+        
+        else if (objClass == Project.class)
+        {
+            Project proj = (Project) item.getHost();
+            switch (item.getRedoAction().getProperty())
+            {
+                case PROJECT_SHORTNAME:
+                    proj.setShortName((String) item.getRedoAction().getValue());
+                    break;
+                case PROJECT_LONGNAME:
+                    proj.setLongName((String) item.getRedoAction().getValue());
+                    break;
+                case PROJECT_DESCRIPTION:
+                    proj.setDescription((String) item.getRedoAction().getValue());
+                    break;
+                case PROJECT_EDIT:
+                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
+                            item.getUndoAction().getValue()) 
+                    {
+                        UndoRedoPerformer.redo(undoAction);
+                    }
+                    ProjectScene.refreshProjectScene(proj);
                     break;     
                 default:
                     System.out.println("Redo with this property not implemented (yet?)");
