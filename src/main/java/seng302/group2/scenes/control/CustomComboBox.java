@@ -47,6 +47,9 @@ public class CustomComboBox extends VBox
         this.getChildren().add(entry);
     }
     
+    /**
+     * Displays error Field
+     */
     public void showErrorField()
     {
         comboBox.setStyle("-fx-border-color: red;");
@@ -54,8 +57,12 @@ public class CustomComboBox extends VBox
         this.getChildren().add(errorMessageText);
     }
     
+    /**
+     * Add option item to Combo Box
+     * @param item String item to add
+     */
     public void addToComboBox(String item)
     {
-       this.options.add(item); 
+        this.options.add(item); 
     }
 }
