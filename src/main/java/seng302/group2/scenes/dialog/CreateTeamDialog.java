@@ -45,7 +45,7 @@ public class CreateTeamDialog
         buttons.getChildren().addAll(btnCreate, btnCancel);
         
         RequiredField shortNameCustomField = new RequiredField("Short Name");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Team Description");
         
         grid.getChildren().add(shortNameCustomField);
         grid.getChildren().add(descriptionTextArea);

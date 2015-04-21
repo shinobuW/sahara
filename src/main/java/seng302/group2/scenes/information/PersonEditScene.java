@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import javafx.scene.control.Label;
 import static seng302.group2.Global.currentWorkspace;
 import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
@@ -117,12 +118,14 @@ public class PersonEditScene
         informationGrid.add(emailTextField, 0, 3);
         informationGrid.add(customBirthDate, 0, 4);
         informationGrid.add(descriptionTextArea, 0, 5);
-        informationGrid.add(personSkillsBox, 0, 6);
-        informationGrid.add(buttons, 0, 7);
+        informationGrid.add(new Label("Skills: "), 0, 6);
+        informationGrid.add(personSkillsBox, 0, 7);
         
-        informationGrid.add(skillsButtons,1,6);
-
-        informationGrid.add(skillsBox, 2, 6);
+        informationGrid.add(skillsButtons,1,7);
+        informationGrid.add(btnSave, 1, 8);
+        
+        informationGrid.add(skillsBox, 2, 7);
+        informationGrid.add(btnCancel, 2, 8);
         
         btnAdd.setOnAction((event) ->
             {
