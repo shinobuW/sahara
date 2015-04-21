@@ -65,4 +65,12 @@ public class CustomComboBox extends VBox
     {
         this.options.add(item); 
     }
+    
+    /** Gets the value of the chosen item in combo box
+     * @return The string of the chosen item
+     */
+    public String getValue()
+    {
+        return this.comboBox.getValue().toString();
+    }
 }
