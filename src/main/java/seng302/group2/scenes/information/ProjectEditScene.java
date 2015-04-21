@@ -4,9 +4,12 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
@@ -18,6 +21,7 @@ import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.team.Team;
 
 import java.util.ArrayList;
 
@@ -62,11 +66,79 @@ public class ProjectEditScene
         longNameCustomField.setText(currentProject.getLongName());
         descriptionTextArea.setText(currentProject.getDescription());
 
+        Button btnAdd = new Button("<-");
+        Button btnDelete = new Button("->");
+
+        VBox teamButtons = new VBox();
+        teamButtons.getChildren().add(btnAdd);
+        teamButtons.getChildren().add(btnDelete);
+        teamButtons.setAlignment(Pos.CENTER);
+
+        ListView projectTeamsBox = new ListView(currentProject.getTeams());
+        projectTeamsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+
+        ObservableList<Team> dialogTeams = observableArrayList();
+        for (TreeViewItem projectTeam : Global.currentWorkspace.getTeams())
+        {
+            if (!((Team)projectTeam).isUnassignedTeam()
+                    && !currentProject.getTeams().contains(projectTeam))
+            {
+                dialogTeams.add((Team)projectTeam);
+            }
+        }
+
+        ListView membersBox = new ListView(dialogTeams);
+        membersBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
         informationGrid.add(shortNameCustomField, 0, 0);
         informationGrid.add(longNameCustomField, 0, 1);
         informationGrid.add(descriptionTextArea, 0, 2);
-        informationGrid.add(buttons, 0, 3);
+        informationGrid.add(projectTeamsBox, 0, 3);
 
+        informationGrid.add(teamButtons, 1, 3);
+
+        informationGrid.add(membersBox, 2, 3);
+        informationGrid.add(buttons, 0, 4);
+
+        btnAdd.setOnAction((event) ->
+            {
+                ObservableList<Team> selectedTeams =
+                        membersBox.getSelectionModel().getSelectedItems();
+                for (Team item : selectedTeams)
+                {
+                    currentProject.addTeam(item);
+                }
+
+                dialogTeams.clear();
+                for (TreeViewItem projectTeams : Global.currentWorkspace.getTeams())
+                {
+                    if (!currentProject.getTeams().contains((Team)projectTeams))
+                    {
+                        dialogTeams.add((Team)projectTeams);
+                    }
+                }
+            });
+
+        btnDelete.setOnAction((event) ->
+            {
+                ObservableList<Team> selectedTeams =
+                        projectTeamsBox.getSelectionModel().getSelectedItems();
+                System.out.println(selectedTeams.size());
+                for (int i = selectedTeams.size() - 1; i >= 0 ; i--)
+                {
+                    currentProject.removeTeam(selectedTeams.get(i));
+                }
+
+                dialogTeams.clear();
+                for (TreeViewItem projectTeams : Global.currentWorkspace.getTeams())
+                {
+                    if (!currentProject.getTeams().contains((Team)projectTeams))
+                    {
+                        dialogTeams.add((Team)projectTeams);
+                    }
+                }
+            });
 
         btnCancel.setOnAction((event) ->
             {

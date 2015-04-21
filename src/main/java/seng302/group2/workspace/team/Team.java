@@ -10,6 +10,7 @@ import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.role.RoleType;
 
@@ -35,6 +36,7 @@ public class Team extends TreeViewItem implements Serializable
     private transient ObservableList<Role> roles = observableArrayList();
     private ArrayList<Role> serializableRoles = new ArrayList<>();
     private boolean unassigned = false;
+    private Project project;
     
     
     /**
@@ -45,6 +47,7 @@ public class Team extends TreeViewItem implements Serializable
         super("unnamed");
         this.shortName = "unnamed";
         this.description = "";
+        this.project = null;
     }
     
     
@@ -60,6 +63,7 @@ public class Team extends TreeViewItem implements Serializable
         
         this.shortName = shortName;
         this.description = description;
+        this.project = null;
     }
 
        
@@ -147,7 +151,16 @@ public class Team extends TreeViewItem implements Serializable
     {
         this.description = description;
     }
-    
+
+    /**
+     * Sets the team's project
+     * @param project the project the team has been added to
+     */
+    public void setProject(Project project)
+    {
+        this.project = project;
+    }
+
     /**
     * Gets the team's Scrum Master
     * @param person the person to set

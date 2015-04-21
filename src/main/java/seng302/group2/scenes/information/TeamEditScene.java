@@ -89,12 +89,12 @@ public class TeamEditScene
         teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
         
-        ObservableList<Person> dialogSkills = observableArrayList();
+        ObservableList<Person> dialogPeople = observableArrayList();
         for (TreeViewItem projectPerson : Global.currentWorkspace.getPeople())
         {
             if (!currentTeam.getPeople().contains(projectPerson))
             {
-                dialogSkills.add((Person)projectPerson);
+                dialogPeople.add((Person) projectPerson);
             }
         }
         if (currentTeam.isUnassignedTeam())
@@ -109,18 +109,18 @@ public class TeamEditScene
             }
         }
                 
-        ListView membersBox = new ListView(dialogSkills);
+        ListView membersBox = new ListView(dialogPeople);
         membersBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         informationGrid.add(shortNameCustomField, 0, 0);
         informationGrid.add(descriptionTextArea, 0, 1);
-        informationGrid.add(buttons, 0,3);
         informationGrid.add(teamsPeopleBox, 0, 2);
-
 
         informationGrid.add(peopleButtons, 1, 2);
         
         informationGrid.add(membersBox, 2, 2);
+
+        informationGrid.add(buttons, 0, 3);
         
         btnAdd.setOnAction((event) ->
             {
@@ -131,12 +131,12 @@ public class TeamEditScene
                     currentTeam.addPerson(item);
                 }
                 
-                dialogSkills.clear();
+                dialogPeople.clear();
                 for (TreeViewItem projectPeople : Global.currentWorkspace.getPeople())
                 {
                     if (!currentTeam.getPeople().contains((Person)projectPeople))
                     {
-                        dialogSkills.add((Person)projectPeople);
+                        dialogPeople.add((Person) projectPeople);
                     }
                 }
             });
@@ -151,12 +151,12 @@ public class TeamEditScene
                     currentTeam.removePerson(selectedPeople.get(i));
                 }
                 
-                dialogSkills.clear();
+                dialogPeople.clear();
                 for (TreeViewItem projectPeople : Global.currentWorkspace.getPeople())
                 {
                     if (!currentTeam.getPeople().contains((Person)projectPeople))
                     {
-                        dialogSkills.add((Person)projectPeople);
+                        dialogPeople.add((Person) projectPeople);
                     }
                 }
             });        

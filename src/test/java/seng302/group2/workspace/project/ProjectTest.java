@@ -30,6 +30,7 @@ public class ProjectTest extends TestCase
         return new TestSuite(ProjectTest.class);
     }
 
+
     // A simple test for the Workspace constructors & getters.
     public void testProjectConstructors()
     {
@@ -46,7 +47,10 @@ public class ProjectTest extends TestCase
         assertEquals("aShortName", proj2.toString());
     }
 
-    // Tests Projects' setter methods.
+
+    /**
+     * Tests the projects' setter methods.
+     */
     public void testProjectSetters()
     {
         Project proj = new Project();
@@ -59,7 +63,11 @@ public class ProjectTest extends TestCase
         assertEquals("aDescription", proj.getDescription());
         assertEquals("aShortName", proj.toString());
     }
-    
+
+
+    /**
+     * Tests that releases are added to projects properly
+     */
     public void testAddRelease()
     {
         Project proj = new Project();
