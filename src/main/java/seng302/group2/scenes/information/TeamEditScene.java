@@ -5,6 +5,7 @@
  */
 package seng302.group2.scenes.information;
 
+import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,9 +27,14 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.team.Team;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import javafx.scene.control.Label;
+import org.controlsfx.dialog.Dialog;
 import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
+import seng302.group2.util.undoredo.UndoRedoAction;
+import seng302.group2.util.undoredo.UndoRedoPerformer;
+import seng302.group2.util.undoredo.UndoableItem;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -37,6 +43,7 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  */
 public class TeamEditScene
 {
+
     /**
      * Gets the Team Edit information scene.
      * @return The Team Edit information scene
@@ -71,10 +78,18 @@ public class TeamEditScene
         VBox peopleButtons = new VBox();
         peopleButtons.getChildren().add(btnAdd);
         peopleButtons.getChildren().add(btnDelete);
+        peopleButtons.setAlignment(Pos.CENTER);
+
         
+        Team tempTeam = new Team();
+        for (Person person : currentTeam.getPeople()) 
+        {
+            System.out.println(person);
+            tempTeam.addPerson(person, false);
+        }
         
-        ListView teamsPeopleBox = new ListView(currentTeam.getPeople());
-        if (currentTeam.isUnassignedTeam())
+        ListView teamsPeopleBox = new ListView(tempTeam.getPeople());
+        if (tempTeam.isUnassignedTeam())
         {
             for (TreeViewItem person : Global.currentWorkspace.getPeople())
             {
@@ -89,15 +104,15 @@ public class TeamEditScene
         teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
         
-        ObservableList<Person> dialogSkills = observableArrayList();
+        ObservableList<Person> dialogPeople = observableArrayList();
         for (TreeViewItem projectPerson : Global.currentWorkspace.getPeople())
         {
-            if (!currentTeam.getPeople().contains(projectPerson))
+            if (!tempTeam.getPeople().contains(projectPerson))
             {
-                dialogSkills.add((Person)projectPerson);
+                dialogPeople.add((Person) projectPerson);
             }
         }
-        if (currentTeam.isUnassignedTeam())
+        if (tempTeam.isUnassignedTeam())
         {
             for (TreeViewItem person : Global.currentWorkspace.getPeople())
             {
@@ -109,18 +124,22 @@ public class TeamEditScene
             }
         }
                 
-        ListView membersBox = new ListView(dialogSkills);
+        ListView membersBox = new ListView(dialogPeople);
         membersBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         informationGrid.add(shortNameCustomField, 0, 0);
         informationGrid.add(descriptionTextArea, 0, 1);
-        informationGrid.add(buttons, 0,3);
-        informationGrid.add(teamsPeopleBox, 0, 2);
+        informationGrid.add(new Label("Team Members: "), 0, 2);
+        informationGrid.add(teamsPeopleBox, 0, 3);
+
+        informationGrid.add(btnSave, 1, 4);
 
 
-        informationGrid.add(peopleButtons, 1, 2);
-        
-        informationGrid.add(membersBox, 2, 2);
+        informationGrid.add(membersBox, 2, 3);
+        informationGrid.add(btnCancel, 2, 4);
+
+        informationGrid.add(buttons, 0, 3);
+
         
         btnAdd.setOnAction((event) ->
             {
@@ -128,15 +147,23 @@ public class TeamEditScene
                         membersBox.getSelectionModel().getSelectedItems();
                 for (Person item : selectedPeople)
                 {
-                    currentTeam.addPerson(item);
+                    if (item.getTeam() == (Team) Global.currentWorkspace.getTeams().get(0) 
+                            || item.getTeam() == null) 
+                    {
+                        tempTeam.addPerson(item, false);
+                    }
+                    else 
+                    {
+                        personCheckDialog(item, tempTeam);
+                    }
                 }
                 
-                dialogSkills.clear();
+                dialogPeople.clear();
                 for (TreeViewItem projectPeople : Global.currentWorkspace.getPeople())
                 {
-                    if (!currentTeam.getPeople().contains((Person)projectPeople))
+                    if (!tempTeam.getPeople().contains((Person)projectPeople))
                     {
-                        dialogSkills.add((Person)projectPeople);
+                        dialogPeople.add((Person) projectPeople);
                     }
                 }
             });
@@ -148,15 +175,15 @@ public class TeamEditScene
                 System.out.println(selectedPeople.size());
                 for (int i = selectedPeople.size() - 1; i >= 0 ; i--)
                 {
-                    currentTeam.removePerson(selectedPeople.get(i));
+                    tempTeam.removePerson(selectedPeople.get(i), false);
                 }
                 
-                dialogSkills.clear();
+                dialogPeople.clear();
                 for (TreeViewItem projectPeople : Global.currentWorkspace.getPeople())
                 {
-                    if (!currentTeam.getPeople().contains((Person)projectPeople))
+                    if (!tempTeam.getPeople().contains((Person)projectPeople))
                     {
-                        dialogSkills.add((Person)projectPeople);
+                        dialogPeople.add((Person) projectPeople);
                     }
                 }
             });        
@@ -184,8 +211,39 @@ public class TeamEditScene
                 
                 if (correctShortName)
                 {
+                    for (Person person : tempTeam.getPeople())
+                    {
+                        person.getTeam().removePerson(person, false);
+                        person.setTeam(currentTeam);
+                    }
+                    currentTeam.getPeople().setAll(tempTeam.getPeople());
+                    
                     currentTeam.setDescription(descriptionTextArea.getText());
                     currentTeam.setShortName(shortNameCustomField.getText());
+                    
+                    ArrayList<UndoableItem> undoActions = new ArrayList<>();
+                    if (shortNameCustomField.getText() != currentTeam.getShortName())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentTeam,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.TEAM_SHORTNAME, 
+                                        currentTeam.getShortName()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.TEAM_SHORTNAME, 
+                                        shortNameCustomField.getText())));
+                    }
+                    if (descriptionTextArea.getText() != currentTeam.getDescription())
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentTeam,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION, 
+                                        currentTeam.getDescription()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION, 
+                                        descriptionTextArea.getText())));
+                    }
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
                     TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
@@ -207,7 +265,43 @@ public class TeamEditScene
                 }
 
             });
-
         return informationGrid;
+    }
+    
+    private static void personCheckDialog(Person person, Team tempTeam) 
+    {
+        
+        Dialog dialog = new Dialog(null, "Already Assigned to a Team");
+        VBox grid = new VBox();
+        grid.spacingProperty().setValue(10);
+        Insets insets = new Insets(20, 20, 20, 20);
+        grid.setPadding(insets);
+               
+        Button btnYes = new Button("Yes");
+        Button btnNo = new Button("No");
+        
+        HBox buttons = new HBox();
+        buttons.spacingProperty().setValue(10);
+        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
+        buttons.getChildren().addAll(btnYes, btnNo);
+        
+        grid.getChildren().add(new Label("Are you sure you want to change teams?"));
+        grid.getChildren().add(buttons);
+        
+        btnYes.setOnAction((event) ->
+            {
+                tempTeam.addPerson(person, false);
+                dialog.hide();
+            });
+        
+        btnNo.setOnAction((event) ->
+            {
+                dialog.hide();
+            });
+        
+        dialog.setResizable(false);
+        dialog.setIconifiable(false);
+        dialog.setContent(grid);
+        dialog.show();
     }
 }

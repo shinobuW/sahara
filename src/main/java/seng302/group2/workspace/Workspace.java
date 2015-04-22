@@ -440,8 +440,8 @@ public class Workspace extends TreeViewItem implements Serializable
         // Add the undo action to the stack
         Global.undoRedoMan.add(new UndoableItem(
                 person,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null), 
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null)
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD, null), 
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD, null)
                 ));
         
         this.people.add(person);
@@ -449,17 +449,17 @@ public class Workspace extends TreeViewItem implements Serializable
 
 
     /**
-     * Removes a Person to the Workspace's list of Persons.
+     * Removes a Person from the Workspace's list of Persons.
      * @param person The person to remove
      */
     public void remove(Person person)
     {
-        // TODO: UndoRedo stack items for REMOVALS of whole people
-        /*Global.undoRedoMan.add(new UndoableItem(
+        // Add the undo action to the stack
+        Global.undoRedoMan.add(new UndoableItem(
                 person,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null)
-        ));*/
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DEL, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DEL, null)
+        ));
 
         this.people.remove(person);
     }
@@ -474,8 +474,8 @@ public class Workspace extends TreeViewItem implements Serializable
         //Add the undo action to the stack
         Global.undoRedoMan.add(new UndoableItem(
                 skill,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL, null)
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_ADD, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_ADD, null)
                 ));
         
         this.skills.add(skill);
@@ -483,17 +483,17 @@ public class Workspace extends TreeViewItem implements Serializable
 
 
     /**
-     * Removes a Skill to the Workspace's list of Skills.
+     * Removes a Skill from the Workspace's list of Skills.
      * @param skill The skill to remove
      */
     public void remove(Skill skill)
     {
-        // TODO: UndoRedo stack items for removals of whole skills
-        /*Global.undoRedoMan.add(new UndoableItem(
-                person,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null)
-        ));*/
+        //Add the undo action to the stack
+        Global.undoRedoMan.add(new UndoableItem(
+                skill,
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_DEL, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_DEL, null)
+        ));
 
         this.skills.remove(skill);
     }
@@ -514,8 +514,8 @@ public class Workspace extends TreeViewItem implements Serializable
         //Add the undo action to the stack
         Global.undoRedoMan.add(new UndoableItem(
                 team,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM, null)
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD, null)
                 ));
         
         this.teams.add(team);
@@ -523,17 +523,22 @@ public class Workspace extends TreeViewItem implements Serializable
 
 
     /**
-     * Removes a Team to the Workspace's list of Teams.
+     * Removes a Team from the Workspace's list of Teams.
      * @param team The team to remove
      */
     public void remove(Team team)
     {
-        // TODO: UndoRedo stack items for removals of whole teams
-        /*Global.undoRedoMan.add(new UndoableItem(
-                person,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null)
-        ));*/
+        if (team.isUnassignedTeam())
+        {
+            return;
+        }
+        
+        // Add the undo action to the stack
+        Global.undoRedoMan.add(new UndoableItem(
+                team,
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DEL, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DEL, null)
+        ));
 
         this.teams.remove(team);
     }
@@ -548,8 +553,8 @@ public class Workspace extends TreeViewItem implements Serializable
         //Add the undo action to the stack
         Global.undoRedoMan.add(new UndoableItem(
                 project,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT, null)
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT_ADD, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT_ADD, null)
         ));
 
         this.projects.add(project);
@@ -557,17 +562,17 @@ public class Workspace extends TreeViewItem implements Serializable
 
 
     /**
-     * Removes a Project to the Workspace's list of Projects.
+     * Removes a Project from the Workspace's list of Projects.
      * @param project The project to remove
      */
     public void remove(Project project)
     {
-        // TODO: UndoRedo stack items for removals of whole projects
-        /*Global.undoRedoMan.add(new UndoableItem(
-                person,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, null)
-        ));*/
+        // Add the undo action to the stack
+        Global.undoRedoMan.add(new UndoableItem(
+                project,
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DEL, null),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DEL, null)
+        ));
 
         this.projects.remove(project);
     }
@@ -591,8 +596,8 @@ public class Workspace extends TreeViewItem implements Serializable
     }
     
         /**
-     * Removes a Role to the Workspace's list of Roles.
-     * @param project The project to remove
+     * Removes a Role from the Workspace's list of Roles.
+     * @param role The role to remove
      */
     public void remove(Role role)
     {

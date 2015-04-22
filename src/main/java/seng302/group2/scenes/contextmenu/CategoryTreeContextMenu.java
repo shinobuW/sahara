@@ -7,8 +7,8 @@ import seng302.group2.scenes.dialog.CreatePersonDialog;
 import seng302.group2.scenes.dialog.CreateProjectDialog;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
 import seng302.group2.scenes.dialog.CreateTeamDialog;
+import seng302.group2.scenes.dialog.CreateWorkspaceDialog;
 import seng302.group2.scenes.listdisplay.Category;
-import seng302.group2.workspace.project.Project;
 
 /**
  * Created by Jordane on 14/04/2015.
@@ -20,13 +20,9 @@ public class CategoryTreeContextMenu extends ContextMenu
     public CategoryTreeContextMenu()
     {
         MenuItem createItem = new MenuItem("Create new...");
-        //String selectedTreeItem = Global.selectedTreeItem.getValue().toString();
         createItem.setOnAction(e ->
             {
-                if (Global.selectedTreeItem.getValue().getClass() == Category.class)
-                {
-                    showCreateNewDialog(Global.selectedTreeItem.getValue().toString());
-                }
+                showCreateNewDialog(Global.selectedTreeItem.getValue().toString());
             });
 
         this.getItems().addAll(createItem);
@@ -53,6 +49,7 @@ public class CategoryTreeContextMenu extends ContextMenu
                 CreateTeamDialog.show();
                 break;
             default:
+                CreateWorkspaceDialog.show();
                 break;
         }
     }

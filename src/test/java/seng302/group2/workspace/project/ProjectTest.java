@@ -1,8 +1,10 @@
 package seng302.group2.workspace.project;
 
+import java.util.Arrays;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import seng302.group2.workspace.release.Release;
 
 
 /**
@@ -28,6 +30,7 @@ public class ProjectTest extends TestCase
         return new TestSuite(ProjectTest.class);
     }
 
+
     // A simple test for the Workspace constructors & getters.
     public void testProjectConstructors()
     {
@@ -44,7 +47,10 @@ public class ProjectTest extends TestCase
         assertEquals("aShortName", proj2.toString());
     }
 
-    // Tests Projects' setter methods.
+
+    /**
+     * Tests the projects' setter methods.
+     */
     public void testProjectSetters()
     {
         Project proj = new Project();
@@ -56,5 +62,18 @@ public class ProjectTest extends TestCase
         assertEquals("aLongName", proj.getLongName());
         assertEquals("aDescription", proj.getDescription());
         assertEquals("aShortName", proj.toString());
+    }
+
+
+    /**
+     * Tests that releases are added to projects properly
+     */
+    public void testAddRelease()
+    {
+        Project proj = new Project();
+        Release release = new Release("test release", proj);
+        proj.addRelease(release);
+        
+        assertTrue(proj.getReleases().contains(release));
     }
 }

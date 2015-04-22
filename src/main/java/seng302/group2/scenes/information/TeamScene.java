@@ -4,10 +4,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -58,7 +55,7 @@ public class TeamScene
                 Person castedPerson = (Person) person;
                 if (castedPerson.getTeam() == null)
                 {
-                    currentTeam.addPerson(castedPerson);
+                    currentTeam.addPerson(castedPerson, false);
                 }
             }
         }
@@ -74,13 +71,17 @@ public class TeamScene
                 dialogPeople.add((Person)projectPerson);
             }
         }
-                
+
+        Separator separator = new Separator();
+
         informationGrid.add(title, 0, 0, 3, 1);
         informationGrid.add(new Label("Description: "), 0, 2);
-        informationGrid.add(teamsPeopleBox, 0, 3);
+        informationGrid.add(separator, 0, 3, 4, 1);
+        informationGrid.add(new Label("Team Members: "), 0, 4);
+        informationGrid.add(teamsPeopleBox, 0, 5, 2, 1);
         
-        informationGrid.add(new Label(currentTeam.getDescription()), 1, 2);
-        informationGrid.add(btnEdit, 1, 4);
+        informationGrid.add(new Label(currentTeam.getDescription()), 1, 2, 5, 1);
+        informationGrid.add(btnEdit, 3, 6);
 
         btnEdit.setOnAction((event) ->
             {

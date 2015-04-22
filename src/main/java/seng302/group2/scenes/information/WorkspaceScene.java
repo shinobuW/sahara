@@ -1,16 +1,24 @@
 package seng302.group2.scenes.information;
 
+import static javafx.collections.FXCollections.observableArrayList;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.App;
+import seng302.group2.Global;
+import static seng302.group2.Global.selectedTreeItem;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.workspace.Workspace;
 
 import static seng302.group2.scenes.MainScene.informationGrid;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 
 /**
  * A class for displaying the Workspace Scene
@@ -53,6 +61,22 @@ public class WorkspaceScene
             });
 
         return informationGrid;
+    }
+    
+    public static void refreshWorkspaceScene(Workspace workspace)
+    {
+	App.content.getChildren().remove(MainScene.informationGrid);
+	App.content.getChildren().remove(MainScene.treeView);
+	WorkspaceScene.getWorkspaceScene(workspace);
+	MainScene.treeView = new TreeViewWithItems(new TreeItem());
+	ObservableList<TreeViewItem> children = observableArrayList();
+	children.add(Global.currentWorkspace);
+
+	MainScene.treeView.setItems(children);
+	MainScene.treeView.setShowRoot(false);
+	App.content.getChildren().add(MainScene.treeView);
+	App.content.getChildren().add(MainScene.informationGrid);
+	MainScene.treeView.getSelectionModel().select(selectedTreeItem);
     }
  
 }

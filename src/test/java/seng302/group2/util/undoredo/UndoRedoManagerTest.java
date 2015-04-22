@@ -16,11 +16,11 @@ public class UndoRedoManagerTest extends TestCase {
 
     UndoableItem item1 = new UndoableItem(firstPerson,
             new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_SHORTNAME, "nameAfterAction"),
-            new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, "nameBeforeAction"));
+            new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD, "nameBeforeAction"));
 
     UndoableItem item2 = new UndoableItem(firstPerson,
             new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_FIRSTNAME, "firstName"),
-            new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON, "changedFirstName"));
+            new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD, "changedFirstName"));
 
     /**
      * The setup for each test

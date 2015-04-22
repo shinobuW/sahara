@@ -17,6 +17,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import seng302.group2.workspace.project.Project;
 
 /**
  * A basic class to represent a Team in the real world.
@@ -35,6 +36,7 @@ public class Team extends TreeViewItem implements Serializable
     private transient ObservableList<Role> roles = observableArrayList();
     private ArrayList<Role> serializableRoles = new ArrayList<>();
     private boolean unassigned = false;
+    private Project project;
     
     
     /**
@@ -45,6 +47,7 @@ public class Team extends TreeViewItem implements Serializable
         super("unnamed");
         this.shortName = "unnamed";
         this.description = "";
+	this.project = null;
     }
     
     
@@ -60,6 +63,7 @@ public class Team extends TreeViewItem implements Serializable
         
         this.shortName = shortName;
         this.description = description;
+	this.project = null;
     }
 
        
@@ -149,6 +153,15 @@ public class Team extends TreeViewItem implements Serializable
     }
     
     /**
+     * Sets the team's project
+     * @param project the project the team has been added to
+     */
+    public void setProject(Project project)
+    {
+        this.project = project;
+    }
+    
+    /**
     * Gets the team's Scrum Master
     * @param person the person to set
     */
@@ -175,17 +188,18 @@ public class Team extends TreeViewItem implements Serializable
      * Adds a Person to the Teams list of Members
      * @param person The person to add
      */
-    public void addPerson(Person person)
+    public void addPerson(Person person, Boolean undo)
     {
         // Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                person,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this), 
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this)
-                ));
-        
+        if (undo)
+        {
+            Global.undoRedoMan.add(new UndoableItem(
+                    person,
+                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this), 
+                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this)
+                    ));
+        }
         this.people.add(person);
-        person.setTeam(this);
     }
     
     
@@ -219,15 +233,17 @@ public class Team extends TreeViewItem implements Serializable
      * Removes a Person from the Team's of Members
      * @param person The person to remove
      */
-    public void removePerson(Person person)
+    public void removePerson(Person person, Boolean redo)
     {
         // Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                person,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DEL_TEAM, this), 
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DEL_TEAM, this)
-                ));
-        
+        if (redo)
+        {
+            Global.undoRedoMan.add(new UndoableItem(
+                    person,
+                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DEL_TEAM, this), 
+                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DEL_TEAM, this)
+                    ));
+        }
         this.people.remove(person);
         person.setTeam(null);
     }
