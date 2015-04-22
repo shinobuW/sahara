@@ -72,7 +72,7 @@ public class WorkspaceTest extends TestCase
     
 
     /**
-     * Tests that people are correctly added to projects through the add() method.
+     * Tests that people are correctly added to the workspace through the add() method.
      */
     public void testAddPerson()
     {
@@ -89,5 +89,29 @@ public class WorkspaceTest extends TestCase
         proj.add(pers);
         assertEquals(3, proj.getPeople().size());
     }
+    
+    /**
+     * Tests that people are correctly removed from the workspace through the remove() method.
+     */
+    public void testRemovePerson()
+    {
+        Workspace proj = new Workspace();
+        Person pers = new Person();
+        proj.add(pers);
+        proj.remove(pers);
+        
+        ObservableList<TreeViewItem> people = observableArrayList();
+        
+        assertEquals(people, proj.getPeople());
+        
+        proj.add(pers);
+        proj.add(pers);
+        proj.remove(pers);
+        proj.remove(pers);
+        
+        assertEquals(0, proj.getPeople().size());
+    }
+    
+    
     
 }

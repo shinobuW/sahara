@@ -40,13 +40,15 @@ public class UndoRedoPerformer
         WORKSPACE_DESCRIPTION,
         WORKSPACE_EDIT,
 
-        PROJECT,
+        PROJECT_ADD,
+        PROJECT_DEL,
         PROJECT_SHORTNAME,
         PROJECT_LONGNAME,
         PROJECT_DESCRIPTION,
         PROJECT_EDIT,
 
-        PERSON,
+        PERSON_ADD,
+        PERSON_DEL,
         PERSON_SHORTNAME,
         PERSON_FIRSTNAME,
         PERSON_LASTNAME,
@@ -57,14 +59,16 @@ public class UndoRedoPerformer
         PERSON_DEL_TEAM,
         PERSON_EDIT,
         
-        SKILL,
+        SKILL_ADD,
+        SKILL_DEL,
         SKILL_SHORTNAME,
         SKILL_DESCRIPTION,
         SKILL_ADD_PERSON,
         SKILL_DEL_PERSON,
         SKILL_EDIT,
         
-        TEAM,
+        TEAM_ADD,
+        TEAM_DEL,
         TEAM_SHORTNAME,
         TEAM_DESCRIPTION,
         TEAM_ADD_PROJECT,
@@ -116,9 +120,12 @@ public class UndoRedoPerformer
             Project proj = (Project) item.getHost();
             switch (item.getUndoAction().getProperty())
             {
-                case PROJECT:
+                case PROJECT_ADD:
                     Global.currentWorkspace.getProjects().remove((Project) item.getHost());
                     break;
+                case PROJECT_DEL:
+                    Global.currentWorkspace.getProjects().add((Project) item.getHost());
+                    break;    
                 case PROJECT_SHORTNAME:
                     proj.setShortName((String) item.getUndoAction().getValue());
                     break;
@@ -148,12 +155,15 @@ public class UndoRedoPerformer
             Person person = (Person) item.getHost();
             switch (item.getUndoAction().getProperty())
             {
-                case PERSON_SHORTNAME:
-                    person.setShortName((String) item.getUndoAction().getValue());
-                    break;
-                case PERSON:
+                case PERSON_ADD:
                     Global.currentWorkspace.getPeople().remove((Person) item.getHost());
                     break;
+                case PERSON_DEL:
+                    Global.currentWorkspace.getPeople().add((Person) item.getHost());
+                    break;
+                case PERSON_SHORTNAME:
+                    person.setShortName((String) item.getUndoAction().getValue());
+                    break;    
                 case PERSON_FIRSTNAME:
                     person.setFirstName((String) item.getUndoAction().getValue());
                     break;
@@ -205,9 +215,12 @@ public class UndoRedoPerformer
             Person currentPerson = (Person) item.getUndoAction().getValue();
             switch (item.getUndoAction().getProperty())
             {
-                case SKILL:
+                case SKILL_ADD:
                     Global.currentWorkspace.getSkills().remove((Skill) item.getHost());
                     break;
+                case SKILL_DEL:
+                    Global.currentWorkspace.getSkills().add((Skill) item.getHost());
+                    break;    
                 case SKILL_SHORTNAME:
                     skill.setShortName((String) item.getUndoAction().getValue());
                     break;
@@ -246,8 +259,11 @@ public class UndoRedoPerformer
             Team team = (Team) item.getHost();
             switch (item.getUndoAction().getProperty())
             {
-                case TEAM:
+                case TEAM_ADD:
                     Global.currentWorkspace.getTeams().remove((Team) item.getHost());
+                    break;
+                case TEAM_DEL:
+                    Global.currentWorkspace.getTeams().add((Team) item.getHost());
                     break;
                 case TEAM_SHORTNAME:
                     team.setShortName((String) item.getUndoAction().getValue());
@@ -327,6 +343,12 @@ public class UndoRedoPerformer
             Project proj = (Project) item.getHost();
             switch (item.getRedoAction().getProperty())
             {
+                case PROJECT_ADD:
+                    Global.currentWorkspace.getProjects().add((Project) item.getHost());
+                    break;
+                case PROJECT_DEL:
+                    Global.currentWorkspace.getProjects().remove((Project) item.getHost());
+                    break;
                 case PROJECT_SHORTNAME:
                     proj.setShortName((String) item.getRedoAction().getValue());
                     break;
@@ -356,9 +378,12 @@ public class UndoRedoPerformer
             Person person = (Person) item.getHost();
             switch (item.getRedoAction().getProperty())
             {
-                case PERSON:
+                case PERSON_ADD:
                     Global.currentWorkspace.getPeople().add((Person) item.getHost());
                     break;
+                case PERSON_DEL:
+                    Global.currentWorkspace.getPeople().remove((Person) item.getHost());
+                    break;    
                 case PERSON_SHORTNAME:
                     person.setShortName((String) item.getRedoAction().getValue());
                     break;
@@ -412,9 +437,12 @@ public class UndoRedoPerformer
             Person currentPerson = (Person) item.getUndoAction().getValue(); //Why is this here?
             switch (item.getRedoAction().getProperty())
             {
-                case SKILL:
+                case SKILL_ADD:
                     Global.currentWorkspace.getSkills().add((Skill) item.getHost());
                     break;
+                case SKILL_DEL:
+                    Global.currentWorkspace.getSkills().remove((Skill) item.getHost());
+                    break;    
                 case SKILL_SHORTNAME:
                     skill.setShortName((String) item.getRedoAction().getValue());
                     break;
@@ -453,9 +481,12 @@ public class UndoRedoPerformer
             Team team = (Team) item.getHost();
             switch (item.getRedoAction().getProperty())
             {
-                case TEAM:
+                case TEAM_ADD:
                     Global.currentWorkspace.getTeams().add((Team) item.getHost());
                     break;
+                case TEAM_DEL:
+                    Global.currentWorkspace.getTeams().remove((Team) item.getHost());
+                    break;    
                 case TEAM_SHORTNAME:
                     team.setShortName((String) item.getRedoAction().getValue());
                     break;
