@@ -17,7 +17,7 @@ import java.util.Date;
 import static junit.framework.Assert.fail;
 
 /**
- *
+ * Tests that the short name validator performs correctly.
  * @author Jordane
  */
 public class ShortNameValidatorTest
