@@ -6,7 +6,6 @@
 package seng302.group2.util.validation;
 
 import java.text.ParseException;
-import junit.framework.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import seng302.group2.Global;
@@ -15,6 +14,7 @@ import seng302.group2.workspace.person.Person;
 
 import java.util.Date;
 import static junit.framework.Assert.fail;
+import static junit.framework.TestCase.assertEquals;
 
 /**
  * Tests that the short name validator performs correctly.
@@ -48,11 +48,11 @@ public class ShortNameValidatorTest
     @Test
     public void testIsValidPerson()
     {
-        Assert.assertEquals(ValidationStatus.INVALID, ShortNameValidator.validateShortName(""));
-        Assert.assertEquals(ValidationStatus.NON_UNIQUE,
+        assertEquals(ValidationStatus.INVALID, ShortNameValidator.validateShortName(""));
+        assertEquals(ValidationStatus.NON_UNIQUE,
                 ShortNameValidator.validateShortName("btm38"));
-        Assert.assertEquals(ValidationStatus.VALID, ShortNameValidator.validateShortName("new"));
-        Assert.assertEquals(ValidationStatus.OUT_OF_RANGE, ShortNameValidator.validateShortName(
+        assertEquals(ValidationStatus.VALID, ShortNameValidator.validateShortName("new"));
+        assertEquals(ValidationStatus.OUT_OF_RANGE, ShortNameValidator.validateShortName(
                 "this is much more than 20 characters long"));
     }
     
