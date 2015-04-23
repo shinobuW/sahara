@@ -10,6 +10,7 @@ import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.role.RoleType;
 
@@ -17,7 +18,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import seng302.group2.workspace.project.Project;
 
 /**
  * A basic class to represent a Team in the real world.

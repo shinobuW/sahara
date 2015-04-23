@@ -3,13 +3,11 @@ package seng302.group2.scenes.information;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TreeItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
@@ -26,8 +24,6 @@ import seng302.group2.workspace.team.Team;
 import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import javafx.scene.control.Label;
-import org.controlsfx.dialog.Dialog;
 import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
@@ -75,7 +71,7 @@ public class ProjectEditScene
         teamButtons.getChildren().add(btnDelete);
         teamButtons.setAlignment(Pos.CENTER);
 
-	Project tempProject = new Project();
+        Project tempProject = new Project();
         for (Team team : currentProject.getTeams()) 
         {
             tempProject.addTeam(team, false);
@@ -86,7 +82,7 @@ public class ProjectEditScene
 
 
         ObservableList<Team> dialogTeams = observableArrayList();
-	ObservableList<Team> dialogTeamsCopy = observableArrayList();
+        ObservableList<Team> dialogTeamsCopy = observableArrayList();
 	
 	
         for (TreeViewItem projectTeam : Global.currentWorkspace.getTeams())
@@ -132,11 +128,11 @@ public class ProjectEditScene
                 {
                     if (!tempProject.getTeams().contains((Team)projectTeams))
                     {
-			if (!((Team)projectTeams).isUnassignedTeam()
-				&& !currentProject.getTeams().contains(projectTeams))
-			{
-			    dialogTeams.add((Team)projectTeams);
-			}
+                        if (!((Team)projectTeams).isUnassignedTeam()
+                            && !currentProject.getTeams().contains(projectTeams))
+                        {
+                            dialogTeams.add((Team)projectTeams);
+                        }
                     }
 		    
                 }
@@ -213,8 +209,8 @@ public class ProjectEditScene
 		    
                     if (longNameCustomField.getText() != currentProject.getLongName())
                     {
-			System.out.println(longNameCustomField.getText());
-			System.out.println(currentProject.getLongName());
+                        System.out.println(longNameCustomField.getText());
+                        System.out.println(currentProject.getLongName());
                         undoActions.add(new UndoableItem(
                                 currentProject,
                                 new UndoRedoAction(
@@ -237,33 +233,33 @@ public class ProjectEditScene
                                         descriptionTextArea.getText())));
                     }
 		    
-		     for (Team team : tempProject.getTeams())
+                    for (Team team : tempProject.getTeams())
                     {
                         if (!currentProject.getTeams().contains(team))
                         {
                             undoActions.add(new UndoableItem(
                                     team,
                                     new UndoRedoAction(
-                                            UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT, 
+                                            UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT,
                                             team.getProject()),
                                     new UndoRedoAction(
-                                            UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT, 
+                                            UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT,
                                             currentProject)));
 
                             undoActions.add(new UndoableItem(
                                     team,
                                     new UndoRedoAction(
-                                            UndoRedoPerformer.UndoRedoProperty.TEAM_PROJECT, 
+                                            UndoRedoPerformer.UndoRedoProperty.TEAM_PROJECT,
                                             team.getProject()),
                                     new UndoRedoAction(
-                                            UndoRedoPerformer.UndoRedoProperty.TEAM_PROJECT, 
+                                            UndoRedoPerformer.UndoRedoProperty.TEAM_PROJECT,
                                             currentProject)));
 
 
-			    if (team.getProject() != null)
-			    {
-				team.getProject().removeTeam(team, false);
-			    }
+                            if (team.getProject() != null)
+                            {
+                                team.getProject().removeTeam(team, false);
+                            }
                             team.setProject(currentProject);
                             currentProject.addTeam(team, false);
                         }

@@ -5,14 +5,15 @@
  */
 package seng302.group2.util.validation;
 
-import java.text.ParseException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 
+import java.text.ParseException;
 import java.util.Date;
+
 import static junit.framework.Assert.fail;
 import static junit.framework.TestCase.assertEquals;
 

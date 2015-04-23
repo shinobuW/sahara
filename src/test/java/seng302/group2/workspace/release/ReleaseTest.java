@@ -5,12 +5,13 @@
  */
 package seng302.group2.workspace.release;
 
-import java.util.Date;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import seng302.group2.workspace.project.Project;
+
+import java.util.Date;
 
 /**
  *

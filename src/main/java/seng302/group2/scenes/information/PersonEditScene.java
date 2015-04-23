@@ -8,10 +8,7 @@ package seng302.group2.scenes.information;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TreeItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -30,12 +27,10 @@ import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import javafx.scene.control.Label;
 import static seng302.group2.Global.currentWorkspace;
 import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;

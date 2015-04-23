@@ -5,9 +5,6 @@
  */
 package seng302.group2.scenes.dialog;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -20,10 +17,15 @@ import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import static seng302.group2.util.validation.DateValidator.validateBirthDate;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static seng302.group2.util.validation.DateValidator.validateBirthDate;
+import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  *

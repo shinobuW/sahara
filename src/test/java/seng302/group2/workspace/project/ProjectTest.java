@@ -1,6 +1,5 @@
 package seng302.group2.workspace.project;
 
-import java.util.Arrays;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

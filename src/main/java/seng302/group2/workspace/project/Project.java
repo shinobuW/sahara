@@ -1,18 +1,18 @@
 package seng302.group2.workspace.project;
 
+import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import static javafx.collections.FXCollections.observableArrayList;
-import javafx.collections.ObservableList;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
-import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.team.Team;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * A class representing real-world projects
@@ -150,14 +150,14 @@ public class Project extends TreeViewItem implements Serializable
     public void addTeam(Team team, Boolean undo)
     {
         // Add the undo action to the stack
-	if (undo)
-	{
-	    Global.undoRedoMan.add(new UndoableItem(
-		    team,
-		    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT, this),
-		    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT, this)
-	    ));
-	}
+        if (undo)
+        {
+            Global.undoRedoMan.add(new UndoableItem(
+                    team,
+                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT, this),
+                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT, this)
+            ));
+        }
         this.teams.add(team);
     }
 
@@ -168,14 +168,14 @@ public class Project extends TreeViewItem implements Serializable
     public void removeTeam(Team team, Boolean redo)
     {
         // Add the undo action to the stack
-	if (redo)
+        if (redo)
         {
-	    Global.undoRedoMan.add(new UndoableItem(
-		    team,
-		    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_PROJECT, this),
-		    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_PROJECT, this)
-	    ));
-	}
+            Global.undoRedoMan.add(new UndoableItem(
+                    team,
+                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_PROJECT, this),
+                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_PROJECT, this)
+            ));
+        }
         this.teams.remove(team);
     }
 

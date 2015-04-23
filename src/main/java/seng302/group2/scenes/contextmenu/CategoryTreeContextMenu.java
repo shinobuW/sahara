@@ -3,12 +3,7 @@ package seng302.group2.scenes.contextmenu;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import seng302.group2.Global;
-import seng302.group2.scenes.dialog.CreatePersonDialog;
-import seng302.group2.scenes.dialog.CreateProjectDialog;
-import seng302.group2.scenes.dialog.CreateSkillDialog;
-import seng302.group2.scenes.dialog.CreateTeamDialog;
-import seng302.group2.scenes.dialog.CreateWorkspaceDialog;
-import seng302.group2.scenes.listdisplay.Category;
+import seng302.group2.scenes.dialog.*;
 
 /**
  * Created by Jordane on 14/04/2015.

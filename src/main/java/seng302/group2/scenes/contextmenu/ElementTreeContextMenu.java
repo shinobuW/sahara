@@ -14,12 +14,11 @@ import seng302.group2.scenes.information.TeamEditScene;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.text.MessageFormat;
-import seng302.group2.workspace.role.Role;
-import seng302.group2.workspace.role.RoleType;
 
 /**
  *ContextMenu class for instances of Person, Skill and Team

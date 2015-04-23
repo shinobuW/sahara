@@ -5,10 +5,11 @@
  */
 package seng302.group2.workspace.release;
 
-import java.util.Date;
 import javafx.collections.ObservableList;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.project.Project;
+
+import java.util.Date;
 
 /**
  *

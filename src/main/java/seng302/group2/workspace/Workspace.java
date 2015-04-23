@@ -19,6 +19,8 @@ import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.role.Role;
+import seng302.group2.workspace.role.RoleType;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
@@ -27,8 +29,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import seng302.group2.workspace.role.Role;
-import seng302.group2.workspace.role.RoleType;
 
 /**
  * Basic workspace class that acts as the root object for Sahara and represents a real-world

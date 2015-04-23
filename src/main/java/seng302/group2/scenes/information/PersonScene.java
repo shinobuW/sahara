@@ -14,7 +14,6 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.workspace.person.Person;
 
-
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
