@@ -59,6 +59,7 @@ public class ProjectScene
         
         ListView projectReleaseBox = new ListView(currentProject.getReleases());
         projectReleaseBox.setMaxHeight(150);
+        
         Separator separator = new Separator();
 
         informationGrid.add(title, 0, 0, 3, 1);

@@ -23,9 +23,11 @@ import seng302.group2.workspace.release.Release;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javafx.collections.ObservableList;
 
 import static seng302.group2.util.validation.DateValidator.validateBirthDate;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
+import seng302.group2.workspace.project.Project;
 
 /**
  *
@@ -77,7 +79,7 @@ public class CreateReleaseDialog
                 Project project = new Project();
                 for (TreeViewItem item : Global.currentWorkspace.getProjects())
                 {
-                    if (item.toString().equals(shortName))
+                    if (item.toString().equals(projectComboBox.getValue()))
                     {
                         project = (Project)item;
                     }
