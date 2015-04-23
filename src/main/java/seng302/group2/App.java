@@ -108,14 +108,11 @@ public class App extends Application
         
         // Exit button handling
         Platform.setImplicitExit(false);
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() 
-        {
-            public void handle(WindowEvent event)
+        primaryStage.setOnCloseRequest(event ->
             {
                 exitApp();
                 event.consume();
-            }
-        });
+            });
         
         // Show the stage/window
         App.refreshWindowTitle();
@@ -123,6 +120,10 @@ public class App extends Application
     }
 
 
+    /**
+     * The closure and application tear-down method that should be executed on closure of the
+     * application from any branch of the project code
+     */
     public static void exitApp()
     {
         ConfigLoader.saveConfig();
