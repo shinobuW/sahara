@@ -44,7 +44,7 @@ public class ProjectScene
         Button btnEdit = new Button("Edit");
 
         ListView projectTeamsBox = new ListView(currentProject.getTeams());
-
+        projectTeamsBox.setMaxHeight(150);
         projectTeamsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         ObservableList<Team> dialogTeams = observableArrayList();
@@ -56,7 +56,9 @@ public class ProjectScene
                 dialogTeams.add((Team)projectTeam);
             }
         }
-
+        
+        ListView projectReleaseBox = new ListView(currentProject.getReleases());
+        projectReleaseBox.setMaxHeight(150);
         Separator separator = new Separator();
 
         informationGrid.add(title, 0, 0, 3, 1);
@@ -69,8 +71,10 @@ public class ProjectScene
         informationGrid.add(separator, 0, 4, 4, 1);
         informationGrid.add(new Label("Teams: "), 0, 5);
         informationGrid.add(projectTeamsBox, 0, 6, 2, 1);
+        informationGrid.add(new Label("Releases: "), 0, 7);
+        informationGrid.add(projectReleaseBox, 0, 8, 2, 1);
 
-        informationGrid.add(btnEdit, 1, 7);
+        informationGrid.add(btnEdit, 2, 9);
 
         btnEdit.setOnAction((event) ->
             {
