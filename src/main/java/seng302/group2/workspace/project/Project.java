@@ -147,34 +147,36 @@ public class Project extends TreeViewItem implements Serializable
      * Adds a Team to the Project list of Teams
      * @param team The team to add
      */
-    public void addTeam(Team team)
+    public void addTeam(Team team, Boolean undo)
     {
         // Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                team,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT, this),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT, this)
-        ));
-
+	if (undo)
+	{
+	    Global.undoRedoMan.add(new UndoableItem(
+		    team,
+		    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT, this),
+		    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT, this)
+	    ));
+	}
         this.teams.add(team);
-        team.setProject(this);
     }
 
     /**
      * Removes a Team from the Project's list of Teams
      * @param team The team to remove
      */
-    public void removeTeam(Team team)
+    public void removeTeam(Team team, Boolean redo)
     {
         // Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                team,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_PROJECT, this),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_PROJECT, this)
-        ));
-
+	if (redo)
+        {
+	    Global.undoRedoMan.add(new UndoableItem(
+		    team,
+		    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_PROJECT, this),
+		    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_PROJECT, this)
+	    ));
+	}
         this.teams.remove(team);
-        team.setProject(null);
     }
 
     /** 

@@ -105,13 +105,17 @@ public class TeamEditScene
         
         
         ObservableList<Person> dialogPeople = observableArrayList();
+        ObservableList<Person> dialogPeopleCopy = observableArrayList();
+        
         for (TreeViewItem projectPerson : Global.currentWorkspace.getPeople())
         {
             if (!tempTeam.getPeople().contains(projectPerson))
             {
                 dialogPeople.add((Person) projectPerson);
+                dialogPeopleCopy.add((Person) projectPerson);
             }
         }
+        
         if (tempTeam.isUnassignedTeam())
         {
             for (TreeViewItem person : Global.currentWorkspace.getPeople())
@@ -132,13 +136,12 @@ public class TeamEditScene
         informationGrid.add(new Label("Team Members: "), 0, 2);
         informationGrid.add(teamsPeopleBox, 0, 3);
 
+        informationGrid.add(peopleButtons, 1, 3);
         informationGrid.add(btnSave, 1, 4);
-
 
         informationGrid.add(membersBox, 2, 3);
         informationGrid.add(btnCancel, 2, 4);
 
-        informationGrid.add(buttons, 0, 3);
 
         
         btnAdd.setOnAction((event) ->
@@ -172,7 +175,6 @@ public class TeamEditScene
             {
                 ObservableList<Person> selectedPeople = 
                         teamsPeopleBox.getSelectionModel().getSelectedItems();
-                System.out.println(selectedPeople.size());
                 for (int i = selectedPeople.size() - 1; i >= 0 ; i--)
                 {
                     tempTeam.removePerson(selectedPeople.get(i), false);
@@ -211,17 +213,9 @@ public class TeamEditScene
                 
                 if (correctShortName)
                 {
-                    for (Person person : tempTeam.getPeople())
-                    {
-                        person.getTeam().removePerson(person, false);
-                        person.setTeam(currentTeam);
-                    }
-                    currentTeam.getPeople().setAll(tempTeam.getPeople());
-                    
-                    currentTeam.setDescription(descriptionTextArea.getText());
-                    currentTeam.setShortName(shortNameCustomField.getText());
                     
                     ArrayList<UndoableItem> undoActions = new ArrayList<>();
+                    
                     if (shortNameCustomField.getText() != currentTeam.getShortName())
                     {
                         undoActions.add(new UndoableItem(
@@ -233,6 +227,9 @@ public class TeamEditScene
                                         UndoRedoPerformer.UndoRedoProperty.TEAM_SHORTNAME, 
                                         shortNameCustomField.getText())));
                     }
+                    
+                    currentTeam.setShortName(shortNameCustomField.getText());
+                    
                     if (descriptionTextArea.getText() != currentTeam.getDescription())
                     {
                         undoActions.add(new UndoableItem(
@@ -244,6 +241,80 @@ public class TeamEditScene
                                         UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION, 
                                         descriptionTextArea.getText())));
                     }
+                    
+                    currentTeam.setDescription(descriptionTextArea.getText());
+                    
+                    for (Person person : tempTeam.getPeople())
+                    {
+                        System.out.println("Adding " + person);
+                        if (!currentTeam.getPeople().contains(person))
+                        {
+                            undoActions.add(new UndoableItem(
+                                    person,
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, 
+                                            person.getTeam()),
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, 
+                                            currentTeam)));
+
+                            undoActions.add(new UndoableItem(
+                                    person,
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM, 
+                                            person.getTeam()),
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM, 
+                                            currentTeam)));
+
+
+
+                            person.getTeam().removePerson(person, false);
+                            person.setTeam(currentTeam);
+                            currentTeam.addPerson(person, false);
+                        }
+                    }
+                    
+                    for (Person person : dialogPeople)
+                    {
+                        System.out.println("Deleting " + person.getTeam());
+                        if (!dialogPeopleCopy.contains(person))
+                        {
+                            undoActions.add(new UndoableItem(
+                                    person,
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_DEL_TEAM, 
+                                            person.getTeam()),
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_DEL_TEAM, 
+                                            person.getTeam())));
+
+                            undoActions.add(new UndoableItem(
+                                    person,
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM, 
+                                            person.getTeam()),
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM, 
+                                            (Team)Global.currentWorkspace.getTeams().get(0))));
+                                         
+                            person.getTeam().removePerson(person, false);
+                            person.setTeam((Team)Global.currentWorkspace.getTeams().get(0));
+                            ((Team)Global.currentWorkspace.getTeams().get(0))
+                                    .addPerson(person, false);
+                        }
+                    }
+                    
+                    Global.undoRedoMan.add(new UndoableItem(
+                        currentTeam,
+                        new UndoRedoAction(
+                                UndoRedoPerformer.UndoRedoProperty.TEAM_EDIT,
+                                undoActions), 
+                        new UndoRedoAction(
+                                UndoRedoPerformer.UndoRedoProperty.TEAM_EDIT, 
+                                undoActions)
+                        ));
+                    
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
                     TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());

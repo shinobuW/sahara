@@ -87,6 +87,15 @@ public class Team extends TreeViewItem implements Serializable
     }
     
     /**
+     * Gets the project the Team is assigned to
+     * @return The description of the team
+     */
+    public Project getProject()
+    {
+        return this.project;
+    }
+    
+    /**
      * Gets the team's list of members
      * @return The ObservableList of Persons
      */
@@ -245,7 +254,6 @@ public class Team extends TreeViewItem implements Serializable
                     ));
         }
         this.people.remove(person);
-        person.setTeam(null);
     }
 
 

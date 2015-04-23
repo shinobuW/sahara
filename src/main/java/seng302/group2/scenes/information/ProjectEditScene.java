@@ -26,10 +26,11 @@ import seng302.group2.workspace.team.Team;
 import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import javafx.scene.control.Label;
+import org.controlsfx.dialog.Dialog;
 import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
-import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -74,11 +75,20 @@ public class ProjectEditScene
         teamButtons.getChildren().add(btnDelete);
         teamButtons.setAlignment(Pos.CENTER);
 
-        ListView projectTeamsBox = new ListView(currentProject.getTeams());
+	Project tempProject = new Project();
+        for (Team team : currentProject.getTeams()) 
+        {
+            tempProject.addTeam(team, false);
+        }
+	
+        ListView projectTeamsBox = new ListView(tempProject.getTeams());
         projectTeamsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
 
         ObservableList<Team> dialogTeams = observableArrayList();
+	ObservableList<Team> dialogTeamsCopy = observableArrayList();
+	
+	
         for (TreeViewItem projectTeam : Global.currentWorkspace.getTeams())
         {
             if (!((Team)projectTeam).isUnassignedTeam()
@@ -107,16 +117,28 @@ public class ProjectEditScene
                         membersBox.getSelectionModel().getSelectedItems();
                 for (Team item : selectedTeams)
                 {
-                    currentProject.addTeam(item);
+		    if (item.getProject() == null) 
+                    {
+                        tempProject.addTeam(item, false);
+                    }
+                    else 
+                    {
+                        teamCheckDialog(item, tempProject);
+                    }
                 }
 
                 dialogTeams.clear();
                 for (TreeViewItem projectTeams : Global.currentWorkspace.getTeams())
                 {
-                    if (!currentProject.getTeams().contains((Team)projectTeams))
+                    if (!tempProject.getTeams().contains((Team)projectTeams))
                     {
-                        dialogTeams.add((Team)projectTeams);
+			if (!((Team)projectTeams).isUnassignedTeam()
+				&& !currentProject.getTeams().contains(projectTeams))
+			{
+			    dialogTeams.add((Team)projectTeams);
+			}
                     }
+		    
                 }
             });
 
@@ -127,13 +149,13 @@ public class ProjectEditScene
                 System.out.println(selectedTeams.size());
                 for (int i = selectedTeams.size() - 1; i >= 0 ; i--)
                 {
-                    currentProject.removeTeam(selectedTeams.get(i));
+                    tempProject.removeTeam(selectedTeams.get(i), false);
                 }
 
                 dialogTeams.clear();
                 for (TreeViewItem projectTeams : Global.currentWorkspace.getTeams())
                 {
-                    if (!currentProject.getTeams().contains((Team)projectTeams))
+                    if (!tempProject.getTeams().contains((Team)projectTeams))
                     {
                         dialogTeams.add((Team)projectTeams);
                     }
@@ -188,8 +210,11 @@ public class ProjectEditScene
                                         shortNameCustomField.getText())));
                     }
 
+		    
                     if (longNameCustomField.getText() != currentProject.getLongName())
                     {
+			System.out.println(longNameCustomField.getText());
+			System.out.println(currentProject.getLongName());
                         undoActions.add(new UndoableItem(
                                 currentProject,
                                 new UndoRedoAction(
@@ -211,6 +236,65 @@ public class ProjectEditScene
                                         UndoRedoPerformer.UndoRedoProperty.PROJECT_DESCRIPTION,
                                         descriptionTextArea.getText())));
                     }
+		    
+		     for (Team team : tempProject.getTeams())
+                    {
+                        if (!currentProject.getTeams().contains(team))
+                        {
+                            undoActions.add(new UndoableItem(
+                                    team,
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT, 
+                                            team.getProject()),
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT, 
+                                            currentProject)));
+
+                            undoActions.add(new UndoableItem(
+                                    team,
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.TEAM_PROJECT, 
+                                            team.getProject()),
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.TEAM_PROJECT, 
+                                            currentProject)));
+
+
+			    if (team.getProject() != null)
+			    {
+				team.getProject().removeTeam(team, false);
+			    }
+                            team.setProject(currentProject);
+                            currentProject.addTeam(team, false);
+                        }
+                    }
+                    
+                    for (Team team : dialogTeams)
+                    {
+                        if (!dialogTeamsCopy.contains(team))
+                        {
+                            undoActions.add(new UndoableItem(
+                                    team,
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_PROJECT, 
+                                            team.getProject()),
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_PROJECT, 
+                                            team.getProject())));
+
+                            undoActions.add(new UndoableItem(
+                                    team,
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.TEAM_PROJECT, 
+                                            team.getProject()),
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.TEAM_PROJECT, 
+                                            null)));
+                                         
+                            team.getProject().removeTeam(team, false);
+                            team.setProject(null);
+                        }
+                    }
 
                     Global.undoRedoMan.add(new UndoableItem(
                             currentProject,
@@ -221,6 +305,7 @@ public class ProjectEditScene
                                     UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT,
                                     undoActions)
                     ));
+                           
 
                     // Save the edits.
                     currentProject.setDescription(descriptionTextArea.getText());
@@ -248,4 +333,42 @@ public class ProjectEditScene
 
         return informationGrid;
     }
+    
+    private static void teamCheckDialog(Team team, Project tempProject) 
+    {
+        
+        Dialog dialog = new Dialog(null, "Already Assigned to a Team");
+        VBox grid = new VBox();
+        grid.spacingProperty().setValue(10);
+        Insets insets = new Insets(20, 20, 20, 20);
+        grid.setPadding(insets);
+               
+        Button btnYes = new Button("Yes");
+        Button btnNo = new Button("No");
+        
+        HBox buttons = new HBox();
+        buttons.spacingProperty().setValue(10);
+        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
+        buttons.getChildren().addAll(btnYes, btnNo);
+        
+        grid.getChildren().add(new Label("Are you sure you want to change teams?"));
+        grid.getChildren().add(buttons);
+        
+        btnYes.setOnAction((event) ->
+            {
+                tempProject.addTeam(team, false);
+                dialog.hide();
+            });
+        
+        btnNo.setOnAction((event) ->
+            {
+                dialog.hide();
+            });
+        
+        dialog.setResizable(false);
+        dialog.setIconifiable(false);
+        dialog.setContent(grid);
+        dialog.show();
+    }
+    
 }

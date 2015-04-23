@@ -55,6 +55,7 @@ public class UndoRedoPerformer
         PERSON_EMAIL,
         PERSON_DESCRIPTION,
         PERSON_BIRTHDATE,
+        PERSON_TEAM,
         PERSON_ADD_TEAM,
         PERSON_DEL_TEAM,
         PERSON_EDIT,
@@ -71,6 +72,7 @@ public class UndoRedoPerformer
         TEAM_DEL,
         TEAM_SHORTNAME,
         TEAM_DESCRIPTION,
+	TEAM_PROJECT,
         TEAM_ADD_PROJECT,
         TEAM_DEL_PROJECT,
         TEAM_EDIT,
@@ -179,17 +181,22 @@ public class UndoRedoPerformer
                 case PERSON_BIRTHDATE:
                     person.setBirthDate((Date) item.getUndoAction().getValue());
                     break;
+                case PERSON_TEAM:
+                    person.setTeam((Team) item.getUndoAction().getValue());
+                    break;
                 case PERSON_ADD_TEAM:
                     Team currentTeam = (Team) item.getUndoAction().getValue();
-                    currentTeam.getPeople().remove(person);
+                    person.getTeam().getPeople().remove(person);
+                    currentTeam.getPeople().add(person);
                     App.content.getChildren().remove(informationGrid);
                     TeamScene.getTeamScene(currentTeam);
                     App.content.getChildren().add(informationGrid);
-                    System.out.println(currentTeam.toString() + person.toString());
                     break;
                 case PERSON_DEL_TEAM:
                     currentTeam = (Team) item.getUndoAction().getValue();
                     currentTeam.getPeople().add(person);
+		    ((Team) Global.currentWorkspace.getTeams().get(0))
+			    .getPeople().remove(person);
                     App.content.getChildren().remove(informationGrid);
                     TeamScene.getTeamScene(currentTeam);
                     App.content.getChildren().add(informationGrid);
@@ -212,7 +219,7 @@ public class UndoRedoPerformer
         else if (objClass == Skill.class)
         {
             Skill skill = (Skill) item.getHost();
-            Person currentPerson = (Person) item.getUndoAction().getValue();
+            
             switch (item.getUndoAction().getProperty())
             {
                 case SKILL_ADD:
@@ -228,12 +235,14 @@ public class UndoRedoPerformer
                     skill.setDescription((String) item.getUndoAction().getValue());
                     break;
                 case SKILL_ADD_PERSON:
+		    Person currentPerson = (Person) item.getUndoAction().getValue();
                     currentPerson.getSkills().remove(skill);
                     App.content.getChildren().remove(informationGrid);
                     PersonScene.getPersonScene(currentPerson);
                     App.content.getChildren().add(informationGrid);
                     break;
                 case SKILL_DEL_PERSON:
+		    currentPerson = (Person) item.getUndoAction().getValue();
                     currentPerson.getSkills().add(skill);
                     App.content.getChildren().remove(informationGrid);
                     PersonScene.getPersonScene(currentPerson);
@@ -266,16 +275,25 @@ public class UndoRedoPerformer
                     Global.currentWorkspace.getTeams().add((Team) item.getHost());
                     break;
                 case TEAM_SHORTNAME:
+                    System.out.println("TEAM_SHORTNAME" + "  " + item.getUndoAction().getValue());
                     team.setShortName((String) item.getUndoAction().getValue());
                     break;
                 case TEAM_DESCRIPTION:
+                    System.out.println("TEAM DESC" + "  " + item.getUndoAction().getValue());
                     team.setDescription((String) item.getUndoAction().getValue());
+                    break;
+		case TEAM_PROJECT:
+                    team.setProject((Project) item.getUndoAction().getValue());
                     break;
                 case TEAM_ADD_PROJECT:
                     Project currentProject = (Project) item.getUndoAction().getValue();
-                    currentProject.getTeams().remove(team);
+		    team.getProject().getTeams().remove(team);
+		    if (currentProject != null) 
+		    {
+                        currentProject.getTeams().add(team);
+		    }
                     App.content.getChildren().remove(informationGrid);
-                    ProjectScene.getProjectScene(currentProject);
+                    ProjectScene.getProjectScene(team.getProject());
                     App.content.getChildren().add(informationGrid);
                     break;
                 case TEAM_DEL_PROJECT:
@@ -291,7 +309,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
-                    //TeamScene.refreshTeamScene(team);
+                    TeamScene.refreshTeamScene(team);
                     break;
                 default:
                     System.out.println("Undo on skill with this property not implemented (yet?)");
@@ -402,16 +420,22 @@ public class UndoRedoPerformer
                 case PERSON_BIRTHDATE:
                     person.setBirthDate((Date) item.getRedoAction().getValue());
                     break;
+                case PERSON_TEAM:
+                    person.setTeam((Team) item.getRedoAction().getValue());
+                    break;
                 case PERSON_ADD_TEAM:
-                    Team currentTeam = (Team) item.getUndoAction().getValue();
+                    Team currentTeam = (Team) item.getRedoAction().getValue();
+                    person.getTeam().getPeople().remove(person);
                     currentTeam.getPeople().add(person);
                     App.content.getChildren().remove(informationGrid);
                     TeamScene.getTeamScene(currentTeam);
                     App.content.getChildren().add(informationGrid);
                     break;
                 case PERSON_DEL_TEAM:
-                    currentTeam = (Team) item.getUndoAction().getValue();
-                    currentTeam.getPeople().remove(person);
+                    currentTeam = (Team) item.getRedoAction().getValue();
+		    currentTeam.getPeople().remove(person);
+		    ((Team) Global.currentWorkspace.getTeams().get(0))
+			    .getPeople().add(person);
                     App.content.getChildren().remove(informationGrid);
                     TeamScene.getTeamScene(currentTeam);
                     App.content.getChildren().add(informationGrid);
@@ -493,15 +517,22 @@ public class UndoRedoPerformer
                 case TEAM_DESCRIPTION:
                     team.setDescription((String) item.getRedoAction().getValue());
                     break;
+		case TEAM_PROJECT:
+                    team.setProject((Project) item.getRedoAction().getValue());
+                    break;
                 case TEAM_ADD_PROJECT:
-                    Project currentProject = (Project) item.getUndoAction().getValue();
+                    Project currentProject = (Project) item.getRedoAction().getValue();
+		    if (team.getProject() != null)
+		    {
+			team.getProject().getTeams().remove(team);
+		    }
                     currentProject.getTeams().add(team);
                     App.content.getChildren().remove(informationGrid);
                     ProjectScene.getProjectScene(currentProject);
                     App.content.getChildren().add(informationGrid);
                     break;
                 case TEAM_DEL_PROJECT:
-                    currentProject = (Project) item.getUndoAction().getValue();
+                    currentProject = (Project) item.getRedoAction().getValue();
                     currentProject.getTeams().remove(team);
                     App.content.getChildren().remove(informationGrid);
                     ProjectScene.getProjectScene(currentProject);
@@ -513,10 +544,10 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
-                    //TeamScene.refreshTeamScene(team);    
+                    TeamScene.refreshTeamScene(team);    
                     break;
                 default:
-                    System.out.println("Redo on skill with this property not implemented (yet?)");
+                    System.out.println("Redo on Team with this property not implemented (yet?)");
                     break;                   
             }
         }
