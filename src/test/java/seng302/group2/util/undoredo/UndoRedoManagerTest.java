@@ -1,9 +1,15 @@
 package seng302.group2.util.undoredo;
 
+import java.util.ArrayList;
+import java.util.Date;
 import junit.framework.TestCase;
 import seng302.group2.workspace.person.Person;
 
 import java.util.Stack;
+import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
 
 /**
  * A JUnit test class for the Undo/Redo Manager
@@ -11,6 +17,7 @@ import java.util.Stack;
 public class UndoRedoManagerTest extends TestCase {
 
     UndoRedoManager manager = new UndoRedoManager();
+    
 
     Person firstPerson = new Person();
 
@@ -96,5 +103,270 @@ public class UndoRedoManagerTest extends TestCase {
 
         assertNotSame(new Stack<UndoableItem>(), manager.getUndoStack());
         assertEquals(equiv, manager.getUndoStack());
+    }
+    
+    
+    /**
+     * A simple test to ensure the Undo/Redo functionality for person edit is working.
+     * @throws Exception 
+     */
+    public void testPersonEdit() throws Exception {
+        TestClassUndoRedoManager testManager = new TestClassUndoRedoManager();
+        ArrayList<UndoableItem> undoActionsTest = new ArrayList<>();
+
+        Person personEdit = new Person("btm38", "Bronson", "McNaughton", "btm38@uclive.ac.nz",
+            "The coolest guy in the world!", new Date(19/12/1994));
+        
+        UndoableItem shortNameEdit = new UndoableItem(personEdit,
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_SHORTNAME, personEdit.getShortName()),
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_SHORTNAME, "amc123"));
+        undoActionsTest.add(shortNameEdit);
+
+        UndoableItem firstNameEdit = new UndoableItem(personEdit,
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_FIRSTNAME, personEdit.getFirstName()),
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_FIRSTNAME, "Angus"));
+        undoActionsTest.add(firstNameEdit);
+
+        UndoableItem lastNameEdit = new UndoableItem(personEdit,
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_LASTNAME, personEdit.getLastName()),
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_LASTNAME, "McGurkinshaw"));
+        undoActionsTest.add(lastNameEdit);
+
+        UndoableItem emailEdit = new UndoableItem(personEdit,
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_EMAIL, personEdit.getEmail()),
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_EMAIL, "AngMcG@gmail.com"));
+        undoActionsTest.add(emailEdit);
+
+        UndoableItem descriptionEdit = new UndoableItem(personEdit,
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DESCRIPTION, personEdit.getDescription()),
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DESCRIPTION, "Who is Angus McGurkinshaw? Nobody really knows...")); 
+        undoActionsTest.add(descriptionEdit);
+        
+        testManager.add(new UndoableItem(personEdit,
+            new UndoRedoAction(
+                UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT,
+                undoActionsTest), 
+            new UndoRedoAction(
+                UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT, 
+                undoActionsTest)
+        ));
+
+        personEdit.setShortName("amc123");
+        personEdit.setFirstName("Angus");
+        personEdit.setLastName("McGurkinshaw");
+        personEdit.setEmail("AngMcG@gmail.com");
+        personEdit.setDescription("Who is Angus McGurkinshaw? Nobody really knows...");
+        
+        testManager.undo();
+           
+        assertEquals("btm38", personEdit.getShortName());
+        assertEquals("Bronson", personEdit.getFirstName());
+        assertEquals("McNaughton", personEdit.getLastName());
+        assertEquals("btm38@uclive.ac.nz", personEdit.getEmail());
+        assertEquals("The coolest guy in the world!", personEdit.getDescription());
+        
+        testManager.redo();
+        
+        assertEquals("amc123", personEdit.getShortName());
+        assertEquals("Angus", personEdit.getFirstName());
+        assertEquals("McGurkinshaw", personEdit.getLastName());
+        assertEquals("AngMcG@gmail.com", personEdit.getEmail());
+        assertEquals("Who is Angus McGurkinshaw? Nobody really knows...", personEdit.getDescription());        
+    }
+    
+    
+    /**
+     * A simple test to ensure the Undo/Redo functionality for workspace edit is working.
+     * @throws Exception 
+     */
+    public void testWorkspaceEdit() throws Exception {
+        TestClassUndoRedoManager testManager = new TestClassUndoRedoManager();
+        ArrayList<UndoableItem> undoActionsTest = new ArrayList<>();
+
+        Workspace workspaceEdit = new Workspace("Original Short Name", "Original Long Name", "Original Description");
+        
+        UndoableItem shortNameEdit = new UndoableItem(workspaceEdit,
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.WORKSPACE_SHORTNAME, workspaceEdit.getShortName()),
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.WORKSPACE_SHORTNAME, "New Short Name"));
+        undoActionsTest.add(shortNameEdit);
+
+        UndoableItem longNameEdit = new UndoableItem(workspaceEdit,
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.WORKSPACE_LONGNAME, workspaceEdit.getLongName()),
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.WORKSPACE_LONGNAME, "New Long Name"));
+        undoActionsTest.add(longNameEdit);
+
+        UndoableItem descriptionEdit = new UndoableItem(workspaceEdit,
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.WORKSPACE_DESCRIPTION, workspaceEdit.getDescription()),
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.WORKSPACE_DESCRIPTION, "New Description"));
+        undoActionsTest.add(descriptionEdit);
+        
+        testManager.add(new UndoableItem(workspaceEdit,
+            new UndoRedoAction(
+                UndoRedoPerformer.UndoRedoProperty.WORKSPACE_EDIT,
+                undoActionsTest), 
+            new UndoRedoAction(
+                UndoRedoPerformer.UndoRedoProperty.WORKSPACE_EDIT, 
+                undoActionsTest)
+        ));
+
+        workspaceEdit.setShortName("New Short Name");
+        workspaceEdit.setLongName("New Long Name");
+        workspaceEdit.setDescription("New Description");
+
+        
+        testManager.undo();
+           
+        assertEquals("Original Short Name", workspaceEdit.getShortName());
+        assertEquals("Original Long Name", workspaceEdit.getLongName());
+        assertEquals("Original Description", workspaceEdit.getDescription());
+        
+        testManager.redo();
+        
+        assertEquals("New Short Name", workspaceEdit.getShortName());
+        assertEquals("New Long Name", workspaceEdit.getLongName());
+        assertEquals("New Description", workspaceEdit.getDescription());
+    }
+    
+    
+    /**
+     * A simple test to ensure the Undo/Redo functionality for workspace edit is working
+     * @throws Exception 
+     */
+    public void testProjectEdit() throws Exception {
+        TestClassUndoRedoManager testManager = new TestClassUndoRedoManager();
+        ArrayList<UndoableItem> undoActionsTest = new ArrayList<>();
+
+        Project projectEdit = new Project("Original Short Name", "Original Long Name", "Original Description");
+
+        UndoableItem shortNameEdit = new UndoableItem(projectEdit,
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT_SHORTNAME, projectEdit.getShortName()),
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT_SHORTNAME, "New Short Name"));
+        undoActionsTest.add(shortNameEdit);
+
+        UndoableItem longNameEdit = new UndoableItem(projectEdit,
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT_LONGNAME, projectEdit.getLongName()),
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT_LONGNAME, "New Long Name"));
+        undoActionsTest.add(longNameEdit);
+
+        UndoableItem descriptionEdit = new UndoableItem(projectEdit,
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT_DESCRIPTION, projectEdit.getDescription()),
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT_DESCRIPTION, "New Description"));
+        undoActionsTest.add(descriptionEdit);
+
+        testManager.add(new UndoableItem(projectEdit,
+            new UndoRedoAction(
+                UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT,
+                undoActionsTest), 
+            new UndoRedoAction(
+                UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT, 
+                undoActionsTest)
+        ));
+
+        projectEdit.setShortName("New Short Name");
+        projectEdit.setLongName("New Long Name");
+        projectEdit.setDescription("New Description");
+
+
+        testManager.undo();
+
+        assertEquals("Original Short Name", projectEdit.getShortName());
+        assertEquals("Original Long Name", projectEdit.getLongName());
+        assertEquals("Original Description", projectEdit.getDescription());
+
+        testManager.redo();
+
+        assertEquals("New Short Name", projectEdit.getShortName());
+        assertEquals("New Long Name", projectEdit.getLongName());
+        assertEquals("New Description", projectEdit.getDescription());
+    }
+      
+    
+    /**
+     * A simple test to ensure the Undo/Redo functionality for skill edit is working.
+     * @throws Exception 
+     */
+    public void testSkillEdit() throws Exception {
+        TestClassUndoRedoManager testManager = new TestClassUndoRedoManager();
+        ArrayList<UndoableItem> undoActionsTest = new ArrayList<>();
+
+        Skill skillEdit = new Skill("Original Short Name", "Original Description");
+        
+        UndoableItem shortNameEdit = new UndoableItem(skillEdit,
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_SHORTNAME, skillEdit.getShortName()),
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_SHORTNAME, "New Short Name"));
+        undoActionsTest.add(shortNameEdit);
+
+        UndoableItem descriptionEdit = new UndoableItem(skillEdit,
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_DESCRIPTION, skillEdit.getDescription()),
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_DESCRIPTION, "New Description"));
+        undoActionsTest.add(descriptionEdit);
+        
+        testManager.add(new UndoableItem(skillEdit,
+            new UndoRedoAction(
+                UndoRedoPerformer.UndoRedoProperty.SKILL_EDIT,
+                undoActionsTest), 
+            new UndoRedoAction(
+                UndoRedoPerformer.UndoRedoProperty.SKILL_EDIT, 
+                undoActionsTest)
+        ));
+
+        skillEdit.setShortName("New Short Name");
+        skillEdit.setDescription("New Description");
+
+        
+        testManager.undo();
+           
+        assertEquals("Original Short Name", skillEdit.getShortName());
+        assertEquals("Original Description", skillEdit.getDescription());
+        
+        testManager.redo();
+        
+        assertEquals("New Short Name", skillEdit.getShortName());
+        assertEquals("New Description", skillEdit.getDescription());
+    }
+    
+    
+    /**
+     * A simple test to ensure the Undo/Redo functionality for team edit is working.
+     * @throws Exception 
+     */
+    public void testTeamEdit() throws Exception {
+        TestClassUndoRedoManager testManager = new TestClassUndoRedoManager();
+        ArrayList<UndoableItem> undoActionsTest = new ArrayList<>();
+
+        Team teamEdit = new Team("Original Short Name", "Original Description");
+        
+        UndoableItem shortNameEdit = new UndoableItem(teamEdit,
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_SHORTNAME, teamEdit.getShortName()),
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_SHORTNAME, "New Short Name"));
+        undoActionsTest.add(shortNameEdit);
+
+        UndoableItem descriptionEdit = new UndoableItem(teamEdit,
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION, teamEdit.getDescription()),
+        new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION, "New Description"));
+        undoActionsTest.add(descriptionEdit);
+        
+        testManager.add(new UndoableItem(teamEdit,
+            new UndoRedoAction(
+                UndoRedoPerformer.UndoRedoProperty.TEAM_EDIT,
+                undoActionsTest), 
+            new UndoRedoAction(
+                UndoRedoPerformer.UndoRedoProperty.TEAM_EDIT, 
+                undoActionsTest)
+        ));
+
+        teamEdit.setShortName("New Short Name");
+        teamEdit.setDescription("New Description");
+
+        
+        testManager.undo();
+           
+        assertEquals("Original Short Name", teamEdit.getShortName());
+        assertEquals("Original Description", teamEdit.getDescription());
+        
+        testManager.redo();
+        
+        assertEquals("New Short Name", teamEdit.getShortName());
+        assertEquals("New Description", teamEdit.getDescription());
     }
 }
