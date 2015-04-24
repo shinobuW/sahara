@@ -44,11 +44,11 @@ public class TeamScene
         Button btnEdit = new Button("Edit");
         if (currentTeam.isUnassignedTeam())
         {
-            btnEdit.setDisable(true);
+            btnEdit.setVisible(false);
         }
         else
         {
-            btnEdit.setDisable(false);
+            btnEdit.setVisible(true);
         }
         
         

@@ -25,6 +25,7 @@ import java.util.Date;
 import static seng302.group2.util.validation.DateValidator.validateBirthDate;
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
+import seng302.group2.workspace.team.Team;
 
 /**
  * Class to create a pop up dialog for creating a person.
@@ -97,6 +98,9 @@ public class CreatePersonDialog
                     Person person = new Person(shortName, firstName, lastName, email, description,
                         birthDate);
                     Global.currentWorkspace.add(person);
+                    person.setTeam((Team)Global.currentWorkspace.getTeams().get(0));
+                            ((Team)Global.currentWorkspace.getTeams().get(0))
+                                    .addPerson(person, false);
                     dialog.hide();
                 }
                 else 
