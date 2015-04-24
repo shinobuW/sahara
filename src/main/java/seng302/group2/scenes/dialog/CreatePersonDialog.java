@@ -99,8 +99,7 @@ public class CreatePersonDialog
                         birthDate);
                     Global.currentWorkspace.add(person);
                     person.setTeam((Team)Global.currentWorkspace.getTeams().get(0));
-                            ((Team)Global.currentWorkspace.getTeams().get(0))
-                                    .addPerson(person, false);
+                    ((Team)Global.currentWorkspace.getTeams().get(0)).addPerson(person, false);
                     dialog.hide();
                 }
                 else 
