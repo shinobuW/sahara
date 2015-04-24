@@ -184,9 +184,10 @@ public class ElementTreeContextMenu extends ContextMenu
             .title("Delete item?")
             .message(MessageFormat.format("Are you sure you want to delete {0}",
                     Global.selectedTreeItem.getValue().toString() + "?"))
+            .actions(Dialog.ACTION_YES, Dialog.ACTION_CANCEL) 
             .showConfirm();
 
-        if (response == Dialog.ACTION_YES || response == Dialog.ACTION_OK)
+        if (response == Dialog.ACTION_YES)
         {
             switch (category)
             {

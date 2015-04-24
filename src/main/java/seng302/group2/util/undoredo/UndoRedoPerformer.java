@@ -454,7 +454,6 @@ public class UndoRedoPerformer
         else if (objClass == Skill.class)
         {
             Skill skill = (Skill) item.getHost();
-            Person currentPerson = (Person) item.getUndoAction().getValue(); //Why is this here?
             switch (item.getRedoAction().getProperty())
             {
                 case SKILL_ADD:
@@ -470,12 +469,14 @@ public class UndoRedoPerformer
                     skill.setDescription((String) item.getRedoAction().getValue());
                     break;
                 case SKILL_ADD_PERSON:
+                    Person currentPerson = (Person) item.getUndoAction().getValue();
                     currentPerson.getSkills().add(skill);
                     App.content.getChildren().remove(informationGrid);
                     PersonScene.getPersonScene(currentPerson);
                     App.content.getChildren().add(informationGrid);
                     break;
                 case SKILL_DEL_PERSON:
+                    currentPerson = (Person) item.getUndoAction().getValue();
                     currentPerson.getSkills().remove(skill);
                     App.content.getChildren().remove(informationGrid);
                     PersonScene.getPersonScene(currentPerson);

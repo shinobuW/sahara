@@ -124,10 +124,10 @@ public class SkillEditScene
                     Global.undoRedoMan.add(new UndoableItem(
                         currentSkill,
                         new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT,
+                                UndoRedoPerformer.UndoRedoProperty.SKILL_EDIT,
                                 undoActions), 
                         new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT, 
+                                UndoRedoPerformer.UndoRedoProperty.SKILL_EDIT, 
                                 undoActions)
                         ));                      
                             
