@@ -12,6 +12,9 @@ import java.util.EmptyStackException;
 import java.util.Stack;
 
 /**
+ * *** This have been slightly modified for testing ***
+ * *** THIS IS JUST TEMPORARY ***
+ * Modifications: calls TestClassUndoRedoPerformer instead of UndoRedoPerformer
  * A class for managing undo and redo actions.
  * @author jml168
  */

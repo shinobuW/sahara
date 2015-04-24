@@ -15,7 +15,8 @@ import java.util.Date;
 
 import static seng302.group2.scenes.MainScene.informationGrid;
 /**
- * *** THIS HAS BEEN SLIGHTLY MODIFIED TO ENABLE UNIT TESTING ***
+ * *** This have been slightly modified for testing ***
+ * *** THIS IS JUST TEMPORARY ***
  * Modifications: calls to each elements RefreshScene have been removed
  * A class that handles the ugly undo/redo work behind the scenes on undoable items.
  * @author jml168
