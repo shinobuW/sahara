@@ -2,8 +2,7 @@ package seng302.group2.workspace.project;
 
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.Category;
-import seng302.group2.scenes.listdisplay.ProjectCategory;
+import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
@@ -107,6 +106,21 @@ public class Project extends TreeViewItem implements Serializable
             this.serializableReleases.add((Release)item);
         }
         return this.releases;
+    }
+
+
+    /**
+     * Returns the releases of a project casted as TreeViewItems
+     * @return list of releases casted as TreeViewItems
+     */
+    public ObservableList<TreeViewItem> getTreeViewReleases()
+    {
+        ObservableList<TreeViewItem> treeViewReleases = observableArrayList();
+        for (Object item : this.releases)
+        {
+            treeViewReleases.add((TreeViewItem)item);
+        }
+        return treeViewReleases;
     }
 
     
@@ -262,9 +276,8 @@ public class Project extends TreeViewItem implements Serializable
     public ObservableList<TreeViewItem> getChildren()
     {
         ObservableList<TreeViewItem> children = observableArrayList();
-        ProjectCategory releases = new ProjectCategory("Releases", this);
-
-        children.add(releases);
+        ReleaseCategory releasesCategory = new ReleaseCategory("Releases", this);
+        children.add(releasesCategory);
 
         return children;
     }

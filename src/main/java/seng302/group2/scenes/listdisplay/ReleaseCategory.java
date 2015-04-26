@@ -12,19 +12,17 @@ import static javafx.collections.FXCollections.observableArrayList;
  * "People" for all persons within the workspace.
  * @author Jordane
  */
-public class ProjectCategory extends Category
+public class ReleaseCategory extends Category
 {
-    private String name;
     private Project project;
 
     /**
      * Basic constructor for a TreeView category
      * @param name The name of the category
      */
-    public ProjectCategory(String name, Project project)
+    public ReleaseCategory(String name, Project project)
     {
         super(name);
-        this.name = name;
         this.project = project;
     }
     
@@ -34,15 +32,8 @@ public class ProjectCategory extends Category
      * @return the children of the category
      */
     @Override
-    public ObservableList<TreeViewItem> getChildren()
+    public ObservableList getChildren()
     {
-        ObservableList<TreeViewItem> children = observableArrayList();
-
-        for (Release release : this.project.getReleases())
-        {
-            children.add(release);
-        }
-
-        return children;
+        return project.getReleases();
     }
 }
