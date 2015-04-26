@@ -2,6 +2,8 @@ package seng302.group2.workspace.project;
 
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
+import seng302.group2.scenes.listdisplay.Category;
+import seng302.group2.scenes.listdisplay.ProjectCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
@@ -55,7 +57,9 @@ public class Project extends TreeViewItem implements Serializable
         this.description = description;
     }
 
+
      // <editor-fold defaultstate="collapsed" desc="Getters">
+
     /**
      * Gets the short name of the project
      * @return Short name of the project
@@ -65,6 +69,7 @@ public class Project extends TreeViewItem implements Serializable
         return shortName;
     }
 
+
     /**
      * Gets the long name of the project
      * @return The long name of the project
@@ -73,6 +78,7 @@ public class Project extends TreeViewItem implements Serializable
     {
         return longName;
     }
+
 
     /**
      * Gets the teams of the project
@@ -88,6 +94,7 @@ public class Project extends TreeViewItem implements Serializable
         return this.teams;
     }
 
+
     /**
      * Gets the releases of the project
      * @return list of releases
@@ -101,6 +108,7 @@ public class Project extends TreeViewItem implements Serializable
         }
         return this.releases;
     }
+
     
     /**
      * Gets the description of the project
@@ -110,8 +118,10 @@ public class Project extends TreeViewItem implements Serializable
     {
         return description;
     }
-    
+
+
     //</editor-fold>
+
 
     /**
      * Sets the short name of the project
@@ -121,7 +131,8 @@ public class Project extends TreeViewItem implements Serializable
     {
         this.shortName = shortName;
     }
-    
+
+
     // <editor-fold defaultstate="collapsed" desc="Setters"> 
     /**
      * Sets the long name of the project
@@ -143,6 +154,7 @@ public class Project extends TreeViewItem implements Serializable
     
     //</editor-fold>
 
+
     /**
      * Adds a Team to the Project list of Teams
      * @param team The team to add
@@ -160,6 +172,7 @@ public class Project extends TreeViewItem implements Serializable
         }
         this.teams.add(team);
     }
+
 
     /**
      * Removes a Team from the Project's list of Teams
@@ -179,6 +192,7 @@ public class Project extends TreeViewItem implements Serializable
         this.teams.remove(team);
     }
 
+
     /** 
      * Add Release to Project
      * @param release release to be added
@@ -189,6 +203,7 @@ public class Project extends TreeViewItem implements Serializable
         //TODO UNDO REDO
         this.releases.add(release);
     }
+
     
      /**
      * Prepares a project to be serialized.
@@ -227,6 +242,7 @@ public class Project extends TreeViewItem implements Serializable
         }
     }
 
+
     /**
      * An overridden version for the String representation of a Workspace.
      * @return The short name of the Workspace
@@ -235,5 +251,21 @@ public class Project extends TreeViewItem implements Serializable
     public String toString()
     {
         return this.shortName;
+    }
+
+
+    /**
+     * Gets the children of the category
+     * @return the children of the category
+     */
+    @Override
+    public ObservableList<TreeViewItem> getChildren()
+    {
+        ObservableList<TreeViewItem> children = observableArrayList();
+        ProjectCategory releases = new ProjectCategory("Releases", this);
+
+        children.add(releases);
+
+        return children;
     }
 }
