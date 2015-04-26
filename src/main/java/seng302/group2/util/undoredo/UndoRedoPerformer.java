@@ -68,7 +68,7 @@ public class UndoRedoPerformer
         TEAM_DEL,
         TEAM_SHORTNAME,
         TEAM_DESCRIPTION,
-	TEAM_PROJECT,
+        TEAM_PROJECT,
         TEAM_ADD_PROJECT,
         TEAM_DEL_PROJECT,
         TEAM_EDIT,
@@ -91,21 +91,28 @@ public class UndoRedoPerformer
             {
                 case WORKSPACE_SHORTNAME:
                     proj.setShortName((String) item.getUndoAction().getValue());
+                    System.out.println("Workspace short name change undone ("
+                            + item.getUndoAction().getValue() + ")");
                     break;
                 case WORKSPACE_LONGNAME:
                     proj.setLongName((String) item.getUndoAction().getValue());
+                    System.out.println("Workspace name change undone ("
+                            + item.getUndoAction().getValue() + ")");
                     break;
                 case WORKSPACE_DESCRIPTION:
                     proj.setDescription((String) item.getUndoAction().getValue());
+                    System.out.println("Workspace description change undone ("
+                            + item.getUndoAction().getValue() + ")");
                     break;
                 case WORKSPACE_EDIT:
                     for (UndoableItem undoAction : (ArrayList<UndoableItem>)
-                            item.getUndoAction().getValue()) 
+                            item.getUndoAction().getValue())
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
-                    WorkspaceScene.refreshWorkspaceScene(proj);
-                    break; 
+                    //WorkspaceScene.refreshWorkspaceScene(proj); //Commeneted for unit testing
+                    System.out.println("Workspace edit undone");
+                    break;
                 default:
                     System.out.println("Undo with this property not implemented (yet?)");
                     break;
@@ -120,18 +127,28 @@ public class UndoRedoPerformer
             {
                 case PROJECT_ADD:
                     Global.currentWorkspace.getProjects().remove((Project) item.getHost());
+                    System.out.println("Project creation undone ("
+                            + item.getUndoAction().getValue() + ")");
                     break;
                 case PROJECT_DEL:
                     Global.currentWorkspace.getProjects().add((Project) item.getHost());
-                    break;    
+                    System.out.println("Project deletion undone ("
+                            + item.getUndoAction().getValue() + ")");
+                    break;
                 case PROJECT_SHORTNAME:
                     proj.setShortName((String) item.getUndoAction().getValue());
+                    System.out.println("Project short name change undone ("
+                            + item.getUndoAction().getValue() + ")");
                     break;
                 case PROJECT_LONGNAME:
                     proj.setLongName((String) item.getUndoAction().getValue());
+                    System.out.println("Project long name change undone ("
+                            + item.getUndoAction().getValue() + ")");
                     break;
                 case PROJECT_DESCRIPTION:
                     proj.setDescription((String) item.getUndoAction().getValue());
+                    System.out.println("Project description change undone ("
+                            + item.getUndoAction().getValue() + ")");
                     break;
                 case PROJECT_EDIT:
                     for (UndoableItem undoAction : (ArrayList<UndoableItem>)
@@ -139,7 +156,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
-                    ProjectScene.refreshProjectScene(proj);
+                    System.out.println("Project edit undone");
                     break;
                 default:
                     System.out.println("Undo with this property not implemented (yet?)");
