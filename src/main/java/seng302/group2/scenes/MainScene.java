@@ -67,28 +67,16 @@ public class MainScene
             RoleScene.getRoleScene((Role) Global.selectedTreeItem.getValue());
         }
         
-        // Old: TreeView display = ListDisplay.getProjectTree();  // (Manual)
+
         // Create the display menu from the workspace tree
         
         ObservableList<TreeViewItem> children = observableArrayList();
-
-        
         children.add(Global.currentWorkspace);
-        
 
         
         treeView.setItems(children);
         treeView.setShowRoot(false);
-        
-        //Creates context menu but the text on treeview disappears
-//        treeView.setCellFactory(new Callback<TreeView<TreeViewItem>,TreeCell<String>>()
-//        {
-//            @Override
-//            public TreeCell<String> call(TreeView<TreeViewItem> arg0) 
-//            {
-//                return new RootTreeCell();
-//            }
-//        });
+
         
         root.heightProperty().addListener(new ChangeListener<Number>() {
             @Override

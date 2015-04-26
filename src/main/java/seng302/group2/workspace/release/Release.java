@@ -12,8 +12,8 @@ import seng302.group2.workspace.project.Project;
 import java.util.Date;
 
 /**
- *
- * @author Shinobu
+ * A release is a sub-member of project and contains information about a release of a project
+ * @author Shinobu, Jordane
  */
 public class Release extends TreeViewItem
 {
@@ -21,8 +21,10 @@ public class Release extends TreeViewItem
     private String description;
     private Date estimatedReleaseDate;
     private Project project;
-    
-    /** Basic constructor
+
+
+    /**
+     * Basic constructor
      */
     public Release()
     {
@@ -31,8 +33,10 @@ public class Release extends TreeViewItem
         this.estimatedReleaseDate = new Date("20/20/2020");
         this.project = new Project();
     }
+
     
-    /** Constructor
+    /**
+     * Required Constructor
      * @param shortName short name to be set
      * @param project project to be set
      */
@@ -41,8 +45,10 @@ public class Release extends TreeViewItem
         this.shortName = shortName;
         this.project = project;
     }
-    
-    /**Constructor
+
+
+    /**
+     * Complete Constructor
      * @param shortName short name to be set
      * @param description description to be set
      * @param releaseDate release date to be set
@@ -55,25 +61,31 @@ public class Release extends TreeViewItem
         this.estimatedReleaseDate = releaseDate;
         this.project = project;
     }
+
     
     // <editor-fold defaultstate="collapsed" desc="Getters"> 
-    
-    /**Gets short name of the release
+
+
+    /**
+     * Gets short name of the release
      * @return short name of the release
      */
     public String getShortName()
     {
         return this.shortName;
     }
-    
-    /**Gets the description of the release
+
+
+    /**
+     * Gets the description of the release
      * @return the description of the release
      */
     public String getDescription()
     {
         return this.description;
     }
-    
+
+
     /**
      * Gets the estimated release date for the release
      * @return the estimated release date of the release
@@ -82,7 +94,8 @@ public class Release extends TreeViewItem
     {
         return this.estimatedReleaseDate;
     }
-    
+
+
     /**
      * Gets the project the release belongs to
      * @return project 
@@ -91,10 +104,14 @@ public class Release extends TreeViewItem
     {
         return this.project;
     }
-     //</editor-fold>
-    
+
+
+    //</editor-fold>
+
+
     // <editor-fold defaultstate="collapsed" desc="Setters"> 
-    
+
+
     /** 
      * Sets the short Name of the release
      * @param shortName short name to set 
@@ -103,7 +120,8 @@ public class Release extends TreeViewItem
     {
         this.shortName = shortName;
     }
-    
+
+
     /**
      * Sets the Description of the release
      * @param description
@@ -112,7 +130,8 @@ public class Release extends TreeViewItem
     {
         this.description = description;
     }
-    
+
+
     /**
      * Sets the estimated Release Date of the release
      * @param releaseDate
@@ -121,7 +140,8 @@ public class Release extends TreeViewItem
     {
         this.estimatedReleaseDate = releaseDate;
     }
-    
+
+
     /**
      * Sets the project the release belongs to
      * @param project project to set
@@ -130,8 +150,10 @@ public class Release extends TreeViewItem
     {
         this.project = project;
     }
-     //</editor-fold>
-    
+
+    //</editor-fold>
+
+
     @Override
     public ObservableList<TreeViewItem> getChildren()
     {
