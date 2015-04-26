@@ -19,7 +19,7 @@ public class Release extends TreeViewItem
 {
     private String shortName;
     private String description;
-    private Date estimatedReleaseDate;
+    private Date estimatedDate;
     private Project project;
 
 
@@ -30,7 +30,7 @@ public class Release extends TreeViewItem
     {
         this.shortName = "Untitled Release";
         this.description = "Release without project assigned should not exist";
-        this.estimatedReleaseDate = new Date("20/20/2020");
+        this.estimatedDate = new Date("20/20/2020");
         this.project = new Project();
     }
 
@@ -58,7 +58,7 @@ public class Release extends TreeViewItem
     {
         this.shortName = shortName;
         this.description = description;
-        this.estimatedReleaseDate = releaseDate;
+        this.estimatedDate = releaseDate;
         this.project = project;
     }
 
@@ -90,9 +90,9 @@ public class Release extends TreeViewItem
      * Gets the estimated release date for the release
      * @return the estimated release date of the release
      */
-    public Date getEstimatedReleaseDate()
+    public Date getEstimatedDate()
     {
-        return this.estimatedReleaseDate;
+        return this.estimatedDate;
     }
 
 
@@ -136,9 +136,9 @@ public class Release extends TreeViewItem
      * Sets the estimated Release Date of the release
      * @param releaseDate
      */
-    public void setEstimatedReleaseDate(Date releaseDate)
+    public void setEstimatedDate(Date releaseDate)
     {
-        this.estimatedReleaseDate = releaseDate;
+        this.estimatedDate = releaseDate;
     }
 
 

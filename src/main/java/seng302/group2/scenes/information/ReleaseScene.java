@@ -55,7 +55,7 @@ public class ReleaseScene
         informationGrid.add(new Label("Project"), 0, 4);
         
         informationGrid.add(new Label(currentRelease.getDescription()), 1, 2);
-        informationGrid.add(new Label(currentRelease.getEstimatedReleaseDate().toString()), 1, 3);
+        informationGrid.add(new Label(currentRelease.getEstimatedDate().toString()), 1, 3);
         informationGrid.add(new Label(currentRelease.getProject().toString()), 1, 4);
         informationGrid.add(btnEdit, 1, 5);
 
