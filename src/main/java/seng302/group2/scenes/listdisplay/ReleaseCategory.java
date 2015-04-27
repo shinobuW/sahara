@@ -25,8 +25,16 @@ public class ReleaseCategory extends Category
         super(name);
         this.project = project;
     }
-    
-    
+
+    /**
+     * Gets the release category's project
+     * @return the release category's project
+     */
+    public Project getProject()
+    {
+        return project;
+    }
+
     /**
      * Gets the children of the category
      * @return the children of the category
@@ -34,6 +42,10 @@ public class ReleaseCategory extends Category
     @Override
     public ObservableList getChildren()
     {
+        if (project == null)
+        {
+            return null;
+        }
         return project.getReleases();
     }
 
