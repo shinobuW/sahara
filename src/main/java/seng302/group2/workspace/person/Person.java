@@ -25,14 +25,12 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public class Person extends TreeViewItem implements Serializable
 {
-    public static String birthDatePattern = "dd/MM/yyyy";
-    
     private String shortName;
     private String firstName;
     private String lastName;
     private String email;
     private String description;
-    private Date birthDate = new Date();
+    private Date birthDate = null;
     private transient ObservableList<Skill> skills = observableArrayList();
     private ArrayList<Skill> serializableSkills = new ArrayList<>();
     private Team team;
@@ -80,12 +78,12 @@ public class Person extends TreeViewItem implements Serializable
         // Initialize as a TreeViewItem
         super(shortName);
         
-        this.shortName = shortName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.description = description;
-        this.birthDate = birthDate;
+        this.setShortName(shortName);
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setEmail(email);
+        this.setDescription(description);
+        this.setBirthDate(birthDate);
         for (TreeViewItem team : Global.currentWorkspace.getTeams())
         {
             Team castedTeam = (Team) team;
@@ -167,7 +165,16 @@ public class Person extends TreeViewItem implements Serializable
             return this.team.getShortName();
         }
     }
-    
+
+    /**
+     * Gets the ArrayList of serializable skills
+     * @return the serializable skills
+     */
+    public ArrayList<Skill> getSerializableSkills()
+    {
+        return serializableSkills;
+    }
+
     /**
      * Gets the person's team
      * @return The person's team
@@ -192,11 +199,11 @@ public class Person extends TreeViewItem implements Serializable
      */
     public ObservableList<Skill> getSkills()
     {
-        this.serializableSkills.clear();
+        /*this.serializableSkills.clear();
         for (Object item : this.skills)
         {
             this.serializableSkills.add((Skill)item);
-        }
+        }*/
         return this.skills;
     }
     
@@ -275,8 +282,8 @@ public class Person extends TreeViewItem implements Serializable
     {
         this.role = role;
     }
-    
-        //</editor-fold>
+
+    //</editor-fold>
     
     /**
      * Adds a Skill to the Person's list of Skills
