@@ -6,9 +6,9 @@
 package seng302.group2.workspace;
 
 import javafx.collections.ObservableList;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Test;
+import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -22,44 +22,34 @@ import static javafx.collections.FXCollections.observableArrayList;
  * @author Jordane Lew (jml168)
  * @author Bronson McNaughton (btm38)
  */
-public class WorkspaceTest extends TestCase
+public class WorkspaceTest
 {
-    /**
-     * Create the test case
-     * @param testName name of the test case
-     */
-    public WorkspaceTest(String testName)
-    {
-        super(testName);
-    }
 
     /**
-     * @return the suite of tests being tested
+     * A simple test for the Workspace constructors & getters.
      */
-    public static Test suite()
-    {
-        return new TestSuite(WorkspaceTest.class);
-    }
-
-    // A simple test for the Workspace constructors & getters.
+    @Test
     public void testWorkspaceConstructors()
     {
         Workspace work = new Workspace();
         ObservableList<TreeViewItem> people = observableArrayList();
-        assertEquals("Untitled Workspace", work.getShortName());
-        assertEquals("Untitled Workspace", work.getLongName());
-        assertEquals("A blank workspace.", work.getDescription());
-        assertEquals("Untitled Workspace", work.toString());
-        assertEquals(people, work.getPeople());
+        Assert.assertEquals("Untitled Workspace", work.getShortName());
+        Assert.assertEquals("Untitled Workspace", work.getLongName());
+        Assert.assertEquals("A blank workspace.", work.getDescription());
+        Assert.assertEquals("Untitled Workspace", work.toString());
+        Assert.assertEquals(people, work.getPeople());
         
         Workspace work2 = new Workspace("aShortName", "aLongName", "aDescription");
-        assertEquals("aShortName", work2.getShortName());
-        assertEquals("aLongName", work2.getLongName());
-        assertEquals("aDescription", work2.getDescription());    
-        assertEquals("aShortName", work2.toString());
+        Assert.assertEquals("aShortName", work2.getShortName());
+        Assert.assertEquals("aLongName", work2.getLongName());
+        Assert.assertEquals("aDescription", work2.getDescription());    
+        Assert.assertEquals("aShortName", work2.toString());
     }
-    
-    // Tests Projects' setter methods.
+
+    /**
+     * Tests Projects' setter methods.
+     */
+    @Test
     public void testWorkspaceSetters()
     {
         Workspace work = new Workspace();
@@ -67,16 +57,17 @@ public class WorkspaceTest extends TestCase
         work.setLongName("aLongName");
         work.setDescription("aDescription");
         
-        assertEquals("aShortName", work.getShortName());
-        assertEquals("aLongName", work.getLongName());
-        assertEquals("aDescription", work.getDescription());
-        assertEquals("aShortName", work.toString());
+        Assert.assertEquals("aShortName", work.getShortName());
+        Assert.assertEquals("aLongName", work.getLongName());
+        Assert.assertEquals("aDescription", work.getDescription());
+        Assert.assertEquals("aShortName", work.toString());
     }
     
 
     /**
      * Tests that people are correctly added to the workspace through the add() method.
      */
+    @Test
     public void testAddPerson()
     {
         Workspace work = new Workspace();
@@ -86,16 +77,17 @@ public class WorkspaceTest extends TestCase
         ObservableList<TreeViewItem> people = observableArrayList();
         people.add(pers);
 
-        assertEquals(people, work.getPeople());
+        Assert.assertEquals(people, work.getPeople());
         
         work.add(pers);
         work.add(pers);
-        assertEquals(3, work.getPeople().size());
+        Assert.assertEquals(3, work.getPeople().size());
     }
     
     /**
      * Tests that people are correctly removed from the workspace through the remove() method.
      */
+    @Test
     public void testRemovePerson()
     {
         Workspace work = new Workspace();
@@ -105,19 +97,20 @@ public class WorkspaceTest extends TestCase
         
         ObservableList<TreeViewItem> people = observableArrayList();
         
-        assertEquals(people, work.getPeople());
+        Assert.assertEquals(people, work.getPeople());
         
         work.add(pers);
         work.add(pers);
         work.remove(pers);
         work.remove(pers);
         
-        assertEquals(0, work.getPeople().size());
+        Assert.assertEquals(0, work.getPeople().size());
     }
     
     /**
      * Tests that projects are correctly added to the workspace through the add() method.
      */
+    @Test
     public void testAddProject()
     {
         Workspace work = new Workspace();
@@ -127,16 +120,17 @@ public class WorkspaceTest extends TestCase
         ObservableList<TreeViewItem> projects = observableArrayList();
         projects.add(proj);
 
-        assertEquals(projects, work.getProjects());
+        Assert.assertEquals(projects, work.getProjects());
         
         work.add(proj);
         work.add(proj);
-        assertEquals(3, work.getProjects().size());
+        Assert.assertEquals(3, work.getProjects().size());
     }
     
     /**
      * Tests that projects are correctly removed from the workspace through the remove() method.
      */
+    @Test
     public void testRemoveProject()
     {
         Workspace work = new Workspace();
@@ -146,19 +140,20 @@ public class WorkspaceTest extends TestCase
         
         ObservableList<TreeViewItem> projects = observableArrayList();
         
-        assertEquals(projects, work.getProjects());
+        Assert.assertEquals(projects, work.getProjects());
         
         work.add(proj);
         work.add(proj);
         work.remove(proj);
         work.remove(proj);
         
-        assertEquals(0, work.getProjects().size());
+        Assert.assertEquals(0, work.getProjects().size());
     }
     
     /**
      * Tests that skills are correctly added to the workspace through the add() method.
      */
+    @Test
     public void testAddSkill()
     {
         Workspace work = new Workspace();
@@ -168,16 +163,17 @@ public class WorkspaceTest extends TestCase
         ObservableList<TreeViewItem> skills = observableArrayList();
         skills.add(skill);
 
-        assertEquals(skills, work.getSkills());
+        Assert.assertEquals(skills, work.getSkills());
         
         work.add(skill);
         work.add(skill);
-        assertEquals(3, work.getSkills().size());
+        Assert.assertEquals(3, work.getSkills().size());
     }
     
     /**
      * Tests that skills are correctly removed from the workspace through the remove() method.
      */
+    @Test
     public void testRemoveSkill()
     {
         Workspace work = new Workspace();
@@ -187,19 +183,20 @@ public class WorkspaceTest extends TestCase
         
         ObservableList<TreeViewItem> skills = observableArrayList();
         
-        assertEquals(skills, work.getSkills());
+        Assert.assertEquals(skills, work.getSkills());
         
         work.add(skill);
         work.add(skill);
         work.remove(skill);
         work.remove(skill);
         
-        assertEquals(0, work.getSkills().size());
+        Assert.assertEquals(0, work.getSkills().size());
     }
     
     /**
      * Tests that teams are correctly added to the workspace through the add() method.
      */
+    @Test
     public void testAddTeam()
     {
         Workspace work = new Workspace();
@@ -209,15 +206,17 @@ public class WorkspaceTest extends TestCase
         
         work.add(team);
         work.add(team);
-        assertEquals(4, work.getTeams().size());
+        Assert.assertEquals(4, work.getTeams().size());
     }
     
     /**
      * Tests that teams are correctly removed from the workspace through the remove() method.
      */
+    @Test
     public void testRemoveTeam()
     {
         Workspace work = new Workspace();
+        Global.currentWorkspace = work;
         Team team = new Team();
         
         work.add(team);
@@ -227,7 +226,10 @@ public class WorkspaceTest extends TestCase
         work.add(team);
         work.remove(team);
         work.remove(team);
-        
-        assertEquals(1, work.getTeams().size());
+
+        Assert.assertEquals(1, work.getTeams().size());
+
+        work.remove(Global.getUnassignedTeam());
+        Assert.assertTrue(work.getTeams().contains(Global.getUnassignedTeam()));
     }
 }

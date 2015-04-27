@@ -277,11 +277,8 @@ public class MainMenuBar
         MenuItem toggleItem = new MenuItem("Toggle Menu");
         toggleItem.setOnAction((event) ->
             {
-                if (Global.appRunning())
-                {
                     MainScene.menuHidden = !MainScene.menuHidden;
                     App.refreshMainScene();
-                }
             });
 
         toggleItem.setAccelerator(new KeyCodeCombination(KeyCode.M,

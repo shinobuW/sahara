@@ -22,7 +22,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static seng302.group2.util.validation.DateValidator.validateBirthDate;
+import static seng302.group2.util.validation.DateValidator.validateBirthDateField;
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 import seng302.group2.workspace.team.Team;
@@ -69,7 +69,7 @@ public class CreatePersonDialog
         // Create button event
         btnCreate.setOnAction((event) ->
             {
-                boolean correctDate = validateBirthDate(customBirthDate);
+                boolean correctDate = validateBirthDateField(customBirthDate);
                 boolean correctShortName = validateShortName(shortNameCustomField);
                 boolean correctFirstName = validateName(firstNameCustomField);
                 boolean correctLastName = validateName(lastNameCustomField);

@@ -127,73 +127,70 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     //System.out.println(App.selectedTreeItem.getValue().getClass());  // testing
 
                     //Updates the display pane to be pane for the selectItem
-                    if (Global.appRunning())
+                    if (Global.selectedTreeItem == null
+                            || Global.selectedTreeItem.getValue() == null)
                     {
-                        if (Global.selectedTreeItem == null
-                                || Global.selectedTreeItem.getValue() == null)
-                        {
-                            // Nothing is selected, make a default selection?
-                            App.content.getChildren().remove(MainScene.informationGrid);
-                            //WorkspaceScene.getWorkspaceScene((Workspace)
-                                        //Global.selectedTreeItem.getValue());
-                            App.content.getChildren().add(MainScene.informationGrid);
-                        }
-                        if (Global.selectedTreeItem.getValue() instanceof Person)
-                        {
-                            App.content.getChildren().remove(MainScene.informationGrid);
-                            PersonScene.getPersonScene((Person) Global.selectedTreeItem.getValue());
-                            App.content.getChildren().add(MainScene.informationGrid);
-                            setContextMenu(new ElementTreeContextMenu());
+                        // Nothing is selected, make a default selection?
+                        App.content.getChildren().remove(MainScene.informationGrid);
+                        //WorkspaceScene.getWorkspaceScene((Workspace)
+                        //Global.selectedTreeItem.getValue());
+                        App.content.getChildren().add(MainScene.informationGrid);
+                    }
+                    if (Global.selectedTreeItem.getValue() instanceof Person)
+                    {
+                        App.content.getChildren().remove(MainScene.informationGrid);
+                        PersonScene.getPersonScene((Person) Global.selectedTreeItem.getValue());
+                        App.content.getChildren().add(MainScene.informationGrid);
+                        setContextMenu(new ElementTreeContextMenu());
 
-                        }
-                        else if (Global.selectedTreeItem.getValue() instanceof Project)
-                        {
-                            App.content.getChildren().remove(MainScene.informationGrid);
-                            ProjectScene.getProjectScene(
-                                    (Project) Global.selectedTreeItem.getValue());
-                            App.content.getChildren().add(MainScene.informationGrid);
-                            setContextMenu(new ElementTreeContextMenu());
+                    }
+                    else if (Global.selectedTreeItem.getValue() instanceof Project)
+                    {
+                        App.content.getChildren().remove(MainScene.informationGrid);
+                        ProjectScene.getProjectScene(
+                                (Project) Global.selectedTreeItem.getValue());
+                        App.content.getChildren().add(MainScene.informationGrid);
+                        setContextMenu(new ElementTreeContextMenu());
 
-                        }
-                        else if (Global.selectedTreeItem.getValue() instanceof Workspace)
+                    }
+                    else if (Global.selectedTreeItem.getValue() instanceof Workspace)
+                    {
+                        App.content.getChildren().remove(MainScene.informationGrid);
+                        WorkspaceScene.getWorkspaceScene((Workspace)
+                                Global.selectedTreeItem.getValue());
+                        App.content.getChildren().add(MainScene.informationGrid);
+                    }
+                    else if (Global.selectedTreeItem.getValue() instanceof Skill)
+                    {
+                        App.content.getChildren().remove(MainScene.informationGrid);
+                        SkillScene.getSkillScene((Skill) Global.selectedTreeItem.getValue());
+                        App.content.getChildren().add(MainScene.informationGrid);
+                        setContextMenu(new ElementTreeContextMenu());
+                    }
+                    else if (Global.selectedTreeItem.getValue() instanceof Team)
+                    {
+                        App.content.getChildren().remove(MainScene.informationGrid);
+                        TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
+                        App.content.getChildren().add(MainScene.informationGrid);
+                        setContextMenu(new ElementTreeContextMenu());
+                    }
+                    else if (Global.selectedTreeItem.getValue() instanceof Category)
+                    {
+                        if (Global.selectedTreeItem.getValue().toString().equals("Roles"))
                         {
-                            App.content.getChildren().remove(MainScene.informationGrid);
-                            WorkspaceScene.getWorkspaceScene((Workspace)
-                                    Global.selectedTreeItem.getValue());
-                            App.content.getChildren().add(MainScene.informationGrid);
+                            setContextMenu(null);
                         }
-                        else if (Global.selectedTreeItem.getValue() instanceof Skill)
+                        else
                         {
-                            App.content.getChildren().remove(MainScene.informationGrid);
-                            SkillScene.getSkillScene((Skill) Global.selectedTreeItem.getValue());
-                            App.content.getChildren().add(MainScene.informationGrid);
-                            setContextMenu(new ElementTreeContextMenu());
+                            setContextMenu(new CategoryTreeContextMenu());
                         }
-                        else if (Global.selectedTreeItem.getValue() instanceof Team)
-                        {
-                            App.content.getChildren().remove(MainScene.informationGrid);
-                            TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
-                            App.content.getChildren().add(MainScene.informationGrid);
-                            setContextMenu(new ElementTreeContextMenu());
-                        }
-                        else if (Global.selectedTreeItem.getValue() instanceof Category)
-                        {
-                            if (Global.selectedTreeItem.getValue().toString().equals("Roles"))
-                            {
-                                setContextMenu(null);
-                            }
-                            else 
-                            {
-                                setContextMenu(new CategoryTreeContextMenu());
-                            }
-                        }
-                        else if (Global.selectedTreeItem.getValue() instanceof Role)
-                        {
-                            App.content.getChildren().remove(MainScene.informationGrid);
-                            RoleScene.getRoleScene((Role) Global.selectedTreeItem.getValue());
-                            App.content.getChildren().add(MainScene.informationGrid);
-                            setContextMenu(new ElementTreeContextMenu()); 
-                        }
+                    }
+                    else if (Global.selectedTreeItem.getValue() instanceof Role)
+                    {
+                        App.content.getChildren().remove(MainScene.informationGrid);
+                        RoleScene.getRoleScene((Role) Global.selectedTreeItem.getValue());
+                        App.content.getChildren().add(MainScene.informationGrid);
+                        setContextMenu(new ElementTreeContextMenu());
                     }
                 }
             });

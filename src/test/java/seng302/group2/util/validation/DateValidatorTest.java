@@ -6,54 +6,26 @@
 package seng302.group2.util.validation;
 
 
-import org.junit.*;
-
-import static junit.framework.TestCase.assertEquals;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
- *
+ * Test class for the DateValidator
  * @author Jordane
  */
 public class DateValidatorTest
 {
-    
-    public DateValidatorTest()
-    {
-    }
-    
-    @BeforeClass
-    public static void setUpClass()
-    {
-    }
-    
-    @AfterClass
-    public static void tearDownClass()
-    {
-    }
-    
-    @Before
-    public void setUp()
-    {
-    }
-    
-    @After
-    public void tearDown()
-    {
-    }
-
     /**
      * Test of isValidDateString method, of class DateValidator.
-     *
      */
     @Test
     public void testIsValidDateString()
     {
-        assertEquals(ValidationStatus.NULL, DateValidator.isValidDateString(""));
-        assertEquals(ValidationStatus.OUT_OF_RANGE,
+        Assert.assertEquals(ValidationStatus.NULL, DateValidator.isValidDateString(""));
+        Assert.assertEquals(ValidationStatus.OUT_OF_RANGE,
                 DateValidator.isValidDateString("12/12/9999"));
-        assertEquals(ValidationStatus.VALID, DateValidator.isValidDateString("20/03/2015"));
-        assertEquals(ValidationStatus.PATTERN_MISMATCH,
+        Assert.assertEquals(ValidationStatus.VALID, DateValidator.isValidDateString("20/03/2015"));
+        Assert.assertEquals(ValidationStatus.PATTERN_MISMATCH,
                 DateValidator.isValidDateString("20/03/15"));
     }
-    
 }

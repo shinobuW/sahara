@@ -54,7 +54,16 @@ public class CustomDateField extends VBox
     {
         this.inputText.setText(text);
     }
-    
+
+
+    /**
+     * Returns whether or not the field is erroneous by checking it's children for error fields
+     * @return
+     */
+    public boolean isErroneous()
+    {
+        return this.getChildren().contains(errorMessageText);
+    }
 
     /**
      * Shows the error field.

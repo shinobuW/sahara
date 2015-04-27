@@ -39,7 +39,7 @@ public class Category extends TreeViewItem
      * @return the children of the category
      */
     @Override
-    public ObservableList<TreeViewItem> getChildren()
+    public ObservableList getChildren()
     {
         switch (name)
         {

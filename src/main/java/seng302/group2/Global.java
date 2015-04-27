@@ -3,6 +3,7 @@ package seng302.group2;
 import javafx.scene.control.TreeItem;
 import seng302.group2.util.undoredo.UndoRedoManager;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.team.Team;
 
 import java.text.SimpleDateFormat;
 
@@ -20,38 +21,33 @@ public final class Global
 
 
     /**
-     * Checks if the app is running (via context of the App)
-     * This method is to stop NullExceptions when testing because there is no App context.
-     * @return true if the app is running, else false.
+     * Gets the unassigned team
+     * @return the unassigned team
      */
-    public static boolean appRunning()
+    public static Team getUnassignedTeam()
     {
-
-        try
+        if (currentWorkspace.getTeams() == null || currentWorkspace.getTeams().isEmpty())
         {
-            // Try and refresh the window title.
-            App.refreshWindowTitle();
+            return null;
         }
-        catch (Exception ex)
+        for (Team team : currentWorkspace.getTeams())
         {
-            // Assume no App running.
-            return false;
+            if (team.isUnassignedTeam())
+            {
+                return team;
+            }
         }
-        // No exceptions, assumed App is running.
-        return true;
+        return null;
     }
 
 
     /**
      * Mark the current workspace as changed.
      */
-    public static void setCurrentProjectChanged()
+    public static void setCurrentWorkspaceChanged()
     {
-        if (Global.appRunning())
-        {
-            currentWorkspace.setChanged();
-            App.refreshWindowTitle();
-        }
+        currentWorkspace.setChanged();
+        App.refreshWindowTitle();
     }
 
 
@@ -60,10 +56,7 @@ public final class Global
      */
     public static void setCurrentWorkspaceUnchanged()
     {
-        if (Global.appRunning())
-        {
-            currentWorkspace.setUnchanged();
-            App.refreshWindowTitle();
-        }
+        currentWorkspace.setUnchanged();
+        App.refreshWindowTitle();
     }
 }

@@ -24,7 +24,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static seng302.group2.util.validation.DateValidator.validateBirthDate;
+import static seng302.group2.util.validation.DateValidator.validateBirthDateField;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -71,7 +71,7 @@ public class CreateReleaseDialog
                 String shortName = shortNameCustomField.getText();
                 String description = descriptionTextArea.getText();
                 
-                boolean correctDate = validateBirthDate(releaseDateField);
+                boolean correctDate = validateBirthDateField(releaseDateField);
                 boolean correctShortName = validateShortName(shortNameCustomField);
                 
                 Project project = new Project();

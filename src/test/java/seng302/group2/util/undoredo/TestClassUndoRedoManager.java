@@ -5,7 +5,6 @@
  */
 package seng302.group2.util.undoredo;
 
-import seng302.group2.util.undoredo.*;
 import seng302.group2.Global;
 
 import java.util.EmptyStackException;
@@ -93,7 +92,7 @@ public class TestClassUndoRedoManager
         UndoableItem item = undoStack.pop();
         TestClassUndoRedoPerformer.undo(item);
         redoStack.push(item);
-        Global.setCurrentProjectChanged();
+        Global.setCurrentWorkspaceChanged();
     }
     
     
@@ -109,7 +108,7 @@ public class TestClassUndoRedoManager
         UndoableItem item = redoStack.pop();
         TestClassUndoRedoPerformer.redo(item);
         undoStack.push(item);
-        Global.setCurrentProjectChanged();
+        Global.setCurrentWorkspaceChanged();
     }
     
     
@@ -122,7 +121,7 @@ public class TestClassUndoRedoManager
         undoStack.add(item);
         //redoStack.empty();
         redoStack = new Stack<>();
-        Global.setCurrentProjectChanged();
+        Global.setCurrentWorkspaceChanged();
     }
 
 

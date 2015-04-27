@@ -47,15 +47,15 @@ public class Workspace extends TreeViewItem implements Serializable
     private static Gson gson = SerialBuilder.getBuilder();
 
     // Workspace elements
-    private transient ObservableList<TreeViewItem> teams = observableArrayList();
+    private transient ObservableList<Team> teams = observableArrayList();
     private ArrayList<Team> serializableTeams = new ArrayList<>();
-    private transient ObservableList<TreeViewItem> people = observableArrayList();
+    private transient ObservableList<Person> people = observableArrayList();
     private ArrayList<Person> serializablePeople = new ArrayList<>();
-    private transient ObservableList<TreeViewItem> skills = observableArrayList();
+    private transient ObservableList<Skill> skills = observableArrayList();
     private ArrayList<Skill> serializableSkills = new ArrayList<>();
-    private transient ObservableList<TreeViewItem> projects = observableArrayList();
+    private transient ObservableList<Project> projects = observableArrayList();
     private ArrayList<Project> serializableProjects = new ArrayList<>();
-    private transient ObservableList<TreeViewItem> roles = observableArrayList();
+    private transient ObservableList<Role> roles = observableArrayList();
     private ArrayList<Role> serializableRoles = new ArrayList();
 
 
@@ -172,7 +172,7 @@ public class Workspace extends TreeViewItem implements Serializable
      * Gets the workspace's list of projects.
      * @return The projects associated with the workspace
      */
-    public ObservableList<TreeViewItem> getProjects()
+    public ObservableList<Project> getProjects()
     {
         return this.projects;
     }
@@ -182,7 +182,7 @@ public class Workspace extends TreeViewItem implements Serializable
      * Gets the workspace's list of Persons.
      * @return The people associated with the workspace
      */
-    public ObservableList<TreeViewItem> getPeople()
+    public ObservableList<Person> getPeople()
     {
         return this.people;
     }
@@ -191,7 +191,7 @@ public class Workspace extends TreeViewItem implements Serializable
      * Gets the workspace's list of Skills.
      * @return The skills associated with a workspace
      */
-    public ObservableList<TreeViewItem> getSkills()
+    public ObservableList<Skill> getSkills()
     {
         return this.skills;
     }
@@ -200,7 +200,7 @@ public class Workspace extends TreeViewItem implements Serializable
      * Gets the workspace's list of Teams.
      * @return The teams associated with a workspace
      */
-    public ObservableList<TreeViewItem> getTeams()
+    public ObservableList<Team> getTeams()
     {
         return this.teams;
     }
@@ -209,7 +209,7 @@ public class Workspace extends TreeViewItem implements Serializable
      * Gets the workspace's list of Roles
      * @return the Roles associated with a workspace
      */
-    public ObservableList<TreeViewItem> getRoles()
+    public ObservableList<Role> getRoles()
     {
         return this.roles;
     }
@@ -417,10 +417,7 @@ public class Workspace extends TreeViewItem implements Serializable
             }
             
             Workspace.postDeserialization();
-            if (Global.appRunning())
-            {
-                App.refreshMainScene();
-            }
+            App.refreshMainScene();
             Global.undoRedoMan.emptyAll();
             return SaveLoadResult.SUCCESS;
         }

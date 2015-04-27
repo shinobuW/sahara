@@ -59,7 +59,7 @@ public class DateValidator
      * @param customBirthDate the birth date error GUI label
      * @return true if correct format
     **/
-    public static boolean validateBirthDate(CustomDateField customBirthDate)
+    public static boolean validateBirthDateField(CustomDateField customBirthDate)
     {
         switch (DateValidator.isValidDateString(customBirthDate.getText()))
         {

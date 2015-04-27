@@ -89,7 +89,7 @@ public class UndoRedoManager
         UndoableItem item = undoStack.pop();
         UndoRedoPerformer.undo(item);
         redoStack.push(item);
-        Global.setCurrentProjectChanged();
+        Global.setCurrentWorkspaceChanged();
     }
     
     
@@ -105,7 +105,7 @@ public class UndoRedoManager
         UndoableItem item = redoStack.pop();
         UndoRedoPerformer.redo(item);
         undoStack.push(item);
-        Global.setCurrentProjectChanged();
+        Global.setCurrentWorkspaceChanged();
     }
     
     
@@ -118,7 +118,7 @@ public class UndoRedoManager
         undoStack.add(item);
         //redoStack.empty();
         redoStack = new Stack<>();
-        Global.setCurrentProjectChanged();
+        Global.setCurrentWorkspaceChanged();
     }
 
 
