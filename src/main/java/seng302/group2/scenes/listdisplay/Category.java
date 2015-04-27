@@ -70,7 +70,8 @@ public class Category extends TreeViewItem
         {
             return false;
         }
-        if (((Category) obj).getChildren() == this.getChildren())
+        if (((Category) obj).getChildren() == this.getChildren()
+                && ((Category) obj).name.equals(this.name))
         {
             return true;
         }

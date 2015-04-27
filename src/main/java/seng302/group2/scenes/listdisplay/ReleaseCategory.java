@@ -50,7 +50,9 @@ public class ReleaseCategory extends Category
         {
             return false;
         }
-        if (((ReleaseCategory) obj).getChildren() == this.getChildren())
+        if (((ReleaseCategory) obj).getChildren() == this.getChildren()
+                && ((ReleaseCategory) obj).project == this.project
+                && obj.toString().equals(this.toString()))
         {
             return true;
         }
