@@ -19,6 +19,7 @@ import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 
 /**
  *ContextMenu class for instances of Person, Skill and Team
@@ -180,10 +181,64 @@ public class ElementTreeContextMenu extends ContextMenu
      */
     public static void showDeleteDialog(Categories category)
     {
+        String message = null;
+        switch (category)
+        {
+            case PERSON:
+                Person deletedPerson = (Person)Global.selectedTreeItem.getValue();  
+                message = MessageFormat.format(
+                    "Are you sure you want to delete {0}, currently in Team {1}", 
+                    deletedPerson.toString(), deletedPerson.getTeamName() + "?");
+                break;
+            case SKILL:
+                Skill deletedSkill = (Skill)Global.selectedTreeItem.getValue();
+                ArrayList<Person> peopleWithSkill = new ArrayList<>();
+                for (Person person : Global.currentWorkspace.getPeople())
+                {
+                    if (person.getSkills().contains(deletedSkill))
+                    {
+                        peopleWithSkill.add(person);
+                    }
+                }
+                
+                if (peopleWithSkill.size() > 0)
+                {
+                    int i = 0;
+                    String namesOfPeopleWithSkill = "";
+                    String customMessage = "";
+                    while (i < 6 && i < peopleWithSkill.size())
+                    {
+                        namesOfPeopleWithSkill += (peopleWithSkill.get(i)).toString() + ", ";
+                        i += 1;
+                    }
+                    if (peopleWithSkill.size() < 7)
+                    {
+                        customMessage = namesOfPeopleWithSkill + "have this skill.";
+                    }
+                    else if (peopleWithSkill.size() == 7)
+                    {
+                        customMessage = namesOfPeopleWithSkill + "and 1 other have this skill.";
+                    }
+                    else
+                    {
+                        customMessage = MessageFormat.format(namesOfPeopleWithSkill + "and {0} others have this skill.",peopleWithSkill.size()-6);
+                    }
+
+                    message = MessageFormat.format("Are you sure you want to delete the skill {0}",deletedSkill.toString() + "?\n" + customMessage);
+                }
+                //else
+                //{
+                //    message = MessageFormat.format("Are you sure you want to delete {0}", Global.selectedTreeItem.getValue().toString() + "?"));
+                //}
+                break;
+           // default:
+               // message = MessageFormat.format("Are you sure you want to delete {0}", Global.selectedTreeItem.getValue().toString() + "?"));
+              //  break;
+        }
+        
         Action response = Dialogs.create()
             .title("Delete item?")
-            .message(MessageFormat.format("Are you sure you want to delete {0}",
-                    Global.selectedTreeItem.getValue().toString() + "?"))
+            .message(message)
             .actions(Dialog.ACTION_YES, Dialog.ACTION_CANCEL) 
             .showConfirm();
 
@@ -192,15 +247,40 @@ public class ElementTreeContextMenu extends ContextMenu
             switch (category)
             {
                 case PERSON:
+                    Person deletePerson = (Person)Global.selectedTreeItem.getValue();  
+                    for (Team teamRemovePerson : Global.currentWorkspace.getTeams())
+                    {
+                        if (teamRemovePerson.getPeople().contains(deletePerson))
+                        {
+                            teamRemovePerson.getPeople().remove(deletePerson);
+                        }
+                    }
                     Global.currentWorkspace.remove((Person) Global.selectedTreeItem.getValue());
                     break;
                 case PROJECT:
                     Global.currentWorkspace.remove((Project) Global.selectedTreeItem.getValue());
                     break;
                 case TEAM:
+                    Team deletedTeam = (Team)Global.selectedTreeItem.getValue();  
+                    for (Person personRemoveTeam : Global.currentWorkspace.getPeople())
+                    {
+                        if (personRemoveTeam.getTeam() == deletedTeam)
+                        {
+                            personRemoveTeam.setTeam((Team)Global.currentWorkspace.getTeams().get(0));
+                            ((Team)Global.currentWorkspace.getTeams().get(0)).add(personRemoveTeam, false);
+                        }
+                    }                    
                     Global.currentWorkspace.remove((Team) Global.selectedTreeItem.getValue());
                     break;
                 case SKILL:
+                    Skill deletedSkill = (Skill)Global.selectedTreeItem.getValue();
+                    for (Person personRemoveSkill : Global.currentWorkspace.getPeople())
+                    {
+                        if (personRemoveSkill.getSkills().contains(deletedSkill))
+                        {
+                            personRemoveSkill.getSkills().remove(deletedSkill);
+                        }       
+                    }
                     Global.currentWorkspace.remove((Skill) Global.selectedTreeItem.getValue());
                     break;
                 case OTHER:
