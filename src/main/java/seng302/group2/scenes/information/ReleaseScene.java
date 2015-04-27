@@ -32,9 +32,9 @@ import static seng302.group2.scenes.MainScene.informationGrid;
 public class ReleaseScene
 {
     /**
-     * Information pane for Release
-     * @param currentRelease selected Release
-     * @return information pane
+     * Gets the information scene for a release
+     * @param currentRelease the release to display the information of
+     * @return the information scene for a release
      */
     public static GridPane getReleaseScene(Release currentRelease)
     {
@@ -69,23 +69,23 @@ public class ReleaseScene
         return informationGrid;
     }
  
-     /**
-      * Refreshes the scene & treeview to show update data
-      * @param release 
-      */
+    /**
+    * Refreshes the scene and treeview to show update data
+    * @param release The release to show the information of
+    */
     public static void refreshReleaseScene(Release release)
     {
-	App.content.getChildren().remove(MainScene.informationGrid);
-	App.content.getChildren().remove(MainScene.treeView);
-	ReleaseScene.getReleaseScene(release);
-	MainScene.treeView = new TreeViewWithItems(new TreeItem());
-	ObservableList<TreeViewItem> children = observableArrayList();
-	children.add(Global.currentWorkspace);
+        App.content.getChildren().remove(MainScene.informationGrid);
+        App.content.getChildren().remove(MainScene.treeView);
+        ReleaseScene.getReleaseScene(release);
+        MainScene.treeView = new TreeViewWithItems(new TreeItem());
+        ObservableList<TreeViewItem> children = observableArrayList();
+        children.add(Global.currentWorkspace);
 
-	MainScene.treeView.setItems(children);
-	MainScene.treeView.setShowRoot(false);
-	App.content.getChildren().add(MainScene.treeView);
-	App.content.getChildren().add(MainScene.informationGrid);
-	MainScene.treeView.getSelectionModel().select(selectedTreeItem);
+        MainScene.treeView.setItems(children);
+        MainScene.treeView.setShowRoot(false);
+        App.content.getChildren().add(MainScene.treeView);
+        App.content.getChildren().add(MainScene.informationGrid);
+        MainScene.treeView.getSelectionModel().select(selectedTreeItem);
     }
 }

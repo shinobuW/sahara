@@ -43,6 +43,7 @@ public class TeamEditScene
 
     /**
      * Gets the Team Edit information scene.
+     * @param currentTeam The team to show the information of
      * @return The Team Edit information scene
      */
     public static GridPane getTeamEditScene(Team currentTeam)

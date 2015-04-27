@@ -27,8 +27,9 @@ import static seng302.group2.scenes.MainScene.informationGrid;
 public class ProjectScene
 {
     /**
-     * Gets the Workspace information scene
-     * @return The Workspace information scene
+     * Gets the project information scene
+     * @param currentProject the project to display the information of
+     * @return The project information scene
      */
     public static GridPane getProjectScene(Project currentProject)
     {

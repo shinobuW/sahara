@@ -38,6 +38,11 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  */
 public class ReleaseEditScene
 {
+    /**
+     * Gets the editable information scene for a release
+     * @param currentRelease the release to display the information of
+     * @return the editable information scene for a release
+     */
     public static GridPane getReleaseEditScene(Release currentRelease)
     {
         informationGrid = new GridPane();

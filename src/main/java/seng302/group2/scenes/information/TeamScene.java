@@ -27,6 +27,7 @@ public class TeamScene
 {
      /**
      * Gets the Team information scene.
+      * @param currentTeam The team to show the information of
      * @return The Team information scene
      */
     public static GridPane getTeamScene(Team currentTeam)

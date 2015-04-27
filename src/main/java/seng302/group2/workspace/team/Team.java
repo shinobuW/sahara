@@ -244,13 +244,14 @@ public class Team extends TreeViewItem implements Serializable
     
     /**
      * Adds the 'Unassigned' team to the workspace.
+     * @return the unassigned team
      */
     public static Team createUnassignedTeam()
     {
         Team temp = new Team("Unassigned", 
                 "All the people unassigned to a team");
         temp.unassigned = true;
-	return temp;
+        return temp;
     }
     
     

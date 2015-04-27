@@ -19,6 +19,7 @@ public class ReleaseCategory extends Category
     /**
      * Basic constructor for a TreeView category
      * @param name The name of the category
+     * @param project The parent project of this release category
      */
     public ReleaseCategory(String name, Project project)
     {

@@ -29,7 +29,6 @@ public class ReleaseCategoryTest
 
     /**
      * Tests the children of a release category are returned correctly
-     * @throws Exception
      */
     @Test
     public void testGetChildren()
@@ -45,7 +44,6 @@ public class ReleaseCategoryTest
 
     /**
      * Tests the equivalence of two release categories are as expected
-     * @throws Exception
      */
     @Test
     public void testEquals()

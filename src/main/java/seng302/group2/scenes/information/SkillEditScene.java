@@ -40,12 +40,11 @@ public class SkillEditScene
 {
     /**
      * Gets the Skill Edit information scene.
+     * @param currentSkill The skill to show the information of
      * @return The Skill Edit information display
      */
     public static GridPane getSkillEditScene(Skill currentSkill)
     {
-
- 
         informationGrid = new GridPane();
         informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);

@@ -47,7 +47,8 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 public class PersonEditScene
 {
     /**
-     * Gets the Person Edit information scene.
+     * Gets the Person Edit information scene
+     * @param currentPerson The person to display information of
      * @return The Person Edit information scene
      */
     public static GridPane getPersonEditScene(Person currentPerson)

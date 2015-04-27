@@ -41,7 +41,7 @@ public class Configuration
 
     /**
      * Gets the configuration's last save location
-     * @return
+     * @return the last save location
      */
     public String getLastSaveLocation()
     {
@@ -51,7 +51,7 @@ public class Configuration
 
     /**
      * Sets the configuration's last save location
-     * @param lastSaveLocation
+     * @param lastSaveLocation the last save location to set
      */
     public void setLastSaveLocation(String lastSaveLocation)
     {

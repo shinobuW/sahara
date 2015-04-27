@@ -31,7 +31,7 @@ public class UndoRedoManagerTest extends TestCase {
 
     /**
      * The setup for each test
-     * @throws Exception
+     * @throws Exception superclass setUp exception
      */
     @Override
     public void setUp() throws Exception {
@@ -39,7 +39,8 @@ public class UndoRedoManagerTest extends TestCase {
         manager.emptyAll();
     }
 
-    public void testEmptyAll() throws Exception {
+    public void testEmptyAll()
+    {
         manager.getRedoStack().add(item1);
         manager.getUndoStack().add(item2);
 
@@ -49,14 +50,16 @@ public class UndoRedoManagerTest extends TestCase {
         assertEquals(new Stack<>(), manager.getRedoStack());
     }
 
-    public void testCanUndo() throws Exception {
+    public void testCanUndo()
+    {
         manager.add(item1);
         assertTrue(manager.canUndo());
         manager.emptyAll();
         assertFalse(manager.canUndo());
     }
 
-    public void testCanRedo() throws Exception {
+    public void testCanRedo()
+    {
         manager.add(item1);
         manager.undo();
         assertTrue(manager.canRedo());
@@ -64,7 +67,8 @@ public class UndoRedoManagerTest extends TestCase {
         assertFalse(manager.canRedo());
     }
 
-    public void testUndo() throws Exception {
+    public void testUndo()
+    {
         manager.add(item1);
         manager.add(item2);
 
@@ -80,7 +84,8 @@ public class UndoRedoManagerTest extends TestCase {
         assertEquals(redoEx, manager.getRedoStack());
     }
 
-    public void testRedo() throws Exception {
+    public void testRedo()
+    {
         manager.getRedoStack().add(item1);
         manager.getRedoStack().add(item2);
 
@@ -95,7 +100,8 @@ public class UndoRedoManagerTest extends TestCase {
         assertEquals(redoEx, manager.getRedoStack());
     }
 
-    public void testAdd() throws Exception {
+    public void testAdd()
+    {
         manager.add(item1);
 
         Stack equiv = new Stack<UndoableItem>();
@@ -108,9 +114,9 @@ public class UndoRedoManagerTest extends TestCase {
     
     /**
      * A simple test to ensure the Undo/Redo functionality for person edit is working.
-     * @throws Exception 
      */
-    public void testPersonEdit() throws Exception {
+    public void testPersonEdit()
+    {
         TestClassUndoRedoManager testManager = new TestClassUndoRedoManager();
         ArrayList<UndoableItem> undoActionsTest = new ArrayList<>();
 
@@ -177,9 +183,9 @@ public class UndoRedoManagerTest extends TestCase {
     
     /**
      * A simple test to ensure the Undo/Redo functionality for workspace edit is working.
-     * @throws Exception 
      */
-    public void testWorkspaceEdit() throws Exception {
+    public void testWorkspaceEdit()
+    {
         TestClassUndoRedoManager testManager = new TestClassUndoRedoManager();
         ArrayList<UndoableItem> undoActionsTest = new ArrayList<>();
 
@@ -230,9 +236,9 @@ public class UndoRedoManagerTest extends TestCase {
     
     /**
      * A simple test to ensure the Undo/Redo functionality for workspace edit is working
-     * @throws Exception 
      */
-    public void testProjectEdit() throws Exception {
+    public void testProjectEdit()
+    {
         TestClassUndoRedoManager testManager = new TestClassUndoRedoManager();
         ArrayList<UndoableItem> undoActionsTest = new ArrayList<>();
 
@@ -283,9 +289,9 @@ public class UndoRedoManagerTest extends TestCase {
     
     /**
      * A simple test to ensure the Undo/Redo functionality for skill edit is working.
-     * @throws Exception 
      */
-    public void testSkillEdit() throws Exception {
+    public void testSkillEdit()
+    {
         TestClassUndoRedoManager testManager = new TestClassUndoRedoManager();
         ArrayList<UndoableItem> undoActionsTest = new ArrayList<>();
 
@@ -328,9 +334,9 @@ public class UndoRedoManagerTest extends TestCase {
     
     /**
      * A simple test to ensure the Undo/Redo functionality for team edit is working.
-     * @throws Exception 
      */
-    public void testTeamEdit() throws Exception {
+    public void testTeamEdit()
+    {
         TestClassUndoRedoManager testManager = new TestClassUndoRedoManager();
         ArrayList<UndoableItem> undoActionsTest = new ArrayList<>();
 

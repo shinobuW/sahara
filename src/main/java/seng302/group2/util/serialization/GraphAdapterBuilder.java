@@ -252,8 +252,8 @@ public final class GraphAdapterBuilder
          * before that value is fully populated. This is useful to deserialize
          * values that directly or indirectly reference themselves: we can hand
          * out an instance before read() returns.
-         * <p/>
-         * <p>Gson should only ever call this method when we're expecting it to;
+         *
+         * Gson should only ever call this method when we're expecting it to;
          * that is only when we've called back into Gson to deserialize a tree.
          */
         @SuppressWarnings("unchecked")
@@ -303,6 +303,7 @@ public final class GraphAdapterBuilder
 
         /**
          * Returns a unique name for an element to be inserted into the graph.
+         * @return a unique name for an element to be inserted into the graph.
          */
         public String nextName()
         {

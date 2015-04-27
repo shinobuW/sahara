@@ -26,7 +26,7 @@ public class WorkspaceTest
 {
 
     /**
-     * A simple test for the Workspace constructors & getters.
+     * A simple test for the Workspace constructors and getters.
      */
     @Test
     public void testWorkspaceConstructors()

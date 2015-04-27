@@ -124,7 +124,7 @@ public class Release extends TreeViewItem
 
     /**
      * Sets the Description of the release
-     * @param description
+     * @param description The description to set
      */
     public void setDescription(String description)
     {
@@ -134,7 +134,7 @@ public class Release extends TreeViewItem
 
     /**
      * Sets the estimated Release Date of the release
-     * @param releaseDate
+     * @param releaseDate The release date to set
      */
     public void setEstimatedDate(Date releaseDate)
     {

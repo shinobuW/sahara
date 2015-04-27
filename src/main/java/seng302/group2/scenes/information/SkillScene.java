@@ -29,6 +29,7 @@ public class SkillScene
 {
     /**
      * Gets the Skill information scene
+     * @param currentSkill the skill to show the information of
      * @return The Skill information scene
      */
     public static GridPane getSkillScene(Skill currentSkill)

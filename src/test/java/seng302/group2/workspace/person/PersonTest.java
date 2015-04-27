@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import static org.junit.Assert.*;
 
 /**
  * Created by Jordane on 27/04/2015.

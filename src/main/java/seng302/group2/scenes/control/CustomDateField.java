@@ -16,7 +16,7 @@ public class CustomDateField extends VBox
     Label errorMessageText = new Label();
 
     /**
-     * Creates a label & and a text field with date layout prompts.
+     * Creates a label and a text field with date layout prompts.
      * @param name The label for the date field
      */
     public CustomDateField(String name)
@@ -58,7 +58,7 @@ public class CustomDateField extends VBox
 
     /**
      * Returns whether or not the field is erroneous by checking it's children for error fields
-     * @return
+     * @return Whether or not the field is erroneous
      */
     public boolean isErroneous()
     {

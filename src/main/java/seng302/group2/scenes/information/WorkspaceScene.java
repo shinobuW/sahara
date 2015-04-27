@@ -30,6 +30,7 @@ public class WorkspaceScene
 {
     /**
      * Gets the Workspace information scene
+     * @param currentWorkspace The workspace to show the information of
      * @return The Workspace information scene
      */
     public static GridPane getWorkspaceScene(Workspace currentWorkspace)

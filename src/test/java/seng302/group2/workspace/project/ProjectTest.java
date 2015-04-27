@@ -22,7 +22,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 public class ProjectTest extends TestCase
 {
     /**
-     * A simple test for the Workspace constructors & getters.
+     * A simple test for the Workspace constructors and getters.
      */
     @Test
     public void testProjectConstructors()

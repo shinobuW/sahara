@@ -27,6 +27,7 @@ public class PersonScene
     
     /**
      * Gets the Person information scene
+     * @param currentPerson the person to display the information of
      * @return The Person information scene
      */
     public static GridPane getPersonScene(Person currentPerson)
