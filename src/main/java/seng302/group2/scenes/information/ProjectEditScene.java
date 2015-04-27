@@ -74,7 +74,7 @@ public class ProjectEditScene
         Project tempProject = new Project();
         for (Team team : currentProject.getTeams()) 
         {
-            tempProject.addTeam(team, false);
+            tempProject.add(team, false);
         }
 	
         ListView projectTeamsBox = new ListView(tempProject.getTeams());
@@ -115,7 +115,7 @@ public class ProjectEditScene
                 {
 		    if (item.getProject() == null) 
                     {
-                        tempProject.addTeam(item, false);
+                        tempProject.add(item, false);
                     }
                     else 
                     {
@@ -145,7 +145,7 @@ public class ProjectEditScene
                 System.out.println(selectedTeams.size());
                 for (int i = selectedTeams.size() - 1; i >= 0 ; i--)
                 {
-                    tempProject.removeTeam(selectedTeams.get(i), false);
+                    tempProject.remove(selectedTeams.get(i), false);
                 }
 
                 dialogTeams.clear();
@@ -258,10 +258,10 @@ public class ProjectEditScene
 
                             if (team.getProject() != null)
                             {
-                                team.getProject().removeTeam(team, false);
+                                team.getProject().remove(team, false);
                             }
                             team.setProject(currentProject);
-                            currentProject.addTeam(team, false);
+                            currentProject.add(team, false);
                         }
                     }
                     
@@ -287,7 +287,7 @@ public class ProjectEditScene
                                             UndoRedoPerformer.UndoRedoProperty.TEAM_PROJECT, 
                                             null)));
                                          
-                            team.getProject().removeTeam(team, false);
+                            team.getProject().remove(team, false);
                             team.setProject(null);
                         }
                     }
@@ -352,7 +352,7 @@ public class ProjectEditScene
         
         btnYes.setOnAction((event) ->
             {
-                tempProject.addTeam(team, false);
+                tempProject.add(team, false);
                 dialog.hide();
             });
         

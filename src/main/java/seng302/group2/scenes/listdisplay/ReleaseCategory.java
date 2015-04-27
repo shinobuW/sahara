@@ -36,4 +36,24 @@ public class ReleaseCategory extends Category
     {
         return project.getReleases();
     }
+
+
+    /**
+     * Overrides that a release category is equal if it has the same children
+     * @param obj the object to compare
+     * @return if the objects are equal/equivalent
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (!(obj instanceof ReleaseCategory))
+        {
+            return false;
+        }
+        if (((ReleaseCategory) obj).getChildren() == this.getChildren())
+        {
+            return true;
+        }
+        return false;
+    }
 }

@@ -23,11 +23,9 @@ import seng302.group2.workspace.release.Release;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javafx.collections.ObservableList;
 
 import static seng302.group2.util.validation.DateValidator.validateBirthDate;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
-import seng302.group2.workspace.project.Project;
 
 /**
  *
@@ -100,7 +98,7 @@ public class CreateReleaseDialog
                     }
 
                     Release release = new Release(shortName, description, releaseDate, project);
-                    project.addRelease(release);
+                    project.add(release);
                     //Global.currentWorkspace.add(release);
                     dialog.hide();
                 }

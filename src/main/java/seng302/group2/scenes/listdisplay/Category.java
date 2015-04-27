@@ -57,4 +57,23 @@ public class Category extends TreeViewItem
                 return null;
         }
     }
+
+    /**
+     * Overrides that a category is equal if it has the same children
+     * @param obj the object to compare
+     * @return if the objects are equal/equivalent
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (!(obj instanceof Category))
+        {
+            return false;
+        }
+        if (((Category) obj).getChildren() == this.getChildren())
+        {
+            return true;
+        }
+        return false;
+    }
 }

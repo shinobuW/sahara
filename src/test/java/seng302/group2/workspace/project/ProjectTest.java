@@ -1,9 +1,18 @@
 package seng302.group2.workspace.project;
 
-import junit.framework.Test;
+import javafx.collections.ObservableList;
+import org.junit.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import seng302.group2.scenes.listdisplay.ReleaseCategory;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.release.Release;
+import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
+
+import java.util.ArrayList;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 
 /**
@@ -13,24 +22,9 @@ import seng302.group2.workspace.release.Release;
 public class ProjectTest extends TestCase
 {
     /**
-     * Create the test case
-     * @param testName name of the test case
+     * A simple test for the Workspace constructors & getters.
      */
-    public ProjectTest(String testName)
-    {
-        super(testName);
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite(ProjectTest.class);
-    }
-
-
-    // A simple test for the Workspace constructors & getters.
+    @Test
     public void testProjectConstructors()
     {
         Project proj = new Project();
@@ -50,6 +44,7 @@ public class ProjectTest extends TestCase
     /**
      * Tests the projects' setter methods.
      */
+    @Test
     public void testProjectSetters()
     {
         Project proj = new Project();
@@ -67,12 +62,146 @@ public class ProjectTest extends TestCase
     /**
      * Tests that releases are added to projects properly
      */
+    @Test
     public void testAddRelease()
     {
         Project proj = new Project();
         Release release = new Release("test release", proj);
-        proj.addRelease(release);
+        proj.add(release);
         
         assertTrue(proj.getReleases().contains(release));
+
+        proj.remove(release);
+        assertFalse(proj.getReleases().contains(release));
+    }
+
+    /**
+     * Tests the addition and removal of teams within projects
+     */
+    @Test
+    public void testAddRemoveTeam()
+    {
+        Project proj = new Project();
+        Team testTeam = new Team();
+
+        proj.getTeams().clear();
+        proj.add(testTeam);
+        ArrayList<Team> teams = new ArrayList<>();
+        teams.add(testTeam);
+
+        Assert.assertEquals(teams, proj.getTeams());
+
+        proj.remove(testTeam);
+        Assert.assertTrue(!proj.getTeams().contains(testTeam));
+
+        // The second add method with optional undo boolean
+        proj.getTeams().clear();
+        proj.add(testTeam, true);
+        teams = new ArrayList<>();
+        teams.add(testTeam);
+
+        Assert.assertEquals(teams, proj.getTeams());
+
+        proj.remove(testTeam, true);
+        Assert.assertTrue(!proj.getTeams().contains(testTeam));
+    }
+
+
+    /**
+     * Tests that a list of releases as TreeViewItems are fetched correctly
+     */
+    @Test
+    public void testTreeViewReleases()
+    {
+        Project proj = new Project();
+        proj.getReleases().clear();
+        Assert.assertTrue(proj.getTreeViewReleases().size() == 0);
+
+        Release release = new Release("test release", proj);
+        proj.add(release);
+
+        Assert.assertTrue(proj.getTreeViewReleases().size() == 1);
+        Assert.assertEquals(proj.getTreeViewReleases().get(0), release);
+    }
+
+
+    /**
+     * Tests that a projects children are correct
+     */
+    @Test
+    public void testGetChildren()
+    {
+        Project proj = new Project();
+        ObservableList<TreeViewItem> children = observableArrayList();
+        ReleaseCategory releasesCategory = new ReleaseCategory("Releases", proj);
+        children.add(releasesCategory);
+        Assert.assertEquals(children, proj.getChildren());
+
+        Release release = new Release("test release", proj);
+        proj.add(release);
+        children.clear();
+        releasesCategory = new ReleaseCategory("Releases", proj);
+        children.add(releasesCategory);
+        Assert.assertEquals(children, proj.getChildren());
+    }
+
+    /**
+     * Tests that a project properly prepares for serialization
+     */
+    @Test
+    public void testPrepSerialization()
+    {
+        Project proj = new Project();
+        Team testTeam = new Team();
+        Release testRelease = new Release();
+
+        proj.getSerializableReleases().clear();
+        proj.getSerializableTeams().clear();
+
+        Assert.assertEquals(new ArrayList<Skill>(), proj.getSerializableTeams());
+        Assert.assertEquals(new ArrayList<Skill>(), proj.getSerializableReleases());
+
+        proj.add(testTeam);
+        proj.add(testRelease);
+
+        proj.prepSerialization();
+
+        ArrayList<Team> teams = new ArrayList<>();
+        ArrayList<Release> releases = new ArrayList<>();
+        teams.add(testTeam);
+        releases.add(testRelease);
+
+        Assert.assertEquals(teams, proj.getSerializableTeams());
+        Assert.assertEquals(releases, proj.getSerializableReleases());
+    }
+
+    /**
+     * Tests that a project properly post-pares after deserialization
+     */
+    @Test
+    public void testPostSerialization()
+    {
+        Project proj = new Project();
+        Team testTeam = new Team();
+        Release testRelease = new Release();
+
+        proj.getReleases().clear();
+        proj.getTeams().clear();
+
+        Assert.assertEquals(new ArrayList<Skill>(), proj.getTeams());
+        Assert.assertEquals(new ArrayList<Skill>(), proj.getReleases());
+
+        proj.getSerializableTeams().add(testTeam);
+        proj.getSerializableReleases().add(testRelease);
+
+        proj.postSerialization();
+
+        ArrayList<Team> teams = new ArrayList<>();
+        ArrayList<Release> releases = new ArrayList<>();
+        teams.add(testTeam);
+        releases.add(testRelease);
+
+        Assert.assertEquals(teams, proj.getTeams());
+        Assert.assertEquals(releases, proj.getReleases());
     }
 }
