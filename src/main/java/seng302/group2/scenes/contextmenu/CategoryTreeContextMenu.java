@@ -43,6 +43,9 @@ public class CategoryTreeContextMenu extends ContextMenu
             case "Teams":
                 CreateTeamDialog.show();
                 break;
+            case "Releases":
+                CreateReleaseDialog.show();
+                break;
             default:
                 CreateWorkspaceDialog.show();
                 break;
