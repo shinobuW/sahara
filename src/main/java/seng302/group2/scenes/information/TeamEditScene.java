@@ -82,7 +82,7 @@ public class TeamEditScene
         for (Person person : currentTeam.getPeople()) 
         {
             System.out.println(person);
-            tempTeam.addPerson(person, false);
+            tempTeam.add(person, false);
         }
         
         ListView teamsPeopleBox = new ListView(tempTeam.getPeople());
@@ -150,7 +150,7 @@ public class TeamEditScene
                     if (item.getTeam() == (Team) Global.currentWorkspace.getTeams().get(0) 
                             || item.getTeam() == null) 
                     {
-                        tempTeam.addPerson(item, false);
+                        tempTeam.add(item, false);
                     }
                     else 
                     {
@@ -174,7 +174,7 @@ public class TeamEditScene
                         teamsPeopleBox.getSelectionModel().getSelectedItems();
                 for (int i = selectedPeople.size() - 1; i >= 0 ; i--)
                 {
-                    tempTeam.removePerson(selectedPeople.get(i), false);
+                    tempTeam.remove(selectedPeople.get(i), false);
                 }
                 
                 dialogPeople.clear();
@@ -266,9 +266,9 @@ public class TeamEditScene
 
 
 
-                            person.getTeam().removePerson(person, false);
+                            person.getTeam().remove(person, false);
                             person.setTeam(currentTeam);
-                            currentTeam.addPerson(person, false);
+                            currentTeam.add(person, false);
                         }
                     }
                     
@@ -295,10 +295,10 @@ public class TeamEditScene
                                             UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM, 
                                             (Team)Global.currentWorkspace.getTeams().get(0))));
                                          
-                            person.getTeam().removePerson(person, false);
+                            person.getTeam().remove(person, false);
                             person.setTeam((Team)Global.currentWorkspace.getTeams().get(0));
                             ((Team)Global.currentWorkspace.getTeams().get(0))
-                                    .addPerson(person, false);
+                                    .add(person, false);
                         }
                     }
                     
@@ -358,7 +358,7 @@ public class TeamEditScene
         
         btnYes.setOnAction((event) ->
             {
-                tempTeam.addPerson(person, false);
+                tempTeam.add(person, false);
                 dialog.hide();
             });
         

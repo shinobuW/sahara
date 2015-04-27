@@ -5,39 +5,25 @@
  */
 package seng302.group2.workspace.team;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Test;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.role.RoleType;
+import seng302.group2.workspace.skills.Skill;
+
+import java.util.ArrayList;
 
 /**
  * A series of tests relating to Teams
  * @author Cameron Williams (crw73)
  */
-public class TeamTest extends TestCase
+public class TeamTest
 {
-    /**
-     * Create the test case.
-     * @param testName name of the test case
-     */
-    public TeamTest(String testName)
-    {
-        super(testName);
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite(TeamTest.class);
-    }
 
     /**
      * A simple test for the Team constructors
      */
+    @Test
     public void testTeamConstructors()
     {
         Team team = new Team();
@@ -58,6 +44,7 @@ public class TeamTest extends TestCase
     /**
      * Tests for Teams' setter methods.
      */
+    @Test
     public void testTeamSetters()
     {
         Team team = new Team();
@@ -76,5 +63,77 @@ public class TeamTest extends TestCase
         Assert.assertEquals("unnamed", team.getScrumMaster().getShortName());
         Assert.assertEquals(RoleType.ProductOwner, team.getProductOwner().getRole().getType());
         Assert.assertEquals(RoleType.ScrumMaster, team.getScrumMaster().getRole().getType());
+    }
+
+    /**
+     * Tests the addition and removal of people in teams
+     */
+    @Test
+    public void testAddPerson()
+    {
+        Team team = new Team();
+        Person person = new Person();
+
+        team.add(person);
+        Assert.assertTrue(team.getPeople().contains(person));
+
+        team.remove(person);
+        Assert.assertFalse(team.getPeople().contains(person));
+
+        team.add(person, true);
+        Assert.assertTrue(team.getPeople().contains(person));
+
+        team.remove(person, true);
+        Assert.assertFalse(team.getPeople().contains(person));
+    }
+
+    /**
+     * Tests whether or not the unassigned team getter works correctly
+     */
+    @Test
+    public void testIsUnassignedTeam()
+    {
+        Team unass = Team.createUnassignedTeam();
+        Team ateam = new Team();
+
+        Assert.assertTrue(unass.isUnassignedTeam());
+        Assert.assertFalse(ateam.isUnassignedTeam());
+    }
+
+
+    /**
+     * Tests that a team properly prepares for serialization
+     */
+    @Test
+    public void testPrepSerialization()
+    {
+        Team testTeam = new Team();
+        Person testPerson = new Person();
+
+        testTeam.getSerializablePeople().clear();
+        Assert.assertTrue(testTeam.getSerializablePeople().isEmpty());
+
+        testTeam.add(testPerson);
+        testTeam.prepSerialization();
+
+        Assert.assertTrue(testTeam.getSerializablePeople().contains(testPerson));
+    }
+
+    /**
+     * Tests that a team properly post-pares after deserialization
+     */
+    @Test
+    public void testPostSerialization()
+    {
+        Team testTeam = new Team();
+        Person testPerson = new Person();
+
+        testTeam.getPeople().clear();
+        Assert.assertTrue(testTeam.getPeople().isEmpty());
+
+        testTeam.getSerializablePeople().add(testPerson);
+        testTeam.postSerialization();
+
+        Assert.assertTrue(testTeam.getPeople().contains(testPerson));
     }
 }
