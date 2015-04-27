@@ -354,6 +354,37 @@ public class Team extends TreeViewItem implements Serializable
     }
     
     
+        /**
+     * Deletes a team and all the people currently assigned to that team.
+     * @param deletedTeam 
+     */
+    public static void deleteTeam(Team deletedTeam)
+    {
+        ArrayList<Person> peopleToBeDeleted = new ArrayList<>();
+        for (Person personRemoveTeam : Global.currentWorkspace.getPeople())
+        {
+            if (personRemoveTeam.getTeam() == deletedTeam)
+            {
+                //Deletes the team and all corresponding people.
+                peopleToBeDeleted.add(personRemoveTeam);
+
+                //Only deletes team from person. Does not delete the person.
+                //personRemoveTeam.setTeam(
+                //(Team)Global.currentWorkspace.getTeams().get(0));
+                //((Team)Global.currentWorkspace.getTeams().get(0)).add(
+                //personRemoveTeam, false);
+            }
+        }
+
+        for (Person personToDelete : peopleToBeDeleted)
+        {
+            Global.currentWorkspace.getPeople().remove(personToDelete);
+        }
+
+        Global.currentWorkspace.remove(deletedTeam);
+    }
+    
+    
     /**
      * An overridden version for the String representation of a Team
      * @return The short name of the Team

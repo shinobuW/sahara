@@ -345,6 +345,15 @@ public class Project extends TreeViewItem implements Serializable
         return this.shortName;
     }
 
+    
+    /**
+     * Deletes deletedProject from the current workspace.
+     * @param deletedProject 
+     */
+    public static void deleteProject(Project deletedProject)
+    {
+        Global.currentWorkspace.remove(deletedProject);
+    }
 
     /**
      * Gets the children of the category

@@ -4,6 +4,8 @@ import javafx.collections.ObservableList;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 import java.io.Serializable;
+import seng302.group2.Global;
+import seng302.group2.workspace.person.Person;
 
 /**
  * A basic class to represent skills a person may have
@@ -92,6 +94,22 @@ public class Skill extends TreeViewItem implements Serializable
         return null;
     }
     
+    
+    /**
+     * Deletes a skill and removes it from any people who have the skill.
+     * @param deletedSkill 
+     */
+    public static void deleteSkill(Skill deletedSkill)
+    {
+        for (Person personRemoveSkill : Global.currentWorkspace.getPeople())
+        {
+            if (personRemoveSkill.getSkills().contains(deletedSkill))
+            {
+                personRemoveSkill.getSkills().remove(deletedSkill);
+            }       
+        }
+        Global.currentWorkspace.remove(deletedSkill);
+    }    
     
     /**
      * An overridden version for the String representation of a Skill

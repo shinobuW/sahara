@@ -20,10 +20,13 @@ import seng302.group2.workspace.team.Team;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import seng302.group2.scenes.information.ProjectEditScene;
 
 /**
  *ContextMenu class for instances of Person, Skill and Team
- * @author swi67, jml168
+ * @author swi67, jml168, btm38
  */
 @SuppressWarnings("deprecation")
 public class ElementTreeContextMenu extends ContextMenu
@@ -158,11 +161,7 @@ public class ElementTreeContextMenu extends ContextMenu
                 TeamEditScene.getTeamEditScene((Team) Global.selectedTreeItem.getValue());
                 break;
             case PROJECT:
-                // TODO: Project, not Workspace
-                /*
-                WorkspaceEditScene.getWorkspaceEditScene(
-                        (Project) Global.selectedTreeItem.getValue());
-                        */
+                ProjectEditScene.getProjectEditScene((Project) Global.selectedTreeItem.getValue());
                 break;
             case OTHER:
                 System.out.println("The category was not correctly recognized");
@@ -181,16 +180,75 @@ public class ElementTreeContextMenu extends ContextMenu
      */
     public static void showDeleteDialog(Categories category)
     {
-        String message = null;
+        ArrayList<String> dialogText = new ArrayList<String>(2);
+        dialogText = getDeleteDialogText(category);
+
+        
+        Action response = Dialogs.create()
+            .title(dialogText.get(0))
+            .message(dialogText.get(1))
+            .actions(Dialog.ACTION_YES, Dialog.ACTION_CANCEL) 
+            .showConfirm();
+
+        if (response == Dialog.ACTION_YES)
+        {
+            switch (category)
+            {
+                case PERSON:
+                    Person.deletePerson((Person)Global.selectedTreeItem.getValue());
+                    break;
+                case PROJECT:
+                    Project.deleteProject((Project)Global.selectedTreeItem.getValue());
+                    break;
+                case TEAM:
+                    Team.deleteTeam((Team)Global.selectedTreeItem.getValue());
+                    break;
+                case SKILL:
+                    Skill.deleteSkill((Skill)Global.selectedTreeItem.getValue());               
+                    break;
+                case OTHER:
+                    System.out.println("Can't delete unknown selected class");
+                    break;
+                default:
+                    System.out.println("Did not identify the class of object to delete");
+                    break;
+            }
+        }
+    }
+    
+    
+    /**
+     * Returns different titles and deletion messages depending on the category passed into the 
+     * function. Returns a ArrayList<String> of size two where index 0 = the title of the dialog
+     * and index 1 = the message of the dialog box.
+     * @param category
+     * @return ArrayList<String>(2) dialogText
+     */
+    public static ArrayList<String> getDeleteDialogText(Categories category)
+    {
+        ArrayList<String> dialogText = new ArrayList<String>(2);
+        String title = "";
+        String message = "";
         switch (category)
         {
             case PERSON:
+                title = "Delete Person?";
                 Person deletedPerson = (Person)Global.selectedTreeItem.getValue();  
-                message = MessageFormat.format(
-                    "Are you sure you want to delete {0}, currently in Team {1}", 
-                    deletedPerson.toString(), deletedPerson.getTeamName() + "?");
+                if  (deletedPerson.getTeamName().equals("Unassigned"))
+                {
+                    message = MessageFormat.format(
+                        "Are you sure you want to delete {0}", deletedPerson.toString() + "?");
+                }
+                else
+                {
+                    message = MessageFormat.format(
+                        "Are you sure you want to delete {0}, currently in Team {1}", 
+                        deletedPerson.toString(), deletedPerson.getTeamName() + "?");
+                }
+
                 break;
             case SKILL:
+                title = "Delete Skill?";
                 Skill deletedSkill = (Skill)Global.selectedTreeItem.getValue();
                 ArrayList<Person> peopleWithSkill = new ArrayList<>();
                 for (Person person : Global.currentWorkspace.getPeople())
@@ -213,83 +271,48 @@ public class ElementTreeContextMenu extends ContextMenu
                     }
                     if (peopleWithSkill.size() < 7)
                     {
-                        customMessage = namesOfPeopleWithSkill + "have this skill.";
+                        customMessage = namesOfPeopleWithSkill + "currently have this skill.";
                     }
                     else if (peopleWithSkill.size() == 7)
                     {
-                        customMessage = namesOfPeopleWithSkill + "and 1 other have this skill.";
+                        customMessage = namesOfPeopleWithSkill 
+                            + "and 1 other currently have this skill.";
                     }
                     else
                     {
-                        customMessage = MessageFormat.format(namesOfPeopleWithSkill + "and {0} others have this skill.",peopleWithSkill.size()-6);
+                        customMessage = MessageFormat.format(namesOfPeopleWithSkill 
+                            + "and {0} others currently have this skill.",
+                            peopleWithSkill.size() - 6);
                     }
 
-                    message = MessageFormat.format("Are you sure you want to delete the skill {0}",deletedSkill.toString() + "?\n" + customMessage);
+                    message = MessageFormat.format("Are you sure you want to delete the skill {0}",
+                        deletedSkill.toString() + "?\n" + customMessage);
                 }
-                //else
-                //{
-                //    message = MessageFormat.format("Are you sure you want to delete {0}", Global.selectedTreeItem.getValue().toString() + "?"));
-                //}
+                else
+                {
+                    message = MessageFormat.format("Are you sure you want to delete {0}", 
+                        Global.selectedTreeItem.getValue().toString() + "?");
+                }
                 break;
-           // default:
-               // message = MessageFormat.format("Are you sure you want to delete {0}", Global.selectedTreeItem.getValue().toString() + "?"));
-              //  break;
+            case TEAM:
+                title = "Delete Team";
+                message = MessageFormat.format("Are you sure you want to delete team {0}", 
+                    Global.selectedTreeItem.getValue().toString() + "? \nWARNING: All people "
+                    + "currently part of the team will be deleted as well as the team.");
+                break;
+            case PROJECT:
+                title = "Delete Project";
+                message = MessageFormat.format("Are you sure you want to delete {0}", 
+                        Global.selectedTreeItem.getValue().toString() + "?");
+                break;                
+            default:
+                title = "Delete Item";
+                message = MessageFormat.format("Are you sure you want to delete {0}", 
+                        Global.selectedTreeItem.getValue().toString() + "?");
+                break;
         }
-        
-        Action response = Dialogs.create()
-            .title("Delete item?")
-            .message(message)
-            .actions(Dialog.ACTION_YES, Dialog.ACTION_CANCEL) 
-            .showConfirm();
-
-        if (response == Dialog.ACTION_YES)
-        {
-            switch (category)
-            {
-                case PERSON:
-                    Person deletePerson = (Person)Global.selectedTreeItem.getValue();  
-                    for (Team teamRemovePerson : Global.currentWorkspace.getTeams())
-                    {
-                        if (teamRemovePerson.getPeople().contains(deletePerson))
-                        {
-                            teamRemovePerson.getPeople().remove(deletePerson);
-                        }
-                    }
-                    Global.currentWorkspace.remove((Person) Global.selectedTreeItem.getValue());
-                    break;
-                case PROJECT:
-                    Global.currentWorkspace.remove((Project) Global.selectedTreeItem.getValue());
-                    break;
-                case TEAM:
-                    Team deletedTeam = (Team)Global.selectedTreeItem.getValue();  
-                    for (Person personRemoveTeam : Global.currentWorkspace.getPeople())
-                    {
-                        if (personRemoveTeam.getTeam() == deletedTeam)
-                        {
-                            personRemoveTeam.setTeam((Team)Global.currentWorkspace.getTeams().get(0));
-                            ((Team)Global.currentWorkspace.getTeams().get(0)).add(personRemoveTeam, false);
-                        }
-                    }                    
-                    Global.currentWorkspace.remove((Team) Global.selectedTreeItem.getValue());
-                    break;
-                case SKILL:
-                    Skill deletedSkill = (Skill)Global.selectedTreeItem.getValue();
-                    for (Person personRemoveSkill : Global.currentWorkspace.getPeople())
-                    {
-                        if (personRemoveSkill.getSkills().contains(deletedSkill))
-                        {
-                            personRemoveSkill.getSkills().remove(deletedSkill);
-                        }       
-                    }
-                    Global.currentWorkspace.remove((Skill) Global.selectedTreeItem.getValue());
-                    break;
-                case OTHER:
-                    System.out.println("Can't delete unknown selected class");
-                    break;
-                default:
-                    System.out.println("Did not identify the class of object to delete");
-                    break;
-            }
-        }
-    }
+        dialogText.add(title);
+        dialogText.add(message);
+        return dialogText;   
+    }  
 }

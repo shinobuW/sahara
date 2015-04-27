@@ -378,6 +378,23 @@ public class Person extends TreeViewItem implements Serializable
     
     
     /**
+     * Deletes the person deletedPerson and removes them from team if they are in one.
+     * @param deletedPerson 
+     */
+    public static void deletePerson(Person deletedPerson)
+    {
+        for (Team teamRemovePerson : Global.currentWorkspace.getTeams())
+        {
+            if (teamRemovePerson.getPeople().contains(deletedPerson))
+            {
+                teamRemovePerson.getPeople().remove(deletedPerson);
+            }
+        }
+        Global.currentWorkspace.remove(deletedPerson);
+    }
+    
+    
+    /**
      * An overridden version for the String representation of a Person
      * @return The short name of the Person
      */
