@@ -347,8 +347,8 @@ public class Project extends TreeViewItem implements Serializable
 
     
     /**
-     * Deletes deletedProject from the current workspace.
-     * @param deletedProject 
+     * Deletes a project from the current workspace.
+     * @param deletedProject The project to delete
      */
     public static void deleteProject(Project deletedProject)
     {

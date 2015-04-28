@@ -97,7 +97,7 @@ public class Skill extends TreeViewItem implements Serializable
     
     /**
      * Deletes a skill and removes it from any people who have the skill.
-     * @param deletedSkill 
+     * @param deletedSkill The skill to delete
      */
     public static void deleteSkill(Skill deletedSkill)
     {
