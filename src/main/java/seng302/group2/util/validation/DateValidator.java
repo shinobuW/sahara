@@ -52,13 +52,58 @@ public class DateValidator
         }
     }
 
+    public static boolean isFutureDate(Date date)
+    {
+        if (date.after(Date.from(Instant.now())))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public static boolean isCorrectDateFormat(CustomDateField dateField)
+    {
+        String dateString = dateField.getText();
+        if (dateString.isEmpty())
+        {
+            return true;
+        }
+        else
+        {
+            Global.datePattern.setLenient(false);
+            try
+            {
+                String[] date = dateString.split("/"); //returns an array with the day, month and yr
+                String year = date[date.length - 1];
+                if (year.length() != 4)
+                {
+                    dateField.showErrorField("* Format must be dd/MM/yyyy e.g 12/03/1990");
+                    return false;
+                }
+
+                Date parsedDate = Global.datePattern.parse(dateString);
+                dateField.hideErrorField();
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                dateField.showErrorField("* Format must be dd/MM/yyyy e.g 12/03/1990");
+                return false;
+
+            }
+        }
+    }
 
     /**
      * Checks whether the birth date format is correct
      * Shows error message and red borders if incorrect
      * @param customBirthDate the birth date error GUI label
      * @return true if correct format
-    **/
+     **/
     public static boolean validateBirthDateField(CustomDateField customBirthDate)
     {
         switch (DateValidator.isValidDateString(customBirthDate.getText()))
