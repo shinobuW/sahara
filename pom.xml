@@ -74,6 +74,47 @@
       </plugin>
 
 
+      <!-- AppAssembler build -->
+      <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>appassembler-maven-plugin</artifactId>
+          <version>1.9</version>
+
+          <executions>
+              <execution>
+                  <phase>site</phase>
+                  <goals>
+                      <goal>assemble</goal>
+                      <!--<goal>generate-daemons</goal>-->
+                  </goals>
+              </execution>
+          </executions>
+
+          <configuration>
+              <!-- Generate bin scripts for windows and unix pr default -->
+              <platforms>
+                  <platform>windows</platform>
+                  <platform>unix</platform>
+              </platforms>
+
+              <assembleDirectory>${project.build.directory}/program</assembleDirectory>
+
+              <binFileExtensions>
+                  <unix>.sh</unix>
+              </binFileExtensions>
+
+              <programs>
+                  <program>
+                      <mainClass>seng302.group2.App</mainClass>
+                      <id>Sahara</id>
+                  </program>
+              </programs>
+              <useWildcardClassPath>true</useWildcardClassPath>
+              <repositoryLayout>flat</repositoryLayout>
+          </configuration>
+      </plugin>
+
+
         <!-- Checkstyle build -->
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -90,12 +131,13 @@
 
           <executions>
             <execution>
-              <phase>process-sources</phase>
+              <phase>package</phase>
               <goals>
                 <goal>check</goal>
               </goals>
               <configuration>
-                <failOnViolation>true</failOnViolation>
+                <failOnViolation>false</failOnViolation>
+                <violationSeverity>warning</violationSeverity>
               </configuration>
             </execution>
           </executions>
@@ -113,45 +155,7 @@
         </plugin>
 
 
-        <!-- AppAssembler build -->
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>appassembler-maven-plugin</artifactId>
-          <version>1.9</version>
 
-          <executions>
-            <execution>
-              <phase>package</phase>
-              <goals>
-                <goal>assemble</goal>
-                <!--<goal>generate-daemons</goal>-->
-              </goals>
-            </execution>
-          </executions>
-
-          <configuration>
-            <!-- Generate bin scripts for windows and unix pr default -->
-            <platforms>
-              <platform>windows</platform>
-              <platform>unix</platform>
-            </platforms>
-            
-            <assembleDirectory>${project.build.directory}/program</assembleDirectory>
-            
-            <binFileExtensions>
-             <unix>.sh</unix>
-            </binFileExtensions>
-
-            <programs>
-              <program>
-                <mainClass>seng302.group2.App</mainClass>
-                <id>Sahara</id>
-              </program>
-            </programs>
-            <useWildcardClassPath>true</useWildcardClassPath>
-            <repositoryLayout>flat</repositoryLayout>
-          </configuration>
-        </plugin>
 
 
       </plugins>
