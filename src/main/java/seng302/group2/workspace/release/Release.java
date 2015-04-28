@@ -18,7 +18,7 @@ import java.util.Date;
 public class Release extends TreeViewItem
 {
     private String shortName;
-    private String description; // An intentional break of checkstyle to check changes in configuration of maven
+    private String description;
     private Date estimatedDate;
     private Project project;
 
