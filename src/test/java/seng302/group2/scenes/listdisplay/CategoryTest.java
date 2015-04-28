@@ -10,8 +10,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
 
-import static org.junit.Assert.assertNotEquals;
-
 /**
  *
  * @author Jordane

@@ -9,9 +9,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.role.RoleType;
-import seng302.group2.workspace.skills.Skill;
-
-import java.util.ArrayList;
 
 /**
  * A series of tests relating to Teams

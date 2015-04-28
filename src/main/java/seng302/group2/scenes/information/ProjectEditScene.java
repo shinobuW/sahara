@@ -221,7 +221,8 @@ public class ProjectEditScene
 
                     if (!descriptionTextArea.getText().equals(currentProject.getDescription()))
                     {
-                        System.out.println(descriptionTextArea.getText() + " " + currentProject.getDescription());
+                        System.out.println(descriptionTextArea.getText() + " "
+                                + currentProject.getDescription());
                         undoActions.add(new UndoableItem(
                                 currentProject,
                                 new UndoRedoAction(

@@ -5,8 +5,6 @@ import org.junit.Test;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by Jordane on 27/04/2015.
  */
