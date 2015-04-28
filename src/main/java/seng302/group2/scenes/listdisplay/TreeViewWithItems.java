@@ -178,9 +178,12 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     }
                     else if (Global.selectedTreeItem.getValue() instanceof Category)
                     {
-                        if (Global.selectedTreeItem.getValue().toString().equals("Roles"))
+                        if (Global.selectedTreeItem.getValue().toString().equals("Projects"))
                         {
-                            setContextMenu(null);
+                            App.content.getChildren().remove(MainScene.informationGrid);
+                            ProjectCategoryScene.getProjectCategoryScene(Global.currentWorkspace);
+                            App.content.getChildren().add(MainScene.informationGrid);
+                            setContextMenu(new CategoryTreeContextMenu());
                         }
                         else if (Global.selectedTreeItem.getValue().toString().equals("People"))
                         {
@@ -188,6 +191,27 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                             PersonCategoryScene.getPersonCategoryScene(Global.currentWorkspace);
                             App.content.getChildren().add(MainScene.informationGrid);
                             setContextMenu(new CategoryTreeContextMenu());
+                        }
+                        else if (Global.selectedTreeItem.getValue().toString().equals("Skills"))
+                        {
+                            App.content.getChildren().remove(MainScene.informationGrid);
+                            SkillCategoryScene.getSkillCategoryScene(Global.currentWorkspace);
+                            App.content.getChildren().add(MainScene.informationGrid);
+                            setContextMenu(new CategoryTreeContextMenu());
+                        }
+                        else if (Global.selectedTreeItem.getValue().toString().equals("Teams"))
+                        {
+                            App.content.getChildren().remove(MainScene.informationGrid);
+                            TeamCategoryScene.getTeamCategoryScene(Global.currentWorkspace);
+                            App.content.getChildren().add(MainScene.informationGrid);
+                            setContextMenu(new CategoryTreeContextMenu());
+                        }
+                        else if (Global.selectedTreeItem.getValue().toString().equals("Roles"))
+                        {
+                            App.content.getChildren().remove(MainScene.informationGrid);
+                            RoleCategoryScene.getRoleCategoryScene(Global.currentWorkspace);
+                            App.content.getChildren().add(MainScene.informationGrid);
+                            setContextMenu(null);
                         }
                         else
                         {
