@@ -1,15 +1,15 @@
 package seng302.group2.util.undoredo;
 
-import java.util.ArrayList;
-import java.util.Date;
 import junit.framework.TestCase;
-import seng302.group2.workspace.person.Person;
-
-import java.util.Stack;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Stack;
 
 /**
  * A JUnit test class for the Undo/Redo Manager

@@ -1,9 +1,9 @@
 package seng302.group2.workspace.project;
 
 import javafx.collections.ObservableList;
-import org.junit.Test;
 import junit.framework.TestCase;
 import org.junit.Assert;
+import org.junit.Test;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.release.Release;

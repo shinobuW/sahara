@@ -17,6 +17,7 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.team.Team;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,7 +26,6 @@ import java.util.Date;
 import static seng302.group2.util.validation.DateValidator.validateBirthDateField;
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
-import seng302.group2.workspace.team.Team;
 
 /**
  * Class to create a pop up dialog for creating a person.

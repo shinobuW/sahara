@@ -1,11 +1,7 @@
 package seng302.group2.scenes.listdisplay;
 
 import javafx.collections.ObservableList;
-import seng302.group2.Global;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.release.Release;
-
-import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * Category item in the list display, uses as a header for all the elements of one type, ie 

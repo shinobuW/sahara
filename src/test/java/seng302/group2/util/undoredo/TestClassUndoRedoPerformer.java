@@ -1,9 +1,10 @@
 package seng302.group2.util.undoredo;
 
-import seng302.group2.util.undoredo.*;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.information.*;
+import seng302.group2.scenes.information.PersonScene;
+import seng302.group2.scenes.information.ProjectScene;
+import seng302.group2.scenes.information.TeamScene;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;

@@ -9,6 +9,7 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.information.PersonEditScene;
+import seng302.group2.scenes.information.ProjectEditScene;
 import seng302.group2.scenes.information.SkillEditScene;
 import seng302.group2.scenes.information.TeamEditScene;
 import seng302.group2.workspace.Workspace;
@@ -20,9 +21,6 @@ import seng302.group2.workspace.team.Team;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import seng302.group2.scenes.information.ProjectEditScene;
 
 /**
  *ContextMenu class for instances of Person, Skill and Team

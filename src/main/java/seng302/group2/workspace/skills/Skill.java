@@ -1,11 +1,11 @@
 package seng302.group2.workspace.skills;
 
 import javafx.collections.ObservableList;
+import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.person.Person;
 
 import java.io.Serializable;
-import seng302.group2.Global;
-import seng302.group2.workspace.person.Person;
 
 /**
  * A basic class to represent skills a person may have
