@@ -37,7 +37,6 @@ public class ProjectEditScene
 {
     /**
      * Gets the workspace edit information scene.
-     * @param currentProject the project to display the information of
      * @return The Workspace Edit information scene
      */
     public static GridPane getProjectEditScene(Project currentProject)
@@ -195,7 +194,7 @@ public class ProjectEditScene
                 {
                     // Build Undo/Redo edit array.
                     ArrayList<UndoableItem> undoActions = new ArrayList<>();
-                    if (shortNameCustomField.getText() != currentProject.getShortName())
+                    if (!shortNameCustomField.getText().equals(currentProject.getShortName()))
                     {
                         undoActions.add(new UndoableItem(
                                 currentProject,
@@ -208,22 +207,21 @@ public class ProjectEditScene
                     }
 
 		    
-                    if (longNameCustomField.getText() != currentProject.getLongName())
+                    if (!longNameCustomField.getText().equals(currentProject.getLongName()))
                     {
-                        System.out.println(longNameCustomField.getText());
-                        System.out.println(currentProject.getLongName());
                         undoActions.add(new UndoableItem(
                                 currentProject,
                                 new UndoRedoAction(
                                         UndoRedoPerformer.UndoRedoProperty.PROJECT_LONGNAME,
-                                        currentProject.getDescription()),
+                                        currentProject.getLongName()),
                                 new UndoRedoAction(
                                         UndoRedoPerformer.UndoRedoProperty.PROJECT_LONGNAME,
                                         longNameCustomField.getText())));
                     }
 
-                    if (descriptionTextArea.getText() != currentProject.getDescription())
+                    if (!descriptionTextArea.getText().equals(currentProject.getDescription()))
                     {
+                        System.out.println(descriptionTextArea.getText() + " " + currentProject.getDescription());
                         undoActions.add(new UndoableItem(
                                 currentProject,
                                 new UndoRedoAction(
@@ -292,17 +290,19 @@ public class ProjectEditScene
                             team.setProject(null);
                         }
                     }
-
-                    Global.undoRedoMan.add(new UndoableItem(
-                            currentProject,
-                            new UndoRedoAction(
-                                    UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT,
-                                    undoActions),
-                            new UndoRedoAction(
-                                    UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT,
-                                    undoActions)
-                    ));
-                           
+                    
+                    if (undoActions.size() > 0)
+                    {
+                        Global.undoRedoMan.add(new UndoableItem(
+                                currentProject,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT,
+                                        undoActions),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PROJECT_EDIT,
+                                        undoActions)
+                        ));
+                    }  
 
                     // Save the edits.
                     currentProject.setDescription(descriptionTextArea.getText());

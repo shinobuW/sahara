@@ -35,7 +35,6 @@ public class WorkspaceEditScene
 {
     /**
      * Gets the workspace edit information scene.
-     * @param currentWorkspace The workspace to show the information of
      * @return The Workspace Edit information scene
      */
     public static GridPane getWorkspaceEditScene(Workspace currentWorkspace)
@@ -122,7 +121,7 @@ public class WorkspaceEditScene
                                 currentWorkspace,
                                 new UndoRedoAction(
                                         UndoRedoPerformer.UndoRedoProperty.WORKSPACE_LONGNAME,
-                                        currentWorkspace.getDescription()),
+                                        currentWorkspace.getLongName()),
                                 new UndoRedoAction(
                                         UndoRedoPerformer.UndoRedoProperty.WORKSPACE_LONGNAME,
                                         longNameCustomField.getText())));                        
@@ -139,15 +138,18 @@ public class WorkspaceEditScene
                                         descriptionTextArea.getText())));
                     }
                     
-                    Global.undoRedoMan.add(new UndoableItem(
-                            currentWorkspace,
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.WORKSPACE_EDIT,
-                                undoActions), 
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.WORKSPACE_EDIT,
-                                undoActions)
-                        ));   
+                    if (undoActions.size() > 0)
+                    {
+                        Global.undoRedoMan.add(new UndoableItem(
+                                currentWorkspace,
+                            new UndoRedoAction(
+                                    UndoRedoPerformer.UndoRedoProperty.WORKSPACE_EDIT,
+                                    undoActions), 
+                            new UndoRedoAction(
+                                    UndoRedoPerformer.UndoRedoProperty.WORKSPACE_EDIT,
+                                    undoActions)
+                            ));   
+                    }
                     
                     // Save the edits.
                     currentWorkspace.setDescription(descriptionTextArea.getText());
