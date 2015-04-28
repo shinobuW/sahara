@@ -17,6 +17,7 @@ import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 
@@ -24,7 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static seng302.group2.util.validation.DateValidator.validateBirthDateField;
+import static seng302.group2.util.validation.DateValidator.isCorrectDateFormat;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -34,7 +35,7 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 public class CreateReleaseDialog
 {
     public static void show()
-    {       
+    {
         Dialog dialog = new Dialog(null, "New Release");
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
@@ -43,82 +44,88 @@ public class CreateReleaseDialog
 
         Button btnCreate = new Button("Create");
         Button btnCancel = new Button("Cancel");
-        
+
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnCreate, btnCancel);
-        
+
         RequiredField shortNameCustomField = new RequiredField("Short Name");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description");
         CustomDateField releaseDateField = new CustomDateField("Estimated Release Date");
         CustomComboBox projectComboBox = new CustomComboBox("Project");
-        
+
         for (TreeViewItem project : Global.currentWorkspace.getProjects())
         {
             projectComboBox.addToComboBox(project.toString());
         }
-        
+
         grid.getChildren().add(shortNameCustomField);
         grid.getChildren().add(descriptionTextArea);
         grid.getChildren().add(releaseDateField);
         grid.getChildren().add(projectComboBox);
         grid.getChildren().add(buttons);
-        
+
         btnCreate.setOnAction((event) ->
+        {
+
+            String shortName = shortNameCustomField.getText();
+            String description = descriptionTextArea.getText();
+
+            boolean correctDate = isCorrectDateFormat(releaseDateField);
+            boolean correctShortName = validateShortName(shortNameCustomField);
+
+            Project project = new Project();
+            for (TreeViewItem item : Global.currentWorkspace.getProjects())
             {
-                
-                String shortName = shortNameCustomField.getText();
-                String description = descriptionTextArea.getText();
-                
-                boolean correctDate = validateBirthDateField(releaseDateField);
-                boolean correctShortName = validateShortName(shortNameCustomField);
-                
-                Project project = new Project();
-                for (TreeViewItem item : Global.currentWorkspace.getProjects())
+                if (item.toString().equals(projectComboBox.getValue()))
                 {
-                    if (item.toString().equals(projectComboBox.getValue()))
-                    {
-                        project = (Project)item;
-                    }
+                    project = (Project)item;
                 }
-                
-                if (correctShortName && correctDate)
+            }
+
+            if (correctShortName && correctDate)
+            {
+                String releaseDateString = releaseDateField.getText();
+
+                Date releaseDate;
+                if (releaseDateString.isEmpty())
                 {
-                    String releaseDateString = releaseDateField.getText();
-
-                    Date releaseDate;
-                    if (releaseDateString.isEmpty())
-                    {
-                        releaseDate = null;
-                    }
-                    else
-                    {
-                        releaseDate = stringToDate(releaseDateString);
-                    }
-
-                    Release release = new Release(shortName, description, releaseDate, project);
-                    project.add(release);
-                    //Global.currentWorkspace.add(release);
-                    dialog.hide();
+                    releaseDate = null;
                 }
                 else
                 {
-                    event.consume();
+                    releaseDate = stringToDate(releaseDateString);
                 }
-            });
-        
-        btnCancel.setOnAction((event) ->
+
+                if (!DateValidator.isFutureDate(releaseDate))
+                {
+                    releaseDateField.showErrorField("Date must be a future date");
+                }
+                else
+                {
+                    Release release = new Release(shortName, description, releaseDate, project);
+                    project.add(release);
+                    dialog.hide();
+                }
+            }
+            else
             {
-                dialog.hide();
-            });
-        
+                event.consume();
+            }
+        });
+
+        btnCancel.setOnAction((event) ->
+        {
+            dialog.hide();
+        });
+
         dialog.setResizable(false);
         dialog.setIconifiable(false);
         dialog.setContent(grid);
         dialog.show();
     }
-    
+
     /**
      * Converts strings to dates
      * @param releaseDateString the birth date string
@@ -140,5 +147,5 @@ public class CreateReleaseDialog
         }
         return releaseDate;
     }
-    
+
 }
