@@ -378,8 +378,8 @@ public class Person extends TreeViewItem implements Serializable
     
     
     /**
-     * Deletes the person deletedPerson and removes them from team if they are in one.
-     * @param deletedPerson 
+     * Deletes the given person and removes them from team if they are in one.
+     * @param deletedPerson The person to delete
      */
     public static void deletePerson(Person deletedPerson)
     {

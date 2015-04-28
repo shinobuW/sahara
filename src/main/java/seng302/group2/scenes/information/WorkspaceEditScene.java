@@ -35,6 +35,7 @@ public class WorkspaceEditScene
 {
     /**
      * Gets the workspace edit information scene.
+     * @param currentWorkspace The workspace to get the editable information scene for
      * @return The Workspace Edit information scene
      */
     public static GridPane getWorkspaceEditScene(Workspace currentWorkspace)

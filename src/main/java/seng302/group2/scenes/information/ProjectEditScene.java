@@ -37,6 +37,7 @@ public class ProjectEditScene
 {
     /**
      * Gets the workspace edit information scene.
+     * @param currentProject The project to display the editable information of
      * @return The Workspace Edit information scene
      */
     public static GridPane getProjectEditScene(Project currentProject)

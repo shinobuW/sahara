@@ -356,7 +356,7 @@ public class Team extends TreeViewItem implements Serializable
     
         /**
      * Deletes a team and all the people currently assigned to that team.
-     * @param deletedTeam 
+     * @param deletedTeam The team to delete
      */
     public static void deleteTeam(Team deletedTeam)
     {

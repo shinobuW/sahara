@@ -217,10 +217,10 @@ public class ElementTreeContextMenu extends ContextMenu
     
     /**
      * Returns different titles and deletion messages depending on the category passed into the 
-     * function. Returns a ArrayList<String> of size two where index 0 = the title of the dialog
-     * and index 1 = the message of the dialog box.
-     * @param category
-     * @return ArrayList<String>(2) dialogText
+     * function. Returns an arraylist of strings of size two where index 0 is the title of the
+     * dialog and index 1 is the message of the dialog box.
+     * @param category The selected category
+     * @return The text of the delete dialog
      */
     public static ArrayList<String> getDeleteDialogText(Categories category)
     {
