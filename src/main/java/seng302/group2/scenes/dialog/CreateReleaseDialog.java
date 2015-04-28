@@ -54,6 +54,9 @@ public class CreateReleaseDialog
         CustomTextArea descriptionTextArea = new CustomTextArea("Description");
         CustomDateField releaseDateField = new CustomDateField("Estimated Release Date");
         CustomComboBox projectComboBox = new CustomComboBox("Project");
+        
+        String firstItem = Global.currentWorkspace.getProjects().get(0).getShortName();
+        projectComboBox.setValue(firstItem);
 
         for (TreeViewItem project : Global.currentWorkspace.getProjects())
         {
@@ -68,7 +71,6 @@ public class CreateReleaseDialog
 
         btnCreate.setOnAction((event) ->
         {
-
             String shortName = shortNameCustomField.getText();
             String description = descriptionTextArea.getText();
 
@@ -92,21 +94,23 @@ public class CreateReleaseDialog
                 if (releaseDateString.isEmpty())
                 {
                     releaseDate = null;
+                    Release release = new Release(shortName, description, releaseDate, project);
+                    project.add(release);
+                    dialog.hide();   
                 }
                 else
                 {
                     releaseDate = stringToDate(releaseDateString);
-                }
-
-                if (!DateValidator.isFutureDate(releaseDate))
-                {
-                    releaseDateField.showErrorField("Date must be a future date");
-                }
-                else
-                {
-                    Release release = new Release(shortName, description, releaseDate, project);
-                    project.add(release);
-                    dialog.hide();
+                    if (!DateValidator.isFutureDate(releaseDate))
+                    {
+                        releaseDateField.showErrorField("Date must be a future date");
+                    }
+                    else
+                    {
+                        Release release = new Release(shortName, description, releaseDate, project);
+                        project.add(release);
+                        dialog.hide();
+                    }
                 }
             }
             else

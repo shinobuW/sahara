@@ -5,6 +5,7 @@
  */
 package seng302.group2.scenes.control;
 
+import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
@@ -44,10 +45,9 @@ public class CustomComboBox extends VBox
         
         HBox entry = new HBox();
         entry.setPrefWidth(175);
-        entry.getChildren().addAll(labelBox, comboBox);
+        entry.getChildren().addAll(labelBox, this.comboBox);
         
-        comboBox.setStyle("-fx-pref-width: 135;");
-
+        this.comboBox.setStyle("-fx-pref-width: 135;");
         this.getChildren().add(entry);
     }
     
@@ -77,4 +77,14 @@ public class CustomComboBox extends VBox
     {
         return this.comboBox.getValue().toString();
     }
+    
+    /**
+     * Sets the value of the selected item of combo box
+     * @param value value to set to 
+     */
+    public void setValue(String value)
+    {
+        this.comboBox.setValue(value);
+    }
+        
 }
