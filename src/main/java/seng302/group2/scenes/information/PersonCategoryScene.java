@@ -71,16 +71,8 @@ public class PersonCategoryScene
                 if (personBox.getSelectionModel().getSelectedItem() != null)
                         //&& personBox.getSelectionModel().isEmpty())
                 {
-                    App.content.getChildren().remove(MainScene.informationGrid);
-                    PersonScene.getPersonScene(
-                            (Person) personBox.getSelectionModel().getSelectedItem());
-                    App.content.getChildren().add(MainScene.informationGrid);
-
-                    /*MainScene.treeView.getSelectionModel().select(
-                            personBox.getSelectionModel().getSelectedItem());*/
-
-                    /*MainScene.treeView.select((TreeViewItem)
-                            personBox.getSelectionModel().getSelectedItem());*/
+                    MainScene.treeView.selectItem((TreeViewItem)
+                            personBox.getSelectionModel().getSelectedItem());
                 }
             });
 

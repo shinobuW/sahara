@@ -1,5 +1,6 @@
 package seng302.group2.scenes.listdisplay;
 
+import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
@@ -144,8 +145,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     App.content.getChildren().add(MainScene.informationGrid);
                     setContextMenu(new ElementTreeContextMenu());
 
-                }
-                else if (Global.selectedTreeItem.getValue() instanceof Project)
+                } else if (Global.selectedTreeItem.getValue() instanceof Project)
                 {
                     App.content.getChildren().remove(MainScene.informationGrid);
                     ProjectScene.getProjectScene(
@@ -153,47 +153,40 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     App.content.getChildren().add(MainScene.informationGrid);
                     setContextMenu(new ElementTreeContextMenu());
 
-                }
-                else if (Global.selectedTreeItem.getValue() instanceof Workspace)
+                } else if (Global.selectedTreeItem.getValue() instanceof Workspace)
                 {
                     App.content.getChildren().remove(MainScene.informationGrid);
                     WorkspaceScene.getWorkspaceScene((Workspace)
                             Global.selectedTreeItem.getValue());
                     App.content.getChildren().add(MainScene.informationGrid);
-                }
-                else if (Global.selectedTreeItem.getValue() instanceof Skill)
+                } else if (Global.selectedTreeItem.getValue() instanceof Skill)
                 {
                     App.content.getChildren().remove(MainScene.informationGrid);
                     SkillScene.getSkillScene((Skill) Global.selectedTreeItem.getValue());
                     App.content.getChildren().add(MainScene.informationGrid);
                     setContextMenu(new ElementTreeContextMenu());
-                }
-                else if (Global.selectedTreeItem.getValue() instanceof Team)
+                } else if (Global.selectedTreeItem.getValue() instanceof Team)
                 {
                     App.content.getChildren().remove(MainScene.informationGrid);
                     TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
                     App.content.getChildren().add(MainScene.informationGrid);
                     setContextMenu(new ElementTreeContextMenu());
-                }
-                else if (Global.selectedTreeItem.getValue() instanceof Category)
+                } else if (Global.selectedTreeItem.getValue() instanceof Category)
                 {
                     if (Global.selectedTreeItem.getValue().toString().equals("Roles"))
                     {
                         setContextMenu(null);
-                    }
-                    else if (Global.selectedTreeItem.getValue().toString().equals("People"))
+                    } else if (Global.selectedTreeItem.getValue().toString().equals("People"))
                     {
                         App.content.getChildren().remove(MainScene.informationGrid);
                         PersonCategoryScene.getPersonCategoryScene(Global.currentWorkspace);
                         App.content.getChildren().add(MainScene.informationGrid);
                         setContextMenu(new CategoryTreeContextMenu());
-                    }
-                    else
+                    } else
                     {
                         setContextMenu(new CategoryTreeContextMenu());
                     }
-                }
-                else if (Global.selectedTreeItem.getValue() instanceof Role)
+                } else if (Global.selectedTreeItem.getValue() instanceof Role)
                 {
                     App.content.getChildren().remove(MainScene.informationGrid);
                     RoleScene.getRoleScene((Role) Global.selectedTreeItem.getValue());
@@ -384,9 +377,36 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
     }
 
 
-    /*public void select(TreeViewItem item)
+    /**
+     * Scans the entire tree from the root and selects the item if it is found.
+     * @param item The (TreeViewItem) item to select
+     */
+    public void selectItem(T item)
     {
-        TreeItem<Object> selectedItem = (TreeItem<Object>) newValue;
-    }*/
+        selectItem(item, this.getRoot());
+    }
+
+
+    /**
+     * Scans the tree and compares the item to the root TreeItem, if they match, select the TreeItem
+     * If not, recursively check the children of the TreeItem. If the item exists in the tree, it
+     * will eventually be selected through the depth-first search.
+     * @param item The (TreeViewItem) item to select
+     * @param root The root node to start checking, usually this.getRoot()
+     */
+    public void selectItem(T item, TreeItem<T> root)
+    {
+        for (TreeItem<T> treeItem : root.getChildren())
+        {
+            if (treeItem.getValue() == item)
+            {
+                getSelectionModel().select(treeItem);
+            }
+            else
+            {
+                selectItem(item, treeItem);
+            }
+        }
+    }
 
 }
