@@ -48,6 +48,16 @@ public class ReleaseScene
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
         Button btnEdit = new Button("Edit");
+        String releaseDate;
+
+        if (currentRelease.getEstimatedDate() == null)
+        {
+            releaseDate = "";
+        }
+        else
+        {
+            releaseDate = currentRelease.getEstimatedDate().toString();
+        }
 
         informationGrid.add(title, 0, 0, 3, 1);
         informationGrid.add(new Label("Description: "), 0, 2);
@@ -55,7 +65,7 @@ public class ReleaseScene
         informationGrid.add(new Label("Project"), 0, 4);
         
         informationGrid.add(new Label(currentRelease.getDescription()), 1, 2);
-        informationGrid.add(new Label(currentRelease.getEstimatedDate().toString()), 1, 3);
+        informationGrid.add(new Label(releaseDate), 1, 3);
         informationGrid.add(new Label(currentRelease.getProject().toString()), 1, 4);
         informationGrid.add(btnEdit, 1, 5);
 

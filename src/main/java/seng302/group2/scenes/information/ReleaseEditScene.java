@@ -78,7 +78,10 @@ public class ReleaseEditScene
         informationGrid.add(releaseDateField, 0, 2);
         informationGrid.add(projectComboBox, 0, 3);
         informationGrid.add(buttons, 0,4);
-        
+
+        String firstItem = Global.currentWorkspace.getProjects().get(0).getShortName();
+        projectComboBox.setValue(firstItem);
+
         btnCancel.setOnAction((event) ->
             {
                 App.content.getChildren().remove(informationGrid);
@@ -98,7 +101,6 @@ public class ReleaseEditScene
                 {
                     correctShortName = validateShortName(shortNameCustomField);
                 }
-
 
                 if (correctShortName)
                 {
@@ -123,7 +125,6 @@ public class ReleaseEditScene
                     App.content.getChildren().add(treeView);
                     App.content.getChildren().add(informationGrid);
                     MainScene.treeView.getSelectionModel().select(selectedTreeItem);
-
                 }
                 else
                 {
