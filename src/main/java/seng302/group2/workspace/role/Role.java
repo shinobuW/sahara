@@ -7,6 +7,11 @@ package seng302.group2.workspace.role;
 
 import javafx.collections.ObservableList;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.skills.Skill;
+
+import java.util.ArrayList;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 
 /**
@@ -18,6 +23,8 @@ public class Role extends TreeViewItem
     private String shortName;
     private String description;
     private RoleType type;
+    private transient ObservableList<Skill> requiredSkills = observableArrayList();
+    private ArrayList<Skill> serializableRequiredSkills = new ArrayList<>();
     private boolean defaultRole;
     
     /**Basic Role constructor
@@ -55,6 +62,37 @@ public class Role extends TreeViewItem
         super(shortName);
         this.shortName = shortName;
         this.description = description;
+        this.type = type;
+    }
+
+    /**Role Constructor
+     * @param shortName short name to be set
+     * @param type type of role to be set
+     * @param skills skills required for role
+     */
+    public Role(String shortName, RoleType type, ObservableList<Skill> skills)
+    {
+        // Initialize as a TreeViewItem
+        super(shortName);
+        this.shortName = shortName;
+        this.description = "";
+        this.requiredSkills = skills;
+        this.type = type;
+    }
+
+    /**Role Constructor
+     * @param shortName short name to be set
+     * @param type type of role to be set
+     * @param description brief description of role
+     * @param skills skills required for role
+     */
+    public Role(String shortName, RoleType type, String description, ObservableList<Skill> skills)
+    {
+        // Initialize as a TreeViewItem
+        super(shortName);
+        this.shortName = shortName;
+        this.description = description;
+        this.requiredSkills = skills;
         this.type = type;
     }
     
@@ -135,7 +173,31 @@ public class Role extends TreeViewItem
     }
     
     //</editor-fold>  
-    
+
+    /**
+     * Prepares a role to be serialized.
+     */
+    public void prepSerialization()
+    {
+        serializableRequiredSkills.clear();
+        for (Object item : requiredSkills)
+        {
+            this.serializableRequiredSkills.add((Skill) item);
+        }
+    }
+
+
+    /**
+     * Deserialization post-processing.
+     */
+    public void postSerialization()
+    {
+        requiredSkills.clear();
+        for (Object item : serializableRequiredSkills)
+        {
+            this.requiredSkills.add((Skill) item);
+        }
+    }
      /**
      * Gets the children of the TreeViewItem
      * @return The items of the TreeViewItem

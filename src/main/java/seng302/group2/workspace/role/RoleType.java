@@ -11,5 +11,5 @@ package seng302.group2.workspace.role;
  */
 public enum RoleType
 {
-    ScrumMaster, ProductOwner, TeamMember, Others
+    ScrumMaster, ProductOwner, DevelopmentTeamMember, Others
 }

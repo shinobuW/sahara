@@ -87,15 +87,31 @@ public class Workspace extends TreeViewItem implements Serializable
         
         Team unassignedTeam = Team.createUnassignedTeam();
         this.add(unassignedTeam);
+
+        Skill productOwnerSkill = new Skill("Product Owner",
+                "Knows how to work as a Teams Product Owner");
+
+        ObservableList<Skill> poSkillList= observableArrayList();
+        poSkillList.add(productOwnerSkill);
+
+        Skill scrumMasterSkill = new Skill("Scrum Master", "Can be Scrum Master for a Team");
+
+        ObservableList<Skill> smSkillList= observableArrayList();
+        smSkillList.add(scrumMasterSkill);
         
-        Role scrumMaster = new Role("Scrum Master", RoleType.ScrumMaster);
+        Role scrumMaster = new Role(
+                "Scrum Master", RoleType.ScrumMaster, "The Scrum Master for a Team", poSkillList);
         this.add(scrumMaster);
         
-        Role productOwner = new Role("Product Owner", RoleType.ProductOwner);
+        Role productOwner = new Role(
+                "Product Owner", RoleType.ProductOwner, "The Product Owner for a Team",
+                smSkillList);
         this.add(productOwner);
         
-        Role teamMember = new Role("Team Member", RoleType.TeamMember);
-        this.add(teamMember);
+        Role developmentTeamMember = new Role(
+                "Development Team Member", RoleType.DevelopmentTeamMember,
+                "A member of the Dev Team");
+        this.add(developmentTeamMember);
     }
     
     
@@ -114,15 +130,31 @@ public class Workspace extends TreeViewItem implements Serializable
         
         Team unassignedTeam = Team.createUnassignedTeam();
         this.add(unassignedTeam);
-        
-        Role scrumMaster = new Role("Scrum Master", RoleType.ScrumMaster);
+
+        Skill productOwnerSkill = new Skill("Product Owner",
+                "Knows how to work as a Teams Product Owner");
+
+        ObservableList<Skill> poSkillList= observableArrayList();
+        poSkillList.add(productOwnerSkill);
+
+        Skill scrumMasterSkill = new Skill("Scrum Master", "Can be Scrum Master for a Team");
+
+        ObservableList<Skill> smSkillList= observableArrayList();
+        smSkillList.add(scrumMasterSkill);
+
+        Role scrumMaster = new Role(
+                "Scrum Master", RoleType.ScrumMaster, "The Scrum Master for a Team", poSkillList);
         this.add(scrumMaster);
-        
-        Role productOwner = new Role("Product Owner", RoleType.ProductOwner);
+
+        Role productOwner = new Role(
+                "Product Owner", RoleType.ProductOwner, "The Product Owner for a Team",
+                smSkillList);
         this.add(productOwner);
-        
-        Role teamMember = new Role("Team Member", RoleType.TeamMember);
-        this.add(teamMember);
+
+        Role developmentTeamMember = new Role(
+                "Development Team Member", RoleType.DevelopmentTeamMember,
+                "A member of the Dev Team");
+        this.add(developmentTeamMember);
     }
     
     
@@ -581,7 +613,7 @@ public class Workspace extends TreeViewItem implements Serializable
     public void add(Role role)
     {
         if (role.getType() == RoleType.ScrumMaster || role.getType() == RoleType.ProductOwner 
-                || role.getType() == RoleType.TeamMember)
+                || role.getType() == RoleType.DevelopmentTeamMember)
         {
             this.roles.add(role);
             return;
@@ -680,6 +712,13 @@ public class Workspace extends TreeViewItem implements Serializable
         {
             Team team = (Team) item;
             team.prepSerialization();
+        }
+
+        // Prepare for the serialization of roles (skills)
+        for (Object item : workspace.roles)
+        {
+            Role role = (Role) item;
+            role.prepSerialization();
         }
 
         // Also perform again for any other deeper observables
