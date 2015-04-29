@@ -9,6 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -45,12 +47,15 @@ public class RoleScene
         Label title = new Label(currentRole.getShortName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
+        ListView skillsBox = new ListView(currentRole.getRequiredSkills());
+        skillsBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
         informationGrid.add(title, 0, 0, 3, 1);
         informationGrid.add(new Label("Description: "), 0, 2);
-        informationGrid.add(new Label("Type: "), 0, 3);
+        informationGrid.add(new Label("Required Skills: "), 0, 3);
 
         informationGrid.add(new Label(currentRole.getDescription()), 1, 2);
-        informationGrid.add(new Label(currentRole.getType().toString()), 1,3);
+        informationGrid.add(skillsBox, 0, 4);
             
         return MainScene.informationGrid;
     }

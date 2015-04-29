@@ -124,6 +124,12 @@ public class Role extends TreeViewItem
     {
         return this.type;
     }
+
+    /**
+     * Gets the required skills for a role
+     * @return list of skills
+     */
+    public ObservableList<Skill> getRequiredSkills() { return this.requiredSkills; }
     
     /** 
      * Gets the default state of the role

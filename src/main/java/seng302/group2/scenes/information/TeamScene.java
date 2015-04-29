@@ -82,8 +82,9 @@ public class TeamScene
         informationGrid.add(title, 0, 0, 3, 1);
         informationGrid.add(new Label("Description: "), 0, 2);
         informationGrid.add(separator, 0, 3, 4, 1);
-        informationGrid.add(new Label("Team Members: "), 0, 4);
-        informationGrid.add(teamsPeopleBox, 0, 5, 2, 1);
+        informationGrid.add(new Label("Development Team Members: "), 0, 4);
+        informationGrid.add(new Label("Team Members (No Role): "), 1, 4);
+        informationGrid.add(teamsPeopleBox, 0, 5, 1, 1);
         
         informationGrid.add(new Label(currentTeam.getDescription()), 1, 2, 5, 1);
         informationGrid.add(btnEdit, 3, 6);

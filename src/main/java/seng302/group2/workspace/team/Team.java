@@ -47,7 +47,7 @@ public class Team extends TreeViewItem implements Serializable
         super("unnamed");
         this.shortName = "unnamed";
         this.description = "";
-	this.project = null;
+	    this.project = null;
     }
     
     
@@ -60,10 +60,9 @@ public class Team extends TreeViewItem implements Serializable
     {
         // Initialize as a TreeViewItem
         super(shortName);
-        
         this.shortName = shortName;
         this.description = description;
-	this.project = null;
+	    this.project = null;
     }
 
        

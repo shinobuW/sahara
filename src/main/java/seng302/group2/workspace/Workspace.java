@@ -770,6 +770,13 @@ public class Workspace extends TreeViewItem implements Serializable
             Team team = (Team) item;
             team.postSerialization();
         }
+
+        //Prepare for the serialization of roles
+        for (Object item : Global.currentWorkspace.serializableRoles)
+        {
+            Role role = (Role) item;
+            role.postSerialization();
+        }
         // Also for any other deeper observables
         // eg. for (TreeViewItem item : Global.currentWorkspace.team.people) {...}
 
