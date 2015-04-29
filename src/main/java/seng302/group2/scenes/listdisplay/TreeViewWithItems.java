@@ -26,7 +26,6 @@ import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
-import sun.applet.Main;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -118,7 +117,6 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
             }
         });
 
-
         /* Sets the App.selectedTreeItem when a new selection is made, and sets the information
          * shown in the main pane to the selected item's details */
         this.getSelectionModel().selectedItemProperty().addListener(new ChangeListener()
@@ -184,6 +182,14 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     {
                         App.content.getChildren().remove(MainScene.informationGrid);
                         ReleaseScene.getReleaseScene((Release) Global.selectedTreeItem.getValue());
+                        App.content.getChildren().add(MainScene.informationGrid);
+                        setContextMenu(new ElementTreeContextMenu());
+                    }
+                    else if (Global.selectedTreeItem.getValue() instanceof ReleaseCategory)
+                    {
+                        App.content.getChildren().remove(MainScene.informationGrid);
+                        ReleaseCategoryScene.getReleaseCategoryScene((ReleaseCategory)
+                                Global.selectedTreeItem.getValue());
                         App.content.getChildren().add(MainScene.informationGrid);
                         setContextMenu(new ElementTreeContextMenu());
                     }

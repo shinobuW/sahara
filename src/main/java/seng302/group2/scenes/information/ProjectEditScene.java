@@ -58,7 +58,7 @@ public class ProjectEditScene
 
         RequiredField shortNameCustomField = new RequiredField("Short Name");
         RequiredField longNameCustomField = new RequiredField("Long Name");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Workspace Description", 300);
+        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description", 300);
 
         shortNameCustomField.setText(currentProject.getShortName());
         longNameCustomField.setText(currentProject.getLongName());

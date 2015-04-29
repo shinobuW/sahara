@@ -49,9 +49,9 @@ public class RoleTest extends TestCase
         Assert.assertEquals("QA", role2.getShortName());
         Assert.assertEquals(RoleType.Others, role2.getType());
         
-        Role role3 = new Role("Dev2", RoleType.TeamMember, "Developer");
+        Role role3 = new Role("Dev2", RoleType.DevelopmentTeamMember, "Developer");
         Assert.assertEquals("Dev2", role3.getShortName());
-        Assert.assertEquals(RoleType.TeamMember, role3.getType());
+        Assert.assertEquals(RoleType.DevelopmentTeamMember, role3.getType());
         Assert.assertEquals("Developer", role3.getDescription());
     }
     

@@ -97,18 +97,23 @@ public class Skill extends TreeViewItem implements Serializable
     
     /**
      * Deletes a skill and removes it from any people who have the skill.
+     * Cannot delete Product Owner or Scrum Master skills.
      * @param deletedSkill The skill to delete
      */
     public static void deleteSkill(Skill deletedSkill)
     {
-        for (Person personRemoveSkill : Global.currentWorkspace.getPeople())
+        if (!deletedSkill.getShortName().equals("Product Owner")
+                && !deletedSkill.getShortName().equals("Scrum Master"))
         {
-            if (personRemoveSkill.getSkills().contains(deletedSkill))
+            for (Person personRemoveSkill : Global.currentWorkspace.getPeople())
             {
-                personRemoveSkill.getSkills().remove(deletedSkill);
-            }       
+                if (personRemoveSkill.getSkills().contains(deletedSkill))
+                {
+                    personRemoveSkill.getSkills().remove(deletedSkill);
+                }
+            }
+            Global.currentWorkspace.remove(deletedSkill);
         }
-        Global.currentWorkspace.remove(deletedSkill);
     }    
     
     /**
