@@ -33,7 +33,7 @@ public class ElementTreeContextMenu extends ContextMenu
      * An enumeration of the categories selected.
      * Each category my have different menu items associated.
      */
-    private enum Categories
+    public enum Categories
     {
         PERSON,
         SKILL,
@@ -107,7 +107,7 @@ public class ElementTreeContextMenu extends ContextMenu
      * Gets the category of the selected tree item.
      * @return An enum value of the selected tree item's category
      */
-    private Categories getSelectedCategory()
+    public static Categories getSelectedCategory()
     {
         Categories selectedCategory = Categories.OTHER;
         if (Global.selectedTreeItem.getValue().getClass() == Person.class)

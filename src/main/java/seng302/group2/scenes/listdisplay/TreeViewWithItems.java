@@ -117,6 +117,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
             }
         });
 
+
         /* Sets the App.selectedTreeItem when a new selection is made, and sets the information
          * shown in the main pane to the selected item's details */
         this.getSelectionModel().selectedItemProperty().addListener(new ChangeListener()
@@ -126,7 +127,9 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                 {
                     TreeItem<Object> selectedItem = (TreeItem<Object>) newValue;
                     Global.selectedTreeItem = selectedItem;
-                    //System.out.println(App.selectedTreeItem.getValue().getClass());  // testing
+
+                    System.out.println(Global.selectedTreeItem.getValue() + " "
+                            + Global.selectedTreeItem.getValue().getClass());  // testing
 
                     //Updates the display pane to be pane for the selectItem
                     if (Global.selectedTreeItem == null
