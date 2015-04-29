@@ -363,11 +363,7 @@ public class MainMenuBar
         //Create MenuItems for Edit submenu
         MenuItem undoItem = createUndoItem();
         MenuItem redoItem = createRedoItem();
-
-        // Create MenuItems for Display submenu
         MenuItem deleteTreeItem = createDeleteTreeItem();
-        editMenu.getItems().addAll(deleteTreeItem);
-              
 
         // Create 'Display >' sub-menu
         Menu displayMenu = new Menu("Display");
@@ -382,7 +378,7 @@ public class MainMenuBar
         fileMenu.getItems().addAll(newBranch, openItem,
                 saveItem, saveAsItem, new SeparatorMenuItem(), quitProgramItem);
         
-        editMenu.getItems().addAll(undoItem, redoItem);
+        editMenu.getItems().addAll(undoItem, redoItem, deleteTreeItem);
                 
         editMenu.setOnShowing((event) ->
             {
