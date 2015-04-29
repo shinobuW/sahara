@@ -16,6 +16,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.team.Team;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import static javafx.collections.FXCollections.observableList;
 import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
 
@@ -52,7 +53,7 @@ public class TeamScene
             btnEdit.setVisible(true);
         }
         
-        
+
         if (currentTeam.isUnassignedTeam())
         {
             for (TreeViewItem person : Global.currentWorkspace.getPeople())
@@ -64,30 +65,50 @@ public class TeamScene
                 }
             }
         }
-        ListView teamsPeopleBox = new ListView(currentTeam.getPeople());
-        
-        teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        
-        ObservableList<Person> dialogPeople = observableArrayList();
-        for (TreeViewItem projectPerson : Global.currentWorkspace.getPeople())
+
+        ObservableList<Person> teamList = observableArrayList();
+        ObservableList<Person> devList = observableArrayList();
+        for(Person teamPerson : currentTeam.getPeople())
         {
-            if (!currentTeam.getPeople().contains(projectPerson))
+            if(teamPerson.getRole() != null
+                    && teamPerson.getRole()
+                    .toString().equals("Development Team Member"))
             {
-                dialogPeople.add((Person)projectPerson);
+                devList.add(teamPerson);
+            }
+            else
+            {
+                teamList.add(teamPerson);
             }
         }
+        ListView teamsPeopleBox = new ListView(teamList);
+        ListView devBox = new ListView(devList);
+
+        teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        devBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         Separator separator = new Separator();
 
         informationGrid.add(title, 0, 0, 3, 1);
         informationGrid.add(new Label("Description: "), 0, 2);
         informationGrid.add(separator, 0, 3, 4, 1);
-        informationGrid.add(new Label("Development Team Members: "), 0, 4);
-        informationGrid.add(new Label("Team Members (No Role): "), 1, 4);
-        informationGrid.add(teamsPeopleBox, 0, 5, 1, 1);
+        informationGrid.add(new Label("Product Owner: "), 0, 4);
+        if(currentTeam.getProductOwner() != null)
+        {
+            informationGrid.add(new Label(currentTeam.getProductOwner().toString()), 1, 4);
+        }
+        informationGrid.add(new Label("Scrum Master: "), 0, 5);
+        if(currentTeam.getScrumMaster() != null)
+        {
+            informationGrid.add(new Label(currentTeam.getScrumMaster().toString()), 1, 5);
+        }
+        informationGrid.add(new Label("Development Team Members: "), 0, 6);
+        informationGrid.add(new Label("Team Members (No Role): "), 1, 6);
+        informationGrid.add(devBox, 0, 7, 1, 1);
+        informationGrid.add(teamsPeopleBox, 1, 7, 1, 1);
         
         informationGrid.add(new Label(currentTeam.getDescription()), 1, 2, 5, 1);
-        informationGrid.add(btnEdit, 3, 6);
+        informationGrid.add(btnEdit, 3, 8);
 
         btnEdit.setOnAction((event) ->
             {

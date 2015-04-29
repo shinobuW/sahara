@@ -160,14 +160,12 @@ public class WorkspaceTest
         Skill skill = new Skill();
         work.add(skill);
         
-        ObservableList<TreeViewItem> skills = observableArrayList();
-        skills.add(skill);
-
-        Assert.assertEquals(skills, work.getSkills());
+        Assert.assertTrue(work.getSkills().contains(skill));
         
         work.add(skill);
         work.add(skill);
-        Assert.assertEquals(3, work.getSkills().size());
+        // Also account for the two default skills in workspaces, SM, PO
+        Assert.assertEquals(5, work.getSkills().size());
     }
     
     /**
@@ -181,16 +179,14 @@ public class WorkspaceTest
         work.add(skill);
         work.remove(skill);
         
-        ObservableList<TreeViewItem> skills = observableArrayList();
-        
-        Assert.assertEquals(skills, work.getSkills());
+        Assert.assertFalse(work.getSkills().contains(skill));
         
         work.add(skill);
         work.add(skill);
         work.remove(skill);
         work.remove(skill);
         
-        Assert.assertEquals(0, work.getSkills().size());
+        Assert.assertEquals(2, work.getSkills().size());  // SM, PO
     }
     
     /**
