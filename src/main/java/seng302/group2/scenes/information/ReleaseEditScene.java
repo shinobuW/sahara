@@ -22,14 +22,17 @@ import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.util.undoredo.UndoableItem;
+import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.release.Release;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
+import static seng302.group2.util.validation.DateValidator.*;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -92,6 +95,8 @@ public class ReleaseEditScene
         btnSave.setOnAction((event) ->
             {
                 boolean correctShortName;
+                boolean correctDateFormat = false;
+                Date releaseDate = null;
                 
                 if (shortNameCustomField.getText().equals(currentRelease.getShortName()))
                 {
@@ -102,7 +107,30 @@ public class ReleaseEditScene
                     correctShortName = validateShortName(shortNameCustomField);
                 }
 
-                if (correctShortName)
+                if (releaseDateField.getText().equals(currentRelease.getEstimatedDate()))
+                {
+                    correctDateFormat = true;
+                }
+                else if (releaseDateField.getText().isEmpty())
+                {
+                    releaseDate = null;
+                    correctDateFormat = true;
+                }
+                else if (isCorrectDateFormat(releaseDateField))
+                {
+                    releaseDate = stringToDate(releaseDateField.getText());
+                    if (!DateValidator.isFutureDate(releaseDate))
+                    {
+                        releaseDateField.showErrorField("Date must be a future date");
+                        correctDateFormat = false;
+                    }
+                    else
+                    {
+                        correctDateFormat = true;
+                    }
+                }
+
+                if (correctShortName && correctDateFormat)
                 {
                     // Build Undo/Redo edit array.
                     ArrayList<UndoableItem> undoActions = new ArrayList<>();          
@@ -111,6 +139,7 @@ public class ReleaseEditScene
                     // Save the edits.        
                     currentRelease.setDescription(descriptionTextArea.getText());
                     currentRelease.setShortName(shortNameCustomField.getText());
+                    currentRelease.setEstimatedDate(releaseDate);
                     
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
@@ -126,11 +155,9 @@ public class ReleaseEditScene
                     App.content.getChildren().add(informationGrid);
                     MainScene.treeView.getSelectionModel().select(selectedTreeItem);
                 }
-                else
-                {
+                else {
                     event.consume();
                 }
-
             });
 
         return informationGrid;

@@ -8,6 +8,8 @@ package seng302.group2.util.validation;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomDateField;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
 
@@ -123,5 +125,27 @@ public class DateValidator
             default:
                 return true;
         }
+    }
+
+    /**
+     * Converts string to date
+     * @param releaseDateString String to be converted
+     * @return date
+     */
+    public static Date stringToDate(String releaseDateString)
+    {
+        Date releaseDate = new Date();
+        try
+        {
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            df.setLenient(false);
+            df.parse(releaseDateString);
+            releaseDate = df.parse(releaseDateString);
+        }
+        catch (ParseException e)
+        {
+            System.out.println("Error parsing date");
+        }
+        return releaseDate;
     }
 }

@@ -18,6 +18,7 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.validation.DateValidator;
+import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 
@@ -26,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static seng302.group2.util.validation.DateValidator.isCorrectDateFormat;
+import static seng302.group2.util.validation.DateValidator.stringToDate;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -39,6 +41,11 @@ public class CreateReleaseDialog
      */
     public static void show()
     {
+        if (Global.currentWorkspace.getProjects().isEmpty())
+        {
+            // There are no projects to create releases for
+            return;
+        }
         Dialog dialog = new Dialog(null, "New Release");
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
@@ -138,8 +145,7 @@ public class CreateReleaseDialog
      * Shows the release creation dialog defaulting to the given project
      * @param defaultProject The default project to create the release in
      */
-    public static void show(Project defaultProject)
-    {
+    public static void show(Project defaultProject) {
         Dialog dialog = new Dialog(null, "New Release");
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
@@ -162,8 +168,7 @@ public class CreateReleaseDialog
         //String firstItem = Global.currentWorkspace.getProjects().get(0).getShortName();
         //projectComboBox.setValue(firstItem);
 
-        for (TreeViewItem project : Global.currentWorkspace.getProjects())
-        {
+        for (TreeViewItem project : Global.currentWorkspace.getProjects()) {
             projectComboBox.addToComboBox(project.toString());
         }
         projectComboBox.setValue(defaultProject.toString());
@@ -175,89 +180,53 @@ public class CreateReleaseDialog
         grid.getChildren().add(buttons);
 
         btnCreate.setOnAction((event) ->
-            {
-                String shortName = shortNameCustomField.getText();
-                String description = descriptionTextArea.getText();
+        {
+            String shortName = shortNameCustomField.getText();
+            String description = descriptionTextArea.getText();
 
-                boolean correctDate = isCorrectDateFormat(releaseDateField);
-                boolean correctShortName = validateShortName(shortNameCustomField);
+            boolean correctDate = isCorrectDateFormat(releaseDateField);
+            boolean correctShortName = validateShortName(shortNameCustomField);
 
-                Project project = new Project();
-                for (TreeViewItem item : Global.currentWorkspace.getProjects())
-                {
-                    if (item.toString().equals(projectComboBox.getValue()))
-                    {
-                        project = (Project)item;
-                    }
+            Project project = new Project();
+            for (TreeViewItem item : Global.currentWorkspace.getProjects()) {
+                if (item.toString().equals(projectComboBox.getValue())) {
+                    project = (Project) item;
                 }
+            }
 
-                if (correctShortName && correctDate)
-                {
-                    String releaseDateString = releaseDateField.getText();
+            if (correctShortName && correctDate) {
+                String releaseDateString = releaseDateField.getText();
 
-                    Date releaseDate;
-                    if (releaseDateString.isEmpty())
-                    {
-                        releaseDate = null;
-                        Release release = new Release(shortName, description, releaseDate, project);
+                Date releaseDate;
+                if (releaseDateString.isEmpty()) {
+                    releaseDate = null;
+                    Release release = new Release(shortName, description, releaseDate, project);
+                    project.add(release);
+                    dialog.hide();
+                } else {
+                    releaseDate = stringToDate(releaseDateString);
+                    if (!DateValidator.isFutureDate(releaseDate)) {
+                        releaseDateField.showErrorField("Date must be a future date");
+                    } else {
+                        Release release = new Release(shortName, description, releaseDate,
+                                project);
                         project.add(release);
                         dialog.hide();
                     }
-                    else
-                    {
-                        releaseDate = stringToDate(releaseDateString);
-                        if (!DateValidator.isFutureDate(releaseDate))
-                        {
-                            releaseDateField.showErrorField("Date must be a future date");
-                        }
-                        else
-                        {
-                            Release release = new Release(shortName, description, releaseDate,
-                                    project);
-                            project.add(release);
-                            dialog.hide();
-                        }
-                    }
                 }
-                else
-                {
-                    event.consume();
-                }
-            });
+            } else {
+                event.consume();
+            }
+        });
 
         btnCancel.setOnAction((event) ->
-            {
-                dialog.hide();
-            });
+        {
+            dialog.hide();
+        });
 
         dialog.setResizable(false);
         dialog.setIconifiable(false);
         dialog.setContent(grid);
         dialog.show();
     }
-
-
-
-    /**
-     * Converts strings to dates
-     * @param releaseDateString the birth date string
-     * @return the parsed date
-     */
-    public static Date stringToDate(String releaseDateString)
-    {
-        Date releaseDate = new Date();
-        try
-        {
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            df.setLenient(false);
-            df.parse(releaseDateString);
-            releaseDate = df.parse(releaseDateString);
-        }
-        catch (ParseException e)
-        {
-            System.out.println("Error parsing date");
-        }
-        return releaseDate;
-    }
-
 }

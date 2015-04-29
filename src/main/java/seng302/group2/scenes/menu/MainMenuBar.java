@@ -130,6 +130,9 @@ public class MainMenuBar
         MenuItem newReleaseItem = new MenuItem("Release");
         newReleaseItem.setOnAction((event) -> 
                 CreateReleaseDialog.show());
+        newReleaseItem.setAccelerator(new KeyCodeCombination(KeyCode.R,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
         return newReleaseItem;
     }
     /**

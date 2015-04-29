@@ -6,6 +6,7 @@
 package seng302.group2.workspace.release;
 
 import javafx.collections.ObservableList;
+import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.project.Project;
 
@@ -103,6 +104,30 @@ public class Release extends TreeViewItem
     public Project getProject()
     {
         return this.project;
+    }
+
+    /**
+     * Gets the persons birth date as a string
+     * @return The persons birth date as a string
+     */
+    public String getDateString()
+    {
+        if (this.estimatedDate == null)
+        {
+            return "";
+        }
+        else
+        {
+            try
+            {
+                return Global.datePattern.format(this.getEstimatedDate());
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error parsing date");
+                return "";
+            }
+        }
     }
 
 
