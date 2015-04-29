@@ -90,22 +90,24 @@ public class Workspace extends TreeViewItem implements Serializable
 
         Skill productOwnerSkill = new Skill("Product Owner",
                 "Knows how to work as a Teams Product Owner");
+        this.add(productOwnerSkill);
 
         ObservableList<Skill> poSkillList= observableArrayList();
         poSkillList.add(productOwnerSkill);
 
         Skill scrumMasterSkill = new Skill("Scrum Master", "Can be Scrum Master for a Team");
+        this.add(scrumMasterSkill);
 
         ObservableList<Skill> smSkillList= observableArrayList();
         smSkillList.add(scrumMasterSkill);
         
         Role scrumMaster = new Role(
-                "Scrum Master", RoleType.ScrumMaster, "The Scrum Master for a Team", poSkillList);
+                "Scrum Master", RoleType.ScrumMaster, "The Scrum Master for a Team", smSkillList);
         this.add(scrumMaster);
         
         Role productOwner = new Role(
                 "Product Owner", RoleType.ProductOwner, "The Product Owner for a Team",
-                smSkillList);
+                poSkillList);
         this.add(productOwner);
         
         Role developmentTeamMember = new Role(
@@ -500,6 +502,12 @@ public class Workspace extends TreeViewItem implements Serializable
      */
     public void add(Skill skill)
     {
+        if(skill.toString().equals("Product Owner")
+                || skill.toString().equals("Scrum Master"))
+        {
+            this.skills.add(skill);
+            return;
+        }
         //Add the undo action to the stack
         Global.undoRedoMan.add(new UndoableItem(
                 skill,

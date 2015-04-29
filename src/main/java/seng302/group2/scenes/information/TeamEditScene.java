@@ -65,7 +65,7 @@ public class TeamEditScene
         buttons.getChildren().addAll(btnSave, btnCancel);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description", 300);
+        CustomTextArea descriptionTextArea = new CustomTextArea("Team Description", 300);
         
         shortNameCustomField.setText(currentTeam.getShortName());
         descriptionTextArea.setText(currentTeam.getDescription());
