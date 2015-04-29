@@ -22,10 +22,10 @@ import seng302.group2.scenes.information.*;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
-import sun.applet.Main;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -182,6 +182,14 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     {
                         App.content.getChildren().remove(MainScene.informationGrid);
                         ReleaseScene.getReleaseScene((Release) Global.selectedTreeItem.getValue());
+                        App.content.getChildren().add(MainScene.informationGrid);
+                        setContextMenu(new ElementTreeContextMenu());
+                    }
+                    else if (Global.selectedTreeItem.getValue() instanceof ReleaseCategory)
+                    {
+                        App.content.getChildren().remove(MainScene.informationGrid);
+                        ReleaseCategoryScene.getReleaseCategoryScene((ReleaseCategory)
+                                Global.selectedTreeItem.getValue());
                         App.content.getChildren().add(MainScene.informationGrid);
                         setContextMenu(new ElementTreeContextMenu());
                     }
