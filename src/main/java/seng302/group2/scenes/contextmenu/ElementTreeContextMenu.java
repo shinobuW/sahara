@@ -8,13 +8,11 @@ import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.information.PersonEditScene;
-import seng302.group2.scenes.information.ProjectEditScene;
-import seng302.group2.scenes.information.SkillEditScene;
-import seng302.group2.scenes.information.TeamEditScene;
+import seng302.group2.scenes.information.*;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -33,7 +31,7 @@ public class ElementTreeContextMenu extends ContextMenu
      * An enumeration of the categories selected.
      * Each category my have different menu items associated.
      */
-    private enum Categories
+    public enum Categories
     {
         PERSON,
         SKILL,
@@ -41,6 +39,7 @@ public class ElementTreeContextMenu extends ContextMenu
         PROJECT,
         WORKSPACE,
         ROLE,
+        RELEASE,
         OTHER  // For anything else, or unresolved.
     }
 
@@ -107,7 +106,7 @@ public class ElementTreeContextMenu extends ContextMenu
      * Gets the category of the selected tree item.
      * @return An enum value of the selected tree item's category
      */
-    private Categories getSelectedCategory()
+    public static Categories getSelectedCategory()
     {
         Categories selectedCategory = Categories.OTHER;
         if (Global.selectedTreeItem.getValue().getClass() == Person.class)
@@ -133,6 +132,10 @@ public class ElementTreeContextMenu extends ContextMenu
         else if (Global.selectedTreeItem.getValue().getClass() == Role.class)
         {
             selectedCategory = Categories.ROLE;
+        }
+        else if (Global.selectedTreeItem.getValue().getClass() == Release.class)
+        {
+            selectedCategory = Categories.RELEASE;
         }
 
         return selectedCategory;
@@ -161,6 +164,8 @@ public class ElementTreeContextMenu extends ContextMenu
             case PROJECT:
                 ProjectEditScene.getProjectEditScene((Project) Global.selectedTreeItem.getValue());
                 break;
+            case RELEASE:
+                ReleaseEditScene.getReleaseEditScene((Release) Global.selectedTreeItem.getValue());
             case OTHER:
                 System.out.println("The category was not correctly recognized");
                 break;

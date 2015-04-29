@@ -14,6 +14,7 @@ import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
+import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
 import seng302.group2.scenes.dialog.*;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.Workspace.SaveLoadResult;
@@ -269,6 +270,25 @@ public class MainMenuBar
     }
 
     /**
+     * Creates a menu item "Delete" item and sets the on action event if "Delete" is clicked.
+     * Piggy-backing off the context menu for now. Better they are synced than duplicate methods.
+     * @return MenuItem Delete
+     */
+    private static MenuItem createDeleteTreeItem()
+    {
+        MenuItem deleteItem = new MenuItem("Delete");
+        deleteItem.setOnAction((event) ->
+            {
+                ElementTreeContextMenu.showDeleteDialog(
+                        ElementTreeContextMenu.getSelectedCategory());
+            });
+
+        deleteItem.setAccelerator(new KeyCodeCombination(KeyCode.DELETE,
+                KeyCombination.SHIFT_DOWN));
+        return deleteItem;
+    }
+
+    /**
      * Creates a menu item "Toggle Tree" and sets the on action event if "Toggle Tree" is clicked.
      * @return MenuItem ToggleTree
      */
@@ -343,6 +363,10 @@ public class MainMenuBar
         //Create MenuItems for Edit submenu
         MenuItem undoItem = createUndoItem();
         MenuItem redoItem = createRedoItem();
+
+        // Create MenuItems for Display submenu
+        MenuItem deleteTreeItem = createDeleteTreeItem();
+        editMenu.getItems().addAll(deleteTreeItem);
               
 
         // Create 'Display >' sub-menu
