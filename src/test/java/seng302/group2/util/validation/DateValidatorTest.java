@@ -6,6 +6,8 @@
 package seng302.group2.util.validation;
 
 
+import java.util.Calendar;
+import java.util.Date;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -27,5 +29,19 @@ public class DateValidatorTest
         Assert.assertEquals(ValidationStatus.VALID, DateValidator.isValidDateString("20/03/2015"));
         Assert.assertEquals(ValidationStatus.PATTERN_MISMATCH,
                 DateValidator.isValidDateString("20/03/15"));
+    }
+    
+    public void testIsFutureDate()
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 1);
+        Date futureDate = cal.getTime();
+        Assert.assertTrue(DateValidator.isFutureDate(futureDate));
+    }
+    
+    public void testStringToDate()
+    {
+        Date testDate = DateValidator.stringToDate("12/12/2015");
+        Assert.assertEquals(new Date("12/12/2015"), testDate);   
     }
 }

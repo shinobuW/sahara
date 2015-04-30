@@ -5,6 +5,7 @@
  */
 package seng302.group2.workspace.release;
 
+import java.util.Arrays;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -63,14 +64,16 @@ public class ReleaseTest extends TestCase
     public void testReleaseSetters()
     {
         Release testRelease = new Release();
+        Project testProject = new Project("Test Project", "Long name", "Description");
         testRelease.setShortName("Release 2.0");
         testRelease.setDescription("Second Release");
         testRelease.setEstimatedDate(new Date("26/03/2016"));
-        testRelease.setProject(new Project("Test Project", "Long name", "Description"));
+        testRelease.setProject(testProject);
         
         Assert.assertEquals("Release 2.0", testRelease.getShortName());
         Assert.assertEquals("Second Release", testRelease.getDescription());
         Assert.assertEquals(new Date("26/03/2016"), testRelease.getEstimatedDate());
         Assert.assertEquals("Test Project", testRelease.getProject().getShortName());   
+        Assert.assertEquals(1, testProject.getReleases().size());
     }
 }
