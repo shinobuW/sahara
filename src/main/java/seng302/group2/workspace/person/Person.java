@@ -289,14 +289,17 @@ public class Person extends TreeViewItem implements Serializable
      * Adds a Skill to the Person's list of Skills
      * @param skill The skill to add
      */
-    public void addSkill(Skill skill)
+    public void addSkill(Skill skill, Boolean Undo)
     {
         //Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                skill,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_ADD_PERSON, this),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_ADD_PERSON, this)
-                ));
+        if (Undo)
+        {
+            Global.undoRedoMan.add(new UndoableItem(
+                    skill,
+                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_ADD_PERSON, this),
+                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_ADD_PERSON, this)
+                    ));
+        }
         
         this.skills.add(skill);
     }
@@ -355,14 +358,18 @@ public class Person extends TreeViewItem implements Serializable
      * Removes a Skill from the Person's list of Skills
      * @param skill The skill to remove
      */
-    public void removeSkill(Skill skill)
+    public void removeSkill(Skill skill, Boolean Undo)
     {
         //Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                skill,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON, this),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON, this)
-                ));
+        if (Undo)
+        {
+            Global.undoRedoMan.add(new UndoableItem(
+                    skill,
+                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON, this),
+                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON, this)
+                    ));
+        }
+        
         this.skills.remove(skill);
     }    
     

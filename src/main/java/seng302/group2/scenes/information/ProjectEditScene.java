@@ -92,6 +92,7 @@ public class ProjectEditScene
                     && !currentProject.getTeams().contains(projectTeam))
             {
                 dialogTeams.add((Team)projectTeam);
+                dialogTeamsCopy.add((Team)projectTeam);
             }
         }
 

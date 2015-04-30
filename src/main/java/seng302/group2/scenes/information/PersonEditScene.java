@@ -75,17 +75,26 @@ public class PersonEditScene
         skillsButtons.getChildren().add(btnDelete);
         skillsButtons.setAlignment(Pos.CENTER);
         
+        Person tempPerson = new Person();
+        for (Skill skill : currentPerson.getSkills())
+        {
+            tempPerson.addSkill(skill, false);
+        }
         
-        ListView personSkillsBox = new ListView(currentPerson.getSkills());
+        ListView personSkillsBox = new ListView(tempPerson.getSkills());
         personSkillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
         
         ObservableList<Skill> dialogSkills = observableArrayList();
+        ObservableList<Skill> dialogSkillsCopy = observableArrayList();
+        
+        
         for (TreeViewItem projectSkill : currentWorkspace.getSkills())
         {
             if (!currentPerson.getSkills().contains(projectSkill))
             {
                 dialogSkills.add((Skill)projectSkill);
+                dialogSkillsCopy.add((Skill)projectSkill);
             }
         }
                 
@@ -129,13 +138,13 @@ public class PersonEditScene
                         skillsBox.getSelectionModel().getSelectedItems();
                 for (Skill item : selectedSkills)
                 {
-                    currentPerson.addSkill(item);
+                    tempPerson.addSkill(item, false);
                 }
 
                 dialogSkills.clear();
                 for (TreeViewItem projectSkill : currentWorkspace.getSkills())
                 {
-                    if (!currentPerson.getSkills().contains((Skill) projectSkill))
+                    if (!tempPerson.getSkills().contains((Skill) projectSkill))
                     {
                         dialogSkills.add((Skill) projectSkill);
                     }
@@ -148,13 +157,13 @@ public class PersonEditScene
                         personSkillsBox.getSelectionModel().getSelectedItems();
                 for (int i = selectedSkills.size() - 1; i >= 0 ; i--)
                 {
-                    currentPerson.removeSkill(selectedSkills.get(i));
+                    tempPerson.removeSkill(selectedSkills.get(i), false);
                 }
                 
                 dialogSkills.clear();
                 for (TreeViewItem projectSkill : currentWorkspace.getSkills())
                 {
-                    if (!currentPerson.getSkills().contains((Skill)projectSkill))
+                    if (!tempPerson.getSkills().contains((Skill)projectSkill))
                     {
                         dialogSkills.add((Skill)projectSkill);
                     }
@@ -170,6 +179,7 @@ public class PersonEditScene
         
         btnSave.setOnAction((event) ->
             {
+
                 boolean correctDate = validateBirthDateField(customBirthDate);
                 boolean correctFirstName = validateName(firstNameCustomField);
                 boolean correctLastName = validateName(lastNameCustomField);
@@ -199,7 +209,7 @@ public class PersonEditScene
                     
                     ArrayList<UndoableItem> undoActions = new ArrayList<>();
                     
-                    if (firstNameCustomField.getText() != currentPerson.getFirstName())
+                    if (!firstNameCustomField.getText().equals(currentPerson.getFirstName()))
                     {
                         undoActions.add(new UndoableItem(
                                 currentPerson,
@@ -211,7 +221,7 @@ public class PersonEditScene
                                         firstNameCustomField.getText())));
                     }
                     
-                    if (lastNameCustomField.getText() != currentPerson.getLastName())
+                    if (!lastNameCustomField.getText().equals(currentPerson.getLastName()))
                     {
                         undoActions.add(new UndoableItem(
                                 currentPerson,
@@ -223,7 +233,7 @@ public class PersonEditScene
                                         lastNameCustomField.getText())));
                     }
                     
-                    if (shortNameCustomField.getText() != currentPerson.getShortName())
+                    if (!shortNameCustomField.getText().equals(currentPerson.getShortName()))
                     {
                         undoActions.add(new UndoableItem(
                                 currentPerson,
@@ -235,7 +245,7 @@ public class PersonEditScene
                                         shortNameCustomField.getText())));
                     }
                     
-                    if (descriptionTextArea.getText() != currentPerson.getDescription())
+                    if (!descriptionTextArea.getText().equals(currentPerson.getDescription()))
                     {
                         undoActions.add(new UndoableItem(
                                 currentPerson,
@@ -247,7 +257,7 @@ public class PersonEditScene
                                         descriptionTextArea.getText())));
                     }
                     
-                    if (emailTextField.getText() != currentPerson.getEmail())
+                    if (!emailTextField.getText().equals(currentPerson.getEmail()))
                     {
                         undoActions.add(new UndoableItem(
                                 currentPerson,
@@ -259,7 +269,7 @@ public class PersonEditScene
                                         emailTextField.getText())));
                     }                    
 
-                    if (stringToDate(customBirthDate.getText()) != currentPerson.getBirthDate())
+                    if (!stringToDate(customBirthDate.getText()).equals(currentPerson.getBirthDate()))
                     {
                         undoActions.add(new UndoableItem(
                                 currentPerson,
@@ -271,15 +281,53 @@ public class PersonEditScene
                                         stringToDate(customBirthDate.getText()))));
                     }  
                     
-                    Global.undoRedoMan.add(new UndoableItem(
-                        currentPerson,
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT,
-                                undoActions), 
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT, 
-                                undoActions)
-                        ));
+                    
+                    for (Skill skill : tempPerson.getSkills())
+                    {
+                        if (!currentPerson.getSkills().contains(skill))
+                        {
+                            undoActions.add(new UndoableItem(
+                                    skill,
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.SKILL_ADD_PERSON,
+                                            currentPerson),
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.SKILL_ADD_PERSON,
+                                            currentPerson)));
+
+                            currentPerson.addSkill(skill, false);
+                        }
+                    }
+                    
+                    for (Skill skill : dialogSkills)
+                    {
+                        if (!dialogSkillsCopy.contains(skill))
+                        {
+                            undoActions.add(new UndoableItem(
+                                    skill,
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON, 
+                                            currentPerson),
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON, 
+                                            currentPerson)));
+                                         
+                            currentPerson.removeSkill(skill, false);
+                        }
+                    }
+                    
+                    if (undoActions.size() > 0)
+                    {
+                        Global.undoRedoMan.add(new UndoableItem(
+                            currentPerson,
+                            new UndoRedoAction(
+                                    UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT,
+                                    undoActions), 
+                            new UndoRedoAction(
+                                    UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT, 
+                                    undoActions)
+                            ));
+                    }
                     
                     currentPerson.setFirstName(firstNameCustomField.getText());
                     currentPerson.setShortName(shortNameCustomField.getText());
