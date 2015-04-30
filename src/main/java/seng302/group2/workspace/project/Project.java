@@ -122,7 +122,7 @@ public class Project extends TreeViewItem implements Serializable
         }
         return treeViewReleases;
     }
-
+   
     
     /**
      * Gets the description of the project
@@ -261,8 +261,17 @@ public class Project extends TreeViewItem implements Serializable
         }
         this.teams.remove(team);
     }
+    
+        /**
+     * Removes the release from the project
+     * @param release release to be removed
+     */
+    public void remove(Release release)
+    {
+        this.releases.remove(release);
+    }
 
-
+    
     /** 
      * Add Release to Project
      * @param release release to be added
@@ -280,24 +289,6 @@ public class Project extends TreeViewItem implements Serializable
     }
 
     /**
-     * Remove Release from Project
-     * @param release release to be removed
-     */
-    public void remove(Release release)
-    {
-        //Add the undo action to the stack
-        //TODO UNDO REDO
-        /*Global.undoRedoMan.add(new UndoableItem(
-                release,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_DEL_PROJECT, this),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_DEL_PROJECT, this)
-        ));*/
-
-        this.releases.remove(release);
-    }
-
-    
-     /**
      * Prepares a project to be serialized.
      */
     public void prepSerialization()

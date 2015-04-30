@@ -174,6 +174,7 @@ public class Release extends TreeViewItem
     public void setProject(Project project)
     {
         this.project = project;
+        project.add(this);
     }
 
     //</editor-fold>

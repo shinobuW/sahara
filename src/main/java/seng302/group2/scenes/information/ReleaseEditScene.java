@@ -34,6 +34,7 @@ import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
 import static seng302.group2.util.validation.DateValidator.*;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
+import seng302.group2.workspace.project.Project;
 
 /**
  *
@@ -82,8 +83,8 @@ public class ReleaseEditScene
         informationGrid.add(projectComboBox, 0, 3);
         informationGrid.add(buttons, 0,4);
 
-        String firstItem = Global.currentWorkspace.getProjects().get(0).getShortName();
-        projectComboBox.setValue(firstItem);
+        String defaultProject = currentRelease.getProject().getShortName();
+        projectComboBox.setValue(defaultProject);
 
         btnCancel.setOnAction((event) ->
             {
@@ -97,6 +98,15 @@ public class ReleaseEditScene
                 boolean correctShortName;
                 boolean correctDateFormat = false;
                 Date releaseDate = null;
+                
+                Project project = new Project();
+                for (TreeViewItem item : Global.currentWorkspace.getProjects())
+                {
+                    if (item.toString().equals(projectComboBox.getValue()))
+                    {
+                        project = (Project)item;
+                    }
+                }
                 
                 if (shortNameCustomField.getText().equals(currentRelease.getShortName()))
                 {
@@ -141,13 +151,17 @@ public class ReleaseEditScene
                     currentRelease.setShortName(shortNameCustomField.getText());
                     currentRelease.setEstimatedDate(releaseDate);
                     
+                    Project previous = currentRelease.getProject();
+                    currentRelease.getProject().remove(currentRelease);
+                    currentRelease.setProject(project);
+                    
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
                     ReleaseScene.getReleaseScene(currentRelease);
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
                     children.add(Global.currentWorkspace);
-
+                    
                     MainScene.treeView.setItems(children);
                     MainScene.treeView.setShowRoot(false);
 
