@@ -185,14 +185,6 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         App.content.getChildren().add(MainScene.informationGrid);
                         setContextMenu(new ElementTreeContextMenu());
                     }
-                    else if (Global.selectedTreeItem.getValue() instanceof ReleaseCategory)
-                    {
-                        App.content.getChildren().remove(MainScene.informationGrid);
-                        ReleaseCategoryScene.getReleaseCategoryScene((ReleaseCategory)
-                                Global.selectedTreeItem.getValue());
-                        App.content.getChildren().add(MainScene.informationGrid);
-                        setContextMenu(new ElementTreeContextMenu());
-                    }
                     else if (Global.selectedTreeItem.getValue() instanceof Category)
                     {
                         if (Global.selectedTreeItem.getValue().toString().equals("Projects"))
@@ -229,6 +221,14 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                             RoleCategoryScene.getRoleCategoryScene(Global.currentWorkspace);
                             App.content.getChildren().add(MainScene.informationGrid);
                             setContextMenu(null);
+                        }
+                        else if (Global.selectedTreeItem.getValue().toString().equals("Releases"))
+                        {       
+                            App.content.getChildren().remove(MainScene.informationGrid);
+                            ReleaseCategoryScene.getReleaseCategoryScene((ReleaseCategory)
+                            Global.selectedTreeItem.getValue());
+                            App.content.getChildren().add(MainScene.informationGrid);
+                            setContextMenu(new CategoryTreeContextMenu());
                         }
                         else
                         {
