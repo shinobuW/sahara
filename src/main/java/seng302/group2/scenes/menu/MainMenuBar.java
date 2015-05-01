@@ -14,10 +14,14 @@ import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
 import seng302.group2.scenes.dialog.*;
+import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
+import seng302.group2.scenes.listdisplay.Category;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.Workspace.SaveLoadResult;
+import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
 
 /**
  * The main menu bar of the workspace window(s).
@@ -282,8 +286,7 @@ public class MainMenuBar
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction((event) ->
             {
-                ElementTreeContextMenu.showDeleteDialog(
-                        ElementTreeContextMenu.getSelectedCategory());
+                showDeleteDialog((TreeViewItem)Global.selectedTreeItem.getValue());
             });
 
         deleteItem.setAccelerator(new KeyCodeCombination(KeyCode.DELETE,
@@ -402,8 +405,49 @@ public class MainMenuBar
                 {
                     undoItem.setDisable(false);
                 }
+                
+                if (Global.selectedTreeItem.getValue().getClass() == Category.class)
+                {
+                    deleteTreeItem.setDisable(true);
+                }
+                else if (Global.selectedTreeItem.getValue().getClass() == Skill.class)
+                {
+                    Skill selectedSkill = (Skill)Global.selectedTreeItem.getValue();
+                    if (selectedSkill.getShortName().equals("Product Owner") 
+                        || selectedSkill.getShortName().equals("Scrum Master"))
+                    {
+                        deleteTreeItem.setDisable(true);
+                    }
+                    else
+                    {
+                        deleteTreeItem.setDisable(false);
+                    }
+                }
+                else if (Global.selectedTreeItem.getValue().getClass() == Team.class)
+                {
+                    Team selectedTeam = (Team)Global.selectedTreeItem.getValue();
+                    if (selectedTeam.getShortName().equals("Unassigned"))
+                    {
+                        deleteTreeItem.setDisable(true);
+                    }
+                    else
+                    {
+                        deleteTreeItem.setDisable(false);
+                    }
+                }
+                else if (Global.selectedTreeItem.getValue().getClass() == Category.class)
+                {
+                    deleteTreeItem.setDisable(true);          
+                }
+                else if (Global.selectedTreeItem.getValue().getClass() == Workspace.class)
+                {
+                    deleteTreeItem.setDisable(true);          
+                }
+                else
+                {
+                    deleteTreeItem.setDisable(false);
+                }
             });
-               
         return menuBar;
     }
 }

@@ -15,9 +15,9 @@ import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.dialog.CreatePersonDialog;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.person.Person;
 
 import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * A class for displaying all people currently created in a workspace.
@@ -76,7 +76,8 @@ public class PersonCategoryScene
             {
                 if (personBox.getSelectionModel().getSelectedItem() != null)
                 {
-                    Person.deletePerson((Person) personBox.getSelectionModel().getSelectedItem());
+                    showDeleteDialog((TreeViewItem) 
+                        personBox.getSelectionModel().getSelectedItem());
                 }
             });
 
