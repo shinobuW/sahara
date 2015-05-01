@@ -226,7 +226,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         {       
                             App.content.getChildren().remove(MainScene.informationGrid);
                             ReleaseCategoryScene.getReleaseCategoryScene((ReleaseCategory)
-                            Global.selectedTreeItem.getValue());
+                                    Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
                             setContextMenu(new CategoryTreeContextMenu());
                         }
