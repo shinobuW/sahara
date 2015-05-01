@@ -166,6 +166,7 @@ public class UndoRedoPerformer
                         UndoRedoPerformer.undo(undoAction);
                     }
                     System.out.println("Project edit undone");
+                    ProjectScene.refreshProjectScene(proj);
                     break;
                 default:
                     System.out.println("Undo with this property not implemented (yet?)");
