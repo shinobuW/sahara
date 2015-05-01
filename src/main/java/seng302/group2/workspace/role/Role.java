@@ -15,10 +15,9 @@ import static javafx.collections.FXCollections.observableArrayList;
 
 
 /**
- *
  * @author swi67
  */
-public class Role extends TreeViewItem 
+public class Role extends TreeViewItem
 {
     private String shortName;
     private String description;
@@ -26,8 +25,9 @@ public class Role extends TreeViewItem
     private transient ObservableList<Skill> requiredSkills = observableArrayList();
     private ArrayList<Skill> serializableRequiredSkills = new ArrayList<>();
     private boolean defaultRole;
-    
-    /**Basic Role constructor
+
+    /**
+     * Basic Role constructor
      */
     public Role()
     {
@@ -37,11 +37,12 @@ public class Role extends TreeViewItem
         this.description = "";
         this.type = RoleType.Others;
     }
-    
-    /**Role Constructor 
-     * 
-     * @param shortName short name to be set 
-     * @param type type of role to be set
+
+    /**
+     * Role Constructor
+     *
+     * @param shortName short name to be set
+     * @param type      type of role to be set
      */
     public Role(String shortName, RoleType type)
     {
@@ -50,10 +51,12 @@ public class Role extends TreeViewItem
         this.shortName = shortName;
         this.type = type;
     }
-    
-    /**Role Constructor
-     * @param shortName short name to be set
-     * @param type type of role to be set
+
+    /**
+     * Role Constructor
+     *
+     * @param shortName   short name to be set
+     * @param type        type of role to be set
      * @param description brief description of role
      */
     public Role(String shortName, RoleType type, String description)
@@ -65,10 +68,12 @@ public class Role extends TreeViewItem
         this.type = type;
     }
 
-    /**Role Constructor
+    /**
+     * Role Constructor
+     *
      * @param shortName short name to be set
-     * @param type type of role to be set
-     * @param skills skills required for role
+     * @param type      type of role to be set
+     * @param skills    skills required for role
      */
     public Role(String shortName, RoleType type, ObservableList<Skill> skills)
     {
@@ -80,11 +85,13 @@ public class Role extends TreeViewItem
         this.type = type;
     }
 
-    /**Role Constructor
-     * @param shortName short name to be set
-     * @param type type of role to be set
+    /**
+     * Role Constructor
+     *
+     * @param shortName   short name to be set
+     * @param type        type of role to be set
      * @param description brief description of role
-     * @param skills skills required for role
+     * @param skills      skills required for role
      */
     public Role(String shortName, RoleType type, String description, ObservableList<Skill> skills)
     {
@@ -95,29 +102,33 @@ public class Role extends TreeViewItem
         this.requiredSkills = skills;
         this.type = type;
     }
-    
+
 
     // <editor-fold defaultstate="collapsed" desc="Getters">
-     /**
+
+    /**
      * Gets the Role's short name
+     *
      * @return The short name of the role
      */
     public String getShortName()
     {
         return this.shortName;
     }
-    
-     /**
+
+    /**
      * Gets the Role's description
+     *
      * @return The description name of the description
      */
     public String getDescription()
     {
         return this.description;
     }
-    
+
     /**
      * Gets the type of role
+     *
      * @return Type of role
      */
     public RoleType getType()
@@ -127,57 +138,68 @@ public class Role extends TreeViewItem
 
     /**
      * Gets the required skills for a role
+     *
      * @return list of skills
      */
-    public ObservableList<Skill> getRequiredSkills() { return this.requiredSkills; }
-    
-    /** 
+    public ObservableList<Skill> getRequiredSkills()
+    {
+        return this.requiredSkills;
+    }
+
+    /**
      * Gets the default state of the role
+     *
      * @return whether the role is a default role or not
      */
     public boolean isDefault()
     {
         return this.defaultRole;
     }
-    
+
     //</editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Setters">
+
     /**
-    * Sets the role's short name
-    * @param shortName the short name to set
-    */
+     * Sets the role's short name
+     *
+     * @param shortName the short name to set
+     */
     public void setShortName(String shortName)
     {
         this.shortName = shortName;
     }
-    
+
     /**
-    * Sets the role's short name
-    * @param description the short name to set
-    */
+     * Sets the role's short name
+     *
+     * @param description the short name to set
+     */
     public void setDescription(String description)
     {
         this.description = description;
     }
-    
+
     /**
-    * Sets the type of role
-    * @param type RoleType to set
-    */
+     * Sets the type of role
+     *
+     * @param type RoleType to set
+     */
     public void setType(RoleType type)
     {
         this.type = type;
     }
-    
-    /** Set the default state of the role
-     * @param isDefault Boolean type of default to set 
+
+    /**
+     * Set the default state of the role
+     *
+     * @param isDefault Boolean type of default to set
      */
     public void setDefault(boolean isDefault)
     {
         this.defaultRole = isDefault;
     }
-    
+
     //</editor-fold>  
 
     /**
@@ -204,8 +226,10 @@ public class Role extends TreeViewItem
             this.requiredSkills.add((Skill) item);
         }
     }
-     /**
+
+    /**
      * Gets the children of the TreeViewItem
+     *
      * @return The items of the TreeViewItem
      */
     @Override
@@ -213,7 +237,7 @@ public class Role extends TreeViewItem
     {
         return null;
     }
-    
+
     @Override
     public String toString()
     {

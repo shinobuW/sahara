@@ -235,7 +235,8 @@ public class ReleaseEditScene
                     MainScene.treeView.getSelectionModel().select(selectedTreeItem);
 
                 }
-                else {
+                else
+                {
                     event.consume();
                 }
             });

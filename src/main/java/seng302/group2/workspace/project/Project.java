@@ -269,7 +269,8 @@ public class Project extends TreeViewItem implements Serializable
      */
     public void remove(Release release, Boolean redo)
     {
-        if (redo) {
+        if (redo)
+        {
             Global.undoRedoMan.add(new UndoableItem(
                     release,
                     new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_DEL, this),
@@ -306,7 +307,8 @@ public class Project extends TreeViewItem implements Serializable
      */
     public void add(Release release, boolean undo)
     {
-        if (undo) {
+        if (undo)
+        {
             Global.undoRedoMan.add(new UndoableItem(
                     release,
                     new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_ADD, this),

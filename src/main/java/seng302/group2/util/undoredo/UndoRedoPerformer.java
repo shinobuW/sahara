@@ -352,15 +352,18 @@ public class UndoRedoPerformer
                     project.getReleases().add(release);
                     break;
                 case RELEASE_SHORTNAME:
-                    System.out.println("RELEASE_SHORTNAME" + "  " + item.getUndoAction().getValue());
+                    System.out.println("RELEASE_SHORTNAME" + "  "
+                            + item.getUndoAction().getValue());
                     release.setShortName((String)item.getUndoAction().getValue());
                     break;
                 case RELEASE_RELEASEDATE:
-                    System.out.println("RELEASE_RELEASEDATE" + "  " + item.getUndoAction().getValue());
+                    System.out.println("RELEASE_RELEASEDATE" + "  "
+                            + item.getUndoAction().getValue());
                     release.setEstimatedDate((Date)item.getUndoAction().getValue());
                     break;
                 case RELEASE_DESCRIPTION:
-                    System.out.println("RELEASE_DESCRIPTION" + "  " + item.getUndoAction().getValue());
+                    System.out.println("RELEASE_DESCRIPTION" + "  "
+                            + item.getUndoAction().getValue());
                     release.setDescription((String)item.getUndoAction().getValue());
                     break;
                 case RELEASE_EDIT:
@@ -370,6 +373,9 @@ public class UndoRedoPerformer
                         UndoRedoPerformer.undo(undoAction);
                     }
                     ReleaseScene.refreshReleaseScene(release);
+                    break;
+                default:
+                    System.out.println("Undo on release with this property not implemented (yet?)");
                     break;
             }
         }
@@ -628,15 +634,18 @@ public class UndoRedoPerformer
                     project.remove(release);
                     break;
                 case RELEASE_SHORTNAME:
-                    System.out.println("RELEASE_SHORTNAME" + "  " + item.getRedoAction().getValue());
+                    System.out.println("RELEASE_SHORTNAME" + "  "
+                            + item.getRedoAction().getValue());
                     release.setShortName((String)item.getRedoAction().getValue());
                     break;
                 case RELEASE_RELEASEDATE:
-                    System.out.println("RELEASE_RELEASEDATE" + "  " + item.getRedoAction().getValue());
+                    System.out.println("RELEASE_RELEASEDATE" + "  "
+                            + item.getRedoAction().getValue());
                     release.setEstimatedDate((Date)item.getRedoAction().getValue());
                     break;
                 case RELEASE_DESCRIPTION:
-                    System.out.println("RELEASE_DESCRIPTION" + "  " + item.getRedoAction().getValue());
+                    System.out.println("RELEASE_DESCRIPTION" + "  "
+                            + item.getRedoAction().getValue());
                     release.setDescription((String)item.getRedoAction().getValue());
                     break;
                 case RELEASE_PROJECT:
@@ -651,7 +660,9 @@ public class UndoRedoPerformer
                     }
                     ReleaseScene.refreshReleaseScene(release);
                     break;
-
+                default:
+                    System.out.println("Redo on Release with this property not implemented (yet?)");
+                    break;
             }
         }
     }

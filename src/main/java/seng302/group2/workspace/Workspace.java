@@ -33,6 +33,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 /**
  * Basic workspace class that acts as the root object for Sahara and represents a real-world
  * company or work group space.
+ *
  * @author Jordane Lew (jml168)
  */
 @SuppressWarnings("deprecation")
@@ -70,7 +71,7 @@ public class Workspace extends TreeViewItem implements Serializable
         NOFILESELECTED,     // Cancelled in save
         FILENOTFOUND        // File doesn't exist when opening
     }
-    
+
     /**
      * Basic Workspace constructor.
      */
@@ -84,7 +85,7 @@ public class Workspace extends TreeViewItem implements Serializable
         this.serializableSkills = new ArrayList<>();
         this.serializableTeams = new ArrayList<>();
         this.serializableRoles = new ArrayList<>();
-        
+
         Team unassignedTeam = Team.createUnassignedTeam();
         this.add(unassignedTeam);
 
@@ -92,35 +93,36 @@ public class Workspace extends TreeViewItem implements Serializable
                 "Knows how to work as a Teams Product Owner");
         this.add(productOwnerSkill);
 
-        ObservableList<Skill> poSkillList= observableArrayList();
+        ObservableList<Skill> poSkillList = observableArrayList();
         poSkillList.add(productOwnerSkill);
 
         Skill scrumMasterSkill = new Skill("Scrum Master", "Can be Scrum Master for a Team");
         this.add(scrumMasterSkill);
 
-        ObservableList<Skill> smSkillList= observableArrayList();
+        ObservableList<Skill> smSkillList = observableArrayList();
         smSkillList.add(scrumMasterSkill);
-        
+
         Role scrumMaster = new Role(
                 "Scrum Master", RoleType.ScrumMaster, "The Scrum Master for a Team", smSkillList);
         this.add(scrumMaster);
-        
+
         Role productOwner = new Role(
                 "Product Owner", RoleType.ProductOwner, "The Product Owner for a Team",
                 poSkillList);
         this.add(productOwner);
-        
+
         Role developmentTeamMember = new Role(
                 "Development Team Member", RoleType.DevelopmentTeamMember,
                 "A member of the Dev Team");
         this.add(developmentTeamMember);
     }
-    
-    
+
+
     /**
      * Basic workspace constructor with input.
-     * @param shortName A unique short name to identify the Workspace
-     * @param fullName The full Workspace name
+     *
+     * @param shortName   A unique short name to identify the Workspace
+     * @param fullName    The full Workspace name
      * @param description A description of the Workspace
      */
     public Workspace(String shortName, String fullName, String description)
@@ -129,19 +131,19 @@ public class Workspace extends TreeViewItem implements Serializable
         this.shortName = shortName;
         this.longName = fullName;
         this.description = description;
-        
+
         Team unassignedTeam = Team.createUnassignedTeam();
         this.add(unassignedTeam);
 
         Skill productOwnerSkill = new Skill("Product Owner",
                 "Knows how to work as a Teams Product Owner");
 
-        ObservableList<Skill> poSkillList= observableArrayList();
+        ObservableList<Skill> poSkillList = observableArrayList();
         poSkillList.add(productOwnerSkill);
 
         Skill scrumMasterSkill = new Skill("Scrum Master", "Can be Scrum Master for a Team");
 
-        ObservableList<Skill> smSkillList= observableArrayList();
+        ObservableList<Skill> smSkillList = observableArrayList();
         smSkillList.add(scrumMasterSkill);
 
         Role scrumMaster = new Role(
@@ -158,42 +160,46 @@ public class Workspace extends TreeViewItem implements Serializable
                 "A member of the Dev Team");
         this.add(developmentTeamMember);
     }
-    
-    
+
+
     // <editor-fold defaultstate="collapsed" desc="Getters">
-    
+
     /**
      * Gets if the workspace has unsaved changes.
+     *
      * @return true or false depending if the workspace has unsaved changes
      */
     public boolean getHasUnsavedChanges()
     {
         return hasUnsavedChanges;
     }
-    
-    
+
+
     /**
      * Gets the workspace's short name.
+     *
      * @return The short name of the workspace
      */
     public String getShortName()
     {
         return this.shortName;
     }
-    
-    
+
+
     /**
      * Gets the workspace's long name.
+     *
      * @return The long name of the workspace
      */
     public String getLongName()
     {
         return this.longName;
     }
-    
-    
+
+
     /**
      * Gets the workspace's description.
+     *
      * @return The description of the workspace
      */
     public String getDescription()
@@ -204,6 +210,7 @@ public class Workspace extends TreeViewItem implements Serializable
 
     /**
      * Gets the workspace's list of projects.
+     *
      * @return The projects associated with the workspace
      */
     public ObservableList<Project> getProjects()
@@ -214,45 +221,49 @@ public class Workspace extends TreeViewItem implements Serializable
 
     /**
      * Gets the workspace's list of Persons.
+     *
      * @return The people associated with the workspace
      */
     public ObservableList<Person> getPeople()
     {
         return this.people;
     }
-    
+
     /**
      * Gets the workspace's list of Skills.
+     *
      * @return The skills associated with a workspace
      */
     public ObservableList<Skill> getSkills()
     {
         return this.skills;
     }
-    
+
     /**
      * Gets the workspace's list of Teams.
+     *
      * @return The teams associated with a workspace
      */
     public ObservableList<Team> getTeams()
     {
         return this.teams;
     }
-    
+
     /**
      * Gets the workspace's list of Roles
+     *
      * @return the Roles associated with a workspace
      */
     public ObservableList<Role> getRoles()
     {
         return this.roles;
     }
-    
+
     // </editor-fold>
-    
-    
+
+
     // <editor-fold defaultstate="collapsed" desc="Setters">
-    
+
     /**
      * Marks the workspace as not having unsaved changes.
      */
@@ -260,8 +271,8 @@ public class Workspace extends TreeViewItem implements Serializable
     {
         this.hasUnsavedChanges = false;
     }
-    
-    
+
+
     /**
      * Marks the workspace as having unsaved changes.
      */
@@ -269,44 +280,48 @@ public class Workspace extends TreeViewItem implements Serializable
     {
         this.hasUnsavedChanges = true;
     }
-    
-    
+
+
     /**
      * Sets the workspace's short name.
+     *
      * @param shortName The new short name for the workspace
      */
     public void setShortName(String shortName)
     {
         this.shortName = shortName;
     }
-    
-    
+
+
     /**
      * Sets the workspace's long name.
+     *
      * @param longName The new long name for the workspace
      */
     public void setLongName(String longName)
     {
         this.longName = longName;
     }
-    
-    
+
+
     /**
      * Sets the workspace's description.
+     *
      * @param description The new description for the workspace
      */
     public void setDescription(String description)
     {
         this.description = description;
     }
-    
+
     //</editor-fold>
-    
-    
+
+
     /**
      * Saves the current workspace as a file specified by the user.
+     *
      * @param workspace The workspace to save
-     * @param saveAs If acting as save as
+     * @param saveAs    If acting as save as
      * @return The corresponding SaveLoadResult status of the process
      */
     public static SaveLoadResult saveWorkspace(Workspace workspace, boolean saveAs)
@@ -318,12 +333,12 @@ public class Workspace extends TreeViewItem implements Serializable
                     .title("No open workspace")
                     .message("There is currently no workspace open to save")
                     .showWarning();
-                    
+
             return SaveLoadResult.NULLWORKSPACE;
         }
-        
+
         workspace = Workspace.prepSerialization(workspace);
-        
+
         if (saveAs || workspace.lastSaveLocation == null || workspace.lastSaveLocation.equals(""))
         {
             // Prime a FileChooser
@@ -336,7 +351,7 @@ public class Workspace extends TreeViewItem implements Serializable
             fileChooser.setInitialFileName(workspace.shortName);
             fileChooser.setTitle("Save Workspace");
             fileChooser.getExtensionFilters().addAll(
-                new ExtensionFilter("Workspace Files", "*.proj")
+                    new ExtensionFilter("Workspace Files", "*.proj")
             );
 
             // Open the FileChooser to choose the save location of the workspace
@@ -358,7 +373,7 @@ public class Workspace extends TreeViewItem implements Serializable
                 return SaveLoadResult.FILENOTFOUND;  // Most likely user cancellation
             }
             workspace.lastSaveLocation = selectedFile.toString();
-            
+
             // Ensure the extension is .proj (Linux issue)
             if (!workspace.lastSaveLocation.endsWith(".proj"))
             {
@@ -384,17 +399,18 @@ public class Workspace extends TreeViewItem implements Serializable
         catch (IOException e)
         {
             Dialogs.create()
-                .title("Error Saving")
-                .message("An error occurred while trying to save the file")
-                .showException(e);
+                    .title("Error Saving")
+                    .message("An error occurred while trying to save the file")
+                    .showException(e);
             return SaveLoadResult.IOEXCEPTION;
         }
 
     }
-    
-    
+
+
     /**
      * Loads a workspace specified by the user into Global.currentWorkspace.
+     *
      * @return The corresponding SaveLoadResult status of the process
      */
     public static SaveLoadResult loadWorkspace()
@@ -408,9 +424,9 @@ public class Workspace extends TreeViewItem implements Serializable
             fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
         }
         fileChooser.getExtensionFilters().addAll(
-            new ExtensionFilter("Workspace Files", "*.proj")
+                new ExtensionFilter("Workspace Files", "*.proj")
         );
-        
+
         // Open the FileChooser and try saving the Workspace as the user specifies
         File selectedFile = null;
         try
@@ -436,20 +452,20 @@ public class Workspace extends TreeViewItem implements Serializable
             catch (FileNotFoundException e)
             {
                 Dialogs.create()
-                    .title("File Not Found")
-                    .message("The specified file could not be found.")
-                    .showWarning();
+                        .title("File Not Found")
+                        .message("The specified file could not be found.")
+                        .showWarning();
                 return SaveLoadResult.FILENOTFOUND;
             }
             catch (IOException e)
             {
                 Dialogs.create()
-                    .title("Error Loading")
-                    .message("An error occurred while trying to load the file.")
-                    .showException(e);
+                        .title("Error Loading")
+                        .message("An error occurred while trying to load the file.")
+                        .showException(e);
                 return SaveLoadResult.IOEXCEPTION;
             }
-            
+
             Workspace.postDeserialization();
             App.refreshMainScene();
             Global.undoRedoMan.emptyAll();
@@ -460,10 +476,11 @@ public class Workspace extends TreeViewItem implements Serializable
             return SaveLoadResult.FILENOTFOUND;  // Was null, probably cancelled action?
         }
     }
-    
-    
+
+
     /**
      * Adds a Person to the Workspace's list of Persons.
+     *
      * @param person The person to add
      */
     public void add(Person person)
@@ -471,16 +488,17 @@ public class Workspace extends TreeViewItem implements Serializable
         // Add the undo action to the stack
         Global.undoRedoMan.add(new UndoableItem(
                 person,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD, null), 
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD, null),
                 new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD, null)
-                ));
-        
+        ));
+
         this.people.add(person);
     }
 
 
     /**
      * Removes a Person from the Workspace's list of Persons.
+     *
      * @param person The person to remove
      */
     public void remove(Person person)
@@ -494,15 +512,16 @@ public class Workspace extends TreeViewItem implements Serializable
 
         this.people.remove(person);
     }
-    
-    
+
+
     /**
      * Adds a Skill to the Workspace's list of Skills.
+     *
      * @param skill The skill to add
      */
     public void add(Skill skill)
     {
-        if(skill.toString().equals("Product Owner")
+        if (skill.toString().equals("Product Owner")
                 || skill.toString().equals("Scrum Master"))
         {
             this.skills.add(skill);
@@ -513,14 +532,15 @@ public class Workspace extends TreeViewItem implements Serializable
                 skill,
                 new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_ADD, null),
                 new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_ADD, null)
-                ));
-        
+        ));
+
         this.skills.add(skill);
     }
 
 
     /**
      * Removes a Skill from the Workspace's list of Skills.
+     *
      * @param skill The skill to remove
      */
     public void remove(Skill skill)
@@ -538,6 +558,7 @@ public class Workspace extends TreeViewItem implements Serializable
 
     /**
      * Adds a Team to the Workspace's list of Teams.
+     *
      * @param team The team to add
      */
     public void add(Team team)
@@ -547,20 +568,21 @@ public class Workspace extends TreeViewItem implements Serializable
             this.teams.add(team);
             return;
         }
-        
+
         //Add the undo action to the stack
         Global.undoRedoMan.add(new UndoableItem(
                 team,
                 new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD, null),
                 new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD, null)
-                ));
-        
+        ));
+
         this.teams.add(team);
     }
 
 
     /**
      * Removes a Team from the Workspace's list of Teams.
+     *
      * @param team The team to remove
      */
     public void remove(Team team)
@@ -569,7 +591,7 @@ public class Workspace extends TreeViewItem implements Serializable
         {
             return;
         }
-        
+
         // Add the undo action to the stack
         Global.undoRedoMan.add(new UndoableItem(
                 team,
@@ -583,6 +605,7 @@ public class Workspace extends TreeViewItem implements Serializable
 
     /**
      * Adds a Project to the Workspace's list of Projects.
+     *
      * @param project The team to add
      */
     public void add(Project project)
@@ -600,6 +623,7 @@ public class Workspace extends TreeViewItem implements Serializable
 
     /**
      * Removes a Project from the Workspace's list of Projects.
+     *
      * @param project The project to remove
      */
     public void remove(Project project)
@@ -613,14 +637,15 @@ public class Workspace extends TreeViewItem implements Serializable
 
         this.projects.remove(project);
     }
-    
+
     /**
      * Adds a Role to the Workspace's list of Roles.
+     *
      * @param role The role to add
      */
     public void add(Role role)
     {
-        if (role.getType() == RoleType.ScrumMaster || role.getType() == RoleType.ProductOwner 
+        if (role.getType() == RoleType.ScrumMaster || role.getType() == RoleType.ProductOwner
                 || role.getType() == RoleType.DevelopmentTeamMember)
         {
             this.roles.add(role);
@@ -631,9 +656,10 @@ public class Workspace extends TreeViewItem implements Serializable
 
         this.roles.add(role);
     }
-    
-        /**
+
+    /**
      * Removes a Role from the Workspace's list of Roles.
+     *
      * @param role The role to remove
      */
     public void remove(Role role)
@@ -642,23 +668,24 @@ public class Workspace extends TreeViewItem implements Serializable
         this.roles.remove(role);
     }
 
-    
+
     /**
      * Gets a list of categories of the workspace based on the workspace's lists.
+     *
      * @return A list of categories of the workspace
      */
     public ObservableList<TreeViewItem> getCategories()
     {
         // Prime the list
         ObservableList<TreeViewItem> root = observableArrayList();
-        
+
         // Make the categories
         Category projectCategory = new Category("Projects");
         Category peopleCategory = new Category("People");
         Category teamsCategory = new Category("Teams");
         Category rolesCategory = new Category("Roles");
         Category skillCategory = new Category("Skills");
-        
+
         // Add the categories
         root.add(projectCategory);
         root.add(peopleCategory);
@@ -668,11 +695,12 @@ public class Workspace extends TreeViewItem implements Serializable
 
         return root;
     }
-    
-    
+
+
     /**
      * Perform pre-serialization steps
      * 1) Transform ObservableLists into ArrayLists for serialization.
+     *
      * @param workspace The workspace for intended serialization
      * @return A serializable version of the given workspace
      */
@@ -681,33 +709,33 @@ public class Workspace extends TreeViewItem implements Serializable
         workspace.serializablePeople.clear();
         for (Object item : workspace.people)
         {
-            workspace.serializablePeople.add((Person)item);
+            workspace.serializablePeople.add((Person) item);
         }
 
         workspace.serializableProjects.clear();
         for (Object item : workspace.projects)
         {
-            workspace.serializableProjects.add((Project)item);
+            workspace.serializableProjects.add((Project) item);
         }
-        
+
         workspace.serializableSkills.clear();
         for (Object item : workspace.skills)
         {
-            workspace.serializableSkills.add((Skill)item);
+            workspace.serializableSkills.add((Skill) item);
         }
-        
+
         workspace.serializableTeams.clear();
         for (Object item : workspace.teams)
         {
             workspace.serializableTeams.add((Team) item);
         }
-        
+
         workspace.serializableRoles.clear();
-        for (Object item: workspace.roles)
+        for (Object item : workspace.roles)
         {
             workspace.serializableRoles.add((Role) item);
         }
-        
+
         // Prepare for the serialization of persons (skills)
         for (Object item : workspace.people)
         {
@@ -730,11 +758,11 @@ public class Workspace extends TreeViewItem implements Serializable
         }
 
         // Also perform again for any other deeper observables
-        
+
         return workspace;
     }
-    
-    
+
+
     /**
      * Perform post-deserialization steps (performs on Global.currentWorkspace for now).
      * 1) Transform ArrayLists back into ObservableLists
@@ -751,19 +779,19 @@ public class Workspace extends TreeViewItem implements Serializable
         {
             Global.currentWorkspace.projects.add(item);
         }
-        
+
         Global.currentWorkspace.skills = observableArrayList();
         for (Skill item : Global.currentWorkspace.serializableSkills)
         {
             Global.currentWorkspace.skills.add(item);
         }
-        
+
         Global.currentWorkspace.teams = observableArrayList();
         for (Team item : Global.currentWorkspace.serializableTeams)
         {
             Global.currentWorkspace.teams.add(item);
         }
-        
+
         Global.currentWorkspace.roles = observableArrayList();
         for (Role item : Global.currentWorkspace.serializableRoles)
         {
@@ -802,10 +830,11 @@ public class Workspace extends TreeViewItem implements Serializable
         // Unset saved changes flag, we just opened the workspace.
         Global.currentWorkspace.hasUnsavedChanges = false;
     }
-    
-    
+
+
     /**
      * An overridden version for the String representation of a Workspace.
+     *
      * @return The short name of the Workspace
      */
     @Override
@@ -813,10 +842,11 @@ public class Workspace extends TreeViewItem implements Serializable
     {
         return this.shortName;
     }
-    
-    
+
+
     /**
      * Gets the children (categories) of the workspace.
+     *
      * @return the children (categories) of the workspace
      */
     @Override

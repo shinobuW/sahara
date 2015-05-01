@@ -137,7 +137,6 @@
               </goals>
               <configuration>
                 <failOnViolation>true</failOnViolation>
-                <violationSeverity>error</violationSeverity>
               </configuration>
             </execution>
           </executions>

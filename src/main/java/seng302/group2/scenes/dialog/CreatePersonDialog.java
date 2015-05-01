@@ -30,6 +30,7 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 
 /**
  * Class to create a pop up dialog for creating a person.
+ *
  * @author swi67
  */
 @SuppressWarnings("deprecation")
@@ -38,7 +39,8 @@ public class CreatePersonDialog
     /**
      * Displays the Dialog box for creating a person.
      */
-    public static void show() {
+    public static void show()
+    {
         // Initialise Dialog and GridPane
         Dialog dialog = new Dialog(null, "New Person");
         VBox grid = new VBox();
@@ -68,39 +70,45 @@ public class CreatePersonDialog
 
         // Create button event
         btnCreate.setOnAction((event) ->
-        {
-            boolean correctDate = validateBirthDateField(customBirthDate);
-            boolean correctShortName = validateShortName(shortNameCustomField);
-            boolean correctFirstName = validateName(firstNameCustomField);
-            boolean correctLastName = validateName(lastNameCustomField);
+            {
+                boolean correctDate = validateBirthDateField(customBirthDate);
+                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctFirstName = validateName(firstNameCustomField);
+                boolean correctLastName = validateName(lastNameCustomField);
 
-            if (correctDate && correctShortName && correctFirstName && correctLastName) {
-                //get user input
-                String firstName = firstNameCustomField.getText();
-                String lastName = lastNameCustomField.getText();
-                String shortName = shortNameCustomField.getText();
-                String email = emailTextField.getText();
-                String description = descriptionTextArea.getText();
+                if (correctDate && correctShortName && correctFirstName && correctLastName)
+                {
+                    //get user input
+                    String firstName = firstNameCustomField.getText();
+                    String lastName = lastNameCustomField.getText();
+                    String shortName = shortNameCustomField.getText();
+                    String email = emailTextField.getText();
+                    String description = descriptionTextArea.getText();
 
-                String birthdateString = customBirthDate.getText();
+                    String birthdateString = customBirthDate.getText();
 
-                Date birthDate;
-                if (birthdateString.isEmpty()) {
-                    birthDate = null;
-                } else {
-                    birthDate = stringToDate(birthdateString);
+                    Date birthDate;
+                    if (birthdateString.isEmpty())
+                    {
+                        birthDate = null;
+                    }
+                    else
+                    {
+                        birthDate = stringToDate(birthdateString);
+                    }
+
+                    Person person = new Person(shortName, firstName, lastName, email, description,
+                            birthDate);
+                    Global.currentWorkspace.add(person);
+                    person.setTeam((Team) Global.currentWorkspace.getTeams().get(0));
+                    ((Team) Global.currentWorkspace.getTeams().get(0)).add(person, false);
+                    dialog.hide();
                 }
-
-                Person person = new Person(shortName, firstName, lastName, email, description,
-                        birthDate);
-                Global.currentWorkspace.add(person);
-                person.setTeam((Team) Global.currentWorkspace.getTeams().get(0));
-                ((Team) Global.currentWorkspace.getTeams().get(0)).add(person, false);
-                dialog.hide();
-            } else {
-                btnCreate.disableProperty();
-            }
-        });
+                else
+                {
+                    btnCreate.disableProperty();
+                }
+            });
 
         // Cancel button event
         btnCancel.setOnAction((event) ->

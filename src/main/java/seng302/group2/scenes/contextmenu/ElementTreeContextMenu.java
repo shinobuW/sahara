@@ -166,6 +166,7 @@ public class ElementTreeContextMenu extends ContextMenu
                 break;
             case RELEASE:
                 ReleaseEditScene.getReleaseEditScene((Release) Global.selectedTreeItem.getValue());
+                break;
             case OTHER:
                 System.out.println("The category was not correctly recognized");
                 break;

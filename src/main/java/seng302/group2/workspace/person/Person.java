@@ -288,11 +288,12 @@ public class Person extends TreeViewItem implements Serializable
     /**
      * Adds a Skill to the Person's list of Skills
      * @param skill The skill to add
+     * @param undo Whether or not to add an undo item to the stack
      */
-    public void addSkill(Skill skill, Boolean Undo)
+    public void addSkill(Skill skill, Boolean undo)
     {
         //Add the undo action to the stack
-        if (Undo)
+        if (undo)
         {
             Global.undoRedoMan.add(new UndoableItem(
                     skill,
@@ -357,11 +358,12 @@ public class Person extends TreeViewItem implements Serializable
     /**
      * Removes a Skill from the Person's list of Skills
      * @param skill The skill to remove
+     * @param undo Whether or not to create an undo item
      */
-    public void removeSkill(Skill skill, Boolean Undo)
+    public void removeSkill(Skill skill, Boolean undo)
     {
         //Add the undo action to the stack
-        if (Undo)
+        if (undo)
         {
             Global.undoRedoMan.add(new UndoableItem(
                     skill,

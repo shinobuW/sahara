@@ -77,12 +77,12 @@ public class TeamScene
         informationGrid.add(new Label("Team Description: "), 0, 2);
         informationGrid.add(separator, 0, 3, 4, 1);
         informationGrid.add(new Label("Product Owner: "), 0, 4);
-        if(currentTeam.getProductOwner() != null)
+        if (currentTeam.getProductOwner() != null)
         {
             informationGrid.add(new Label(currentTeam.getProductOwner().toString()), 1, 4);
         }
         informationGrid.add(new Label("Scrum Master: "), 0, 5);
-        if(currentTeam.getScrumMaster() != null)
+        if (currentTeam.getScrumMaster() != null)
         {
             informationGrid.add(new Label(currentTeam.getScrumMaster().toString()), 1, 5);
         }
