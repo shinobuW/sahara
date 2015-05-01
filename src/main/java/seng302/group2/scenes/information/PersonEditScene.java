@@ -198,7 +198,7 @@ public class PersonEditScene
                 
                 if (correctDate && correctShortName && correctFirstName && correctLastName)
                 {
-                    //set Person proprties
+                    //set Person properties
                     Date birthDate;
                     if (customBirthDate.getText().isEmpty())
                     {
@@ -271,7 +271,7 @@ public class PersonEditScene
                                         emailTextField.getText())));
                     }                    
 
-                    if (!stringToDate(customBirthDate.getText()).equals(currentPerson.getBirthDate()))
+                    if (birthDate != (currentPerson.getBirthDate()))
                     {
                         undoActions.add(new UndoableItem(
                                 currentPerson,
