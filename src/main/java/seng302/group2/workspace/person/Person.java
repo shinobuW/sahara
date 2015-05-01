@@ -4,6 +4,7 @@
 package seng302.group2.workspace.person;
 
 import javafx.collections.ObservableList;
+import org.apache.commons.lang.ObjectUtils;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.UndoRedoAction;
@@ -410,6 +411,15 @@ public class Person extends TreeViewItem implements Serializable
     @Override
     public String toString()
     {
+        if (Global.selectedTreeItem.getValue() instanceof Team)
+        {
+            if (this.getRole() == null)
+            {
+                return this.shortName + " - (Unassigned)";
+            }
+            return this.shortName + " - (" + this.getRole() + ")";
+
+        }
         return this.shortName;
     }
 }

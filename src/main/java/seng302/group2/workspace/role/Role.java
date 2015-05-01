@@ -241,6 +241,10 @@ public class Role extends TreeViewItem
     @Override
     public String toString()
     {
+        if (this == null)
+        {
+            return "null";
+        }
         return this.shortName;
     }
 }

@@ -34,8 +34,8 @@ public class Team extends TreeViewItem implements Serializable
     private Person productOwner;
     private transient ObservableList<Person> people = observableArrayList();
     private ArrayList<Person> serializablePeople = new ArrayList<>();
-    private transient ObservableList<Role> roles = observableArrayList();
-    private ArrayList<Role> serializableRoles = new ArrayList<>();
+    private transient ObservableList<Person> devs = observableArrayList();
+    private ArrayList<Person> serializableDevs = new ArrayList<>();
     private boolean unassigned = false;
     private Project project;
 
@@ -120,14 +120,14 @@ public class Team extends TreeViewItem implements Serializable
      *
      * @return The observable list of roles
      */
-    public ObservableList<Role> getRoles()
+    public ObservableList<Person> getDevs()
     {
-        this.serializableRoles.clear();
-        for (Object item : this.roles)
+        this.serializableDevs.clear();
+        for (Object item : this.devs)
         {
-            this.serializableRoles.add((Role) item);
+            this.serializableDevs.add((Person) item);
         }
-        return this.roles;
+        return this.devs;
     }
 
     /**
@@ -332,13 +332,13 @@ public class Team extends TreeViewItem implements Serializable
     /**
      * Adds the role to the team's list of Roles
      *
-     * @param role Role to add
+     * @param person Role to add
      */
-    public void addRole(Role role)
+    public void addRole(Person person)
     {
         // Add the undo action to the stack
         // TODO
-        this.roles.add(role);
+        this.devs.add(person);
     }
 
 

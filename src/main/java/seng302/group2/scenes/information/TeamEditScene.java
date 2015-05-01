@@ -61,6 +61,12 @@ public class TeamEditScene
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Save");
 
+        HBox devBtns = new HBox();
+        Button mkeDev = new Button("Make Developer");
+        Button rmvDev = new Button("Unmake Developer");
+        devBtns.getChildren().add(mkeDev);
+        devBtns.getChildren().add(rmvDev);
+
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
@@ -74,6 +80,9 @@ public class TeamEditScene
         productOwnerBox.addToComboBox("");
         scrumMasterBox.addToComboBox("");
 
+        Person currentSM = currentTeam.getScrumMaster();
+        Person currentPO = currentTeam.getProductOwner();
+
         for (Person teamMember : currentTeam.getPeople())
         {
             for (Skill memSkill : teamMember.getSkills())
@@ -84,6 +93,14 @@ public class TeamEditScene
                     break;
                 }
             }
+        }
+        if (currentPO == null)
+        {
+            productOwnerBox.setValue("");
+        }
+        else
+        {
+            productOwnerBox.setValue(currentPO.toString());
         }
 
         for (Person teamMember : currentTeam.getPeople())
@@ -97,12 +114,22 @@ public class TeamEditScene
                 }
             }
         }
+        if (currentSM == null)
+        {
+            scrumMasterBox.setValue("");
+        }
+        else
+        {
+            scrumMasterBox.setValue(currentSM.toString());
+        }
+
 
         shortNameCustomField.setText(currentTeam.getShortName());
         descriptionTextArea.setText(currentTeam.getDescription());
         
         Button btnAdd = new Button("<-");
         Button btnDelete = new Button("->");
+
         
         VBox peopleButtons = new VBox();
         peopleButtons.spacingProperty().setValue(10);
@@ -112,7 +139,7 @@ public class TeamEditScene
 
         
         Team tempTeam = new Team();
-        for (Person person : currentTeam.getPeople()) 
+        for (Person person : currentTeam.getPeople())
         {
             System.out.println(person);
             tempTeam.add(person, false);
@@ -171,7 +198,7 @@ public class TeamEditScene
         informationGrid.add(teamsPeopleBox, 0, 5);
         informationGrid.add(peopleButtons, 1, 5);
         informationGrid.add(membersBox, 2, 5);
-
+        informationGrid.add(devBtns, 0, 6);
         informationGrid.add(btnSave, 1, 6);
         informationGrid.add(btnCancel, 2, 6);
 
@@ -221,7 +248,30 @@ public class TeamEditScene
                         dialogPeople.add((Person) projectPeople);
                     }
                 }
-            });        
+            });
+
+        mkeDev.setOnAction((event) ->
+            {
+                ObservableList<Person> selectedPeople =
+                        teamsPeopleBox.getSelectionModel().getSelectedItems();
+
+                for (Person selectedPerson : selectedPeople)
+                {
+                    selectedPerson.setRole(Global.currentWorkspace.getRoles().get(2));
+                }
+
+            });
+
+        rmvDev.setOnAction((event) ->
+            {
+                ObservableList<Person> selectedPeople =
+                        teamsPeopleBox.getSelectionModel().getSelectedItems();
+
+                for (Person selectedPerson : selectedPeople)
+                {
+                    selectedPerson.setRole(null);
+                }
+            });
         
         btnCancel.setOnAction((event) ->
             {
@@ -234,7 +284,7 @@ public class TeamEditScene
         btnSave.setOnAction((event) ->
             {
                 boolean correctShortName;
-                
+
                 if (shortNameCustomField.getText().equals(currentTeam.getShortName()))
                 {
                     correctShortName = true;
@@ -276,6 +326,58 @@ public class TeamEditScene
                     }
                     
                     currentTeam.setDescription(descriptionTextArea.getText());
+
+                    String stringSM = "";
+                    if (currentSM != null)
+                    {
+                        stringSM = currentSM.toString();
+                    }
+                    if (!scrumMasterBox.getValue().equals(stringSM))
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentTeam,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION,
+                                        currentTeam.getDescription()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION,
+                                        descriptionTextArea.getText())));
+                        for (Person selectedPerson : currentTeam.getPeople())
+                        {
+                            if (selectedPerson.toString().equals(scrumMasterBox.getValue()))
+                            {
+                                currentTeam.setScrumMaster(selectedPerson);
+                                selectedPerson.setRole(Global.currentWorkspace.getRoles().get(0));
+                            }
+                        }
+                    }
+
+
+                    String stringPO = "";
+                    if (currentPO != null)
+                    {
+                        stringPO = currentPO.toString();
+                    }
+                    if (!productOwnerBox.getValue().equals(stringPO))
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentTeam,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION,
+                                        currentTeam.getDescription()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION,
+                                        descriptionTextArea.getText())));
+                        for (Person selectedPerson : currentTeam.getPeople())
+                        {
+                            if (selectedPerson.toString().equals(productOwnerBox.getValue()))
+                            {
+                                currentTeam.setProductOwner(selectedPerson);
+                                selectedPerson.setRole(Global.currentWorkspace.getRoles().get(1));
+                            }
+                        }
+                    }
+
                     
                     for (Person person : tempTeam.getPeople())
                     {
@@ -307,7 +409,9 @@ public class TeamEditScene
                             currentTeam.add(person, false);
                         }
                     }
-                    
+
+
+
                     for (Person person : dialogPeople)
                     {
                         System.out.println("Deleting " + person.getTeam());
@@ -337,16 +441,19 @@ public class TeamEditScene
                                     .add(person, false);
                         }
                     }
-                    
-                    Global.undoRedoMan.add(new UndoableItem(
-                        currentTeam,
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.TEAM_EDIT,
-                                undoActions), 
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.TEAM_EDIT, 
-                                undoActions)
+
+                    if (undoActions.size() > 0)
+                    {
+                        Global.undoRedoMan.add(new UndoableItem(
+                                currentTeam,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.TEAM_EDIT,
+                                        undoActions),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.TEAM_EDIT,
+                                        undoActions)
                         ));
+                    }
                     
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
