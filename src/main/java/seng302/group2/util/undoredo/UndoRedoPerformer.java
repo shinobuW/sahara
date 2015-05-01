@@ -59,6 +59,7 @@ public class UndoRedoPerformer
         
         SKILL_ADD,
         SKILL_DEL,
+        SKILL_DEL_RECURSIVE,
         SKILL_SHORTNAME,
         SKILL_DESCRIPTION,
         SKILL_ADD_PERSON,
@@ -250,7 +251,15 @@ public class UndoRedoPerformer
                     break;
                 case SKILL_DEL:
                     Global.currentWorkspace.getSkills().add((Skill) item.getHost());
-                    break;    
+                    break;
+                case SKILL_DEL_RECURSIVE:
+                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
+                            item.getUndoAction().getValue())
+                    {
+                        UndoRedoPerformer.undo(undoAction);
+                    }
+                    SkillScene.refreshSkillScene(skill);
+                    break;
                 case SKILL_SHORTNAME:
                     skill.setShortName((String) item.getUndoAction().getValue());
                     break;

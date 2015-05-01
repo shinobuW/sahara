@@ -3,9 +3,13 @@ package seng302.group2.workspace.skills;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.undoredo.UndoRedoAction;
+import seng302.group2.util.undoredo.UndoRedoPerformer;
+import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.workspace.person.Person;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * A basic class to represent skills a person may have
@@ -102,6 +106,7 @@ public class Skill extends TreeViewItem implements Serializable
      */
     public static void deleteSkill(Skill deletedSkill)
     {
+        ArrayList<UndoableItem> undoActions = new ArrayList<>();
         if (!deletedSkill.getShortName().equals("Product Owner")
                 && !deletedSkill.getShortName().equals("Scrum Master"))
         {
@@ -109,10 +114,41 @@ public class Skill extends TreeViewItem implements Serializable
             {
                 if (personRemoveSkill.getSkills().contains(deletedSkill))
                 {
-                    personRemoveSkill.getSkills().remove(deletedSkill);
+                    undoActions.add(new UndoableItem(
+                            deletedSkill,
+                            new UndoRedoAction(
+                                    UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON,
+                                    personRemoveSkill),
+                            new UndoRedoAction(
+                                    UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON,
+                                    personRemoveSkill)));
+                    personRemoveSkill.removeSkill(deletedSkill, false);
                 }
             }
-            Global.currentWorkspace.remove(deletedSkill);
+
+            undoActions.add(new UndoableItem(
+                    deletedSkill,
+                    new UndoRedoAction(
+                            UndoRedoPerformer.UndoRedoProperty.SKILL_DEL,
+                            deletedSkill),
+                    new UndoRedoAction(
+                            UndoRedoPerformer.UndoRedoProperty.SKILL_DEL,
+                            deletedSkill)));
+            Global.currentWorkspace.remove(deletedSkill, false);
+
+
+            if (undoActions.size() > 0)
+            {
+                Global.undoRedoMan.add(new UndoableItem(
+                        deletedSkill,
+                        new UndoRedoAction(
+                                UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_RECURSIVE,
+                                undoActions),
+                        new UndoRedoAction(
+                                UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_RECURSIVE,
+                                undoActions)
+                ));
+            }
         }
     }    
     
