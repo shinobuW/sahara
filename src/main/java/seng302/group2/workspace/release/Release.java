@@ -183,6 +183,7 @@ public class Release extends TreeViewItem
      */
     public void setProject(Project project)
     {
+        this.project.remove(this, false);
         this.project = project;
         project.add(this);
     }

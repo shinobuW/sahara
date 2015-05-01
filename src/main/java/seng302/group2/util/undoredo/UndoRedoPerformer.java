@@ -366,6 +366,11 @@ public class UndoRedoPerformer
                             + item.getUndoAction().getValue());
                     release.setDescription((String)item.getUndoAction().getValue());
                     break;
+                case RELEASE_PROJECT:
+                    System.out.println("RELEASE_PROJECT" + "  "
+                            + item.getUndoAction().getValue());
+                    release.setProject((Project)item.getUndoAction().getValue());
+                    break;
                 case RELEASE_EDIT:
                     for (UndoableItem undoAction : (ArrayList<UndoableItem>)
                             item.getUndoAction().getValue())
