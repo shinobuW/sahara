@@ -127,8 +127,8 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     TreeItem<Object> selectedItem = (TreeItem<Object>) newValue;
                     Global.selectedTreeItem = selectedItem;
 
-                    System.out.println(Global.selectedTreeItem.getValue() + " "
-                            + Global.selectedTreeItem.getValue().getClass());  // testing
+                    /*System.out.println(Global.selectedTreeItem.getValue() + " "
+                            + Global.selectedTreeItem.getValue().getClass());*/
 
                     //Updates the display pane to be pane for the selectItem
                     if (Global.selectedTreeItem == null

@@ -21,6 +21,8 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
+import seng302.group2.util.undoredo.UndoRedoAction;
+import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.release.Release;
@@ -99,12 +101,12 @@ public class ReleaseEditScene
                 boolean correctDateFormat = false;
                 Date releaseDate = null;
                 
-                Project project = new Project();
+                Project selectedProject = null;
                 for (TreeViewItem item : Global.currentWorkspace.getProjects())
                 {
                     if (item.toString().equals(projectComboBox.getValue()))
                     {
-                        project = (Project)item;
+                        selectedProject = (Project)item;
                     }
                 }
                 
@@ -143,17 +145,80 @@ public class ReleaseEditScene
                 if (correctShortName && correctDateFormat)
                 {
                     // Build Undo/Redo edit array.
-                    ArrayList<UndoableItem> undoActions = new ArrayList<>();          
-                    //TODO: undoredo
-        
+                    ArrayList<UndoableItem> undoActions = new ArrayList<>();
+                    if (!shortNameCustomField.getText().equals(currentRelease.getShortName()))
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentRelease,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_SHORTNAME,
+                                        currentRelease.getShortName()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_SHORTNAME,
+                                        shortNameCustomField.getText())));
+                    }
+
+                    if (currentRelease.getEstimatedDate() != (releaseDate))
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentRelease,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_RELEASEDATE,
+                                        currentRelease.getEstimatedDate()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_RELEASEDATE,
+                                        releaseDate)
+                        ));
+                    }
+
+                    if (!currentRelease.getDescription().equals(descriptionTextArea.getText()))
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentRelease,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_DESCRIPTION,
+                                        currentRelease.getDescription()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_DESCRIPTION,
+                                        descriptionTextArea.getText())
+                        ));
+                    }
+
+                    if (!currentRelease.getProject().equals(selectedProject))
+                    {
+                        undoActions.add(new UndoableItem(
+                                currentRelease,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_PROJECT,
+                                        currentRelease.getProject()),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_PROJECT,
+                                        selectedProject)));
+                    }
+
+                    if (undoActions.size() > 0)
+                    {
+                        System.out.println("RElease edit added to undoredo stack");
+                        Global.undoRedoMan.add(new UndoableItem(
+                                currentRelease,
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_EDIT,
+                                        undoActions),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_EDIT,
+                                        undoActions)
+                        ));
+                    }
+
+
                     // Save the edits.        
                     currentRelease.setDescription(descriptionTextArea.getText());
                     currentRelease.setShortName(shortNameCustomField.getText());
                     currentRelease.setEstimatedDate(releaseDate);
                     
                     Project previous = currentRelease.getProject();
-                    currentRelease.getProject().remove(currentRelease);
-                    currentRelease.setProject(project);
+                    currentRelease.getProject().remove(currentRelease, false);
+                    currentRelease.setProject(selectedProject, false);
                     
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
@@ -168,6 +233,7 @@ public class ReleaseEditScene
                     App.content.getChildren().add(treeView);
                     App.content.getChildren().add(informationGrid);
                     MainScene.treeView.getSelectionModel().select(selectedTreeItem);
+
                 }
                 else {
                     event.consume();

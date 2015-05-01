@@ -11,6 +11,7 @@ import seng302.group2.scenes.information.*;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
@@ -72,6 +73,14 @@ public class UndoRedoPerformer
         TEAM_ADD_PROJECT,
         TEAM_DEL_PROJECT,
         TEAM_EDIT,
+
+        RELEASE_ADD,
+        RELEASE_DEL,
+        RELEASE_EDIT,
+        RELEASE_SHORTNAME,
+        RELEASE_RELEASEDATE,
+        RELEASE_DESCRIPTION,
+        RELEASE_PROJECT
     }
 
     
@@ -329,6 +338,47 @@ public class UndoRedoPerformer
                     break;                    
             }
         }
+        else if (objClass == Release.class)
+        {
+            Release release = (Release)item.getHost();
+            Project project = release.getProject();
+            switch (item.getUndoAction().getProperty())
+            {
+                case RELEASE_ADD:
+//                    for (Project worksSpaceProject : Global.currentWorkspace.getProjects())
+//                    {
+//                        if (worksSpaceProject == release.getProject())
+//                        {
+//                            project.remove(release);
+//                        }
+//                    }
+                    release.getProject().getReleases().remove(release);
+                    break;
+                case RELEASE_DEL:
+                    project.getReleases().add(release);
+                    break;
+                case RELEASE_SHORTNAME:
+                    System.out.println("RELEASE_SHORTNAME" + "  " + item.getUndoAction().getValue());
+                    release.setShortName((String)item.getUndoAction().getValue());
+                    break;
+                case RELEASE_RELEASEDATE:
+                    System.out.println("RELEASE_RELEASEDATE" + "  " + item.getUndoAction().getValue());
+                    release.setEstimatedDate((Date)item.getUndoAction().getValue());
+                    break;
+                case RELEASE_DESCRIPTION:
+                    System.out.println("RELEASE_DESCRIPTION" + "  " + item.getUndoAction().getValue());
+                    release.setDescription((String)item.getUndoAction().getValue());
+                    break;
+                case RELEASE_EDIT:
+                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
+                            item.getUndoAction().getValue())
+                    {
+                        UndoRedoPerformer.undo(undoAction);
+                    }
+                    ReleaseScene.refreshReleaseScene(release);
+                    break;
+            }
+        }
     }
 
     
@@ -563,6 +613,50 @@ public class UndoRedoPerformer
                 default:
                     System.out.println("Redo on Team with this property not implemented (yet?)");
                     break;                   
+            }
+        }
+        else if (objClass == Release.class)
+        {
+            Release release = (Release)item.getHost();
+            Project project = release.getProject();
+            switch (item.getRedoAction().getProperty())
+            {
+                case RELEASE_ADD:
+                    for (Project worksSpaceProject : Global.currentWorkspace.getProjects())
+                    {
+                        if (worksSpaceProject == release.getProject())
+                        {
+                            project.add(release);
+                        }
+                    }
+                    break;
+                case RELEASE_DEL:
+                    project.remove(release);
+                    break;
+                case RELEASE_EDIT:
+                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
+                            item.getRedoAction().getValue())
+                    {
+                        UndoRedoPerformer.redo(undoAction);
+                    }
+                    ReleaseScene.refreshReleaseScene(release);
+                    break;
+                case RELEASE_SHORTNAME:
+                    System.out.println("RELEASE_SHORTNAME" + "  " + item.getRedoAction().getValue());
+                    release.setShortName((String)item.getRedoAction().getValue());
+                    break;
+                case RELEASE_RELEASEDATE:
+                    System.out.println("RELEASE_RELEASEDATE" + "  " + item.getRedoAction().getValue());
+                    release.setEstimatedDate((Date)item.getRedoAction().getValue());
+                    break;
+                case RELEASE_DESCRIPTION:
+                    System.out.println("RELEASE_DESCRIPTION" + "  " + item.getRedoAction().getValue());
+                    release.setDescription((String)item.getRedoAction().getValue());
+                    break;
+                case RELEASE_PROJECT:
+                    System.out.println("RELEASE_PROJECT" + " " + item.getRedoAction().getValue());
+                    release.setProject((Project)item.getRedoAction().getValue());
+
             }
         }
     }

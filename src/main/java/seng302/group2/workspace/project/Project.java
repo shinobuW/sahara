@@ -209,7 +209,7 @@ public class Project extends TreeViewItem implements Serializable
      * @param team The team to add
      * @param undo If adding the team should be undoable
      */
-    public void add(Team team, Boolean undo)
+    public void add(Team team, boolean undo)
     {
         // Add the undo action to the stack
         if (undo)
@@ -261,6 +261,27 @@ public class Project extends TreeViewItem implements Serializable
         }
         this.teams.remove(team);
     }
+
+
+    /**
+     * Removes the release from the project
+     * @param release release to be removed
+     */
+    public void remove(Release release, Boolean redo)
+    {
+        if (redo) {
+            Global.undoRedoMan.add(new UndoableItem(
+                    release,
+                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_DEL, this),
+                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_DEL, this)
+            ));
+        }
+
+        this.releases.remove(release);
+    }
+
+
+
     
         /**
      * Removes the release from the project
@@ -268,23 +289,46 @@ public class Project extends TreeViewItem implements Serializable
      */
     public void remove(Release release)
     {
+        Global.undoRedoMan.add(new UndoableItem(
+                release,
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_DEL, this),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_DEL, this)
+        ));
+
         this.releases.remove(release);
     }
 
-    
+
+
+    /**
+     * Add Release to Project
+     * @param release release to be added
+     */
+    public void add(Release release, boolean undo)
+    {
+        if (undo) {
+            Global.undoRedoMan.add(new UndoableItem(
+                    release,
+                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_ADD, this),
+                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_ADD, this)
+            ));
+        }
+        this.releases.add(release);
+    }
+
+
+
     /** 
      * Add Release to Project
      * @param release release to be added
      */
     public void add(Release release)
     {
-        //Add the undo action to the stack
-        //TODO UNDO REDO
-        /*Global.undoRedoMan.add(new UndoableItem(
+        Global.undoRedoMan.add(new UndoableItem(
                 release,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_ADD_PROJECT, this),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_ADD_PROJECT, this)
-        ));*/
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_ADD, this),
+                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_ADD, this)
+        ));
         this.releases.add(release);
     }
 

@@ -171,6 +171,16 @@ public class Release extends TreeViewItem
      * Sets the project the release belongs to
      * @param project project to set
      */
+    public void setProject(Project project, boolean undo)
+    {
+        this.project = project;
+        project.add(this, undo);
+    }
+
+    /**
+     * Sets the project the release belongs to
+     * @param project project to set
+     */
     public void setProject(Project project)
     {
         this.project = project;
