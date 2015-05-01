@@ -99,6 +99,22 @@ public class ElementTreeContextMenu extends ContextMenu
                 deleteItem.setDisable(false);
             }
         }
+
+        if (selectedCategory == Categories.SKILL)
+        {
+            Skill selectedSkill = (Skill) Global.selectedTreeItem.getValue();
+            if (selectedSkill.getShortName().equals("Scrum Master")
+                    || selectedSkill.getShortName().equals("Product Owner"))
+            {
+                editItem.setDisable(true);
+                deleteItem.setDisable(true);
+            }
+            else
+            {
+                editItem.setDisable(false);
+                deleteItem.setDisable(false);
+            }
+        }
     }
 
 
