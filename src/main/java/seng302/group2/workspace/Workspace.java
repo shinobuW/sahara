@@ -543,7 +543,8 @@ public class Workspace extends TreeViewItem implements Serializable
      */
     public void remove(Person person, boolean undo)
     {
-        if (undo) {
+        if (undo)
+        {
             // Add the undo action to the stack
             Global.undoRedoMan.add(new UndoableItem(
                     person,
@@ -630,6 +631,7 @@ public class Workspace extends TreeViewItem implements Serializable
      * Removes a Skill from the Workspace's list of Skills.
      *
      * @param skill The skill to remove
+     * @param undo boolean wether to add to the undo stack or not
      */
     public void remove(Skill skill, boolean undo)
     {
@@ -675,6 +677,7 @@ public class Workspace extends TreeViewItem implements Serializable
      * Adds a Team to the Workspace's list of Teams.
      *
      * @param team The team to add
+     * @param undo boolean wether to add to the undo stack or not
      */
     public void add(Team team, boolean undo)
     {
@@ -725,6 +728,7 @@ public class Workspace extends TreeViewItem implements Serializable
      * Removes a Team from the Workspace's list of Teams.
      *
      * @param team The team to remove
+     * @param undo boolean wether to add to the undo stack or not
      */
     public void remove(Team team, boolean undo)
     {
@@ -768,6 +772,7 @@ public class Workspace extends TreeViewItem implements Serializable
      * Adds a Project to the Workspace's list of Projects.
      *
      * @param project The team to add
+     * @param undo boolean wether to add to the undo stack or not
      */
     public void add(Project project, boolean undo)
     {
@@ -807,6 +812,7 @@ public class Workspace extends TreeViewItem implements Serializable
      * Removes a Project from the Workspace's list of Projects.
      *
      * @param project The project to remove
+     * @param undo boolean wether to add to the undo stack or not
      */
     public void remove(Project project, boolean undo)
     {
@@ -848,6 +854,7 @@ public class Workspace extends TreeViewItem implements Serializable
      * Adds a Role to the Workspace's list of Roles.
      *
      * @param role The role to add
+     * @param undo boolean wether to add to the undo stack or not
      */
     public void add(Role role, boolean undo)
     {
@@ -886,6 +893,7 @@ public class Workspace extends TreeViewItem implements Serializable
      * Removes a Role from the Workspace's list of Roles.
      *
      * @param role The role to remove
+     * @param undo boolean wether to add to the undo stack or not
      */
     public void remove(Role role, boolean undo)
     {

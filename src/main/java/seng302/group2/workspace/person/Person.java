@@ -290,7 +290,7 @@ public class Person extends TreeViewItem implements Serializable
      * @param skill The skill to add
      * @param undo Whether or not to add an undo item to the stack
      */
-    public void addSkill(Skill skill, Boolean undo)
+    public void addSkillToPerson(Skill skill, Boolean undo)
     {
         //Add the undo action to the stack
         if (undo)
@@ -360,7 +360,7 @@ public class Person extends TreeViewItem implements Serializable
      * @param skill The skill to remove
      * @param undo Whether or not to create an undo item
      */
-    public void removeSkill(Skill skill, Boolean undo)
+    public void removeSkillFromPerson(Skill skill, Boolean undo)
     {
         //Add the undo action to the stack
         if (undo)

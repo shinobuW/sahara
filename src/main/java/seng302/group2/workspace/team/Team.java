@@ -387,6 +387,7 @@ public class Team extends TreeViewItem implements Serializable
     public static void deleteTeam(Team deletedTeam)
     {
         ArrayList<Person> peopleToBeDeleted = new ArrayList<>();
+        ArrayList<UndoableItem> undoActions = new ArrayList<>();
         for (Person personRemoveTeam : Global.currentWorkspace.getPeople())
         {
             if (personRemoveTeam.getTeam() == deletedTeam)
@@ -404,10 +405,40 @@ public class Team extends TreeViewItem implements Serializable
 
         for (Person personToDelete : peopleToBeDeleted)
         {
-            Global.currentWorkspace.getPeople().remove(personToDelete);
+            undoActions.add(new UndoableItem(
+                    personToDelete,
+                    new UndoRedoAction(
+                            UndoRedoPerformer.UndoRedoProperty.PERSON_DEL,
+                            deletedTeam),
+                    new UndoRedoAction(
+                            UndoRedoPerformer.UndoRedoProperty.PERSON_DEL,
+                            deletedTeam)));
+            Global.currentWorkspace.remove(personToDelete, false);
+
         }
 
-        Global.currentWorkspace.remove(deletedTeam);
+        undoActions.add(new UndoableItem(
+                deletedTeam,
+                new UndoRedoAction(
+                        UndoRedoPerformer.UndoRedoProperty.TEAM_DEL,
+                        deletedTeam),
+                new UndoRedoAction(
+                        UndoRedoPerformer.UndoRedoProperty.TEAM_DEL,
+                        deletedTeam)));
+        Global.currentWorkspace.remove(deletedTeam, false);
+
+        if (undoActions.size() > 0)
+        {
+            Global.undoRedoMan.add(new UndoableItem(
+                    deletedTeam,
+                    new UndoRedoAction(
+                            UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_RECURSIVE,
+                            undoActions),
+                    new UndoRedoAction(
+                            UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_RECURSIVE,
+                            undoActions)
+            ));
+        }
     }
 
 

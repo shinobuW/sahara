@@ -122,7 +122,7 @@ public class Skill extends TreeViewItem implements Serializable
                             new UndoRedoAction(
                                     UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON,
                                     personRemoveSkill)));
-                    personRemoveSkill.removeSkill(deletedSkill, false);
+                    personRemoveSkill.removeSkillFromPerson(deletedSkill, false);
                 }
             }
 
