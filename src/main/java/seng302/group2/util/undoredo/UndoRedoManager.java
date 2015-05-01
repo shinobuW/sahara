@@ -82,6 +82,7 @@ public class UndoRedoManager
      */
     public void undo()
     {
+        System.out.println("undo called");
         if (!canUndo())
         {
             return;
@@ -98,6 +99,7 @@ public class UndoRedoManager
      */
     public void redo()
     {
+        System.out.println("redo called");
         if (!canRedo())
         {
             return;
@@ -115,6 +117,7 @@ public class UndoRedoManager
      */
     public void add(UndoableItem item)
     {
+        System.out.println("item added to undo stack");
         undoStack.add(item);
         //redoStack.empty();
         redoStack = new Stack<>();

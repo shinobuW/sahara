@@ -746,6 +746,11 @@ public class Workspace extends TreeViewItem implements Serializable
         {
             Global.currentWorkspace.people.add(item);
         }
+
+        for (Project item : Global.currentWorkspace.serializableProjects)
+        {
+            Global.currentWorkspace.projects.add(item);
+        }
         
         Global.currentWorkspace.skills = observableArrayList();
         for (Skill item : Global.currentWorkspace.serializableSkills)
@@ -763,6 +768,12 @@ public class Workspace extends TreeViewItem implements Serializable
         for (Role item : Global.currentWorkspace.serializableRoles)
         {
             Global.currentWorkspace.roles.add(item);
+        }
+
+        // Prepare for the serialization of projects
+        for (Project proj : Global.currentWorkspace.serializableProjects)
+        {
+            proj.postSerialization();
         }
 
         // Prepare for the serialization of persons

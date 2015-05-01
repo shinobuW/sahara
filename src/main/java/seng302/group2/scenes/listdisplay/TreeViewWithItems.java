@@ -127,8 +127,8 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     TreeItem<Object> selectedItem = (TreeItem<Object>) newValue;
                     Global.selectedTreeItem = selectedItem;
 
-                    System.out.println(Global.selectedTreeItem.getValue() + " "
-                            + Global.selectedTreeItem.getValue().getClass());  // testing
+                    /*System.out.println(Global.selectedTreeItem.getValue() + " "
+                            + Global.selectedTreeItem.getValue().getClass());*/
 
                     //Updates the display pane to be pane for the selectItem
                     if (Global.selectedTreeItem == null
@@ -140,7 +140,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         //Global.selectedTreeItem.getValue());
                         App.content.getChildren().add(MainScene.informationGrid);
                     }
-                    if (Global.selectedTreeItem.getValue() instanceof Person)
+                    else if (Global.selectedTreeItem.getValue() instanceof Person)
                     {
                         App.content.getChildren().remove(MainScene.informationGrid);
                         PersonScene.getPersonScene((Person) Global.selectedTreeItem.getValue());
@@ -226,7 +226,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         {       
                             App.content.getChildren().remove(MainScene.informationGrid);
                             ReleaseCategoryScene.getReleaseCategoryScene((ReleaseCategory)
-                            Global.selectedTreeItem.getValue());
+                                    Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
                             setContextMenu(new CategoryTreeContextMenu());
                         }

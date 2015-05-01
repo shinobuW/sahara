@@ -6,6 +6,9 @@ import javafx.collections.ObservableList;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.release.Release;
+import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
@@ -24,6 +27,9 @@ public class SerialBuilder
                 .addType(Person.class)
                 .addType(Skill.class)
                 .addType(Team.class)
+                .addType(Project.class)
+                .addType(Release.class)
+                .addType(Role.class)
                 .registerOn(gsonBuilder);
         return gsonBuilder.create();
     }
