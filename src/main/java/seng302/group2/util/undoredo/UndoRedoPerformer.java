@@ -345,13 +345,6 @@ public class UndoRedoPerformer
             switch (item.getUndoAction().getProperty())
             {
                 case RELEASE_ADD:
-//                    for (Project worksSpaceProject : Global.currentWorkspace.getProjects())
-//                    {
-//                        if (worksSpaceProject == release.getProject())
-//                        {
-//                            project.remove(release);
-//                        }
-//                    }
                     release.getProject().getReleases().remove(release);
                     break;
                 case RELEASE_DEL:
@@ -633,14 +626,6 @@ public class UndoRedoPerformer
                 case RELEASE_DEL:
                     project.remove(release);
                     break;
-                case RELEASE_EDIT:
-                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
-                            item.getRedoAction().getValue())
-                    {
-                        UndoRedoPerformer.redo(undoAction);
-                    }
-                    ReleaseScene.refreshReleaseScene(release);
-                    break;
                 case RELEASE_SHORTNAME:
                     System.out.println("RELEASE_SHORTNAME" + "  " + item.getRedoAction().getValue());
                     release.setShortName((String)item.getRedoAction().getValue());
@@ -656,6 +641,15 @@ public class UndoRedoPerformer
                 case RELEASE_PROJECT:
                     System.out.println("RELEASE_PROJECT" + " " + item.getRedoAction().getValue());
                     release.setProject((Project)item.getRedoAction().getValue());
+                    break;
+                case RELEASE_EDIT:
+                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
+                            item.getRedoAction().getValue())
+                    {
+                        UndoRedoPerformer.redo(undoAction);
+                    }
+                    ReleaseScene.refreshReleaseScene(release);
+                    break;
 
             }
         }
