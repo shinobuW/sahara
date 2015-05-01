@@ -78,6 +78,7 @@ public class ReleaseEditScene
         
         shortNameCustomField.setText(currentRelease.getShortName());
         descriptionTextArea.setText(currentRelease.getDescription());
+        releaseDateField.setText(currentRelease.getDateString());
 
         informationGrid.add(shortNameCustomField, 0, 0);
         informationGrid.add(descriptionTextArea, 0, 1);
