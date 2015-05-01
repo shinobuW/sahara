@@ -51,7 +51,7 @@ public class RoleScene
         skillsBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         informationGrid.add(title, 0, 0, 3, 1);
-        informationGrid.add(new Label("Description: "), 0, 2);
+        informationGrid.add(new Label("Role Description: "), 0, 2);
         informationGrid.add(new Label("Required Skills: "), 0, 3);
 
         informationGrid.add(new Label(currentRole.getDescription()), 1, 2);

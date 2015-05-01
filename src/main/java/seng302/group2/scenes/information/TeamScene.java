@@ -17,6 +17,7 @@ import seng302.group2.workspace.team.Team;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static javafx.collections.FXCollections.observableList;
+import static seng302.group2.Global.currentWorkspace;
 import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
 
@@ -66,31 +67,14 @@ public class TeamScene
             }
         }
 
-        ObservableList<Person> teamList = observableArrayList();
-        ObservableList<Person> devList = observableArrayList();
-        for(Person teamPerson : currentTeam.getPeople())
-        {
-            if(teamPerson.getRole() != null
-                    && teamPerson.getRole()
-                    .toString().equals("Development Team Member"))
-            {
-                devList.add(teamPerson);
-            }
-            else
-            {
-                teamList.add(teamPerson);
-            }
-        }
-        ListView teamsPeopleBox = new ListView(teamList);
-        ListView devBox = new ListView(devList);
+        ListView teamsPeopleBox = new ListView(currentTeam.getPeople());
 
         teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        devBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         Separator separator = new Separator();
 
         informationGrid.add(title, 0, 0, 3, 1);
-        informationGrid.add(new Label("Description: "), 0, 2);
+        informationGrid.add(new Label("Team Description: "), 0, 2);
         informationGrid.add(separator, 0, 3, 4, 1);
         informationGrid.add(new Label("Product Owner: "), 0, 4);
         if(currentTeam.getProductOwner() != null)
@@ -102,10 +86,9 @@ public class TeamScene
         {
             informationGrid.add(new Label(currentTeam.getScrumMaster().toString()), 1, 5);
         }
-        informationGrid.add(new Label("Development Team Members: "), 0, 6);
-        informationGrid.add(new Label("Team Members (No Role): "), 1, 6);
-        informationGrid.add(devBox, 0, 7, 1, 1);
-        informationGrid.add(teamsPeopleBox, 1, 7, 1, 1);
+
+        informationGrid.add(new Label("Team Members: "), 0, 6);
+        informationGrid.add(teamsPeopleBox, 0, 7, 1, 1);
         
         informationGrid.add(new Label(currentTeam.getDescription()), 1, 2, 5, 1);
         informationGrid.add(btnEdit, 3, 8);

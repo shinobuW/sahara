@@ -65,7 +65,7 @@ public class ProjectScene
 
         informationGrid.add(title, 0, 0, 3, 1);
         informationGrid.add(new Label("Short Name: "), 0, 2);
-        informationGrid.add(new Label("Description: "), 0, 3);
+        informationGrid.add(new Label("Project Description: "), 0, 3);
 
         informationGrid.add(new Label(currentProject.getShortName()), 1, 2, 5, 1);
         informationGrid.add(new Label(currentProject.getDescription()), 1, 3, 5, 1);

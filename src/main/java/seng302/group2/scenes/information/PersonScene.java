@@ -52,7 +52,7 @@ public class PersonScene
         informationGrid.add(new Label("Short Name: "), 0, 2);
         informationGrid.add(new Label("Email Address: "), 0, 3);
         informationGrid.add(new Label("Birth Date: "), 0, 4);
-        informationGrid.add(new Label("Description: "), 0, 5);
+        informationGrid.add(new Label("Person Description: "), 0, 5);
         informationGrid.add(new Label("Team: "), 0, 6);
         informationGrid.add(new Label("Role: "), 0, 7);
         informationGrid.add(separator, 0, 8, 4, 1);

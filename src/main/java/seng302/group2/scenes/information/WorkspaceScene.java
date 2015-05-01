@@ -48,7 +48,7 @@ public class WorkspaceScene
 
         informationGrid.add(title, 0, 0, 3, 1);
         informationGrid.add(new Label("Short Name: "), 0, 2);
-        informationGrid.add(new Label("Description: "), 0, 3);
+        informationGrid.add(new Label("Workspace Description: "), 0, 3);
 
         informationGrid.add(new Label(currentWorkspace.getShortName()), 1, 2);
         informationGrid.add(new Label(currentWorkspace.getDescription()), 1, 3);

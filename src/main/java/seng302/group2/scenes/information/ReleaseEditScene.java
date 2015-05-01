@@ -63,11 +63,11 @@ public class ReleaseEditScene
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Description", 300);
-        CustomDateField releaseDateField = new CustomDateField("Estimated Release Date");
+        RequiredField shortNameCustomField = new RequiredField("Short Name: ");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Release Description: ", 300);
+        CustomDateField releaseDateField = new CustomDateField("Estimated Release Date: ");
         
-        CustomComboBox projectComboBox = new CustomComboBox("Project");
+        CustomComboBox projectComboBox = new CustomComboBox("Project: ");
         
         for (TreeViewItem project : Global.currentWorkspace.getProjects())
         {

@@ -71,6 +71,7 @@ public class PersonEditScene
         Button btnDelete = new Button("->");
         
         VBox skillsButtons = new VBox();
+        skillsButtons.spacingProperty().setValue(10);
         skillsButtons.getChildren().add(btnAdd);
         skillsButtons.getChildren().add(btnDelete);
         skillsButtons.setAlignment(Pos.CENTER);
@@ -101,12 +102,12 @@ public class PersonEditScene
         ListView skillsBox = new ListView(dialogSkills);
         skillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        RequiredField firstNameCustomField = new RequiredField("First Name");
-        RequiredField lastNameCustomField = new RequiredField("Last Name");
-        CustomTextField emailTextField = new CustomTextField("Email");
-        CustomDateField customBirthDate = new CustomDateField("Birth Date");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Description", 300);
+        RequiredField shortNameCustomField = new RequiredField("Short Name: ");
+        RequiredField firstNameCustomField = new RequiredField("First Name: ");
+        RequiredField lastNameCustomField = new RequiredField("Last Name: ");
+        CustomTextField emailTextField = new CustomTextField("Email: ");
+        CustomDateField customBirthDate = new CustomDateField("Birth Date: ");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Person Description: ", 300);
         
         firstNameCustomField.setText(currentPerson.getFirstName());
         lastNameCustomField.setText(currentPerson.getLastName());
@@ -124,6 +125,7 @@ public class PersonEditScene
         informationGrid.add(customBirthDate, 0, 4);
         informationGrid.add(descriptionTextArea, 0, 5);
         informationGrid.add(new Label("Skills: "), 0, 6);
+        informationGrid.add(new Label("Available Skills: "), 2, 6);
         informationGrid.add(personSkillsBox, 0, 7);
         
         informationGrid.add(skillsButtons,1,7);

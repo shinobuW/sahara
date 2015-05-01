@@ -56,9 +56,9 @@ public class ProjectEditScene
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        RequiredField longNameCustomField = new RequiredField("Long Name");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description", 300);
+        RequiredField shortNameCustomField = new RequiredField("Short Name: ");
+        RequiredField longNameCustomField = new RequiredField("Long Name: ");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description: ", 300);
 
         shortNameCustomField.setText(currentProject.getShortName());
         longNameCustomField.setText(currentProject.getLongName());
@@ -68,6 +68,7 @@ public class ProjectEditScene
         Button btnDelete = new Button("->");
 
         VBox teamButtons = new VBox();
+        teamButtons.spacingProperty().setValue(10);
         teamButtons.getChildren().add(btnAdd);
         teamButtons.getChildren().add(btnDelete);
         teamButtons.setAlignment(Pos.CENTER);
@@ -80,6 +81,7 @@ public class ProjectEditScene
 	
         ListView projectTeamsBox = new ListView(tempProject.getTeams());
         projectTeamsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        projectTeamsBox.setMaxHeight(150);
 
 
         ObservableList<Team> dialogTeams = observableArrayList();
@@ -98,16 +100,18 @@ public class ProjectEditScene
 
         ListView membersBox = new ListView(dialogTeams);
         membersBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        membersBox.setMaxHeight(150);
 
         informationGrid.add(shortNameCustomField, 0, 0);
         informationGrid.add(longNameCustomField, 0, 1);
         informationGrid.add(descriptionTextArea, 0, 2);
-        informationGrid.add(projectTeamsBox, 0, 3);
+        informationGrid.add(new Label("Teams: "), 0, 3);
+        informationGrid.add(new Label("Available Teams: "), 2, 3);
+        informationGrid.add(projectTeamsBox, 0, 4);
+        informationGrid.add(teamButtons, 1, 4);
+        informationGrid.add(membersBox, 2, 4);
 
-        informationGrid.add(teamButtons, 1, 3);
-
-        informationGrid.add(membersBox, 2, 3);
-        informationGrid.add(buttons, 0, 4);
+        informationGrid.add(buttons, 0, 5);
 
         btnAdd.setOnAction((event) ->
             {

@@ -68,7 +68,7 @@ public class TestClassUndoRedoPerformer
         TEAM_DEL,
         TEAM_SHORTNAME,
         TEAM_DESCRIPTION,
-	TEAM_PROJECT,
+	    TEAM_PROJECT,
         TEAM_ADD_PROJECT,
         TEAM_DEL_PROJECT,
         TEAM_EDIT,

@@ -64,8 +64,8 @@ public class TeamEditScene
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Team Description", 300);
+        RequiredField shortNameCustomField = new RequiredField("Short Name: ");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Team Description: ", 300);
         
         shortNameCustomField.setText(currentTeam.getShortName());
         descriptionTextArea.setText(currentTeam.getDescription());
@@ -74,6 +74,7 @@ public class TeamEditScene
         Button btnDelete = new Button("->");
         
         VBox peopleButtons = new VBox();
+        peopleButtons.spacingProperty().setValue(10);
         peopleButtons.getChildren().add(btnAdd);
         peopleButtons.getChildren().add(btnDelete);
         peopleButtons.setAlignment(Pos.CENTER);
@@ -132,6 +133,7 @@ public class TeamEditScene
         informationGrid.add(shortNameCustomField, 0, 0);
         informationGrid.add(descriptionTextArea, 0, 1);
         informationGrid.add(new Label("Team Members: "), 0, 2);
+        informationGrid.add(new Label("Available People: "), 2, 2);
         informationGrid.add(teamsPeopleBox, 0, 3);
 
         informationGrid.add(peopleButtons, 1, 3);
@@ -148,7 +150,7 @@ public class TeamEditScene
                         membersBox.getSelectionModel().getSelectedItems();
                 for (Person item : selectedPeople)
                 {
-                    if (item.getTeam() == (Team) Global.currentWorkspace.getTeams().get(0) 
+                    if (item.getTeam().isUnassignedTeam()
                             || item.getTeam() == null) 
                     {
                         tempTeam.add(item, false);
@@ -162,7 +164,7 @@ public class TeamEditScene
                 dialogPeople.clear();
                 for (TreeViewItem projectPeople : Global.currentWorkspace.getPeople())
                 {
-                    if (!tempTeam.getPeople().contains((Person)projectPeople))
+                    if (!tempTeam.getPeople().contains(projectPeople))
                     {
                         dialogPeople.add((Person) projectPeople);
                     }
@@ -181,7 +183,7 @@ public class TeamEditScene
                 dialogPeople.clear();
                 for (TreeViewItem projectPeople : Global.currentWorkspace.getPeople())
                 {
-                    if (!tempTeam.getPeople().contains((Person)projectPeople))
+                    if (!tempTeam.getPeople().contains(projectPeople))
                     {
                         dialogPeople.add((Person) projectPeople);
                     }

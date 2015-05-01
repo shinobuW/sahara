@@ -46,7 +46,7 @@ public class SkillScene
         Button btnEdit = new Button("Edit");
 
         informationGrid.add(title, 0, 0, 3, 1);
-        informationGrid.add(new Label("Description: "), 0, 2);
+        informationGrid.add(new Label("Skill Description: "), 0, 2);
         
         informationGrid.add(new Label(currentSkill.getDescription()), 1, 2);
         informationGrid.add(btnEdit, 1, 3);
