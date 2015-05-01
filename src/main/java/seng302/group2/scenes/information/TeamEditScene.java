@@ -16,6 +16,7 @@ import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
+import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
@@ -24,6 +25,7 @@ import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.util.ArrayList;
@@ -66,7 +68,36 @@ public class TeamEditScene
 
         RequiredField shortNameCustomField = new RequiredField("Short Name: ");
         CustomTextArea descriptionTextArea = new CustomTextArea("Team Description: ", 300);
-        
+        CustomComboBox productOwnerBox = new CustomComboBox("Product Owner: ", false);
+        CustomComboBox scrumMasterBox = new CustomComboBox("Scrum Master: ", false);
+
+        productOwnerBox.addToComboBox("");
+        scrumMasterBox.addToComboBox("");
+
+        for (Person teamMember : currentTeam.getPeople())
+        {
+            for (Skill memSkill : teamMember.getSkills())
+            {
+                if (memSkill.getShortName().equals("Product Owner"))
+                {
+                    productOwnerBox.addToComboBox(teamMember.toString());
+                    break;
+                }
+            }
+        }
+
+        for (Person teamMember : currentTeam.getPeople())
+        {
+            for (Skill memSkill : teamMember.getSkills())
+            {
+                if (memSkill.getShortName().equals("Scrum Master"))
+                {
+                    scrumMasterBox.addToComboBox(teamMember.toString());
+                    break;
+                }
+            }
+        }
+
         shortNameCustomField.setText(currentTeam.getShortName());
         descriptionTextArea.setText(currentTeam.getDescription());
         
@@ -132,15 +163,17 @@ public class TeamEditScene
 
         informationGrid.add(shortNameCustomField, 0, 0);
         informationGrid.add(descriptionTextArea, 0, 1);
-        informationGrid.add(new Label("Team Members: "), 0, 2);
-        informationGrid.add(new Label("Available People: "), 2, 2);
-        informationGrid.add(teamsPeopleBox, 0, 3);
+        informationGrid.add(productOwnerBox, 0, 2);
+        informationGrid.add(scrumMasterBox, 0, 3);
+        informationGrid.add(new Label("Team Members: "), 0, 4);
+        informationGrid.add(new Label("Available People: "), 2, 4);
 
-        informationGrid.add(peopleButtons, 1, 3);
-        informationGrid.add(btnSave, 1, 4);
+        informationGrid.add(teamsPeopleBox, 0, 5);
+        informationGrid.add(peopleButtons, 1, 5);
+        informationGrid.add(membersBox, 2, 5);
 
-        informationGrid.add(membersBox, 2, 3);
-        informationGrid.add(btnCancel, 2, 4);
+        informationGrid.add(btnSave, 1, 6);
+        informationGrid.add(btnCancel, 2, 6);
 
 
         

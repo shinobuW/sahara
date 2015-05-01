@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
  */
 public class CustomComboBox extends VBox
 {
+    boolean required;
     String errorMessage = "";
     Label errorMessageText = new Label();
     ObservableList<String> options = FXCollections.observableArrayList();
@@ -30,19 +31,26 @@ public class CustomComboBox extends VBox
      * asterisk.
      * @param name The node field that is required
      */
-    public CustomComboBox(String name)
+    public CustomComboBox(String name, boolean required)
     {
+        this.required = required;
         this.errorMessageText.setText(errorMessage);
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(165);
         labelBox.spacingProperty().setValue(0);
-        
-        Label aster = new Label(" * ");
-        aster.setTextFill(Color.web("#ff0000"));
-        
-        labelBox.getChildren().addAll(new Label(name), aster);
-        
+
+
+
+        labelBox.getChildren().addAll(new Label(name));
+
+        if (required)
+        {
+            Label aster = new Label(" * ");
+            aster.setTextFill(Color.web("#ff0000"));
+            labelBox.getChildren().add(aster);
+        }
+
         HBox entry = new HBox();
         entry.setPrefWidth(175);
         entry.getChildren().addAll(labelBox, this.comboBox);
@@ -60,7 +68,7 @@ public class CustomComboBox extends VBox
         this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
         this.getChildren().add(errorMessageText);
     }
-    
+
     /**
      * Add option item to Combo Box
      * @param item String item to add

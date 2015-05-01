@@ -67,7 +67,7 @@ public class ReleaseEditScene
         CustomTextArea descriptionTextArea = new CustomTextArea("Release Description: ", 300);
         CustomDateField releaseDateField = new CustomDateField("Estimated Release Date: ");
         
-        CustomComboBox projectComboBox = new CustomComboBox("Project: ");
+        CustomComboBox projectComboBox = new CustomComboBox("Project: ", true);
         
         for (TreeViewItem project : Global.currentWorkspace.getProjects())
         {
