@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static seng302.group2.scenes.MainScene.informationGrid;
+import seng302.group2.workspace.role.Role;
 /**
  * A class that handles the ugly undo/redo work behind the scenes on undoable items.
  * @author jml168
@@ -56,6 +57,7 @@ public class UndoRedoPerformer
         PERSON_ADD_TEAM,
         PERSON_DEL_TEAM,
         PERSON_EDIT,
+        PERSON_ROLE,
         
         SKILL_ADD,
         SKILL_DEL,
@@ -207,6 +209,9 @@ public class UndoRedoPerformer
                     break;
                 case PERSON_TEAM:
                     person.setTeam((Team) item.getUndoAction().getValue());
+                    break;
+                case PERSON_ROLE:
+                    person.setRole((Role) item.getUndoAction().getValue());
                     break;
                 case PERSON_ADD_TEAM:
                     Team currentTeam = (Team) item.getUndoAction().getValue();
@@ -507,6 +512,9 @@ public class UndoRedoPerformer
                     break;
                 case PERSON_TEAM:
                     person.setTeam((Team) item.getRedoAction().getValue());
+                    break;
+                case PERSON_ROLE:
+                    person.setRole((Role) item.getRedoAction().getValue());
                     break;
                 case PERSON_ADD_TEAM:
                     Team currentTeam = (Team) item.getRedoAction().getValue();

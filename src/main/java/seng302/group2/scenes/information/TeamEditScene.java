@@ -35,6 +35,7 @@ import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
+import seng302.group2.workspace.role.Role;
 
 /**
  * A class for displaying the team edit scene.
@@ -164,6 +165,9 @@ public class TeamEditScene
         ObservableList<Person> dialogPeople = observableArrayList();
         ObservableList<Person> dialogPeopleCopy = observableArrayList();
         
+        ObservableList<Person> dialogPeopleRoles = observableArrayList();
+        ObservableList<Role> dialogRoles = observableArrayList();
+        
         for (TreeViewItem projectPerson : Global.currentWorkspace.getPeople())
         {
             if (!tempTeam.getPeople().contains(projectPerson))
@@ -201,8 +205,7 @@ public class TeamEditScene
         informationGrid.add(devBtns, 0, 6);
         informationGrid.add(btnSave, 1, 6);
         informationGrid.add(btnCancel, 2, 6);
-
-
+        
         
         btnAdd.setOnAction((event) ->
             {
@@ -257,6 +260,8 @@ public class TeamEditScene
 
                 for (Person selectedPerson : selectedPeople)
                 {
+                    dialogRoles.add(selectedPerson.getRole());
+                    dialogPeopleRoles.add(selectedPerson);
                     selectedPerson.setRole(Global.currentWorkspace.getRoles().get(2));
                 }
 
@@ -269,6 +274,9 @@ public class TeamEditScene
 
                 for (Person selectedPerson : selectedPeople)
                 {
+                    int personIndex = dialogPeopleRoles.indexOf(selectedPerson);
+                    dialogPeopleRoles.remove(selectedPerson);
+                    dialogRoles.remove(personIndex, personIndex);
                     selectedPerson.setRole(null);
                 }
             });
@@ -278,7 +286,10 @@ public class TeamEditScene
                 App.content.getChildren().remove(informationGrid);
                 TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
                 App.content.getChildren().add(informationGrid);
-
+                for (int i = 0; i < dialogRoles.size(); i++)
+                {
+                    dialogPeopleRoles.get(i).setRole(dialogRoles.get(i));
+                }
             });
 
         btnSave.setOnAction((event) ->
@@ -299,7 +310,7 @@ public class TeamEditScene
                     
                     ArrayList<UndoableItem> undoActions = new ArrayList<>();
                     
-                    if (shortNameCustomField.getText() != currentTeam.getShortName())
+                    if (!shortNameCustomField.getText().equals(currentTeam.getShortName()))
                     {
                         undoActions.add(new UndoableItem(
                                 currentTeam,
@@ -313,7 +324,7 @@ public class TeamEditScene
                     
                     currentTeam.setShortName(shortNameCustomField.getText());
                     
-                    if (descriptionTextArea.getText() != currentTeam.getDescription())
+                    if (!descriptionTextArea.getText().equals(currentTeam.getDescription()))
                     {
                         undoActions.add(new UndoableItem(
                                 currentTeam,
@@ -326,6 +337,18 @@ public class TeamEditScene
                     }
                     
                     currentTeam.setDescription(descriptionTextArea.getText());
+                    
+                    for (int i = 0; i < dialogRoles.size(); i++)
+                    {
+                        undoActions.add(new UndoableItem(
+                                dialogPeopleRoles.get(i),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PERSON_ROLE,
+                                        dialogRoles.get(i)),
+                                new UndoRedoAction(
+                                        UndoRedoPerformer.UndoRedoProperty.PERSON_ROLE,
+                                        dialogPeopleRoles.get(i).getRole())));
+                    }
 
                     String stringSM = "";
                     if (currentSM != null)
@@ -334,24 +357,23 @@ public class TeamEditScene
                     }
                     if (!scrumMasterBox.getValue().equals(stringSM))
                     {
-                        undoActions.add(new UndoableItem(
-                                currentTeam,
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION,
-                                        currentTeam.getDescription()),
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION,
-                                        descriptionTextArea.getText())));
                         for (Person selectedPerson : currentTeam.getPeople())
                         {
                             if (selectedPerson.toString().equals(scrumMasterBox.getValue()))
                             {
+                                undoActions.add(new UndoableItem(
+                                    selectedPerson,
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ROLE,
+                                            selectedPerson.getRole()),
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ROLE,
+                                            Global.currentWorkspace.getRoles().get(0))));
                                 currentTeam.setScrumMaster(selectedPerson);
                                 selectedPerson.setRole(Global.currentWorkspace.getRoles().get(0));
                             }
                         }
                     }
-
 
                     String stringPO = "";
                     if (currentPO != null)
@@ -360,24 +382,23 @@ public class TeamEditScene
                     }
                     if (!productOwnerBox.getValue().equals(stringPO))
                     {
-                        undoActions.add(new UndoableItem(
-                                currentTeam,
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION,
-                                        currentTeam.getDescription()),
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.TEAM_DESCRIPTION,
-                                        descriptionTextArea.getText())));
                         for (Person selectedPerson : currentTeam.getPeople())
                         {
                             if (selectedPerson.toString().equals(productOwnerBox.getValue()))
                             {
+                                undoActions.add(new UndoableItem(
+                                    selectedPerson,
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ROLE,
+                                            selectedPerson.getRole()),
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ROLE,
+                                            Global.currentWorkspace.getRoles().get(1))));
                                 currentTeam.setProductOwner(selectedPerson);
                                 selectedPerson.setRole(Global.currentWorkspace.getRoles().get(1));
                             }
                         }
                     }
-
                     
                     for (Person person : tempTeam.getPeople())
                     {
@@ -401,9 +422,6 @@ public class TeamEditScene
                                     new UndoRedoAction(
                                             UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM, 
                                             currentTeam)));
-
-
-
                             person.getTeam().remove(person, false);
                             person.setTeam(currentTeam);
                             currentTeam.add(person, false);
