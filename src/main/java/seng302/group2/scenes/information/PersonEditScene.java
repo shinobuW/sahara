@@ -337,7 +337,6 @@ public class PersonEditScene
                             currentPerson.removeSkillFromPerson(skill, false);
                         }
                     }
-                    
                                         
                     String stringSM = "";
                     if (currentTeam != null)
@@ -486,43 +485,5 @@ public class PersonEditScene
             });
         
         return informationGrid;
-    }
-    
-    private static void personCheckDialog(Person person, Team tempTeam, Team currentTeam) 
-    {
-        
-        Dialog dialog = new Dialog(null, "Already Assigned to a Team");
-        VBox grid = new VBox();
-        grid.spacingProperty().setValue(10);
-        Insets insets = new Insets(20, 20, 20, 20);
-        grid.setPadding(insets);
-               
-        Button btnYes = new Button("Yes");
-        Button btnNo = new Button("No");
-        
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
-        buttons.getChildren().addAll(btnYes, btnNo);
-        
-        grid.getChildren().add(new Label("Are you sure you want to move " + person.getShortName() 
-                +  " from " + person.getTeamName() + " to " + currentTeam));
-        grid.getChildren().add(buttons);
-        
-        btnYes.setOnAction((event) ->
-            {
-                tempTeam.add(person, false);
-                dialog.hide();
-            });
-        
-        btnNo.setOnAction((event) ->
-            {
-                dialog.hide();
-            });
-        
-        dialog.setResizable(false);
-        dialog.setIconifiable(false);
-        dialog.setContent(grid);
-        dialog.show();
     }
 }
