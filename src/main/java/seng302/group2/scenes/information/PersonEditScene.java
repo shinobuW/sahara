@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import org.controlsfx.dialog.Dialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
@@ -35,10 +36,12 @@ import static seng302.group2.Global.currentWorkspace;
 import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
+import seng302.group2.scenes.control.CustomComboBox;
 import static seng302.group2.util.validation.DateValidator.stringToDate;
 import static seng302.group2.util.validation.DateValidator.validateBirthDateField;
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
+import seng302.group2.workspace.team.Team;
 
 /**
  * A class for displaying the person edit scene.
@@ -101,6 +104,23 @@ public class PersonEditScene
                 
         ListView skillsBox = new ListView(dialogSkills);
         skillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        CustomComboBox teamBox = new CustomComboBox("Team: ", false);
+
+        
+        Team currentTeam = currentPerson.getTeam();
+
+        for (Team team : Global.currentWorkspace.getTeams())
+        {
+            teamBox.addToComboBox(team.toString());
+        }
+        if (currentTeam == Global.currentWorkspace.getTeams().get(0))
+        {
+            teamBox.setValue(Global.currentWorkspace.getTeams().get(0).toString());
+        }
+        else
+        {
+            teamBox.setValue(currentTeam.toString());
+        }
         
         RequiredField shortNameCustomField = new RequiredField("Short Name: ");
         RequiredField firstNameCustomField = new RequiredField("First Name: ");
@@ -124,15 +144,16 @@ public class PersonEditScene
         informationGrid.add(emailTextField, 0, 3);
         informationGrid.add(customBirthDate, 0, 4);
         informationGrid.add(descriptionTextArea, 0, 5);
-        informationGrid.add(new Label("Skills: "), 0, 6);
-        informationGrid.add(new Label("Available Skills: "), 2, 6);
-        informationGrid.add(personSkillsBox, 0, 7);
+        informationGrid.add(teamBox, 0, 6);
+        informationGrid.add(new Label("Skills: "), 0, 7);
+        informationGrid.add(personSkillsBox, 0, 8);
         
-        informationGrid.add(skillsButtons,1,7);
-        informationGrid.add(btnSave, 1, 8);
+        informationGrid.add(skillsButtons,1,8);
+        informationGrid.add(btnSave, 1, 9);
         
-        informationGrid.add(skillsBox, 2, 7);
-        informationGrid.add(btnCancel, 2, 8);
+        informationGrid.add(new Label("Available Skills: "), 2, 7);
+        informationGrid.add(skillsBox, 2, 8);
+        informationGrid.add(btnCancel, 2, 9);
         
         btnAdd.setOnAction((event) ->
             {
@@ -283,7 +304,6 @@ public class PersonEditScene
                                         stringToDate(customBirthDate.getText()))));
                     }  
                     
-                    
                     for (Skill skill : tempPerson.getSkills())
                     {
                         if (!currentPerson.getSkills().contains(skill))
@@ -315,6 +335,111 @@ public class PersonEditScene
                                             currentPerson)));
                                          
                             currentPerson.removeSkillFromPerson(skill, false);
+                        }
+                    }
+                    
+                                        
+                    String stringSM = "";
+                    if (currentTeam != null)
+                    {
+                        stringSM = currentTeam.toString();
+                    }
+                    if (!teamBox.getValue().equals(stringSM))
+                    {
+                        if (teamBox.getValue().equals("Unassigned"))
+                        {
+                            undoActions.add(new UndoableItem(
+                                    currentPerson,
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, 
+                                            currentPerson.getTeam()),
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, 
+                                            Global.currentWorkspace.getTeams().get(0))));
+
+                            undoActions.add(new UndoableItem(
+                                    currentPerson,
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM, 
+                                            currentPerson.getTeam()),
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM, 
+                                            Global.currentWorkspace.getTeams().get(0))));
+
+                            currentPerson.getTeam().remove(currentPerson, false);
+                            currentPerson.setTeam(Global.currentWorkspace.getTeams().get(0));
+                            Global.currentWorkspace.getTeams().get(0).add(currentPerson, false);
+                        }
+                        else 
+                        {
+                            for (Team selectedTeam : Global.currentWorkspace.getTeams())
+                            {
+                                if (selectedTeam.toString().equals(teamBox.getValue()))
+                                {
+                                    Dialog dialog = new Dialog(null, "Already Assigned to a Team");
+                                    VBox grid = new VBox();
+                                    grid.spacingProperty().setValue(10);
+                                    Insets insets = new Insets(20, 20, 20, 20);
+                                    grid.setPadding(insets);
+
+                                    Button btnYes1 = new Button("Yes");
+                                    Button btnNo1 = new Button("No");
+
+                                    HBox buttons1 = new HBox();
+                                    buttons1.spacingProperty().setValue(10);
+                                    buttons1.alignmentProperty().set(Pos.CENTER_RIGHT);
+                                    buttons1.getChildren().addAll(btnYes1, btnNo1);
+
+                                    grid.getChildren().add(new Label(
+                                            "Are you sure you want to move " 
+                                                    + currentPerson.getShortName() 
+                                            +  " from " + currentPerson.getTeamName() 
+                                                    + " to " + selectedTeam));
+                                    grid.getChildren().add(buttons1);
+
+                                    btnYes1.setOnAction((dialogEvent) ->
+                                        {
+                                            undoActions.add(new UndoableItem(
+                                                    currentPerson,
+                                                    new UndoRedoAction(
+                                                            UndoRedoPerformer.
+                                                                    UndoRedoProperty.
+                                                                    PERSON_ADD_TEAM, 
+                                                            currentPerson.getTeam()),
+                                                    new UndoRedoAction(
+                                                            UndoRedoPerformer.
+                                                                    UndoRedoProperty.
+                                                                    PERSON_ADD_TEAM, 
+                                                            selectedTeam)));
+
+                                            undoActions.add(new UndoableItem(
+                                                    currentPerson,
+                                                    new UndoRedoAction(
+                                                            UndoRedoPerformer.
+                                                                    UndoRedoProperty.PERSON_TEAM, 
+                                                            currentPerson.getTeam()),
+                                                    new UndoRedoAction(
+                                                            UndoRedoPerformer.
+                                                                    UndoRedoProperty.PERSON_TEAM, 
+                                                            selectedTeam)));
+
+                                            currentPerson.getTeam().remove(currentPerson, false);
+                                            currentPerson.setTeam(selectedTeam);
+                                            selectedTeam.add(currentPerson, false);
+                                            dialog.hide();
+                                        });
+
+                                    btnNo1.setOnAction((dialogEvent) ->
+                                        {
+                                            dialog.hide();
+                                        });
+
+                                    dialog.setResizable(false);
+                                    dialog.setIconifiable(false);
+                                    dialog.setContent(grid);
+                                    dialog.show();
+                                }
+                            }
                         }
                     }
                     
@@ -361,5 +486,43 @@ public class PersonEditScene
             });
         
         return informationGrid;
+    }
+    
+    private static void personCheckDialog(Person person, Team tempTeam, Team currentTeam) 
+    {
+        
+        Dialog dialog = new Dialog(null, "Already Assigned to a Team");
+        VBox grid = new VBox();
+        grid.spacingProperty().setValue(10);
+        Insets insets = new Insets(20, 20, 20, 20);
+        grid.setPadding(insets);
+               
+        Button btnYes = new Button("Yes");
+        Button btnNo = new Button("No");
+        
+        HBox buttons = new HBox();
+        buttons.spacingProperty().setValue(10);
+        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
+        buttons.getChildren().addAll(btnYes, btnNo);
+        
+        grid.getChildren().add(new Label("Are you sure you want to move " + person.getShortName() 
+                +  " from " + person.getTeamName() + " to " + currentTeam));
+        grid.getChildren().add(buttons);
+        
+        btnYes.setOnAction((event) ->
+            {
+                tempTeam.add(person, false);
+                dialog.hide();
+            });
+        
+        btnNo.setOnAction((event) ->
+            {
+                dialog.hide();
+            });
+        
+        dialog.setResizable(false);
+        dialog.setIconifiable(false);
+        dialog.setContent(grid);
+        dialog.show();
     }
 }
