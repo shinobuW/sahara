@@ -217,7 +217,7 @@ public class TeamEditScene
                     }
                     else 
                     {
-                        personCheckDialog(item, tempTeam);
+                        personCheckDialog(item, tempTeam, currentTeam);
                     }
                 }
                 
@@ -479,7 +479,7 @@ public class TeamEditScene
         return informationGrid;
     }
     
-    private static void personCheckDialog(Person person, Team tempTeam) 
+    private static void personCheckDialog(Person person, Team tempTeam, Team currentTeam) 
     {
         
         Dialog dialog = new Dialog(null, "Already Assigned to a Team");
@@ -496,7 +496,8 @@ public class TeamEditScene
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnYes, btnNo);
         
-        grid.getChildren().add(new Label("Are you sure you want to change teams?"));
+        grid.getChildren().add(new Label("Are you sure you want to move " + person.getShortName() 
+                +  " from " + person.getTeamName() + " to " + currentTeam));
         grid.getChildren().add(buttons);
         
         btnYes.setOnAction((event) ->
