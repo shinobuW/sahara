@@ -125,7 +125,7 @@ public class Role extends TreeViewItem
 
     /**
      * Gets the Role's description
-     *
+     *Role
      * @return The description name of the description
      */
     public String getDescription()
@@ -169,7 +169,7 @@ public class Role extends TreeViewItem
      * @param type The type of role to return
      * @return The role in the workspace of the given type
      */
-    public Role getRoleType(RoleType type)
+    public static Role getRoleType(RoleType type)
     {
         Role role = null;
         for (Role wsrole : Global.currentWorkspace.getRoles())
