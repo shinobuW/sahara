@@ -38,6 +38,11 @@ public class DeleteDialog
      */
     public static boolean showDeleteDialog(TreeViewItem element)
     {
+        if (element.getClass() == Project.class)
+        {
+            return false;
+        }
+
         ArrayList<String> dialogText = new ArrayList<String>(2);
         dialogText = getDeleteDialogText(element);
 
@@ -203,7 +208,7 @@ public class DeleteDialog
             Project deletedProject = (Project)element;
             message = MessageFormat.format("Are you sure you want to delete the project \"{0}",
                     deletedProject.toString() + "\"?");
-        }              
+        }
         else
         {
             title = "Delete Item";
