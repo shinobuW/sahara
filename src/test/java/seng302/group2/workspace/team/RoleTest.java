@@ -10,7 +10,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import seng302.group2.workspace.role.Role;
-import seng302.group2.workspace.role.RoleType;
 
 /**
  * A series of tests relating to Role
@@ -45,13 +44,13 @@ public class RoleTest extends TestCase
         Assert.assertEquals("", role.getDescription());
         Assert.assertEquals("role Name", role.toString());
         
-        Role role2 = new Role("QA", RoleType.Others);
+        Role role2 = new Role("QA", Role.RoleType.Others);
         Assert.assertEquals("QA", role2.getShortName());
-        Assert.assertEquals(RoleType.Others, role2.getType());
+        Assert.assertEquals(Role.RoleType.Others, role2.getType());
         
-        Role role3 = new Role("Dev2", RoleType.DevelopmentTeamMember, "Developer");
+        Role role3 = new Role("Dev2", Role.RoleType.DevelopmentTeamMember, "Developer");
         Assert.assertEquals("Dev2", role3.getShortName());
-        Assert.assertEquals(RoleType.DevelopmentTeamMember, role3.getType());
+        Assert.assertEquals(Role.RoleType.DevelopmentTeamMember, role3.getType());
         Assert.assertEquals("Developer", role3.getDescription());
     }
     
@@ -63,10 +62,10 @@ public class RoleTest extends TestCase
         Role role = new Role();
         role.setShortName("Tester");
         role.setDescription("Manual Testing");
-        role.setType(RoleType.Others);
+        role.setType(Role.RoleType.Others);
         
         Assert.assertEquals("Tester", role.getShortName());
         Assert.assertEquals("Manual Testing", role.getDescription());
-        Assert.assertEquals(RoleType.Others, role.getType());
+        Assert.assertEquals(Role.RoleType.Others, role.getType());
     }
 }

@@ -170,6 +170,7 @@ public class Release extends TreeViewItem
     /**
      * Sets the project the release belongs to
      * @param project project to set
+     * @param undo Whether or not to create an undo item for the action
      */
     public void setProject(Project project, boolean undo)
     {

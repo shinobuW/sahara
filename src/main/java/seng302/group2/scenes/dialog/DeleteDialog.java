@@ -30,9 +30,11 @@ import seng302.group2.workspace.team.Team;
  */
 public class DeleteDialog
 {
-/**
+
+    /**
      * Shows a confirm dialog box for element deletion
-     * @param category Type of Category
+     * @param element The element to be deleted
+     * @return if the user confirms for the element to be deleted
      */
     public static boolean showDeleteDialog(TreeViewItem element)
     {
@@ -102,13 +104,15 @@ public class DeleteDialog
             else
             {
                 message = MessageFormat.format(
-                    "Are you sure you want to delete {0}, currently in Team {1}", 
-                    deletedPerson.toString(), deletedPerson.getTeamName() + "?");
+                    "Are you sure you want to delete {0}, currently in the team \"{1}",
+                    deletedPerson.toString(), deletedPerson.getTeamName() + "\"?");
             }
         }
         else if (element.getClass() == Skill.class)
         {
             title = "Delete Skill?";
+            String customSkillMessage = "";
+            String namesOfPeopleWithSkill = "";
             Skill deletedSkill = (Skill)element;
             ArrayList<Person> peopleWithSkill = new ArrayList<>();
             for (Person person : Global.currentWorkspace.getPeople())
@@ -119,55 +123,86 @@ public class DeleteDialog
                 }
             }
 
-            if (peopleWithSkill.size() > 0)
+            // Build a String list of people with the skill.
+            if (peopleWithSkill.size() > 1 && peopleWithSkill.size() < 7)
             {
                 int i = 0;
-                String namesOfPeopleWithSkill = "";
-                String customMessage = "";
-                while (i < 6 && i < peopleWithSkill.size())
+                while (i < peopleWithSkill.size())
                 {
-                    namesOfPeopleWithSkill += (peopleWithSkill.get(i)).toString() + ", ";
+                    if (i == peopleWithSkill.size() - 1)
+                    {
+                        namesOfPeopleWithSkill = namesOfPeopleWithSkill.substring(
+                            0, namesOfPeopleWithSkill.length() - 2);
+                        namesOfPeopleWithSkill += (" and " + peopleWithSkill.get(i)).toString()
+                            + " ";
+                    }
+                    else
+                    {
+                        namesOfPeopleWithSkill += (peopleWithSkill.get(i)).toString() + ", ";
+                    }
                     i += 1;
                 }
-                if (peopleWithSkill.size() < 7)
+            }
+            else if (peopleWithSkill.size() >= 7)
+            {
+                int i = 0;
+                while (i < 6)
                 {
-                    customMessage = namesOfPeopleWithSkill + "currently have this skill.";
+                    if (i == 5)
+                    {
+                        namesOfPeopleWithSkill += (peopleWithSkill.get(i)).toString() + " ";
+                    }
+                    else
+                    {
+                        namesOfPeopleWithSkill += (peopleWithSkill.get(i)).toString() + ", ";
+                    }
+                    i += 1;
                 }
-                else if (peopleWithSkill.size() == 7)
-                {
-                    customMessage = namesOfPeopleWithSkill 
-                        + "and 1 other currently have this skill.";
-                }
-                else
-                {
-                    customMessage = MessageFormat.format(namesOfPeopleWithSkill 
-                        + "and {0} others currently have this skill.",
-                        peopleWithSkill.size() - 6);
-                }
+            }
 
-                message = MessageFormat.format("Are you sure you want to delete the skill {0}",
-                    deletedSkill.toString() + "?\n" + customMessage);
+            // Create the appropriate message following common grammar conventions
+            if (peopleWithSkill.size() == 0)
+            {
+                customSkillMessage = "";
+            }
+            else if (peopleWithSkill.size() == 1)
+            {
+                customSkillMessage = peopleWithSkill.get(0).toString()
+                    + " currently has this skill.";
+            }
+            else if (peopleWithSkill.size() < 7)
+            {
+                customSkillMessage = namesOfPeopleWithSkill + "currently have this skill.";
+            }
+            else if (peopleWithSkill.size() == 7)
+            {
+                customSkillMessage = namesOfPeopleWithSkill
+                    + "and 1 other person currently have this skill.";
             }
             else
             {
-                message = MessageFormat.format("Are you sure you want to delete {0}", 
-                    deletedSkill.toString() + "?");
+                customSkillMessage = MessageFormat.format(namesOfPeopleWithSkill
+                    + "and {0} other people currently have this skill.",
+                    peopleWithSkill.size() - 6);
             }
+
+            message = MessageFormat.format("Are you sure you want to delete the skill \"{0}",
+            deletedSkill.toString() + "\"?\n" + customSkillMessage);
         }
         else if (element.getClass() == Team.class)
         {
             title = "Delete Team";
             Team deletedTeam = (Team)element;
-            message = MessageFormat.format("Are you sure you want to delete team {0}", 
-                deletedTeam.toString() + "? \nWARNING: All people "
-                + "currently part of the team will be deleted as well as the team.");
+            message = MessageFormat.format("Are you sure you want to delete the team \"{0}",
+                deletedTeam.toString() + "\"? \nWARNING: All people "
+                + "currently part of the team will also be deleted.");
         }
         else if (element.getClass() == Project.class)
         {
             title = "Delete Project";
             Project deletedProject = (Project)element;
-            message = MessageFormat.format("Are you sure you want to delete {0}", 
-                    deletedProject.toString() + "?");
+            message = MessageFormat.format("Are you sure you want to delete the project \"{0}",
+                    deletedProject.toString() + "\"?");
         }              
         else
         {

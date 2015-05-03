@@ -157,7 +157,8 @@ public class ProjectEditScene
                 dialogTeams.clear();
                 for (TreeViewItem projectTeams : Global.currentWorkspace.getTeams())
                 {
-                    if (!tempProject.getTeams().contains((Team)projectTeams))
+                    if (!tempProject.getTeams().contains((Team)projectTeams)
+                        && !((Team)projectTeams).isUnassignedTeam())
                     {
                         dialogTeams.add((Team)projectTeams);
                     }
@@ -337,11 +338,17 @@ public class ProjectEditScene
 
         return informationGrid;
     }
-    
+
+
+    /**
+     * Asks if a user is sure they want to move the team to a different project.
+     * @param team The team to be moved
+     * @param tempProject The project to move the team to
+     */
     private static void teamCheckDialog(Team team, Project tempProject) 
     {
         
-        Dialog dialog = new Dialog(null, "Already Assigned to a Team");
+        Dialog dialog = new Dialog(null, "Already Assigned to a Project");
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
@@ -355,7 +362,8 @@ public class ProjectEditScene
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnYes, btnNo);
         
-        grid.getChildren().add(new Label("Are you sure you want to change teams?"));
+        grid.getChildren().add(new Label("The team " + team.getShortName() + " is already assigned"
+                + " to a project. Are you sure you want to move them to a different one?"));
         grid.getChildren().add(buttons);
         
         btnYes.setOnAction((event) ->

@@ -12,9 +12,14 @@ import seng302.group2.scenes.dialog.*;
 public class CategoryTreeContextMenu extends ContextMenu
 {
 
-    public CategoryTreeContextMenu()
+    /**
+     * Constructor for context menu for categories
+     * @param disabled the visibility of the context menu
+     */
+    public CategoryTreeContextMenu(Boolean enabled)
     {
         MenuItem createItem = new MenuItem("Create new...");
+        createItem.setDisable(!enabled);
         createItem.setOnAction(e ->
             {
                 showCreateNewDialog(Global.selectedTreeItem.getValue().toString());

@@ -36,7 +36,6 @@ import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 import seng302.group2.workspace.role.Role;
-import seng302.group2.workspace.role.RoleType;
 
 /**
  * A class for displaying the team edit scene.
@@ -162,19 +161,7 @@ public class TeamEditScene
         if (currentSM == null)
         {
             scrumMasterBox.setValue("");
-        }+
- 	510
-+    /**
- 	511
-+     * Asks if the user is sure about moving a person between teams.
- 	512
-+     * @param person The person to be moved
- 	513
-+     * @param tempTeam The team to be moved to
- 	514
-+     * @param currentTeam The persons current team
- 	515
-+     */
+        }
         else
         {
             scrumMasterBox.setValue(currentSM.toString());

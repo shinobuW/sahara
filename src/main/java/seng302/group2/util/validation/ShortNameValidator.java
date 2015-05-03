@@ -8,6 +8,9 @@ package seng302.group2.util.validation;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.release.Release;
+import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
@@ -48,68 +51,76 @@ public class ShortNameValidator
     }
     
     /**
-     * Checks whether a person's short name is valid (unique and not null/empty).
+     * Checks whether a short name is valid (unique and not null/empty).
      * @param shortName The short name to validate
      * @return Validation status representing if the short name is valid
      */
     public static ValidationStatus validateShortName(String shortName)
     {
+        // Test if valid name
         if (NameValidator.validateName(shortName) == ValidationStatus.INVALID)
         {
             return ValidationStatus.INVALID;
         }
+        // Test if short
         if (shortName.length() > 20)
         {
             return ValidationStatus.OUT_OF_RANGE;
         }
-        
-        for (Object object : Global.currentWorkspace.getPeople())
+
+        // Test if unique
+        if (Global.currentWorkspace.getShortName().equals(shortName))
         {
-            try
+            return ValidationStatus.NON_UNIQUE;
+        }
+
+        for (Person pers : Global.currentWorkspace.getPeople())
+        {
+            if (pers.getShortName().equals(shortName))
             {
-                Person person = (Person) object;
-                if (person.getShortName().equals(shortName))
-                {
-                    return ValidationStatus.NON_UNIQUE;
-                }
-            }
-            catch (Exception ex)
-            {
-                continue;
+                return ValidationStatus.NON_UNIQUE;
             }
         }
-        
-        for (Object object : Global.currentWorkspace.getSkills())
+
+        for (Team team : Global.currentWorkspace.getTeams())
         {
-            try
+            if (team.getShortName().equals(shortName))
             {
-                Skill skill = (Skill) object;
-                if (skill.getShortName().equals(shortName))
-                {
-                    return ValidationStatus.NON_UNIQUE;
-                }
+                return ValidationStatus.NON_UNIQUE;
             }
-            catch (Exception ex)    
-            {
-                continue;
-            }    
         }
-        
-        for (Object object : Global.currentWorkspace.getTeams())
+
+        for (Skill skill : Global.currentWorkspace.getSkills())
         {
-            try
+            if (skill.getShortName().equals(shortName))
             {
-                Team team = (Team) object;
-                if (team.getShortName().equals(shortName))
+                return ValidationStatus.NON_UNIQUE;
+            }
+        }
+
+        for (Role role : Global.currentWorkspace.getRoles())
+        {
+            if (role.getShortName().equals(shortName))
+            {
+                return ValidationStatus.NON_UNIQUE;
+            }
+        }
+
+        for (Project proj : Global.currentWorkspace.getProjects())
+        {
+            if (proj.getShortName().equals(shortName))
+            {
+                return ValidationStatus.NON_UNIQUE;
+            }
+            for (Release rel : proj.getReleases())
+            {
+                if (rel.getShortName().equals(shortName))
                 {
                     return ValidationStatus.NON_UNIQUE;
                 }
             }
-            catch (Exception ex)    
-            {
-                continue;
-            }    
-        }        
+        }
+
         return ValidationStatus.VALID;
     }
 }
