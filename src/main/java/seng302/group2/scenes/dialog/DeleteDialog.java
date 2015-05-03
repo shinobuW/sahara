@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
+import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
 import seng302.group2.scenes.contextmenu.ElementTreeContextMenu.Categories;
@@ -59,6 +60,7 @@ public class DeleteDialog
             {
                 Project deletedProject = (Project)element;
                 Project.deleteProject(deletedProject);
+                App.refreshMainScene();
             }
             else if (element.getClass() == Team.class)
             {
