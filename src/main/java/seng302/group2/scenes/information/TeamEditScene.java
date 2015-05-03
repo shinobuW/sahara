@@ -496,7 +496,13 @@ public class TeamEditScene
             });
         return informationGrid;
     }
-    
+
+    /**
+     * Asks if the user is sure about moving a person to a different team
+     * @param person The person being moved
+     * @param tempTeam The team to move to
+     * @param currentTeam The persons current team
+     */
     private static void personCheckDialog(Person person, Team tempTeam, Team currentTeam) 
     {
         

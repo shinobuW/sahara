@@ -120,8 +120,10 @@ public class ReleaseEditScene
                     correctShortName = validateShortName(shortNameCustomField);
                 }
 
-                if (releaseDateField.getText().equals(currentRelease.getEstimatedDate()))
+                if (stringToDate(releaseDateField.getText())
+                        .equals(currentRelease.getEstimatedDate()))
                 {
+                    releaseDate = currentRelease.getEstimatedDate();
                     correctDateFormat = true;
                 }
                 else if (releaseDateField.getText().isEmpty())
@@ -159,7 +161,7 @@ public class ReleaseEditScene
                                         shortNameCustomField.getText())));
                     }
 
-                    if (currentRelease.getEstimatedDate() != (releaseDate))
+                    if (currentRelease.getEstimatedDate() != releaseDate)
                     {
                         undoActions.add(new UndoableItem(
                                 currentRelease,
@@ -199,7 +201,7 @@ public class ReleaseEditScene
 
                     if (undoActions.size() > 0)
                     {
-                        System.out.println("RElease edit added to undoredo stack");
+                        System.out.println("Release edit added to undoredo stack");
                         Global.undoRedoMan.add(new UndoableItem(
                                 currentRelease,
                                 new UndoRedoAction(
@@ -224,7 +226,7 @@ public class ReleaseEditScene
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
                     ReleaseScene.getReleaseScene(currentRelease);
-                    MainScene.treeView = new TreeViewWithItems(new TreeItem());
+                    MainScene.treeView = new TreeViewWithItems( new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
                     children.add(Global.currentWorkspace);
                     
