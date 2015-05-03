@@ -14,7 +14,7 @@ public class CategoryTreeContextMenu extends ContextMenu
 
     /**
      * Constructor for context menu for categories
-     * @param disabled the visibility of the context menu
+     * @param enabled the visibility of the context menu
      */
     public CategoryTreeContextMenu(Boolean enabled)
     {
