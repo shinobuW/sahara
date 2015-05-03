@@ -43,7 +43,7 @@ import seng302.group2.workspace.role.Role;
  */
 public class TeamEditScene
 {
-
+    private static ListView teamsPeopleBox = new ListView();
     /**
      * Gets the Team Edit information scene.
      * @param currentTeam The team to show the information of
@@ -138,16 +138,20 @@ public class TeamEditScene
         peopleButtons.getChildren().add(btnDelete);
         peopleButtons.setAlignment(Pos.CENTER);
 
-        
-        Team tempTeam = new Team();
+        //Creates a copy of the Teams people as of when this function is called.
+        //CurrentTeam never changes until the save is called.
+        ObservableList<Person> tempTeam = observableArrayList();
+        ObservableList<String> tempTeamString = observableArrayList();
         for (Person person : currentTeam.getPeople())
         {
-            System.out.println(person);
-            tempTeam.add(person, false);
+            tempTeam.add(person);
+            tempTeamString.add(person.getShortName() + " - (" + person.getRole() + ")");
         }
         
-        ListView teamsPeopleBox = new ListView(tempTeam.getPeople());
-        if (tempTeam.isUnassignedTeam())
+        //Creates the Teams box of People
+        teamsPeopleBox = new ListView(tempTeamString);
+        
+        if (currentTeam.isUnassignedTeam())
         {
             for (TreeViewItem person : Global.currentWorkspace.getPeople())
             {
@@ -165,19 +169,19 @@ public class TeamEditScene
         ObservableList<Person> dialogPeople = observableArrayList();
         ObservableList<Person> dialogPeopleCopy = observableArrayList();
         
-        ObservableList<Person> dialogPeopleRoles = observableArrayList();
-        ObservableList<Role> dialogRoles = observableArrayList();
+        ObservableList<Person> teamPeopleRoles = observableArrayList();
+        ObservableList<Role> teamRoles = observableArrayList();
         
         for (TreeViewItem projectPerson : Global.currentWorkspace.getPeople())
         {
-            if (!tempTeam.getPeople().contains(projectPerson))
+            if (!tempTeam.contains(projectPerson))
             {
                 dialogPeople.add((Person) projectPerson);
                 dialogPeopleCopy.add((Person) projectPerson);
             }
         }
         
-        if (tempTeam.isUnassignedTeam())
+        if (currentTeam.isUnassignedTeam())
         {
             for (TreeViewItem person : Global.currentWorkspace.getPeople())
             {
@@ -188,10 +192,11 @@ public class TeamEditScene
                 }
             }
         }
-                
+        
+        //Creates the Box of people that aren't assigned to the current Team
         ListView membersBox = new ListView(dialogPeople);
         membersBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
+        
         informationGrid.add(shortNameCustomField, 0, 0);
         informationGrid.add(descriptionTextArea, 0, 1);
         informationGrid.add(productOwnerBox, 0, 2);
@@ -205,8 +210,8 @@ public class TeamEditScene
         informationGrid.add(devBtns, 0, 6);
         informationGrid.add(btnSave, 1, 6);
         informationGrid.add(btnCancel, 2, 6);
-        
-        
+        refreshListView(tempTeam, currentTeam);
+
         btnAdd.setOnAction((event) ->
             {
                 ObservableList<Person> selectedPeople = 
@@ -216,7 +221,7 @@ public class TeamEditScene
                     if (item.getTeam().isUnassignedTeam()
                             || item.getTeam() == null) 
                     {
-                        tempTeam.add(item, false);
+                        tempTeam.add(item);
                     }
                     else 
                     {
@@ -227,69 +232,74 @@ public class TeamEditScene
                 dialogPeople.clear();
                 for (TreeViewItem projectPeople : Global.currentWorkspace.getPeople())
                 {
-                    if (!tempTeam.getPeople().contains(projectPeople))
+                    if (!tempTeam.contains(projectPeople))
                     {
                         dialogPeople.add((Person) projectPeople);
                     }
                 }
+                refreshListView(tempTeam, currentTeam);
             });
         
         btnDelete.setOnAction((event) ->
             {
-                ObservableList<Person> selectedPeople = 
-                        teamsPeopleBox.getSelectionModel().getSelectedItems();
-                for (int i = selectedPeople.size() - 1; i >= 0 ; i--)
+                ObservableList<Integer> selectedPeople =
+                        teamsPeopleBox.getSelectionModel().getSelectedIndices();
+                for (int i = selectedPeople.size() - 1; i >= 0; i--)
                 {
-                    tempTeam.remove(selectedPeople.get(i), false);
+                    tempTeam.remove(i);
+                    
                 }
-                
+                refreshListView(tempTeam, currentTeam);
                 dialogPeople.clear();
                 for (TreeViewItem projectPeople : Global.currentWorkspace.getPeople())
                 {
-                    if (!tempTeam.getPeople().contains(projectPeople))
+                    if (!tempTeam.contains(projectPeople))
                     {
                         dialogPeople.add((Person) projectPeople);
                     }
                 }
+                refreshListView(tempTeam, currentTeam);
             });
 
         mkeDev.setOnAction((event) ->
             {
-                ObservableList<Person> selectedPeople =
-                        teamsPeopleBox.getSelectionModel().getSelectedItems();
-
-                for (Person selectedPerson : selectedPeople)
+                ObservableList<Integer> selectedPeople =
+                        teamsPeopleBox.getSelectionModel().getSelectedIndices();
+                System.out.println(selectedPeople);
+                for (int i : selectedPeople)
                 {
-                    dialogRoles.add(selectedPerson.getRole());
-                    dialogPeopleRoles.add(selectedPerson);
-                    selectedPerson.setRole(Global.currentWorkspace.getRoles().get(2));
+                    teamRoles.add(tempTeam.get(i).getRole());
+                    teamPeopleRoles.add(tempTeam.get(i));
+                    tempTeam.get(i).setRole(Global.currentWorkspace.getRoles().get(2));
+                    refreshListView(tempTeam, currentTeam);
                 }
 
             });
 
         rmvDev.setOnAction((event) ->
             {
-                ObservableList<Person> selectedPeople =
-                        teamsPeopleBox.getSelectionModel().getSelectedItems();
+                ObservableList<Integer> selectedPeople =
+                        teamsPeopleBox.getSelectionModel().getSelectedIndices();
 
-                for (Person selectedPerson : selectedPeople)
+                for (int i : selectedPeople)
                 {
-                    int personIndex = dialogPeopleRoles.indexOf(selectedPerson);
-                    dialogPeopleRoles.remove(selectedPerson);
-                    dialogRoles.remove(personIndex, personIndex);
-                    selectedPerson.setRole(null);
+                    teamPeopleRoles.remove(tempTeam.get(i));
+                    teamRoles.remove(i, i);
+                    tempTeam.get(i).setRole(null);
+                    refreshListView(tempTeam, currentTeam);
+
                 }
             });
         
         btnCancel.setOnAction((event) ->
             {
                 App.content.getChildren().remove(informationGrid);
+                for (int i = 0; i < teamPeopleRoles.size(); i++)
+                {
+                    teamPeopleRoles.get(i).setRole(teamRoles.get(i));
+                }
                 TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
                 App.content.getChildren().add(informationGrid);
-                for (int i = 0; i < dialogRoles.size(); i++)
-                {
-                    dialogPeopleRoles.get(i).setRole(dialogRoles.get(i));
-                }
             });
 
         btnSave.setOnAction((event) ->
@@ -338,16 +348,16 @@ public class TeamEditScene
                     
                     currentTeam.setDescription(descriptionTextArea.getText());
                     
-                    for (int i = 0; i < dialogRoles.size(); i++)
+                    for (int i = 0; i < teamRoles.size(); i++)
                     {
                         undoActions.add(new UndoableItem(
-                                dialogPeopleRoles.get(i),
+                                teamPeopleRoles.get(i),
                                 new UndoRedoAction(
                                         UndoRedoPerformer.UndoRedoProperty.PERSON_ROLE,
-                                        dialogRoles.get(i)),
+                                        teamRoles.get(i)),
                                 new UndoRedoAction(
                                         UndoRedoPerformer.UndoRedoProperty.PERSON_ROLE,
-                                        dialogPeopleRoles.get(i).getRole())));
+                                        teamPeopleRoles.get(i).getRole())));
                     }
 
                     String stringSM = "";
@@ -400,7 +410,7 @@ public class TeamEditScene
                         }
                     }
                     
-                    for (Person person : tempTeam.getPeople())
+                    for (Person person : tempTeam)
                     {
                         System.out.println("Adding " + person);
                         if (!currentTeam.getPeople().contains(person))
@@ -496,14 +506,9 @@ public class TeamEditScene
             });
         return informationGrid;
     }
-
-    /**
-     * Asks if the user is sure about moving a person to a different team
-     * @param person The person being moved
-     * @param tempTeam The team to move to
-     * @param currentTeam The persons current team
-     */
-    private static void personCheckDialog(Person person, Team tempTeam, Team currentTeam) 
+    
+    private static void personCheckDialog(Person person, ObservableList<Person> tempTeam, 
+            Team currentTeam) 
     {
         
         Dialog dialog = new Dialog(null, "Already Assigned to a Team");
@@ -521,12 +526,12 @@ public class TeamEditScene
         buttons.getChildren().addAll(btnYes, btnNo);
         
         grid.getChildren().add(new Label("Are you sure you want to move " + person.getShortName() 
-                +  " from " + person.getTeamName() + " to " + currentTeam));
+                +  " from " + person.getTeamName() + " to " + currentTeam + "?"));
         grid.getChildren().add(buttons);
         
         btnYes.setOnAction((event) ->
             {
-                tempTeam.add(person, false);
+                tempTeam.add(person);
                 dialog.hide();
             });
         
@@ -539,5 +544,17 @@ public class TeamEditScene
         dialog.setIconifiable(false);
         dialog.setContent(grid);
         dialog.show();
+    }
+    
+    private static void refreshListView(ObservableList<Person> currentTeam, Team team)
+    {
+        ObservableList<String> tempTeamString = TeamScene.sortListView(currentTeam, team);
+
+        informationGrid.getChildren().remove(teamsPeopleBox);
+
+        teamsPeopleBox = new ListView(tempTeamString);
+        teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        informationGrid.add(teamsPeopleBox, 0, 5);
     }
 }

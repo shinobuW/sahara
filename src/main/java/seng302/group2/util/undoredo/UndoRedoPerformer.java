@@ -211,6 +211,14 @@ public class UndoRedoPerformer
                     person.setTeam((Team) item.getUndoAction().getValue());
                     break;
                 case PERSON_ROLE:
+                    if (person.getRole().toString().equals("Scrum Master"))
+                    {
+                        person.getTeam().setScrumMaster(null);
+                    }
+                    else if (person.getRole().toString().equals("Product Owner"))
+                    {
+                        person.getTeam().setProductOwner(null);
+                    }
                     person.setRole((Role) item.getUndoAction().getValue());
                     break;
                 case PERSON_ADD_TEAM:
@@ -515,6 +523,14 @@ public class UndoRedoPerformer
                     break;
                 case PERSON_ROLE:
                     person.setRole((Role) item.getRedoAction().getValue());
+                    if (person.getRole().toString().equals("Scrum Master"))
+                    {
+                        person.getTeam().setScrumMaster(person);
+                    }
+                    else if (person.getRole().toString().equals("Product Owner"))
+                    {
+                        person.getTeam().setProductOwner(person);
+                    }
                     break;
                 case PERSON_ADD_TEAM:
                     Team currentTeam = (Team) item.getRedoAction().getValue();
