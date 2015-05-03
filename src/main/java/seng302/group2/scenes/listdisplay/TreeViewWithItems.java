@@ -90,7 +90,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
      */
     private void init()
     {
-        setContextMenu(new CategoryTreeContextMenu());
+        setContextMenu(new CategoryTreeContextMenu(true));
 
         rootProperty().addListener(new ChangeListener<TreeItem<T>>()
         {
@@ -192,35 +192,35 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                             App.content.getChildren().remove(MainScene.informationGrid);
                             ProjectCategoryScene.getProjectCategoryScene(Global.currentWorkspace);
                             App.content.getChildren().add(MainScene.informationGrid);
-                            setContextMenu(new CategoryTreeContextMenu());
+                            setContextMenu(new CategoryTreeContextMenu(true));
                         }
                         else if (Global.selectedTreeItem.getValue().toString().equals("People"))
                         {
                             App.content.getChildren().remove(MainScene.informationGrid);
                             PersonCategoryScene.getPersonCategoryScene(Global.currentWorkspace);
                             App.content.getChildren().add(MainScene.informationGrid);
-                            setContextMenu(new CategoryTreeContextMenu());
+                            setContextMenu(new CategoryTreeContextMenu(true));
                         }
                         else if (Global.selectedTreeItem.getValue().toString().equals("Skills"))
                         {
                             App.content.getChildren().remove(MainScene.informationGrid);
                             SkillCategoryScene.getSkillCategoryScene(Global.currentWorkspace);
                             App.content.getChildren().add(MainScene.informationGrid);
-                            setContextMenu(new CategoryTreeContextMenu());
+                            setContextMenu(new CategoryTreeContextMenu(true));
                         }
                         else if (Global.selectedTreeItem.getValue().toString().equals("Teams"))
                         {
                             App.content.getChildren().remove(MainScene.informationGrid);
                             TeamCategoryScene.getTeamCategoryScene(Global.currentWorkspace);
                             App.content.getChildren().add(MainScene.informationGrid);
-                            setContextMenu(new CategoryTreeContextMenu());
+                            setContextMenu(new CategoryTreeContextMenu(true));
                         }
                         else if (Global.selectedTreeItem.getValue().toString().equals("Roles"))
                         {
                             App.content.getChildren().remove(MainScene.informationGrid);
                             RoleCategoryScene.getRoleCategoryScene(Global.currentWorkspace);
                             App.content.getChildren().add(MainScene.informationGrid);
-                            setContextMenu(null);
+                            setContextMenu(new CategoryTreeContextMenu(false));
                         }
                         else if (Global.selectedTreeItem.getValue().toString().equals("Releases"))
                         {       
@@ -228,11 +228,11 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                             ReleaseCategoryScene.getReleaseCategoryScene((ReleaseCategory)
                                     Global.selectedTreeItem.getValue());
                             App.content.getChildren().add(MainScene.informationGrid);
-                            setContextMenu(new CategoryTreeContextMenu());
+                            setContextMenu(new CategoryTreeContextMenu(true));
                         }
                         else
                         {
-                            setContextMenu(new CategoryTreeContextMenu());
+                            setContextMenu(new CategoryTreeContextMenu(true));
                         }
                     }
                     else if (Global.selectedTreeItem.getValue() instanceof Role)
