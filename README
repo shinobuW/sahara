@@ -12,6 +12,9 @@ The project may be run in two ways:
 	.bat for Windows, and .sh for Linux
 	Again, on linux, the .sh file may need to be marked as executable before running (chmod +X)
 
+Demo Workspace
+--------------
+Included is a demo workspace that has been saved as 'Demo Workspace.proj', which may be helpful for learning and understanding the concepts of Sahara, as well as testing
 
 User Guide Documentation
 ------------------------
@@ -21,4 +24,4 @@ For convenience, the user guide has also been downloaded as a PDF and added to t
 
 Other Documentation
 -------------------
-The user acceptance/manual testing document can also be found in the /doc directory as an .xlsx Excel file, and as a view-only PDF
+The user acceptance/manual testing documents can also be found in the /doc directory as an .xlsx Excel files, and as a view-only PDFs
