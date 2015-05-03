@@ -101,8 +101,8 @@ public class TeamEditScene
         peopleButtons.getChildren().add(btnDelete);
         peopleButtons.setAlignment(Pos.CENTER);
 
-        //Creates a copy of the Teams people as of when this function is called.
-        //CurrentTeam never changes until the save is called.
+        // Creates a copy of the Teams people as of when this function is called.
+        // CurrentTeam never changes until the save is called.
         ObservableList<String> tempTeamString = observableArrayList();
         tempTeam = observableArrayList();
         for (Person person : currentTeam.getPeople())
@@ -110,7 +110,7 @@ public class TeamEditScene
             tempTeam.add(person);
         }
         
-        //Creates the Teams box of People
+        // Creates the Teams box of People.
         teamsPeopleBox = new ListView(tempTeamString);
         
         if (currentTeam.isUnassignedTeam())
@@ -194,7 +194,7 @@ public class TeamEditScene
             }
         }
         
-        //Creates the Box of people that aren't assigned to the current Team
+        // Creates the Box of people that aren't assigned to the current Team.
         ListView membersBox = new ListView(dialogPeople);
         membersBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
@@ -221,7 +221,7 @@ public class TeamEditScene
                 for (Person item : selectedPeople)
                 {
                     if (item.getTeam().isUnassignedTeam()
-                            || item.getTeam() == null) 
+                            || item.getTeam() == null || (item.getTeam() == currentTeam)) 
                     {
                         tempTeam.add(item);
                     }
@@ -276,10 +276,8 @@ public class TeamEditScene
                     teamRoles.add(tempTeam.get(i).getRole());
                     teamPeopleRoles.add(tempTeam.get(i));
                     tempTeam.get(i).setRole(Global.currentWorkspace.getRoles().get(2));
-                    System.out.println(tempTeam + " hello");
                     refreshListView(tempTeam);
                     refreshComboBox(tempTeam);
-                    System.out.println(tempTeam.get(0).getRole() + " hello");
                 }
 
             });
@@ -313,7 +311,11 @@ public class TeamEditScene
         btnSave.setOnAction((event) ->
             {
                 boolean correctShortName;
-
+                if (productOwnerBox.getValue().equals(scrumMasterBox.getValue()) 
+                        && !productOwnerBox.getValue().equals(""))
+                {
+                    roleCheckDialog(currentSM, currentPO);
+                }
                 if (shortNameCustomField.getText().equals(currentTeam.getShortName()))
                 {
                     correctShortName = true;
@@ -361,10 +363,10 @@ public class TeamEditScene
                         undoActions.add(new UndoableItem(
                                 teamPeopleRoles.get(i),
                                 new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PERSON_ROLE,
+                                        UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_ROLE,
                                         teamRoles.get(i)),
                                 new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PERSON_ROLE,
+                                        UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_ROLE,
                                         teamPeopleRoles.get(i).getRole())));
                     }
 
@@ -373,22 +375,41 @@ public class TeamEditScene
                     {
                         stringSM = currentSM.toString();
                     }
+                    //Check for UndoRedo
                     if (!scrumMasterBox.getValue().equals(stringSM))
                     {
-                        for (Person selectedPerson : currentTeam.getPeople())
+                        System.out.println(scrumMasterBox.getValue() + "SM box");
+                        System.out.println(stringSM + " owner");
+                        //For looping through the changed list
+                        
                         {
-                            if (selectedPerson.toString().equals(scrumMasterBox.getValue()))
+                            for (Person selectedPerson : tempTeam)
                             {
-                                undoActions.add(new UndoableItem(
-                                    selectedPerson,
-                                    new UndoRedoAction(
-                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ROLE,
-                                            selectedPerson.getRole()),
-                                    new UndoRedoAction(
-                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ROLE,
-                                            Global.currentWorkspace.getRoles().get(0))));
-                                currentTeam.setScrumMaster(selectedPerson);
-                                selectedPerson.setRole(Global.currentWorkspace.getRoles().get(0));
+
+                                //checking to see if the selected Person is a ScrumMaster
+                                if (selectedPerson.toString().equals(scrumMasterBox.getValue()))
+                                {
+                                    undoActions.add(new UndoableItem(
+                                        selectedPerson,
+                                        new UndoRedoAction(
+                                                UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_ROLE,
+                                                selectedPerson.getRole()),
+                                        new UndoRedoAction(
+                                                UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_ROLE,
+                                                Global.currentWorkspace.getRoles().get(0))));
+                                    currentTeam.setScrumMaster(selectedPerson);
+                                    selectedPerson.setRole(Global.currentWorkspace.getRoles().
+                                            get(0));
+                                }
+                                else if (selectedPerson.getRole() != null) 
+                                {
+                                    if (selectedPerson.getRole().getType() 
+                                            == Role.RoleType.ScrumMaster)
+                                    {
+                                        selectedPerson.setRole(Role.getRoleType(
+                                                Role.RoleType.Others));
+                                    }
+                                }
                             }
                         }
                     }
@@ -398,9 +419,9 @@ public class TeamEditScene
                     {
                         stringPO = currentPO.toString();
                     }
-                    if (!productOwnerBox.getValue().equals(stringPO))
+                    
+                    if (!(productOwnerBox.getValue().equals(stringPO)))
                     {
-                        
                         for (Person selectedPerson : tempTeam)
                         {
                             if (selectedPerson.toString().equals(productOwnerBox.getValue()))
@@ -408,20 +429,27 @@ public class TeamEditScene
                                 undoActions.add(new UndoableItem(
                                     selectedPerson,
                                     new UndoRedoAction(
-                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ROLE,
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_ROLE,
                                             selectedPerson.getRole()),
                                     new UndoRedoAction(
-                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ROLE,
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_ROLE,
                                             Global.currentWorkspace.getRoles().get(1))));
                                 currentTeam.setProductOwner(selectedPerson);
                                 selectedPerson.setRole(Global.currentWorkspace.getRoles().get(1));
+                            }
+                            else if (selectedPerson.getRole() != null) 
+                            {
+                                if (selectedPerson.getRole().getType() 
+                                            == Role.RoleType.ProductOwner)
+                                {
+                                    selectedPerson.setRole(Role.getRoleType(Role.RoleType.Others));
+                                }
                             }
                         }
                     }
                     
                     for (Person person : tempTeam)
                     {
-                        System.out.println("Adding " + person);
                         if (!currentTeam.getPeople().contains(person))
                         {
                             undoActions.add(new UndoableItem(
@@ -449,7 +477,6 @@ public class TeamEditScene
 
                     for (Person person : dialogPeople)
                     {
-                        System.out.println("Deleting " + person.getTeam());
                         if (!dialogPeopleCopy.contains(person))
                         {
                             undoActions.add(new UndoableItem(
@@ -469,7 +496,26 @@ public class TeamEditScene
                                     new UndoRedoAction(
                                             UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM, 
                                             (Team)Global.currentWorkspace.getTeams().get(0))));
-                                         
+                                     
+                            undoActions.add(new UndoableItem(
+                                    person,
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM, 
+                                            person.getRole()),
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM, 
+                                            null)));
+                            
+                            if (person.getRole() == Role.getRoleType(Role.RoleType.ScrumMaster))
+                            {
+                                currentTeam.setScrumMaster(null);
+                            }
+                            else if (person.getRole() == Role.getRoleType(
+                                    Role.RoleType.ScrumMaster))
+                            {
+                                currentTeam.setScrumMaster(null);
+                            }
+                            person.setRole(Role.getRoleType(Role.RoleType.Others));
                             person.getTeam().remove(person, false);
                             person.setTeam((Team)Global.currentWorkspace.getTeams().get(0));
                             ((Team)Global.currentWorkspace.getTeams().get(0))
@@ -545,6 +591,53 @@ public class TeamEditScene
         btnNo.setOnAction((event) ->
             {
                 dialog.hide();
+            });
+        
+        dialog.setResizable(false);
+        dialog.setIconifiable(false);
+        dialog.setContent(grid);
+        dialog.show();
+    }
+    
+    private static void roleCheckDialog(Person currentSM, Person currentPO) 
+    {
+        Dialog dialog = new Dialog(null, "PO and SM set to same Person");
+        VBox grid = new VBox();
+        grid.spacingProperty().setValue(10);
+        Insets insets = new Insets(20, 20, 20, 20);
+        grid.setPadding(insets);
+               
+        Button btnPO = new Button("Make Product Owner");
+        Button btnSM = new Button("Make Scrum Master");
+        
+        HBox buttons = new HBox();
+        buttons.spacingProperty().setValue(10);
+        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
+        buttons.getChildren().addAll(btnPO, btnSM);
+        
+        grid.getChildren().add(new Label("Can't make " + scrumMasterBox.getValue() 
+                + " set to both Scrum Master and Product Owner."));
+        grid.getChildren().add(buttons);
+        
+        btnPO.setOnAction((event) ->
+            {
+                scrumMasterBox.setValue(currentSM.toString());
+                if (scrumMasterBox.getValue().equals(currentSM.toString()))
+                {
+                    scrumMasterBox.setValue("");
+                }
+                dialog.hide();
+            });
+        
+        btnSM.setOnAction((event) ->
+            {
+                productOwnerBox.setValue(currentPO.toString());
+                if (scrumMasterBox.getValue().equals(currentPO.toString()))
+                {
+                    scrumMasterBox.setValue("");
+                }
+                dialog.hide();
+                
             });
         
         dialog.setResizable(false);
