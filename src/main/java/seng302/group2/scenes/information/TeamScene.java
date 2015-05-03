@@ -104,6 +104,10 @@ public class TeamScene
         return informationGrid;
     }
     
+    /*
+    * Refreshes the information grid for the TeamScene
+    * @param team Refreshes based on this Team
+    */
     public static void refreshTeamScene(Team team)
     {
 	App.content.getChildren().remove(MainScene.informationGrid);
@@ -120,6 +124,12 @@ public class TeamScene
 	MainScene.treeView.getSelectionModel().select(selectedTreeItem);
     }
     
+    /*
+    * Sorts a list of people based on their roles on a team, PO first, SM second, Dev third
+    * then lastly goes people without a role.
+    * @param currentTeam The team to sort by.
+    * @return Returns sorted list.
+    */
     public static ObservableList<Person> sortListView(ObservableList<Person> currentTeam)
     {
         ObservableList<Person> teamList = observableArrayList();
@@ -167,6 +177,10 @@ public class TeamScene
         return teamList;
     }
  
+    /*
+    * @param currentTeam It is the team to be converted.
+    * @return returns a List of the People converted to a List of their Shortnames
+    */
     public static ObservableList<String> convertToString(ObservableList<Person> currentTeam)
     {
         ObservableList<String> currentStringTeam = observableArrayList();
@@ -212,8 +226,7 @@ public class TeamScene
                 currentStringTeam.add(person.toString());
             }
         }
-        
-        
-        return currentStringTeam;
+
+	return currentStringTeam;
     }
 }

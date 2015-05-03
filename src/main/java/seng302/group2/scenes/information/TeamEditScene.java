@@ -382,36 +382,41 @@ public class TeamEditScene
                         System.out.println(stringSM + " owner");
                         //For looping through the changed list
                         
+                        
+                        for (Person selectedPerson : tempTeam)
                         {
-                            for (Person selectedPerson : tempTeam)
+                            if (scrumMasterBox.getValue().equals(""))
                             {
-
-                                //checking to see if the selected Person is a ScrumMaster
-                                if (selectedPerson.toString().equals(scrumMasterBox.getValue()))
+                                currentTeam.setScrumMaster(null);
+                            }
+                            
+                            //checking to see if the selected Person is a ScrumMaster
+                            if (selectedPerson.toString().equals(scrumMasterBox.getValue()))
+                            {
+                                undoActions.add(new UndoableItem(
+                                    selectedPerson,
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_ROLE,
+                                            selectedPerson.getRole()),
+                                    new UndoRedoAction(
+                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_ROLE,
+                                            Global.currentWorkspace.getRoles().get(0))));
+                                currentTeam.setScrumMaster(selectedPerson);
+                                selectedPerson.setRole(Global.currentWorkspace.getRoles().
+                                        get(0));
+                            }
+                            else if (selectedPerson.getRole() != null) 
+                            {
+                                if (selectedPerson.getRole().getType() 
+                                        == Role.RoleType.ScrumMaster)
                                 {
-                                    undoActions.add(new UndoableItem(
-                                        selectedPerson,
-                                        new UndoRedoAction(
-                                                UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_ROLE,
-                                                selectedPerson.getRole()),
-                                        new UndoRedoAction(
-                                                UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_ROLE,
-                                                Global.currentWorkspace.getRoles().get(0))));
-                                    currentTeam.setScrumMaster(selectedPerson);
-                                    selectedPerson.setRole(Global.currentWorkspace.getRoles().
-                                            get(0));
-                                }
-                                else if (selectedPerson.getRole() != null) 
-                                {
-                                    if (selectedPerson.getRole().getType() 
-                                            == Role.RoleType.ScrumMaster)
-                                    {
-                                        selectedPerson.setRole(Role.getRoleType(
-                                                Role.RoleType.Others));
-                                    }
+                                    selectedPerson.setRole(Role.getRoleType(
+                                            Role.RoleType.Others));
                                 }
                             }
+
                         }
+                        
                     }
 
                     String stringPO = "";
@@ -560,6 +565,13 @@ public class TeamEditScene
         return informationGrid;
     }
     
+    /*
+    * Dialog shown for checking if a Person is already on a team.
+    * @param person The person that is being checked.
+    * @param tempTeam The temporary team for adding to see if any changes before and after clicking
+    * save.
+    * @param currentTeam The currentTeam that the person is being moved to.
+    */
     private static void personCheckDialog(Person person, ObservableList<Person> tempTeam, 
             Team currentTeam) 
     {
@@ -599,6 +611,12 @@ public class TeamEditScene
         dialog.show();
     }
     
+    /*
+    * Dialog shown for checking what role to give someone if they have been assigned to in both 
+    * Comboboxes.
+    * @param currentSM The current Scrum Master.
+    * @param currentPo The current Product Owner.
+    */
     private static void roleCheckDialog(Person currentSM, Person currentPO) 
     {
         Dialog dialog = new Dialog(null, "PO and SM set to same Person");
@@ -622,6 +640,7 @@ public class TeamEditScene
         btnPO.setOnAction((event) ->
             {
                 scrumMasterBox.setValue(currentSM.toString());
+                System.out.println(currentSM.toString() + scrumMasterBox.getValue());
                 if (scrumMasterBox.getValue().equals(currentSM.toString()))
                 {
                     scrumMasterBox.setValue("");
@@ -646,6 +665,11 @@ public class TeamEditScene
         dialog.show();
     }
     
+    /*
+    * Dynamically updating the Listview when someone is being added or a role is being changed on a 
+    * person.
+    * @param currentTeam the Team to input into the ListView
+    */
     private static void refreshListView(ObservableList<Person> currentTeam)
     {
         System.out.println(tempTeam + " before");
@@ -661,6 +685,11 @@ public class TeamEditScene
         informationGrid.add(teamsPeopleBox, 0, 5);
     }
     
+    /*
+    * Dynamically updating the Combobox when someone is being added or a role is being changed on a 
+    * person.
+    * @param currentTeam the Team to input into the Combobox based on skills
+    */
     private static void refreshComboBox(ObservableList<Person> currentTeam)
     {
         
