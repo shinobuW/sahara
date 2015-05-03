@@ -12,6 +12,7 @@ import seng302.group2.workspace.skills.Skill;
 import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import seng302.group2.Global;
 
 
 /**
@@ -155,6 +156,27 @@ public class Role extends TreeViewItem
     {
         return this.defaultRole;
     }
+    
+    
+    /**
+     * Searches all roles in the workspace to find the role for the given type
+     * @param type The type of role to return
+     * @return The role in the workspace of the given type
+     */
+    public Role getRoleType(RoleType type)
+    {
+        Role role = null;
+        for (Role wsrole : Global.currentWorkspace.getRoles())
+        {
+            if (wsrole.getType().equals(type))
+            {
+                role = wsrole;
+                break;
+            }
+        }
+        return role;
+    }
+    
 
     //</editor-fold>
 
