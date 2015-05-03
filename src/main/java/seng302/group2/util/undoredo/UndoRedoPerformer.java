@@ -47,6 +47,7 @@ public class UndoRedoPerformer
 
         PERSON_ADD,
         PERSON_DEL,
+        PERSON_DEL_RECURSIVE,
         PERSON_SHORTNAME,
         PERSON_FIRSTNAME,
         PERSON_LASTNAME,
@@ -189,6 +190,14 @@ public class UndoRedoPerformer
                 case PERSON_DEL:
                     Global.currentWorkspace.getPeople().add((Person) item.getHost());
                     break;
+                case PERSON_DEL_RECURSIVE:
+                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
+                            item.getUndoAction().getValue())
+                    {
+                        UndoRedoPerformer.undo(undoAction);
+                    }
+                    PersonScene.refreshPersonScene(person);
+                    break;
                 case PERSON_SHORTNAME:
                     person.setShortName((String) item.getUndoAction().getValue());
                     break;    
@@ -232,8 +241,11 @@ public class UndoRedoPerformer
                 case PERSON_DEL_TEAM:
                     currentTeam = (Team) item.getUndoAction().getValue();
                     currentTeam.getPeople().add(person);
-		    ((Team)Global.currentWorkspace.getTeams()
-                            .get(0)).getPeople().remove(person);
+                    if (!(currentTeam == Global.getUnassignedTeam()))
+                    {
+                        Global.getUnassignedTeam().remove(person);
+                    }
+                    person.setTeam(currentTeam);
                     App.content.getChildren().remove(informationGrid);
                     TeamScene.getTeamScene(currentTeam);
                     App.content.getChildren().add(informationGrid);
@@ -247,6 +259,7 @@ public class UndoRedoPerformer
                     PersonScene.refreshPersonScene(person);
                     break;
                 default:
+                    System.out.println(item.getUndoAction().getProperty());
                     System.out.println("Undo on person with this property not implemented (yet?)");
                     break;
             }
@@ -280,14 +293,14 @@ public class UndoRedoPerformer
                     skill.setDescription((String) item.getUndoAction().getValue());
                     break;
                 case SKILL_ADD_PERSON:
-		    Person currentPerson = (Person) item.getUndoAction().getValue();
+                    Person currentPerson = (Person) item.getUndoAction().getValue();
                     currentPerson.getSkills().remove(skill);
                     App.content.getChildren().remove(informationGrid);
                     PersonScene.getPersonScene(currentPerson);
                     App.content.getChildren().add(informationGrid);
                     break;
                 case SKILL_DEL_PERSON:
-		    currentPerson = (Person) item.getUndoAction().getValue();
+                    currentPerson = (Person) item.getUndoAction().getValue();
                     currentPerson.getSkills().add(skill);
                     App.content.getChildren().remove(informationGrid);
                     PersonScene.getPersonScene(currentPerson);
@@ -500,6 +513,14 @@ public class UndoRedoPerformer
                 case PERSON_DEL:
                     Global.currentWorkspace.getPeople().remove((Person) item.getHost());
                     break;
+                case PERSON_DEL_RECURSIVE:
+                    for (UndoableItem undoAction : (ArrayList<UndoableItem>)
+                            item.getUndoAction().getValue())
+                    {
+                        UndoRedoPerformer.redo(undoAction);
+                    }
+                    PersonScene.refreshPersonScene(person);
+                    break;
                 case PERSON_SHORTNAME:
                     person.setShortName((String) item.getRedoAction().getValue());
                     break;
@@ -542,9 +563,11 @@ public class UndoRedoPerformer
                     break;
                 case PERSON_DEL_TEAM:
                     currentTeam = (Team) item.getRedoAction().getValue();
-		    currentTeam.getPeople().remove(person);
-                    ((Team) Global.currentWorkspace.getTeams().get(0))
-			        .getPeople().add(person);
+                    currentTeam.getPeople().remove(person);
+                    if (currentTeam == Global.getUnassignedTeam())
+                    {
+                        Global.getUnassignedTeam().remove(person);
+                    }
                     App.content.getChildren().remove(informationGrid);
                     TeamScene.getTeamScene(currentTeam);
                     App.content.getChildren().add(informationGrid);
@@ -643,15 +666,15 @@ public class UndoRedoPerformer
                 case TEAM_DESCRIPTION:
                     team.setDescription((String) item.getRedoAction().getValue());
                     break;
-		case TEAM_PROJECT:
+                case TEAM_PROJECT:
                     team.setProject((Project) item.getRedoAction().getValue());
                     break;
                 case TEAM_ADD_PROJECT:
                     Project currentProject = (Project) item.getRedoAction().getValue();
-		    if (team.getProject() != null)
-		    {
-			team.getProject().getTeams().remove(team);
-		    }
+                    if (team.getProject() != null)
+                    {
+                        team.getProject().getTeams().remove(team);
+                    }
                     currentProject.getTeams().add(team);
                     App.content.getChildren().remove(informationGrid);
                     ProjectScene.getProjectScene(currentProject);
