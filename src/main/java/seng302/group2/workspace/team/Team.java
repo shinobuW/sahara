@@ -196,25 +196,25 @@ public class Team extends TreeViewItem implements Serializable
     }
 
     /**
-     * Gets the team's Scrum Master
+     * Sets the team's Scrum Master
      *
      * @param person the person to set
      */
     public void setScrumMaster(Person person)
     {
         this.scrumMaster = person;
-        person.setRole(new Role("Scrum Master", RoleType.ScrumMaster));
+        //person.setRole(new Role("Scrum Master", RoleType.ScrumMaster));
     }
 
     /**
-     * Gets the team's Product Owner
+     * Sets the team's Product Owner
      *
      * @param person the person to set
      */
     public void setProductOwner(Person person)
     {
         this.productOwner = person;
-        person.setRole(new Role("Product Owner", RoleType.ProductOwner));
+        //person.setRole(new Role("Product Owner", RoleType.ProductOwner));
     }
 
     //</editor-fold>

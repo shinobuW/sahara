@@ -411,15 +411,6 @@ public class Person extends TreeViewItem implements Serializable
     @Override
     public String toString()
     {
-        if (Global.selectedTreeItem.getValue() instanceof Team)
-        {
-            if (this.getRole() == null)
-            {
-                return this.shortName + " - (Unassigned)";
-            }
-            return this.shortName + " - (" + this.getRole() + ")";
-
-        }
         return this.shortName;
     }
 }

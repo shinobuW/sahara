@@ -67,7 +67,9 @@ public class TeamScene
             }
         }
 
-        ListView teamsPeopleBox = new ListView(currentTeam.getPeople());
+        ObservableList<String> tempTeamString = sortListView(currentTeam.getPeople(), currentTeam);
+        
+        ListView teamsPeopleBox = new ListView(tempTeamString);
 
         teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
@@ -88,10 +90,10 @@ public class TeamScene
         }
 
         informationGrid.add(new Label("Team Members: "), 0, 6);
-        informationGrid.add(teamsPeopleBox, 0, 7, 1, 1);
+        informationGrid.add(teamsPeopleBox, 0, 7, 4, 1);
         
         informationGrid.add(new Label(currentTeam.getDescription()), 1, 2, 5, 1);
-        informationGrid.add(btnEdit, 3, 8);
+        informationGrid.add(btnEdit, 4, 8);
 
         btnEdit.setOnAction((event) ->
             {
@@ -117,6 +119,44 @@ public class TeamScene
 	App.content.getChildren().add(MainScene.treeView);
 	App.content.getChildren().add(MainScene.informationGrid);
 	MainScene.treeView.getSelectionModel().select(selectedTreeItem);
+    }
+    
+    public static ObservableList<String> sortListView(ObservableList<Person> currentTeam, Team team)
+    {
+        ObservableList<String> tempTeamString = observableArrayList();
+        
+        if (team.getProductOwner() != null)
+        {
+            tempTeamString.add(team.getProductOwner().toString() + " - (" 
+                    + team.getProductOwner().getRole() + ")");
+        }
+        
+        if (team.getScrumMaster() != null)
+        {
+            tempTeamString.add(team.getScrumMaster().toString() + " - (" 
+                    + team.getScrumMaster().getRole() + ")");
+        }
+        
+        for (Person person : currentTeam)
+        {
+            if (person.getRole() != null)
+            {
+                if (person.getRole().toString().equals("Development Team Member"))
+                {
+                    tempTeamString.add(person.toString() + " - (" + person.getRole() + ")");
+                }
+            }
+        }
+        
+        for (Person person : currentTeam)
+        {
+            if (person.getRole() == null)
+            {
+                tempTeamString.add(person.toString());
+            }
+        }
+        
+        return tempTeamString;
     }
  
 }
