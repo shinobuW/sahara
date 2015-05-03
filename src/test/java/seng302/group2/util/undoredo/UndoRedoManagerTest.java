@@ -1,14 +1,8 @@
 package seng302.group2.util.undoredo;
 
 import junit.framework.TestCase;
-import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.skills.Skill;
-import seng302.group2.workspace.team.Team;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Stack;
 
 /**
@@ -39,6 +33,10 @@ public class UndoRedoManagerTest extends TestCase {
         manager.emptyAll();
     }
 
+
+    /**
+     * Tests that the undo and redo stacks are emptied properly
+     */
     public void testEmptyAll()
     {
         manager.getRedoStack().add(item1);
@@ -50,6 +48,10 @@ public class UndoRedoManagerTest extends TestCase {
         assertEquals(new Stack<>(), manager.getRedoStack());
     }
 
+
+    /**
+     * Tests that the canUndo method returns expected results
+     */
     public void testCanUndo()
     {
         manager.add(item1);
@@ -58,6 +60,10 @@ public class UndoRedoManagerTest extends TestCase {
         assertFalse(manager.canUndo());
     }
 
+
+    /**
+     * Tests that the canRedo method returns expected results
+     */
     public void testCanRedo()
     {
         manager.add(item1);
@@ -67,6 +73,10 @@ public class UndoRedoManagerTest extends TestCase {
         assertFalse(manager.canRedo());
     }
 
+
+    /**
+     * Tests that the undo functionality works as expected
+     */
     public void testUndo()
     {
         manager.add(item1);
@@ -84,6 +94,9 @@ public class UndoRedoManagerTest extends TestCase {
         assertEquals(redoEx, manager.getRedoStack());
     }
 
+    /**
+     * Tests that the redo functionality works as expected
+     */
     public void testRedo()
     {
         manager.getRedoStack().add(item1);
@@ -100,6 +113,9 @@ public class UndoRedoManagerTest extends TestCase {
         assertEquals(redoEx, manager.getRedoStack());
     }
 
+    /**
+     * Tests that items are added to the undo/redo stack(s) properly
+     */
     public void testAdd()
     {
         manager.add(item1);

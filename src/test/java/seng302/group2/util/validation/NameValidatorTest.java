@@ -9,17 +9,11 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 /**
- *
+ * A test class for NameValidator
  * @author Jordane
  */
 public class NameValidatorTest
 {
-    
-    public NameValidatorTest()
-    {
-    }
-
-
     /**
      * Test of validateName method, of class NameValidator.
      */

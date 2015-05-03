@@ -6,10 +6,11 @@
 package seng302.group2.util.validation;
 
 
-import java.util.Calendar;
-import java.util.Date;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Test class for the DateValidator
@@ -30,7 +31,11 @@ public class DateValidatorTest
         Assert.assertEquals(ValidationStatus.PATTERN_MISMATCH,
                 DateValidator.isValidDateString("20/03/15"));
     }
-    
+
+    /**
+     * Tests the future date validation
+     */
+    @Test
     public void testIsFutureDate()
     {
         Calendar cal = Calendar.getInstance();
@@ -38,7 +43,11 @@ public class DateValidatorTest
         Date futureDate = cal.getTime();
         Assert.assertTrue(DateValidator.isFutureDate(futureDate));
     }
-    
+
+    /**
+     * Tests that the string to date conversion is equivalent
+     */
+    @Test
     public void testStringToDate()
     {
         Date testDate = DateValidator.stringToDate("12/12/2015");

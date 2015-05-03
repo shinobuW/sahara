@@ -5,6 +5,7 @@
  */
 package seng302.group2.util.validation;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import seng302.group2.Global;
@@ -19,8 +20,6 @@ import seng302.group2.workspace.team.Team;
 import java.text.ParseException;
 import java.util.Date;
 
-import static junit.framework.Assert.fail;
-import static junit.framework.TestCase.assertEquals;
 
 /**
  * Tests that the short name validator performs correctly.
@@ -28,6 +27,9 @@ import static junit.framework.TestCase.assertEquals;
  */
 public class ShortNameValidatorTest
 {
+    /**
+     * Performs the initialization state before tests are run
+     */
     @BeforeClass
     public static void setUp()
     {
@@ -38,7 +40,7 @@ public class ShortNameValidatorTest
         }
         catch (ParseException e)
         {
-            fail("Date parsing error, needs fixing");
+            Assert.fail("Date parsing error, needs fixing");
         }
 
         Workspace ws = new Workspace("WS", "Workspace", "Desc");
@@ -73,21 +75,19 @@ public class ShortNameValidatorTest
     public void testValidateShortName()
     {
         // People
-        assertEquals(ValidationStatus.INVALID, ShortNameValidator.validateShortName(""));
-        assertEquals(ValidationStatus.NON_UNIQUE,
+        Assert.assertEquals(ValidationStatus.INVALID, ShortNameValidator.validateShortName(""));
+        Assert.assertEquals(ValidationStatus.NON_UNIQUE,
                 ShortNameValidator.validateShortName("btm38"));
-        assertEquals(ValidationStatus.VALID, ShortNameValidator.validateShortName("new"));
-        assertEquals(ValidationStatus.OUT_OF_RANGE, ShortNameValidator.validateShortName(
+        Assert.assertEquals(ValidationStatus.VALID, ShortNameValidator.validateShortName("new"));
+        Assert.assertEquals(ValidationStatus.OUT_OF_RANGE, ShortNameValidator.validateShortName(
                 "this is much more than 20 characters long"));
 
-        assertEquals(ValidationStatus.NON_UNIQUE, ShortNameValidator.validateShortName("WS"));
-        assertEquals(ValidationStatus.NON_UNIQUE, ShortNameValidator.validateShortName("PROJ"));
-        assertEquals(ValidationStatus.NON_UNIQUE, ShortNameValidator.validateShortName("TEAM"));
-        assertEquals(ValidationStatus.NON_UNIQUE, ShortNameValidator.validateShortName("PERS"));
-        assertEquals(ValidationStatus.NON_UNIQUE, ShortNameValidator.validateShortName("SKILL"));
-        assertEquals(ValidationStatus.NON_UNIQUE, ShortNameValidator.validateShortName("ROLE"));
-        assertEquals(ValidationStatus.NON_UNIQUE, ShortNameValidator.validateShortName("RELEASE"));
+        Assert.assertEquals(ValidationStatus.NON_UNIQUE, ShortNameValidator.validateShortName("WS"));
+        Assert.assertEquals(ValidationStatus.NON_UNIQUE, ShortNameValidator.validateShortName("PROJ"));
+        Assert.assertEquals(ValidationStatus.NON_UNIQUE, ShortNameValidator.validateShortName("TEAM"));
+        Assert.assertEquals(ValidationStatus.NON_UNIQUE, ShortNameValidator.validateShortName("PERS"));
+        Assert.assertEquals(ValidationStatus.NON_UNIQUE, ShortNameValidator.validateShortName("SKILL"));
+        Assert.assertEquals(ValidationStatus.NON_UNIQUE, ShortNameValidator.validateShortName("ROLE"));
+        Assert.assertEquals(ValidationStatus.NON_UNIQUE, ShortNameValidator.validateShortName("RELEASE"));
     }
-
-    
 }
