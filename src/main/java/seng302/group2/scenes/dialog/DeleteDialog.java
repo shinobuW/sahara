@@ -131,8 +131,10 @@ public class DeleteDialog
                 {
                     if (i == peopleWithSkill.size() - 1)
                     {
-                        namesOfPeopleWithSkill = namesOfPeopleWithSkill.substring(0, namesOfPeopleWithSkill.length()-2);
-                        namesOfPeopleWithSkill += (" and " + peopleWithSkill.get(i)).toString() + " ";
+                        namesOfPeopleWithSkill = namesOfPeopleWithSkill.substring(
+                            0, namesOfPeopleWithSkill.length() - 2);
+                        namesOfPeopleWithSkill += (" and " + peopleWithSkill.get(i)).toString()
+                            + " ";
                     }
                     else
                     {
@@ -149,7 +151,8 @@ public class DeleteDialog
                     if (i == 5)
                     {
                         namesOfPeopleWithSkill += (peopleWithSkill.get(i)).toString() + " ";
-                    } else
+                    }
+                    else
                     {
                         namesOfPeopleWithSkill += (peopleWithSkill.get(i)).toString() + ", ";
                     }
@@ -164,7 +167,8 @@ public class DeleteDialog
             }
             else if (peopleWithSkill.size() == 1)
             {
-                customSkillMessage = peopleWithSkill.get(0).toString() + " currently has this skill.";
+                customSkillMessage = peopleWithSkill.get(0).toString()
+                    + " currently has this skill.";
             }
             else if (peopleWithSkill.size() < 7)
             {
