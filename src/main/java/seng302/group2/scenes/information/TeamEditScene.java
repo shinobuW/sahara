@@ -43,7 +43,10 @@ import seng302.group2.workspace.role.Role;
  */
 public class TeamEditScene
 {
+    private static ObservableList<Person> tempTeam = observableArrayList();
     private static ListView teamsPeopleBox = new ListView();
+    private static CustomComboBox productOwnerBox = new CustomComboBox("Product Owner: ", false);
+    private static CustomComboBox scrumMasterBox = new CustomComboBox("Scrum Master: ", false);
     /**
      * Gets the Team Edit information scene.
      * @param currentTeam The team to show the information of
@@ -75,8 +78,8 @@ public class TeamEditScene
 
         RequiredField shortNameCustomField = new RequiredField("Short Name: ");
         CustomTextArea descriptionTextArea = new CustomTextArea("Team Description: ", 300);
-        CustomComboBox productOwnerBox = new CustomComboBox("Product Owner: ", false);
-        CustomComboBox scrumMasterBox = new CustomComboBox("Scrum Master: ", false);
+        productOwnerBox = new CustomComboBox("Product Owner: ", false);
+        scrumMasterBox = new CustomComboBox("Scrum Master: ", false);
 
         productOwnerBox.addToComboBox("");
         scrumMasterBox.addToComboBox("");
@@ -84,47 +87,7 @@ public class TeamEditScene
         Person currentSM = currentTeam.getScrumMaster();
         Person currentPO = currentTeam.getProductOwner();
 
-        for (Person teamMember : currentTeam.getPeople())
-        {
-            for (Skill memSkill : teamMember.getSkills())
-            {
-                if (memSkill.getShortName().equals("Product Owner"))
-                {
-                    productOwnerBox.addToComboBox(teamMember.toString());
-                    break;
-                }
-            }
-        }
-        if (currentPO == null)
-        {
-            productOwnerBox.setValue("");
-        }
-        else
-        {
-            productOwnerBox.setValue(currentPO.toString());
-        }
-
-        for (Person teamMember : currentTeam.getPeople())
-        {
-            for (Skill memSkill : teamMember.getSkills())
-            {
-                if (memSkill.getShortName().equals("Scrum Master"))
-                {
-                    scrumMasterBox.addToComboBox(teamMember.toString());
-                    break;
-                }
-            }
-        }
-        if (currentSM == null)
-        {
-            scrumMasterBox.setValue("");
-        }
-        else
-        {
-            scrumMasterBox.setValue(currentSM.toString());
-        }
-
-
+        
         shortNameCustomField.setText(currentTeam.getShortName());
         descriptionTextArea.setText(currentTeam.getDescription());
         
@@ -140,12 +103,11 @@ public class TeamEditScene
 
         //Creates a copy of the Teams people as of when this function is called.
         //CurrentTeam never changes until the save is called.
-        ObservableList<Person> tempTeam = observableArrayList();
         ObservableList<String> tempTeamString = observableArrayList();
+        tempTeam = observableArrayList();
         for (Person person : currentTeam.getPeople())
         {
             tempTeam.add(person);
-            tempTeamString.add(person.getShortName() + " - (" + person.getRole() + ")");
         }
         
         //Creates the Teams box of People
@@ -165,6 +127,45 @@ public class TeamEditScene
         
         teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
+        for (Person teamMember : tempTeam)
+        {
+            for (Skill memSkill : teamMember.getSkills())
+            {
+                if (memSkill.getShortName().equals("Product Owner"))
+                {
+                    productOwnerBox.addToComboBox(teamMember.toString());
+                    break;
+                }
+            }
+        }
+        if (currentPO == null)
+        {
+            productOwnerBox.setValue("");
+        }
+        else
+        {
+            productOwnerBox.setValue(currentPO.toString());
+        }
+
+        for (Person teamMember : tempTeam)
+        {
+            for (Skill memSkill : teamMember.getSkills())
+            {
+                if (memSkill.getShortName().equals("Scrum Master"))
+                {
+                    scrumMasterBox.addToComboBox(teamMember.toString());
+                    break;
+                }
+            }
+        }
+        if (currentSM == null)
+        {
+            scrumMasterBox.setValue("");
+        }
+        else
+        {
+            scrumMasterBox.setValue(currentSM.toString());
+        }
         
         ObservableList<Person> dialogPeople = observableArrayList();
         ObservableList<Person> dialogPeopleCopy = observableArrayList();
@@ -210,7 +211,8 @@ public class TeamEditScene
         informationGrid.add(devBtns, 0, 6);
         informationGrid.add(btnSave, 1, 6);
         informationGrid.add(btnCancel, 2, 6);
-        refreshListView(tempTeam, currentTeam);
+        refreshListView(tempTeam);
+        refreshComboBox(tempTeam);
 
         btnAdd.setOnAction((event) ->
             {
@@ -237,7 +239,8 @@ public class TeamEditScene
                         dialogPeople.add((Person) projectPeople);
                     }
                 }
-                refreshListView(tempTeam, currentTeam);
+                refreshListView(tempTeam);
+                refreshComboBox(tempTeam);
             });
         
         btnDelete.setOnAction((event) ->
@@ -246,10 +249,10 @@ public class TeamEditScene
                         teamsPeopleBox.getSelectionModel().getSelectedIndices();
                 for (int i = selectedPeople.size() - 1; i >= 0; i--)
                 {
-                    tempTeam.remove(i);
-                    
+                    tempTeam.remove(tempTeam.get(selectedPeople.get(i)));
                 }
-                refreshListView(tempTeam, currentTeam);
+                
+                refreshListView(tempTeam);
                 dialogPeople.clear();
                 for (TreeViewItem projectPeople : Global.currentWorkspace.getPeople())
                 {
@@ -258,7 +261,9 @@ public class TeamEditScene
                         dialogPeople.add((Person) projectPeople);
                     }
                 }
-                refreshListView(tempTeam, currentTeam);
+                refreshListView(tempTeam);
+                refreshComboBox(tempTeam);
+
             });
 
         mkeDev.setOnAction((event) ->
@@ -271,7 +276,10 @@ public class TeamEditScene
                     teamRoles.add(tempTeam.get(i).getRole());
                     teamPeopleRoles.add(tempTeam.get(i));
                     tempTeam.get(i).setRole(Global.currentWorkspace.getRoles().get(2));
-                    refreshListView(tempTeam, currentTeam);
+                    System.out.println(tempTeam + " hello");
+                    refreshListView(tempTeam);
+                    refreshComboBox(tempTeam);
+                    System.out.println(tempTeam.get(0).getRole() + " hello");
                 }
 
             });
@@ -286,7 +294,7 @@ public class TeamEditScene
                     teamPeopleRoles.remove(tempTeam.get(i));
                     teamRoles.remove(i, i);
                     tempTeam.get(i).setRole(null);
-                    refreshListView(tempTeam, currentTeam);
+                    refreshListView(tempTeam);
 
                 }
             });
@@ -392,7 +400,8 @@ public class TeamEditScene
                     }
                     if (!productOwnerBox.getValue().equals(stringPO))
                     {
-                        for (Person selectedPerson : currentTeam.getPeople())
+                        
+                        for (Person selectedPerson : tempTeam)
                         {
                             if (selectedPerson.toString().equals(productOwnerBox.getValue()))
                             {
@@ -437,8 +446,6 @@ public class TeamEditScene
                             currentTeam.add(person, false);
                         }
                     }
-
-
 
                     for (Person person : dialogPeople)
                     {
@@ -506,13 +513,7 @@ public class TeamEditScene
             });
         return informationGrid;
     }
-
-    /**
-     * Asks if the user is sure about moving a person between teams.
-     * @param person The person to be moved
-     * @param tempTeam The team to be moved to
-     * @param currentTeam The persons current team
-     */
+    
     private static void personCheckDialog(Person person, ObservableList<Person> tempTeam, 
             Team currentTeam) 
     {
@@ -552,9 +553,12 @@ public class TeamEditScene
         dialog.show();
     }
     
-    private static void refreshListView(ObservableList<Person> currentTeam, Team team)
+    private static void refreshListView(ObservableList<Person> currentTeam)
     {
-        ObservableList<String> tempTeamString = TeamScene.sortListView(currentTeam, team);
+        System.out.println(tempTeam + " before");
+        tempTeam = TeamScene.sortListView(currentTeam);
+        System.out.println(tempTeam + " after");
+        ObservableList<String> tempTeamString = TeamScene.convertToString(tempTeam);
 
         informationGrid.getChildren().remove(teamsPeopleBox);
 
@@ -562,5 +566,79 @@ public class TeamEditScene
         teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         informationGrid.add(teamsPeopleBox, 0, 5);
+    }
+    
+    private static void refreshComboBox(ObservableList<Person> currentTeam)
+    {
+        
+        informationGrid.getChildren().remove(productOwnerBox);
+        informationGrid.getChildren().remove(scrumMasterBox);
+        
+        productOwnerBox = new CustomComboBox("Product Owner: ", false);
+        scrumMasterBox = new CustomComboBox("Scrum Master: ", false);
+
+        productOwnerBox.addToComboBox("");
+        scrumMasterBox.addToComboBox("");
+
+        Person currentSM = null;
+        Person currentPO = null;
+        
+        for (Person teamMember : currentTeam)
+        {
+            for (Skill memSkill : teamMember.getSkills())
+            {
+                if (memSkill.getShortName().equals("Product Owner"))
+                {
+                    productOwnerBox.addToComboBox(teamMember.toString());
+                    if (teamMember.getRole() != null)
+                    {
+                        if (teamMember.getRole().toString().equals("Product Owner"))
+                        {
+                            currentPO = teamMember;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        if (currentPO == null)
+        {
+            productOwnerBox.setValue("");
+        }
+        else
+        {
+            productOwnerBox.setValue(currentPO.toString());
+        }
+
+        for (Person teamMember : currentTeam)
+        {
+            for (Skill memSkill : teamMember.getSkills())
+            {
+                if (memSkill.getShortName().equals("Scrum Master"))
+                {
+                    scrumMasterBox.addToComboBox(teamMember.toString());
+                    if (teamMember.getRole() != null)
+                    {
+                        if (teamMember.getRole().toString().equals("Scrum Master"))
+                        {
+                            currentSM = teamMember;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        if (currentSM == null)
+        {
+            scrumMasterBox.setValue("");
+        }
+        else
+        {
+            scrumMasterBox.setValue(currentSM.toString());
+        }
+        
+        informationGrid.add(productOwnerBox, 0, 2);
+        informationGrid.add(scrumMasterBox, 0, 3);
+        
     }
 }

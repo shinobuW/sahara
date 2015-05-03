@@ -1,5 +1,6 @@
 package seng302.group2.scenes.information;
 
+import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,8 +17,6 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.team.Team;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import static javafx.collections.FXCollections.observableList;
-import static seng302.group2.Global.currentWorkspace;
 import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
 
@@ -67,7 +66,7 @@ public class TeamScene
             }
         }
 
-        ObservableList<String> tempTeamString = sortListView(currentTeam.getPeople(), currentTeam);
+        ObservableList<String> tempTeamString = TeamScene.convertToString(currentTeam.getPeople());
         
         ListView teamsPeopleBox = new ListView(tempTeamString);
 
@@ -121,20 +120,30 @@ public class TeamScene
 	MainScene.treeView.getSelectionModel().select(selectedTreeItem);
     }
     
-    public static ObservableList<String> sortListView(ObservableList<Person> currentTeam, Team team)
+    public static ObservableList<Person> sortListView(ObservableList<Person> currentTeam)
     {
-        ObservableList<String> tempTeamString = observableArrayList();
+        ObservableList<Person> teamList = observableArrayList();
         
-        if (team.getProductOwner() != null)
+        for (Person person : currentTeam)
         {
-            tempTeamString.add(team.getProductOwner().toString() + " - (" 
-                    + team.getProductOwner().getRole() + ")");
+            if (person.getRole() != null)
+            {
+                if (person.getRole().toString().equals("Product Owner"))
+                {
+                    teamList.add(person);
+                }
+            }
         }
         
-        if (team.getScrumMaster() != null)
+        for (Person person : currentTeam)
         {
-            tempTeamString.add(team.getScrumMaster().toString() + " - (" 
-                    + team.getScrumMaster().getRole() + ")");
+            if (person.getRole() != null)
+            {
+                if (person.getRole().toString().equals("Scrum Master"))
+                {
+                    teamList.add(person);
+                }
+            }
         }
         
         for (Person person : currentTeam)
@@ -143,7 +152,7 @@ public class TeamScene
             {
                 if (person.getRole().toString().equals("Development Team Member"))
                 {
-                    tempTeamString.add(person.toString() + " - (" + person.getRole() + ")");
+                    teamList.add(person);
                 }
             }
         }
@@ -152,11 +161,59 @@ public class TeamScene
         {
             if (person.getRole() == null)
             {
-                tempTeamString.add(person.toString());
+                teamList.add(person);
+            }
+        }
+        return teamList;
+    }
+ 
+    public static ObservableList<String> convertToString(ObservableList<Person> currentTeam)
+    {
+        ObservableList<String> currentStringTeam = observableArrayList();
+        
+        
+        for (Person person : currentTeam)
+        {
+            if (person.getRole() != null)
+            {
+                if (person.getRole().toString().equals("Product Owner"))
+                {
+                    currentStringTeam.add(person.toString() + " (" + person.getRole() + ")");
+                }
+            }
+        }
+
+        for (Person person : currentTeam)
+        {
+            if (person.getRole() != null)
+            {
+                if (person.getRole().toString().equals("Scrum Master"))
+                {
+                    currentStringTeam.add(person.toString() + " (" + person.getRole() + ")");
+                }
+            }
+        }
+
+        for (Person person : currentTeam)
+        {
+            if (person.getRole() != null)
+            {
+                if (person.getRole().toString().equals("Development Team Member"))
+                {
+                    currentStringTeam.add(person.toString() + " (" + person.getRole() + ")");
+                }
+            }
+        }
+
+        for (Person person : currentTeam)
+        {
+            if (person.getRole() == null)
+            {
+                currentStringTeam.add(person.toString());
             }
         }
         
-        return tempTeamString;
+        
+        return currentStringTeam;
     }
- 
 }

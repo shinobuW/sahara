@@ -41,13 +41,13 @@ public class ProjectCategoryScene
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
         Button btnView = new Button("View");
-        Button btnDelete = new Button("Delete");
+        //Button btnDelete = new Button("Delete");
         Button btnCreate = new Button("Create New Project");
 
         VBox selectionButtons = new VBox();
         selectionButtons.spacingProperty().setValue(10);
         selectionButtons.getChildren().add(btnView);
-        selectionButtons.getChildren().add(btnDelete);
+        //selectionButtons.getChildren().add(btnDelete);
         selectionButtons.setAlignment(Pos.TOP_CENTER);
 
         HBox createButton = new HBox();
@@ -72,14 +72,14 @@ public class ProjectCategoryScene
             });
 
 
-        btnDelete.setOnAction((event) ->
+        /*btnDelete.setOnAction((event) ->
             {
                 if (projectBox.getSelectionModel().getSelectedItem() != null)
                 {
                     Project.deleteProject(
                             (Project) projectBox.getSelectionModel().getSelectedItem());
                 }
-            });
+            });*/
 
         btnCreate.setOnAction((event) ->
             {

@@ -17,9 +17,12 @@ import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.dialog.*;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 import seng302.group2.scenes.listdisplay.Category;
+import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.Workspace.SaveLoadResult;
+import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
@@ -412,6 +415,10 @@ public class MainMenuBar
                 {
                     deleteTreeItem.setDisable(true);
                 }
+                else if (Global.selectedTreeItem.getValue().getClass() == ReleaseCategory.class)
+                {
+                    deleteTreeItem.setDisable(true);
+                }
                 else if (Global.selectedTreeItem.getValue().getClass() == Skill.class)
                 {
                     Skill selectedSkill = (Skill)Global.selectedTreeItem.getValue();
@@ -444,6 +451,14 @@ public class MainMenuBar
                 else if (Global.selectedTreeItem.getValue().getClass() == Workspace.class)
                 {
                     deleteTreeItem.setDisable(true);          
+                }
+                else if (Global.selectedTreeItem.getValue().getClass() == Project.class)
+                {
+                    deleteTreeItem.setDisable(true);
+                }
+                else if (Global.selectedTreeItem.getValue().getClass() == Release.class)
+                {
+                    deleteTreeItem.setDisable(true);
                 }
                 else
                 {
