@@ -28,8 +28,9 @@ public class CustomComboBox extends VBox
     
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
-     * asterisk.
-     * @param name The node field that is required
+     * asterisk if the field is required.
+     * @param name The node field
+     * @param required Whether or not the field is required
      */
     public CustomComboBox(String name, boolean required)
     {

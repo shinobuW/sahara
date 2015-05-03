@@ -266,6 +266,7 @@ public class Project extends TreeViewItem implements Serializable
     /**
      * Removes the release from the project
      * @param release release to be removed
+     * @param redo Whether or not to add a redo item to the undoredo stack
      */
     public void remove(Release release, Boolean redo)
     {
@@ -304,6 +305,7 @@ public class Project extends TreeViewItem implements Serializable
     /**
      * Add Release to Project
      * @param release release to be added
+     * @param undo whether or not to create an undo item and add it to the undoredo stack
      */
     public void add(Release release, boolean undo)
     {

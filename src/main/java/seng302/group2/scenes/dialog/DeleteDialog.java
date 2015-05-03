@@ -33,8 +33,8 @@ public class DeleteDialog
 
     /**
      * Shows a confirm dialog box for element deletion
-     * @param element
-     * @return True if the element is to be deleted, else false.
+     * @param element The element to be deleted
+     * @return if the user confirms for the element to be deleted
      */
     public static boolean showDeleteDialog(TreeViewItem element)
     {
