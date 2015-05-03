@@ -244,7 +244,7 @@ public class TeamEditScene
             {
                 ObservableList<Integer> selectedPeople =
                         teamsPeopleBox.getSelectionModel().getSelectedIndices();
-                for (int i = selectedPeople.size()-1; i >= 0; i--)
+                for (int i = selectedPeople.size() - 1; i >= 0; i--)
                 {
                     tempTeam.remove(i);
                     
@@ -507,7 +507,8 @@ public class TeamEditScene
         return informationGrid;
     }
     
-    private static void personCheckDialog(Person person, ObservableList<Person> tempTeam, Team currentTeam) 
+    private static void personCheckDialog(Person person, ObservableList<Person> tempTeam, 
+            Team currentTeam) 
     {
         
         Dialog dialog = new Dialog(null, "Already Assigned to a Team");
@@ -547,13 +548,13 @@ public class TeamEditScene
     
     private static void refreshListView(ObservableList<Person> currentTeam, Team team)
     {
-            ObservableList<String> tempTeamString = TeamScene.sortListView(currentTeam, team);
-            
-            informationGrid.getChildren().remove(teamsPeopleBox);
+        ObservableList<String> tempTeamString = TeamScene.sortListView(currentTeam, team);
 
-            teamsPeopleBox = new ListView(tempTeamString);
-            teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        informationGrid.getChildren().remove(teamsPeopleBox);
 
-            informationGrid.add(teamsPeopleBox, 0, 5);
+        teamsPeopleBox = new ListView(tempTeamString);
+        teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        informationGrid.add(teamsPeopleBox, 0, 5);
     }
 }
