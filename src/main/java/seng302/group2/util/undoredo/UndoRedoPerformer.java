@@ -89,7 +89,7 @@ public class UndoRedoPerformer
 
     
     /**
-     * Performs the undo on the underlying undoable item.
+     * Performs the relevant undo on the underlying undoable item.
      * @param item The UndoableItem to undo
      */
     public static void undo(UndoableItem item)
@@ -418,7 +418,7 @@ public class UndoRedoPerformer
 
     
      /**
-     * Performs the redo on the underlying undoable item.
+     * Performs the relevant redo on the underlying undoable item.
      * @param item The UndoableItem to redo
      */
     public static void redo(UndoableItem item)
@@ -499,7 +499,7 @@ public class UndoRedoPerformer
                     break;
                 case PERSON_DEL:
                     Global.currentWorkspace.getPeople().remove((Person) item.getHost());
-                    break;    
+                    break;
                 case PERSON_SHORTNAME:
                     person.setShortName((String) item.getRedoAction().getValue());
                     break;
@@ -551,7 +551,7 @@ public class UndoRedoPerformer
                     break;
                 case PERSON_EDIT:
                     for (UndoableItem undoAction : (ArrayList<UndoableItem>)
-                            item.getUndoAction().getValue()) 
+                            item.getUndoAction().getValue())
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
@@ -562,7 +562,7 @@ public class UndoRedoPerformer
                     break;
             }
         }
-        
+
         /* Skill Actions */
         else if (objClass == Skill.class)
         {
@@ -605,7 +605,7 @@ public class UndoRedoPerformer
                     break;
                 case SKILL_EDIT:
                     for (UndoableItem undoAction : (ArrayList<UndoableItem>)
-                            item.getUndoAction().getValue()) 
+                            item.getUndoAction().getValue())
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
@@ -613,10 +613,10 @@ public class UndoRedoPerformer
                     break;
                 default:
                     System.out.println("Redo on skill with this property not implemented (yet?)");
-                    break;                   
+                    break;
             }
         }
-        
+
         /* Team Actions */
         else if (objClass == Team.class)
         {
@@ -666,15 +666,15 @@ public class UndoRedoPerformer
                     break;
                 case TEAM_EDIT:
                     for (UndoableItem undoAction : (ArrayList<UndoableItem>)
-                            item.getUndoAction().getValue()) 
+                            item.getUndoAction().getValue())
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
-                    TeamScene.refreshTeamScene(team);    
+                    TeamScene.refreshTeamScene(team);
                     break;
                 default:
                     System.out.println("Redo on Team with this property not implemented (yet?)");
-                    break;                   
+                    break;
             }
         }
         else if (objClass == Release.class)

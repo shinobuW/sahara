@@ -19,6 +19,12 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public class Role extends TreeViewItem
 {
+    public enum RoleType
+    {
+        ScrumMaster, ProductOwner, DevelopmentTeamMember, Others
+    }
+
+
     private String shortName;
     private String description;
     private RoleType type;
