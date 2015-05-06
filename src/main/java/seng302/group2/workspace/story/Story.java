@@ -4,6 +4,7 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 import java.io.Serializable;
 import javafx.collections.ObservableList;
+import seng302.group2.workspace.project.Project;
 
 /**
  * Created by swi67 on 6/05/15.
@@ -14,6 +15,7 @@ public class Story extends TreeViewItem implements Serializable
     private String longName;
     private String description;
     private String creator;
+    private Project project;
 
     /**
      * Basic Story constructor
@@ -24,17 +26,25 @@ public class Story extends TreeViewItem implements Serializable
         this.longName = "Untitled Story";
         this.description = "";
         this.creator = null;
+        this.project = null;
     }
 
     /**
-     * Stort Constructor with all fields
+     * Story Constructor with all fields
+     * @param shortName short name to identify the story
+     * @param longName long name 
+     * @param description description 
+     * @param creator creator of the story
+     * @param project project the story belongs to 
      */
-    public Story(String shortName, String longName, String description, String creator)
+    public Story(String shortName, String longName, String description, String creator,
+            Project project)
     {
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
         this.creator = creator;
+        this.project = project;
     }
 
     /**
@@ -57,7 +67,7 @@ public class Story extends TreeViewItem implements Serializable
 
     /**
      * Gets the description of the story
-     * @return descirption
+     * @return description
      */
     public String getDescription()
     {
@@ -71,6 +81,11 @@ public class Story extends TreeViewItem implements Serializable
     public String getCreator()
     {
         return this.creator;
+    }
+    
+    public Project getProject()
+    {
+        return this.project;
     }
 
     /**
@@ -107,6 +122,16 @@ public class Story extends TreeViewItem implements Serializable
     public void setCreator(String creator)
     {
         this.creator = creator;
+    }
+    
+    /**
+     * Sets the project the story belongs to
+     * @param project project to set to
+     */
+    public void setProject(Project project)
+    {
+        this.project = project;
+        project.add(this);
     }
     
     /**

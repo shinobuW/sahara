@@ -145,6 +145,21 @@ public class MainMenuBar
                 KeyCombination.SHORTCUT_DOWN));
         return newReleaseItem;
     }
+    
+        /**
+     * Create a menu item "Release" and sets the action event if "Release" is clicked.
+     * @return MenuItem Release
+     */
+    private static MenuItem createStoryItem()
+    {
+
+        MenuItem newStoryItem = new MenuItem("Story");
+        newStoryItem.setOnAction((event) ->
+            {
+                CreateStoryDialog.show();
+            });
+        return newStoryItem;
+    }
 
 
     /**
@@ -343,6 +358,7 @@ public class MainMenuBar
         MenuItem newSkillItem = createSkillItem();
         MenuItem newTeamItem = createTeamItem();
         MenuItem newReleaseItem = createReleaseItem();
+        MenuItem newStoryItem = createStoryItem();
 
         // Create other items for file menu
         MenuItem openItem = createOpenItem();
@@ -356,15 +372,18 @@ public class MainMenuBar
         newBranch.getItems().add(newSkillItem);
         newBranch.getItems().add(newTeamItem);
         newBranch.getItems().add(newReleaseItem);
+        newBranch.getItems().add(newStoryItem);
 
 
         if (Global.currentWorkspace.getProjects().isEmpty())
         {
             newReleaseItem.setDisable(true);
+            newStoryItem.setDisable(true);
         }
         else
         {
             newReleaseItem.setDisable(false);
+            newStoryItem.setDisable(false);
         }
 
         // Create 'Edit >' sub-menu

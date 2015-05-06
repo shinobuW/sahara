@@ -267,6 +267,25 @@ public class Project extends TreeViewItem implements Serializable
         }
         this.teams.add(team);
     }
+    
+    /**
+     * Adds a Project to the Project list of Stories
+     * @param story the story to add
+     */
+    public void add(Story story)
+    {
+        this.stories.add(story);
+    }
+    
+    /**
+     * Removes a Story from the Project's list of Stories
+     * @param story story to remove
+     */
+    public void remove(Story story)
+    {
+        this.stories.remove(story);
+        story.setProject(null);
+    }
 
 
     /**
