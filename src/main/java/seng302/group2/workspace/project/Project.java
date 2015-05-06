@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import seng302.group2.workspace.story.Story;
 
 /**
  * A class representing real-world projects
@@ -30,6 +31,8 @@ public class Project extends TreeViewItem implements Serializable
     private ArrayList<Release> serializableReleases = new ArrayList<>();
     private transient ObservableList<Team> pastTeams = observableArrayList();
     private ArrayList<Team> serializablePastTeams = new ArrayList<>();
+    private transient ObservableList<Story> stories = observableArrayList();
+    private ArrayList<Story> serializableStories = new ArrayList<>();
 
 
     /**
@@ -109,6 +112,21 @@ public class Project extends TreeViewItem implements Serializable
         }
         return this.releases;
     }
+    
+    /**
+     * Gets the stories of the project
+     * @return list of stories
+     */
+    public ObservableList<Story> getStories()
+    {
+        this.serializableStories.clear();
+        for (Object item : this.stories)
+        {
+            this.serializableStories.add((Story)item);
+        }
+        return this.stories;
+        
+    }
 
 
     /**
@@ -151,6 +169,15 @@ public class Project extends TreeViewItem implements Serializable
     public ArrayList<Release> getSerializableReleases()
     {
         return serializableReleases;
+    }
+    
+    /**
+     * Gets the serializable stories
+     * @return the serializable releases
+     */
+    public ArrayList<Story> getSerilizableStories()
+    {
+        return serializableStories;
     }
 
     /**
@@ -437,6 +464,7 @@ public class Project extends TreeViewItem implements Serializable
         ObservableList<TreeViewItem> children = observableArrayList();
         ReleaseCategory releasesCategory = new ReleaseCategory("Releases", this);
         children.add(releasesCategory);
+ 
 
         return children;
     }
