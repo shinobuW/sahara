@@ -301,9 +301,7 @@ public class Project extends TreeViewItem implements Serializable
     }
 
 
-
-    
-        /**
+    /**
      * Removes the release from the project
      * @param release release to be removed
      */
@@ -318,6 +316,14 @@ public class Project extends TreeViewItem implements Serializable
         this.releases.remove(release);
     }
 
+    /**
+     * Removes the team from the list of past teams allocated to the project
+     * @param team team to rmeove from the list
+     */
+    public void removePastTeam(Team team)
+    {
+        this.pastTeams.remove(team);
+    }
 
 
     /**
@@ -352,6 +358,15 @@ public class Project extends TreeViewItem implements Serializable
                 new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_ADD, this)
         ));
         this.releases.add(release);
+    }
+
+    /**
+     * Adds a team to the list od teams allocated to the project in the past
+     * @param team team to add
+     */
+    public void addPastTeam(Team team)
+    {
+        this.pastTeams.add(team);
     }
 
     /**

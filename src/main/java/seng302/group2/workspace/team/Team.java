@@ -277,6 +277,15 @@ public class Team extends TreeViewItem implements Serializable
         this.people.add(person);
     }
 
+    /**
+     * Adds a project to the list of projects the team was allocated in the past
+     * @param project project to add
+     */
+    public void addPastProject(Project project)
+    {
+        this.pastProjects.add(project);
+    }
+
 
     /**
      * Adds the 'Unassigned' team to the workspace.
@@ -346,6 +355,14 @@ public class Team extends TreeViewItem implements Serializable
         this.people.remove(person);
     }
 
+    /**
+     * Removes the given project from the list of projects allocated in the past
+     * @param project project to be removed
+     */
+    public void removePastProject(Project project)
+    {
+        this.pastProjects.remove(project);
+    }
 
     /**
      * Adds the role to the team's list of Roles

@@ -106,6 +106,26 @@ public class ProjectTest extends TestCase
         Assert.assertTrue(!proj.getTeams().contains(testTeam));
     }
 
+    /**
+     * Tests the addition of past teams within the projects
+     */
+    @Test
+    public void testAddPastTeam()
+    {
+        Project proj = new Project();
+        Team team = new Team();
+
+        proj.addPastTeam(team);
+        ArrayList<Team> teams = new ArrayList<>();
+        teams.add(team);
+
+        Assert.assertEquals(teams, proj.getPastTeams());
+
+        proj.removePastTeam(team);
+        Assert.assertTrue(!proj.getPastTeams().contains(team));
+    }
+
+
 
     /**
      * Tests that a list of releases as TreeViewItems are fetched correctly

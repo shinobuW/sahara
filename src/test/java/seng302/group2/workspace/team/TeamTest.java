@@ -8,6 +8,9 @@ package seng302.group2.workspace.team;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.Project;
+
+import java.util.ArrayList;
 
 /**
  * A series of tests relating to Teams
@@ -83,6 +86,28 @@ public class TeamTest
         team.remove(person, true);
         Assert.assertFalse(team.getPeople().contains(person));
     }
+
+    /**
+     * Test the addition and removal of projects in list of projects allocated in the past
+     */
+    @Test
+    public void testAddRemovalPastProject()
+    {
+        Team team = new Team();
+        Project proj = new Project();
+
+
+        team.addPastProject(proj);
+        ArrayList<Project> projects = new ArrayList<>();
+        projects.add(proj);
+
+        Assert.assertEquals(projects, team.getPastProjects());
+
+        team.removePastProject(proj);
+        Assert.assertTrue(!team.getPastProjects().contains(proj));
+
+    }
+
 
     /**
      * Tests whether or not the unassigned team getter works correctly
