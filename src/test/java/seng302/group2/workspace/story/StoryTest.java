@@ -9,6 +9,7 @@ import junit.framework.Assert;
 import junit.framework.TestSuite;
 import org.junit.Test;
 import junit.framework.TestCase;
+import seng302.group2.workspace.project.Project;
 
 /**
  * A series of tests relating to Story
@@ -41,18 +42,20 @@ public class StoryTest extends TestCase
     public void testStoryConstructors()
     {
         Story story = new Story();
+        Project project = new Project();
         Assert.assertEquals("Untitled Story", story.getShortName());
         Assert.assertEquals("", story.getDescription());
         Assert.assertEquals("Untitled Story", story.toString());
         Assert.assertEquals(null, story.getCreator());
 
         Story testStory = new Story("Test Story", "A long Name", "test description",
-                "Tyler the Creator");
+                "Tyler the Creator", project);
         Assert.assertEquals("Test Story", testStory.getShortName());
         Assert.assertEquals("A long Name", testStory.getLongName());
         Assert.assertEquals("test description", testStory.getDescription());
         Assert.assertEquals("Tyler the Creator", testStory.getCreator());
         Assert.assertEquals("Test Story", testStory.toString()); 
+        Assert.assertEquals(project, testStory.getProject());
     }
     
     /**
