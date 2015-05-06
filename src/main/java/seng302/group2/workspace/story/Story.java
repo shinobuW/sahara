@@ -3,6 +3,7 @@ package seng302.group2.workspace.story;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 import java.io.Serializable;
+import javafx.collections.ObservableList;
 
 /**
  * Created by swi67 on 6/05/15.
@@ -107,5 +108,24 @@ public class Story extends TreeViewItem implements Serializable
     {
         this.creator = creator;
     }
-
+    
+    /**
+     * Gets the children of the TreeViewItem
+     * @return The items of the TreeViewItem
+     */
+    @Override
+    public ObservableList<TreeViewItem> getChildren()
+    {
+        return null;
+    }
+    
+    /**
+     * An overridden version for the String representation of a Story
+     * @return The short name of the Story
+     */
+    @Override
+    public String toString()
+    {
+        return this.shortName;
+    }
 }
