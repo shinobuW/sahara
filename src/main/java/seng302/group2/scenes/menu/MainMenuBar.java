@@ -18,6 +18,7 @@ import seng302.group2.scenes.dialog.*;
 import seng302.group2.scenes.listdisplay.Category;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.ReportGenerator;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.Workspace.SaveLoadResult;
 import seng302.group2.workspace.project.Project;
@@ -26,7 +27,6 @@ import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
-import seng302.group2.workspace.ReportGenerator;
 
 /**
  * The main menu bar of the workspace window(s).
@@ -255,7 +255,8 @@ public class MainMenuBar
     }
     
     /**
-     * Creates a menu item "Export" and sets the on action event to export the file as an XML document.
+     * Creates a menu item "Export" and sets the on action event to export the file as an XML
+     * document.
      * @return MenuItem Save
      */
     private static MenuItem createExportItem() 
