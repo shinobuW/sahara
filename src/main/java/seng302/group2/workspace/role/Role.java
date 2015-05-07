@@ -6,13 +6,14 @@
 package seng302.group2.workspace.role;
 
 import javafx.collections.ObservableList;
+import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.skills.Skill;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import seng302.group2.Global;
 
 
 /**
@@ -30,7 +31,7 @@ public class Role extends TreeViewItem
     private String description;
     private RoleType type;
     private transient ObservableList<Skill> requiredSkills = observableArrayList();
-    private ArrayList<Skill> serializableRequiredSkills = new ArrayList<>();
+    private List<Skill> serializableRequiredSkills = new ArrayList<>();
     private boolean defaultRole;
 
     /**

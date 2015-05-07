@@ -16,6 +16,7 @@ import seng302.group2.workspace.team.Team;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -32,7 +33,7 @@ public class Person extends TreeViewItem implements Serializable
     private String description;
     private Date birthDate = null;
     private transient ObservableList<Skill> skills = observableArrayList();
-    private ArrayList<Skill> serializableSkills = new ArrayList<>();
+    private List<Skill> serializableSkills = new ArrayList<>();
     private Team team;
     private Role role;
 
@@ -170,7 +171,7 @@ public class Person extends TreeViewItem implements Serializable
      * Gets the ArrayList of serializable skills
      * @return the serializable skills
      */
-    public ArrayList<Skill> getSerializableSkills()
+    public List<Skill> getSerializableSkills()
     {
         return serializableSkills;
     }

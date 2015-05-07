@@ -27,13 +27,13 @@ import seng302.group2.workspace.team.Team;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * Basic workspace class that acts as the root object for Sahara and represents a real-world
  * company or work group space.
- *
  * @author Jordane Lew (jml168)
  */
 @SuppressWarnings("deprecation")
@@ -49,15 +49,15 @@ public class Workspace extends TreeViewItem implements Serializable
 
     // Workspace elements
     private transient ObservableList<Team> teams = observableArrayList();
-    private ArrayList<Team> serializableTeams = new ArrayList<>();
+    private List<Team> serializableTeams = new ArrayList<>();
     private transient ObservableList<Person> people = observableArrayList();
-    private ArrayList<Person> serializablePeople = new ArrayList<>();
+    private List<Person> serializablePeople = new ArrayList<>();
     private transient ObservableList<Skill> skills = observableArrayList();
-    private ArrayList<Skill> serializableSkills = new ArrayList<>();
+    private List<Skill> serializableSkills = new ArrayList<>();
     private transient ObservableList<Project> projects = observableArrayList();
-    private ArrayList<Project> serializableProjects = new ArrayList<>();
+    private List<Project> serializableProjects = new ArrayList<>();
     private transient ObservableList<Role> roles = observableArrayList();
-    private ArrayList<Role> serializableRoles = new ArrayList();
+    private List<Role> serializableRoles = new ArrayList();
 
 
     /**

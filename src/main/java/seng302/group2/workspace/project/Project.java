@@ -15,6 +15,7 @@ import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -28,13 +29,13 @@ public class Project extends TreeViewItem implements Serializable
     private String longName;
     private String description;
     private transient ObservableList<Team> teams = observableArrayList();
-    private ArrayList<Team> serializableTeams = new ArrayList<>();
+    private List<Team> serializableTeams = new ArrayList<>();
     private transient ObservableList<Release> releases = observableArrayList();
-    private ArrayList<Release> serializableReleases = new ArrayList<>();
+    private List<Release> serializableReleases = new ArrayList<>();
     private transient ObservableList<Team> pastTeams = observableArrayList();
-    private ArrayList<Team> serializablePastTeams = new ArrayList<>();
+    private List<Team> serializablePastTeams = new ArrayList<>();
     private transient ObservableList<Story> stories = observableArrayList();
-    private ArrayList<Story> serializableStories = new ArrayList<>();
+    private List<Story> serializableStories = new ArrayList<>();
 
 
     /**
@@ -159,7 +160,7 @@ public class Project extends TreeViewItem implements Serializable
      * Gets the serializable teams
      * @return the serializable teams
      */
-    public ArrayList<Team> getSerializableTeams()
+    public List<Team> getSerializableTeams()
     {
         return serializableTeams;
     }
@@ -168,7 +169,7 @@ public class Project extends TreeViewItem implements Serializable
      * Gets the serializable releases
      * @return the serializable releases
      */
-    public ArrayList<Release> getSerializableReleases()
+    public List<Release> getSerializableReleases()
     {
         return serializableReleases;
     }
@@ -177,7 +178,7 @@ public class Project extends TreeViewItem implements Serializable
      * Gets the serializable stories
      * @return the serializable releases
      */
-    public ArrayList<Story> getSerilizableStories()
+    public List<Story> getSerilizableStories()
     {
         return serializableStories;
     }
@@ -195,7 +196,7 @@ public class Project extends TreeViewItem implements Serializable
      * Gets the serializable teams allocated to the project in the past
      * @return serializable teams
      */
-    public ArrayList<Team> getSerializablePastTeams()
+    public List<Team> getSerializablePastTeams()
     {
         return serializablePastTeams;
     }

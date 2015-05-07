@@ -14,6 +14,7 @@ import seng302.group2.workspace.project.Project;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -31,11 +32,11 @@ public class Team extends TreeViewItem implements Serializable
     private Person scrumMaster;
     private Person productOwner;
     private transient ObservableList<Person> people = observableArrayList();
-    private ArrayList<Person> serializablePeople = new ArrayList<>();
+    private List<Person> serializablePeople = new ArrayList<>();
     private transient ObservableList<Person> devs = observableArrayList();
-    private ArrayList<Person> serializableDevs = new ArrayList<>();
+    private List<Person> serializableDevs = new ArrayList<>();
     private transient ObservableList<Project> pastProjects = observableArrayList();
-    private ArrayList<Project> serializablePastProjects = new ArrayList<>();
+    private List<Project> serializablePastProjects = new ArrayList<>();
     private boolean unassigned = false;
     private Project project;
 
@@ -155,7 +156,7 @@ public class Team extends TreeViewItem implements Serializable
      *
      * @return the serializable people
      */
-    public ArrayList<Person> getSerializablePeople()
+    public List<Person> getSerializablePeople()
     {
         return serializablePeople;
     }
@@ -164,7 +165,7 @@ public class Team extends TreeViewItem implements Serializable
      * Gets the serializable project that team was allocated to in the past
      * @return list of projects
      */
-    public ArrayList<Project> getSerializableProject()
+    public List<Project> getSerializableProject()
     {
         return serializablePastProjects;
     }
