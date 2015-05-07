@@ -19,17 +19,17 @@ import java.util.Date;
 public class DateValidatorTest
 {
     /**
-     * Test of isValidDateString method, of class DateValidator.
+     * Test of isValidBirthdate method, of class DateValidator.
      */
     @Test
     public void testIsValidDateString()
     {
-        Assert.assertEquals(ValidationStatus.NULL, DateValidator.isValidDateString(""));
+        Assert.assertEquals(ValidationStatus.NULL, DateValidator.isValidBirthdate(""));
         Assert.assertEquals(ValidationStatus.OUT_OF_RANGE,
-                DateValidator.isValidDateString("12/12/9999"));
-        Assert.assertEquals(ValidationStatus.VALID, DateValidator.isValidDateString("20/03/2015"));
+                DateValidator.isValidBirthdate("12/12/9999"));
+        Assert.assertEquals(ValidationStatus.VALID, DateValidator.isValidBirthdate("20/03/2015"));
         Assert.assertEquals(ValidationStatus.PATTERN_MISMATCH,
-                DateValidator.isValidDateString("20/03/15"));
+                DateValidator.isValidBirthdate("20/03/15"));
     }
 
     /**

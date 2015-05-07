@@ -5,38 +5,20 @@
  */
 package seng302.group2.workspace.team;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Assert;
+import org.junit.Test;
 import seng302.group2.workspace.role.Role;
 
 /**
  * A series of tests relating to Role
  * @author swi67 
  */
-public class RoleTest extends TestCase
+public class RoleTest
 {
-    /**
-     * Create the test case.
-     * @param testName name of the test case
-     */
-    public RoleTest(String testName)
-    {
-        super(testName);
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite(RoleTest.class);
-    }
-
     /**
      * A simple test for the Role constructors
      */
+    @Test
     public void testRoleConstructors()
     {
         Role role = new Role();
@@ -57,6 +39,7 @@ public class RoleTest extends TestCase
     /**
      * Tests for Role setter methods.
      */
+    @Test
     public void testRoleSetters()
     {
         Role role = new Role();

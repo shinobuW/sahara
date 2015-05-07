@@ -7,6 +7,8 @@ package seng302.group2.util.validation;
 
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomDateField;
+import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.team.Allocation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,7 +21,7 @@ import java.util.Date;
  */
 public class DateValidator
 {
-    public static ValidationStatus isValidDateString(String birthDate)
+    public static ValidationStatus isValidBirthdate(String birthDate)
     {
         if (birthDate.isEmpty())
         {
@@ -53,6 +55,29 @@ public class DateValidator
 
         }
     }
+
+
+    // TODO Make after allocation
+    /*
+    public static Allocation.AllocationStatus isValidAllocationDate(Allocation alloc, Project proj)
+    {
+        allocStart = alloc.getStartDate();
+        allocEnd = alloc.getEndDate();
+
+        for (Allocation projAlloc : proj.getAllocations())
+        {
+            if (projAlloc.isCurrentAllocation() == Allocation.AllocationStatus.PAST)
+            {
+                if (allocStart.before(projAlloc.getEndDate()))
+                {
+                    return Allocation.AllocationStatus.PAST;
+                }
+            }
+        }
+        return true;
+    }*/
+
+
 
     public static boolean isFutureDate(Date date)
     {
@@ -108,7 +133,7 @@ public class DateValidator
      **/
     public static boolean validateBirthDateField(CustomDateField customBirthDate)
     {
-        switch (DateValidator.isValidDateString(customBirthDate.getText()))
+        switch (DateValidator.isValidBirthdate(customBirthDate.getText()))
         {
             case VALID:
                 customBirthDate.hideErrorField();

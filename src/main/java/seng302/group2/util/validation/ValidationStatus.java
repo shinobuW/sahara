@@ -11,10 +11,22 @@ package seng302.group2.util.validation;
  */
 public enum ValidationStatus
 {
+    // Common statuses
     VALID,
     INVALID,
-    PATTERN_MISMATCH,
-    OUT_OF_RANGE,
     NON_UNIQUE,
-    NULL
+    NULL,
+
+    // Pattern/RegEx status
+    PATTERN_MISMATCH,
+
+    // Birth date statuses
+    OUT_OF_RANGE,
+
+    // Allocation date statuses
+    START_OVERLAP,
+    END_OVERLAP,
+    SUPER_OVERLAP,
+    SUB_OVERLAP
+
 }
