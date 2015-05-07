@@ -3,7 +3,10 @@ package seng302.group2.scenes.information;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -14,20 +17,13 @@ import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.TreeViewWithItems;
-import seng302.group2.util.undoredo.UndoRedoAction;
-import seng302.group2.util.undoredo.UndoRedoPerformer;
-import seng302.group2.util.undoredo.UndoableItem;
+import seng302.group2.util.validation.NameValidator;
+import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
 
-import java.util.ArrayList;
-
 import static javafx.collections.FXCollections.observableArrayList;
-import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
-import static seng302.group2.scenes.MainScene.treeView;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * A class for displaying the project edit scene.
@@ -176,7 +172,7 @@ public class ProjectEditScene
         btnSave.setOnAction((event) ->
             {
               
-                boolean correctShortName;
+                /*boolean correctShortName;
                 boolean correctLongName;   
                 
                 if (shortNameCustomField.getText().equals(currentProject.getShortName()))
@@ -197,10 +193,9 @@ public class ProjectEditScene
                     correctLongName = validateShortName(longNameCustomField);
                 }
 
-                if (correctShortName && correctLongName)
-                {
+                if (correctShortName && correctLongName)*/
                     // Build Undo/Redo edit array.
-                    ArrayList<UndoableItem> undoActions = new ArrayList<>();
+                    /*ArrayList<UndoableItem> undoActions = new ArrayList<>();
                     if (!shortNameCustomField.getText().equals(currentProject.getShortName()))
                     {
                         undoActions.add(new UndoableItem(
@@ -315,8 +310,10 @@ public class ProjectEditScene
                     // Save the edits.
                     currentProject.setDescription(descriptionTextArea.getText());
                     currentProject.setShortName(shortNameCustomField.getText());
-                    currentProject.setLongName(longNameCustomField.getText());
-                    App.content.getChildren().remove(treeView);
+                    currentProject.setLongName(longNameCustomField.getText());*/
+
+
+                    /*App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
                     ProjectScene.getProjectScene(currentProject);
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
@@ -328,10 +325,32 @@ public class ProjectEditScene
 
                     App.content.getChildren().add(treeView);
                     App.content.getChildren().add(informationGrid);
-                    MainScene.treeView.getSelectionModel().select(selectedTreeItem);
+                    MainScene.treeView.getSelectionModel().select(selectedTreeItem);*/
+
+
+                if (shortNameCustomField.getText().equals(currentProject.getShortName())
+                        && longNameCustomField.getText().equals(currentProject.getLongName())
+                        && descriptionTextArea.getText().equals(currentProject.getDescription()))
+                {
+                    // No fields have been changed
+                    returnFromEdit(currentProject);
+                }
+                // The short name is the same or valid
+                if ((shortNameCustomField.getText().equals(currentProject.getShortName())
+                        || ShortNameValidator.validateShortName(shortNameCustomField))
+                        && // and the long name is the same or valid
+                        (longNameCustomField.getText().equals(currentProject.getLongName())
+                                || NameValidator.validateName(longNameCustomField)))
+                {
+                    currentProject.edit(shortNameCustomField.getText(),
+                            longNameCustomField.getText(), descriptionTextArea.getText());
+
+                    returnFromEdit(currentProject);
+                    MainScene.treeView.refresh();
                 }
                 else
                 {
+                    // One or more fields incorrectly validated, stay on the edit scene
                     event.consume();
                 }
             });
@@ -382,5 +401,16 @@ public class ProjectEditScene
         dialog.setContent(grid);
         dialog.show();
     }
-    
+
+
+    /**
+     * Returns from the project's edit scene to it's information scene
+     * @param currentProject The project of which the information scene will show
+     */
+    private static void returnFromEdit(Project currentProject)
+    {
+        App.content.getChildren().remove(informationGrid);
+        ProjectScene.getProjectScene(currentProject);
+        App.content.getChildren().add(informationGrid);
+    }
 }

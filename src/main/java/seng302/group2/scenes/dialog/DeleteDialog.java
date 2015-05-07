@@ -5,25 +5,19 @@
  */
 package seng302.group2.scenes.dialog;
 
-import java.text.MessageFormat;
-import java.util.ArrayList;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
-import seng302.group2.scenes.contextmenu.ElementTreeContextMenu.Categories;
-import static seng302.group2.scenes.contextmenu.ElementTreeContextMenu.Categories.OTHER;
-import static seng302.group2.scenes.contextmenu.ElementTreeContextMenu.Categories.PERSON;
-import static seng302.group2.scenes.contextmenu.ElementTreeContextMenu.Categories.PROJECT;
-import static seng302.group2.scenes.contextmenu.ElementTreeContextMenu.Categories.SKILL;
-import static seng302.group2.scenes.contextmenu.ElementTreeContextMenu.Categories.TEAM;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
+
+import java.text.MessageFormat;
+import java.util.ArrayList;
 
 /**
  * TODO
@@ -64,7 +58,8 @@ public class DeleteDialog
             else if (element.getClass() == Project.class)
             {
                 Project deletedProject = (Project)element;
-                Project.deleteProject(deletedProject);
+                deletedProject.deleteProject(Global.currentWorkspace);
+                //Project.deleteProject(deletedProject);
                 App.refreshMainScene();
             }
             else if (element.getClass() == Team.class)

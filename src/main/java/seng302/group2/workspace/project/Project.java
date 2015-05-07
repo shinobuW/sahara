@@ -4,17 +4,19 @@ import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.undoredo.Command;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
+import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.release.Release;
+import seng302.group2.workspace.story.Story;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import seng302.group2.workspace.story.Story;
 
 /**
  * A class representing real-world projects
@@ -415,6 +417,7 @@ public class Project extends TreeViewItem implements Serializable
         this.pastTeams.add(team);
     }
 
+
     /**
      * Prepares a project to be serialized.
      */
@@ -465,13 +468,15 @@ public class Project extends TreeViewItem implements Serializable
 
     
     /**
-     * Deletes a project from the current workspace.
-     * @param deletedProject The project to delete
+     * Deletes a project from the given workspace.
+     * @param ws The workspace to remove the project from
      */
-    public static void deleteProject(Project deletedProject)
+    public void deleteProject(Workspace ws)
     {
-        Global.currentWorkspace.remove(deletedProject);
+        DeleteProjectCommand command = new DeleteProjectCommand(this, ws);
+        Global.commandManager.executeCommand(command);
     }
+
 
     /**
      * Gets the children of the category
@@ -486,5 +491,91 @@ public class Project extends TreeViewItem implements Serializable
  
 
         return children;
+    }
+
+
+    /**
+     * Creates a Project edit command and executes it with the Global Command Manager, updating
+     * the project with the new parameter values.
+     * @param newShortName The new short name
+     * @param newLongName The new long name
+     * @param newDescription The new description
+     */
+    public void edit(String newShortName, String newLongName, String newDescription)
+    {
+        Command wsedit = new ProjectEditCommand(this, newShortName, newLongName, newDescription);
+        Global.commandManager.executeCommand(wsedit);
+    }
+
+
+    /**
+     * A command class that allows the executing and undoing of project edits
+     */
+    private class ProjectEditCommand implements Command
+    {
+        private Project proj;
+        private String shortName;
+        private String longName;
+        private String description;
+        private String oldShortName;
+        private String oldLongName;
+        private String oldDescription;
+
+        private ProjectEditCommand(Project proj, String newShortName, String newLongName,
+                                     String newDescription)
+        {
+            this.proj = proj;
+            this.shortName = newShortName;
+            this.longName = newLongName;
+            this.description = newDescription;
+            this.oldShortName = proj.shortName;
+            this.oldLongName = proj.longName;
+            this.oldDescription = proj.description;
+        }
+
+        /**
+         * Executes/Redoes the changes of the workspace edit
+         */
+        public void execute()
+        {
+            proj.shortName = shortName;
+            proj.longName = longName;
+            proj.description = description;
+        }
+
+        /**
+         * Undoes the changes of the workspace edit
+         */
+        public void undo()
+        {
+            proj.shortName = oldShortName;
+            proj.longName = oldLongName;
+            proj.description = oldDescription;
+        }
+    }
+
+
+    private class DeleteProjectCommand implements Command
+    {
+        private Project proj;
+        private Workspace ws;
+
+        DeleteProjectCommand(Project proj, Workspace ws)
+        {
+            this.proj = proj;
+            this.ws = ws;
+        }
+
+        public void execute()
+        {
+            ws.getProjects().remove(proj);
+            // TODO Remove any associations
+        }
+
+        public void undo()
+        {
+            ws.getProjects().add(proj);
+            // TODO Readd any associations
+        }
     }
 }

@@ -60,7 +60,7 @@ public class ShortNameValidatorTest
         Role role = new Role("ROLE", Role.RoleType.Others);
 
         proj.add(rel, false);
-        ws.add(proj, false);
+        ws.addWithoutUndo(proj);
         ws.add(team, false);
         ws.add(apers, false);
         ws.add(skill, false);

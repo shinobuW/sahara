@@ -702,6 +702,26 @@ public class Workspace extends TreeViewItem implements Serializable
 
 
     /**
+     * Adds the given project to the workspace
+     * @param proj The project to add to the workspace
+     */
+    public void add(Project proj)
+    {
+        AddProjectCommand command = new AddProjectCommand(this, proj);
+        Global.commandManager.executeCommand(command);
+    }
+
+    /**
+     * Adds the project to the given workspace without creating an undoable command
+     * @param proj The project to add to the workspace
+     */
+    public void addWithoutUndo(Project proj)
+    {
+        this.getProjects().add(proj);
+    }
+
+
+    /**
      * Removes a Team from the Workspace's list of Teams.
      *
      * @param team The team to remove
@@ -748,45 +768,6 @@ public class Workspace extends TreeViewItem implements Serializable
         }
 
         this.teams.remove(team);
-    }
-
-
-    /**
-     * Adds a Project to the Workspace's list of Projects.
-     *
-     * @param project The team to add
-     */
-    public void add(Project project)
-    {
-        //Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                project,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT_ADD, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT_ADD, null)
-        ));
-
-        this.projects.add(project);
-    }
-
-    /**
-     * Adds a Project to the Workspace's list of Projects.
-     *
-     * @param project The team to add
-     * @param undo boolean wether to add to the undo stack or not
-     */
-    public void add(Project project, boolean undo)
-    {
-        if (undo)
-        {
-            //Add the undo action to the stack
-            Global.undoRedoMan.add(new UndoableItem(
-                    project,
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT_ADD, null),
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PROJECT_ADD, null)
-            ));
-        }
-
-        this.projects.add(project);
     }
 
 
@@ -1142,6 +1123,7 @@ public class Workspace extends TreeViewItem implements Serializable
             ws.shortName = shortName;
             ws.longName = longName;
             ws.description = description;
+            App.refreshWindowTitle();  // The project name may have changed
         }
 
         /**
@@ -1152,6 +1134,32 @@ public class Workspace extends TreeViewItem implements Serializable
             ws.shortName = oldShortName;
             ws.longName = oldLongName;
             ws.description = oldDescription;
+            App.refreshWindowTitle();  // The project name may have changed
+        }
+    }
+
+
+    private class AddProjectCommand implements Command
+    {
+        private Project proj;
+        private Workspace ws;
+
+        AddProjectCommand(Workspace ws, Project proj)
+        {
+            this.proj = proj;
+            this.ws = ws;
+        }
+
+        public void execute()
+        {
+            ws.getProjects().add(proj);
+            // TODO Readd any associations, eg. allocation history
+        }
+
+        public void undo()
+        {
+            ws.getProjects().remove(proj);
+            // TODO Remove any associations, eg. allocation history
         }
     }
 }

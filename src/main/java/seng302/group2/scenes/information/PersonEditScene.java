@@ -10,23 +10,22 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import org.controlsfx.dialog.Dialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.control.CustomDateField;
-import seng302.group2.scenes.control.CustomTextArea;
-import seng302.group2.scenes.control.CustomTextField;
-import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
+import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,12 +35,10 @@ import static seng302.group2.Global.currentWorkspace;
 import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
-import seng302.group2.scenes.control.CustomComboBox;
 import static seng302.group2.util.validation.DateValidator.stringToDate;
 import static seng302.group2.util.validation.DateValidator.validateBirthDateField;
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
-import seng302.group2.workspace.team.Team;
 
 /**
  * A class for displaying the person edit scene.
@@ -485,5 +482,12 @@ public class PersonEditScene
             });
         
         return informationGrid;
+    }
+
+    private static void returnFromEdit()
+    {
+        App.content.getChildren().remove(informationGrid);
+        WorkspaceScene.getWorkspaceScene((Workspace) Global.selectedTreeItem.getValue());
+        App.content.getChildren().add(informationGrid);
     }
 }

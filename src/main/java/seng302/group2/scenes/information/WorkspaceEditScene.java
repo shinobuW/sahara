@@ -194,10 +194,14 @@ public class WorkspaceEditScene
         return informationGrid;
     }
 
+
+    /**
+     * Returns to the current workspace information scene
+     */
     private static void returnFromEdit()
     {
         App.content.getChildren().remove(informationGrid);
-        WorkspaceScene.getWorkspaceScene((Workspace) Global.selectedTreeItem.getValue());
+        WorkspaceScene.getWorkspaceScene(Global.currentWorkspace);
         App.content.getChildren().add(informationGrid);
     }
 }
