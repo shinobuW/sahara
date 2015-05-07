@@ -75,7 +75,7 @@
 
 
       <!-- AppAssembler build -->
-      <plugin>
+      <!--<plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>appassembler-maven-plugin</artifactId>
           <version>1.9</version>
@@ -85,13 +85,11 @@
                   <phase>site</phase>
                   <goals>
                       <goal>assemble</goal>
-                      <!--<goal>generate-daemons</goal>-->
                   </goals>
               </execution>
           </executions>
 
           <configuration>
-              <!-- Generate bin scripts for windows and unix pr default -->
               <platforms>
                   <platform>windows</platform>
                   <platform>unix</platform>
@@ -112,7 +110,7 @@
               <useWildcardClassPath>true</useWildcardClassPath>
               <repositoryLayout>flat</repositoryLayout>
           </configuration>
-      </plugin>
+      </plugin>-->
 
 
         <!-- Checkstyle build -->
@@ -152,9 +150,6 @@
             <logViolationsToConsole>true</logViolationsToConsole>
           </configuration>
         </plugin>
-
-
-
 
 
       </plugins>
