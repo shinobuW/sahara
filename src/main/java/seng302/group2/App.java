@@ -30,13 +30,6 @@ public class App extends Application
     public static Stage mainStage;
     public static Scene mainScene;
     
-    /* Moved into Global
-    public static Workspace currentWorkspace = new Workspace();
-    public static TreeItem selectedTreeItem = new TreeItem();
-    public static UndoRedoManager undoRedoMan = new UndoRedoManager();
-    */
-    
-    
     /**
      * Refreshes the main scene GUI.
      */
@@ -89,10 +82,12 @@ public class App extends Application
         
         // The title of the window
         primaryStage.setTitle("Sahara");
-        primaryStage.setWidth(0.75 * screenSize.getWidth());
-        primaryStage.setHeight(0.75 * screenSize.getHeight());
-        primaryStage.setMinHeight(0.25 * screenSize.getWidth());
-        primaryStage.setMinWidth(0.25 * screenSize.getWidth());
+        //primaryStage.setWidth(0.75 * screenSize.getWidth());
+        //primaryStage.setHeight(0.75 * screenSize.getHeight());
+        primaryStage.setMinWidth(960);
+        primaryStage.setMinHeight(540);
+        //primaryStage.setMinHeight(0.25 * screenSize.getWidth());
+        //primaryStage.setMinWidth(0.25 * screenSize.getWidth());
         primaryStage.getIcons().add(new Image("file:images/icon.png"));
         
         // Set the scene of the stage to the initial scene
