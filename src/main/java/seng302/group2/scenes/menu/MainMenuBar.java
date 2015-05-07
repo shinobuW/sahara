@@ -26,6 +26,7 @@ import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
+import seng302.group2.workspace.ReportGenerator;
 
 /**
  * The main menu bar of the workspace window(s).
@@ -254,6 +255,23 @@ public class MainMenuBar
     }
     
     /**
+     * Creates a menu item "Export" and sets the on action event to export the file as an XML document.
+     * @return MenuItem Save
+     */
+    private static MenuItem createExportItem() 
+    {
+        // Create 'Save' MenuItem
+        MenuItem exportItem = new MenuItem("Export");
+        exportItem.setOnAction((event) ->
+                ReportGenerator.generateReport());
+
+//        exportItem.setAccelerator(new KeyCodeCombination(KeyCode.S,
+//                KeyCombination.CONTROL_DOWN,
+//                KeyCombination.SHORTCUT_DOWN));
+        return exportItem;
+    }
+    
+    /**
      * Creates a menu item "Quit" and sets the on action event if "Quit" is clicked.
      * @return MenuItem Quit
      */
@@ -365,6 +383,7 @@ public class MainMenuBar
         MenuItem openItem = createOpenItem();
         MenuItem saveItem = createSaveItem();
         MenuItem saveAsItem = createSaveAsItem();
+	MenuItem exportItem = createExportItem();
         MenuItem quitProgramItem = createQuitItem();
         
         newBranch.getItems().add(newWorkspaceItem);
@@ -407,7 +426,7 @@ public class MainMenuBar
 
         // Add MenuItems to Menu
         fileMenu.getItems().addAll(newBranch, openItem,
-                saveItem, saveAsItem, new SeparatorMenuItem(), quitProgramItem);
+                saveItem, saveAsItem, exportItem, new SeparatorMenuItem(), quitProgramItem);
         
         editMenu.getItems().addAll(undoItem, redoItem, deleteTreeItem);
                 
