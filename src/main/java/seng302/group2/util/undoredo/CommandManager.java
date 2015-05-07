@@ -1,6 +1,5 @@
 package seng302.group2.util.undoredo;
 
-import seng302.group2.App;
 import seng302.group2.scenes.MainScene;
 
 import java.util.Stack;
@@ -16,7 +15,7 @@ public class CommandManager
 
     /**
      * Executes the given command
-     * @param c The command to execute
+     * @param command The command to execute
      */
     public void executeCommand(Command command)
     {
