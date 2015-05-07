@@ -8,81 +8,43 @@ package seng302.group2.workspace;
 import java.io.File;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
  
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.role.Role;
+import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
 
 /**
  *
  * @author crw73
  */
-public class ReportGenerator {
+public class ReportGenerator 
+{
+    private static DocumentBuilderFactory docFactory = null;
+    private static DocumentBuilder docBuilder = null;
+    private static Document doc = null;
     
-    public static boolean generateReport() {
-	try{
-	    DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-	    DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-
-	    // root elements
-	    Document doc = docBuilder.newDocument();
+    public static boolean generateReport() 
+    {
+	try
+        {
+	    docFactory = DocumentBuilderFactory.newInstance();
+            docBuilder = docFactory.newDocumentBuilder();
+            doc = docBuilder.newDocument();
 	    
 	    //WorkSpace Node
-	    Element rootElement = doc.createElement("workspace");
+	    Element rootElement = generateWorkSpace(Global.currentWorkspace);
 	    doc.appendChild(rootElement);
 	    
-	    //WorkSpace Elements
-	    Attr workSpaceShortName = doc.createAttribute("identifier");
-	    workSpaceShortName.setValue(Global.currentWorkspace.getShortName());
-	    rootElement.setAttributeNode(workSpaceShortName);
 	    
-	    Attr workSpaceLongName = doc.createAttribute("long-name");
-	    workSpaceLongName.setValue(Global.currentWorkspace.getLongName());
-	    rootElement.setAttributeNode(workSpaceLongName);
-	    
-	    Attr workSpaceDescription = doc.createAttribute("description");
-	    workSpaceDescription.setValue(Global.currentWorkspace.getDescription());
-	    rootElement.setAttributeNode(workSpaceDescription);
-	    
-
-	    // staff elements
-	    Element staff = doc.createElement("Staff");
-	    rootElement.appendChild(staff);
-
-	    // set attribute to staff element
-	    Attr attr = doc.createAttribute("id");
-	    attr.setValue("1");
-	    staff.setAttributeNode(attr);
-
-	    // shorten way
-	    // staff.setAttribute("id", "1");
-
-	    // firstname elements
-	    Element firstname = doc.createElement("firstname");
-	    firstname.appendChild(doc.createTextNode("yong"));
-	    staff.appendChild(firstname);
-
-	    // lastname elements
-	    Element lastname = doc.createElement("lastname");
-	    lastname.appendChild(doc.createTextNode("mook kim"));
-	    staff.appendChild(lastname);
-
-	    // nickname elements
-	    Element nickname = doc.createElement("nickname");
-	    nickname.appendChild(doc.createTextNode("mkyong"));
-	    staff.appendChild(nickname);
-
-	    // salary elements
-	    Element salary = doc.createElement("salary");
-	    salary.appendChild(doc.createTextNode("100000"));
-	    staff.appendChild(salary);
 
 	    // write the content into xml file
 	    TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -95,12 +57,169 @@ public class ReportGenerator {
 
 	    transformer.transform(source, result);
 
-	    System.out.println("File saved!");
+	    System.out.println("File exported!");
 	}
-	catch (Exception e) {
-	    
+	catch (Exception e) 
+        {
+	    System.out.println("Error exporting");
 	}
 	return true;
+    }
+    
+    private static Element generateWorkSpace(Workspace workspace)
+    {
+        Element workSpaceElement = doc.createElement("workspace");
+
+        //WorkSpace Elements
+        Element workSpaceShortName = doc.createElement("identifier");
+        workSpaceShortName.appendChild(doc.createTextNode(workspace.getShortName()));
+        workSpaceElement.appendChild(workSpaceShortName);
+
+        Element workSpaceLongName = doc.createElement("long-name");
+        workSpaceLongName.appendChild(doc.createTextNode(workspace.getLongName()));
+        workSpaceElement.appendChild(workSpaceLongName);
+
+        Element workSpaceDescription = doc.createElement("description");
+        workSpaceDescription.appendChild(doc.createTextNode(workspace.getDescription()));
+        workSpaceElement.appendChild(workSpaceDescription);
+        
+        for (Project project : workspace.getProjects())
+        {
+            Element projectElement = generateProject(project);
+	    workSpaceElement.appendChild(projectElement);
+        }
+        
+        return workSpaceElement;
+    }
+    
+    private static Element generateProject(Project project)
+    {
+        Element projectElement = doc.createElement("project");
+
+        //WorkSpace Elements
+        Element projectShortName = doc.createElement("identifier");
+        projectShortName.appendChild(doc.createTextNode(project.getShortName()));
+        projectElement.appendChild(projectShortName);
+
+        Element projectLongName = doc.createElement("long-name");
+        projectLongName.appendChild(doc.createTextNode(project.getLongName()));
+        projectElement.appendChild(projectLongName);
+
+        Element projectDescription = doc.createElement("description");
+        projectDescription.appendChild(doc.createTextNode(project.getDescription()));
+        projectElement.appendChild(projectDescription);
+        
+        for (Team team : project.getTeams())
+        {
+            Element teamElement = generateTeam(team);
+	    projectElement.appendChild(teamElement);
+        }
+        
+        return projectElement;
+    }
+    
+    private static Element generateTeam(Team team)
+    {
+        Element teamElement = doc.createElement("team");
+
+        //WorkSpace Elements
+        Element teamShortName = doc.createElement("identifier");
+        teamShortName.appendChild(doc.createTextNode(team.getShortName()));
+        teamElement.appendChild(teamShortName);
+
+        Element teamDescription = doc.createElement("description");
+        teamDescription.appendChild(doc.createTextNode(team.getDescription()));
+        teamElement.appendChild(teamDescription);
+        
+        Element productOwnerElement = doc.createElement("product-owner");
+        Element teamProductOwner = generatePerson(team.getProductOwner());
+        productOwnerElement.appendChild(teamProductOwner);
+        teamElement.appendChild(productOwnerElement);
+        
+        Element scrumMasterElement = doc.createElement("scrum-master");
+        Element teamScrumMaster = generatePerson(team.getScrumMaster());
+        scrumMasterElement.appendChild(teamScrumMaster);
+        teamElement.appendChild(scrumMasterElement);
+        
+        Element devElement = doc.createElement("devs");
+        for (Person person : team.getPeople())
+        {
+            if (person.getRole() != null)
+            {
+                if (person.getRole().getType() == Role.RoleType.DevelopmentTeamMember)
+                {
+                    Element personElement = generatePerson(person);
+                    devElement.appendChild(personElement);
+                }
+            }
+        }
+        teamElement.appendChild(devElement);
+        
+        Element othersElement = doc.createElement("others");
+        for (Person person : team.getPeople())
+        {
+            if (person.getRole() != null)
+            {
+                if (person.getRole().getType() == Role.RoleType.Others)
+                {
+                    Element personElement = generatePerson(person);
+                    othersElement.appendChild(personElement);
+                }
+            }
+        }
+        teamElement.appendChild(othersElement);
+        
+        return teamElement;
+    }
+    
+    private static Element generatePerson(Person person)
+    {
+        Element personElement = doc.createElement("person");
+
+        //WorkSpace Elements
+        Element teamShortName = doc.createElement("identifier");
+        teamShortName.appendChild(doc.createTextNode(person.getShortName()));
+        personElement.appendChild(teamShortName);
+        
+        Element teamFirstName = doc.createElement("first-name");
+        teamFirstName.appendChild(doc.createTextNode(person.getFirstName()));
+        personElement.appendChild(teamFirstName);
+        
+        Element teamLastName = doc.createElement("last-name");
+        teamLastName.appendChild(doc.createTextNode(person.getLastName()));
+        personElement.appendChild(teamLastName);
+        
+        Element teamEmail = doc.createElement("email");
+        teamEmail.appendChild(doc.createTextNode(person.getEmail()));
+        personElement.appendChild(teamEmail);
+
+        Element teamDescription = doc.createElement("description");
+        teamDescription.appendChild(doc.createTextNode(person.getDescription()));
+        personElement.appendChild(teamDescription);
+        
+        for (Skill skill : person.getSkills())
+        {
+            Element skillElement = generateSkill(skill);
+	    personElement.appendChild(skillElement);
+        }
+        
+        return personElement;
+    }
+    
+    private static Element generateSkill(Skill skill)
+    {
+        Element skillElement = doc.createElement("skill");
+
+        //WorkSpace Elements
+        Element skillShortName = doc.createElement("identifier");
+        skillShortName.appendChild(doc.createTextNode(skill.getShortName()));
+        skillElement.appendChild(skillShortName);
+
+        Element skillDescription = doc.createElement("description");
+        skillDescription.appendChild(doc.createTextNode(skill.getDescription()));
+        skillElement.appendChild(skillDescription);
+                
+        return skillElement;
     }
     
 }
