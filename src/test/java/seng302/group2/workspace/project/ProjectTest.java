@@ -94,15 +94,15 @@ public class ProjectTest extends TestCase
         proj.remove(testTeam);
         Assert.assertTrue(!proj.getTeams().contains(testTeam));
 
-        // The second add method with optional undo boolean
+        // The second add method without undo
         proj.getTeams().clear();
-        proj.add(testTeam, true);
+        proj.addWithoutUndo(testTeam);
         teams = new ArrayList<>();
         teams.add(testTeam);
 
         Assert.assertEquals(teams, proj.getTeams());
 
-        proj.remove(testTeam, true);
+        proj.removeWithoutUndo(testTeam);
         Assert.assertTrue(!proj.getTeams().contains(testTeam));
     }
 

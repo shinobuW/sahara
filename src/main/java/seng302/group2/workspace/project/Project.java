@@ -254,19 +254,9 @@ public class Project extends TreeViewItem implements Serializable
     /**
      * Adds a Team to the Project list of Teams
      * @param team The team to add
-     * @param undo If adding the team should be undoable
      */
-    public void add(Team team, boolean undo)
+    public void addWithoutUndo(Team team)
     {
-        // Add the undo action to the stack
-        if (undo)
-        {
-            Global.undoRedoMan.add(new UndoableItem(
-                    team,
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT, this),
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT, this)
-            ));
-        }
         this.teams.add(team);
     }
     
@@ -310,41 +300,21 @@ public class Project extends TreeViewItem implements Serializable
 
 
     /**
-     * Removes a Team from the Project's list of Teams
+     * Removes a Team from the Project's list of Teams without an undoable command
      * @param team The team to remove
-     * @param redo If adding the team should be redoable
      */
-    public void remove(Team team, Boolean redo)
+    public void removeWithoutUndo(Team team)
     {
-        // Add the undo action to the stack
-        if (redo)
-        {
-            Global.undoRedoMan.add(new UndoableItem(
-                    team,
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_PROJECT, this),
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_PROJECT, this)
-            ));
-        }
         this.teams.remove(team);
     }
 
 
     /**
-     * Removes the release from the project
+     * Removes the release from the project without creating an undo command
      * @param release release to be removed
-     * @param redo Whether or not to add a redo item to the undoredo stack
      */
-    public void remove(Release release, Boolean redo)
+    public void removeWithoutUndo(Release release)
     {
-        if (redo)
-        {
-            Global.undoRedoMan.add(new UndoableItem(
-                    release,
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_DEL, this),
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_DEL, this)
-            ));
-        }
-
         this.releases.remove(release);
     }
 
@@ -375,20 +345,11 @@ public class Project extends TreeViewItem implements Serializable
 
 
     /**
-     * Add Release to Project
+     * Add Release to Project without an undoable command
      * @param release release to be added
-     * @param undo whether or not to create an undo item and add it to the undoredo stack
      */
-    public void add(Release release, boolean undo)
+    public void addWithoutUndo(Release release)
     {
-        if (undo)
-        {
-            Global.undoRedoMan.add(new UndoableItem(
-                    release,
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_ADD, this),
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_ADD, this)
-            ));
-        }
         this.releases.add(release);
     }
 

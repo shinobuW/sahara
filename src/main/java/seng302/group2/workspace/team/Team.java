@@ -448,7 +448,7 @@ public class Team extends TreeViewItem implements Serializable
                     new UndoRedoAction(
                             UndoRedoPerformer.UndoRedoProperty.PERSON_DEL,
                             deletedTeam)));
-            Global.currentWorkspace.remove(personToDelete, false);
+            Global.currentWorkspace.removeWithoutUndo(personToDelete);
 
         }
 
@@ -460,7 +460,7 @@ public class Team extends TreeViewItem implements Serializable
                 new UndoRedoAction(
                         UndoRedoPerformer.UndoRedoProperty.TEAM_DEL,
                         deletedTeam)));
-        Global.currentWorkspace.remove(deletedTeam, false);
+        Global.currentWorkspace.removeWithoutUndo(deletedTeam);
 
         if (undoActions.size() > 0)
         {

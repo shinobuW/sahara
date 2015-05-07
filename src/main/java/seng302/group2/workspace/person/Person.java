@@ -4,7 +4,6 @@
 package seng302.group2.workspace.person;
 
 import javafx.collections.ObservableList;
-import org.apache.commons.lang.ObjectUtils;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.UndoRedoAction;
@@ -418,7 +417,7 @@ public class Person extends TreeViewItem implements Serializable
                 new UndoRedoAction(
                         UndoRedoPerformer.UndoRedoProperty.PERSON_DEL,
                         deletedPerson)));
-        Global.currentWorkspace.remove(deletedPerson, false);
+        Global.currentWorkspace.removeWithoutUndo(deletedPerson);
 
         if (undoActions.size() > 0)
         {

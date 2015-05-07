@@ -59,12 +59,12 @@ public class ShortNameValidatorTest
         Skill skill = new Skill("SKILL", "Desc");
         Role role = new Role("ROLE", Role.RoleType.Others);
 
-        proj.add(rel, false);
+        proj.addWithoutUndo(rel);
         ws.addWithoutUndo(proj);
-        ws.add(team, false);
-        ws.add(apers, false);
-        ws.add(skill, false);
-        ws.add(role, false);
+        ws.addWithoutUndo(team);
+        ws.addWithoutUndo(apers);
+        ws.addWithoutUndo(skill);
+        ws.addWithoutUndo(role);
     }
 
 

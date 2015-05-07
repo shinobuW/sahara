@@ -72,7 +72,7 @@ public class ProjectEditScene
         Project tempProject = new Project();
         for (Team team : currentProject.getTeams()) 
         {
-            tempProject.add(team, false);
+            tempProject.addWithoutUndo(team);
         }
 	
         ListView projectTeamsBox = new ListView(tempProject.getTeams());
@@ -117,7 +117,7 @@ public class ProjectEditScene
                 {
 		    if (item.getProject() == null) 
                     {
-                        tempProject.add(item, false);
+                        tempProject.addWithoutUndo(item);
                     }
                     else 
                     {
@@ -147,7 +147,7 @@ public class ProjectEditScene
                 System.out.println(selectedTeams.size());
                 for (int i = selectedTeams.size() - 1; i >= 0 ; i--)
                 {
-                    tempProject.remove(selectedTeams.get(i), false);
+                    tempProject.removeWithoutUndo(selectedTeams.get(i));
                 }
 
                 dialogTeams.clear();
@@ -387,7 +387,7 @@ public class ProjectEditScene
         
         btnYes.setOnAction((event) ->
             {
-                tempProject.add(team, false);
+                tempProject.addWithoutUndo(team);
                 dialog.hide();
             });
         

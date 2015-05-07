@@ -134,7 +134,7 @@ public class Skill extends TreeViewItem implements Serializable
                     new UndoRedoAction(
                             UndoRedoPerformer.UndoRedoProperty.SKILL_DEL,
                             deletedSkill)));
-            Global.currentWorkspace.remove(deletedSkill, false);
+            Global.currentWorkspace.removeWithoutUndo(deletedSkill);
 
 
             if (undoActions.size() > 0)

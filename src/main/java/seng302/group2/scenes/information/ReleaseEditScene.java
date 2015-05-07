@@ -25,6 +25,7 @@ import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.util.validation.DateValidator;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 
 import java.util.ArrayList;
@@ -34,9 +35,9 @@ import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
-import static seng302.group2.util.validation.DateValidator.*;
+import static seng302.group2.util.validation.DateValidator.isCorrectDateFormat;
+import static seng302.group2.util.validation.DateValidator.stringToDate;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
-import seng302.group2.workspace.project.Project;
 
 /**
  *
@@ -220,8 +221,8 @@ public class ReleaseEditScene
                     currentRelease.setEstimatedDate(releaseDate);
                     
                     Project previous = currentRelease.getProject();
-                    currentRelease.getProject().remove(currentRelease, false);
-                    currentRelease.setProject(selectedProject, false);
+                    currentRelease.getProject().removeWithoutUndo(currentRelease);
+                    currentRelease.setProjectWithoutUndo(selectedProject);
                     
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);

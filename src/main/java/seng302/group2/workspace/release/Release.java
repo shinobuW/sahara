@@ -168,14 +168,13 @@ public class Release extends TreeViewItem
 
 
     /**
-     * Sets the project the release belongs to
+     * Sets the project the release belongs to without an undoable command
      * @param project project to set
-     * @param undo Whether or not to create an undo item for the action
      */
-    public void setProject(Project project, boolean undo)
+    public void setProjectWithoutUndo(Project project)
     {
         this.project = project;
-        project.add(this, undo);
+        project.addWithoutUndo(this);
     }
 
     /**
@@ -184,7 +183,7 @@ public class Release extends TreeViewItem
      */
     public void setProject(Project project)
     {
-        this.project.remove(this, false);
+        this.project.removeWithoutUndo(this);
         this.project = project;
         project.add(this);
     }

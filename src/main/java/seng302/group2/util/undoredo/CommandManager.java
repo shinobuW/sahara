@@ -1,5 +1,8 @@
 package seng302.group2.util.undoredo;
 
+import seng302.group2.App;
+import seng302.group2.scenes.MainScene;
+
 import java.util.Stack;
 
 /**
@@ -41,6 +44,7 @@ public class CommandManager
             Command command = undos.pop();
             command.undo();
             redos.push(command);
+            MainScene.treeView.refresh();
         }
     }
 
@@ -63,6 +67,7 @@ public class CommandManager
             Command command = redos.pop();
             command.execute();
             undos.push(command);
+            MainScene.treeView.refresh();
         }
     }
 
