@@ -101,10 +101,10 @@ public class TeamTest
         ArrayList<Project> projects = new ArrayList<>();
         projects.add(proj);
 
-        Assert.assertEquals(projects, team.getPastProjects());
+        Assert.assertEquals(projects, team.getProjectAllocations());
 
         team.removePastProject(proj);
-        Assert.assertTrue(!team.getPastProjects().contains(proj));
+        Assert.assertTrue(!team.getProjectAllocations().contains(proj));
 
     }
 
