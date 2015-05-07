@@ -119,10 +119,10 @@ public class ProjectTest extends TestCase
         ArrayList<Team> teams = new ArrayList<>();
         teams.add(team);
 
-        Assert.assertEquals(teams, proj.getPastTeams());
+        Assert.assertEquals(teams, proj.getTeamAllocations());
 
         proj.removePastTeam(team);
-        Assert.assertTrue(!proj.getPastTeams().contains(team));
+        Assert.assertTrue(!proj.getTeamAllocations().contains(team));
     }
 
 

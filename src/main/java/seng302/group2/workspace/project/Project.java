@@ -32,7 +32,7 @@ public class Project extends TreeViewItem implements Serializable
     private List<Team> serializableTeams = new ArrayList<>();
     private transient ObservableList<Release> releases = observableArrayList();
     private List<Release> serializableReleases = new ArrayList<>();
-    private transient ObservableList<Team> pastTeams = observableArrayList();
+    private transient ObservableList<Team> teamAllocations = observableArrayList();
     private List<Team> serializablePastTeams = new ArrayList<>();
     private transient ObservableList<Story> stories = observableArrayList();
     private List<Story> serializableStories = new ArrayList<>();
@@ -187,9 +187,9 @@ public class Project extends TreeViewItem implements Serializable
      * Gets the list of teams allocated to the project in the past
      * @return list of teams
      */
-    public ObservableList<Team> getPastTeams()
+    public ObservableList<Team> getTeamAllocations()
     {
-        return pastTeams;
+        return teamAllocations;
     }
 
     /**
@@ -341,7 +341,7 @@ public class Project extends TreeViewItem implements Serializable
      */
     public void removePastTeam(Team team)
     {
-        this.pastTeams.remove(team);
+        this.teamAllocations.remove(team);
     }
 
 
@@ -376,7 +376,7 @@ public class Project extends TreeViewItem implements Serializable
      */
     public void addPastTeam(Team team)
     {
-        this.pastTeams.add(team);
+        this.teamAllocations.add(team);
     }
 
 

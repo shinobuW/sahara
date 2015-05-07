@@ -10,10 +10,9 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.util.validation.NameValidator;
+import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.Project;
-
-import static seng302.group2.util.validation.NameValidator.validateName;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * Class to create a pop up dialog for creating a workspace.
@@ -52,8 +51,9 @@ public class CreateProjectDialog
 
         btnCreate.setOnAction((event) ->
             {
-                boolean correctShortName = validateShortName(shortNameCustomField);
-                boolean correctLongName = validateName(longNameCustomField);
+                boolean correctShortName = ShortNameValidator.validateShortName(
+                        shortNameCustomField);
+                boolean correctLongName = NameValidator.validateName(longNameCustomField);
 
                 String shortName = shortNameCustomField.getText();
                 String longName = longNameCustomField.getText();

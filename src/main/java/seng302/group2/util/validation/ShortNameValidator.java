@@ -21,6 +21,34 @@ import seng302.group2.workspace.team.Team;
  */
 public class ShortNameValidator
 {
+    /**
+     * Checks whether a given short name is valid (null/empty), but can be non-unique
+     * @param shortNameField is a short name field
+     * @return If the short name is valid
+     */
+    public static boolean validateShortNameNonUnique(RequiredField shortNameField)
+    {
+        switch (ShortNameValidator.validateShortName(shortNameField.getText()))
+        {
+            case VALID:
+                shortNameField.hideErrorField();
+                return true;
+            case NON_UNIQUE:
+                shortNameField.hideErrorField();
+                return true;
+            case INVALID:
+                shortNameField.showErrorField("* Not a valid short name");
+                return false;
+            case OUT_OF_RANGE:
+                shortNameField.showErrorField("* Short names must be less than 20 characters long");
+                return false;
+            default:
+                shortNameField.showErrorField("* Not a valid short name");
+                return false;
+        }
+    }
+
+
         /**
      * Checks whether a given short name is valid (unique and not null/empty)
      * @param shortNameField is a short name field

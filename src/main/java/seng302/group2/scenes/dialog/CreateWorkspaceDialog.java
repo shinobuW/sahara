@@ -7,12 +7,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.Workspace;
 
 import static seng302.group2.util.validation.NameValidator.validateName;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
+import static seng302.group2.util.validation.ShortNameValidator.validateShortNameNonUnique;
 
 /**
  * Class to create a pop up dialog for creating a workspace.
@@ -51,7 +52,7 @@ public class CreateWorkspaceDialog
         
         btnCreate.setOnAction((event) ->
             {
-                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctShortName = validateShortNameNonUnique(shortNameCustomField);
                 boolean correctLongName = validateName(longNameCustomField);
                 
                 String shortName = shortNameCustomField.getText();
@@ -62,6 +63,7 @@ public class CreateWorkspaceDialog
                 {
                     Workspace workspace = new Workspace(shortName, longName, description);
                     Global.currentWorkspace = workspace;
+                    MainScene.treeView.selectItem(Global.currentWorkspace);
                     dialog.hide();
                 }
                 else
