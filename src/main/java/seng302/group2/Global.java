@@ -1,6 +1,7 @@
 package seng302.group2;
 
 import javafx.scene.control.TreeItem;
+import seng302.group2.util.undoredo.CommandManager;
 import seng302.group2.util.undoredo.UndoRedoManager;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.team.Team;
@@ -15,9 +16,11 @@ public final class Global
 {
     public static Workspace currentWorkspace = new Workspace();
     public static TreeItem selectedTreeItem = new TreeItem();
-    public static UndoRedoManager undoRedoMan = new UndoRedoManager();
     public static String lastSaveLocation = "/";
     public static SimpleDateFormat datePattern = new SimpleDateFormat("dd/MM/yyyy");
+
+    public static UndoRedoManager undoRedoMan = new UndoRedoManager(); // Becoming deprecated
+    public static CommandManager commandManager = new CommandManager();
 
 
     /**

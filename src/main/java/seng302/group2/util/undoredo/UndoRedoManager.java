@@ -14,6 +14,7 @@ import java.util.Stack;
  * A class for managing undo and redo actions.
  * @author jml168
  */
+@Deprecated
 public class UndoRedoManager
 {
     private Stack<UndoableItem> undoStack;
@@ -53,7 +54,7 @@ public class UndoRedoManager
         }
         catch (EmptyStackException ex)
         {
-            System.out.println("The undo stack is empty");
+            //System.out.println("The undo stack is empty");
         }
         return false;
     }
@@ -72,7 +73,7 @@ public class UndoRedoManager
         }
         catch (EmptyStackException ex)
         {
-            System.out.println("The redo stack is empty");
+            //System.out.println("The redo stack is empty");
         }
         return false;
     }
@@ -82,7 +83,7 @@ public class UndoRedoManager
      */
     public void undo()
     {
-        System.out.println("undo called");
+        //System.out.println("undo called");
         if (!canUndo())
         {
             return;
@@ -99,7 +100,7 @@ public class UndoRedoManager
      */
     public void redo()
     {
-        System.out.println("redo called");
+        //System.out.println("redo called");
         if (!canRedo())
         {
             return;
@@ -117,7 +118,7 @@ public class UndoRedoManager
      */
     public void add(UndoableItem item)
     {
-        System.out.println("item added to undo stack");
+        //System.out.println("item added to undo stack");
         undoStack.add(item);
         //redoStack.empty();
         redoStack = new Stack<>();

@@ -1,10 +1,8 @@
 package seng302.group2.scenes.information;
 
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import seng302.group2.App;
@@ -12,20 +10,11 @@ import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.TreeViewWithItems;
-import seng302.group2.util.undoredo.UndoRedoAction;
-import seng302.group2.util.undoredo.UndoRedoPerformer;
-import seng302.group2.util.undoredo.UndoableItem;
+import seng302.group2.util.validation.NameValidator;
+import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.Workspace;
 
-import java.util.ArrayList;
-
-import static javafx.collections.FXCollections.observableArrayList;
-import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
-import static seng302.group2.scenes.MainScene.treeView;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * A class for displaying the workspace edit scene.
@@ -40,8 +29,6 @@ public class WorkspaceEditScene
      */
     public static GridPane getWorkspaceEditScene(Workspace currentWorkspace)
     {
-
-
         informationGrid = new GridPane();
         informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
@@ -72,15 +59,13 @@ public class WorkspaceEditScene
 
         btnCancel.setOnAction((event) ->
             {
-                App.content.getChildren().remove(informationGrid);
-                WorkspaceScene.getWorkspaceScene((Workspace) Global.selectedTreeItem.getValue());
-                App.content.getChildren().add(informationGrid);
-
+                returnFromEdit();
             });
 
         btnSave.setOnAction((event) ->
             {
-                boolean correctShortName;
+
+                /*boolean correctShortName;
                 boolean correctLongName;   
                 
                 if (shortNameCustomField.getText().equals(currentWorkspace.getShortName()))
@@ -100,10 +85,10 @@ public class WorkspaceEditScene
                 {
                     correctLongName = validateShortName(longNameCustomField);
                 }
-                if (correctShortName && correctLongName)
-                {
+                if (correctShortName && correctLongName)*/
+
                     // Build Undo/Redo edit array.
-                    ArrayList<UndoableItem> undoActions = new ArrayList<>();                    
+                    /*ArrayList<UndoableItem> undoActions = new ArrayList<>();
                     if (shortNameCustomField.getText() != currentWorkspace.getShortName())
                     {
                         undoActions.add(new UndoableItem(
@@ -155,7 +140,12 @@ public class WorkspaceEditScene
                     // Save the edits.
                     currentWorkspace.setDescription(descriptionTextArea.getText());
                     currentWorkspace.setShortName(shortNameCustomField.getText());
-                    currentWorkspace.setLongName(longNameCustomField.getText());
+                    currentWorkspace.setLongName(longNameCustomField.getText());*/
+
+
+
+
+                    /*
                     App.content.getChildren().remove(treeView);
                     App.content.getChildren().remove(informationGrid);
                     WorkspaceScene.getWorkspaceScene(currentWorkspace);
@@ -168,16 +158,46 @@ public class WorkspaceEditScene
 
                     App.content.getChildren().add(treeView);
                     App.content.getChildren().add(informationGrid);
-                    MainScene.treeView.getSelectionModel().select(selectedTreeItem);
+                    MainScene.treeView.getSelectionModel().select(selectedTreeItem);*/
 
+
+
+
+                if (shortNameCustomField.getText().equals(currentWorkspace.getShortName())
+                        && longNameCustomField.getText().equals(currentWorkspace.getLongName())
+                        && descriptionTextArea.getText().equals(currentWorkspace.getDescription()))
+                {
+                    // No fields have been changed
+                    returnFromEdit();
+                }
+                    // The short name is the same or valid
+                if ((shortNameCustomField.getText().equals(currentWorkspace.getShortName())
+                            || ShortNameValidator.validateShortName(shortNameCustomField))
+                            && // and the long name is the same or valid
+                            (longNameCustomField.getText().equals(currentWorkspace.getLongName())
+                                    || NameValidator.validateName(longNameCustomField)))
+                {
+                    currentWorkspace.edit(shortNameCustomField.getText(),
+                            longNameCustomField.getText(), descriptionTextArea.getText());
+
+                    returnFromEdit();
+                    MainScene.treeView.refresh();
                 }
                 else
                 {
+                    // One or more fields incorrectly validated, stay on the edit scene
                     event.consume();
                 }
 
             });
 
         return informationGrid;
+    }
+
+    private static void returnFromEdit()
+    {
+        App.content.getChildren().remove(informationGrid);
+        WorkspaceScene.getWorkspaceScene((Workspace) Global.selectedTreeItem.getValue());
+        App.content.getChildren().add(informationGrid);
     }
 }

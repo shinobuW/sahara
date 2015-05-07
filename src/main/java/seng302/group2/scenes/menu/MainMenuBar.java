@@ -15,7 +15,6 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.dialog.*;
-import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 import seng302.group2.scenes.listdisplay.Category;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
@@ -25,6 +24,8 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
+
+import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * The main menu bar of the workspace window(s).
@@ -47,7 +48,7 @@ public class MainMenuBar
                 {
                     CreateWorkspaceDialog.show();
                     App.refreshMainScene();
-                    Global.undoRedoMan.emptyAll();
+                    Global.commandManager.clear();
                     return;
                 }
 
@@ -274,7 +275,7 @@ public class MainMenuBar
         // Create 'Undo' MenuItem
         MenuItem undoItem = new MenuItem("Undo");
         undoItem.setOnAction((event) ->
-                Global.undoRedoMan.undo());
+                Global.commandManager.undo());
 
         undoItem.setAccelerator(new KeyCodeCombination(KeyCode.Z,
                 KeyCombination.CONTROL_DOWN,
@@ -291,7 +292,7 @@ public class MainMenuBar
         // Create 'Redo' MenuItem
         MenuItem redoItem = new MenuItem("Redo");
         redoItem.setOnAction((event) ->
-                Global.undoRedoMan.redo());
+                Global.commandManager.redo());
 
         redoItem.setAccelerator(new KeyCodeCombination(KeyCode.Y,
                 KeyCombination.CONTROL_DOWN,
@@ -412,30 +413,17 @@ public class MainMenuBar
                 
         editMenu.setOnShowing((event) ->
             {
-                if (!Global.undoRedoMan.canRedo())
-                {
-                    redoItem.setDisable(true);
-                }
-                else
-                {
-                    redoItem.setDisable(false);
-                }
+                redoItem.setDisable(!Global.commandManager.isRedoAvailable());
+                undoItem.setDisable(!Global.commandManager.isUndoAvailable());
                 
-                if (!Global.undoRedoMan.canUndo())
+                if (Global.selectedTreeItem.getValue().getClass() == Category.class
+                        || Global.selectedTreeItem.getValue().getClass() == ReleaseCategory.class
+                        || Global.selectedTreeItem.getValue().getClass() == Category.class
+                        || Global.selectedTreeItem.getValue().getClass() == Workspace.class
+                        || Global.selectedTreeItem.getValue().getClass() == Project.class
+                        || Global.selectedTreeItem.getValue().getClass() == Release.class)
                 {
-                    undoItem.setDisable(true);
-                }
-                else
-                {
-                    undoItem.setDisable(false);
-                }
-                
-                if (Global.selectedTreeItem.getValue().getClass() == Category.class)
-                {
-                    deleteTreeItem.setDisable(true);
-                }
-                else if (Global.selectedTreeItem.getValue().getClass() == ReleaseCategory.class)
-                {
+                    // Non-deleteable classes (for now?)
                     deleteTreeItem.setDisable(true);
                 }
                 else if (Global.selectedTreeItem.getValue().getClass() == Skill.class)
@@ -454,30 +442,7 @@ public class MainMenuBar
                 else if (Global.selectedTreeItem.getValue().getClass() == Team.class)
                 {
                     Team selectedTeam = (Team)Global.selectedTreeItem.getValue();
-                    if (selectedTeam.getShortName().equals("Unassigned"))
-                    {
-                        deleteTreeItem.setDisable(true);
-                    }
-                    else
-                    {
-                        deleteTreeItem.setDisable(false);
-                    }
-                }
-                else if (Global.selectedTreeItem.getValue().getClass() == Category.class)
-                {
-                    deleteTreeItem.setDisable(true);          
-                }
-                else if (Global.selectedTreeItem.getValue().getClass() == Workspace.class)
-                {
-                    deleteTreeItem.setDisable(true);          
-                }
-                else if (Global.selectedTreeItem.getValue().getClass() == Project.class)
-                {
-                    deleteTreeItem.setDisable(true);
-                }
-                else if (Global.selectedTreeItem.getValue().getClass() == Release.class)
-                {
-                    deleteTreeItem.setDisable(true);
+                    deleteTreeItem.setDisable(selectedTeam.isUnassignedTeam());
                 }
                 else
                 {

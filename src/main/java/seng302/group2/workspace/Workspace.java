@@ -14,6 +14,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.Category;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.serialization.SerialBuilder;
+import seng302.group2.util.undoredo.Command;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
@@ -1091,5 +1092,66 @@ public class Workspace extends TreeViewItem implements Serializable
     public ObservableList<TreeViewItem> getChildren()
     {
         return getCategories();
+    }
+
+
+    /**
+     * Creates a Workspace edit command and executes it with the Global Command Manager, updating
+     * the workspace with the new parameter values.
+     * @param newShortName The new short name
+     * @param newLongName The new long name
+     * @param newDescription The new description
+     */
+    public void edit(String newShortName, String newLongName, String newDescription)
+    {
+        Command wsedit = new WorkspaceEditCommand(this, newShortName, newLongName, newDescription);
+        Global.commandManager.executeCommand(wsedit);
+    }
+
+
+    /**
+     * A command class that allows the executing and undoing of workspace edits
+     */
+    private class WorkspaceEditCommand implements Command
+    {
+        private Workspace ws;
+        private String shortName;
+        private String longName;
+        private String description;
+        private String oldShortName;
+        private String oldLongName;
+        private String oldDescription;
+
+        private WorkspaceEditCommand(Workspace ws, String newShortName, String newLongName,
+                                     String newDescription)
+        {
+            this.ws = ws;
+            this.shortName = newShortName;
+            this.longName = newLongName;
+            this.description = newDescription;
+            this.oldShortName = ws.shortName;
+            this.oldLongName = ws.longName;
+            this.oldDescription = ws.description;
+        }
+
+        /**
+         * Executes/Redoes the changes of the workspace edit
+         */
+        public void execute()
+        {
+            ws.shortName = shortName;
+            ws.longName = longName;
+            ws.description = description;
+        }
+
+        /**
+         * Undoes the changes of the workspace edit
+         */
+        public void undo()
+        {
+            ws.shortName = oldShortName;
+            ws.longName = oldLongName;
+            ws.description = oldDescription;
+        }
     }
 }

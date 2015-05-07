@@ -1,6 +1,5 @@
 package seng302.group2.scenes.listdisplay;
 
-import com.sun.javafx.collections.ObservableListWrapper;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
@@ -82,6 +81,18 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
     {
         super(root);
         init();
+    }
+
+
+    /**
+     * Refreshes the tree by clearing the root item and updating.
+     */
+    public void refresh()
+    {
+        T currentSelection = (T) Global.selectedTreeItem.getValue();
+        clear(getRoot());
+        updateItems();
+        selectItem(currentSelection);
     }
 
 
