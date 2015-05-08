@@ -26,6 +26,13 @@ public class Allocation
     private Project project;
     private Team team;
 
+    public Allocation(Project project, Team team, Date startDate, Date endDate)
+    {
+        this.project = project;
+        this.team = team;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 
     /**
      * Gets the allocation end date
