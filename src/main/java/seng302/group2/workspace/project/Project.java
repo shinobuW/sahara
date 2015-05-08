@@ -435,7 +435,7 @@ public class Project extends TreeViewItem implements Serializable
      */
     public void deleteProject(Workspace ws)
     {
-        DeleteProjectCommand command = new DeleteProjectCommand(this, ws);
+        Command command = new DeleteProjectCommand(this, ws);
         Global.commandManager.executeCommand(command);
     }
 
@@ -496,7 +496,7 @@ public class Project extends TreeViewItem implements Serializable
         }
 
         /**
-         * Executes/Redoes the changes of the workspace edit
+         * Executes/Redoes the changes of the project edit
          */
         public void execute()
         {
@@ -506,7 +506,7 @@ public class Project extends TreeViewItem implements Serializable
         }
 
         /**
-         * Undoes the changes of the workspace edit
+         * Undoes the changes of the project edit
          */
         public void undo()
         {

@@ -384,7 +384,7 @@ public class MainMenuBar
         MenuItem openItem = createOpenItem();
         MenuItem saveItem = createSaveItem();
         MenuItem saveAsItem = createSaveAsItem();
-	MenuItem exportItem = createExportItem();
+        MenuItem exportItem = createExportItem();
         MenuItem quitProgramItem = createQuitItem();
         
         newBranch.getItems().add(newWorkspaceItem);

@@ -76,9 +76,10 @@ public class TeamCategoryScene
             {
                 if (teamBox.getSelectionModel().getSelectedItem() != null)
                 {
-                    Team.deleteTeam((Team) teamBox.getSelectionModel().getSelectedItem());
+                    ((Team) teamBox.getSelectionModel().getSelectedItem()).deleteTeamCascading();
                 }
             });
+
 
         btnCreate.setOnAction((event) ->
             {

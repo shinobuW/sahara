@@ -6,9 +6,11 @@ package seng302.group2.workspace.team;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.undoredo.Command;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
+import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 
@@ -416,17 +418,28 @@ public class Team extends TreeViewItem implements Serializable
 
 
     /**
-     * Deletes a team and all the people currently assigned to that team.
-     *
-     * @param deletedTeam The team to delete
+     * Deletes the team without cascading deletion on the assigned people
      */
-    public static void deleteTeam(Team deletedTeam)
+    public void deleteTeam()
     {
+        Command teamDel = new DeleteTeamCommand(this, Global.currentWorkspace);
+        teamDel.execute();
+    }
+
+
+    /**
+     * Deletes the team and all the people currently assigned to it in a cascading manner.
+     */
+    public void deleteTeamCascading()
+    {
+        Command teamCasDelete = new DeleteTeamCascadingCommand(this, Global.currentWorkspace);
+        teamCasDelete.execute();
+        /*
         ArrayList<Person> peopleToBeDeleted = new ArrayList<>();
         ArrayList<UndoableItem> undoActions = new ArrayList<>();
         for (Person personRemoveTeam : Global.currentWorkspace.getPeople())
         {
-            if (personRemoveTeam.getTeam() == deletedTeam)
+            if (personRemoveTeam.getTeam() == this)
             {
                 //Deletes the team and all corresponding people.
                 peopleToBeDeleted.add(personRemoveTeam);
@@ -445,28 +458,28 @@ public class Team extends TreeViewItem implements Serializable
                     personToDelete,
                     new UndoRedoAction(
                             UndoRedoPerformer.UndoRedoProperty.PERSON_DEL,
-                            deletedTeam),
+                            this),
                     new UndoRedoAction(
                             UndoRedoPerformer.UndoRedoProperty.PERSON_DEL,
-                            deletedTeam)));
+                            this)));
             Global.currentWorkspace.removeWithoutUndo(personToDelete);
 
         }
 
         undoActions.add(new UndoableItem(
-                deletedTeam,
+                this,
                 new UndoRedoAction(
                         UndoRedoPerformer.UndoRedoProperty.TEAM_DEL,
-                        deletedTeam),
+                        this),
                 new UndoRedoAction(
                         UndoRedoPerformer.UndoRedoProperty.TEAM_DEL,
-                        deletedTeam)));
-        Global.currentWorkspace.removeWithoutUndo(deletedTeam);
+                        this)));
+        Global.currentWorkspace.removeWithoutUndo(this);
 
         if (undoActions.size() > 0)
         {
             Global.undoRedoMan.add(new UndoableItem(
-                    deletedTeam,
+                    this,
                     new UndoRedoAction(
                             UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_RECURSIVE,
                             undoActions),
@@ -474,7 +487,7 @@ public class Team extends TreeViewItem implements Serializable
                             UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_RECURSIVE,
                             undoActions)
             ));
-        }
+        }*/
     }
 
 
@@ -487,5 +500,127 @@ public class Team extends TreeViewItem implements Serializable
     public String toString()
     {
         return this.shortName;
+    }
+
+
+    /**
+     * Creates a team edit command and executes it with the Global Command Manager, updating
+     * the team with the new parameter values.
+     * @param newShortName The new short name
+     * @param newDescription The new description
+     */
+    public void edit(String newShortName, String newDescription)
+    {
+        Command teamEdit = new TeamEditCommand(this, newShortName, newDescription);
+        Global.commandManager.executeCommand(teamEdit);
+    }
+
+
+    /**
+     * A command class that allows the executing and undoing of team edits
+     */
+    private class TeamEditCommand implements Command
+    {
+        private Team team;
+        private String shortName;
+        private String description;
+        private String oldShortName;
+        private String oldDescription;
+
+        private TeamEditCommand(Team team, String newShortName, String newDescription)
+        {
+            this.team = team;
+            this.shortName = newShortName;
+            this.description = newDescription;
+            this.oldShortName = team.shortName;
+            this.oldDescription = team.description;
+        }
+
+        /**
+         * Executes/Redoes the changes of the team edit
+         */
+        public void execute()
+        {
+            team.shortName = shortName;
+            team.description = description;
+        }
+
+        /**
+         * Undoes the changes of the team edit
+         */
+        public void undo()
+        {
+            team.shortName = oldShortName;
+            team.description = oldDescription;
+        }
+    }
+
+
+    private class DeleteTeamCommand implements Command
+    {
+        private Team team;
+        private Workspace ws;
+        private List<Person> members;
+
+        DeleteTeamCommand(Team team, Workspace ws)
+        {
+            this.team = team;
+            this.ws = ws;
+            this.members = team.getPeople();
+        }
+
+        public void execute()
+        {
+            ws.getTeams().remove(team);
+            for (Person member : members)
+            {
+                member.setTeam(null);
+            }
+            // TODO Remove any associations
+        }
+
+        public void undo()
+        {
+            for (Person member : members)
+            {
+                member.setTeam(team);
+            }
+            ws.getTeams().add(team);
+            // TODO Readd any associations
+        }
+    }
+
+    private class DeleteTeamCascadingCommand implements Command
+    {
+        private Team team;
+        private Workspace ws;
+        private List<Person> members;
+
+        DeleteTeamCascadingCommand(Team team, Workspace ws)
+        {
+            this.team = team;
+            this.ws = ws;
+            this.members = team.getPeople();
+        }
+
+        public void execute()
+        {
+            for (Person member : members)
+            {
+                ws.removeWithoutUndo(member);
+            }
+            ws.getTeams().remove(team);
+            // TODO Remove any associations
+        }
+
+        public void undo()
+        {
+            for (Person member : members)
+            {
+                ws.addWithoutUndo(member);
+            }
+            ws.getTeams().add(team);
+            // TODO Readd any associations
+        }
     }
 }

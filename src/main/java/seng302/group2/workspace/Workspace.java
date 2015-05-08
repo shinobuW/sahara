@@ -87,34 +87,34 @@ public class Workspace extends TreeViewItem implements Serializable
         this.serializableRoles = new ArrayList<>();
 
         Team unassignedTeam = Team.createUnassignedTeam();
-        this.add(unassignedTeam);
+        this.addWithoutUndo(unassignedTeam);
 
         Skill productOwnerSkill = new Skill("Product Owner",
                 "Knows how to work as a Teams Product Owner");
-        this.add(productOwnerSkill);
+        this.addWithoutUndo(productOwnerSkill);
 
         ObservableList<Skill> poSkillList = observableArrayList();
         poSkillList.add(productOwnerSkill);
 
         Skill scrumMasterSkill = new Skill("Scrum Master", "Can be Scrum Master for a Team");
-        this.add(scrumMasterSkill);
+        this.addWithoutUndo(scrumMasterSkill);
 
         ObservableList<Skill> smSkillList = observableArrayList();
         smSkillList.add(scrumMasterSkill);
 
         Role scrumMaster = new Role("Scrum Master", Role.RoleType.ScrumMaster,
                 "The Scrum Master for a Team", smSkillList);
-        this.add(scrumMaster);
+        this.addWithoutUndo(scrumMaster);
 
         Role productOwner = new Role(
                 "Product Owner", Role.RoleType.ProductOwner, "The Product Owner for a Team",
                 poSkillList);
-        this.add(productOwner);
+        this.addWithoutUndo(productOwner);
 
         Role developmentTeamMember = new Role(
                 "Development Team Member", Role.RoleType.DevelopmentTeamMember,
                 "A member of the Dev Team");
-        this.add(developmentTeamMember);
+        this.addWithoutUndo(developmentTeamMember);
     }
 
 
@@ -133,7 +133,7 @@ public class Workspace extends TreeViewItem implements Serializable
         this.description = description;
 
         Team unassignedTeam = Team.createUnassignedTeam();
-        this.add(unassignedTeam);
+        this.addWithoutUndo(unassignedTeam);
 
         Skill productOwnerSkill = new Skill("Product Owner",
                 "Knows how to work as a Teams Product Owner");
@@ -148,17 +148,17 @@ public class Workspace extends TreeViewItem implements Serializable
 
         Role scrumMaster = new Role("Scrum Master", Role.RoleType.ScrumMaster,
                 "The Scrum Master for a Team", poSkillList);
-        this.add(scrumMaster);
+        this.addWithoutUndo(scrumMaster);
 
         Role productOwner = new Role(
                 "Product Owner", Role.RoleType.ProductOwner, "The Product Owner for a Team",
                 smSkillList);
-        this.add(productOwner);
+        this.addWithoutUndo(productOwner);
 
         Role developmentTeamMember = new Role(
                 "Development Team Member", Role.RoleType.DevelopmentTeamMember,
                 "A member of the Dev Team");
-        this.add(developmentTeamMember);
+        this.addWithoutUndo(developmentTeamMember);
     }
 
 
@@ -613,6 +613,7 @@ public class Workspace extends TreeViewItem implements Serializable
      */
     public void add(Team team)
     {
+        /*
         if (team.isUnassignedTeam())
         {
             this.teams.add(team);
@@ -626,7 +627,10 @@ public class Workspace extends TreeViewItem implements Serializable
                 new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD, null)
         ));
 
-        this.teams.add(team);
+        this.teams.add(team);*/
+
+        Command command = new AddTeamCommand(this, team);
+        Global.commandManager.executeCommand(command);
     }
 
 
@@ -647,7 +651,7 @@ public class Workspace extends TreeViewItem implements Serializable
      */
     public void add(Project proj)
     {
-        AddProjectCommand command = new AddProjectCommand(this, proj);
+        Command command = new AddProjectCommand(this, proj);
         Global.commandManager.executeCommand(command);
     }
 
@@ -1062,6 +1066,31 @@ public class Workspace extends TreeViewItem implements Serializable
         public void undo()
         {
             ws.getProjects().remove(proj);
+            // TODO Remove any associations, eg. allocation history
+        }
+    }
+
+
+    private class AddTeamCommand implements Command
+    {
+        private Team team;
+        private Workspace ws;
+
+        AddTeamCommand(Workspace ws, Team team)
+        {
+            this.team = team;
+            this.ws = ws;
+        }
+
+        public void execute()
+        {
+            ws.getTeams().add(team);
+            // TODO Readd any associations, eg. allocation history
+        }
+
+        public void undo()
+        {
+            ws.getTeams().remove(team);
             // TODO Remove any associations, eg. allocation history
         }
     }

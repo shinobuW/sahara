@@ -65,7 +65,7 @@ public class DeleteDialog
             else if (element.getClass() == Team.class)
             {
                 Team deletedTeam = (Team)element;
-                Team.deleteTeam(deletedTeam);
+                deletedTeam.deleteTeamCascading();
             }
             else if (element.getClass() == Skill.class)
             {

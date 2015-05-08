@@ -77,7 +77,9 @@ public class App extends Application
      */
     @Override
     public void start(Stage primaryStage)
-    {        
+    {
+        Global.currentWorkspace = new Workspace();
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         
         // The title of the window

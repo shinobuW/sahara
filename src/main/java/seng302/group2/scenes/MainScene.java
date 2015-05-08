@@ -45,6 +45,11 @@ public class MainScene
         VBox root = new VBox();
         MenuBar menuBar = MainMenuBar.getMainMenuBar();
         root.getChildren().add(new StackPane(menuBar));
+
+        if (Global.selectedTreeItem == null)
+        {
+            treeView.selectItem(Global.currentWorkspace);
+        }
         
         if (Global.selectedTreeItem.getValue() instanceof Workspace)
         {
