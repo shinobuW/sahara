@@ -43,8 +43,10 @@ public class WorkspaceScene
         Button btnEdit = new Button("Edit");
 
         informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(new Label("Short Name: " + currentWorkspace.getShortName()));
-        informationGrid.getChildren().add(new Label("Workspace Description: " + currentWorkspace.getDescription()));
+        informationGrid.getChildren().add(new Label("Short Name: "
+                + currentWorkspace.getShortName()));
+        informationGrid.getChildren().add(new Label("Workspace Description: "
+                + currentWorkspace.getDescription()));
         informationGrid.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) ->

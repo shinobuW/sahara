@@ -74,11 +74,13 @@ public class TeamScene
         Separator separator = new Separator();
 
         informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(new Label("Team Description: " + currentTeam.getDescription()));
+        informationGrid.getChildren().add(new Label("Team Description: "
+                + currentTeam.getDescription()));
         informationGrid.getChildren().add(separator);
         if (currentTeam.getProductOwner() != null)
         {
-            informationGrid.getChildren().add(new Label("Product Owner: " + currentTeam.getProductOwner().toString()));
+            informationGrid.getChildren().add(new Label("Product Owner: "
+                    + currentTeam.getProductOwner().toString()));
         }
         else
         {
@@ -88,7 +90,8 @@ public class TeamScene
 
         if (currentTeam.getScrumMaster() != null)
         {
-            informationGrid.getChildren().add(new Label("Scrum Master: " + currentTeam.getScrumMaster().toString()));
+            informationGrid.getChildren().add(new Label("Scrum Master: "
+                    + currentTeam.getScrumMaster().toString()));
         }
         else
         {

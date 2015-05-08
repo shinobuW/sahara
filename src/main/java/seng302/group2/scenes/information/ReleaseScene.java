@@ -50,9 +50,12 @@ public class ReleaseScene
         Button btnEdit = new Button("Edit");
 
         informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(new Label("Release Description: " + currentRelease.getDescription()));
-        informationGrid.getChildren().add(new Label("Estimated Release Date: " + currentRelease.getDateString()));
-        informationGrid.getChildren().add(new Label("Project: " + currentRelease.getProject().toString()));
+        informationGrid.getChildren().add(new Label("Release Description: "
+                + currentRelease.getDescription()));
+        informationGrid.getChildren().add(new Label("Estimated Release Date: "
+                + currentRelease.getDateString()));
+        informationGrid.getChildren().add(new Label("Project: "
+                + currentRelease.getProject().toString()));
         informationGrid.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) ->

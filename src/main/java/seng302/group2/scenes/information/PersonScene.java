@@ -51,8 +51,10 @@ public class PersonScene
         informationGrid.getChildren().add(title);
         informationGrid.getChildren().add(new Label("Short Name: " + currentPerson.getShortName()));
         informationGrid.getChildren().add(new Label("Email Address: " + currentPerson.getEmail()));
-        informationGrid.getChildren().add(new Label("Birth Date: " + currentPerson.getDateString()));
-        informationGrid.getChildren().add(new Label("Person Description: " + currentPerson.getDescription()));
+        informationGrid.getChildren().add(new Label("Birth Date: "
+                + currentPerson.getDateString()));
+        informationGrid.getChildren().add(new Label("Person Description: "
+                + currentPerson.getDescription()));
         informationGrid.getChildren().add(new Label("Team: " + currentPerson.getTeamName()));
 
         String roleString = currentPerson.getRole() == null ? "" :
