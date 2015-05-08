@@ -6,9 +6,11 @@ package seng302.group2.workspace.person;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.undoredo.Command;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
+import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -388,12 +390,14 @@ public class Person extends TreeViewItem implements Serializable
     
     
     /**
-     * Deletes the given person and removes them from team if they are in one.
-     * @param deletedPerson The person to delete
+     * Deletes the person and removes them from team if they are in one.
      */
-    public static void deletePerson(Person deletedPerson)
+    public void deletePerson()
     {
-        ArrayList<UndoableItem> undoActions = new ArrayList<>();
+        Command deletePers = new DeletePersonCommand(this, Global.currentWorkspace);
+        deletePers.execute();
+
+        /*ArrayList<UndoableItem> undoActions = new ArrayList<>();
         for (Team teamRemovePerson : Global.currentWorkspace.getTeams())
         {
             if (teamRemovePerson.getPeople().contains(deletedPerson))
@@ -431,7 +435,7 @@ public class Person extends TreeViewItem implements Serializable
                             UndoRedoPerformer.UndoRedoProperty.PERSON_DEL_RECURSIVE,
                             undoActions)
             ));
-        }
+        }*/
     }
     
     
@@ -443,5 +447,37 @@ public class Person extends TreeViewItem implements Serializable
     public String toString()
     {
         return this.shortName;
+    }
+
+    private class DeletePersonCommand implements Command
+    {
+        private Person person;
+        private Workspace ws;
+        private Team team;
+
+        DeletePersonCommand(Person person, Workspace ws)
+        {
+            this.person = person;
+            this.ws = ws;
+            this.team = person.getTeam();
+        }
+
+        public void execute()
+        {
+            System.out.println("Exec Person Delete");
+            team.getPeople().remove(person);
+            person.setTeam(null);
+            ws.getPeople().remove(person);
+            // TODO Remove any associations
+        }
+
+        public void undo()
+        {
+            System.out.println("Undone Person Delete");
+            team.getPeople().add(person);
+            person.setTeam(team);
+            ws.getPeople().add(person);
+            // TODO Readd any associations
+        }
     }
 }

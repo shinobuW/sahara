@@ -53,7 +53,7 @@ public class DeleteDialog
             if (element.getClass() == Person.class)
             {
                 Person deletedPerson = (Person)element;
-                Person.deletePerson(deletedPerson);
+                deletedPerson.deletePerson();
             }
             else if (element.getClass() == Project.class)
             {
