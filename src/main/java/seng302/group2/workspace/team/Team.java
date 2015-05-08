@@ -37,8 +37,8 @@ public class Team extends TreeViewItem implements Serializable
     private List<Person> serializablePeople = new ArrayList<>();
     private transient ObservableList<Person> devs = observableArrayList();
     private List<Person> serializableDevs = new ArrayList<>();
-    private transient ObservableList<Project> projectAllocations = observableArrayList();
-    private List<Project> serializablePastProjects = new ArrayList<>();
+    private transient ObservableList<Allocation> projectAllocations = observableArrayList();
+    private List<Allocation> serializableProjectAllocation = new ArrayList<>();
     private boolean unassigned = false;
     private Project project;
 
@@ -164,19 +164,19 @@ public class Team extends TreeViewItem implements Serializable
     }
 
     /**
-     * Gets the serializable project that team was allocated to in the past
-     * @return list of projects
+     * Gets the serializable project allocation
+     * @return list of project allocations
      */
-    public List<Project> getSerializableProject()
+    public List<Allocation> getSerializableProject()
     {
-        return serializablePastProjects;
+        return serializableProjectAllocation;
     }
 
     /**
-     * Gets the projects the team was allocated to in the past
-     * @return list of past projects
+     * Gets the team's list of project allocations
+     * @return list of allocations
      */
-    public ObservableList<Project> getProjectAllocations()
+    public ObservableList<Allocation> getProjectAllocations()
     {
         return projectAllocations;
     }
@@ -281,12 +281,12 @@ public class Team extends TreeViewItem implements Serializable
     }
 
     /**
-     * Adds a project to the list of projects the team was allocated in the past
-     * @param project project to add
+     * Adds a project allocation to the team's list of allocations
+     * @param allocation Allocation to add
      */
-    public void addPastProject(Project project)
+    public void add(Allocation allocation)
     {
-        this.projectAllocations.add(project);
+        this.projectAllocations.add(allocation);
     }
 
 
@@ -359,12 +359,12 @@ public class Team extends TreeViewItem implements Serializable
     }
 
     /**
-     * Removes the given project from the list of projects allocated in the past
-     * @param project project to be removed
+     * Removes the given allocation from the team's list of allocations
+     * @param allocation allocation to be removed
      */
-    public void removePastProject(Project project)
+    public void remove(Allocation allocation)
     {
-        this.projectAllocations.remove(project);
+        this.projectAllocations.remove(allocation);
     }
 
     /**

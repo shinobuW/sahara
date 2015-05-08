@@ -11,6 +11,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A series of tests relating to Teams
@@ -88,24 +89,22 @@ public class TeamTest
     }
 
     /**
-     * Test the addition and removal of projects in list of projects allocated in the past
+     * Test the addition and removal of team's project allocations
      */
     @Test
-    public void testAddRemovalPastProject()
+    public void testAddRemoveAllocation()
     {
         Team team = new Team();
         Project proj = new Project();
+        Date startDate = new Date();
+        Date endDate = new Date();
+        Allocation alloc = new Allocation(proj, team, startDate, endDate);
+        
+        team.add(alloc);
+        Assert.assertTrue(team.getProjectAllocations().contains(alloc));
 
-
-        team.addPastProject(proj);
-        ArrayList<Project> projects = new ArrayList<>();
-        projects.add(proj);
-
-        Assert.assertEquals(projects, team.getProjectAllocations());
-
-        team.removePastProject(proj);
-        Assert.assertTrue(!team.getProjectAllocations().contains(proj));
-
+        team.remove(alloc);
+        Assert.assertTrue(team.getProjectAllocations().isEmpty());
     }
 
 
