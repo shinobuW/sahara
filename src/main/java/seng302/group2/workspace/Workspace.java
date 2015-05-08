@@ -535,14 +535,9 @@ public class Workspace extends TreeViewItem implements Serializable
             this.skills.add(skill);
             return;
         }
-        //Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                skill,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_ADD, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_ADD, null)
-        ));
 
-        this.skills.add(skill);
+        Command addSkill = new AddSkillCommand(Global.currentWorkspace, skill);
+        Global.commandManager.executeCommand(addSkill);
     }
 
 
@@ -600,22 +595,6 @@ public class Workspace extends TreeViewItem implements Serializable
      */
     public void add(Team team)
     {
-        /*
-        if (team.isUnassignedTeam())
-        {
-            this.teams.add(team);
-            return;
-        }
-
-        //Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                team,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD, null)
-        ));
-
-        this.teams.add(team);*/
-
         Command command = new AddTeamCommand(this, team);
         Global.commandManager.executeCommand(command);
     }
@@ -1102,6 +1081,28 @@ public class Workspace extends TreeViewItem implements Serializable
         public void undo()
         {
             ws.getPeople().remove(person);
+        }
+    }
+
+    private class AddSkillCommand implements Command
+    {
+        private Skill skill;
+        private Workspace ws;
+
+        AddSkillCommand(Workspace ws, Skill skill)
+        {
+            this.skill = skill;
+            this.ws = ws;
+        }
+
+        public void execute()
+        {
+            ws.getSkills().add(skill);
+        }
+
+        public void undo()
+        {
+            ws.getSkills().remove(skill);
         }
     }
 }

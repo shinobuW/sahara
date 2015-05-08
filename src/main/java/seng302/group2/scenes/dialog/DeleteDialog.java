@@ -70,7 +70,7 @@ public class DeleteDialog
             else if (element.getClass() == Skill.class)
             {
                 Skill deletedSkill = (Skill)element;
-                Skill.deleteSkill(deletedSkill);
+                deletedSkill.deleteSkill();
             }
             else
             {

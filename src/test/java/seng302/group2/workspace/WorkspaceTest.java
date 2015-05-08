@@ -8,6 +8,7 @@ package seng302.group2.workspace;
 import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.Test;
+import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
@@ -133,13 +134,16 @@ public class WorkspaceTest
     public void testAddSkill()
     {
         Workspace work = new Workspace();
+        Global.currentWorkspace = work;
         Skill skill = new Skill();
         work.add(skill);
-        
+
+        System.out.println(work.getSkills());
         Assert.assertTrue(work.getSkills().contains(skill));
         
         work.add(skill);
         work.add(skill);
+
         // Also account for the two default skills in workspaces, SM, PO
         Assert.assertEquals(5, work.getSkills().size());
     }
@@ -172,6 +176,7 @@ public class WorkspaceTest
     public void testAddTeam()
     {
         Workspace work = new Workspace();
+        Global.currentWorkspace = work;
         Team team = new Team();
         
         work.add(team);
