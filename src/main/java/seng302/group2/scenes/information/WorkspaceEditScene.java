@@ -30,7 +30,7 @@ public class WorkspaceEditScene
      */
     public static Pane getWorkspaceEditScene(Workspace currentWorkspace)
     {
-        informationGrid = new VBox();
+        informationGrid = new VBox(10);
         /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);*/

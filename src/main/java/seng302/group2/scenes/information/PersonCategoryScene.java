@@ -32,7 +32,7 @@ public class PersonCategoryScene
      */
     public static Pane getPersonCategoryScene(Workspace currentWorkspace)
     {
-        informationGrid = new VBox();
+        informationGrid = new VBox(10);
         /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);*/
@@ -44,23 +44,26 @@ public class PersonCategoryScene
         Button btnDelete = new Button("Delete");
         Button btnCreate = new Button("Create New Person");
 
-        VBox selectionButtons = new VBox();
+        HBox selectionButtons = new HBox();
         selectionButtons.spacingProperty().setValue(10);
         selectionButtons.getChildren().add(btnView);
         selectionButtons.getChildren().add(btnDelete);
-        selectionButtons.setAlignment(Pos.TOP_CENTER);
+        selectionButtons.getChildren().add(btnCreate);
+        selectionButtons.setAlignment(Pos.TOP_LEFT);
 
-        HBox createButton = new HBox();
-        createButton.getChildren().add(btnCreate);
-        createButton.setAlignment(Pos.CENTER_RIGHT);
+        //HBox createButton = new HBox();
+        //createButton.getChildren().add(btnCreate);
+        //createButton.setAlignment(Pos.CENTER_RIGHT);
 
         ListView personBox = new ListView(currentWorkspace.getPeople());
         personBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        personBox.setMaxWidth(275);
 
         informationGrid.getChildren().add(title);
         informationGrid.getChildren().add(personBox);
         informationGrid.getChildren().add(selectionButtons);
-        informationGrid.getChildren().add(createButton);
+
+        //informationGrid.getChildren().add(createButton);
 
         btnView.setOnAction((event) ->
             {

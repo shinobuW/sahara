@@ -31,7 +31,7 @@ public class ReleaseCategoryScene
      */
     public static Pane getReleaseCategoryScene(ReleaseCategory selectedCategory)
     {
-        informationGrid = new VBox();
+        informationGrid = new VBox(10);
         /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);*/
@@ -43,23 +43,21 @@ public class ReleaseCategoryScene
         //Button btnDelete = new Button("Delete");
         Button btnCreate = new Button("Create New Release");
 
-        VBox selectionButtons = new VBox();
+        HBox selectionButtons = new HBox();
         selectionButtons.spacingProperty().setValue(10);
         selectionButtons.getChildren().add(btnView);
+        selectionButtons.getChildren().add(btnCreate);
         //selectionButtons.getChildren().add(btnDelete);
-        selectionButtons.setAlignment(Pos.TOP_CENTER);
+        selectionButtons.setAlignment(Pos.TOP_LEFT);
 
-        HBox createButton = new HBox();
-        createButton.getChildren().add(btnCreate);
-        createButton.setAlignment(Pos.CENTER_RIGHT);
 
         ListView releaseBox = new ListView(selectedCategory.getProject().getReleases());
         releaseBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        releaseBox.setMaxWidth(275);
 
         informationGrid.getChildren().add(title);
         informationGrid.getChildren().add(releaseBox);
         informationGrid.getChildren().add(selectionButtons);
-        informationGrid.getChildren().add(createButton);
 
         btnView.setOnAction((event) ->
             {

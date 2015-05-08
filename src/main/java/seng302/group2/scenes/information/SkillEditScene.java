@@ -46,7 +46,7 @@ public class SkillEditScene
      */
     public static Pane getSkillEditScene(Skill currentSkill)
     {
-        informationGrid = new VBox();
+        informationGrid = new VBox(10);
         /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);*/
@@ -57,12 +57,15 @@ public class SkillEditScene
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
+        buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name: ");
         CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description: ", 300);
-        
+
+        shortNameCustomField.setMaxWidth(275);
+        descriptionTextArea.setMaxWidth(275);
+
         shortNameCustomField.setText(currentSkill.getShortName());
         descriptionTextArea.setText(currentSkill.getDescription());
 

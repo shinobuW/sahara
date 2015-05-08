@@ -31,7 +31,7 @@ public class ProjectCategoryScene
      */
     public static Pane getProjectCategoryScene(Workspace currentWorkspace)
     {
-        informationGrid = new VBox();
+        informationGrid = new VBox(10);
         /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);*/
@@ -43,22 +43,18 @@ public class ProjectCategoryScene
         //Button btnDelete = new Button("Delete");
         Button btnCreate = new Button("Create New Project");
 
-        VBox selectionButtons = new VBox();
-        selectionButtons.spacingProperty().setValue(10);
-        selectionButtons.getChildren().add(btnView);
-        //selectionButtons.getChildren().add(btnDelete);
-        selectionButtons.setAlignment(Pos.TOP_CENTER);
-
         HBox createButton = new HBox();
+        createButton.spacingProperty().setValue(10);
+        createButton.getChildren().add(btnView);
         createButton.getChildren().add(btnCreate);
-        createButton.setAlignment(Pos.CENTER_RIGHT);
+        createButton.setAlignment(Pos.TOP_LEFT);
 
         ListView projectBox = new ListView(currentWorkspace.getProjects());
         projectBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        projectBox.setMaxWidth(275);
 
         informationGrid.getChildren().add(title);
         informationGrid.getChildren().add(projectBox);
-        informationGrid.getChildren().add(selectionButtons);
         informationGrid.getChildren().add(createButton);
 
         btnView.setOnAction((event) ->

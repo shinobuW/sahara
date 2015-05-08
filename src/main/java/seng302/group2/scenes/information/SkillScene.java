@@ -34,7 +34,7 @@ public class SkillScene
      */
     public static Pane getSkillScene(Skill currentSkill)
     {
-        informationGrid = new VBox();
+        informationGrid = new VBox(10);
 
         /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);

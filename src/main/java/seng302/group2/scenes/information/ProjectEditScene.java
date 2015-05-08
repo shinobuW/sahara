@@ -38,7 +38,7 @@ public class ProjectEditScene
      */
     public static Pane getProjectEditScene(Project currentProject)
     {
-        informationGrid = new VBox();
+        informationGrid = new VBox(10);
         /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);*/
@@ -49,12 +49,16 @@ public class ProjectEditScene
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
+        buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name: ");
         RequiredField longNameCustomField = new RequiredField("Long Name: ");
         CustomTextArea descriptionTextArea = new CustomTextArea("Project Description: ", 300);
+
+        shortNameCustomField.setMaxWidth(275);
+        longNameCustomField.setMaxWidth(275);
+        descriptionTextArea.setMaxWidth(275);
 
         shortNameCustomField.setText(currentProject.getShortName());
         longNameCustomField.setText(currentProject.getLongName());
@@ -101,12 +105,18 @@ public class ProjectEditScene
         informationGrid.getChildren().add(shortNameCustomField);
         informationGrid.getChildren().add(longNameCustomField);
         informationGrid.getChildren().add(descriptionTextArea);
-        informationGrid.getChildren().add(new Label("Teams: "));
-        informationGrid.getChildren().add(new Label("Available Teams: "));
-        informationGrid.getChildren().add(projectTeamsBox);
-        informationGrid.getChildren().add(teamButtons);
-        informationGrid.getChildren().add(membersBox);
 
+        HBox h1 = new HBox(10);
+        VBox v1 = new VBox(10);
+        v1.getChildren().add(new Label("Teams: "));
+        v1.getChildren().add(projectTeamsBox);
+
+        VBox v2 = new VBox(10);
+        v2.getChildren().add(new Label("Available Teams: "));
+        v2.getChildren().add(membersBox);
+
+        h1.getChildren().addAll(v1, teamButtons, v2);
+        informationGrid.getChildren().add(h1);
         informationGrid.getChildren().add(buttons);
 
         btnAdd.setOnAction((event) ->

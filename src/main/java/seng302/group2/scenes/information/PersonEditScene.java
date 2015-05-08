@@ -53,7 +53,7 @@ public class PersonEditScene
      */
     public static Pane getPersonEditScene(Person currentPerson)
     {
-        informationGrid = new VBox();
+        informationGrid = new VBox(10);
         /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);*/
@@ -64,7 +64,7 @@ public class PersonEditScene
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
+        buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnSave, btnCancel);
         
         Button btnAdd = new Button("<-");
@@ -84,8 +84,9 @@ public class PersonEditScene
         
         ListView personSkillsBox = new ListView(tempPerson.getSkills());
         personSkillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        
-        
+        personSkillsBox.setMaxWidth(275);
+
+
         ObservableList<Skill> dialogSkills = observableArrayList();
         ObservableList<Skill> dialogSkillsCopy = observableArrayList();
         
@@ -101,6 +102,8 @@ public class PersonEditScene
                 
         ListView skillsBox = new ListView(dialogSkills);
         skillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        skillsBox.setMaxWidth(275);
+
         CustomComboBox teamBox = new CustomComboBox("Team: ", false);
 
         
@@ -134,7 +137,16 @@ public class PersonEditScene
         customBirthDate.setText(currentPerson.getDateString());
 
         descriptionTextArea.setText(currentPerson.getDescription());
-        
+
+
+        shortNameCustomField.setMaxWidth(275);
+        firstNameCustomField.setMaxWidth(275);
+        lastNameCustomField.setMaxWidth(275);
+        emailTextField.setMaxWidth(275);
+        customBirthDate.setMaxWidth(275);
+        descriptionTextArea.setMaxWidth(275);
+        teamBox.setMaxWidth(275);
+
         informationGrid.getChildren().add(shortNameCustomField);
         informationGrid.getChildren().add(firstNameCustomField);
         informationGrid.getChildren().add(lastNameCustomField);
@@ -142,16 +154,19 @@ public class PersonEditScene
         informationGrid.getChildren().add(customBirthDate);
         informationGrid.getChildren().add(descriptionTextArea);
         informationGrid.getChildren().add(teamBox);
-        informationGrid.getChildren().add(new Label("Skills: "));
-        informationGrid.getChildren().add(personSkillsBox);
-        
-        informationGrid.getChildren().add(skillsButtons);
-        informationGrid.getChildren().add(btnSave);
-        
-        informationGrid.getChildren().add(new Label("Available Skills: "));
-        informationGrid.getChildren().add(skillsBox);
-        informationGrid.getChildren().add(btnCancel);
-        
+
+        VBox v1 = new VBox(10);
+        v1.getChildren().addAll(new Label("Skills: "), personSkillsBox);
+        VBox v2 = new VBox(10);
+        v2.getChildren().addAll(new Label("Available Skills: "), skillsBox);
+
+        HBox h1 = new HBox(10);
+
+        h1.getChildren().addAll(v1, skillsButtons, v2);
+        informationGrid.getChildren().add(h1);
+
+        informationGrid.getChildren().add(buttons);
+
         btnAdd.setOnAction((event) ->
             {
                 ObservableList<Skill> selectedSkills =

@@ -33,7 +33,7 @@ public class TeamScene
     public static Pane getTeamScene(Team currentTeam)
     {
         
-        informationGrid = new VBox();
+        informationGrid = new VBox(10);
 
         /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
@@ -68,29 +68,36 @@ public class TeamScene
         ObservableList<String> tempTeamString = TeamScene.convertToString(currentTeam.getPeople());
         
         ListView teamsPeopleBox = new ListView(tempTeamString);
-
         teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        teamsPeopleBox.setMaxWidth(275);
 
         Separator separator = new Separator();
 
         informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(new Label("Team Description: "));
+        informationGrid.getChildren().add(new Label("Team Description: " + currentTeam.getDescription()));
         informationGrid.getChildren().add(separator);
-        informationGrid.getChildren().add(new Label("Product Owner: "));
         if (currentTeam.getProductOwner() != null)
         {
-            informationGrid.getChildren().add(new Label(currentTeam.getProductOwner().toString()));
+            informationGrid.getChildren().add(new Label("Product Owner: " + currentTeam.getProductOwner().toString()));
         }
-        informationGrid.getChildren().add(new Label("Scrum Master: "));
+        else
+        {
+            informationGrid.getChildren().add(new Label("Product Owner: "));
+        }
+
+
         if (currentTeam.getScrumMaster() != null)
         {
-            informationGrid.getChildren().add(new Label(currentTeam.getScrumMaster().toString()));
+            informationGrid.getChildren().add(new Label("Scrum Master: " + currentTeam.getScrumMaster().toString()));
+        }
+        else
+        {
+            informationGrid.getChildren().add(new Label("Scrum Master: "));
         }
 
         informationGrid.getChildren().add(new Label("Team Members: "));
         informationGrid.getChildren().add(teamsPeopleBox);
-        
-        informationGrid.getChildren().add(new Label(currentTeam.getDescription()));
+
         informationGrid.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) ->

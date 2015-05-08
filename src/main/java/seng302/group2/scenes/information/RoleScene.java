@@ -38,7 +38,7 @@ public class RoleScene
      */
     public static Pane getRoleScene(Role currentRole)
     {
-        informationGrid = new VBox();
+        informationGrid = new VBox(10);
         
         /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
@@ -49,6 +49,7 @@ public class RoleScene
 
         ListView skillsBox = new ListView(currentRole.getRequiredSkills());
         skillsBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        skillsBox.setMaxWidth(275);
 
         informationGrid.getChildren().add(title);
         informationGrid.getChildren().add(new Label("Role Description: "));

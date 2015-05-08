@@ -35,11 +35,7 @@ public class WorkspaceScene
      */
     public static Pane getWorkspaceScene(Workspace currentWorkspace)
     {
-        informationGrid = new VBox();
-
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
+        informationGrid = new VBox(10);
         informationGrid.setPadding(new Insets(25,25,25,25));
         Label title = new Label(currentWorkspace.getLongName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
@@ -47,11 +43,8 @@ public class WorkspaceScene
         Button btnEdit = new Button("Edit");
 
         informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(new Label("Short Name: "));
-        informationGrid.getChildren().add(new Label("Workspace Description: "));
-
-        informationGrid.getChildren().add(new Label(currentWorkspace.getShortName()));
-        informationGrid.getChildren().add(new Label(currentWorkspace.getDescription()));
+        informationGrid.getChildren().add(new Label("Short Name: " + currentWorkspace.getShortName()));
+        informationGrid.getChildren().add(new Label("Workspace Description: " + currentWorkspace.getDescription()));
         informationGrid.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) ->

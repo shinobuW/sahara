@@ -53,7 +53,7 @@ public class ReleaseEditScene
      */
     public static Pane getReleaseEditScene(Release currentRelease)
     {
-        informationGrid = new VBox();
+        informationGrid = new VBox(10);
         /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);*/
@@ -64,7 +64,7 @@ public class ReleaseEditScene
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
+        buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name: ");
@@ -72,7 +72,12 @@ public class ReleaseEditScene
         CustomDateField releaseDateField = new CustomDateField("Estimated Release Date: ");
         
         CustomComboBox projectComboBox = new CustomComboBox("Project: ", true);
-        
+
+        shortNameCustomField.setMaxWidth(275);
+        descriptionTextArea.setMaxWidth(275);
+        releaseDateField.setMaxWidth(275);
+        projectComboBox.setMaxWidth(275);
+
         for (TreeViewItem project : Global.currentWorkspace.getProjects())
         {
             projectComboBox.addToComboBox(project.toString());

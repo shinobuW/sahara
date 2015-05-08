@@ -38,7 +38,7 @@ public class ReleaseScene
      */
     public static Pane getReleaseScene(Release currentRelease)
     {
-        informationGrid = new VBox();
+        informationGrid = new VBox(10);
 
         /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
@@ -50,13 +50,9 @@ public class ReleaseScene
         Button btnEdit = new Button("Edit");
 
         informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(new Label("Release Description: "));
-        informationGrid.getChildren().add(new Label("Estimated Release Date: "));
-        informationGrid.getChildren().add(new Label("Project: "));
-        
-        informationGrid.getChildren().add(new Label(currentRelease.getDescription()));
-        informationGrid.getChildren().add(new Label(currentRelease.getDateString()));
-        informationGrid.getChildren().add(new Label(currentRelease.getProject().toString()));
+        informationGrid.getChildren().add(new Label("Release Description: " + currentRelease.getDescription()));
+        informationGrid.getChildren().add(new Label("Estimated Release Date: " + currentRelease.getDateString()));
+        informationGrid.getChildren().add(new Label("Project: " + currentRelease.getProject().toString()));
         informationGrid.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) ->

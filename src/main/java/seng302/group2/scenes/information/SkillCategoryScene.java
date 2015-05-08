@@ -32,7 +32,7 @@ public class SkillCategoryScene
      */
     public static Pane getSkillCategoryScene(Workspace currentWorkspace)
     {
-        informationGrid = new VBox();
+        informationGrid = new VBox(10);
         /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);*/
@@ -44,23 +44,21 @@ public class SkillCategoryScene
         Button btnDelete = new Button("Delete");
         Button btnCreate = new Button("Create New Skill");
 
-        VBox selectionButtons = new VBox();
+        HBox selectionButtons = new HBox();
         selectionButtons.spacingProperty().setValue(10);
         selectionButtons.getChildren().add(btnView);
         selectionButtons.getChildren().add(btnDelete);
-        selectionButtons.setAlignment(Pos.TOP_CENTER);
-
-        HBox createButton = new HBox();
-        createButton.getChildren().add(btnCreate);
-        createButton.setAlignment(Pos.CENTER_RIGHT);
+        selectionButtons.getChildren().add(btnCreate);
+        selectionButtons.setAlignment(Pos.TOP_LEFT);
 
         ListView skillBox = new ListView(currentWorkspace.getSkills());
         skillBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        skillBox.setMaxWidth(275);
 
         informationGrid.getChildren().add(title);
         informationGrid.getChildren().add(skillBox);
         informationGrid.getChildren().add(selectionButtons);
-        informationGrid.getChildren().add(createButton);
+
 
         btnView.setOnAction((event) ->
             {

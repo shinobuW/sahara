@@ -33,8 +33,8 @@ public class ProjectScene
      */
     public static Pane getProjectScene(Project currentProject)
     {
-        informationGrid = new VBox();
-        Pane infoTabGrid = new VBox();
+        informationGrid = new VBox(10);
+        Pane infoTabGrid = new VBox(10);
 
         //informationGrid.setAlignment(Pos.TOP_LEFT);
         infoTabGrid.setBorder(null);

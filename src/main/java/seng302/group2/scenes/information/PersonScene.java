@@ -32,7 +32,7 @@ public class PersonScene
      */
     public static Pane getPersonScene(Person currentPerson)
     {
-        informationGrid = new VBox();
+        informationGrid = new VBox(10);
 
         /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
@@ -49,27 +49,20 @@ public class PersonScene
         final Separator separator = new Separator();
         
         informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(new Label("Short Name: "));
-        informationGrid.getChildren().add(new Label("Email Address: "));
-        informationGrid.getChildren().add(new Label("Birth Date: "));
-        informationGrid.getChildren().add(new Label("Person Description: "));
-        informationGrid.getChildren().add(new Label("Team: "));
-        informationGrid.getChildren().add(new Label("Role: "));
+        informationGrid.getChildren().add(new Label("Short Name: " + currentPerson.getShortName()));
+        informationGrid.getChildren().add(new Label("Email Address: " + currentPerson.getEmail()));
+        informationGrid.getChildren().add(new Label("Birth Date: " + currentPerson.getDateString()));
+        informationGrid.getChildren().add(new Label("Person Description: " + currentPerson.getDescription()));
+        informationGrid.getChildren().add(new Label("Team: " + currentPerson.getTeamName()));
+
+        String roleString = currentPerson.getRole() == null ? "" :
+                currentPerson.getRole().toString();
+        informationGrid.getChildren().add(new Label("Role: " + roleString));
+
         informationGrid.getChildren().add(separator);
         informationGrid.getChildren().add(new Label("Skills: "));
         informationGrid.getChildren().add(personSkillsBox);
-        
-        informationGrid.getChildren().add(new Label(currentPerson.getShortName()));
-        informationGrid.getChildren().add(new Label(currentPerson.getEmail()));
 
-        informationGrid.getChildren().add(new Label(currentPerson.getDateString()));
-
-        informationGrid.getChildren().add(new Label(currentPerson.getDescription()));
-        informationGrid.getChildren().add(new Label(currentPerson.getTeamName()));
-        
-        String roleString = currentPerson.getRole() == null ? "" : 
-                currentPerson.getRole().toString();
-        informationGrid.getChildren().add(new Label(roleString));
         informationGrid.getChildren().add(btnEdit);
         
         btnEdit.setOnAction((event) ->

@@ -56,7 +56,7 @@ public class TeamEditScene
     {
 
         //Team currentTeam = (Team) selectedTreeItem.getValue();
-        informationGrid = new VBox();
+        informationGrid = new VBox(10);
         /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
         informationGrid.setVgap(10);*/
@@ -66,6 +66,8 @@ public class TeamEditScene
         Button btnSave = new Button("Save");
 
         HBox devBtns = new HBox();
+        devBtns.spacingProperty().setValue(10);
+        devBtns.alignmentProperty().set(Pos.TOP_LEFT);
         Button mkeDev = new Button("Make Developer");
         Button rmvDev = new Button("Unmake Developer");
         devBtns.getChildren().add(mkeDev);
@@ -73,13 +75,18 @@ public class TeamEditScene
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
+        buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name: ");
         CustomTextArea descriptionTextArea = new CustomTextArea("Team Description: ", 300);
         productOwnerBox = new CustomComboBox("Product Owner: ", false);
         scrumMasterBox = new CustomComboBox("Scrum Master: ", false);
+
+        shortNameCustomField.setMaxWidth(275);
+        descriptionTextArea.setMaxWidth(275);
+        productOwnerBox.setMaxWidth(275);
+        scrumMasterBox.setMaxWidth(275);
 
         productOwnerBox.addToComboBox("");
         scrumMasterBox.addToComboBox("");
@@ -112,7 +119,7 @@ public class TeamEditScene
         
         // Creates the Teams box of People.
         teamsPeopleBox = new ListView(tempTeamString);
-        
+        teamsPeopleBox.setMaxWidth(275);
         if (currentTeam.isUnassignedTeam())
         {
             for (TreeViewItem person : Global.currentWorkspace.getPeople())
@@ -197,22 +204,32 @@ public class TeamEditScene
         // Creates the Box of people that aren't assigned to the current Team.
         ListView membersBox = new ListView(dialogPeople);
         membersBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        
+        membersBox.setMaxWidth(275);
+
         informationGrid.getChildren().add(shortNameCustomField);
         informationGrid.getChildren().add(descriptionTextArea);
+
         informationGrid.getChildren().add(productOwnerBox);
         informationGrid.getChildren().add(scrumMasterBox);
-        informationGrid.getChildren().add(new Label("Team Members: "));
-        informationGrid.getChildren().add(new Label("Available People: "));
-
-        informationGrid.getChildren().add(teamsPeopleBox);
-        informationGrid.getChildren().add(peopleButtons);
-        informationGrid.getChildren().add(membersBox);
-        informationGrid.getChildren().add(devBtns);
-        informationGrid.getChildren().add(btnSave);
-        informationGrid.getChildren().add(btnCancel);
         refreshListView(tempTeam);
         refreshComboBox(tempTeam);
+
+        HBox h1 = new HBox(10);
+        VBox v1 = new VBox(10);
+        v1.getChildren().add(new Label("Team Members: "));
+        v1.getChildren().add(membersBox);
+
+        VBox v2 = new VBox(10);
+        v2.getChildren().add(new Label("Available People: "));
+        v2.getChildren().add(teamsPeopleBox);
+
+        h1.getChildren().addAll(v1, peopleButtons, v2);
+
+        informationGrid.getChildren().add(h1);
+        informationGrid.getChildren().add(devBtns);
+        informationGrid.getChildren().add(buttons);
+
+
 
         btnAdd.setOnAction((event) ->
             {
