@@ -423,7 +423,7 @@ public class Team extends TreeViewItem implements Serializable
     public void deleteTeam()
     {
         Command teamDel = new DeleteTeamCommand(this, Global.currentWorkspace);
-        teamDel.execute();
+        Global.commandManager.executeCommand(teamDel);
     }
 
 
@@ -433,7 +433,8 @@ public class Team extends TreeViewItem implements Serializable
     public void deleteTeamCascading()
     {
         Command teamCasDelete = new DeleteTeamCascadingCommand(this, Global.currentWorkspace);
-        teamCasDelete.execute();
+        Global.commandManager.executeCommand(teamCasDelete);
+
         /*
         ArrayList<Person> peopleToBeDeleted = new ArrayList<>();
         ArrayList<UndoableItem> undoActions = new ArrayList<>();
@@ -594,33 +595,35 @@ public class Team extends TreeViewItem implements Serializable
     {
         private Team team;
         private Workspace ws;
-        private List<Person> members;
+        private List<Person> members = new ArrayList<>();
 
         DeleteTeamCascadingCommand(Team team, Workspace ws)
         {
             this.team = team;
             this.ws = ws;
-            this.members = team.getPeople();
+            for (Person p : team.getPeople())
+            {
+                members.add(p);
+            }
         }
 
         public void execute()
         {
             for (Person member : members)
             {
-                ws.removeWithoutUndo(member);
+                ws.getPeople().remove(member);
             }
             ws.getTeams().remove(team);
-            // TODO Remove any associations
         }
 
         public void undo()
         {
+            System.out.println("Undone Team Casc Delete");
             for (Person member : members)
             {
-                ws.addWithoutUndo(member);
+                ws.getPeople().add(member);
             }
             ws.getTeams().add(team);
-            // TODO Readd any associations
         }
     }
 }

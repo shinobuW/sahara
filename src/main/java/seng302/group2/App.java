@@ -84,12 +84,17 @@ public class App extends Application
         
         // The title of the window
         primaryStage.setTitle("Sahara");
-        //primaryStage.setWidth(0.75 * screenSize.getWidth());
+      
+        primaryStage.setWidth(960);
+        primaryStage.setHeight(540);
+	primaryStage.setMinWidth(900);
+	primaryStage.setMinHeight(500);
+	
+	//primaryStage.setWidth(0.75 * screenSize.getWidth());
         //primaryStage.setHeight(0.75 * screenSize.getHeight());
-        primaryStage.setMinWidth(960);
-        primaryStage.setMinHeight(540);
         //primaryStage.setMinHeight(0.25 * screenSize.getWidth());
         //primaryStage.setMinWidth(0.25 * screenSize.getWidth());
+	
         primaryStage.getIcons().add(new Image("file:images/icon.png"));
         
         // Set the scene of the stage to the initial scene

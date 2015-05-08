@@ -3,13 +3,13 @@ package seng302.group2.workspace.skills;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.util.undoredo.UndoRedoAction;
-import seng302.group2.util.undoredo.UndoRedoPerformer;
-import seng302.group2.util.undoredo.UndoableItem;
+import seng302.group2.util.undoredo.Command;
+import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A basic class to represent skills a person may have
@@ -17,7 +17,6 @@ import java.util.ArrayList;
  */
 public class Skill extends TreeViewItem implements Serializable
 {
-    
     private String shortName;
     private String description;
     
@@ -100,13 +99,20 @@ public class Skill extends TreeViewItem implements Serializable
     
     
     /**
-     * Deletes a skill and removes it from any people who have the skill.
+     * Deletes the skill and removes it from any people who have the skill.
      * Cannot delete Product Owner or Scrum Master skills.
-     * @param deletedSkill The skill to delete
      */
-    public static void deleteSkill(Skill deletedSkill)
+    public void deleteSkill()
     {
-        ArrayList<UndoableItem> undoActions = new ArrayList<>();
+        if (this.shortName.equals("Scrum Master") || this.shortName.equals("Product Owner"))
+        {
+            System.out.println("Can't delete this skill");
+            return;
+        }
+        Command deleteSkill = new DeleteSkillCommand(this, Global.currentWorkspace);
+        Global.commandManager.executeCommand(deleteSkill);
+
+        /*ArrayList<UndoableItem> undoActions = new ArrayList<>();
         if (!deletedSkill.getShortName().equals("Product Owner")
                 && !deletedSkill.getShortName().equals("Scrum Master"))
         {
@@ -149,8 +155,27 @@ public class Skill extends TreeViewItem implements Serializable
                                 undoActions)
                 ));
             }
+        }*/
+    }
+
+
+    /**
+     * Gets a list of people in the current workspace that have this skill
+     * @return People with the skill
+     */
+    public List<Person> getPeopleWithSkill()
+    {
+        List<Person> people = new ArrayList<>();
+        for (Person person : Global.currentWorkspace.getPeople())
+        {
+            if (person.getSkills().contains(this))
+            {
+                people.add(person);
+            }
         }
-    }    
+        return people;
+    }
+
     
     /**
      * An overridden version for the String representation of a Skill
@@ -161,5 +186,37 @@ public class Skill extends TreeViewItem implements Serializable
     {
         return this.shortName;
     }
-    
+
+
+    private class DeleteSkillCommand implements Command
+    {
+        private Skill skill;
+        private Workspace ws;
+        private List<Person> people;
+
+        DeleteSkillCommand(Skill skill, Workspace ws)
+        {
+            this.skill = skill;
+            this.ws = ws;
+            this.people = skill.getPeopleWithSkill();
+        }
+
+        public void execute()
+        {
+            for (Person person : this.people)
+            {
+                person.getSkills().remove(skill);
+            }
+            ws.getSkills().remove(skill);
+        }
+
+        public void undo()
+        {
+            for (Person person : this.people)
+            {
+                person.getSkills().add(skill);
+            }
+            ws.getSkills().add(skill);
+        }
+    }
 }

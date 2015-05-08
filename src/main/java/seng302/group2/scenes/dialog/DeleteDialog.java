@@ -53,7 +53,7 @@ public class DeleteDialog
             if (element.getClass() == Person.class)
             {
                 Person deletedPerson = (Person)element;
-                Person.deletePerson(deletedPerson);
+                deletedPerson.deletePerson();
             }
             else if (element.getClass() == Project.class)
             {
@@ -70,7 +70,7 @@ public class DeleteDialog
             else if (element.getClass() == Skill.class)
             {
                 Skill deletedSkill = (Skill)element;
-                Skill.deleteSkill(deletedSkill);
+                deletedSkill.deleteSkill();
             }
             else
             {

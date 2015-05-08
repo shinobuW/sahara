@@ -485,14 +485,8 @@ public class Workspace extends TreeViewItem implements Serializable
      */
     public void add(Person person)
     {
-        // Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                person,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD, null)
-        ));
-
-        this.people.add(person);
+        Command command = new AddPersonCommand(this, person);
+        Global.commandManager.executeCommand(command);
     }
 
 
@@ -511,17 +505,10 @@ public class Workspace extends TreeViewItem implements Serializable
      *
      * @param person The person to remove
      */
-    public void remove(Person person)
+    /*public void remove(Person person)
     {
-        // Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                person,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DEL, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DEL, null)
-        ));
 
-        this.people.remove(person);
-    }
+    }*/
 
 
     /**
@@ -548,14 +535,9 @@ public class Workspace extends TreeViewItem implements Serializable
             this.skills.add(skill);
             return;
         }
-        //Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                skill,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_ADD, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_ADD, null)
-        ));
 
-        this.skills.add(skill);
+        Command addSkill = new AddSkillCommand(Global.currentWorkspace, skill);
+        Global.commandManager.executeCommand(addSkill);
     }
 
 
@@ -613,22 +595,6 @@ public class Workspace extends TreeViewItem implements Serializable
      */
     public void add(Team team)
     {
-        /*
-        if (team.isUnassignedTeam())
-        {
-            this.teams.add(team);
-            return;
-        }
-
-        //Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                team,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD, null)
-        ));
-
-        this.teams.add(team);*/
-
         Command command = new AddTeamCommand(this, team);
         Global.commandManager.executeCommand(command);
     }
@@ -670,7 +636,7 @@ public class Workspace extends TreeViewItem implements Serializable
      *
      * @param team The team to remove
      */
-    public void remove(Team team)
+    /*public void remove(Team team)
     {
         if (team.isUnassignedTeam())
         {
@@ -685,7 +651,7 @@ public class Workspace extends TreeViewItem implements Serializable
         ));
 
         this.teams.remove(team);
-    }
+    }*/
 
 
     /**
@@ -709,7 +675,7 @@ public class Workspace extends TreeViewItem implements Serializable
      *
      * @param project The project to remove
      */
-    public void remove(Project project)
+    /*public void remove(Project project)
     {
         // Add the undo action to the stack
         Global.undoRedoMan.add(new UndoableItem(
@@ -719,7 +685,7 @@ public class Workspace extends TreeViewItem implements Serializable
         ));
 
         this.projects.remove(project);
-    }
+    }*/
 
 
     /**
@@ -1092,6 +1058,51 @@ public class Workspace extends TreeViewItem implements Serializable
         {
             ws.getTeams().remove(team);
             // TODO Remove any associations, eg. allocation history
+        }
+    }
+
+
+    private class AddPersonCommand implements Command
+    {
+        private Person person;
+        private Workspace ws;
+
+        AddPersonCommand(Workspace ws, Person person)
+        {
+            this.person = person;
+            this.ws = ws;
+        }
+
+        public void execute()
+        {
+            ws.getPeople().add(person);
+        }
+
+        public void undo()
+        {
+            ws.getPeople().remove(person);
+        }
+    }
+
+    private class AddSkillCommand implements Command
+    {
+        private Skill skill;
+        private Workspace ws;
+
+        AddSkillCommand(Workspace ws, Skill skill)
+        {
+            this.skill = skill;
+            this.ws = ws;
+        }
+
+        public void execute()
+        {
+            ws.getSkills().add(skill);
+        }
+
+        public void undo()
+        {
+            ws.getSkills().remove(skill);
         }
     }
 }

@@ -22,6 +22,7 @@ public class CommandManager
         command.execute();
         undos.push(command);
         redos.clear();
+        System.out.println("added: " + command.toString());
     }
 
     /**
@@ -41,6 +42,7 @@ public class CommandManager
         if (isUndoAvailable())
         {
             Command command = undos.pop();
+            System.out.println("undo: " + command);
             command.undo();
             redos.push(command);
             MainScene.treeView.refresh();
@@ -64,6 +66,7 @@ public class CommandManager
         if (isRedoAvailable())
         {
             Command command = redos.pop();
+            System.out.println("redo: " + command);
             command.execute();
             undos.push(command);
             MainScene.treeView.refresh();

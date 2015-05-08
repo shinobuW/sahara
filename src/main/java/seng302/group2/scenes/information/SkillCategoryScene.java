@@ -76,7 +76,7 @@ public class SkillCategoryScene
             {
                 if (skillBox.getSelectionModel().getSelectedItem() != null)
                 {
-                    Skill.deleteSkill((Skill) skillBox.getSelectionModel().getSelectedItem());
+                    ((Skill) skillBox.getSelectionModel().getSelectedItem()).deleteSkill();
                 }
             });
 
