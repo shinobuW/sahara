@@ -24,6 +24,7 @@ public enum ValidationStatus
     OUT_OF_RANGE,
 
     // Allocation date statuses
+    ALLOCATION_DATES_WRONG_ORDER,
     START_OVERLAP,
     END_OVERLAP,
     SUPER_OVERLAP,
