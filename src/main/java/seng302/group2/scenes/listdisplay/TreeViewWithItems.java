@@ -101,6 +101,9 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
      */
     private void init()
     {
+        setMinWidth(80);
+        setWidth(80);
+
         setContextMenu(new CategoryTreeContextMenu(true));
 
         rootProperty().addListener(new ChangeListener<TreeItem<T>>()
