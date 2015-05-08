@@ -11,6 +11,7 @@ import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.story.Story;
+import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
@@ -32,8 +33,8 @@ public class Project extends TreeViewItem implements Serializable
     private List<Team> serializableTeams = new ArrayList<>();
     private transient ObservableList<Release> releases = observableArrayList();
     private List<Release> serializableReleases = new ArrayList<>();
-    private transient ObservableList<Team> teamAllocations = observableArrayList();
-    private List<Team> serializablePastTeams = new ArrayList<>();
+    private transient ObservableList<Allocation> teamAllocations = observableArrayList();
+    private List<Team> serializableTeamAllocations = new ArrayList<>();
     private transient ObservableList<Story> stories = observableArrayList();
     private List<Story> serializableStories = new ArrayList<>();
 
@@ -187,7 +188,7 @@ public class Project extends TreeViewItem implements Serializable
      * Gets the list of teams allocated to the project in the past
      * @return list of teams
      */
-    public ObservableList<Team> getTeamAllocations()
+    public ObservableList<Allocation> getTeamAllocations()
     {
         return teamAllocations;
     }
@@ -196,9 +197,9 @@ public class Project extends TreeViewItem implements Serializable
      * Gets the serializable teams allocated to the project in the past
      * @return serializable teams
      */
-    public List<Team> getSerializablePastTeams()
+    public List<Team> getSerializableTeamAllocations()
     {
-        return serializablePastTeams;
+        return serializableTeamAllocations;
     }
     //</editor-fold>
 
@@ -336,12 +337,12 @@ public class Project extends TreeViewItem implements Serializable
     }
 
     /**
-     * Removes the team from the list of past teams allocated to the project
-     * @param team team to rmeove from the list
+     * Removes the team allocation from the list of project's team allocation
+     * @param allocation allocation to remove from the list
      */
-    public void removePastTeam(Team team)
+    public void remove(Allocation allocation)
     {
-        this.teamAllocations.remove(team);
+        this.teamAllocations.remove(allocation);
     }
 
 
@@ -371,12 +372,12 @@ public class Project extends TreeViewItem implements Serializable
     }
 
     /**
-     * Adds a team to the list od teams allocated to the project in the past
-     * @param team team to add
+     * Adds a team allocation to the list of project's team allocations
+     * @param allocation Allocation to add
      */
-    public void addPastTeam(Team team)
+    public void add(Allocation allocation)
     {
-        this.teamAllocations.add(team);
+        this.teamAllocations.add(allocation);
     }
 
 

@@ -8,9 +8,11 @@ import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -107,22 +109,22 @@ public class ProjectTest extends TestCase
     }
 
     /**
-     * Tests the addition of past teams within the projects
+     * Tests the addition and removal of project's team allocation
      */
     @Test
-    public void testAddPastTeam()
+    public void testAddRemoveTeamAllocation()
     {
+        Date startDate = new Date();
+        Date endDate = new Date();
         Project proj = new Project();
         Team team = new Team();
 
-        proj.addPastTeam(team);
-        ArrayList<Team> teams = new ArrayList<>();
-        teams.add(team);
+        Allocation allocation = new Allocation(proj, team, startDate, endDate);
+        proj.add(allocation);
+        Assert.assertTrue(proj.getTeamAllocations().contains(allocation));
 
-        Assert.assertEquals(teams, proj.getTeamAllocations());
-
-        proj.removePastTeam(team);
-        Assert.assertTrue(!proj.getTeamAllocations().contains(team));
+        proj.remove(allocation);
+        Assert.assertTrue(proj.getTeamAllocations().isEmpty());
     }
 
 
