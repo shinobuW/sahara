@@ -6,6 +6,8 @@
 package seng302.group2.util.reporting;
 
 import java.io.File;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -52,15 +54,51 @@ public class ReportGenerator
 	    TransformerFactory transformerFactory = TransformerFactory.newInstance();
 	    Transformer transformer = transformerFactory.newTransformer();
 	    DOMSource source = new DOMSource(doc);
-	    StreamResult result = new StreamResult(new File("C:\\file.xml"));
+            
+            
+            
+            
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Export Report");
+            if (Global.lastSaveLocation != null && Global.lastSaveLocation != "")
+            {
+                fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
+            }
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("XML Report", "*.xml")
+            );
+            
+            File selectedFile = null;
+            
+            try
+            {
+                selectedFile = fileChooser.showSaveDialog(new Stage());
+            }
+            catch (IllegalArgumentException e)
+            {
+                // The file directory is invalid, try again with 'root'
+                System.out.println("Bad directory");
+                fileChooser.setInitialDirectory(new File("/"));
+                selectedFile = fileChooser.showSaveDialog(new Stage());
+            }
+            
+            if (selectedFile != null)
+            {
+                StreamResult result = new StreamResult(selectedFile);
 
-	    // Output to console for testing
-	    // StreamResult result = new StreamResult(System.out);
+                // Output to console for testing
+                // StreamResult result = new StreamResult(System.out);
 
-	    transformer.transform(source, result);
+                transformer.transform(source, result);
 
-	    System.out.println("File exported!");
-	}
+                System.out.println("File exported!");
+            }
+            else
+            {
+                System.out.println("Export aborted (by user or error? :()");
+            }
+            
+        }
 	catch (Exception e) 
         {
 	    System.out.println("Error exporting");
