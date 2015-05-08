@@ -18,7 +18,7 @@ import seng302.group2.scenes.dialog.*;
 import seng302.group2.scenes.listdisplay.Category;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.workspace.ReportGenerator;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.Workspace.SaveLoadResult;
 import seng302.group2.workspace.project.Project;
