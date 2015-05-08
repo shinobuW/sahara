@@ -7,11 +7,11 @@ package seng302.group2.scenes.information;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.App;
@@ -36,28 +36,28 @@ public class ReleaseScene
      * @param currentRelease the release to display the information of
      * @return the information scene for a release
      */
-    public static GridPane getReleaseScene(Release currentRelease)
+    public static Pane getReleaseScene(Release currentRelease)
     {
-        informationGrid = new GridPane();
+        informationGrid = new VBox();
 
-        informationGrid.setAlignment(Pos.TOP_LEFT);
+        /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
-        informationGrid.setVgap(10);
+        informationGrid.setVgap(10);*/
         informationGrid.setPadding(new Insets(25,25,25,25));
         Label title = new Label(currentRelease.getShortName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
         Button btnEdit = new Button("Edit");
 
-        informationGrid.add(title, 0, 0, 3, 1);
-        informationGrid.add(new Label("Release Description: "), 0, 2);
-        informationGrid.add(new Label("Estimated Release Date: "), 0, 3);
-        informationGrid.add(new Label("Project: "), 0, 4);
+        informationGrid.getChildren().add(title);
+        informationGrid.getChildren().add(new Label("Release Description: "));
+        informationGrid.getChildren().add(new Label("Estimated Release Date: "));
+        informationGrid.getChildren().add(new Label("Project: "));
         
-        informationGrid.add(new Label(currentRelease.getDescription()), 1, 2);
-        informationGrid.add(new Label(currentRelease.getDateString()), 1, 3);
-        informationGrid.add(new Label(currentRelease.getProject().toString()), 1, 4);
-        informationGrid.add(btnEdit, 1, 5);
+        informationGrid.getChildren().add(new Label(currentRelease.getDescription()));
+        informationGrid.getChildren().add(new Label(currentRelease.getDateString()));
+        informationGrid.getChildren().add(new Label(currentRelease.getProject().toString()));
+        informationGrid.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) ->
             {

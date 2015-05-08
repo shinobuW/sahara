@@ -2,9 +2,9 @@ package seng302.group2.scenes.information;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.App;
@@ -30,13 +30,13 @@ public class PersonScene
      * @param currentPerson the person to display the information of
      * @return The Person information scene
      */
-    public static GridPane getPersonScene(Person currentPerson)
+    public static Pane getPersonScene(Person currentPerson)
     {
-        informationGrid = new GridPane();
-        
-        informationGrid.setAlignment(Pos.TOP_LEFT);
+        informationGrid = new VBox();
+
+        /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
-        informationGrid.setVgap(10);
+        informationGrid.setVgap(10);*/
         informationGrid.setPadding(new Insets(25,25,25,25));
         Label title = new Label(currentPerson.getFirstName() + " " + currentPerson.getLastName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
@@ -48,29 +48,29 @@ public class PersonScene
 
         final Separator separator = new Separator();
         
-        informationGrid.add(title, 0, 0, 3, 1);
-        informationGrid.add(new Label("Short Name: "), 0, 2);
-        informationGrid.add(new Label("Email Address: "), 0, 3);
-        informationGrid.add(new Label("Birth Date: "), 0, 4);
-        informationGrid.add(new Label("Person Description: "), 0, 5);
-        informationGrid.add(new Label("Team: "), 0, 6);
-        informationGrid.add(new Label("Role: "), 0, 7);
-        informationGrid.add(separator, 0, 8, 4, 1);
-        informationGrid.add(new Label("Skills: "), 0, 9);
-        informationGrid.add(personSkillsBox, 0, 10, 2, 1);
+        informationGrid.getChildren().add(title);
+        informationGrid.getChildren().add(new Label("Short Name: "));
+        informationGrid.getChildren().add(new Label("Email Address: "));
+        informationGrid.getChildren().add(new Label("Birth Date: "));
+        informationGrid.getChildren().add(new Label("Person Description: "));
+        informationGrid.getChildren().add(new Label("Team: "));
+        informationGrid.getChildren().add(new Label("Role: "));
+        informationGrid.getChildren().add(separator);
+        informationGrid.getChildren().add(new Label("Skills: "));
+        informationGrid.getChildren().add(personSkillsBox);
         
-        informationGrid.add(new Label(currentPerson.getShortName()), 1, 2, 5, 1);
-        informationGrid.add(new Label(currentPerson.getEmail()), 1, 3, 5, 1);
+        informationGrid.getChildren().add(new Label(currentPerson.getShortName()));
+        informationGrid.getChildren().add(new Label(currentPerson.getEmail()));
 
-        informationGrid.add(new Label(currentPerson.getDateString()), 1, 4, 5, 1);
+        informationGrid.getChildren().add(new Label(currentPerson.getDateString()));
 
-        informationGrid.add(new Label(currentPerson.getDescription()), 1, 5, 5, 1);
-        informationGrid.add(new Label(currentPerson.getTeamName()), 1, 6, 5, 1);
+        informationGrid.getChildren().add(new Label(currentPerson.getDescription()));
+        informationGrid.getChildren().add(new Label(currentPerson.getTeamName()));
         
         String roleString = currentPerson.getRole() == null ? "" : 
                 currentPerson.getRole().toString();
-        informationGrid.add(new Label(roleString), 1, 7, 5, 1);
-        informationGrid.add(btnEdit, 3, 11);
+        informationGrid.getChildren().add(new Label(roleString));
+        informationGrid.getChildren().add(btnEdit);
         
         btnEdit.setOnAction((event) ->
             {

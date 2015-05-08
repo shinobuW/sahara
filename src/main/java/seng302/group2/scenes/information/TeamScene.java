@@ -1,11 +1,10 @@
 package seng302.group2.scenes.information;
 
-import java.util.ArrayList;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.App;
@@ -31,14 +30,14 @@ public class TeamScene
       * @param currentTeam The team to show the information of
      * @return The Team information scene
      */
-    public static GridPane getTeamScene(Team currentTeam)
+    public static Pane getTeamScene(Team currentTeam)
     {
         
-        informationGrid = new GridPane();
+        informationGrid = new VBox();
 
-        informationGrid.setAlignment(Pos.TOP_LEFT);
+        /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
-        informationGrid.setVgap(10);
+        informationGrid.setVgap(10);*/
         informationGrid.setPadding(new Insets(25,25,25,25));
         Label title = new Label(currentTeam.getShortName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
@@ -74,25 +73,25 @@ public class TeamScene
 
         Separator separator = new Separator();
 
-        informationGrid.add(title, 0, 0, 3, 1);
-        informationGrid.add(new Label("Team Description: "), 0, 2);
-        informationGrid.add(separator, 0, 3, 4, 1);
-        informationGrid.add(new Label("Product Owner: "), 0, 4);
+        informationGrid.getChildren().add(title);
+        informationGrid.getChildren().add(new Label("Team Description: "));
+        informationGrid.getChildren().add(separator);
+        informationGrid.getChildren().add(new Label("Product Owner: "));
         if (currentTeam.getProductOwner() != null)
         {
-            informationGrid.add(new Label(currentTeam.getProductOwner().toString()), 1, 4);
+            informationGrid.getChildren().add(new Label(currentTeam.getProductOwner().toString()));
         }
-        informationGrid.add(new Label("Scrum Master: "), 0, 5);
+        informationGrid.getChildren().add(new Label("Scrum Master: "));
         if (currentTeam.getScrumMaster() != null)
         {
-            informationGrid.add(new Label(currentTeam.getScrumMaster().toString()), 1, 5);
+            informationGrid.getChildren().add(new Label(currentTeam.getScrumMaster().toString()));
         }
 
-        informationGrid.add(new Label("Team Members: "), 0, 6);
-        informationGrid.add(teamsPeopleBox, 0, 7, 4, 1);
+        informationGrid.getChildren().add(new Label("Team Members: "));
+        informationGrid.getChildren().add(teamsPeopleBox);
         
-        informationGrid.add(new Label(currentTeam.getDescription()), 1, 2, 5, 1);
-        informationGrid.add(btnEdit, 4, 8);
+        informationGrid.getChildren().add(new Label(currentTeam.getDescription()));
+        informationGrid.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) ->
             {

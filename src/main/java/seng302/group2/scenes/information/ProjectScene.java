@@ -2,9 +2,9 @@ package seng302.group2.scenes.information;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.App;
@@ -31,14 +31,36 @@ public class ProjectScene
      * @param currentProject the project to display the information of
      * @return The project information scene
      */
-    public static GridPane getProjectScene(Project currentProject)
+    public static Pane getProjectScene(Project currentProject)
     {
-        informationGrid = new GridPane();
+        informationGrid = new VBox();
+        Pane infoTabGrid = new VBox();
 
-        informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        //informationGrid.setAlignment(Pos.TOP_LEFT);
+        infoTabGrid.setBorder(null);
+        //infoTabGrid.setHgap(10);
+        //infoTabGrid.setVgap(10);
+        infoTabGrid.setPadding(new Insets(25,25,25,25));
+        //infoTabGrid.setAlignment(Pos.BASELINE_CENTER);
+        TabPane tabPane = new TabPane();
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        tabPane.getStyleClass().add("floating");
+
+        Tab information = new Tab();
+        Tab allocation = new Tab();
+        information.setText("Information");
+        allocation.setText("Allocation History");
+        tabPane.getTabs().addAll(information, allocation);
+
+        tabPane.setMinWidth(informationGrid.getWidth());
+        infoTabGrid.setMinWidth(informationGrid.getWidth());
+        System.out.println(informationGrid.getWidth());
+        ScrollPane s1 = new ScrollPane();
+        s1.setContent(tabPane);
+        s1.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+
+        informationGrid.getChildren().add(tabPane);
+
         Label title = new Label(currentProject.getLongName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
@@ -63,20 +85,22 @@ public class ProjectScene
         
         Separator separator = new Separator();
 
-        informationGrid.add(title, 0, 0, 3, 1);
-        informationGrid.add(new Label("Short Name: "), 0, 2);
-        informationGrid.add(new Label("Project Description: "), 0, 3);
+        infoTabGrid.getChildren().add(title);
+        infoTabGrid.getChildren().add(new Label("Short Name: "));
+        infoTabGrid.getChildren().add(new Label("Project Description: "));
 
-        informationGrid.add(new Label(currentProject.getShortName()), 1, 2, 5, 1);
-        informationGrid.add(new Label(currentProject.getDescription()), 1, 3, 5, 1);
+        infoTabGrid.getChildren().add(new Label(currentProject.getShortName()));
+        infoTabGrid.getChildren().add(new Label(currentProject.getDescription()));
 
-        informationGrid.add(separator, 0, 4, 4, 1);
-        informationGrid.add(new Label("Teams: "), 0, 5);
-        informationGrid.add(projectTeamsBox, 0, 6, 2, 1);
-        informationGrid.add(new Label("Releases: "), 0, 7);
-        informationGrid.add(projectReleaseBox, 0, 8, 2, 1);
+        infoTabGrid.getChildren().add(separator);
+        infoTabGrid.getChildren().add(new Label("Teams: "));
+        infoTabGrid.getChildren().add(projectTeamsBox);
+        infoTabGrid.getChildren().add(new Label("Releases: "));
+        infoTabGrid.getChildren().add(projectReleaseBox);
 
-        informationGrid.add(btnEdit, 2, 9);
+        infoTabGrid.getChildren().add(btnEdit);
+
+        information.setContent(infoTabGrid);
 
         btnEdit.setOnAction((event) ->
             {
@@ -84,6 +108,7 @@ public class ProjectScene
                 ProjectEditScene.getProjectEditScene(currentProject);
                 App.content.getChildren().add(informationGrid);
             });
+
 
         return informationGrid;
     }

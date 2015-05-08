@@ -2,11 +2,11 @@ package seng302.group2.scenes.information;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.App;
@@ -32,24 +32,24 @@ public class SkillScene
      * @param currentSkill the skill to show the information of
      * @return The Skill information scene
      */
-    public static GridPane getSkillScene(Skill currentSkill)
+    public static Pane getSkillScene(Skill currentSkill)
     {
-        informationGrid = new GridPane();
+        informationGrid = new VBox();
 
-        informationGrid.setAlignment(Pos.TOP_LEFT);
+        /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
-        informationGrid.setVgap(10);
+        informationGrid.setVgap(10);*/
         informationGrid.setPadding(new Insets(25,25,25,25));
         Label title = new Label(currentSkill.getShortName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
         Button btnEdit = new Button("Edit");
 
-        informationGrid.add(title, 0, 0, 3, 1);
-        informationGrid.add(new Label("Skill Description: "), 0, 2);
+        informationGrid.getChildren().add(title);
+        informationGrid.getChildren().add(new Label("Skill Description: "));
         
-        informationGrid.add(new Label(currentSkill.getDescription()), 1, 2);
-        informationGrid.add(btnEdit, 1, 3);
+        informationGrid.getChildren().add(new Label(currentSkill.getDescription()));
+        informationGrid.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) ->
             {

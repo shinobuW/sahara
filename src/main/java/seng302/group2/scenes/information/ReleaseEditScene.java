@@ -10,8 +10,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
@@ -50,12 +51,12 @@ public class ReleaseEditScene
      * @param currentRelease the release to display the information of
      * @return the editable information scene for a release
      */
-    public static GridPane getReleaseEditScene(Release currentRelease)
+    public static Pane getReleaseEditScene(Release currentRelease)
     {
-        informationGrid = new GridPane();
-        informationGrid.setAlignment(Pos.TOP_LEFT);
+        informationGrid = new VBox();
+        /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
-        informationGrid.setVgap(10);
+        informationGrid.setVgap(10);*/
         informationGrid.setPadding(new Insets(25,25,25,25));
 
         Button btnCancel = new Button("Cancel");
@@ -81,11 +82,11 @@ public class ReleaseEditScene
         descriptionTextArea.setText(currentRelease.getDescription());
         releaseDateField.setText(currentRelease.getDateString());
 
-        informationGrid.add(shortNameCustomField, 0, 0);
-        informationGrid.add(descriptionTextArea, 0, 1);
-        informationGrid.add(releaseDateField, 0, 2);
-        informationGrid.add(projectComboBox, 0, 3);
-        informationGrid.add(buttons, 0,4);
+        informationGrid.getChildren().add(shortNameCustomField);
+        informationGrid.getChildren().add(descriptionTextArea);
+        informationGrid.getChildren().add(releaseDateField);
+        informationGrid.getChildren().add(projectComboBox);
+        informationGrid.getChildren().add(buttons);
 
         String defaultProject = currentRelease.getProject().getShortName();
         projectComboBox.setValue(defaultProject);

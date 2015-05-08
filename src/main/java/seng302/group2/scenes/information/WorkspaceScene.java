@@ -2,11 +2,11 @@ package seng302.group2.scenes.information;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.App;
@@ -33,26 +33,26 @@ public class WorkspaceScene
      * @param currentWorkspace The workspace to show the information of
      * @return The Workspace information scene
      */
-    public static GridPane getWorkspaceScene(Workspace currentWorkspace)
+    public static Pane getWorkspaceScene(Workspace currentWorkspace)
     {
-        informationGrid = new GridPane();
+        informationGrid = new VBox();
 
-        informationGrid.setAlignment(Pos.TOP_LEFT);
+        /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
-        informationGrid.setVgap(10);
+        informationGrid.setVgap(10);*/
         informationGrid.setPadding(new Insets(25,25,25,25));
         Label title = new Label(currentWorkspace.getLongName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
         Button btnEdit = new Button("Edit");
 
-        informationGrid.add(title, 0, 0, 3, 1);
-        informationGrid.add(new Label("Short Name: "), 0, 2);
-        informationGrid.add(new Label("Workspace Description: "), 0, 3);
+        informationGrid.getChildren().add(title);
+        informationGrid.getChildren().add(new Label("Short Name: "));
+        informationGrid.getChildren().add(new Label("Workspace Description: "));
 
-        informationGrid.add(new Label(currentWorkspace.getShortName()), 1, 2);
-        informationGrid.add(new Label(currentWorkspace.getDescription()), 1, 3);
-        informationGrid.add(btnEdit, 1, 4);
+        informationGrid.getChildren().add(new Label(currentWorkspace.getShortName()));
+        informationGrid.getChildren().add(new Label(currentWorkspace.getDescription()));
+        informationGrid.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) ->
             {

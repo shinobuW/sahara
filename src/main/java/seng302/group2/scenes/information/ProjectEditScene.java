@@ -7,8 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
@@ -36,12 +36,12 @@ public class ProjectEditScene
      * @param currentProject The project to display the editable information of
      * @return The Workspace Edit information scene
      */
-    public static GridPane getProjectEditScene(Project currentProject)
+    public static Pane getProjectEditScene(Project currentProject)
     {
-        informationGrid = new GridPane();
-        informationGrid.setAlignment(Pos.TOP_LEFT);
+        informationGrid = new VBox();
+        /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
-        informationGrid.setVgap(10);
+        informationGrid.setVgap(10);*/
         informationGrid.setPadding(new Insets(25,25,25,25));
 
         Button btnCancel = new Button("Cancel");
@@ -98,16 +98,16 @@ public class ProjectEditScene
         membersBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         membersBox.setMaxHeight(150);
 
-        informationGrid.add(shortNameCustomField, 0, 0);
-        informationGrid.add(longNameCustomField, 0, 1);
-        informationGrid.add(descriptionTextArea, 0, 2);
-        informationGrid.add(new Label("Teams: "), 0, 3);
-        informationGrid.add(new Label("Available Teams: "), 2, 3);
-        informationGrid.add(projectTeamsBox, 0, 4);
-        informationGrid.add(teamButtons, 1, 4);
-        informationGrid.add(membersBox, 2, 4);
+        informationGrid.getChildren().add(shortNameCustomField);
+        informationGrid.getChildren().add(longNameCustomField);
+        informationGrid.getChildren().add(descriptionTextArea);
+        informationGrid.getChildren().add(new Label("Teams: "));
+        informationGrid.getChildren().add(new Label("Available Teams: "));
+        informationGrid.getChildren().add(projectTeamsBox);
+        informationGrid.getChildren().add(teamButtons);
+        informationGrid.getChildren().add(membersBox);
 
-        informationGrid.add(buttons, 0, 5);
+        informationGrid.getChildren().add(buttons);
 
         btnAdd.setOnAction((event) ->
             {

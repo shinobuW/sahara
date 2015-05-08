@@ -10,8 +10,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
@@ -43,12 +44,12 @@ public class SkillEditScene
      * @param currentSkill The skill to show the information of
      * @return The Skill Edit information display
      */
-    public static GridPane getSkillEditScene(Skill currentSkill)
+    public static Pane getSkillEditScene(Skill currentSkill)
     {
-        informationGrid = new GridPane();
-        informationGrid.setAlignment(Pos.TOP_LEFT);
+        informationGrid = new VBox();
+        /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
-        informationGrid.setVgap(10);
+        informationGrid.setVgap(10);*/
         informationGrid.setPadding(new Insets(25,25,25,25));
 
         Button btnCancel = new Button("Cancel");
@@ -65,9 +66,9 @@ public class SkillEditScene
         shortNameCustomField.setText(currentSkill.getShortName());
         descriptionTextArea.setText(currentSkill.getDescription());
 
-        informationGrid.add(shortNameCustomField, 0, 0);
-        informationGrid.add(descriptionTextArea, 0, 1);
-        informationGrid.add(buttons, 0,2);
+        informationGrid.getChildren().add(shortNameCustomField);
+        informationGrid.getChildren().add(descriptionTextArea);
+        informationGrid.getChildren().add(buttons);
 
 
         btnCancel.setOnAction((event) ->

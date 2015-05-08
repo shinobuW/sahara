@@ -9,8 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
@@ -51,12 +51,12 @@ public class PersonEditScene
      * @param currentPerson The person to display information of
      * @return The Person Edit information scene
      */
-    public static GridPane getPersonEditScene(Person currentPerson)
+    public static Pane getPersonEditScene(Person currentPerson)
     {
-        informationGrid = new GridPane();
-        informationGrid.setAlignment(Pos.TOP_LEFT);
+        informationGrid = new VBox();
+        /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
-        informationGrid.setVgap(10);
+        informationGrid.setVgap(10);*/
         informationGrid.setPadding(new Insets(25,25,25,25));
     
         Button btnSave = new Button("Save");
@@ -135,22 +135,22 @@ public class PersonEditScene
 
         descriptionTextArea.setText(currentPerson.getDescription());
         
-        informationGrid.add(shortNameCustomField, 0, 0);
-        informationGrid.add(firstNameCustomField, 0, 1);
-        informationGrid.add(lastNameCustomField, 0, 2);
-        informationGrid.add(emailTextField, 0, 3);
-        informationGrid.add(customBirthDate, 0, 4);
-        informationGrid.add(descriptionTextArea, 0, 5);
-        informationGrid.add(teamBox, 0, 6);
-        informationGrid.add(new Label("Skills: "), 0, 7);
-        informationGrid.add(personSkillsBox, 0, 8);
+        informationGrid.getChildren().add(shortNameCustomField);
+        informationGrid.getChildren().add(firstNameCustomField);
+        informationGrid.getChildren().add(lastNameCustomField);
+        informationGrid.getChildren().add(emailTextField);
+        informationGrid.getChildren().add(customBirthDate);
+        informationGrid.getChildren().add(descriptionTextArea);
+        informationGrid.getChildren().add(teamBox);
+        informationGrid.getChildren().add(new Label("Skills: "));
+        informationGrid.getChildren().add(personSkillsBox);
         
-        informationGrid.add(skillsButtons,1,8);
-        informationGrid.add(btnSave, 1, 9);
+        informationGrid.getChildren().add(skillsButtons);
+        informationGrid.getChildren().add(btnSave);
         
-        informationGrid.add(new Label("Available Skills: "), 2, 7);
-        informationGrid.add(skillsBox, 2, 8);
-        informationGrid.add(btnCancel, 2, 9);
+        informationGrid.getChildren().add(new Label("Available Skills: "));
+        informationGrid.getChildren().add(skillsBox);
+        informationGrid.getChildren().add(btnCancel);
         
         btnAdd.setOnAction((event) ->
             {

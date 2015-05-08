@@ -6,8 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -30,12 +30,12 @@ public class SkillCategoryScene
      * @param currentWorkspace The workspace currently being used
      * @return The skill category info scene
      */
-    public static GridPane getSkillCategoryScene(Workspace currentWorkspace)
+    public static Pane getSkillCategoryScene(Workspace currentWorkspace)
     {
-        informationGrid = new GridPane();
-        informationGrid.setAlignment(Pos.TOP_LEFT);
+        informationGrid = new VBox();
+        /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
-        informationGrid.setVgap(10);
+        informationGrid.setVgap(10);*/
         informationGrid.setPadding(new Insets(25,25,25,25));
         Label title = new Label("Skills in " + currentWorkspace.getShortName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
@@ -57,10 +57,10 @@ public class SkillCategoryScene
         ListView skillBox = new ListView(currentWorkspace.getSkills());
         skillBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        informationGrid.add(title, 0, 1, 5, 1);
-        informationGrid.add(skillBox, 0, 2);
-        informationGrid.add(selectionButtons, 1, 2);
-        informationGrid.add(createButton, 0, 3);
+        informationGrid.getChildren().add(title);
+        informationGrid.getChildren().add(skillBox);
+        informationGrid.getChildren().add(selectionButtons);
+        informationGrid.getChildren().add(createButton);
 
         btnView.setOnAction((event) ->
             {

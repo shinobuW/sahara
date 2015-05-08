@@ -3,10 +3,14 @@ package seng302.group2.scenes;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Control;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
@@ -21,6 +25,8 @@ import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
+import javax.swing.*;
+
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.App.content;
 
@@ -32,7 +38,7 @@ import static seng302.group2.App.content;
 public class MainScene
 {
     public static TreeViewWithItems treeView = new TreeViewWithItems(new TreeItem());
-    public static GridPane informationGrid = new GridPane();
+    public static Pane informationGrid = new Pane();
     public static boolean menuHidden = false;
     
     /**

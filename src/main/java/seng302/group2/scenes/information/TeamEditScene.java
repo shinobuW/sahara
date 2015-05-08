@@ -9,8 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
@@ -25,6 +25,7 @@ import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
@@ -35,7 +36,6 @@ import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
 import static seng302.group2.scenes.MainScene.treeView;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
-import seng302.group2.workspace.role.Role;
 
 /**
  * A class for displaying the team edit scene.
@@ -52,14 +52,14 @@ public class TeamEditScene
      * @param currentTeam The team to show the information of
      * @return The Team Edit information scene
      */
-    public static GridPane getTeamEditScene(Team currentTeam)
+    public static Pane getTeamEditScene(Team currentTeam)
     {
 
         //Team currentTeam = (Team) selectedTreeItem.getValue();
-        informationGrid = new GridPane();
-        informationGrid.setAlignment(Pos.TOP_LEFT);
+        informationGrid = new VBox();
+        /*informationGrid.setAlignment(Pos.TOP_LEFT);
         informationGrid.setHgap(10);
-        informationGrid.setVgap(10);
+        informationGrid.setVgap(10);*/
         informationGrid.setPadding(new Insets(25,25,25,25));
 
         Button btnCancel = new Button("Cancel");
@@ -198,19 +198,19 @@ public class TeamEditScene
         ListView membersBox = new ListView(dialogPeople);
         membersBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         
-        informationGrid.add(shortNameCustomField, 0, 0);
-        informationGrid.add(descriptionTextArea, 0, 1);
-        informationGrid.add(productOwnerBox, 0, 2);
-        informationGrid.add(scrumMasterBox, 0, 3);
-        informationGrid.add(new Label("Team Members: "), 0, 4);
-        informationGrid.add(new Label("Available People: "), 2, 4);
+        informationGrid.getChildren().add(shortNameCustomField);
+        informationGrid.getChildren().add(descriptionTextArea);
+        informationGrid.getChildren().add(productOwnerBox);
+        informationGrid.getChildren().add(scrumMasterBox);
+        informationGrid.getChildren().add(new Label("Team Members: "));
+        informationGrid.getChildren().add(new Label("Available People: "));
 
-        informationGrid.add(teamsPeopleBox, 0, 5);
-        informationGrid.add(peopleButtons, 1, 5);
-        informationGrid.add(membersBox, 2, 5);
-        informationGrid.add(devBtns, 0, 6);
-        informationGrid.add(btnSave, 1, 6);
-        informationGrid.add(btnCancel, 2, 6);
+        informationGrid.getChildren().add(teamsPeopleBox);
+        informationGrid.getChildren().add(peopleButtons);
+        informationGrid.getChildren().add(membersBox);
+        informationGrid.getChildren().add(devBtns);
+        informationGrid.getChildren().add(btnSave);
+        informationGrid.getChildren().add(btnCancel);
         refreshListView(tempTeam);
         refreshComboBox(tempTeam);
 
@@ -682,7 +682,7 @@ public class TeamEditScene
         teamsPeopleBox = new ListView(tempTeamString);
         teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        informationGrid.add(teamsPeopleBox, 0, 5);
+        informationGrid.getChildren().add(teamsPeopleBox);
     }
     
     /*
@@ -759,8 +759,8 @@ public class TeamEditScene
             scrumMasterBox.setValue(currentSM.toString());
         }
         
-        informationGrid.add(productOwnerBox, 0, 2);
-        informationGrid.add(scrumMasterBox, 0, 3);
+        informationGrid.getChildren().add(productOwnerBox);
+        informationGrid.getChildren().add(scrumMasterBox);
         
     }
 }
