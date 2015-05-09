@@ -176,6 +176,19 @@ public class Skill extends TreeViewItem implements Serializable
         return people;
     }
 
+
+    /**
+     * Creates a skill edit command and executes it with the Global Command Manager, updating
+     * the skill with the new parameter values.
+     * @param newShortName The new short name
+     * @param newDescription The new description
+     */
+    public void edit(String newShortName, String newDescription)
+    {
+        Command edit = new SkillEditCommand(this, newShortName, newDescription);
+        Global.commandManager.executeCommand(edit);
+    }
+
     
     /**
      * An overridden version for the String representation of a Skill
@@ -187,6 +200,45 @@ public class Skill extends TreeViewItem implements Serializable
         return this.shortName;
     }
 
+
+    /**
+     * A command class that allows the executing and undoing of skill edits
+     */
+    private class SkillEditCommand implements Command
+    {
+        private Skill skill;
+        private String shortName;
+        private String description;
+        private String oldShortName;
+        private String oldDescription;
+
+        private SkillEditCommand(Skill skill, String newShortName, String newDescription)
+        {
+            this.skill = skill;
+            this.shortName = newShortName;
+            this.description = newDescription;
+            this.oldShortName = skill.shortName;
+            this.oldDescription = skill.description;
+        }
+
+        /**
+         * Executes/Redoes the changes of the skill edit
+         */
+        public void execute()
+        {
+            skill.shortName = shortName;
+            skill.description = description;
+        }
+
+        /**
+         * Undoes the changes of the skill edit
+         */
+        public void undo()
+        {
+            skill.shortName = oldShortName;
+            skill.description = oldDescription;
+        }
+    }
 
     private class DeleteSkillCommand implements Command
     {

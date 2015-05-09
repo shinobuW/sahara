@@ -5,32 +5,18 @@
  */
 package seng302.group2.scenes.information;
 
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.TreeItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
-import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.TreeViewWithItems;
-import seng302.group2.util.undoredo.UndoRedoAction;
-import seng302.group2.util.undoredo.UndoRedoPerformer;
-import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.workspace.skills.Skill;
 
-import java.util.ArrayList;
-
-import static javafx.collections.FXCollections.observableArrayList;
-import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
-import static seng302.group2.scenes.MainScene.treeView;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -75,28 +61,31 @@ public class SkillEditScene
 
 
         btnCancel.setOnAction((event) ->
-            {
-                App.content.getChildren().remove(informationGrid);
-                SkillScene.getSkillScene((Skill) Global.selectedTreeItem.getValue());
-                App.content.getChildren().add(informationGrid);
-
-            });
+        {
+            App.changeScene(App.ContentScene.SKILL_EDIT, currentSkill);
+        });
 
         btnSave.setOnAction((event) ->
             {
-                boolean correctShortName;
-                
-                if (shortNameCustomField.getText().equals(currentSkill.getShortName()))
+                if (shortNameCustomField.getText().equals(currentSkill.getShortName())
+                        && descriptionTextArea.getText().equals(currentSkill.getDescription()))
                 {
-                    correctShortName = true;
+                    // No changes
+                    App.changeScene(App.ContentScene.SKILL, currentSkill);
                 }
-                else
+
+                else if (shortNameCustomField.getText().equals(currentSkill.getShortName())
+                        || validateShortName(shortNameCustomField))
                 {
-                    correctShortName = validateShortName(shortNameCustomField);
+                    // Valid short name, make the edit
+                    currentSkill.edit(shortNameCustomField.getText(),
+                            descriptionTextArea.getText());
+
+                    App.changeScene(App.ContentScene.SKILL_EDIT, currentSkill);
                 }
 
 
-                if (correctShortName)
+/*              if (correctShortName)
                 {
                     // Build Undo/Redo edit array.
                     ArrayList<UndoableItem> undoActions = new ArrayList<>();          
@@ -136,10 +125,11 @@ public class SkillEditScene
                             
                     // Save the edits.        
                     currentSkill.setDescription(descriptionTextArea.getText());
-                    currentSkill.setShortName(shortNameCustomField.getText());
-                    
-                    App.content.getChildren().remove(treeView);
-                    App.content.getChildren().remove(informationGrid);
+                    currentSkill.setShortName(shortNameCustomField.getText());*/
+
+                    /*
+                    App.content.getItems().remove(treeView);
+                    App.content.getItems().remove(informationGrid);
                     SkillScene.getSkillScene(currentSkill);
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
@@ -148,11 +138,13 @@ public class SkillEditScene
                     MainScene.treeView.setItems(children);
                     MainScene.treeView.setShowRoot(false);
 
-                    App.content.getChildren().add(treeView);
-                    App.content.getChildren().add(informationGrid);
+                    App.content.getItems().add(treeView);
+                    App.content.getItems().add(informationGrid);
                     MainScene.treeView.getSelectionModel().select(selectedTreeItem);
+                    */
 
-                }
+
+
                 else
                 {
                     event.consume();

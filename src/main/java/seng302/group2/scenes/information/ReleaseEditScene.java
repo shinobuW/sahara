@@ -5,23 +5,19 @@
  */
 package seng302.group2.scenes.information;
 
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.TreeItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
@@ -32,10 +28,7 @@ import seng302.group2.workspace.release.Release;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static javafx.collections.FXCollections.observableArrayList;
-import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
-import static seng302.group2.scenes.MainScene.treeView;
 import static seng302.group2.util.validation.DateValidator.isCorrectDateFormat;
 import static seng302.group2.util.validation.DateValidator.stringToDate;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
@@ -98,9 +91,9 @@ public class ReleaseEditScene
 
         btnCancel.setOnAction((event) ->
             {
-                App.content.getChildren().remove(informationGrid);
+                App.content.getItems().remove(informationGrid);
                 ReleaseScene.getReleaseScene((Release) Global.selectedTreeItem.getValue());
-                App.content.getChildren().add(informationGrid);
+                App.content.getItems().add(informationGrid);
             });
 
         btnSave.setOnAction((event) ->
@@ -229,9 +222,11 @@ public class ReleaseEditScene
                     Project previous = currentRelease.getProject();
                     currentRelease.getProject().removeWithoutUndo(currentRelease);
                     currentRelease.setProjectWithoutUndo(selectedProject);
-                    
-                    App.content.getChildren().remove(treeView);
-                    App.content.getChildren().remove(informationGrid);
+
+
+                    /*
+                    App.content.getItems().remove(treeView);
+                    App.content.getItems().remove(informationGrid);
                     ReleaseScene.getReleaseScene(currentRelease);
                     MainScene.treeView = new TreeViewWithItems( new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
@@ -240,9 +235,12 @@ public class ReleaseEditScene
                     MainScene.treeView.setItems(children);
                     MainScene.treeView.setShowRoot(false);
 
-                    App.content.getChildren().add(treeView);
-                    App.content.getChildren().add(informationGrid);
+                    App.content.getItems().add(treeView);
+                    App.content.getItems().add(informationGrid);
                     MainScene.treeView.getSelectionModel().select(selectedTreeItem);
+                    */
+
+                    App.changeScene(App.ContentScene.RELEASE, currentRelease);
 
                 }
                 else

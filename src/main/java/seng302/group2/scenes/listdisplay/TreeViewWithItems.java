@@ -17,7 +17,6 @@ import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.contextmenu.CategoryTreeContextMenu;
 import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
-import seng302.group2.scenes.information.*;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -89,7 +88,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
      */
     public void refresh()
     {
-        T currentSelection = (T) Global.selectedTreeItem.getValue();
+        T currentSelection = (T) Global.selectedTreeItem.getValue();;
         clear(getRoot());
         updateItems();
         selectItem(currentSelection);
@@ -141,107 +140,91 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     TreeItem<Object> selectedItem = (TreeItem<Object>) newValue;
                     Global.selectedTreeItem = selectedItem;
 
-                    /*System.out.println(Global.selectedTreeItem.getValue() + " "
-                            + Global.selectedTreeItem.getValue().getClass());*/
+                    /*System.out.println(selected + " "
+                            + selected.getClass());*/
+
+                    Object selected = null;
 
                     //Updates the display pane to be pane for the selectItem
                     if (Global.selectedTreeItem == null
                             || Global.selectedTreeItem.getValue() == null)
                     {
                         // Nothing is selected, make a default selection?
-                        App.content.getChildren().remove(MainScene.informationGrid);
+                        App.content.getItems().remove(MainScene.informationGrid);
                         //WorkspaceScene.getWorkspaceScene((Workspace)
-                        //Global.selectedTreeItem.getValue());
-                        App.content.getChildren().add(MainScene.informationGrid);
+                        //selected);
+                        App.content.getItems().add(MainScene.informationGrid);
                     }
-                    else if (Global.selectedTreeItem.getValue() instanceof Person)
+                    else
                     {
-                        App.content.getChildren().remove(MainScene.informationGrid);
-                        PersonScene.getPersonScene((Person) Global.selectedTreeItem.getValue());
-                        App.content.getChildren().add(MainScene.informationGrid);
-                        setContextMenu(new ElementTreeContextMenu());
+                        selected = Global.selectedTreeItem.getValue();
+                    }
 
-                    }
-                    else if (Global.selectedTreeItem.getValue() instanceof Project)
+                    if (selected instanceof Person)
                     {
-                        App.content.getChildren().remove(MainScene.informationGrid);
-                        ProjectScene.getProjectScene(
-                                (Project) Global.selectedTreeItem.getValue());
-                        App.content.getChildren().add(MainScene.informationGrid);
-                        setContextMenu(new ElementTreeContextMenu());
-
-                    }
-                    else if (Global.selectedTreeItem.getValue() instanceof Workspace)
-                    {
-                        App.content.getChildren().remove(MainScene.informationGrid);
-                        WorkspaceScene.getWorkspaceScene((Workspace)
-                                Global.selectedTreeItem.getValue());
-                        App.content.getChildren().add(MainScene.informationGrid);
-                    }
-                    else if (Global.selectedTreeItem.getValue() instanceof Skill)
-                    {
-                        App.content.getChildren().remove(MainScene.informationGrid);
-                        SkillScene.getSkillScene((Skill) Global.selectedTreeItem.getValue());
-                        App.content.getChildren().add(MainScene.informationGrid);
+                        App.changeScene(App.ContentScene.PERSON, (TreeViewItem) selected);
                         setContextMenu(new ElementTreeContextMenu());
                     }
-                    else if (Global.selectedTreeItem.getValue() instanceof Team)
+                    else if (selected instanceof Project)
                     {
-                        App.content.getChildren().remove(MainScene.informationGrid);
-                        TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
-                        App.content.getChildren().add(MainScene.informationGrid);
+                        App.changeScene(App.ContentScene.PROJECT, (TreeViewItem) selected);
                         setContextMenu(new ElementTreeContextMenu());
                     }
-                    else if (Global.selectedTreeItem.getValue() instanceof Release)
+                    else if (selected instanceof Workspace)
                     {
-                        App.content.getChildren().remove(MainScene.informationGrid);
-                        ReleaseScene.getReleaseScene((Release) Global.selectedTreeItem.getValue());
-                        App.content.getChildren().add(MainScene.informationGrid);
+                        App.changeScene(App.ContentScene.WORKSPACE, (TreeViewItem) selected);
                         setContextMenu(new ElementTreeContextMenu());
                     }
-                    else if (Global.selectedTreeItem.getValue() instanceof Category)
+                    else if (selected instanceof Skill)
                     {
-                        if (Global.selectedTreeItem.getValue().toString().equals("Projects"))
+                        App.changeScene(App.ContentScene.SKILL, (TreeViewItem) selected);
+                        setContextMenu(new ElementTreeContextMenu());
+                    }
+                    else if (selected instanceof Team)
+                    {
+                        App.changeScene(App.ContentScene.TEAM, (TreeViewItem) selected);
+                        setContextMenu(new ElementTreeContextMenu());
+                    }
+                    else if (selected instanceof Release)
+                    {
+                        App.changeScene(App.ContentScene.RELEASE, (TreeViewItem) selected);
+                        setContextMenu(new ElementTreeContextMenu());
+                    }
+                    else if (selected instanceof Category)
+                    {
+                        if (selected.toString().equals("Projects"))
                         {
-                            App.content.getChildren().remove(MainScene.informationGrid);
-                            ProjectCategoryScene.getProjectCategoryScene(Global.currentWorkspace);
-                            App.content.getChildren().add(MainScene.informationGrid);
+                            App.changeScene(App.CategoryScene.PROJECTS);
                             setContextMenu(new CategoryTreeContextMenu(true));
                         }
-                        else if (Global.selectedTreeItem.getValue().toString().equals("People"))
+                        else if (selected.toString().equals("People"))
                         {
-                            App.content.getChildren().remove(MainScene.informationGrid);
-                            PersonCategoryScene.getPersonCategoryScene(Global.currentWorkspace);
-                            App.content.getChildren().add(MainScene.informationGrid);
+                            App.changeScene(App.CategoryScene.PEOPLE);
                             setContextMenu(new CategoryTreeContextMenu(true));
                         }
-                        else if (Global.selectedTreeItem.getValue().toString().equals("Skills"))
+                        else if (selected.toString().equals("Skills"))
                         {
-                            App.content.getChildren().remove(MainScene.informationGrid);
-                            SkillCategoryScene.getSkillCategoryScene(Global.currentWorkspace);
-                            App.content.getChildren().add(MainScene.informationGrid);
+                            App.changeScene(App.CategoryScene.SKILLS);
                             setContextMenu(new CategoryTreeContextMenu(true));
                         }
-                        else if (Global.selectedTreeItem.getValue().toString().equals("Teams"))
+                        else if (selected.toString().equals("Teams"))
                         {
-                            App.content.getChildren().remove(MainScene.informationGrid);
-                            TeamCategoryScene.getTeamCategoryScene(Global.currentWorkspace);
-                            App.content.getChildren().add(MainScene.informationGrid);
+                            App.changeScene(App.CategoryScene.TEAMS);
                             setContextMenu(new CategoryTreeContextMenu(true));
                         }
-                        else if (Global.selectedTreeItem.getValue().toString().equals("Roles"))
+                        else if (selected.toString().equals("Roles"))
                         {
-                            App.content.getChildren().remove(MainScene.informationGrid);
-                            RoleCategoryScene.getRoleCategoryScene(Global.currentWorkspace);
-                            App.content.getChildren().add(MainScene.informationGrid);
+                            App.changeScene(App.CategoryScene.ROLES);
                             setContextMenu(new CategoryTreeContextMenu(false));
                         }
-                        else if (Global.selectedTreeItem.getValue().toString().equals("Releases"))
-                        {       
-                            App.content.getChildren().remove(MainScene.informationGrid);
+                        else if (selected.toString().equals("Releases"))
+                        {
+                            App.changeScene(App.ContentScene.RELEASE_CATEGORY,
+                                    (TreeViewItem) selected);
+                            /*App.content.getItems().remove(MainScene.informationGrid);
                             ReleaseCategoryScene.getReleaseCategoryScene((ReleaseCategory)
-                                    Global.selectedTreeItem.getValue());
-                            App.content.getChildren().add(MainScene.informationGrid);
+                                    selected);
+                            App.content.getItems().add(MainScene.informationGrid);*/
                             setContextMenu(new CategoryTreeContextMenu(true));
                         }
                         else
@@ -249,11 +232,9 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                             setContextMenu(new CategoryTreeContextMenu(true));
                         }
                     }
-                    else if (Global.selectedTreeItem.getValue() instanceof Role)
+                    else if (selected instanceof Role)
                     {
-                        App.content.getChildren().remove(MainScene.informationGrid);
-                        RoleScene.getRoleScene((Role) Global.selectedTreeItem.getValue());
-                        App.content.getChildren().add(MainScene.informationGrid);
+                        App.changeScene(App.ContentScene.ROLE, (TreeViewItem) selected);
                         setContextMenu(new ElementTreeContextMenu());
                     }
                 }

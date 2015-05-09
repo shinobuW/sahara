@@ -12,6 +12,7 @@ import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
+import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
@@ -19,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static seng302.group2.scenes.MainScene.informationGrid;
-import seng302.group2.workspace.role.Role;
 /**
  * A class that handles the ugly undo/redo work behind the scenes on undoable items.
  * @author jml168
@@ -269,9 +269,9 @@ public class UndoRedoPerformer
                     Team currentTeam = (Team) item.getUndoAction().getValue();
                     person.getTeam().getPeople().remove(person);
                     currentTeam.getPeople().add(person);
-                    App.content.getChildren().remove(informationGrid);
+                    App.content.getItems().remove(informationGrid);
                     TeamScene.getTeamScene(currentTeam);
-                    App.content.getChildren().add(informationGrid);
+                    App.content.getItems().add(informationGrid);
                     break;
                 case PERSON_DEL_TEAM:
                     currentTeam = (Team) item.getUndoAction().getValue();
@@ -281,9 +281,9 @@ public class UndoRedoPerformer
                         Global.getUnassignedTeam().remove(person);
                     }
                     person.setTeam(currentTeam);
-                    App.content.getChildren().remove(informationGrid);
+                    App.content.getItems().remove(informationGrid);
                     TeamScene.getTeamScene(currentTeam);
-                    App.content.getChildren().add(informationGrid);
+                    App.content.getItems().add(informationGrid);
                     break;
                 case PERSON_EDIT:
                     for (UndoableItem undoAction : (ArrayList<UndoableItem>)
@@ -330,16 +330,16 @@ public class UndoRedoPerformer
                 case SKILL_ADD_PERSON:
                     Person currentPerson = (Person) item.getUndoAction().getValue();
                     currentPerson.getSkills().remove(skill);
-                    App.content.getChildren().remove(informationGrid);
+                    App.content.getItems().remove(informationGrid);
                     PersonScene.getPersonScene(currentPerson);
-                    App.content.getChildren().add(informationGrid);
+                    App.content.getItems().add(informationGrid);
                     break;
                 case SKILL_DEL_PERSON:
                     currentPerson = (Person) item.getUndoAction().getValue();
                     currentPerson.getSkills().add(skill);
-                    App.content.getChildren().remove(informationGrid);
+                    App.content.getItems().remove(informationGrid);
                     PersonScene.getPersonScene(currentPerson);
-                    App.content.getChildren().add(informationGrid);
+                    App.content.getItems().add(informationGrid);
                     break;
                 case SKILL_EDIT:
                     for (UndoableItem undoAction : (ArrayList<UndoableItem>)
@@ -393,16 +393,16 @@ public class UndoRedoPerformer
                     {
                         currentProject.getTeams().add(team);
                     }
-                    App.content.getChildren().remove(informationGrid);
+                    App.content.getItems().remove(informationGrid);
                     ProjectScene.getProjectScene(team.getProject());
-                    App.content.getChildren().add(informationGrid);
+                    App.content.getItems().add(informationGrid);
                     break;
                 case TEAM_DEL_PROJECT:
                     currentProject = (Project) item.getUndoAction().getValue();
                     currentProject.getTeams().add(team);
-                    App.content.getChildren().remove(informationGrid);
+                    App.content.getItems().remove(informationGrid);
                     ProjectScene.getProjectScene(currentProject);
-                    App.content.getChildren().add(informationGrid);
+                    App.content.getItems().add(informationGrid);
                     break;
                 case TEAM_EDIT:
                     for (UndoableItem undoAction : (ArrayList<UndoableItem>)
@@ -615,9 +615,9 @@ public class UndoRedoPerformer
                     Team currentTeam = (Team) item.getRedoAction().getValue();
                     person.getTeam().getPeople().remove(person);
                     currentTeam.getPeople().add(person);
-                    App.content.getChildren().remove(informationGrid);
+                    App.content.getItems().remove(informationGrid);
                     TeamScene.getTeamScene(currentTeam);
-                    App.content.getChildren().add(informationGrid);
+                    App.content.getItems().add(informationGrid);
                     break;
                 case PERSON_DEL_TEAM:
                     currentTeam = (Team) item.getRedoAction().getValue();
@@ -626,9 +626,9 @@ public class UndoRedoPerformer
                     {
                         Global.getUnassignedTeam().remove(person);
                     }
-                    App.content.getChildren().remove(informationGrid);
+                    App.content.getItems().remove(informationGrid);
                     TeamScene.getTeamScene(currentTeam);
-                    App.content.getChildren().add(informationGrid);
+                    App.content.getItems().add(informationGrid);
                     break;
                 case PERSON_EDIT:
                     for (UndoableItem undoAction : (ArrayList<UndoableItem>)
@@ -673,16 +673,16 @@ public class UndoRedoPerformer
                 case SKILL_ADD_PERSON:
                     Person currentPerson = (Person) item.getUndoAction().getValue();
                     currentPerson.getSkills().add(skill);
-                    App.content.getChildren().remove(informationGrid);
+                    App.content.getItems().remove(informationGrid);
                     PersonScene.getPersonScene(currentPerson);
-                    App.content.getChildren().add(informationGrid);
+                    App.content.getItems().add(informationGrid);
                     break;
                 case SKILL_DEL_PERSON:
                     currentPerson = (Person) item.getUndoAction().getValue();
                     currentPerson.getSkills().remove(skill);
-                    App.content.getChildren().remove(informationGrid);
+                    App.content.getItems().remove(informationGrid);
                     PersonScene.getPersonScene(currentPerson);
-                    App.content.getChildren().add(informationGrid);
+                    App.content.getItems().add(informationGrid);
                     break;
                 case SKILL_EDIT:
                     for (UndoableItem undoAction : (ArrayList<UndoableItem>)
@@ -734,16 +734,16 @@ public class UndoRedoPerformer
                         team.getProject().getTeams().remove(team);
                     }
                     currentProject.getTeams().add(team);
-                    App.content.getChildren().remove(informationGrid);
+                    App.content.getItems().remove(informationGrid);
                     ProjectScene.getProjectScene(currentProject);
-                    App.content.getChildren().add(informationGrid);
+                    App.content.getItems().add(informationGrid);
                     break;
                 case TEAM_DEL_PROJECT:
                     currentProject = (Project) item.getRedoAction().getValue();
                     currentProject.getTeams().remove(team);
-                    App.content.getChildren().remove(informationGrid);
+                    App.content.getItems().remove(informationGrid);
                     ProjectScene.getProjectScene(currentProject);
-                    App.content.getChildren().add(informationGrid);
+                    App.content.getItems().add(informationGrid);
                     break;
                 case TEAM_EDIT:
                     for (UndoableItem undoAction : (ArrayList<UndoableItem>)

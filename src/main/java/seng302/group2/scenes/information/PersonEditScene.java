@@ -8,21 +8,21 @@ package seng302.group2.scenes.information;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
-import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -32,9 +32,7 @@ import java.util.Date;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.Global.currentWorkspace;
-import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
-import static seng302.group2.scenes.MainScene.treeView;
 import static seng302.group2.util.validation.DateValidator.stringToDate;
 import static seng302.group2.util.validation.DateValidator.validateBirthDateField;
 import static seng302.group2.util.validation.NameValidator.validateName;
@@ -207,9 +205,7 @@ public class PersonEditScene
         
         btnCancel.setOnAction((event) ->
             {
-                App.content.getChildren().remove(informationGrid);
-                PersonScene.getPersonScene(currentPerson);
-                App.content.getChildren().add(informationGrid);
+                returnFromEdit();
             });
         
         btnSave.setOnAction((event) ->
@@ -474,21 +470,7 @@ public class PersonEditScene
                     currentPerson.setEmail(emailTextField.getText());
                     currentPerson.setBirthDate(birthDate);
 
-
-                    //String birthdate = birthDateField.getText();
-                    App.content.getChildren().remove(treeView);
-                    App.content.getChildren().remove(informationGrid);
-                    PersonScene.getPersonScene(currentPerson);
-                    MainScene.treeView = new TreeViewWithItems(new TreeItem());
-                    ObservableList<TreeViewItem> children = observableArrayList();
-                    children.add(Global.currentWorkspace);
-
-                    MainScene.treeView.setItems(children);
-                    MainScene.treeView.setShowRoot(false);
-
-                    App.content.getChildren().add(treeView);
-                    App.content.getChildren().add(informationGrid);
-                    MainScene.treeView.getSelectionModel().select(selectedTreeItem);
+                    returnFromEdit();
                 }
                 else
                 {
@@ -501,8 +483,6 @@ public class PersonEditScene
 
     private static void returnFromEdit()
     {
-        App.content.getChildren().remove(informationGrid);
-        WorkspaceScene.getWorkspaceScene((Workspace) Global.selectedTreeItem.getValue());
-        App.content.getChildren().add(informationGrid);
+        App.changeScene(App.ContentScene.PERSON, (TreeViewItem) Global.selectedTreeItem.getValue());
     }
 }

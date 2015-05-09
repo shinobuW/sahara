@@ -7,8 +7,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
-import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.util.validation.NameValidator;
@@ -60,7 +58,7 @@ public class WorkspaceEditScene
 
         btnCancel.setOnAction((event) ->
             {
-                returnFromEdit();
+                App.changeScene(App.ContentScene.WORKSPACE, currentWorkspace);
             });
 
         btnSave.setOnAction((event) ->
@@ -70,7 +68,7 @@ public class WorkspaceEditScene
                         && descriptionTextArea.getText().equals(currentWorkspace.getDescription()))
                 {
                     // No fields have been changed
-                    returnFromEdit();
+                    App.changeScene(App.ContentScene.WORKSPACE, currentWorkspace);
                 }
                     // The short name is the same or valid
                 if ((shortNameCustomField.getText().equals(currentWorkspace.getShortName())
@@ -82,8 +80,7 @@ public class WorkspaceEditScene
                     currentWorkspace.edit(shortNameCustomField.getText(),
                             longNameCustomField.getText(), descriptionTextArea.getText());
 
-                    returnFromEdit();
-                    MainScene.treeView.refresh();
+                    App.changeScene(App.ContentScene.WORKSPACE, currentWorkspace);
                 }
                 else
                 {
@@ -94,16 +91,5 @@ public class WorkspaceEditScene
             });
 
         return informationGrid;
-    }
-
-
-    /**
-     * Returns to the current workspace information scene
-     */
-    private static void returnFromEdit()
-    {
-        App.content.getChildren().remove(informationGrid);
-        WorkspaceScene.getWorkspaceScene(Global.currentWorkspace);
-        App.content.getChildren().add(informationGrid);
     }
 }

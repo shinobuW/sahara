@@ -8,19 +8,20 @@ package seng302.group2.scenes.information;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
@@ -32,9 +33,7 @@ import seng302.group2.workspace.team.Team;
 import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import static seng302.group2.Global.selectedTreeItem;
 import static seng302.group2.scenes.MainScene.informationGrid;
-import static seng302.group2.scenes.MainScene.treeView;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -316,13 +315,14 @@ public class TeamEditScene
         
         btnCancel.setOnAction((event) ->
             {
-                App.content.getChildren().remove(informationGrid);
+                //App.content.getItems().remove(informationGrid);
                 for (int i = 0; i < teamPeopleRoles.size(); i++)
                 {
                     teamPeopleRoles.get(i).setRole(teamRoles.get(i));
                 }
-                TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
-                App.content.getChildren().add(informationGrid);
+                /*TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
+                App.content.getItems().add(informationGrid);*/
+                App.changeScene(App.ContentScene.TEAM, currentTeam);
             });
 
         btnSave.setOnAction((event) ->
@@ -557,9 +557,10 @@ public class TeamEditScene
                                         undoActions)
                         ));
                     }
-                    
-                    App.content.getChildren().remove(treeView);
-                    App.content.getChildren().remove(informationGrid);
+
+                    /*
+                    App.content.getItems().remove(treeView);
+                    App.content.getItems().remove(informationGrid);
                     TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
@@ -568,9 +569,11 @@ public class TeamEditScene
                     MainScene.treeView.setItems(children);
                     MainScene.treeView.setShowRoot(false);
 
-                    App.content.getChildren().add(treeView);
-                    App.content.getChildren().add(informationGrid);
-                    MainScene.treeView.getSelectionModel().select(selectedTreeItem);
+                    App.content.getItems().add(treeView);
+                    App.content.getItems().add(informationGrid);
+                    MainScene.treeView.getSelectionModel().select(selectedTreeItem);*/
+
+                    App.changeScene(App.ContentScene.TEAM, currentTeam);
 
                 }
                 else

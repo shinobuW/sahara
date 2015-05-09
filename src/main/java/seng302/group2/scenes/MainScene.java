@@ -3,16 +3,11 @@ package seng302.group2.scenes;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Control;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TreeItem;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.information.*;
@@ -24,8 +19,6 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
-
-import javax.swing.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.App.content;
@@ -48,9 +41,10 @@ public class MainScene
     public static Scene getMainScene()
     {
         // The root window box
-        VBox root = new VBox();
+        BorderPane root = new BorderPane();
         MenuBar menuBar = MainMenuBar.getMainMenuBar();
-        root.getChildren().add(new StackPane(menuBar));
+        root.setTop(menuBar);
+        //root.getChildren().add(new StackPane(menuBar));
 
         if (Global.selectedTreeItem == null)
         {
@@ -89,28 +83,34 @@ public class MainScene
         treeView.setShowRoot(false);
 
         
-        root.heightProperty().addListener(new ChangeListener<Number>() {
+        root.heightProperty().addListener(new ChangeListener<Number>()
+        {
             @Override
             public void changed(ObservableValue<? extends Number> arg0,
-                    Number arg1, Number arg2) 
+                                Number arg1, Number arg2)
             {
                 App.content.setPrefHeight(arg2.doubleValue());
             }
         });
-        
+
         content.boundsInParentProperty();
         informationGrid.boundsInParentProperty();
 
-        content.getChildren().removeAll(treeView, informationGrid);
+        content.getItems().removeAll(treeView, informationGrid);
+        //content.getChildren().removeAll(treeView, informationGrid);
 
         if (!menuHidden)
         {
-            content.getChildren().add(treeView);
+            content.getItems().add(treeView);
+            //content.getChildren().add(treeView);
         }
-        content.getChildren().add(informationGrid);
+        content.getItems().add(informationGrid);
+        content.setDividerPositions(0.2f);
 
-        root.getChildren().remove(content);
-        root.getChildren().add(content);
+        //content.getChildren().add(informationGrid);
+
+        //root.getChildren().remove(content);
+        root.setCenter(content);
 
         return new Scene(root);
     }

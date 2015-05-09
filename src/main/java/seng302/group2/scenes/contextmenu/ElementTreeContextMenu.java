@@ -6,6 +6,7 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.information.*;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -13,8 +14,8 @@ import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
+
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 
 /**
@@ -170,7 +171,7 @@ public class ElementTreeContextMenu extends ContextMenu
      */
     public static void showEditScene(Categories category)
     {
-        App.content.getChildren().remove(MainScene.informationGrid);
+        App.content.getItems().remove(MainScene.informationGrid);
         
         switch (category)
         {
@@ -196,6 +197,6 @@ public class ElementTreeContextMenu extends ContextMenu
                 System.out.println("The category was not set");
                 break;
         }
-        App.content.getChildren().add(MainScene.informationGrid);
+        App.content.getItems().add(MainScene.informationGrid);
     }
 }

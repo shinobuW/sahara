@@ -173,9 +173,9 @@ public class ProjectEditScene
 
         btnCancel.setOnAction((event) ->
             {
-                App.content.getChildren().remove(informationGrid);
+                App.content.getItems().remove(informationGrid);
                 ProjectScene.getProjectScene((Project) Global.selectedTreeItem.getValue());
-                App.content.getChildren().add(informationGrid);
+                App.content.getItems().add(informationGrid);
 
             });
 
@@ -343,7 +343,7 @@ public class ProjectEditScene
                         && descriptionTextArea.getText().equals(currentProject.getDescription()))
                 {
                     // No fields have been changed
-                    returnFromEdit(currentProject);
+                    App.changeScene(App.ContentScene.PROJECT, currentProject);
                 }
                 // The short name is the same or valid
                 if ((shortNameCustomField.getText().equals(currentProject.getShortName())
@@ -355,7 +355,7 @@ public class ProjectEditScene
                     currentProject.edit(shortNameCustomField.getText(),
                             longNameCustomField.getText(), descriptionTextArea.getText());
 
-                    returnFromEdit(currentProject);
+                    App.changeScene(App.ContentScene.PROJECT, currentProject);
                     MainScene.treeView.refresh();
                 }
                 else
@@ -410,17 +410,5 @@ public class ProjectEditScene
         dialog.setIconifiable(false);
         dialog.setContent(grid);
         dialog.show();
-    }
-
-
-    /**
-     * Returns from the project's edit scene to it's information scene
-     * @param currentProject The project of which the information scene will show
-     */
-    private static void returnFromEdit(Project currentProject)
-    {
-        App.content.getChildren().remove(informationGrid);
-        ProjectScene.getProjectScene(currentProject);
-        App.content.getChildren().add(informationGrid);
     }
 }
