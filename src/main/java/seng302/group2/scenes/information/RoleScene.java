@@ -16,7 +16,7 @@ import javafx.scene.text.FontWeight;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.workspace.role.Role;
 
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  * @author Shinobu
@@ -30,12 +30,12 @@ public class RoleScene
      */
     public static Pane getRoleScene(Role currentRole)
     {
-        informationGrid = new VBox(10);
+        informationPane = new VBox(10);
         
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
         Label title = new Label(currentRole.getShortName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
@@ -43,13 +43,13 @@ public class RoleScene
         skillsBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         skillsBox.setMaxWidth(275);
 
-        informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(new Label("Role Description: "));
-        informationGrid.getChildren().add(new Label("Required Skills: "));
+        informationPane.getChildren().add(title);
+        informationPane.getChildren().add(new Label("Role Description: "));
+        informationPane.getChildren().add(new Label("Required Skills: "));
 
-        informationGrid.getChildren().add(new Label(currentRole.getDescription()));
-        informationGrid.getChildren().add(skillsBox);
+        informationPane.getChildren().add(new Label(currentRole.getDescription()));
+        informationPane.getChildren().add(skillsBox);
             
-        return MainScene.informationGrid;
+        return MainScene.informationPane;
     }
 }

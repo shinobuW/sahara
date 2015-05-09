@@ -10,7 +10,7 @@ import javafx.scene.text.FontWeight;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.workspace.skills.Skill;
 
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  * A class for displaying the skill scene
@@ -26,29 +26,29 @@ public class SkillScene
      */
     public static Pane getSkillScene(Skill currentSkill)
     {
-        informationGrid = new VBox(10);
+        informationPane = new VBox(10);
 
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
         Label title = new Label(currentSkill.getShortName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
         Button btnEdit = new Button("Edit");
 
-        informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(new Label("Skill Description: "));
+        informationPane.getChildren().add(title);
+        informationPane.getChildren().add(new Label("Skill Description: "));
         
-        informationGrid.getChildren().add(new Label(currentSkill.getDescription()));
-        informationGrid.getChildren().add(btnEdit);
+        informationPane.getChildren().add(new Label(currentSkill.getDescription()));
+        informationPane.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) ->
             {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL_EDIT, currentSkill);
             });
 
-        return informationGrid;
+        return informationPane;
     }
  
     public static void refreshSkillScene(Skill skill)

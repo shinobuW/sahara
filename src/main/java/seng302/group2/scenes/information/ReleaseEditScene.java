@@ -29,7 +29,7 @@ import seng302.group2.workspace.release.Release;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.util.validation.DateValidator.isCorrectDateFormat;
 import static seng302.group2.util.validation.DateValidator.stringToDate;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
@@ -47,11 +47,11 @@ public class ReleaseEditScene
      */
     public static Pane getReleaseEditScene(Release currentRelease)
     {
-        informationGrid = new VBox(10);
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        informationPane = new VBox(10);
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Save");
@@ -81,20 +81,20 @@ public class ReleaseEditScene
         descriptionTextArea.setText(currentRelease.getDescription());
         releaseDateField.setText(currentRelease.getDateString());
 
-        informationGrid.getChildren().add(shortNameCustomField);
-        informationGrid.getChildren().add(descriptionTextArea);
-        informationGrid.getChildren().add(releaseDateField);
-        informationGrid.getChildren().add(projectComboBox);
-        informationGrid.getChildren().add(buttons);
+        informationPane.getChildren().add(shortNameCustomField);
+        informationPane.getChildren().add(descriptionTextArea);
+        informationPane.getChildren().add(releaseDateField);
+        informationPane.getChildren().add(projectComboBox);
+        informationPane.getChildren().add(buttons);
 
         String defaultProject = currentRelease.getProject().getShortName();
         projectComboBox.setValue(defaultProject);
 
         btnCancel.setOnAction((event) ->
             {
-                App.content.getItems().remove(informationGrid);
+                App.content.getItems().remove(informationPane);
                 ReleaseScene.getReleaseScene((Release) Global.selectedTreeItem.getValue());
-                App.content.getItems().add(informationGrid);
+                App.content.getItems().add(informationPane);
             });
 
         btnSave.setOnAction((event) ->
@@ -227,7 +227,7 @@ public class ReleaseEditScene
 
                     /*
                     App.content.getItems().remove(treeView);
-                    App.content.getItems().remove(informationGrid);
+                    App.content.getItems().remove(informationPane);
                     ReleaseScene.getReleaseScene(currentRelease);
                     MainScene.treeView = new TreeViewWithItems( new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
@@ -237,7 +237,7 @@ public class ReleaseEditScene
                     MainScene.treeView.setShowRoot(false);
 
                     App.content.getItems().add(treeView);
-                    App.content.getItems().add(informationGrid);
+                    App.content.getItems().add(informationPane);
                     MainScene.treeView.getSelectionModel().select(selectedTreeItem);
                     */
 
@@ -250,7 +250,7 @@ public class ReleaseEditScene
                 }
             });
 
-        return informationGrid;
+        return informationPane;
     }
     
 }

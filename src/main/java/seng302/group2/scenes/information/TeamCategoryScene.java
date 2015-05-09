@@ -17,7 +17,7 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.team.Team;
 
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  * A class for displaying all teams currently created in a workspace.
@@ -32,11 +32,11 @@ public class TeamCategoryScene
      */
     public static Pane getTeamCategoryScene(Workspace currentWorkspace)
     {
-        informationGrid = new VBox(10);
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        informationPane = new VBox(10);
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
         Label title = new Label("Teams in " + currentWorkspace.getShortName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
@@ -56,9 +56,9 @@ public class TeamCategoryScene
         teamBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         teamBox.setMaxWidth(275);
 
-        informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(teamBox);
-        informationGrid.getChildren().add(selectionButtons);
+        informationPane.getChildren().add(title);
+        informationPane.getChildren().add(teamBox);
+        informationPane.getChildren().add(selectionButtons);
 
 
         btnView.setOnAction((event) ->
@@ -85,6 +85,6 @@ public class TeamCategoryScene
                 CreateTeamDialog.show();
             });
 
-        return MainScene.informationGrid;
+        return MainScene.informationPane;
     }
 }

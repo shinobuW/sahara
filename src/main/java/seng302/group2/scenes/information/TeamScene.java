@@ -14,7 +14,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.team.Team;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  * A class for displaying the team scene.
@@ -30,12 +30,12 @@ public class TeamScene
     public static Pane getTeamScene(Team currentTeam)
     {
         
-        informationGrid = new VBox(10);
+        informationPane = new VBox(10);
 
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
         Label title = new Label(currentTeam.getShortName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
@@ -70,42 +70,42 @@ public class TeamScene
 
         Separator separator = new Separator();
 
-        informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(new Label("Team Description: "
+        informationPane.getChildren().add(title);
+        informationPane.getChildren().add(new Label("Team Description: "
                 + currentTeam.getDescription()));
-        informationGrid.getChildren().add(separator);
+        informationPane.getChildren().add(separator);
         if (currentTeam.getProductOwner() != null)
         {
-            informationGrid.getChildren().add(new Label("Product Owner: "
+            informationPane.getChildren().add(new Label("Product Owner: "
                     + currentTeam.getProductOwner().toString()));
         }
         else
         {
-            informationGrid.getChildren().add(new Label("Product Owner: "));
+            informationPane.getChildren().add(new Label("Product Owner: "));
         }
 
 
         if (currentTeam.getScrumMaster() != null)
         {
-            informationGrid.getChildren().add(new Label("Scrum Master: "
+            informationPane.getChildren().add(new Label("Scrum Master: "
                     + currentTeam.getScrumMaster().toString()));
         }
         else
         {
-            informationGrid.getChildren().add(new Label("Scrum Master: "));
+            informationPane.getChildren().add(new Label("Scrum Master: "));
         }
 
-        informationGrid.getChildren().add(new Label("Team Members: "));
-        informationGrid.getChildren().add(teamsPeopleBox);
+        informationPane.getChildren().add(new Label("Team Members: "));
+        informationPane.getChildren().add(teamsPeopleBox);
 
-        informationGrid.getChildren().add(btnEdit);
+        informationPane.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) ->
             {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM_EDIT, currentTeam);
             });
         
-        return informationGrid;
+        return informationPane;
     }
     
     /*

@@ -10,7 +10,7 @@ import javafx.scene.text.FontWeight;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.workspace.Workspace;
 
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  * A class for displaying the Workspace Scene
@@ -27,19 +27,19 @@ public class WorkspaceScene
      */
     public static Pane getWorkspaceScene(Workspace currentWorkspace)
     {
-        informationGrid = new VBox(10);
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        informationPane = new VBox(10);
+        informationPane.setPadding(new Insets(25,25,25,25));
         Label title = new Label(currentWorkspace.getLongName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
         Button btnEdit = new Button("Edit");
 
-        informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(new Label("Short Name: "
+        informationPane.getChildren().add(title);
+        informationPane.getChildren().add(new Label("Short Name: "
                 + currentWorkspace.getShortName()));
-        informationGrid.getChildren().add(new Label("Workspace Description: "
+        informationPane.getChildren().add(new Label("Workspace Description: "
                 + currentWorkspace.getDescription()));
-        informationGrid.getChildren().add(btnEdit);
+        informationPane.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) ->
             {
@@ -47,7 +47,7 @@ public class WorkspaceScene
                         currentWorkspace);
             });
 
-        return informationGrid;
+        return informationPane;
     }
     
     public static void refreshWorkspaceScene(Workspace workspace)

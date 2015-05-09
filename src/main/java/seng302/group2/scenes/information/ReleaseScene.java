@@ -15,7 +15,7 @@ import javafx.scene.text.FontWeight;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.workspace.release.Release;
 
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  *
@@ -30,32 +30,32 @@ public class ReleaseScene
      */
     public static Pane getReleaseScene(Release currentRelease)
     {
-        informationGrid = new VBox(10);
+        informationPane = new VBox(10);
 
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
         Label title = new Label(currentRelease.getShortName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
         Button btnEdit = new Button("Edit");
 
-        informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(new Label("Release Description: "
+        informationPane.getChildren().add(title);
+        informationPane.getChildren().add(new Label("Release Description: "
                 + currentRelease.getDescription()));
-        informationGrid.getChildren().add(new Label("Estimated Release Date: "
+        informationPane.getChildren().add(new Label("Estimated Release Date: "
                 + currentRelease.getDateString()));
-        informationGrid.getChildren().add(new Label("Project: "
+        informationPane.getChildren().add(new Label("Project: "
                 + currentRelease.getProject().toString()));
-        informationGrid.getChildren().add(btnEdit);
+        informationPane.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) ->
             {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE_EDIT, currentRelease);
             });
 
-        return informationGrid;
+        return informationPane;
     }
  
     /**

@@ -68,27 +68,27 @@ public class SceneSwitcher
         switch (scene)
         {
             case PEOPLE:
-                App.content.getItems().remove(MainScene.informationGrid);
+                App.content.getItems().remove(MainScene.informationPane);
                 App.content.getItems().add(PersonCategoryScene.getPersonCategoryScene(
                         Global.currentWorkspace));
                 break;
             case PROJECTS:
-                App.content.getItems().remove(MainScene.informationGrid);
+                App.content.getItems().remove(MainScene.informationPane);
                 App.content.getItems().add(ProjectCategoryScene.getProjectCategoryScene(
                         Global.currentWorkspace));
                 break;
             case ROLES:
-                App.content.getItems().remove(MainScene.informationGrid);
+                App.content.getItems().remove(MainScene.informationPane);
                 App.content.getItems().add(RoleCategoryScene.getRoleCategoryScene(
                         Global.currentWorkspace));
                 break;
             case SKILLS:
-                App.content.getItems().remove(MainScene.informationGrid);
+                App.content.getItems().remove(MainScene.informationPane);
                 App.content.getItems().add(SkillCategoryScene.getSkillCategoryScene(
                         Global.currentWorkspace));
                 break;
             case TEAMS:
-                App.content.getItems().remove(MainScene.informationGrid);
+                App.content.getItems().remove(MainScene.informationPane);
                 App.content.getItems().add(TeamCategoryScene.getTeamCategoryScene(
                         Global.currentWorkspace));
                 break;
@@ -113,14 +113,14 @@ public class SceneSwitcher
             case WORKSPACE:
                 if (item.getClass() == Workspace.class)
                 {
-                    App.content.getItems().remove(MainScene.informationGrid);
+                    App.content.getItems().remove(MainScene.informationPane);
                     App.content.getItems().add(WorkspaceScene.getWorkspaceScene((Workspace) item));
                 }
                 break;
             case WORKSPACE_EDIT:
                 if (item.getClass() == Workspace.class)
                 {
-                    App.content.getItems().remove(MainScene.informationGrid);
+                    App.content.getItems().remove(MainScene.informationPane);
                     App.content.getItems().add(
                             WorkspaceEditScene.getWorkspaceEditScene((Workspace) item));
                 }
@@ -128,28 +128,28 @@ public class SceneSwitcher
             case PERSON:
                 if (item.getClass() == Person.class)
                 {
-                    App.content.getItems().remove(MainScene.informationGrid);
+                    App.content.getItems().remove(MainScene.informationPane);
                     App.content.getItems().add(PersonScene.getPersonScene((Person) item));
                 }
                 break;
             case PERSON_EDIT:
                 if (item.getClass() == Person.class)
                 {
-                    App.content.getItems().remove(MainScene.informationGrid);
+                    App.content.getItems().remove(MainScene.informationPane);
                     App.content.getItems().add(PersonEditScene.getPersonEditScene((Person) item));
                 }
                 break;
             case PROJECT:
                 if (item.getClass() == Project.class)
                 {
-                    App.content.getItems().remove(MainScene.informationGrid);
+                    App.content.getItems().remove(MainScene.informationPane);
                     App.content.getItems().add(ProjectScene.getProjectScene((Project) item));
                 }
                 break;
             case PROJECT_EDIT:
                 if (item.getClass() == Project.class)
                 {
-                    App.content.getItems().remove(MainScene.informationGrid);
+                    App.content.getItems().remove(MainScene.informationPane);
                     App.content.getItems().add(ProjectEditScene.getProjectEditScene(
                             (Project) item));
                 }
@@ -157,7 +157,7 @@ public class SceneSwitcher
             case ROLE:
                 if (item.getClass() == Role.class)
                 {
-                    App.content.getItems().remove(MainScene.informationGrid);
+                    App.content.getItems().remove(MainScene.informationPane);
                     App.content.getItems().add(RoleScene.getRoleScene((Role) item));
                 }
                 break;
@@ -167,28 +167,28 @@ public class SceneSwitcher
             case SKILL:
                 if (item.getClass() == Skill.class)
                 {
-                    App.content.getItems().remove(MainScene.informationGrid);
+                    App.content.getItems().remove(MainScene.informationPane);
                     App.content.getItems().add(SkillScene.getSkillScene((Skill) item));
                 }
                 break;
             case SKILL_EDIT:
                 if (item.getClass() == Skill.class)
                 {
-                    App.content.getItems().remove(MainScene.informationGrid);
+                    App.content.getItems().remove(MainScene.informationPane);
                     App.content.getItems().add(SkillEditScene.getSkillEditScene((Skill) item));
                 }
                 break;
             case RELEASE:
                 if (item.getClass() == Release.class)
                 {
-                    App.content.getItems().remove(MainScene.informationGrid);
+                    App.content.getItems().remove(MainScene.informationPane);
                     App.content.getItems().add(ReleaseScene.getReleaseScene((Release) item));
                 }
                 break;
             case RELEASE_EDIT:
                 if (item.getClass() == Release.class)
                 {
-                    App.content.getItems().remove(MainScene.informationGrid);
+                    App.content.getItems().remove(MainScene.informationPane);
                     App.content.getItems().add(ReleaseEditScene.getReleaseEditScene(
                             (Release) item));
                 }
@@ -196,7 +196,7 @@ public class SceneSwitcher
             case RELEASE_CATEGORY:
                 if (item.getClass() == ReleaseCategory.class)
                 {
-                    App.content.getItems().remove(MainScene.informationGrid);
+                    App.content.getItems().remove(MainScene.informationPane);
                     App.content.getItems().add(ReleaseCategoryScene.getReleaseCategoryScene(
                             (ReleaseCategory) item));
                 }
@@ -204,14 +204,14 @@ public class SceneSwitcher
             case TEAM:
                 if (item.getClass() == Team.class)
                 {
-                    App.content.getItems().remove(MainScene.informationGrid);
+                    App.content.getItems().remove(MainScene.informationPane);
                     App.content.getItems().add(TeamScene.getTeamScene((Team) item));
                 }
                 break;
             case TEAM_EDIT:
                 if (item.getClass() == Team.class)
                 {
-                    App.content.getItems().remove(MainScene.informationGrid);
+                    App.content.getItems().remove(MainScene.informationPane);
                     App.content.getItems().add(TeamEditScene.getTeamEditScene((Team) item));
                 }
                 break;

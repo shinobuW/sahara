@@ -17,7 +17,7 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.skills.Skill;
 
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  * A class for displaying all skills currently created in a workspace.
@@ -32,11 +32,11 @@ public class SkillCategoryScene
      */
     public static Pane getSkillCategoryScene(Workspace currentWorkspace)
     {
-        informationGrid = new VBox(10);
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        informationPane = new VBox(10);
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
         Label title = new Label("Skills in " + currentWorkspace.getShortName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
@@ -55,9 +55,9 @@ public class SkillCategoryScene
         skillBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         skillBox.setMaxWidth(275);
 
-        informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(skillBox);
-        informationGrid.getChildren().add(selectionButtons);
+        informationPane.getChildren().add(title);
+        informationPane.getChildren().add(skillBox);
+        informationPane.getChildren().add(selectionButtons);
 
 
         btnView.setOnAction((event) ->
@@ -83,6 +83,6 @@ public class SkillCategoryScene
                 CreateSkillDialog.show();
             });
 
-        return MainScene.informationGrid;
+        return MainScene.informationPane;
     }
 }

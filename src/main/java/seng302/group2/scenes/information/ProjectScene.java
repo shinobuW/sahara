@@ -14,7 +14,7 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  * A class for displaying the project scene
@@ -30,10 +30,10 @@ public class ProjectScene
      */
     public static Pane getProjectScene(Project currentProject)
     {
-        informationGrid = new VBox(10);
+        informationPane = new VBox(10);
         Pane infoTabGrid = new VBox(10);
 
-        //informationGrid.setAlignment(Pos.TOP_LEFT);
+        //informationPane.setAlignment(Pos.TOP_LEFT);
         infoTabGrid.setBorder(null);
         //infoTabGrid.setHgap(10);
         //infoTabGrid.setVgap(10);
@@ -49,14 +49,14 @@ public class ProjectScene
         allocation.setText("Allocation History");
         tabPane.getTabs().addAll(information, allocation);
 
-        tabPane.setMinWidth(informationGrid.getWidth());
-        infoTabGrid.setMinWidth(informationGrid.getWidth());
-        System.out.println(informationGrid.getWidth());
+        tabPane.setMinWidth(informationPane.getWidth());
+        infoTabGrid.setMinWidth(informationPane.getWidth());
+        System.out.println(informationPane.getWidth());
         ScrollPane s1 = new ScrollPane();
         s1.setContent(tabPane);
         s1.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 
-        informationGrid.getChildren().add(tabPane);
+        informationPane.getChildren().add(tabPane);
 
         Label title = new Label(currentProject.getLongName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
@@ -105,7 +105,7 @@ public class ProjectScene
             });
 
 
-        return informationGrid;
+        return informationPane;
     }
     
     public static void refreshProjectScene(Project project)

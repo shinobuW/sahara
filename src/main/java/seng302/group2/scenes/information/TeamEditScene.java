@@ -33,7 +33,7 @@ import seng302.group2.workspace.team.Team;
 import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -55,11 +55,11 @@ public class TeamEditScene
     {
 
         //Team currentTeam = (Team) selectedTreeItem.getValue();
-        informationGrid = new VBox(10);
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        informationPane = new VBox(10);
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Save");
@@ -205,11 +205,11 @@ public class TeamEditScene
         membersBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         membersBox.setMaxWidth(275);
 
-        informationGrid.getChildren().add(shortNameCustomField);
-        informationGrid.getChildren().add(descriptionTextArea);
+        informationPane.getChildren().add(shortNameCustomField);
+        informationPane.getChildren().add(descriptionTextArea);
 
-        informationGrid.getChildren().add(productOwnerBox);
-        informationGrid.getChildren().add(scrumMasterBox);
+        informationPane.getChildren().add(productOwnerBox);
+        informationPane.getChildren().add(scrumMasterBox);
         refreshListView(tempTeam);
         refreshComboBox(tempTeam);
 
@@ -224,9 +224,9 @@ public class TeamEditScene
 
         h1.getChildren().addAll(v1, peopleButtons, v2);
 
-        informationGrid.getChildren().add(h1);
-        informationGrid.getChildren().add(devBtns);
-        informationGrid.getChildren().add(buttons);
+        informationPane.getChildren().add(h1);
+        informationPane.getChildren().add(devBtns);
+        informationPane.getChildren().add(buttons);
 
 
 
@@ -315,13 +315,13 @@ public class TeamEditScene
         
         btnCancel.setOnAction((event) ->
             {
-                //App.content.getItems().remove(informationGrid);
+                //App.content.getItems().remove(informationPane);
                 for (int i = 0; i < teamPeopleRoles.size(); i++)
                 {
                     teamPeopleRoles.get(i).setRole(teamRoles.get(i));
                 }
                 /*TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
-                App.content.getItems().add(informationGrid);*/
+                App.content.getItems().add(informationPane);*/
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM, currentTeam);
             });
 
@@ -560,7 +560,7 @@ public class TeamEditScene
 
                     /*
                     App.content.getItems().remove(treeView);
-                    App.content.getItems().remove(informationGrid);
+                    App.content.getItems().remove(informationPane);
                     TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
@@ -570,7 +570,7 @@ public class TeamEditScene
                     MainScene.treeView.setShowRoot(false);
 
                     App.content.getItems().add(treeView);
-                    App.content.getItems().add(informationGrid);
+                    App.content.getItems().add(informationPane);
                     MainScene.treeView.getSelectionModel().select(selectedTreeItem);*/
 
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM, currentTeam);
@@ -582,7 +582,7 @@ public class TeamEditScene
                 }
 
             });
-        return informationGrid;
+        return informationPane;
     }
     
     /*
@@ -697,12 +697,12 @@ public class TeamEditScene
         System.out.println(tempTeam + " after");
         ObservableList<String> tempTeamString = TeamScene.convertToString(tempTeam);
 
-        informationGrid.getChildren().remove(teamsPeopleBox);
+        informationPane.getChildren().remove(teamsPeopleBox);
 
         teamsPeopleBox = new ListView(tempTeamString);
         teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        informationGrid.getChildren().add(teamsPeopleBox);
+        informationPane.getChildren().add(teamsPeopleBox);
     }
     
     /*
@@ -713,8 +713,8 @@ public class TeamEditScene
     private static void refreshComboBox(ObservableList<Person> currentTeam)
     {
         
-        informationGrid.getChildren().remove(productOwnerBox);
-        informationGrid.getChildren().remove(scrumMasterBox);
+        informationPane.getChildren().remove(productOwnerBox);
+        informationPane.getChildren().remove(scrumMasterBox);
         
         productOwnerBox = new CustomComboBox("Product Owner: ", false);
         scrumMasterBox = new CustomComboBox("Scrum Master: ", false);
@@ -779,8 +779,8 @@ public class TeamEditScene
             scrumMasterBox.setValue(currentSM.toString());
         }
         
-        informationGrid.getChildren().add(productOwnerBox);
-        informationGrid.getChildren().add(scrumMasterBox);
+        informationPane.getChildren().add(productOwnerBox);
+        informationPane.getChildren().add(scrumMasterBox);
         
     }
 }

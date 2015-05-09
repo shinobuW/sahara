@@ -16,7 +16,7 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.skills.Skill;
 
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -32,11 +32,11 @@ public class SkillEditScene
      */
     public static Pane getSkillEditScene(Skill currentSkill)
     {
-        informationGrid = new VBox(10);
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        informationPane = new VBox(10);
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Save");
@@ -55,9 +55,9 @@ public class SkillEditScene
         shortNameCustomField.setText(currentSkill.getShortName());
         descriptionTextArea.setText(currentSkill.getDescription());
 
-        informationGrid.getChildren().add(shortNameCustomField);
-        informationGrid.getChildren().add(descriptionTextArea);
-        informationGrid.getChildren().add(buttons);
+        informationPane.getChildren().add(shortNameCustomField);
+        informationPane.getChildren().add(descriptionTextArea);
+        informationPane.getChildren().add(buttons);
 
 
         btnCancel.setOnAction((event) ->
@@ -129,7 +129,7 @@ public class SkillEditScene
 
                     /*
                     App.content.getItems().remove(treeView);
-                    App.content.getItems().remove(informationGrid);
+                    App.content.getItems().remove(informationPane);
                     SkillScene.getSkillScene(currentSkill);
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
@@ -139,7 +139,7 @@ public class SkillEditScene
                     MainScene.treeView.setShowRoot(false);
 
                     App.content.getItems().add(treeView);
-                    App.content.getItems().add(informationGrid);
+                    App.content.getItems().add(informationPane);
                     MainScene.treeView.getSelectionModel().select(selectedTreeItem);
                     */
 
@@ -152,6 +152,6 @@ public class SkillEditScene
 
             });
 
-        return informationGrid;
+        return informationPane;
     }
 }

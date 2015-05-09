@@ -16,7 +16,7 @@ import seng302.group2.scenes.dialog.CreateProjectDialog;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
 
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  * A class for displaying all projects currently created in a workspace.
@@ -31,11 +31,11 @@ public class ProjectCategoryScene
      */
     public static Pane getProjectCategoryScene(Workspace currentWorkspace)
     {
-        informationGrid = new VBox(10);
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        informationPane = new VBox(10);
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
         Label title = new Label("Projects in " + currentWorkspace.getShortName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
@@ -53,9 +53,9 @@ public class ProjectCategoryScene
         projectBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         projectBox.setMaxWidth(275);
 
-        informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(projectBox);
-        informationGrid.getChildren().add(createButton);
+        informationPane.getChildren().add(title);
+        informationPane.getChildren().add(projectBox);
+        informationPane.getChildren().add(createButton);
 
         btnView.setOnAction((event) ->
             {
@@ -81,6 +81,6 @@ public class ProjectCategoryScene
                 CreateProjectDialog.show();
             });
 
-        return MainScene.informationGrid;
+        return MainScene.informationPane;
     }
 }

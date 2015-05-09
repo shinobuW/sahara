@@ -13,7 +13,7 @@ import seng302.group2.util.validation.NameValidator;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.Workspace;
 
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  * A class for displaying the workspace edit scene.
@@ -28,11 +28,11 @@ public class WorkspaceEditScene
      */
     public static Pane getWorkspaceEditScene(Workspace currentWorkspace)
     {
-        informationGrid = new VBox(10);
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        informationPane = new VBox(10);
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Save");
@@ -50,10 +50,10 @@ public class WorkspaceEditScene
         longNameCustomField.setText(currentWorkspace.getLongName());
         descriptionTextArea.setText(currentWorkspace.getDescription());
 
-        informationGrid.getChildren().add(shortNameCustomField);
-        informationGrid.getChildren().add(longNameCustomField);
-        informationGrid.getChildren().add(descriptionTextArea);
-        informationGrid.getChildren().add(buttons);
+        informationPane.getChildren().add(shortNameCustomField);
+        informationPane.getChildren().add(longNameCustomField);
+        informationPane.getChildren().add(descriptionTextArea);
+        informationPane.getChildren().add(buttons);
 
 
         btnCancel.setOnAction((event) ->
@@ -92,6 +92,6 @@ public class WorkspaceEditScene
 
             });
 
-        return informationGrid;
+        return informationPane;
     }
 }

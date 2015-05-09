@@ -32,7 +32,7 @@ import java.util.Date;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.Global.currentWorkspace;
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.util.validation.DateValidator.stringToDate;
 import static seng302.group2.util.validation.DateValidator.validateBirthDateField;
 import static seng302.group2.util.validation.NameValidator.validateName;
@@ -51,11 +51,11 @@ public class PersonEditScene
      */
     public static Pane getPersonEditScene(Person currentPerson)
     {
-        informationGrid = new VBox(10);
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        informationPane = new VBox(10);
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
     
         Button btnSave = new Button("Save");
         Button btnCancel = new Button("Cancel");
@@ -145,13 +145,13 @@ public class PersonEditScene
         descriptionTextArea.setMaxWidth(275);
         teamBox.setMaxWidth(275);
 
-        informationGrid.getChildren().add(shortNameCustomField);
-        informationGrid.getChildren().add(firstNameCustomField);
-        informationGrid.getChildren().add(lastNameCustomField);
-        informationGrid.getChildren().add(emailTextField);
-        informationGrid.getChildren().add(customBirthDate);
-        informationGrid.getChildren().add(descriptionTextArea);
-        informationGrid.getChildren().add(teamBox);
+        informationPane.getChildren().add(shortNameCustomField);
+        informationPane.getChildren().add(firstNameCustomField);
+        informationPane.getChildren().add(lastNameCustomField);
+        informationPane.getChildren().add(emailTextField);
+        informationPane.getChildren().add(customBirthDate);
+        informationPane.getChildren().add(descriptionTextArea);
+        informationPane.getChildren().add(teamBox);
 
         VBox v1 = new VBox(10);
         v1.getChildren().addAll(new Label("Skills: "), personSkillsBox);
@@ -161,9 +161,9 @@ public class PersonEditScene
         HBox h1 = new HBox(10);
 
         h1.getChildren().addAll(v1, skillsButtons, v2);
-        informationGrid.getChildren().add(h1);
+        informationPane.getChildren().add(h1);
 
-        informationGrid.getChildren().add(buttons);
+        informationPane.getChildren().add(buttons);
 
         btnAdd.setOnAction((event) ->
             {
@@ -478,7 +478,7 @@ public class PersonEditScene
                 }
             });
         
-        return informationGrid;
+        return informationPane;
     }
 
     private static void returnFromEdit()

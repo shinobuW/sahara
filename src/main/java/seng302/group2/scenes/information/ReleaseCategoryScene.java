@@ -16,7 +16,7 @@ import seng302.group2.scenes.dialog.CreateReleaseDialog;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  * A class for displaying all releases in a project.
@@ -31,11 +31,11 @@ public class ReleaseCategoryScene
      */
     public static Pane getReleaseCategoryScene(ReleaseCategory selectedCategory)
     {
-        informationGrid = new VBox(10);
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        informationPane = new VBox(10);
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
         Label title = new Label("Releases in " + selectedCategory.getProject().toString());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
@@ -55,9 +55,9 @@ public class ReleaseCategoryScene
         releaseBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         releaseBox.setMaxWidth(275);
 
-        informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(releaseBox);
-        informationGrid.getChildren().add(selectionButtons);
+        informationPane.getChildren().add(title);
+        informationPane.getChildren().add(releaseBox);
+        informationPane.getChildren().add(selectionButtons);
 
         btnView.setOnAction((event) ->
             {
@@ -83,6 +83,6 @@ public class ReleaseCategoryScene
                 CreateReleaseDialog.show(selectedCategory.getProject());
             });
 
-        return MainScene.informationGrid;
+        return MainScene.informationPane;
     }
 }

@@ -15,7 +15,7 @@ import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
 
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  * A class for displaying all roles currently created in a workspace.
@@ -30,11 +30,11 @@ public class RoleCategoryScene
      */
     public static Pane getRoleCategoryScene(Workspace currentWorkspace)
     {
-        informationGrid = new VBox(10);
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        informationPane = new VBox(10);
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
         Label title = new Label("Roles in " + currentWorkspace.getShortName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
@@ -56,10 +56,10 @@ public class RoleCategoryScene
         roleBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         roleBox.setMaxWidth(275);
 
-        informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(roleBox);
-        informationGrid.getChildren().add(selectionButtons);
-        informationGrid.getChildren().add(createButton);
+        informationPane.getChildren().add(title);
+        informationPane.getChildren().add(roleBox);
+        informationPane.getChildren().add(selectionButtons);
+        informationPane.getChildren().add(createButton);
 
         btnView.setOnAction((event) ->
             {
@@ -84,6 +84,6 @@ public class RoleCategoryScene
                 CreateRoleDialog.show();
             });*/
 
-        return MainScene.informationGrid;
+        return MainScene.informationPane;
     }
 }

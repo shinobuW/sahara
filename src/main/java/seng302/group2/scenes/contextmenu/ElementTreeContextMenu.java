@@ -171,7 +171,7 @@ public class ElementTreeContextMenu extends ContextMenu
      */
     public static void showEditScene(Categories category)
     {
-        App.content.getItems().remove(MainScene.informationGrid);
+        App.content.getItems().remove(MainScene.informationPane);
         
         switch (category)
         {
@@ -197,6 +197,6 @@ public class ElementTreeContextMenu extends ContextMenu
                 System.out.println("The category was not set");
                 break;
         }
-        App.content.getItems().add(MainScene.informationGrid);
+        App.content.getItems().add(MainScene.informationPane);
     }
 }

@@ -24,7 +24,7 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  * A class for displaying the project edit scene.
@@ -39,11 +39,11 @@ public class ProjectEditScene
      */
     public static Pane getProjectEditScene(Project currentProject)
     {
-        informationGrid = new VBox(10);
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        informationPane = new VBox(10);
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Save");
@@ -103,9 +103,9 @@ public class ProjectEditScene
         membersBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         membersBox.setMaxHeight(150);
 
-        informationGrid.getChildren().add(shortNameCustomField);
-        informationGrid.getChildren().add(longNameCustomField);
-        informationGrid.getChildren().add(descriptionTextArea);
+        informationPane.getChildren().add(shortNameCustomField);
+        informationPane.getChildren().add(longNameCustomField);
+        informationPane.getChildren().add(descriptionTextArea);
 
         HBox h1 = new HBox(10);
         VBox v1 = new VBox(10);
@@ -117,8 +117,8 @@ public class ProjectEditScene
         v2.getChildren().add(membersBox);
 
         h1.getChildren().addAll(v1, teamButtons, v2);
-        informationGrid.getChildren().add(h1);
-        informationGrid.getChildren().add(buttons);
+        informationPane.getChildren().add(h1);
+        informationPane.getChildren().add(buttons);
 
         btnAdd.setOnAction((event) ->
             {
@@ -174,9 +174,9 @@ public class ProjectEditScene
 
         btnCancel.setOnAction((event) ->
             {
-                App.content.getItems().remove(informationGrid);
+                App.content.getItems().remove(informationPane);
                 ProjectScene.getProjectScene((Project) Global.selectedTreeItem.getValue());
-                App.content.getItems().add(informationGrid);
+                App.content.getItems().add(informationPane);
 
             });
 
@@ -325,7 +325,7 @@ public class ProjectEditScene
 
 
                     /*App.content.getChildren().remove(treeView);
-                    App.content.getChildren().remove(informationGrid);
+                    App.content.getChildren().remove(informationPane);
                     ProjectScene.getProjectScene(currentProject);
                     MainScene.treeView = new TreeViewWithItems(new TreeItem());
                     ObservableList<TreeViewItem> children = observableArrayList();
@@ -335,7 +335,7 @@ public class ProjectEditScene
                     MainScene.treeView.setShowRoot(false);
 
                     App.content.getChildren().add(treeView);
-                    App.content.getChildren().add(informationGrid);
+                    App.content.getChildren().add(informationPane);
                     MainScene.treeView.getSelectionModel().select(selectedTreeItem);*/
 
 
@@ -366,7 +366,7 @@ public class ProjectEditScene
                 }
             });
 
-        return informationGrid;
+        return informationPane;
     }
 
 

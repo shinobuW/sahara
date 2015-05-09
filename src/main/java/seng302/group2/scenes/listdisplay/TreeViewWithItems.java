@@ -101,9 +101,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
      */
     private void init()
     {
-        setMinWidth(80);
-        setWidth(80);
-        setPrefWidth(80);
+        setMinWidth(160);
 
         setContextMenu(new CategoryTreeContextMenu(true));
 
@@ -152,10 +150,10 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                             || Global.selectedTreeItem.getValue() == null)
                     {
                         // Nothing is selected, make a default selection?
-                        App.content.getItems().remove(MainScene.informationGrid);
+                        App.content.getItems().remove(MainScene.informationPane);
                         //WorkspaceScene.getWorkspaceScene((Workspace)
                         //selected);
-                        App.content.getItems().add(MainScene.informationGrid);
+                        App.content.getItems().add(MainScene.informationPane);
                     }
                     else
                     {
@@ -229,10 +227,10 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         {
                             SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE_CATEGORY,
                                     (TreeViewItem) selected);
-                            /*App.content.getItems().remove(MainScene.informationGrid);
+                            /*App.content.getItems().remove(MainScene.informationPane);
                             ReleaseCategoryScene.getReleaseCategoryScene((ReleaseCategory)
                                     selected);
-                            App.content.getItems().add(MainScene.informationGrid);*/
+                            App.content.getItems().add(MainScene.informationPane);*/
                             setContextMenu(new CategoryTreeContextMenu(true));
                         }
                         else

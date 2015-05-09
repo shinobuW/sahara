@@ -10,7 +10,7 @@ import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.workspace.person.Person;
 
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  * A class for displaying the Person Scene
@@ -26,12 +26,12 @@ public class PersonScene
      */
     public static Pane getPersonScene(Person currentPerson)
     {
-        informationGrid = new VBox(10);
+        informationPane = new VBox(10);
 
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
         Label title = new Label(currentPerson.getFirstName() + " " + currentPerson.getLastName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
@@ -42,31 +42,31 @@ public class PersonScene
 
         final Separator separator = new Separator();
         
-        informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(new Label("Short Name: " + currentPerson.getShortName()));
-        informationGrid.getChildren().add(new Label("Email Address: " + currentPerson.getEmail()));
-        informationGrid.getChildren().add(new Label("Birth Date: "
+        informationPane.getChildren().add(title);
+        informationPane.getChildren().add(new Label("Short Name: " + currentPerson.getShortName()));
+        informationPane.getChildren().add(new Label("Email Address: " + currentPerson.getEmail()));
+        informationPane.getChildren().add(new Label("Birth Date: "
                 + currentPerson.getDateString()));
-        informationGrid.getChildren().add(new Label("Person Description: "
+        informationPane.getChildren().add(new Label("Person Description: "
                 + currentPerson.getDescription()));
-        informationGrid.getChildren().add(new Label("Team: " + currentPerson.getTeamName()));
+        informationPane.getChildren().add(new Label("Team: " + currentPerson.getTeamName()));
 
         String roleString = currentPerson.getRole() == null ? "" :
                 currentPerson.getRole().toString();
-        informationGrid.getChildren().add(new Label("Role: " + roleString));
+        informationPane.getChildren().add(new Label("Role: " + roleString));
 
-        informationGrid.getChildren().add(separator);
-        informationGrid.getChildren().add(new Label("Skills: "));
-        informationGrid.getChildren().add(personSkillsBox);
+        informationPane.getChildren().add(separator);
+        informationPane.getChildren().add(new Label("Skills: "));
+        informationPane.getChildren().add(personSkillsBox);
 
-        informationGrid.getChildren().add(btnEdit);
+        informationPane.getChildren().add(btnEdit);
         
         btnEdit.setOnAction((event) ->
             {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON_EDIT, currentPerson);
             });
 
-        return MainScene.informationGrid;
+        return MainScene.informationPane;
     }
 
     

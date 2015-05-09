@@ -32,7 +32,7 @@ import static seng302.group2.App.content;
 public class MainScene
 {
     public static TreeViewWithItems treeView = new TreeViewWithItems(new TreeItem());
-    public static Pane informationGrid = new Pane();
+    public static Pane informationPane = new Pane();
     public static boolean menuHidden = false;
     
     /**
@@ -95,24 +95,24 @@ public class MainScene
         });
 
         content.boundsInParentProperty();
-        informationGrid.boundsInParentProperty();
+        informationPane.boundsInParentProperty();
 
-        content.getItems().removeAll(treeView, informationGrid);
-        //content.getChildren().removeAll(treeView, informationGrid);
+        content.getItems().removeAll(treeView, informationPane);
+        //content.getChildren().removeAll(treeView, informationPane);
 
         if (!menuHidden)
         {
             content.getItems().add(treeView);
             //content.getChildren().add(treeView);
         }
-        content.getItems().add(informationGrid);
+        content.getItems().add(informationPane);
 
-        //content.getChildren().add(informationGrid);
+        //content.getChildren().add(informationPane);
 
         //root.getChildren().remove(content);
         root.setCenter(content);
 
-        Platform.runLater(()->content.setDividerPositions(0.2));
+        Platform.runLater(()->content.setDividerPositions(0.225));
 
         return new Scene(root);
     }

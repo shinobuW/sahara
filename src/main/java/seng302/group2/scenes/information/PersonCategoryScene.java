@@ -16,7 +16,7 @@ import seng302.group2.scenes.dialog.CreatePersonDialog;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
 
-import static seng302.group2.scenes.MainScene.informationGrid;
+import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
@@ -32,11 +32,11 @@ public class PersonCategoryScene
      */
     public static Pane getPersonCategoryScene(Workspace currentWorkspace)
     {
-        informationGrid = new VBox(10);
-        /*informationGrid.setAlignment(Pos.TOP_LEFT);
-        informationGrid.setHgap(10);
-        informationGrid.setVgap(10);*/
-        informationGrid.setPadding(new Insets(25,25,25,25));
+        informationPane = new VBox(10);
+        /*informationPane.setAlignment(Pos.TOP_LEFT);
+        informationPane.setHgap(10);
+        informationPane.setVgap(10);*/
+        informationPane.setPadding(new Insets(25,25,25,25));
         Label title = new Label("People in " + currentWorkspace.getShortName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
@@ -59,11 +59,11 @@ public class PersonCategoryScene
         personBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         personBox.setMaxWidth(275);
 
-        informationGrid.getChildren().add(title);
-        informationGrid.getChildren().add(personBox);
-        informationGrid.getChildren().add(selectionButtons);
+        informationPane.getChildren().add(title);
+        informationPane.getChildren().add(personBox);
+        informationPane.getChildren().add(selectionButtons);
 
-        //informationGrid.getChildren().add(createButton);
+        //informationPane.getChildren().add(createButton);
 
         btnView.setOnAction((event) ->
             {
@@ -89,6 +89,6 @@ public class PersonCategoryScene
                 CreatePersonDialog.show();
             });
 
-        return MainScene.informationGrid;
+        return MainScene.informationPane;
     }
 }
