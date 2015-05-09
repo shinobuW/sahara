@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import seng302.group2.App;
+import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.workspace.release.Release;
 
 import static seng302.group2.scenes.MainScene.informationGrid;
@@ -52,7 +52,7 @@ public class ReleaseScene
 
         btnEdit.setOnAction((event) ->
             {
-                App.changeScene(App.ContentScene.RELEASE_EDIT, currentRelease);
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE_EDIT, currentRelease);
             });
 
         return informationGrid;
@@ -64,6 +64,6 @@ public class ReleaseScene
     */
     public static void refreshReleaseScene(Release release)
     {
-        App.changeScene(App.ContentScene.RELEASE, release);
+        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, release);
     }
 }

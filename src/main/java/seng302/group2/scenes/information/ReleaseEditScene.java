@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.scenes.control.CustomTextArea;
@@ -240,7 +241,7 @@ public class ReleaseEditScene
                     MainScene.treeView.getSelectionModel().select(selectedTreeItem);
                     */
 
-                    App.changeScene(App.ContentScene.RELEASE, currentRelease);
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
 
                 }
                 else

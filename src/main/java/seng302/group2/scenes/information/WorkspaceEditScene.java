@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.App;
+import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.util.validation.NameValidator;
@@ -58,7 +58,7 @@ public class WorkspaceEditScene
 
         btnCancel.setOnAction((event) ->
             {
-                App.changeScene(App.ContentScene.WORKSPACE, currentWorkspace);
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE, currentWorkspace);
             });
 
         btnSave.setOnAction((event) ->
@@ -68,7 +68,8 @@ public class WorkspaceEditScene
                         && descriptionTextArea.getText().equals(currentWorkspace.getDescription()))
                 {
                     // No fields have been changed
-                    App.changeScene(App.ContentScene.WORKSPACE, currentWorkspace);
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE,
+                            currentWorkspace);
                 }
                     // The short name is the same or valid
                 if ((shortNameCustomField.getText().equals(currentWorkspace.getShortName())
@@ -80,7 +81,8 @@ public class WorkspaceEditScene
                     currentWorkspace.edit(shortNameCustomField.getText(),
                             longNameCustomField.getText(), descriptionTextArea.getText());
 
-                    App.changeScene(App.ContentScene.WORKSPACE, currentWorkspace);
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE,
+                            currentWorkspace);
                 }
                 else
                 {

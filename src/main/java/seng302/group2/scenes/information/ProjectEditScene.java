@@ -14,6 +14,7 @@ import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
+import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
@@ -343,7 +344,7 @@ public class ProjectEditScene
                         && descriptionTextArea.getText().equals(currentProject.getDescription()))
                 {
                     // No fields have been changed
-                    App.changeScene(App.ContentScene.PROJECT, currentProject);
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
                 }
                 // The short name is the same or valid
                 if ((shortNameCustomField.getText().equals(currentProject.getShortName())
@@ -355,7 +356,7 @@ public class ProjectEditScene
                     currentProject.edit(shortNameCustomField.getText(),
                             longNameCustomField.getText(), descriptionTextArea.getText());
 
-                    App.changeScene(App.ContentScene.PROJECT, currentProject);
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
                     MainScene.treeView.refresh();
                 }
                 else

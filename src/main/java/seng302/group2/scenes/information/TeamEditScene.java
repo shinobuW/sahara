@@ -16,8 +16,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
-import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
@@ -322,7 +322,7 @@ public class TeamEditScene
                 }
                 /*TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
                 App.content.getItems().add(informationGrid);*/
-                App.changeScene(App.ContentScene.TEAM, currentTeam);
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM, currentTeam);
             });
 
         btnSave.setOnAction((event) ->
@@ -573,7 +573,7 @@ public class TeamEditScene
                     App.content.getItems().add(informationGrid);
                     MainScene.treeView.getSelectionModel().select(selectedTreeItem);*/
 
-                    App.changeScene(App.ContentScene.TEAM, currentTeam);
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM, currentTeam);
 
                 }
                 else

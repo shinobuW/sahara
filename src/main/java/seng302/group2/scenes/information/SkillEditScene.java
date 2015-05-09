@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.App;
+import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.skills.Skill;
@@ -61,9 +61,9 @@ public class SkillEditScene
 
 
         btnCancel.setOnAction((event) ->
-        {
-            App.changeScene(App.ContentScene.SKILL_EDIT, currentSkill);
-        });
+            {
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL, currentSkill);
+            });
 
         btnSave.setOnAction((event) ->
             {
@@ -71,7 +71,7 @@ public class SkillEditScene
                         && descriptionTextArea.getText().equals(currentSkill.getDescription()))
                 {
                     // No changes
-                    App.changeScene(App.ContentScene.SKILL, currentSkill);
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL, currentSkill);
                 }
 
                 else if (shortNameCustomField.getText().equals(currentSkill.getShortName())
@@ -81,7 +81,7 @@ public class SkillEditScene
                     currentSkill.edit(shortNameCustomField.getText(),
                             descriptionTextArea.getText());
 
-                    App.changeScene(App.ContentScene.SKILL_EDIT, currentSkill);
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL, currentSkill);
                 }
 
 

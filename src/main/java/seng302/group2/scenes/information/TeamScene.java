@@ -7,8 +7,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.team.Team;
@@ -102,7 +102,7 @@ public class TeamScene
 
         btnEdit.setOnAction((event) ->
             {
-                App.changeScene(App.ContentScene.TEAM_EDIT, currentTeam);
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM_EDIT, currentTeam);
             });
         
         return informationGrid;
@@ -114,7 +114,7 @@ public class TeamScene
     */
     public static void refreshTeamScene(Team team)
     {
-        App.changeScene(App.ContentScene.TEAM, team);
+        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM, team);
     }
     
     /*

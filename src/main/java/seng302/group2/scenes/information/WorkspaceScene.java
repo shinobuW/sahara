@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import seng302.group2.App;
+import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.workspace.Workspace;
 
 import static seng302.group2.scenes.MainScene.informationGrid;
@@ -43,7 +43,8 @@ public class WorkspaceScene
 
         btnEdit.setOnAction((event) ->
             {
-                App.changeScene(App.ContentScene.WORKSPACE_EDIT, currentWorkspace);
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE_EDIT,
+                        currentWorkspace);
             });
 
         return informationGrid;
@@ -51,7 +52,7 @@ public class WorkspaceScene
     
     public static void refreshWorkspaceScene(Workspace workspace)
     {
-        App.changeScene(App.ContentScene.WORKSPACE, workspace);
+        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE, workspace);
     }
  
 }

@@ -6,8 +6,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import seng302.group2.App;
 import seng302.group2.scenes.MainScene;
+import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.workspace.person.Person;
 
 import static seng302.group2.scenes.MainScene.informationGrid;
@@ -63,7 +63,7 @@ public class PersonScene
         
         btnEdit.setOnAction((event) ->
             {
-                App.changeScene(App.ContentScene.PERSON_EDIT, currentPerson);
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON_EDIT, currentPerson);
             });
 
         return MainScene.informationGrid;
@@ -72,6 +72,6 @@ public class PersonScene
     
     public static void refreshPersonScene(Person person)
     {
-        App.changeScene(App.ContentScene.PERSON, person);
+        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON, person);
     }
 }

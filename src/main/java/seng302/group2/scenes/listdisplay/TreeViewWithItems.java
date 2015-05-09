@@ -15,6 +15,7 @@ import javafx.scene.control.TreeView;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
+import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.contextmenu.CategoryTreeContextMenu;
 import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
 import seng302.group2.workspace.Workspace;
@@ -88,7 +89,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
      */
     public void refresh()
     {
-        T currentSelection = (T) Global.selectedTreeItem.getValue();;
+        T currentSelection = (T) Global.selectedTreeItem.getValue();
         clear(getRoot());
         updateItems();
         selectItem(currentSelection);
@@ -102,6 +103,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
     {
         setMinWidth(80);
         setWidth(80);
+        setPrefWidth(80);
 
         setContextMenu(new CategoryTreeContextMenu(true));
 
@@ -162,64 +164,70 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
 
                     if (selected instanceof Person)
                     {
-                        App.changeScene(App.ContentScene.PERSON, (TreeViewItem) selected);
+                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON,
+                                (TreeViewItem) selected);
                         setContextMenu(new ElementTreeContextMenu());
                     }
                     else if (selected instanceof Project)
                     {
-                        App.changeScene(App.ContentScene.PROJECT, (TreeViewItem) selected);
+                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT,
+                                (TreeViewItem) selected);
                         setContextMenu(new ElementTreeContextMenu());
                     }
                     else if (selected instanceof Workspace)
                     {
-                        App.changeScene(App.ContentScene.WORKSPACE, (TreeViewItem) selected);
+                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE,
+                                (TreeViewItem) selected);
                         setContextMenu(new ElementTreeContextMenu());
                     }
                     else if (selected instanceof Skill)
                     {
-                        App.changeScene(App.ContentScene.SKILL, (TreeViewItem) selected);
+                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL,
+                                (TreeViewItem) selected);
                         setContextMenu(new ElementTreeContextMenu());
                     }
                     else if (selected instanceof Team)
                     {
-                        App.changeScene(App.ContentScene.TEAM, (TreeViewItem) selected);
+                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM,
+                                (TreeViewItem) selected);
                         setContextMenu(new ElementTreeContextMenu());
                     }
                     else if (selected instanceof Release)
                     {
-                        App.changeScene(App.ContentScene.RELEASE, (TreeViewItem) selected);
+                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE,
+                                (TreeViewItem) selected);
                         setContextMenu(new ElementTreeContextMenu());
                     }
                     else if (selected instanceof Category)
                     {
                         if (selected.toString().equals("Projects"))
                         {
-                            App.changeScene(App.CategoryScene.PROJECTS);
+                            SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.PROJECTS);
                             setContextMenu(new CategoryTreeContextMenu(true));
                         }
                         else if (selected.toString().equals("People"))
                         {
-                            App.changeScene(App.CategoryScene.PEOPLE);
+                            SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.PEOPLE);
                             setContextMenu(new CategoryTreeContextMenu(true));
                         }
                         else if (selected.toString().equals("Skills"))
                         {
-                            App.changeScene(App.CategoryScene.SKILLS);
+                            SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.SKILLS);
                             setContextMenu(new CategoryTreeContextMenu(true));
                         }
                         else if (selected.toString().equals("Teams"))
                         {
-                            App.changeScene(App.CategoryScene.TEAMS);
+                            SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.TEAMS);
                             setContextMenu(new CategoryTreeContextMenu(true));
                         }
                         else if (selected.toString().equals("Roles"))
                         {
-                            App.changeScene(App.CategoryScene.ROLES);
+                            SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.ROLES);
                             setContextMenu(new CategoryTreeContextMenu(false));
                         }
                         else if (selected.toString().equals("Releases"))
                         {
-                            App.changeScene(App.ContentScene.RELEASE_CATEGORY,
+                            SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE_CATEGORY,
                                     (TreeViewItem) selected);
                             /*App.content.getItems().remove(MainScene.informationGrid);
                             ReleaseCategoryScene.getReleaseCategoryScene((ReleaseCategory)
@@ -234,7 +242,8 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     }
                     else if (selected instanceof Role)
                     {
-                        App.changeScene(App.ContentScene.ROLE, (TreeViewItem) selected);
+                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.ROLE,
+                                (TreeViewItem) selected);
                         setContextMenu(new ElementTreeContextMenu());
                     }
                 }

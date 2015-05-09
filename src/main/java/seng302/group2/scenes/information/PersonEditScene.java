@@ -16,8 +16,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
-import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.UndoRedoAction;
@@ -483,6 +483,7 @@ public class PersonEditScene
 
     private static void returnFromEdit()
     {
-        App.changeScene(App.ContentScene.PERSON, (TreeViewItem) Global.selectedTreeItem.getValue());
+        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON,
+                (TreeViewItem) Global.selectedTreeItem.getValue());
     }
 }

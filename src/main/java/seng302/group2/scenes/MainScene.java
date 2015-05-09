@@ -1,5 +1,6 @@
 package seng302.group2.scenes;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -105,12 +106,13 @@ public class MainScene
             //content.getChildren().add(treeView);
         }
         content.getItems().add(informationGrid);
-        content.setDividerPositions(0.2f);
 
         //content.getChildren().add(informationGrid);
 
         //root.getChildren().remove(content);
         root.setCenter(content);
+
+        Platform.runLater(()->content.setDividerPositions(0.2));
 
         return new Scene(root);
     }
