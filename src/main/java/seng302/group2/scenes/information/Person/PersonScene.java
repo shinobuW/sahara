@@ -1,4 +1,4 @@
-package seng302.group2.scenes.information;
+package seng302.group2.scenes.information.Person;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -24,7 +24,7 @@ public class PersonScene
      * @param currentPerson the person to display the information of
      * @return The Person information scene
      */
-    public static Pane getPersonScene(Person currentPerson)
+    public static ScrollPane getPersonScene(Person currentPerson)
     {
         informationPane = new VBox(10);
 
@@ -66,7 +66,7 @@ public class PersonScene
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON_EDIT, currentPerson);
             });
 
-        return MainScene.informationPane;
+        return new ScrollPane(informationPane);
     }
 
     

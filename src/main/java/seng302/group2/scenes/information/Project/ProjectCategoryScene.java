@@ -1,11 +1,8 @@
-package seng302.group2.scenes.information;
+package seng302.group2.scenes.information.Project;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -29,7 +26,7 @@ public class ProjectCategoryScene
      * @param currentWorkspace The workspace currently being used
      * @return The project category info scene
      */
-    public static Pane getProjectCategoryScene(Workspace currentWorkspace)
+    public static ScrollPane getProjectCategoryScene(Workspace currentWorkspace)
     {
         informationPane = new VBox(10);
         /*informationPane.setAlignment(Pos.TOP_LEFT);
@@ -81,6 +78,6 @@ public class ProjectCategoryScene
                 CreateProjectDialog.show();
             });
 
-        return MainScene.informationPane;
+        return new ScrollPane(informationPane);
     }
 }

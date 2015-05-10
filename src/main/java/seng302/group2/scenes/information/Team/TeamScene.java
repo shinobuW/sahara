@@ -1,4 +1,4 @@
-package seng302.group2.scenes.information;
+package seng302.group2.scenes.information.Team;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -27,7 +27,7 @@ public class TeamScene
       * @param currentTeam The team to show the information of
      * @return The Team information scene
      */
-    public static Pane getTeamScene(Team currentTeam)
+    public static ScrollPane getTeamScene(Team currentTeam)
     {
         
         informationPane = new VBox(10);
@@ -105,7 +105,7 @@ public class TeamScene
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM_EDIT, currentTeam);
             });
         
-        return informationPane;
+        return new ScrollPane(informationPane);
     }
     
     /*

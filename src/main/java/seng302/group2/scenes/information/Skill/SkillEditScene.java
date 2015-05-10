@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package seng302.group2.scenes.information;
+package seng302.group2.scenes.information.Skill;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
@@ -30,7 +32,7 @@ public class SkillEditScene
      * @param currentSkill The skill to show the information of
      * @return The Skill Edit information display
      */
-    public static Pane getSkillEditScene(Skill currentSkill)
+    public static ScrollPane getSkillEditScene(Skill currentSkill)
     {
         informationPane = new VBox(10);
         /*informationPane.setAlignment(Pos.TOP_LEFT);
@@ -82,68 +84,8 @@ public class SkillEditScene
                             descriptionTextArea.getText());
 
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL, currentSkill);
+                    MainScene.treeView.refresh();
                 }
-
-
-/*              if (correctShortName)
-                {
-                    // Build Undo/Redo edit array.
-                    ArrayList<UndoableItem> undoActions = new ArrayList<>();          
-                    if (shortNameCustomField.getText() != currentSkill.getShortName())
-                    {
-                        undoActions.add(new UndoableItem(
-                                currentSkill,
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.SKILL_SHORTNAME,
-                                        currentSkill.getShortName()),
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.SKILL_SHORTNAME,
-                                        shortNameCustomField.getText())));
-                    }
-                    
-                    if (descriptionTextArea.getText() != currentSkill.getDescription())
-                    {
-                        undoActions.add(new UndoableItem(
-                                currentSkill,
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.SKILL_DESCRIPTION,
-                                        currentSkill.getDescription()),
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.SKILL_DESCRIPTION,
-                                        descriptionTextArea.getText())));
-                    }
-                           
-                    Global.undoRedoMan.add(new UndoableItem(
-                        currentSkill,
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.SKILL_EDIT,
-                                undoActions), 
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.SKILL_EDIT, 
-                                undoActions)
-                        ));                      
-                            
-                    // Save the edits.        
-                    currentSkill.setDescription(descriptionTextArea.getText());
-                    currentSkill.setShortName(shortNameCustomField.getText());*/
-
-                    /*
-                    App.content.getItems().remove(treeView);
-                    App.content.getItems().remove(informationPane);
-                    SkillScene.getSkillScene(currentSkill);
-                    MainScene.treeView = new TreeViewWithItems(new TreeItem());
-                    ObservableList<TreeViewItem> children = observableArrayList();
-                    children.add(Global.currentWorkspace);
-
-                    MainScene.treeView.setItems(children);
-                    MainScene.treeView.setShowRoot(false);
-
-                    App.content.getItems().add(treeView);
-                    App.content.getItems().add(informationPane);
-                    MainScene.treeView.getSelectionModel().select(selectedTreeItem);
-                    */
-
-
 
                 else
                 {
@@ -152,6 +94,6 @@ public class SkillEditScene
 
             });
 
-        return informationPane;
+        return new ScrollPane(informationPane);
     }
 }

@@ -1,12 +1,9 @@
-package seng302.group2.scenes.information;
+package seng302.group2.scenes.information.Project;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -37,7 +34,7 @@ public class ProjectEditScene
      * @param currentProject The project to display the editable information of
      * @return The Workspace Edit information scene
      */
-    public static Pane getProjectEditScene(Project currentProject)
+    public static ScrollPane getProjectEditScene(Project currentProject)
     {
         informationPane = new VBox(10);
         /*informationPane.setAlignment(Pos.TOP_LEFT);
@@ -366,7 +363,7 @@ public class ProjectEditScene
                 }
             });
 
-        return informationPane;
+        return new ScrollPane(informationPane);
     }
 
 

@@ -1,4 +1,4 @@
-package seng302.group2.scenes.information;
+package seng302.group2.scenes.information.Project;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -28,7 +28,7 @@ public class ProjectScene
      * @param currentProject the project to display the information of
      * @return The project information scene
      */
-    public static Pane getProjectScene(Project currentProject)
+    public static ScrollPane getProjectScene(Project currentProject)
     {
         informationPane = new VBox(10);
         Pane infoTabGrid = new VBox(10);
@@ -105,7 +105,7 @@ public class ProjectScene
             });
 
 
-        return informationPane;
+        return new ScrollPane(informationPane);
     }
     
     public static void refreshProjectScene(Project project)

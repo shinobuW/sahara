@@ -1,8 +1,9 @@
-package seng302.group2.scenes.information;
+package seng302.group2.scenes.information.Skill;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -24,7 +25,7 @@ public class SkillScene
      * @param currentSkill the skill to show the information of
      * @return The Skill information scene
      */
-    public static Pane getSkillScene(Skill currentSkill)
+    public static ScrollPane getSkillScene(Skill currentSkill)
     {
         informationPane = new VBox(10);
 
@@ -48,7 +49,7 @@ public class SkillScene
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL_EDIT, currentSkill);
             });
 
-        return informationPane;
+        return new ScrollPane(informationPane);
     }
  
     public static void refreshSkillScene(Skill skill)

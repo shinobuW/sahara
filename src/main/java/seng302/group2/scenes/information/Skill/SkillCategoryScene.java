@@ -1,11 +1,8 @@
-package seng302.group2.scenes.information;
+package seng302.group2.scenes.information.Skill;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -30,7 +27,7 @@ public class SkillCategoryScene
      * @param currentWorkspace The workspace currently being used
      * @return The skill category info scene
      */
-    public static Pane getSkillCategoryScene(Workspace currentWorkspace)
+    public static ScrollPane getSkillCategoryScene(Workspace currentWorkspace)
     {
         informationPane = new VBox(10);
         /*informationPane.setAlignment(Pos.TOP_LEFT);
@@ -83,6 +80,6 @@ public class SkillCategoryScene
                 CreateSkillDialog.show();
             });
 
-        return MainScene.informationPane;
+        return new ScrollPane(informationPane);
     }
 }

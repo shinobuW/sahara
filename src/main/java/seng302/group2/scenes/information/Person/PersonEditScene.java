@@ -3,20 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package seng302.group2.scenes.information;
+package seng302.group2.scenes.information.Person;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
@@ -49,7 +47,7 @@ public class PersonEditScene
      * @param currentPerson The person to display information of
      * @return The Person Edit information scene
      */
-    public static Pane getPersonEditScene(Person currentPerson)
+    public static ScrollPane getPersonEditScene(Person currentPerson)
     {
         informationPane = new VBox(10);
         /*informationPane.setAlignment(Pos.TOP_LEFT);
@@ -205,7 +203,7 @@ public class PersonEditScene
         
         btnCancel.setOnAction((event) ->
             {
-                returnFromEdit();
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON, currentPerson);
             });
         
         btnSave.setOnAction((event) ->
@@ -470,7 +468,8 @@ public class PersonEditScene
                     currentPerson.setEmail(emailTextField.getText());
                     currentPerson.setBirthDate(birthDate);
 
-                    returnFromEdit();
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON, currentPerson);
+                    MainScene.treeView.refresh();
                 }
                 else
                 {
@@ -478,12 +477,7 @@ public class PersonEditScene
                 }
             });
         
-        return informationPane;
+        return new ScrollPane(informationPane);
     }
 
-    private static void returnFromEdit()
-    {
-        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON,
-                (TreeViewItem) Global.selectedTreeItem.getValue());
-    }
 }

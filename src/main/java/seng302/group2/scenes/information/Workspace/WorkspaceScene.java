@@ -1,8 +1,9 @@
-package seng302.group2.scenes.information;
+package seng302.group2.scenes.information.Workspace;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -25,7 +26,7 @@ public class WorkspaceScene
      * @param currentWorkspace The workspace to show the information of
      * @return The Workspace information scene
      */
-    public static Pane getWorkspaceScene(Workspace currentWorkspace)
+    public static ScrollPane getWorkspaceScene(Workspace currentWorkspace)
     {
         informationPane = new VBox(10);
         informationPane.setPadding(new Insets(25,25,25,25));
@@ -47,7 +48,7 @@ public class WorkspaceScene
                         currentWorkspace);
             });
 
-        return informationPane;
+        return new ScrollPane(informationPane);
     }
     
     public static void refreshWorkspaceScene(Workspace workspace)

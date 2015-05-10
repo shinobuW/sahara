@@ -1,8 +1,29 @@
 package seng302.group2.scenes;
 
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.control.ScrollPane;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.information.*;
+import seng302.group2.scenes.information.Person.PersonCategoryScene;
+import seng302.group2.scenes.information.Person.PersonEditScene;
+import seng302.group2.scenes.information.Person.PersonScene;
+import seng302.group2.scenes.information.Project.ProjectCategoryScene;
+import seng302.group2.scenes.information.Project.ProjectEditScene;
+import seng302.group2.scenes.information.Project.ProjectScene;
+import seng302.group2.scenes.information.Release.ReleaseCategoryScene;
+import seng302.group2.scenes.information.Release.ReleaseEditScene;
+import seng302.group2.scenes.information.Release.ReleaseScene;
+import seng302.group2.scenes.information.Role.RoleCategoryScene;
+import seng302.group2.scenes.information.Role.RoleScene;
+import seng302.group2.scenes.information.Skill.SkillCategoryScene;
+import seng302.group2.scenes.information.Skill.SkillEditScene;
+import seng302.group2.scenes.information.Skill.SkillScene;
+import seng302.group2.scenes.information.Team.TeamCategoryScene;
+import seng302.group2.scenes.information.Team.TeamEditScene;
+import seng302.group2.scenes.information.Team.TeamScene;
+import seng302.group2.scenes.information.Workspace.WorkspaceEditScene;
+import seng302.group2.scenes.information.Workspace.WorkspaceScene;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
@@ -12,6 +33,12 @@ import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static seng302.group2.scenes.MainScene.contentPane;
+import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  * Allows easy switching between scenes
@@ -57,6 +84,7 @@ public class SceneSwitcher
         TEAMS
     }
 
+
     /**
      * Changes to the given category scene of the application
      * @param scene The category scene to switch to
@@ -68,28 +96,23 @@ public class SceneSwitcher
         switch (scene)
         {
             case PEOPLE:
-                App.content.getItems().remove(MainScene.informationPane);
-                App.content.getItems().add(PersonCategoryScene.getPersonCategoryScene(
+                MainScene.contentPane.setContent(PersonCategoryScene.getPersonCategoryScene(
                         Global.currentWorkspace));
                 break;
             case PROJECTS:
-                App.content.getItems().remove(MainScene.informationPane);
-                App.content.getItems().add(ProjectCategoryScene.getProjectCategoryScene(
+                MainScene.contentPane.setContent(ProjectCategoryScene.getProjectCategoryScene(
                         Global.currentWorkspace));
                 break;
             case ROLES:
-                App.content.getItems().remove(MainScene.informationPane);
-                App.content.getItems().add(RoleCategoryScene.getRoleCategoryScene(
+                MainScene.contentPane.setContent(RoleCategoryScene.getRoleCategoryScene(
                         Global.currentWorkspace));
                 break;
             case SKILLS:
-                App.content.getItems().remove(MainScene.informationPane);
-                App.content.getItems().add(SkillCategoryScene.getSkillCategoryScene(
+                MainScene.contentPane.setContent(SkillCategoryScene.getSkillCategoryScene(
                         Global.currentWorkspace));
                 break;
             case TEAMS:
-                App.content.getItems().remove(MainScene.informationPane);
-                App.content.getItems().add(TeamCategoryScene.getTeamCategoryScene(
+                MainScene.contentPane.setContent(TeamCategoryScene.getTeamCategoryScene(
                         Global.currentWorkspace));
                 break;
             default:
@@ -113,52 +136,50 @@ public class SceneSwitcher
             case WORKSPACE:
                 if (item.getClass() == Workspace.class)
                 {
-                    App.content.getItems().remove(MainScene.informationPane);
-                    App.content.getItems().add(WorkspaceScene.getWorkspaceScene((Workspace) item));
+                    MainScene.contentPane.setContent(WorkspaceScene.getWorkspaceScene(
+                            (Workspace) item));
                 }
                 break;
             case WORKSPACE_EDIT:
                 if (item.getClass() == Workspace.class)
                 {
-                    App.content.getItems().remove(MainScene.informationPane);
-                    App.content.getItems().add(
-                            WorkspaceEditScene.getWorkspaceEditScene((Workspace) item));
+                    MainScene.contentPane.setContent(WorkspaceEditScene.getWorkspaceEditScene(
+                            (Workspace) item));
                 }
                 break;
             case PERSON:
                 if (item.getClass() == Person.class)
                 {
-                    App.content.getItems().remove(MainScene.informationPane);
-                    App.content.getItems().add(PersonScene.getPersonScene((Person) item));
+                    MainScene.contentPane.setContent(PersonScene.getPersonScene(
+                            (Person) item));
                 }
                 break;
             case PERSON_EDIT:
                 if (item.getClass() == Person.class)
                 {
-                    App.content.getItems().remove(MainScene.informationPane);
-                    App.content.getItems().add(PersonEditScene.getPersonEditScene((Person) item));
+                    MainScene.contentPane.setContent(PersonEditScene.getPersonEditScene(
+                            (Person) item));
                 }
                 break;
             case PROJECT:
                 if (item.getClass() == Project.class)
                 {
-                    App.content.getItems().remove(MainScene.informationPane);
-                    App.content.getItems().add(ProjectScene.getProjectScene((Project) item));
+                    MainScene.contentPane.setContent(ProjectScene.getProjectScene(
+                            (Project) item));
                 }
                 break;
             case PROJECT_EDIT:
                 if (item.getClass() == Project.class)
                 {
-                    App.content.getItems().remove(MainScene.informationPane);
-                    App.content.getItems().add(ProjectEditScene.getProjectEditScene(
+                    MainScene.contentPane.setContent(ProjectEditScene.getProjectEditScene(
                             (Project) item));
                 }
                 break;
             case ROLE:
                 if (item.getClass() == Role.class)
                 {
-                    App.content.getItems().remove(MainScene.informationPane);
-                    App.content.getItems().add(RoleScene.getRoleScene((Role) item));
+                    MainScene.contentPane.setContent(RoleScene.getRoleScene(
+                            (Role) item));
                 }
                 break;
             case ROLE_EDIT:
@@ -167,52 +188,50 @@ public class SceneSwitcher
             case SKILL:
                 if (item.getClass() == Skill.class)
                 {
-                    App.content.getItems().remove(MainScene.informationPane);
-                    App.content.getItems().add(SkillScene.getSkillScene((Skill) item));
+                    MainScene.contentPane.setContent(SkillScene.getSkillScene(
+                            (Skill) item));
                 }
                 break;
             case SKILL_EDIT:
                 if (item.getClass() == Skill.class)
                 {
-                    App.content.getItems().remove(MainScene.informationPane);
-                    App.content.getItems().add(SkillEditScene.getSkillEditScene((Skill) item));
+                    MainScene.contentPane.setContent(SkillEditScene.getSkillEditScene(
+                            (Skill) item));
                 }
                 break;
             case RELEASE:
                 if (item.getClass() == Release.class)
                 {
-                    App.content.getItems().remove(MainScene.informationPane);
-                    App.content.getItems().add(ReleaseScene.getReleaseScene((Release) item));
+                    MainScene.contentPane.setContent(ReleaseScene.getReleaseScene(
+                            (Release) item));
                 }
                 break;
             case RELEASE_EDIT:
                 if (item.getClass() == Release.class)
                 {
-                    App.content.getItems().remove(MainScene.informationPane);
-                    App.content.getItems().add(ReleaseEditScene.getReleaseEditScene(
+                    MainScene.contentPane.setContent(ReleaseEditScene.getReleaseEditScene(
                             (Release) item));
                 }
                 break;
             case RELEASE_CATEGORY:
                 if (item.getClass() == ReleaseCategory.class)
                 {
-                    App.content.getItems().remove(MainScene.informationPane);
-                    App.content.getItems().add(ReleaseCategoryScene.getReleaseCategoryScene(
+                    MainScene.contentPane.setContent(ReleaseCategoryScene.getReleaseCategoryScene(
                             (ReleaseCategory) item));
                 }
                 break;
             case TEAM:
                 if (item.getClass() == Team.class)
                 {
-                    App.content.getItems().remove(MainScene.informationPane);
-                    App.content.getItems().add(TeamScene.getTeamScene((Team) item));
+                    MainScene.contentPane.setContent(TeamScene.getTeamScene(
+                            (Team) item));
                 }
                 break;
             case TEAM_EDIT:
                 if (item.getClass() == Team.class)
                 {
-                    App.content.getItems().remove(MainScene.informationPane);
-                    App.content.getItems().add(TeamEditScene.getTeamEditScene((Team) item));
+                    MainScene.contentPane.setContent(TeamEditScene.getTeamEditScene(
+                            (Team) item));
                 }
                 break;
             //TODO: Other scenes when implemented

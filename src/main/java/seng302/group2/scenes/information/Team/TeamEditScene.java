@@ -3,20 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package seng302.group2.scenes.information;
+package seng302.group2.scenes.information.Team;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
@@ -51,7 +49,7 @@ public class TeamEditScene
      * @param currentTeam The team to show the information of
      * @return The Team Edit information scene
      */
-    public static Pane getTeamEditScene(Team currentTeam)
+    public static ScrollPane getTeamEditScene(Team currentTeam)
     {
 
         //Team currentTeam = (Team) selectedTreeItem.getValue();
@@ -558,22 +556,8 @@ public class TeamEditScene
                         ));
                     }
 
-                    /*
-                    App.content.getItems().remove(treeView);
-                    App.content.getItems().remove(informationPane);
-                    TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
-                    MainScene.treeView = new TreeViewWithItems(new TreeItem());
-                    ObservableList<TreeViewItem> children = observableArrayList();
-                    children.add(Global.currentWorkspace);
-
-                    MainScene.treeView.setItems(children);
-                    MainScene.treeView.setShowRoot(false);
-
-                    App.content.getItems().add(treeView);
-                    App.content.getItems().add(informationPane);
-                    MainScene.treeView.getSelectionModel().select(selectedTreeItem);*/
-
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM, currentTeam);
+                    MainScene.treeView.refresh();
 
                 }
                 else
@@ -582,7 +566,7 @@ public class TeamEditScene
                 }
 
             });
-        return informationPane;
+        return new ScrollPane(informationPane);
     }
     
     /*
@@ -781,6 +765,5 @@ public class TeamEditScene
         
         informationPane.getChildren().add(productOwnerBox);
         informationPane.getChildren().add(scrumMasterBox);
-        
     }
 }

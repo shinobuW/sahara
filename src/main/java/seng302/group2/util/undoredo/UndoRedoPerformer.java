@@ -7,7 +7,12 @@ package seng302.group2.util.undoredo;
 
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.information.*;
+import seng302.group2.scenes.information.Person.PersonScene;
+import seng302.group2.scenes.information.Project.ProjectScene;
+import seng302.group2.scenes.information.Release.ReleaseScene;
+import seng302.group2.scenes.information.Skill.SkillScene;
+import seng302.group2.scenes.information.Team.TeamScene;
+import seng302.group2.scenes.information.Workspace.WorkspaceScene;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;

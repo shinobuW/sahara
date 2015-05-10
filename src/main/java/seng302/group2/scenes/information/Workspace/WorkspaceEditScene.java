@@ -1,11 +1,13 @@
-package seng302.group2.scenes.information;
+package seng302.group2.scenes.information.Workspace;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
@@ -26,7 +28,7 @@ public class WorkspaceEditScene
      * @param currentWorkspace The workspace to get the editable information scene for
      * @return The Workspace Edit information scene
      */
-    public static Pane getWorkspaceEditScene(Workspace currentWorkspace)
+    public static ScrollPane getWorkspaceEditScene(Workspace currentWorkspace)
     {
         informationPane = new VBox(10);
         /*informationPane.setAlignment(Pos.TOP_LEFT);
@@ -83,6 +85,7 @@ public class WorkspaceEditScene
 
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE,
                             currentWorkspace);
+                    MainScene.treeView.refresh();
                 }
                 else
                 {
@@ -92,6 +95,6 @@ public class WorkspaceEditScene
 
             });
 
-        return informationPane;
+        return new ScrollPane(informationPane);
     }
 }

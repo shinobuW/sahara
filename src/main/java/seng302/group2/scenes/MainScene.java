@@ -6,12 +6,17 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.information.*;
+import seng302.group2.scenes.information.Person.PersonScene;
+import seng302.group2.scenes.information.Role.RoleScene;
+import seng302.group2.scenes.information.Skill.SkillScene;
+import seng302.group2.scenes.information.Team.TeamScene;
+import seng302.group2.scenes.information.Workspace.WorkspaceScene;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.scenes.menu.MainMenuBar;
@@ -33,6 +38,7 @@ public class MainScene
 {
     public static TreeViewWithItems treeView = new TreeViewWithItems(new TreeItem());
     public static Pane informationPane = new Pane();
+    public static ScrollPane contentPane = new ScrollPane();
     public static boolean menuHidden = false;
     
     /**
@@ -94,6 +100,10 @@ public class MainScene
             }
         });
 
+        contentPane = new ScrollPane(informationPane);
+        contentPane.setFitToHeight(true);
+        contentPane.setFitToWidth(true);
+
         content.boundsInParentProperty();
         informationPane.boundsInParentProperty();
 
@@ -105,13 +115,13 @@ public class MainScene
             content.getItems().add(treeView);
             //content.getChildren().add(treeView);
         }
-        content.getItems().add(informationPane);
+        content.getItems().add(contentPane);
 
-        //content.getChildren().add(informationPane);
 
         //root.getChildren().remove(content);
         root.setCenter(content);
 
+        content.setDividerPositions(0.225);
         Platform.runLater(()->content.setDividerPositions(0.225));
 
         return new Scene(root);
