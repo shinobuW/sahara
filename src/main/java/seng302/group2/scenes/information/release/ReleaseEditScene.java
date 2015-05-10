@@ -93,9 +93,7 @@ public class ReleaseEditScene
 
         btnCancel.setOnAction((event) ->
             {
-                App.content.getItems().remove(informationPane);
-                ReleaseScene.getReleaseScene((Release) Global.selectedTreeItem.getValue());
-                App.content.getItems().add(informationPane);
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
             });
 
         btnSave.setOnAction((event) ->

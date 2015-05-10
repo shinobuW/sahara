@@ -151,10 +151,8 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                             || Global.selectedTreeItem.getValue() == null)
                     {
                         // Nothing is selected, make a default selection?
-                        App.content.getItems().remove(MainScene.informationPane);
-                        //WorkspaceScene.getWorkspaceScene((Workspace)
-                        //selected);
-                        App.content.getItems().add(MainScene.informationPane);
+                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE,
+                                Global.currentWorkspace);
                     }
                     else
                     {
