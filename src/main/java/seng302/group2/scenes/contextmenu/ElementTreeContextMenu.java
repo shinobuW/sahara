@@ -5,6 +5,7 @@ import javafx.scene.control.MenuItem;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
+import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.information.person.PersonEditScene;
 import seng302.group2.scenes.information.project.ProjectEditScene;
 import seng302.group2.scenes.information.release.ReleaseEditScene;
@@ -175,24 +176,27 @@ public class ElementTreeContextMenu extends ContextMenu
      */
     public static void showEditScene(Categories category)
     {
-        App.content.getItems().remove(MainScene.informationPane);
-        
         switch (category)
         {
             case PERSON:
-                PersonEditScene.getPersonEditScene((Person) Global.selectedTreeItem.getValue());
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON_EDIT,
+                        (Person) Global.selectedTreeItem.getValue());
                 break;
             case SKILL:
-                SkillEditScene.getSkillEditScene((Skill) Global.selectedTreeItem.getValue());
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL_EDIT,
+                        (Skill) Global.selectedTreeItem.getValue());
                 break;
             case TEAM:
-                TeamEditScene.getTeamEditScene((Team) Global.selectedTreeItem.getValue());
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM_EDIT,
+                        (Team) Global.selectedTreeItem.getValue());
                 break;
             case PROJECT:
-                ProjectEditScene.getProjectEditScene((Project) Global.selectedTreeItem.getValue());
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT_EDIT,
+                        (Project) Global.selectedTreeItem.getValue());
                 break;
             case RELEASE:
-                ReleaseEditScene.getReleaseEditScene((Release) Global.selectedTreeItem.getValue());
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE_EDIT,
+                        (Release) Global.selectedTreeItem.getValue());
                 break;
             case OTHER:
                 System.out.println("The category was not correctly recognized");
@@ -201,6 +205,5 @@ public class ElementTreeContextMenu extends ContextMenu
                 System.out.println("The category was not set");
                 break;
         }
-        App.content.getItems().add(MainScene.informationPane);
     }
 }
