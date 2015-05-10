@@ -464,9 +464,11 @@ public class Project extends TreeViewItem implements Serializable
      * @param newLongName The new long name
      * @param newDescription The new description
      */
-    public void edit(String newShortName, String newLongName, String newDescription)
+    public void edit(String newShortName, String newLongName, String newDescription,
+                     ObservableList<Team> teams)
     {
-        Command wsedit = new ProjectEditCommand(this, newShortName, newLongName, newDescription);
+        Command wsedit = new ProjectEditCommand(this, newShortName, newLongName, newDescription,
+                teams);
         Global.commandManager.executeCommand(wsedit);
     }
 
@@ -480,20 +482,24 @@ public class Project extends TreeViewItem implements Serializable
         private String shortName;
         private String longName;
         private String description;
+        private ObservableList<Team> teams;
         private String oldShortName;
         private String oldLongName;
         private String oldDescription;
+        private ObservableList<Team> oldTeams;
 
         private ProjectEditCommand(Project proj, String newShortName, String newLongName,
-                                     String newDescription)
+                                     String newDescription, ObservableList<Team> newTeams)
         {
             this.proj = proj;
             this.shortName = newShortName;
             this.longName = newLongName;
             this.description = newDescription;
+            this.teams = newTeams;
             this.oldShortName = proj.shortName;
             this.oldLongName = proj.longName;
             this.oldDescription = proj.description;
+            this.oldTeams = proj.teams;
         }
 
         /**
@@ -504,6 +510,7 @@ public class Project extends TreeViewItem implements Serializable
             proj.shortName = shortName;
             proj.longName = longName;
             proj.description = description;
+            proj.teams = teams;
         }
 
         /**
@@ -514,6 +521,7 @@ public class Project extends TreeViewItem implements Serializable
             proj.shortName = oldShortName;
             proj.longName = oldLongName;
             proj.description = oldDescription;
+            proj.teams = oldTeams;
         }
     }
 

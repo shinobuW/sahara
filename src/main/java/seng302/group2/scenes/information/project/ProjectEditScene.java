@@ -81,8 +81,8 @@ public class ProjectEditScene
         projectTeamsBox.setMaxHeight(150);
 
 
-        ObservableList<Team> dialogTeams = observableArrayList();
-        ObservableList<Team> dialogTeamsCopy = observableArrayList();
+        ObservableList<Team> availableTeams = observableArrayList();
+        ObservableList<Team> addedTeams = observableArrayList();
 	
 	
         for (TreeViewItem projectTeam : Global.currentWorkspace.getTeams())
@@ -90,12 +90,12 @@ public class ProjectEditScene
             if (!((Team)projectTeam).isUnassignedTeam()
                     && !currentProject.getTeams().contains(projectTeam))
             {
-                dialogTeams.add((Team)projectTeam);
-                dialogTeamsCopy.add((Team)projectTeam);
+                availableTeams.add((Team) projectTeam);
+                addedTeams.add((Team) projectTeam);
             }
         }
 
-        ListView membersBox = new ListView(dialogTeams);
+        ListView membersBox = new ListView(availableTeams);
         membersBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         membersBox.setMaxHeight(150);
 
@@ -122,7 +122,7 @@ public class ProjectEditScene
                         membersBox.getSelectionModel().getSelectedItems();
                 for (Team item : selectedTeams)
                 {
-		    if (item.getProject() == null) 
+                    if (item.getProject() == null)
                     {
                         tempProject.addWithoutUndo(item);
                     }
@@ -132,7 +132,7 @@ public class ProjectEditScene
                     }
                 }
 
-                dialogTeams.clear();
+                availableTeams.clear();
                 for (TreeViewItem projectTeams : Global.currentWorkspace.getTeams())
                 {
                     if (!tempProject.getTeams().contains((Team)projectTeams))
@@ -140,7 +140,7 @@ public class ProjectEditScene
                         if (!((Team)projectTeams).isUnassignedTeam()
                             && !currentProject.getTeams().contains(projectTeams))
                         {
-                            dialogTeams.add((Team)projectTeams);
+                            availableTeams.add((Team) projectTeams);
                         }
                     }
 		    
@@ -157,23 +157,20 @@ public class ProjectEditScene
                     tempProject.removeWithoutUndo(selectedTeams.get(i));
                 }
 
-                dialogTeams.clear();
+                availableTeams.clear();
                 for (TreeViewItem projectTeams : Global.currentWorkspace.getTeams())
                 {
                     if (!tempProject.getTeams().contains((Team)projectTeams)
                         && !((Team)projectTeams).isUnassignedTeam())
                     {
-                        dialogTeams.add((Team)projectTeams);
+                        availableTeams.add((Team) projectTeams);
                     }
                 }
             });
 
         btnCancel.setOnAction((event) ->
             {
-                App.content.getItems().remove(informationPane);
-                ProjectScene.getProjectScene((Project) Global.selectedTreeItem.getValue());
-                App.content.getItems().add(informationPane);
-
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
             });
 
         btnSave.setOnAction((event) ->
@@ -193,7 +190,8 @@ public class ProjectEditScene
                                 || NameValidator.validateName(longNameCustomField)))
                 {
                     currentProject.edit(shortNameCustomField.getText(),
-                            longNameCustomField.getText(), descriptionTextArea.getText());
+                            longNameCustomField.getText(), descriptionTextArea.getText(),
+                            addedTeams);
 
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
                     MainScene.treeView.refresh();
