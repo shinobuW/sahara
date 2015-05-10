@@ -8,6 +8,9 @@ package seng302.group2.util.validation;
 
 import org.junit.Assert;
 import org.junit.Test;
+import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.team.Allocation;
+import seng302.group2.workspace.team.Team;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -22,7 +25,7 @@ public class DateValidatorTest
      * Test of isValidBirthdate method, of class DateValidator.
      */
     @Test
-    public void testIsValidDateString()
+    public void testIsValidBirthdate()
     {
         Assert.assertEquals(ValidationStatus.NULL, DateValidator.isValidBirthdate(""));
         Assert.assertEquals(ValidationStatus.OUT_OF_RANGE,
@@ -30,6 +33,81 @@ public class DateValidatorTest
         Assert.assertEquals(ValidationStatus.VALID, DateValidator.isValidBirthdate("20/03/2015"));
         Assert.assertEquals(ValidationStatus.PATTERN_MISMATCH,
                 DateValidator.isValidBirthdate("20/03/15"));
+    }
+
+    /**
+     * Test of isValidAllocationDate method, of class DateValidator
+     */
+    @Test
+    public void testIsValidAllocationDate()
+    {
+        Project proj = new Project();
+        Team team = new Team();
+        Allocation projAlloc = new Allocation(proj, team,
+                new Date("01/01/2015"), new Date("01/01/2016"));
+        proj.add(projAlloc);
+        team.add(projAlloc);
+
+        Allocation allocDatesWrongOrder = new Allocation(proj, team,
+                new Date("01/01/2016"), new Date("01/01/2015"));
+        Assert.assertEquals(ValidationStatus.ALLOCATION_DATES_WRONG_ORDER,
+                DateValidator.isValidAllocationDate(allocDatesWrongOrder, proj));
+
+        Allocation allocStartOverlap = new Allocation(proj, team,
+                new Date("01/06/2015"), new Date("01/06/2016"));
+        Assert.assertEquals(ValidationStatus.START_OVERLAP,
+                DateValidator.isValidAllocationDate(allocStartOverlap, proj));
+
+        Allocation allocEndOverlap = new Allocation(proj, team,
+                new Date("01/06/2014"), new Date("01/06/2015"));
+        Assert.assertEquals(ValidationStatus.END_OVERLAP,
+                DateValidator.isValidAllocationDate(allocEndOverlap, proj));
+
+        Allocation allocSuperOverlap = new Allocation(proj, team,
+                new Date("01/06/2014"), new Date("01/06/2016"));
+        Assert.assertEquals(ValidationStatus.SUPER_OVERLAP,
+                DateValidator.isValidAllocationDate(allocSuperOverlap, proj));
+
+        Allocation allocSubOverlap = new Allocation(proj, team,
+                new Date("01/02/2015"), new Date("01/12/2015"));
+        Assert.assertEquals(ValidationStatus.SUB_OVERLAP,
+                DateValidator.isValidAllocationDate(allocSubOverlap, proj));
+
+        Allocation allocValid = new Allocation(proj, team,
+                new Date("02/01/2016"), new Date("01/01/2017"));
+        Assert.assertEquals(ValidationStatus.VALID,
+                DateValidator.isValidAllocationDate(allocValid, proj));
+
+    }
+
+    /**
+     * Test of dateBefore method, of class DateValidator
+     */
+    @Test
+    public void testDateBefore()
+    {
+        Date date1 = new Date("01/01/2015");
+        Date date2 = new Date("01/01/2016");
+
+        Assert.assertEquals(true, DateValidator.dateBefore(date1, date2));
+        Assert.assertEquals(false, DateValidator.dateBefore(date2, date1));
+        Assert.assertEquals(false, DateValidator.dateBefore(null, date2));
+        Assert.assertEquals(true, DateValidator.dateBefore(date1, null));
+    }
+
+    /**
+     * Test of dateAfter method, of class DateValidator
+     */
+    @Test
+    public void testDateAfter()
+    {
+        Date date1 = new Date("01/01/2015");
+        Date date2 = new Date("01/01/2016");
+
+        Assert.assertEquals(false, DateValidator.dateAfter(date1, date2));
+        Assert.assertEquals(true, DateValidator.dateAfter(date2, date1));
+        Assert.assertEquals(true, DateValidator.dateAfter(null, date2));
+        Assert.assertEquals(false, DateValidator.dateAfter(date1, null));
     }
 
     /**
