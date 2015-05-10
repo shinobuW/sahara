@@ -5,7 +5,6 @@
  */
 package seng302.group2.scenes.control;
 
-import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
@@ -77,6 +76,15 @@ public class CustomComboBox extends VBox
     public void addToComboBox(String item)
     {
         this.options.add(item); 
+    }
+
+    /**
+     * Gets the inner combo box
+     * @return The combo box
+     */
+    public ComboBox getComboBox()
+    {
+        return this.comboBox;
     }
     
     /** Gets the value of the chosen item in combo box
