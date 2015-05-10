@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -36,48 +37,25 @@ public class ProjectScene
         TabPane tabPane = new TabPane();
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.getStyleClass().add("floating");
+        informationPane.getChildren().add(tabPane);  // Add to the info pane
+        ((VBox) informationPane).setVgrow(tabPane, Priority.ALWAYS);
 
-        // Basic info tab
+        // Define and add the tabs
         Tab informationTab = new ProjectInfoTab(currentProject);
-
-        // Alloc history tab
         Tab allocation = ProjectHistoryTab.getHistoryTab();
 
-
-
         tabPane.getTabs().addAll(informationTab, allocation);  // Add the tabs to the pane
-
-
-
-
-
-
-
-
-
-
-        //tabPane.setMinWidth(informationPane.getWidth());
-
-
-        //basicInfoPane.setMinWidth(informationPane.getWidth());
-
-
-        /*ScrollPane s1 = new ScrollPane();
-        s1.setContent(tabPane);
-        s1.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);*/
-
-
-
-
-
-
-        informationPane.getChildren().add(tabPane);
 
         ScrollPane wrapper = new ScrollPane(informationPane);
         wrapper.setStyle("-fx-background-color:transparent;");
         return wrapper;
     }
-    
+
+
+    /**
+     * Reloads the scene with the given project
+     * @param project The project to reload
+     */
     public static void refreshProjectScene(Project project)
     {
         SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, project);
