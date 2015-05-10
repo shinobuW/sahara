@@ -800,57 +800,38 @@ public class Workspace extends TreeViewItem implements Serializable
     public static Workspace prepSerialization(Workspace workspace)
     {
         workspace.serializablePeople.clear();
-        for (Object item : workspace.people)
+        for (Person item : workspace.people)
         {
-            workspace.serializablePeople.add((Person) item);
+            item.prepSerialization();
+            workspace.serializablePeople.add(item);
         }
 
         workspace.serializableProjects.clear();
-        for (Object item : workspace.projects)
+        for (Project item : workspace.projects)
         {
-            workspace.serializableProjects.add((Project) item);
+            item.prepSerialization();
+            workspace.serializableProjects.add(item);
         }
 
         workspace.serializableSkills.clear();
-        for (Object item : workspace.skills)
+        for (Skill item : workspace.skills)
         {
-            workspace.serializableSkills.add((Skill) item);
+            workspace.serializableSkills.add(item);
         }
 
         workspace.serializableTeams.clear();
-        for (Object item : workspace.teams)
+        for (Team item : workspace.teams)
         {
-            workspace.serializableTeams.add((Team) item);
+            item.prepSerialization();
+            workspace.serializableTeams.add(item);
         }
 
         workspace.serializableRoles.clear();
-        for (Object item : workspace.roles)
+        for (Role item : workspace.roles)
         {
-            workspace.serializableRoles.add((Role) item);
+            item.prepSerialization();
+            workspace.serializableRoles.add(item);
         }
-
-        // Prepare for the serialization of persons (skills)
-        for (Object item : workspace.people)
-        {
-            Person person = (Person) item;
-            person.prepSerialization();
-        }
-
-        // Prepare for the serialization of teams (people)
-        for (Object item : workspace.teams)
-        {
-            Team team = (Team) item;
-            team.prepSerialization();
-        }
-
-        // Prepare for the serialization of roles (skills)
-        for (Object item : workspace.roles)
-        {
-            Role role = (Role) item;
-            role.prepSerialization();
-        }
-
-        // Also perform again for any other deeper observables
 
         return workspace;
     }
@@ -865,11 +846,13 @@ public class Workspace extends TreeViewItem implements Serializable
         Global.currentWorkspace.people = observableArrayList();
         for (Person item : Global.currentWorkspace.serializablePeople)
         {
+            item.postSerialization();
             Global.currentWorkspace.people.add(item);
         }
 
         for (Project item : Global.currentWorkspace.serializableProjects)
         {
+            item.postSerialization();
             Global.currentWorkspace.projects.add(item);
         }
 
@@ -882,43 +865,16 @@ public class Workspace extends TreeViewItem implements Serializable
         Global.currentWorkspace.teams = observableArrayList();
         for (Team item : Global.currentWorkspace.serializableTeams)
         {
+            item.postSerialization();
             Global.currentWorkspace.teams.add(item);
         }
 
         Global.currentWorkspace.roles = observableArrayList();
         for (Role item : Global.currentWorkspace.serializableRoles)
         {
+            item.postSerialization();
             Global.currentWorkspace.roles.add(item);
         }
-
-        // Prepare for the serialization of projects
-        for (Project proj : Global.currentWorkspace.serializableProjects)
-        {
-            proj.postSerialization();
-        }
-
-        // Prepare for the serialization of persons
-        for (Object item : Global.currentWorkspace.serializablePeople)
-        {
-            Person person = (Person) item;
-            person.postSerialization();
-        }
-
-        // Prepare for the serialization of teams
-        for (Object item : Global.currentWorkspace.serializableTeams)
-        {
-            Team team = (Team) item;
-            team.postSerialization();
-        }
-
-        //Prepare for the serialization of roles
-        for (Object item : Global.currentWorkspace.serializableRoles)
-        {
-            Role role = (Role) item;
-            role.postSerialization();
-        }
-        // Also for any other deeper observables
-        // eg. for (TreeViewItem item : Global.currentWorkspace.team.people) {...}
 
         // Unset saved changes flag, we just opened the workspace.
         Global.currentWorkspace.hasUnsavedChanges = false;

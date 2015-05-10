@@ -15,8 +15,8 @@ import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
+import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -29,14 +29,18 @@ public class Project extends TreeViewItem implements Serializable
     private String shortName;
     private String longName;
     private String description;
-    private transient ObservableList<Team> teams = observableArrayList();
-    private List<Team> serializableTeams = new ArrayList<>();
+
     private transient ObservableList<Release> releases = observableArrayList();
     private List<Release> serializableReleases = new ArrayList<>();
     private transient ObservableList<Allocation> teamAllocations = observableArrayList();
-    private List<Team> serializableTeamAllocations = new ArrayList<>();
+    private List<Allocation> serializableTeamAllocations = new ArrayList<>();
     private transient ObservableList<Story> stories = observableArrayList();
     private List<Story> serializableStories = new ArrayList<>();
+
+    @Deprecated
+    private transient ObservableList<Team> teams = observableArrayList();
+    @Deprecated
+    private List<Team> serializableTeams = new ArrayList<>();
 
 
     /**
@@ -92,6 +96,7 @@ public class Project extends TreeViewItem implements Serializable
      * Gets the teams of the project
      * @return list of teams
      */
+    @Deprecated
     public ObservableList<Team> getTeams()
     {
         this.serializableTeams.clear();
@@ -100,6 +105,48 @@ public class Project extends TreeViewItem implements Serializable
             this.serializableTeams.add((Team) item);
         }
         return this.teams;
+    }
+
+
+    /**
+     * Gets a set of the teams that have been assigned to the project through the team allocations
+     * @return a set of the teams that have been assigned to the project
+     */
+    public Set<Team> getAllTeams()
+    {
+        Set<Team> teams = new HashSet<>();
+        for (Allocation alloc : teamAllocations)
+        {
+            Team projectTeam = alloc.getTeam();
+            if (!projectTeam.isUnassignedTeam())
+            {
+                teams.add(projectTeam);
+            }
+        }
+        return teams;
+    }
+
+
+    /**
+     * Gets a set of the teams currently assigned to the project through the team allocations
+     * @return a set of the teams currently assigned to the project
+     */
+    public Set<Team> getCurrentTeams()
+    {
+        Set<Team> teams = new HashSet<>();
+        for (Allocation alloc : teamAllocations)
+        {
+            Team projectTeam = alloc.getTeam();
+            if (!projectTeam.isUnassignedTeam()
+                    && alloc.getStartDate().before(Date.from(Instant.now()))
+                    && alloc.getEndDate().after(Date.from(Instant.now()))
+                    && !teams.contains(projectTeam))
+            {
+                teams.add(projectTeam);
+            }
+        }
+        System.out.println(teams);
+        return teams;
     }
 
 
@@ -161,6 +208,7 @@ public class Project extends TreeViewItem implements Serializable
      * Gets the serializable teams
      * @return the serializable teams
      */
+    @Deprecated
     public List<Team> getSerializableTeams()
     {
         return serializableTeams;
@@ -197,7 +245,7 @@ public class Project extends TreeViewItem implements Serializable
      * Gets the serializable teams allocated to the project in the past
      * @return serializable teams
      */
-    public List<Team> getSerializableTeamAllocations()
+    public List<Allocation> getSerializableTeamAllocations()
     {
         return serializableTeamAllocations;
     }
@@ -403,6 +451,20 @@ public class Project extends TreeViewItem implements Serializable
         {
             this.serializableReleases.add((Release) item);
         }
+
+        System.out.println("allocation serial prep");
+        serializableTeamAllocations.clear();
+        for (Allocation item : teamAllocations)
+        {
+            System.out.println("there is an allocation");
+            this.serializableTeamAllocations.add(item);
+        }
+
+        serializableStories.clear();
+        for (Story item : stories)
+        {
+            this.serializableStories.add(item);
+        }
     }
 
 
@@ -421,6 +483,18 @@ public class Project extends TreeViewItem implements Serializable
         for (Object item : serializableReleases)
         {
             this.releases.add((Release) item);
+        }
+
+        teamAllocations.clear();
+        for (Allocation alloc : serializableTeamAllocations)
+        {
+            this.teamAllocations.add(alloc);
+        }
+
+        stories.clear();
+        for (Story story : serializableStories)
+        {
+            this.stories.add(story);
         }
     }
 

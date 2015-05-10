@@ -5,10 +5,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.Global;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.TitleLabel;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
 
@@ -20,6 +18,8 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public class ProjectInfoTab extends Tab
 {
+    ObservableList<Team> currentTeams = observableArrayList();
+
     public ProjectInfoTab(Project currentProject)
     {
         this.setText("Basic Information");
@@ -35,19 +35,20 @@ public class ProjectInfoTab extends Tab
 
         Button btnEdit = new Button("Edit");
 
-        ListView projectTeamsBox = new ListView(currentProject.getTeams());
+
+        this.setOnSelectionChanged(event ->
+            {
+                currentTeams.clear();
+                for (Team team : currentProject.getCurrentTeams())
+                {
+                    currentTeams.add(team);
+                }
+            });
+
+
+        ListView projectTeamsBox = new ListView(currentTeams);
         projectTeamsBox.setMaxHeight(150);
         projectTeamsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-        ObservableList<Team> dialogTeams = observableArrayList();
-        for (TreeViewItem projectTeam : Global.currentWorkspace.getTeams())
-        {
-            if (!((Team)projectTeam).isUnassignedTeam()
-                    && !currentProject.getTeams().contains(projectTeam))
-            {
-                dialogTeams.add((Team)projectTeam);
-            }
-        }
 
         ListView projectReleaseBox = new ListView(currentProject.getReleases());
         projectReleaseBox.setMaxHeight(150);

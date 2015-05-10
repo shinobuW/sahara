@@ -1,19 +1,17 @@
 package seng302.group2.scenes.information.project;
 
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
-import seng302.group2.App;
-import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.validation.NameValidator;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.Project;
@@ -36,9 +34,7 @@ public class ProjectEditScene
     public static ScrollPane getProjectEditScene(Project currentProject)
     {
         informationPane = new VBox(10);
-        /*informationPane.setAlignment(Pos.TOP_LEFT);
-        informationPane.setHgap(10);
-        informationPane.setVgap(10);*/
+
         informationPane.setPadding(new Insets(25,25,25,25));
 
         Button btnCancel = new Button("Cancel");
@@ -70,7 +66,7 @@ public class ProjectEditScene
         teamButtons.getChildren().add(btnDelete);
         teamButtons.setAlignment(Pos.CENTER);
 
-        Project tempProject = new Project();
+        /*Project tempProject = new Project();
         for (Team team : currentProject.getTeams()) 
         {
             tempProject.addWithoutUndo(team);
@@ -97,13 +93,13 @@ public class ProjectEditScene
 
         ListView membersBox = new ListView(availableTeams);
         membersBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        membersBox.setMaxHeight(150);
+        membersBox.setMaxHeight(150);*/
 
         informationPane.getChildren().add(shortNameCustomField);
         informationPane.getChildren().add(longNameCustomField);
         informationPane.getChildren().add(descriptionTextArea);
 
-        HBox h1 = new HBox(10);
+        /*HBox h1 = new HBox(10);
         VBox v1 = new VBox(10);
         v1.getChildren().add(new Label("Teams: "));
         v1.getChildren().add(projectTeamsBox);
@@ -113,10 +109,10 @@ public class ProjectEditScene
         v2.getChildren().add(membersBox);
 
         h1.getChildren().addAll(v1, teamButtons, v2);
-        informationPane.getChildren().add(h1);
+        informationPane.getChildren().add(h1);*/
         informationPane.getChildren().add(buttons);
 
-        btnAdd.setOnAction((event) ->
+        /*btnAdd.setOnAction((event) ->
             {
                 ObservableList<Team> selectedTeams =
                         membersBox.getSelectionModel().getSelectedItems();
@@ -166,7 +162,7 @@ public class ProjectEditScene
                         availableTeams.add((Team) projectTeams);
                     }
                 }
-            });
+            });*/
 
         btnCancel.setOnAction((event) ->
             {
@@ -191,7 +187,7 @@ public class ProjectEditScene
                 {
                     currentProject.edit(shortNameCustomField.getText(),
                             longNameCustomField.getText(), descriptionTextArea.getText(),
-                            addedTeams);
+                            observableArrayList() /*addedTeams TODO: Remove when certain */);
 
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
                     MainScene.treeView.refresh();

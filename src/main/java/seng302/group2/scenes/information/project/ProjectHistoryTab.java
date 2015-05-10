@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.scenes.control.TitleLabel;
@@ -43,7 +44,6 @@ public class ProjectHistoryTab extends Tab
         historyPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(historyPane);
         this.setContent(wrapper);
-
 
         TableView<Allocation> historyTable = new TableView();
         ObservableList<Allocation> data = currentProject.getTeamAllocations();
@@ -102,12 +102,14 @@ public class ProjectHistoryTab extends Tab
             {
             //System.out.println("called" + currentProject.getTeams());
                 teamComboBox.getComboBox().getItems().clear();
-                for (Team team : currentProject.getTeams())
+                for (Team team : Global.currentWorkspace.getTeams())
                 {
                     //System.out.println("Team : " + team.toString());
                     teamComboBox.getComboBox().getItems().add(team);
                     //teamComboBox.addToComboBox(team.toString());
                 }
+                // Remove the unassigned team
+                teamComboBox.getComboBox().getItems().remove(Global.getUnassignedTeam());
             });
 
 
@@ -125,11 +127,11 @@ public class ProjectHistoryTab extends Tab
                     Date startDate = stringToDate(startDateField.getText());
                     Team selectedTeam = new Team();
 
-                    for (Team team : currentProject.getTeams())
+                    for (Team team : Global.currentWorkspace.getTeams())
                     {
                         if (team.toString().equals(teamComboBox.getValue()))
                         {
-                            selectedTeam = (Team)team;
+                            selectedTeam = team;
                         }
                     }
 

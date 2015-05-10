@@ -2,13 +2,14 @@ package seng302.group2.workspace.team;
 
 import seng302.group2.workspace.project.Project;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * A class that represents allocations between teams and projects
  * Created by Jordane Lew and David Moseley on 7/05/15.
  */
-public class Allocation
+public class Allocation implements Serializable
 {
     /**
      * An enumeration for allocation statuses

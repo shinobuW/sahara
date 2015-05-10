@@ -10,6 +10,8 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.story.Story;
+import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
 
 /**
@@ -30,6 +32,9 @@ public class SerialBuilder
                 .addType(Project.class)
                 .addType(Release.class)
                 .addType(Role.class)
+                .addType(Allocation.class)
+                .addType(Story.class)
+                //TODO add backlog.class
                 .registerOn(gsonBuilder);
         return gsonBuilder.create();
     }
