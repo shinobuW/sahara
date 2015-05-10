@@ -28,9 +28,7 @@ public class ProjectCategoryScene
     public static ScrollPane getProjectCategoryScene(Workspace currentWorkspace)
     {
         informationPane = new VBox(10);
-        /*informationPane.setAlignment(Pos.TOP_LEFT);
-        informationPane.setHgap(10);
-        informationPane.setVgap(10);*/
+
         informationPane.setPadding(new Insets(25,25,25,25));
         Label title = new Label("Projects in " + currentWorkspace.getShortName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
