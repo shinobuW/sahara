@@ -45,7 +45,8 @@ public class ProjectScene
         informationTab.setContent(basicInfoPane);
 
         // Alloc history tab
-        Tab allocation = new Tab("Allocation History");
+        Tab allocation = ProjectHistoryTab.getHistoryTab();
+
 
 
         tabPane.getTabs().addAll(informationTab, allocation);  // Add the tabs to the pane
