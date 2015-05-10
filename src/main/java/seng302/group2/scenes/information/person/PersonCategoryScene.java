@@ -1,45 +1,44 @@
-package seng302.group2.scenes.information.Team;
+package seng302.group2.scenes.information.person;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.dialog.CreateTeamDialog;
+import seng302.group2.scenes.dialog.CreatePersonDialog;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.team.Team;
 
 import static seng302.group2.scenes.MainScene.informationPane;
+import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
- * A class for displaying all teams currently created in a workspace.
+ * A class for displaying all people currently created in a workspace.
  * @author David Moseley
  */
-public class TeamCategoryScene
+public class PersonCategoryScene
 {
     /**
-     * Gets the Team Category Scene
+     * Gets the Person Category Scene
      * @param currentWorkspace The workspace currently being used
-     * @return The team category info scene
+     * @return The person category info scene
      */
-    public static ScrollPane getTeamCategoryScene(Workspace currentWorkspace)
+    public static ScrollPane getPersonCategoryScene(Workspace currentWorkspace)
     {
         informationPane = new VBox(10);
         /*informationPane.setAlignment(Pos.TOP_LEFT);
         informationPane.setHgap(10);
         informationPane.setVgap(10);*/
         informationPane.setPadding(new Insets(25,25,25,25));
-        Label title = new Label("Teams in " + currentWorkspace.getShortName());
+        Label title = new Label("People in " + currentWorkspace.getShortName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
         Button btnView = new Button("View");
         Button btnDelete = new Button("Delete");
-        Button btnCreate = new Button("Create New Team");
+        Button btnCreate = new Button("Create New Person");
 
         HBox selectionButtons = new HBox();
         selectionButtons.spacingProperty().setValue(10);
@@ -48,38 +47,42 @@ public class TeamCategoryScene
         selectionButtons.getChildren().add(btnCreate);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
+        //HBox createButton = new HBox();
+        //createButton.getChildren().add(btnCreate);
+        //createButton.setAlignment(Pos.CENTER_RIGHT);
 
-        ListView teamBox = new ListView(currentWorkspace.getTeams());
-        teamBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        teamBox.setMaxWidth(275);
+        ListView personBox = new ListView(currentWorkspace.getPeople());
+        personBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        personBox.setMaxWidth(275);
 
         informationPane.getChildren().add(title);
-        informationPane.getChildren().add(teamBox);
+        informationPane.getChildren().add(personBox);
         informationPane.getChildren().add(selectionButtons);
 
+        //informationPane.getChildren().add(createButton);
 
         btnView.setOnAction((event) ->
             {
-                if (teamBox.getSelectionModel().getSelectedItem() != null)
+                if (personBox.getSelectionModel().getSelectedItem() != null)
                 {
                     MainScene.treeView.selectItem((TreeViewItem)
-                            teamBox.getSelectionModel().getSelectedItem());
+                            personBox.getSelectionModel().getSelectedItem());
                 }
             });
 
 
         btnDelete.setOnAction((event) ->
             {
-                if (teamBox.getSelectionModel().getSelectedItem() != null)
+                if (personBox.getSelectionModel().getSelectedItem() != null)
                 {
-                    ((Team) teamBox.getSelectionModel().getSelectedItem()).deleteTeamCascading();
+                    showDeleteDialog((TreeViewItem) 
+                        personBox.getSelectionModel().getSelectedItem());
                 }
             });
 
-
         btnCreate.setOnAction((event) ->
             {
-                CreateTeamDialog.show();
+                CreatePersonDialog.show();
             });
 
         ScrollPane wrapper = new ScrollPane(informationPane);

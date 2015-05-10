@@ -1,9 +1,8 @@
-package seng302.group2.scenes.information.Team;
+package seng302.group2.scenes.information.team;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;

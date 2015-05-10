@@ -1,83 +1,82 @@
-package seng302.group2.scenes.information.Skill;
+package seng302.group2.scenes.information.release;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.dialog.CreateSkillDialog;
+import seng302.group2.scenes.dialog.CreateReleaseDialog;
+import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.skills.Skill;
 
 import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
- * A class for displaying all skills currently created in a workspace.
+ * A class for displaying all releases in a project.
  * @author David Moseley
  */
-public class SkillCategoryScene
+public class ReleaseCategoryScene
 {
     /**
-     * Gets the Skill Category Scene
-     * @param currentWorkspace The workspace currently being used
-     * @return The skill category info scene
+     * Gets the Release Category Scene
+     * @param selectedCategory The category currently selected
+     * @return The release category info scene
      */
-    public static ScrollPane getSkillCategoryScene(Workspace currentWorkspace)
+    public static ScrollPane getReleaseCategoryScene(ReleaseCategory selectedCategory)
     {
         informationPane = new VBox(10);
         /*informationPane.setAlignment(Pos.TOP_LEFT);
         informationPane.setHgap(10);
         informationPane.setVgap(10);*/
         informationPane.setPadding(new Insets(25,25,25,25));
-        Label title = new Label("Skills in " + currentWorkspace.getShortName());
+        Label title = new Label("Releases in " + selectedCategory.getProject().toString());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
         Button btnView = new Button("View");
-        Button btnDelete = new Button("Delete");
-        Button btnCreate = new Button("Create New Skill");
+        //Button btnDelete = new Button("Delete");
+        Button btnCreate = new Button("Create New Release");
 
         HBox selectionButtons = new HBox();
         selectionButtons.spacingProperty().setValue(10);
         selectionButtons.getChildren().add(btnView);
-        selectionButtons.getChildren().add(btnDelete);
         selectionButtons.getChildren().add(btnCreate);
+        //selectionButtons.getChildren().add(btnDelete);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
-        ListView skillBox = new ListView(currentWorkspace.getSkills());
-        skillBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        skillBox.setMaxWidth(275);
+
+        ListView releaseBox = new ListView(selectedCategory.getProject().getReleases());
+        releaseBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        releaseBox.setMaxWidth(275);
 
         informationPane.getChildren().add(title);
-        informationPane.getChildren().add(skillBox);
+        informationPane.getChildren().add(releaseBox);
         informationPane.getChildren().add(selectionButtons);
-
 
         btnView.setOnAction((event) ->
             {
-                if (skillBox.getSelectionModel().getSelectedItem() != null)
+                if (releaseBox.getSelectionModel().getSelectedItem() != null)
                 {
                     MainScene.treeView.selectItem((TreeViewItem)
-                            skillBox.getSelectionModel().getSelectedItem());
+                            releaseBox.getSelectionModel().getSelectedItem());
                 }
             });
 
 
-        btnDelete.setOnAction((event) ->
+        /*btnDelete.setOnAction((event) ->
             {
-                if (skillBox.getSelectionModel().getSelectedItem() != null)
+                if (releaseBox.getSelectionModel().getSelectedItem() != null)
                 {
-                    ((Skill) skillBox.getSelectionModel().getSelectedItem()).deleteSkill();
+                    Release.deleteRelease(
+                            (Release) releaseBox.getSelectionModel().getSelectedItem());
                 }
-            });
+            });*/
 
         btnCreate.setOnAction((event) ->
             {
-                CreateSkillDialog.show();
+                CreateReleaseDialog.show(selectedCategory.getProject());
             });
 
         ScrollPane wrapper = new ScrollPane(informationPane);

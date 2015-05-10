@@ -1,29 +1,26 @@
 package seng302.group2.scenes;
 
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.ScrollPane;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.information.Person.PersonCategoryScene;
-import seng302.group2.scenes.information.Person.PersonEditScene;
-import seng302.group2.scenes.information.Person.PersonScene;
-import seng302.group2.scenes.information.Project.ProjectCategoryScene;
-import seng302.group2.scenes.information.Project.ProjectEditScene;
-import seng302.group2.scenes.information.Project.ProjectScene;
-import seng302.group2.scenes.information.Release.ReleaseCategoryScene;
-import seng302.group2.scenes.information.Release.ReleaseEditScene;
-import seng302.group2.scenes.information.Release.ReleaseScene;
-import seng302.group2.scenes.information.Role.RoleCategoryScene;
-import seng302.group2.scenes.information.Role.RoleScene;
-import seng302.group2.scenes.information.Skill.SkillCategoryScene;
-import seng302.group2.scenes.information.Skill.SkillEditScene;
-import seng302.group2.scenes.information.Skill.SkillScene;
-import seng302.group2.scenes.information.Team.TeamCategoryScene;
-import seng302.group2.scenes.information.Team.TeamEditScene;
-import seng302.group2.scenes.information.Team.TeamScene;
-import seng302.group2.scenes.information.Workspace.WorkspaceEditScene;
-import seng302.group2.scenes.information.Workspace.WorkspaceScene;
+import seng302.group2.scenes.information.person.PersonCategoryScene;
+import seng302.group2.scenes.information.person.PersonEditScene;
+import seng302.group2.scenes.information.person.PersonScene;
+import seng302.group2.scenes.information.project.ProjectCategoryScene;
+import seng302.group2.scenes.information.project.ProjectEditScene;
+import seng302.group2.scenes.information.project.ProjectScene;
+import seng302.group2.scenes.information.release.ReleaseCategoryScene;
+import seng302.group2.scenes.information.release.ReleaseEditScene;
+import seng302.group2.scenes.information.release.ReleaseScene;
+import seng302.group2.scenes.information.role.RoleCategoryScene;
+import seng302.group2.scenes.information.role.RoleScene;
+import seng302.group2.scenes.information.skill.SkillCategoryScene;
+import seng302.group2.scenes.information.skill.SkillEditScene;
+import seng302.group2.scenes.information.skill.SkillScene;
+import seng302.group2.scenes.information.team.TeamCategoryScene;
+import seng302.group2.scenes.information.team.TeamEditScene;
+import seng302.group2.scenes.information.team.TeamScene;
+import seng302.group2.scenes.information.workspace.WorkspaceEditScene;
+import seng302.group2.scenes.information.workspace.WorkspaceScene;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
@@ -33,12 +30,6 @@ import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static seng302.group2.scenes.MainScene.contentPane;
-import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  * Allows easy switching between scenes

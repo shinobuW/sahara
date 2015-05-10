@@ -1,4 +1,4 @@
-package seng302.group2.scenes.information.Project;
+package seng302.group2.scenes.information.project;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
