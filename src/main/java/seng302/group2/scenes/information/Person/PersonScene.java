@@ -66,7 +66,9 @@ public class PersonScene
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON_EDIT, currentPerson);
             });
 
-        return new ScrollPane(informationPane);
+        ScrollPane wrapper = new ScrollPane(informationPane);
+        wrapper.setStyle("-fx-background-color:transparent;");
+        return wrapper;
     }
 
     

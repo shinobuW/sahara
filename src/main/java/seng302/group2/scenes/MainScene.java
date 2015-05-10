@@ -103,6 +103,7 @@ public class MainScene
         contentPane = new ScrollPane(informationPane);
         contentPane.setFitToHeight(true);
         contentPane.setFitToWidth(true);
+        contentPane.setStyle("-fx-background-color:transparent;");
 
         content.boundsInParentProperty();
         informationPane.boundsInParentProperty();

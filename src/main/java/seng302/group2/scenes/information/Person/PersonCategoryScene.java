@@ -86,6 +86,8 @@ public class PersonCategoryScene
                 CreatePersonDialog.show();
             });
 
-        return new ScrollPane(MainScene.informationPane);
+        ScrollPane wrapper = new ScrollPane(informationPane);
+        wrapper.setStyle("-fx-background-color:transparent;");
+        return wrapper;
     }
 }

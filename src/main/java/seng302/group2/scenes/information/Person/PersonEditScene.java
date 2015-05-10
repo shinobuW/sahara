@@ -476,8 +476,10 @@ public class PersonEditScene
                     event.consume();
                 }
             });
-        
-        return new ScrollPane(informationPane);
+
+        ScrollPane wrapper = new ScrollPane(informationPane);
+        wrapper.setStyle("-fx-background-color:transparent;");
+        return wrapper;
     }
 
 }

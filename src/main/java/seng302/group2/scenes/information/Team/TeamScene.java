@@ -104,8 +104,11 @@ public class TeamScene
             {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM_EDIT, currentTeam);
             });
-        
-        return new ScrollPane(informationPane);
+
+
+        ScrollPane wrapper = new ScrollPane(informationPane);
+        wrapper.setStyle("-fx-background-color:transparent;");
+        return wrapper;
     }
     
     /*

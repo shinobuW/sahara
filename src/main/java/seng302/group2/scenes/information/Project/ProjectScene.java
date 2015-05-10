@@ -30,33 +30,46 @@ public class ProjectScene
      */
     public static ScrollPane getProjectScene(Project currentProject)
     {
-        informationPane = new VBox(10);
-        Pane infoTabGrid = new VBox(10);
+        informationPane = new VBox(10);  // Holds everything
 
-        //informationPane.setAlignment(Pos.TOP_LEFT);
-        infoTabGrid.setBorder(null);
-        //infoTabGrid.setHgap(10);
-        //infoTabGrid.setVgap(10);
-        infoTabGrid.setPadding(new Insets(25,25,25,25));
-        //infoTabGrid.setAlignment(Pos.BASELINE_CENTER);
+        // The TabPane
         TabPane tabPane = new TabPane();
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         tabPane.getStyleClass().add("floating");
 
-        Tab information = new Tab();
-        Tab allocation = new Tab();
-        information.setText("Information");
-        allocation.setText("Allocation History");
-        tabPane.getTabs().addAll(information, allocation);
+        // Basic info tab
+        Tab informationTab = new Tab("Basic Information");
+        Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
+        basicInfoPane.setBorder(null);
+        basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
+        informationTab.setContent(basicInfoPane);
 
-        tabPane.setMinWidth(informationPane.getWidth());
-        infoTabGrid.setMinWidth(informationPane.getWidth());
-        System.out.println(informationPane.getWidth());
-        ScrollPane s1 = new ScrollPane();
+        // Alloc history tab
+        Tab allocation = new Tab("Allocation History");
+
+
+        tabPane.getTabs().addAll(informationTab, allocation);  // Add the tabs to the pane
+
+
+
+
+
+
+
+
+
+
+        //tabPane.setMinWidth(informationPane.getWidth());
+
+
+        //basicInfoPane.setMinWidth(informationPane.getWidth());
+
+
+        /*ScrollPane s1 = new ScrollPane();
         s1.setContent(tabPane);
-        s1.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        s1.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);*/
 
-        informationPane.getChildren().add(tabPane);
+
 
         Label title = new Label(currentProject.getLongName());
         title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
@@ -82,22 +95,21 @@ public class ProjectScene
         
         Separator separator = new Separator();
 
-        infoTabGrid.getChildren().add(title);
-        infoTabGrid.getChildren().add(new Label("Short Name: "));
-        infoTabGrid.getChildren().add(new Label("Project Description: "));
+        basicInfoPane.getChildren().add(title);
+        basicInfoPane.getChildren().add(new Label("Short Name: "));
+        basicInfoPane.getChildren().add(new Label("Project Description: "));
 
-        infoTabGrid.getChildren().add(new Label(currentProject.getShortName()));
-        infoTabGrid.getChildren().add(new Label(currentProject.getDescription()));
+        basicInfoPane.getChildren().add(new Label(currentProject.getShortName()));
+        basicInfoPane.getChildren().add(new Label(currentProject.getDescription()));
 
-        infoTabGrid.getChildren().add(separator);
-        infoTabGrid.getChildren().add(new Label("Teams: "));
-        infoTabGrid.getChildren().add(projectTeamsBox);
-        infoTabGrid.getChildren().add(new Label("Releases: "));
-        infoTabGrid.getChildren().add(projectReleaseBox);
+        basicInfoPane.getChildren().add(separator);
+        basicInfoPane.getChildren().add(new Label("Teams: "));
+        basicInfoPane.getChildren().add(projectTeamsBox);
+        basicInfoPane.getChildren().add(new Label("Releases: "));
+        basicInfoPane.getChildren().add(projectReleaseBox);
 
-        infoTabGrid.getChildren().add(btnEdit);
+        basicInfoPane.getChildren().add(btnEdit);
 
-        information.setContent(infoTabGrid);
 
         btnEdit.setOnAction((event) ->
             {
@@ -105,7 +117,11 @@ public class ProjectScene
             });
 
 
-        return new ScrollPane(informationPane);
+        informationPane.getChildren().add(tabPane);
+
+        ScrollPane wrapper = new ScrollPane(informationPane);
+        wrapper.setStyle("-fx-background-color:transparent;");
+        return wrapper;
     }
     
     public static void refreshProjectScene(Project project)

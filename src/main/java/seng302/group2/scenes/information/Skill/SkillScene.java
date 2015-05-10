@@ -49,7 +49,9 @@ public class SkillScene
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL_EDIT, currentSkill);
             });
 
-        return new ScrollPane(informationPane);
+        ScrollPane wrapper = new ScrollPane(informationPane);
+        wrapper.setStyle("-fx-background-color:transparent;");
+        return wrapper;
     }
  
     public static void refreshSkillScene(Skill skill)

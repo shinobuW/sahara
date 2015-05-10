@@ -566,7 +566,9 @@ public class TeamEditScene
                 }
 
             });
-        return new ScrollPane(informationPane);
+        ScrollPane wrapper = new ScrollPane(informationPane);
+        wrapper.setStyle("-fx-background-color:transparent;");
+        return wrapper;
     }
     
     /*

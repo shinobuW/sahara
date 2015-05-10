@@ -50,7 +50,9 @@ public class RoleScene
 
         informationPane.getChildren().add(new Label(currentRole.getDescription()));
         informationPane.getChildren().add(skillsBox);
-            
-        return new ScrollPane(informationPane);
+
+        ScrollPane wrapper = new ScrollPane(informationPane);
+        wrapper.setStyle("-fx-background-color:transparent;");
+        return wrapper;
     }
 }

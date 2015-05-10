@@ -48,7 +48,9 @@ public class WorkspaceScene
                         currentWorkspace);
             });
 
-        return new ScrollPane(informationPane);
+        ScrollPane wrapper = new ScrollPane(informationPane);
+        wrapper.setStyle("-fx-background-color:transparent;");
+        return wrapper;
     }
     
     public static void refreshWorkspaceScene(Workspace workspace)
