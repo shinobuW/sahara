@@ -145,7 +145,6 @@ public class Project extends TreeViewItem implements Serializable
                 teams.add(projectTeam);
             }
         }
-        System.out.println(teams);
         return teams;
     }
 
