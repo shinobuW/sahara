@@ -155,8 +155,7 @@ public class SceneSwitcher
             case PROJECT:
                 if (item.getClass() == Project.class)
                 {
-                    MainScene.contentPane.setContent(ProjectScene.getProjectScene(
-                            (Project) item));
+                    MainScene.contentPane.setContent(new ProjectScene((Project) item));
                 }
                 break;
             case PROJECT_EDIT:

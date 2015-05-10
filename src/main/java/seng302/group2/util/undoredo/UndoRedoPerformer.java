@@ -8,7 +8,6 @@ package seng302.group2.util.undoredo;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.information.person.PersonScene;
-import seng302.group2.scenes.information.project.ProjectScene;
 import seng302.group2.scenes.information.release.ReleaseScene;
 import seng302.group2.scenes.information.skill.SkillScene;
 import seng302.group2.scenes.information.team.TeamScene;
@@ -176,7 +175,7 @@ public class UndoRedoPerformer
                         UndoRedoPerformer.undo(undoAction);
                     }
                     System.out.println("Project edit undone");
-                    ProjectScene.refreshProjectScene(proj);
+                    //ProjectScene.refreshProjectScene(proj);
                     break;
                 default:
                     System.out.println("Undo with this property not implemented (yet?)");
@@ -399,14 +398,14 @@ public class UndoRedoPerformer
                         currentProject.getTeams().add(team);
                     }
                     App.content.getItems().remove(informationPane);
-                    ProjectScene.getProjectScene(team.getProject());
+                    //ProjectScene.getProjectScene(team.getProject());
                     App.content.getItems().add(informationPane);
                     break;
                 case TEAM_DEL_PROJECT:
                     currentProject = (Project) item.getUndoAction().getValue();
                     currentProject.getTeams().add(team);
                     App.content.getItems().remove(informationPane);
-                    ProjectScene.getProjectScene(currentProject);
+                    //ProjectScene.getProjectScene(currentProject);
                     App.content.getItems().add(informationPane);
                     break;
                 case TEAM_EDIT:
@@ -533,7 +532,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
-                    ProjectScene.refreshProjectScene(proj);
+                    //ProjectScene.refreshProjectScene(proj);
                     break;     
                 default:
                     System.out.println("Redo with this property not implemented (yet?)");
@@ -740,14 +739,14 @@ public class UndoRedoPerformer
                     }
                     currentProject.getTeams().add(team);
                     App.content.getItems().remove(informationPane);
-                    ProjectScene.getProjectScene(currentProject);
+                    //ProjectScene.getProjectScene(currentProject);
                     App.content.getItems().add(informationPane);
                     break;
                 case TEAM_DEL_PROJECT:
                     currentProject = (Project) item.getRedoAction().getValue();
                     currentProject.getTeams().remove(team);
                     App.content.getItems().remove(informationPane);
-                    ProjectScene.getProjectScene(currentProject);
+                    //ProjectScene.getProjectScene(currentProject);
                     App.content.getItems().add(informationPane);
                     break;
                 case TEAM_EDIT:

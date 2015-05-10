@@ -41,7 +41,8 @@ public class ProjectHistoryTab extends Tab
         Pane historyPane = new VBox(10);  // The pane that holds the basic info
         historyPane.setBorder(null);
         historyPane.setPadding(new Insets(25, 25, 25, 25));
-        this.setContent(historyPane);
+        ScrollPane wrapper = new ScrollPane(historyPane);
+        this.setContent(wrapper);
 
 
         TableView<Allocation> historyTable = new TableView();
