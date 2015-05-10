@@ -38,11 +38,7 @@ public class ProjectScene
         tabPane.getStyleClass().add("floating");
 
         // Basic info tab
-        Tab informationTab = new Tab("Basic Information");
-        Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
-        basicInfoPane.setBorder(null);
-        basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
-        informationTab.setContent(basicInfoPane);
+        Tab informationTab = new ProjectInfoTab(currentProject);
 
         // Alloc history tab
         Tab allocation = ProjectHistoryTab.getHistoryTab();
@@ -72,50 +68,7 @@ public class ProjectScene
 
 
 
-        Label title = new Label(currentProject.getLongName());
-        title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
 
-        Button btnEdit = new Button("Edit");
-
-        ListView projectTeamsBox = new ListView(currentProject.getTeams());
-        projectTeamsBox.setMaxHeight(150);
-        projectTeamsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-        ObservableList<Team> dialogTeams = observableArrayList();
-        for (TreeViewItem projectTeam : Global.currentWorkspace.getTeams())
-        {
-            if (!((Team)projectTeam).isUnassignedTeam()
-                    && !currentProject.getTeams().contains(projectTeam))
-            {
-                dialogTeams.add((Team)projectTeam);
-            }
-        }
-        
-        ListView projectReleaseBox = new ListView(currentProject.getReleases());
-        projectReleaseBox.setMaxHeight(150);
-        
-        Separator separator = new Separator();
-
-        basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new Label("Short Name: "));
-        basicInfoPane.getChildren().add(new Label("Project Description: "));
-
-        basicInfoPane.getChildren().add(new Label(currentProject.getShortName()));
-        basicInfoPane.getChildren().add(new Label(currentProject.getDescription()));
-
-        basicInfoPane.getChildren().add(separator);
-        basicInfoPane.getChildren().add(new Label("Teams: "));
-        basicInfoPane.getChildren().add(projectTeamsBox);
-        basicInfoPane.getChildren().add(new Label("Releases: "));
-        basicInfoPane.getChildren().add(projectReleaseBox);
-
-        basicInfoPane.getChildren().add(btnEdit);
-
-
-        btnEdit.setOnAction((event) ->
-            {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT_EDIT, currentProject);
-            });
 
 
         informationPane.getChildren().add(tabPane);
