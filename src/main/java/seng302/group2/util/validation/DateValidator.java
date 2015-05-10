@@ -14,7 +14,6 @@ import seng302.group2.workspace.team.Allocation;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.temporal.TemporalAmount;
 import java.util.Date;
 
 /**
@@ -257,6 +256,12 @@ public class DateValidator
         }
     }
 
+    /**
+     * Checks that the text in the given CustomDateField is in the "dd/mm/yyyy" format
+     * Displays appropriate errors if wrong format
+     * @param dateField The CustomDateField to check
+     * @return true if correct format
+     */
     public static boolean isCorrectDateFormat(CustomDateField dateField)
     {
         String dateString = dateField.getText();

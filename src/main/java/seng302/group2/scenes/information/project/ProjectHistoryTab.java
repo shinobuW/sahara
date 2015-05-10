@@ -1,5 +1,7 @@
 package seng302.group2.scenes.information.project;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -7,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.scenes.control.TitleLabel;
@@ -14,10 +17,11 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static seng302.group2.util.validation.DateValidator.isCorrectDateFormat;
-import static seng302.group2.util.validation.DateValidator.stringToDate;
+import static seng302.group2.util.validation.DateValidator.*;
 
 
 /**
@@ -51,12 +55,38 @@ public class ProjectHistoryTab extends Tab
         teamCol.setMaxWidth(150);
 
         TableColumn startDateCol = new TableColumn("Start Date");
-        startDateCol.setCellValueFactory(new PropertyValueFactory<Allocation, String>("startDate"));
+        startDateCol.setCellValueFactory(
+            new Callback<TableColumn.CellDataFeatures<Allocation, String>,
+                    ObservableValue<String>>()
+            {
+                @Override
+                public ObservableValue<String> call(TableColumn.CellDataFeatures<Allocation, String>
+                                                            alloc)
+                {
+                    SimpleStringProperty property = new SimpleStringProperty();
+                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    property.setValue(dateFormat.format(alloc.getValue().getStartDate()));
+                    return property;
+                }
+            });
         startDateCol.setMinWidth(100);
         startDateCol.setMaxWidth(150);
 
         TableColumn endDateCol = new TableColumn("End Date");
-        endDateCol.setCellValueFactory(new PropertyValueFactory<Allocation, String>("startDate"));
+        endDateCol.setCellValueFactory(
+            new Callback<TableColumn.CellDataFeatures<Allocation, String>,
+                    ObservableValue<String>>()
+            {
+                @Override
+                public ObservableValue<String> call(TableColumn.CellDataFeatures<Allocation, String>
+                                                            alloc)
+                {
+                    SimpleStringProperty property = new SimpleStringProperty();
+                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    property.setValue(dateFormat.format(alloc.getValue().getEndDate()));
+                    return property;
+                }
+            });
         endDateCol.setMinWidth(100);
         endDateCol.setMaxWidth(150);
 
@@ -85,10 +115,11 @@ public class ProjectHistoryTab extends Tab
 
                 boolean correctStartDateFormat = isCorrectDateFormat(startDateField);
 
-                if (correctStartDateFormat && startDateField.getText() != "")
+
+                if (correctStartDateFormat && !startDateField.getText().isEmpty())
                 {
                     String endDateFieldText = endDateField.getText();
-                    Date endDate = (endDateFieldText != null)
+                    Date endDate = (!endDateFieldText.isEmpty())
                             ? stringToDate(endDateFieldText) : null;
                     Date startDate = stringToDate(startDateField.getText());
                     Team selectedTeam = new Team();
@@ -103,7 +134,20 @@ public class ProjectHistoryTab extends Tab
 
                     Allocation alloc = new Allocation(currentProject, selectedTeam,
                             startDate, endDate);
-                    currentProject.add(alloc);
+
+                    if (validateAllocation(alloc, currentProject))
+                    {
+                        currentProject.add(alloc);
+                    }
+                    else
+                    {
+                        event.consume();
+                    }
+
+                }
+                else
+                {
+                    event.consume();
                 }
             });
 
