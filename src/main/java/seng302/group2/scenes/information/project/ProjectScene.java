@@ -1,20 +1,13 @@
 package seng302.group2.scenes.information.project;
 
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import seng302.group2.Global;
 import seng302.group2.scenes.SceneSwitcher;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.team.Team;
 
-import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
@@ -42,7 +35,7 @@ public class ProjectScene
 
         // Define and add the tabs
         Tab informationTab = new ProjectInfoTab(currentProject);
-        Tab allocation = ProjectHistoryTab.getHistoryTab();
+        Tab allocation = new ProjectHistoryTab(currentProject);
 
         tabPane.getTabs().addAll(informationTab, allocation);  // Add the tabs to the pane
 
