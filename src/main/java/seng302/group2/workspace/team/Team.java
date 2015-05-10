@@ -286,7 +286,13 @@ public class Team extends TreeViewItem implements Serializable
      */
     public void add(Allocation allocation)
     {
-        this.projectAllocations.add(allocation);
+        if (!this.equals(allocation.getTeam()))
+        {
+            System.out.println("Called on wrong team, not happening");
+            return;
+        }
+        Command addAlloc = new AddAllocationCommand(allocation.getProject(), this, allocation);
+        Global.commandManager.executeCommand(addAlloc);
     }
 
 
@@ -624,6 +630,32 @@ public class Team extends TreeViewItem implements Serializable
                 ws.getPeople().add(member);
             }
             ws.getTeams().add(team);
+        }
+    }
+
+    private class AddAllocationCommand implements Command
+    {
+        private Project proj;
+        private Team team;
+        private Allocation allocation;
+
+        AddAllocationCommand(Project proj, Team team, Allocation allocation)
+        {
+            this.proj = proj;
+            this.team = team;
+            this.allocation = allocation;
+        }
+
+        public void execute()
+        {
+            proj.getTeamAllocations().add(allocation);
+            team.getProjectAllocations().add(allocation);
+        }
+
+        public void undo()
+        {
+            proj.getTeamAllocations().remove(allocation);
+            team.getProjectAllocations().remove(allocation);
         }
     }
 }
