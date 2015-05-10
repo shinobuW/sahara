@@ -36,9 +36,9 @@ public class ProjectScene
         // The TabPane
         TabPane tabPane = new TabPane();
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-        tabPane.getStyleClass().add("floating");
         informationPane.getChildren().add(tabPane);  // Add to the info pane
         ((VBox) informationPane).setVgrow(tabPane, Priority.ALWAYS);
+        //((VBox) informationPane).grow(tabPane, Priority.ALWAYS);
 
         // Define and add the tabs
         Tab informationTab = new ProjectInfoTab(currentProject);
