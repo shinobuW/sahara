@@ -13,6 +13,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
@@ -33,11 +34,6 @@ public class DeleteDialog
      */
     public static boolean showDeleteDialog(TreeViewItem element)
     {
-        if (element.getClass() == Project.class)
-        {
-            return false;
-        }
-
         ArrayList<String> dialogText = new ArrayList<String>(2);
         dialogText = getDeleteDialogText(element);
 
@@ -71,6 +67,11 @@ public class DeleteDialog
             {
                 Skill deletedSkill = (Skill)element;
                 deletedSkill.deleteSkill();
+            }
+            else if (element.getClass() == Release.class)
+            {
+                Release deletedRelease = (Release)element;
+                deletedRelease.deleteRelease();
             }
             else
             {

@@ -473,9 +473,9 @@ public class Project extends TreeViewItem implements Serializable
     public void edit(String newShortName, String newLongName, String newDescription,
                      ObservableList<Team> teams)
     {
-        Command wsedit = new ProjectEditCommand(this, newShortName, newLongName, newDescription,
+        Command projEdit = new ProjectEditCommand(this, newShortName, newLongName, newDescription,
                 teams);
-        Global.commandManager.executeCommand(wsedit);
+        Global.commandManager.executeCommand(projEdit);
     }
 
 

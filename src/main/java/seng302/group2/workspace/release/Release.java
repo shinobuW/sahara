@@ -8,9 +8,13 @@ package seng302.group2.workspace.release;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.undoredo.Command;
+import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * A release is a sub-member of project and contains information about a release of a project
@@ -191,6 +195,16 @@ public class Release extends TreeViewItem
     //</editor-fold>
 
 
+    /**
+     * Deletes a release from the given project.
+     */
+    public void deleteRelease()
+    {
+        Command command = new DeleteReleaseCommand(this);
+        Global.commandManager.executeCommand(command);
+    }
+
+
     @Override
     public ObservableList<TreeViewItem> getChildren()
     {
@@ -201,5 +215,102 @@ public class Release extends TreeViewItem
     public String toString()
     {
         return this.shortName;
-    }      
+    }
+
+    /**
+     * Creates a Release edit command and executes it with the Global Command Manager, updating
+     * the release with the new parameter values.
+     * @param newShortName The new short name
+     * @param newDescription The new description
+     * @param newEstimatedDate The new estimated date
+     * @param newProject The new project
+     */
+    public void edit(String newShortName, String newDescription, Date newEstimatedDate,
+        Project newProject)
+    {
+        Command relEdit = new ReleaseEditCommand(this, newShortName, newDescription,
+                newEstimatedDate, newProject);
+        Global.commandManager.executeCommand(relEdit);
+    }
+
+
+    /**
+     * A command class that allows the executing and undoing of release edits
+     */
+    private class ReleaseEditCommand implements Command
+    {
+        private Release release;
+        private String shortName;
+        private String description;
+        private Date estimatedDate;
+        private Project project;
+        private String oldShortName;
+        private String oldDescription;
+        private Date oldEstimatedDate;
+        private Project oldProject;
+
+        private ReleaseEditCommand(Release release, String newShortName, String newDescription,
+            Date newEstimatedDate, Project newProject)
+        {
+            this.release = release;
+            this.shortName = newShortName;
+            this.description = newDescription;
+            this.estimatedDate = newEstimatedDate;
+            this.project = newProject;
+            this.oldShortName = release.shortName;
+            this.oldDescription = release.description;
+            this.oldEstimatedDate = release.estimatedDate;
+            this.oldProject = release.project;
+        }
+
+        /**
+         * Executes/Redoes the changes of the release edit
+         */
+        public void execute()
+        {
+            release.shortName = shortName;
+            release.description = description;
+            release.estimatedDate = estimatedDate;
+            release.project = project;
+        }
+
+        /**
+         * Undoes the changes of the release edit
+         */
+        public void undo()
+        {
+            release.shortName = oldShortName;
+            release.description = oldDescription;
+            release.estimatedDate = oldEstimatedDate;
+            release.project = oldProject;
+        }
+    }
+
+    private class DeleteReleaseCommand implements Command
+    {
+        private Release release;
+        //private Workspace ws;
+        private Project proj;
+
+        DeleteReleaseCommand(Release release)
+        {
+            this.release = release;
+            //this.ws = ws;
+            this.proj = release.getProject();
+        }
+
+        public void execute()
+        {
+            System.out.println("Exec Release Delete");
+            proj.getReleases().remove(release);
+            //release.setProject(null);
+        }
+
+        public void undo()
+        {
+            System.out.println("Undone Release Delete");
+            proj.getReleases().add(release);
+            //release.setProject(proj);
+        }
+    }
 }

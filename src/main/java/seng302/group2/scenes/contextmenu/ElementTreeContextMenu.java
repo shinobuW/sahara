@@ -73,16 +73,6 @@ public class ElementTreeContextMenu extends ContextMenu
 
         this.getItems().addAll(editItem, deleteItem);
 
-        if (selectedCategory == Categories.PROJECT)
-        {
-            deleteItem.setDisable(true);
-        }
-
-        if (selectedCategory == Categories.RELEASE)
-        {
-            deleteItem.setDisable(true);
-        }
-
         if (selectedCategory == Categories.TEAM)
         {
             Team selectedTeam = (Team) Global.selectedTreeItem.getValue();
