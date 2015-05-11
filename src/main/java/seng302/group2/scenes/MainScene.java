@@ -79,7 +79,7 @@ public class MainScene
         }
         else if (Global.selectedTreeItem.getValue() instanceof Team)
         {
-            TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
+            contentPane.setContent(new TeamScene((Team) Global.selectedTreeItem.getValue()));
         }
         else if (Global.selectedTreeItem.getValue() instanceof Role)
         {

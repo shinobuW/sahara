@@ -7,7 +7,6 @@ package seng302.group2.util.undoredo;
 
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.information.team.TeamScene;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -270,7 +269,7 @@ public class UndoRedoPerformer
                     person.getTeam().getPeople().remove(person);
                     currentTeam.getPeople().add(person);
                     App.content.getItems().remove(informationPane);
-                    TeamScene.getTeamScene(currentTeam);
+                    //TeamScene.getTeamScene(currentTeam);
                     App.content.getItems().add(informationPane);
                     break;
                 case PERSON_DEL_TEAM:
@@ -282,7 +281,7 @@ public class UndoRedoPerformer
                     }
                     person.setTeam(currentTeam);
                     App.content.getItems().remove(informationPane);
-                    TeamScene.getTeamScene(currentTeam);
+                    //TeamScene.getTeamScene(currentTeam);
                     App.content.getItems().add(informationPane);
                     break;
                 case PERSON_EDIT:
@@ -373,7 +372,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
-                    TeamScene.refreshTeamScene(team);
+                    //TeamScene.refreshTeamScene(team);
                     break;
                 case TEAM_SHORTNAME:
                     System.out.println("TEAM_SHORTNAME" + "  " + item.getUndoAction().getValue());
@@ -410,7 +409,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
-                    TeamScene.refreshTeamScene(team);
+                    //TeamScene.refreshTeamScene(team);
                     break;
                 default:
                     System.out.println("Undo on skill with this property not implemented (yet?)");
@@ -616,7 +615,7 @@ public class UndoRedoPerformer
                     person.getTeam().getPeople().remove(person);
                     currentTeam.getPeople().add(person);
                     App.content.getItems().remove(informationPane);
-                    TeamScene.getTeamScene(currentTeam);
+                    //TeamScene.getTeamScene(currentTeam);
                     App.content.getItems().add(informationPane);
                     break;
                 case PERSON_DEL_TEAM:
@@ -627,7 +626,7 @@ public class UndoRedoPerformer
                         Global.getUnassignedTeam().remove(person);
                     }
                     App.content.getItems().remove(informationPane);
-                    TeamScene.getTeamScene(currentTeam);
+                    //TeamScene.getTeamScene(currentTeam);
                     App.content.getItems().add(informationPane);
                     break;
                 case PERSON_EDIT:
@@ -716,7 +715,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
-                    TeamScene.refreshTeamScene(team);
+                    //TeamScene.refreshTeamScene(team);
                     break;
                 case TEAM_SHORTNAME:
                     team.setShortName((String) item.getRedoAction().getValue());
@@ -751,7 +750,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
-                    TeamScene.refreshTeamScene(team);
+                    //TeamScene.refreshTeamScene(team);
                     break;
                 default:
                     System.out.println("Redo on Team with this property not implemented (yet?)");

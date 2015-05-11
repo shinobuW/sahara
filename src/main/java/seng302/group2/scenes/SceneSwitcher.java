@@ -208,8 +208,7 @@ public class SceneSwitcher
             case TEAM:
                 if (item.getClass() == Team.class)
                 {
-                    MainScene.contentPane.setContent(TeamScene.getTeamScene(
-                            (Team) item));
+                    MainScene.contentPane.setContent(new TeamScene((Team) item));
                 }
                 break;
             case TEAM_EDIT:

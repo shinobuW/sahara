@@ -28,6 +28,7 @@ public class RoleInfoTab extends Tab
         Label title = new TitleLabel(currentRole.getShortName());
 
         ListView skillsBox = new ListView(currentRole.getRequiredSkills());
+        skillsBox.setPrefHeight(192);
         skillsBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         skillsBox.setMaxWidth(275);
 

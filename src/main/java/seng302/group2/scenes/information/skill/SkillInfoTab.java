@@ -28,7 +28,6 @@ public class SkillInfoTab extends Tab
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-
         Label title = new TitleLabel(currentSkill.getShortName());
 
         Button btnEdit = new Button("Edit");

@@ -5,9 +5,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import seng302.group2.scenes.MainScene;
+import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.dialog.CreateReleaseDialog;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
@@ -28,12 +27,9 @@ public class ReleaseCategoryScene
     public static ScrollPane getReleaseCategoryScene(ReleaseCategory selectedCategory)
     {
         informationPane = new VBox(10);
-        /*informationPane.setAlignment(Pos.TOP_LEFT);
-        informationPane.setHgap(10);
-        informationPane.setVgap(10);*/
+
         informationPane.setPadding(new Insets(25,25,25,25));
-        Label title = new Label("Releases in " + selectedCategory.getProject().toString());
-        title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
+        Label title = new TitleLabel("Releases in " + selectedCategory.getProject().toString());
 
         Button btnView = new Button("View");
         //Button btnDelete = new Button("Delete");

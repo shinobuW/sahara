@@ -3,6 +3,7 @@ package seng302.group2.scenes.information.project;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.SceneSwitcher;
@@ -46,12 +47,8 @@ public class ProjectInfoTab extends Tab
             });
 
 
-        ListView projectTeamsBox = new ListView(currentTeams);
-        projectTeamsBox.setMaxHeight(150);
-        projectTeamsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        ListView projectReleaseBox = new ListView(currentProject.getReleases());
-        projectReleaseBox.setMaxHeight(150);
+
 
         Separator separator = new Separator();
 
@@ -63,14 +60,29 @@ public class ProjectInfoTab extends Tab
         basicInfoPane.getChildren().add(new Label(currentProject.getDescription()));
 
         basicInfoPane.getChildren().add(separator);
-        basicInfoPane.getChildren().add(new Label("Teams: "));
-        basicInfoPane.getChildren().add(projectTeamsBox);
-        basicInfoPane.getChildren().add(new Label("Releases: "));
-        basicInfoPane.getChildren().add(projectReleaseBox);
+
+
+
+        ListView projectTeamsBox = new ListView(currentTeams);
+        projectTeamsBox.setPrefHeight(192);
+        projectTeamsBox.setMaxHeight(150);
+        projectTeamsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        ListView projectReleaseBox = new ListView(currentProject.getReleases());
+        projectReleaseBox.setPrefHeight(192);
+        projectReleaseBox.setMaxHeight(150);
+
+        HBox listBoxes = new HBox(12);
+        VBox teamsBox = new VBox();
+        VBox releaseBox = new VBox();
+        teamsBox.getChildren().addAll(new Label("Teams:"), projectTeamsBox);
+        releaseBox.getChildren().addAll(new Label("Releases:"), projectReleaseBox);
+        listBoxes.getChildren().addAll(teamsBox, releaseBox);
+
+        basicInfoPane.getChildren().add(listBoxes);
+
 
         basicInfoPane.getChildren().add(btnEdit);
-
-
         btnEdit.setOnAction((event) ->
             {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT_EDIT, currentProject);
