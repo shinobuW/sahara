@@ -12,6 +12,8 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -44,37 +46,37 @@ public class DateValidatorTest
         Project proj = new Project();
         Team team = new Team();
         Allocation projAlloc = new Allocation(proj, team,
-                new Date("01/01/2015"), new Date("01/01/2016"));
+                LocalDate.of(2015, Month.JANUARY, 1), LocalDate.of(2016, Month.JANUARY, 1));
         proj.add(projAlloc);
         team.add(projAlloc);
 
         Allocation allocDatesWrongOrder = new Allocation(proj, team,
-                new Date("01/01/2016"), new Date("01/01/2015"));
+                LocalDate.of(2016, Month.JANUARY, 1), LocalDate.of(2015, Month.JANUARY, 1));
         Assert.assertEquals(ValidationStatus.ALLOCATION_DATES_WRONG_ORDER,
                 DateValidator.isValidAllocationDate(allocDatesWrongOrder, proj));
 
         Allocation allocStartOverlap = new Allocation(proj, team,
-                new Date("01/06/2015"), new Date("01/06/2016"));
+                LocalDate.of(2015, Month.JUNE, 1), LocalDate.of(2016, Month.JUNE, 1));
         Assert.assertEquals(ValidationStatus.START_OVERLAP,
                 DateValidator.isValidAllocationDate(allocStartOverlap, proj));
 
         Allocation allocEndOverlap = new Allocation(proj, team,
-                new Date("01/06/2014"), new Date("01/06/2015"));
+                LocalDate.of(2014, Month.JUNE, 1), LocalDate.of(2015, Month.JUNE, 1));
         Assert.assertEquals(ValidationStatus.END_OVERLAP,
                 DateValidator.isValidAllocationDate(allocEndOverlap, proj));
 
         Allocation allocSuperOverlap = new Allocation(proj, team,
-                new Date("01/06/2014"), new Date("01/06/2016"));
+                LocalDate.of(2014, Month.JUNE, 1), LocalDate.of(2016, Month.JUNE, 1));
         Assert.assertEquals(ValidationStatus.SUPER_OVERLAP,
                 DateValidator.isValidAllocationDate(allocSuperOverlap, proj));
 
         Allocation allocSubOverlap = new Allocation(proj, team,
-                new Date("01/02/2015"), new Date("01/12/2015"));
+                LocalDate.of(2015, Month.JANUARY, 2), LocalDate.of(2015, Month.DECEMBER, 12));
         Assert.assertEquals(ValidationStatus.SUB_OVERLAP,
                 DateValidator.isValidAllocationDate(allocSubOverlap, proj));
 
         Allocation allocValid = new Allocation(proj, team,
-                new Date("02/01/2016"), new Date("01/01/2017"));
+                LocalDate.of(2016, Month.JANUARY, 2),LocalDate.of(2017, Month.JANUARY, 1));
         Assert.assertEquals(ValidationStatus.VALID,
                 DateValidator.isValidAllocationDate(allocValid, proj));
 

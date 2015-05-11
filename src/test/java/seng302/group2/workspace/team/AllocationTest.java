@@ -1,15 +1,11 @@
 package seng302.group2.workspace.team;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import seng302.group2.Global;
 import seng302.group2.workspace.project.Project;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import static org.junit.Assert.*;
+import java.time.LocalDate;
+import java.time.Month;
 
 public class AllocationTest
 {
@@ -19,26 +15,10 @@ public class AllocationTest
      */
 
         //Set test Allocations
-        Date startDate = new Date();
-        Date endDate = new Date();
+        LocalDate startDate = LocalDate.of(2015, Month.APRIL, 12);
+        LocalDate endDate = LocalDate.of(2100, Month.MAY, 30);
         Project proj = new Project();
         Team team = new Team();
-
-    @Before
-    public void setUp()
-    {
-        //Set test dates
-        try
-        {
-            startDate = Global.datePattern.parse("12/04/2015");
-            endDate = Global.datePattern.parse("30/05/2100");
-        }
-        catch (Exception e)
-        {
-            Assert.fail("The date was not parsed correctly, please review");
-        }
-    }
-
 
     @Test
     public void testConstructors()
@@ -53,8 +33,8 @@ public class AllocationTest
     @Test
     public void testIsCurrentAllocation() throws Exception
     {
-        Date today = new Date();
-        Date tomorrow = new Date(today.getTime() + (1000 * 60 * 60 * 24));
+        LocalDate now = LocalDate.now();
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
 
         Allocation alloc2 = new Allocation(proj, team, startDate, tomorrow);
         Assert.assertTrue(alloc2.isCurrentAllocation());

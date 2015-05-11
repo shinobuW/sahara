@@ -3,7 +3,7 @@ package seng302.group2.workspace.team;
 import seng302.group2.workspace.project.Project;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * A class that represents allocations between teams and projects
@@ -22,12 +22,12 @@ public class Allocation implements Serializable
     }
 
 
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Project project;
     private Team team;
 
-    public Allocation(Project project, Team team, Date startDate, Date endDate)
+    public Allocation(Project project, Team team, LocalDate startDate, LocalDate endDate)
     {
         this.project = project;
         this.team = team;
@@ -39,7 +39,7 @@ public class Allocation implements Serializable
      * Gets the allocation end date
      * @return The allocation end date
      */
-    public Date getEndDate()
+    public LocalDate getEndDate()
     {
         return this.endDate;
     }
@@ -49,7 +49,7 @@ public class Allocation implements Serializable
      * Gets the allocation start date
      * @return The allocation start date
      */
-    public Date getStartDate()
+    public LocalDate getStartDate()
     {
         return this.startDate;
     }
@@ -79,21 +79,21 @@ public class Allocation implements Serializable
      */
     public AllocationStatus getTimeState()
     {
-        Date now = new Date();
+        LocalDate now = LocalDate.now();
 
         if (this.getEndDate() != null)
         {
-            if (now.after(this.getEndDate()))
+            if (now.isAfter(this.getEndDate()))
             {
                 return AllocationStatus.PAST; // Is a past allocation
             }
-            if (!now.before(this.getStartDate()) && !now.after(this.getEndDate()))
+            if (!now.isBefore(this.getStartDate()) && !now.isAfter(this.getEndDate()))
             {
                 return AllocationStatus.CURRENT; // Is a current allocation
             }
         }
 
-        if (!now.before(this.getStartDate()))
+        if (!now.isBefore(this.getStartDate()))
         {
             return AllocationStatus.CURRENT; // Is a current allocation
         }

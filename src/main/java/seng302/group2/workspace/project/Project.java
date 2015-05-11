@@ -15,8 +15,11 @@ import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.util.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -134,12 +137,13 @@ public class Project extends TreeViewItem implements Serializable
     public Set<Team> getCurrentTeams()
     {
         Set<Team> teams = new HashSet<>();
+        LocalDate now = LocalDate.now();
         for (Allocation alloc : teamAllocations)
         {
             Team projectTeam = alloc.getTeam();
             if (!projectTeam.isUnassignedTeam()
-                    && alloc.getStartDate().before(Date.from(Instant.now()))
-                    && alloc.getEndDate().after(Date.from(Instant.now()))
+                    && alloc.getStartDate().isBefore(now)
+                    && alloc.getEndDate().isAfter(now)
                     && !teams.contains(projectTeam))
             {
                 teams.add(projectTeam);

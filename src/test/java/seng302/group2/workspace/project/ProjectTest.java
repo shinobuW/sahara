@@ -11,8 +11,9 @@ import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
-import java.util.Date;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -114,8 +115,8 @@ public class ProjectTest extends TestCase
     @Test
     public void testAddRemoveTeamAllocation()
     {
-        Date startDate = new Date();
-        Date endDate = new Date();
+        LocalDate startDate = LocalDate.of(2015, Month.JANUARY, 1);
+        LocalDate endDate = LocalDate.of(2015, Month.JANUARY, 2);
         Project proj = new Project();
         Team team = new Team();
 

@@ -14,6 +14,7 @@ import seng302.group2.workspace.team.Allocation;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -67,12 +68,15 @@ public class DateValidator
     */
     public static ValidationStatus isValidAllocationDate(Allocation alloc, Project proj)
     {
-        Date allocStart = alloc.getStartDate();
-        Date allocEnd = alloc.getEndDate();
+        LocalDate allocStart = alloc.getStartDate();
+        LocalDate allocEnd = alloc.getEndDate();
 
-        if (dateAfter(allocStart, allocEnd))
+        if (allocEnd != null)
         {
-            return ValidationStatus.ALLOCATION_DATES_WRONG_ORDER;
+            if (allocStart.isAfter(allocEnd))
+            {
+                return ValidationStatus.ALLOCATION_DATES_WRONG_ORDER;
+            }
         }
 
         for (Allocation projAlloc : proj.getTeamAllocations())
@@ -83,52 +87,52 @@ public class DateValidator
                 // Check for date overlaps within a single Teams total allocations
                 for (Allocation teamAlloc : projAlloc.getTeam().getProjectAllocations())
                 {
-                    Date teamStart = teamAlloc.getStartDate();
-                    Date teamEnd = teamAlloc.getEndDate();
+                    LocalDate teamStart = teamAlloc.getStartDate();
+                    LocalDate teamEnd = teamAlloc.getEndDate();
 
-                    if (dateAfter(teamStart, allocStart)
-                            && dateBefore(teamEnd, allocEnd))
+                    if (teamStart.isAfter(allocStart)
+                            && teamEnd.isBefore(allocEnd))
                     {
                         return ValidationStatus.SUPER_OVERLAP;
                     }
-                    else if (dateAfter(teamEnd, allocEnd)
-                            && dateBefore(teamStart, allocStart))
+                    else if (teamEnd.isAfter(allocEnd)
+                            && teamStart.isBefore(allocStart))
                     {
                         return ValidationStatus.SUB_OVERLAP;
                     }
-                    else if (dateAfter(allocStart, teamStart)
-                            && dateBefore(allocStart, teamEnd))
+                    else if (allocStart.isAfter(teamStart)
+                            && allocStart.isBefore(teamEnd))
                     {
                         return ValidationStatus.START_OVERLAP;
                     }
-                    else if (dateBefore(allocEnd, teamEnd)
-                            && dateAfter(allocEnd, teamStart))
+                    else if (allocEnd.isBefore(teamEnd)
+                            && allocEnd.isAfter(teamStart))
                     {
                         return ValidationStatus.END_OVERLAP;
                     }
                 }
 
                 // Check for date overlaps within a teams allocations on a project
-                Date projStart = projAlloc.getStartDate();
-                Date projEnd = projAlloc.getEndDate();
+                LocalDate projStart = projAlloc.getStartDate();
+                LocalDate projEnd = projAlloc.getEndDate();
 
-                if (dateAfter(projStart, allocStart)
-                        && dateBefore(projEnd, allocEnd))
+                if (projStart.isAfter(allocStart)
+                        && projEnd.isBefore(allocEnd))
                 {
                     return ValidationStatus.SUPER_OVERLAP;
                 }
-                else if (dateAfter(projEnd, allocEnd)
-                        && dateBefore(projStart, allocStart))
+                else if (projEnd.isAfter(allocEnd)
+                        && projStart.isBefore(allocStart))
                 {
                     return ValidationStatus.SUB_OVERLAP;
                 }
-                else if (dateAfter(allocStart, projStart)
-                        && dateBefore(allocStart, projEnd))
+                else if (allocStart.isAfter(projStart)
+                        && allocStart.isBefore(projEnd))
                 {
                     return ValidationStatus.START_OVERLAP;
                 }
-                else if (dateBefore(allocEnd, projEnd)
-                        && dateAfter(allocEnd, projStart))
+                else if (allocEnd.isBefore(projEnd)
+                        && allocEnd.isAfter(projStart))
                 {
                     return ValidationStatus.END_OVERLAP;
                 }

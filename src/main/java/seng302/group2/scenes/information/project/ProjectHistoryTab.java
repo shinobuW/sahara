@@ -1,7 +1,5 @@
 package seng302.group2.scenes.information.project;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -9,20 +7,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
-import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 
-import static seng302.group2.util.validation.DateValidator.*;
+import static seng302.group2.util.validation.DateValidator.validateAllocation;
 
 
 /**
@@ -56,76 +50,47 @@ public class ProjectHistoryTab extends Tab
         teamCol.setMaxWidth(150);
 
         TableColumn startDateCol = new TableColumn("Start Date");
-        startDateCol.setCellValueFactory(
-            new Callback<TableColumn.CellDataFeatures<Allocation, String>,
-                    ObservableValue<String>>()
-            {
-                @Override
-                public ObservableValue<String> call(TableColumn.CellDataFeatures<Allocation, String>
-                                                            alloc)
-                {
-                    SimpleStringProperty property = new SimpleStringProperty();
-                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    property.setValue(dateFormat.format(alloc.getValue().getStartDate()));
-                    return property;
-                }
-            });
+        startDateCol.setCellValueFactory(new PropertyValueFactory<Allocation, String>("startDate"));
         startDateCol.setMinWidth(100);
         startDateCol.setMaxWidth(150);
 
         TableColumn endDateCol = new TableColumn("End Date");
-        endDateCol.setCellValueFactory(
-            new Callback<TableColumn.CellDataFeatures<Allocation, String>,
-                    ObservableValue<String>>()
-            {
-                @Override
-                public ObservableValue<String> call(TableColumn.CellDataFeatures<Allocation, String>
-                                                            alloc)
-                {
-                    SimpleStringProperty property = new SimpleStringProperty();
-                    DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    property.setValue(dateFormat.format(alloc.getValue().getEndDate()));
-                    return property;
-                }
-            });
+        endDateCol.setCellValueFactory(new PropertyValueFactory<Allocation, String>("endDate"));
         endDateCol.setMinWidth(100);
         endDateCol.setMaxWidth(150);
 
         Button addButton = new Button("Add");
         HBox newAllocationFields = new HBox(10);
         CustomComboBox teamComboBox = new CustomComboBox("Team", true);
-        CustomDateField startDateField = new CustomDateField("Start Date");
-        CustomDateField endDateField = new CustomDateField("End Date");
-        newAllocationFields.getChildren().addAll(teamComboBox, startDateField, endDateField);
+        Label startDateLabel = new Label("Start Date");
+        DatePicker startDatePicker = new DatePicker();
+        Label endDateLabel = new Label("End Date");
+        DatePicker endDatePicker = new DatePicker();
+        newAllocationFields.getChildren().addAll(teamComboBox, startDateLabel,
+                startDatePicker, endDateLabel, endDatePicker);
 
         teamComboBox.getComboBox().setOnMouseClicked(event ->
             {
-            //System.out.println("called" + currentProject.getTeams());
                 teamComboBox.getComboBox().getItems().clear();
                 for (Team team : Global.currentWorkspace.getTeams())
                 {
-                    //System.out.println("Team : " + team.toString());
                     teamComboBox.getComboBox().getItems().add(team);
-                    //teamComboBox.addToComboBox(team.toString());
                 }
                 // Remove the unassigned team
                 teamComboBox.getComboBox().getItems().remove(Global.getUnassignedTeam());
             });
 
 
+//
+
         addButton.setOnAction((event) ->
             {
 
-                boolean correctStartDateFormat = isCorrectDateFormat(startDateField);
-
-
-                if (correctStartDateFormat && !startDateField.getText().isEmpty())
+                if (startDatePicker.getValue() != null)
                 {
-                    String endDateFieldText = endDateField.getText();
-                    Date endDate = (!endDateFieldText.isEmpty())
-                            ? stringToDate(endDateFieldText) : null;
-                    Date startDate = stringToDate(startDateField.getText());
-                    Team selectedTeam = new Team();
+                    LocalDate endDate = endDatePicker.getValue();
+                    LocalDate startDate = startDatePicker.getValue();
+                    Team selectedTeam = null;
 
                     for (Team team : Global.currentWorkspace.getTeams())
                     {
@@ -146,15 +111,12 @@ public class ProjectHistoryTab extends Tab
                     {
                         event.consume();
                     }
-
                 }
                 else
                 {
                     event.consume();
                 }
             });
-
-
         historyTable.setItems(data);
         historyTable.getColumns().addAll(teamCol, startDateCol, endDateCol);
         historyPane.getChildren().addAll(title, historyTable, newAllocationFields, addButton);
