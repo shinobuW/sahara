@@ -5,52 +5,24 @@
  */
 package seng302.group2.scenes.information.role;
 
-import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+import javafx.scene.control.Tab;
+import seng302.group2.scenes.SceneSwitcher;
+import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.workspace.role.Role;
 
-import static seng302.group2.scenes.MainScene.informationPane;
-
 /**
- * @author Shinobu
+ * A class for displaying the role scene
+ * @author jml168
  */
-public class RoleScene
-{  
-    /**
-     * Gets the Role information scene
-     * @param currentRole the selected role 
-     * @return The Role information scene
-     */
-    public static ScrollPane getRoleScene(Role currentRole)
+public class RoleScene extends TrackedTabPane
+{
+    public RoleScene(Role currentRole)
     {
-        informationPane = new VBox(10);
-        
-        /*informationPane.setAlignment(Pos.TOP_LEFT);
-        informationPane.setHgap(10);
-        informationPane.setVgap(10);*/
-        informationPane.setPadding(new Insets(25,25,25,25));
-        Label title = new Label(currentRole.getShortName());
-        title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
+        super(SceneSwitcher.ContentScene.ROLE);
 
-        ListView skillsBox = new ListView(currentRole.getRequiredSkills());
-        skillsBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        skillsBox.setMaxWidth(275);
+        // Define and add the tabs
+        Tab informationTab = new RoleInfoTab(currentRole);
 
-        informationPane.getChildren().add(title);
-        informationPane.getChildren().add(new Label("Role Description: "));
-        informationPane.getChildren().add(new Label("Required Skills: "));
-
-        informationPane.getChildren().add(new Label(currentRole.getDescription()));
-        informationPane.getChildren().add(skillsBox);
-
-        ScrollPane wrapper = new ScrollPane(informationPane);
-        wrapper.setStyle("-fx-background-color:transparent;");
-        return wrapper;
+        this.getTabs().addAll(informationTab);  // Add the tabs to the pane
     }
 }

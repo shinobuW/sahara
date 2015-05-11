@@ -1,61 +1,23 @@
 package seng302.group2.scenes.information.skill;
 
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+import javafx.scene.control.Tab;
 import seng302.group2.scenes.SceneSwitcher;
+import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.workspace.skills.Skill;
 
-import static seng302.group2.scenes.MainScene.informationPane;
-
 /**
- * A class for displaying the skill scene
- * @author drm127
+ * A class for displaying the role scene
+ * @author jml168
  */
-@SuppressWarnings("deprecation")
-public class SkillScene
+public class SkillScene extends TrackedTabPane
 {
-    /**
-     * Gets the Skill information scene
-     * @param currentSkill the skill to show the information of
-     * @return The Skill information scene
-     */
-    public static ScrollPane getSkillScene(Skill currentSkill)
+    public SkillScene(Skill currentSkill)
     {
-        informationPane = new VBox(10);
+        super(SceneSwitcher.ContentScene.SKILL);
 
-        /*informationPane.setAlignment(Pos.TOP_LEFT);
-        informationPane.setHgap(10);
-        informationPane.setVgap(10);*/
-        informationPane.setPadding(new Insets(25,25,25,25));
-        Label title = new Label(currentSkill.getShortName());
-        title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
+        // Define and add the tabs
+        Tab informationTab = new SkillInfoTab(currentSkill);
 
-        Button btnEdit = new Button("Edit");
-
-        informationPane.getChildren().add(title);
-        informationPane.getChildren().add(new Label("Skill Description: "));
-        
-        informationPane.getChildren().add(new Label(currentSkill.getDescription()));
-        informationPane.getChildren().add(btnEdit);
-
-        btnEdit.setOnAction((event) ->
-            {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL_EDIT, currentSkill);
-            });
-
-        ScrollPane wrapper = new ScrollPane(informationPane);
-        wrapper.setStyle("-fx-background-color:transparent;");
-        return wrapper;
-    }
- 
-    public static void refreshSkillScene(Skill skill)
-    {
-        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL, skill);
+        this.getTabs().addAll(informationTab);  // Add the tabs to the pane
     }
 }
-    

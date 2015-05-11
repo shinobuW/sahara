@@ -140,8 +140,7 @@ public class SceneSwitcher
             case PERSON:
                 if (item.getClass() == Person.class)
                 {
-                    MainScene.contentPane.setContent(PersonScene.getPersonScene(
-                            (Person) item));
+                    MainScene.contentPane.setContent(new PersonScene((Person) item));
                 }
                 break;
             case PERSON_EDIT:
@@ -167,8 +166,7 @@ public class SceneSwitcher
             case ROLE:
                 if (item.getClass() == Role.class)
                 {
-                    MainScene.contentPane.setContent(RoleScene.getRoleScene(
-                            (Role) item));
+                    MainScene.contentPane.setContent(new RoleScene((Role) item));
                 }
                 break;
             case ROLE_EDIT:
@@ -177,8 +175,7 @@ public class SceneSwitcher
             case SKILL:
                 if (item.getClass() == Skill.class)
                 {
-                    MainScene.contentPane.setContent(SkillScene.getSkillScene(
-                            (Skill) item));
+                    MainScene.contentPane.setContent(new SkillScene((Skill) item));
                 }
                 break;
             case SKILL_EDIT:
@@ -191,8 +188,7 @@ public class SceneSwitcher
             case RELEASE:
                 if (item.getClass() == Release.class)
                 {
-                    MainScene.contentPane.setContent(ReleaseScene.getReleaseScene(
-                            (Release) item));
+                    MainScene.contentPane.setContent(new ReleaseScene((Release) item));
                 }
                 break;
             case RELEASE_EDIT:
