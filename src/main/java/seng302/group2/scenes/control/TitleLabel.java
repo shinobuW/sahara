@@ -12,6 +12,6 @@ public class TitleLabel extends Label
     public TitleLabel(String label)
     {
         this.setText(label);
-        this.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
+        this.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
     }
 }

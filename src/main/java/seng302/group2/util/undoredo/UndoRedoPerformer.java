@@ -129,7 +129,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
-                    WorkspaceScene.refreshWorkspaceScene(proj); //Commeneted for unit testing
+                    //WorkspaceScene.refreshWorkspaceScene(proj); //Commeneted for unit testing
                     break;
                 default:
                     System.out.println("Undo with this property not implemented (yet?)");
@@ -498,7 +498,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
-                    WorkspaceScene.refreshWorkspaceScene(proj);
+                    //WorkspaceScene.refreshWorkspaceScene(proj);
                     break;     
                 default:
                     System.out.println("Redo with this property not implemented (yet?)");
