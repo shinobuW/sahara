@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.information.person.PersonScene;
+import seng302.group2.scenes.information.project.ProjectScene;
 import seng302.group2.scenes.information.role.RoleScene;
 import seng302.group2.scenes.information.skill.SkillScene;
 import seng302.group2.scenes.information.team.TeamScene;
@@ -22,6 +23,7 @@ import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.scenes.menu.MainMenuBar;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -60,7 +62,13 @@ public class MainScene
         
         if (Global.selectedTreeItem.getValue() instanceof Workspace)
         {
-            WorkspaceScene.getWorkspaceScene((Workspace) Global.selectedTreeItem.getValue());
+            contentPane.setContent(new WorkspaceScene(
+                    (Workspace)Global.selectedTreeItem.getValue()));
+        }
+        if (Global.selectedTreeItem.getValue() instanceof Project)
+        {
+            contentPane.setContent(new ProjectScene(
+                    (Project)Global.selectedTreeItem.getValue()));
         }
         else if (Global.selectedTreeItem.getValue() instanceof Person)
         {

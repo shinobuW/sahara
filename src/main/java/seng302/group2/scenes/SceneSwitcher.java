@@ -127,8 +127,7 @@ public class SceneSwitcher
             case WORKSPACE:
                 if (item.getClass() == Workspace.class)
                 {
-                    MainScene.contentPane.setContent(WorkspaceScene.getWorkspaceScene(
-                            (Workspace) item));
+                    MainScene.contentPane.setContent(new WorkspaceScene((Workspace) item));
                 }
                 break;
             case WORKSPACE_EDIT:
