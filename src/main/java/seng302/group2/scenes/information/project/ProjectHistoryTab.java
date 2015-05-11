@@ -1,5 +1,7 @@
 package seng302.group2.scenes.information.project;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -7,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.TitleLabel;
@@ -15,6 +18,7 @@ import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static seng302.group2.util.validation.DateValidator.validateAllocation;
 
@@ -50,12 +54,45 @@ public class ProjectHistoryTab extends Tab
         teamCol.setMaxWidth(150);
 
         TableColumn startDateCol = new TableColumn("Start Date");
-        startDateCol.setCellValueFactory(new PropertyValueFactory<Allocation, String>("startDate"));
+        startDateCol.setCellValueFactory(
+            new Callback<TableColumn.CellDataFeatures<Allocation, String>,
+                    ObservableValue<String>>()
+            {
+                @Override
+                public ObservableValue<String> call(TableColumn.CellDataFeatures<Allocation, String>
+                                                            alloc)
+                {
+                    SimpleStringProperty property = new SimpleStringProperty();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    property.setValue(alloc.getValue().getStartDate().format(formatter));
+                    return property;
+                }
+            });
         startDateCol.setMinWidth(100);
         startDateCol.setMaxWidth(150);
 
         TableColumn endDateCol = new TableColumn("End Date");
-        endDateCol.setCellValueFactory(new PropertyValueFactory<Allocation, String>("endDate"));
+        endDateCol.setCellValueFactory(
+            new Callback<TableColumn.CellDataFeatures<Allocation, String>,
+                                    ObservableValue<String>>()
+            {
+                @Override
+                public ObservableValue<String> call(TableColumn.CellDataFeatures<Allocation, String>
+                                                            alloc)
+                {
+                    SimpleStringProperty property = new SimpleStringProperty();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    if (alloc.getValue().getEndDate() != null)
+                    {
+                        property.setValue(alloc.getValue().getEndDate().format(formatter));
+                    }
+                    else
+                    {
+                        property.setValue("");
+                    }
+                    return property;
+                }
+            });
         endDateCol.setMinWidth(100);
         endDateCol.setMaxWidth(150);
 

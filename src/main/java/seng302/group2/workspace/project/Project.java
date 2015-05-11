@@ -141,9 +141,10 @@ public class Project extends TreeViewItem implements Serializable
         for (Allocation alloc : teamAllocations)
         {
             Team projectTeam = alloc.getTeam();
+
             if (!projectTeam.isUnassignedTeam()
                     && alloc.getStartDate().isBefore(now)
-                    && alloc.getEndDate().isAfter(now)
+                    && (alloc.getEndDate() == null || alloc.getEndDate().isAfter(now))
                     && !teams.contains(projectTeam))
             {
                 teams.add(projectTeam);
