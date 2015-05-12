@@ -248,7 +248,7 @@ public class ReleaseEditScene
                         && projectComboBox.getValue().equals(currentRelease.getProject()))
                 {
                     // No fields have been changed
-                    System.out.print("test");
+                    event.consume();
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
                 }
 

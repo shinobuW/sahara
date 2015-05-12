@@ -17,9 +17,7 @@ import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -27,7 +25,7 @@ import static javafx.collections.FXCollections.observableArrayList;
  * A basic class to represent a Person in the real world.
  * @author crw73
  */
-public class Person extends TreeViewItem implements Serializable
+public class Person extends TreeViewItem implements Serializable, Comparable<Person>
 {
     private String shortName;
     private String firstName;
@@ -389,6 +387,15 @@ public class Person extends TreeViewItem implements Serializable
     {
         return null;
     }
+
+
+    // TODO write javadoc.
+    public int compareTo(Person comparePerson)
+    {
+        String pers1ShortName = this.getShortName().toUpperCase();
+        String pers2ShortName = comparePerson.getShortName().toUpperCase();
+        return pers1ShortName.compareTo(pers2ShortName);
+    }
     
     
     /**
@@ -439,7 +446,112 @@ public class Person extends TreeViewItem implements Serializable
             ));
         }*/
     }
-    
+
+
+
+    /**
+     * Creates a Person edit command and executes it with the Global Command Manager, updating
+     * the person with the new parameter values.
+     * @param newShortName  The persons new shortName
+     * @param newFirstName  The persons new First name
+     * @param newLastName   The perosns new Last name
+     * @param newEmail      The persons new email address
+     * @param newBirthDate  The persons new birth date
+     * @param newDescription The persons new description
+     * @param newSkills     the persons new list of skills
+     */
+    public void edit(String newShortName, String newFirstName, String newLastName,
+                     String newEmail, LocalDate newBirthDate, String newDescription,
+                     Team newTeam,ObservableList newSkills)
+    {
+        Command persEdit = new PersonEditCommand(this, newShortName, newFirstName, newLastName,
+                newEmail, newBirthDate, newDescription, newTeam, newSkills);
+        Global.commandManager.executeCommand(persEdit);
+    }
+
+
+    /**
+     * A command class that allows the executing and undoing of project edits
+     */
+    private class PersonEditCommand implements Command
+    {
+        private Person person;
+        private String shortName;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private LocalDate birthDate;
+        private String description;
+        private Team team;
+        private ObservableList<Skill> skills;
+
+        private String oldShortName;
+        private String oldFirstName;
+        private String oldLastName;
+        private String oldNewEmail;
+        private LocalDate oldBirthDate;
+        private String oldDescription;
+        private Team oldTeam;
+        private ObservableList<Skill> oldSkills;
+
+        private PersonEditCommand(Person person, String newShortName, String newFirstName,
+            String newLastName, String newEmail, LocalDate newBirthDate,
+            String newDescription, Team newTeam, ObservableList<Skill> newSkills)
+        {
+            this.person = person;
+
+            this.shortName = newShortName;
+            this.firstName = newFirstName;
+            this.lastName = newLastName;
+            this.email = newEmail;
+            this.birthDate = newBirthDate;
+            this.description = newDescription;
+            this.team = newTeam;
+            this.skills = newSkills;
+
+            this.oldShortName = person.shortName;
+            this.oldFirstName = person.firstName;
+            this.oldLastName = person.lastName;
+            this.oldNewEmail = person.email;
+            this.oldBirthDate = person.birthDate;
+            this.oldDescription = person.description;
+            this.oldTeam = person.team;
+            this.oldSkills = person.skills;
+        }
+
+        /**
+         * Executes/Redoes the changes of the person edit
+         */
+        public void execute()
+        {
+            person.shortName = shortName;
+            person.firstName = firstName;
+            person.lastName = lastName;
+            person.email = email;
+            person.birthDate = birthDate;
+            person.description = description;
+            person.team = team;
+            person.skills = skills;
+            Collections.sort(Global.currentWorkspace.getPeople());
+        }
+
+        /**
+         * Undoes the changes of the person edit
+         */
+        public void undo()
+        {
+            person.shortName = oldShortName;
+            person.firstName = oldFirstName;
+            person.lastName = oldLastName;
+            person.email = oldNewEmail;
+            person.birthDate = oldBirthDate;
+            person.description = oldDescription;
+            person.team = oldTeam;
+            person.skills = oldSkills;
+            Collections.sort(Global.currentWorkspace.getPeople());
+        }
+    }
+
     
     /**
      * An overridden version for the String representation of a Person

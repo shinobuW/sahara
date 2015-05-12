@@ -27,7 +27,8 @@ public class PersonInfoTab extends Tab
         this.setContent(wrapper);
 
 
-        Label title = new TitleLabel(currentPerson.getFirstName() + currentPerson.getLastName());
+        Label title = new TitleLabel(currentPerson.getFirstName() + " "
+            + currentPerson.getLastName());
 
         Button btnEdit = new Button("Edit");
 

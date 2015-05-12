@@ -177,6 +177,7 @@ public class ProjectEditScene
                 {
                     // No fields have been changed
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
+                    event.consume();
                 }
                 // The short name is the same or valid
                 if ((shortNameCustomField.getText().equals(currentProject.getShortName())

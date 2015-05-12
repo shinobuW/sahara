@@ -11,30 +11,24 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.util.undoredo.UndoRedoAction;
-import seng302.group2.util.undoredo.UndoRedoPerformer;
-import seng302.group2.util.undoredo.UndoableItem;
+import seng302.group2.util.validation.NameValidator;
+import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.Global.currentWorkspace;
 import static seng302.group2.scenes.MainScene.informationPane;
-import static seng302.group2.util.validation.DateValidator.stringToDate;
 import static seng302.group2.util.validation.DateValidator.validateBirthDateField;
-import static seng302.group2.util.validation.NameValidator.validateName;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * A class for displaying the person edit scene.
@@ -204,273 +198,350 @@ public class PersonEditScene
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON, currentPerson);
             });
         
+//        btnSave.setOnAction((event) ->
+//            {
+//
+//                boolean correctDate = validateBirthDateField(customBirthDate);
+//                boolean correctFirstName = validateName(firstNameCustomField);
+//                boolean correctLastName = validateName(lastNameCustomField);
+//                boolean correctShortName;
+//
+//                if (shortNameCustomField.getText().equals(currentPerson.getShortName()))
+//                {
+//                    correctShortName = true;
+//                }
+//                else
+//                {
+//                    correctShortName = validateShortName(shortNameCustomField);
+//                }
+//
+//                if (correctDate && correctShortName && correctFirstName && correctLastName)
+//                {
+//                    //set Person properties
+//                    LocalDate birthDate;
+//                    if (customBirthDate.getText().isEmpty())
+//                    {
+//                        birthDate = null;
+//                    }
+//                    else
+//                    {
+//                        birthDate = stringToDate(customBirthDate.getText());
+//                    }
+//
+//                    ArrayList<UndoableItem> undoActions = new ArrayList<>();
+//
+//                    if (!firstNameCustomField.getText().equals(currentPerson.getFirstName()))
+//                    {
+//                        undoActions.add(new UndoableItem(
+//                                currentPerson,
+//                                new UndoRedoAction(
+//                                        UndoRedoPerformer.UndoRedoProperty.PERSON_FIRSTNAME,
+//                                        currentPerson.getFirstName()),
+//                                new UndoRedoAction(
+//                                        UndoRedoPerformer.UndoRedoProperty.PERSON_FIRSTNAME,
+//                                        firstNameCustomField.getText())));
+//                    }
+//
+//                    if (!lastNameCustomField.getText().equals(currentPerson.getLastName()))
+//                    {
+//                        undoActions.add(new UndoableItem(
+//                                currentPerson,
+//                                new UndoRedoAction(
+//                                        UndoRedoPerformer.UndoRedoProperty.PERSON_LASTNAME,
+//                                        currentPerson.getLastName()),
+//                                new UndoRedoAction(
+//                                        UndoRedoPerformer.UndoRedoProperty.PERSON_LASTNAME,
+//                                        lastNameCustomField.getText())));
+//                    }
+//
+//                    if (!shortNameCustomField.getText().equals(currentPerson.getShortName()))
+//                    {
+//                        undoActions.add(new UndoableItem(
+//                                currentPerson,
+//                                new UndoRedoAction(
+//                                        UndoRedoPerformer.UndoRedoProperty.PERSON_SHORTNAME,
+//                                        currentPerson.getShortName()),
+//                                new UndoRedoAction(
+//                                        UndoRedoPerformer.UndoRedoProperty.PERSON_SHORTNAME,
+//                                        shortNameCustomField.getText())));
+//                    }
+//
+//                    if (!descriptionTextArea.getText().equals(currentPerson.getDescription()))
+//                    {
+//                        undoActions.add(new UndoableItem(
+//                                currentPerson,
+//                                new UndoRedoAction(
+//                                        UndoRedoPerformer.UndoRedoProperty.PERSON_DESCRIPTION,
+//                                        currentPerson.getDescription()),
+//                                new UndoRedoAction(
+//                                        UndoRedoPerformer.UndoRedoProperty.PERSON_DESCRIPTION,
+//                                        descriptionTextArea.getText())));
+//                    }
+//
+//                    if (!emailTextField.getText().equals(currentPerson.getEmail()))
+//                    {
+//                        undoActions.add(new UndoableItem(
+//                                currentPerson,
+//                                new UndoRedoAction(
+//                                        UndoRedoPerformer.UndoRedoProperty.PERSON_EMAIL,
+//                                        currentPerson.getEmail()),
+//                                new UndoRedoAction(
+//                                        UndoRedoPerformer.UndoRedoProperty.PERSON_EMAIL,
+//                                        emailTextField.getText())));
+//                    }
+//
+//                    if (birthDate != (currentPerson.getBirthDate()))
+//                    {
+//                        undoActions.add(new UndoableItem(
+//                                currentPerson,
+//                                new UndoRedoAction(
+//                                        UndoRedoPerformer.UndoRedoProperty.PERSON_BIRTHDATE,
+//                                        currentPerson.getBirthDate()),
+//                                new UndoRedoAction(
+//                                        UndoRedoPerformer.UndoRedoProperty.PERSON_BIRTHDATE,
+//                                        stringToDate(customBirthDate.getText()))));
+//                    }
+//
+//                    for (Skill skill : tempPerson.getSkills())
+//                    {
+//                        if (!currentPerson.getSkills().contains(skill))
+//                        {
+//                            undoActions.add(new UndoableItem(
+//                                    skill,
+//                                    new UndoRedoAction(
+//                                            UndoRedoPerformer.UndoRedoProperty.SKILL_ADD_PERSON,
+//                                            currentPerson),
+//                                    new UndoRedoAction(
+//                                            UndoRedoPerformer.UndoRedoProperty.SKILL_ADD_PERSON,
+//                                            currentPerson)));
+//
+//                            currentPerson.addSkillToPerson(skill, false);
+//                        }
+//                    }
+//
+//                    for (Skill skill : dialogSkills)
+//                    {
+//                        if (!dialogSkillsCopy.contains(skill))
+//                        {
+//                            undoActions.add(new UndoableItem(
+//                                    skill,
+//                                    new UndoRedoAction(
+//                                            UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON,
+//                                            currentPerson),
+//                                    new UndoRedoAction(
+//                                            UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON,
+//                                            currentPerson)));
+//
+//                            currentPerson.removeSkillFromPerson(skill, false);
+//                        }
+//                    }
+//
+//                    String stringSM = "";
+//                    if (currentTeam != null)
+//                    {
+//                        stringSM = currentTeam.toString();
+//                    }
+//                    if (!teamBox.getValue().equals(stringSM))
+//                    {
+//                        if (teamBox.getValue().equals("Unassigned"))
+//                        {
+//                            undoActions.add(new UndoableItem(
+//                                    currentPerson,
+//                                    new UndoRedoAction(
+//                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM,
+//                                            currentPerson.getTeam()),
+//                                    new UndoRedoAction(
+//                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM,
+//                                            Global.currentWorkspace.getTeams().get(0))));
+//
+//                            undoActions.add(new UndoableItem(
+//                                    currentPerson,
+//                                    new UndoRedoAction(
+//                                            UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM,
+//                                            currentPerson.getTeam()),
+//                                    new UndoRedoAction(
+//                                            UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM,
+//                                            Global.currentWorkspace.getTeams().get(0))));
+//
+//                            currentPerson.getTeam().remove(currentPerson, false);
+//                            currentPerson.setTeam(Global.currentWorkspace.getTeams().get(0));
+//                            Global.currentWorkspace.getTeams().get(0).add(currentPerson, false);
+//                        }
+//                        else
+//                        {
+//                            for (Team selectedTeam : Global.currentWorkspace.getTeams())
+//                            {
+//                                if (selectedTeam.toString().equals(teamBox.getValue()))
+//                                {
+//                                    Dialog dialog = new Dialog(null,
+//                                        "Already Assigned to a Team");
+//                                    VBox grid = new VBox();
+//                                    grid.spacingProperty().setValue(10);
+//                                    Insets insets = new Insets(20, 20, 20, 20);
+//                                    grid.setPadding(insets);
+//
+//                                    Button btnYes1 = new Button("Yes");
+//                                    Button btnNo1 = new Button("No");
+//
+//                                    HBox buttons1 = new HBox();
+//                                    buttons1.spacingProperty().setValue(10);
+//                                    buttons1.alignmentProperty().set(Pos.CENTER_RIGHT);
+//                                    buttons1.getChildren().addAll(btnYes1, btnNo1);
+//
+//                                    grid.getChildren().add(new Label(
+//                                            "Are you sure you want to move "
+//                                                    + currentPerson.getShortName()
+//                                            +  " from " + currentPerson.getTeamName()
+//                                                    + " to " + selectedTeam));
+//                                    grid.getChildren().add(buttons1);
+//
+//                                    btnYes1.setOnAction((dialogEvent) ->
+//                                        {
+//                                            undoActions.add(new UndoableItem(
+//                                                    currentPerson,
+//                                                    new UndoRedoAction(
+//                                                            UndoRedoPerformer.
+//                                                                    UndoRedoProperty.
+//                                                                    PERSON_ADD_TEAM,
+//                                                            currentPerson.getTeam()),
+//                                                    new UndoRedoAction(
+//                                                            UndoRedoPerformer.
+//                                                                    UndoRedoProperty.
+//                                                                    PERSON_ADD_TEAM,
+//                                                            selectedTeam)));
+//
+//                                            undoActions.add(new UndoableItem(
+//                                                    currentPerson,
+//                                                    new UndoRedoAction(
+//                                                            UndoRedoPerformer.
+//                                                                    UndoRedoProperty.PERSON_TEAM,
+//                                                            currentPerson.getTeam()),
+//                                                    new UndoRedoAction(
+//                                           shortNameCustomField                 UndoRedoPerformer.
+//                                                                    UndoRedoProperty.PERSON_TEAM,
+//                                                            selectedTeam)));
+//
+//                                            currentPerson.getTeam().remove(currentPerson, false);
+//                                            currentPerson.setTeam(selectedTeam);
+//                                            selectedTeam.add(currentPerson, false);
+//                                            dialog.hide();
+//                                        });
+//
+//                                    btnNo1.setOnAction((dialogEvent) ->
+//                                        {
+//                                            dialog.hide();
+//                                        });
+//
+//                                    dialog.setResizable(false);
+//                                    dialog.setIconifiable(false);
+//                                    dialog.setContent(grid);
+//                                    dialog.show();
+//                                }
+//                            }
+//                        }
+//                    }
+//
+//                    if (undoActions.size() > 0)
+//                    {
+//                        Global.undoRedoMan.add(new UndoableItem(
+//                            currentPerson,
+//                            new UndoRedoAction(
+//                                    UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT,
+//                                    undoActions),
+//                            new UndoRedoAction(
+//                                    UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT,
+//                                    undoActions)
+//                            ));
+//                    }
+//
+//                    currentPerson.setFirstName(firstNameCustomField.getText());
+//                    currentPerson.setShortName(shortNameCustomField.getText());
+//                    currentPerson.setLastName(lastNameCustomField.getText());
+//                    currentPerson.setDescription(descriptionTextArea.getText());
+//                    currentPerson.setEmail(emailTextField.getText());
+//                    currentPerson.setBirthDate(birthDate);
+//
+//                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON, currentPerson);
+//                    MainScene.treeView.refresh();
+//                }
+//                else
+//                {
+//                    event.consume();
+//                }
+//            });
+
         btnSave.setOnAction((event) ->
             {
-
                 boolean correctDate = validateBirthDateField(customBirthDate);
-                boolean correctFirstName = validateName(firstNameCustomField);
-                boolean correctLastName = validateName(lastNameCustomField);
-                boolean correctShortName;
-                
-                if (shortNameCustomField.getText().equals(currentPerson.getShortName()))
+
+                Team selectedTeam = new Team();
+                for (Team i :Global.currentWorkspace.getTeams())
                 {
-                    correctShortName = true;
+                    if (i.toString().equals(teamBox.getValue()))
+                    {
+                        selectedTeam = i;
+                        break;
+                    }
                 }
-                else
+
+                boolean skillsNotChanged = true;
+                for (Object i : personSkillsBox.getItems())
                 {
-                    correctShortName = validateShortName(shortNameCustomField);
+                    if (!currentPerson.getSkills().contains((Skill)i))
+                    {
+                        skillsNotChanged = false;
+                        break;
+                    }
                 }
-                
-                if (correctDate && correctShortName && correctFirstName && correctLastName)
+
+                if (shortNameCustomField.getText().equals(currentPerson.getShortName())
+                        && firstNameCustomField.getText().equals(currentPerson.getFirstName())
+                        && lastNameCustomField.getText().equals(currentPerson.getLastName())
+                        && descriptionTextArea.getText().equals(currentPerson.getDescription())
+                        && customBirthDate.getText().equals(currentPerson.getDateString())
+                        && emailTextField.getText().equals(currentPerson.getEmail())
+                        && selectedTeam.getShortName().equals(currentPerson.getTeamName())
+                        && skillsNotChanged)
                 {
-                    //set Person properties
+                    // No fields have been changed
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON, currentPerson);
+                    event.consume();
+                }
+
+                // The short name is the same or valid
+                if ((shortNameCustomField.getText().equals(currentPerson.getShortName())
+                        || ShortNameValidator.validateShortName(shortNameCustomField))
+                        && NameValidator.validateName(firstNameCustomField)
+                        && NameValidator.validateName(lastNameCustomField)
+                        && correctDate)
+                {
                     LocalDate birthDate;
-                    if (customBirthDate.getText().isEmpty())
+                    if (customBirthDate.getText().equals(""))
                     {
                         birthDate = null;
                     }
                     else
                     {
-                        birthDate = stringToDate(customBirthDate.getText());
+                        birthDate = LocalDate.parse(customBirthDate.getText(),
+                            Global.dateFormatter);
                     }
-                    
-                    ArrayList<UndoableItem> undoActions = new ArrayList<>();
-                    
-                    if (!firstNameCustomField.getText().equals(currentPerson.getFirstName()))
-                    {
-                        undoActions.add(new UndoableItem(
-                                currentPerson,
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PERSON_FIRSTNAME, 
-                                        currentPerson.getFirstName()),
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PERSON_FIRSTNAME, 
-                                        firstNameCustomField.getText())));
-                    }
-                    
-                    if (!lastNameCustomField.getText().equals(currentPerson.getLastName()))
-                    {
-                        undoActions.add(new UndoableItem(
-                                currentPerson,
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PERSON_LASTNAME, 
-                                        currentPerson.getLastName()),
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PERSON_LASTNAME, 
-                                        lastNameCustomField.getText())));
-                    }
-                    
-                    if (!shortNameCustomField.getText().equals(currentPerson.getShortName()))
-                    {
-                        undoActions.add(new UndoableItem(
-                                currentPerson,
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PERSON_SHORTNAME, 
-                                        currentPerson.getShortName()),
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PERSON_SHORTNAME, 
-                                        shortNameCustomField.getText())));
-                    }
-                    
-                    if (!descriptionTextArea.getText().equals(currentPerson.getDescription()))
-                    {
-                        undoActions.add(new UndoableItem(
-                                currentPerson,
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PERSON_DESCRIPTION, 
-                                        currentPerson.getDescription()),
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PERSON_DESCRIPTION, 
-                                        descriptionTextArea.getText())));
-                    }
-                    
-                    if (!emailTextField.getText().equals(currentPerson.getEmail()))
-                    {
-                        undoActions.add(new UndoableItem(
-                                currentPerson,
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PERSON_EMAIL, 
-                                        currentPerson.getEmail()),
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PERSON_EMAIL, 
-                                        emailTextField.getText())));
-                    }                    
 
-                    if (birthDate != (currentPerson.getBirthDate()))
-                    {
-                        undoActions.add(new UndoableItem(
-                                currentPerson,
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PERSON_BIRTHDATE, 
-                                        currentPerson.getBirthDate()),
-                                new UndoRedoAction(
-                                        UndoRedoPerformer.UndoRedoProperty.PERSON_BIRTHDATE, 
-                                        stringToDate(customBirthDate.getText()))));
-                    }  
-                    
-                    for (Skill skill : tempPerson.getSkills())
-                    {
-                        if (!currentPerson.getSkills().contains(skill))
-                        {
-                            undoActions.add(new UndoableItem(
-                                    skill,
-                                    new UndoRedoAction(
-                                            UndoRedoPerformer.UndoRedoProperty.SKILL_ADD_PERSON,
-                                            currentPerson),
-                                    new UndoRedoAction(
-                                            UndoRedoPerformer.UndoRedoProperty.SKILL_ADD_PERSON,
-                                            currentPerson)));
-
-                            currentPerson.addSkillToPerson(skill, false);
-                        }
-                    }
-                    
-                    for (Skill skill : dialogSkills)
-                    {
-                        if (!dialogSkillsCopy.contains(skill))
-                        {
-                            undoActions.add(new UndoableItem(
-                                    skill,
-                                    new UndoRedoAction(
-                                            UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON, 
-                                            currentPerson),
-                                    new UndoRedoAction(
-                                            UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON, 
-                                            currentPerson)));
-                                         
-                            currentPerson.removeSkillFromPerson(skill, false);
-                        }
-                    }
-                                        
-                    String stringSM = "";
-                    if (currentTeam != null)
-                    {
-                        stringSM = currentTeam.toString();
-                    }
-                    if (!teamBox.getValue().equals(stringSM))
-                    {
-                        if (teamBox.getValue().equals("Unassigned"))
-                        {
-                            undoActions.add(new UndoableItem(
-                                    currentPerson,
-                                    new UndoRedoAction(
-                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, 
-                                            currentPerson.getTeam()),
-                                    new UndoRedoAction(
-                                            UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, 
-                                            Global.currentWorkspace.getTeams().get(0))));
-
-                            undoActions.add(new UndoableItem(
-                                    currentPerson,
-                                    new UndoRedoAction(
-                                            UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM, 
-                                            currentPerson.getTeam()),
-                                    new UndoRedoAction(
-                                            UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM, 
-                                            Global.currentWorkspace.getTeams().get(0))));
-
-                            currentPerson.getTeam().remove(currentPerson, false);
-                            currentPerson.setTeam(Global.currentWorkspace.getTeams().get(0));
-                            Global.currentWorkspace.getTeams().get(0).add(currentPerson, false);
-                        }
-                        else 
-                        {
-                            for (Team selectedTeam : Global.currentWorkspace.getTeams())
-                            {
-                                if (selectedTeam.toString().equals(teamBox.getValue()))
-                                {
-                                    Dialog dialog = new Dialog(null, "Already Assigned to a Team");
-                                    VBox grid = new VBox();
-                                    grid.spacingProperty().setValue(10);
-                                    Insets insets = new Insets(20, 20, 20, 20);
-                                    grid.setPadding(insets);
-
-                                    Button btnYes1 = new Button("Yes");
-                                    Button btnNo1 = new Button("No");
-
-                                    HBox buttons1 = new HBox();
-                                    buttons1.spacingProperty().setValue(10);
-                                    buttons1.alignmentProperty().set(Pos.CENTER_RIGHT);
-                                    buttons1.getChildren().addAll(btnYes1, btnNo1);
-
-                                    grid.getChildren().add(new Label(
-                                            "Are you sure you want to move " 
-                                                    + currentPerson.getShortName() 
-                                            +  " from " + currentPerson.getTeamName() 
-                                                    + " to " + selectedTeam));
-                                    grid.getChildren().add(buttons1);
-
-                                    btnYes1.setOnAction((dialogEvent) ->
-                                        {
-                                            undoActions.add(new UndoableItem(
-                                                    currentPerson,
-                                                    new UndoRedoAction(
-                                                            UndoRedoPerformer.
-                                                                    UndoRedoProperty.
-                                                                    PERSON_ADD_TEAM, 
-                                                            currentPerson.getTeam()),
-                                                    new UndoRedoAction(
-                                                            UndoRedoPerformer.
-                                                                    UndoRedoProperty.
-                                                                    PERSON_ADD_TEAM, 
-                                                            selectedTeam)));
-
-                                            undoActions.add(new UndoableItem(
-                                                    currentPerson,
-                                                    new UndoRedoAction(
-                                                            UndoRedoPerformer.
-                                                                    UndoRedoProperty.PERSON_TEAM, 
-                                                            currentPerson.getTeam()),
-                                                    new UndoRedoAction(
-                                                            UndoRedoPerformer.
-                                                                    UndoRedoProperty.PERSON_TEAM, 
-                                                            selectedTeam)));
-
-                                            currentPerson.getTeam().remove(currentPerson, false);
-                                            currentPerson.setTeam(selectedTeam);
-                                            selectedTeam.add(currentPerson, false);
-                                            dialog.hide();
-                                        });
-
-                                    btnNo1.setOnAction((dialogEvent) ->
-                                        {
-                                            dialog.hide();
-                                        });
-
-                                    dialog.setResizable(false);
-                                    dialog.setIconifiable(false);
-                                    dialog.setContent(grid);
-                                    dialog.show();
-                                }
-                            }
-                        }
-                    }
-                    
-                    if (undoActions.size() > 0)
-                    {
-                        Global.undoRedoMan.add(new UndoableItem(
-                            currentPerson,
-                            new UndoRedoAction(
-                                    UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT,
-                                    undoActions), 
-                            new UndoRedoAction(
-                                    UndoRedoPerformer.UndoRedoProperty.PERSON_EDIT, 
-                                    undoActions)
-                            ));
-                    }
-                    
-                    currentPerson.setFirstName(firstNameCustomField.getText());
-                    currentPerson.setShortName(shortNameCustomField.getText());
-                    currentPerson.setLastName(lastNameCustomField.getText());
-                    currentPerson.setDescription(descriptionTextArea.getText());
-                    currentPerson.setEmail(emailTextField.getText());
-                    currentPerson.setBirthDate(birthDate);
+                    currentPerson.edit(shortNameCustomField.getText(),
+                            firstNameCustomField.getText(),
+                            lastNameCustomField.getText(),
+                            emailTextField.getText(),
+                            birthDate,
+                            descriptionTextArea.getText(),
+                            selectedTeam,
+                            personSkillsBox.getItems());
 
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON, currentPerson);
+                    Collections.sort(Global.currentWorkspace.getPeople());
                     MainScene.treeView.refresh();
                 }
                 else
                 {
+                    // One or more fields incorrectly validated, stay on the edit scene
                     event.consume();
                 }
             });
