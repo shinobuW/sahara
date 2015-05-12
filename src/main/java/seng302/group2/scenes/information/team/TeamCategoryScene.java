@@ -5,9 +5,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import seng302.group2.scenes.MainScene;
+import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.dialog.CreateTeamDialog;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
@@ -29,12 +28,9 @@ public class TeamCategoryScene
     public static ScrollPane getTeamCategoryScene(Workspace currentWorkspace)
     {
         informationPane = new VBox(10);
-        /*informationPane.setAlignment(Pos.TOP_LEFT);
-        informationPane.setHgap(10);
-        informationPane.setVgap(10);*/
+
         informationPane.setPadding(new Insets(25,25,25,25));
-        Label title = new Label("Teams in " + currentWorkspace.getShortName());
-        title.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
+        Label title = new TitleLabel("Teams in " + currentWorkspace.getShortName());
 
         Button btnView = new Button("View");
         Button btnDelete = new Button("Delete");

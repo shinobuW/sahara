@@ -63,28 +63,27 @@ public class MainScene
         if (Global.selectedTreeItem.getValue() instanceof Workspace)
         {
             contentPane.setContent(new WorkspaceScene(
-                    (Workspace)Global.selectedTreeItem.getValue()));
+                    (Workspace) Global.selectedTreeItem.getValue()));
         }
         if (Global.selectedTreeItem.getValue() instanceof Project)
         {
-            contentPane.setContent(new ProjectScene(
-                    (Project)Global.selectedTreeItem.getValue()));
+            contentPane.setContent(new ProjectScene((Project) Global.selectedTreeItem.getValue()));
         }
         else if (Global.selectedTreeItem.getValue() instanceof Person)
         {
-            PersonScene.getPersonScene((Person) Global.selectedTreeItem.getValue());
+            contentPane.setContent(new PersonScene((Person) Global.selectedTreeItem.getValue()));
         }
         else if (Global.selectedTreeItem.getValue() instanceof Skill)
         {
-            SkillScene.getSkillScene((Skill) Global.selectedTreeItem.getValue());
+            contentPane.setContent(new SkillScene((Skill) Global.selectedTreeItem.getValue()));
         }
         else if (Global.selectedTreeItem.getValue() instanceof Team)
         {
-            TeamScene.getTeamScene((Team) Global.selectedTreeItem.getValue());
+            contentPane.setContent(new TeamScene((Team) Global.selectedTreeItem.getValue()));
         }
         else if (Global.selectedTreeItem.getValue() instanceof Role)
         {
-            RoleScene.getRoleScene((Role) Global.selectedTreeItem.getValue());
+            contentPane.setContent(new RoleScene((Role) Global.selectedTreeItem.getValue()));
         }
         
 

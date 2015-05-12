@@ -10,8 +10,8 @@ import org.junit.Test;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Month;
 
 /**
  * A series of tests relating to Teams
@@ -96,8 +96,8 @@ public class TeamTest
     {
         Team team = new Team();
         Project proj = new Project();
-        Date startDate = new Date();
-        Date endDate = new Date();
+        LocalDate startDate = LocalDate.of(2014, Month.JANUARY, 1);
+        LocalDate endDate = LocalDate.of(2014, Month.JANUARY, 10);
         Allocation alloc = new Allocation(proj, team, startDate, endDate);
         
         team.add(alloc);

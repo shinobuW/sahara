@@ -7,11 +7,6 @@ package seng302.group2.util.undoredo;
 
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.information.person.PersonScene;
-import seng302.group2.scenes.information.release.ReleaseScene;
-import seng302.group2.scenes.information.skill.SkillScene;
-import seng302.group2.scenes.information.team.TeamScene;
-import seng302.group2.scenes.information.workspace.WorkspaceScene;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -203,7 +198,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
-                    PersonScene.refreshPersonScene(person);
+                    //PersonScene.refreshPersonScene(person);
                     break;
                 case PERSON_SHORTNAME:
                     person.setShortName((String) item.getUndoAction().getValue());
@@ -274,7 +269,7 @@ public class UndoRedoPerformer
                     person.getTeam().getPeople().remove(person);
                     currentTeam.getPeople().add(person);
                     App.content.getItems().remove(informationPane);
-                    TeamScene.getTeamScene(currentTeam);
+                    //TeamScene.getTeamScene(currentTeam);
                     App.content.getItems().add(informationPane);
                     break;
                 case PERSON_DEL_TEAM:
@@ -286,7 +281,7 @@ public class UndoRedoPerformer
                     }
                     person.setTeam(currentTeam);
                     App.content.getItems().remove(informationPane);
-                    TeamScene.getTeamScene(currentTeam);
+                    //TeamScene.getTeamScene(currentTeam);
                     App.content.getItems().add(informationPane);
                     break;
                 case PERSON_EDIT:
@@ -295,7 +290,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
-                    PersonScene.refreshPersonScene(person);
+                    //PersonScene.refreshPersonScene(person);
                     break;
                 default:
                     System.out.println(item.getUndoAction().getProperty());
@@ -323,7 +318,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
-                    SkillScene.refreshSkillScene(skill);
+                    //SkillScene.refreshSkillScene(skill);
                     break;
                 case SKILL_SHORTNAME:
                     skill.setShortName((String) item.getUndoAction().getValue());
@@ -335,14 +330,14 @@ public class UndoRedoPerformer
                     Person currentPerson = (Person) item.getUndoAction().getValue();
                     currentPerson.getSkills().remove(skill);
                     App.content.getItems().remove(informationPane);
-                    PersonScene.getPersonScene(currentPerson);
+                    //PersonScene.getPersonScene(currentPerson);
                     App.content.getItems().add(informationPane);
                     break;
                 case SKILL_DEL_PERSON:
                     currentPerson = (Person) item.getUndoAction().getValue();
                     currentPerson.getSkills().add(skill);
                     App.content.getItems().remove(informationPane);
-                    PersonScene.getPersonScene(currentPerson);
+                    //PersonScene.getPersonScene(currentPerson);
                     App.content.getItems().add(informationPane);
                     break;
                 case SKILL_EDIT:
@@ -351,7 +346,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
-                    SkillScene.refreshSkillScene(skill);
+                    //SkillScene.refreshSkillScene(skill);
                     break;
                 default:
                     System.out.println("Undo on skill with this property not implemented (yet?)");
@@ -377,7 +372,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
-                    TeamScene.refreshTeamScene(team);
+                    //TeamScene.refreshTeamScene(team);
                     break;
                 case TEAM_SHORTNAME:
                     System.out.println("TEAM_SHORTNAME" + "  " + item.getUndoAction().getValue());
@@ -414,7 +409,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
-                    TeamScene.refreshTeamScene(team);
+                    //TeamScene.refreshTeamScene(team);
                     break;
                 default:
                     System.out.println("Undo on skill with this property not implemented (yet?)");
@@ -459,7 +454,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.undo(undoAction);
                     }
-                    ReleaseScene.refreshReleaseScene(release);
+                    //ReleaseScene.refreshReleaseScene(release);
                     break;
                 default:
                     System.out.println("Undo on release with this property not implemented (yet?)");
@@ -558,7 +553,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
-                    PersonScene.refreshPersonScene(person);
+                    //PersonScene.refreshPersonScene(person);
                     break;
                 case PERSON_SHORTNAME:
                     person.setShortName((String) item.getRedoAction().getValue());
@@ -620,7 +615,7 @@ public class UndoRedoPerformer
                     person.getTeam().getPeople().remove(person);
                     currentTeam.getPeople().add(person);
                     App.content.getItems().remove(informationPane);
-                    TeamScene.getTeamScene(currentTeam);
+                    //TeamScene.getTeamScene(currentTeam);
                     App.content.getItems().add(informationPane);
                     break;
                 case PERSON_DEL_TEAM:
@@ -631,7 +626,7 @@ public class UndoRedoPerformer
                         Global.getUnassignedTeam().remove(person);
                     }
                     App.content.getItems().remove(informationPane);
-                    TeamScene.getTeamScene(currentTeam);
+                    //TeamScene.getTeamScene(currentTeam);
                     App.content.getItems().add(informationPane);
                     break;
                 case PERSON_EDIT:
@@ -640,7 +635,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
-                    PersonScene.refreshPersonScene(person);
+                    //PersonScene.refreshPersonScene(person);
                     break;
                 default:
                     System.out.println("Redo on person with this property not implemented (yet?)");
@@ -666,7 +661,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
-                    SkillScene.refreshSkillScene(skill);
+                    //SkillScene.refreshSkillScene(skill);
                     break;
                 case SKILL_SHORTNAME:
                     skill.setShortName((String) item.getRedoAction().getValue());
@@ -678,14 +673,14 @@ public class UndoRedoPerformer
                     Person currentPerson = (Person) item.getUndoAction().getValue();
                     currentPerson.getSkills().add(skill);
                     App.content.getItems().remove(informationPane);
-                    PersonScene.getPersonScene(currentPerson);
+                    //PersonScene.getPersonScene(currentPerson);
                     App.content.getItems().add(informationPane);
                     break;
                 case SKILL_DEL_PERSON:
                     currentPerson = (Person) item.getUndoAction().getValue();
                     currentPerson.getSkills().remove(skill);
                     App.content.getItems().remove(informationPane);
-                    PersonScene.getPersonScene(currentPerson);
+                    //PersonScene.getPersonScene(currentPerson);
                     App.content.getItems().add(informationPane);
                     break;
                 case SKILL_EDIT:
@@ -694,7 +689,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
-                    SkillScene.refreshSkillScene(skill);
+                    //SkillScene.refreshSkillScene(skill);
                     break;
                 default:
                     System.out.println("Redo on skill with this property not implemented (yet?)");
@@ -720,7 +715,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
-                    TeamScene.refreshTeamScene(team);
+                    //TeamScene.refreshTeamScene(team);
                     break;
                 case TEAM_SHORTNAME:
                     team.setShortName((String) item.getRedoAction().getValue());
@@ -755,7 +750,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
-                    TeamScene.refreshTeamScene(team);
+                    //TeamScene.refreshTeamScene(team);
                     break;
                 default:
                     System.out.println("Redo on Team with this property not implemented (yet?)");
@@ -805,7 +800,7 @@ public class UndoRedoPerformer
                     {
                         UndoRedoPerformer.redo(undoAction);
                     }
-                    ReleaseScene.refreshReleaseScene(release);
+                    //ReleaseScene.refreshReleaseScene(release);
                     break;
                 default:
                     System.out.println("Redo on Release with this property not implemented (yet?)");

@@ -678,9 +678,9 @@ public class TeamEditScene
     private static void refreshListView(ObservableList<Person> currentTeam)
     {
         System.out.println(tempTeam + " before");
-        tempTeam = TeamScene.sortListView(currentTeam);
+        tempTeam = TeamInfoTab.sortListView(currentTeam);
         System.out.println(tempTeam + " after");
-        ObservableList<String> tempTeamString = TeamScene.convertToString(tempTeam);
+        ObservableList<String> tempTeamString = TeamInfoTab.personRoleToString(tempTeam);
 
         informationPane.getChildren().remove(teamsPeopleBox);
 
