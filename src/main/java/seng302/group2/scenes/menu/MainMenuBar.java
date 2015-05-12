@@ -275,8 +275,8 @@ public class MainMenuBar
     }
 
     /**
-     * Creates a menu item "Revert" and sets the on action event to revert the current workspace to the
-     * Revert state from when the program is last saved or last opened
+     * Creates a menu item "Revert" and sets the on action event to revert the current workspace to
+     * the Revert state from when the program is last saved or last opened
      * @return MenuItem Revert
      */
     private static MenuItem createRevertItem()

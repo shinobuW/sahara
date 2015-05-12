@@ -8,6 +8,7 @@ package seng302.group2.util.validation;
 
 import org.junit.Assert;
 import org.junit.Test;
+import seng302.group2.Global;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
@@ -88,8 +89,8 @@ public class DateValidatorTest
     @Test
     public void testDateBefore()
     {
-        Date date1 = new Date("01/01/2015");
-        Date date2 = new Date("01/01/2016");
+        LocalDate date1 = LocalDate.parse("01/01/2015", Global.dateFormatter);
+        LocalDate date2 = LocalDate.parse("01/01/2016", Global.dateFormatter);
 
         Assert.assertEquals(true, DateValidator.dateBefore(date1, date2));
         Assert.assertEquals(false, DateValidator.dateBefore(date2, date1));
@@ -103,8 +104,8 @@ public class DateValidatorTest
     @Test
     public void testDateAfter()
     {
-        Date date1 = new Date("01/01/2015");
-        Date date2 = new Date("01/01/2016");
+        LocalDate date1 = LocalDate.parse("01/01/2015", Global.dateFormatter);
+        LocalDate date2 = LocalDate.parse("01/01/2016", Global.dateFormatter);
 
         Assert.assertEquals(false, DateValidator.dateAfter(date1, date2));
         Assert.assertEquals(true, DateValidator.dateAfter(date2, date1));
@@ -130,7 +131,7 @@ public class DateValidatorTest
     @Test
     public void testStringToDate()
     {
-        Date testDate = DateValidator.stringToDate("12/12/2015");
-        Assert.assertEquals(new Date("12/12/2015"), testDate);   
+        LocalDate testDate = DateValidator.stringToDate("12/12/2015");
+        Assert.assertEquals(LocalDate.parse("12/12/2015", Global.dateFormatter), testDate);
     }
 }

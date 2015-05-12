@@ -5,10 +5,7 @@
  */
 package seng302.group2.workspace.release;
 
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
@@ -22,28 +19,12 @@ import java.time.LocalDate;
  *
  * @author Shinobu
  */
-public class ReleaseTest extends TestCase
+public class ReleaseTest
 {
-     /**
-     * Create the test case.
-     * @param testName name of the test case
-     */
-    public ReleaseTest(String testName)
-    {
-        super(testName);
-    }
-    
-     /**
-     * @return the suite of tests being tested.
-     */
-    public static Test suite()
-    {
-        return new TestSuite(ReleaseTest.class);
-    }
-    
     /**
      * Test constructors
      */
+    @Test
     public void testReleaseConstructor()
     {
         Release release1 = new Release();

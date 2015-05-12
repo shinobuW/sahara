@@ -253,7 +253,7 @@ public class ReleaseEditScene
                 }
 
                 boolean correctDateFormat = false;
-                Date releaseDate = null;
+                LocalDate releaseDate = null;
 
                 //TODO Date validation.
     //            Date estimatedDate = new Date();
