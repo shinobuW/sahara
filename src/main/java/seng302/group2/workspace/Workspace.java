@@ -4,6 +4,7 @@
 package seng302.group2.workspace;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -456,6 +457,15 @@ public class Workspace extends TreeViewItem implements Serializable
                         .title("File Not Found")
                         .message("The specified file could not be found.")
                         .showWarning();
+                return SaveLoadResult.FILENOTFOUND;
+            }
+            catch (JsonSyntaxException e)
+            {
+                Dialogs.create()
+                        .title("File out dated")
+                        .message("The specified file was created with a deprecated version of "
+                                + "Sahara.\nThe file cannot be loaded.")
+                        .showError();
                 return SaveLoadResult.FILENOTFOUND;
             }
             catch (IOException e)

@@ -16,6 +16,7 @@ import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,7 @@ public class Person extends TreeViewItem implements Serializable
     private String lastName;
     private String email;
     private String description;
-    private Date birthDate = null;
+    private LocalDate birthDate = null;
     private transient ObservableList<Skill> skills = observableArrayList();
     private List<Skill> serializableSkills = new ArrayList<>();
     private Team team;
@@ -72,11 +73,11 @@ public class Person extends TreeViewItem implements Serializable
      * @param firstName The first name of the Person
      * @param lastName The last name of the Person
      * @param email The email of the Person
-     * @param birthDate A description of the Person
-     * @param description The date of birth of a Person
+     * @param birthDate The date of birth of the Person
+     * @param description A description of the Person
      */
     public Person(String shortName, String firstName, String lastName, String email, 
-            String description, Date birthDate)
+            String description, LocalDate birthDate)
     {
         // Initialize as a TreeViewItem
         super(shortName);
@@ -148,7 +149,7 @@ public class Person extends TreeViewItem implements Serializable
      * Gets the person's birth date.
      * @return The birth date of the person
      */
-    public Date getBirthDate()
+    public LocalDate getBirthDate()
     {
         return this.birthDate;
     }
@@ -263,7 +264,7 @@ public class Person extends TreeViewItem implements Serializable
      * Sets the person's birth date
      * @param birthDate the birth date to set
      */
-    public void setBirthDate(Date birthDate)
+    public void setBirthDate(LocalDate birthDate)
     {
         this.birthDate = birthDate;
     }
@@ -348,7 +349,8 @@ public class Person extends TreeViewItem implements Serializable
         {
             try
             {
-                return Global.datePattern.format(this.getBirthDate());
+                return this.getBirthDate().format(Global.dateFormatter);
+                //return Global.datePattern.format(this.getBirthDate());
             }
             catch (Exception e)
             {

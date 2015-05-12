@@ -7,6 +7,7 @@ import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.team.Team;
 
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 
 /**
  * TODO
@@ -17,10 +18,11 @@ public final class Global
     public static Workspace currentWorkspace = new Workspace();
     public static TreeItem selectedTreeItem = new TreeItem();
     public static String lastSaveLocation = "/";
-    public static SimpleDateFormat datePattern = new SimpleDateFormat("dd/MM/yyyy");
-
-    public static UndoRedoManager undoRedoMan = new UndoRedoManager(); // Becoming deprecated
+    public static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     public static CommandManager commandManager = new CommandManager();
+
+    @Deprecated
+    public static UndoRedoManager undoRedoMan = new UndoRedoManager(); // Becoming deprecated
 
 
     /**

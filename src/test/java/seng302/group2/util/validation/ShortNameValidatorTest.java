@@ -18,6 +18,8 @@ import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 
@@ -33,12 +35,12 @@ public class ShortNameValidatorTest
     @BeforeClass
     public static void setUp()
     {
-        Date dob = new Date();
+        LocalDate dob = LocalDate.now();
         try
         {
-            dob = Global.datePattern.parse("19/12/1994");
+            dob = LocalDate.parse("19/12/1994", Global.dateFormatter);
         }
-        catch (ParseException e)
+        catch (DateTimeParseException e)
         {
             Assert.fail("Date parsing error, needs fixing");
         }

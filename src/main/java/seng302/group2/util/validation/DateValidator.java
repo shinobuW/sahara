@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 /**
@@ -30,7 +31,7 @@ public class DateValidator
             return ValidationStatus.NULL;
         }
 
-        Global.datePattern.setLenient(false);
+        //Global.datePattern.setLenient(false);
         try
         {
             String[] date = birthDate.split("/"); //returns an array with the day, month and year
@@ -40,9 +41,9 @@ public class DateValidator
                 return ValidationStatus.PATTERN_MISMATCH;
             }
 
-            Date parsedBirthDate = Global.datePattern.parse(birthDate);
+            LocalDate parsedBirthDate = LocalDate.parse(birthDate, Global.dateFormatter);
 
-            if (parsedBirthDate.after(Date.from(Instant.now())))
+            if (parsedBirthDate.isAfter(LocalDate.now()))
             {
                 return ValidationStatus.OUT_OF_RANGE;
             }
@@ -51,7 +52,7 @@ public class DateValidator
                 return ValidationStatus.VALID;
             }
         }
-        catch (Exception ex)
+        catch (DateTimeParseException ex)
         {
             return ValidationStatus.PATTERN_MISMATCH;
 
@@ -73,7 +74,7 @@ public class DateValidator
 
         if (allocEnd != null)
         {
-            if (allocStart.isAfter(allocEnd))
+            if (dateAfter(allocStart, allocEnd))
             {
                 return ValidationStatus.ALLOCATION_DATES_WRONG_ORDER;
             }
@@ -90,55 +91,51 @@ public class DateValidator
                     LocalDate teamStart = teamAlloc.getStartDate();
                     LocalDate teamEnd = teamAlloc.getEndDate();
 
-                    if (teamStart.isAfter(allocStart)
-                            && teamEnd.isBefore(allocEnd))
+                    if (datesEqual(teamStart, allocStart)
+                            && datesEqual(teamEnd, allocEnd))
+                    {
+                        return ValidationStatus.ALLOCATION_DATES_EQUAL;
+                    }
+                    else if (dateAfter(teamStart, allocStart)
+                            && dateBefore(teamEnd, allocEnd))
                     {
                         return ValidationStatus.SUPER_OVERLAP;
                     }
-                    else if (teamEnd.isAfter(allocEnd)
-                            && teamStart.isBefore(allocStart))
+                    else if (dateAfter(teamStart, allocStart)
+                            && datesEqual(teamEnd, allocEnd))
+                    {
+                        return ValidationStatus.SUPER_OVERLAP;
+                    }
+                    else if (datesEqual(teamStart, allocStart)
+                            && dateBefore(teamEnd, allocEnd))
+                    {
+                        return ValidationStatus.SUPER_OVERLAP;
+                    }
+                    else if (dateBefore(teamStart, allocStart)
+                            && dateAfter(teamEnd, allocEnd))
                     {
                         return ValidationStatus.SUB_OVERLAP;
                     }
-                    else if (allocStart.isAfter(teamStart)
-                            && allocStart.isBefore(teamEnd))
+                    else if (dateBefore(teamStart, allocStart)
+                            && datesEqual(teamEnd, allocEnd))
+                    {
+                        return ValidationStatus.SUB_OVERLAP;
+                    }
+                    else if (datesEqual(teamStart, allocStart)
+                            && dateAfter(teamEnd, allocEnd))
+                    {
+                        return ValidationStatus.SUB_OVERLAP;
+                    }
+                    else if (dateBefore(teamStart, allocStart)
+                            && dateAfter(teamEnd, allocStart))
                     {
                         return ValidationStatus.START_OVERLAP;
                     }
-                    else if (allocEnd.isBefore(teamEnd)
-                            && allocEnd.isAfter(teamStart))
+                    else if (dateAfter(teamEnd, allocEnd)
+                            && dateBefore(teamStart, allocEnd))
                     {
                         return ValidationStatus.END_OVERLAP;
                     }
-                }
-
-                // Check for date overlaps within a teams allocations on a project
-                LocalDate projStart = projAlloc.getStartDate();
-                LocalDate projEnd = projAlloc.getEndDate();
-
-                if (projStart.isAfter(allocStart)
-                        && projEnd.isBefore(allocEnd))
-                {
-                    return ValidationStatus.SUPER_OVERLAP;
-                }
-                else if (projEnd.isAfter(allocEnd)
-                        && projStart.isBefore(allocStart))
-                {
-                    return ValidationStatus.SUB_OVERLAP;
-                }
-                else if (allocStart.isAfter(projStart)
-                        && allocStart.isBefore(projEnd))
-                {
-                    return ValidationStatus.START_OVERLAP;
-                }
-                else if (allocEnd.isBefore(projEnd)
-                        && allocEnd.isAfter(projStart))
-                {
-                    return ValidationStatus.END_OVERLAP;
-                }
-                else
-                {
-                    return ValidationStatus.VALID;
                 }
             }
         }
@@ -162,6 +159,13 @@ public class DateValidator
                         .title("Allocation Date Error")
                         .message("The end date of your new allocation cannot be before the start"
                                 + " date!")
+                        .showError();
+                return false;
+            case ALLOCATION_DATES_EQUAL:
+                Dialogs.create()
+                        .title("Allocation Date Error")
+                        .message("An allocation for that team with those start and end dates"
+                                + " already exists!")
                         .showError();
                 return false;
             case START_OVERLAP:
@@ -197,6 +201,32 @@ public class DateValidator
         }
     }
 
+    /**
+     * Checks if date1 and date2 are equal
+     * @param date1 the first date
+     * @param date2 the second date
+     * @return if date1 and date2 are equal
+     */
+    public static boolean datesEqual(LocalDate date1, LocalDate date2)
+    {
+        if (date1 == null && date2 == null)
+        {
+            return true;
+        }
+        else if (date1 == null)
+        {
+            return false;
+        }
+        else if (date2 == null)
+        {
+            return false;
+        }
+        else
+        {
+            return date1.equals(date2);
+            
+        }
+    }
 
     /**
      * Checks if date1 comes before date2 in the case of 'infinite' nulls
@@ -204,7 +234,7 @@ public class DateValidator
      * @param date2 the date to compare to
      * @return if date1 comes before date2
      */
-    public static boolean dateBefore(Date date1, Date date2)
+    public static boolean dateBefore(LocalDate date1, LocalDate date2)
     {
         if (date1 == null)
         {
@@ -216,7 +246,7 @@ public class DateValidator
         }
         else
         {
-            return date1.before(date2);
+            return date1.isBefore(date2);
         }
     }
 
@@ -226,7 +256,7 @@ public class DateValidator
      * @param date2 the date to compare to
      * @return if date1 comes after date2
      */
-    public static boolean dateAfter(Date date1, Date date2)
+    public static boolean dateAfter(LocalDate date1, LocalDate date2)
     {
         if (date1 == null)
         {
@@ -238,19 +268,19 @@ public class DateValidator
         }
         else
         {
-            return date1.after(date2);
+            return date1.isAfter(date2);
         }
     }
 
 
     /**
-     * Determines if a Date is in the future.
+     * Determines if a LocalDate is in the future.
      * @param date The date to check against the current time
      * @return A boolean showing if the date is in the future (true) or not (false).
      */
-    public static boolean isFutureDate(Date date)
+    public static boolean isFutureDate(LocalDate date)
     {
-        if (date.after(Date.from(Instant.now())))
+        if (date.isAfter(LocalDate.now()))
         {
             return true;
         }
@@ -275,7 +305,7 @@ public class DateValidator
         }
         else
         {
-            Global.datePattern.setLenient(false);
+            //Global.datePattern.setLenient(false);
             try
             {
                 String[] date = dateString.split("/"); //returns an array with the day, month and yr
@@ -285,8 +315,8 @@ public class DateValidator
                     dateField.showErrorField("* Format must be dd/MM/yyyy e.g 12/03/1990");
                     return false;
                 }
+                LocalDate parsedLocalDate = LocalDate.parse(dateString, Global.dateFormatter);
 
-                Date parsedDate = Global.datePattern.parse(dateString);
                 dateField.hideErrorField();
                 return true;
 
@@ -303,7 +333,7 @@ public class DateValidator
     /**
      * Checks whether the birth date format is correct
      * Shows error message and red borders if incorrect
-     * @param customBirthDate the birth date error GUI label
+     * @param customBirthLocalDate the birth date error GUI label
      * @return true if correct format// TODO Make after allocation
      **/
     public static boolean validateBirthDateField(CustomDateField customBirthDate)
@@ -332,17 +362,14 @@ public class DateValidator
      * @param releaseDateString String to be converted
      * @return date
      */
-    public static Date stringToDate(String releaseDateString)
+    public static LocalDate stringToDate(String releaseDateString)
     {
-        Date releaseDate = new Date();
+        LocalDate releaseDate = null;
         try
         {
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            df.setLenient(false);
-            df.parse(releaseDateString);
-            releaseDate = df.parse(releaseDateString);
+            releaseDate = LocalDate.parse(releaseDateString, Global.dateFormatter);
         }
-        catch (ParseException e)
+        catch (DateTimeParseException e)
         {
             System.out.println("Error parsing date");
         }

@@ -29,6 +29,7 @@ import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -250,7 +251,7 @@ public class ReleaseEditScene
                 }
 
                 boolean correctDateFormat = false;
-                Date releaseDate = null;
+                LocalDate releaseDate = null;
 
                 //TODO Date validation.
     //            Date estimatedDate = new Date();

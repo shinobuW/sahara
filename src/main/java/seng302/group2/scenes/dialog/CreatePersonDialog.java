@@ -21,6 +21,7 @@ import seng302.group2.workspace.team.Team;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 import static seng302.group2.util.validation.DateValidator.stringToDate;
@@ -87,7 +88,7 @@ public class CreatePersonDialog
 
                     String birthdateString = customBirthDate.getText();
 
-                    Date birthDate;
+                    LocalDate birthDate;
                     if (birthdateString.isEmpty())
                     {
                         birthDate = null;

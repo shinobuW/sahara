@@ -13,6 +13,7 @@ import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class Release extends TreeViewItem
 {
     private String shortName;
     private String description;
-    private Date estimatedDate;
+    private LocalDate estimatedDate;
     private Project project;
 
 
@@ -35,7 +36,7 @@ public class Release extends TreeViewItem
     {
         this.shortName = "Untitled Release";
         this.description = "Release without project assigned should not exist";
-        this.estimatedDate = new Date("20/20/2020");
+        this.estimatedDate = LocalDate.now();
         this.project = new Project();
     }
 
@@ -59,7 +60,7 @@ public class Release extends TreeViewItem
      * @param releaseDate release date to be set
      * @param project project to be set
      */
-    public Release(String shortName, String description, Date releaseDate, Project project)
+    public Release(String shortName, String description, LocalDate releaseDate, Project project)
     {
         this.shortName = shortName;
         this.description = description;
@@ -95,7 +96,7 @@ public class Release extends TreeViewItem
      * Gets the estimated release date for the release
      * @return the estimated release date of the release
      */
-    public Date getEstimatedDate()
+    public LocalDate getEstimatedDate()
     {
         return this.estimatedDate;
     }
@@ -124,7 +125,8 @@ public class Release extends TreeViewItem
         {
             try
             {
-                return Global.datePattern.format(this.getEstimatedDate());
+                return this.getEstimatedDate().format(Global.dateFormatter);
+                //return Global.datePattern.format(this.getEstimatedDate());
             }
             catch (Exception e)
             {
@@ -165,7 +167,7 @@ public class Release extends TreeViewItem
      * Sets the estimated Release Date of the release
      * @param releaseDate The release date to set
      */
-    public void setEstimatedDate(Date releaseDate)
+    public void setEstimatedDate(LocalDate releaseDate)
     {
         this.estimatedDate = releaseDate;
     }
@@ -225,7 +227,7 @@ public class Release extends TreeViewItem
      * @param newEstimatedDate The new estimated date
      * @param newProject The new project
      */
-    public void edit(String newShortName, String newDescription, Date newEstimatedDate,
+    public void edit(String newShortName, String newDescription, LocalDate newEstimatedDate,
         Project newProject)
     {
         Command relEdit = new ReleaseEditCommand(this, newShortName, newDescription,
@@ -242,15 +244,15 @@ public class Release extends TreeViewItem
         private Release release;
         private String shortName;
         private String description;
-        private Date estimatedDate;
+        private LocalDate estimatedDate;
         private Project project;
         private String oldShortName;
         private String oldDescription;
-        private Date oldEstimatedDate;
+        private LocalDate oldEstimatedDate;
         private Project oldProject;
 
         private ReleaseEditCommand(Release release, String newShortName, String newDescription,
-            Date newEstimatedDate, Project newProject)
+            LocalDate newEstimatedDate, Project newProject)
         {
             this.release = release;
             this.shortName = newShortName;

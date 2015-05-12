@@ -11,6 +11,8 @@ import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -29,8 +31,8 @@ public class PersonTest
     Skill testSkill = new Skill();
     Role testRole = new Role();
 
-    Date testDate;
-    Date testDate2;
+    LocalDate testDate;
+    LocalDate testDate2;
 
     Person basicPerson = new Person();
     Person extendedPerson = new Person("btm38", "Bronson", "McNaughton", "btm38@gmail.com",
@@ -57,10 +59,10 @@ public class PersonTest
         // Set the test date
         try
         {
-            testDate = Global.datePattern.parse("06/03/1995");
-            testDate2 = Global.datePattern.parse("19/12/1994");
+            testDate = LocalDate.parse("06/03/1995", Global.dateFormatter);
+            testDate2 = LocalDate.parse("19/12/1994", Global.dateFormatter);
         }
-        catch (ParseException e)
+        catch (DateTimeParseException e)
         {
             Assert.fail("The date was not parsed correctly, please review:\n" + e.toString());
         }

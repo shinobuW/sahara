@@ -24,6 +24,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -225,7 +226,7 @@ public class PersonEditScene
                 if (correctDate && correctShortName && correctFirstName && correctLastName)
                 {
                     //set Person properties
-                    Date birthDate;
+                    LocalDate birthDate;
                     if (customBirthDate.getText().isEmpty())
                     {
                         birthDate = null;
