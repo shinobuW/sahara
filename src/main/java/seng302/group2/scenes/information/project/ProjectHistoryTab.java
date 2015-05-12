@@ -44,14 +44,15 @@ public class ProjectHistoryTab extends Tab
         this.setContent(wrapper);
 
         TableView<Allocation> historyTable = new TableView();
+        historyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         ObservableList<Allocation> data = currentProject.getTeamAllocations();
         historyTable.setEditable(false);
         Label title = new TitleLabel("Allocation History");
 
         TableColumn teamCol = new TableColumn("Team");
         teamCol.setCellValueFactory(new PropertyValueFactory<Allocation, String>("Team"));
-        teamCol.setMinWidth(100);
-        teamCol.setMaxWidth(150);
+        teamCol.prefWidthProperty().bind(historyTable.widthProperty().divide(3));
+        teamCol.setResizable(false);
 
         TableColumn startDateCol = new TableColumn("Start Date");
         startDateCol.setCellValueFactory(
@@ -68,33 +69,33 @@ public class ProjectHistoryTab extends Tab
                     return property;
                 }
             });
-        startDateCol.setMinWidth(100);
-        startDateCol.setMaxWidth(150);
+        startDateCol.prefWidthProperty().bind(historyTable.widthProperty().divide(3));
+        startDateCol.setResizable(false);
 
         TableColumn endDateCol = new TableColumn("End Date");
         endDateCol.setCellValueFactory(
-            new Callback<TableColumn.CellDataFeatures<Allocation, String>,
-                                    ObservableValue<String>>()
-            {
-                @Override
-                public ObservableValue<String> call(TableColumn.CellDataFeatures<Allocation, String>
-                                                            alloc)
+                new Callback<TableColumn.CellDataFeatures<Allocation, String>,
+                        ObservableValue<String>>()
                 {
-                    SimpleStringProperty property = new SimpleStringProperty();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                    if (alloc.getValue().getEndDate() != null)
+                    @Override
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<Allocation,
+                            String> alloc)
                     {
-                        property.setValue(alloc.getValue().getEndDate().format(formatter));
+                        SimpleStringProperty property = new SimpleStringProperty();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        if (alloc.getValue().getEndDate() != null)
+                        {
+                            property.setValue(alloc.getValue().getEndDate().format(formatter));
+                        }
+                        else
+                        {
+                            property.setValue("");
+                        }
+                        return property;
                     }
-                    else
-                    {
-                        property.setValue("");
-                    }
-                    return property;
-                }
             });
-        endDateCol.setMinWidth(100);
-        endDateCol.setMaxWidth(150);
+        endDateCol.prefWidthProperty().bind(historyTable.widthProperty().divide(3));
+        endDateCol.setResizable(false);
 
         Button addButton = new Button("Add");
         HBox newAllocationFields = new HBox(10);
