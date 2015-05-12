@@ -5,14 +5,14 @@
  */
 package seng302.group2.workspace.release;
 
-import java.util.Arrays;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import seng302.group2.workspace.project.Project;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Month;
 
 /**
  *
@@ -46,7 +46,7 @@ public class ReleaseTest extends TestCase
         Assert.assertEquals("Untitled Release", release1.getShortName());
         Assert.assertEquals("Release without project assigned should not exist", 
                 release1.getDescription());
-        Assert.assertEquals(new Date("20/20/2020"), release1.getEstimatedDate());
+        Assert.assertEquals(null, release1.getEstimatedDate());
         Assert.assertEquals("Untitled Project", release1.getProject().getShortName());
         
         Project testProject = new Project();
@@ -54,10 +54,10 @@ public class ReleaseTest extends TestCase
         Assert.assertEquals("Test2", release2.getShortName());
         Assert.assertEquals("Untitled Project", release2.getProject().getShortName());
         
-        Release release3 = new Release("Test", "description", new Date("12/12/2020"), testProject);
+        Release release3 = new Release("Test", "description", LocalDate.of(2020, Month.DECEMBER, 12), testProject);
         Assert.assertEquals("Test", release3.getShortName());
         Assert.assertEquals("description", release3.getDescription());
-        Assert.assertEquals(new Date("12/12/2020"), release3.getEstimatedDate());
+        Assert.assertEquals(LocalDate.of(2020, Month.DECEMBER, 12), release3.getEstimatedDate());
         Assert.assertEquals("Untitled Project", release3.getProject().getShortName());
     }
     
@@ -67,12 +67,12 @@ public class ReleaseTest extends TestCase
         Project testProject = new Project("Test Project", "Long name", "Description");
         testRelease.setShortName("Release 2.0");
         testRelease.setDescription("Second Release");
-        testRelease.setEstimatedDate(new Date("26/03/2016"));
+        testRelease.setEstimatedDate(LocalDate.of(2016, Month.MARCH, 26));
         testRelease.setProject(testProject);
         
         Assert.assertEquals("Release 2.0", testRelease.getShortName());
         Assert.assertEquals("Second Release", testRelease.getDescription());
-        Assert.assertEquals(new Date("26/03/2016"), testRelease.getEstimatedDate());
+        Assert.assertEquals(LocalDate.of(2016, Month.MARCH, 26), testRelease.getEstimatedDate());
         Assert.assertEquals("Test Project", testRelease.getProject().getShortName());   
         Assert.assertEquals(1, testProject.getReleases().size());
     }

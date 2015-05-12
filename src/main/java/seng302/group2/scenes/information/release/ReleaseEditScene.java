@@ -11,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
@@ -20,23 +19,17 @@ import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.util.undoredo.UndoRedoAction;
-import seng302.group2.util.undoredo.UndoRedoPerformer;
-import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.util.validation.DateValidator;
-import seng302.group2.util.validation.NameValidator;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.util.validation.DateValidator.isCorrectDateFormat;
-import static seng302.group2.util.validation.DateValidator.isValidAllocationDate;
 import static seng302.group2.util.validation.DateValidator.stringToDate;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  *
@@ -250,7 +243,7 @@ public class ReleaseEditScene
                 }
 
                 boolean correctDateFormat = false;
-                Date releaseDate = null;
+                LocalDate releaseDate = null;
 
                 //TODO Date validation.
     //            Date estimatedDate = new Date();
@@ -277,7 +270,9 @@ public class ReleaseEditScene
                 }
                 else if (isCorrectDateFormat(releaseDateField))
                 {
-                    releaseDate = stringToDate(releaseDateField.getText());
+                    releaseDate = LocalDate.parse(releaseDateField.getText(),
+                            DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
                     if (!DateValidator.isFutureDate(releaseDate))
                     {
                         releaseDateField.showErrorField("Date must be a future date");
@@ -285,7 +280,6 @@ public class ReleaseEditScene
                     }
                     else
                     {
-                        System.out.print("asdasda");
                         correctDateFormat = true;
                     }
                 }

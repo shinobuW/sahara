@@ -11,6 +11,8 @@ import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.workspace.release.Release;
 
+import java.time.format.DateTimeFormatter;
+
 
 /**
  * The workspace information tab
@@ -33,11 +35,14 @@ public class ReleaseInfoTab extends Tab
 
         Button btnEdit = new Button("Edit");
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String releaseDateString = currentRelease.getEstimatedDate().format(formatter);
+
         basicInfoPane.getChildren().add(title);
         basicInfoPane.getChildren().add(new Label("Release Description: "
                 + currentRelease.getDescription()));
         basicInfoPane.getChildren().add(new Label("Estimated Release Date: "
-                + currentRelease.getDateString()));
+                + releaseDateString));
         basicInfoPane.getChildren().add(new Label("Project: "
                 + currentRelease.getProject().toString()));
         basicInfoPane.getChildren().add(btnEdit);

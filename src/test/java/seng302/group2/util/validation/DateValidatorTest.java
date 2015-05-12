@@ -120,7 +120,7 @@ public class DateValidatorTest
     {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 1);
-        Date futureDate = cal.getTime();
+        LocalDate futureDate = LocalDate.now().plusDays(1);
         Assert.assertTrue(DateValidator.isFutureDate(futureDate));
     }
 

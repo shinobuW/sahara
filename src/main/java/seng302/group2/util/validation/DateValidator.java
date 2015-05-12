@@ -248,9 +248,9 @@ public class DateValidator
      * @param date The date to check against the current time
      * @return A boolean showing if the date is in the future (true) or not (false).
      */
-    public static boolean isFutureDate(Date date)
+    public static boolean isFutureDate(LocalDate date)
     {
-        if (date.after(Date.from(Instant.now())))
+        if (date.isAfter(LocalDate.now()))
         {
             return true;
         }

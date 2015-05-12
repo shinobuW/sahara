@@ -15,6 +15,7 @@ import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -436,7 +437,7 @@ public class UndoRedoPerformer
                 case RELEASE_RELEASEDATE:
                     System.out.println("RELEASE_RELEASEDATE" + "  "
                             + item.getUndoAction().getValue());
-                    release.setEstimatedDate((Date)item.getUndoAction().getValue());
+                    release.setEstimatedDate((LocalDate)item.getUndoAction().getValue());
                     break;
                 case RELEASE_DESCRIPTION:
                     System.out.println("RELEASE_DESCRIPTION" + "  "
@@ -783,7 +784,7 @@ public class UndoRedoPerformer
                 case RELEASE_RELEASEDATE:
                     System.out.println("RELEASE_RELEASEDATE" + "  "
                             + item.getRedoAction().getValue());
-                    release.setEstimatedDate((Date)item.getRedoAction().getValue());
+                    release.setEstimatedDate((LocalDate)item.getRedoAction().getValue());
                     break;
                 case RELEASE_DESCRIPTION:
                     System.out.println("RELEASE_DESCRIPTION" + "  "
