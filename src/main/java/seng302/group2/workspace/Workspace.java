@@ -5,6 +5,7 @@ package seng302.group2.workspace;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -29,6 +30,7 @@ import seng302.group2.workspace.team.Team;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -117,6 +119,8 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
                 "Development Team Member", Role.RoleType.DevelopmentTeamMember,
                 "A member of the Dev Team");
         this.addWithoutUndo(developmentTeamMember);
+
+        addListeners();
     }
 
 
@@ -161,9 +165,21 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
                 "Development Team Member", Role.RoleType.DevelopmentTeamMember,
                 "A member of the Dev Team");
         this.addWithoutUndo(developmentTeamMember);
+
+        addListeners();
     }
 
 
+    // TODO
+    private void addListeners()
+    {
+        people.addListener((ListChangeListener<Person>) change ->
+        {
+            if (change.next() && !change.wasPermutated()) {
+                Collections.sort(people);
+            }
+        });
+    }
     // <editor-fold defaultstate="collapsed" desc="Getters">
 
     /**

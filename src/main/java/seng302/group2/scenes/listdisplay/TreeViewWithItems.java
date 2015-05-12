@@ -13,6 +13,7 @@ import javafx.collections.WeakListChangeListener;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import seng302.group2.Global;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.contextmenu.CategoryTreeContextMenu;
 import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
@@ -328,7 +329,8 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     // If the list was sorted.
                     if (change.wasPermutated())
                     {
-                        // Store the new order.
+                        MainScene.treeView.refresh();
+                        /*// Store the new order.
                         Map<Integer, TreeItem<T>> tempMap = new HashMap<Integer, TreeItem<T>>();
 
                         for (int i = change.getTo() - 1; i >= change.getFrom(); i--)
@@ -343,7 +345,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         for (int i = change.getFrom(); i < change.getTo(); i++)
                         {
                             treeItemChildren.add(tempMap.remove(i));
-                        }
+                        }*/
                     }
                 }
             }

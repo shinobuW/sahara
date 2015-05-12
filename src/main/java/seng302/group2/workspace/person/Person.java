@@ -18,6 +18,7 @@ import seng302.group2.workspace.team.Team;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,7 @@ import static javafx.collections.FXCollections.observableArrayList;
  * A basic class to represent a Person in the real world.
  * @author crw73
  */
-public class Person extends TreeViewItem implements Serializable
+public class Person extends TreeViewItem implements Serializable, Comparable<Person>
 {
     private String shortName;
     private String firstName;
@@ -388,6 +389,15 @@ public class Person extends TreeViewItem implements Serializable
     public ObservableList<TreeViewItem> getChildren()
     {
         return null;
+    }
+
+
+    // TODO write javadoc.
+    public int compareTo(Person comparePerson)
+    {
+        String pers1ShortName = this.getShortName().toUpperCase();
+        String pers2ShortName = comparePerson.getShortName().toUpperCase();
+        return pers1ShortName.compareTo(pers2ShortName);
     }
     
     
