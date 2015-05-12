@@ -36,7 +36,7 @@ public class WorkspaceEditScene
         informationPane.setPadding(new Insets(25,25,25,25));
 
         Button btnCancel = new Button("Cancel");
-        Button btnSave = new Button("Save");
+        Button btnSave = new Button("Done");
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);

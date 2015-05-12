@@ -49,12 +49,10 @@ public class PersonEditScene
     public static ScrollPane getPersonEditScene(Person currentPerson)
     {
         informationPane = new VBox(10);
-        /*informationPane.setAlignment(Pos.TOP_LEFT);
-        informationPane.setHgap(10);
-        informationPane.setVgap(10);*/
+
         informationPane.setPadding(new Insets(25,25,25,25));
     
-        Button btnSave = new Button("Save");
+        Button btnSave = new Button("Done");
         Button btnCancel = new Button("Cancel");
 
         HBox buttons = new HBox();

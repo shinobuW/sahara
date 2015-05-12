@@ -59,7 +59,7 @@ public class TeamEditScene
         informationPane.setPadding(new Insets(25,25,25,25));
 
         Button btnCancel = new Button("Cancel");
-        Button btnSave = new Button("Save");
+        Button btnSave = new Button("Done");
 
         HBox devBtns = new HBox();
         devBtns.spacingProperty().setValue(10);
