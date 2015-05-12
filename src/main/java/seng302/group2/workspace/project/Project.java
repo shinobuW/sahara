@@ -160,6 +160,7 @@ public class Project extends TreeViewItem implements Serializable
         {
             this.serializableReleases.add((Release)item);
         }
+        //TODO sort()
         return this.releases;
     }
     

@@ -215,6 +215,7 @@ public class Workspace extends TreeViewItem implements Serializable
      */
     public ObservableList<Project> getProjects()
     {
+        // TODO sort()
         return this.projects;
     }
 
@@ -774,15 +775,15 @@ public class Workspace extends TreeViewItem implements Serializable
 
         // Make the categories
         Category projectCategory = new Category("Projects");
-        Category peopleCategory = new Category("People");
         Category teamsCategory = new Category("Teams");
+        Category peopleCategory = new Category("People");
         Category rolesCategory = new Category("Roles");
         Category skillCategory = new Category("Skills");
 
         // Add the categories
         root.add(projectCategory);
-        root.add(peopleCategory);
         root.add(teamsCategory);
+        root.add(peopleCategory);
         root.add(rolesCategory);
         root.add(skillCategory);
 
