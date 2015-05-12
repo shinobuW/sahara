@@ -14,6 +14,7 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.Category;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.revert.Revert;
 import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.util.undoredo.UndoRedoAction;
@@ -38,7 +39,7 @@ import static javafx.collections.FXCollections.observableArrayList;
  * @author Jordane Lew (jml168)
  */
 @SuppressWarnings("deprecation")
-public class Workspace extends TreeViewItem implements Serializable
+public class Workspace extends TreeViewItem implements Serializable, Cloneable
 {
     private String shortName;
     private String longName;
@@ -387,6 +388,7 @@ public class Workspace extends TreeViewItem implements Serializable
         try (Writer writer = new FileWriter(workspace.lastSaveLocation))
         {
             //Gson gson = new GsonBuilder().create();
+            Revert.updateRevertState();
             gson.toJson(workspace, writer);
             writer.close();
             Global.setCurrentWorkspaceUnchanged();
@@ -449,6 +451,7 @@ public class Workspace extends TreeViewItem implements Serializable
             try (Reader reader = new FileReader(selectedFile))
             {
                 Global.currentWorkspace = gson.fromJson(reader, Workspace.class);
+                Revert.updateRevertState();
                 reader.close();
             }
             catch (FileNotFoundException e)
@@ -927,6 +930,24 @@ public class Workspace extends TreeViewItem implements Serializable
     {
         Command wsedit = new WorkspaceEditCommand(this, newShortName, newLongName, newDescription);
         Global.commandManager.executeCommand(wsedit);
+    }
+
+
+    protected Object clone() throws CloneNotSupportedException
+    {
+        return super.clone();
+    }
+
+    public Workspace getCopy()
+    {
+        try
+        {
+            return (Workspace) clone();
+        }
+        catch (Exception e)
+        {
+            return null;
+        }
     }
 
 

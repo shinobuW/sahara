@@ -30,6 +30,8 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -251,7 +253,7 @@ public class ReleaseEditScene
                 }
 
                 boolean correctDateFormat = false;
-                LocalDate releaseDate = null;
+                Date releaseDate = null;
 
                 //TODO Date validation.
     //            Date estimatedDate = new Date();

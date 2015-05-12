@@ -64,4 +64,5 @@ public final class Global
         currentWorkspace.setUnchanged();
         App.refreshWindowTitle();
     }
+
 }

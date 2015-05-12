@@ -19,6 +19,7 @@ import seng302.group2.scenes.listdisplay.Category;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.reporting.ReportGenerator;
+import seng302.group2.util.revert.Revert;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.Workspace.SaveLoadResult;
 import seng302.group2.workspace.project.Project;
@@ -257,7 +258,7 @@ public class MainMenuBar
     /**
      * Creates a menu item "Export" and sets the on action event to export the file as an XML
      * document.
-     * @return MenuItem Save
+     * @return MenuItem Export
      */
     private static MenuItem createExportItem() 
     {
@@ -266,6 +267,26 @@ public class MainMenuBar
         exportItem.setOnAction((event) ->
                 ReportGenerator.generateReport());
 
+        //ShortcutItem not implemented yet
+//        exportItem.setAccelerator(new KeyCodeCombination(KeyCode.S,
+//                KeyCombination.CONTROL_DOWN,
+//                KeyCombination.SHORTCUT_DOWN));
+        return exportItem;
+    }
+
+    /**
+     * Creates a menu item "Revert" and sets the on action event to revert the current workspace to the
+     * Revert state from when the program is last saved or last opened
+     * @return MenuItem Revert
+     */
+    private static MenuItem createRevertItem()
+    {
+        // Create 'Save' MenuItem
+        MenuItem exportItem = new MenuItem("Revert");
+        exportItem.setOnAction((event) ->
+                Revert.revertWorkspace());
+
+        //ShortcutItem not implemented yet
 //        exportItem.setAccelerator(new KeyCodeCombination(KeyCode.S,
 //                KeyCombination.CONTROL_DOWN,
 //                KeyCombination.SHORTCUT_DOWN));
@@ -385,6 +406,7 @@ public class MainMenuBar
         MenuItem saveItem = createSaveItem();
         MenuItem saveAsItem = createSaveAsItem();
         MenuItem exportItem = createExportItem();
+        MenuItem revertItem = createRevertItem();
         MenuItem quitProgramItem = createQuitItem();
         
         newBranch.getItems().add(newWorkspaceItem);
@@ -405,6 +427,15 @@ public class MainMenuBar
         {
             newReleaseItem.setDisable(false);
             newStoryItem.setDisable(false);
+        }
+        System.out.println(Revert.getRevertState());
+        if (Revert.getRevertState() == null)
+        {
+            revertItem.setDisable(true);
+        }
+        else
+        {
+            revertItem.setDisable(false);
         }
 
         // Create 'Edit >' sub-menu
@@ -427,7 +458,8 @@ public class MainMenuBar
 
         // Add MenuItems to Menu
         fileMenu.getItems().addAll(newBranch, openItem,
-                saveItem, saveAsItem, exportItem, new SeparatorMenuItem(), quitProgramItem);
+                saveItem, saveAsItem, exportItem, revertItem, new SeparatorMenuItem(),
+                quitProgramItem);
         
         editMenu.getItems().addAll(undoItem, redoItem, deleteTreeItem);
                 

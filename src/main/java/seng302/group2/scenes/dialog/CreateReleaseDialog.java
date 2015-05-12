@@ -24,7 +24,6 @@ import seng302.group2.workspace.release.Release;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 
 import static seng302.group2.util.validation.DateValidator.isCorrectDateFormat;
@@ -204,7 +203,7 @@ public class CreateReleaseDialog
                 {
                     String releaseDateString = releaseDateField.getText();
 
-                    LocalDate releaseDate;
+                    Date releaseDate;
                     if (releaseDateString.isEmpty())
                     {
                         releaseDate = null;
