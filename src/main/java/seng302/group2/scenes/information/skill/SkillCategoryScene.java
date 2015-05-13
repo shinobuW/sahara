@@ -13,6 +13,7 @@ import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.skills.Skill;
 
 import static seng302.group2.scenes.MainScene.informationPane;
+import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * A class for displaying all skills currently created in a workspace.
@@ -53,22 +54,20 @@ public class SkillCategoryScene
 
 
         btnView.setOnAction((event) ->
-            {
-                if (skillBox.getSelectionModel().getSelectedItem() != null)
-                {
-                    MainScene.treeView.selectItem((TreeViewItem)
-                            skillBox.getSelectionModel().getSelectedItem());
-                }
-            });
-
+        {
+            if (skillBox.getSelectionModel().getSelectedItem() != null) {
+                MainScene.treeView.selectItem((TreeViewItem)
+                        skillBox.getSelectionModel().getSelectedItem());
+            }
+        });
 
         btnDelete.setOnAction((event) ->
-            {
-                if (skillBox.getSelectionModel().getSelectedItem() != null)
-                {
-                    ((Skill) skillBox.getSelectionModel().getSelectedItem()).deleteSkill();
-                }
-            });
+        {
+            if (skillBox.getSelectionModel().getSelectedItem() != null) {
+                showDeleteDialog((TreeViewItem)
+                        skillBox.getSelectionModel().getSelectedItem());
+            }
+        });
 
         btnCreate.setOnAction((event) ->
             {
