@@ -213,11 +213,11 @@ public class TeamEditScene
         HBox h1 = new HBox(10);
         VBox v1 = new VBox(10);
         v1.getChildren().add(new Label("Team Members: "));
-        v1.getChildren().add(membersBox);
+        v1.getChildren().add(teamsPeopleBox);
 
         VBox v2 = new VBox(10);
         v2.getChildren().add(new Label("Available People: "));
-        v2.getChildren().add(teamsPeopleBox);
+        v2.getChildren().add(membersBox);
 
         h1.getChildren().addAll(v1, peopleButtons, v2);
 
@@ -228,10 +228,10 @@ public class TeamEditScene
 
 
         btnAdd.setOnAction((event) ->
-            {
-                ObservableList<Person> selectedPeople = 
-                        membersBox.getSelectionModel().getSelectedItems();
-                for (Person item : selectedPeople)
+        {
+            ObservableList<Person> selectedPeople =
+                    membersBox.getSelectionModel().getSelectedItems();
+            for (Person item : selectedPeople)
                 {
                     if (item.getTeam().isUnassignedTeam()
                             || item.getTeam() == null || (item.getTeam() == currentTeam)) 
@@ -243,8 +243,9 @@ public class TeamEditScene
                         personCheckDialog(item, tempTeam, currentTeam);
                     }
                 }
-                
+                refreshListView(tempTeam);
                 dialogPeople.clear();
+
                 for (TreeViewItem projectPeople : Global.currentWorkspace.getPeople())
                 {
                     if (!tempTeam.contains(projectPeople))
@@ -254,8 +255,8 @@ public class TeamEditScene
                 }
                 refreshListView(tempTeam);
                 refreshComboBox(tempTeam);
-            });
-        
+        });
+
         btnDelete.setOnAction((event) ->
             {
                 ObservableList<Integer> selectedPeople =
