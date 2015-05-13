@@ -36,6 +36,24 @@ public class Allocation implements Serializable
     }
 
     /**
+     * Sets the start date of the allocation
+     * @param date Start date to set
+     */
+    public void setStartDate(LocalDate date)
+    {
+        this.startDate = date;
+    }
+
+    /**
+     * Sets the end date of the allocation
+     * @param date End date to set
+     */
+    public void setEndDate(LocalDate date)
+    {
+        this.endDate = date;
+    }
+
+    /**
      * Gets the allocation end date
      * @return The allocation end date
      */
