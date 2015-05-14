@@ -1,5 +1,6 @@
 package seng302.group2.scenes.information.project;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -69,19 +70,19 @@ public class ProjectHistoryTab extends Tab
 
         TableColumn startDateCol = new TableColumn("Start Date");
         startDateCol.setCellValueFactory(
-            new Callback<TableColumn.CellDataFeatures<Allocation, String>,
-                    ObservableValue<String>>()
-            {
-                @Override
-                public ObservableValue<String> call(TableColumn.CellDataFeatures<Allocation,
-                        String> alloc)
+                new Callback<TableColumn.CellDataFeatures<Allocation, String>,
+                        ObservableValue<String>>()
                 {
-                    SimpleStringProperty property = new SimpleStringProperty();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                    property.setValue(alloc.getValue().getStartDate().format(formatter));
-                    return property;
-                }
-            });
+                    @Override
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<Allocation,
+                            String> alloc)
+                    {
+                        SimpleStringProperty property = new SimpleStringProperty();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        property.setValue(alloc.getValue().getStartDate().format(formatter));
+                        return property;
+                    }
+                });
         startDateCol.setOnEditCommit(
                 new EventHandler<TableColumn.CellEditEvent<Allocation, String>>()
                 {
@@ -126,17 +127,20 @@ public class ProjectHistoryTab extends Tab
         endDateCol.setCellFactory(cellFactory);
         endDateCol.setEditable(true);
         endDateCol.setOnEditCommit(
-            new EventHandler<TableColumn.CellEditEvent<Allocation, String>>()
-            {
-                @Override
-                public void handle(TableColumn.CellEditEvent<Allocation, String> col)
+                new EventHandler<TableColumn.CellEditEvent<Allocation, String>>()
                 {
-                    ((Allocation) col.getTableView().getItems().get(
-                            col.getTablePosition().getRow())
-                    ).setEndDate(LocalDate.parse(col.getNewValue(),
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Allocation, String> col)
+                    {
+                        if (!col.getNewValue().isEmpty())
+                        {
+                            ((Allocation) col.getTableView().getItems().get(
+                                    col.getTablePosition().getRow())
+                            ).setEndDate(LocalDate.parse(col.getNewValue(),
+                                    DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                        }
+                    }
                 }
-            }
         );
 
         Button addButton = new Button("Add");
@@ -164,11 +168,9 @@ public class ProjectHistoryTab extends Tab
 
         addButton.setOnAction((event) ->
             {
-
-                if (teamComboBox.getValue() != null && startDatePicker.getValue() != null)
+                if (startDatePicker.getValue() != null)
                 {
                     LocalDate endDate = endDatePicker.getValue();
-                    System.out.print(endDate);
                     LocalDate startDate = startDatePicker.getValue();
                     Team selectedTeam = null;
 
@@ -214,12 +216,12 @@ public class ProjectHistoryTab extends Tab
         @Override
         public void startEdit()
         {
-            System.out.println("Start Edit");
             if (!isEmpty())
             {
                 super.startEdit();
                 createTextField();
                 setGraphic(datePicker);
+
                 if (!getText().isEmpty())
                 {
                     datePicker.setValue(LocalDate.parse(getText(),
@@ -229,6 +231,10 @@ public class ProjectHistoryTab extends Tab
                 {
                     datePicker.setValue(null);
                 }
+                Platform.runLater(() ->
+                    {
+                        datePicker.requestFocus();
+                    });
 
             }
         }
@@ -237,9 +243,6 @@ public class ProjectHistoryTab extends Tab
         public void cancelEdit()
         {
             super.cancelEdit();
-            System.out.println("CAncel Edit");
-
-            //setText((String) getItem());
             setGraphic(null);
         }
 
@@ -247,7 +250,6 @@ public class ProjectHistoryTab extends Tab
         public void updateItem(String item, boolean empty)
         {
             super.updateItem(item, empty);
-            System.out.println("Update Item");
             if (empty)
             {
                 setText(null);
@@ -262,7 +264,6 @@ public class ProjectHistoryTab extends Tab
                         datePicker.setValue(LocalDate.parse(getItem(),
                                 DateTimeFormatter.ofPattern("dd/MM/yyyy")));
                     }
-
                     setGraphic(datePicker);
                 }
                 else
@@ -285,7 +286,14 @@ public class ProjectHistoryTab extends Tab
                 {
                     if (!arg2)
                     {
-                        commitEdit(datePicker.getValue().toString());
+                        if (datePicker.getValue() != null)
+                        {
+                            commitEdit(datePicker.getValue().toString());
+                        }
+                        else
+                        {
+                            commitEdit("");
+                        }
                     }
                     else
                     {

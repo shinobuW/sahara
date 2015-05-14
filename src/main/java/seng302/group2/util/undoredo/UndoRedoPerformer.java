@@ -24,6 +24,7 @@ import static seng302.group2.scenes.MainScene.informationPane;
  * A class that handles the ugly undo/redo work behind the scenes on undoable items.
  * @author jml168
  */
+@Deprecated
 public class UndoRedoPerformer
 {
     /**

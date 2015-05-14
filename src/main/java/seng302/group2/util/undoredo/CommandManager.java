@@ -31,7 +31,8 @@ public class CommandManager
      */
     public boolean isUndoAvailable()
     {
-        return !undos.empty();
+        System.out.println("undos avail?" + undos);
+        return !undos.isEmpty();
     }
 
     /**
@@ -45,7 +46,15 @@ public class CommandManager
             System.out.println("undo: " + command);
             command.undo();
             redos.push(command);
-            MainScene.treeView.refresh();
+            try
+            {
+                MainScene.treeView.refresh();
+            }
+            catch (ExceptionInInitializerError | NoClassDefFoundError e)
+            {
+                // Thrown in tests because app is not actually running
+                // Worst case of catch: tree doesn't update properly
+            }
         }
     }
 
@@ -55,7 +64,7 @@ public class CommandManager
      */
     public boolean isRedoAvailable()
     {
-        return !redos.empty();
+        return !redos.isEmpty();
     }
 
     /**
@@ -69,8 +78,34 @@ public class CommandManager
             System.out.println("redo: " + command);
             command.execute();
             undos.push(command);
-            MainScene.treeView.refresh();
+            try
+            {
+                MainScene.treeView.refresh();
+            }
+            catch (ExceptionInInitializerError | NoClassDefFoundError e)
+            {
+                // Thrown in tests because app is not actually running
+                // Worst case of catch: tree doesn't update properly
+            }
         }
+    }
+
+    /**
+     * Finds the number of undo items on the stack
+     * @return the size of the undo stack
+     */
+    public int numUndos()
+    {
+        return undos.size();
+    }
+
+    /**
+     * Finds the number of redo items on the stack
+     * @return the size of the redo stack
+     */
+    public int numRedos()
+    {
+        return redos.size();
     }
 
     /**
@@ -78,7 +113,7 @@ public class CommandManager
      */
     public void clear()
     {
-        redos.empty();
-        undos.empty();
+        redos = new Stack<>();
+        undos = new Stack<>();
     }
 }

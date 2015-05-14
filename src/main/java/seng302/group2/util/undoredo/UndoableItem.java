@@ -9,6 +9,7 @@ package seng302.group2.util.undoredo;
  * An item that holds information about objects and actions to perform undo/redo with.
  * @author jml168
  */
+@Deprecated
 public class UndoableItem
 {
     private Object host;

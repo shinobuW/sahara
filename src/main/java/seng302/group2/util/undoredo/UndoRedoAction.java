@@ -11,6 +11,7 @@ import seng302.group2.util.undoredo.UndoRedoPerformer.UndoRedoProperty;
  * An action class that holds the property state before and after a value change.
  * @author jml168
  */
+@Deprecated
 public class UndoRedoAction
 {
     private UndoRedoProperty property;
