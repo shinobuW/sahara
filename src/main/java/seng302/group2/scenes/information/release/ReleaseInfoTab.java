@@ -35,8 +35,13 @@ public class ReleaseInfoTab extends Tab
 
         Button btnEdit = new Button("Edit");
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String releaseDateString = currentRelease.getEstimatedDate().format(formatter);
+        String releaseDateString = "";
+
+        if (currentRelease.getEstimatedDate() != null)
+        {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            releaseDateString = currentRelease.getEstimatedDate().format(formatter);
+        }
 
         basicInfoPane.getChildren().add(title);
         basicInfoPane.getChildren().add(new Label("Release Description: "
