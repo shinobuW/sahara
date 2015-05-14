@@ -8,6 +8,7 @@ import java.util.Stack;
 /**
  * A JUnit test class for the Undo/Redo Manager
  */
+@Deprecated
 public class UndoRedoManagerTest extends TestCase {
 
     UndoRedoManager manager = new UndoRedoManager();
