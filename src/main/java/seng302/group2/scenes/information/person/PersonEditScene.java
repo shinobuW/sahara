@@ -508,11 +508,13 @@ public class PersonEditScene
                     event.consume();
                 }
 
+                boolean shortNameValidated =
+                        ShortNameValidator.validateShortName(shortNameCustomField);
+                boolean firstNameValidated = NameValidator.validateName(firstNameCustomField);
+                boolean lastNameValidated = NameValidator.validateName(lastNameCustomField);
                 // The short name is the same or valid
                 if ((shortNameCustomField.getText().equals(currentPerson.getShortName())
-                        || ShortNameValidator.validateShortName(shortNameCustomField))
-                        && NameValidator.validateName(firstNameCustomField)
-                        && NameValidator.validateName(lastNameCustomField)
+                        || shortNameValidated) && firstNameValidated && lastNameValidated
                         && correctDate)
                 {
                     LocalDate birthDate;

@@ -10,7 +10,6 @@ import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.dialog.CreateTeamDialog;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.team.Team;
 
 import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -55,25 +54,27 @@ public class TeamCategoryScene
 
 
         btnView.setOnAction((event) ->
-        {
-            if (teamBox.getSelectionModel().getSelectedItem() != null) {
-                MainScene.treeView.selectItem((TreeViewItem)
-                        teamBox.getSelectionModel().getSelectedItem());
-            }
-        });
+            {
+                if (teamBox.getSelectionModel().getSelectedItem() != null)
+                {
+                    MainScene.treeView.selectItem((TreeViewItem)
+                            teamBox.getSelectionModel().getSelectedItem());
+                }
+            });
 
         btnDelete.setOnAction((event) ->
-        {
-            if (teamBox.getSelectionModel().getSelectedItem() != null) {
-                showDeleteDialog((TreeViewItem)
-                        teamBox.getSelectionModel().getSelectedItem());
-            }
-        });
+            {
+                if (teamBox.getSelectionModel().getSelectedItem() != null)
+                {
+                    showDeleteDialog((TreeViewItem)
+                            teamBox.getSelectionModel().getSelectedItem());
+                }
+            });
 
         btnCreate.setOnAction((event) ->
-        {
-            CreateTeamDialog.show();
-        });
+            {
+                CreateTeamDialog.show();
+            });
 
         ScrollPane wrapper = new ScrollPane(informationPane);
         wrapper.setStyle("-fx-background-color:transparent;");

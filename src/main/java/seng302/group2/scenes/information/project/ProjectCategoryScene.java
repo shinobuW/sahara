@@ -10,7 +10,6 @@ import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.dialog.CreateProjectDialog;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.project.Project;
 
 import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -55,21 +54,22 @@ public class ProjectCategoryScene
         informationPane.getChildren().add(createButton);
 
         btnView.setOnAction((event) ->
-        {
-            if (projectBox.getSelectionModel().getSelectedItem() != null) {
-                MainScene.treeView.selectItem((TreeViewItem)
-                        projectBox.getSelectionModel().getSelectedItem());
-            }
-        });
+            {
+                if (projectBox.getSelectionModel().getSelectedItem() != null)
+                {
+                    MainScene.treeView.selectItem((TreeViewItem)
+                            projectBox.getSelectionModel().getSelectedItem());
+                }
+            });
         
         btnDelete.setOnAction((event) ->
-        {
-            if (projectBox.getSelectionModel().getSelectedItem() != null)
             {
-                showDeleteDialog((TreeViewItem)
-                        projectBox.getSelectionModel().getSelectedItem());
-            }
-        });
+                if (projectBox.getSelectionModel().getSelectedItem() != null)
+                {
+                    showDeleteDialog((TreeViewItem)
+                            projectBox.getSelectionModel().getSelectedItem());
+                }
+            });
         btnCreate.setOnAction((event) ->
             {
                 CreateProjectDialog.show();

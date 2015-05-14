@@ -228,17 +228,17 @@ public class TeamEditScene
 
 
         btnAdd.setOnAction((event) ->
-        {
-            ObservableList<Person> selectedPeople =
-                    membersBox.getSelectionModel().getSelectedItems();
-            for (Person item : selectedPeople)
+            {
+                ObservableList<Person> selectedPeople =
+                        membersBox.getSelectionModel().getSelectedItems();
+                for (Person item : selectedPeople)
                 {
                     if (item.getTeam().isUnassignedTeam()
-                            || item.getTeam() == null || (item.getTeam() == currentTeam)) 
+                            || item.getTeam() == null || (item.getTeam() == currentTeam))
                     {
                         tempTeam.add(item);
                     }
-                    else 
+                    else
                     {
                         personCheckDialog(item, tempTeam, currentTeam);
                     }
@@ -255,7 +255,7 @@ public class TeamEditScene
                 }
                 refreshListView(tempTeam);
                 refreshComboBox(tempTeam);
-        });
+            });
 
         btnDelete.setOnAction((event) ->
             {
