@@ -92,7 +92,14 @@ public class CustomComboBox extends VBox
      */
     public String getValue()
     {
-        return this.comboBox.getValue().toString();
+        if (this.comboBox.getValue() != null)
+        {
+            return this.comboBox.getValue().toString();
+        }
+        else
+        {
+            return null;
+        }
     }
     
     /**
