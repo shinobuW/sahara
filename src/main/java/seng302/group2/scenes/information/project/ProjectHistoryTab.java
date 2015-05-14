@@ -164,7 +164,8 @@ public class ProjectHistoryTab extends Tab
 
         addButton.setOnAction((event) ->
             {
-                if (startDatePicker.getValue() != null)
+
+                if (teamComboBox.getValue() != null && startDatePicker.getValue() != null)
                 {
                     LocalDate endDate = endDatePicker.getValue();
                     System.out.print(endDate);
