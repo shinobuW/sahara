@@ -269,6 +269,7 @@ public class Release extends TreeViewItem
             release.description = description;
             release.estimatedDate = estimatedDate;
             release.project = project;
+
         }
 
         /**
