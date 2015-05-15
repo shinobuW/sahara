@@ -84,8 +84,8 @@ public class App extends Application
         // The title of the window
         primaryStage.setTitle("Sahara");
       
-        primaryStage.setWidth(960);
-        primaryStage.setHeight(540);
+        primaryStage.setWidth(1060);
+        primaryStage.setHeight(640);
         primaryStage.setMinWidth(900);
         primaryStage.setMinHeight(500);
 	

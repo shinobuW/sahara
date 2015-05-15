@@ -11,12 +11,8 @@ import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Allocation;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
 
 /**
  *
@@ -82,59 +78,61 @@ public class DateValidator
 
         for (Allocation projAlloc : proj.getTeamAllocations())
         {
-            if (projAlloc.getTeam() == alloc.getTeam())
+            if (projAlloc != alloc)
             {
-
-                // Check for date overlaps within a single Teams total allocations
-                for (Allocation teamAlloc : projAlloc.getTeam().getProjectAllocations())
+                if (projAlloc.getTeam() == alloc.getTeam())
                 {
-                    LocalDate teamStart = teamAlloc.getStartDate();
-                    LocalDate teamEnd = teamAlloc.getEndDate();
+                    // Check for date overlaps within a single Teams total allocations
+                    for (Allocation teamAlloc : projAlloc.getTeam().getProjectAllocations())
+                    {
+                        LocalDate teamStart = teamAlloc.getStartDate();
+                        LocalDate teamEnd = teamAlloc.getEndDate();
 
-                    if (datesEqual(teamStart, allocStart)
-                            && datesEqual(teamEnd, allocEnd))
-                    {
-                        return ValidationStatus.ALLOCATION_DATES_EQUAL;
-                    }
-                    else if (dateAfter(teamStart, allocStart)
-                            && dateBefore(teamEnd, allocEnd))
-                    {
-                        return ValidationStatus.SUPER_OVERLAP;
-                    }
-                    else if (dateAfter(teamStart, allocStart)
-                            && datesEqual(teamEnd, allocEnd))
-                    {
-                        return ValidationStatus.SUPER_OVERLAP;
-                    }
-                    else if (datesEqual(teamStart, allocStart)
-                            && dateBefore(teamEnd, allocEnd))
-                    {
-                        return ValidationStatus.SUPER_OVERLAP;
-                    }
-                    else if (dateBefore(teamStart, allocStart)
-                            && dateAfter(teamEnd, allocEnd))
-                    {
-                        return ValidationStatus.SUB_OVERLAP;
-                    }
-                    else if (dateBefore(teamStart, allocStart)
-                            && datesEqual(teamEnd, allocEnd))
-                    {
-                        return ValidationStatus.SUB_OVERLAP;
-                    }
-                    else if (datesEqual(teamStart, allocStart)
-                            && dateAfter(teamEnd, allocEnd))
-                    {
-                        return ValidationStatus.SUB_OVERLAP;
-                    }
-                    else if (dateBefore(teamStart, allocStart)
-                            && dateAfter(teamEnd, allocStart))
-                    {
-                        return ValidationStatus.START_OVERLAP;
-                    }
-                    else if (dateAfter(teamEnd, allocEnd)
-                            && dateBefore(teamStart, allocEnd))
-                    {
-                        return ValidationStatus.END_OVERLAP;
+                        if (datesEqual(teamStart, allocStart)
+                                && datesEqual(teamEnd, allocEnd))
+                        {
+                            return ValidationStatus.ALLOCATION_DATES_EQUAL;
+                        }
+                        else if (dateAfter(teamStart, allocStart)
+                                && dateBefore(teamEnd, allocEnd))
+                        {
+                            return ValidationStatus.SUPER_OVERLAP;
+                        }
+                        else if (dateAfter(teamStart, allocStart)
+                                && datesEqual(teamEnd, allocEnd))
+                        {
+                            return ValidationStatus.SUPER_OVERLAP;
+                        }
+                        else if (datesEqual(teamStart, allocStart)
+                                && dateBefore(teamEnd, allocEnd))
+                        {
+                            return ValidationStatus.SUPER_OVERLAP;
+                        }
+                        else if (dateBefore(teamStart, allocStart)
+                                && dateAfter(teamEnd, allocEnd))
+                        {
+                            return ValidationStatus.SUB_OVERLAP;
+                        }
+                        else if (dateBefore(teamStart, allocStart)
+                                && datesEqual(teamEnd, allocEnd))
+                        {
+                            return ValidationStatus.SUB_OVERLAP;
+                        }
+                        else if (datesEqual(teamStart, allocStart)
+                                && dateAfter(teamEnd, allocEnd))
+                        {
+                            return ValidationStatus.SUB_OVERLAP;
+                        }
+                        else if (dateBefore(teamStart, allocStart)
+                                && dateAfter(teamEnd, allocStart))
+                        {
+                            return ValidationStatus.START_OVERLAP;
+                        }
+                        else if (dateAfter(teamEnd, allocEnd)
+                                && dateBefore(teamStart, allocEnd))
+                        {
+                            return ValidationStatus.END_OVERLAP;
+                        }
                     }
                 }
             }
@@ -333,7 +331,7 @@ public class DateValidator
     /**
      * Checks whether the birth date format is correct
      * Shows error message and red borders if incorrect
-     * @param customBirthLocalDate the birth date error GUI label
+     * @param customBirthDate the birth date error GUI label
      * @return true if correct format// TODO Make after allocation
      **/
     public static boolean validateBirthDateField(CustomDateField customBirthDate)
