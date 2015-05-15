@@ -431,7 +431,7 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
         try (Writer writer = new FileWriter(workspace.lastSaveLocation))
         {
             //Gson gson = new GsonBuilder().create();
-            Revert.updateRevertState();
+            Revert.updateRevertState(null);
             gson.toJson(workspace, writer);
             writer.close();
             Global.setCurrentWorkspaceUnchanged();
@@ -494,7 +494,10 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
             try (Reader reader = new FileReader(selectedFile))
             {
                 Global.currentWorkspace = gson.fromJson(reader, Workspace.class);
-                Revert.updateRevertState();
+
+                Reader reader1 = new FileReader(selectedFile);
+                System.out.println(gson.fromJson(reader1, Workspace.class) + "load json");
+                Revert.updateRevertState(gson.fromJson(reader1, Workspace.class));
                 reader.close();
             }
             catch (FileNotFoundException e)
