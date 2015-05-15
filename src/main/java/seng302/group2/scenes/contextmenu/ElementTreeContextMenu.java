@@ -118,6 +118,11 @@ public class ElementTreeContextMenu extends ContextMenu
                 deleteItem.setDisable(false);
             }
         }
+        
+        if (selectedCategory == Categories.WORKSPACE)
+        {
+            deleteItem.setDisable(true);
+        }
     }
 
 
@@ -187,6 +192,10 @@ public class ElementTreeContextMenu extends ContextMenu
             case RELEASE:
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE_EDIT,
                         (Release) Global.selectedTreeItem.getValue());
+                break;
+            case WORKSPACE:
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE_EDIT,
+                        (Workspace) Global.selectedTreeItem.getValue());
                 break;
             case OTHER:
                 System.out.println("The category was not correctly recognized");
