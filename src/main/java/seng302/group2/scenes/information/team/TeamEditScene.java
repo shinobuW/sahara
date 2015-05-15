@@ -28,6 +28,7 @@ import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.scenes.MainScene.informationPane;
@@ -556,6 +557,7 @@ public class TeamEditScene
                         ));
                     }
 
+                    Collections.sort(Global.currentWorkspace.getTeams());
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM, currentTeam);
                     MainScene.treeView.refresh();
 

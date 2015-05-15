@@ -9,13 +9,14 @@ import seng302.group2.workspace.person.Person;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * A basic class to represent skills a person may have
  * @author crw73
  */
-public class Skill extends TreeViewItem implements Serializable
+public class Skill extends TreeViewItem implements Serializable, Comparable<Skill>
 {
     private String shortName;
     private String description;
@@ -95,6 +96,16 @@ public class Skill extends TreeViewItem implements Serializable
     public ObservableList<TreeViewItem> getChildren()
     {
         return null;
+    }
+    
+    
+    // TODO write javadoc.
+    @Override
+    public int compareTo(Skill compareSkill)
+    {
+        String skill1ShortName = this.getShortName().toUpperCase();
+        String skill2ShortName = compareSkill.getShortName().toUpperCase();
+        return skill1ShortName.compareTo(skill2ShortName);
     }
     
     
@@ -228,6 +239,7 @@ public class Skill extends TreeViewItem implements Serializable
         {
             skill.shortName = shortName;
             skill.description = description;
+            Collections.sort(Global.currentWorkspace.getSkills());
         }
 
         /**
@@ -237,6 +249,7 @@ public class Skill extends TreeViewItem implements Serializable
         {
             skill.shortName = oldShortName;
             skill.description = oldDescription;
+            Collections.sort(Global.currentWorkspace.getSkills());
         }
     }
 

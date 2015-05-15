@@ -18,17 +18,20 @@ import seng302.group2.workspace.team.Team;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import javafx.collections.ListChangeListener;
+import seng302.group2.workspace.person.Person;
 
 /**
  * A class representing real-world projects
  * Created by Jordane on 18/04/2015.
  */
-public class Project extends TreeViewItem implements Serializable
+public class Project extends TreeViewItem implements Serializable, Comparable<Project>
 {
     private String shortName;
     private String longName;
@@ -71,6 +74,27 @@ public class Project extends TreeViewItem implements Serializable
         this.shortName = shortName;
         this.longName = fullName;
         this.description = description;
+        addListeners();
+    }
+    
+    // TODO
+    private void addListeners()
+    {
+        releases.addListener((ListChangeListener<Release>) change ->
+            {
+                if (change.next() && !change.wasPermutated())
+                {
+                    Collections.sort(releases);
+                }
+            });
+        
+        stories.addListener((ListChangeListener<Story>) change ->
+            {
+                if (change.next() && !change.wasPermutated())
+                {
+                    Collections.sort(stories);
+                }
+            });
     }
 
 
@@ -519,6 +543,16 @@ public class Project extends TreeViewItem implements Serializable
     }
 
     
+    // TODO write javadoc.
+    @Override
+    public int compareTo(Project compareProject)
+    {
+        String proj1ShortName = this.getShortName().toUpperCase();
+        String proj2ShortName = compareProject.getShortName().toUpperCase();
+        return proj1ShortName.compareTo(proj2ShortName);
+    }
+    
+    
     /**
      * Deletes a project from the given workspace.
      * @param ws The workspace to remove the project from
@@ -600,6 +634,7 @@ public class Project extends TreeViewItem implements Serializable
             proj.longName = longName;
             proj.description = description;
             proj.teams = teams;
+            Collections.sort(Global.currentWorkspace.getProjects());
         }
 
         /**
@@ -611,6 +646,7 @@ public class Project extends TreeViewItem implements Serializable
             proj.longName = oldLongName;
             proj.description = oldDescription;
             proj.teams = oldTeams;
+            Collections.sort(Global.currentWorkspace.getProjects());
         }
     }
 

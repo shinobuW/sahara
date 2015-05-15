@@ -25,7 +25,7 @@ import static javafx.collections.FXCollections.observableArrayList;
  *
  * @author crw73
  */
-public class Team extends TreeViewItem implements Serializable
+public class Team extends TreeViewItem implements Serializable, Comparable<Team>
 {
     public static String birthDatePattern = "dd/MM/yyyy";
 
@@ -422,6 +422,16 @@ public class Team extends TreeViewItem implements Serializable
         return null;
     }
 
+    
+    // TODO write javadoc.
+    @Override
+    public int compareTo(Team compareTeam)
+    {
+        String team1ShortName = this.getShortName().toUpperCase();
+        String team2ShortName = compareTeam.getShortName().toUpperCase();
+        return team1ShortName.compareTo(team2ShortName);
+    }
+    
 
     /**
      * Deletes the team without cascading deletion on the assigned people

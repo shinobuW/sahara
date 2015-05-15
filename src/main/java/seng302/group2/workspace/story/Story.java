@@ -5,11 +5,12 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import java.io.Serializable;
 import javafx.collections.ObservableList;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.skills.Skill;
 
 /**
  * Created by swi67 on 6/05/15.
  */
-public class Story extends TreeViewItem implements Serializable
+public class Story extends TreeViewItem implements Serializable, Comparable<Story>
 {
     private String shortName;
     private String longName;
@@ -142,6 +143,16 @@ public class Story extends TreeViewItem implements Serializable
     public ObservableList<TreeViewItem> getChildren()
     {
         return null;
+    }
+    
+    
+    // TODO write javadoc.
+    @Override
+    public int compareTo(Story compareStory)
+    {
+        String story1ShortName = this.getShortName().toUpperCase();
+        String story2ShortName = compareStory.getShortName().toUpperCase();
+        return story1ShortName.compareTo(story2ShortName);
     }
     
     /**
