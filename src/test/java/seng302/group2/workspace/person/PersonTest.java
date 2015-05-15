@@ -271,4 +271,18 @@ public class PersonTest
         Assert.assertEquals("unnamed", basicPerson.toString());
         Assert.assertEquals("btm38", extendedPerson.toString());
     }
+    
+    /**
+     * Tests the compareTo method of Person to ensure it correctly returns an int representing if a 
+     * shortName is larger or not.
+     */
+    @Test
+    public void testCompareTo()
+    {
+        Person zedd = new Person("z","first", "last", "", "", null);
+        Person zeddDupl = new Person("Z","first", "last", "", "", null);
+        Assert.assertTrue(extendedPerson.compareTo(zedd) <= 0);
+        Assert.assertTrue(zedd.compareTo(extendedPerson) >= 0);
+        Assert.assertTrue(zedd.compareTo(zeddDupl) == 0);
+    }
 }

@@ -6,6 +6,7 @@ import org.junit.Test;
 /**
  * A series of tests relating to Skills
  * @author Cameron Williams (crw73)
+ * @author Bronson McNaughton (btm38)
  */
 public class SkillTest
 {
@@ -41,5 +42,24 @@ public class SkillTest
         Assert.assertEquals("C#", skill.getShortName());
         Assert.assertEquals("A better language than Java", skill.getDescription());
         Assert.assertEquals("C#", skill.toString());
+    }
+    
+    /**
+     * Tests the compareTo method of Skill to ensure it correctly returns an int representing if a 
+     * shortName is larger or not.
+     */
+    @Test
+    public void testCompareTo()
+    {
+        Skill skill1 = new Skill();
+        Skill skill2 = new Skill();
+        Skill skill1Dupl = new Skill();
+        skill1.setShortName("A");
+        skill2.setShortName("Z");
+        skill1Dupl.setShortName("a");
+        
+        Assert.assertTrue(skill1.compareTo(skill2) <= 0);
+        Assert.assertTrue(skill2.compareTo(skill1) >= 0);
+        Assert.assertTrue(skill1.compareTo(skill1Dupl) == 0);
     }
 }

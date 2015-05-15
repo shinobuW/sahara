@@ -227,4 +227,20 @@ public class ProjectTest extends TestCase
         Assert.assertEquals(teams, proj.getTeams());
         Assert.assertEquals(releases, proj.getReleases());
     }
+    
+    /**
+     * Tests the compareTo method of Project to ensure it correctly returns an int representing if a 
+     * shortName is larger or not.
+     */
+    @Test
+    public void testCompareTo()
+    {
+        Project proj = new Project("aShortName", "aLongName", "aDescription");
+        Project proj2 = new Project();
+        
+        Project projDupl = new Project("ASHORTNAME", "aLongName", "aDescription");
+        Assert.assertTrue(proj.compareTo(proj2) <= 0);
+        Assert.assertTrue(proj2.compareTo(proj) >= 0);
+        Assert.assertTrue(proj.compareTo(projDupl) == 0);
+    }
 }
