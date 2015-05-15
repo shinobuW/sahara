@@ -24,6 +24,7 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
 
 /**
@@ -38,26 +39,27 @@ public class ReportGenerator
     
     public static boolean generateReport() 
     {
-	try
+        try
         {
-	    docFactory = DocumentBuilderFactory.newInstance();
+            docFactory = DocumentBuilderFactory.newInstance();
             docBuilder = docFactory.newDocumentBuilder();
             doc = docBuilder.newDocument();
-	    
-	    //WorkSpace Node
-	    Element rootElement = generateWorkSpace(Global.currentWorkspace);
-	    doc.appendChild(rootElement);
-	    
-	    
 
-	    // write the content into xml file
-	    TransformerFactory transformerFactory = TransformerFactory.newInstance();
-	    Transformer transformer = transformerFactory.newTransformer();
-	    DOMSource source = new DOMSource(doc);
-            
-            
-            
-            
+            //WorkSpace Node
+            Element rootElement = generateWorkSpace(Global.currentWorkspace);
+            System.out.println(Global.currentWorkspace);
+            doc.appendChild(rootElement);
+
+
+
+            // write the content into xml file
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+
+
+
+
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Export Report");
             if (Global.lastSaveLocation != null && Global.lastSaveLocation != "")
@@ -67,9 +69,9 @@ public class ReportGenerator
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("XML Report", "*.xml")
             );
-            
+
             File selectedFile = null;
-            
+
             try
             {
                 selectedFile = fileChooser.showSaveDialog(new Stage());
@@ -81,7 +83,7 @@ public class ReportGenerator
                 fileChooser.setInitialDirectory(new File("/"));
                 selectedFile = fileChooser.showSaveDialog(new Stage());
             }
-            
+
             if (selectedFile != null)
             {
                 StreamResult result = new StreamResult(selectedFile);
@@ -97,13 +99,14 @@ public class ReportGenerator
             {
                 System.out.println("Export aborted (by user or error? :()");
             }
-            
+
         }
-	catch (Exception e) 
+        catch (Exception e)
         {
-	    System.out.println("Error exporting");
-	}
-	return true;
+            e.printStackTrace();
+            System.out.println("Error exporting ");
+        }
+        return true;
     }
     
     private static Element generateWorkSpace(Workspace workspace)
@@ -145,6 +148,7 @@ public class ReportGenerator
         {
             if (team.getProject() == null && !team.isUnassignedTeam())
             {
+                System.out.println(team + " Team name");
                 Element teamElement = generateTeam(team);
                 teamElements.appendChild(teamElement);
             }
@@ -205,23 +209,106 @@ public class ReportGenerator
         projectDescription.appendChild(doc.createTextNode(project.getDescription()));
         projectElement.appendChild(projectDescription);
         
-        Element teamElements = doc.createElement("teams");
-        for (Team team : project.getTeams())
+        Element teamElements = doc.createElement("current-teams");
+        for (Team team : project.getCurrentTeams())
         {
-            Element teamElement = generateTeam(team);
-	    teamElements.appendChild(teamElement);
+            Allocation currentAllocation = team.getCurrentAllocation();
+            Element teamElement = generateAllocatedTeam(team, currentAllocation);
+            teamElements.appendChild(teamElement);
         }
         projectElement.appendChild(teamElements);
+
+//        Element teamPreviousElements = doc.createElement("previous-teams");
+//        for (Team team : project.getPastTeams())
+//        {
+//            Element teamElement = generateAllocatedTeam(team, allocation);
+//            teamPreviousElements.appendChild(teamElement);
+//        }
+//        projectElement.appendChild(teamPreviousElements);
         
         Element releaseElements = doc.createElement("releases");
         for (Release release : project.getReleases())
         {
             Element releaseElement = generateRelease(release);
-	    releaseElements.appendChild(releaseElement);
+            releaseElements.appendChild(releaseElement);
         }
         projectElement.appendChild(releaseElements);
         
         return projectElement;
+    }
+
+    private static Element generateAllocatedTeam(Team team, Allocation allocation)
+    {
+
+        Element teamElement = doc.createElement("team");
+
+        //WorkSpace Elements
+        Element teamShortName = doc.createElement("identifier");
+        teamShortName.appendChild(doc.createTextNode(team.getShortName()));
+        teamElement.appendChild(teamShortName);
+
+        Element teamDescription = doc.createElement("description");
+        teamDescription.appendChild(doc.createTextNode(team.getDescription()));
+        teamElement.appendChild(teamDescription);
+
+        Element teamStartDate = doc.createElement("allocation-start-date");
+        teamStartDate.appendChild(doc.createTextNode(allocation.getStartDate().toString()));
+        teamElement.appendChild(teamStartDate);
+
+        Element teamEndDate = doc.createElement("allocation-end-date");
+        teamEndDate.appendChild(doc.createTextNode(allocation.getEndDate().toString()));
+        teamElement.appendChild(teamEndDate);
+
+        Element productOwnerElement = doc.createElement("product-owner");
+        if (team.getProductOwner() != null)
+        {
+            Element teamProductOwner = generatePerson(team.getProductOwner());
+            productOwnerElement.appendChild(teamProductOwner);
+        }
+        teamElement.appendChild(productOwnerElement);
+
+        Element scrumMasterElement = doc.createElement("scrum-master");
+        if (team.getProductOwner() != null)
+        {
+            Element teamScrumMaster = generatePerson(team.getScrumMaster());
+            scrumMasterElement.appendChild(teamScrumMaster);
+        }
+        teamElement.appendChild(scrumMasterElement);
+
+        Element devElement = doc.createElement("devs");
+        for (Person person : team.getPeople())
+        {
+            if (person.getRole() != null)
+            {
+                if (person.getRole().getType() == Role.RoleType.DevelopmentTeamMember)
+                {
+                    Element personElement = generatePerson(person);
+                    devElement.appendChild(personElement);
+                }
+            }
+        }
+        teamElement.appendChild(devElement);
+
+        Element othersElement = doc.createElement("others");
+        for (Person person : team.getPeople())
+        {
+            if (person.getRole() != null)
+            {
+                if (person.getRole().getType() == Role.RoleType.Others)
+                {
+                    Element personElement = generatePerson(person);
+                    othersElement.appendChild(personElement);
+                }
+            }
+            if (person.getRole() == null)
+            {
+                Element personElement = generatePerson(person);
+                othersElement.appendChild(personElement);
+            }
+        }
+        teamElement.appendChild(othersElement);
+
+        return teamElement;
     }
     
     private static Element generateTeam(Team team)
@@ -238,13 +325,19 @@ public class ReportGenerator
         teamElement.appendChild(teamDescription);
         
         Element productOwnerElement = doc.createElement("product-owner");
-        Element teamProductOwner = generatePerson(team.getProductOwner());
-        productOwnerElement.appendChild(teamProductOwner);
+        if (team.getProductOwner() != null)
+        {
+            Element teamProductOwner = generatePerson(team.getProductOwner());
+            productOwnerElement.appendChild(teamProductOwner);
+        }
         teamElement.appendChild(productOwnerElement);
         
         Element scrumMasterElement = doc.createElement("scrum-master");
-        Element teamScrumMaster = generatePerson(team.getScrumMaster());
-        scrumMasterElement.appendChild(teamScrumMaster);
+        if (team.getProductOwner() != null)
+        {
+            Element teamScrumMaster = generatePerson(team.getScrumMaster());
+            scrumMasterElement.appendChild(teamScrumMaster);
+        }
         teamElement.appendChild(scrumMasterElement);
         
         Element devElement = doc.createElement("devs");

@@ -178,6 +178,29 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         return teams;
     }
 
+    /**
+     * Gets a set of the teams that have been assigned to the project through the team allocations
+     * @return a set of the teams that have been assigned to the project
+     */
+    public Set<Team> getPastTeams()
+    {
+        Set<Team> teams = new HashSet<>();
+        LocalDate now = LocalDate.now();
+        for (Allocation alloc : teamAllocations)
+        {
+            Team projectTeam = alloc.getTeam();
+
+            if (!projectTeam.isUnassignedTeam()
+                    && alloc.getStartDate().isBefore(now)
+                    && alloc.getEndDate().isBefore(now)
+                    && !teams.contains(projectTeam))
+            {
+                teams.add(projectTeam);
+            }
+        }
+        return teams;
+    }
+
 
     /**
      * Gets the releases of the project

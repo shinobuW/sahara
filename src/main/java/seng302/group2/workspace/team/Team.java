@@ -15,6 +15,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -179,6 +180,27 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
     public ObservableList<Allocation> getProjectAllocations()
     {
         return projectAllocations;
+    }
+
+    /**
+     * Gets the project the Team is assigned to
+     *
+     * @return The description of the team
+     */
+    public Allocation getCurrentAllocation()
+    {
+        Allocation currentAllocation = null;
+        LocalDate now = LocalDate.now();
+        for (Allocation allocation : this.getProjectAllocations())
+        {
+            if (allocation.getStartDate().isBefore(now)
+                    && (allocation.getEndDate().isAfter(now)
+                            || allocation.getEndDate() == null))
+            {
+                currentAllocation = allocation;
+            }
+        }
+        return currentAllocation;
     }
 
     //</editor-fold>

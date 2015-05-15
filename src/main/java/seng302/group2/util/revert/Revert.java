@@ -27,11 +27,9 @@ public class Revert
         return revertState;
     }
 
-    public static void updateRevertState()
+    public static void updateRevertState(Workspace workspace)
     {
-        revertState = Global.currentWorkspace.getCopy();
-        System.out.println(revertState.getProjects());
-        System.out.println(revertState.getPeople());
-        System.out.println(revertState.getTeams());
+        revertState = workspace;
+
     }
 }
