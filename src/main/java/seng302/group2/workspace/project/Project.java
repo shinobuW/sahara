@@ -458,18 +458,31 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
 
 
 
-    /** 
-     * Add Release to Project
-     * @param release release to be added
+//    /** 
+//     * Add Release to Project
+//     * @param release release to be added
+//     */
+//    public void add(Release release)
+//    {
+//        Global.undoRedoMan.add(new UndoableItem(
+//                release,
+//                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_ADD, this),
+//                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_ADD, this)
+//        ));
+//        this.releases.add(release);
+//    }
+    
+    
+    
+    /**
+     * Adds a Person to the Workspace's list of Persons.
+     *
+     * @param person The person to add
      */
     public void add(Release release)
     {
-        Global.undoRedoMan.add(new UndoableItem(
-                release,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_ADD, this),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_ADD, this)
-        ));
-        this.releases.add(release);
+        Command command = new AddReleaseCommand(this, release);
+        Global.commandManager.executeCommand(command);
     }
 
     /**
@@ -695,6 +708,31 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         {
             ws.getProjects().add(proj);
             // TODO Readd any associations
+        }
+    }
+    
+    
+    private class AddReleaseCommand implements Command
+    {
+        private Release release;
+        private Project proj;
+
+        AddReleaseCommand(Project proj, Release release)
+        {
+            this.proj = proj;
+            this.release = release;
+        }
+
+        public void execute()
+        {
+            proj.getReleases().add(release);
+            // TODO Readd any associations, eg. allocation history
+        }
+
+        public void undo()
+        {
+            proj.getReleases().remove(release);
+            // TODO Remove any associations, eg. allocation history
         }
     }
 

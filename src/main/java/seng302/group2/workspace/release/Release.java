@@ -297,13 +297,11 @@ public class Release extends TreeViewItem implements Comparable<Release>
     private class DeleteReleaseCommand implements Command
     {
         private Release release;
-        //private Workspace ws;
         private Project proj;
 
         DeleteReleaseCommand(Release release)
         {
             this.release = release;
-            //this.ws = ws;
             this.proj = release.getProject();
         }
 

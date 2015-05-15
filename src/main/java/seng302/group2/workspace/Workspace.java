@@ -34,6 +34,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import seng302.group2.workspace.release.Release;
 
 /**
  * Basic workspace class that acts as the root object for Sahara and represents a real-world
@@ -1070,8 +1071,8 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
             // TODO Remove any associations, eg. allocation history
         }
     }
-
-
+    
+    
     private class AddTeamCommand implements Command
     {
         private Team team;

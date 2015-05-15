@@ -471,9 +471,7 @@ public class MainMenuBar
                 if (Global.selectedTreeItem.getValue().getClass() == Category.class
                         || Global.selectedTreeItem.getValue().getClass() == ReleaseCategory.class
                         || Global.selectedTreeItem.getValue().getClass() == Category.class
-                        || Global.selectedTreeItem.getValue().getClass() == Workspace.class
-                        || Global.selectedTreeItem.getValue().getClass() == Project.class
-                        || Global.selectedTreeItem.getValue().getClass() == Release.class)
+                        || Global.selectedTreeItem.getValue().getClass() == Workspace.class)
                 {
                     // Non-deleteable classes (for now?)
                     deleteTreeItem.setDisable(true);
