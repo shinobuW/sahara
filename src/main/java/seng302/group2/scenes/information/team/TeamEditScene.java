@@ -206,10 +206,10 @@ public class TeamEditScene
         informationPane.getChildren().add(shortNameCustomField);
         informationPane.getChildren().add(descriptionTextArea);
 
-        informationPane.getChildren().add(productOwnerBox);
-        informationPane.getChildren().add(scrumMasterBox);
-        refreshListView(tempTeam);
-        refreshComboBox(tempTeam);
+        VBox v3 = new VBox(10);
+        v3.getChildren().add(productOwnerBox);
+        v3.getChildren().add(scrumMasterBox);
+        informationPane.getChildren().add(v3);
 
         HBox h1 = new HBox(10);
         VBox v1 = new VBox(10);
@@ -222,6 +222,8 @@ public class TeamEditScene
 
         h1.getChildren().addAll(v1, peopleButtons, v2);
 
+        refreshListView(tempTeam, v1);
+        refreshComboBox(tempTeam, v3);
         informationPane.getChildren().add(h1);
         informationPane.getChildren().add(devBtns);
         informationPane.getChildren().add(buttons);
@@ -244,7 +246,7 @@ public class TeamEditScene
                         personCheckDialog(item, tempTeam, currentTeam);
                     }
                 }
-                refreshListView(tempTeam);
+                refreshListView(tempTeam, v1);
                 dialogPeople.clear();
 
                 for (TreeViewItem projectPeople : Global.currentWorkspace.getPeople())
@@ -254,8 +256,8 @@ public class TeamEditScene
                         dialogPeople.add((Person) projectPeople);
                     }
                 }
-                refreshListView(tempTeam);
-                refreshComboBox(tempTeam);
+                refreshListView(tempTeam, v1);
+                refreshComboBox(tempTeam, v3);
             });
 
         btnDelete.setOnAction((event) ->
@@ -267,7 +269,7 @@ public class TeamEditScene
                     tempTeam.remove(tempTeam.get(selectedPeople.get(i)));
                 }
                 
-                refreshListView(tempTeam);
+                refreshListView(tempTeam, v1);
                 dialogPeople.clear();
                 for (TreeViewItem projectPeople : Global.currentWorkspace.getPeople())
                 {
@@ -276,8 +278,8 @@ public class TeamEditScene
                         dialogPeople.add((Person) projectPeople);
                     }
                 }
-                refreshListView(tempTeam);
-                refreshComboBox(tempTeam);
+                refreshListView(tempTeam, v1);
+                refreshComboBox(tempTeam, v3);
 
             });
 
@@ -291,8 +293,8 @@ public class TeamEditScene
                     teamRoles.add(tempTeam.get(i).getRole());
                     teamPeopleRoles.add(tempTeam.get(i));
                     tempTeam.get(i).setRole(Global.currentWorkspace.getRoles().get(2));
-                    refreshListView(tempTeam);
-                    refreshComboBox(tempTeam);
+                    refreshListView(tempTeam, v1);
+                    refreshComboBox(tempTeam, v3);
                 }
 
             });
@@ -307,7 +309,7 @@ public class TeamEditScene
                     teamPeopleRoles.remove(tempTeam.get(i));
                     teamRoles.remove(i, i);
                     tempTeam.get(i).setRole(null);
-                    refreshListView(tempTeam);
+                    refreshListView(tempTeam, v1);
 
                 }
             });
@@ -678,19 +680,19 @@ public class TeamEditScene
     * person.
     * @param currentTeam the Team to input into the ListView
     */
-    private static void refreshListView(ObservableList<Person> currentTeam)
+    private static void refreshListView(ObservableList<Person> currentTeam,  VBox v1)
     {
         System.out.println(tempTeam + " before");
         tempTeam = TeamInfoTab.sortListView(currentTeam);
         System.out.println(tempTeam + " after");
         ObservableList<String> tempTeamString = TeamInfoTab.personRoleToString(tempTeam);
 
-        informationPane.getChildren().remove(teamsPeopleBox);
+        v1.getChildren().remove(teamsPeopleBox);
 
         teamsPeopleBox = new ListView(tempTeamString);
         teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        informationPane.getChildren().add(teamsPeopleBox);
+        v1.getChildren().add(teamsPeopleBox);
     }
     
     /*
@@ -698,11 +700,11 @@ public class TeamEditScene
     * person.
     * @param currentTeam the Team to input into the Combobox based on skills
     */
-    private static void refreshComboBox(ObservableList<Person> currentTeam)
+    private static void refreshComboBox(ObservableList<Person> currentTeam, VBox v3)
     {
-        
-        informationPane.getChildren().remove(productOwnerBox);
-        informationPane.getChildren().remove(scrumMasterBox);
+
+        v3.getChildren().remove(productOwnerBox);
+        v3.getChildren().remove(scrumMasterBox);
         
         productOwnerBox = new CustomComboBox("Product Owner: ", false);
         scrumMasterBox = new CustomComboBox("Scrum Master: ", false);
@@ -766,8 +768,9 @@ public class TeamEditScene
         {
             scrumMasterBox.setValue(currentSM.toString());
         }
-        
-        informationPane.getChildren().add(productOwnerBox);
-        informationPane.getChildren().add(scrumMasterBox);
+
+
+        v3.getChildren().add(productOwnerBox);
+        v3.getChildren().add(scrumMasterBox);
     }
 }
