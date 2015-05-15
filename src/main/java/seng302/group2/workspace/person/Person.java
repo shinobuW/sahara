@@ -390,6 +390,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
 
 
     // TODO write javadoc.
+    @Override
     public int compareTo(Person comparePerson)
     {
         String pers1ShortName = this.getShortName().toUpperCase();

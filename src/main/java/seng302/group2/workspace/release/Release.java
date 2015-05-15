@@ -17,7 +17,7 @@ import java.time.LocalDate;
  * A release is a sub-member of project and contains information about a release of a project
  * @author Shinobu, Jordane
  */
-public class Release extends TreeViewItem
+public class Release extends TreeViewItem implements Comparable<Release>
 {
     private String shortName;
     private String description;
@@ -192,6 +192,16 @@ public class Release extends TreeViewItem
     //</editor-fold>
 
 
+    // TODO write javadoc.
+    @Override
+    public int compareTo(Release compareRelease)
+    {
+        String release1ShortName = this.getShortName().toUpperCase();
+        String release2ShortName = compareRelease.getShortName().toUpperCase();
+        return release1ShortName.compareTo(release2ShortName);
+    }
+    
+    
     /**
      * Deletes a release from the given project.
      */

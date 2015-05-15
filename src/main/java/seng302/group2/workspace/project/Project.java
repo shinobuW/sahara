@@ -28,7 +28,7 @@ import static javafx.collections.FXCollections.observableArrayList;
  * A class representing real-world projects
  * Created by Jordane on 18/04/2015.
  */
-public class Project extends TreeViewItem implements Serializable
+public class Project extends TreeViewItem implements Serializable, Comparable<Project>
 {
     private String shortName;
     private String longName;
@@ -518,6 +518,16 @@ public class Project extends TreeViewItem implements Serializable
         return this.shortName;
     }
 
+    
+    // TODO write javadoc.
+    @Override
+    public int compareTo(Project compareProject)
+    {
+        String proj1ShortName = this.getShortName().toUpperCase();
+        String proj2ShortName = compareProject.getShortName().toUpperCase();
+        return proj1ShortName.compareTo(proj2ShortName);
+    }
+    
     
     /**
      * Deletes a project from the given workspace.
