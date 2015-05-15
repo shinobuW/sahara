@@ -34,6 +34,8 @@ import static seng302.group2.util.validation.DateValidator.validateAllocation;
  */
 public class ProjectHistoryTab extends Tab
 {
+    private boolean isValidEdit = false;
+
     /**
      * Constructor for project allocation tab
      * @param currentProject currently selected project
@@ -84,18 +86,36 @@ public class ProjectHistoryTab extends Tab
                     }
                 });
         startDateCol.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<Allocation, String>>()
+            new EventHandler<TableColumn.CellEditEvent<Allocation, String>>()
+            {
+                @Override
+                public void handle(TableColumn.CellEditEvent<Allocation, String> event)
                 {
-                    @Override
-                    public void handle(TableColumn.CellEditEvent<Allocation, String> tableCol)
+                    if (!event.getNewValue().isEmpty())
                     {
-                        ((Allocation) tableCol.getTableView().getItems().get(
-                                tableCol.getTablePosition().getRow())
-                        ).setStartDate(LocalDate.parse(tableCol.getNewValue(),
-                                DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+                        Allocation currentAllocation = (Allocation) event.getTableView().getItems()
+                                .get(event.getTablePosition().getRow());
+                        Project proj = currentAllocation.getProject();
+
+                        LocalDate currentStartDate = currentAllocation.getStartDate();
+                        LocalDate newStartDate = LocalDate.parse(event.getNewValue(),
+                                DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                        currentAllocation.setStartDate(newStartDate);
+
+                        if (validateAllocation(currentAllocation, proj))
+                        {
+                            isValidEdit = false;
+                        }
+                        else
+                        {
+                            currentAllocation.setStartDate(currentStartDate);
+
+                            isValidEdit = true;
+                        }
                     }
                 }
-        );
+            });
         startDateCol.setCellFactory(cellFactory);
         startDateCol.prefWidthProperty().bind(historyTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
@@ -130,18 +150,33 @@ public class ProjectHistoryTab extends Tab
                 new EventHandler<TableColumn.CellEditEvent<Allocation, String>>()
                 {
                     @Override
-                    public void handle(TableColumn.CellEditEvent<Allocation, String> col)
+                    public void handle(TableColumn.CellEditEvent<Allocation, String> event)
                     {
-                        if (!col.getNewValue().isEmpty())
+                        if (!event.getNewValue().isEmpty())
                         {
-                            ((Allocation) col.getTableView().getItems().get(
-                                    col.getTablePosition().getRow())
-                            ).setEndDate(LocalDate.parse(col.getNewValue(),
-                                    DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+                            Allocation currentAllocation = (Allocation) event.getTableView().
+                                    getItems().get(event.getTablePosition().getRow());
+                            Project proj = currentAllocation.getProject();
+
+                            LocalDate currentEndDate = currentAllocation.getEndDate();
+                            LocalDate newEndDate = LocalDate.parse(event.getNewValue(),
+                                    DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                            currentAllocation.setEndDate(newEndDate);
+
+                            if (validateAllocation(currentAllocation, proj))
+                            {
+                                isValidEdit = false;
+                            }
+                            else
+                            {
+                                currentAllocation.setEndDate(currentEndDate);
+                                isValidEdit = true;
+                            }
+
                         }
                     }
-                }
-        );
+                });
 
         Button addButton = new Button("Add");
         HBox newAllocationFields = new HBox(10);
@@ -149,6 +184,7 @@ public class ProjectHistoryTab extends Tab
         CustomComboBox teamComboBox = new CustomComboBox("Team", true);
         Label startDateLabel = new Label("Start Date");
         DatePicker startDatePicker = new DatePicker();
+
 
         Label endDateLabel = new Label("End Date");
         DatePicker endDatePicker = new DatePicker();
@@ -207,7 +243,7 @@ public class ProjectHistoryTab extends Tab
     class EditingCell extends TableCell<Allocation, String>
     {
 
-        private DatePicker datePicker;
+        public DatePicker datePicker;
 
         public EditingCell()
         {
@@ -268,7 +304,22 @@ public class ProjectHistoryTab extends Tab
                 }
                 else
                 {
-                    setText(getString());
+                    if (datePicker == null)
+                    {
+                        setText(getString());
+                    }
+                    else
+                    {
+                        if (datePicker.getValue() == null)
+                        {
+                            setText(getString());
+                        }
+                        else if (!isValidEdit)
+                        {
+                            setText(datePicker.getValue().format(Global.dateFormatter));
+                        }
+                    }
+
                     setGraphic(null);
                 }
             }
