@@ -52,7 +52,7 @@ public class CategoryTreeContextMenu extends ContextMenu
                 CreateReleaseDialog.show();
                 break;
             default:
-                CreateWorkspaceDialog.show();
+                System.out.println("Create dialog for that category not implemented (yet?)");
                 break;
         }
     }
