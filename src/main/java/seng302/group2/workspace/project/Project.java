@@ -18,11 +18,14 @@ import seng302.group2.workspace.team.Team;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import javafx.collections.ListChangeListener;
+import seng302.group2.workspace.person.Person;
 
 /**
  * A class representing real-world projects
@@ -71,6 +74,27 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         this.shortName = shortName;
         this.longName = fullName;
         this.description = description;
+        addListeners();
+    }
+    
+    // TODO
+    private void addListeners()
+    {
+        releases.addListener((ListChangeListener<Release>) change ->
+            {
+                if (change.next() && !change.wasPermutated())
+                {
+                    Collections.sort(releases);
+                }
+            });
+        
+        stories.addListener((ListChangeListener<Story>) change ->
+            {
+                if (change.next() && !change.wasPermutated())
+                {
+                    Collections.sort(stories);
+                }
+            });
     }
 
 
@@ -610,6 +634,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
             proj.longName = longName;
             proj.description = description;
             proj.teams = teams;
+            Collections.sort(Global.currentWorkspace.getProjects());
         }
 
         /**
@@ -621,6 +646,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
             proj.longName = oldLongName;
             proj.description = oldDescription;
             proj.teams = oldTeams;
+            Collections.sort(Global.currentWorkspace.getProjects());
         }
     }
 

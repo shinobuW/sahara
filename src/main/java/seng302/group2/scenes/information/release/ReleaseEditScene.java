@@ -25,6 +25,7 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 
 import java.time.LocalDate;
+import java.util.Collections;
 
 import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.util.validation.DateValidator.isCorrectDateFormat;
@@ -301,6 +302,8 @@ public class ReleaseEditScene
 
                     currentRelease.edit(shortNameCustomField.getText(),
                         descriptionTextArea.getText(), releaseDate, project);
+                    
+                    Collections.sort(currentRelease.getProject().getReleases());
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
                     MainScene.treeView.refresh();
                 }

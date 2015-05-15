@@ -9,6 +9,7 @@ import seng302.group2.workspace.person.Person;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -238,6 +239,7 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
         {
             skill.shortName = shortName;
             skill.description = description;
+            Collections.sort(Global.currentWorkspace.getSkills());
         }
 
         /**
@@ -247,6 +249,7 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
         {
             skill.shortName = oldShortName;
             skill.description = oldDescription;
+            Collections.sort(Global.currentWorkspace.getSkills());
         }
     }
 

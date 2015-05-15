@@ -5,12 +5,14 @@
  */
 package seng302.group2.scenes.information.skill;
 
+import java.util.Collections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.CustomTextArea;
@@ -82,6 +84,7 @@ public class SkillEditScene
                     currentSkill.edit(shortNameCustomField.getText(),
                             descriptionTextArea.getText());
 
+                    Collections.sort(Global.currentWorkspace.getSkills());
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL, currentSkill);
                     MainScene.treeView.refresh();
                 }

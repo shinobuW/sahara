@@ -203,7 +203,9 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
                 {
                     Collections.sort(skills);
                 }
-            });        
+            }); 
+        
+        
     }
     // <editor-fold defaultstate="collapsed" desc="Getters">
 

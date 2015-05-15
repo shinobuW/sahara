@@ -38,8 +38,8 @@ public class SkillInfoTab extends Tab
         basicInfoPane.getChildren().add(new Label(currentSkill.getDescription()));
         basicInfoPane.getChildren().add(btnEdit);
         
-        if (currentSkill.getShortName().equals("Product Owner") ||
-            currentSkill.getShortName().equals("Scrum Master"))
+        if (currentSkill.getShortName().equals("Product Owner") 
+            || currentSkill.getShortName().equals("Scrum Master"))
         {
             btnEdit.setDisable(true);
         }

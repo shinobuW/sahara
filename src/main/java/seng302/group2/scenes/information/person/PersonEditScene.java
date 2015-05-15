@@ -537,8 +537,8 @@ public class PersonEditScene
                             selectedTeam,
                             personSkillsBox.getItems());
 
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON, currentPerson);
                     Collections.sort(Global.currentWorkspace.getPeople());
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON, currentPerson);
                     MainScene.treeView.refresh();
                 }
                 else

@@ -1,5 +1,6 @@
 package seng302.group2.scenes.information.project;
 
+import java.util.Collections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -18,6 +19,7 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import seng302.group2.Global;
 import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
@@ -190,6 +192,7 @@ public class ProjectEditScene
                             longNameCustomField.getText(), descriptionTextArea.getText(),
                             observableArrayList() /*addedTeams TODO: Remove when certain */);
 
+                    Collections.sort(Global.currentWorkspace.getProjects());
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
                     MainScene.treeView.refresh();
                 }
