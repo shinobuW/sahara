@@ -1,5 +1,6 @@
 package seng302.group2.util.undoredo;
 
+import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 
 import java.util.Stack;
@@ -12,6 +13,7 @@ public class CommandManager
 {
     private Stack<Command> undos = new Stack<>();
     private Stack<Command> redos = new Stack<>();
+    private Command lastSaveCommand = null;
 
     /**
      * Executes the given command
@@ -19,10 +21,11 @@ public class CommandManager
      */
     public void executeCommand(Command command)
     {
+        Global.setCurrentWorkspaceChanged();
         command.execute();
         undos.push(command);
         redos.clear();
-        System.out.println("added: " + command.toString());
+        //System.out.println("added: " + command.toString());
     }
 
     /**
@@ -31,7 +34,7 @@ public class CommandManager
      */
     public boolean isUndoAvailable()
     {
-        System.out.println("undos avail?" + undos);
+        //System.out.println("undos avail?" + undos);
         return !undos.isEmpty();
     }
 
@@ -42,21 +45,57 @@ public class CommandManager
     {
         if (isUndoAvailable())
         {
+            if (undos.peek().getClass() == SaveTrackerCommand.class)
+            {
+                // Bring over the save tracker
+                redos.push(undos.pop());
+                if (redos.peek() == lastSaveCommand)
+                {
+                    Global.setCurrentWorkspaceUnchanged();
+                }
+                if (!isUndoAvailable())
+                {
+                    return;  // Return if it's the last item
+                }
+            }
+
+            // Normal undo
             Command command = undos.pop();
-            System.out.println("undo: " + command);
+            //System.out.println("undo: " + command);
             command.undo();
             redos.push(command);
-            try
+
+            // Check if we are back to the last save
+            if (isUndoAvailable() && undos.peek() == lastSaveCommand)
             {
-                MainScene.treeView.refresh();
+                Global.setCurrentWorkspaceUnchanged();
             }
-            catch (ExceptionInInitializerError | NoClassDefFoundError e)
+            else
             {
-                // Thrown in tests because app is not actually running
-                // Worst case of catch: tree doesn't update properly
+                Global.setCurrentWorkspaceChanged();
             }
+
+            refreshTree();
         }
     }
+
+
+    /**
+     * Refreshes the tree in the case that the application is running
+     */
+    public void refreshTree()
+    {
+        try
+        {
+            MainScene.treeView.refresh();
+        }
+        catch (ExceptionInInitializerError | NoClassDefFoundError e)
+        {
+            // Caused because it was called without the context of the application running, ie. Unit
+            // tests.
+        }
+    }
+
 
     /**
      * Checks if the redo stack has items that can be redone
@@ -67,6 +106,7 @@ public class CommandManager
         return !redos.isEmpty();
     }
 
+
     /**
      * Redoes the last action added to the redo stack
      */
@@ -74,19 +114,38 @@ public class CommandManager
     {
         if (isRedoAvailable())
         {
+            if (redos.peek().getClass() == SaveTrackerCommand.class)
+            {
+                undos.push(redos.pop());
+                if (!isRedoAvailable())
+                {
+                    return;
+                }
+            }
+
             Command command = redos.pop();
-            System.out.println("redo: " + command);
+            //System.out.println("redo: " + command);
             command.execute();
             undos.push(command);
-            try
+
+            if (isRedoAvailable() && redos.peek().getClass() == SaveTrackerCommand.class)
             {
-                MainScene.treeView.refresh();
+                undos.push(redos.pop());
+                if (undos.peek() == lastSaveCommand)
+                {
+                    Global.setCurrentWorkspaceUnchanged();
+                }
+                else
+                {
+                    Global.setCurrentWorkspaceChanged();
+                }
             }
-            catch (ExceptionInInitializerError | NoClassDefFoundError e)
+            else
             {
-                // Thrown in tests because app is not actually running
-                // Worst case of catch: tree doesn't update properly
+                Global.setCurrentWorkspaceChanged();
             }
+
+            refreshTree();
         }
     }
 
@@ -99,6 +158,7 @@ public class CommandManager
         return undos.size();
     }
 
+
     /**
      * Finds the number of redo items on the stack
      * @return the size of the redo stack
@@ -108,6 +168,7 @@ public class CommandManager
         return redos.size();
     }
 
+
     /**
      * Clears the undo and redo stacks.
      */
@@ -115,5 +176,37 @@ public class CommandManager
     {
         redos = new Stack<>();
         undos = new Stack<>();
+    }
+
+
+    /**
+     * Adds an empty command that tracks the last save (unsaved changes)
+     */
+    public void trackSave()
+    {
+        Command lastSave = new SaveTrackerCommand();
+        lastSaveCommand = lastSave;
+        this.executeCommand(lastSave);
+        Global.setCurrentWorkspaceUnchanged();
+    }
+
+
+    /**
+     * A fake command to keep track of saves
+     */
+    private class SaveTrackerCommand implements Command
+    {
+
+        @Override
+        public void execute()
+        {
+            // Do nothing
+        }
+
+        @Override
+        public void undo()
+        {
+            // Do nothing
+        }
     }
 }

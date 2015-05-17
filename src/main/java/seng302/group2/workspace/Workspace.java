@@ -439,14 +439,16 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
             Global.lastSaveLocation = Paths.get(workspace.lastSaveLocation).getParent().toString();
 
             //TESTING
-            System.out.println("WORKSPACE LOCATION: " + workspace.lastSaveLocation);
-            System.out.println("GLOBAL LOCATION: " + Global.lastSaveLocation);
+            //System.out.println("WORKSPACE LOCATION: " + workspace.lastSaveLocation);
+            //System.out.println("GLOBAL LOCATION: " + Global.lastSaveLocation);
+
             Reader reader = new FileReader(workspace.lastSaveLocation);
+
             Revert.updateRevertWorkspace(gson.fromJson(reader, Workspace.class));
             Workspace.postDeserialization(Revert.getRevertWorkspace());
-            System.out.println(Revert.getRevertWorkspace().getTeams());
-            App.refreshMainScene();
 
+            App.refreshMainScene();
+            Global.commandManager.trackSave();
 
             return SaveLoadResult.SUCCESS;
         }

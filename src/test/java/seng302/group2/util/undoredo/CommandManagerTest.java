@@ -111,7 +111,7 @@ public class CommandManagerTest
     {
         Assert.assertEquals(0, Global.commandManager.numUndos());
         Global.commandManager.executeCommand(testCommand);
-        Assert.assertEquals(1, Global.commandManager.numUndos());
+        Assert.assertEquals(1, Global.commandManager.numUndos()); //One more for the changes tracker
         Global.commandManager.executeCommand(testCommand);
         Assert.assertEquals(2, Global.commandManager.numUndos());
     }
