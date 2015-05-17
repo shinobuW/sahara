@@ -218,13 +218,13 @@ public class ReportGenerator
         }
         projectElement.appendChild(teamElements);
 
-//        Element teamPreviousElements = doc.createElement("previous-teams");
-//        for (Team team : project.getPastTeams())
-//        {
-//            Element teamElement = generateAllocatedTeam(team, allocation);
-//            teamPreviousElements.appendChild(teamElement);
-//        }
-//        projectElement.appendChild(teamPreviousElements);
+        Element teamPreviousElements = doc.createElement("previous-teams");
+        for (Allocation allocation: project.getPastAllocations())
+        {
+            Element teamElement = generateAllocation(allocation);
+            teamPreviousElements.appendChild(teamElement);
+        }
+        projectElement.appendChild(teamPreviousElements);
         
         Element releaseElements = doc.createElement("releases");
         for (Release release : project.getReleases())
@@ -309,6 +309,26 @@ public class ReportGenerator
         teamElement.appendChild(othersElement);
 
         return teamElement;
+    }
+
+    private static Element generateAllocation(Allocation allocation)
+    {
+        Element allocationElement = doc.createElement("allocation");
+
+        //WorkSpace Elements
+        Element allocatedTeam = doc.createElement("team-name");
+        allocatedTeam.appendChild(doc.createTextNode(allocation.getTeam().toString()));
+        allocationElement.appendChild(allocatedTeam);
+
+        Element allocationStartDate = doc.createElement("allocation-start-date");
+        allocationStartDate.appendChild(doc.createTextNode(allocation.getEndDate().toString()));
+        allocationElement.appendChild(allocationStartDate);
+
+        Element allocationEndDate = doc.createElement("allocation-end-date");
+        allocationEndDate.appendChild(doc.createTextNode(allocation.getEndDate().toString()));
+        allocationElement.appendChild(allocationEndDate);
+
+        return allocationElement;
     }
     
     private static Element generateTeam(Team team)

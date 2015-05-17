@@ -518,7 +518,7 @@ public class TeamEditScene
                                             person.getTeam()),
                                     new UndoRedoAction(
                                             UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM, 
-                                            (Team)Global.currentWorkspace.getTeams().get(0))));
+                                            (Team)Global.getUnassignedTeam())));
                                      
                             undoActions.add(new UndoableItem(
                                     person,
@@ -540,8 +540,8 @@ public class TeamEditScene
                             }
                             person.setRole(Role.getRoleType(Role.RoleType.Others));
                             person.getTeam().remove(person, false);
-                            person.setTeam((Team)Global.currentWorkspace.getTeams().get(0));
-                            ((Team)Global.currentWorkspace.getTeams().get(0))
+                            person.setTeam((Team)Global.getUnassignedTeam());
+                            ((Team)Global.getUnassignedTeam())
                                     .add(person, false);
                         }
                     }

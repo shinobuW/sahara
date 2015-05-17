@@ -101,9 +101,9 @@ public class PersonEditScene
         {
             teamBox.addToComboBox(team.toString());
         }
-        if (currentTeam == Global.currentWorkspace.getTeams().get(0))
+        if (currentTeam == Global.getUnassignedTeam())
         {
-            teamBox.setValue(Global.currentWorkspace.getTeams().get(0).toString());
+            teamBox.setValue(Global.getUnassignedTeam().toString());
         }
         else
         {
