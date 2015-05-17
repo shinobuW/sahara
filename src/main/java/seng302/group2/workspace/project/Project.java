@@ -498,8 +498,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     
     /**
      * Adds a Person to the Workspace's list of Persons.
-     *
-     * @param person The person to add
+     * @param release The release to add
      */
     public void add(Release release)
     {

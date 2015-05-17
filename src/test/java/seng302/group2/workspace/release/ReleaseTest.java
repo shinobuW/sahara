@@ -84,4 +84,29 @@ public class ReleaseTest
         Assert.assertTrue(release2.compareTo(release1) >= 0);
         Assert.assertTrue(release1.compareTo(release1Dupl) == 0);
     }
+
+
+    @Test
+    public void testEdit()
+    {
+        Release release = new Release();
+        Project testProject = new Project();
+        release.setProject(testProject);
+
+        Project testProject2 = new Project();
+        release.edit("newShortName", "newDescription", LocalDate.now(), testProject2);
+
+        Assert.assertEquals("newShortName", release.getShortName());
+        Assert.assertEquals("newDescription", release.getDescription());
+        Assert.assertEquals(LocalDate.now(), release.getEstimatedDate());
+        Assert.assertEquals(testProject2, release.getProject());
+
+        Global.commandManager.undo();
+
+        Assert.assertEquals("Untitled Release", release.getShortName());
+        Assert.assertEquals("Release without project assigned should not exist",
+                release.getDescription());
+        Assert.assertEquals(LocalDate.now(), release.getEstimatedDate());
+        Assert.assertEquals("Untitled Project", release.getProject().getShortName());
+    }
 }
