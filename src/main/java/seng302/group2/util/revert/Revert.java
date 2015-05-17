@@ -1,5 +1,6 @@
 package seng302.group2.util.revert;
 
+import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.workspace.Workspace;
 
@@ -9,27 +10,34 @@ import seng302.group2.workspace.Workspace;
 public class Revert
 {
 
-    private static Workspace revertState;
+    private static Workspace revertWorkspace;
+    private static boolean revertState = false;
 
     public static void revertWorkspace()
     {
-        if (revertState != null)
+        if (revertWorkspace != null)
         {
-            System.out.println(revertState.getProjects());
-            System.out.println(revertState.getPeople());
-            System.out.println(revertState.getTeams());
-            Global.currentWorkspace = revertState;
+            Global.currentWorkspace = revertWorkspace;
+            revertState = false;
+            App.refreshMainScene();
+
         }
     }
 
-    public static Workspace getRevertState()
+    public static Workspace getRevertWorkspace()
+    {
+        return revertWorkspace;
+    }
+
+    public static boolean getRevertState()
     {
         return revertState;
     }
 
-    public static void updateRevertState(Workspace workspace)
+    public static void updateRevertWorkspace(Workspace workspace)
     {
-        revertState = workspace;
+        revertWorkspace = workspace;
+        revertState = true;
 
     }
 }

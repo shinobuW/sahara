@@ -428,14 +428,14 @@ public class MainMenuBar
             newReleaseItem.setDisable(false);
             newStoryItem.setDisable(false);
         }
-        System.out.println(Revert.getRevertState());
-        if (Revert.getRevertState() == null)
+        System.out.println(Revert.getRevertWorkspace());
+        if (Revert.getRevertState())
         {
-            revertItem.setDisable(true);
+            revertItem.setDisable(false);
         }
         else
         {
-            revertItem.setDisable(false);
+            revertItem.setDisable(true);
         }
 
         // Create 'Edit >' sub-menu

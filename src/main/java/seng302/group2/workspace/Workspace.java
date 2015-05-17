@@ -432,7 +432,7 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
         try (Writer writer = new FileWriter(workspace.lastSaveLocation))
         {
             //Gson gson = new GsonBuilder().create();
-            Revert.updateRevertState(null);
+            Revert.updateRevertWorkspace(null);
             gson.toJson(workspace, writer);
             writer.close();
             Global.setCurrentWorkspaceUnchanged();
@@ -441,6 +441,12 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
             //TESTING
             System.out.println("WORKSPACE LOCATION: " + workspace.lastSaveLocation);
             System.out.println("GLOBAL LOCATION: " + Global.lastSaveLocation);
+            Reader reader = new FileReader(workspace.lastSaveLocation);
+            Revert.updateRevertWorkspace(gson.fromJson(reader, Workspace.class));
+            Workspace.postDeserialization(Revert.getRevertWorkspace());
+            System.out.println(Revert.getRevertWorkspace().getTeams());
+            App.refreshMainScene();
+
 
             return SaveLoadResult.SUCCESS;
         }
@@ -495,10 +501,8 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
             try (Reader reader = new FileReader(selectedFile))
             {
                 Global.currentWorkspace = gson.fromJson(reader, Workspace.class);
-
                 Reader reader1 = new FileReader(selectedFile);
-                System.out.println(gson.fromJson(reader1, Workspace.class) + "load json");
-                Revert.updateRevertState(gson.fromJson(reader1, Workspace.class));
+                Revert.updateRevertWorkspace(gson.fromJson(reader1, Workspace.class));
                 reader.close();
             }
             catch (FileNotFoundException e)
@@ -527,7 +531,8 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
                 return SaveLoadResult.IOEXCEPTION;
             }
 
-            Workspace.postDeserialization();
+            Workspace.postDeserialization(Global.currentWorkspace);
+            Workspace.postDeserialization(Revert.getRevertWorkspace());
             App.refreshMainScene();
             Global.undoRedoMan.emptyAll();
             return SaveLoadResult.SUCCESS;
@@ -902,43 +907,43 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
      * Perform post-deserialization steps (performs on Global.currentWorkspace for now).
      * 1) Transform ArrayLists back into ObservableLists
      */
-    public static void postDeserialization()
+    public static void postDeserialization(Workspace workspace)
     {
-        Global.currentWorkspace.people = observableArrayList();
-        for (Person item : Global.currentWorkspace.serializablePeople)
+        workspace.people = observableArrayList();
+        for (Person item : workspace.serializablePeople)
         {
             item.postSerialization();
-            Global.currentWorkspace.people.add(item);
+            workspace.people.add(item);
         }
 
-        for (Project item : Global.currentWorkspace.serializableProjects)
+        for (Project item : workspace.serializableProjects)
         {
             item.postSerialization();
-            Global.currentWorkspace.projects.add(item);
+            workspace.projects.add(item);
         }
 
-        Global.currentWorkspace.skills = observableArrayList();
-        for (Skill item : Global.currentWorkspace.serializableSkills)
+        workspace.skills = observableArrayList();
+        for (Skill item : workspace.serializableSkills)
         {
-            Global.currentWorkspace.skills.add(item);
+            workspace.skills.add(item);
         }
 
-        Global.currentWorkspace.teams = observableArrayList();
-        for (Team item : Global.currentWorkspace.serializableTeams)
-        {
-            item.postSerialization();
-            Global.currentWorkspace.teams.add(item);
-        }
-
-        Global.currentWorkspace.roles = observableArrayList();
-        for (Role item : Global.currentWorkspace.serializableRoles)
+        workspace.teams = observableArrayList();
+        for (Team item : workspace.serializableTeams)
         {
             item.postSerialization();
-            Global.currentWorkspace.roles.add(item);
+            workspace.teams.add(item);
+        }
+
+        workspace.roles = observableArrayList();
+        for (Role item : workspace.serializableRoles)
+        {
+            item.postSerialization();
+            workspace.roles.add(item);
         }
 
         // Unset saved changes flag, we just opened the workspace.
-        Global.currentWorkspace.hasUnsavedChanges = false;
+        workspace.hasUnsavedChanges = false;
     }
 
 
