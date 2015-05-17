@@ -284,25 +284,30 @@ public class MainMenuBar
         // Create 'Save' MenuItem
         MenuItem revertItem = new MenuItem("Revert");
         revertItem.setOnAction((event) ->
-        {
-            if (!Global.currentWorkspace.getHasUnsavedChanges()) {
-                Revert.revertWorkspace();
-                return;
-            }
-            Action response = Dialogs.create()
-                    .title("Save Workspace?")
-                    .message("Would you like to save your changes to the current workspace?")
-                    .showConfirm();
+            {
+                if (!Global.currentWorkspace.getHasUnsavedChanges())
+                {
+                    Revert.revertWorkspace();
+                    return;
+                }
+                Action response = Dialogs.create()
+                        .title("Save Workspace?")
+                        .message("Would you like to save your changes to the current workspace?")
+                        .showConfirm();
 
-            if (response == Dialog.ACTION_YES) {
-                SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
-                if (saved == SaveLoadResult.SUCCESS) {
+                if (response == Dialog.ACTION_YES)
+                {
+                    SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
+                    if (saved == SaveLoadResult.SUCCESS)
+                    {
+                        Revert.revertWorkspace();
+                    }
+                }
+                else if (response == Dialog.ACTION_NO)
+                {
                     Revert.revertWorkspace();
                 }
-            } else if (response == Dialog.ACTION_NO) {
-                Revert.revertWorkspace();
-            }
-        });
+            });
 
 
 
