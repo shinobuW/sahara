@@ -128,7 +128,7 @@ public class CommandManagerTest
     }
 
     @Test
-    public void testClear() throws Exception
+    public void testClear()
     {
         Global.commandManager.executeCommand(testCommand);
         Global.commandManager.executeCommand(testCommand);
@@ -138,5 +138,19 @@ public class CommandManagerTest
         Global.commandManager.clear();
         Assert.assertEquals(0, Global.commandManager.numUndos());
         Assert.assertEquals(0, Global.commandManager.numRedos());
+    }
+
+    @Test
+    public void testTrackSave()
+    {
+        Assert.assertTrue(Global.currentWorkspace.getHasUnsavedChanges());
+        Global.commandManager.trackSave();
+        Assert.assertFalse(Global.currentWorkspace.getHasUnsavedChanges());
+        Global.commandManager.executeCommand(testCommand);
+        Assert.assertTrue(Global.currentWorkspace.getHasUnsavedChanges());
+        Global.commandManager.undo();
+        Assert.assertFalse(Global.currentWorkspace.getHasUnsavedChanges());
+        Global.commandManager.redo();
+        Assert.assertTrue(Global.currentWorkspace.getHasUnsavedChanges());
     }
 }
