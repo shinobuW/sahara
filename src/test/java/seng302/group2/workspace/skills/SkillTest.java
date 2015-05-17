@@ -2,6 +2,7 @@ package seng302.group2.workspace.skills;
 
 import org.junit.Assert;
 import org.junit.Test;
+import seng302.group2.Global;
 
 /**
  * A series of tests relating to Skills
@@ -61,5 +62,20 @@ public class SkillTest
         Assert.assertTrue(skill1.compareTo(skill2) <= 0);
         Assert.assertTrue(skill2.compareTo(skill1) >= 0);
         Assert.assertTrue(skill1.compareTo(skill1Dupl) == 0);
+    }
+
+    @Test
+    public void testEdit()
+    {
+        Skill skill = new Skill("C#", "A better language than Java");
+
+        skill.edit("Java", "A better language than C#");
+        Assert.assertEquals("Java", skill.getShortName());
+        Assert.assertEquals("A better language than C#", skill.getDescription());
+
+        Global.commandManager.undo();
+
+        Assert.assertEquals("C#", skill.getShortName());
+        Assert.assertEquals("A better language than Java", skill.getDescription());
     }
 }
