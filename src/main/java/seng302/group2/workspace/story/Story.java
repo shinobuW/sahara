@@ -1,9 +1,13 @@
 package seng302.group2.workspace.story;
 
+import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+
 import javafx.collections.ObservableList;
+import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
 
@@ -163,5 +167,66 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
     public String toString()
     {
         return this.shortName;
+    }
+
+
+    /**
+     * Creates a Story edit command and executes it with the Global Command Manager, updating
+     * the story with the new parameter values.
+     * @param newShortName The new short name
+     * @param newDescription The new description
+     * @param newProject The new project
+     */
+    public void edit(String newShortName, String newDescription, Project newProject)
+    {
+        Command relEdit = new StoryEditCommand(this, newShortName, newDescription, newProject);
+        Global.commandManager.executeCommand(relEdit);
+    }
+
+    /**
+     * A command class that allows the executing and undoing of story edits
+     */
+    private class StoryEditCommand implements Command
+    {
+        private Story story;
+        private String shortName;
+        private String description;
+        private Project project;
+        private String oldShortName;
+        private String oldDescription;
+        private Project oldProject;
+
+        private StoryEditCommand(Story story, String newShortName, String newDescription,
+                                   Project newProject)
+        {
+            this.story = story;
+            this.shortName = newShortName;
+            this.description = newDescription;
+            this.project = newProject;
+            this.oldShortName = story.shortName;
+            this.oldDescription = story.description;
+            this.oldProject = story.project;
+        }
+
+        /**
+         * Executes/Redoes the changes of the story edit
+         */
+        public void execute()
+        {
+            story.shortName = shortName;
+            story.description = description;
+            story.project = project;
+
+        }
+
+        /**
+         * Undoes the changes of the story edit
+         */
+        public void undo()
+        {
+            story.shortName = oldShortName;
+            story.description = oldDescription;
+            story.project = oldProject;
+        }
     }
 }

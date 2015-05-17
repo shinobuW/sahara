@@ -87,7 +87,7 @@ public class CreateStoryDialog
                         }
                     }
                     Story story = new Story(shortName, longName, description, creator, project);
-
+                    project.add(story);
                     dialog.hide();
                 }
                 else

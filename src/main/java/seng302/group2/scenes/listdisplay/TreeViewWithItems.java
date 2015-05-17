@@ -23,6 +23,7 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.story.Story;
 import seng302.group2.workspace.team.Team;
 
 import java.util.HashMap;
@@ -194,6 +195,12 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                                 (TreeViewItem) selected);
                         setContextMenu(new ElementTreeContextMenu());
                     }
+                    else if (selected instanceof Story)
+                    {
+                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY,
+                                (TreeViewItem) selected);
+                        setContextMenu(new ElementTreeContextMenu());
+                    }
                     else if (selected instanceof Category)
                     {
                         if (selected.toString().equals("Projects"))
@@ -229,6 +236,12 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                             ReleaseCategoryScene.getReleaseCategoryScene((ReleaseCategory)
                                     selected);
                             App.content.getItems().add(MainScene.informationPane);*/
+                            setContextMenu(new CategoryTreeContextMenu(true));
+                        }
+                        else if (selected.toString().equals("Stories"))
+                        {
+                            SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY_CATEGORY,
+                                    (TreeViewItem) selected);
                             setContextMenu(new CategoryTreeContextMenu(true));
                         }
                         else

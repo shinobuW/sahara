@@ -3,6 +3,7 @@ package seng302.group2.workspace.project;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
+import seng302.group2.scenes.listdisplay.StoryCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.util.undoredo.UndoRedoAction;
@@ -391,7 +392,9 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
      */
     public void add(Story story)
     {
-        this.stories.add(story);
+        Command command = new AddStoryCommand(this, story);
+        Global.commandManager.executeCommand(command);
+
     }
     
     /**
@@ -497,7 +500,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     
     
     /**
-     * Adds a Person to the Workspace's list of Persons.
+     * Adds a Release to the Project's list of Releases.
      * @param release The release to add
      */
     public void add(Release release)
@@ -631,6 +634,8 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         ObservableList<TreeViewItem> children = observableArrayList();
         ReleaseCategory releasesCategory = new ReleaseCategory("Releases", this);
         children.add(releasesCategory);
+        StoryCategory storiesCategory = new StoryCategory("Stories", this);
+        children.add(storiesCategory);
  
 
         return children;
@@ -754,6 +759,28 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         {
             proj.getReleases().remove(release);
             // TODO Remove any associations, eg. allocation history
+        }
+    }
+
+    private class AddStoryCommand implements Command
+    {
+        private Story story;
+        private Project proj;
+
+        AddStoryCommand(Project proj, Story story)
+        {
+            this.proj = proj;
+            this.story = story;
+        }
+
+        public void execute()
+        {
+            proj.getStories().add(story);
+        }
+
+        public void undo()
+        {
+            proj.getStories().remove(story);
         }
     }
 

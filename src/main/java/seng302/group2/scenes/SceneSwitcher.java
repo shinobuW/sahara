@@ -16,12 +16,16 @@ import seng302.group2.scenes.information.role.RoleScene;
 import seng302.group2.scenes.information.skill.SkillCategoryScene;
 import seng302.group2.scenes.information.skill.SkillEditScene;
 import seng302.group2.scenes.information.skill.SkillScene;
+import seng302.group2.scenes.information.story.StoryCategoryScene;
+import seng302.group2.scenes.information.story.StoryEditScene;
+import seng302.group2.scenes.information.story.StoryScene;
 import seng302.group2.scenes.information.team.TeamCategoryScene;
 import seng302.group2.scenes.information.team.TeamEditScene;
 import seng302.group2.scenes.information.team.TeamScene;
 import seng302.group2.scenes.information.workspace.WorkspaceEditScene;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
+import seng302.group2.scenes.listdisplay.StoryCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
@@ -29,6 +33,7 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.story.Story;
 import seng302.group2.workspace.team.Team;
 
 /**
@@ -59,6 +64,7 @@ public class SceneSwitcher
         RELEASE_EDIT,
         STORY,
         STORY_EDIT,
+        STORY_CATEGORY,
         BACKLOG,
         BACKLOG_EDIT
     }
@@ -203,6 +209,26 @@ public class SceneSwitcher
                 {
                     MainScene.contentPane.setContent(ReleaseCategoryScene.getReleaseCategoryScene(
                             (ReleaseCategory) item));
+                }
+                break;
+            case STORY:
+                if (item.getClass() == Story.class)
+                {
+                    MainScene.contentPane.setContent(new StoryScene((Story) item));
+                }
+                break;
+            case STORY_EDIT:
+                if (item.getClass() == Story.class)
+                {
+                    MainScene.contentPane.setContent(StoryEditScene.getStoryEditScene(
+                            (Story) item));
+                }
+                break;
+            case STORY_CATEGORY:
+                if (item.getClass() == StoryCategory.class)
+                {
+                    MainScene.contentPane.setContent(StoryCategoryScene.getStoryCategoryScene(
+                            (StoryCategory) item));
                 }
                 break;
             case TEAM:

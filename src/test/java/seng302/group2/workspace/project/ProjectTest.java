@@ -6,10 +6,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
+import seng302.group2.scenes.listdisplay.StoryCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.story.Story;
 import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
 
@@ -160,13 +162,19 @@ public class ProjectTest extends TestCase
         ObservableList<TreeViewItem> children = observableArrayList();
         ReleaseCategory releasesCategory = new ReleaseCategory("Releases", proj);
         children.add(releasesCategory);
+        StoryCategory storiesCategory = new StoryCategory("Stories", proj);
+        children.add(storiesCategory);
         Assert.assertEquals(children, proj.getChildren());
 
         Release release = new Release("test release", proj);
         proj.add(release);
+        Story story = new Story();
+        proj.add(story);
         children.clear();
         releasesCategory = new ReleaseCategory("Releases", proj);
         children.add(releasesCategory);
+        storiesCategory = new StoryCategory("Stories", proj);
+        children.add(storiesCategory);
         Assert.assertEquals(children, proj.getChildren());
     }
 

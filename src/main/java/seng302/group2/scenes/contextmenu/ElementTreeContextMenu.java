@@ -18,6 +18,7 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.story.Story;
 import seng302.group2.workspace.team.Team;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -43,6 +44,7 @@ public class ElementTreeContextMenu extends ContextMenu
         WORKSPACE,
         ROLE,
         RELEASE,
+        STORY,
         OTHER  // For anything else, or unresolved.
     }
 
@@ -160,7 +162,11 @@ public class ElementTreeContextMenu extends ContextMenu
         else if (Global.selectedTreeItem.getValue().getClass() == Release.class)
         {
             selectedCategory = Categories.RELEASE;
-        }        
+        }
+        else if (Global.selectedTreeItem.getValue().getClass() == Story.class)
+        {
+            selectedCategory = Categories.STORY;
+        }
         return selectedCategory;
     }
 
@@ -192,6 +198,10 @@ public class ElementTreeContextMenu extends ContextMenu
             case RELEASE:
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE_EDIT,
                         (Release) Global.selectedTreeItem.getValue());
+                break;
+            case STORY:
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY_EDIT,
+                        (Story) Global.selectedTreeItem.getValue());
                 break;
             case WORKSPACE:
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE_EDIT,
