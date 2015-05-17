@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
+import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Allocation;
@@ -51,6 +52,7 @@ public class ProjectHistoryTab extends Tab
 
         TableView<Allocation> historyTable = new TableView();
         historyTable.setEditable(true);
+        historyTable.setStyle("-fx-pref-width: 750;");
         historyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         ObservableList<Allocation> data = currentProject.getTeamAllocations();
 
@@ -182,14 +184,18 @@ public class ProjectHistoryTab extends Tab
         HBox newAllocationFields = new HBox(10);
         newAllocationFields.setAlignment(Pos.CENTER);
         CustomComboBox teamComboBox = new CustomComboBox("Team", true);
-        Label startDateLabel = new Label("Start Date");
-        DatePicker startDatePicker = new DatePicker();
-
-
-        Label endDateLabel = new Label("End Date");
-        DatePicker endDatePicker = new DatePicker();
-        newAllocationFields.getChildren().addAll(teamComboBox, startDateLabel,
-                startDatePicker, endDateLabel, endDatePicker);
+        CustomDatePicker startDatePicker = new CustomDatePicker("Start Date", true);
+        CustomDatePicker endDatePicker = new CustomDatePicker("End Date", false);
+        startDatePicker.setStyle("-fx-pref-width: 200;");
+        endDatePicker.setStyle("-fx-pref-width: 200;");
+        teamComboBox.prefWidthProperty().bind(historyTable.widthProperty()
+                .subtract(3).divide(100).multiply(30));
+        startDatePicker.prefWidthProperty().bind(historyTable.widthProperty()
+                .subtract(3).divide(100).multiply(30));
+        endDatePicker.prefWidthProperty().bind(historyTable.widthProperty()
+                .subtract(3).divide(100).multiply(30));
+        newAllocationFields.getChildren().addAll(teamComboBox,
+                startDatePicker, endDatePicker);
 
         teamComboBox.getComboBox().setOnMouseClicked(event ->
             {

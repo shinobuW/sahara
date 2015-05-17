@@ -15,7 +15,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.CustomComboBox;
-import seng302.group2.scenes.control.CustomDateField;
+import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
@@ -28,8 +28,6 @@ import java.time.LocalDate;
 import java.util.Collections;
 
 import static seng302.group2.scenes.MainScene.informationPane;
-import static seng302.group2.util.validation.DateValidator.isCorrectDateFormat;
-import static seng302.group2.util.validation.DateValidator.stringToDate;
 
 /**
  *
@@ -60,13 +58,14 @@ public class ReleaseEditScene
 
         RequiredField shortNameCustomField = new RequiredField("Short Name: ");
         CustomTextArea descriptionTextArea = new CustomTextArea("Release Description: ", 300);
-        CustomDateField releaseDateField = new CustomDateField("Estimated Release Date: ");
+        CustomDatePicker releaseDatePicker = new CustomDatePicker("Estimated Release Date: ",
+                false);
         
         CustomComboBox projectComboBox = new CustomComboBox("Project: ", true);
 
         shortNameCustomField.setMaxWidth(275);
         descriptionTextArea.setMaxWidth(275);
-        releaseDateField.setMaxWidth(275);
+        releaseDatePicker.setMaxWidth(275);
         projectComboBox.setMaxWidth(275);
 
         for (TreeViewItem project : Global.currentWorkspace.getProjects())
@@ -76,13 +75,11 @@ public class ReleaseEditScene
         
         shortNameCustomField.setText(currentRelease.getShortName());
         descriptionTextArea.setText(currentRelease.getDescription());
-        releaseDateField.setText(currentRelease.getDateString());
+        releaseDatePicker.setValue(currentRelease.getEstimatedDate());
 
-        informationPane.getChildren().add(shortNameCustomField);
-        informationPane.getChildren().add(descriptionTextArea);
-        informationPane.getChildren().add(releaseDateField);
+        informationPane.getChildren().addAll(shortNameCustomField, descriptionTextArea,
+                releaseDatePicker, buttons);
         //informationPane.getChildren().add(projectComboBox);
-        informationPane.getChildren().add(buttons);
 
         String defaultProject = currentRelease.getProject().getShortName();
         projectComboBox.setValue(defaultProject);
@@ -234,7 +231,6 @@ public class ReleaseEditScene
             {
                 if (shortNameCustomField.getText().equals(currentRelease.getShortName())
                         && descriptionTextArea.getText().equals(currentRelease.getDescription())
-                        && releaseDateField.getText().equals(currentRelease.getDateString())
                         && projectComboBox.getValue().equals(currentRelease.getProject()))
                 {
                     // No fields have been changed
@@ -242,51 +238,25 @@ public class ReleaseEditScene
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
                 }
 
-                boolean correctDateFormat = false;
-                LocalDate releaseDate = null;
-
-                //TODO Date validation.
-    //            Date estimatedDate = new Date();
-    //            if (releaseDateField.getText().equals(""))
-    //            {
-    //                estimatedDate = null;
-    //            }
-    //            else
-    //            {
-    //                estimatedDate = stringToDate(releaseDateField.getText());
-    //            }
+                LocalDate releaseDate = releaseDatePicker.getValue();
 
 
-                if (releaseDateField.getText().isEmpty())
+
+                if (releaseDatePicker.getValue() == null)
                 {
                     releaseDate = null;
-                    correctDateFormat = true;
                 }
-                else if (stringToDate(releaseDateField.getText())
-                        .equals(currentRelease.getEstimatedDate()))
+                else
                 {
-                    releaseDate = currentRelease.getEstimatedDate();
-                    correctDateFormat = true;
-                }
-                else if (isCorrectDateFormat(releaseDateField))
-                {
-                    releaseDate = stringToDate(releaseDateField.getText());
                     if (!DateValidator.isFutureDate(releaseDate))
                     {
-                        releaseDateField.showErrorField("Date must be a future date");
-                        correctDateFormat = false;
-                    }
-                    else
-                    {
-                        System.out.print("asdasda");
-                        correctDateFormat = true;
+                        releaseDatePicker.showErrorField("Date must be a future date");
                     }
                 }
 
                 // The short name is the same or valid
                 if (((shortNameCustomField.getText().equals(currentRelease.getShortName())
-                        || ShortNameValidator.validateShortName(shortNameCustomField)))
-                        && (correctDateFormat = true))
+                        || ShortNameValidator.validateShortName(shortNameCustomField))))
                 {
                     System.out.print("HELLO?");
                     Project project = new Project();
