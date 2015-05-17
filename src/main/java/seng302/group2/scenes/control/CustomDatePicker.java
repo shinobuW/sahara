@@ -76,6 +76,15 @@ public class CustomDatePicker extends VBox
     }
 
     /**
+     * Hides the error field.
+     */
+    public void hideErrorField()
+    {
+        this.getChildren().remove(errorMessageText);
+        this.datePicker.setStyle(null);
+    }
+
+    /**
      * Gets the inner date picker
      * @return The date picker
      */

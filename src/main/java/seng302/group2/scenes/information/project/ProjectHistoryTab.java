@@ -210,7 +210,9 @@ public class ProjectHistoryTab extends Tab
 
         addButton.setOnAction((event) ->
             {
-                if (startDatePicker.getValue() != null)
+                teamComboBox.hideErrorField();
+                startDatePicker.hideErrorField();
+                if (teamComboBox.getValue() != null && startDatePicker.getValue() != null)
                 {
                     LocalDate endDate = endDatePicker.getValue();
                     LocalDate startDate = startDatePicker.getValue();
@@ -238,7 +240,16 @@ public class ProjectHistoryTab extends Tab
                 }
                 else
                 {
-                    event.consume();
+                    if (teamComboBox.getValue() == null)
+                    {
+                        teamComboBox.showErrorField("Please select a team");
+                        event.consume();
+                    }
+                    if (startDatePicker.getValue() == null)
+                    {
+                        startDatePicker.showErrorField("Please select a date");
+                        event.consume();
+                    }
                 }
             });
         historyTable.setItems(data);

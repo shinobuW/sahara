@@ -72,6 +72,16 @@ public class CustomComboBox extends VBox
     }
 
     /**
+     * Shows the error field with the with the given text.
+     * @param errorMessage The error message to show
+     */
+    public void showErrorField(String errorMessage)
+    {
+        this.errorMessageText.setText(errorMessage);
+        showErrorField();
+    }
+
+    /**
      * Add option item to Combo Box
      * @param item String item to add
      */
@@ -88,7 +98,7 @@ public class CustomComboBox extends VBox
     {
         return this.comboBox;
     }
-    
+
     /** Gets the value of the chosen item in combo box
      * @return The string of the chosen item
      */
@@ -103,7 +113,7 @@ public class CustomComboBox extends VBox
             return null;
         }
     }
-    
+
     /**
      * Sets the value of the selected item of combo box
      * @param value value to set to 
@@ -111,6 +121,16 @@ public class CustomComboBox extends VBox
     public void setValue(String value)
     {
         this.comboBox.setValue(value);
+    }
+
+
+    /**
+     * Hides the error field.
+     */
+    public void hideErrorField()
+    {
+        this.getChildren().remove(errorMessageText);
+        this.comboBox.setStyle(null);
     }
         
 }
