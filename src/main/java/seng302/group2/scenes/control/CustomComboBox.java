@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
@@ -54,6 +55,7 @@ public class CustomComboBox extends VBox
         HBox entry = new HBox();
         entry.setPrefWidth(175);
         entry.getChildren().addAll(labelBox, this.comboBox);
+        entry.setHgrow(labelBox, Priority.ALWAYS);
         
         this.comboBox.setStyle("-fx-pref-width: 135;");
         this.getChildren().add(entry);
@@ -67,6 +69,16 @@ public class CustomComboBox extends VBox
         comboBox.setStyle("-fx-border-color: red;");
         this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
         this.getChildren().add(errorMessageText);
+    }
+
+    /**
+     * Shows the error field with the with the given text.
+     * @param errorMessage The error message to show
+     */
+    public void showErrorField(String errorMessage)
+    {
+        this.errorMessageText.setText(errorMessage);
+        showErrorField();
     }
 
     /**
@@ -86,7 +98,7 @@ public class CustomComboBox extends VBox
     {
         return this.comboBox;
     }
-    
+
     /** Gets the value of the chosen item in combo box
      * @return The string of the chosen item
      */
@@ -101,7 +113,7 @@ public class CustomComboBox extends VBox
             return null;
         }
     }
-    
+
     /**
      * Sets the value of the selected item of combo box
      * @param value value to set to 
@@ -109,6 +121,16 @@ public class CustomComboBox extends VBox
     public void setValue(String value)
     {
         this.comboBox.setValue(value);
+    }
+
+
+    /**
+     * Hides the error field.
+     */
+    public void hideErrorField()
+    {
+        this.getChildren().remove(errorMessageText);
+        this.comboBox.setStyle(null);
     }
         
 }

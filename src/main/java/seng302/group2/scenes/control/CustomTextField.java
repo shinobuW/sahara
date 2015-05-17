@@ -3,6 +3,7 @@ package seng302.group2.scenes.control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 /**
  * Creates a custom text field which displays appropriate error messages when required.
@@ -32,6 +33,7 @@ public class CustomTextField extends VBox
         HBox entry = new HBox();
         entry.setPrefWidth(175);
         entry.getChildren().addAll(labelBox, inputText);
+        entry.setHgrow(labelBox, Priority.ALWAYS);
 
         this.getChildren().add(entry);
     }

@@ -12,20 +12,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.CustomComboBox;
-import seng302.group2.scenes.control.CustomDateField;
-import seng302.group2.scenes.control.CustomTextArea;
-import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.validation.DateValidator;
-import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 
 import static seng302.group2.util.validation.DateValidator.isCorrectDateFormat;
 import static seng302.group2.util.validation.DateValidator.stringToDate;
@@ -63,7 +56,7 @@ public class CreateReleaseDialog
 
         RequiredField shortNameCustomField = new RequiredField("Short Name");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description");
-        CustomDateField releaseDateField = new CustomDateField("Estimated Release Date");
+        CustomDatePicker releaseDateField = new CustomDatePicker("Estimated Release Date", false);
         CustomComboBox projectComboBox = new CustomComboBox("Project", true);
         
         String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
@@ -85,7 +78,6 @@ public class CreateReleaseDialog
                 String shortName = shortNameCustomField.getText();
                 String description = descriptionTextArea.getText();
 
-                boolean correctDate = isCorrectDateFormat(releaseDateField);
                 boolean correctShortName = validateShortName(shortNameCustomField);
 
                 Project project = new Project();
@@ -97,12 +89,12 @@ public class CreateReleaseDialog
                     }
                 }
 
-                if (correctShortName && correctDate)
+                if (correctShortName)
                 {
-                    String releaseDateString = releaseDateField.getText();
+                    LocalDate releaseDate = releaseDateField.getValue();
 
-                    LocalDate releaseDate;
-                    if (releaseDateString.isEmpty())
+
+                    if (releaseDate == null)
                     {
                         releaseDate = null;
                         Release release = new Release(shortName, description, releaseDate, project);
@@ -111,7 +103,6 @@ public class CreateReleaseDialog
                     }
                     else
                     {
-                        releaseDate = stringToDate(releaseDateString);
                         if (!DateValidator.isFutureDate(releaseDate))
                         {
                             releaseDateField.showErrorField("Date must be a future date");

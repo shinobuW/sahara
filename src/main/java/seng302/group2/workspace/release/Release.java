@@ -184,9 +184,9 @@ public class Release extends TreeViewItem implements Comparable<Release>
      */
     public void setProject(Project project)
     {
-        this.project.removeWithoutUndo(this);
+        //this.project.removeWithoutUndo(this);
         this.project = project;
-        project.add(this);
+        //project.add(this);
     }
 
     //</editor-fold>

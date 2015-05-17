@@ -9,6 +9,7 @@ package seng302.group2.workspace.release;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
+import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.project.Project;
 
 import java.time.LocalDate;
@@ -56,14 +57,14 @@ public class ReleaseTest
         testRelease.setShortName("Release 2.0");
         testRelease.setDescription("Second Release");
         testRelease.setEstimatedDate(LocalDate.parse("26/03/2016", Global.dateFormatter));
-        testRelease.setProject(testProject);
+        testProject.add(testRelease);
         
         Assert.assertEquals("Release 2.0", testRelease.getShortName());
         Assert.assertEquals("Second Release", testRelease.getDescription());
         Assert.assertEquals(LocalDate.parse("26/03/2016", Global.dateFormatter),
                 testRelease.getEstimatedDate());
         Assert.assertEquals("Test Project", testRelease.getProject().getShortName());   
-        Assert.assertEquals(1, testProject.getReleases().size());
+        Assert.assertTrue(testProject.getReleases().contains(testRelease));
     }
     
     /**
@@ -108,5 +109,22 @@ public class ReleaseTest
                 release.getDescription());
         Assert.assertEquals(LocalDate.now(), release.getEstimatedDate());
         Assert.assertEquals("Untitled Project", release.getProject().getShortName());
+    }
+
+    @Test
+    public void testDeleteRelease()
+    {
+        Release release = new Release();
+        Project project = new Project();
+        Workspace ws = new Workspace();
+        ws.add(project);
+        project.add(release);
+
+        release.deleteRelease();
+
+        //TODO: fix releases not being removed from project collection of releases
+        Assert.assertFalse(project.getReleases().contains(release));
+        Global.commandManager.undo();
+        Assert.assertTrue(project.getReleases().contains(release));
     }
 }

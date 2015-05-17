@@ -405,7 +405,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
     public void deletePerson()
     {
         Command deletePers = new DeletePersonCommand(this, Global.currentWorkspace);
-        deletePers.execute();
+        Global.commandManager.executeCommand(deletePers);
 
         /*ArrayList<UndoableItem> undoActions = new ArrayList<>();
         for (Team teamRemovePerson : Global.currentWorkspace.getTeams())

@@ -78,4 +78,17 @@ public class SkillTest
         Assert.assertEquals("C#", skill.getShortName());
         Assert.assertEquals("A better language than Java", skill.getDescription());
     }
+
+    @Test
+    public void testDeleteSkill()
+    {
+        Skill skill = new Skill("C#", "A better language than Java");
+
+        skill.deleteSkill();
+        Assert.assertFalse(Global.currentWorkspace.getSkills().contains(skill));
+
+        Global.commandManager.undo();
+
+        Assert.assertTrue(Global.currentWorkspace.getSkills().contains(skill));
+    }
 }
