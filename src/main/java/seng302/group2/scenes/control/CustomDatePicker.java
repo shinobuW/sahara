@@ -72,6 +72,7 @@ public class CustomDatePicker extends VBox
     public void showErrorField(String errorMessage)
     {
         this.errorMessageText.setText(errorMessage);
+        this.errorMessageText.setTextFill(Color.web("FF0000"));
         showErrorField();
     }
 
