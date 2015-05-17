@@ -282,15 +282,35 @@ public class MainMenuBar
     private static MenuItem createRevertItem()
     {
         // Create 'Save' MenuItem
-        MenuItem exportItem = new MenuItem("Revert");
-        exportItem.setOnAction((event) ->
-                Revert.revertWorkspace());
+        MenuItem revertItem = new MenuItem("Revert");
+        revertItem.setOnAction((event) ->
+        {
+            if (!Global.currentWorkspace.getHasUnsavedChanges()) {
+                Revert.revertWorkspace();
+                return;
+            }
+            Action response = Dialogs.create()
+                    .title("Save Workspace?")
+                    .message("Would you like to save your changes to the current workspace?")
+                    .showConfirm();
+
+            if (response == Dialog.ACTION_YES) {
+                SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
+                if (saved == SaveLoadResult.SUCCESS) {
+                    Revert.revertWorkspace();
+                }
+            } else if (response == Dialog.ACTION_NO) {
+                Revert.revertWorkspace();
+            }
+        });
+
+
 
         //ShortcutItem not implemented yet
 //        exportItem.setAccelerator(new KeyCodeCombination(KeyCode.S,
 //                KeyCombination.CONTROL_DOWN,
 //                KeyCombination.SHORTCUT_DOWN));
-        return exportItem;
+        return revertItem;
     }
     
     /**

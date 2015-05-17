@@ -18,6 +18,7 @@ public class Revert
         if (revertWorkspace != null)
         {
             Global.currentWorkspace = revertWorkspace;
+            Global.commandManager.clear();
             revertState = false;
             App.refreshMainScene();
 
