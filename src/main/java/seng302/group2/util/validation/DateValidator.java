@@ -57,13 +57,13 @@ public class DateValidator
 
 
     /**
-    * Determines the Validation status of a new allocation, checking id there are any illegal
-    * overlaps with the start or end dates of other allocations.
+    * Determines the Validation status of a new allocation, checking if there are any illegal
+    * overlaps with the start or end dates of the team's allocations.
     * @param alloc The new allocation to check
     * @param proj The project within which to check the allocations
     * @return The validation status of the new allocation
     */
-    public static ValidationStatus isValidAllocationDate(Allocation alloc, Project proj)
+    public static ValidationStatus validAllocation(Allocation alloc, Project proj)
     {
         LocalDate allocStart = alloc.getStartDate();
         LocalDate allocEnd = alloc.getEndDate();
@@ -87,55 +87,89 @@ public class DateValidator
                     {
                         LocalDate teamStart = teamAlloc.getStartDate();
                         LocalDate teamEnd = teamAlloc.getEndDate();
-
-                        if (datesEqual(teamStart, allocStart)
-                                && datesEqual(teamEnd, allocEnd))
+                        //Validate with other teams
+                        ValidationStatus teamComparison = validateAllocationDate(teamStart, teamEnd,
+                                allocStart, allocEnd);
+                        if (teamComparison != ValidationStatus.VALID)
                         {
-                            return ValidationStatus.ALLOCATION_DATES_EQUAL;
-                        }
-                        else if (dateAfter(teamStart, allocStart)
-                                && dateBefore(teamEnd, allocEnd))
-                        {
-                            return ValidationStatus.SUPER_OVERLAP;
-                        }
-                        else if (dateAfter(teamStart, allocStart)
-                                && datesEqual(teamEnd, allocEnd))
-                        {
-                            return ValidationStatus.SUPER_OVERLAP;
-                        }
-                        else if (datesEqual(teamStart, allocStart)
-                                && dateBefore(teamEnd, allocEnd))
-                        {
-                            return ValidationStatus.SUPER_OVERLAP;
-                        }
-                        else if (dateBefore(teamStart, allocStart)
-                                && dateAfter(teamEnd, allocEnd))
-                        {
-                            return ValidationStatus.SUB_OVERLAP;
-                        }
-                        else if (dateBefore(teamStart, allocStart)
-                                && datesEqual(teamEnd, allocEnd))
-                        {
-                            return ValidationStatus.SUB_OVERLAP;
-                        }
-                        else if (datesEqual(teamStart, allocStart)
-                                && dateAfter(teamEnd, allocEnd))
-                        {
-                            return ValidationStatus.SUB_OVERLAP;
-                        }
-                        else if (dateBefore(teamStart, allocStart)
-                                && dateAfter(teamEnd, allocStart))
-                        {
-                            return ValidationStatus.START_OVERLAP;
-                        }
-                        else if (dateAfter(teamEnd, allocEnd)
-                                && dateBefore(teamStart, allocEnd))
-                        {
-                            return ValidationStatus.END_OVERLAP;
+                            return teamComparison;
                         }
                     }
                 }
             }
+        }
+
+        Allocation currentAlloc = alloc.getTeam().getCurrentAllocation();
+        ValidationStatus projectComparison = ValidationStatus.VALID;
+        if (currentAlloc != null)
+        {
+            //Check that the team's currently allocated project doesn't overlap with
+            // the new allocation
+            LocalDate currentAllocStartDate = currentAlloc.getStartDate();
+            LocalDate currentAllocEndDate = currentAlloc.getEndDate();
+            projectComparison = validateAllocationDate(currentAllocStartDate, currentAllocEndDate,
+                    allocStart, allocEnd);
+        }
+        return projectComparison;
+    }
+
+
+    /**
+     * Determines the Validation status of a new allocation, checking if there are any illegal
+     * overlaps with the start or end dates of other allocations.
+     * @param startDate1 the start date to check
+     * @param endDate1 the end date to check
+     * @param startDate2 the start date to compare to
+     * @param endDate2 the end date to compare to
+     * @return
+     */
+    public static ValidationStatus validateAllocationDate(LocalDate startDate1, LocalDate endDate1,
+                                                          LocalDate startDate2, LocalDate endDate2)
+    {
+        if (datesEqual(startDate1, startDate2)
+                && datesEqual(endDate1, endDate2))
+        {
+            return ValidationStatus.ALLOCATION_DATES_EQUAL;
+        }
+        else if (dateAfter(startDate1, startDate2)
+                && dateBefore(endDate1, endDate2))
+        {
+            return ValidationStatus.SUPER_OVERLAP; // teamAlloc is between startDate and endDate
+        }
+        else if (dateAfter(startDate1, startDate2)
+                && datesEqual(endDate1, endDate2))
+        {
+            return ValidationStatus.SUPER_OVERLAP; //when bigger
+        }
+        else if (datesEqual(startDate1, startDate2)
+                && dateBefore(endDate1, endDate2))
+        {
+            return ValidationStatus.SUPER_OVERLAP;
+        }
+        else if (dateBefore(startDate1, startDate2)
+                && dateAfter(endDate1, endDate2))
+        {
+            return ValidationStatus.SUB_OVERLAP; // new Allocation between start date and endDate
+        }
+        else if (dateBefore(startDate1, startDate2)
+                && datesEqual(endDate1, endDate2))
+        {
+            return ValidationStatus.SUB_OVERLAP;
+        }
+        else if (datesEqual(startDate1, startDate2)
+                && dateAfter(endDate1, endDate2))
+        {
+            return ValidationStatus.SUB_OVERLAP;
+        }
+        else if (dateBefore(startDate1, startDate2)
+                && dateAfter(endDate1, startDate2))
+        {
+            return ValidationStatus.START_OVERLAP;
+        }
+        else if (dateAfter(endDate1, startDate2)
+                && dateBefore(startDate1, endDate2))
+        {
+            return ValidationStatus.END_OVERLAP;
         }
         return ValidationStatus.VALID;
     }
@@ -148,7 +182,7 @@ public class DateValidator
      */
     public static boolean validateAllocation(Allocation alloc, Project proj)
     {
-        switch (isValidAllocationDate(alloc, proj))
+        switch (validAllocation(alloc, proj))
         {
             case VALID:
                 return true;
