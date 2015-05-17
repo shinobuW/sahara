@@ -230,11 +230,11 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
      */
     public ObservableList<Release> getReleases()
     {
-        this.serializableReleases.clear();
+        /*this.serializableReleases.clear();
         for (Object item : this.releases)
         {
             this.serializableReleases.add((Release)item);
-        }
+        }*/
         //TODO sort()
         return this.releases;
     }
@@ -448,6 +448,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
      * Removes the release from the project
      * @param release release to be removed
      */
+    @Deprecated
     public void remove(Release release)
     {
         Global.undoRedoMan.add(new UndoableItem(
@@ -463,6 +464,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
      * Removes the team allocation from the list of project's team allocation
      * @param allocation allocation to remove from the list
      */
+    @Deprecated
     public void remove(Allocation allocation)
     {
         this.teamAllocations.remove(allocation);
@@ -747,12 +749,14 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         public void execute()
         {
             proj.getReleases().add(release);
+            release.setProject(proj);
             // TODO Readd any associations, eg. allocation history
         }
 
         public void undo()
         {
             proj.getReleases().remove(release);
+            release.setProject(null);
             // TODO Remove any associations, eg. allocation history
         }
     }

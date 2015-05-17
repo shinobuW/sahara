@@ -76,7 +76,8 @@ public class ProjectTest extends TestCase
         
         assertTrue(proj.getReleases().contains(release));
 
-        proj.remove(release);
+        Global.commandManager.undo();
+
         assertFalse(proj.getReleases().contains(release));
     }
 
@@ -126,8 +127,9 @@ public class ProjectTest extends TestCase
         proj.add(allocation);
         Assert.assertTrue(proj.getTeamAllocations().contains(allocation));
 
-        proj.remove(allocation);
-        Assert.assertTrue(proj.getTeamAllocations().isEmpty());
+        Global.commandManager.undo();
+        //proj.remove(allocation);
+        Assert.assertFalse(proj.getTeamAllocations().contains(allocation));
     }
 
 

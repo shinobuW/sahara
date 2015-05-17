@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -66,22 +67,26 @@ public class WorkspaceTest
     /**
      * Tests that people are correctly added to the workspace through the add() method.
      */
-    /*@Test
+    @Test
     public void testAddPerson()
     {
         Workspace work = new Workspace();
+        Global.currentWorkspace = work;
         Person pers = new Person();
         work.add(pers);
-        
-        ObservableList<TreeViewItem> people = observableArrayList();
-        people.add(pers);
 
-        Assert.assertEquals(people, work.getPeople());
+        Assert.assertTrue(work.getPeople().contains(pers));
         
         work.add(pers);
-        work.add(pers);
-        Assert.assertEquals(3, work.getPeople().size());
-    }*/
+
+        Assert.assertEquals(2, work.getPeople().size());
+
+        Global.commandManager.undo();
+        Assert.assertEquals(1, work.getPeople().size());
+
+        Global.commandManager.undo();
+        Assert.assertEquals(0, work.getPeople().size());
+    }
 
     
     /**
@@ -91,41 +96,20 @@ public class WorkspaceTest
     public void testAddProject()
     {
         Workspace work = new Workspace();
+        Global.currentWorkspace = work;
         Project proj = new Project();
         work.add(proj);
-        
-        ObservableList<TreeViewItem> projects = observableArrayList();
-        projects.add(proj);
 
-        Assert.assertEquals(projects, work.getProjects());
+        Assert.assertTrue(work.getProjects().contains(proj));
         
         work.add(proj);
-        work.add(proj);
-        Assert.assertEquals(3, work.getProjects().size());
-    }
-    
-    /**
-     * Tests that projects are correctly removed from the workspace through the remove() method.
-     */
-    /*@Test
-    public void testRemoveProject()
-    {
-        Workspace work = new Workspace();
-        Project proj = new Project();
-        work.add(proj);
-        work.remove(proj);
-        
-        ObservableList<TreeViewItem> projects = observableArrayList();
-        
-        Assert.assertEquals(projects, work.getProjects());
-        
-        work.add(proj);
-        work.add(proj);
-        work.remove(proj);
-        work.remove(proj);
-        
+        Assert.assertEquals(2, work.getProjects().size());
+        Global.commandManager.undo();
+        Assert.assertEquals(1, work.getProjects().size());
+        Global.commandManager.undo();
         Assert.assertEquals(0, work.getProjects().size());
-    }*/
+    }
+
     
     /**
      * Tests that skills are correctly added to the workspace through the add() method.
@@ -138,36 +122,21 @@ public class WorkspaceTest
         Skill skill = new Skill();
         work.add(skill);
 
-        System.out.println(work.getSkills());
+        //System.out.println(work.getSkills());
         Assert.assertTrue(work.getSkills().contains(skill));
         
         work.add(skill);
-        work.add(skill);
 
         // Also account for the two default skills in workspaces, SM, PO
-        Assert.assertEquals(5, work.getSkills().size());
+        Assert.assertEquals(4, work.getSkills().size());
+        Global.commandManager.undo();
+        Assert.assertEquals(3, work.getSkills().size());
+        Global.commandManager.undo();
+        Assert.assertEquals(2, work.getSkills().size());
+        Global.commandManager.undo();  // Can't remove the default skills
+        Assert.assertEquals(2, work.getSkills().size());
     }
-    
-    /**
-     * Tests that skills are correctly removed from the workspace through the remove() method.
-     */
-    /*@Test
-    public void testRemoveSkill()
-    {
-        Workspace work = new Workspace();
-        Skill skill = new Skill();
-        work.add(skill);
-        work.remove(skill);
-        
-        Assert.assertFalse(work.getSkills().contains(skill));
-        
-        work.add(skill);
-        work.add(skill);
-        work.remove(skill);
-        work.remove(skill);
-        
-        Assert.assertEquals(2, work.getSkills().size());  // SM, PO
-    }*/
+
     
     /**
      * Tests that teams are correctly added to the workspace through the add() method.
@@ -180,33 +149,16 @@ public class WorkspaceTest
         Team team = new Team();
         
         work.add(team);
+        Assert.assertTrue(work.getTeams().contains(team));
         
         work.add(team);
-        work.add(team);
-        Assert.assertEquals(4, work.getTeams().size());
-    }
-    
-    /**
-     * Tests that teams are correctly removed from the workspace through the remove() method.
-     */
-    /*@Test
-    public void testRemoveTeam()
-    {
-        Workspace work = new Workspace();
-        Global.currentWorkspace = work;
-        Team team = new Team();
-        
-        work.add(team);
-        work.remove(team);
+        Assert.assertEquals(3, work.getTeams().size());  // Including the unassigned team
 
-        work.add(team);
-        work.add(team);
-        work.remove(team);
-        work.remove(team);
-
+        Global.commandManager.undo();
+        Assert.assertEquals(2, work.getTeams().size());
+        Global.commandManager.undo();
         Assert.assertEquals(1, work.getTeams().size());
-
-        work.remove(Global.getUnassignedTeam());
-        Assert.assertTrue(work.getTeams().contains(Global.getUnassignedTeam()));
-    }*/
+        Global.commandManager.undo();
+        Assert.assertEquals(1, work.getTeams().size());  // Can't remove the unassigned team
+    }
 }
