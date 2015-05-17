@@ -536,7 +536,10 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
             Workspace.postDeserialization(Global.currentWorkspace);
             Workspace.postDeserialization(Revert.getRevertWorkspace());
             App.refreshMainScene();
-            Global.undoRedoMan.emptyAll();
+
+            Global.commandManager.clear();
+            Global.commandManager.trackSave();
+
             return SaveLoadResult.SUCCESS;
         }
         else
