@@ -4,8 +4,10 @@ import javafx.collections.ObservableList;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
+import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Allocation;
@@ -227,6 +229,7 @@ public class ProjectTest extends TestCase
         Assert.assertEquals(teams, proj.getTeams());
         Assert.assertEquals(releases, proj.getReleases());
     }
+
     
     /**
      * Tests the compareTo method of Project to ensure it correctly returns an int representing if a 
@@ -242,5 +245,23 @@ public class ProjectTest extends TestCase
         Assert.assertTrue(proj.compareTo(proj2) <= 0);
         Assert.assertTrue(proj2.compareTo(proj) >= 0);
         Assert.assertTrue(proj.compareTo(projDupl) == 0);
+    }
+
+
+    @Test
+    public void testEdit()
+    {
+        Project project = new Project("aShortName", "aLongName", "aDescription");
+        project.edit("newShortname", "newLongName", "newDescription", null);
+
+        assertEquals("newShortname", project.getShortName());
+        assertEquals("newLongName", project.getLongName());
+        assertEquals("newDescription", project.getDescription());
+
+        Global.commandManager.undo();
+
+        assertEquals("aShortName", project.getShortName());
+        assertEquals("aLongName", project.getLongName());
+        assertEquals("aDescription", project.getDescription());
     }
 }

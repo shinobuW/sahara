@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -284,5 +285,31 @@ public class PersonTest
         Assert.assertTrue(extendedPerson.compareTo(zedd) <= 0);
         Assert.assertTrue(zedd.compareTo(extendedPerson) >= 0);
         Assert.assertTrue(zedd.compareTo(zeddDupl) == 0);
+    }
+
+
+    @Test
+    public void testEdit()
+    {
+        Person person = new Person("btm38", "Bronson", "McNaughton", "btm38@gmail.com",
+                "A really cool dude", testDate2);
+        person.edit("shortName", "firstName",
+                "lastName", "email", LocalDate.now(), "Desc", null, null);
+
+        Assert.assertEquals("shortName", person.getShortName());
+        Assert.assertEquals("firstName", person.getFirstName());
+        Assert.assertEquals("lastName", person.getLastName());
+        Assert.assertEquals("email", person.getEmail());
+        Assert.assertEquals(LocalDate.now(), person.getBirthDate());
+        Assert.assertEquals("Desc", person.getDescription());
+
+        Global.commandManager.undo();
+
+        Assert.assertEquals("btm38", person.getShortName());
+        Assert.assertEquals("Bronson", person.getFirstName());
+        Assert.assertEquals("McNaughton", person.getLastName());
+        Assert.assertEquals("btm38@gmail.com", person.getEmail());
+        Assert.assertEquals(testDate2, person.getBirthDate());
+        Assert.assertEquals("A really cool dude", person.getDescription());
     }
 }

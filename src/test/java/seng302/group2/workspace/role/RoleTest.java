@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package seng302.group2.workspace.team;
+package seng302.group2.workspace.role;
 
 import org.junit.Assert;
 import org.junit.Test;
-import seng302.group2.workspace.role.Role;
 
 /**
  * A series of tests relating to Role
@@ -51,4 +50,5 @@ public class RoleTest
         Assert.assertEquals("Manual Testing", role.getDescription());
         Assert.assertEquals(Role.RoleType.Others, role.getType());
     }
+
 }

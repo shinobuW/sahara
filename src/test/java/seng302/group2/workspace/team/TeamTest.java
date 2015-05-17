@@ -7,8 +7,10 @@ package seng302.group2.workspace.team;
 
 import org.junit.Assert;
 import org.junit.Test;
+import seng302.group2.Global;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.skills.Skill;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -175,5 +177,22 @@ public class TeamTest
         Assert.assertTrue(team1.compareTo(team2) <= 0);
         Assert.assertTrue(team2.compareTo(team1) >= 0);
         Assert.assertTrue(team1.compareTo(team1Dupl) == 0);
+    }
+
+
+    @Test
+    public void testEdit()
+    {
+        Team team = new Team("Arctic Falcon", "An awesome team name");
+
+
+        team.edit("Antarctic Eagle", "An even awesomer team name");
+        Assert.assertEquals("Antarctic Eagle", team.getShortName());
+        Assert.assertEquals("An even awesomer team name", team.getDescription());
+
+        Global.commandManager.undo();
+
+        Assert.assertEquals("Arctic Falcon", team.getShortName());
+        Assert.assertEquals("An awesome team name", team.getDescription());
     }
 }

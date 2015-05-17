@@ -495,7 +495,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
         private Team oldTeam;
         private ObservableList<Skill> oldSkills;
 
-        private PersonEditCommand(Person person, String newShortName, String newFirstName,
+        protected PersonEditCommand(Person person, String newShortName, String newFirstName,
             String newLastName, String newEmail, LocalDate newBirthDate,
             String newDescription, Team newTeam, ObservableList<Skill> newSkills)
         {
