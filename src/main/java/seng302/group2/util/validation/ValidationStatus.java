@@ -30,5 +30,4 @@ public enum ValidationStatus
     SUPER_OVERLAP,
     SUB_OVERLAP,
     ALLOCATION_DATES_EQUAL
-
 }
