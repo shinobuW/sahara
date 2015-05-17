@@ -312,4 +312,18 @@ public class PersonTest
         Assert.assertEquals(testDate2, person.getBirthDate());
         Assert.assertEquals("A really cool dude", person.getDescription());
     }
+
+
+    @Test
+    public void testDeletePerson()
+    {
+        Global.commandManager.clear();
+        Person person = new Person();
+        Global.currentWorkspace.add(person);
+
+        person.deletePerson();
+        Assert.assertFalse(Global.currentWorkspace.getPeople().contains(person));
+        Global.commandManager.undo();
+        Assert.assertTrue(Global.currentWorkspace.getPeople().contains(person));
+    }
 }
