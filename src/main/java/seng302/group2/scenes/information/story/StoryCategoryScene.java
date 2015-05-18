@@ -14,6 +14,7 @@ import seng302.group2.scenes.listdisplay.StoryCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 import static seng302.group2.scenes.MainScene.informationPane;
+import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * Created by drm127 on 17/05/15.
@@ -33,14 +34,14 @@ public class StoryCategoryScene
         Label title = new TitleLabel("Stories in " + selectedCategory.getProject().toString());
 
         Button btnView = new Button("View");
-        //Button btnDelete = new Button("Delete");
+        Button btnDelete = new Button("Delete");
         Button btnCreate = new Button("Create New Story");
 
         HBox selectionButtons = new HBox();
         selectionButtons.spacingProperty().setValue(10);
         selectionButtons.getChildren().add(btnView);
+        selectionButtons.getChildren().add(btnDelete);
         selectionButtons.getChildren().add(btnCreate);
-        //selectionButtons.getChildren().add(btnDelete);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
 
@@ -62,14 +63,14 @@ public class StoryCategoryScene
             });
 
 
-        /*btnDelete.setOnAction((event) ->
+        btnDelete.setOnAction((event) ->
             {
                 if (storyBox.getSelectionModel().getSelectedItem() != null)
                 {
-                    Story.deleteStory(
-                            (Story) storyBox.getSelectionModel().getSelectedItem());
+                    showDeleteDialog((TreeViewItem) storyBox.getSelectionModel()
+                            .getSelectedItem());
                 }
-            });*/
+            });
 
         btnCreate.setOnAction((event) ->
             {

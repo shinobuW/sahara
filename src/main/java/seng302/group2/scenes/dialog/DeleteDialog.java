@@ -15,6 +15,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.story.Story;
 import seng302.group2.workspace.team.Team;
 
 import java.text.MessageFormat;
@@ -72,6 +73,11 @@ public class DeleteDialog
             {
                 Release deletedRelease = (Release)element;
                 deletedRelease.deleteRelease();
+            }
+            else if (element.getClass() == Story.class)
+            {
+                Story deletedStory = (Story)element;
+                deletedStory.deleteStory();
             }
             else
             {
@@ -206,6 +212,20 @@ public class DeleteDialog
             Project deletedProject = (Project)element;
             message = MessageFormat.format("Are you sure you want to delete the project \"{0}",
                     deletedProject.toString() + "\"?");
+        }
+        else if (element.getClass() == Release.class)
+        {
+            title = "Delete Release";
+            Release deletedRelease = (Release)element;
+            message = MessageFormat.format("Are you sure you want to delete the release \"{0}",
+                    deletedRelease.toString() + "\"?");
+        }
+        else if (element.getClass() == Story.class)
+        {
+            title = "Delete Story";
+            Story deletedStory = (Story)element;
+            message = MessageFormat.format("Are you sure you want to delete the story \"{0}",
+                    deletedStory.toString() + "\"?");
         }
         else
         {
