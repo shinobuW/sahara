@@ -12,6 +12,7 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.story.Story;
 import seng302.group2.workspace.team.Team;
 
 
@@ -143,6 +144,13 @@ public class ShortNameValidator
             for (Release rel : proj.getReleases())
             {
                 if (rel.getShortName().equals(shortName))
+                {
+                    return ValidationStatus.NON_UNIQUE;
+                }
+            }
+            for (Story story : proj.getStories())
+            {
+                if (story.getShortName().equals(shortName))
                 {
                     return ValidationStatus.NON_UNIQUE;
                 }

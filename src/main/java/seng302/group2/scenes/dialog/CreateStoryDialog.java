@@ -92,7 +92,7 @@ public class CreateStoryDialog
                 }
                 else
                 {
-                    btnCreate.disableProperty();
+                    event.consume();
                 }
             });
 
