@@ -184,6 +184,15 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
     }
 
     /**
+     * Deletes a story from the given project.
+     */
+    public void deleteStory()
+    {
+        Command command = new DeleteStoryCommand(this);
+        Global.commandManager.executeCommand(command);
+    }
+
+    /**
      * A command class that allows the executing and undoing of story edits
      */
     private class StoryEditCommand implements Command
@@ -227,6 +236,32 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
             story.shortName = oldShortName;
             story.description = oldDescription;
             story.project = oldProject;
+        }
+    }
+
+    private class DeleteStoryCommand implements Command
+    {
+        private Story story;
+        private Project proj;
+
+        DeleteStoryCommand(Story story)
+        {
+            this.story = story;
+            this.proj = story.getProject();
+        }
+
+        public void execute()
+        {
+            System.out.println("Exec Story Delete");
+            proj.getStories().remove(story);
+            //release.setProject(null);
+        }
+
+        public void undo()
+        {
+            System.out.println("Undone Story Delete");
+            proj.getStories().add(story);
+            //release.setProject(proj);
         }
     }
 }
