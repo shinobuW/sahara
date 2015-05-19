@@ -18,6 +18,7 @@ import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.contextmenu.CategoryTreeContextMenu;
 import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
@@ -201,6 +202,12 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                                 (TreeViewItem) selected);
                         setContextMenu(new ElementTreeContextMenu());
                     }
+                    else if (selected instanceof Backlog)
+                    {
+                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG,
+                                (TreeViewItem) selected);
+                        setContextMenu(new ElementTreeContextMenu());
+                    }
                     else if (selected instanceof Category)
                     {
                         if (selected.toString().equals("Projects"))
@@ -241,6 +248,12 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         else if (selected.toString().equals("Stories"))
                         {
                             SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY_CATEGORY,
+                                    (TreeViewItem) selected);
+                            setContextMenu(new CategoryTreeContextMenu(true));
+                        }
+                        else if (selected.toString().equals("Backlog"))
+                        {
+                            SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG_CATEGORY,
                                     (TreeViewItem) selected);
                             setContextMenu(new CategoryTreeContextMenu(true));
                         }

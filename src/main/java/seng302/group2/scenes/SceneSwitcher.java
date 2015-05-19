@@ -2,6 +2,9 @@ package seng302.group2.scenes;
 
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.information.backlog.BacklogCategoryScene;
+import seng302.group2.scenes.information.backlog.BacklogEditScene;
+import seng302.group2.scenes.information.backlog.BacklogScene;
 import seng302.group2.scenes.information.person.PersonCategoryScene;
 import seng302.group2.scenes.information.person.PersonEditScene;
 import seng302.group2.scenes.information.person.PersonScene;
@@ -24,10 +27,12 @@ import seng302.group2.scenes.information.team.TeamEditScene;
 import seng302.group2.scenes.information.team.TeamScene;
 import seng302.group2.scenes.information.workspace.WorkspaceEditScene;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
+import seng302.group2.scenes.listdisplay.BacklogCategory;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.StoryCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
@@ -66,7 +71,8 @@ public class SceneSwitcher
         STORY_EDIT,
         STORY_CATEGORY,
         BACKLOG,
-        BACKLOG_EDIT
+        BACKLOG_EDIT,
+        BACKLOG_CATEGORY
     }
 
     /**
@@ -242,6 +248,26 @@ public class SceneSwitcher
                 {
                     MainScene.contentPane.setContent(TeamEditScene.getTeamEditScene(
                             (Team) item));
+                }
+                break;
+            case BACKLOG:
+                if (item.getClass() == Backlog.class)
+                {
+                    MainScene.contentPane.setContent(new BacklogScene((Backlog) item));
+                }
+                break;
+            case BACKLOG_EDIT:
+                if (item.getClass() == Backlog.class)
+                {
+                    MainScene.contentPane.setContent(BacklogEditScene.getBacklogEditScene(
+                            (Backlog) item));
+                }
+                break;
+            case BACKLOG_CATEGORY:
+                if (item.getClass() == BacklogCategory.class)
+                {
+                    MainScene.contentPane.setContent(BacklogCategoryScene.getBacklogCategoryScene(
+                            (BacklogCategory) item));
                 }
                 break;
             //TODO: Other scenes when implemented
