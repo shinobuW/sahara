@@ -34,7 +34,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import seng302.group2.workspace.release.Release;
 
 /**
  * Basic workspace class that acts as the root object for Sahara and represents a real-world
@@ -117,7 +116,7 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
         this.addWithoutUndo(productOwner);
 
         Role developmentTeamMember = new Role(
-                "Development Team Member", Role.RoleType.DevelopmentTeamMember,
+                "Dev Team Member", Role.RoleType.DevelopmentTeamMember,
                 "A member of the Dev Team");
         this.addWithoutUndo(developmentTeamMember);
 
@@ -163,7 +162,7 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
         this.addWithoutUndo(productOwner);
 
         Role developmentTeamMember = new Role(
-                "Development Team Member", Role.RoleType.DevelopmentTeamMember,
+                "Dev Team Member", Role.RoleType.DevelopmentTeamMember,
                 "A member of the Dev Team");
         this.addWithoutUndo(developmentTeamMember);
 
