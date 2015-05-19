@@ -22,8 +22,6 @@ import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.revert.Revert;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.Workspace.SaveLoadResult;
-import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
@@ -431,7 +429,6 @@ public class MainMenuBar
         MenuItem saveItem = createSaveItem();
         MenuItem saveAsItem = createSaveAsItem();
         MenuItem exportItem = createExportItem();
-        MenuItem revertItem = createRevertItem();
         MenuItem quitProgramItem = createQuitItem();
         
         newBranch.getItems().add(newWorkspaceItem);
@@ -453,15 +450,7 @@ public class MainMenuBar
             newReleaseItem.setDisable(false);
             newStoryItem.setDisable(false);
         }
-        System.out.println(Revert.getRevertWorkspace());
-        if (Revert.getRevertState())
-        {
-            revertItem.setDisable(false);
-        }
-        else
-        {
-            revertItem.setDisable(true);
-        }
+
 
         // Create 'Edit >' sub-menu
         Menu editMenu = new Menu("Edit");
@@ -471,6 +460,7 @@ public class MainMenuBar
         MenuItem undoItem = createUndoItem();
         MenuItem redoItem = createRedoItem();
         MenuItem deleteTreeItem = createDeleteTreeItem();
+        MenuItem revertItem = createRevertItem();
 
         // Create 'Display >' sub-menu
         Menu displayMenu = new Menu("Display");
@@ -487,6 +477,17 @@ public class MainMenuBar
                 quitProgramItem);
         
         editMenu.getItems().addAll(undoItem, redoItem, deleteTreeItem);
+
+        fileMenu.setOnShowing((event) -> {
+            if (Global.currentWorkspace.getHasUnsavedChanges())
+            {
+                revertItem.setDisable(false);
+            }
+            else
+            {
+                revertItem.setDisable(true);
+            }
+        });
                 
         editMenu.setOnShowing((event) ->
             {
