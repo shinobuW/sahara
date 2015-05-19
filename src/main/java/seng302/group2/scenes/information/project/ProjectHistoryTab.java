@@ -18,6 +18,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.util.validation.ValidationStatus;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
@@ -25,6 +26,7 @@ import seng302.group2.workspace.team.Team;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static seng302.group2.util.validation.DateValidator.validAllocation;
 import static seng302.group2.util.validation.DateValidator.validateAllocation;
 
 
@@ -105,14 +107,13 @@ public class ProjectHistoryTab extends Tab
                                 DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                         currentAllocation.setStartDate(newStartDate);
 
-                        if (validateAllocation(currentAllocation, proj))
+                        if (validAllocation(currentAllocation, proj) == ValidationStatus.VALID)
                         {
                             isValidEdit = false;
                         }
                         else
                         {
                             currentAllocation.setStartDate(currentStartDate);
-
                             isValidEdit = true;
                         }
                     }

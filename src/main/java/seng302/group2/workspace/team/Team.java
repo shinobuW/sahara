@@ -194,8 +194,8 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         for (Allocation allocation : this.getProjectAllocations())
         {
             if (allocation.getStartDate().isBefore(now)
-                    && (allocation.getEndDate().isAfter(now)
-                            || allocation.getEndDate() == null))
+                    && (allocation.getEndDate() == null
+                            || allocation.getEndDate().isAfter(now)))
             {
                 currentAllocation = allocation;
             }
