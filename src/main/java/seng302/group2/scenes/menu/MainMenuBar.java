@@ -22,6 +22,7 @@ import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.revert.Revert;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.Workspace.SaveLoadResult;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
@@ -204,6 +205,11 @@ public class MainMenuBar
                     if (saved == SaveLoadResult.SUCCESS)
                     {
                         Workspace.loadWorkspace();
+                        Global.currentWorkspace.addListeners();
+                        for (Project proj : Global.currentWorkspace.getProjects())
+                        {
+                            proj.addListeners();
+                        }
                         //App.refreshMainScene();
                     }
                 }

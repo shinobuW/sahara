@@ -78,7 +78,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     }
     
     // TODO
-    private void addListeners()
+    public void addListeners()
     {
         releases.addListener((ListChangeListener<Release>) change ->
             {
@@ -93,6 +93,13 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
                 if (change.next() && !change.wasPermutated())
                 {
                     Collections.sort(stories);
+                }
+            });
+        backlogs.addListener((ListChangeListener<Backlog>) change ->
+            {
+                if (change.next() && !change.wasPermutated())
+                {
+                    Collections.sort(backlogs);
                 }
             });
     }

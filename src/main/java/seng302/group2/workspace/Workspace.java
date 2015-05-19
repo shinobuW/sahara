@@ -171,7 +171,7 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
 
 
     // TODO
-    private void addListeners()
+    public void addListeners()
     {
         people.addListener((ListChangeListener<Person>) change ->
             {
@@ -180,30 +180,30 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
                     Collections.sort(people);
                 }
             });
-        
-        teams.addListener((ListChangeListener<Team>) change -> 
+
+        teams.addListener((ListChangeListener<Team>) change ->
             {
                 if (change.next() && !change.wasPermutated())
                 {
                     Collections.sort(teams);
                 }
             });
-        
-        projects.addListener((ListChangeListener<Project>) change -> 
+
+        projects.addListener((ListChangeListener<Project>) change ->
             {
                 if (change.next() && !change.wasPermutated())
                 {
                     Collections.sort(projects);
                 }
-            });     
-        
-        skills.addListener((ListChangeListener<Skill>) change -> 
+            });
+
+        skills.addListener((ListChangeListener<Skill>) change ->
             {
                 if (change.next() && !change.wasPermutated())
                 {
                     Collections.sort(skills);
                 }
-            }); 
+            });
         
         
     }
