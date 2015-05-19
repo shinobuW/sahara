@@ -391,7 +391,7 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
             FileChooser fileChooser = new FileChooser();
             if (Global.lastSaveLocation != null && Global.lastSaveLocation != "")
             {
-                System.out.println("last save dir: " + Global.lastSaveLocation);
+                //System.out.println("last save dir: " + Global.lastSaveLocation);
                 fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
             }
             fileChooser.setInitialFileName(workspace.shortName);
@@ -434,7 +434,7 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
             writer.close();
 
             String json = gson.toJson(workspace);
-            System.out.println(json);
+            //System.out.println(json);
             Revert.updateRevertState(json);
 
             Global.setCurrentWorkspaceUnchanged();
@@ -474,7 +474,7 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
         fileChooser.setTitle("Open Workspace");
         if (Global.lastSaveLocation != null && Global.lastSaveLocation != "")
         {
-            System.out.println("last save dir: " + Global.lastSaveLocation);
+            //System.out.println("last save dir: " + Global.lastSaveLocation);
             fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
         }
         fileChooser.getExtensionFilters().addAll(
@@ -506,7 +506,7 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
                 while ((line = bufferedReader.readLine()) != null) {
                     json.append(line);
                 }
-                System.out.println(json);
+                //System.out.println(json);
 
                 Global.currentWorkspace = gson.fromJson(json.toString(), Workspace.class);
 

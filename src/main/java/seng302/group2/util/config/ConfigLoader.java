@@ -8,13 +8,14 @@ import java.io.*;
 
 /**
  * Handles the loading and saving of Global configuration and settings of the application
+ * TODO: Move into using Java Preferences instead. See below link:
+ * http://docs.oracle.com/javase/8/docs/technotes/guides/preferences/index.html
  * Created by Jordane on 13/04/2015.
  */
 @SuppressWarnings("deprecation")
 public class ConfigLoader
 {
     private static String configLocation = "./config";
-
 
     /**
      * Save the current configuration
@@ -55,20 +56,6 @@ public class ConfigLoader
             reader.close();
             config.updateRuntime();
         }
-        /*catch (FileNotFoundException e)
-        {
-            Dialogs.create()
-                    .title("File Not Found")
-                    .message("The configuration file could not be found.")
-                    .showWarning();
-        }
-        catch (IOException e)
-        {
-            Dialogs.create()
-                    .title("Error Loading")
-                    .message("An error occurred while trying to load the file.")
-                    .showException(e);
-        }*/
         catch (Exception e)
         {
             // Not too worried about the configuration load failures at the moment
