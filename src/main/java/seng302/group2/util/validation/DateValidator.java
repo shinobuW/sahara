@@ -344,7 +344,7 @@ public class DateValidator
                 String year = date[date.length - 1];
                 if (year.length() != 4)
                 {
-                    dateField.showErrorField("* Format must be dd/MM/yyyy e.g 12/03/1990");
+                    dateField.showErrorField("* Format must be dd/MM/yyyy");
                     return false;
                 }
                 LocalDate parsedLocalDate = LocalDate.parse(dateString, Global.dateFormatter);
@@ -355,7 +355,7 @@ public class DateValidator
             }
             catch (Exception ex)
             {
-                dateField.showErrorField("* Format must be dd/MM/yyyy e.g 12/03/1990");
+                dateField.showErrorField("* Format must be dd/MM/yyyy");
                 return false;
 
             }
@@ -382,7 +382,7 @@ public class DateValidator
                 customBirthDate.showErrorField("* This is not a valid birth date");
                 return false;
             case PATTERN_MISMATCH:
-                customBirthDate.showErrorField("* Format must be dd/MM/yyyy e.g 12/03/1990");
+                customBirthDate.showErrorField("* Format must be dd/MM/yyyy");
                 return false;
             default:
                 return true;

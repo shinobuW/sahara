@@ -155,8 +155,8 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
     @Override
     public int compareTo(Story compareStory)
     {
-        String story1ShortName = this.getShortName().toUpperCase();
-        String story2ShortName = compareStory.getShortName().toUpperCase();
+        String story1ShortName = this.getShortName();
+        String story2ShortName = compareStory.getShortName();
         return story1ShortName.compareTo(story2ShortName);
     }
     

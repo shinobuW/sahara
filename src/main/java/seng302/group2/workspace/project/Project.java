@@ -593,8 +593,8 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     @Override
     public int compareTo(Project compareProject)
     {
-        String proj1ShortName = this.getShortName().toUpperCase();
-        String proj2ShortName = compareProject.getShortName().toUpperCase();
+        String proj1ShortName = this.getShortName();
+        String proj2ShortName = compareProject.getShortName();
         return proj1ShortName.compareTo(proj2ShortName);
     }
     

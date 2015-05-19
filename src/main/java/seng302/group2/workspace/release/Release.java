@@ -197,8 +197,8 @@ public class Release extends TreeViewItem implements Comparable<Release>
     @Override
     public int compareTo(Release compareRelease)
     {
-        String release1ShortName = this.getShortName().toUpperCase();
-        String release2ShortName = compareRelease.getShortName().toUpperCase();
+        String release1ShortName = this.getShortName();
+        String release2ShortName = compareRelease.getShortName();
         return release1ShortName.compareTo(release2ShortName);
     }
     

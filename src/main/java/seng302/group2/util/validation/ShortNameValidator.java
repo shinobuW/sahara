@@ -65,7 +65,7 @@ public class ShortNameValidator
                 shortNameField.hideErrorField();
                 return true;
             case NON_UNIQUE:
-                shortNameField.showErrorField("* Short name has already been taken");
+                shortNameField.showErrorField("* Short name must be unique");
                 return false;
             case INVALID:
                 shortNameField.showErrorField("* Not a valid short name");
@@ -105,7 +105,7 @@ public class ShortNameValidator
 
         for (Person pers : Global.currentWorkspace.getPeople())
         {
-            if (pers.getShortName().equals(shortName))
+            if (pers.getShortName().toUpperCase().equals(shortName.toUpperCase()))
             {
                 return ValidationStatus.NON_UNIQUE;
             }

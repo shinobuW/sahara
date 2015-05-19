@@ -449,8 +449,8 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
     @Override
     public int compareTo(Team compareTeam)
     {
-        String team1ShortName = this.getShortName().toUpperCase();
-        String team2ShortName = compareTeam.getShortName().toUpperCase();
+        String team1ShortName = this.getShortName();
+        String team2ShortName = compareTeam.getShortName();
         return team1ShortName.compareTo(team2ShortName);
     }
     
