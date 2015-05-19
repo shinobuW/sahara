@@ -43,7 +43,7 @@ public class BacklogCategoryScene
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
 
-        ListView backlogBox = new ListView(selectedCategory.getProject().getBacklog());
+        ListView backlogBox = new ListView(selectedCategory.getProject().getBacklogs());
         backlogBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         backlogBox.setMaxWidth(275);
 

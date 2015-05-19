@@ -265,7 +265,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
      * Gets the backlogs of the project
      * @return list of backlogs
      */
-    public ObservableList<Backlog> getBacklog()
+    public ObservableList<Backlog> getBacklogs()
     {
         this.serializableBacklogs.clear();
         for (Object item : this.backlogs)
@@ -838,7 +838,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
 
         public void execute()
         {
-            proj.getBacklog().add(backlog);
+            proj.getBacklogs().add(backlog);
         }
 
         public void undo()

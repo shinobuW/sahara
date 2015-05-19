@@ -6,8 +6,13 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.story.Story;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * Created by cvs20 on 19/05/15.
@@ -18,6 +23,8 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
     private String longName;
     private String description;
     private Person productOwner;
+    private transient ObservableList<Story> stories = observableArrayList();
+    private List<Story> serializableStories = new ArrayList<>();
     private Project project;
 
     /**
@@ -98,6 +105,32 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         return this.project;
     }
 
+    /**
+     * Gets the serializable stories of a backlog
+     *
+     * @return the serializable stories
+     */
+
+    /**
+     * Gets the backlogs list of stories
+     *
+     * @return The ObservableList of stories
+     */
+    public ObservableList<Story> getStories()
+    {
+        this.serializableStories.clear();
+        for (Object item : this.stories)
+        {
+            this.serializableStories.add((Story) item);
+        }
+        return this.stories;
+    }
+
+    public List<Story> getSerializableStory()
+    {
+        return serializableStories;
+    }
+
     //</editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Setters">
@@ -146,6 +179,16 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
     public void setProject(Project project)
     {
         this.project = project;
+    }
+
+    /**
+     * Adds a story to the backlogs list of stories
+     * @param story Story to add
+     */
+    public void add(Story story)
+    {
+        Command addStory = new AddStoryCommand(this.getProject(), story.getBacklog(), story);
+        Global.commandManager.executeCommand(addStory);
     }
 
     //</editor-fold>
@@ -281,15 +324,41 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         public void execute()
         {
             System.out.println("Exec Backlog Delete");
-            proj.getBacklog().remove(backlog);
+            proj.getBacklogs().remove(backlog);
             //release.setProject(null);
         }
 
         public void undo()
         {
             System.out.println("Undone Backlog Delete");
-            proj.getBacklog().add(backlog);
+            proj.getBacklogs().add(backlog);
             //release.setProject(proj);
+        }
+    }
+
+    private class AddStoryCommand implements Command
+    {
+        private Project proj;
+        private Backlog backlog;
+        private Story story;
+
+        AddStoryCommand(Project proj, Backlog backlog, Story story)
+        {
+            this.proj = proj;
+            this.backlog = backlog;
+            this.story = story;
+        }
+
+        public void execute()
+        {
+            proj.getBacklogs().add(backlog);
+            backlog.getStories().add(story);
+        }
+
+        public void undo()
+        {
+            proj.getBacklogs().remove(backlog);
+            backlog.getStories().remove(story);
         }
     }
 }

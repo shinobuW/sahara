@@ -9,6 +9,7 @@ import java.util.Collections;
 
 import javafx.collections.ObservableList;
 import seng302.group2.util.undoredo.Command;
+import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
 
@@ -22,6 +23,7 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
     private String description;
     private String creator;
     private Project project;
+    private Backlog backlog;
 
     /**
      * Basic Story constructor
@@ -33,6 +35,7 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
         this.description = "";
         this.creator = null;
         this.project = null;
+        this.backlog = null;
     }
 
     /**
@@ -52,6 +55,8 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
         this.creator = creator;
         this.project = project;
     }
+
+    // <editor-fold defaultstate="collapsed" desc="Getters">
 
     /**
      * Gets the short name of the story
@@ -88,11 +93,28 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
     {
         return this.creator;
     }
-    
+
+    /**
+     * Gets the project the story is part of
+     * @return projecct
+     */
     public Project getProject()
     {
         return this.project;
     }
+
+    /**
+     * Gets the stories backlog
+     * @return The person's team
+     */
+    public Backlog getBacklog()
+    {
+        return this.backlog;
+    }
+
+    //</editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Setters">
 
     /**
      * Sets the short name of the story
@@ -139,6 +161,12 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
         this.project = project;
         project.add(this);
     }
+
+    public void setBacklog(Backlog backlog)
+    {
+        this.backlog = backlog;
+        backlog.add(this);
+    }
     
     /**
      * Gets the children of the TreeViewItem
@@ -149,6 +177,8 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
     {
         return null;
     }
+
+    //</editor-fold>
     
     
     // TODO write javadoc.

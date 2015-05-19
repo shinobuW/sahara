@@ -41,7 +41,7 @@ public class BacklogCategory extends Category
         {
             return null;
         }
-        return project.getBacklog();
+        return project.getBacklogs();
     }
 
     /**

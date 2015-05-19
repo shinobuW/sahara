@@ -406,46 +406,6 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
     {
         Command deletePers = new DeletePersonCommand(this, Global.currentWorkspace);
         Global.commandManager.executeCommand(deletePers);
-
-        /*ArrayList<UndoableItem> undoActions = new ArrayList<>();
-        for (Team teamRemovePerson : Global.currentWorkspace.getTeams())
-        {
-            if (teamRemovePerson.getPeople().contains(deletedPerson))
-            {
-                undoActions.add(new UndoableItem(
-                        deletedPerson,
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.PERSON_DEL_TEAM,
-                                teamRemovePerson),
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.PERSON_DEL_TEAM,
-                                teamRemovePerson)));
-                teamRemovePerson.remove(deletedPerson, false);
-            }
-        }
-
-        undoActions.add(new UndoableItem(
-                deletedPerson,
-                new UndoRedoAction(
-                        UndoRedoPerformer.UndoRedoProperty.PERSON_DEL,
-                        deletedPerson),
-                new UndoRedoAction(
-                        UndoRedoPerformer.UndoRedoProperty.PERSON_DEL,
-                        deletedPerson)));
-        Global.currentWorkspace.removeWithoutUndo(deletedPerson);
-
-        if (undoActions.size() > 0)
-        {
-            Global.undoRedoMan.add(new UndoableItem(
-                    deletedPerson,
-                    new UndoRedoAction(
-                            UndoRedoPerformer.UndoRedoProperty.PERSON_DEL_RECURSIVE,
-                            undoActions),
-                    new UndoRedoAction(
-                            UndoRedoPerformer.UndoRedoProperty.PERSON_DEL_RECURSIVE,
-                            undoActions)
-            ));
-        }*/
     }
 
 
