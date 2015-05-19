@@ -484,22 +484,6 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     }
 
 
-
-//    /** 
-//     * Add Release to Project
-//     * @param release release to be added
-//     */
-//    public void add(Release release)
-//    {
-//        Global.undoRedoMan.add(new UndoableItem(
-//                release,
-//                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_ADD, this),
-//                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_ADD, this)
-//        ));
-//        this.releases.add(release);
-//    }
-    
-    
     
     /**
      * Adds a Release to the Project's list of Releases.
