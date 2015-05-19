@@ -2,17 +2,11 @@ package seng302.group2.scenes.contextmenu;
 
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
-import seng302.group2.scenes.information.person.PersonEditScene;
-import seng302.group2.scenes.information.project.ProjectEditScene;
-import seng302.group2.scenes.information.release.ReleaseEditScene;
-import seng302.group2.scenes.information.skill.SkillEditScene;
-import seng302.group2.scenes.information.team.TeamEditScene;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
@@ -45,6 +39,7 @@ public class ElementTreeContextMenu extends ContextMenu
         ROLE,
         RELEASE,
         STORY,
+        BACKLOG,
         OTHER  // For anything else, or unresolved.
     }
 
@@ -167,6 +162,10 @@ public class ElementTreeContextMenu extends ContextMenu
         {
             selectedCategory = Categories.STORY;
         }
+        else if (Global.selectedTreeItem.getValue().getClass() == Backlog.class)
+        {
+            selectedCategory = Categories.BACKLOG;
+        }
         return selectedCategory;
     }
 
@@ -202,6 +201,10 @@ public class ElementTreeContextMenu extends ContextMenu
             case STORY:
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY_EDIT,
                         (Story) Global.selectedTreeItem.getValue());
+                break;
+            case BACKLOG:
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG_EDIT,
+                        (Backlog) Global.selectedTreeItem.getValue());
                 break;
             case WORKSPACE:
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE_EDIT,
