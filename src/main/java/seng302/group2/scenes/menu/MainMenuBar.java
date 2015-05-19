@@ -162,6 +162,16 @@ public class MainMenuBar
         return newStoryItem;
     }
 
+    private static MenuItem createBacklogItem()
+    {
+
+        MenuItem newBacklogItem = new MenuItem("Backlog");
+        newBacklogItem.setOnAction((event) ->
+        {
+            CreateBacklogDialog.show();
+        });
+        return newBacklogItem;
+    }
 
     /**
      * Creates a menu item "Team" and sets the on action event if "Team" is clicked.
@@ -423,6 +433,7 @@ public class MainMenuBar
         MenuItem newTeamItem = createTeamItem();
         MenuItem newReleaseItem = createReleaseItem();
         MenuItem newStoryItem = createStoryItem();
+        MenuItem newBacklogItem = createBacklogItem();
 
         // Create other items for file menu
         MenuItem openItem = createOpenItem();
@@ -438,17 +449,20 @@ public class MainMenuBar
         newBranch.getItems().add(newTeamItem);
         newBranch.getItems().add(newReleaseItem);
         newBranch.getItems().add(newStoryItem);
+        newBranch.getItems().add(newBacklogItem);
 
 
         if (Global.currentWorkspace.getProjects().isEmpty())
         {
             newReleaseItem.setDisable(true);
             newStoryItem.setDisable(true);
+            newBacklogItem.setDisable(true);
         }
         else
         {
             newReleaseItem.setDisable(false);
             newStoryItem.setDisable(false);
+            newBacklogItem.setDisable(false);
         }
 
 
