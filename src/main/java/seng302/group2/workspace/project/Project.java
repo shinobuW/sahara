@@ -11,7 +11,6 @@ import seng302.group2.util.undoredo.Command;
 import seng302.group2.util.undoredo.UndoRedoAction;
 import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
-import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.release.Release;
@@ -557,11 +556,12 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
             System.out.println("Called on wrong project, not happening");
             return;
         }
-        if (DateValidator.validateAllocation(allocation, this))
-        {
-            Command addAlloc = new AddAllocationCommand(this, allocation.getTeam(), allocation);
-            Global.commandManager.executeCommand(addAlloc);
-        }
+        this.getTeamAllocations().add(allocation);
+//        if (DateValidator.validateAllocation(allocation, this))
+//        {
+//            Command addAlloc = new AddAllocationCommand(this, allocation.getTeam(), allocation);
+//            Global.commandManager.executeCommand(addAlloc);
+//        }
     }
 
 
