@@ -12,6 +12,7 @@ import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
 
 import java.time.LocalDate;
+import java.util.Collections;
 
 /**
  * A release is a sub-member of project and contains information about a release of a project
@@ -279,6 +280,7 @@ public class Release extends TreeViewItem implements Comparable<Release>
             release.description = description;
             release.estimatedDate = estimatedDate;
             release.project = project;
+            Collections.sort(project.getReleases());
 
         }
 
@@ -291,6 +293,7 @@ public class Release extends TreeViewItem implements Comparable<Release>
             release.description = oldDescription;
             release.estimatedDate = oldEstimatedDate;
             release.project = oldProject;
+            Collections.sort(project.getReleases());
         }
     }
 
