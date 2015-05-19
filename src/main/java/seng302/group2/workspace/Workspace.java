@@ -34,7 +34,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import seng302.group2.workspace.release.Release;
 
 /**
  * Basic workspace class that acts as the root object for Sahara and represents a real-world
@@ -117,7 +116,7 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
         this.addWithoutUndo(productOwner);
 
         Role developmentTeamMember = new Role(
-                "Development Team Member", Role.RoleType.DevelopmentTeamMember,
+                "Dev Team Member", Role.RoleType.DevelopmentTeamMember,
                 "A member of the Dev Team");
         this.addWithoutUndo(developmentTeamMember);
 
@@ -163,7 +162,7 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
         this.addWithoutUndo(productOwner);
 
         Role developmentTeamMember = new Role(
-                "Development Team Member", Role.RoleType.DevelopmentTeamMember,
+                "Dev Team Member", Role.RoleType.DevelopmentTeamMember,
                 "A member of the Dev Team");
         this.addWithoutUndo(developmentTeamMember);
 
@@ -392,7 +391,7 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
             FileChooser fileChooser = new FileChooser();
             if (Global.lastSaveLocation != null && Global.lastSaveLocation != "")
             {
-                System.out.println("last save dir: " + Global.lastSaveLocation);
+                //System.out.println("last save dir: " + Global.lastSaveLocation);
                 fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
             }
             fileChooser.setInitialFileName(workspace.shortName);
@@ -431,10 +430,13 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
         /* GSON SERIALIZATION */
         try (Writer writer = new FileWriter(workspace.lastSaveLocation))
         {
-            //Gson gson = new GsonBuilder().create();
-            Revert.updateRevertWorkspace(null);
             gson.toJson(workspace, writer);
             writer.close();
+
+            String json = gson.toJson(workspace);
+            //System.out.println(json);
+            Revert.updateRevertState(json);
+
             Global.setCurrentWorkspaceUnchanged();
             Global.lastSaveLocation = Paths.get(workspace.lastSaveLocation).getParent().toString();
 
@@ -442,10 +444,6 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
             //System.out.println("WORKSPACE LOCATION: " + workspace.lastSaveLocation);
             //System.out.println("GLOBAL LOCATION: " + Global.lastSaveLocation);
 
-            Reader reader = new FileReader(workspace.lastSaveLocation);
-
-            Revert.updateRevertWorkspace(gson.fromJson(reader, Workspace.class));
-            Workspace.postDeserialization(Revert.getRevertWorkspace());
 
             App.refreshMainScene();
             Global.commandManager.trackSave();
@@ -476,7 +474,7 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
         fileChooser.setTitle("Open Workspace");
         if (Global.lastSaveLocation != null && Global.lastSaveLocation != "")
         {
-            System.out.println("last save dir: " + Global.lastSaveLocation);
+            //System.out.println("last save dir: " + Global.lastSaveLocation);
             fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
         }
         fileChooser.getExtensionFilters().addAll(
@@ -502,9 +500,19 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
             /* GSON DESERIALIZATION */
             try (Reader reader = new FileReader(selectedFile))
             {
-                Global.currentWorkspace = gson.fromJson(reader, Workspace.class);
-                Reader reader1 = new FileReader(selectedFile);
-                Revert.updateRevertWorkspace(gson.fromJson(reader1, Workspace.class));
+                BufferedReader bufferedReader = new BufferedReader(reader);
+                StringBuilder json = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null)
+                {
+                    json.append(line);
+                }
+                //System.out.println(json);
+
+                Global.currentWorkspace = gson.fromJson(json.toString(), Workspace.class);
+
+                //Revert.updateRevertState(new FileReader(selectedFile));
+
                 reader.close();
             }
             catch (FileNotFoundException e)
@@ -517,8 +525,9 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
             }
             catch (JsonSyntaxException e)
             {
+                e.printStackTrace();
                 Dialogs.create()
-                        .title("File out dated")
+                        .title("File outdated")
                         .message("The specified file was created with a deprecated version of "
                                 + "Sahara.\nThe file cannot be loaded.")
                         .showError();
@@ -534,7 +543,7 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
             }
 
             Workspace.postDeserialization(Global.currentWorkspace);
-            Workspace.postDeserialization(Revert.getRevertWorkspace());
+
             App.refreshMainScene();
 
             Global.commandManager.clear();

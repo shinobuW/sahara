@@ -14,6 +14,8 @@ import seng302.group2.workspace.story.Story;
 import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
 
+import java.time.LocalDate;
+
 /**
  * Created by Jordane on 12/04/2015.
  */
@@ -34,6 +36,7 @@ public class SerialBuilder
                 .addType(Role.class)
                 .addType(Allocation.class)
                 .addType(Story.class)
+                .addType(LocalDate.class)
                 //TODO add backlog.class
                 .registerOn(gsonBuilder);
         return gsonBuilder.create();

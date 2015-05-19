@@ -5,6 +5,7 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Collections;
 
 import javafx.collections.ObservableList;
 import seng302.group2.util.undoredo.Command;
@@ -225,7 +226,7 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
             story.shortName = shortName;
             story.description = description;
             story.project = project;
-
+            Collections.sort(project.getStories());
         }
 
         /**
@@ -236,20 +237,30 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
             story.shortName = oldShortName;
             story.description = oldDescription;
             story.project = oldProject;
+            Collections.sort(project.getStories());
         }
     }
 
+    /**
+     * A class for implementing story deletion in the Command undo/redo structure.
+     */
     private class DeleteStoryCommand implements Command
     {
         private Story story;
         private Project proj;
 
+        /**
+         * Contructor for a story deletion command.
+         */
         DeleteStoryCommand(Story story)
         {
             this.story = story;
             this.proj = story.getProject();
         }
 
+        /**
+         * Executes the deletion of a story.
+         */
         public void execute()
         {
             System.out.println("Exec Story Delete");
@@ -257,6 +268,9 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
             //release.setProject(null);
         }
 
+        /**
+         * Undoes the deletion of a story.
+         */
         public void undo()
         {
             System.out.println("Undone Story Delete");
