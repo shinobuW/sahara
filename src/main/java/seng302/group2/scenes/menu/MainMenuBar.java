@@ -167,9 +167,9 @@ public class MainMenuBar
 
         MenuItem newBacklogItem = new MenuItem("Backlog");
         newBacklogItem.setOnAction((event) ->
-        {
-            CreateBacklogDialog.show();
-        });
+            {
+                CreateBacklogDialog.show();
+            });
         return newBacklogItem;
     }
 
