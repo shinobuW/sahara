@@ -503,7 +503,8 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
                 BufferedReader bufferedReader = new BufferedReader(reader);
                 StringBuilder json = new StringBuilder();
                 String line;
-                while ((line = bufferedReader.readLine()) != null) {
+                while ((line = bufferedReader.readLine()) != null)
+                {
                     json.append(line);
                 }
                 //System.out.println(json);

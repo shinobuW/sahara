@@ -479,15 +479,15 @@ public class MainMenuBar
         editMenu.getItems().addAll(undoItem, redoItem, deleteTreeItem);
 
         fileMenu.setOnShowing((event) -> {
-            if (Global.currentWorkspace.getHasUnsavedChanges())
-            {
-                revertItem.setDisable(false);
-            }
-            else
-            {
-                revertItem.setDisable(true);
-            }
-        });
+                if (Global.currentWorkspace.getHasUnsavedChanges())
+                {
+                    revertItem.setDisable(false);
+                }
+                else
+                {
+                    revertItem.setDisable(true);
+                }
+            });
                 
         editMenu.setOnShowing((event) ->
             {

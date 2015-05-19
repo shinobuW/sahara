@@ -8,7 +8,8 @@ import seng302.group2.workspace.Workspace;
 import java.io.Reader;
 
 /**
- * Allows {@link seng302.group2.workspace.Workspace}s to be reverted to the last given state (as a json serialised workspace).
+ * Allows {@link seng302.group2.workspace.Workspace}s to be reverted to the last given state (as a
+ * json serialised workspace).
  * Created by crw73 on 12/05/15.
  */
 public class Revert
