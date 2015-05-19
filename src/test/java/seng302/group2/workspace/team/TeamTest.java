@@ -168,15 +168,13 @@ public class TeamTest
     public void testCompareTo()
     {
         Team team1 = new Team();
-        Team team1Dupl = new Team();
         Team team2 = new Team();
         team1.setShortName("A");
         team2.setShortName("Z");
-        team1Dupl.setShortName("a");
-        
+
         Assert.assertTrue(team1.compareTo(team2) <= 0);
         Assert.assertTrue(team2.compareTo(team1) >= 0);
-        Assert.assertTrue(team1.compareTo(team1Dupl) == 0);
+        Assert.assertTrue(team1.compareTo(team1) == 0);
     }
 
 

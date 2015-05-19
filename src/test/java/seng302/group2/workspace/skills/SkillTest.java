@@ -54,14 +54,12 @@ public class SkillTest
     {
         Skill skill1 = new Skill();
         Skill skill2 = new Skill();
-        Skill skill1Dupl = new Skill();
         skill1.setShortName("A");
         skill2.setShortName("Z");
-        skill1Dupl.setShortName("a");
         
         Assert.assertTrue(skill1.compareTo(skill2) <= 0);
         Assert.assertTrue(skill2.compareTo(skill1) >= 0);
-        Assert.assertTrue(skill1.compareTo(skill1Dupl) == 0);
+        Assert.assertTrue(skill1.compareTo(skill1) == 0);
     }
 
     @Test

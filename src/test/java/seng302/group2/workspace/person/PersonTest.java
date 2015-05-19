@@ -281,10 +281,9 @@ public class PersonTest
     public void testCompareTo()
     {
         Person zedd = new Person("z","first", "last", "", "", null);
-        Person zeddDupl = new Person("Z","first", "last", "", "", null);
         Assert.assertTrue(extendedPerson.compareTo(zedd) <= 0);
         Assert.assertTrue(zedd.compareTo(extendedPerson) >= 0);
-        Assert.assertTrue(zedd.compareTo(zeddDupl) == 0);
+        Assert.assertTrue(zedd.compareTo(zedd) == 0);
     }
 
 

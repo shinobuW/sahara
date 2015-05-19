@@ -5,9 +5,11 @@ import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
+import seng302.group2.scenes.listdisplay.BacklogCategory;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.StoryCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.skills.Skill;
@@ -166,17 +168,23 @@ public class ProjectTest extends TestCase
         children.add(releasesCategory);
         StoryCategory storiesCategory = new StoryCategory("Stories", proj);
         children.add(storiesCategory);
+        BacklogCategory backlogCategory = new BacklogCategory("Backlog", proj);
+        children.add(backlogCategory);
         Assert.assertEquals(children, proj.getChildren());
 
         Release release = new Release("test release", proj);
         proj.add(release);
         Story story = new Story();
         proj.add(story);
+        Backlog backlog = new Backlog();
+        proj.add(backlog);
         children.clear();
         releasesCategory = new ReleaseCategory("Releases", proj);
         children.add(releasesCategory);
         storiesCategory = new StoryCategory("Stories", proj);
         children.add(storiesCategory);
+        backlogCategory = new BacklogCategory("Backlog", proj);
+        children.add(backlogCategory);
         Assert.assertEquals(children, proj.getChildren());
     }
 
@@ -249,12 +257,13 @@ public class ProjectTest extends TestCase
     public void testCompareTo()
     {
         Project proj = new Project("aShortName", "aLongName", "aDescription");
-        Project proj2 = new Project();
-        
-        Project projDupl = new Project("ASHORTNAME", "aLongName", "aDescription");
+        Project proj2 = new Project("zShortName", "Long Name", "Description");
+
+       System.out.print(proj.compareTo(proj2));
+
         Assert.assertTrue(proj.compareTo(proj2) <= 0);
         Assert.assertTrue(proj2.compareTo(proj) >= 0);
-        Assert.assertTrue(proj.compareTo(projDupl) == 0);
+        Assert.assertTrue(proj.compareTo(proj) == 0);
     }
 
 
