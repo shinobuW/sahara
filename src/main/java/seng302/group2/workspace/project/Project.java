@@ -1,7 +1,9 @@
 package seng302.group2.workspace.project;
 
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
+import seng302.group2.scenes.listdisplay.BacklogCategory;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.StoryCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
@@ -11,6 +13,7 @@ import seng302.group2.util.undoredo.UndoRedoPerformer;
 import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.story.Story;
 import seng302.group2.workspace.team.Allocation;
@@ -18,15 +21,9 @@ import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import javafx.collections.ListChangeListener;
-import seng302.group2.workspace.person.Person;
 
 /**
  * A class representing real-world projects
@@ -44,6 +41,8 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     private List<Allocation> serializableTeamAllocations = new ArrayList<>();
     private transient ObservableList<Story> stories = observableArrayList();
     private List<Story> serializableStories = new ArrayList<>();
+    private transient ObservableList<Backlog> backlogs = observableArrayList();
+    private List<Backlog> serializableBacklogs = new ArrayList<>();
 
     @Deprecated
     private transient ObservableList<Team> teams = observableArrayList();
@@ -255,6 +254,21 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         
     }
 
+    /**
+     * Gets the backlogs of the project
+     * @return list of backlogs
+     */
+    public ObservableList<Backlog> getBacklog()
+    {
+        this.serializableBacklogs.clear();
+        for (Object item : this.backlogs)
+        {
+            this.serializableBacklogs.add((Backlog)item);
+        }
+        return this.backlogs;
+
+    }
+
 
     /**
      * Returns the releases of a project casted as TreeViewItems
@@ -307,6 +321,16 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     {
         return serializableStories;
     }
+
+    /**
+     * Gets the serializable Backlogs
+     * @return the serializable Backlogs
+     */
+    public List<Backlog> getSerilizableBacklogs()
+    {
+        return serializableBacklogs;
+    }
+
 
     /**
      * Gets the list of teams allocated to the project in the past
@@ -396,7 +420,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         Global.commandManager.executeCommand(command);
 
     }
-    
+
     /**
      * Removes a Story from the Project's list of Stories
      * @param story story to remove
@@ -407,6 +431,26 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         story.setProject(null);
     }
 
+    /**
+     * Removes a Backlog from the Project's list of Backlogs
+     * @param backlog Backlog to remove
+     */
+    public void remove(Backlog backlog)
+    {
+        this.stories.remove(backlog);
+        backlog.setProject(null);
+    }
+
+    /**
+     * Adds a Backlog to the Backlog list of Backlogs
+     * @param backlog the Backlog to add
+     */
+    public void add(Backlog backlog)
+    {
+        Command command = new AddBacklogCommand(this, backlog);
+        Global.commandManager.executeCommand(command);
+
+    }
 
     /**
      * Removes a Team from the Project's list of Teams
@@ -622,6 +666,8 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         children.add(releasesCategory);
         StoryCategory storiesCategory = new StoryCategory("Stories", this);
         children.add(storiesCategory);
+        BacklogCategory backlogCategory = new BacklogCategory("Backlog", this);
+        children.add(backlogCategory);
  
 
         return children;
@@ -772,6 +818,27 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         }
     }
 
+    private class AddBacklogCommand implements Command
+    {
+        private Backlog backlog;
+        private Project proj;
+
+        AddBacklogCommand(Project proj, Backlog backlog)
+        {
+            this.proj = proj;
+            this.backlog = backlog;
+        }
+
+        public void execute()
+        {
+            proj.getBacklog().add(backlog);
+        }
+
+        public void undo()
+        {
+            proj.getStories().remove(backlog);
+        }
+    }
 
     private class AddAllocationCommand implements Command
     {

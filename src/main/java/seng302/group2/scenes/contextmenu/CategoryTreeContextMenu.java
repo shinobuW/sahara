@@ -54,6 +54,9 @@ public class CategoryTreeContextMenu extends ContextMenu
             case "Stories":
                 CreateStoryDialog.show();
                 break;
+            case "Backlog":
+                CreateBacklogDialog.show();
+                break;
             default:
                 System.out.println("Create dialog for that category not implemented (yet?)");
                 break;

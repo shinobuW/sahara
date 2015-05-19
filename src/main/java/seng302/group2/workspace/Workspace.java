@@ -116,7 +116,7 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
         this.addWithoutUndo(productOwner);
 
         Role developmentTeamMember = new Role(
-                "Development Team Member", Role.RoleType.DevelopmentTeamMember,
+                "Dev Team Member", Role.RoleType.DevelopmentTeamMember,
                 "A member of the Dev Team");
         this.addWithoutUndo(developmentTeamMember);
 
@@ -162,7 +162,7 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
         this.addWithoutUndo(productOwner);
 
         Role developmentTeamMember = new Role(
-                "Development Team Member", Role.RoleType.DevelopmentTeamMember,
+                "Dev Team Member", Role.RoleType.DevelopmentTeamMember,
                 "A member of the Dev Team");
         this.addWithoutUndo(developmentTeamMember);
 
