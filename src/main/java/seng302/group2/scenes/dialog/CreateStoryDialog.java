@@ -53,7 +53,8 @@ public class CreateStoryDialog
         RequiredField creatorCustomField = new RequiredField("Creator");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description");
         CustomComboBox projectComboBox = new CustomComboBox("Project", true);
-
+        RequiredField priorityNumberField = new RequiredField("Priority");
+        
         String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
         projectComboBox.setValue(firstItem);
 
@@ -105,5 +106,5 @@ public class CreateStoryDialog
         dialog.setContent(grid);
         dialog.show();
     }
-
+    
 }
