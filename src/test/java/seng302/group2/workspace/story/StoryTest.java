@@ -48,11 +48,12 @@ public class StoryTest extends TestCase
         Assert.assertEquals("Untitled Story", story.toString());
         Assert.assertEquals(null, story.getCreator());
 
-        Story testStory = new Story("Test Story", "A long Name", "test description",
+        Story testStory = new Story("Test Story", "A long Name", "test description", "1",
                 "Tyler the Creator", project);
         Assert.assertEquals("Test Story", testStory.getShortName());
         Assert.assertEquals("A long Name", testStory.getLongName());
         Assert.assertEquals("test description", testStory.getDescription());
+        Assert.assertEquals("1", testStory.getPriority());
         Assert.assertEquals("Tyler the Creator", testStory.getCreator());
         Assert.assertEquals("Test Story", testStory.toString()); 
         Assert.assertEquals(project, testStory.getProject());
@@ -68,11 +69,13 @@ public class StoryTest extends TestCase
         story.setShortName("Test Story");
         story.setLongName("Test Long Name");
         story.setDescription("description");
+        story.setPriority("5");
         story.setCreator("Shinobu");
         
         Assert.assertEquals("Test Story", story.getShortName());
         Assert.assertEquals("Test Long Name", story.getLongName());
         Assert.assertEquals("description", story.getDescription());
+        Assert.assertEquals("5", story.getPriority());
         Assert.assertEquals("Shinobu", story.getCreator());
     }
     

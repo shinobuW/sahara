@@ -20,6 +20,7 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
     private String shortName;
     private String longName;
     private String description;
+    private String priority;
     private String creator;
     private Project project;
 
@@ -31,6 +32,7 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
         this.shortName = "Untitled Story";
         this.longName = "Untitled Story";
         this.description = "";
+        this.priority = "";
         this.creator = null;
         this.project = null;
     }
@@ -39,19 +41,23 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
      * Story Constructor with all fields
      * @param shortName short name to identify the story
      * @param longName long name 
-     * @param description description 
+     * @param description description
+     * @param priority the priority of the story
      * @param creator creator of the story
      * @param project project the story belongs to 
      */
-    public Story(String shortName, String longName, String description, String creator,
-            Project project)
+    public Story(String shortName, String longName, String description, String priority,
+                 String creator, Project project)
     {
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
+        this.priority = priority;
         this.creator = creator;
         this.project = project;
     }
+
+    // <editor-fold defaultstate="collapsed" desc="Getters">
 
     /**
      * Gets the short name of the story
@@ -88,11 +94,26 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
     {
         return this.creator;
     }
-    
+
+    /**
+     * Gets the priority of the project
+     * @return an integer representing the priority
+     */
+    public String getPriority()
+    {
+        return this.priority;
+    }
+
+    /**
+     * Gets the project this story belongs to.
+     * @return the project
+     */
     public Project getProject()
     {
         return this.project;
     }
+
+    //</editor-fold>
 
     /**
      * Sets the short name of the story
@@ -128,6 +149,15 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
     public void setCreator(String creator)
     {
         this.creator = creator;
+    }
+
+    /**
+     * Sets the priority of the story
+     * @param priority the new priority to be set
+     */
+    public void setPriority(String priority)
+    {
+        this.priority = priority;
     }
     
     /**
@@ -178,9 +208,11 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
      * @param newDescription The new description
      * @param newProject The new project
      */
-    public void edit(String newShortName, String newDescription, Project newProject)
+    public void edit(String newShortName, String newDescription, Project newProject,
+                     String priority)
     {
-        Command relEdit = new StoryEditCommand(this, newShortName, newDescription, newProject);
+        Command relEdit = new StoryEditCommand(this, newShortName, newDescription, newProject,
+                priority);
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -201,21 +233,25 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
         private Story story;
         private String shortName;
         private String description;
+        private String priority;
         private Project project;
         private String oldShortName;
         private String oldDescription;
+        private String oldPriority;
         private Project oldProject;
 
         private StoryEditCommand(Story story, String newShortName, String newDescription,
-                                   Project newProject)
+                                   Project newProject, String newPriority)
         {
             this.story = story;
             this.shortName = newShortName;
             this.description = newDescription;
             this.project = newProject;
+            this.priority = newPriority;
             this.oldShortName = story.shortName;
             this.oldDescription = story.description;
             this.oldProject = story.project;
+            this.oldPriority = story.priority;
         }
 
         /**
@@ -226,6 +262,7 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
             story.shortName = shortName;
             story.description = description;
             story.project = project;
+            story.priority = priority;
             Collections.sort(project.getStories());
         }
 
@@ -237,6 +274,7 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
             story.shortName = oldShortName;
             story.description = oldDescription;
             story.project = oldProject;
+            story.priority = oldPriority;
             Collections.sort(project.getStories());
         }
     }
