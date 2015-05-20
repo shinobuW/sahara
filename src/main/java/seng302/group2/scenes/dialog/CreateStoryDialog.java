@@ -17,6 +17,7 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
+import static seng302.group2.util.validation.NumberFieldValidator.validateNumberField;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.story.Story;
 
@@ -64,20 +65,22 @@ public class CreateStoryDialog
         }
 
         grid.getChildren().addAll(shortNameCustomField, longNameCustomField, creatorCustomField, 
-                projectComboBox, descriptionTextArea, buttons);
+                priorityNumberField, projectComboBox, descriptionTextArea, buttons);
 
         // Create button event
         btnCreate.setOnAction((event) ->
             {
                 boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctPriority = validateNumberField(priorityNumberField);
 
-                if (correctShortName)
+                if (correctShortName && correctPriority)
                 {
                     //get user input
                     String shortName = shortNameCustomField.getText();
                     String longName = longNameCustomField.getText();
                     String creator = creatorCustomField.getText();
                     String description = descriptionTextArea.getText();
+                    String priority = priorityNumberField.getText();
                  
                     Project project = new Project();
                     for (TreeViewItem item : Global.currentWorkspace.getProjects())
@@ -87,7 +90,8 @@ public class CreateStoryDialog
                             project = (Project)item;
                         }
                     }
-                    Story story = new Story(shortName, longName, description, creator, project);
+                    Story story = new Story(shortName, longName, description, creator, project,
+                            priority);
                     project.add(story);
                     dialog.hide();
                 }

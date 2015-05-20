@@ -48,8 +48,8 @@ public class StoryTest extends TestCase
         Assert.assertEquals("Untitled Story", story.toString());
         Assert.assertEquals(null, story.getCreator());
 
-        Story testStory = new Story("Test Story", "A long Name", "test description", "1",
-                "Tyler the Creator", project);
+        Story testStory = new Story("Test Story", "A long Name", "test description",
+                "Tyler the Creator", project, "1");
         Assert.assertEquals("Test Story", testStory.getShortName());
         Assert.assertEquals("A long Name", testStory.getLongName());
         Assert.assertEquals("test description", testStory.getDescription());
