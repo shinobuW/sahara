@@ -143,6 +143,16 @@ public class Allocation implements Serializable
         return (this.getTimeState() == AllocationStatus.CURRENT);
     }
 
+
+    /**
+     * Deleted the allocation and removes them from project and team
+     */
+    public void delete()
+    {
+        Command deleteAlloc = new DeleteAllocationCommand(this, this.project, this.team);
+        Global.commandManager.executeCommand(deleteAlloc);
+    }
+
     private class AllocationEditCommand implements Command
     {
         private Allocation allocation;
@@ -184,6 +194,36 @@ public class Allocation implements Serializable
         {
             allocation.startDate = oldStartDate;
             allocation.endDate = oldEndDate;
+        }
+    }
+
+
+    private class DeleteAllocationCommand implements Command
+    {
+        private Allocation allocation;
+        private Project project;
+        private Team team;
+
+        DeleteAllocationCommand(Allocation allocation, Project project, Team team)
+        {
+            this.allocation = allocation;
+            this.project = project;
+            this.team = team;
+        }
+
+        public void execute()
+        {
+            team.getProjectAllocations().remove(allocation);
+            project.getTeamAllocations().remove(allocation);
+            // TODO Remove any associations
+        }
+
+        public void undo()
+        {
+            System.out.println("Undone Person Delete");
+            team.getProjectAllocations().add(allocation);
+            project.getTeamAllocations().add(allocation);
+            // TODO Readd any associations
         }
     }
 }
