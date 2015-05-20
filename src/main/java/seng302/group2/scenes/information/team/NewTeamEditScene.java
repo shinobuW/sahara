@@ -11,11 +11,13 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.controlsfx.dialog.ExceptionDialog;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.role.Role;
@@ -285,19 +287,39 @@ public class NewTeamEditScene extends ScrollPane
 
 
     /**
-     * Checks if the current role changes are valid
+     * Checks if the current role changes are valid, and displays a dialog with the first found
+     * violation
      * @return If the role changes are valid
      */
     private boolean areRolesValid()
     {
-        return (!(allocatedScrumMaster == allocatedProductOwner)
-                || allocatedScrumMaster == null)
+        // Find and store errors in validation
+        String errorMessage = null;
+        if (allocatedScrumMaster == allocatedProductOwner && allocatedScrumMaster != null)
+        {
+            errorMessage = "Cannot have the same person assigned to Product Owner and Scrum Master";
+        }
+        else if (allocatedDevelopers.contains(allocatedScrumMaster) && allocatedScrumMaster != null)
+        {
+            errorMessage = "The Scrum Master cannot also be assigned as a developer";
+        }
+        else if (allocatedDevelopers.contains(allocatedProductOwner)
+                && allocatedProductOwner != null)
+        {
+            errorMessage = "The Product Owner cannot also be assigned as a developer";
+        }
 
-                && (!allocatedDevelopers.contains(allocatedScrumMaster) ||
-                allocatedScrumMaster == null)
-
-                && (!allocatedDevelopers.contains(allocatedProductOwner) ||
-                allocatedProductOwner == null);
+        // Display the first found error, or pass if valid
+        if (errorMessage == null)
+        {
+            return true;
+        }
+        else
+        {
+            CustomDialog.showDialog("Invalid Role Assignment", errorMessage,
+                    Alert.AlertType.WARNING);
+            return false;
+        }
     }
 
 }

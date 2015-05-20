@@ -508,8 +508,12 @@ public class MainMenuBar
             {
                 redoItem.setDisable(!Global.commandManager.isRedoAvailable());
                 undoItem.setDisable(!Global.commandManager.isUndoAvailable());
-                
-                if (Global.selectedTreeItem.getValue().getClass() == Category.class
+
+                if (Global.selectedTreeItem == null || Global.selectedTreeItem.getValue() == null)
+                {
+                    deleteTreeItem.setDisable(true);
+                }
+                else if (Global.selectedTreeItem.getValue().getClass() == Category.class
                         || Global.selectedTreeItem.getValue().getClass() == ReleaseCategory.class
                         || Global.selectedTreeItem.getValue().getClass() == Category.class
                         || Global.selectedTreeItem.getValue().getClass() == Workspace.class)
