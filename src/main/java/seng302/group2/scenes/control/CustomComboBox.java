@@ -77,6 +77,7 @@ public class CustomComboBox extends VBox
      */
     public void showErrorField(String errorMessage)
     {
+        this.errorMessageText.setTextFill(Color.web("FF0000"));
         this.errorMessageText.setText(errorMessage);
         showErrorField();
     }

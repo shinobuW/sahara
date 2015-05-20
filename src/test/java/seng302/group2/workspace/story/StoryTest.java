@@ -88,14 +88,12 @@ public class StoryTest extends TestCase
     {
         Story story1 = new Story();
         Story story2 = new Story();
-        Story story1Dupl = new Story();
         story1.setShortName("A");
         story2.setShortName("Z");
-        story1Dupl.setShortName("a");
-        
+
         Assert.assertTrue(story1.compareTo(story2) <= 0);
         Assert.assertTrue(story2.compareTo(story1) >= 0);
-        Assert.assertTrue(story1.compareTo(story1Dupl) == 0);
+        Assert.assertTrue(story1.compareTo(story1) == 0);
     }
     
 }

@@ -5,11 +5,11 @@
  */
 package seng302.group2.util.validation;
 
-import org.controlsfx.dialog.Dialogs;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Allocation;
+import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -55,63 +55,127 @@ public class DateValidator
         }
     }
 
-
     /**
-    * Determines the Validation status of a new allocation, checking if there are any illegal
-    * overlaps with the start or end dates of the team's allocations.
-    * @param alloc The new allocation to check
-    * @param proj The project within which to check the allocations
-    * @return The validation status of the new allocation
-    */
-    public static ValidationStatus validAllocation(Allocation alloc, Project proj)
+     * @param project the project to allocate team to
+     * @param team the team to allocate
+     * @param startDate to validate
+     * @param endDate to validate
+     * @param allocation allocation to be edited if method used for validating allocation
+     * @returns validation status
+     */
+    public static ValidationStatus validateAllocation(Project project, Team team,
+                                                      LocalDate startDate, LocalDate endDate,
+                                                      Allocation allocation)
     {
-        LocalDate allocStart = alloc.getStartDate();
-        LocalDate allocEnd = alloc.getEndDate();
-
-        if (allocEnd != null)
+        if (allocation != null)
         {
-            if (dateAfter(allocStart, allocEnd))
+            project = allocation.getProject();
+            team = allocation.getTeam();
+        }
+
+        if (endDate != null)
+        {
+            if (dateAfter(startDate, endDate))
             {
                 return ValidationStatus.ALLOCATION_DATES_WRONG_ORDER;
             }
         }
-
-        for (Allocation projAlloc : proj.getTeamAllocations())
+        //Go through project's teams
+        for (Allocation alloc : project.getTeamAllocations())
         {
-            if (projAlloc != alloc)
+            if (alloc != allocation && alloc.getTeam() == team) //&& alloc.getProject() == project
             {
-                if (projAlloc.getTeam() == alloc.getTeam())
+                ValidationStatus currentStatus = validateAllocationDate(alloc.getStartDate(),
+                        alloc.getEndDate(),
+                        startDate, endDate);
+                if (currentStatus != ValidationStatus.VALID)
                 {
-                    // Check for date overlaps within a single Teams total allocations
-                    for (Allocation teamAlloc : projAlloc.getTeam().getProjectAllocations())
-                    {
-                        LocalDate teamStart = teamAlloc.getStartDate();
-                        LocalDate teamEnd = teamAlloc.getEndDate();
-                        //Validate with other teams
-                        ValidationStatus teamComparison = validateAllocationDate(teamStart, teamEnd,
-                                allocStart, allocEnd);
-                        if (teamComparison != ValidationStatus.VALID)
-                        {
-                            return teamComparison;
-                        }
-                    }
+                    return currentStatus;
                 }
             }
         }
 
-        Allocation currentAlloc = alloc.getTeam().getCurrentAllocation();
+        Allocation currentAlloc = team.getCurrentAllocation();
         ValidationStatus projectComparison = ValidationStatus.VALID;
-        if (currentAlloc != null)
+        if (currentAlloc != null && currentAlloc != allocation)
         {
             //Check that the team's currently allocated project doesn't overlap with
             // the new allocation
             LocalDate currentAllocStartDate = currentAlloc.getStartDate();
             LocalDate currentAllocEndDate = currentAlloc.getEndDate();
             projectComparison = validateAllocationDate(currentAllocStartDate, currentAllocEndDate,
-                    allocStart, allocEnd);
+                    startDate, endDate);
         }
+
         return projectComparison;
     }
+
+    /**
+     * @returns clashAllocation The first allocation instance it clashes with
+     */
+    public static ValidationStatus validateAllocation(Project project, Team team,
+                                                      LocalDate startDate, LocalDate endDate)
+    {
+        return validateAllocation(project, team, startDate, endDate, null);
+    }
+
+//    /**
+//    * Determines the Validation status of a new allocation, checking if there are any illegal
+//    * overlaps with the start or end dates of the team's allocations.
+//    * @param alloc The new allocation to check
+//    * @param proj The project within which to check the allocations
+//    * @return The validation status of the new allocation
+//    */
+//    public static ValidationStatus validAllocation(Allocation alloc, Project proj)
+//    {
+//        LocalDate allocStart = alloc.getStartDate();
+//        LocalDate allocEnd = alloc.getEndDate();
+//
+//        if (allocEnd != null)
+//        {
+//            if (dateAfter(allocStart, allocEnd))
+//            {
+//                return ValidationStatus.ALLOCATION_DATES_WRONG_ORDER;
+//            }
+//        }
+//
+//        for (Allocation projAlloc : proj.getTeamAllocations())
+//        {
+//            if (projAlloc != alloc)
+//            {
+//                if (projAlloc.getTeam() == alloc.getTeam())
+//                {
+//                    // Check for date overlaps within a single Teams total allocations
+//                    for (Allocation teamAlloc : projAlloc.getTeam().getProjectAllocations())
+//                    {
+//                        LocalDate teamStart = teamAlloc.getStartDate();
+//                        LocalDate teamEnd = teamAlloc.getEndDate();
+//                        //Validate with other teams
+//                        ValidationStatus teamComparison = validateAllocationDate(teamStart,
+// teamEnd,
+//                                allocStart, allocEnd);
+//                        if (teamComparison != ValidationStatus.VALID)
+//                        {
+//                            return teamComparison;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        Allocation currentAlloc = alloc.getTeam().getCurrentAllocation();
+//        ValidationStatus projectComparison = ValidationStatus.VALID;
+//        if (currentAlloc != null)
+//        {
+//            //Check that the team's currently allocated project doesn't overlap with
+//            // the new allocation
+//            LocalDate currentAllocStartDate = currentAlloc.getStartDate();
+//            LocalDate currentAllocEndDate = currentAlloc.getEndDate();
+//            projectComparison = validateAllocationDate(currentAllocStartDate, currentAllocEndDate,
+//                    allocStart, allocEnd);
+//        }
+//        return projectComparison;
+//    }
 
 
     /**
@@ -172,65 +236,6 @@ public class DateValidator
             return ValidationStatus.END_OVERLAP;
         }
         return ValidationStatus.VALID;
-    }
-
-    /**
-     * Determines whether an allocation is valid and what course of action to take
-     * @param alloc The new allocation
-     * @param proj The project within which the new allocation is made
-     * @return Whether the allocation is a valid one based on its start and end dates
-     */
-    public static boolean validateAllocation(Allocation alloc, Project proj)
-    {
-        switch (validAllocation(alloc, proj))
-        {
-            case VALID:
-                return true;
-            case ALLOCATION_DATES_WRONG_ORDER:
-                Dialogs.create()
-                        .title("Allocation Date Error")
-                        .message("The end date of your new allocation cannot be before the start"
-                                + " date!")
-                        .showError();
-                return false;
-            case ALLOCATION_DATES_EQUAL:
-                Dialogs.create()
-                        .title("Allocation Date Error")
-                        .message("An allocation for that team with those start and end dates"
-                                + " already exists!")
-                        .showError();
-                return false;
-            case START_OVERLAP:
-                Dialogs.create()
-                        .title("Allocation Date Error")
-                        .message("The start date of your new allocation overlaps with an already"
-                                + " existing allocation for that team.")
-                        .showError();
-                return false;
-            case END_OVERLAP:
-                Dialogs.create()
-                        .title("Allocation Date Error")
-                        .message("The end date of your new allocation overlaps with an already"
-                                + " existing allocation for that team.")
-                        .showError();
-                return false;
-            case SUPER_OVERLAP:
-                Dialogs.create()
-                        .title("Allocation Date Error")
-                        .message("The start and end dates of your new allocation encompass an"
-                                + " existing allocation for that team.")
-                        .showError();
-                return false;
-            case SUB_OVERLAP:
-                Dialogs.create()
-                        .title("Allocation Date Error")
-                        .message("The start and end dates of your new allocation are encompassed"
-                                + " by an existing allocation for that team.")
-                        .showError();
-                return false;
-            default:
-                return true;
-        }
     }
 
     /**
@@ -344,7 +349,7 @@ public class DateValidator
                 String year = date[date.length - 1];
                 if (year.length() != 4)
                 {
-                    dateField.showErrorField("* Format must be dd/MM/yyyy e.g 12/03/1990");
+                    dateField.showErrorField("* Format must be dd/MM/yyyy");
                     return false;
                 }
                 LocalDate parsedLocalDate = LocalDate.parse(dateString, Global.dateFormatter);
@@ -355,7 +360,7 @@ public class DateValidator
             }
             catch (Exception ex)
             {
-                dateField.showErrorField("* Format must be dd/MM/yyyy e.g 12/03/1990");
+                dateField.showErrorField("* Format must be dd/MM/yyyy");
                 return false;
 
             }
@@ -382,7 +387,7 @@ public class DateValidator
                 customBirthDate.showErrorField("* This is not a valid birth date");
                 return false;
             case PATTERN_MISMATCH:
-                customBirthDate.showErrorField("* Format must be dd/MM/yyyy e.g 12/03/1990");
+                customBirthDate.showErrorField("* Format must be dd/MM/yyyy");
                 return false;
             default:
                 return true;

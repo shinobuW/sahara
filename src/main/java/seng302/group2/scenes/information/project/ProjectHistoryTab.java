@@ -14,10 +14,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialogs;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.util.validation.ValidationStatus;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
@@ -93,27 +96,28 @@ public class ProjectHistoryTab extends Tab
                 @Override
                 public void handle(TableColumn.CellEditEvent<Allocation, String> event)
                 {
+                    isValidEdit = false;
                     if (!event.getNewValue().isEmpty())
                     {
-
-                        Allocation currentAllocation = (Allocation) event.getTableView().getItems()
+                        Allocation currentAlloc = (Allocation) event.getTableView().getItems()
                                 .get(event.getTablePosition().getRow());
-                        Project proj = currentAllocation.getProject();
 
-                        LocalDate currentStartDate = currentAllocation.getStartDate();
                         LocalDate newStartDate = LocalDate.parse(event.getNewValue(),
                                 DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                        currentAllocation.setStartDate(newStartDate);
+                        ValidationStatus editValidationStatus = validateAllocation(
+                                currentAlloc.getProject(), currentAlloc.getTeam(),
+                                newStartDate, currentAlloc.getEndDate(),
+                                currentAlloc);
 
-                        if (validateAllocation(currentAllocation, proj))
+                        if (editValidationStatus == ValidationStatus.VALID)
                         {
-                            isValidEdit = false;
+                            currentAlloc.editStartDate(newStartDate);
+                            isValidEdit = true;
                         }
                         else
                         {
-                            currentAllocation.setStartDate(currentStartDate);
-
-                            isValidEdit = true;
+                            showErrorDialog(editValidationStatus);
+                            isValidEdit = false;
                         }
                     }
                 }
@@ -144,6 +148,7 @@ public class ProjectHistoryTab extends Tab
                         return property;
                     }
                 });
+
         endDateCol.prefWidthProperty().bind(historyTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
         endDateCol.setCellFactory(cellFactory);
@@ -154,26 +159,31 @@ public class ProjectHistoryTab extends Tab
                     @Override
                     public void handle(TableColumn.CellEditEvent<Allocation, String> event)
                     {
+                        isValidEdit = false;
                         if (!event.getNewValue().isEmpty())
                         {
 
-                            Allocation currentAllocation = (Allocation) event.getTableView().
+                            Allocation currentAlloc = (Allocation) event.getTableView().
                                     getItems().get(event.getTablePosition().getRow());
-                            Project proj = currentAllocation.getProject();
 
-                            LocalDate currentEndDate = currentAllocation.getEndDate();
                             LocalDate newEndDate = LocalDate.parse(event.getNewValue(),
                                     DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                            currentAllocation.setEndDate(newEndDate);
 
-                            if (validateAllocation(currentAllocation, proj))
+                            ValidationStatus editValidationStatus =
+                                    validateAllocation(currentAlloc.getProject(),
+                                    currentAlloc.getTeam(),
+                                    currentAlloc.getStartDate(), newEndDate,
+                                    currentAlloc);
+
+                            if (editValidationStatus == ValidationStatus.VALID)
                             {
-                                isValidEdit = false;
+                                currentAlloc.editEndDate(newEndDate);
+                                isValidEdit = true;
                             }
                             else
                             {
-                                currentAllocation.setEndDate(currentEndDate);
-                                isValidEdit = true;
+                                showErrorDialog(editValidationStatus);
+                                isValidEdit = false;
                             }
 
                         }
@@ -181,13 +191,16 @@ public class ProjectHistoryTab extends Tab
                 });
 
         Button addButton = new Button("Add");
+        Button deleteButton = new Button("Delete");
         HBox newAllocationFields = new HBox(10);
         newAllocationFields.setAlignment(Pos.CENTER);
         CustomComboBox teamComboBox = new CustomComboBox("Team", true);
         CustomDatePicker startDatePicker = new CustomDatePicker("Start Date", true);
         CustomDatePicker endDatePicker = new CustomDatePicker("End Date", false);
+
         startDatePicker.setStyle("-fx-pref-width: 200;");
         endDatePicker.setStyle("-fx-pref-width: 200;");
+
         teamComboBox.prefWidthProperty().bind(historyTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
         startDatePicker.prefWidthProperty().bind(historyTable.widthProperty()
@@ -226,15 +239,18 @@ public class ProjectHistoryTab extends Tab
                         }
                     }
 
-                    Allocation alloc = new Allocation(currentProject, selectedTeam,
-                            startDate, endDate);
-
-                    if (validateAllocation(alloc, currentProject))
+                    if (validateAllocation(currentProject, selectedTeam, startDate, endDate)
+                            == ValidationStatus.VALID)
                     {
+                        Allocation alloc = new Allocation(currentProject, selectedTeam,
+                                startDate, endDate);
                         currentProject.add(alloc);
+                        selectedTeam.add(alloc);
                     }
                     else
                     {
+                        showErrorDialog(validateAllocation(currentProject,
+                                selectedTeam, startDate, endDate));
                         event.consume();
                     }
                 }
@@ -252,10 +268,93 @@ public class ProjectHistoryTab extends Tab
                     }
                 }
             });
+
+        deleteButton.setOnAction((event) ->
+            {
+                Allocation selectedAlloc = historyTable.getSelectionModel().getSelectedItem();
+                if (selectedAlloc != null)
+                {
+                    Action response = Dialogs.create()
+                            .title("Delete Allocation?")
+                            .message("Do you really want to delete this allocation?")
+                            .showConfirm();
+
+                    if (response == org.controlsfx.dialog.Dialog.ACTION_YES)
+                    {
+                        selectedAlloc.delete();
+                    }
+                    else if (response == org.controlsfx.dialog.Dialog.ACTION_NO)
+                    {
+                        event.consume();
+                    }
+                }
+            });
+
         historyTable.setItems(data);
         historyTable.getColumns().addAll(teamCol, startDateCol, endDateCol);
-        historyPane.getChildren().addAll(title, historyTable, newAllocationFields, addButton);
+        historyPane.getChildren().addAll(title, historyTable, newAllocationFields, addButton,
+                deleteButton);
     }
+
+
+    /**
+     * Displays the appropriate error dialog according to the validation status
+     * @param status the validation status
+     */
+    private void showErrorDialog(ValidationStatus status)
+    {
+        switch (status)
+        {
+            case VALID:
+                break;
+            case ALLOCATION_DATES_WRONG_ORDER:
+                Dialogs.create()
+                        .title("Allocation Date Error")
+                        .message("The end date of your new allocation cannot be before the start"
+                                + " date!")
+                        .showError();
+                break;
+            case ALLOCATION_DATES_EQUAL:
+                Dialogs.create()
+                        .title("Allocation Date Error")
+                        .message("An allocation for that team with those start and end dates"
+                                + " already exists!")
+                        .showError();
+                break;
+            case START_OVERLAP:
+                Dialogs.create()
+                        .title("Allocation Date Error")
+                        .message("The start date of your new allocation overlaps with an already"
+                                + " existing allocation for that team.")
+                        .showError();
+                break;
+            case END_OVERLAP:
+                Dialogs.create()
+                        .title("Allocation Date Error")
+                        .message("The end date of your new allocation overlaps with an already"
+                                + " existing allocation for that team.")
+                        .showError();
+                break;
+            case SUPER_OVERLAP:
+                Dialogs.create()
+                        .title("Allocation Date Error")
+                        .message("The start and end dates of your new allocation encompass an"
+                                + " existing allocation for that team.")
+                        .showError();
+                break;
+            case SUB_OVERLAP:
+                Dialogs.create()
+                        .title("Allocation Date Error")
+                        .message("The start and end dates of your new allocation are encompassed"
+                                + " by an existing allocation for that team.")
+                        .showError();
+                break;
+            default:
+                System.out.println("Error: Cannot recognise validation status");
+                break;
+        }
+    }
+
 
     class EditingCell extends TableCell<Allocation, String>
     {
@@ -331,7 +430,7 @@ public class ProjectHistoryTab extends Tab
                         {
                             setText(getString());
                         }
-                        else if (!isValidEdit)
+                        else if (isValidEdit)
                         {
                             setText(datePicker.getValue().format(Global.dateFormatter));
                         }

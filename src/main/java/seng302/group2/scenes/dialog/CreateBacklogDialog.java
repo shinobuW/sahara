@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package seng302.group2.scenes.dialog;
 
 import javafx.geometry.Insets;
@@ -16,15 +11,18 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
+import seng302.group2.workspace.backlog.Backlog;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.story.Story;
+import seng302.group2.workspace.team.Team;
+
+import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
- * Class to create a pop up dialog for creating a story
- * @author swi67
+ * Class to create a pop up dialog for creating a backlog
+ * Created by cvs20 on 19/05/15.
  */
-public class CreateStoryDialog
+public class CreateBacklogDialog
 {
     /**
      * Displays the Dialog box for creating a story.
@@ -32,7 +30,7 @@ public class CreateStoryDialog
     public static void show()
     {
         // Initialise Dialog and GridPane
-        Dialog dialog = new Dialog(null, "New Story");
+        Dialog dialog = new Dialog(null, "New Backlog");
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
@@ -50,21 +48,34 @@ public class CreateStoryDialog
         // Add elements to grid
         RequiredField shortNameCustomField = new RequiredField("Short Name");
         RequiredField longNameCustomField = new RequiredField("Long Name");
-        RequiredField creatorCustomField = new RequiredField("Creator");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description");
         CustomComboBox projectComboBox = new CustomComboBox("Project", true);
-        RequiredField priorityNumberField = new RequiredField("Priority");
-        
-        String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
-        projectComboBox.setValue(firstItem);
+        CustomComboBox productOwnerComboBox = new CustomComboBox("Product Owner", true);
+
+        if (Global.currentWorkspace.getPeople().size() > 0)
+        {
+            String firstItem = Global.currentWorkspace.getPeople().get(0).toString();
+            projectComboBox.setValue(firstItem);
+        }
 
         for (TreeViewItem project : Global.currentWorkspace.getProjects())
         {
             projectComboBox.addToComboBox(project.toString());
         }
 
-        grid.getChildren().addAll(shortNameCustomField, longNameCustomField, creatorCustomField, 
-                projectComboBox, descriptionTextArea, buttons);
+        for (Project project : Global.currentWorkspace.getProjects())
+        {
+            if (project.toString().equals(projectComboBox.getValue()))
+            {
+                for (Team team : project.getCurrentTeams())
+                {
+                    productOwnerComboBox.addToComboBox(team.getProductOwner().toString());
+                }
+            }
+        }
+
+        grid.getChildren().addAll(shortNameCustomField, longNameCustomField,
+                projectComboBox, productOwnerComboBox, descriptionTextArea, buttons);
 
         // Create button event
         btnCreate.setOnAction((event) ->
@@ -76,9 +87,8 @@ public class CreateStoryDialog
                     //get user input
                     String shortName = shortNameCustomField.getText();
                     String longName = longNameCustomField.getText();
-                    String creator = creatorCustomField.getText();
                     String description = descriptionTextArea.getText();
-                 
+
                     Project project = new Project();
                     for (TreeViewItem item : Global.currentWorkspace.getProjects())
                     {
@@ -87,8 +97,21 @@ public class CreateStoryDialog
                             project = (Project)item;
                         }
                     }
-                    Story story = new Story(shortName, longName, description, creator, project);
-                    project.add(story);
+
+                    Person productOwner = new Person();
+                    for (Team team : project.getCurrentTeams())
+                    {
+                        if (team.getProductOwner().toString().equals(
+                                (productOwnerComboBox.getValue())))
+                        {
+                            productOwner = team.getProductOwner();
+                        }
+                    }
+
+
+                    Backlog backlog = new Backlog(shortName, longName, description, productOwner,
+                            project);
+                    project.add(backlog);
                     dialog.hide();
                 }
                 else
@@ -106,5 +129,4 @@ public class CreateStoryDialog
         dialog.setContent(grid);
         dialog.show();
     }
-    
 }

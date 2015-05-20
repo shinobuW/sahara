@@ -194,8 +194,8 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         for (Allocation allocation : this.getProjectAllocations())
         {
             if (allocation.getStartDate().isBefore(now)
-                    && (allocation.getEndDate().isAfter(now)
-                            || allocation.getEndDate() == null))
+                    && (allocation.getEndDate() == null
+                            || allocation.getEndDate().isAfter(now)))
             {
                 currentAllocation = allocation;
             }
@@ -449,8 +449,8 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
     @Override
     public int compareTo(Team compareTeam)
     {
-        String team1ShortName = this.getShortName().toUpperCase();
-        String team2ShortName = compareTeam.getShortName().toUpperCase();
+        String team1ShortName = this.getShortName();
+        String team2ShortName = compareTeam.getShortName();
         return team1ShortName.compareTo(team2ShortName);
     }
     
@@ -680,7 +680,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
 
         public void execute()
         {
-            proj.getTeamAllocations().add(allocation);
+            //proj.getTeamAllocations().add(allocation);
             team.getProjectAllocations().add(allocation);
         }
 

@@ -75,15 +75,13 @@ public class ReleaseTest
     public void testCompareTo()
     {
         Release release1 = new Release();
-        Release release1Dupl = new Release();
         Release release2 = new Release();
         release1.setShortName("A");
         release2.setShortName("Z");
-        release1Dupl.setShortName("a");
         
         Assert.assertTrue(release1.compareTo(release2) <= 0);
         Assert.assertTrue(release2.compareTo(release1) >= 0);
-        Assert.assertTrue(release1.compareTo(release1Dupl) == 0);
+        Assert.assertTrue(release1.compareTo(release1) == 0);
     }
 
 

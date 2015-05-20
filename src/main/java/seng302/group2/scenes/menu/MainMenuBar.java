@@ -23,7 +23,6 @@ import seng302.group2.util.revert.Revert;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.Workspace.SaveLoadResult;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
@@ -164,6 +163,16 @@ public class MainMenuBar
         return newStoryItem;
     }
 
+    private static MenuItem createBacklogItem()
+    {
+
+        MenuItem newBacklogItem = new MenuItem("Backlog");
+        newBacklogItem.setOnAction((event) ->
+            {
+                CreateBacklogDialog.show();
+            });
+        return newBacklogItem;
+    }
 
     /**
      * Creates a menu item "Team" and sets the on action event if "Team" is clicked.
@@ -425,13 +434,13 @@ public class MainMenuBar
         MenuItem newTeamItem = createTeamItem();
         MenuItem newReleaseItem = createReleaseItem();
         MenuItem newStoryItem = createStoryItem();
+        MenuItem newBacklogItem = createBacklogItem();
 
         // Create other items for file menu
         MenuItem openItem = createOpenItem();
         MenuItem saveItem = createSaveItem();
         MenuItem saveAsItem = createSaveAsItem();
         MenuItem exportItem = createExportItem();
-        MenuItem revertItem = createRevertItem();
         MenuItem quitProgramItem = createQuitItem();
         
         newBranch.getItems().add(newWorkspaceItem);
@@ -441,27 +450,22 @@ public class MainMenuBar
         newBranch.getItems().add(newTeamItem);
         newBranch.getItems().add(newReleaseItem);
         newBranch.getItems().add(newStoryItem);
+        newBranch.getItems().add(newBacklogItem);
 
 
         if (Global.currentWorkspace.getProjects().isEmpty())
         {
             newReleaseItem.setDisable(true);
             newStoryItem.setDisable(true);
+            newBacklogItem.setDisable(true);
         }
         else
         {
             newReleaseItem.setDisable(false);
             newStoryItem.setDisable(false);
+            newBacklogItem.setDisable(false);
         }
-        System.out.println(Revert.getRevertWorkspace());
-        if (Revert.getRevertState())
-        {
-            revertItem.setDisable(false);
-        }
-        else
-        {
-            revertItem.setDisable(true);
-        }
+
 
         // Create 'Edit >' sub-menu
         Menu editMenu = new Menu("Edit");
@@ -471,6 +475,7 @@ public class MainMenuBar
         MenuItem undoItem = createUndoItem();
         MenuItem redoItem = createRedoItem();
         MenuItem deleteTreeItem = createDeleteTreeItem();
+        MenuItem revertItem = createRevertItem();
 
         // Create 'Display >' sub-menu
         Menu displayMenu = new Menu("Display");
@@ -487,6 +492,17 @@ public class MainMenuBar
                 quitProgramItem);
         
         editMenu.getItems().addAll(undoItem, redoItem, deleteTreeItem);
+
+        fileMenu.setOnShowing((event) -> {
+                if (Global.currentWorkspace.getHasUnsavedChanges())
+                {
+                    revertItem.setDisable(false);
+                }
+                else
+                {
+                    revertItem.setDisable(true);
+                }
+            });
                 
         editMenu.setOnShowing((event) ->
             {

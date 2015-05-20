@@ -287,7 +287,7 @@ public class TeamEditScene
             {
                 ObservableList<Integer> selectedPeople =
                         teamsPeopleBox.getSelectionModel().getSelectedIndices();
-                System.out.println(selectedPeople);
+                //System.out.println(selectedPeople);
                 for (int i : selectedPeople)
                 {
                     teamRoles.add(tempTeam.get(i).getRole());

@@ -103,8 +103,8 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
     @Override
     public int compareTo(Skill compareSkill)
     {
-        String skill1ShortName = this.getShortName().toUpperCase();
-        String skill2ShortName = compareSkill.getShortName().toUpperCase();
+        String skill1ShortName = this.getShortName();
+        String skill2ShortName = compareSkill.getShortName();
         return skill1ShortName.compareTo(skill2ShortName);
     }
     

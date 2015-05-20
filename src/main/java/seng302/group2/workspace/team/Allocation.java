@@ -1,6 +1,10 @@
 package seng302.group2.workspace.team;
 
+import javafx.collections.ObservableList;
+import seng302.group2.Global;
+import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.skills.Skill;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -39,18 +43,26 @@ public class Allocation implements Serializable
      * Sets the start date of the allocation
      * @param date Start date to set
      */
-    public void setStartDate(LocalDate date)
+    public void editStartDate(LocalDate date)
     {
         this.startDate = date;
+
+        AllocationEditCommand allocEdit = new AllocationEditCommand(this, date, endDate);
+        Global.commandManager.executeCommand(allocEdit);
+
     }
 
     /**
      * Sets the end date of the allocation
      * @param date End date to set
-     */
-    public void setEndDate(LocalDate date)
+    */
+    public void editEndDate(LocalDate date)
     {
         this.endDate = date;
+
+        AllocationEditCommand allocEdit = new AllocationEditCommand(this, startDate, date);
+        Global.commandManager.executeCommand(allocEdit);
+
     }
 
     /**
@@ -129,5 +141,89 @@ public class Allocation implements Serializable
     public boolean isCurrentAllocation()
     {
         return (this.getTimeState() == AllocationStatus.CURRENT);
+    }
+
+
+    /**
+     * Deleted the allocation and removes them from project and team
+     */
+    public void delete()
+    {
+        Command deleteAlloc = new DeleteAllocationCommand(this, this.project, this.team);
+        Global.commandManager.executeCommand(deleteAlloc);
+    }
+
+    private class AllocationEditCommand implements Command
+    {
+        private Allocation allocation;
+
+        private LocalDate startDate;
+        private LocalDate endDate;
+
+        private LocalDate oldStartDate;
+        private LocalDate oldEndDate;
+
+        private ObservableList<Skill> oldSkills;
+
+        protected AllocationEditCommand(Allocation alloc, LocalDate newStartDate,
+                                        LocalDate newEndDate)
+        {
+            this.allocation = alloc;
+
+            this.startDate = newStartDate;
+            this.endDate = newEndDate;
+
+
+            this.oldStartDate = allocation.startDate;
+            this.oldEndDate = allocation.endDate;
+        }
+
+        /**
+         * Executes/Redoes the changes of the allocation edit
+         */
+        public void execute()
+        {
+            allocation.startDate = startDate;
+            allocation.endDate = endDate;
+        }
+
+        /**
+         * Undoes the changes of the person edit
+         */
+        public void undo()
+        {
+            allocation.startDate = oldStartDate;
+            allocation.endDate = oldEndDate;
+        }
+    }
+
+
+    private class DeleteAllocationCommand implements Command
+    {
+        private Allocation allocation;
+        private Project project;
+        private Team team;
+
+        DeleteAllocationCommand(Allocation allocation, Project project, Team team)
+        {
+            this.allocation = allocation;
+            this.project = project;
+            this.team = team;
+        }
+
+        public void execute()
+        {
+            team.getProjectAllocations().remove(allocation);
+            project.getTeamAllocations().remove(allocation);
+            // TODO Remove any associations
+        }
+
+        public void undo()
+        {
+            System.out.println("Undone Person Delete");
+            team.getProjectAllocations().add(allocation);
+            project.getTeamAllocations().add(allocation);
+            // TODO Readd any associations
+        }
     }
 }
