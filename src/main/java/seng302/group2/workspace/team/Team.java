@@ -680,7 +680,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
 
         public void execute()
         {
-            proj.getTeamAllocations().add(allocation);
+            //proj.getTeamAllocations().add(allocation);
             team.getProjectAllocations().add(allocation);
         }
 

@@ -167,16 +167,20 @@ public class ProjectHistoryTab extends Tab
                             LocalDate newEndDate = LocalDate.parse(event.getNewValue(),
                                     DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-                            if (validateAllocation(currentAlloc.getProject(),
+                            ValidationStatus editValidationStatus =
+                                    validateAllocation(currentAlloc.getProject(),
                                     currentAlloc.getTeam(),
                                     currentAlloc.getStartDate(), newEndDate,
-                                    currentAlloc) == ValidationStatus.VALID)
+                                    currentAlloc);
+
+                            if (editValidationStatus == ValidationStatus.VALID)
                             {
                                 currentAlloc.editEndDate(newEndDate);
                                 isValidEdit = true;
                             }
                             else
                             {
+                                showErrorDialog(editValidationStatus);
                                 isValidEdit = false;
                             }
 
@@ -242,6 +246,8 @@ public class ProjectHistoryTab extends Tab
                     }
                     else
                     {
+                        showErrorDialog(validateAllocation(currentProject,
+                                selectedTeam, startDate, endDate));
                         event.consume();
                     }
                 }
