@@ -420,6 +420,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
      * @param newBirthDate  The persons new birth date
      * @param newDescription The persons new description
      * @param newSkills     the persons new list of skills
+     * @param newTeam  the persons new team
      */
     public void edit(String newShortName, String newFirstName, String newLastName,
                      String newEmail, LocalDate newBirthDate, String newDescription,

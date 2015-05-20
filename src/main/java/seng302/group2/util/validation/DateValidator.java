@@ -20,6 +20,11 @@ import java.time.format.DateTimeParseException;
  */
 public class DateValidator
 {
+    /**
+     * Checks is the given string is a valid birth date
+     * @param birthDate the string representation of a birth date
+     * @return The validation status of the check
+     */
     public static ValidationStatus isValidBirthdate(String birthDate)
     {
         if (birthDate.isEmpty())
@@ -56,12 +61,13 @@ public class DateValidator
     }
 
     /**
+     * Checks if the given allocation parameters are valid
      * @param project the project to allocate team to
      * @param team the team to allocate
      * @param startDate to validate
      * @param endDate to validate
      * @param allocation allocation to be edited if method used for validating allocation
-     * @returns validation status
+     * @return validation status
      */
     public static ValidationStatus validateAllocation(Project project, Team team,
                                                       LocalDate startDate, LocalDate endDate,
@@ -110,8 +116,14 @@ public class DateValidator
         return projectComparison;
     }
 
+
     /**
-     * @returns clashAllocation The first allocation instance it clashes with
+     * Checks for clashing allocations?
+     * @param endDate The end date of the allocation
+     * @param project The project that the allocation is for
+     * @param startDate The start date of the allocation
+     * @param team The team that the allocation is for
+     * @return clashAllocation The first allocation instance it clashes with
      */
     public static ValidationStatus validateAllocation(Project project, Team team,
                                                       LocalDate startDate, LocalDate endDate)
@@ -185,7 +197,7 @@ public class DateValidator
      * @param endDate1 the end date to check
      * @param startDate2 the start date to compare to
      * @param endDate2 the end date to compare to
-     * @return
+     * @return The validation status of the check
      */
     public static ValidationStatus validateAllocationDate(LocalDate startDate1, LocalDate endDate1,
                                                           LocalDate startDate2, LocalDate endDate2)

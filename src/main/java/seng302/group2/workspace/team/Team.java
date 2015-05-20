@@ -507,6 +507,10 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
      * the team with the new parameter values.
      * @param newShortName The new short name
      * @param newDescription The new description
+     * @param newDevelopers The new developers
+     * @param newMembers The new team members
+     * @param newPO The new product owner
+     * @param newSM The new scrum master
      */
     public void edit(String newShortName, String newDescription, Collection<Person> newMembers,
                      Person newPO, Person newSM, Collection<Person> newDevelopers)

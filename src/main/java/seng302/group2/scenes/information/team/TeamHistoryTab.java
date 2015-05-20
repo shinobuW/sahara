@@ -27,12 +27,13 @@ import java.time.format.DateTimeFormatter;
  */
 public class TeamHistoryTab extends Tab
 {
+    Boolean isValidEdit;
+
     /**
      * Constructor for team allocation tab
-     * @param currentTeam currently selected project
+     * @param currentTeam currently selected team
      */
-    Boolean isValidEdit;
-    TeamHistoryTab(Team currentTeam)
+    public TeamHistoryTab(Team currentTeam)
     {
         this.setText("Allocation History");
         Pane historyPane = new VBox(10);  // The pane that holds the basic info

@@ -688,6 +688,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
      * @param newShortName The new short name
      * @param newLongName The new long name
      * @param newDescription The new description
+     * @param teams The new project teams
      */
     public void edit(String newShortName, String newLongName, String newDescription,
                      ObservableList<Team> teams)

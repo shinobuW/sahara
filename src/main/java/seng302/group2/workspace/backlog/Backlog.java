@@ -45,6 +45,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
      * @param longName long name
      * @param description description
      * @param productOwner product owner of the backlog
+     * @param project the project the backlog belongs to
      */
     public Backlog(String shortName, String longName, String description,
                    Person productOwner, Project project)

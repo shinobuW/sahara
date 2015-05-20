@@ -44,7 +44,8 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
      * @param longName long name 
      * @param description description 
      * @param creator creator of the story
-     * @param project project the story belongs to 
+     * @param project project the story belongs to
+     * @param priority the projects priority
      */
     public Story(String shortName, String longName, String description, String creator,
             Project project, String priority)
@@ -222,6 +223,7 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
      * @param newShortName The new short name
      * @param newDescription The new description
      * @param newProject The new project
+     * @param newPriority The new priority
      */
     public void edit(String newShortName, String newDescription, Project newProject,
                      String newPriority)
@@ -304,6 +306,7 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
 
         /**
          * Contructor for a story deletion command.
+         * @param story The story to delete
          */
         DeleteStoryCommand(Story story)
         {

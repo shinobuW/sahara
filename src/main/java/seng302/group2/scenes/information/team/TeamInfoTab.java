@@ -21,6 +21,10 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public class TeamInfoTab extends Tab
 {
+    /**
+     * Constructor for team basic information tab
+     * @param currentTeam currently selected team
+     */
     public TeamInfoTab(Team currentTeam)
     {
         this.setText("Basic Information");

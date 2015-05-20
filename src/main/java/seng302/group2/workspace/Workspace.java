@@ -920,6 +920,8 @@ public class Workspace extends TreeViewItem implements Serializable
     /**
      * Perform post-deserialization steps (performs on Global.currentWorkspace for now).
      * 1) Transform ArrayLists back into ObservableLists
+     * 2) Add listeners back to the workspace (and recursively project..etc.)
+     * @param workspace The workspace to prepare
      */
     public static void postDeserialization(Workspace workspace)
     {
