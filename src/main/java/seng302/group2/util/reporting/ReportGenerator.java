@@ -280,7 +280,7 @@ public class ReportGenerator
         {
             if (person.getRole() != null)
             {
-                if (person.getRole().getType() == Role.RoleType.DevelopmentTeamMember)
+                if (person.getRole().getType() == Role.RoleType.DEVELOPMENT_TEAM_MEMBER)
                 {
                     Element personElement = generatePerson(person);
                     devElement.appendChild(personElement);
@@ -294,7 +294,7 @@ public class ReportGenerator
         {
             if (person.getRole() != null)
             {
-                if (person.getRole().getType() == Role.RoleType.Others)
+                if (person.getRole().getType() == Role.RoleType.OTHER)
                 {
                     Element personElement = generatePerson(person);
                     othersElement.appendChild(personElement);
@@ -365,7 +365,7 @@ public class ReportGenerator
         {
             if (person.getRole() != null)
             {
-                if (person.getRole().getType() == Role.RoleType.DevelopmentTeamMember)
+                if (person.getRole().getType() == Role.RoleType.DEVELOPMENT_TEAM_MEMBER)
                 {
                     Element personElement = generatePerson(person);
                     devElement.appendChild(personElement);
@@ -379,7 +379,7 @@ public class ReportGenerator
         {
             if (person.getRole() != null)
             {
-                if (person.getRole().getType() == Role.RoleType.Others)
+                if (person.getRole().getType() == Role.RoleType.OTHER)
                 {
                     Element personElement = generatePerson(person);
                     othersElement.appendChild(personElement);

@@ -135,7 +135,7 @@ public class TeamEditScene
         {
             for (Skill memSkill : teamMember.getSkills())
             {
-                if (memSkill.getShortName().equals("Product Owner"))
+                if (memSkill.getShortName().toLowerCase().equals("product owner"))
                 {
                     productOwnerBox.addToComboBox(teamMember.toString());
                     break;
@@ -155,7 +155,7 @@ public class TeamEditScene
         {
             for (Skill memSkill : teamMember.getSkills())
             {
-                if (memSkill.getShortName().equals("Scrum Master"))
+                if (memSkill.getShortName().toLowerCase().equals("scrum master"))
                 {
                     scrumMasterBox.addToComboBox(teamMember.toString());
                     break;
@@ -296,7 +296,6 @@ public class TeamEditScene
                     refreshListView(tempTeam, v1);
                     refreshComboBox(tempTeam, v3);
                 }
-
             });
 
         rmvDev.setOnAction((event) ->
@@ -426,10 +425,10 @@ public class TeamEditScene
                             else if (selectedPerson.getRole() != null) 
                             {
                                 if (selectedPerson.getRole().getType() 
-                                        == Role.RoleType.ScrumMaster)
+                                        == Role.RoleType.SCRUM_MASTER)
                                 {
                                     selectedPerson.setRole(Role.getRoleType(
-                                            Role.RoleType.Others));
+                                            Role.RoleType.OTHER));
                                 }
                             }
 
@@ -463,9 +462,9 @@ public class TeamEditScene
                             else if (selectedPerson.getRole() != null) 
                             {
                                 if (selectedPerson.getRole().getType() 
-                                            == Role.RoleType.ProductOwner)
+                                            == Role.RoleType.PRODUCT_OWNER)
                                 {
-                                    selectedPerson.setRole(Role.getRoleType(Role.RoleType.Others));
+                                    selectedPerson.setRole(Role.getRoleType(Role.RoleType.OTHER));
                                 }
                             }
                         }
@@ -529,16 +528,16 @@ public class TeamEditScene
                                             UndoRedoPerformer.UndoRedoProperty.PERSON_TEAM, 
                                             null)));
                             
-                            if (person.getRole() == Role.getRoleType(Role.RoleType.ScrumMaster))
+                            if (person.getRole() == Role.getRoleType(Role.RoleType.SCRUM_MASTER))
                             {
                                 currentTeam.setScrumMaster(null);
                             }
                             else if (person.getRole() == Role.getRoleType(
-                                    Role.RoleType.ScrumMaster))
+                                    Role.RoleType.SCRUM_MASTER))
                             {
                                 currentTeam.setScrumMaster(null);
                             }
-                            person.setRole(Role.getRoleType(Role.RoleType.Others));
+                            person.setRole(Role.getRoleType(Role.RoleType.OTHER));
                             person.getTeam().remove(person, false);
                             person.setTeam((Team)Global.getUnassignedTeam());
                             ((Team)Global.getUnassignedTeam())
@@ -702,7 +701,6 @@ public class TeamEditScene
     */
     private static void refreshComboBox(ObservableList<Person> currentTeam, VBox v3)
     {
-
         v3.getChildren().remove(productOwnerBox);
         v3.getChildren().remove(scrumMasterBox);
         
@@ -768,7 +766,6 @@ public class TeamEditScene
         {
             scrumMasterBox.setValue(currentSM.toString());
         }
-
 
         v3.getChildren().add(productOwnerBox);
         v3.getChildren().add(scrumMasterBox);

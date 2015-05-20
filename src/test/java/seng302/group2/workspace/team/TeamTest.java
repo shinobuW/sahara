@@ -64,8 +64,8 @@ public class TeamTest
         Assert.assertEquals("Chardonnay", team.getProductOwner().getShortName());
         Assert.assertEquals("unnamed", team.getScrumMaster().getShortName());
         //Setting Team and People Roles should be seperate
-        //Assert.assertEquals(RoleType.ProductOwner, team.getProductOwner().getRole().getType());
-        //Assert.assertEquals(RoleType.ScrumMaster, team.getScrumMaster().getRole().getType());
+        //Assert.assertEquals(RoleType.PRODUCT_OWNER, team.getProductOwner().getRole().getType());
+        //Assert.assertEquals(RoleType.SCRUM_MASTER, team.getScrumMaster().getRole().getType());
     }
 
     /**

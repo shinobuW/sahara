@@ -25,13 +25,13 @@ public class RoleTest
         Assert.assertEquals("", role.getDescription());
         Assert.assertEquals("role Name", role.toString());
         
-        Role role2 = new Role("QA", Role.RoleType.Others);
+        Role role2 = new Role("QA", Role.RoleType.OTHER);
         Assert.assertEquals("QA", role2.getShortName());
-        Assert.assertEquals(Role.RoleType.Others, role2.getType());
+        Assert.assertEquals(Role.RoleType.OTHER, role2.getType());
         
-        Role role3 = new Role("Dev2", Role.RoleType.DevelopmentTeamMember, "Developer");
+        Role role3 = new Role("Dev2", Role.RoleType.DEVELOPMENT_TEAM_MEMBER, "Developer");
         Assert.assertEquals("Dev2", role3.getShortName());
-        Assert.assertEquals(Role.RoleType.DevelopmentTeamMember, role3.getType());
+        Assert.assertEquals(Role.RoleType.DEVELOPMENT_TEAM_MEMBER, role3.getType());
         Assert.assertEquals("Developer", role3.getDescription());
     }
     
@@ -44,11 +44,11 @@ public class RoleTest
         Role role = new Role();
         role.setShortName("Tester");
         role.setDescription("Manual Testing");
-        role.setType(Role.RoleType.Others);
+        role.setType(Role.RoleType.OTHER);
         
         Assert.assertEquals("Tester", role.getShortName());
         Assert.assertEquals("Manual Testing", role.getDescription());
-        Assert.assertEquals(Role.RoleType.Others, role.getType());
+        Assert.assertEquals(Role.RoleType.OTHER, role.getType());
     }
 
 }

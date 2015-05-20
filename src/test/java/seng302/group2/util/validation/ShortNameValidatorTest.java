@@ -17,10 +17,8 @@ import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
 
 
 /**
@@ -59,7 +57,7 @@ public class ShortNameValidatorTest
         Person apers = new Person();
         apers.setShortName("PERS");
         Skill skill = new Skill("SKILL", "Desc");
-        Role role = new Role("ROLE", Role.RoleType.Others);
+        Role role = new Role("ROLE", Role.RoleType.OTHER);
 
         proj.addWithoutUndo(rel);
         ws.addWithoutUndo(proj);

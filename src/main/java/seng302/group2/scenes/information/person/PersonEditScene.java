@@ -204,19 +204,19 @@ public class PersonEditScene
                 boolean correctDate = validateBirthDateField(customBirthDate);
 
                 Team selectedTeam = new Team();
-                for (Team i :Global.currentWorkspace.getTeams())
+                for (Team team :Global.currentWorkspace.getTeams())
                 {
-                    if (i.toString().equals(teamBox.getValue()))
+                    if (team.toString().equals(teamBox.getValue()))
                     {
-                        selectedTeam = i;
+                        selectedTeam = team;
                         break;
                     }
                 }
 
                 boolean skillsNotChanged = true;
-                for (Object i : personSkillsBox.getItems())
+                for (Object skill : personSkillsBox.getItems())
                 {
-                    if (!currentPerson.getSkills().contains((Skill)i))
+                    if (!currentPerson.getSkills().contains((Skill)skill))
                     {
                         skillsNotChanged = false;
                         break;

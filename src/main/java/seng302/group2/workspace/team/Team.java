@@ -246,7 +246,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
     public void setScrumMaster(Person person)
     {
         this.scrumMaster = person;
-        //person.setRole(new Role("Scrum Master", RoleType.ScrumMaster));
+        //person.setRole(new Role("Scrum Master", RoleType.SCRUM_MASTER));
     }
 
     /**
@@ -257,7 +257,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
     public void setProductOwner(Person person)
     {
         this.productOwner = person;
-        //person.setRole(new Role("Product Owner", RoleType.ProductOwner));
+        //person.setRole(new Role("Product Owner", RoleType.PRODUCT_OWNER));
     }
 
     //</editor-fold>
@@ -550,15 +550,30 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
      */
     public void edit(String newShortName, String newDescription)
     {
-        Command teamEdit = new TeamEditCommand(this, newShortName, newDescription);
+        Command teamEdit = new BasicTeamEditCommand(this, newShortName, newDescription);
         Global.commandManager.executeCommand(teamEdit);
     }
 
 
     /**
-     * A command class that allows the executing and undoing of team edits
+     * Creates a team edit command and executes it with the Global Command Manager, updating
+     * the team with the new parameter values.
+     * @param newShortName The new short name
+     * @param newDescription The new description
      */
-    private class TeamEditCommand implements Command
+    public void edit(String newShortName, String newDescription, List<Person> newMembers,
+                     Person newPO, Person newSM, List<Person> newDevelopers)
+    {
+        Command teamEdit = new ExtendedTeamEditCommand(this, newShortName, newDescription,
+                newMembers, newPO, newSM, newDevelopers);
+        Global.commandManager.executeCommand(teamEdit);
+    }
+
+
+    /**
+     * A command class that allows the executing and undoing of basic team edits
+     */
+    private class BasicTeamEditCommand implements Command
     {
         private Team team;
         private String shortName;
@@ -566,7 +581,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         private String oldShortName;
         private String oldDescription;
 
-        private TeamEditCommand(Team team, String newShortName, String newDescription)
+        private BasicTeamEditCommand(Team team, String newShortName, String newDescription)
         {
             this.team = team;
             this.shortName = newShortName;
@@ -591,6 +606,96 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         {
             team.shortName = oldShortName;
             team.description = oldDescription;
+        }
+    }
+
+
+    /**
+     * A command class that allows the executing and undoing of team edits
+     */
+    private class ExtendedTeamEditCommand implements Command
+    {
+        private Team team;
+        private String shortName;
+        private String description;
+        private List<Person> members;
+        private Person productOwner;
+        private Person scrumMaster;
+        private List<Person> developers;
+
+        private String oldShortName;
+        private String oldDescription;
+        private List<Person> oldMembers;
+        private Person oldProductOwner;
+        private Person oldScrumMaster;
+        private List<Person> oldDevelopers;
+
+        private ExtendedTeamEditCommand(Team team, String newShortName, String newDescription,
+                                        List<Person> newMembers, Person newPO, Person newSM,
+                                        List<Person> newDevelopers)
+        {
+            this.team = team;
+            this.shortName = newShortName;
+            this.description = newDescription;
+            this.members = newMembers;
+            this.productOwner = newPO;
+            this.scrumMaster = newSM;
+            this.developers = newDevelopers;
+
+            this.oldShortName = team.shortName;
+            this.oldDescription = team.description;
+            this.oldMembers = team.people;
+            this.oldProductOwner = team.productOwner;
+            this.oldScrumMaster = team.scrumMaster;
+            this.oldDevelopers = team.devs;
+        }
+
+        /**
+         * Executes/Redoes the changes of the team edit
+         */
+        public void execute()
+        {
+            team.shortName = shortName;
+            team.description = description;
+            team.people.clear();
+            team.people.addAll(members);
+            team.productOwner = productOwner;
+            team.scrumMaster = scrumMaster;
+            team.devs.clear();
+            team.devs.addAll(developers);
+
+            for (Person member : oldMembers)
+            {
+                member.setTeam(Global.getUnassignedTeam());
+            }
+            for (Person member : members)
+            {
+                member.setTeam(team);
+            }
+        }
+
+        /**
+         * Undoes the changes of the team edit
+         */
+        public void undo()
+        {
+            team.shortName = oldShortName;
+            team.description = oldDescription;
+            team.people.clear();
+            team.people.addAll(oldMembers);
+            team.productOwner = oldProductOwner;
+            team.scrumMaster = oldScrumMaster;
+            team.devs.clear();
+            team.devs.addAll(oldDevelopers);
+
+            for (Person member : members)
+            {
+                member.setTeam(Global.getUnassignedTeam());
+            }
+            for (Person member : oldMembers)
+            {
+                member.setTeam(team);
+            }
         }
     }
 

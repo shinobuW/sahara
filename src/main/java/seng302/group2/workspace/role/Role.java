@@ -10,6 +10,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.skills.Skill;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +20,11 @@ import static javafx.collections.FXCollections.observableArrayList;
 /**
  * @author swi67
  */
-public class Role extends TreeViewItem
+public class Role extends TreeViewItem implements Serializable
 {
     public enum RoleType
     {
-        ScrumMaster, ProductOwner, DevelopmentTeamMember, Others
+        SCRUM_MASTER, PRODUCT_OWNER, DEVELOPMENT_TEAM_MEMBER, OTHER, NONE
     }
 
 
@@ -43,7 +44,7 @@ public class Role extends TreeViewItem
         super("unnamed");
         this.shortName = "role Name";
         this.description = "";
-        this.type = RoleType.Others;
+        this.type = RoleType.NONE;
     }
 
     /**

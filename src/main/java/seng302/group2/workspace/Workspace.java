@@ -41,7 +41,7 @@ import static javafx.collections.FXCollections.observableArrayList;
  * @author Jordane Lew (jml168)
  */
 @SuppressWarnings("deprecation")
-public class Workspace extends TreeViewItem implements Serializable, Cloneable
+public class Workspace extends TreeViewItem implements Serializable
 {
     private String shortName;
     private String longName;
@@ -106,17 +106,17 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
         ObservableList<Skill> smSkillList = observableArrayList();
         smSkillList.add(scrumMasterSkill);
 
-        Role scrumMaster = new Role("Scrum Master", Role.RoleType.ScrumMaster,
+        Role scrumMaster = new Role("Scrum Master", Role.RoleType.SCRUM_MASTER,
                 "The Scrum Master for a Team", smSkillList);
         this.addWithoutUndo(scrumMaster);
 
         Role productOwner = new Role(
-                "Product Owner", Role.RoleType.ProductOwner, "The Product Owner for a Team",
+                "Product Owner", Role.RoleType.PRODUCT_OWNER, "The Product Owner for a Team",
                 poSkillList);
         this.addWithoutUndo(productOwner);
 
         Role developmentTeamMember = new Role(
-                "Dev Team Member", Role.RoleType.DevelopmentTeamMember,
+                "Developer", Role.RoleType.DEVELOPMENT_TEAM_MEMBER,
                 "A member of the Dev Team");
         this.addWithoutUndo(developmentTeamMember);
 
@@ -152,17 +152,17 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
         ObservableList<Skill> smSkillList = observableArrayList();
         smSkillList.add(scrumMasterSkill);
 
-        Role scrumMaster = new Role("Scrum Master", Role.RoleType.ScrumMaster,
+        Role scrumMaster = new Role("Scrum Master", Role.RoleType.SCRUM_MASTER,
                 "The Scrum Master for a Team", poSkillList);
         this.addWithoutUndo(scrumMaster);
 
         Role productOwner = new Role(
-                "Product Owner", Role.RoleType.ProductOwner, "The Product Owner for a Team",
+                "Product Owner", Role.RoleType.PRODUCT_OWNER, "The Product Owner for a Team",
                 smSkillList);
         this.addWithoutUndo(productOwner);
 
         Role developmentTeamMember = new Role(
-                "Dev Team Member", Role.RoleType.DevelopmentTeamMember,
+                "Dev Team Member", Role.RoleType.DEVELOPMENT_TEAM_MEMBER,
                 "A member of the Dev Team");
         this.addWithoutUndo(developmentTeamMember);
 
@@ -785,9 +785,9 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
      */
     public void add(Role role)
     {
-        if (role.getType() == Role.RoleType.ScrumMaster
-                || role.getType() == Role.RoleType.ProductOwner
-                || role.getType() == Role.RoleType.DevelopmentTeamMember)
+        if (role.getType() == Role.RoleType.SCRUM_MASTER
+                || role.getType() == Role.RoleType.PRODUCT_OWNER
+                || role.getType() == Role.RoleType.DEVELOPMENT_TEAM_MEMBER)
         {
             this.roles.add(role);
             return;
@@ -806,9 +806,9 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
      */
     public void addWithoutUndo(Role role)
     {
-        if (role.getType() == Role.RoleType.ScrumMaster
-                || role.getType() == Role.RoleType.ProductOwner
-                || role.getType() == Role.RoleType.DevelopmentTeamMember)
+        if (role.getType() == Role.RoleType.SCRUM_MASTER
+                || role.getType() == Role.RoleType.PRODUCT_OWNER
+                || role.getType() == Role.RoleType.DEVELOPMENT_TEAM_MEMBER)
         {
             this.roles.add(role);
             return;
