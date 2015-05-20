@@ -170,21 +170,21 @@ public class NewTeamEditScene extends ScrollPane
         // Listeners
         // Update the roles combo when the selected person changes
         teamMembersListView.getSelectionModel().selectedItemProperty().addListener((event) ->
-        {
-            roleList.clear();
-            if (teamMembersListView.getSelectionModel().getSelectedItems().size() == 1)
             {
-                roleComboBox.setDisable(false);
-                btnRoleAssign.setDisable(false);
-                updateRoles(teamMembersListView.getSelectionModel().getSelectedItems().get(0));
-            }
-            else
-            {
-                // No person, or more than one person, selected
-                roleComboBox.setDisable(true);
-                btnRoleAssign.setDisable(true);
-            }
-        });
+                roleList.clear();
+                if (teamMembersListView.getSelectionModel().getSelectedItems().size() == 1)
+                {
+                    roleComboBox.setDisable(false);
+                    btnRoleAssign.setDisable(false);
+                    updateRoles(teamMembersListView.getSelectionModel().getSelectedItems().get(0));
+                }
+                else
+                {
+                    // No person, or more than one person, selected
+                    roleComboBox.setDisable(true);
+                    btnRoleAssign.setDisable(true);
+                }
+            });
 
 
 
