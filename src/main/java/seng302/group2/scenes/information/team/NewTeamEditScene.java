@@ -266,7 +266,7 @@ public class NewTeamEditScene extends ScrollPane
         roleList.add(noneRole);
         for (Role role : Global.currentWorkspace.getRoles())
         {
-            if (person.getSkills().containsAll(role.getRequiredSkills()))
+            if (person != null && person.getSkills().containsAll(role.getRequiredSkills()))
             {
                 roleList.add(role);
             }
