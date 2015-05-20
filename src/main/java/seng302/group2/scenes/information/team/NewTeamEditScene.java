@@ -21,9 +21,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.team.Team;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
@@ -39,34 +37,42 @@ public class NewTeamEditScene extends ScrollPane
     CustomTextArea descriptionField;
     Person allocatedProductOwner;
     Person allocatedScrumMaster;
-    List<Person> allocatedDevelopers = new ArrayList<>();
+    Set<Person> allocatedDevelopers = new HashSet<>();
     ObservableList<Role> roleList = observableArrayList();
     ComboBox<Role> roleComboBox;
     Role noneRole = new Role("(none)", Role.RoleType.NONE);
 
     public NewTeamEditScene(Team baseTeam)
     {
+        // Init
         this.baseTeam = baseTeam;
+        allocatedDevelopers.addAll(baseTeam.getDevs());
+        allocatedProductOwner = baseTeam.getProductOwner();
+        allocatedScrumMaster = baseTeam.getScrumMaster();
 
+
+        // Setup basic GUI
         VBox container = new VBox(10);
         container.setPadding(new Insets(25, 25, 25, 25));
 
+
         // Basic information fields
         shortNameField = new RequiredField("Short Name: ");
-        descriptionField = new CustomTextArea("Team Description: ", 300);
         shortNameField.setText(baseTeam.getShortName());
-        descriptionField.setText(baseTeam.getDescription());
         shortNameField.setMaxWidth(275);
+        descriptionField = new CustomTextArea("Team Description: ", 300);
+        descriptionField.setText(baseTeam.getDescription());
         descriptionField.setMaxWidth(275);
+
 
         // Team assignment buttons
         Button btnAssign = new Button("<");
         Button btnUnassign = new Button(">");
         VBox assignmentButtons = new VBox();
         assignmentButtons.spacingProperty().setValue(10);
-        assignmentButtons.getChildren().add(btnAssign);
-        assignmentButtons.getChildren().add(btnUnassign);
+        assignmentButtons.getChildren().addAll(btnAssign, btnUnassign);
         assignmentButtons.setAlignment(Pos.CENTER);
+
 
         // Buttons for the scene
         Button btnSave = new Button("Done");
@@ -76,14 +82,12 @@ public class NewTeamEditScene extends ScrollPane
         sceneButtons.alignmentProperty().set(Pos.TOP_LEFT);
         sceneButtons.getChildren().addAll(btnSave, btnCancel);
 
+
         // Role assignment
         Button btnRoleAssign = new Button("Assign");
         btnRoleAssign.setDisable(true);
         roleList = observableArrayList();
-        roleList.add(noneRole);
-        roleList.addAll(Global.currentWorkspace.getRoles());
         roleComboBox = new ComboBox<>(roleList);
-        roleComboBox.setDisable(true);
 
         HBox roleAssignmentBox = new HBox(10);
         roleAssignmentBox.getChildren().addAll(
@@ -91,14 +95,7 @@ public class NewTeamEditScene extends ScrollPane
 
 
 
-
-
-
-
-
-
-
-        // Make lists of people in the team and available people
+        // Draft member and available people lists
         ObservableList<Person> teamMembersList = observableArrayList();
         teamMembersList.addAll(baseTeam.getPeople());
 
@@ -107,12 +104,7 @@ public class NewTeamEditScene extends ScrollPane
         availablePeopleList.removeAll(teamMembersList);
 
 
-
-
-
-
-
-        // Make list views for the people lists
+        // List views
         ListView<Person> teamMembersListView = new ListView<>(teamMembersList);
         teamMembersListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         teamMembersListView.getSelectionModel().select(0);
@@ -121,7 +113,6 @@ public class NewTeamEditScene extends ScrollPane
         availablePeopleListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         teamMembersListView.getSelectionModel().select(0);
 
-        // Add the views into styled gui containers
         VBox teamMembersBox = new VBox(10);
         teamMembersBox.getChildren().add(new Label("Team Members: "));
         teamMembersBox.getChildren().add(teamMembersListView);
@@ -135,22 +126,18 @@ public class NewTeamEditScene extends ScrollPane
         memberListViews.setPrefHeight(192);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        // Load the initial role assignment options
+        if (teamMembersListView.getSelectionModel().getSelectedItems().size() == 1)
+        {
+            roleComboBox.setDisable(false);
+            btnRoleAssign.setDisable(false);
+            updateRoles(teamMembersListView.getSelectionModel().getSelectedItems().get(0));
+        }
+        else
+        {
+            roleComboBox.setDisable(true);
+            btnRoleAssign.setDisable(true);
+        }
 
 
         // Adding of gui elements to the container (VBox)
@@ -161,10 +148,6 @@ public class NewTeamEditScene extends ScrollPane
                 roleAssignmentBox,
                 sceneButtons
         );
-
-
-
-
 
 
         // Listeners
@@ -187,9 +170,6 @@ public class NewTeamEditScene extends ScrollPane
             });
 
 
-
-
-
         // Button events
         btnAssign.setOnAction((event) ->
             {
@@ -199,7 +179,6 @@ public class NewTeamEditScene extends ScrollPane
                         availablePeopleListView.getSelectionModel().getSelectedItems());
             });
 
-
         btnUnassign.setOnAction((event) ->
             {
                 availablePeopleList.addAll(
@@ -207,7 +186,6 @@ public class NewTeamEditScene extends ScrollPane
                 teamMembersList.removeAll(
                         teamMembersListView.getSelectionModel().getSelectedItems());
             });
-
 
         btnRoleAssign.setOnAction((event) ->
             {
@@ -245,12 +223,10 @@ public class NewTeamEditScene extends ScrollPane
                 }
             });
 
-
         btnCancel.setOnAction((event) ->
             {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM, baseTeam);
             });
-
 
         btnSave.setOnAction((event) ->
             {
@@ -272,13 +248,16 @@ public class NewTeamEditScene extends ScrollPane
             });
 
 
-
-
+        // Finally
         this.setStyle("-fx-background-color:transparent;");
         this.setContent(container);
     }
 
 
+    /**
+     * Updates the roles in the role allocation combo box with those that the given person can fill
+     * @param person The person whose roles to check
+     */
     private void updateRoles(Person person)
     {
         roleList.clear();
@@ -293,20 +272,32 @@ public class NewTeamEditScene extends ScrollPane
     }
 
 
+    /**
+     * Checks if the changes in the scene are valid
+     * @return If the changes in the scene are valid
+     */
     private boolean isValidState()
     {
-        // Validation methods
         return (shortNameField.getText().equals(baseTeam.getShortName())  // Is the same,
                 || ShortNameValidator.validateShortName(shortNameField))  // or new name validates
                 && areRolesValid();
     }
 
 
+    /**
+     * Checks if the current role changes are valid
+     * @return If the role changes are valid
+     */
     private boolean areRolesValid()
     {
-        return !(allocatedScrumMaster == allocatedProductOwner)
-                && !allocatedDevelopers.contains(allocatedScrumMaster)
-                && !allocatedDevelopers.contains(allocatedProductOwner);
+        return (!(allocatedScrumMaster == allocatedProductOwner)
+                || allocatedScrumMaster == null)
+
+                && (!allocatedDevelopers.contains(allocatedScrumMaster) ||
+                allocatedScrumMaster == null)
+
+                && (!allocatedDevelopers.contains(allocatedProductOwner) ||
+                allocatedProductOwner == null);
     }
 
 }

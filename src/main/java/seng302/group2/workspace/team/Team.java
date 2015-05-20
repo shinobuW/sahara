@@ -17,6 +17,8 @@ import seng302.group2.workspace.project.Project;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -472,61 +474,6 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
     {
         Command teamCasDelete = new DeleteTeamCascadingCommand(this, Global.currentWorkspace);
         Global.commandManager.executeCommand(teamCasDelete);
-
-        /*
-        ArrayList<Person> peopleToBeDeleted = new ArrayList<>();
-        ArrayList<UndoableItem> undoActions = new ArrayList<>();
-        for (Person personRemoveTeam : Global.currentWorkspace.getPeople())
-        {
-            if (personRemoveTeam.getTeam() == this)
-            {
-                //Deletes the team and all corresponding people.
-                peopleToBeDeleted.add(personRemoveTeam);
-
-                //Only deletes team from person. Does not delete the person.
-                //personRemoveTeam.setTeam(
-                //(Team)Global.currentWorkspace.getTeams().get(0));
-                //((Team)Global.currentWorkspace.getTeams().get(0)).add(
-                //personRemoveTeam, false);
-            }
-        }
-
-        for (Person personToDelete : peopleToBeDeleted)
-        {
-            undoActions.add(new UndoableItem(
-                    personToDelete,
-                    new UndoRedoAction(
-                            UndoRedoPerformer.UndoRedoProperty.PERSON_DEL,
-                            this),
-                    new UndoRedoAction(
-                            UndoRedoPerformer.UndoRedoProperty.PERSON_DEL,
-                            this)));
-            Global.currentWorkspace.removeWithoutUndo(personToDelete);
-
-        }
-
-        undoActions.add(new UndoableItem(
-                this,
-                new UndoRedoAction(
-                        UndoRedoPerformer.UndoRedoProperty.TEAM_DEL,
-                        this),
-                new UndoRedoAction(
-                        UndoRedoPerformer.UndoRedoProperty.TEAM_DEL,
-                        this)));
-        Global.currentWorkspace.removeWithoutUndo(this);
-
-        if (undoActions.size() > 0)
-        {
-            Global.undoRedoMan.add(new UndoableItem(
-                    this,
-                    new UndoRedoAction(
-                            UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_RECURSIVE,
-                            undoActions),
-                    new UndoRedoAction(
-                            UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_RECURSIVE,
-                            undoActions)
-            ));
-        }*/
     }
 
 
@@ -561,8 +508,8 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
      * @param newShortName The new short name
      * @param newDescription The new description
      */
-    public void edit(String newShortName, String newDescription, List<Person> newMembers,
-                     Person newPO, Person newSM, List<Person> newDevelopers)
+    public void edit(String newShortName, String newDescription, Collection<Person> newMembers,
+                     Person newPO, Person newSM, Collection<Person> newDevelopers)
     {
         Command teamEdit = new ExtendedTeamEditCommand(this, newShortName, newDescription,
                 newMembers, newPO, newSM, newDevelopers);
@@ -618,36 +565,36 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         private Team team;
         private String shortName;
         private String description;
-        private List<Person> members;
+        private Collection<Person> members = new HashSet<>();
         private Person productOwner;
         private Person scrumMaster;
-        private List<Person> developers;
+        private Collection<Person> developers = new HashSet<>();
 
         private String oldShortName;
         private String oldDescription;
-        private List<Person> oldMembers;
+        private Collection<Person> oldMembers = new HashSet<>();
         private Person oldProductOwner;
         private Person oldScrumMaster;
-        private List<Person> oldDevelopers;
+        private Collection<Person> oldDevelopers = new HashSet<>();
 
         private ExtendedTeamEditCommand(Team team, String newShortName, String newDescription,
-                                        List<Person> newMembers, Person newPO, Person newSM,
-                                        List<Person> newDevelopers)
+                                        Collection<Person> newMembers, Person newPO, Person newSM,
+                                        Collection<Person> newDevelopers)
         {
             this.team = team;
             this.shortName = newShortName;
             this.description = newDescription;
-            this.members = newMembers;
+            this.members.addAll(newMembers);
             this.productOwner = newPO;
             this.scrumMaster = newSM;
-            this.developers = newDevelopers;
+            this.developers.addAll(newDevelopers);
 
             this.oldShortName = team.shortName;
             this.oldDescription = team.description;
-            this.oldMembers = team.people;
+            this.oldMembers.addAll(team.people);
             this.oldProductOwner = team.productOwner;
             this.oldScrumMaster = team.scrumMaster;
-            this.oldDevelopers = team.devs;
+            this.oldDevelopers.addAll(team.devs);
         }
 
         /**
@@ -655,15 +602,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
          */
         public void execute()
         {
-            team.shortName = shortName;
-            team.description = description;
-            team.people.clear();
-            team.people.addAll(members);
-            team.productOwner = productOwner;
-            team.scrumMaster = scrumMaster;
-            team.devs.clear();
-            team.devs.addAll(developers);
-
+            Global.getUnassignedTeam().getPeople().removeAll(oldMembers);
             for (Person member : oldMembers)
             {
                 member.setTeam(Global.getUnassignedTeam());
@@ -672,6 +611,15 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
             {
                 member.setTeam(team);
             }
+
+            team.shortName = shortName;
+            team.description = description;
+            team.people.clear();
+            team.people.addAll(members);
+            team.productOwner = productOwner;
+            team.scrumMaster = scrumMaster;
+            team.devs.clear();
+            team.devs.addAll(developers);
         }
 
         /**
@@ -688,6 +636,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
             team.devs.clear();
             team.devs.addAll(oldDevelopers);
 
+            Global.getUnassignedTeam().getPeople().addAll(members);
             for (Person member : members)
             {
                 member.setTeam(Global.getUnassignedTeam());
