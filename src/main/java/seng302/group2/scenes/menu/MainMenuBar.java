@@ -215,11 +215,6 @@ public class MainMenuBar
                     if (saved == SaveLoadResult.SUCCESS)
                     {
                         Workspace.loadWorkspace();
-                        Global.currentWorkspace.addListeners();
-                        for (Project proj : Global.currentWorkspace.getProjects())
-                        {
-                            proj.addListeners();
-                        }
                         //App.refreshMainScene();
                     }
                 }

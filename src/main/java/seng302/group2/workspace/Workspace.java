@@ -958,6 +958,13 @@ public class Workspace extends TreeViewItem implements Serializable, Cloneable
 
         // Unset saved changes flag, we just opened the workspace.
         workspace.hasUnsavedChanges = false;
+
+        // Adds listeners to the workspace (mainly for sorting lists)
+        workspace.addListeners();
+        for (Project proj : workspace.getProjects())
+        {
+            proj.addListeners();
+        }
     }
 
 
