@@ -14,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
@@ -147,6 +148,7 @@ public class ProjectHistoryTab extends Tab
                         return property;
                     }
                 });
+
         endDateCol.prefWidthProperty().bind(historyTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
         endDateCol.setCellFactory(cellFactory);
@@ -189,6 +191,7 @@ public class ProjectHistoryTab extends Tab
                 });
 
         Button addButton = new Button("Add");
+        Button deleteButton = new Button("Delete");
         HBox newAllocationFields = new HBox(10);
         newAllocationFields.setAlignment(Pos.CENTER);
         CustomComboBox teamComboBox = new CustomComboBox("Team", true);
@@ -266,9 +269,31 @@ public class ProjectHistoryTab extends Tab
                 }
             });
 
+        deleteButton.setOnAction((event) ->
+            {
+                Allocation selectedAlloc = historyTable.getSelectionModel().getSelectedItem();
+                if (selectedAlloc != null)
+                {
+                    Action response = Dialogs.create()
+                            .title("Delete Allocation?")
+                            .message("Do you really want to delete this allocation?")
+                            .showConfirm();
+
+                    if (response == org.controlsfx.dialog.Dialog.ACTION_YES)
+                    {
+                        selectedAlloc.delete();
+                    }
+                    else if (response == org.controlsfx.dialog.Dialog.ACTION_NO)
+                    {
+                        event.consume();
+                    }
+                }
+            });
+
         historyTable.setItems(data);
         historyTable.getColumns().addAll(teamCol, startDateCol, endDateCol);
-        historyPane.getChildren().addAll(title, historyTable, newAllocationFields, addButton);
+        historyPane.getChildren().addAll(title, historyTable, newAllocationFields, addButton,
+                deleteButton);
     }
 
 
