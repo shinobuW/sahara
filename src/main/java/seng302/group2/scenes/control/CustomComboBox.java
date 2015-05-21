@@ -7,6 +7,7 @@ package seng302.group2.scenes.control;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -39,6 +40,7 @@ public class CustomComboBox extends VBox
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(165);
+        labelBox.setAlignment(Pos.CENTER_LEFT);
         labelBox.spacingProperty().setValue(0);
 
 

@@ -59,10 +59,10 @@ public class NewTeamEditScene extends ScrollPane
 
 
         // Basic information fields
-        shortNameField = new RequiredField("Short Name: ");
+        shortNameField = new RequiredField("Short Name:");
         shortNameField.setText(baseTeam.getShortName());
         shortNameField.setMaxWidth(275);
-        descriptionField = new CustomTextArea("Team Description: ", 300);
+        descriptionField = new CustomTextArea("Team Description:", 300);
         descriptionField.setText(baseTeam.getDescription());
         descriptionField.setMaxWidth(275);
 

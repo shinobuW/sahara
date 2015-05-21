@@ -54,10 +54,10 @@ public class CreateReleaseDialog
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnCreate, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Description");
-        CustomDatePicker releaseDateField = new CustomDatePicker("Estimated Release Date", false);
-        CustomComboBox projectComboBox = new CustomComboBox("Project", true);
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
+        CustomDatePicker releaseDateField = new CustomDatePicker("Estimated Release Date:", false);
+        CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
         
         String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
         projectComboBox.setValue(firstItem);

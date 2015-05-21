@@ -1,5 +1,6 @@
 package seng302.group2.scenes.control;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -34,6 +35,7 @@ public class CustomDatePicker extends VBox
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(165);
         labelBox.spacingProperty().setValue(0);
+        labelBox.setAlignment(Pos.CENTER_LEFT);
 
         labelBox.getChildren().addAll(new Label(name));
 

@@ -46,7 +46,7 @@ public class RoleCategoryScene
 
         ListView roleBox = new ListView(currentWorkspace.getRoles());
         roleBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        roleBox.setMaxWidth(275);
+        roleBox.setMaxWidth(450);
 
         informationPane.getChildren().add(title);
         informationPane.getChildren().add(roleBox);

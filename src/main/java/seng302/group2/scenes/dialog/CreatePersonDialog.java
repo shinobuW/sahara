@@ -59,12 +59,12 @@ public class CreatePersonDialog
         buttons.getChildren().addAll(btnCreate, btnCancel);
 
         // Add elements to grid
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        RequiredField firstNameCustomField = new RequiredField("First Name");
-        RequiredField lastNameCustomField = new RequiredField("Last Name");
-        CustomTextField emailTextField = new CustomTextField("Email");
-        CustomDateField customBirthDate = new CustomDateField("Birth Date");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Description");
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        RequiredField firstNameCustomField = new RequiredField("First Name:");
+        RequiredField lastNameCustomField = new RequiredField("Last Name:");
+        CustomTextField emailTextField = new CustomTextField("Email:");
+        CustomDateField customBirthDate = new CustomDateField("Birth Date:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
 
         grid.getChildren().addAll(shortNameCustomField, firstNameCustomField, lastNameCustomField,
                 emailTextField, customBirthDate, descriptionTextArea, buttons);

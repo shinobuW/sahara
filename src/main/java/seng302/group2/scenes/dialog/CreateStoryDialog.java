@@ -51,12 +51,12 @@ public class CreateStoryDialog
         buttons.getChildren().addAll(btnCreate, btnCancel);
 
         // Add elements to grid
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        RequiredField longNameCustomField = new RequiredField("Long Name");
-        RequiredField creatorCustomField = new RequiredField("Creator");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Description");
-        CustomComboBox projectComboBox = new CustomComboBox("Project", true);
-        RequiredField priorityNumberField = new RequiredField("Priority");
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        RequiredField longNameCustomField = new RequiredField("Long Name:");
+        RequiredField creatorCustomField = new RequiredField("Creator:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
+        CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
+        RequiredField priorityNumberField = new RequiredField("Priority:");
         
         String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
         projectComboBox.setValue(firstItem);

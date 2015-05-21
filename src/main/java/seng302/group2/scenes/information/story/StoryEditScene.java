@@ -48,10 +48,10 @@ public class StoryEditScene
         buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name: ");
-        CustomTextField longNameTextField = new CustomTextField("Long Name: ");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Story Description: ", 300);
-        RequiredField priorityNumberField = new RequiredField("Story Priority: ");
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        CustomTextField longNameTextField = new CustomTextField("Long Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Story Description:", 300);
+        RequiredField priorityNumberField = new RequiredField("Story Priority:");
 
         shortNameCustomField.setMaxWidth(275);
         descriptionTextArea.setMaxWidth(275);

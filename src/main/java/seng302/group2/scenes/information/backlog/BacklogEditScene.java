@@ -39,15 +39,15 @@ public class BacklogEditScene
         buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name: ");
-        CustomTextArea longNameCustomField = new CustomTextArea("Long Name: ");
-        CustomComboBox productOwnerComboBox = new CustomComboBox("Product Owner", true);
-        CustomTextArea descriptionTextArea = new CustomTextArea("Backlog Description: ", 300);
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        CustomTextArea longNameCustomField = new CustomTextArea("Long Name:");
+        CustomComboBox productOwnerComboBox = new CustomComboBox("Product Owner:", true);
+        CustomTextArea descriptionTextArea = new CustomTextArea("Backlog Description:", 300);
 
-        shortNameCustomField.setMaxWidth(275);
-        longNameCustomField.setMaxWidth(275);
-        productOwnerComboBox.setMaxWidth(275);
-        descriptionTextArea.setMaxWidth(275);
+        shortNameCustomField.setMaxWidth(450);
+        longNameCustomField.setMaxWidth(450);
+        productOwnerComboBox.setMaxWidth(450);
+        descriptionTextArea.setMaxWidth(450);
 
         shortNameCustomField.setText(currentBacklog.getShortName());
         longNameCustomField.setText(currentBacklog.getLongName());

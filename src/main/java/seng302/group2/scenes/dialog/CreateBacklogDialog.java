@@ -47,11 +47,11 @@ public class CreateBacklogDialog
         buttons.getChildren().addAll(btnCreate, btnCancel);
 
         // Add elements to grid
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        RequiredField longNameCustomField = new RequiredField("Long Name");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Description");
-        CustomComboBox projectComboBox = new CustomComboBox("Project", true);
-        CustomComboBox productOwnerComboBox = new CustomComboBox("Product Owner", false);
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        RequiredField longNameCustomField = new RequiredField("Long Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
+        CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
+        CustomComboBox productOwnerComboBox = new CustomComboBox("Product Owner:", false);
 
         if (Global.currentWorkspace.getProjects().size() > 0)
         {

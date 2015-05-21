@@ -44,8 +44,8 @@ public class CreateTeamDialog
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnCreate, btnCancel);
         
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Team Description");
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Team Description:");
         
         grid.getChildren().add(shortNameCustomField);
         grid.getChildren().add(descriptionTextArea);

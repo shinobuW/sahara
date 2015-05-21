@@ -56,9 +56,9 @@ public class ReleaseEditScene
         buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name: ");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Release Description: ", 300);
-        CustomDatePicker releaseDatePicker = new CustomDatePicker("Estimated Release Date: ",
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Release Description:", 300);
+        CustomDatePicker releaseDatePicker = new CustomDatePicker("Estimated Release Date:",
                 false);
         
         CustomComboBox projectComboBox = new CustomComboBox("Project: ", true);
@@ -89,143 +89,6 @@ public class ReleaseEditScene
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
             });
 
-//        btnSave.setOnAction((event) ->
-//            {
-//                boolean correctShortName;
-//                boolean correctDateFormat = false;
-//                Date releaseDate = null;
-//
-//                Project selectedProject = null;
-//                for (TreeViewItem item : Global.currentWorkspace.getProjects())
-//                {
-//                    if (item.toString().equals(projectComboBox.getValue()))
-//                    {
-//                        selectedProject = (Project)item;
-//                    }
-//                }
-//
-//                if (shortNameCustomField.getText().equals(currentRelease.getShortName()))
-//                {
-//                    correctShortName = true;
-//                }
-//                else
-//                {
-//                    correctShortName = validateShortName(shortNameCustomField);
-//                }
-//
-//                if (stringToDate(releaseDateField.getText())
-//                        .equals(currentRelease.getEstimatedDate()))
-//                {
-//                    releaseDate = currentRelease.getEstimatedDate();
-//                    correctDateFormat = true;
-//                }
-//                else if (releaseDateField.getText().isEmpty())
-//                {
-//                    releaseDate = null;
-//                    correctDateFormat = true;
-//                }
-//                else if (isCorrectDateFormat(releaseDateField))
-//                {
-//                    releaseDate = stringToDate(releaseDateField.getText());
-//                    if (!DateValidator.isFutureDate(releaseDate))
-//                    {
-//                        releaseDateField.showErrorField("Date must be a future date");
-//                        correctDateFormat = false;
-//                    }
-//                    else
-//                    {
-//                        correctDateFormat = true;
-//                    }
-//                }
-//
-//                if (correctShortName && correctDateFormat)
-//                {
-//                    // Build Undo/Redo edit array.
-//                    ArrayList<UndoableItem> undoActions = new ArrayList<>();
-//                    if (!shortNameCustomField.getText().equals(currentRelease.getShortName()))
-//                    {
-//                        undoActions.add(new UndoableItem(
-//                                currentRelease,
-//                                new UndoRedoAction(
-//                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_SHORTNAME,
-//                                        currentRelease.getShortName()),
-//                                new UndoRedoAction(
-//                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_SHORTNAME,
-//                                        shortNameCustomField.getText())));
-//                    }
-//
-//                    if (currentRelease.getEstimatedDate() != releaseDate)
-//                    {
-//                        undoActions.add(new UndoableItem(
-//                                currentRelease,
-//                                new UndoRedoAction(
-//                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_RELEASEDATE,
-//                                        currentRelease.getEstimatedDate()),
-//                                new UndoRedoAction(
-//                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_RELEASEDATE,
-//                                        releaseDate)
-//                        ));
-//                    }
-//
-//                    if (!currentRelease.getDescription().equals(descriptionTextArea.getText()))
-//                    {
-//                        undoActions.add(new UndoableItem(
-//                                currentRelease,
-//                                new UndoRedoAction(
-//                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_DESCRIPTION,
-//                                        currentRelease.getDescription()),
-//                                new UndoRedoAction(
-//                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_DESCRIPTION,
-//                                        descriptionTextArea.getText())
-//                        ));
-//                    }
-//
-//                    if (!currentRelease.getProject().equals(selectedProject))
-//                    {
-//                        undoActions.add(new UndoableItem(
-//                                currentRelease,
-//                                new UndoRedoAction(
-//                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_PROJECT,
-//                                        currentRelease.getProject()),
-//                                new UndoRedoAction(
-//                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_PROJECT,
-//                                        selectedProject)));
-//                    }
-//
-//                    if (undoActions.size() > 0)
-//                    {
-//                        System.out.println("Release edit added to undoredo stack");
-//                        Global.undoRedoMan.add(new UndoableItem(
-//                                currentRelease,
-//                                new UndoRedoAction(
-//                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_EDIT,
-//                                        undoActions),
-//                                new UndoRedoAction(
-//                                        UndoRedoPerformer.UndoRedoProperty.RELEASE_EDIT,
-//                                        undoActions)
-//                        ));
-//                    }
-//
-//
-//                    // Save the edits.
-//                    currentRelease.setDescription(descriptionTextArea.getText());
-//                    currentRelease.setShortName(shortNameCustomField.getText());
-//                    currentRelease.setEstimatedDate(releaseDate);
-//
-//                    Project previous = currentRelease.getProject();
-//                    currentRelease.getProject().removeWithoutUndo(currentRelease);
-//                    currentRelease.setProjectWithoutUndo(selectedProject);
-//
-//
-//                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
-//                    MainScene.treeView.refresh();
-//
-//                }
-//                else
-//                {
-//                    event.consume();
-//                }
-//            });
 
         btnSave.setOnAction((event) ->
             {

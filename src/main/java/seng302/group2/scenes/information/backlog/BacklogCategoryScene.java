@@ -45,7 +45,7 @@ public class BacklogCategoryScene
 
         ListView backlogBox = new ListView(selectedCategory.getProject().getBacklogs());
         backlogBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        backlogBox.setMaxWidth(275);
+        backlogBox.setMaxWidth(450);
 
         informationPane.getChildren().add(title);
         informationPane.getChildren().add(backlogBox);

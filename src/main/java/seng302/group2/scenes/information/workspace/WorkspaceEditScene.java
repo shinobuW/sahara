@@ -43,9 +43,9 @@ public class WorkspaceEditScene
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name: ");
-        RequiredField longNameCustomField = new RequiredField("Long Name: ");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Workspace Description: ", 300);
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        RequiredField longNameCustomField = new RequiredField("Long Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Workspace Description:", 300);
         
         shortNameCustomField.setText(currentWorkspace.getShortName());
         longNameCustomField.setText(currentWorkspace.getLongName());
