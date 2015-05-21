@@ -65,7 +65,6 @@ public class AllocationTest {
     @Test
     public void testDeleteAllocation()
     {
-        proj.add(alloc);
         team.add(alloc);
         alloc.delete();
         Assert.assertEquals(0, team.getProjectAllocations().size());

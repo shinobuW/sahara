@@ -239,7 +239,6 @@ public class TeamHistoryTab extends Tab
                     {
                         Allocation alloc = new Allocation(selectedProject, currentTeam,
                                 startDate, endDate);
-                        selectedProject.add(alloc);
                         currentTeam.add(alloc);
                     }
                     else

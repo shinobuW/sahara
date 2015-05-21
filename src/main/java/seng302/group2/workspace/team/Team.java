@@ -308,6 +308,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
      * Adds a project allocation to the team's list of allocations
      * @param allocation Allocation to add
      */
+    @Deprecated
     public void add(Allocation allocation)
     {
         if (!this.equals(allocation.getTeam()))
@@ -315,6 +316,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
             System.out.println("Called on wrong team, not happening");
             return;
         }
+
         Command addAlloc = new AddAllocationCommand(allocation.getProject(), this, allocation);
         Global.commandManager.executeCommand(addAlloc);
     }
@@ -388,7 +390,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         this.people.remove(person);
     }
 
-    /**
+    /**        //this.getTeamAllocations().add(allocation);
      * Removes the given allocation from the team's list of allocations
      * @param allocation allocation to be removed
      */
@@ -738,7 +740,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
 
         public void execute()
         {
-            //proj.getTeamAllocations().add(allocation);
+            proj.getTeamAllocations().add(allocation);
             team.getProjectAllocations().add(allocation);
         }
 

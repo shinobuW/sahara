@@ -557,12 +557,9 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
             System.out.println("Called on wrong project, not happening");
             return;
         }
-        this.getTeamAllocations().add(allocation);
-//        if (DateValidator.validateAllocation(allocation, this))
-//        {
-//            Command addAlloc = new AddAllocationCommand(this, allocation.getTeam(), allocation);
-//            Global.commandManager.executeCommand(addAlloc);
-//        }
+
+        Command addAlloc = new AddAllocationCommand(this, allocation.getTeam(), allocation);
+        Global.commandManager.executeCommand(addAlloc);
     }
 
 
