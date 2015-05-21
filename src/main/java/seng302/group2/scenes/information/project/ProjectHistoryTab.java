@@ -162,7 +162,6 @@ public class ProjectHistoryTab extends Tab
                         isValidEdit = false;
                         if (!event.getNewValue().isEmpty())
                         {
-
                             Allocation currentAlloc = (Allocation) event.getTableView().
                                     getItems().get(event.getTablePosition().getRow());
 
@@ -185,7 +184,6 @@ public class ProjectHistoryTab extends Tab
                                 showErrorDialog(editValidationStatus);
                                 isValidEdit = false;
                             }
-
                         }
                     }
                 });
@@ -356,6 +354,10 @@ public class ProjectHistoryTab extends Tab
     }
 
 
+    /**
+     * A subclass of TableCell to allow for date pickers to be bound to the cell
+     * to allow for start and end date to be edited
+     */
     class EditingCell extends TableCell<Allocation, String>
     {
 
