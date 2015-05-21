@@ -78,7 +78,7 @@ public class CreateReleaseDialog
                 String shortName = shortNameCustomField.getText();
                 String description = descriptionTextArea.getText();
 
-                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctShortName = validateShortName(shortNameCustomField, null);
 
                 Project project = new Project();
                 for (TreeViewItem item : Global.currentWorkspace.getProjects())
@@ -179,7 +179,7 @@ public class CreateReleaseDialog
                 String description = descriptionTextArea.getText();
 
                 boolean correctDate = isCorrectDateFormat(releaseDateField);
-                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctShortName = validateShortName(shortNameCustomField, null);
 
                 Project project = new Project();
 

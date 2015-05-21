@@ -6,16 +6,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.story.Story;
 
-import java.util.Collections;
 
 import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
@@ -75,32 +72,41 @@ public class StoryEditScene
 
         btnSave.setOnAction((event) ->
             {
-                if (shortNameCustomField.getText().equals(currentStory.getShortName())
-                        && longNameTextField.getText().equals(currentStory.getLongName())
-                        && descriptionTextArea.getText().equals(currentStory.getDescription())
-                        && priorityNumberField.getText().equals(currentStory.getPriority()))
+                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                    currentStory.getShortName());
+                boolean longNameUnchanged = longNameTextField.getText().equals(
+                    currentStory.getLongName());
+                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                    currentStory.getDescription());
+                boolean priorityUnchanged = priorityNumberField.getText().equals(
+                    currentStory.getPriority());
+
+                if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged
+                    &&  priorityUnchanged)
                 {
                     // No changes
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY, currentStory);
+                    return;
                 }
 
-                else if ((shortNameCustomField.getText().equals(currentStory.getShortName())
-                        || validateShortName(shortNameCustomField))
-                        && validateNumberField(priorityNumberField))
+                boolean correctShortName = validateShortName(shortNameCustomField,
+                    currentStory.getShortName());
+                boolean correctPriority = validateNumberField(priorityNumberField);
+
+                if (correctShortName && correctPriority)
                 {
                     // Valid short name, make the edit
                     currentStory.edit(shortNameCustomField.getText(),
-                            longNameTextField.getText(),
-                            descriptionTextArea.getText(),
-                            currentStory.getProject(),
-                            Integer.parseInt(priorityNumberField.getText()),
-                            null);  // Backlog to be passed through here.
+                        longNameTextField.getText(),
+                        descriptionTextArea.getText(),
+                        currentStory.getProject(),
+                        Integer.parseInt(priorityNumberField.getText()),
+                        null // Backlog to be passed through here.
+                    );
 
-                    //Collections.sort(Global.currentWorkspace.getStories());
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY, currentStory);
                     MainScene.treeView.refresh();
                 }
-
                 else
                 {
                     event.consume();

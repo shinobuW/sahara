@@ -53,7 +53,7 @@ public class CreateSkillDialog
         
         btnCreate.setOnAction((event) ->
             {
-                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctShortName = validateShortName(shortNameCustomField, null);
                 
                 String shortName = shortNameCustomField.getText();
                 String description = descriptionTextArea.getText();

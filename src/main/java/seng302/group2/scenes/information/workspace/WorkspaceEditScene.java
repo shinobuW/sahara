@@ -15,6 +15,7 @@ import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.Workspace;
 
 import static seng302.group2.scenes.MainScene.informationPane;
+import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * A class for displaying the workspace edit scene.
@@ -64,23 +65,32 @@ public class WorkspaceEditScene
 
         btnSave.setOnAction((event) ->
             {
-                if (shortNameCustomField.getText().equals(currentWorkspace.getShortName())
-                        && longNameCustomField.getText().equals(currentWorkspace.getLongName())
-                        && descriptionTextArea.getText().equals(currentWorkspace.getDescription()))
+
+                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                        currentWorkspace.getShortName());
+                boolean longNameUnchanged = longNameCustomField.getText().equals(
+                        currentWorkspace.getLongName());
+                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                        currentWorkspace.getDescription());
+
+                if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged)
                 {
                     // No fields have been changed
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE,
                             currentWorkspace);
+                    return;
                 }
                     // The short name is the same or valid
-                if ((shortNameCustomField.getText().equals(currentWorkspace.getShortName())
-                            || ShortNameValidator.validateShortName(shortNameCustomField))
-                            && // and the long name is the same or valid
-                            (longNameCustomField.getText().equals(currentWorkspace.getLongName())
-                                    || NameValidator.validateName(longNameCustomField)))
+                boolean correctShortName = validateShortName(shortNameCustomField,
+                        currentWorkspace.getShortName());
+                boolean correctLongName = validateShortName(longNameCustomField,
+                        currentWorkspace.getLongName());
+                if (correctShortName && correctLongName)
                 {
                     currentWorkspace.edit(shortNameCustomField.getText(),
-                            longNameCustomField.getText(), descriptionTextArea.getText());
+                        longNameCustomField.getText(),
+                        descriptionTextArea.getText()
+                    );
 
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE,
                             currentWorkspace);

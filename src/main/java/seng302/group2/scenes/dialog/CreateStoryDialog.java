@@ -72,7 +72,7 @@ public class CreateStoryDialog
         // Create button event
         btnCreate.setOnAction((event) ->
             {
-                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctShortName = validateShortName(shortNameCustomField, null);
                 boolean correctLongName = validateName(longNameCustomField);
                 boolean correctCreator = validateName(creatorCustomField);
                 boolean correctPriority = validateNumberField(priorityNumberField);

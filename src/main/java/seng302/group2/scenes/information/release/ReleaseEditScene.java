@@ -28,6 +28,7 @@ import java.time.LocalDate;
 import java.util.Collections;
 
 import static seng302.group2.scenes.MainScene.informationPane;
+import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  *
@@ -84,26 +85,23 @@ public class ReleaseEditScene
         String defaultProject = currentRelease.getProject().getShortName();
         projectComboBox.setValue(defaultProject);
 
-        btnCancel.setOnAction((event) ->
-            {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
-            });
-
 
         btnSave.setOnAction((event) ->
             {
-                if (shortNameCustomField.getText().equals(currentRelease.getShortName())
-                        && descriptionTextArea.getText().equals(currentRelease.getDescription())
-                        && projectComboBox.getValue().equals(currentRelease.getProject()))
+                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                    currentRelease.getShortName());
+                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                    currentRelease.getDescription());
+                boolean projectUnchanged = projectComboBox.getValue().equals(
+                    currentRelease.getProject());
+                if (shortNameUnchanged && descriptionUnchanged && projectUnchanged)
                 {
                     // No fields have been changed
-                    event.consume();
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
+                    return;
                 }
 
                 LocalDate releaseDate = releaseDatePicker.getValue();
-
-
 
                 if (releaseDatePicker.getValue() == null)
                 {
@@ -117,11 +115,11 @@ public class ReleaseEditScene
                     }
                 }
 
+                boolean correctShortName = validateShortName(shortNameCustomField,
+                    currentRelease.getShortName());
                 // The short name is the same or valid
-                if (((shortNameCustomField.getText().equals(currentRelease.getShortName())
-                        || ShortNameValidator.validateShortName(shortNameCustomField))))
+                if (correctShortName)
                 {
-                    System.out.print("HELLO?");
                     Project project = new Project();
 
                     for (Project proj : Global.currentWorkspace.getProjects())
@@ -134,7 +132,10 @@ public class ReleaseEditScene
                     }
 
                     currentRelease.edit(shortNameCustomField.getText(),
-                        descriptionTextArea.getText(), releaseDate, project);
+                        descriptionTextArea.getText(),
+                        releaseDate,
+                        project
+                    );
                     
                     Collections.sort(currentRelease.getProject().getReleases());
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
@@ -145,6 +146,11 @@ public class ReleaseEditScene
                     // One or more fields incorrectly validated, stay on the edit scene
                     event.consume();
                 }
+            });
+
+        btnCancel.setOnAction((event) ->
+            {
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
             });
 
         ScrollPane wrapper = new ScrollPane(informationPane);

@@ -235,9 +235,13 @@ public class NewTeamEditScene extends ScrollPane
                 if (isValidState())// validation
                 {
                     // Edit Command
-                    baseTeam.edit(shortNameField.getText(), descriptionField.getText(),
-                            teamMembersList, allocatedProductOwner, allocatedScrumMaster,
-                            allocatedDevelopers);
+                    baseTeam.edit(shortNameField.getText(),
+                        descriptionField.getText(),
+                        teamMembersList,
+                        allocatedProductOwner,
+                        allocatedScrumMaster,
+                        allocatedDevelopers
+                    );
 
                     Collections.sort(Global.currentWorkspace.getTeams());
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM, baseTeam);
@@ -281,7 +285,7 @@ public class NewTeamEditScene extends ScrollPane
     private boolean isValidState()
     {
         return (shortNameField.getText().equals(baseTeam.getShortName())  // Is the same,
-                || ShortNameValidator.validateShortName(shortNameField))  // or new name validates
+                || ShortNameValidator.validateShortName(shortNameField, null))// new name validates
                 && areRolesValid();
     }
 

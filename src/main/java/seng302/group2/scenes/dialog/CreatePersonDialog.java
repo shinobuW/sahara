@@ -73,7 +73,7 @@ public class CreatePersonDialog
         btnCreate.setOnAction((event) ->
             {
                 boolean correctDate = validateBirthDateField(customBirthDate);
-                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctShortName = validateShortName(shortNameCustomField, null);
                 boolean correctFirstName = validateName(firstNameCustomField);
                 boolean correctLastName = validateName(lastNameCustomField);
 

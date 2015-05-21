@@ -52,7 +52,7 @@ public class CreateWorkspaceDialog
         
         btnCreate.setOnAction((event) ->
             {
-                boolean correctShortName = validateShortNameNonUnique(shortNameCustomField);
+                boolean correctShortName = validateShortNameNonUnique(shortNameCustomField, null);
                 boolean correctLongName = validateName(longNameCustomField);
                 
                 String shortName = shortNameCustomField.getText();

@@ -165,25 +165,27 @@ public class ProjectTest extends TestCase
         ObservableList<TreeViewItem> children = observableArrayList();
         ReleaseCategory releasesCategory = new ReleaseCategory("Releases", proj);
         children.add(releasesCategory);
-        StoryCategory storiesCategory = new StoryCategory("Stories", proj);
-        children.add(storiesCategory);
         BacklogCategory backlogCategory = new BacklogCategory("Backlog", proj);
         children.add(backlogCategory);
+        StoryCategory storiesCategory = new StoryCategory("Stories", proj);
+        children.add(storiesCategory);
+
         Assert.assertEquals(children, proj.getChildren());
 
         Release release = new Release("test release", proj);
         proj.add(release);
-        Story story = new Story();
-        proj.add(story);
         Backlog backlog = new Backlog();
         proj.add(backlog);
+        Story story = new Story();
+        proj.add(story);
         children.clear();
         releasesCategory = new ReleaseCategory("Releases", proj);
         children.add(releasesCategory);
-        storiesCategory = new StoryCategory("Stories", proj);
-        children.add(storiesCategory);
         backlogCategory = new BacklogCategory("Backlog", proj);
         children.add(backlogCategory);
+        storiesCategory = new StoryCategory("Stories", proj);
+        children.add(storiesCategory);
+
         Assert.assertEquals(children, proj.getChildren());
     }
 

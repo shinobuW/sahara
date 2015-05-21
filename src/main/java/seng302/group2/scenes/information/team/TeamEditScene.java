@@ -339,7 +339,8 @@ public class TeamEditScene
                 }
                 else
                 {
-                    correctShortName = validateShortName(shortNameCustomField);
+                    correctShortName = validateShortName(shortNameCustomField,
+                        currentTeam.getShortName());
                 }
                 
                 if (correctShortName)

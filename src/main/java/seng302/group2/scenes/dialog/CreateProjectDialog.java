@@ -52,7 +52,7 @@ public class CreateProjectDialog
         btnCreate.setOnAction((event) ->
             {
                 boolean correctShortName = ShortNameValidator.validateShortName(
-                        shortNameCustomField);
+                        shortNameCustomField, null);
                 boolean correctLongName = NameValidator.validateName(longNameCustomField);
 
                 String shortName = shortNameCustomField.getText();

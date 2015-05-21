@@ -116,35 +116,32 @@ public class ProjectEditScene
         informationPane.getChildren().add(h1);*/
         informationPane.getChildren().add(buttons);
 
-        btnCancel.setOnAction((event) ->
-            {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
-            });
-
         btnSave.setOnAction((event) ->
             {
                 boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                        currentProject.getShortName());
+                    currentProject.getShortName());
                 boolean longNameUnchanged = longNameCustomField.getText().equals(
-                        currentProject.getLongName());
+                    currentProject.getLongName());
                 boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                        currentProject.getDescription());
+                    currentProject.getDescription());
 
-                boolean correctShortName = validateShortName(shortNameCustomField);
-                boolean correctLongName = validateName(longNameCustomField);
+                // If no fields have been changed
                 if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged)
                 {
-                    // No fields have been changed
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
-                    event.consume();
+                    return;
                 }
-                // The short name is the same or valid
-                if ((shortNameUnchanged || correctShortName)
-                        && (longNameUnchanged || correctLongName))
+
+                boolean correctShortName = validateShortName(shortNameCustomField,
+                    currentProject.getShortName());
+                boolean correctLongName = validateName(longNameCustomField);
+
+                if (correctShortName && correctLongName)
                 {
                     currentProject.edit(shortNameCustomField.getText(),
-                            longNameCustomField.getText(), descriptionTextArea.getText(),
-                            observableArrayList() /*addedTeams TODO: Remove when certain */);
+                        longNameCustomField.getText(), descriptionTextArea.getText(),
+                        observableArrayList() /*addedTeams TODO: Remove when certain */
+                    );
 
                     Collections.sort(Global.currentWorkspace.getProjects());
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
@@ -155,6 +152,11 @@ public class ProjectEditScene
                     // One or more fields incorrectly validated, stay on the edit scene
                     event.consume();
                 }
+            });
+
+        btnCancel.setOnAction((event) ->
+            {
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
             });
 
         ScrollPane wrapper = new ScrollPane(informationPane);

@@ -81,7 +81,7 @@ public class CreateBacklogDialog
         // Create button event
         btnCreate.setOnAction((event) ->
             {
-                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctShortName = validateShortName(shortNameCustomField, null);
                 boolean correctLongName = validateName(longNameCustomField);
                 boolean correctProductOwnerCombo = true;
                 boolean correctProjectCombo = true;
@@ -108,7 +108,7 @@ public class CreateBacklogDialog
                         }
                     }
 
-                    Person productOwner = null;
+                    Person productOwner = new Person();
                     for (Team team : project.getCurrentTeams())
                     {
                         if (team.getProductOwner().toString().equals(
