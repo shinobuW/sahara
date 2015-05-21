@@ -10,6 +10,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.CustomTextArea;
+import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.story.Story;
@@ -48,6 +49,7 @@ public class StoryEditScene
         buttons.getChildren().addAll(btnSave, btnCancel);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name: ");
+        CustomTextField longNameTextField = new CustomTextField("Long Name: ");
         CustomTextArea descriptionTextArea = new CustomTextArea("Story Description: ", 300);
         RequiredField priorityNumberField = new RequiredField("Story Priority: ");
 
@@ -55,10 +57,12 @@ public class StoryEditScene
         descriptionTextArea.setMaxWidth(275);
 
         shortNameCustomField.setText(currentStory.getShortName());
+        longNameTextField.setText(currentStory.getLongName());
         descriptionTextArea.setText(currentStory.getDescription());
-        priorityNumberField.setText(currentStory.getPriority());
+        priorityNumberField.setText(currentStory.getPriority().toString());
 
         informationPane.getChildren().add(shortNameCustomField);
+        informationPane.getChildren().add(longNameTextField);
         informationPane.getChildren().add(descriptionTextArea);
         informationPane.getChildren().add(priorityNumberField);
         informationPane.getChildren().add(buttons);
@@ -72,6 +76,7 @@ public class StoryEditScene
         btnSave.setOnAction((event) ->
             {
                 if (shortNameCustomField.getText().equals(currentStory.getShortName())
+                        && longNameTextField.getText().equals(currentStory.getLongName())
                         && descriptionTextArea.getText().equals(currentStory.getDescription())
                         && priorityNumberField.getText().equals(currentStory.getPriority()))
                 {
@@ -85,9 +90,11 @@ public class StoryEditScene
                 {
                     // Valid short name, make the edit
                     currentStory.edit(shortNameCustomField.getText(),
+                            longNameTextField.getText(),
                             descriptionTextArea.getText(),
                             currentStory.getProject(),
-                            priorityNumberField.getText());
+                            Integer.parseInt(priorityNumberField.getText()),
+                            null);  // Backlog to be passed through here.
 
                     //Collections.sort(Global.currentWorkspace.getStories());
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY, currentStory);

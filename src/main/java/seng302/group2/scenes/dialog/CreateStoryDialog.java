@@ -16,6 +16,8 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+
+import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 import static seng302.group2.util.validation.NumberFieldValidator.validateNumberField;
 import seng302.group2.workspace.project.Project;
@@ -71,16 +73,18 @@ public class CreateStoryDialog
         btnCreate.setOnAction((event) ->
             {
                 boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctLongName = validateName(longNameCustomField);
+                boolean correctCreator = validateName(creatorCustomField);
                 boolean correctPriority = validateNumberField(priorityNumberField);
 
-                if (correctShortName && correctPriority)
+                if (correctShortName && correctLongName && correctCreator && correctPriority)
                 {
                     //get user input
                     String shortName = shortNameCustomField.getText();
                     String longName = longNameCustomField.getText();
                     String creator = creatorCustomField.getText();
                     String description = descriptionTextArea.getText();
-                    String priority = priorityNumberField.getText();
+                    Integer priority = Integer.parseInt(priorityNumberField.getText());
                  
                     Project project = new Project();
                     for (TreeViewItem item : Global.currentWorkspace.getProjects())

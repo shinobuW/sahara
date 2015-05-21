@@ -92,7 +92,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
             {
                 if (change.next() && !change.wasPermutated())
                 {
-                    Collections.sort(stories);
+                    Collections.sort(stories, Story.StoryNameComparator);
                 }
             });
         backlogs.addListener((ListChangeListener<Backlog>) change ->
@@ -649,7 +649,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         String proj2ShortName = compareProject.getShortName();
         return proj1ShortName.compareTo(proj2ShortName);
     }
-    
+
     
     /**
      * Deletes a project from the given workspace.

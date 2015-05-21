@@ -6,6 +6,7 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.Comparator;
 
 import javafx.collections.ObservableList;
 import seng302.group2.util.undoredo.Command;
@@ -16,14 +17,14 @@ import seng302.group2.workspace.skills.Skill;
 /**
  * Created by swi67 on 6/05/15.
  */
-public class Story extends TreeViewItem implements Serializable, Comparable<Story>
+public class Story extends TreeViewItem implements Serializable
 {
     private String shortName;
     private String longName;
     private String description;
     private String creator;
     private Project project;
-    private String priority;
+    private Integer priority;
     private Backlog backlog;
 
     /**
@@ -48,7 +49,7 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
      * @param priority the projects priority
      */
     public Story(String shortName, String longName, String description, String creator,
-            Project project, String priority)
+            Project project, Integer priority)
     {
         this.shortName = shortName;
         this.longName = longName;
@@ -98,7 +99,7 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
      * Gets the priority of the project
      * @return an integer representing the priority
      */
-    public String getPriority()
+    public Integer getPriority()
     {
         return this.priority;
     }
@@ -181,7 +182,7 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
      * Sets the priority of the story
      * @param priority the priority
      */
-    public void setPriority(String priority)
+    public void setPriority(Integer priority)
     {
         this.priority = priority;
     }
@@ -197,14 +198,40 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
     }
     
     
-    // TODO write javadoc.
-    @Override
-    public int compareTo(Story compareStory)
+//    // TODO write javadoc.
+//    @Override
+//    public int compareTo(Story compareStory)
+//    {
+//        String story1ShortName = this.getShortName().toUpperCase();
+//        String story2ShortName = compareStory.getShortName().toUpperCase();
+//        return story1ShortName.compareTo(story2ShortName);
+//    }
+
+
+    // TODO
+    public static Comparator<Story> StoryPriorityComparator = new Comparator<Story>()
     {
-        String story1ShortName = this.getShortName().toUpperCase();
-        String story2ShortName = compareStory.getShortName().toUpperCase();
-        return story1ShortName.compareTo(story2ShortName);
-    }
+        @Override
+        public int compare(Story story1, Story story2)
+        {
+            Integer story1Priority = story1.getPriority();
+            Integer story2Priority = story2.getPriority();
+
+            return story2Priority.compareTo(story1Priority);
+        }
+    };
+
+    // TODO
+    public static Comparator<Story> StoryNameComparator = new Comparator<Story>()
+    {
+        @Override
+        public int compare(Story story1, Story story2)
+        {
+            String story1ShortName = story1.getShortName().toUpperCase();
+            String story2ShortName = story2.getShortName().toUpperCase();
+            return story1ShortName.compareTo(story2ShortName);
+        }
+    };
     
     /**
      * An overridden version for the String representation of a Story
@@ -225,11 +252,11 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
      * @param newProject The new project
      * @param newPriority The new priority
      */
-    public void edit(String newShortName, String newDescription, Project newProject,
-                     String newPriority)
+    public void edit(String newShortName, String newLongName, String newDescription,
+                     Project newProject, Integer newPriority, Backlog newBacklog)
     {
-        Command relEdit = new StoryEditCommand(this, newShortName, newDescription, newProject,
-                newPriority);
+        Command relEdit = new StoryEditCommand(this, newShortName, newLongName,
+                newDescription, newProject, newPriority, newBacklog);
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -248,27 +275,38 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
     private class StoryEditCommand implements Command
     {
         private Story story;
+
         private String shortName;
+        private String longName;
         private String description;
         private Project project;
-        private String priority;
+        private Integer priority;
+        private Backlog backlog;
+
         private String oldShortName;
+        private String oldLongName;
         private String oldDescription;
         private Project oldProject;
-        private String oldPriority;
+        private Integer oldPriority;
+        private Backlog oldBacklog;
 
-        private StoryEditCommand(Story story, String newShortName, String newDescription,
-                                   Project newProject, String newPriority)
+        private StoryEditCommand(Story story, String newShortName, String newLongName,
+            String newDescription, Project newProject, Integer newPriority, Backlog newBacklog)
         {
             this.story = story;
             this.shortName = newShortName;
+            this.longName = newLongName;
             this.description = newDescription;
             this.project = newProject;
             this.priority = newPriority;
+            this.backlog = newBacklog;
+
             this.oldShortName = story.shortName;
+            this.oldLongName = story.longName;
             this.oldDescription = story.description;
             this.oldProject = story.project;
             this.oldPriority = story.priority;
+            this.oldBacklog = story.backlog;
         }
 
         /**
@@ -277,10 +315,13 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
         public void execute()
         {
             story.shortName = shortName;
+            story.longName = longName;
             story.description = description;
             story.project = project;
             story.priority = priority;
-            Collections.sort(project.getStories());
+            story.backlog = backlog;
+            Collections.sort(project.getStories(), Story.StoryNameComparator);
+            Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
         }
 
         /**
@@ -289,10 +330,13 @@ public class Story extends TreeViewItem implements Serializable, Comparable<Stor
         public void undo()
         {
             story.shortName = oldShortName;
+            story.longName = oldLongName;
             story.description = oldDescription;
             story.project = oldProject;
             story.priority = oldPriority;
-            Collections.sort(project.getStories());
+            story.backlog = oldBacklog;
+            Collections.sort(project.getStories(), Story.StoryNameComparator);
+            Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
         }
     }
 

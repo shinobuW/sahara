@@ -16,6 +16,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
 
+import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -50,11 +51,11 @@ public class CreateBacklogDialog
         RequiredField longNameCustomField = new RequiredField("Long Name");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description");
         CustomComboBox projectComboBox = new CustomComboBox("Project", true);
-        CustomComboBox productOwnerComboBox = new CustomComboBox("Product Owner", true);
+        CustomComboBox productOwnerComboBox = new CustomComboBox("Product Owner", false);
 
-        if (Global.currentWorkspace.getPeople().size() > 0)
+        if (Global.currentWorkspace.getProjects().size() > 0)
         {
-            String firstItem = Global.currentWorkspace.getPeople().get(0).toString();
+            String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
             projectComboBox.setValue(firstItem);
         }
 
@@ -81,8 +82,17 @@ public class CreateBacklogDialog
         btnCreate.setOnAction((event) ->
             {
                 boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctLongName = validateName(longNameCustomField);
+                boolean correctProductOwnerCombo = true;
+                boolean correctProjectCombo = true;
 
-                if (correctShortName)
+//                if (productOwnerComboBox.getValue() == null)
+//                {
+//                    productOwnerComboBox.showErrorField("You must select a product owner.");
+//                    correctProductOwnerCombo = false;
+//                }
+
+                if (correctShortName && correctLongName && correctProductOwnerCombo)
                 {
                     //get user input
                     String shortName = shortNameCustomField.getText();
@@ -98,7 +108,7 @@ public class CreateBacklogDialog
                         }
                     }
 
-                    Person productOwner = new Person();
+                    Person productOwner = null;
                     for (Team team : project.getCurrentTeams())
                     {
                         if (team.getProductOwner().toString().equals(
