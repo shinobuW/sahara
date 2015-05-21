@@ -669,12 +669,10 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         ObservableList<TreeViewItem> children = observableArrayList();
         ReleaseCategory releasesCategory = new ReleaseCategory("Releases", this);
         children.add(releasesCategory);
-        StoryCategory storiesCategory = new StoryCategory("Stories", this);
-        children.add(storiesCategory);
         BacklogCategory backlogCategory = new BacklogCategory("Backlog", this);
         children.add(backlogCategory);
- 
-
+        StoryCategory storiesCategory = new StoryCategory("Stories", this);
+        children.add(storiesCategory);
         return children;
     }
 
