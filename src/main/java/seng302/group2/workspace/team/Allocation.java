@@ -220,7 +220,6 @@ public class Allocation implements Serializable
 
         public void undo()
         {
-            System.out.println("Undone Person Delete");
             team.getProjectAllocations().add(allocation);
             project.getTeamAllocations().add(allocation);
             // TODO Readd any associations
