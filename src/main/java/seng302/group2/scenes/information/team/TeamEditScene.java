@@ -38,6 +38,7 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  * A class for displaying the team edit scene.
  * @author crw73
  */
+@Deprecated
 public class TeamEditScene
 {
     private static ObservableList<Person> tempTeam = observableArrayList();
@@ -49,6 +50,7 @@ public class TeamEditScene
      * @param currentTeam The team to show the information of
      * @return The Team Edit information scene
      */
+    @Deprecated
     public static ScrollPane getTeamEditScene(Team currentTeam)
     {
 
@@ -237,7 +239,7 @@ public class TeamEditScene
                 for (Person item : selectedPeople)
                 {
                     if (item.getTeam().isUnassignedTeam()
-                            || item.getTeam() == null || (item.getTeam() == currentTeam))
+                            || item.getTeam() == null || item.getTeam() == currentTeam)
                     {
                         tempTeam.add(item);
                     }

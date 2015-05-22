@@ -1,8 +1,11 @@
 package seng302.group2.scenes.dialog;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
@@ -16,6 +19,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
 
+import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
@@ -51,7 +55,13 @@ public class CreateBacklogDialog
         RequiredField longNameCustomField = new RequiredField("Long Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
         CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
-        CustomComboBox productOwnerComboBox = new CustomComboBox("Product Owner:", false);
+
+        ObservableList<Person> productOwnerOptions = observableArrayList();
+        ComboBox<Person> productOwnerComboBox = new ComboBox<>(productOwnerOptions);
+        Label poComboLabel = new Label("Product Owner: ");
+
+        HBox poCombo = new HBox();
+        poCombo.getChildren().addAll(poComboLabel, productOwnerComboBox);
 
         if (Global.currentWorkspace.getProjects().size() > 0)
         {
@@ -64,19 +74,16 @@ public class CreateBacklogDialog
             projectComboBox.addToComboBox(project.toString());
         }
 
-        for (Project project : Global.currentWorkspace.getProjects())
+        for (Team team : Global.currentWorkspace.getTeams())
         {
-            if (project.toString().equals(projectComboBox.getValue()))
+            if (team.getProductOwner() != null)
             {
-                for (Team team : project.getCurrentTeams())
-                {
-                    productOwnerComboBox.addToComboBox(team.getProductOwner().toString());
-                }
+                productOwnerOptions.add(team.getProductOwner());
             }
         }
 
         grid.getChildren().addAll(shortNameCustomField, longNameCustomField,
-                projectComboBox, productOwnerComboBox, descriptionTextArea, buttons);
+                projectComboBox, poCombo, descriptionTextArea, buttons);
 
         // Create button event
         btnCreate.setOnAction((event) ->
@@ -108,16 +115,15 @@ public class CreateBacklogDialog
                         }
                     }
 
-                    Person productOwner = new Person();
-                    for (Team team : project.getCurrentTeams())
+                    Person productOwner = null;
+                    /*for (Team team : project.getCurrentTeams())
                     {
                         if (team.getProductOwner().toString().equals(
                                 (productOwnerComboBox.getValue())))
                         {
                             productOwner = team.getProductOwner();
                         }
-                    }
-
+                    }*/
 
                     Backlog backlog = new Backlog(shortName, longName, description, productOwner,
                             project);

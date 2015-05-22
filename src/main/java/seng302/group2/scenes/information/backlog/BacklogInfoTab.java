@@ -1,17 +1,17 @@
 package seng302.group2.scenes.information.backlog;
 
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.workspace.backlog.Backlog;
 
+import java.util.Collections;
+
 /**
+ * The information tab for a backlog
  * Created by cvs20 on 19/05/15.
  */
 public class BacklogInfoTab extends Tab
@@ -31,6 +31,12 @@ public class BacklogInfoTab extends Tab
 
         Button btnEdit = new Button("Edit");
 
+        ListView backlogStoryBox = new ListView(currentBacklog.getStories());
+        backlogStoryBox.setPrefHeight(192);
+        backlogStoryBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+        final Separator separator = new Separator();
+
         basicInfoPane.getChildren().add(title);
         basicInfoPane.getChildren().add(new Label("Backlog Description: "
                 + currentBacklog.getDescription()));
@@ -38,6 +44,11 @@ public class BacklogInfoTab extends Tab
                 + currentBacklog.getProject().toString()));
         basicInfoPane.getChildren().add(new Label("Backlog Product Owner: "
                 + currentBacklog.getProductOwner()));
+
+        basicInfoPane.getChildren().add(separator);
+        basicInfoPane.getChildren().add(new Label("Stories: "));
+        basicInfoPane.getChildren().add(backlogStoryBox);
+
         basicInfoPane.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) ->

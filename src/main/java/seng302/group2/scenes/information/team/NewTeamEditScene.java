@@ -9,9 +9,10 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.controlsfx.dialog.ExceptionDialog;
+import org.controlsfx.dialog.*;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
@@ -102,7 +103,13 @@ public class NewTeamEditScene extends ScrollPane
         teamMembersList.addAll(baseTeam.getPeople());
 
         ObservableList<Person> availablePeopleList = observableArrayList();
-        availablePeopleList.addAll(Global.currentWorkspace.getPeople());
+        for (Person person : Global.currentWorkspace.getPeople())
+        {
+            if (person.getTeam().isUnassignedTeam())
+            {
+                availablePeopleList.add(person);
+            }
+        }
         availablePeopleList.removeAll(teamMembersList);
 
 
@@ -113,7 +120,7 @@ public class NewTeamEditScene extends ScrollPane
 
         ListView<Person> availablePeopleListView = new ListView<>(availablePeopleList);
         availablePeopleListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        teamMembersListView.getSelectionModel().select(0);
+        availablePeopleListView.getSelectionModel().select(0);
 
         VBox teamMembersBox = new VBox(10);
         teamMembersBox.getChildren().add(new Label("Team Members: "));
@@ -234,7 +241,8 @@ public class NewTeamEditScene extends ScrollPane
             {
                 if (isValidState())// validation
                 {
-                    // Edit Command
+                    // Edit Command.
+
                     baseTeam.edit(shortNameField.getText(),
                         descriptionField.getText(),
                         teamMembersList,
@@ -288,6 +296,7 @@ public class NewTeamEditScene extends ScrollPane
                 || ShortNameValidator.validateShortName(shortNameField, null))// new name validates
                 && areRolesValid();
     }
+
 
 
     /**

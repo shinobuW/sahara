@@ -10,6 +10,8 @@ import seng302.group2.workspace.story.Story;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -234,10 +236,10 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
      *
      */
     public void edit(String newShortName, String newLongName, String newDescription,
-                     Person newProductOwner, Project newProject)
+                     Person newProductOwner, Project newProject, Collection<Story> newStories)
     {
         Command relEdit = new BacklogEditCommand(this, newShortName, newLongName, newDescription,
-                newProductOwner, newProject);
+                newProductOwner, newProject, newStories);
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -261,16 +263,18 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         private String description;
         private Person productOwner;
         private Project project;
+        private Collection<Story> stories = new HashSet<>();
 
         private String oldShortName;
         private String oldLongName;
         private String oldDescription;
         private Person oldProductOwner;
         private Project oldProject;
+        private Collection<Story> oldStories = new HashSet<>();
 
         private BacklogEditCommand(Backlog backlog, String newShortName, String newLongName,
                                    String newDescription, Person newProductOwner,
-                                   Project newProject)
+                                   Project newProject, Collection<Story> newStories)
         {
             this.backlog = backlog;
             this.shortName = newShortName;
@@ -278,12 +282,14 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
             this.description = newDescription;
             this.productOwner = newProductOwner;
             this.project = newProject;
+            this.stories.addAll(newStories);
 
             this.oldShortName = backlog.shortName;
             this.oldLongName = backlog.longName;
             this.oldDescription = backlog.description;
             this.oldProductOwner = backlog.productOwner;
             this.oldProject = backlog.project;
+            this.oldStories.addAll(backlog.stories);
         }
 
         /**
@@ -291,11 +297,21 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
          */
         public void execute()
         {
+            backlog.stories.removeAll(oldStories);
+            for (Story story : oldStories)
+            {
+                story.setBacklog(null);
+            }
+            for (Story story : stories)
+            {
+                story.setBacklog(backlog);
+            }
             backlog.shortName = shortName;
             backlog.longName = longName;
             backlog.description = description;
             backlog.productOwner = productOwner;
             backlog.project = project;
+            backlog.stories.addAll(stories);
         }
 
         /**
@@ -308,6 +324,16 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
             backlog.description = oldDescription;
             backlog.productOwner = oldProductOwner;
             backlog.project = oldProject;
+            backlog.stories.removeAll(stories);
+            backlog.stories.addAll(oldStories);
+            for (Story story : stories)
+            {
+                story.setBacklog(null);
+            }
+            for (Story story : oldStories)
+            {
+                story.setBacklog(backlog);
+            }
         }
     }
 
