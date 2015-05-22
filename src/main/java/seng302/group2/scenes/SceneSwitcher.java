@@ -261,7 +261,7 @@ public class SceneSwitcher
             case BACKLOG_EDIT:
                 if (item.getClass() == Backlog.class)
                 {
-                    MainScene.contentPane.setContent(BacklogEditScene.getBacklogEditScene(
+                    MainScene.contentPane.setContent(new BacklogEditScene(
                             (Backlog) item));
                 }
                 break;

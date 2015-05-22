@@ -174,8 +174,14 @@ public class Story extends TreeViewItem implements Serializable
      */
     public void setBacklog(Backlog backlog)
     {
-        this.backlog = backlog;
-        backlog.add(this);
+        if (backlog == null)
+        {
+            this.backlog = null;
+        }
+        else
+        {
+            this.backlog = backlog;
+        }
     }
 
     /**
