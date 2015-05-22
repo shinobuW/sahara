@@ -40,9 +40,9 @@ public class CreateProjectDialog
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnCreate, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        RequiredField longNameCustomField = new RequiredField("Long Name");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description");
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        RequiredField longNameCustomField = new RequiredField("Long Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description:");
 
         grid.getChildren().add(shortNameCustomField);
         grid.getChildren().add(longNameCustomField);
@@ -52,7 +52,7 @@ public class CreateProjectDialog
         btnCreate.setOnAction((event) ->
             {
                 boolean correctShortName = ShortNameValidator.validateShortName(
-                        shortNameCustomField);
+                        shortNameCustomField, null);
                 boolean correctLongName = NameValidator.validateName(longNameCustomField);
 
                 String shortName = shortNameCustomField.getText();

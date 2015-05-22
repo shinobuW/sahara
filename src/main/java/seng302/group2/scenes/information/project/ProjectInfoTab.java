@@ -46,17 +46,12 @@ public class ProjectInfoTab extends Tab
                 }
             });
 
-
-
-
-
         Separator separator = new Separator();
 
         basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new Label("Short Name: "));
+        basicInfoPane.getChildren().add(new Label("Short Name: " + currentProject.getShortName()));
         basicInfoPane.getChildren().add(new Label("Project Description: "));
 
-        basicInfoPane.getChildren().add(new Label(currentProject.getShortName()));
         basicInfoPane.getChildren().add(new Label(currentProject.getDescription()));
 
         basicInfoPane.getChildren().add(separator);
@@ -75,7 +70,7 @@ public class ProjectInfoTab extends Tab
         HBox listBoxes = new HBox(12);
         VBox teamsBox = new VBox();
         VBox releaseBox = new VBox();
-        teamsBox.getChildren().addAll(new Label("Teams:"), projectTeamsBox);
+        teamsBox.getChildren().addAll(new Label("Current Teams:"), projectTeamsBox);
         releaseBox.getChildren().addAll(new Label("Releases:"), projectReleaseBox);
         listBoxes.getChildren().addAll(teamsBox, releaseBox);
 

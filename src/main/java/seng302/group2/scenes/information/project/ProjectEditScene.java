@@ -21,6 +21,8 @@ import seng302.group2.workspace.team.Team;
 import static javafx.collections.FXCollections.observableArrayList;
 import seng302.group2.Global;
 import static seng302.group2.scenes.MainScene.informationPane;
+import static seng302.group2.util.validation.NameValidator.validateName;
+import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * A class for displaying the project edit scene.
@@ -47,9 +49,9 @@ public class ProjectEditScene
         buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name: ");
-        RequiredField longNameCustomField = new RequiredField("Long Name: ");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description: ", 300);
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        RequiredField longNameCustomField = new RequiredField("Long Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description:", 300);
 
         shortNameCustomField.setMaxWidth(275);
         longNameCustomField.setMaxWidth(275);
@@ -114,83 +116,32 @@ public class ProjectEditScene
         informationPane.getChildren().add(h1);*/
         informationPane.getChildren().add(buttons);
 
-        /*btnAdd.setOnAction((event) ->
-            {
-                ObservableList<Team> selectedTeams =
-                        membersBox.getSelectionModel().getSelectedItems();
-                for (Team item : selectedTeams)
-                {
-                    if (item.getProject() == null)
-                    {
-                        tempProject.addWithoutUndo(item);
-                    }
-                    else 
-                    {
-                        teamCheckDialog(item, tempProject);
-                    }
-                }
-
-                availableTeams.clear();
-                for (TreeViewItem projectTeams : Global.currentWorkspace.getTeams())
-                {
-                    if (!tempProject.getTeams().contains((Team)projectTeams))
-                    {
-                        if (!((Team)projectTeams).isUnassignedTeam()
-                            && !currentProject.getTeams().contains(projectTeams))
-                        {
-                            availableTeams.add((Team) projectTeams);
-                        }
-                    }
-		    
-                }
-            });
-
-        btnDelete.setOnAction((event) ->
-            {
-                ObservableList<Team> selectedTeams =
-                        projectTeamsBox.getSelectionModel().getSelectedItems();
-                System.out.println(selectedTeams.size());
-                for (int i = selectedTeams.size() - 1; i >= 0 ; i--)
-                {
-                    tempProject.removeWithoutUndo(selectedTeams.get(i));
-                }
-
-                availableTeams.clear();
-                for (TreeViewItem projectTeams : Global.currentWorkspace.getTeams())
-                {
-                    if (!tempProject.getTeams().contains((Team)projectTeams)
-                        && !((Team)projectTeams).isUnassignedTeam())
-                    {
-                        availableTeams.add((Team) projectTeams);
-                    }
-                }
-            });*/
-
-        btnCancel.setOnAction((event) ->
-            {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
-            });
-
         btnSave.setOnAction((event) ->
             {
-                if (shortNameCustomField.getText().equals(currentProject.getShortName())
-                        && longNameCustomField.getText().equals(currentProject.getLongName())
-                        && descriptionTextArea.getText().equals(currentProject.getDescription()))
+                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                    currentProject.getShortName());
+                boolean longNameUnchanged = longNameCustomField.getText().equals(
+                    currentProject.getLongName());
+                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                    currentProject.getDescription());
+
+                // If no fields have been changed
+                if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged)
                 {
-                    // No fields have been changed
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
-                    event.consume();
+                    return;
                 }
-                // The short name is the same or valid
-                if ((shortNameCustomField.getText().equals(currentProject.getShortName())
-                        || ShortNameValidator.validateShortName(shortNameCustomField))
-                        && // and the long name is the same or valid
-                        (longNameCustomField.getText().equals(currentProject.getLongName())
-                                || NameValidator.validateName(longNameCustomField)))
+
+                boolean correctShortName = validateShortName(shortNameCustomField,
+                    currentProject.getShortName());
+                boolean correctLongName = validateName(longNameCustomField);
+
+                if (correctShortName && correctLongName)
                 {
                     currentProject.edit(shortNameCustomField.getText(),
-                            longNameCustomField.getText(), descriptionTextArea.getText(),
-                            observableArrayList() /*addedTeams TODO: Remove when certain */);
+                        longNameCustomField.getText(), descriptionTextArea.getText(),
+                        observableArrayList() /*addedTeams TODO: Remove when certain */
+                    );
 
                     Collections.sort(Global.currentWorkspace.getProjects());
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
@@ -201,6 +152,11 @@ public class ProjectEditScene
                     // One or more fields incorrectly validated, stay on the edit scene
                     event.consume();
                 }
+            });
+
+        btnCancel.setOnAction((event) ->
+            {
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
             });
 
         ScrollPane wrapper = new ScrollPane(informationPane);

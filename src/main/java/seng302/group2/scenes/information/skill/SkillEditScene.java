@@ -49,8 +49,8 @@ public class SkillEditScene
         buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name: ");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description: ", 300);
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description:", 300);
 
         shortNameCustomField.setMaxWidth(275);
         descriptionTextArea.setMaxWidth(275);
@@ -62,39 +62,47 @@ public class SkillEditScene
         informationPane.getChildren().add(descriptionTextArea);
         informationPane.getChildren().add(buttons);
 
-
-        btnCancel.setOnAction((event) ->
-            {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL, currentSkill);
-            });
-
         btnSave.setOnAction((event) ->
             {
-                if (shortNameCustomField.getText().equals(currentSkill.getShortName())
-                        && descriptionTextArea.getText().equals(currentSkill.getDescription()))
+                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                    currentSkill.getShortName());
+                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                    currentSkill.getDescription());
+
+                if (shortNameUnchanged && descriptionUnchanged)
                 {
                     // No changes
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL, currentSkill);
+                    return;
                 }
 
-                else if (shortNameCustomField.getText().equals(currentSkill.getShortName())
-                        || validateShortName(shortNameCustomField))
+                boolean correctShortName = validateShortName(shortNameCustomField,
+                    currentSkill.getShortName());
+
+                if (correctShortName)
                 {
                     // Valid short name, make the edit
                     currentSkill.edit(shortNameCustomField.getText(),
-                            descriptionTextArea.getText());
+                        descriptionTextArea.getText()
+                    );
 
                     Collections.sort(Global.currentWorkspace.getSkills());
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL, currentSkill);
                     MainScene.treeView.refresh();
                 }
-
                 else
                 {
                     event.consume();
                 }
 
             });
+
+        btnCancel.setOnAction((event) ->
+            {
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL, currentSkill);
+            });
+
+
 
         ScrollPane wrapper = new ScrollPane(informationPane);
         wrapper.setStyle("-fx-background-color:transparent;");

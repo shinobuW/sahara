@@ -565,7 +565,7 @@ public class Workspace extends TreeViewItem implements Serializable
      */
     public void add(Person person)
     {
-        Command command = new AddPersonCommand(this, person);
+        Command command = new AddPersonCommand(this, person, Global.getUnassignedTeam());
         Global.commandManager.executeCommand(command);
     }
 
@@ -1130,20 +1130,24 @@ public class Workspace extends TreeViewItem implements Serializable
     {
         private Person person;
         private Workspace ws;
+        private Team unassingedTeam;
 
-        AddPersonCommand(Workspace ws, Person person)
+        AddPersonCommand(Workspace ws, Person person, Team unassingedTeam)
         {
             this.person = person;
             this.ws = ws;
+            this.unassingedTeam = unassingedTeam;
         }
 
         public void execute()
         {
             ws.getPeople().add(person);
+            unassingedTeam.getPeople().add(person);
         }
 
         public void undo()
         {
+            unassingedTeam.remove(person);
             ws.getPeople().remove(person);
             Global.getUnassignedTeam().remove(person);
         }

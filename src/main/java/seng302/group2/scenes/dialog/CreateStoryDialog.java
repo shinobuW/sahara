@@ -16,6 +16,8 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+
+import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 import static seng302.group2.util.validation.NumberFieldValidator.validateNumberField;
 import seng302.group2.workspace.project.Project;
@@ -49,12 +51,12 @@ public class CreateStoryDialog
         buttons.getChildren().addAll(btnCreate, btnCancel);
 
         // Add elements to grid
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        RequiredField longNameCustomField = new RequiredField("Long Name");
-        RequiredField creatorCustomField = new RequiredField("Creator");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Description");
-        CustomComboBox projectComboBox = new CustomComboBox("Project", true);
-        RequiredField priorityNumberField = new RequiredField("Priority");
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        RequiredField longNameCustomField = new RequiredField("Long Name:");
+        RequiredField creatorCustomField = new RequiredField("Creator:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
+        CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
+        RequiredField priorityNumberField = new RequiredField("Priority:");
         
         String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
         projectComboBox.setValue(firstItem);
@@ -70,17 +72,19 @@ public class CreateStoryDialog
         // Create button event
         btnCreate.setOnAction((event) ->
             {
-                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctShortName = validateShortName(shortNameCustomField, null);
+                boolean correctLongName = validateName(longNameCustomField);
+                boolean correctCreator = validateName(creatorCustomField);
                 boolean correctPriority = validateNumberField(priorityNumberField);
 
-                if (correctShortName && correctPriority)
+                if (correctShortName && correctLongName && correctCreator && correctPriority)
                 {
                     //get user input
                     String shortName = shortNameCustomField.getText();
                     String longName = longNameCustomField.getText();
                     String creator = creatorCustomField.getText();
                     String description = descriptionTextArea.getText();
-                    String priority = priorityNumberField.getText();
+                    Integer priority = Integer.parseInt(priorityNumberField.getText());
                  
                     Project project = new Project();
                     for (TreeViewItem item : Global.currentWorkspace.getProjects())

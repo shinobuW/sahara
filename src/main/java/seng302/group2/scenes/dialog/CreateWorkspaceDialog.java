@@ -41,9 +41,9 @@ public class CreateWorkspaceDialog
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnCreate, btnCancel);
         
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        RequiredField longNameCustomField = new RequiredField("Long Name");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Workspace Description");
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        RequiredField longNameCustomField = new RequiredField("Long Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Workspace Description:");
         
         grid.getChildren().add(shortNameCustomField);
         grid.getChildren().add(longNameCustomField);
@@ -52,7 +52,7 @@ public class CreateWorkspaceDialog
         
         btnCreate.setOnAction((event) ->
             {
-                boolean correctShortName = validateShortNameNonUnique(shortNameCustomField);
+                boolean correctShortName = validateShortNameNonUnique(shortNameCustomField, null);
                 boolean correctLongName = validateName(longNameCustomField);
                 
                 String shortName = shortNameCustomField.getText();

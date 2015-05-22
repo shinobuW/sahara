@@ -75,10 +75,10 @@ public class TeamEditScene
         buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name: ");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Team Description: ", 300);
-        productOwnerBox = new CustomComboBox("Product Owner: ", false);
-        scrumMasterBox = new CustomComboBox("Scrum Master: ", false);
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Team Description:", 300);
+        productOwnerBox = new CustomComboBox("Product Owner:", false);
+        scrumMasterBox = new CustomComboBox("Scrum Master:", false);
 
         shortNameCustomField.setMaxWidth(275);
         descriptionTextArea.setMaxWidth(275);
@@ -339,7 +339,8 @@ public class TeamEditScene
                 }
                 else
                 {
-                    correctShortName = validateShortName(shortNameCustomField);
+                    correctShortName = validateShortName(shortNameCustomField,
+                        currentTeam.getShortName());
                 }
                 
                 if (correctShortName)

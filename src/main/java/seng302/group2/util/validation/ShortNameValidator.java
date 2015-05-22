@@ -27,9 +27,10 @@ public class ShortNameValidator
      * @param shortNameField is a short name field
      * @return If the short name is valid
      */
-    public static boolean validateShortNameNonUnique(RequiredField shortNameField)
+    public static boolean validateShortNameNonUnique(RequiredField shortNameField,
+        String currentShortName)
     {
-        switch (ShortNameValidator.validateShortName(shortNameField.getText()))
+        switch (ShortNameValidator.validateShortName(shortNameField.getText(), currentShortName))
         {
             case VALID:
                 shortNameField.hideErrorField();
@@ -49,19 +50,22 @@ public class ShortNameValidator
         }
     }
 
-
-        /**
+    /**
      * Checks whether a given short name is valid (unique and not null/empty)
      * @param shortNameField is a short name field
+     * @param editedShortName If an element is being edited, the current short name of that element.
      * @return If the short name is valid
      */
-    public static boolean validateShortName(RequiredField shortNameField)
+    public static boolean validateShortName(RequiredField shortNameField, String editedShortName)
     {
-        switch (ShortNameValidator.validateShortName(shortNameField.getText()))
+        ValidationStatus status;
+        status = validateShortName(shortNameField.getText(), editedShortName);
+
+        switch (status)
         {
             case VALID:
                 //shortNameError.setText(null);
-                //shortNameField.setStyle(null); 
+                //shortNameField.setStyle(null);
                 shortNameField.hideErrorField();
                 return true;
             case NON_UNIQUE:
@@ -79,13 +83,20 @@ public class ShortNameValidator
         }
     }
     
+
     /**
      * Checks whether a short name is valid (unique and not null/empty).
      * @param shortName The short name to validate
+     * @param editedShortName If an element is being edited, the current short name of that element.
      * @return Validation status representing if the short name is valid
      */
-    public static ValidationStatus validateShortName(String shortName)
+    public static ValidationStatus validateShortName(String shortName, String editedShortName)
     {
+        //Test if the same
+        if (shortName.equals(editedShortName))
+        {
+            return ValidationStatus.VALID;
+        }
         // Test if valid name
         if (NameValidator.validateName(shortName) == ValidationStatus.INVALID)
         {

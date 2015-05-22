@@ -1,5 +1,6 @@
 package seng302.group2.scenes.control;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -30,6 +31,7 @@ public class RequiredField extends VBox
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);
         labelBox.spacingProperty().setValue(0);
+        labelBox.setAlignment(Pos.CENTER_LEFT);
         
         Label aster = new Label(" * ");
         aster.setTextFill(Color.web("#ff0000"));

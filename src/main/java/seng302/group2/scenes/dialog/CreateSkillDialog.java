@@ -44,8 +44,8 @@ public class CreateSkillDialog
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnCreate, btnCancel);
         
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description");
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description:");
         
         grid.getChildren().add(shortNameCustomField);
         grid.getChildren().add(descriptionTextArea);
@@ -53,7 +53,7 @@ public class CreateSkillDialog
         
         btnCreate.setOnAction((event) ->
             {
-                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctShortName = validateShortName(shortNameCustomField, null);
                 
                 String shortName = shortNameCustomField.getText();
                 String description = descriptionTextArea.getText();

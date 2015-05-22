@@ -92,7 +92,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
             {
                 if (change.next() && !change.wasPermutated())
                 {
-                    Collections.sort(stories);
+                    Collections.sort(stories, Story.StoryNameComparator);
                 }
             });
         backlogs.addListener((ListChangeListener<Backlog>) change ->
@@ -177,7 +177,8 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
             if (!projectTeam.isUnassignedTeam()
                     && alloc.getStartDate().isBefore(now)
                     && (alloc.getEndDate() == null || alloc.getEndDate().isAfter(now))
-                    && !teams.contains(projectTeam))
+                    && !teams.contains(projectTeam)
+                    && Global.currentWorkspace.getTeams().contains(alloc.getTeam()))
             {
                 teams.add(projectTeam);
             }
@@ -557,12 +558,9 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
             System.out.println("Called on wrong project, not happening");
             return;
         }
-        this.getTeamAllocations().add(allocation);
-//        if (DateValidator.validateAllocation(allocation, this))
-//        {
-//            Command addAlloc = new AddAllocationCommand(this, allocation.getTeam(), allocation);
-//            Global.commandManager.executeCommand(addAlloc);
-//        }
+
+        Command addAlloc = new AddAllocationCommand(this, allocation.getTeam(), allocation);
+        Global.commandManager.executeCommand(addAlloc);
     }
 
 
@@ -649,7 +647,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         String proj2ShortName = compareProject.getShortName();
         return proj1ShortName.compareTo(proj2ShortName);
     }
-    
+
     
     /**
      * Deletes a project from the given workspace.
@@ -672,12 +670,10 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         ObservableList<TreeViewItem> children = observableArrayList();
         ReleaseCategory releasesCategory = new ReleaseCategory("Releases", this);
         children.add(releasesCategory);
-        StoryCategory storiesCategory = new StoryCategory("Stories", this);
-        children.add(storiesCategory);
         BacklogCategory backlogCategory = new BacklogCategory("Backlog", this);
         children.add(backlogCategory);
- 
-
+        StoryCategory storiesCategory = new StoryCategory("Stories", this);
+        children.add(storiesCategory);
         return children;
     }
 

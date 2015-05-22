@@ -54,10 +54,10 @@ public class CreateReleaseDialog
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnCreate, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Description");
-        CustomDatePicker releaseDateField = new CustomDatePicker("Estimated Release Date", false);
-        CustomComboBox projectComboBox = new CustomComboBox("Project", true);
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
+        CustomDatePicker releaseDateField = new CustomDatePicker("Estimated Release Date:", false);
+        CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
         
         String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
         projectComboBox.setValue(firstItem);
@@ -78,7 +78,7 @@ public class CreateReleaseDialog
                 String shortName = shortNameCustomField.getText();
                 String description = descriptionTextArea.getText();
 
-                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctShortName = validateShortName(shortNameCustomField, null);
 
                 Project project = new Project();
                 for (TreeViewItem item : Global.currentWorkspace.getProjects())
@@ -179,7 +179,7 @@ public class CreateReleaseDialog
                 String description = descriptionTextArea.getText();
 
                 boolean correctDate = isCorrectDateFormat(releaseDateField);
-                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctShortName = validateShortName(shortNameCustomField, null);
 
                 Project project = new Project();
 

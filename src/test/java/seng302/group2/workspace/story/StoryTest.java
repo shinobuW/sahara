@@ -11,6 +11,8 @@ import org.junit.Test;
 import junit.framework.TestCase;
 import seng302.group2.workspace.project.Project;
 
+import java.lang.reflect.Array;
+
 /**
  * A series of tests relating to Story
  * @author swi67
@@ -49,11 +51,11 @@ public class StoryTest extends TestCase
         Assert.assertEquals(null, story.getCreator());
 
         Story testStory = new Story("Test Story", "A long Name", "test description",
-                "Tyler the Creator", project, "1");
+                "Tyler the Creator", project, 1);
         Assert.assertEquals("Test Story", testStory.getShortName());
         Assert.assertEquals("A long Name", testStory.getLongName());
         Assert.assertEquals("test description", testStory.getDescription());
-        Assert.assertEquals("1", testStory.getPriority());
+        Assert.assertEquals(1, testStory.getPriority(), 0);
         Assert.assertEquals("Tyler the Creator", testStory.getCreator());
         Assert.assertEquals("Test Story", testStory.toString()); 
         Assert.assertEquals(project, testStory.getProject());
@@ -69,31 +71,16 @@ public class StoryTest extends TestCase
         story.setShortName("Test Story");
         story.setLongName("Test Long Name");
         story.setDescription("description");
-        story.setPriority("5");
+        story.setPriority(5);
         story.setCreator("Shinobu");
         
         Assert.assertEquals("Test Story", story.getShortName());
         Assert.assertEquals("Test Long Name", story.getLongName());
         Assert.assertEquals("description", story.getDescription());
-        Assert.assertEquals("5", story.getPriority());
+        Assert.assertEquals(5, story.getPriority(), 0);
         Assert.assertEquals("Shinobu", story.getCreator());
     }
     
-    /**
-     * Tests the compareTo method of Story to ensure it correctly returns an int representing if a 
-     * shortName is larger or not.
-     */
-    @Test
-    public void testCompareTo()
-    {
-        Story story1 = new Story();
-        Story story2 = new Story();
-        story1.setShortName("A");
-        story2.setShortName("Z");
+    //TODO tests for Comparators
 
-        Assert.assertTrue(story1.compareTo(story2) <= 0);
-        Assert.assertTrue(story2.compareTo(story1) >= 0);
-        Assert.assertTrue(story1.compareTo(story1) == 0);
-    }
-    
 }

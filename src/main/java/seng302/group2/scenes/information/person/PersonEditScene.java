@@ -17,7 +17,6 @@ import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.validation.NameValidator;
-import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -29,6 +28,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.Global.currentWorkspace;
 import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.util.validation.DateValidator.validateBirthDateField;
+import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * A class for displaying the person edit scene.
@@ -110,12 +110,12 @@ public class PersonEditScene
             teamBox.setValue(currentTeam.toString());
         }
         
-        RequiredField shortNameCustomField = new RequiredField("Short Name: ");
-        RequiredField firstNameCustomField = new RequiredField("First Name: ");
-        RequiredField lastNameCustomField = new RequiredField("Last Name: ");
-        CustomTextField emailTextField = new CustomTextField("Email: ");
-        CustomDateField customBirthDate = new CustomDateField("Birth Date: ");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Person Description: ", 300);
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        RequiredField firstNameCustomField = new RequiredField("First Name:");
+        RequiredField lastNameCustomField = new RequiredField("Last Name:");
+        CustomTextField emailTextField = new CustomTextField("Email:");
+        CustomDateField customBirthDate = new CustomDateField("Birth Date:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Person Description:", 300);
         
         firstNameCustomField.setText(currentPerson.getFirstName());
         lastNameCustomField.setText(currentPerson.getLastName());
@@ -193,16 +193,8 @@ public class PersonEditScene
                 }
             });        
         
-        btnCancel.setOnAction((event) ->
-            {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON, currentPerson);
-            });
-
-
         btnSave.setOnAction((event) ->
             {
-                boolean correctDate = validateBirthDateField(customBirthDate);
-
                 Team selectedTeam = new Team();
                 for (Team team :Global.currentWorkspace.getTeams())
                 {
@@ -213,38 +205,47 @@ public class PersonEditScene
                     }
                 }
 
-                boolean skillsNotChanged = true;
+                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                        currentPerson.getShortName());
+                boolean firstNameUnchanged = firstNameCustomField.getText().equals(
+                        currentPerson.getFirstName());
+                boolean lastNameUnchanged = lastNameCustomField.getText().equals(
+                        currentPerson.getLastName());
+                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                        currentPerson.getDescription());
+                boolean birthdayUnchanged = customBirthDate.getText().equals(
+                        currentPerson.getDateString());
+                boolean emailUnchanged = emailTextField.getText().equals(
+                        currentPerson.getEmail());
+                boolean teamUnchanged = selectedTeam.getShortName().equals(
+                        currentPerson.getTeamName());
+                boolean skillsUnchanged = true;
                 for (Object skill : personSkillsBox.getItems())
                 {
                     if (!currentPerson.getSkills().contains((Skill)skill))
                     {
-                        skillsNotChanged = false;
+                        skillsUnchanged = false;
                         break;
                     }
                 }
 
-                if (shortNameCustomField.getText().equals(currentPerson.getShortName())
-                        && firstNameCustomField.getText().equals(currentPerson.getFirstName())
-                        && lastNameCustomField.getText().equals(currentPerson.getLastName())
-                        && descriptionTextArea.getText().equals(currentPerson.getDescription())
-                        && customBirthDate.getText().equals(currentPerson.getDateString())
-                        && emailTextField.getText().equals(currentPerson.getEmail())
-                        && selectedTeam.getShortName().equals(currentPerson.getTeamName())
-                        && skillsNotChanged)
+                if (shortNameUnchanged && firstNameUnchanged && lastNameUnchanged
+                        && descriptionUnchanged && birthdayUnchanged && emailUnchanged
+                        && teamUnchanged && skillsUnchanged)
                 {
                     // No fields have been changed
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON, currentPerson);
-                    event.consume();
+                    return;
                 }
 
-                boolean shortNameValidated =
-                        ShortNameValidator.validateShortName(shortNameCustomField);
+                boolean correctShortName = validateShortName(shortNameCustomField,
+                        currentPerson.getShortName());
                 boolean firstNameValidated = NameValidator.validateName(firstNameCustomField);
                 boolean lastNameValidated = NameValidator.validateName(lastNameCustomField);
+                boolean correctDate = validateBirthDateField(customBirthDate);
+
                 // The short name is the same or valid
-                if ((shortNameCustomField.getText().equals(currentPerson.getShortName())
-                        || shortNameValidated) && firstNameValidated && lastNameValidated
-                        && correctDate)
+                if (correctShortName && firstNameValidated && lastNameValidated && correctDate)
                 {
                     LocalDate birthDate;
                     if (customBirthDate.getText().equals(""))
@@ -258,13 +259,14 @@ public class PersonEditScene
                     }
 
                     currentPerson.edit(shortNameCustomField.getText(),
-                            firstNameCustomField.getText(),
-                            lastNameCustomField.getText(),
-                            emailTextField.getText(),
-                            birthDate,
-                            descriptionTextArea.getText(),
-                            selectedTeam,
-                            personSkillsBox.getItems());
+                        firstNameCustomField.getText(),
+                        lastNameCustomField.getText(),
+                        emailTextField.getText(),
+                        birthDate,
+                        descriptionTextArea.getText(),
+                        selectedTeam,
+                        personSkillsBox.getItems()
+                    );
 
                     Collections.sort(Global.currentWorkspace.getPeople());
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON, currentPerson);
@@ -275,6 +277,11 @@ public class PersonEditScene
                     // One or more fields incorrectly validated, stay on the edit scene
                     event.consume();
                 }
+            });
+
+        btnCancel.setOnAction((event) ->
+            {
+                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON, currentPerson);
             });
 
         ScrollPane wrapper = new ScrollPane(informationPane);

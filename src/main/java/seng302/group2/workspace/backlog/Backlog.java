@@ -208,8 +208,8 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
     @Override
     public int compareTo(Backlog backlog)
     {
-        String story1ShortName = this.getShortName().toUpperCase();
-        String story2ShortName = backlog.getShortName().toUpperCase();
+        String story1ShortName = this.getShortName();
+        String story2ShortName = backlog.getShortName();
         return story1ShortName.compareTo(story2ShortName);
     }
 

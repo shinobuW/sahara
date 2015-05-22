@@ -265,24 +265,6 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
     //</editor-fold>
 
 
-    /**
-     * Adds a Person to the Teams list of Members
-     * Adds an undo item by default
-     *
-     * @param person The person to add
-     */
-    public void add(Person person)
-    {
-        // Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                person,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this)
-        ));
-
-        this.people.add(person);
-    }
-
 
     /**
      * Adds a Person to the Teams list of Members
@@ -292,15 +274,15 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
      */
     public void add(Person person, Boolean undo)
     {
-        // Add the undo action to the stack
-        if (undo)
-        {
-            Global.undoRedoMan.add(new UndoableItem(
-                    person,
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this),
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this)
-            ));
-        }
+//        // Add the undo action to the stack
+//        if (undo)
+//        {
+//            Global.undoRedoMan.add(new UndoableItem(
+//                    person,
+//                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this),
+//                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this)
+//            ));
+//        }
         this.people.add(person);
     }
 
@@ -308,6 +290,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
      * Adds a project allocation to the team's list of allocations
      * @param allocation Allocation to add
      */
+    @Deprecated
     public void add(Allocation allocation)
     {
         if (!this.equals(allocation.getTeam()))
@@ -315,6 +298,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
             System.out.println("Called on wrong team, not happening");
             return;
         }
+
         Command addAlloc = new AddAllocationCommand(allocation.getProject(), this, allocation);
         Global.commandManager.executeCommand(addAlloc);
     }
@@ -388,7 +372,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         this.people.remove(person);
     }
 
-    /**
+    /**        //this.getTeamAllocations().add(allocation);
      * Removes the given allocation from the team's list of allocations
      * @param allocation allocation to be removed
      */
@@ -725,6 +709,32 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         }
     }
 
+    private class AddPersonCommand implements Command
+    {
+        private Person person;
+        private Team team;
+
+        AddPersonCommand(Team team, Person person)
+        {
+            this.person = person;
+            this.team = team;
+        }
+
+        public void execute()
+        {
+            team.getPeople().add(person);
+            person.setTeam(team);
+            // TODO Readd any associations
+        }
+
+        public void undo()
+        {
+            team.getPeople().remove(person);
+            person.setTeam(team);
+            // TODO Remove any associations
+        }
+    }
+
     private class AddAllocationCommand implements Command
     {
         private Project proj;
@@ -740,7 +750,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
 
         public void execute()
         {
-            //proj.getTeamAllocations().add(allocation);
+            proj.getTeamAllocations().add(allocation);
             team.getProjectAllocations().add(allocation);
         }
 

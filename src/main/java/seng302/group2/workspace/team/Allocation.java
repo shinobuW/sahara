@@ -163,7 +163,6 @@ public class Allocation implements Serializable
         private LocalDate oldStartDate;
         private LocalDate oldEndDate;
 
-        private ObservableList<Skill> oldSkills;
 
         protected AllocationEditCommand(Allocation alloc, LocalDate newStartDate,
                                         LocalDate newEndDate)
@@ -220,7 +219,6 @@ public class Allocation implements Serializable
 
         public void undo()
         {
-            System.out.println("Undone Person Delete");
             team.getProjectAllocations().add(allocation);
             project.getTeamAllocations().add(allocation);
             // TODO Readd any associations

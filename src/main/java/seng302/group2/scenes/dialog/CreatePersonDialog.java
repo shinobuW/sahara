@@ -59,12 +59,12 @@ public class CreatePersonDialog
         buttons.getChildren().addAll(btnCreate, btnCancel);
 
         // Add elements to grid
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        RequiredField firstNameCustomField = new RequiredField("First Name");
-        RequiredField lastNameCustomField = new RequiredField("Last Name");
-        CustomTextField emailTextField = new CustomTextField("Email");
-        CustomDateField customBirthDate = new CustomDateField("Birth Date");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Description");
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        RequiredField firstNameCustomField = new RequiredField("First Name:");
+        RequiredField lastNameCustomField = new RequiredField("Last Name:");
+        CustomTextField emailTextField = new CustomTextField("Email:");
+        CustomDateField customBirthDate = new CustomDateField("Birth Date:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
 
         grid.getChildren().addAll(shortNameCustomField, firstNameCustomField, lastNameCustomField,
                 emailTextField, customBirthDate, descriptionTextArea, buttons);
@@ -73,7 +73,7 @@ public class CreatePersonDialog
         btnCreate.setOnAction((event) ->
             {
                 boolean correctDate = validateBirthDateField(customBirthDate);
-                boolean correctShortName = validateShortName(shortNameCustomField);
+                boolean correctShortName = validateShortName(shortNameCustomField, null);
                 boolean correctFirstName = validateName(firstNameCustomField);
                 boolean correctLastName = validateName(lastNameCustomField);
 
@@ -101,8 +101,8 @@ public class CreatePersonDialog
                     Person person = new Person(shortName, firstName, lastName, email, description,
                             birthDate);
                     Global.currentWorkspace.add(person);
-                    person.setTeam((Team) Global.getUnassignedTeam());
-                    ((Team) Global.getUnassignedTeam()).add(person, false);
+                    //person.setTeam((Team) Global.getUnassignedTeam());
+                    //((Team) Global.getUnassignedTeam()).add(person, false);
                     dialog.hide();
                 }
                 else

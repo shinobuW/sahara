@@ -11,6 +11,7 @@ import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
@@ -225,6 +226,13 @@ public class DeleteDialog
             title = "Delete Story";
             Story deletedStory = (Story)element;
             message = MessageFormat.format("Are you sure you want to delete the story \"{0}",
+                    deletedStory.toString() + "\"?");
+        }
+        else if (element.getClass() == Backlog.class)
+        {
+            title = "Delete Backlog";
+            Story deletedStory = (Story)element;
+            message = MessageFormat.format("Are you sure you want to delete the backlog \"{0}",
                     deletedStory.toString() + "\"?");
         }
         else
