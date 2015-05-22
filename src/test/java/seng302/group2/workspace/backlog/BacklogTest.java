@@ -3,8 +3,10 @@ package seng302.group2.workspace.backlog;
 
 import org.junit.Assert;
 import org.junit.Test;
+import seng302.group2.Global;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.story.Story;
 
 /**
  * A series if tests relating to Backlog
@@ -59,5 +61,39 @@ public class BacklogTest
         Assert.assertEquals("Description", backlog.getDescription());
         Assert.assertEquals(codie, backlog.getProductOwner());
         Assert.assertEquals(project, backlog.getProject());
+    }
+
+    @Test
+    public void testAddStory()
+    {
+        Backlog backlog = new Backlog();
+        Story story = new Story();
+
+        backlog.add(story);
+        Assert.assertTrue(backlog.getStories().contains(story));
+
+        Global.commandManager.undo();
+        Assert.assertFalse(backlog.getStories().contains(story));
+
+        Global.commandManager.redo();
+        Assert.assertTrue(backlog.getStories().contains(story));
+    }
+
+
+    @Test
+    public void testGetChildren()
+    {
+        Backlog backlog = new Backlog();
+        Assert.assertNull(backlog.getChildren());
+    }
+
+
+    @Test
+    public void testToString()
+    {
+        Backlog backlogDefault = new Backlog();
+        Backlog backlog = new Backlog("short", "long", "desc", null, null);
+        Assert.assertEquals("Untitled Backlog", backlogDefault.toString());
+        Assert.assertEquals("short", backlog.toString());
     }
 }

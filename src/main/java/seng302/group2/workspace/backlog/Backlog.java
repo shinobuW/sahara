@@ -190,7 +190,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
      */
     public void add(Story story)
     {
-        Command addStory = new AddStoryCommand(this.getProject(), story.getBacklog(), story);
+        Command addStory = new AddStoryCommand(this.getProject(), this, story);
         Global.commandManager.executeCommand(addStory);
     }
 
@@ -206,7 +206,12 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         return null;
     }
 
-    // TODO write javadoc.
+
+    /**
+     * A comparator for backlogs based on short names
+     * @param backlog The backlog to compare to
+     * @return The result of the comparison of the short name strings
+     */
     @Override
     public int compareTo(Backlog backlog)
     {
@@ -378,14 +383,20 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
 
         public void execute()
         {
-            proj.getBacklogs().add(backlog);
-            backlog.getStories().add(story);
+            if (proj != null)
+            {
+                proj.getBacklogs().add(backlog);
+            }
+            backlog.stories.add(story);
         }
 
         public void undo()
         {
-            proj.getBacklogs().remove(backlog);
-            backlog.getStories().remove(story);
+            if (proj != null)
+            {
+                proj.getBacklogs().remove(backlog);
+            }
+            backlog.stories.remove(story);
         }
     }
 }
