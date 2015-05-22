@@ -77,10 +77,10 @@ public class TeamTest
         Team team = new Team();
         Person person = new Person();
 
-        team.add(person);
+        team.add(person, true);
         Assert.assertTrue(team.getPeople().contains(person));
 
-        team.remove(person);
+        team.remove(person, true);
         Assert.assertFalse(team.getPeople().contains(person));
 
         team.add(person, true);
@@ -136,7 +136,7 @@ public class TeamTest
         testTeam.getSerializablePeople().clear();
         Assert.assertTrue(testTeam.getSerializablePeople().isEmpty());
 
-        testTeam.add(testPerson);
+        testTeam.add(testPerson, true);
         testTeam.prepSerialization();
 
         Assert.assertTrue(testTeam.getSerializablePeople().contains(testPerson));

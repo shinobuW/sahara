@@ -347,6 +347,7 @@ public class Story extends TreeViewItem implements Serializable
     {
         private Story story;
         private Project proj;
+        private Backlog backlog;
 
         /**
          * Contructor for a story deletion command.
@@ -356,6 +357,7 @@ public class Story extends TreeViewItem implements Serializable
         {
             this.story = story;
             this.proj = story.getProject();
+            this.backlog = story.getBacklog();
         }
 
         /**
@@ -364,8 +366,8 @@ public class Story extends TreeViewItem implements Serializable
         public void execute()
         {
             System.out.println("Exec Story Delete");
+            backlog.getStories().remove(story);
             proj.getStories().remove(story);
-            //release.setProject(null);
         }
 
         /**
@@ -375,7 +377,7 @@ public class Story extends TreeViewItem implements Serializable
         {
             System.out.println("Undone Story Delete");
             proj.getStories().add(story);
-            //release.setProject(proj);
+            backlog.getStories().add(story);
         }
     }
 }
