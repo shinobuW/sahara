@@ -5,37 +5,19 @@
  */
 package seng302.group2.workspace.story;
 
-import junit.framework.Assert;
-import junit.framework.TestSuite;
-import org.junit.Test;
-import junit.framework.TestCase;
-import seng302.group2.workspace.project.Project;
 
-import java.lang.reflect.Array;
+import org.junit.Assert;
+import org.junit.Test;
+import seng302.group2.workspace.project.Project;
 
 /**
  * A series of tests relating to Story
  * @author swi67
  */
-public class StoryTest extends TestCase
+public class StoryTest
 {
     
-    /**
-     * Create the test case.
-     * @param testName name of the test case
-     */
-    public StoryTest(String testName)
-    {
-        super(testName);
-    }
 
-    /**
-     * @return the suite of tests being tested.
-     */
-    public static junit.framework.Test suite()
-    {
-        return new TestSuite(StoryTest.class);
-    }
     
     /**
      * Test for the story constructors
