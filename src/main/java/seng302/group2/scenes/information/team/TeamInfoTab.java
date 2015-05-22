@@ -74,35 +74,39 @@ public class TeamInfoTab extends Tab
         basicInfoPane.getChildren().add(new Label("Team Description: "
                 + currentTeam.getDescription()));
         basicInfoPane.getChildren().add(separator);
-        if (currentTeam.getProductOwner() != null)
-        {
-            basicInfoPane.getChildren().add(new Label("Product Owner: "
-                    + currentTeam.getProductOwner().toString()));
-        }
-        else
-        {
-            basicInfoPane.getChildren().add(new Label("Product Owner: "));
-        }
 
-        if (currentTeam.getScrumMaster() != null)
+        if (!currentTeam.isUnassignedTeam())
         {
-            basicInfoPane.getChildren().add(new Label("Scrum Master: "
-                    + currentTeam.getScrumMaster().toString()));
-        }
-        else
-        {
-            basicInfoPane.getChildren().add(new Label("Scrum Master: "));
-        }
-
-        basicInfoPane.getChildren().add(new Label("Team Members: "));
-        basicInfoPane.getChildren().add(teamsPeopleBox);
-
-        basicInfoPane.getChildren().add(btnEdit);
-
-        btnEdit.setOnAction((event) ->
+            if (currentTeam.getProductOwner() != null)
             {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM_EDIT, currentTeam);
-            });
+                basicInfoPane.getChildren().add(new Label("Product Owner: "
+                        + currentTeam.getProductOwner().toString()));
+            }
+            else
+            {
+                basicInfoPane.getChildren().add(new Label("Product Owner: "));
+            }
+
+            if (currentTeam.getScrumMaster() != null)
+            {
+                basicInfoPane.getChildren().add(new Label("Scrum Master: "
+                        + currentTeam.getScrumMaster().toString()));
+            }
+            else
+            {
+                basicInfoPane.getChildren().add(new Label("Scrum Master: "));
+            }
+
+            basicInfoPane.getChildren().add(new Label("Team Members: "));
+            basicInfoPane.getChildren().add(teamsPeopleBox);
+
+            basicInfoPane.getChildren().add(btnEdit);
+
+            btnEdit.setOnAction((event) ->
+                {
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM_EDIT, currentTeam);
+                });
+        }
     }
 
 
