@@ -54,7 +54,8 @@ public class TeamHistoryTab extends Tab
 
         TableView<Allocation> historyTable = new TableView();
         historyTable.setEditable(true);
-        historyTable.setStyle("-fx-pref-width: 750;");
+        historyTable.setPrefWidth(700);
+        historyTable.setPrefHeight(400);
         historyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         ObservableList<Allocation> data = currentTeam.getProjectAllocations();
 
@@ -187,16 +188,19 @@ public class TeamHistoryTab extends Tab
                     }
                 });
 
+        HBox buttons = new HBox(10);
+        buttons.setAlignment(Pos.BOTTOM_RIGHT);
         Button addButton = new Button("Add");
         Button deleteButton = new Button("Delete");
-        HBox newAllocationFields = new HBox(10);
-        newAllocationFields.setAlignment(Pos.CENTER);
+        buttons.getChildren().addAll(addButton, deleteButton);
+
+        HBox newAllocationFields = new HBox(35);
         CustomComboBox projectComboBox = new CustomComboBox("Project", true);
         CustomDatePicker startDatePicker = new CustomDatePicker("Start Date", true);
         CustomDatePicker endDatePicker = new CustomDatePicker("End Date", false);
-
-        startDatePicker.setStyle("-fx-pref-width: 200;");
-        endDatePicker.setStyle("-fx-pref-width: 200;");
+        startDatePicker.getDatePicker().setStyle("-fx-pref-width: 200;");
+        endDatePicker.getDatePicker().setStyle("-fx-pref-width: 200;");
+        projectComboBox.getComboBox().setStyle("-fx-pref-width: 250;");
 
         projectComboBox.prefWidthProperty().bind(historyTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
@@ -252,7 +256,7 @@ public class TeamHistoryTab extends Tab
                 {
                     if (projectComboBox.getValue() == null)
                     {
-                        projectComboBox.showErrorField("Please select a team");
+                        projectComboBox.showErrorField("Please select a project");
                         event.consume();
                     }
                     if (startDatePicker.getValue() == null)
@@ -285,8 +289,7 @@ public class TeamHistoryTab extends Tab
             });
         historyTable.setItems(data);
         historyTable.getColumns().addAll(teamCol, startDateCol, endDateCol);
-        historyPane.getChildren().addAll(title, historyTable, newAllocationFields, addButton,
-                deleteButton);
+        historyPane.getChildren().addAll(title, historyTable, newAllocationFields, buttons);
     }
 
     /**
