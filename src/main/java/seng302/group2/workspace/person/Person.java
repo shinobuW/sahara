@@ -540,7 +540,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
 
         public void execute()
         {
-            System.out.println("Exec Person Delete");
+            //System.out.println("Exec Person Delete");
             team.getPeople().remove(person);
             person.setTeam(null);
             ws.getPeople().remove(person);
@@ -549,7 +549,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
 
         public void undo()
         {
-            System.out.println("Undone Person Delete");
+            //System.out.println("Undone Person Delete");
             team.getPeople().add(person);
             person.setTeam(team);
             ws.getPeople().add(person);

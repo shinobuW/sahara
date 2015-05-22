@@ -611,6 +611,8 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
             {
                 member.setTeam(Global.getUnassignedTeam());
             }
+
+            Global.getUnassignedTeam().getPeople().removeAll(members);
             for (Person member : members)
             {
                 member.setTeam(team);

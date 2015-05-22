@@ -1145,6 +1145,7 @@ public class Workspace extends TreeViewItem implements Serializable
         public void undo()
         {
             ws.getPeople().remove(person);
+            Global.getUnassignedTeam().remove(person);
         }
     }
 
