@@ -70,7 +70,7 @@ public class ProjectInfoTab extends Tab
         HBox listBoxes = new HBox(12);
         VBox teamsBox = new VBox();
         VBox releaseBox = new VBox();
-        teamsBox.getChildren().addAll(new Label("Teams:"), projectTeamsBox);
+        teamsBox.getChildren().addAll(new Label("Current Teams:"), projectTeamsBox);
         releaseBox.getChildren().addAll(new Label("Releases:"), projectReleaseBox);
         listBoxes.getChildren().addAll(teamsBox, releaseBox);
 

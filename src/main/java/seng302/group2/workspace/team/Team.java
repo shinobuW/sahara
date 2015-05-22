@@ -265,24 +265,6 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
     //</editor-fold>
 
 
-    /**
-     * Adds a Person to the Teams list of Members
-     * Adds an undo item by default
-     *
-     * @param person The person to add
-     */
-    public void add(Person person)
-    {
-        // Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                person,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this)
-        ));
-
-        this.people.add(person);
-    }
-
 
     /**
      * Adds a Person to the Teams list of Members
@@ -292,15 +274,15 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
      */
     public void add(Person person, Boolean undo)
     {
-        // Add the undo action to the stack
-        if (undo)
-        {
-            Global.undoRedoMan.add(new UndoableItem(
-                    person,
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this),
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this)
-            ));
-        }
+//        // Add the undo action to the stack
+//        if (undo)
+//        {
+//            Global.undoRedoMan.add(new UndoableItem(
+//                    person,
+//                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this),
+//                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this)
+//            ));
+//        }
         this.people.add(person);
     }
 
@@ -722,6 +704,32 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
                 ws.getPeople().add(member);
             }
             ws.getTeams().add(team);
+        }
+    }
+
+    private class AddPersonCommand implements Command
+    {
+        private Person person;
+        private Team team;
+
+        AddPersonCommand(Team team, Person person)
+        {
+            this.person = person;
+            this.team = team;
+        }
+
+        public void execute()
+        {
+            team.getPeople().add(person);
+            person.setTeam(team);
+            // TODO Readd any associations
+        }
+
+        public void undo()
+        {
+            team.getPeople().remove(person);
+            person.setTeam(team);
+            // TODO Remove any associations
         }
     }
 

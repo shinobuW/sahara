@@ -101,8 +101,8 @@ public class CreatePersonDialog
                     Person person = new Person(shortName, firstName, lastName, email, description,
                             birthDate);
                     Global.currentWorkspace.add(person);
-                    person.setTeam((Team) Global.getUnassignedTeam());
-                    ((Team) Global.getUnassignedTeam()).add(person, false);
+                    //person.setTeam((Team) Global.getUnassignedTeam());
+                    //((Team) Global.getUnassignedTeam()).add(person, false);
                     dialog.hide();
                 }
                 else

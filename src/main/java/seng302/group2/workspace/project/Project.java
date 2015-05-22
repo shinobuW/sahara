@@ -177,7 +177,8 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
             if (!projectTeam.isUnassignedTeam()
                     && alloc.getStartDate().isBefore(now)
                     && (alloc.getEndDate() == null || alloc.getEndDate().isAfter(now))
-                    && !teams.contains(projectTeam))
+                    && !teams.contains(projectTeam)
+                    && Global.currentWorkspace.getTeams().contains(alloc.getTeam()))
             {
                 teams.add(projectTeam);
             }

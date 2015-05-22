@@ -163,7 +163,6 @@ public class Allocation implements Serializable
         private LocalDate oldStartDate;
         private LocalDate oldEndDate;
 
-        private ObservableList<Skill> oldSkills;
 
         protected AllocationEditCommand(Allocation alloc, LocalDate newStartDate,
                                         LocalDate newEndDate)
