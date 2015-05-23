@@ -8,6 +8,7 @@ package seng302.group2.util.reporting;
 import java.io.File;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javax.xml.transform.OutputKeys;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -19,11 +20,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.story.Story;
 import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
 
@@ -50,15 +53,12 @@ public class ReportGenerator
             System.out.println(Global.currentWorkspace);
             doc.appendChild(rootElement);
 
-
-
             // write the content into xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
             DOMSource source = new DOMSource(doc);
-
-
-
 
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Export Report");
@@ -233,6 +233,23 @@ public class ReportGenerator
             releaseElements.appendChild(releaseElement);
         }
         projectElement.appendChild(releaseElements);
+
+        Element backlogElements = doc.createElement("backlogs");
+        for (Backlog backlog : project.getBacklogs())
+        {
+            Element backlogElement = generateBacklog(backlog);
+            backlogElements.appendChild(backlogElement);
+        }
+        projectElement.appendChild(backlogElements);
+
+        Element storyElements = doc.createElement("stories");
+        for (Story story : project.getStories())
+        {
+            Element storyElement = generateStory(story);
+            storyElements.appendChild(storyElement);
+
+        }
+        projectElement.appendChild(storyElements);
         
         return projectElement;
     }
@@ -493,5 +510,64 @@ public class ReportGenerator
                 
         return skillElement;
     }
-    
+
+    private static Element generateStory(Story story)
+    {
+        Element storyElement = doc.createElement("story");
+
+        //WorkSpace Elements
+        Element storyShortName = doc.createElement("identifier");
+        storyShortName.appendChild(doc.createTextNode(story.getShortName()));
+        storyElement.appendChild(storyShortName);
+
+        Element storyLongName = doc.createElement("long-name");
+        storyLongName.appendChild(doc.createTextNode(story.getLongName()));
+        storyElement.appendChild(storyLongName);
+
+        Element storyDescription = doc.createElement("description");
+        storyDescription.appendChild(doc.createTextNode(story.getDescription()));
+        storyElement.appendChild(storyDescription);
+
+        Element storyCreator = doc.createElement("creator");
+        storyCreator.appendChild(doc.createTextNode(story.getCreator()));
+        storyElement.appendChild(storyCreator);
+
+        Element storyPriority = doc.createElement("priority");
+        storyPriority.appendChild(doc.createTextNode(story.getPriority().toString()));
+        storyElement.appendChild(storyPriority);
+
+        return storyElement;
+    }
+
+    private static Element generateBacklog(Backlog backlog)
+    {
+        Element backlogElement = doc.createElement("backlog");
+
+        //WorkSpace Elements
+        Element backlogShortName = doc.createElement("identifier");
+        backlogShortName.appendChild(doc.createTextNode(backlog.getShortName()));
+        backlogElement.appendChild(backlogShortName);
+
+        Element backlogLongName = doc.createElement("long-name");
+        backlogLongName.appendChild(doc.createTextNode(backlog.getLongName()));
+        backlogElement.appendChild(backlogLongName);
+
+        Element backlogDescription = doc.createElement("description");
+        backlogDescription.appendChild(doc.createTextNode(backlog.getDescription()));
+        backlogElement.appendChild(backlogDescription);
+
+        Element backlogProductOwner = doc.createElement("product-owner");
+        backlogProductOwner.appendChild(doc.createTextNode(backlog.getProductOwner().toString()));
+        backlogElement.appendChild(backlogProductOwner);
+
+        Element backlogStories = doc.createElement("stories");
+        for (Story story : backlog.getStories())
+        {
+            Element storyElement = generateStory(story);
+            backlogStories.appendChild(storyElement);
+        }
+        backlogElement.appendChild(backlogStories);
+
+        return backlogElement;
+    }
 }
