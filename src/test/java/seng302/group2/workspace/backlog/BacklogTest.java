@@ -8,6 +8,9 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.story.Story;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  * A series if tests relating to Backlog
  * Created by cvs20 on 22/05/15.
@@ -95,5 +98,103 @@ public class BacklogTest
         Backlog backlog = new Backlog("short", "long", "desc", null, null);
         Assert.assertEquals("Untitled Backlog", backlogDefault.toString());
         Assert.assertEquals("short", backlog.toString());
+    }
+
+
+    @Test
+    public void testCompareTo()
+    {
+        Backlog backlogDefault = new Backlog();
+        Backlog backlog = new Backlog("short", "long", "desc", null, null);
+        Assert.assertTrue(0 < backlog.compareTo(backlogDefault));
+        Assert.assertEquals(30, backlog.compareTo(backlogDefault));
+    }
+
+
+    @Test
+    public void testEdit()
+    {
+        Backlog backlog = new Backlog();
+        Story oldStory = new Story();
+        backlog.add(oldStory);
+
+        Person po = new Person();
+        Project proj = new Project();
+        Collection<Story> stories = new ArrayList<>();
+        Story story = new Story();
+        stories.add(story);
+
+        backlog.edit("short", "long", "desc", po, proj, stories);
+
+        Assert.assertEquals("short", backlog.getShortName());
+        Assert.assertEquals("long", backlog.getLongName());
+        Assert.assertEquals("desc", backlog.getDescription());
+        Assert.assertEquals(po, backlog.getProductOwner());
+        Assert.assertEquals(proj, backlog.getProject());
+        Assert.assertEquals(stories, backlog.getStories());
+        Assert.assertTrue(story.getBacklog() == backlog);
+        Assert.assertFalse(oldStory.getBacklog() == backlog);
+
+        Global.commandManager.undo();
+
+        Assert.assertEquals("Untitled Backlog", backlog.getShortName());
+        Assert.assertEquals("Untitled Backlog", backlog.getLongName());
+        Assert.assertEquals("", backlog.getDescription());
+        Assert.assertEquals(null, backlog.getProductOwner());
+        Assert.assertEquals(null, backlog.getProject());
+        Assert.assertTrue(backlog.getStories().contains(oldStory));
+        Assert.assertEquals(1, backlog.getStories().size());
+        Assert.assertFalse(story.getBacklog() == backlog);
+        Assert.assertTrue(oldStory.getBacklog() == backlog);
+
+        Global.commandManager.redo();
+
+        Assert.assertEquals("short", backlog.getShortName());
+        Assert.assertEquals("long", backlog.getLongName());
+        Assert.assertEquals("desc", backlog.getDescription());
+        Assert.assertEquals(po, backlog.getProductOwner());
+        Assert.assertEquals(proj, backlog.getProject());
+        Assert.assertEquals(stories, backlog.getStories());
+        Assert.assertTrue(story.getBacklog() == backlog);
+        Assert.assertFalse(oldStory.getBacklog() == backlog);
+    }
+
+
+    @Test
+    public void testDeleteBacklog()
+    {
+        Backlog backlog = new Backlog();
+        Project project = new Project();
+        project.add(backlog);
+        Global.currentWorkspace.add(project);
+
+        backlog.deleteBacklog();
+        Assert.assertFalse(project.getBacklogs().contains(backlog));
+        Assert.assertNotEquals(project, backlog.getProject());
+
+        Global.commandManager.undo();
+        Assert.assertTrue(project.getBacklogs().contains(backlog));
+        Assert.assertEquals(project, backlog.getProject());
+    }
+
+
+    /**
+     * Tests both the prepSerialization and postDeserialization methods
+     */
+    @Test
+    public void testSerializationMethods()
+    {
+        Backlog backlog = new Backlog();
+
+        Story story = new Story();
+        backlog.getStories().add(story);
+        backlog.prepSerialization();
+        Assert.assertTrue(backlog.getSerializableStories().contains(story));
+
+        Story story2 = new Story();
+        backlog.getSerializableStories().add(story2);
+        backlog.postDeserialization();
+        Assert.assertTrue(backlog.getStories().contains(story2));
+        Assert.assertEquals(2, backlog.getStories().size());
     }
 }

@@ -594,6 +594,13 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         {
             this.serializableStories.add(item);
         }
+
+        serializableBacklogs.clear();
+        for (Backlog backlog : backlogs)
+        {
+            backlog.prepSerialization();
+            this.serializableBacklogs.add(backlog);
+        }
     }
 
 
@@ -624,6 +631,13 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         for (Story story : serializableStories)
         {
             this.stories.add(story);
+        }
+
+        backlogs.clear();
+        for (Backlog backlog : serializableBacklogs)
+        {
+            backlog.postDeserialization();
+            this.backlogs.add(backlog);
         }
     }
 
@@ -837,11 +851,13 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         public void execute()
         {
             proj.getBacklogs().add(backlog);
+            backlog.setProject(proj);
         }
 
         public void undo()
         {
             proj.getStories().remove(backlog);
+            backlog.setProject(null);
         }
     }
 

@@ -6,7 +6,10 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.story.Story;
+import seng302.group2.workspace.team.Allocation;
+import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -129,7 +132,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         return this.stories;
     }
 
-    public List<Story> getSerializableStory()
+    public List<Story> getSerializableStories()
     {
         return serializableStories;
     }
@@ -195,6 +198,33 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
     }
 
     //</editor-fold>
+
+
+    /**
+     * Prepares the backlog to be serialized.
+     */
+    public void prepSerialization()
+    {
+        serializableStories.clear();
+        for (Story story : stories)
+        {
+            this.serializableStories.add(story);
+        }
+    }
+
+
+    /**
+     * Deserialization post-processing.
+     */
+    public void postDeserialization()
+    {
+        stories.clear();
+        for (Story story : serializableStories)
+        {
+            this.stories.add(story);
+        }
+    }
+
 
     /**
      * Gets the children of the TreeViewItem
@@ -357,6 +387,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         {
             System.out.println("Exec Backlog Delete");
             proj.getBacklogs().remove(backlog);
+            backlog.setProject(null);
             //release.setProject(null);
         }
 
@@ -364,6 +395,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         {
             System.out.println("Undone Backlog Delete");
             proj.getBacklogs().add(backlog);
+            backlog.setProject(proj);
             //release.setProject(proj);
         }
     }
