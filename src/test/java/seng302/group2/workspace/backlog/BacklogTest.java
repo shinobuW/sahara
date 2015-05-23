@@ -176,4 +176,25 @@ public class BacklogTest
         Assert.assertTrue(project.getBacklogs().contains(backlog));
         Assert.assertEquals(project, backlog.getProject());
     }
+
+
+    /**
+     * Tests both the prepSerialization and postDeserialization methods
+     */
+    @Test
+    public void testSerializationMethods()
+    {
+        Backlog backlog = new Backlog();
+
+        Story story = new Story();
+        backlog.getStories().add(story);
+        backlog.prepSerialization();
+        Assert.assertTrue(backlog.getSerializableStories().contains(story));
+
+        Story story2 = new Story();
+        backlog.getSerializableStories().add(story2);
+        backlog.postDeserialization();
+        Assert.assertTrue(backlog.getStories().contains(story2));
+        Assert.assertEquals(2, backlog.getStories().size());
+    }
 }

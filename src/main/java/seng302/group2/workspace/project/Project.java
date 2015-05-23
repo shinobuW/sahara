@@ -636,7 +636,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         backlogs.clear();
         for (Backlog backlog : serializableBacklogs)
         {
-            backlog.postSerialization();
+            backlog.postDeserialization();
             this.backlogs.add(backlog);
         }
     }

@@ -216,7 +216,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
     /**
      * Deserialization post-processing.
      */
-    public void postSerialization()
+    public void postDeserialization()
     {
         stories.clear();
         for (Story story : serializableStories)
