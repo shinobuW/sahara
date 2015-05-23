@@ -12,10 +12,7 @@ import seng302.group2.workspace.team.Allocation;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -193,7 +190,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
      */
     public void add(Story story)
     {
-        Command addStory = new AddStoryCommand(this.getProject(), this, story);
+        Command addStory = new AddStoryCommand(this, story);
         Global.commandManager.executeCommand(addStory);
     }
 
@@ -231,9 +228,9 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
      * @return The items of the TreeViewItem
      */
     @Override
-    public ObservableList<TreeViewItem> getChildren()
+    public ObservableList getChildren()
     {
-        return null;
+        return this.getStories();
     }
 
 
@@ -332,21 +329,42 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
          */
         public void execute()
         {
-            backlog.stories.removeAll(oldStories);
-            for (Story story : oldStories)
-            {
-                story.setBacklog(null);
-            }
-            for (Story story : stories)
-            {
-                story.setBacklog(backlog);
-            }
             backlog.shortName = shortName;
             backlog.longName = longName;
             backlog.description = description;
             backlog.productOwner = productOwner;
             backlog.project = project;
+
+            backlog.stories.removeAll(oldStories);
             backlog.stories.addAll(stories);
+
+            Set<Story> allStories = new HashSet<>();
+            allStories.addAll(stories);
+            allStories.addAll(oldStories);
+            for (Story story : allStories)
+            {
+                if (!stories.contains(story))
+                {
+                    // Not a story in the backlog
+                    if (project != null)
+                    {
+                        project.getStories().add(story);
+                    }
+                    story.setProject(project);
+                    story.setBacklog(null);
+                }
+                else
+                {
+                    // In the backlog
+                    if (project != null)
+                    {
+                        project.getStories().remove(story);
+                    }
+                    story.setProject(project);
+                    story.setBacklog(backlog);
+                }
+            }
+
         }
 
         /**
@@ -359,15 +377,35 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
             backlog.description = oldDescription;
             backlog.productOwner = oldProductOwner;
             backlog.project = oldProject;
+
             backlog.stories.removeAll(stories);
             backlog.stories.addAll(oldStories);
-            for (Story story : stories)
+
+            Set<Story> allStories = new HashSet<>();
+            allStories.addAll(stories);
+            allStories.addAll(oldStories);
+            for (Story story : allStories)
             {
-                story.setBacklog(null);
-            }
-            for (Story story : oldStories)
-            {
-                story.setBacklog(backlog);
+                if (!oldStories.contains(story))
+                {
+                    // Not a story in the backlog
+                    if (oldProject != null)
+                    {
+                        oldProject.getStories().add(story);
+                    }
+                    story.setProject(oldProject);
+                    story.setBacklog(null);
+                }
+                else
+                {
+                    // In the backlog
+                    if (oldProject != null)
+                    {
+                        oldProject.getStories().remove(story);
+                    }
+                    story.setProject(oldProject);
+                    story.setBacklog(backlog);
+                }
             }
         }
     }
@@ -406,29 +444,37 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         private Backlog backlog;
         private Story story;
 
-        AddStoryCommand(Project proj, Backlog backlog, Story story)
+        AddStoryCommand(Backlog backlog, Story story)
         {
-            this.proj = proj;
+            //this.proj = proj;
             this.backlog = backlog;
             this.story = story;
         }
 
         public void execute()
         {
-            if (proj != null)
+            /*if (proj != null)
             {
                 proj.getBacklogs().add(backlog);
-            }
+            }*/
             backlog.stories.add(story);
+            if (backlog.getProject() != null)
+            {
+                backlog.getProject().getStories().remove(story);
+            }
         }
 
         public void undo()
         {
-            if (proj != null)
+            /*if (proj != null)
             {
                 proj.getBacklogs().remove(backlog);
-            }
+            }*/
             backlog.stories.remove(story);
+            if (backlog.getProject() != null)
+            {
+                backlog.getProject().getStories().add(story);
+            }
         }
     }
 }

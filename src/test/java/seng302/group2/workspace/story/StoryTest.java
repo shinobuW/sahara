@@ -8,6 +8,8 @@ package seng302.group2.workspace.story;
 
 import org.junit.Assert;
 import org.junit.Test;
+import seng302.group2.Global;
+import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.project.Project;
 
 /**
@@ -16,9 +18,6 @@ import seng302.group2.workspace.project.Project;
  */
 public class StoryTest
 {
-    
-
-    
     /**
      * Test for the story constructors
      */
@@ -41,6 +40,8 @@ public class StoryTest
         Assert.assertEquals("Tyler the Creator", testStory.getCreator());
         Assert.assertEquals("Test Story", testStory.toString()); 
         Assert.assertEquals(project, testStory.getProject());
+
+        Assert.assertNull(testStory.getChildren());
     }
     
     /**
@@ -63,6 +64,49 @@ public class StoryTest
         Assert.assertEquals("Shinobu", story.getCreator());
     }
     
-    //TODO tests for Comparators
+
+    @Test
+    public void testComparators()
+    {
+        Story defaultStory = new Story();
+        Story story = new Story();
+
+        // Short name comparator
+        story.setShortName("a story");
+        Assert.assertTrue(0 < Story.StoryNameComparator.compare(story, defaultStory));
+
+        // Priority comparator
+        story.setPriority(1);
+        defaultStory.setPriority(5);
+        Assert.assertTrue(0 > Story.StoryPriorityComparator.compare(story, defaultStory));
+    }
+
+
+    @Test
+    public void testDeleteStory()
+    {
+        Project proj = new Project();
+        Backlog back = new Backlog();
+        proj.add(back);
+
+        Story story = new Story("short", "long", "desc", "creator", null, 5);
+        story.setProject(proj);
+        story.setBacklog(back);
+        back.add(story);
+        proj.add(story);
+
+        Assert.assertTrue(back.getStories().contains(story));
+        Assert.assertTrue(proj.getStories().contains(story));
+
+        story.deleteStory();
+
+        Assert.assertFalse(back.getStories().contains(story));
+        Assert.assertFalse(proj.getStories().contains(story));
+
+        Global.commandManager.undo();
+
+        Assert.assertTrue(back.getStories().contains(story));
+        Assert.assertTrue(proj.getStories().contains(story));
+    }
 
 }

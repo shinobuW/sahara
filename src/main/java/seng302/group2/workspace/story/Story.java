@@ -165,7 +165,6 @@ public class Story extends TreeViewItem implements Serializable
     public void setProject(Project project)
     {
         this.project = project;
-        project.add(this);
     }
 
     /**
@@ -174,14 +173,7 @@ public class Story extends TreeViewItem implements Serializable
      */
     public void setBacklog(Backlog backlog)
     {
-        if (backlog == null)
-        {
-            this.backlog = null;
-        }
-        else
-        {
-            this.backlog = backlog;
-        }
+        this.backlog = backlog;
     }
 
     /**
@@ -202,43 +194,24 @@ public class Story extends TreeViewItem implements Serializable
     {
         return null;
     }
-    
-    
-//    // TODO write javadoc.
-//    @Override
-//    public int compareTo(Story compareStory)
-//    {
-//        String story1ShortName = this.getShortName();
-//        String story2ShortName = compareStory.getShortName();
-//        return story1ShortName.compareTo(story2ShortName);
-//    }
 
 
-    // TODO
-    public static Comparator<Story> StoryPriorityComparator = new Comparator<Story>()
-    {
-        @Override
-        public int compare(Story story1, Story story2)
-        {
-            Integer story1Priority = story1.getPriority();
-            Integer story2Priority = story2.getPriority();
-
-            return story2Priority.compareTo(story1Priority);
-        }
+    /**
+     * A comparator that returns the comparison of two story's priorities
+     */
+    public static Comparator<Story> StoryPriorityComparator = (story1, story2) -> {
+        return story1.getPriority().compareTo(story2.getPriority());
     };
 
-    // TODO
-    public static Comparator<Story> StoryNameComparator = new Comparator<Story>()
-    {
-        @Override
-        public int compare(Story story1, Story story2)
-        {
-            String story1ShortName = story1.getShortName();
-            String story2ShortName = story2.getShortName();
-            return story1ShortName.compareTo(story2ShortName);
-        }
+
+    /**
+     * A comparator that returns the comparison of two story's short names
+     */
+    public static Comparator<Story> StoryNameComparator = (story1, story2) -> {
+        return story1.getShortName().compareTo(story2.getShortName());
     };
-    
+
+
     /**
      * An overridden version for the String representation of a Story
      * @return The short name of the Story
@@ -274,6 +247,7 @@ public class Story extends TreeViewItem implements Serializable
         Command command = new DeleteStoryCommand(this);
         Global.commandManager.executeCommand(command);
     }
+
 
     /**
      * A command class that allows the executing and undoing of story edits
@@ -328,6 +302,13 @@ public class Story extends TreeViewItem implements Serializable
             story.backlog = backlog;
             Collections.sort(project.getStories(), Story.StoryNameComparator);
             Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
+
+            /* If the story if being added to a backlog in the project, remove it from the
+            unassigned stories.*/
+            if (backlog != null && project != null)
+            {
+                project.getStories().remove(story);
+            }
         }
 
         /**
@@ -343,6 +324,13 @@ public class Story extends TreeViewItem implements Serializable
             story.backlog = oldBacklog;
             Collections.sort(project.getStories(), Story.StoryNameComparator);
             Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
+
+            /* If the story if being added back into a backlog in the project, remove it from the
+            unassigned stories.*/
+            if (oldBacklog != null && oldProject != null)
+            {
+                oldProject.getStories().remove(story);
+            }
         }
     }
 
@@ -371,9 +359,15 @@ public class Story extends TreeViewItem implements Serializable
          */
         public void execute()
         {
-            System.out.println("Exec Story Delete");
-            backlog.getStories().remove(story);
-            proj.getStories().remove(story);
+            //System.out.println("Exec Story Delete");
+            if (backlog != null)
+            {
+                backlog.getStories().remove(story);
+            }
+            if (proj != null)
+            {
+                proj.getStories().remove(story);
+            }
         }
 
         /**
@@ -381,9 +375,16 @@ public class Story extends TreeViewItem implements Serializable
          */
         public void undo()
         {
-            System.out.println("Undone Story Delete");
+            //System.out.println("Undone Story Delete");
             proj.getStories().add(story);
-            backlog.getStories().add(story);
+            if (backlog != null)
+            {
+                backlog.getStories().add(story);
+            }
+            if (proj != null)
+            {
+                proj.getStories().add(story);
+            }
         }
     }
 }
