@@ -245,7 +245,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                             App.content.getItems().add(MainScene.informationPane);*/
                             setContextMenu(new CategoryTreeContextMenu(true));
                         }
-                        else if (selected.toString().equals("Stories"))
+                        else if (selected.toString().equals("Unassigned Stories"))
                         {
                             SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY_CATEGORY,
                                     (TreeViewItem) selected);
