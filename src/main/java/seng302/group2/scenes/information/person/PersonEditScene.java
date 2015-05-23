@@ -67,7 +67,7 @@ public class PersonEditScene
         Person tempPerson = new Person();
         for (Skill skill : currentPerson.getSkills())
         {
-            tempPerson.addSkillToPerson(skill, false);
+            tempPerson.getSkills().add(skill);
         }
         
         ListView personSkillsBox = new ListView(tempPerson.getSkills());
@@ -161,7 +161,7 @@ public class PersonEditScene
                         skillsBox.getSelectionModel().getSelectedItems();
                 for (Skill item : selectedSkills)
                 {
-                    tempPerson.addSkillToPerson(item, false);
+                    tempPerson.getSkills().add(item);
                 }
 
                 dialogSkills.clear();
@@ -180,7 +180,7 @@ public class PersonEditScene
                         personSkillsBox.getSelectionModel().getSelectedItems();
                 for (int i = selectedSkills.size() - 1; i >= 0 ; i--)
                 {
-                    tempPerson.removeSkillFromPerson(selectedSkills.get(i), false);
+                    tempPerson.getSkills().remove(selectedSkills.get(i));
                 }
                 
                 dialogSkills.clear();

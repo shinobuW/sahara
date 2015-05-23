@@ -170,7 +170,9 @@ public class ProjectEditScene
      * @param team The team to be moved
      * @param tempProject The project to move the team to
      */
-    private static void teamCheckDialog(Team team, Project tempProject) 
+    /*
+    @Deprecated
+    private static void teamCheckDialog(Team team, Project tempProject)
     {
         
         Dialog dialog = new Dialog(null, "Already Assigned to a Project");
@@ -206,5 +208,5 @@ public class ProjectEditScene
         dialog.setIconifiable(false);
         dialog.setContent(grid);
         dialog.show();
-    }
+    }*/
 }

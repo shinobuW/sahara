@@ -7,9 +7,6 @@ import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
-import seng302.group2.util.undoredo.UndoRedoAction;
-import seng302.group2.util.undoredo.UndoRedoPerformer;
-import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -41,7 +38,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
     private transient ObservableList<Person> devs = observableArrayList();
     private List<Person> serializableDevs = new ArrayList<>();
     private transient ObservableList<Allocation> projectAllocations = observableArrayList();
-    private List<Allocation> serializableProjectAllocation = new ArrayList<>();
+    private List<Allocation> serializableProjectAllocations = new ArrayList<>();
     private boolean unassigned = false;
     private Project project;
 
@@ -113,11 +110,11 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
      */
     public ObservableList<Person> getPeople()
     {
-        this.serializablePeople.clear();
+        /*this.serializablePeople.clear();
         for (Object item : this.people)
         {
             this.serializablePeople.add((Person) item);
-        }
+        }*/
         return this.people;
     }
 
@@ -128,11 +125,11 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
      */
     public ObservableList<Person> getDevs()
     {
-        this.serializableDevs.clear();
+        /*this.serializableDevs.clear();
         for (Object item : this.devs)
         {
             this.serializableDevs.add((Person) item);
-        }
+        }*/
         return this.devs;
     }
 
@@ -167,12 +164,12 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
     }
 
     /**
-     * Gets the serializable project allocation
+     * Gets the serializable project allocations
      * @return list of project allocations
      */
     public List<Allocation> getSerializableProject()
     {
-        return serializableProjectAllocation;
+        return serializableProjectAllocations;
     }
 
     /**
@@ -339,6 +336,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
      *
      * @param person The person to remove
      */
+    /*@Deprecated
     public void remove(Person person)
     {
         // Add the undo action to the stack
@@ -349,7 +347,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         ));
 
         this.people.remove(person);
-    }
+    }*/
 
 
     /**
@@ -358,6 +356,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
      * @param person The person to remove
      * @param redo   Whether to create an redo item for removing the person
      */
+    /*@Deprecated
     public void remove(Person person, Boolean redo)
     {
         // Add the undo action to the stack
@@ -370,7 +369,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
             ));
         }
         this.people.remove(person);
-    }
+    }*/
 
     /**        //this.getTeamAllocations().add(allocation);
      * Removes the given allocation from the team's list of allocations

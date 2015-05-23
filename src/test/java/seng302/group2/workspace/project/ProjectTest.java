@@ -87,33 +87,33 @@ public class ProjectTest extends TestCase
     /**
      * Tests the addition and removal of teams within projects
      */
-    @Test
+    /*@Test
     public void testAddRemoveTeam()
     {
         Project proj = new Project();
         Team testTeam = new Team();
 
         proj.getTeams().clear();
-        proj.add(testTeam);
+        //proj.add(testTeam);
         ArrayList<Team> teams = new ArrayList<>();
         teams.add(testTeam);
 
         Assert.assertEquals(teams, proj.getTeams());
 
-        proj.remove(testTeam);
+        //proj.remove(testTeam);
         Assert.assertTrue(!proj.getTeams().contains(testTeam));
 
         // The second add method without undo
-        proj.getTeams().clear();
-        proj.addWithoutUndo(testTeam);
+        //proj.getTeams().clear();
+        //proj.addWithoutUndo(testTeam);
         teams = new ArrayList<>();
         teams.add(testTeam);
 
         Assert.assertEquals(teams, proj.getTeams());
 
-        proj.removeWithoutUndo(testTeam);
+        //proj.removeWithoutUndo(testTeam);
         Assert.assertTrue(!proj.getTeams().contains(testTeam));
-    }
+    }*/
 
     /**
      * Tests the addition and removal of project's team allocation
@@ -200,12 +200,12 @@ public class ProjectTest extends TestCase
         Release testRelease = new Release();
 
         proj.getSerializableReleases().clear();
-        proj.getSerializableTeams().clear();
+        //proj.getSerializableTeams().clear();
 
-        Assert.assertEquals(new ArrayList<Skill>(), proj.getSerializableTeams());
+        //Assert.assertEquals(new ArrayList<Skill>(), proj.getSerializableTeams());
         Assert.assertEquals(new ArrayList<Skill>(), proj.getSerializableReleases());
 
-        proj.add(testTeam);
+        //proj.add(testTeam);
         proj.add(testRelease);
 
         proj.prepSerialization();
@@ -215,7 +215,7 @@ public class ProjectTest extends TestCase
         teams.add(testTeam);
         releases.add(testRelease);
 
-        Assert.assertEquals(teams, proj.getSerializableTeams());
+        //Assert.assertEquals(teams, proj.getSerializableTeams());
         Assert.assertEquals(releases, proj.getSerializableReleases());
     }
 
@@ -226,26 +226,16 @@ public class ProjectTest extends TestCase
     public void testPostSerialization()
     {
         Project proj = new Project();
-        Team testTeam = new Team();
         Release testRelease = new Release();
 
         proj.getReleases().clear();
-        proj.getTeams().clear();
-
-        Assert.assertEquals(new ArrayList<Skill>(), proj.getTeams());
         Assert.assertEquals(new ArrayList<Skill>(), proj.getReleases());
 
-        proj.getSerializableTeams().add(testTeam);
         proj.getSerializableReleases().add(testRelease);
-
         proj.postSerialization();
-
-        ArrayList<Team> teams = new ArrayList<>();
         ArrayList<Release> releases = new ArrayList<>();
-        teams.add(testTeam);
         releases.add(testRelease);
 
-        Assert.assertEquals(teams, proj.getTeams());
         Assert.assertEquals(releases, proj.getReleases());
     }
 

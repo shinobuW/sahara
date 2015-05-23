@@ -18,9 +18,6 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.revert.Revert;
 import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.Command;
-import seng302.group2.util.undoredo.UndoRedoAction;
-import seng302.group2.util.undoredo.UndoRedoPerformer;
-import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.role.Role;
@@ -640,24 +637,6 @@ public class Workspace extends TreeViewItem implements Serializable
 
 
     /**
-     * Removes a Skill from the Workspace's list of Skills.
-     *
-     * @param skill The skill to remove
-     */
-    public void remove(Skill skill)
-    {
-        //Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                skill,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_DEL, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_DEL, null)
-        ));
-
-        this.skills.remove(skill);
-    }
-
-
-    /**
      * Removes a Skill from the Workspace's list of Skills without an undoable command
      *
      * @param skill The skill to remove
@@ -1147,9 +1126,12 @@ public class Workspace extends TreeViewItem implements Serializable
 
         public void undo()
         {
-            unassingedTeam.remove(person);
+            unassingedTeam.getPeople().remove(person);
             ws.getPeople().remove(person);
-            Global.getUnassignedTeam().remove(person);
+            if (Global.getUnassignedTeam() != null)
+            {
+                Global.getUnassignedTeam().getPeople().remove(person);
+            }
         }
     }
 

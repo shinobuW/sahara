@@ -80,13 +80,13 @@ public class TeamTest
         team.add(person, true);
         Assert.assertTrue(team.getPeople().contains(person));
 
-        team.remove(person, true);
+        team.getPeople().remove(person);
         Assert.assertFalse(team.getPeople().contains(person));
 
         team.add(person, true);
         Assert.assertTrue(team.getPeople().contains(person));
 
-        team.remove(person, true);
+        team.getPeople().remove(person);
         Assert.assertFalse(team.getPeople().contains(person));
     }
 

@@ -2,11 +2,9 @@ package seng302.group2;
 
 import javafx.scene.control.TreeItem;
 import seng302.group2.util.undoredo.CommandManager;
-import seng302.group2.util.undoredo.UndoRedoManager;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.team.Team;
 
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -20,9 +18,6 @@ public final class Global
     public static String lastSaveLocation = "/";
     public static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     public static CommandManager commandManager = new CommandManager();
-
-    @Deprecated
-    public static UndoRedoManager undoRedoMan = new UndoRedoManager(); // Becoming deprecated
 
 
     /**

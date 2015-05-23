@@ -7,9 +7,6 @@ import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
-import seng302.group2.util.undoredo.UndoRedoAction;
-import seng302.group2.util.undoredo.UndoRedoPerformer;
-import seng302.group2.util.undoredo.UndoableItem;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
@@ -288,27 +285,6 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
     //</editor-fold>
     
     /**
-     * Adds a Skill to the Person's list of Skills
-     * @param skill The skill to add
-     * @param undo Whether or not to add an undo item to the stack
-     */
-    public void addSkillToPerson(Skill skill, Boolean undo)
-    {
-        //Add the undo action to the stack
-        if (undo)
-        {
-            Global.undoRedoMan.add(new UndoableItem(
-                    skill,
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_ADD_PERSON, this),
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_ADD_PERSON, this)
-                    ));
-        }
-        
-        this.skills.add(skill);
-    }
-
-
-    /**
      * Prepares a person to be serialized.
      */
     public void prepSerialization()
@@ -358,25 +334,6 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
         }
     }
 
-    /**
-     * Removes a Skill from the Person's list of Skills
-     * @param skill The skill to remove
-     * @param undo Whether or not to create an undo item
-     */
-    public void removeSkillFromPerson(Skill skill, Boolean undo)
-    {
-        //Add the undo action to the stack
-        if (undo)
-        {
-            Global.undoRedoMan.add(new UndoableItem(
-                    skill,
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON, this),
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON, this)
-                    ));
-        }
-        
-        this.skills.remove(skill);
-    }    
     
     /**
      * Gets the children of the TreeViewItem

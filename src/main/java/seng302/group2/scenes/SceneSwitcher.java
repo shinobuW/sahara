@@ -24,7 +24,6 @@ import seng302.group2.scenes.information.story.StoryEditScene;
 import seng302.group2.scenes.information.story.StoryScene;
 import seng302.group2.scenes.information.team.NewTeamEditScene;
 import seng302.group2.scenes.information.team.TeamCategoryScene;
-import seng302.group2.scenes.information.team.TeamEditScene;
 import seng302.group2.scenes.information.team.TeamScene;
 import seng302.group2.scenes.information.workspace.WorkspaceEditScene;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
@@ -248,8 +247,6 @@ public class SceneSwitcher
                 if (item.getClass() == Team.class)
                 {
                     MainScene.contentPane.setContent(new NewTeamEditScene((Team) item));
-                    /*MainScene.contentPane.setContent(TeamEditScene.getTeamEditScene(
-                            (Team) item));*/
                 }
                 break;
             case BACKLOG:

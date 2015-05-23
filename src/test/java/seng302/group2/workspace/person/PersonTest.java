@@ -195,7 +195,7 @@ public class PersonTest
         ObservableList<Skill> skills = observableArrayList();
         skills.add(testSkill);
 
-        basicPerson.addSkillToPerson(testSkill, false);
+        basicPerson.getSkills().add(testSkill);
         Assert.assertEquals(skills, basicPerson.getSkills());
     }
 
@@ -210,7 +210,7 @@ public class PersonTest
         Assert.assertEquals(new ArrayList<Skill>(), basicPerson.getSerializableSkills());
         Assert.assertEquals(new ArrayList<Skill>(), basicPerson.getSkills());
 
-        basicPerson.addSkillToPerson(testSkill, false);
+        basicPerson.getSkills().add(testSkill);
         basicPerson.prepSerialization();
 
         ArrayList<Skill> skills = new ArrayList<>();
@@ -255,7 +255,7 @@ public class PersonTest
         Assert.assertEquals(skills, basicPerson.getSkills());
 
         // Remove
-        basicPerson.removeSkillFromPerson(testSkill, false);
+        basicPerson.getSkills().remove(testSkill);
         Assert.assertTrue(basicPerson.getSkills().isEmpty());
     }
 
