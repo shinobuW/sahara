@@ -32,11 +32,11 @@ public class StoryCategoryTest
     {
         Project proj = new Project();
         StoryCategory category = new StoryCategory("Stories", proj);
-        Assert.assertEquals(proj.getStories(), category.getProject().getStories());
+        Assert.assertEquals(proj.getUnallocatedStories(), category.getProject().getUnallocatedStories());
 
         Story story = new Story();
         proj.add(story);
-        Assert.assertEquals(proj.getStories(), category.getProject().getStories());
+        Assert.assertEquals(proj.getUnallocatedStories(), category.getProject().getUnallocatedStories());
     }
 
     /**

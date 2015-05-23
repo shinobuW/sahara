@@ -4,7 +4,6 @@ import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -12,7 +11,6 @@ import javafx.collections.ObservableList;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.skills.Skill;
 
 /**
  * Created by swi67 on 6/05/15.
@@ -300,14 +298,14 @@ public class Story extends TreeViewItem implements Serializable
             story.project = project;
             story.priority = priority;
             story.backlog = backlog;
-            Collections.sort(project.getStories(), Story.StoryNameComparator);
+            Collections.sort(project.getUnallocatedStories(), Story.StoryNameComparator);
             Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
 
             /* If the story if being added to a backlog in the project, remove it from the
             unassigned stories.*/
             if (backlog != null && project != null)
             {
-                project.getStories().remove(story);
+                project.getUnallocatedStories().remove(story);
             }
         }
 
@@ -322,14 +320,14 @@ public class Story extends TreeViewItem implements Serializable
             story.project = oldProject;
             story.priority = oldPriority;
             story.backlog = oldBacklog;
-            Collections.sort(project.getStories(), Story.StoryNameComparator);
+            Collections.sort(project.getUnallocatedStories(), Story.StoryNameComparator);
             Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
 
             /* If the story if being added back into a backlog in the project, remove it from the
             unassigned stories.*/
             if (oldBacklog != null && oldProject != null)
             {
-                oldProject.getStories().remove(story);
+                oldProject.getUnallocatedStories().remove(story);
             }
         }
     }
@@ -366,7 +364,7 @@ public class Story extends TreeViewItem implements Serializable
             }
             if (proj != null)
             {
-                proj.getStories().remove(story);
+                proj.getUnallocatedStories().remove(story);
             }
         }
 
@@ -376,14 +374,14 @@ public class Story extends TreeViewItem implements Serializable
         public void undo()
         {
             //System.out.println("Undone Story Delete");
-            proj.getStories().add(story);
+            proj.getUnallocatedStories().add(story);
             if (backlog != null)
             {
                 backlog.getStories().add(story);
             }
             if (proj != null)
             {
-                proj.getStories().add(story);
+                proj.getUnallocatedStories().add(story);
             }
         }
     }

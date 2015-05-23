@@ -243,7 +243,7 @@ public class ReportGenerator
         projectElement.appendChild(backlogElements);
 
         Element storyElements = doc.createElement("stories");
-        for (Story story : project.getStories())
+        for (Story story : project.getUnallocatedStories())
         {
             Element storyElement = generateStory(story);
             storyElements.appendChild(storyElement);

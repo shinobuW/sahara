@@ -41,7 +41,7 @@ public class StoryCategory extends Category
         {
             return null;
         }
-        return project.getStories();
+        return project.getUnallocatedStories();
     }
 
     /**

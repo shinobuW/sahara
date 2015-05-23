@@ -159,7 +159,7 @@ public class ShortNameValidator
                     return ValidationStatus.NON_UNIQUE;
                 }
             }
-            for (Story story : proj.getStories())
+            for (Story story : proj.getUnallocatedStories())
             {
                 if (story.getShortName().equals(shortName))
                 {

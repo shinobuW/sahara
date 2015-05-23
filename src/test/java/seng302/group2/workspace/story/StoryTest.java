@@ -96,17 +96,17 @@ public class StoryTest
         proj.add(story);
 
         Assert.assertTrue(back.getStories().contains(story));
-        Assert.assertTrue(proj.getStories().contains(story));
+        Assert.assertTrue(proj.getUnallocatedStories().contains(story));
 
         story.deleteStory();
 
         Assert.assertFalse(back.getStories().contains(story));
-        Assert.assertFalse(proj.getStories().contains(story));
+        Assert.assertFalse(proj.getUnallocatedStories().contains(story));
 
         Global.commandManager.undo();
 
         Assert.assertTrue(back.getStories().contains(story));
-        Assert.assertTrue(proj.getStories().contains(story));
+        Assert.assertTrue(proj.getUnallocatedStories().contains(story));
     }
 
 }

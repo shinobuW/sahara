@@ -6,10 +6,7 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.story.Story;
-import seng302.group2.workspace.team.Allocation;
-import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
 import java.util.*;
@@ -348,7 +345,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
                     // Not a story in the backlog
                     if (project != null)
                     {
-                        project.getStories().add(story);
+                        project.getUnallocatedStories().add(story);
                     }
                     story.setProject(project);
                     story.setBacklog(null);
@@ -358,7 +355,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
                     // In the backlog
                     if (project != null)
                     {
-                        project.getStories().remove(story);
+                        project.getUnallocatedStories().remove(story);
                     }
                     story.setProject(project);
                     story.setBacklog(backlog);
@@ -391,7 +388,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
                     // Not a story in the backlog
                     if (oldProject != null)
                     {
-                        oldProject.getStories().add(story);
+                        oldProject.getUnallocatedStories().add(story);
                     }
                     story.setProject(oldProject);
                     story.setBacklog(null);
@@ -401,7 +398,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
                     // In the backlog
                     if (oldProject != null)
                     {
-                        oldProject.getStories().remove(story);
+                        oldProject.getUnallocatedStories().remove(story);
                     }
                     story.setProject(oldProject);
                     story.setBacklog(backlog);
@@ -460,7 +457,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
             backlog.stories.add(story);
             if (backlog.getProject() != null)
             {
-                backlog.getProject().getStories().remove(story);
+                backlog.getProject().getUnallocatedStories().remove(story);
             }
         }
 
@@ -473,7 +470,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
             backlog.stories.remove(story);
             if (backlog.getProject() != null)
             {
-                backlog.getProject().getStories().add(story);
+                backlog.getProject().getUnallocatedStories().add(story);
             }
         }
     }

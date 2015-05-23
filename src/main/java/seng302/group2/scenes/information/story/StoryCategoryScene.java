@@ -7,9 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.TitleLabel;
-import seng302.group2.scenes.dialog.CreateReleaseDialog;
 import seng302.group2.scenes.dialog.CreateStoryDialog;
-import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.StoryCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
@@ -45,7 +43,7 @@ public class StoryCategoryScene
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
 
-        ListView storyBox = new ListView(selectedCategory.getProject().getStories());
+        ListView storyBox = new ListView(selectedCategory.getProject().getUnallocatedStories());
         storyBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         storyBox.setMaxWidth(275);
 

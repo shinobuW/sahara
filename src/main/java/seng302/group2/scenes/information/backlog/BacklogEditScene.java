@@ -6,25 +6,18 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
-import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.backlog.Backlog;
-import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.story.Story;
-import seng302.group2.workspace.team.Team;
 
 import java.util.Collections;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -82,7 +75,7 @@ public class BacklogEditScene extends ScrollPane
         backlogStoryList.addAll(baseBacklog.getStories());
 
         ObservableList<Story> availableStoryList = observableArrayList();
-        for (Story story : baseBacklog.getProject().getStories())
+        for (Story story : baseBacklog.getProject().getUnallocatedStories())
         {
             if (story.getBacklog() == null)
             {

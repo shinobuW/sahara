@@ -38,7 +38,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     private List<Release> serializableReleases = new ArrayList<>();
     private transient ObservableList<Allocation> teamAllocations = observableArrayList();
     private List<Allocation> serializableTeamAllocations = new ArrayList<>();
-    private transient ObservableList<Story> stories = observableArrayList();
+    private transient ObservableList<Story> unallocatedStories = observableArrayList();
     private List<Story> serializableStories = new ArrayList<>();
     private transient ObservableList<Backlog> backlogs = observableArrayList();
     private List<Backlog> serializableBacklogs = new ArrayList<>();
@@ -88,13 +88,13 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
                 }
             });
         
-        stories.addListener((ListChangeListener<Story>) change ->
+        unallocatedStories.addListener((ListChangeListener<Story>) change ->
+        {
+            if (change.next() && !change.wasPermutated())
             {
-                if (change.next() && !change.wasPermutated())
-                {
-                    Collections.sort(stories, Story.StoryNameComparator);
-                }
-            });
+                Collections.sort(unallocatedStories, Story.StoryNameComparator);
+            }
+        });
         backlogs.addListener((ListChangeListener<Backlog>) change ->
             {
                 if (change.next() && !change.wasPermutated())
@@ -248,17 +248,17 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     }
     
     /**
-     * Gets the stories of the project
-     * @return list of stories
+     * Gets the unallocatedStories of the project
+     * @return list of unallocatedStories
      */
-    public ObservableList<Story> getStories()
+    public ObservableList<Story> getUnallocatedStories()
     {
         this.serializableStories.clear();
-        for (Object item : this.stories)
+        for (Object item : this.unallocatedStories)
         {
             this.serializableStories.add((Story)item);
         }
-        return this.stories;
+        return this.unallocatedStories;
         
     }
 
@@ -322,7 +322,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     }
     
     /**
-     * Gets the serializable stories
+     * Gets the serializable unallocatedStories
      * @return the serializable releases
      */
     public List<Story> getSerilizableStories()
@@ -435,7 +435,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
      */
     public void remove(Story story)
     {
-        this.stories.remove(story);
+        this.unallocatedStories.remove(story);
         story.setProject(null);
     }
 
@@ -445,7 +445,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
      */
     public void remove(Backlog backlog)
     {
-        this.stories.remove(backlog);
+        this.unallocatedStories.remove(backlog);
         backlog.setProject(null);
     }
 
@@ -590,7 +590,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         }
 
         serializableStories.clear();
-        for (Story item : stories)
+        for (Story item : unallocatedStories)
         {
             this.serializableStories.add(item);
         }
@@ -627,10 +627,10 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
             this.teamAllocations.add(alloc);
         }
 
-        stories.clear();
+        unallocatedStories.clear();
         for (Story story : serializableStories)
         {
-            this.stories.add(story);
+            this.unallocatedStories.add(story);
         }
 
         backlogs.clear();
@@ -639,6 +639,22 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
             backlog.postDeserialization();
             this.backlogs.add(backlog);
         }
+    }
+
+
+    /**
+     * Gets all of the stories within the project (unassigned and assigned)
+     * @return all of the stories within the project (unassigned and assigned)
+     */
+    public Set<Story> getAllStories()
+    {
+        Set<Story> stories = new HashSet<>();
+        stories.addAll(stories);
+        for (Backlog backlog : backlogs)
+        {
+            stories.addAll(backlog.getStories());
+        }
+        return stories;
     }
 
 
@@ -815,6 +831,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         }
     }
 
+
     private class AddStoryCommand implements Command
     {
         private Story story;
@@ -828,14 +845,15 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
 
         public void execute()
         {
-            proj.getStories().add(story);
+            proj.getUnallocatedStories().add(story);
         }
 
         public void undo()
         {
-            proj.getStories().remove(story);
+            proj.getUnallocatedStories().remove(story);
         }
     }
+
 
     private class AddBacklogCommand implements Command
     {
@@ -856,7 +874,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
 
         public void undo()
         {
-            proj.getStories().remove(backlog);
+            proj.getUnallocatedStories().remove(backlog);
             backlog.setProject(null);
         }
     }
