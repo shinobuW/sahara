@@ -686,7 +686,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         children.add(releasesCategory);
         BacklogCategory backlogCategory = new BacklogCategory("Backlog", this);
         children.add(backlogCategory);
-        StoryCategory storiesCategory = new StoryCategory("Stories", this);
+        StoryCategory storiesCategory = new StoryCategory("Unassigned Stories", this);
         children.add(storiesCategory);
         return children;
     }

@@ -51,7 +51,7 @@ public class CategoryTreeContextMenu extends ContextMenu
             case "Releases":
                 CreateReleaseDialog.show();
                 break;
-            case "Stories":
+            case "Unassigned Stories":
                 CreateStoryDialog.show();
                 break;
             case "Backlog":

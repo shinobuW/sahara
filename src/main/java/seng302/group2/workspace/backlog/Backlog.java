@@ -423,7 +423,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
 
         public void execute()
         {
-            System.out.println("Exec Backlog Delete");
+            //System.out.println("Exec Backlog Delete");
             proj.getBacklogs().remove(backlog);
             backlog.setProject(null);
             //release.setProject(null);
@@ -431,7 +431,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
 
         public void undo()
         {
-            System.out.println("Undone Backlog Delete");
+            //System.out.println("Undone Backlog Delete");
             proj.getBacklogs().add(backlog);
             backlog.setProject(proj);
             //release.setProject(proj);
@@ -455,7 +455,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         {
             /*if (proj != null)
             {
-                proj.getBacklogs().add(backlog);
+                proj.getBacklogs().add(backlog);  // Why? This is add story to bl, not bl to proj
             }*/
             backlog.stories.add(story);
             if (backlog.getProject() != null)
