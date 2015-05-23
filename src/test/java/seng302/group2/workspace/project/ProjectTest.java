@@ -167,7 +167,7 @@ public class ProjectTest extends TestCase
         children.add(releasesCategory);
         BacklogCategory backlogCategory = new BacklogCategory("Backlog", proj);
         children.add(backlogCategory);
-        StoryCategory storiesCategory = new StoryCategory("Stories", proj);
+        StoryCategory storiesCategory = new StoryCategory("Unassigned Stories", proj);
         children.add(storiesCategory);
 
         Assert.assertEquals(children, proj.getChildren());
@@ -183,7 +183,7 @@ public class ProjectTest extends TestCase
         children.add(releasesCategory);
         backlogCategory = new BacklogCategory("Backlog", proj);
         children.add(backlogCategory);
-        storiesCategory = new StoryCategory("Stories", proj);
+        storiesCategory = new StoryCategory("Unassigned Stories", proj);
         children.add(storiesCategory);
 
         Assert.assertEquals(children, proj.getChildren());

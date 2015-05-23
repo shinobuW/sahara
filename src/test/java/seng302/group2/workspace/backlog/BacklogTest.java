@@ -4,12 +4,16 @@ package seng302.group2.workspace.backlog;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
+import seng302.group2.scenes.listdisplay.Category;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.story.Story;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * A series if tests relating to Backlog
@@ -87,7 +91,8 @@ public class BacklogTest
     public void testGetChildren()
     {
         Backlog backlog = new Backlog();
-        Assert.assertNull(backlog.getChildren());
+        List<Category> exp = observableArrayList();
+        Assert.assertEquals(exp, backlog.getChildren());
     }
 
 
