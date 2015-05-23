@@ -87,35 +87,7 @@ public class Workspace extends TreeViewItem implements Serializable
         this.serializableTeams = new ArrayList<>();
         this.serializableRoles = new ArrayList<>();
 
-        Team unassignedTeam = Team.createUnassignedTeam();
-        this.addWithoutUndo(unassignedTeam);
-
-        Skill productOwnerSkill = new Skill("Product Owner",
-                "Knows how to work as a Teams Product Owner");
-        this.addWithoutUndo(productOwnerSkill);
-
-        ObservableList<Skill> poSkillList = observableArrayList();
-        poSkillList.add(productOwnerSkill);
-
-        Skill scrumMasterSkill = new Skill("Scrum Master", "Can be Scrum Master for a Team");
-        this.addWithoutUndo(scrumMasterSkill);
-
-        ObservableList<Skill> smSkillList = observableArrayList();
-        smSkillList.add(scrumMasterSkill);
-
-        Role scrumMaster = new Role("Scrum Master", Role.RoleType.SCRUM_MASTER,
-                "The Scrum Master for a Team", smSkillList);
-        this.addWithoutUndo(scrumMaster);
-
-        Role productOwner = new Role(
-                "Product Owner", Role.RoleType.PRODUCT_OWNER, "The Product Owner for a Team",
-                poSkillList);
-        this.addWithoutUndo(productOwner);
-
-        Role developmentTeamMember = new Role(
-                "Developer", Role.RoleType.DEVELOPMENT_TEAM_MEMBER,
-                "A member of the Dev Team");
-        this.addWithoutUndo(developmentTeamMember);
+        this.createDefaultElements();
 
         addListeners();
     }
@@ -135,39 +107,53 @@ public class Workspace extends TreeViewItem implements Serializable
         this.longName = fullName;
         this.description = description;
 
-        Team unassignedTeam = Team.createUnassignedTeam();
-        this.addWithoutUndo(unassignedTeam);
-
-        Skill productOwnerSkill = new Skill("Product Owner",
-                "Knows how to work as a Teams Product Owner");
-
-        ObservableList<Skill> poSkillList = observableArrayList();
-        poSkillList.add(productOwnerSkill);
-
-        Skill scrumMasterSkill = new Skill("Scrum Master", "Can be Scrum Master for a Team");
-
-        ObservableList<Skill> smSkillList = observableArrayList();
-        smSkillList.add(scrumMasterSkill);
-
-        Role scrumMaster = new Role("Scrum Master", Role.RoleType.SCRUM_MASTER,
-                "The Scrum Master for a Team", poSkillList);
-        this.addWithoutUndo(scrumMaster);
-
-        Role productOwner = new Role(
-                "Product Owner", Role.RoleType.PRODUCT_OWNER, "The Product Owner for a Team",
-                smSkillList);
-        this.addWithoutUndo(productOwner);
-
-        Role developmentTeamMember = new Role(
-                "Dev Team Member", Role.RoleType.DEVELOPMENT_TEAM_MEMBER,
-                "A member of the Dev Team");
-        this.addWithoutUndo(developmentTeamMember);
+        this.createDefaultElements();
 
         addListeners();
     }
 
 
-    // TODO
+    /**
+     * Adds the default elements, such as the product owner and scrum master skills and roles, as
+     * well as the unassigned team, to the project.
+     */
+    private void createDefaultElements()
+    {
+        Team unassignedTeam = Team.createUnassignedTeam();
+        this.addWithoutUndo(unassignedTeam);
+
+        Skill productOwnerSkill = new Skill("Product Owner",
+                "Knows how to work as a Teams Product Owner");
+        this.getSkills().add(productOwnerSkill);
+
+        ObservableList<Skill> poSkillList = observableArrayList();
+        poSkillList.add(productOwnerSkill);
+
+        Skill scrumMasterSkill = new Skill("Scrum Master", "Can be Scrum Master for a Team");
+        this.getSkills().add(scrumMasterSkill);
+
+        ObservableList<Skill> smSkillList = observableArrayList();
+        smSkillList.add(scrumMasterSkill);
+
+        Role scrumMaster = new Role("Scrum Master", Role.RoleType.SCRUM_MASTER,
+                "The Scrum Master for a Team", smSkillList);
+        this.getRoles().add(scrumMaster);
+
+        Role productOwner = new Role(
+                "Product Owner", Role.RoleType.PRODUCT_OWNER, "The Product Owner for a Team",
+                poSkillList);
+        this.getRoles().add(productOwner);
+
+        Role developmentTeamMember = new Role(
+                "Developer", Role.RoleType.DEVELOPMENT_TEAM_MEMBER,
+                "A member of the Dev Team");
+        this.getRoles().add(developmentTeamMember);
+    }
+
+
+    /**
+     * Adds listeners to the workspace's property lists, primarily for sorting.
+     */
     public void addListeners()
     {
         people.addListener((ListChangeListener<Person>) change ->
@@ -201,9 +187,10 @@ public class Workspace extends TreeViewItem implements Serializable
                     Collections.sort(skills);
                 }
             });
-        
-        
     }
+
+
+
     // <editor-fold defaultstate="collapsed" desc="Getters">
 
     /**
@@ -577,27 +564,6 @@ public class Workspace extends TreeViewItem implements Serializable
     }
 
 
-    /**
-     * Removes a Person from the Workspace's list of Persons.
-     *
-     * @param person The person to remove
-     */
-    /*public void remove(Person person)
-    {
-
-    }*/
-
-
-    /**
-     * Removes a Person from the Workspace's list of Persons without an undoable command
-     *
-     * @param person The person to remove
-     */
-    public void removeWithoutUndo(Person person)
-    {
-        this.people.remove(person);
-    }
-
 
     /**
      * Adds a Skill to the Workspace's list of Skills.
@@ -615,35 +581,6 @@ public class Workspace extends TreeViewItem implements Serializable
 
         Command addSkill = new AddSkillCommand(Global.currentWorkspace, skill);
         Global.commandManager.executeCommand(addSkill);
-    }
-
-
-    /**
-     * Adds a Skill to the Workspace's list of Skills without an undoable command
-     *
-     * @param skill The skill to add
-     */
-    public void addWithoutUndo(Skill skill)
-    {
-        if (skill.toString().equals("Product Owner")
-                || skill.toString().equals("Scrum Master"))
-        {
-            this.skills.add(skill);
-            return;
-        }
-
-        this.skills.add(skill);
-    }
-
-
-    /**
-     * Removes a Skill from the Workspace's list of Skills without an undoable command
-     *
-     * @param skill The skill to remove
-     */
-    public void removeWithoutUndo(Skill skill)
-    {
-        this.skills.remove(skill);
     }
 
 
@@ -773,25 +710,6 @@ public class Workspace extends TreeViewItem implements Serializable
         }
         //Add the undo action to the stack
         //TODO undoredo role stuff
-
-        this.roles.add(role);
-    }
-
-
-    /**
-     * Adds a Role to the Workspace's list of Roles without an undoable command
-     *
-     * @param role The role to add
-     */
-    public void addWithoutUndo(Role role)
-    {
-        if (role.getType() == Role.RoleType.SCRUM_MASTER
-                || role.getType() == Role.RoleType.PRODUCT_OWNER
-                || role.getType() == Role.RoleType.DEVELOPMENT_TEAM_MEMBER)
-        {
-            this.roles.add(role);
-            return;
-        }
 
         this.roles.add(role);
     }

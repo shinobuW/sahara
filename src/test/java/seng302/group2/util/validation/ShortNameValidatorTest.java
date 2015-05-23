@@ -60,11 +60,11 @@ public class ShortNameValidatorTest
         Role role = new Role("ROLE", Role.RoleType.OTHER);
 
         proj.addWithoutUndo(rel);
-        ws.addWithoutUndo(proj);
-        ws.addWithoutUndo(team);
-        ws.addWithoutUndo(apers);
-        ws.addWithoutUndo(skill);
-        ws.addWithoutUndo(role);
+        ws.getProjects().add(proj);
+        ws.getTeams().add(team);
+        ws.getPeople().add(apers);
+        ws.getSkills().add(skill);
+        ws.getRoles().add(role);
     }
 
 
