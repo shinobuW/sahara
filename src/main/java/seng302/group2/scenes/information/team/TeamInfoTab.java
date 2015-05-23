@@ -107,6 +107,12 @@ public class TeamInfoTab extends Tab
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM_EDIT, currentTeam);
                 });
         }
+        else
+        {
+            // Just add the members list
+            basicInfoPane.getChildren().add(new Label("Unassigned People: "));
+            basicInfoPane.getChildren().add(teamsPeopleBox);
+        }
     }
 
 
