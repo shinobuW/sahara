@@ -86,7 +86,10 @@ public class ReportGenerator
 
             if (selectedFile != null)
             {
-                StreamResult result = new StreamResult(selectedFile);
+                String file_name = selectedFile.toString();
+                if (!file_name.endsWith(".xml"))
+                    file_name += ".xml";
+                StreamResult result = new StreamResult(file_name);
 
                 // Output to console for testing
                 // StreamResult result = new StreamResult(System.out);
@@ -146,7 +149,7 @@ public class ReportGenerator
         Element teamElements = doc.createElement("unassigned-teams");
         for (Team team : workspace.getTeams())
         {
-            if (team.getProject() == null && !team.isUnassignedTeam())
+            if (team.getCurrentAllocation() == null && !team.isUnassignedTeam())
             {
                 System.out.println(team + " Team name");
                 Element teamElement = generateTeam(team);
@@ -269,11 +272,11 @@ public class ReportGenerator
         teamElement.appendChild(teamDescription);
 
         Element teamStartDate = doc.createElement("allocation-start-date");
-        teamStartDate.appendChild(doc.createTextNode(allocation.getStartDate().toString()));
+        teamStartDate.appendChild(doc.createTextNode(allocation.getStartDate().format(Global.dateFormatter)));
         teamElement.appendChild(teamStartDate);
 
         Element teamEndDate = doc.createElement("allocation-end-date");
-        teamEndDate.appendChild(doc.createTextNode(allocation.getEndDate().toString()));
+        teamEndDate.appendChild(doc.createTextNode(allocation.getEndDate().format(Global.dateFormatter)));
         teamElement.appendChild(teamEndDate);
 
         Element productOwnerElement = doc.createElement("product-owner");
@@ -338,11 +341,11 @@ public class ReportGenerator
         allocationElement.appendChild(allocatedTeam);
 
         Element allocationStartDate = doc.createElement("allocation-start-date");
-        allocationStartDate.appendChild(doc.createTextNode(allocation.getEndDate().toString()));
+        allocationStartDate.appendChild(doc.createTextNode(allocation.getStartDate().format(Global.dateFormatter)));
         allocationElement.appendChild(allocationStartDate);
 
         Element allocationEndDate = doc.createElement("allocation-end-date");
-        allocationEndDate.appendChild(doc.createTextNode(allocation.getEndDate().toString()));
+        allocationEndDate.appendChild(doc.createTextNode(allocation.getEndDate().format(Global.dateFormatter)));
         allocationElement.appendChild(allocationEndDate);
 
         return allocationElement;
