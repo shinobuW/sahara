@@ -90,10 +90,19 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
      */
     public void refresh()
     {
-        T currentSelection = (T) Global.selectedTreeItem.getValue();
+        T currentSelection = null;
+        if (Global.selectedTreeItem != null)
+        {
+            currentSelection = (T) Global.selectedTreeItem.getValue();
+        }
+
         clear(getRoot());
         updateItems();
-        selectItem(currentSelection);
+
+        if (currentSelection != null)
+        {
+            selectItem(currentSelection);
+        }
     }
 
 

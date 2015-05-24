@@ -37,8 +37,13 @@ public class CommandManager
         boolean available = true;
 
         // The case that we just opened a ws and created the saveTrackerCommand
-        if (undos.size() == 1 && undos.peek() == lastSaveCommand)
+        if (undos.isEmpty())
         {
+            available = false;
+        }
+        else if (undos.size() == 1 && undos.peek() == lastSaveCommand)
+        {
+            Global.setCurrentWorkspaceUnchanged();
             available = false;
         }
 
@@ -64,6 +69,11 @@ public class CommandManager
                 {
                     return;  // Return if it's the last item
                 }
+                else
+                {
+                    undo();
+                    return;
+                }
             }
 
             // Normal undo
@@ -73,7 +83,7 @@ public class CommandManager
             redos.push(command);
 
             // Check if we are back to the last save
-            if (isUndoAvailable() && undos.peek() == lastSaveCommand)
+            if (!undos.isEmpty() && undos.peek() == lastSaveCommand)
             {
                 Global.setCurrentWorkspaceUnchanged();
             }
