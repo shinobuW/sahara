@@ -299,13 +299,16 @@ public class ProjectHistoryTab extends Tab
         historyTable.getColumns().setAll(columns);
 
         // Listener to disable columns being movable
-        historyTable.getColumns().addListener(new ListChangeListener() {
+        historyTable.getColumns().addListener(new ListChangeListener()
+        {
             public boolean suspended;
 
             @Override
-            public void onChanged(Change change) {
+            public void onChanged(Change change)
+            {
                 change.next();
-                if (change.wasReplaced() && !suspended) {
+                if (change.wasReplaced() && !suspended)
+                {
                     this.suspended = true;
                     historyTable.getColumns().setAll(columns);
                     this.suspended = false;
