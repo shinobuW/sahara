@@ -42,7 +42,7 @@ public class BacklogInfoTab extends Tab
                 + currentBacklog.getProject().toString()));
 
 
-        if(currentBacklog.getProductOwner() == null)
+        if (currentBacklog.getProductOwner() == null)
         {
             basicInfoPane.getChildren().add(new Label("Backlog Product Owner: "
                     + ""));
