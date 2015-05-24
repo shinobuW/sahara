@@ -95,6 +95,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
                     Collections.sort(unallocatedStories, Story.StoryNameComparator);
                 }
             });
+
         backlogs.addListener((ListChangeListener<Backlog>) change ->
             {
                 if (change.next() && !change.wasPermutated())
@@ -102,6 +103,10 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
                     Collections.sort(backlogs);
                 }
             });
+        for (Backlog bl : backlogs)
+        {
+            bl.addListeners();
+        }
     }
 
 
