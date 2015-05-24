@@ -86,7 +86,7 @@ public class BacklogInfoTab extends Tab
             basicInfoPane.getChildren().add(new Label("Backlog Product Owner: "
                     + currentBacklog.getProductOwner()));
         }
-        basicInfoPane.getChildren().add(separator);
+
         basicInfoPane.getChildren().add(new Separator());
         basicInfoPane.getChildren().add(new Label("Stories: "));
         basicInfoPane.getChildren().add(storyTable);
