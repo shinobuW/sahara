@@ -34,8 +34,15 @@ public class CommandManager
      */
     public boolean isUndoAvailable()
     {
-        //System.out.println("undos avail?" + undos);
-        return !undos.isEmpty();
+        boolean available = true;
+
+        // The case that we just opened a ws and created the saveTrackerCommand
+        if (undos.size() == 1 && undos.peek() == lastSaveCommand)
+        {
+            available = false;
+        }
+
+        return available;
     }
 
     /**
