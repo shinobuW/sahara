@@ -255,7 +255,24 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         {
                             SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG_CATEGORY,
                                     (TreeViewItem) selected);
-                            setContextMenu(new CategoryTreeContextMenu(true));
+                            boolean PoExists = false;
+                            for (Team team : Global.currentWorkspace.getTeams())
+                            {
+                                if (team.getProductOwner() != null)
+                                {
+                                    PoExists = true;
+                                    break;
+                                }
+                            }
+                            if (!PoExists)
+                            {
+                                setContextMenu(new CategoryTreeContextMenu(false));
+                            }
+                            else
+                            {
+                                setContextMenu(new CategoryTreeContextMenu(true));
+                            }
+                            //setContextMenu(new CategoryTreeContextMenu(true));
                         }
                         else
                         {
