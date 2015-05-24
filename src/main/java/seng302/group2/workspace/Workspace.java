@@ -373,8 +373,8 @@ public class Workspace extends TreeViewItem implements Serializable
         File f = new File(workspace.lastSaveLocation);
         if (!f.exists())
         {
-            CustomDialog.showDialog("File doesn't exist", "The file no longer exists. Please" +
-                    " choose another save location", Alert.AlertType.ERROR);
+            CustomDialog.showDialog("File doesn't exist", "The file no longer exists. Please"
+                    + " choose another save location", Alert.AlertType.ERROR);
             saveAs = true;
         }
 
