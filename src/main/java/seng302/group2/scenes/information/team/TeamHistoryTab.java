@@ -56,6 +56,7 @@ public class TeamHistoryTab extends Tab
         historyTable.setEditable(true);
         historyTable.setPrefWidth(700);
         historyTable.setPrefHeight(400);
+        historyTable.setPlaceholder(new Label("This team has no project allocations."));
         historyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         ObservableList<Allocation> data = currentTeam.getProjectAllocations();
 

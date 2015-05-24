@@ -78,7 +78,7 @@ public class StoryTest
         // Priority comparator
         story.setPriority(1);
         defaultStory.setPriority(5);
-        Assert.assertTrue(0 > Story.StoryPriorityComparator.compare(story, defaultStory));
+        Assert.assertTrue(0 < Story.StoryPriorityComparator.compare(story, defaultStory));
     }
 
 

@@ -197,7 +197,7 @@ public class Story extends TreeViewItem implements Serializable
      * A comparator that returns the comparison of two story's priorities
      */
     public static Comparator<Story> StoryPriorityComparator = (story1, story2) -> {
-        return story1.getPriority().compareTo(story2.getPriority());
+        return story2.getPriority().compareTo(story1.getPriority());
     };
 
 

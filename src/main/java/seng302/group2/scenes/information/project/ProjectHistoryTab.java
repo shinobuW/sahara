@@ -57,6 +57,7 @@ public class ProjectHistoryTab extends Tab
         historyTable.setEditable(true);
         historyTable.setPrefWidth(700);
         historyTable.setPrefHeight(400);
+        historyTable.setPlaceholder(new Label("This project has no team allocations."));
         historyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         ObservableList<Allocation> data = currentProject.getTeamAllocations();
 
@@ -74,7 +75,7 @@ public class ProjectHistoryTab extends Tab
         teamCol.setCellValueFactory(new PropertyValueFactory<Allocation, String>("Team"));
         teamCol.prefWidthProperty().bind(historyTable.widthProperty()
                 .subtract(3).divide(100).multiply(40));
-        teamCol.setResizable(false);
+        //teamCol.setResizable(false);
 
         TableColumn startDateCol = new TableColumn("Start Date");
         startDateCol.setCellValueFactory(
