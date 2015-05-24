@@ -22,7 +22,6 @@ import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.revert.Revert;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.Workspace.SaveLoadResult;
-import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
@@ -163,6 +162,10 @@ public class MainMenuBar
         return newStoryItem;
     }
 
+    /**
+     * Create a menu item "Backlog" and sets the action event if "Backlog" is clicked.
+     * @return MenuItem Backlog
+     */
     private static MenuItem createBacklogItem()
     {
 
@@ -501,6 +504,27 @@ public class MainMenuBar
                 else
                 {
                     revertItem.setDisable(true);
+                }
+            });
+
+        newBranch.setOnShowing((event) ->
+            {
+                boolean PoExists = false;
+                for (Team team : Global.currentWorkspace.getTeams())
+                {
+                    if (team.getProductOwner() != null)
+                    {
+                        PoExists = true;
+                        break;
+                    }
+                }
+                if (!PoExists)
+                {
+                    newBacklogItem.setDisable(true);
+                }
+                else
+                {
+                    newBacklogItem.setDisable(false);
                 }
             });
                 

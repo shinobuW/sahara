@@ -37,7 +37,7 @@ public class BacklogInfoTab extends Tab
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        Label title = new TitleLabel(currentBacklog.getShortName());
+        Label title = new TitleLabel(currentBacklog.getLongName());
 
         Button btnEdit = new Button("Edit");
 
@@ -68,13 +68,25 @@ public class BacklogInfoTab extends Tab
         storyTable.getColumns().addAll(priorityCol, storyCol);
 
         basicInfoPane.getChildren().add(title);
+        basicInfoPane.getChildren().add(new Label("Short Name: "
+                + currentBacklog.getShortName()));
         basicInfoPane.getChildren().add(new Label("Backlog Description: "
                 + currentBacklog.getDescription()));
         basicInfoPane.getChildren().add(new Label("Project: "
                 + currentBacklog.getProject().toString()));
-        basicInfoPane.getChildren().add(new Label("Backlog Product Owner: "
-                + currentBacklog.getProductOwner()));
 
+
+        if (currentBacklog.getProductOwner() == null)
+        {
+            basicInfoPane.getChildren().add(new Label("Backlog Product Owner: "
+                    + ""));
+        }
+        else
+        {
+            basicInfoPane.getChildren().add(new Label("Backlog Product Owner: "
+                    + currentBacklog.getProductOwner()));
+        }
+        basicInfoPane.getChildren().add(separator);
         basicInfoPane.getChildren().add(new Separator());
         basicInfoPane.getChildren().add(new Label("Stories: "));
         basicInfoPane.getChildren().add(storyTable);

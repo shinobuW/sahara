@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
@@ -61,13 +62,20 @@ public class CreateBacklogDialog
         ObservableList<Person> productOwnerOptions = observableArrayList();
         ComboBox<Person> productOwnerComboBox = new ComboBox<>(productOwnerOptions);
         productOwnerComboBox.setStyle("-fx-pref-width: 135;");
-        Label poComboLabel = new Label("Product Owner: ");
+        Label poComboLabel = new Label("Product Owner:");
         HBox poComboHBox = new HBox(poComboLabel);
 
+        Label aster = new Label(" * ");
+        aster.setTextFill(Color.web("#ff0000"));
+        poComboHBox.getChildren().add(aster);
+
+        VBox poVBox = new VBox();
         HBox poCombo = new HBox();
         poCombo.getChildren().addAll(poComboHBox, productOwnerComboBox);
         poCombo.setHgrow(poComboHBox, Priority.ALWAYS);
-
+        poVBox.getChildren().add(poCombo);
+        Label noPoSelectedLabel = new Label("* Please select a product owner");
+        noPoSelectedLabel.setTextFill(Color.web("#ff0000"));
 
         if (Global.currentWorkspace.getProjects().size() > 0)
         {
@@ -89,7 +97,9 @@ public class CreateBacklogDialog
         }
 
         grid.getChildren().addAll(shortNameCustomField, longNameCustomField,
-                projectComboBox, poCombo, descriptionTextArea, buttons);
+                projectComboBox, poVBox, descriptionTextArea, buttons);
+
+
 
         // Create button event
         btnCreate.setOnAction((event) ->
@@ -99,11 +109,21 @@ public class CreateBacklogDialog
                 boolean correctProductOwnerCombo = true;
                 boolean correctProjectCombo = true;
 
-//                if (productOwnerComboBox.getValue() == null)
-//                {
-//                    productOwnerComboBox.showErrorField("You must select a product owner.");
-//                    correctProductOwnerCombo = false;
-//                }
+                if (productOwnerComboBox.getSelectionModel().getSelectedItem() == null)
+                {
+                    //Show error
+                    if (!poVBox.getChildren().contains(noPoSelectedLabel))
+                    {
+                        poVBox.getChildren().add(noPoSelectedLabel);
+                    }
+                }
+                else
+                {
+                    if (poVBox.getChildren().contains(noPoSelectedLabel))
+                    {
+                        poVBox.getChildren().remove(noPoSelectedLabel);
+                    }
+                }
 
                 if (correctShortName && correctLongName && correctProductOwnerCombo)
                 {
@@ -122,14 +142,10 @@ public class CreateBacklogDialog
                     }
 
                     Person productOwner = null;
-                    /*for (Team team : project.getCurrentTeams())
+                    if (productOwnerComboBox.getValue() != null)
                     {
-                        if (team.getProductOwner().toString().equals(
-                                (productOwnerComboBox.getValue())))
-                        {
-                            productOwner = team.getProductOwner();
-                        }
-                    }*/
+                        productOwner = productOwnerComboBox.getValue();
+                    }
 
                     Backlog backlog = new Backlog(shortName, longName, description, productOwner,
                             project);
