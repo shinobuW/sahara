@@ -71,6 +71,7 @@ public class PersonEditScene
         }
         
         ListView personSkillsBox = new ListView(tempPerson.getSkills());
+        personSkillsBox.setPrefHeight(192);
         personSkillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         personSkillsBox.setMaxWidth(275);
 
@@ -89,6 +90,7 @@ public class PersonEditScene
         }
                 
         ListView skillsBox = new ListView(dialogSkills);
+        skillsBox.setPrefHeight(192);
         skillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         skillsBox.setMaxWidth(275);
 
