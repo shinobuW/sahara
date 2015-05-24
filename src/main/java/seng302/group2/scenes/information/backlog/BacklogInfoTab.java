@@ -8,8 +8,6 @@ import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.workspace.backlog.Backlog;
 
-import java.util.Collections;
-
 /**
  * The information tab for a backlog
  * Created by cvs20 on 19/05/15.
@@ -42,9 +40,18 @@ public class BacklogInfoTab extends Tab
                 + currentBacklog.getDescription()));
         basicInfoPane.getChildren().add(new Label("Project: "
                 + currentBacklog.getProject().toString()));
-        basicInfoPane.getChildren().add(new Label("Backlog Product Owner: "
-                + currentBacklog.getProductOwner()));
 
+
+        if(currentBacklog.getProductOwner() == null)
+        {
+            basicInfoPane.getChildren().add(new Label("Backlog Product Owner: "
+                    + ""));
+        }
+        else
+        {
+            basicInfoPane.getChildren().add(new Label("Backlog Product Owner: "
+                    + currentBacklog.getProductOwner()));
+        }
         basicInfoPane.getChildren().add(separator);
         basicInfoPane.getChildren().add(new Label("Stories: "));
         basicInfoPane.getChildren().add(backlogStoryBox);

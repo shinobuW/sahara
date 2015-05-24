@@ -122,14 +122,10 @@ public class CreateBacklogDialog
                     }
 
                     Person productOwner = null;
-                    /*for (Team team : project.getCurrentTeams())
+                    if (productOwnerComboBox.getValue() != null)
                     {
-                        if (team.getProductOwner().toString().equals(
-                                (productOwnerComboBox.getValue())))
-                        {
-                            productOwner = team.getProductOwner();
-                        }
-                    }*/
+                        productOwner = productOwnerComboBox.getValue();
+                    }
 
                     Backlog backlog = new Backlog(shortName, longName, description, productOwner,
                             project);
