@@ -28,6 +28,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
     private List<Story> serializableStories = new ArrayList<>();
     private Project project;
 
+
     /**
      * Basic Backlog constructor
      */
@@ -39,6 +40,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         this.productOwner = null;
         this.project = null;
     }
+
 
     /**
      * Backlog Constructor with all fields
@@ -380,6 +382,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
                 }
             }
 
+            Collections.sort(backlog.stories, Story.StoryNameComparator);
         }
 
         /**
@@ -422,6 +425,8 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
                     story.setBacklog(backlog);
                 }
             }
+
+            Collections.sort(backlog.stories, Story.StoryNameComparator);
         }
     }
 
