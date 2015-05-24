@@ -1,16 +1,15 @@
 package seng302.group2.workspace.story;
 
+import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.undoredo.Command;
+import seng302.group2.workspace.backlog.Backlog;
+import seng302.group2.workspace.project.Project;
 
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
-
-import javafx.collections.ObservableList;
-import seng302.group2.util.undoredo.Command;
-import seng302.group2.workspace.backlog.Backlog;
-import seng302.group2.workspace.project.Project;
 
 /**
  * Created by swi67 on 6/05/15.
@@ -299,7 +298,10 @@ public class Story extends TreeViewItem implements Serializable
             story.priority = priority;
             story.backlog = backlog;
             Collections.sort(project.getUnallocatedStories(), Story.StoryNameComparator);
-            Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
+            if (backlog != null)
+            {
+                Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
+            }
 
             /* If the story if being added to a backlog in the project, remove it from the
             unassigned stories.*/
