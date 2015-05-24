@@ -7,12 +7,14 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.scenes.listdisplay.Category;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.revert.Revert;
@@ -368,6 +370,14 @@ public class Workspace extends TreeViewItem implements Serializable
 
         workspace = Workspace.prepSerialization(workspace);
 
+        File f = new File(workspace.lastSaveLocation);
+        if (!f.exists())
+        {
+            CustomDialog.showDialog("File doesn't exist", "The file no longer exists. Please" +
+                    " choose another save location", Alert.AlertType.ERROR);
+            saveAs = true;
+        }
+
         if (saveAs || workspace.lastSaveLocation == null || workspace.lastSaveLocation.equals(""))
         {
             // Prime a FileChooser
@@ -524,6 +534,10 @@ public class Workspace extends TreeViewItem implements Serializable
                         .showException(e);
                 return SaveLoadResult.IOEXCEPTION;
             }
+
+            Global.currentWorkspace.lastSaveLocation = selectedFile.toString();
+            Global.lastSaveLocation = Paths.get(Global.currentWorkspace.lastSaveLocation)
+                    .getParent().toString();
 
             Workspace.postDeserialization(Global.currentWorkspace);
 
