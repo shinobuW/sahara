@@ -1,5 +1,7 @@
 package seng302.group2.scenes.information.project;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -28,6 +30,8 @@ import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.Date;
 
 import static seng302.group2.util.validation.DateValidator.validateAllocation;
 
@@ -79,7 +83,28 @@ public class ProjectHistoryTab extends Tab
                 .subtract(3).divide(100).multiply(40));
         //teamCol.setResizable(false);
 
-        TableColumn startDateCol = new TableColumn("Start Date");
+        TableColumn startDateCol = new TableColumn<Allocation, String>("Start Date");
+        // Sorting comparator.
+        startDateCol.setComparator(new Comparator<String>()
+            {
+                @Override 
+                public int compare(String dateString1, String dateString2) 
+                {
+                    try
+                    {
+                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
+                        Date date1 = format.parse(dateString1);                
+                        Date date2 = format.parse(dateString2);
+                        return Long.compare(date1.getTime(),date2.getTime());
+                    }
+                    catch (ParseException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    return -1;
+                }
+            });
+        
         startDateCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Allocation, String>,
                         ObservableValue<String>>()
@@ -94,6 +119,7 @@ public class ProjectHistoryTab extends Tab
                         return property;
                     }
                 });
+        
         startDateCol.setOnEditCommit(
             new EventHandler<TableColumn.CellEditEvent<Allocation, String>>()
             {
@@ -126,11 +152,33 @@ public class ProjectHistoryTab extends Tab
                     }
                 }
             });
+        
         startDateCol.setCellFactory(cellFactory);
         startDateCol.prefWidthProperty().bind(historyTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
 
         TableColumn endDateCol = new TableColumn("End Date");
+        // Sorting comparator.
+        endDateCol.setComparator(new Comparator<String>()
+            {
+                @Override 
+                public int compare(String dateString1, String dateString2) 
+                {
+                    try
+                    {
+                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
+                        Date date1 = format.parse(dateString1);                
+                        Date date2 = format.parse(dateString2);
+                        return Long.compare(date1.getTime(),date2.getTime());
+                    }
+                    catch (ParseException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    return -1;
+                }
+            });
+        
         endDateCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Allocation, String>,
                         ObservableValue<String>>()
