@@ -236,6 +236,8 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         {
             this.stories.add(story);
         }
+
+        Collections.sort(this.stories, Story.StoryPriorityComparator);
     }
 
 

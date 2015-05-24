@@ -1,10 +1,9 @@
-package seng302.group2.workspace.allocation;
+package seng302.group2.workspace.team;
 
 import org.junit.Assert;
 import org.junit.Test;
-import seng302.group2.workspace.allocation.Allocation;
+import seng302.group2.Global;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -53,11 +52,19 @@ public class AllocationTest {
     @Test
     public void testEditAllocation()
     {
-        alloc.editEndDate(LocalDate.of(2015, Month.MAY, 30));
-        Assert.assertEquals(LocalDate.of(2015, Month.MAY, 30), alloc.getEndDate());
+        LocalDate testDate = LocalDate.of(2015, Month.MAY, 30);
+        alloc.editEndDate(testDate);
+        Assert.assertEquals(testDate, alloc.getEndDate());
+
+        Global.commandManager.undo();
+        Assert.assertEquals(LocalDate.of(2100, Month.MAY, 30), alloc.getEndDate());
 
         alloc.editStartDate(LocalDate.of(2015, Month.MARCH, 12));
         Assert.assertEquals(LocalDate.of(2015, Month.MARCH, 12), alloc.getStartDate());
+
+        Global.commandManager.undo();
+        Assert.assertEquals(LocalDate.of(2015, Month.APRIL, 12), alloc.getStartDate());
+
     }
 
 
@@ -71,5 +78,12 @@ public class AllocationTest {
         alloc.delete();
         Assert.assertEquals(0, team.getProjectAllocations().size());
         Assert.assertEquals(0, proj.getTeamAllocations().size());
+
+        Global.commandManager.undo();
+
+        Assert.assertTrue(team.getProjectAllocations().contains(alloc));
+        Assert.assertTrue(proj.getTeamAllocations().contains(alloc));
     }
+
+
 }
