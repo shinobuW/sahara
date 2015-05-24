@@ -16,12 +16,12 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-
-import static seng302.group2.util.validation.NameValidator.validateName;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
-import static seng302.group2.util.validation.NumberFieldValidator.validateNumberField;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.story.Story;
+
+import static seng302.group2.util.validation.NameValidator.validateName;
+import static seng302.group2.util.validation.NumberFieldValidator.validateNumberField;
+import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * Class to create a pop up dialog for creating a story
@@ -56,6 +56,7 @@ public class CreateStoryDialog
         RequiredField creatorCustomField = new RequiredField("Creator:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
         CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
+        projectComboBox.getComboBox().setPrefWidth(180);
         RequiredField priorityNumberField = new RequiredField("Priority:");
         
         String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
