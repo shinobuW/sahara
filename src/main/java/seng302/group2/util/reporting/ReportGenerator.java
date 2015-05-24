@@ -6,6 +6,8 @@
 package seng302.group2.util.reporting;
 
 import java.io.File;
+import java.time.LocalDate;
+
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.xml.transform.OutputKeys;
@@ -48,10 +50,23 @@ public class ReportGenerator
             docBuilder = docFactory.newDocumentBuilder();
             doc = docBuilder.newDocument();
 
+            Element report = doc.createElement("status-report");
+
+            //Header
+            Element header = doc.createElement("header");
+            Element title = doc.createElement("report-title");
+            title.appendChild(doc.createTextNode(Global.currentWorkspace.getShortName()));
+            Element date = doc.createElement("report-creation-date");
+            date.appendChild(doc.createTextNode(LocalDate.now().format(Global.dateFormatter)));
+            header.appendChild(title);
+            header.appendChild(date);
+            report.appendChild(header);
+
             //WorkSpace Node
-            Element rootElement = generateWorkSpace(Global.currentWorkspace);
+            Element workspaceElement = generateWorkSpace(Global.currentWorkspace);
             System.out.println(Global.currentWorkspace);
-            doc.appendChild(rootElement);
+            report.appendChild(workspaceElement);
+            doc.appendChild(report);
 
             // write the content into xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -86,7 +101,12 @@ public class ReportGenerator
 
             if (selectedFile != null)
             {
-                StreamResult result = new StreamResult(selectedFile);
+                String file_name = selectedFile.toString();
+                if (!file_name.endsWith(".xml"))
+                {
+                    file_name += ".xml";
+                }
+                StreamResult result = new StreamResult(file_name);
 
                 // Output to console for testing
                 // StreamResult result = new StreamResult(System.out);
@@ -146,7 +166,7 @@ public class ReportGenerator
         Element teamElements = doc.createElement("unassigned-teams");
         for (Team team : workspace.getTeams())
         {
-            if (team.getProject() == null && !team.isUnassignedTeam())
+            if (team.getCurrentAllocation() == null && !team.isUnassignedTeam())
             {
                 System.out.println(team + " Team name");
                 Element teamElement = generateTeam(team);
@@ -269,11 +289,13 @@ public class ReportGenerator
         teamElement.appendChild(teamDescription);
 
         Element teamStartDate = doc.createElement("allocation-start-date");
-        teamStartDate.appendChild(doc.createTextNode(allocation.getStartDate().toString()));
+        teamStartDate.appendChild(doc.createTextNode(allocation.getStartDate().format(
+                Global.dateFormatter)));
         teamElement.appendChild(teamStartDate);
 
         Element teamEndDate = doc.createElement("allocation-end-date");
-        teamEndDate.appendChild(doc.createTextNode(allocation.getEndDate().toString()));
+        teamEndDate.appendChild(doc.createTextNode(allocation.getEndDate().format(
+                Global.dateFormatter)));
         teamElement.appendChild(teamEndDate);
 
         Element productOwnerElement = doc.createElement("product-owner");
@@ -338,11 +360,13 @@ public class ReportGenerator
         allocationElement.appendChild(allocatedTeam);
 
         Element allocationStartDate = doc.createElement("allocation-start-date");
-        allocationStartDate.appendChild(doc.createTextNode(allocation.getEndDate().toString()));
+        allocationStartDate.appendChild(doc.createTextNode(allocation.getStartDate().format(
+                Global.dateFormatter)));
         allocationElement.appendChild(allocationStartDate);
 
         Element allocationEndDate = doc.createElement("allocation-end-date");
-        allocationEndDate.appendChild(doc.createTextNode(allocation.getEndDate().toString()));
+        allocationEndDate.appendChild(doc.createTextNode(allocation.getEndDate().format(
+                Global.dateFormatter)));
         allocationElement.appendChild(allocationEndDate);
 
         return allocationElement;

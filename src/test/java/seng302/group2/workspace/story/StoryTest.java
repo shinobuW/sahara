@@ -78,7 +78,7 @@ public class StoryTest
         // Priority comparator
         story.setPriority(1);
         defaultStory.setPriority(5);
-        Assert.assertTrue(0 > Story.StoryPriorityComparator.compare(story, defaultStory));
+        Assert.assertTrue(0 < Story.StoryPriorityComparator.compare(story, defaultStory));
     }
 
 
@@ -90,22 +90,27 @@ public class StoryTest
         proj.add(back);
 
         Story story = new Story("short", "long", "desc", "creator", null, 5);
+        Story story2 = new Story("short2", "long", "desc", "creator", null, 5);
         story.setProject(proj);
-        story.setBacklog(back);
-        back.add(story);
-        proj.add(story);
+        story2.setProject(proj);
+        story2.setBacklog(back);
 
-        Assert.assertTrue(back.getStories().contains(story));
+        proj.add(story);
+        back.add(story2);
+
+        Assert.assertTrue(back.getStories().contains(story2));
         Assert.assertTrue(proj.getUnallocatedStories().contains(story));
 
         story.deleteStory();
+        story2.deleteStory();
 
-        Assert.assertFalse(back.getStories().contains(story));
+        Assert.assertFalse(back.getStories().contains(story2));
         Assert.assertFalse(proj.getUnallocatedStories().contains(story));
 
         Global.commandManager.undo();
+        Global.commandManager.undo();
 
-        Assert.assertTrue(back.getStories().contains(story));
+        Assert.assertTrue(back.getStories().contains(story2));
         Assert.assertTrue(proj.getUnallocatedStories().contains(story));
     }
 

@@ -197,7 +197,7 @@ public class Story extends TreeViewItem implements Serializable
      * A comparator that returns the comparison of two story's priorities
      */
     public static Comparator<Story> StoryPriorityComparator = (story1, story2) -> {
-        return story1.getPriority().compareTo(story2.getPriority());
+        return story2.getPriority().compareTo(story1.getPriority());
     };
 
 
@@ -359,12 +359,11 @@ public class Story extends TreeViewItem implements Serializable
          */
         public void execute()
         {
-            //System.out.println("Exec Story Delete");
             if (backlog != null)
             {
                 backlog.getStories().remove(story);
             }
-            if (proj != null)
+            else if (proj != null)
             {
                 proj.getUnallocatedStories().remove(story);
             }
@@ -375,13 +374,11 @@ public class Story extends TreeViewItem implements Serializable
          */
         public void undo()
         {
-            //System.out.println("Undone Story Delete");
-            proj.getUnallocatedStories().add(story);
             if (backlog != null)
             {
                 backlog.getStories().add(story);
             }
-            if (proj != null)
+            else if (proj != null)
             {
                 proj.getUnallocatedStories().add(story);
             }

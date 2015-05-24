@@ -69,7 +69,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
             {
                 if (change.next() && !change.wasPermutated())
                 {
-                    Collections.sort(stories, Story.StoryNameComparator);
+                    Collections.sort(stories, Story.StoryPriorityComparator);
                 }
             });
     }
@@ -381,7 +381,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
                 }
             }
 
-            Collections.sort(backlog.stories, Story.StoryNameComparator);
+            Collections.sort(backlog.stories, Story.StoryPriorityComparator);
         }
 
         /**
@@ -425,7 +425,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
                 }
             }
 
-            Collections.sort(backlog.stories, Story.StoryNameComparator);
+            Collections.sort(backlog.stories, Story.StoryPriorityComparator);
         }
     }
 
