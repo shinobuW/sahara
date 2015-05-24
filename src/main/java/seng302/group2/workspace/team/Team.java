@@ -293,7 +293,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
     {
         if (!this.equals(allocation.getTeam()))
         {
-            System.out.println("Called on wrong team, not happening");
+            //System.out.println("Called on wrong team, not happening");
             return;
         }
 
@@ -702,7 +702,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
 
         public void undo()
         {
-            System.out.println("Undone Team Casc Delete");
+            //System.out.println("Undone Team Casc Delete");
             for (Person member : members)
             {
                 ws.getPeople().add(member);

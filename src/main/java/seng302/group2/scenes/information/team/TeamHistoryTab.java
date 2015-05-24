@@ -414,7 +414,7 @@ public class TeamHistoryTab extends Tab
                         .showError();
                 break;
             default:
-                System.out.println("Error: Cannot recognise validation status");
+                //System.out.println("Error: Cannot recognise validation status");
                 break;
         }
     }

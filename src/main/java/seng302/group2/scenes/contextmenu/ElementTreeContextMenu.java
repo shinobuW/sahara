@@ -211,10 +211,10 @@ public class ElementTreeContextMenu extends ContextMenu
                         (Workspace) Global.selectedTreeItem.getValue());
                 break;
             case OTHER:
-                System.out.println("The category was not correctly recognized");
+                //System.out.println("The category was not correctly recognized");
                 break;
             default:
-                System.out.println("The category was not set");
+                //System.out.println("The category was not set");
                 break;
         }
     }

@@ -355,7 +355,7 @@ public class ProjectTest extends TestCase
         Project proj = new Project("aShortName", "aLongName", "aDescription");
         Project proj2 = new Project("zShortName", "Long Name", "Description");
 
-       System.out.print(proj.compareTo(proj2));
+       //System.out.print(proj.compareTo(proj2));
 
         Assert.assertTrue(proj.compareTo(proj2) <= 0);
         Assert.assertTrue(proj2.compareTo(proj) >= 0);

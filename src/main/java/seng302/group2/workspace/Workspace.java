@@ -388,7 +388,7 @@ public class Workspace extends TreeViewItem implements Serializable
             FileChooser fileChooser = new FileChooser();
             if (Global.lastSaveLocation != null && Global.lastSaveLocation != "")
             {
-                //System.out.println("last save dir: " + Global.lastSaveLocation);
+                ////System.out.println("last save dir: " + Global.lastSaveLocation);
                 fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
             }
             fileChooser.setInitialFileName(workspace.shortName);
@@ -406,7 +406,7 @@ public class Workspace extends TreeViewItem implements Serializable
             catch (IllegalArgumentException e)
             {
                 // The file directory is invalid, try again with 'root'
-                System.out.println("Bad directory");
+                //System.out.println("Bad directory");
                 fileChooser.setInitialDirectory(new File("/"));
                 selectedFile = fileChooser.showSaveDialog(new Stage());
             }
@@ -431,15 +431,15 @@ public class Workspace extends TreeViewItem implements Serializable
             writer.close();
 
             String json = gson.toJson(workspace);
-            //System.out.println(json);
+            ////System.out.println(json);
             Revert.updateRevertState(json);
 
             Global.setCurrentWorkspaceUnchanged();
             Global.lastSaveLocation = Paths.get(workspace.lastSaveLocation).getParent().toString();
 
             //TESTING
-            //System.out.println("WORKSPACE LOCATION: " + workspace.lastSaveLocation);
-            //System.out.println("GLOBAL LOCATION: " + Global.lastSaveLocation);
+            ////System.out.println("WORKSPACE LOCATION: " + workspace.lastSaveLocation);
+            ////System.out.println("GLOBAL LOCATION: " + Global.lastSaveLocation);
 
 
             App.refreshMainScene();
@@ -471,7 +471,7 @@ public class Workspace extends TreeViewItem implements Serializable
         fileChooser.setTitle("Open Workspace");
         if (Global.lastSaveLocation != null && Global.lastSaveLocation != "")
         {
-            //System.out.println("last save dir: " + Global.lastSaveLocation);
+            ////System.out.println("last save dir: " + Global.lastSaveLocation);
             fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
         }
         fileChooser.getExtensionFilters().addAll(
@@ -487,7 +487,7 @@ public class Workspace extends TreeViewItem implements Serializable
         catch (IllegalArgumentException e)
         {
             // The file directory is invalid, try again with 'root'
-            System.out.println("Bad directory");
+            //System.out.println("Bad directory");
             fileChooser.setInitialDirectory(new File("/"));
             selectedFile = fileChooser.showOpenDialog(new Stage());
         }
@@ -504,7 +504,7 @@ public class Workspace extends TreeViewItem implements Serializable
                 {
                     json.append(line);
                 }
-                //System.out.println(json);
+                ////System.out.println(json);
 
                 Global.currentWorkspace = gson.fromJson(json.toString(), Workspace.class);
 

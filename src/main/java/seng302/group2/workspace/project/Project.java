@@ -80,7 +80,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
      */
     public void addListeners()
     {
-        //System.out.println("Listeners added");
+        ////System.out.println("Listeners added");
         releases.addListener((ListChangeListener<Release>) change ->
             {
                 if (change.next() && !change.wasPermutated())
@@ -436,7 +436,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     {
         if (!this.equals(allocation.getProject()))
         {
-            System.out.println("Called on wrong project, not happening");
+            //System.out.println("Called on wrong project, not happening");
             return;
         }
 
@@ -456,11 +456,11 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
             this.serializableReleases.add((Release) item);
         }
 
-        System.out.println("allocation serial prep");
+        //System.out.println("allocation serial prep");
         serializableTeamAllocations.clear();
         for (Allocation item : teamAllocations)
         {
-            System.out.println("there is an allocation");
+            //System.out.println("there is an allocation");
             this.serializableTeamAllocations.add(item);
         }
 

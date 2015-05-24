@@ -220,7 +220,7 @@ public class NewTeamEditScene extends ScrollPane
                 Role selectedRole = roleComboBox.getSelectionModel().getSelectedItem();
                 if (selectedRole == null)
                 {
-                    System.out.println("No selected role");
+                    //System.out.println("No selected role");
                 }
                 switch (selectedRole.getType())
                 {
