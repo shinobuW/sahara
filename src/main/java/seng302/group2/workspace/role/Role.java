@@ -49,7 +49,6 @@ public class Role extends TreeViewItem implements Serializable
 
     /**
      * Role Constructor
-     *
      * @param shortName short name to be set
      * @param type      type of role to be set
      */
@@ -63,7 +62,6 @@ public class Role extends TreeViewItem implements Serializable
 
     /**
      * Role Constructor
-     *
      * @param shortName   short name to be set
      * @param type        type of role to be set
      * @param description brief description of role
@@ -79,7 +77,6 @@ public class Role extends TreeViewItem implements Serializable
 
     /**
      * Role Constructor
-     *
      * @param shortName short name to be set
      * @param type      type of role to be set
      * @param skills    skills required for role
@@ -96,7 +93,6 @@ public class Role extends TreeViewItem implements Serializable
 
     /**
      * Role Constructor
-     *
      * @param shortName   short name to be set
      * @param type        type of role to be set
      * @param description brief description of role
@@ -137,7 +133,6 @@ public class Role extends TreeViewItem implements Serializable
 
     /**
      * Gets the type of role
-     *
      * @return Type of role
      */
     public RoleType getType()
@@ -147,12 +142,20 @@ public class Role extends TreeViewItem implements Serializable
 
     /**
      * Gets the required skills for a role
-     *
      * @return list of skills
      */
     public ObservableList<Skill> getRequiredSkills()
     {
         return this.requiredSkills;
+    }
+
+    /**
+     * Gets the required skills for a role
+     * @return list of skills
+     */
+    public List<Skill> getSerializableRequiredSkills()
+    {
+        return this.serializableRequiredSkills;
     }
 
     /**
@@ -238,9 +241,9 @@ public class Role extends TreeViewItem implements Serializable
     public void prepSerialization()
     {
         serializableRequiredSkills.clear();
-        for (Object item : requiredSkills)
+        for (Skill skill : requiredSkills)
         {
-            this.serializableRequiredSkills.add((Skill) item);
+            this.serializableRequiredSkills.add(skill);
         }
     }
 
@@ -251,9 +254,9 @@ public class Role extends TreeViewItem implements Serializable
     public void postSerialization()
     {
         requiredSkills.clear();
-        for (Object item : serializableRequiredSkills)
+        for (Skill skill : serializableRequiredSkills)
         {
-            this.requiredSkills.add((Skill) item);
+            this.requiredSkills.add(skill);
         }
     }
 
@@ -271,10 +274,6 @@ public class Role extends TreeViewItem implements Serializable
     @Override
     public String toString()
     {
-        if (this == null)
-        {
-            return "null";
-        }
         return this.shortName;
     }
 }
