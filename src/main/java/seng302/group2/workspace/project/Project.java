@@ -654,7 +654,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     public Set<Story> getAllStories()
     {
         Set<Story> stories = new HashSet<>();
-        stories.addAll(stories);
+        stories.addAll(unallocatedStories);
         for (Backlog backlog : backlogs)
         {
             stories.addAll(backlog.getStories());
