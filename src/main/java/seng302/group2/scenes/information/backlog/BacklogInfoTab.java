@@ -25,7 +25,7 @@ public class BacklogInfoTab extends Tab
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        Label title = new TitleLabel(currentBacklog.getShortName());
+        Label title = new TitleLabel(currentBacklog.getLongName());
 
         Button btnEdit = new Button("Edit");
 
@@ -36,6 +36,8 @@ public class BacklogInfoTab extends Tab
         final Separator separator = new Separator();
 
         basicInfoPane.getChildren().add(title);
+        basicInfoPane.getChildren().add(new Label("Short Name: "
+                + currentBacklog.getShortName()));
         basicInfoPane.getChildren().add(new Label("Backlog Description: "
                 + currentBacklog.getDescription()));
         basicInfoPane.getChildren().add(new Label("Project: "
