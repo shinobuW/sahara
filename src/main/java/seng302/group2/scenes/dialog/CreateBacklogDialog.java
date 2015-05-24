@@ -117,7 +117,8 @@ public class CreateBacklogDialog
                         poVBox.getChildren().add(noPoSelectedLabel);
                     }
                 }
-                else {
+                else
+                {
                     if (poVBox.getChildren().contains(noPoSelectedLabel))
                     {
                         poVBox.getChildren().remove(noPoSelectedLabel);
