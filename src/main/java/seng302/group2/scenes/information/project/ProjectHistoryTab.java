@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -55,6 +56,7 @@ public class ProjectHistoryTab extends Tab
 
         TableView<Allocation> historyTable = new TableView();
         historyTable.setEditable(true);
+        historyTable.fixedCellSizeProperty();
         historyTable.setPrefWidth(700);
         historyTable.setPrefHeight(400);
         historyTable.setPlaceholder(new Label("This project has no team allocations."));
@@ -293,7 +295,23 @@ public class ProjectHistoryTab extends Tab
             });
 
         historyTable.setItems(data);
-        historyTable.getColumns().addAll(teamCol, startDateCol, endDateCol);
+        TableColumn[] columns = {teamCol, startDateCol, endDateCol};
+        historyTable.getColumns().setAll(columns);
+
+        // Listener to disable columns being movable
+        historyTable.getColumns().addListener(new ListChangeListener() {
+            public boolean suspended;
+
+            @Override
+            public void onChanged(Change change) {
+                change.next();
+                if (change.wasReplaced() && !suspended) {
+                    this.suspended = true;
+                    historyTable.getColumns().setAll(columns);
+                    this.suspended = false;
+                }
+            }
+        });
         historyPane.getChildren().addAll(title, historyTable, newAllocationFields, buttons);
     }
 

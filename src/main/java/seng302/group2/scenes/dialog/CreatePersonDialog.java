@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
@@ -101,8 +102,7 @@ public class CreatePersonDialog
                     Person person = new Person(shortName, firstName, lastName, email, description,
                             birthDate);
                     Global.currentWorkspace.add(person);
-                    //person.setTeam((Team) Global.getUnassignedTeam());
-                    //((Team) Global.getUnassignedTeam()).add(person, false);
+                    MainScene.treeView.selectItem(person);
                     dialog.hide();
                 }
                 else

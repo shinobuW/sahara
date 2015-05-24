@@ -770,12 +770,14 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         {
             proj.getTeamAllocations().add(allocation);
             team.getProjectAllocations().add(allocation);
+            Collections.sort(allocation.getProject().getTeamAllocations());
         }
 
         public void undo()
         {
             proj.getTeamAllocations().remove(allocation);
             team.getProjectAllocations().remove(allocation);
+            Collections.sort(allocation.getProject().getTeamAllocations());
         }
     }
 }

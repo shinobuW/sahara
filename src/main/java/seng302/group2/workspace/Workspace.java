@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.scenes.listdisplay.Category;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
@@ -548,6 +549,8 @@ public class Workspace extends TreeViewItem implements Serializable
 
             Global.commandManager.clear();
             Global.commandManager.trackSave();
+
+            MainScene.treeView.selectItem(Global.currentWorkspace);
 
             return SaveLoadResult.SUCCESS;
         }

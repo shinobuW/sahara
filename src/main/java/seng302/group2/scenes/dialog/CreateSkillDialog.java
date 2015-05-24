@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.skills.Skill;
@@ -62,6 +63,7 @@ public class CreateSkillDialog
                 {
                     Skill skill = new Skill(shortName, description);
                     Global.currentWorkspace.add(skill);
+                    MainScene.treeView.selectItem(skill);
                     dialog.hide();
                 }
                 else
