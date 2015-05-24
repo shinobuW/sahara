@@ -391,6 +391,12 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         {
             this.serializablePeople.add((Person) item);
         }
+
+        serializableProjectAllocations.clear();
+        for (Object item : projectAllocations)
+        {
+            this.serializableProjectAllocations.add((Allocation) item);
+        }
     }
 
 
@@ -403,6 +409,12 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         for (Object item : serializablePeople)
         {
             this.people.add((Person) item);
+        }
+
+        projectAllocations.clear();
+        for (Allocation alloc : serializableProjectAllocations)
+        {
+            this.projectAllocations.add(alloc);
         }
     }
 
