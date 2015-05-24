@@ -1,9 +1,15 @@
 package seng302.group2.scenes.control;
 
+import com.sun.javafx.scene.control.behavior.TextAreaBehavior;
+import com.sun.javafx.scene.control.skin.TextAreaSkin;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.SkinBase;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -45,6 +51,28 @@ public class CustomTextArea extends VBox
         entry.getChildren().addAll(labelBox, inputText);
 
         this.getChildren().add(entry);
+
+        inputText.addEventFilter(KeyEvent.KEY_PRESSED, event ->
+            {
+                if (event.getCode() == KeyCode.TAB)
+                {
+                    TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
+                    if (skin.getBehavior() != null)
+                    {
+                        TextAreaBehavior behavior = skin.getBehavior();
+                        if (event.isControlDown())
+                        {
+                            behavior.callAction("InsertTab");
+                        }
+                        else
+                        {
+                            behavior.callAction("TraverseNext");
+                        }
+                        event.consume();
+                    }
+
+                }
+            });
     }
 
         /**
