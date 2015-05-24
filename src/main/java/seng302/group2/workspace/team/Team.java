@@ -380,18 +380,6 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         this.projectAllocations.remove(allocation);
     }
 
-    /**
-     * Adds the role to the team's list of Roles
-     *
-     * @param person Role to add
-     */
-    public void addRole(Person person)
-    {
-        // Add the undo action to the stack
-        // TODO
-        this.devs.add(person);
-    }
-
 
     /**
      * Prepares a Team to be serialized.
@@ -429,8 +417,12 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         return null;
     }
 
-    
-    // TODO write javadoc.
+
+    /**
+     * Compares the team to another team based on their short names
+     * @param compareTeam The team to compare to
+     * @return The result of running the string comparator on the teams' short names
+     */
     @Override
     public int compareTo(Team compareTeam)
     {
@@ -658,7 +650,6 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
             {
                 member.setTeam(null);
             }
-            // TODO Remove any associations
         }
 
         public void undo()
@@ -668,7 +659,6 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
                 member.setTeam(team);
             }
             ws.getTeams().add(team);
-            // TODO Readd any associations
         }
     }
 
@@ -723,14 +713,12 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         {
             team.getPeople().add(person);
             person.setTeam(team);
-            // TODO Readd any associations
         }
 
         public void undo()
         {
             team.getPeople().remove(person);
             person.setTeam(team);
-            // TODO Remove any associations
         }
     }
 

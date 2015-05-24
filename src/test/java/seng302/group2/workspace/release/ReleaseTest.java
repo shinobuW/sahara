@@ -120,7 +120,6 @@ public class ReleaseTest
 
         release.deleteRelease();
 
-        //TODO: fix releases not being removed from project collection of releases
         Assert.assertFalse(project.getReleases().contains(release));
         Global.commandManager.undo();
         Assert.assertTrue(project.getReleases().contains(release));

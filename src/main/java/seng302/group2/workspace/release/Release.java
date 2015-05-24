@@ -193,7 +193,11 @@ public class Release extends TreeViewItem implements Comparable<Release>
     //</editor-fold>
 
 
-    // TODO write javadoc.
+    /**
+     * Compares the release to another release based on their short names
+     * @param compareRelease The release to compare to
+     * @return The string comparison or the releases short names
+     */
     @Override
     public int compareTo(Release compareRelease)
     {

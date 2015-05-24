@@ -379,11 +379,12 @@ public class DateValidator
         }
     }
 
+
     /**
      * Checks whether the birth date format is correct
      * Shows error message and red borders if incorrect
      * @param customBirthDate the birth date error GUI label
-     * @return true if correct format// TODO Make after allocation
+     * @return true if correct format
      **/
     public static boolean validateBirthDateField(CustomDateField customBirthDate)
     {
@@ -405,6 +406,7 @@ public class DateValidator
                 return true;
         }
     }
+
 
     /**
      * Converts string to date

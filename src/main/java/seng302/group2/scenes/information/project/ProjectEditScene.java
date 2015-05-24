@@ -140,7 +140,7 @@ public class ProjectEditScene
                 {
                     currentProject.edit(shortNameCustomField.getText(),
                         longNameCustomField.getText(), descriptionTextArea.getText(),
-                        observableArrayList() /*addedTeams TODO: Remove when certain */
+                        observableArrayList()
                     );
 
                     Collections.sort(Global.currentWorkspace.getProjects());

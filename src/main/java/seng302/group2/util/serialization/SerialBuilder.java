@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import javafx.collections.ObservableList;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
@@ -17,6 +18,7 @@ import seng302.group2.workspace.team.Team;
 import java.time.LocalDate;
 
 /**
+ *
  * Created by Jordane on 12/04/2015.
  */
 public class SerialBuilder
@@ -37,7 +39,10 @@ public class SerialBuilder
                 .addType(Allocation.class)
                 .addType(Story.class)
                 .addType(LocalDate.class)
-                //TODO add backlog.class
+                .addType(Backlog.class)
+
+                //TODO add any new classes
+
                 .registerOn(gsonBuilder);
         return gsonBuilder.create();
     }

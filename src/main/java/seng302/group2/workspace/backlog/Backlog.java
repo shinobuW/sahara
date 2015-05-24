@@ -1,11 +1,13 @@
 package seng302.group2.workspace.backlog;
 
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.story.Story;
 
 import java.io.Serializable;
@@ -55,6 +57,22 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         this.productOwner = productOwner;
         this.project = project;
     }
+
+
+    /**
+     * Adds listeners to the backlog stories for sorting
+     */
+    public void addListeners()
+    {
+        stories.addListener((ListChangeListener<Story>) change ->
+        {
+            if (change.next() && !change.wasPermutated())
+            {
+                Collections.sort(stories, Story.StoryNameComparator);
+            }
+        });
+    }
+
 
     // <editor-fold defaultstate="collapsed" desc="Getters">
 

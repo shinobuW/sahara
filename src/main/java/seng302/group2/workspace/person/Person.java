@@ -346,7 +346,11 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
     }
 
 
-    // TODO write javadoc.
+    /**
+     * Compares the person to another person based on their short names
+     * @param comparePerson The person to compare to
+     * @return The string comparison result of the peoples' short names
+     */
     @Override
     public int compareTo(Person comparePerson)
     {
@@ -497,20 +501,16 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
 
         public void execute()
         {
-            //System.out.println("Exec Person Delete");
             team.getPeople().remove(person);
             person.setTeam(null);
             ws.getPeople().remove(person);
-            // TODO Remove any associations
         }
 
         public void undo()
         {
-            //System.out.println("Undone Person Delete");
             team.getPeople().add(person);
             person.setTeam(team);
             ws.getPeople().add(person);
-            // TODO Readd any associations
         }
     }
 }

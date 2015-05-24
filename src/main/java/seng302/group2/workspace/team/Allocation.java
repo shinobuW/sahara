@@ -214,14 +214,12 @@ public class Allocation implements Serializable
         {
             team.getProjectAllocations().remove(allocation);
             project.getTeamAllocations().remove(allocation);
-            // TODO Remove any associations
         }
 
         public void undo()
         {
             team.getProjectAllocations().add(allocation);
             project.getTeamAllocations().add(allocation);
-            // TODO Readd any associations
         }
     }
 }

@@ -8,7 +8,8 @@ import seng302.group2.workspace.team.Team;
 import java.time.format.DateTimeFormatter;
 
 /**
- * TODO
+ * A class that keeps static local variables for the runtime of the application. Useful for tracking
+ * the current workspace, command manager, and other items.
  * @author Jordane
  */
 public final class Global

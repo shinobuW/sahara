@@ -182,7 +182,7 @@ public class SceneSwitcher
                 }
                 break;
             case ROLE_EDIT:
-                //TODO: Roles edit scenes
+                //TODO: Roles edit scene when necc.
                 break;
             case SKILL:
                 if (item.getClass() == Skill.class)
@@ -269,7 +269,7 @@ public class SceneSwitcher
                             (BacklogCategory) item));
                 }
                 break;
-            //TODO: Other scenes when implemented
+
             default:
                 break;
         }

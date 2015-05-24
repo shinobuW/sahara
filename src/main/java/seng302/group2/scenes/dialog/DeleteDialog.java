@@ -23,7 +23,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 
 /**
- * TODO
+ * The deletion dialog for deleting workspace elements
  * @author btm38
  */
 public class DeleteDialog
