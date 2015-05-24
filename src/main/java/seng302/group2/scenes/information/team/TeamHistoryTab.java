@@ -85,18 +85,22 @@ public class TeamHistoryTab extends Tab
         // Sorting Comparator.
         startDateCol.setComparator(new Comparator<String>()
             {
-                 @Override 
-                 public int compare(String dateString1, String dateString2) {
-                    try{
-                      SimpleDateFormat format =new SimpleDateFormat("dd/MM/YYYY");
-                      Date date1 =format.parse(dateString1);                
-                      Date date2 = format.parse(dateString2);
-                      return Long.compare(date1.getTime(),date2.getTime());
-                    }catch(ParseException e){
-                         e.printStackTrace();
+                @Override 
+                public int compare(String dateString1, String dateString2) 
+                {
+                    try
+                    {
+                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
+                        Date date1 = format.parse(dateString1);                
+                        Date date2 = format.parse(dateString2);
+                        return Long.compare(date1.getTime(),date2.getTime());
+                    }
+                    catch (ParseException e)
+                    {
+                        e.printStackTrace();
                     }
                     return -1;
-                 }
+                }
             });
         
         startDateCol.setCellValueFactory(
@@ -155,18 +159,22 @@ public class TeamHistoryTab extends Tab
         // Sorting Comparator.
         endDateCol.setComparator(new Comparator<String>()
             {
-                 @Override 
-                 public int compare(String dateString1, String dateString2) {
-                    try{
-                      SimpleDateFormat format =new SimpleDateFormat("dd/MM/YYYY");
-                      Date date1 =format.parse(dateString1);                
-                      Date date2 = format.parse(dateString2);
-                      return Long.compare(date1.getTime(),date2.getTime());
-                    }catch(ParseException e){
-                         e.printStackTrace();
+                @Override 
+                public int compare(String dateString1, String dateString2) 
+                {
+                    try
+                    {
+                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
+                        Date date1 = format.parse(dateString1);                
+                        Date date2 = format.parse(dateString2);
+                        return Long.compare(date1.getTime(),date2.getTime());
+                    }
+                    catch (ParseException e)
+                    {
+                        e.printStackTrace();
                     }
                     return -1;
-                 }
+                }
             });
         
         endDateCol.setCellValueFactory(
