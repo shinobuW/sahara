@@ -163,10 +163,10 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         for (Allocation alloc : teamAllocations)
         {
             Team projectTeam = alloc.getTeam();
-
+            
             if (!projectTeam.isUnassignedTeam()
                     && !alloc.getStartDate().isAfter(now)
-                    && (alloc.getEndDate() == null || alloc.getEndDate().isAfter(now))
+                    && (alloc.getEndDate() == null || alloc.getEndDate().isAfter(now.minusDays(1)))
                     && !teams.contains(projectTeam)
                     && Global.currentWorkspace.getTeams().contains(alloc.getTeam()))
             {
