@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
@@ -150,6 +151,7 @@ public class CreateBacklogDialog
                     Backlog backlog = new Backlog(shortName, longName, description, productOwner,
                             project);
                     project.add(backlog);
+                    MainScene.treeView.selectItem(backlog);
                     dialog.hide();
                 }
                 else

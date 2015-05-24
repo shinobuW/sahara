@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.util.validation.NameValidator;
@@ -63,8 +64,8 @@ public class CreateProjectDialog
                 {
                     Project project = new Project(shortName, longName, description);
                     Global.currentWorkspace.add(project);
+                    MainScene.treeView.selectItem(project);
                     dialog.hide();
-                    App.refreshMainScene();
                 }
                 else
                 {

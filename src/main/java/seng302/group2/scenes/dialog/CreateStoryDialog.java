@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
@@ -98,6 +99,7 @@ public class CreateStoryDialog
                     Story story = new Story(shortName, longName, description, creator, project,
                             priority);
                     project.add(story);
+                    MainScene.treeView.selectItem(story);
                     dialog.hide();
                 }
                 else

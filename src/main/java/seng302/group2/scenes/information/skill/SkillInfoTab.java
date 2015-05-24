@@ -33,9 +33,9 @@ public class SkillInfoTab extends Tab
         Button btnEdit = new Button("Edit");
 
         basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new Label("Skill Description: "));
+        basicInfoPane.getChildren().add(new Label("Skill Description: "
+                + currentSkill.getDescription()));
 
-        basicInfoPane.getChildren().add(new Label(currentSkill.getDescription()));
         basicInfoPane.getChildren().add(btnEdit);
         
         if (currentSkill.getShortName().equals("Product Owner") 

@@ -50,10 +50,8 @@ public class ProjectInfoTab extends Tab
 
         basicInfoPane.getChildren().add(title);
         basicInfoPane.getChildren().add(new Label("Short Name: " + currentProject.getShortName()));
-        basicInfoPane.getChildren().add(new Label("Project Description: "));
-
-        basicInfoPane.getChildren().add(new Label(currentProject.getDescription()));
-
+        basicInfoPane.getChildren().add(new Label("Project Description: "
+                + currentProject.getDescription()));
         basicInfoPane.getChildren().add(separator);
 
 
