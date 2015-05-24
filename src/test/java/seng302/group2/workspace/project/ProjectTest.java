@@ -84,36 +84,6 @@ public class ProjectTest extends TestCase
         assertFalse(proj.getReleases().contains(release));
     }
 
-    /**
-     * Tests the addition and removal of teams within projects
-     */
-    /*@Test
-    public void testAddRemoveTeam()
-    {
-        Project proj = new Project();
-        Team testTeam = new Team();
-
-        proj.getTeams().clear();
-        //proj.add(testTeam);
-        ArrayList<Team> teams = new ArrayList<>();
-        teams.add(testTeam);
-
-        Assert.assertEquals(teams, proj.getTeams());
-
-        //proj.remove(testTeam);
-        Assert.assertTrue(!proj.getTeams().contains(testTeam));
-
-        // The second add method without undo
-        //proj.getTeams().clear();
-        //proj.addWithoutUndo(testTeam);
-        teams = new ArrayList<>();
-        teams.add(testTeam);
-
-        Assert.assertEquals(teams, proj.getTeams());
-
-        //proj.removeWithoutUndo(testTeam);
-        Assert.assertTrue(!proj.getTeams().contains(testTeam));
-    }*/
 
     /**
      * Tests the addition and removal of project's team allocation
@@ -130,11 +100,74 @@ public class ProjectTest extends TestCase
         proj.add(allocation);
         Assert.assertTrue(proj.getTeamAllocations().contains(allocation));
 
-        //Global.commandManager.undo();
-        //proj.remove(allocation);
-        //Assert.assertFalse(proj.getTeamAllocations().contains(allocation));
+        Global.commandManager.undo();
+        Assert.assertFalse(proj.getTeamAllocations().contains(allocation));
     }
 
+
+    /**
+     * Tests the addition and removal of project's backlogs
+     */
+    @Test
+    public void testAddRemoveTeamBacklog()
+    {
+        Project proj = new Project();
+        Backlog back = new Backlog();
+
+        proj.add(back);
+        Assert.assertTrue(proj.getBacklogs().contains(back));
+
+        Global.commandManager.undo();
+        Assert.assertFalse(proj.getBacklogs().contains(back));
+
+        Global.commandManager.redo();
+    }
+
+
+    /**
+     * Tests the addition and removal of project's team allocation
+     */
+    @Test
+    public void testGetAllocationMethods()
+    {
+        LocalDate startDate = LocalDate.now().minusYears(1);
+        LocalDate endDate = LocalDate.now().plusYears(1);
+        Project proj = new Project();
+        Team team = new Team();
+        Allocation currentAllocation = new Allocation(proj, team, startDate, endDate);
+
+        LocalDate startDate2 = LocalDate.now().plusYears(2);
+        LocalDate endDate2 = LocalDate.now().plusYears(3);
+        Team team2 = new Team();
+        Allocation futureAllocation = new Allocation(proj, team2, startDate2, endDate2);
+
+        LocalDate startDate3 = LocalDate.now().minusYears(3);
+        LocalDate endDate3 = LocalDate.now().minusYears(2);
+        Team team3 = new Team();
+        Allocation pastAllocation = new Allocation(proj, team3, startDate3, endDate3);
+
+        Project anotherProj = new Project();
+        Allocation anotherAllocation = new Allocation(anotherProj, team3, startDate3, endDate3);
+
+        Global.currentWorkspace.getTeams().addAll(team, team2, team3);
+
+        proj.add(currentAllocation);
+        proj.add(futureAllocation);
+        proj.add(pastAllocation);
+        proj.add(anotherAllocation);  // Should not add correctly as it has another project as param
+
+        Assert.assertFalse(proj.getTeamAllocations().contains(anotherAllocation));
+
+        Assert.assertTrue(proj.getCurrentTeams().contains(team));
+        Assert.assertFalse(proj.getCurrentTeams().contains(team2));
+
+        Assert.assertTrue(proj.getAllTeams().contains(team));
+        Assert.assertTrue(proj.getAllTeams().contains(team2));
+
+        Assert.assertFalse(proj.getPastAllocations().contains(currentAllocation));
+        Assert.assertFalse(proj.getPastAllocations().contains(futureAllocation));
+        Assert.assertTrue(proj.getPastAllocations().contains(pastAllocation));
+    }
 
 
     /**
@@ -189,6 +222,26 @@ public class ProjectTest extends TestCase
         Assert.assertEquals(children, proj.getChildren());
     }
 
+
+    @Test
+    public void testAddStory()
+    {
+        Project proj = new Project();
+        Backlog back = new Backlog();
+        Story loneStory = new Story();
+        Story backStory = new Story();
+
+        proj.add(back);
+        back.add(backStory);
+        proj.add(loneStory);
+
+        Assert.assertTrue(proj.getUnallocatedStories().contains(loneStory));
+        Assert.assertFalse(proj.getUnallocatedStories().contains(backStory));
+        Assert.assertTrue(proj.getAllStories().contains(loneStory));
+        Assert.assertTrue(proj.getAllStories().contains(backStory));
+    }
+
+
     /**
      * Tests that a project properly prepares for serialization
      */
@@ -198,25 +251,41 @@ public class ProjectTest extends TestCase
         Project proj = new Project();
         Team testTeam = new Team();
         Release testRelease = new Release();
+        Backlog testBacklog = new Backlog();
+        Story testStory = new Story();
+        Allocation testAllocation = new Allocation(proj, testTeam, LocalDate.now(),
+                LocalDate.now());
 
         proj.getSerializableReleases().clear();
-        //proj.getSerializableTeams().clear();
+        proj.getSerilizableBacklogs().clear();
+        proj.getSerilizableStories().clear();
+        proj.getSerializableTeamAllocations();
 
-        //Assert.assertEquals(new ArrayList<Skill>(), proj.getSerializableTeams());
-        Assert.assertEquals(new ArrayList<Skill>(), proj.getSerializableReleases());
+        Assert.assertEquals(new ArrayList<Skill>(), proj.getSerilizableStories());
+        Assert.assertEquals(new ArrayList<Backlog>(), proj.getSerilizableBacklogs());
+        Assert.assertEquals(new ArrayList<Release>(), proj.getSerializableReleases());
+        Assert.assertEquals(new ArrayList<Allocation>(), proj.getSerializableTeamAllocations());
 
-        //proj.add(testTeam);
+        proj.add(testBacklog);
+        proj.add(testStory);
         proj.add(testRelease);
+        proj.add(testAllocation);
 
         proj.prepSerialization();
 
-        ArrayList<Team> teams = new ArrayList<>();
+        ArrayList<Story> stories = new ArrayList<>();
         ArrayList<Release> releases = new ArrayList<>();
-        teams.add(testTeam);
+        ArrayList<Backlog> backlogs = new ArrayList<>();
+        ArrayList<Allocation> allocations = new ArrayList<>();
+        stories.add(testStory);
         releases.add(testRelease);
+        backlogs.add(testBacklog);
+        allocations.add(testAllocation);
 
-        //Assert.assertEquals(teams, proj.getSerializableTeams());
+        Assert.assertEquals(backlogs, proj.getSerilizableBacklogs());
+        Assert.assertEquals(stories, proj.getSerilizableStories());
         Assert.assertEquals(releases, proj.getSerializableReleases());
+        Assert.assertEquals(allocations, proj.getSerializableTeamAllocations());
     }
 
     /**
