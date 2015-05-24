@@ -55,6 +55,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         this.shortName = "Untitled Project";
         this.longName = "Untitled Project";
         this.description = "A blank project.";
+        addListeners();
     }
 
 

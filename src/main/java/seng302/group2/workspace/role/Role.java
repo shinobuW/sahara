@@ -174,7 +174,7 @@ public class Role extends TreeViewItem implements Serializable
      * @param type The type of role to return
      * @return The role in the workspace of the given type
      */
-    public static Role getRoleType(RoleType type)
+    public static Role getRoleFromType(RoleType type)
     {
         Role role = null;
         for (Role wsrole : Global.currentWorkspace.getRoles())

@@ -77,7 +77,7 @@ public class RoleTest
                 poRole = role;
             }
         }
-        Assert.assertTrue(Role.getRoleType(Role.RoleType.PRODUCT_OWNER) == poRole);
+        Assert.assertTrue(Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER) == poRole);
     }
 
 

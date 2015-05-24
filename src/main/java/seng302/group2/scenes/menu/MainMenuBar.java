@@ -456,20 +456,6 @@ public class MainMenuBar
         newBranch.getItems().add(newBacklogItem);
 
 
-        if (Global.currentWorkspace.getProjects().isEmpty())
-        {
-            newReleaseItem.setDisable(true);
-            newStoryItem.setDisable(true);
-            newBacklogItem.setDisable(true);
-        }
-        else
-        {
-            newReleaseItem.setDisable(false);
-            newStoryItem.setDisable(false);
-            newBacklogItem.setDisable(false);
-        }
-
-
         // Create 'Edit >' sub-menu
         Menu editMenu = new Menu("Edit");
         menuBar.getMenus().add(editMenu);
@@ -509,6 +495,7 @@ public class MainMenuBar
 
         newBranch.setOnShowing((event) ->
             {
+                newBacklogItem.setDisable(true);
                 boolean PoExists = false;
                 for (Team team : Global.currentWorkspace.getTeams())
                 {
@@ -518,13 +505,20 @@ public class MainMenuBar
                         break;
                     }
                 }
-                if (!PoExists)
+                if (PoExists && !Global.currentWorkspace.getProjects().isEmpty())
                 {
-                    newBacklogItem.setDisable(true);
+                    newBacklogItem.setDisable(false);
+                }
+
+                if (Global.currentWorkspace.getProjects().isEmpty())
+                {
+                    newReleaseItem.setDisable(true);
+                    newStoryItem.setDisable(true);
                 }
                 else
                 {
-                    newBacklogItem.setDisable(false);
+                    newReleaseItem.setDisable(false);
+                    newStoryItem.setDisable(false);
                 }
             });
                 
