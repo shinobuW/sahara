@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
+ * An instance of a user story that is used to describe high-level requirements of a project
  * Created by swi67 on 6/05/15.
  */
 public class Story extends TreeViewItem implements Serializable
