@@ -34,6 +34,7 @@ public class Story extends TreeViewItem implements Serializable
         this.description = "";
         this.creator = null;
         this.project = null;
+        this.priority = 0;
     }
 
     /**
