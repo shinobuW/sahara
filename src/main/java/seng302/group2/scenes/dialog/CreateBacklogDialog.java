@@ -56,11 +56,12 @@ public class CreateBacklogDialog
         RequiredField longNameCustomField = new RequiredField("Long Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
         CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
+        projectComboBox.getComboBox().setPrefWidth(180);
         //CustomComboBox productOwnerComboBox = new CustomComboBox("Product Owner", false);
 
         ObservableList<Person> productOwnerOptions = observableArrayList();
         ComboBox<Person> productOwnerComboBox = new ComboBox<>(productOwnerOptions);
-        productOwnerComboBox.setStyle("-fx-pref-width: 135;");
+        productOwnerComboBox.setPrefWidth(180);
         Label poComboLabel = new Label("Product Owner: ");
         HBox poComboHBox = new HBox(poComboLabel);
 
