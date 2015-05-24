@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
@@ -55,13 +56,18 @@ public class CreateBacklogDialog
         RequiredField longNameCustomField = new RequiredField("Long Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
         CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
+        //CustomComboBox productOwnerComboBox = new CustomComboBox("Product Owner", false);
 
         ObservableList<Person> productOwnerOptions = observableArrayList();
         ComboBox<Person> productOwnerComboBox = new ComboBox<>(productOwnerOptions);
+        productOwnerComboBox.setStyle("-fx-pref-width: 135;");
         Label poComboLabel = new Label("Product Owner: ");
+        HBox poComboHBox = new HBox(poComboLabel);
 
         HBox poCombo = new HBox();
-        poCombo.getChildren().addAll(poComboLabel, productOwnerComboBox);
+        poCombo.getChildren().addAll(poComboHBox, productOwnerComboBox);
+        poCombo.setHgrow(poComboHBox, Priority.ALWAYS);
+
 
         if (Global.currentWorkspace.getProjects().size() > 0)
         {

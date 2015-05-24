@@ -7,7 +7,6 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.story.Story;
 
 import java.io.Serializable;
@@ -67,12 +66,12 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
     public void addListeners()
     {
         stories.addListener((ListChangeListener<Story>) change ->
-        {
-            if (change.next() && !change.wasPermutated())
             {
-                Collections.sort(stories, Story.StoryNameComparator);
-            }
-        });
+                if (change.next() && !change.wasPermutated())
+                {
+                    Collections.sort(stories, Story.StoryNameComparator);
+                }
+            });
     }
 
 

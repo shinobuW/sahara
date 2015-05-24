@@ -20,7 +20,6 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.validation.DateValidator;
-import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
 
@@ -50,7 +49,7 @@ public class ReleaseEditScene
         informationPane.setPadding(new Insets(25,25,25,25));
 
         Button btnCancel = new Button("Cancel");
-        Button btnSave = new Button("Save");
+        Button btnSave = new Button("Done");
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
