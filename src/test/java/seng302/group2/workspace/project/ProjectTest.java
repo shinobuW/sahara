@@ -224,6 +224,20 @@ public class ProjectTest extends TestCase
 
 
     @Test
+    public void testDeleteProject()
+    {
+        Project proj = new Project();
+        Global.currentWorkspace.add(proj);
+        proj.deleteProject(Global.currentWorkspace);
+        Assert.assertFalse(Global.currentWorkspace.getProjects().contains(proj));
+
+        Global.commandManager.undo();
+
+        Assert.assertTrue(Global.currentWorkspace.getProjects().contains(proj));
+    }
+
+
+    @Test
     public void testAddStory()
     {
         Project proj = new Project();
@@ -239,6 +253,10 @@ public class ProjectTest extends TestCase
         Assert.assertFalse(proj.getUnallocatedStories().contains(backStory));
         Assert.assertTrue(proj.getAllStories().contains(loneStory));
         Assert.assertTrue(proj.getAllStories().contains(backStory));
+
+        Global.commandManager.undo();
+
+        Assert.assertFalse(proj.getAllStories().contains(loneStory));
     }
 
 
@@ -292,20 +310,38 @@ public class ProjectTest extends TestCase
      * Tests that a project properly post-pares after deserialization
      */
     @Test
-    public void testPostSerialization()
+    public void testPostDeserialization()
     {
         Project proj = new Project();
         Release testRelease = new Release();
+        Backlog testBacklog = new Backlog();
+        Story testStory = new Story();
+        Allocation testAllocation = new Allocation(proj, new Team(), LocalDate.now(),
+                LocalDate.now());
 
         proj.getReleases().clear();
+        proj.getUnallocatedStories().clear();
+        proj.getBacklogs().clear();
+        proj.getTeamAllocations().clear();
+
         Assert.assertEquals(new ArrayList<Skill>(), proj.getReleases());
+        Assert.assertTrue(proj.getUnallocatedStories().isEmpty());
+        Assert.assertTrue(proj.getBacklogs().isEmpty());
+        Assert.assertTrue(proj.getTeamAllocations().isEmpty());
 
         proj.getSerializableReleases().add(testRelease);
+        proj.getSerilizableStories().add(testStory);
+        proj.getSerilizableBacklogs().add(testBacklog);
+        proj.getSerializableTeamAllocations().add(testAllocation);
+
         proj.postSerialization();
         ArrayList<Release> releases = new ArrayList<>();
         releases.add(testRelease);
 
         Assert.assertEquals(releases, proj.getReleases());
+        Assert.assertTrue(proj.getBacklogs().contains(testBacklog));
+        Assert.assertTrue(proj.getUnallocatedStories().contains(testStory));
+        Assert.assertTrue(proj.getTeamAllocations().contains(testAllocation));
     }
 
     
