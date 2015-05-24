@@ -359,12 +359,11 @@ public class Story extends TreeViewItem implements Serializable
          */
         public void execute()
         {
-            //System.out.println("Exec Story Delete");
             if (backlog != null)
             {
                 backlog.getStories().remove(story);
             }
-            if (proj != null)
+            else if (proj != null)
             {
                 proj.getUnallocatedStories().remove(story);
             }
@@ -375,13 +374,11 @@ public class Story extends TreeViewItem implements Serializable
          */
         public void undo()
         {
-            //System.out.println("Undone Story Delete");
-            proj.getUnallocatedStories().add(story);
             if (backlog != null)
             {
                 backlog.getStories().add(story);
             }
-            if (proj != null)
+            else if (proj != null)
             {
                 proj.getUnallocatedStories().add(story);
             }
