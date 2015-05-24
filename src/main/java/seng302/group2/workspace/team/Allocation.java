@@ -1,10 +1,8 @@
 package seng302.group2.workspace.team;
 
-import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.skills.Skill;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -45,8 +43,6 @@ public class Allocation implements Serializable
      */
     public void editStartDate(LocalDate date)
     {
-        this.startDate = date;
-
         AllocationEditCommand allocEdit = new AllocationEditCommand(this, date, endDate);
         Global.commandManager.executeCommand(allocEdit);
 
@@ -58,9 +54,7 @@ public class Allocation implements Serializable
     */
     public void editEndDate(LocalDate date)
     {
-        this.endDate = date;
-
-        AllocationEditCommand allocEdit = new AllocationEditCommand(this, startDate, date);
+        AllocationEditCommand allocEdit = new AllocationEditCommand(this, this.startDate, date);
         Global.commandManager.executeCommand(allocEdit);
 
     }
