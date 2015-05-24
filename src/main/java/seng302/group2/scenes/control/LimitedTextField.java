@@ -5,13 +5,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
 /**
- * TODO
+ * A text field with a limited number of characters
  * Created by Jordane on 24/03/2015.
  */
 public class LimitedTextField extends TextField
 {
     /**
-     * TODO
+     * Creates a text field with a limited number of characters, given by maxCharacters
      * @param maxCharacters The max allowed characters that can be entered into this
      * {@link TextField}.
      */

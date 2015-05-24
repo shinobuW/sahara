@@ -244,7 +244,6 @@ public class Workspace extends TreeViewItem implements Serializable
      */
     public ObservableList<Project> getProjects()
     {
-        // TODO sort()
         return this.projects;
     }
 
@@ -708,8 +707,6 @@ public class Workspace extends TreeViewItem implements Serializable
             this.roles.add(role);
             return;
         }
-        //Add the undo action to the stack
-        //TODO undoredo role stuff
 
         this.roles.add(role);
     }
@@ -720,20 +717,6 @@ public class Workspace extends TreeViewItem implements Serializable
      * @param role The role to remove
      */
     public void remove(Role role)
-    {
-        //Add the undo action to the stack
-        // TODO: UndoRedo stack items for removals of roles
-        this.roles.remove(role);
-    }
-
-
-
-    /**
-     * Removes a Role from the Workspace's list of Roles without an undoable command
-     *
-     * @param role The role to remove
-     */
-    public void removeWithoutUndo(Role role)
     {
         this.roles.remove(role);
     }
@@ -905,25 +888,6 @@ public class Workspace extends TreeViewItem implements Serializable
     }
 
 
-    protected Object clone() throws CloneNotSupportedException
-    {
-        return super.clone();
-    }
-
-    // TODO
-    public Workspace getCopy()
-    {
-        try
-        {
-            return (Workspace) clone();
-        }
-        catch (Exception e)
-        {
-            return null;
-        }
-    }
-
-
     /**
      * A command class that allows the executing and undoing of workspace edits
      */
@@ -987,13 +951,11 @@ public class Workspace extends TreeViewItem implements Serializable
         public void execute()
         {
             ws.getProjects().add(proj);
-            // TODO Readd any associations, eg. allocation history
         }
 
         public void undo()
         {
             ws.getProjects().remove(proj);
-            // TODO Remove any associations, eg. allocation history
         }
     }
     
@@ -1012,13 +974,11 @@ public class Workspace extends TreeViewItem implements Serializable
         public void execute()
         {
             ws.getTeams().add(team);
-            // TODO Readd any associations, eg. allocation history
         }
 
         public void undo()
         {
             ws.getTeams().remove(team);
-            // TODO Remove any associations, eg. allocation history
         }
     }
 

@@ -97,9 +97,13 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
     {
         return null;
     }
-    
-    
-    // TODO write javadoc.
+
+
+    /**
+     * Compares the skill to another skill by their short names
+     * @param compareSkill The skill to compare to
+     * @return The result of the string comparison between the teams' short names
+     */
     @Override
     public int compareTo(Skill compareSkill)
     {

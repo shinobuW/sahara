@@ -8,7 +8,7 @@ import java.io.*;
 
 /**
  * Handles the loading and saving of Global configuration and settings of the application
- * TODO: Move into using Java Preferences instead. See below link:
+ * TODO: When a change is made, move into using Java Preferences instead. See below link:
  * http://docs.oracle.com/javase/8/docs/technotes/guides/preferences/index.html
  * Created by Jordane on 13/04/2015.
  */

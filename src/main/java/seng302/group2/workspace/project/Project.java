@@ -238,12 +238,6 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
      */
     public ObservableList<Release> getReleases()
     {
-        /*this.serializableReleases.clear();
-        for (Object item : this.releases)
-        {
-            this.serializableReleases.add((Release)item);
-        }*/
-        //TODO sort()
         return this.releases;
     }
     
