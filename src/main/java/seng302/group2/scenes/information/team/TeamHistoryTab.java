@@ -22,7 +22,7 @@ import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.util.validation.ValidationStatus;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.team.Allocation;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;

@@ -2,21 +2,15 @@ package seng302.group2.scenes.information.backlog;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.TitleLabel;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.story.Story;
-import seng302.group2.workspace.team.Allocation;
-
-import java.util.Collections;
 
 import static javafx.collections.FXCollections.observableArrayList;
 

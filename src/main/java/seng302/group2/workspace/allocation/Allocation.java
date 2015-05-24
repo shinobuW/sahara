@@ -1,10 +1,9 @@
-package seng302.group2.workspace.team;
+package seng302.group2.workspace.allocation;
 
-import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
 import java.time.LocalDate;

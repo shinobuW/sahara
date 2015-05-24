@@ -1,8 +1,10 @@
-package seng302.group2.workspace.team;
+package seng302.group2.workspace.allocation;
 
 import org.junit.Assert;
 import org.junit.Test;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
 import java.time.Month;
