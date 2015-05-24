@@ -80,6 +80,11 @@ public class DeleteDialog
                 Story deletedStory = (Story)element;
                 deletedStory.deleteStory();
             }
+            else if (element.getClass() == Backlog.class)
+            {
+                Backlog deletedBacklog = (Backlog)element;
+                deletedBacklog.deleteBacklog();
+            }
             else
             {
                 System.out.printf("Deletion dialog for that element has not been deleted");
@@ -231,9 +236,9 @@ public class DeleteDialog
         else if (element.getClass() == Backlog.class)
         {
             title = "Delete Backlog";
-            Story deletedStory = (Story)element;
+            Backlog deletedBacklog = (Backlog)element;
             message = MessageFormat.format("Are you sure you want to delete the backlog \"{0}",
-                    deletedStory.toString() + "\"?");
+                    deletedBacklog.toString() + "\"?");
         }
         else
         {
