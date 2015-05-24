@@ -59,7 +59,7 @@ public class CustomComboBox extends VBox
         entry.getChildren().addAll(labelBox, this.comboBox);
         entry.setHgrow(labelBox, Priority.ALWAYS);
         
-        this.comboBox.setStyle("-fx-pref-width: 135;");
+        this.comboBox.setMinWidth(135);
         this.getChildren().add(entry);
     }
     
