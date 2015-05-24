@@ -6,6 +6,8 @@
 package seng302.group2.util.reporting;
 
 import java.io.File;
+import java.time.LocalDate;
+
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.xml.transform.OutputKeys;
@@ -48,10 +50,23 @@ public class ReportGenerator
             docBuilder = docFactory.newDocumentBuilder();
             doc = docBuilder.newDocument();
 
+            Element report = doc.createElement("status-report");
+
+            //Header
+            Element header = doc.createElement("header");
+            Element title = doc.createElement("report-title");
+            title.appendChild(doc.createTextNode(Global.currentWorkspace.getShortName()));
+            Element date = doc.createElement("report-creation-date");
+            date.appendChild(doc.createTextNode(LocalDate.now().format(Global.dateFormatter)));
+            header.appendChild(title);
+            header.appendChild(date);
+            report.appendChild(header);
+
             //WorkSpace Node
-            Element rootElement = generateWorkSpace(Global.currentWorkspace);
+            Element workspaceElement = generateWorkSpace(Global.currentWorkspace);
             System.out.println(Global.currentWorkspace);
-            doc.appendChild(rootElement);
+            report.appendChild(workspaceElement);
+            doc.appendChild(report);
 
             // write the content into xml file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
