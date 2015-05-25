@@ -328,7 +328,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
             }
             catch (Exception e)
             {
-                System.out.println("Error parsing date");
+                //System.out.println("Error parsing date");
                 return "";
             }
         }

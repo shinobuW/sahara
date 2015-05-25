@@ -12,7 +12,7 @@ import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.story.Story;
-import seng302.group2.workspace.team.Allocation;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
@@ -55,6 +55,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         this.shortName = "Untitled Project";
         this.longName = "Untitled Project";
         this.description = "A blank project.";
+        addListeners();
     }
 
 
@@ -79,7 +80,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
      */
     public void addListeners()
     {
-        System.out.println("Listeners added");
+        ////System.out.println("Listeners added");
         releases.addListener((ListChangeListener<Release>) change ->
             {
                 if (change.next() && !change.wasPermutated())
@@ -133,22 +134,6 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
 
 
     /**
-     * Gets the teams of the project
-     * @return list of teams
-     */
-    @Deprecated
-    public ObservableList<Team> getTeams()
-    {
-        this.serializableTeams.clear();
-        for (Object item : this.teams)
-        {
-            this.serializableTeams.add((Team) item);
-        }
-        return this.teams;
-    }
-
-
-    /**
      * Gets a set of the teams that have been assigned to the project through the team allocations
      * @return a set of the teams that have been assigned to the project
      */
@@ -178,10 +163,10 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         for (Allocation alloc : teamAllocations)
         {
             Team projectTeam = alloc.getTeam();
-
+            
             if (!projectTeam.isUnassignedTeam()
-                    && alloc.getStartDate().isBefore(now)
-                    && (alloc.getEndDate() == null || alloc.getEndDate().isAfter(now))
+                    && !alloc.getStartDate().isAfter(now)
+                    && (alloc.getEndDate() == null || alloc.getEndDate().isAfter(now.minusDays(1)))
                     && !teams.contains(projectTeam)
                     && Global.currentWorkspace.getTeams().contains(alloc.getTeam()))
             {
@@ -191,28 +176,6 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         return teams;
     }
 
-    /**
-     * Gets a set of the teams that have been assigned to the project through the team allocations
-     * @return a set of the teams that have been assigned to the project
-     */
-    public Set<Team> getPastTeams()
-    {
-        Set<Team> teams = new HashSet<>();
-        LocalDate now = LocalDate.now();
-        for (Allocation alloc : teamAllocations)
-        {
-            Team projectTeam = alloc.getTeam();
-
-            if (!projectTeam.isUnassignedTeam()
-                    && alloc.getStartDate().isBefore(now)
-                    && alloc.getEndDate().isBefore(now)
-                    && !teams.contains(projectTeam))
-            {
-                teams.add(projectTeam);
-            }
-        }
-        return teams;
-    }
 
     /**
      * Gets a set of the teams that have been assigned to the project through the team allocations
@@ -245,20 +208,14 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     {
         return this.releases;
     }
-    
+
     /**
      * Gets the unallocatedStories of the project
      * @return list of unallocatedStories
      */
     public ObservableList<Story> getUnallocatedStories()
     {
-        this.serializableStories.clear();
-        for (Object item : this.unallocatedStories)
-        {
-            this.serializableStories.add((Story)item);
-        }
         return this.unallocatedStories;
-        
     }
 
     /**
@@ -267,13 +224,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
      */
     public ObservableList<Backlog> getBacklogs()
     {
-        this.serializableBacklogs.clear();
-        for (Object item : this.backlogs)
-        {
-            this.serializableBacklogs.add((Backlog)item);
-        }
         return this.backlogs;
-
     }
 
 
@@ -432,25 +383,6 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
 
     }
 
-    /**
-     * Removes a Story from the Project's list of Stories
-     * @param story story to remove
-     */
-    public void remove(Story story)
-    {
-        this.unallocatedStories.remove(story);
-        story.setProject(null);
-    }
-
-    /**
-     * Removes a Backlog from the Project's list of Backlogs
-     * @param backlog Backlog to remove
-     */
-    public void remove(Backlog backlog)
-    {
-        this.unallocatedStories.remove(backlog);
-        backlog.setProject(null);
-    }
 
     /**
      * Adds a Backlog to the Backlog list of Backlogs
@@ -460,63 +392,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     {
         Command command = new AddBacklogCommand(this, backlog);
         Global.commandManager.executeCommand(command);
-
     }
-
-    /**
-     * Removes a Team from the Project's list of Teams
-     * Adds a redo item by default
-     * @param team The team to remove
-     */
-    /*public void remove(Team team)
-    {
-        // Add the undo action to the stack
-
-        Global.undoRedoMan.add(new UndoableItem(
-                team,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_PROJECT, this),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DEL_PROJECT, this)
-        ));
-
-        this.teams.remove(team);
-    }*/
-
-
-    /**
-     * Removes a Team from the Project's list of Teams without an undoable command
-     * @param team The team to remove
-     */
-    /*public void removeWithoutUndo(Team team)
-    {
-        this.teams.remove(team);
-    }*/
-
-
-    /**
-     * Removes the release from the project without creating an undo command
-     * @param release release to be removed
-     */
-    /*public void removeWithoutUndo(Release release)
-    {
-        this.releases.remove(release);
-    }*/
-
-
-    /**
-     * Removes the release from the project
-     * @param release release to be removed
-     */
-    /*@Deprecated
-    public void remove(Release release)
-    {
-        Global.undoRedoMan.add(new UndoableItem(
-                release,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_DEL, this),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.RELEASE_DEL, this)
-        ));
-
-        this.releases.remove(release);
-    }*/
 
 
     /**
@@ -560,7 +436,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     {
         if (!this.equals(allocation.getProject()))
         {
-            System.out.println("Called on wrong project, not happening");
+            //System.out.println("Called on wrong project, not happening");
             return;
         }
 
@@ -574,23 +450,17 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
      */
     public void prepSerialization()
     {
-        /*serializableTeams.clear();
-        for (Object item : teams)
-        {
-            this.serializableTeams.add((Team) item);
-        }*/
-
         serializableReleases.clear();
         for (Object item : releases)
         {
             this.serializableReleases.add((Release) item);
         }
 
-        System.out.println("allocation serial prep");
+        //System.out.println("allocation serial prep");
         serializableTeamAllocations.clear();
         for (Allocation item : teamAllocations)
         {
-            System.out.println("there is an allocation");
+            //System.out.println("there is an allocation");
             this.serializableTeamAllocations.add(item);
         }
 
@@ -901,12 +771,14 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         {
             proj.getTeamAllocations().add(allocation);
             team.getProjectAllocations().add(allocation);
+            Collections.sort(allocation.getProject().getTeamAllocations());
         }
 
         public void undo()
         {
             proj.getTeamAllocations().remove(allocation);
             team.getProjectAllocations().remove(allocation);
+            Collections.sort(allocation.getProject().getTeamAllocations());
         }
     }
 }

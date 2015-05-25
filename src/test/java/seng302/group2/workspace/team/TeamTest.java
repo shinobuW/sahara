@@ -8,12 +8,13 @@ package seng302.group2.workspace.team;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.skills.Skill;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 
 /**
  * A series of tests relating to Teams
@@ -179,10 +180,9 @@ public class TeamTest
 
 
     @Test
-    public void testEdit()
+    public void testBasicEdit()
     {
         Team team = new Team("Arctic Falcon", "An awesome team name");
-
 
         team.edit("Antarctic Eagle", "An even awesomer team name");
         Assert.assertEquals("Antarctic Eagle", team.getShortName());
@@ -192,5 +192,93 @@ public class TeamTest
 
         Assert.assertEquals("Arctic Falcon", team.getShortName());
         Assert.assertEquals("An awesome team name", team.getDescription());
+    }
+
+
+    @Test
+    public void testDelete()
+    {
+        Team team = new Team();
+        Person p1 = new Person();
+        team.getPeople().add(p1);
+
+        Global.currentWorkspace.add(p1);
+        Global.currentWorkspace.add(team);
+        Assert.assertTrue(Global.currentWorkspace.getTeams().contains(team));
+
+        team.deleteTeam();
+        Assert.assertFalse(Global.currentWorkspace.getTeams().contains(team));
+        Assert.assertEquals(null, p1.getTeam());
+
+        Global.commandManager.undo();
+        Assert.assertTrue(Global.currentWorkspace.getTeams().contains(team));
+    }
+
+
+    @Test
+    public void testDeleteCascading()
+    {
+        Team team = new Team();
+        Person p1 = new Person();
+        Person p2 = new Person();
+        team.getPeople().addAll(p1, p2);
+
+        Global.currentWorkspace.add(team);
+        Global.currentWorkspace.add(p1);
+        Global.currentWorkspace.add(p2);
+
+        Assert.assertTrue(Global.currentWorkspace.getTeams().contains(team));
+        Assert.assertTrue(Global.currentWorkspace.getPeople().contains(p1));
+        Assert.assertTrue(Global.currentWorkspace.getPeople().contains(p2));
+
+        team.deleteTeamCascading();
+
+        Assert.assertFalse(Global.currentWorkspace.getTeams().contains(team));
+        Assert.assertFalse(Global.currentWorkspace.getPeople().contains(p1));
+        Assert.assertFalse(Global.currentWorkspace.getPeople().contains(p2));
+
+        Global.commandManager.undo();
+
+        Assert.assertTrue(Global.currentWorkspace.getTeams().contains(team));
+        Assert.assertTrue(Global.currentWorkspace.getPeople().contains(p1));
+        Assert.assertTrue(Global.currentWorkspace.getPeople().contains(p2));
+    }
+
+
+    @Test
+    public void testExtendedEdit()
+    {
+        Team team = new Team("Arctic Falcon", "An awesome team name");
+        Person bronson = new Person();
+        Person moffat = new Person();
+        Person andrew = new Person();
+        Person shinobu = new Person();
+        ArrayList<Person> members = new ArrayList<>();
+        members.add(bronson);
+        members.add(shinobu);
+        members.add(moffat);
+        members.add(andrew);
+        ArrayList<Person> devs = new ArrayList<>();
+        devs.add(bronson);
+
+        team.edit("Antarctic Eagle", "An even awesomer team name", members,
+                moffat, andrew, devs);
+
+        Assert.assertEquals("Antarctic Eagle", team.getShortName());
+        Assert.assertEquals("An even awesomer team name", team.getDescription());
+        Assert.assertTrue(team.getPeople().containsAll(members));
+        Assert.assertTrue(team.getDevs().contains(bronson));
+        Assert.assertEquals(andrew, team.getScrumMaster());
+        Assert.assertEquals(moffat, team.getProductOwner());
+
+        Global.commandManager.undo();
+
+        Assert.assertEquals("Arctic Falcon", team.getShortName());
+        Assert.assertEquals("An awesome team name", team.getDescription());
+        Assert.assertFalse(team.getPeople().containsAll(members));
+        Assert.assertFalse(team.getDevs().contains(bronson));
+        Assert.assertNull(team.getScrumMaster());
+        Assert.assertNull(team.getProductOwner());
+
     }
 }

@@ -25,7 +25,7 @@ public class Configuration
      */
     public void updateConfiguration()
     {
-        //System.out.println(lastSaveLocation); // Testing
+        ////System.out.println(lastSaveLocation); // Testing
         this.lastSaveLocation = Global.lastSaveLocation;
     }
 

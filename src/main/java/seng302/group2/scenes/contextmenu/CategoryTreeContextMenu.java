@@ -58,7 +58,7 @@ public class CategoryTreeContextMenu extends ContextMenu
                 CreateBacklogDialog.show();
                 break;
             default:
-                System.out.println("Create dialog for that category not implemented (yet?)");
+                //System.out.println("Create dialog for that category not implemented (yet?)");
                 break;
         }
     }

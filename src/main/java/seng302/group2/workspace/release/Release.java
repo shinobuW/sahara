@@ -126,7 +126,7 @@ public class Release extends TreeViewItem implements Comparable<Release>
             }
             catch (Exception e)
             {
-                System.out.println("Error parsing date");
+                //System.out.println("Error parsing date");
                 return "";
             }
         }
@@ -314,14 +314,14 @@ public class Release extends TreeViewItem implements Comparable<Release>
 
         public void execute()
         {
-            System.out.println("Exec Release Delete");
+            //System.out.println("Exec Release Delete");
             proj.getReleases().remove(release);
             //release.setProject(null);
         }
 
         public void undo()
         {
-            System.out.println("Undone Release Delete");
+            //System.out.println("Undone Release Delete");
             proj.getReleases().add(release);
             //release.setProject(proj);
         }

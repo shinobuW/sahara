@@ -444,7 +444,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
 
         public void execute()
         {
-            //System.out.println("Exec Backlog Delete");
+            ////System.out.println("Exec Backlog Delete");
             proj.getBacklogs().remove(backlog);
             backlog.setProject(null);
             //release.setProject(null);
@@ -452,7 +452,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
 
         public void undo()
         {
-            //System.out.println("Undone Backlog Delete");
+            ////System.out.println("Undone Backlog Delete");
             proj.getBacklogs().add(backlog);
             backlog.setProject(proj);
             //release.setProject(proj);

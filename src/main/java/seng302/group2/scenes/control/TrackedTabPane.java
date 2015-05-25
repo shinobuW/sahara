@@ -35,7 +35,7 @@ public class TrackedTabPane extends TabPane
             {
                 contentTabs.put(scene,
                         this.getSelectionModel().getSelectedIndex());
-                //System.out.println("saving last tab");
+                ////System.out.println("saving last tab");
             });
     }
 
@@ -48,7 +48,7 @@ public class TrackedTabPane extends TabPane
         Integer lastTab = 0;
         if (scene != null)
         {
-            //System.out.println("opening last tab from " + scene.toString());
+            ////System.out.println("opening last tab from " + scene.toString());
             lastTab = contentTabs.get(scene);
         }
         if (lastTab != null)

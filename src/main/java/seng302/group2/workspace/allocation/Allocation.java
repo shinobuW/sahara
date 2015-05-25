@@ -1,17 +1,20 @@
-package seng302.group2.workspace.team;
+package seng302.group2.workspace.allocation;
 
 import seng302.group2.Global;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * A class that represents allocations between teams and projects
  * Created by Jordane Lew and David Moseley on 7/05/15.
  */
-public class Allocation implements Serializable
+public class Allocation implements Serializable, Comparable<Allocation>
 {
     /**
      * An enumeration for allocation statuses
@@ -147,6 +150,34 @@ public class Allocation implements Serializable
         Global.commandManager.executeCommand(deleteAlloc);
     }
 
+
+    /**
+     * //TODO
+     */
+    @Override
+    public int compareTo(Allocation allocation)
+    {
+        LocalDate allocationStarDate = this.getStartDate();
+        LocalDate allocation2StarDate = allocation.getStartDate();
+        return allocationStarDate.compareTo(allocation2StarDate);
+    }
+
+
+//    /**
+//     * A comparator that returns the comparison of two story's priorities
+//     */
+//    public static Comparator<Allocation> AllocationStartDateComparator = (alloc1, alloc2) -> {
+//        return alloc2.getEndDate().compareTo(alloc1.getStartDate());
+//    };
+//
+//
+//    /**
+//     * A comparator that returns the comparison of two story's short names
+//     */
+//    public static Comparator<Allocation> AllocationEndDateComparator = (alloc1, alloc2) -> {
+//        return alloc1.getEndDate().compareTo(alloc2.getEndDate());
+//    };
+
     private class AllocationEditCommand implements Command
     {
         private Allocation allocation;
@@ -178,6 +209,7 @@ public class Allocation implements Serializable
         {
             allocation.startDate = startDate;
             allocation.endDate = endDate;
+            Collections.sort(allocation.getProject().getTeamAllocations());
         }
 
         /**
@@ -187,6 +219,7 @@ public class Allocation implements Serializable
         {
             allocation.startDate = oldStartDate;
             allocation.endDate = oldEndDate;
+            Collections.sort(allocation.getProject().getTeamAllocations());
         }
     }
 

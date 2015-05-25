@@ -87,7 +87,7 @@ public class DeleteDialog
             }
             else
             {
-                System.out.printf("Deletion dialog for that element has not been deleted");
+                //System.out.printf("Deletion dialog for that element has not been deleted");
                 return false;
             }
         }

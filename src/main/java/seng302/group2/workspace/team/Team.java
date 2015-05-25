@@ -8,6 +8,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 
@@ -292,7 +293,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
     {
         if (!this.equals(allocation.getTeam()))
         {
-            System.out.println("Called on wrong team, not happening");
+            //System.out.println("Called on wrong team, not happening");
             return;
         }
 
@@ -701,7 +702,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
 
         public void undo()
         {
-            System.out.println("Undone Team Casc Delete");
+            //System.out.println("Undone Team Casc Delete");
             for (Person member : members)
             {
                 ws.getPeople().add(member);

@@ -25,7 +25,7 @@ public class CommandManager
         command.execute();
         undos.push(command);
         redos.clear();
-        //System.out.println("added: " + command.toString());
+        ////System.out.println("added: " + command.toString());
     }
 
     /**
@@ -34,8 +34,20 @@ public class CommandManager
      */
     public boolean isUndoAvailable()
     {
-        //System.out.println("undos avail?" + undos);
-        return !undos.isEmpty();
+        boolean available = true;
+
+        // The case that we just opened a ws and created the saveTrackerCommand
+        if (undos.isEmpty())
+        {
+            available = false;
+        }
+        else if (undos.size() == 1 && undos.peek() == lastSaveCommand)
+        {
+            Global.setCurrentWorkspaceUnchanged();
+            available = false;
+        }
+
+        return available;
     }
 
     /**
@@ -57,16 +69,21 @@ public class CommandManager
                 {
                     return;  // Return if it's the last item
                 }
+                else
+                {
+                    undo();
+                    return;
+                }
             }
 
             // Normal undo
             Command command = undos.pop();
-            //System.out.println("undo: " + command);
+            ////System.out.println("undo: " + command);
             command.undo();
             redos.push(command);
 
             // Check if we are back to the last save
-            if (isUndoAvailable() && undos.peek() == lastSaveCommand)
+            if (!undos.isEmpty() && undos.peek() == lastSaveCommand)
             {
                 Global.setCurrentWorkspaceUnchanged();
             }
@@ -124,7 +141,7 @@ public class CommandManager
             }
 
             Command command = redos.pop();
-            //System.out.println("redo: " + command);
+            ////System.out.println("redo: " + command);
             command.execute();
             undos.push(command);
 

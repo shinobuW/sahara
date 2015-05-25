@@ -71,6 +71,7 @@ public class CommandManagerTest
     @Test
     public void testIsUndoAvailable()
     {
+        Global.commandManager.clear();
         Assert.assertFalse(Global.commandManager.isUndoAvailable());  // No objects pushed
         Global.commandManager.executeCommand(testCommand);  // Push an object
         Assert.assertTrue(Global.commandManager.isUndoAvailable());
@@ -143,6 +144,7 @@ public class CommandManagerTest
     @Test
     public void testTrackSave()
     {
+        Global.commandManager.clear();
         Assert.assertTrue(Global.currentWorkspace.getHasUnsavedChanges());
         Global.commandManager.trackSave();
         Assert.assertFalse(Global.currentWorkspace.getHasUnsavedChanges());

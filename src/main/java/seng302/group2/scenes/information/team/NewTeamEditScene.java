@@ -190,10 +190,27 @@ public class NewTeamEditScene extends ScrollPane
 
         btnUnassign.setOnAction((event) ->
             {
-                availablePeopleList.addAll(
-                        teamMembersListView.getSelectionModel().getSelectedItems());
-                teamMembersList.removeAll(
-                        teamMembersListView.getSelectionModel().getSelectedItems());
+                Collection<Person> selectedPeople = new ArrayList<Person>();
+                selectedPeople.addAll(teamMembersListView.getSelectionModel().
+                        getSelectedItems());
+                availablePeopleList.addAll(selectedPeople);
+                teamMembersList.removeAll(selectedPeople);
+
+                for (Person person : selectedPeople)
+                {
+                    if (allocatedProductOwner == person)
+                    {
+                        allocatedProductOwner = null;
+                    }
+                    if (allocatedScrumMaster == person)
+                    {
+                        allocatedProductOwner = null;
+                    }
+                    if (allocatedDevelopers.contains(person))
+                    {
+                        allocatedDevelopers.remove(person);
+                    }
+                }
             });
 
         btnRoleAssign.setOnAction((event) ->
@@ -203,7 +220,7 @@ public class NewTeamEditScene extends ScrollPane
                 Role selectedRole = roleComboBox.getSelectionModel().getSelectedItem();
                 if (selectedRole == null)
                 {
-                    System.out.println("No selected role");
+                    //System.out.println("No selected role");
                 }
                 switch (selectedRole.getType())
                 {
