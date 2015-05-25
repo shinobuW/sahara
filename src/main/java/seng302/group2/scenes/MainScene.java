@@ -57,7 +57,7 @@ public class MainScene
         root.setTop(menuBar);
         //root.getChildren().add(new StackPane(menuBar));
 
-        if (Global.selectedTreeItem == null)
+        if (Global.selectedTreeItem == null || Global.selectedTreeItem.getValue() == null)
         {
             treeView.selectItem(Global.currentWorkspace);
         }
