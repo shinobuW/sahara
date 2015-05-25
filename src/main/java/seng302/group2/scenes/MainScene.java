@@ -60,14 +60,15 @@ public class MainScene
         if (Global.selectedTreeItem == null || Global.selectedTreeItem.getValue() == null)
         {
             treeView.selectItem(Global.currentWorkspace);
+            contentPane.setContent(new WorkspaceScene(
+                    Global.currentWorkspace));
         }
-        
-        if (Global.selectedTreeItem.getValue() instanceof Workspace)
+        else if (Global.selectedTreeItem.getValue() instanceof Workspace)
         {
             contentPane.setContent(new WorkspaceScene(
                     (Workspace) Global.selectedTreeItem.getValue()));
         }
-        if (Global.selectedTreeItem.getValue() instanceof Project)
+        else if (Global.selectedTreeItem.getValue() instanceof Project)
         {
             contentPane.setContent(new ProjectScene((Project) Global.selectedTreeItem.getValue()));
         }
