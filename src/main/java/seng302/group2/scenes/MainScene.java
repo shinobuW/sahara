@@ -28,6 +28,8 @@ import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
+import java.util.UUID;
+
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.App.content;
 

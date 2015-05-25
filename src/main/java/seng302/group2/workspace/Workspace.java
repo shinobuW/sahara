@@ -90,6 +90,8 @@ public class Workspace extends TreeViewItem implements Serializable
         this.createDefaultElements();
 
         addListeners();
+
+        updateDefaultRevert();
     }
 
 
@@ -110,6 +112,16 @@ public class Workspace extends TreeViewItem implements Serializable
         this.createDefaultElements();
 
         addListeners();
+
+        updateDefaultRevert();
+    }
+
+
+    private void updateDefaultRevert()
+    {
+        prepSerialization(this);
+        String json = gson.toJson(this);
+        Revert.updateRevertState(json);
     }
 
 
@@ -494,7 +506,7 @@ public class Workspace extends TreeViewItem implements Serializable
 
                 Global.currentWorkspace = gson.fromJson(json.toString(), Workspace.class);
 
-                //Revert.updateRevertState(new FileReader(selectedFile));
+                Revert.updateRevertState(json.toString());
 
                 reader.close();
             }
