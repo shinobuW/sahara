@@ -178,7 +178,8 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
 
 
     /**
-     * Gets a set of the teams that have been assigned to the project through the team allocations
+     * Gets a set of the teams that have been previously assigned
+     * to the project through the team allocations
      * @return a set of the teams that have been assigned to the project
      */
     public Set<Allocation> getPastAllocations()
@@ -194,6 +195,38 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
                     && alloc.getEndDate().isBefore(now))
             {
                 allocations.add(alloc);
+            }
+        }
+        return allocations;
+    }
+
+    /**
+     * Gets a set of the teams that will be assigned to the project
+     * @return a set of the teams that will be assigned to the project
+     */
+    public Set<Allocation> getFutureAllocations()
+    {
+        Set<Allocation> allocations = new HashSet<>();
+        LocalDate now = LocalDate.now();
+        for (Allocation alloc : teamAllocations)
+        {
+            Team projectTeam = alloc.getTeam();
+            if (alloc.getEndDate() != null)
+            {
+                if (!projectTeam.isUnassignedTeam()
+                        && alloc.getStartDate().isAfter(now)
+                        && alloc.getEndDate().isAfter(now))
+                {
+                    allocations.add(alloc);
+                }
+            }
+            else
+            {
+                if (!projectTeam.isUnassignedTeam()
+                        && alloc.getStartDate().isAfter(now))
+                {
+                    allocations.add(alloc);
+                }
             }
         }
         return allocations;

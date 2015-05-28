@@ -245,6 +245,14 @@ public class ReportGenerator
             teamPreviousElements.appendChild(teamElement);
         }
         projectElement.appendChild(teamPreviousElements);
+
+        Element teamFutureElements = doc.createElement("future-teams");
+        for (Allocation allocation: project.getFutureAllocations())
+        {
+            Element teamElement = generateAllocation(allocation);
+            teamFutureElements.appendChild(teamElement);
+        }
+        projectElement.appendChild(teamFutureElements);
         
         Element releaseElements = doc.createElement("releases");
         for (Release release : project.getReleases())
@@ -352,7 +360,7 @@ public class ReportGenerator
 
     private static Element generateAllocation(Allocation allocation)
     {
-        Element allocationElement = doc.createElement("allocation");
+        Element allocationElement = doc.createElement("team");
 
         //WorkSpace Elements
         Element allocatedTeam = doc.createElement("team-name");
