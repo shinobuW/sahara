@@ -422,7 +422,7 @@ public class DateValidator
         }
         catch (DateTimeParseException e)
         {
-            //System.out.println("Error parsing date");
+            System.out.println("Error parsing date");
         }
         return releaseDate;
     }

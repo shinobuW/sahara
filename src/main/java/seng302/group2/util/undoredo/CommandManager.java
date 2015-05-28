@@ -25,7 +25,7 @@ public class CommandManager
         command.execute();
         undos.push(command);
         redos.clear();
-        ////System.out.println("added: " + command.toString());
+        //System.out.println("added: " + command.toString());
     }
 
     /**
@@ -78,7 +78,7 @@ public class CommandManager
 
             // Normal undo
             Command command = undos.pop();
-            ////System.out.println("undo: " + command);
+            //System.out.println("undo: " + command);
             command.undo();
             redos.push(command);
 
@@ -141,7 +141,7 @@ public class CommandManager
             }
 
             Command command = redos.pop();
-            ////System.out.println("redo: " + command);
+            //System.out.println("redo: " + command);
             command.execute();
             undos.push(command);
 

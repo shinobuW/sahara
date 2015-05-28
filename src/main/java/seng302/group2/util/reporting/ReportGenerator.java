@@ -64,7 +64,7 @@ public class ReportGenerator
 
             //WorkSpace Node
             Element workspaceElement = generateWorkSpace(Global.currentWorkspace);
-            //System.out.println(Global.currentWorkspace);
+            System.out.println(Global.currentWorkspace);
             report.appendChild(workspaceElement);
             doc.appendChild(report);
 
@@ -94,7 +94,7 @@ public class ReportGenerator
             catch (IllegalArgumentException e)
             {
                 // The file directory is invalid, try again with 'root'
-                //System.out.println("Bad directory");
+                System.out.println("Bad directory");
                 fileChooser.setInitialDirectory(new File("/"));
                 selectedFile = fileChooser.showSaveDialog(new Stage());
             }
@@ -109,22 +109,22 @@ public class ReportGenerator
                 StreamResult result = new StreamResult(file_name);
 
                 // Output to console for testing
-                // StreamResult result = new StreamResult(//System.out);
+                // StreamResult result = new StreamResult(System.out);
 
                 transformer.transform(source, result);
 
-                //System.out.println("File exported!");
+                System.out.println("File exported!");
             }
             else
             {
-                //System.out.println("Export aborted (by user or error? :()");
+                System.out.println("Export aborted (by user or error? :()");
             }
 
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            //System.out.println("Error exporting ");
+            System.out.println("Error exporting ");
         }
         return true;
     }
@@ -168,7 +168,7 @@ public class ReportGenerator
         {
             if (team.getCurrentAllocation() == null && !team.isUnassignedTeam())
             {
-                //System.out.println(team + " Team name");
+                System.out.println(team + " Team name");
                 Element teamElement = generateTeam(team);
                 teamElements.appendChild(teamElement);
             }

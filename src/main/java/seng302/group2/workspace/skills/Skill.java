@@ -121,7 +121,7 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
     {
         if (this.shortName.equals("Scrum Master") || this.shortName.equals("Product Owner"))
         {
-            //System.out.println("Can't delete this skill");
+            System.out.println("Can't delete this skill");
             return;
         }
         Command deleteSkill = new DeleteSkillCommand(this, Global.currentWorkspace);

@@ -122,7 +122,7 @@ public class WorkspaceTest
         Skill skill = new Skill();
         work.add(skill);
 
-        ////System.out.println(work.getSkills());
+        //System.out.println(work.getSkills());
         Assert.assertTrue(work.getSkills().contains(skill));
         
         work.add(skill);

@@ -22,10 +22,10 @@ public class Revert
      */
     public static void revertWorkspace()
     {
-        //System.out.println("called");
+        System.out.println("called");
         if (revertWorkspace != null)
         {
-            //System.out.println("content: " + revertWorkspace);
+            System.out.println("content: " + revertWorkspace);
             Workspace currentWorkspace = SerialBuilder.getBuilder().fromJson(revertWorkspace,
                     Workspace.class);
             Workspace.postDeserialization(currentWorkspace);
