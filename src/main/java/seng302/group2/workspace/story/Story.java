@@ -4,12 +4,18 @@ import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
+import seng302.group2.workspace.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.release.Release;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * An instance of a user story that is used to describe high-level requirements of a project
@@ -24,6 +30,8 @@ public class Story extends TreeViewItem implements Serializable
     private Project project;
     private Integer priority;
     private Backlog backlog;
+    private transient ObservableList<AcceptanceCriteria> acceptanceCriteria = observableArrayList();
+    private List<AcceptanceCriteria> serializableAcceptanceCriteria = new ArrayList<>();
 
     /**
      * Basic Story constructor
@@ -122,6 +130,23 @@ public class Story extends TreeViewItem implements Serializable
     }
 
     /**
+     * Gets the acceptance criteria of this story
+     */
+    public ObservableList<AcceptanceCriteria> getAcceptanceCriteria()
+    {
+        return this.acceptanceCriteria;
+    }
+
+    /**
+     * Gets the serializable AC's
+     * @return the serializable AC's
+     */
+    public List<AcceptanceCriteria> getSerializableAc()
+    {
+        return serializableAcceptanceCriteria;
+    }
+
+    /**
      * Sets the short name of the story
      * @param shortName short name to be set
      */
@@ -183,7 +208,43 @@ public class Story extends TreeViewItem implements Serializable
     {
         this.priority = priority;
     }
-    
+
+    /**
+     * Adds an Acceptance Criteria to the story
+     * @param ac ac to be added
+     */
+    public void add(AcceptanceCriteria ac)
+    {
+        Command command = new AddAcceptanceCriteriaCommand(this, ac);
+        Global.commandManager.executeCommand(command);
+    }
+
+    /**
+     * Prepares a story to be serialized.
+     */
+    public void prepSerialization()
+    {
+        serializableAcceptanceCriteria.clear();
+        for (AcceptanceCriteria ac : acceptanceCriteria)
+        {
+            this.serializableAcceptanceCriteria.add(ac);
+        }
+    }
+
+    /**
+     * Deserialization post-processing.
+     */
+    public void postSerialization()
+    {
+        acceptanceCriteria.clear();
+        for (Object item : serializableAcceptanceCriteria)
+        {
+            this.acceptanceCriteria.add((AcceptanceCriteria) item);
+        }
+    }
+
+
+
     /**
      * Gets the children of the TreeViewItem
      * @return The items of the TreeViewItem
@@ -384,6 +445,30 @@ public class Story extends TreeViewItem implements Serializable
             {
                 proj.getUnallocatedStories().add(story);
             }
+        }
+    }
+
+    private class AddAcceptanceCriteriaCommand implements Command
+    {
+        private Story story;
+        private AcceptanceCriteria ac;
+
+        AddAcceptanceCriteriaCommand(Story story, AcceptanceCriteria ac)
+        {
+            this.story = story;
+            this.ac = ac;
+        }
+
+        public void execute()
+        {
+            story.getAcceptanceCriteria().add(ac);
+            ac.setStory(story);
+        }
+
+        public void undo()
+        {
+            story.getAcceptanceCriteria().remove(ac);
+            ac.setStory(null);
         }
     }
 }
