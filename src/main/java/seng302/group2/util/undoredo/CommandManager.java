@@ -17,6 +17,27 @@ public class CommandManager
 
     /**
      * Executes the given command
+     * @return The current undo stack.
+     */
+    public Stack<Command> getUndos()
+    {
+        return this.undos;
+        //System.out.println("added: " + command.toString());
+    }
+
+    /**
+     * Executes the given command
+     * @return The current undo stack.
+     */
+    public void setUndos(Stack<Command> undos)
+    {
+        this.undos = (Stack<Command>) undos;
+        //System.out.println("added: " + command.toString());
+    }
+
+
+    /**
+     * Executes the given command
      * @param command The command to execute
      */
     public void executeCommand(Command command)
@@ -80,6 +101,7 @@ public class CommandManager
             Command command = undos.pop();
             //System.out.println("undo: " + command);
             command.undo();
+
             redos.push(command);
 
             // Check if we are back to the last save

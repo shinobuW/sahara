@@ -94,7 +94,7 @@ public class Workspace extends TreeViewItem implements Serializable
 
         addListeners();
 
-        updateDefaultRevert();
+        //updateDefaultRevert();
     }
 
 
@@ -116,7 +116,7 @@ public class Workspace extends TreeViewItem implements Serializable
 
         addListeners();
 
-        updateDefaultRevert();
+        //updateDefaultRevert();
     }
 
 
@@ -890,7 +890,8 @@ public class Workspace extends TreeViewItem implements Serializable
     @Override
     public String toString()
     {
-        return this.shortName;
+        return getClass().getName() + "@" + Integer.toHexString(hashCode());
+//        return this.shortName;
     }
 
 
