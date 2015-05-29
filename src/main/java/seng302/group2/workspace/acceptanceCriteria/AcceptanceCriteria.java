@@ -8,9 +8,9 @@ import seng302.group2.workspace.story.Story;
 public class AcceptanceCriteria
 {
     private String text;
-    private acState state;
+    private AcState state;
     private Story story;
-    private enum acState
+    private enum AcState
     {
         DONE,
         ACCEPTED,
@@ -32,7 +32,7 @@ public class AcceptanceCriteria
      * Sets the state of the AC to done, accepted or unaccepted
      * @param state the state to set
      */
-    public void setAcState(acState state)
+    public void setAcState(AcState state)
     {
         this.state = state;
     }
@@ -42,7 +42,7 @@ public class AcceptanceCriteria
      * Sets the story the AC belongs to
      * @param story to set
      */
-    public void setStory (Story story)
+    public void setStory(Story story)
     {
         this.story = story;
     }
@@ -60,7 +60,7 @@ public class AcceptanceCriteria
     /**
      * Gets the state
      */
-    public acState getState()
+    public AcState getState()
     {
         return this.state;
     }
