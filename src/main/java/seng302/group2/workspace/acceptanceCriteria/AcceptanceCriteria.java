@@ -10,12 +10,26 @@ public class AcceptanceCriteria
     private String text;
     private AcState state;
     private Story story;
-    private enum AcState
+    public enum AcState
     {
         DONE,
         ACCEPTED,
         UNACCEPTED
     }
+
+    /**
+     * Basic constructor
+     * @param text the description of the AC
+     * @param state of the AC
+     * @param story the AC belongs to
+     */
+    public AcceptanceCriteria(String text, AcState state, Story story)
+    {
+        this.text = text;
+        this.state = state;
+        this.story = story;
+    }
+
 
 
     /**
