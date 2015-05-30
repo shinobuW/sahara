@@ -272,18 +272,18 @@ public class MainMenuBar
      * document.
      * @return MenuItem Export
      */
-    private static MenuItem createExportItem() 
+    private static MenuItem createReportItem()
     {
         // Create 'Save' MenuItem
-        MenuItem exportItem = new MenuItem("Export");
-        exportItem.setOnAction((event) ->
+        MenuItem reportItem = new MenuItem("Report");
+        reportItem.setOnAction((event) ->
                 ReportGenerator.generateReport());
 
         //ShortcutItem not implemented yet
 //        exportItem.setAccelerator(new KeyCodeCombination(KeyCode.S,
 //                KeyCombination.CONTROL_DOWN,
 //                KeyCombination.SHORTCUT_DOWN));
-        return exportItem;
+        return reportItem;
     }
 
     /**
@@ -443,7 +443,7 @@ public class MainMenuBar
         MenuItem openItem = createOpenItem();
         MenuItem saveItem = createSaveItem();
         MenuItem saveAsItem = createSaveAsItem();
-        MenuItem exportItem = createExportItem();
+
         MenuItem quitProgramItem = createQuitItem();
         
         newBranch.getItems().add(newWorkspaceItem);
@@ -460,6 +460,7 @@ public class MainMenuBar
         Menu editMenu = new Menu("Edit");
         menuBar.getMenus().add(editMenu);
 
+
         //Create MenuItems for Edit submenu
         MenuItem undoItem = createUndoItem();
         MenuItem redoItem = createRedoItem();
@@ -469,15 +470,23 @@ public class MainMenuBar
         // Create 'Display >' sub-menu
         Menu displayMenu = new Menu("Display");
         menuBar.getMenus().add(displayMenu);
-
         // Create MenuItems for Display submenu
         MenuItem toggleTree = createToggleTreeItem();
         displayMenu.getItems().addAll(toggleTree);
 
 
+
+        // Create 'Generate >' menu
+        Menu generateMenu = new Menu("Generate");
+        menuBar.getMenus().add(generateMenu);
+        MenuItem reportItem = createReportItem();
+        generateMenu.getItems().add(reportItem);
+
+
+
         // Add MenuItems to Menu
         fileMenu.getItems().addAll(newBranch, openItem,
-                saveItem, saveAsItem, exportItem, revertItem, new SeparatorMenuItem(),
+                saveItem, saveAsItem, revertItem, new SeparatorMenuItem(),
                 quitProgramItem);
         
         editMenu.getItems().addAll(undoItem, redoItem, deleteTreeItem);
