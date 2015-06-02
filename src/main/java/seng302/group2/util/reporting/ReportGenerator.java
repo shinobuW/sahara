@@ -200,7 +200,7 @@ public class ReportGenerator
                     break;
                 }
             }
-            if (assigned == false)
+            if (!assigned)
             {
                 Element skillElement = generateSkill(skill);
                 skillElements.appendChild(skillElement);

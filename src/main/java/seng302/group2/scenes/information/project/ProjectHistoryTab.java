@@ -485,7 +485,7 @@ public class ProjectHistoryTab extends Tab
             {
                 if (isEditing())
                 {
-                    if (!getItem().toString().isEmpty())
+                    if (!getItem().isEmpty())
                     {
                         datePicker.setValue(LocalDate.parse(getItem(),
                                 DateTimeFormatter.ofPattern("dd/MM/yyyy")));
@@ -548,20 +548,20 @@ public class ProjectHistoryTab extends Tab
         {
             LocalDate date;
 
-            if (getItem().toString().isEmpty())
+            if (getItem().isEmpty())
             {
-                return getItem().toString();
+                return getItem();
             }
             else
             {
-                if (getItem().toString().matches("([0-9]{2})/([0-9]{2})/([0-9]{4})"))
+                if (getItem().matches("([0-9]{2})/([0-9]{2})/([0-9]{4})"))
                 {
-                    date = LocalDate.parse(getItem().toString(),
+                    date = LocalDate.parse(getItem(),
                             DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 }
                 else
                 {
-                    date = LocalDate.parse(getItem().toString(),
+                    date = LocalDate.parse(getItem(),
                             DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 }
                 String dateString = date.format(Global.dateFormatter);

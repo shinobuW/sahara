@@ -148,7 +148,7 @@ public class DeleteDialog
                     {
                         namesOfPeopleWithSkill = namesOfPeopleWithSkill.substring(
                             0, namesOfPeopleWithSkill.length() - 2);
-                        namesOfPeopleWithSkill += (" and " + peopleWithSkill.get(i)).toString()
+                        namesOfPeopleWithSkill += (" and " + peopleWithSkill.get(i))
                             + " ";
                     }
                     else

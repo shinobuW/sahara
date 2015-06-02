@@ -61,7 +61,8 @@ public class CreateWorkspaceDialog
                 
                 if (correctShortName && correctLongName)
                 {
-                    Workspace workspace = new Workspace(shortName, longName, description);
+                    Workspace workspace;
+                    workspace = new Workspace(shortName, longName, description);
                     Global.currentWorkspace = workspace;
                     MainScene.treeView.selectItem(Global.currentWorkspace);
                     dialog.hide();
