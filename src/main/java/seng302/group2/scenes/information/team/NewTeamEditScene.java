@@ -32,15 +32,15 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public class NewTeamEditScene extends ScrollPane
 {
-    Team baseTeam;
-    RequiredField shortNameField;
-    CustomTextArea descriptionField;
-    Person allocatedProductOwner;
-    Person allocatedScrumMaster;
-    Set<Person> allocatedDevelopers = new HashSet<>();
-    ObservableList<Role> roleList = observableArrayList();
-    ComboBox<Role> roleComboBox;
-    Role noneRole = new Role("(none)", Role.RoleType.NONE);
+    private Team baseTeam;
+    private RequiredField shortNameField;
+    private  CustomTextArea descriptionField;
+    private Person allocatedProductOwner;
+    private Person allocatedScrumMaster;
+    private Set<Person> allocatedDevelopers = new HashSet<>();
+    private ObservableList<Role> roleList = observableArrayList();
+    private ComboBox<Role> roleComboBox;
+    private Role noneRole = new Role("(none)", Role.RoleType.NONE);
 
     public NewTeamEditScene(Team baseTeam)
     {

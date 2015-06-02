@@ -13,9 +13,9 @@ import javafx.scene.paint.Color;
  */
 public class CustomDateField extends VBox
 {
-    String errorMessage = "";
-    TextField inputText = new TextField();
-    Label errorMessageText = new Label();
+    private String errorMessage = "";
+    private TextField inputText = new TextField();
+    private Label errorMessageText = new Label();
 
     /**
      * Creates a label and a text field with date layout prompts.

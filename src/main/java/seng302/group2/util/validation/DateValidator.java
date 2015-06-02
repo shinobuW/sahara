@@ -199,7 +199,7 @@ public class DateValidator
      * @param endDate2 the end date to compare to
      * @return The validation status of the check
      */
-    public static ValidationStatus validateAllocationDate(LocalDate startDate1, LocalDate endDate1,
+    private static ValidationStatus validateAllocationDate(LocalDate startDate1, LocalDate endDate1,
                                                           LocalDate startDate2, LocalDate endDate2)
     {
         if (datesEqual(startDate1, startDate2)
@@ -256,7 +256,7 @@ public class DateValidator
      * @param date2 the second date
      * @return if date1 and date2 are equal
      */
-    public static boolean datesEqual(LocalDate date1, LocalDate date2)
+    private static boolean datesEqual(LocalDate date1, LocalDate date2)
     {
         if (date1 == null && date2 == null)
         {

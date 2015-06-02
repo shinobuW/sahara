@@ -12,9 +12,9 @@ import javafx.scene.layout.VBox;
  */
 public class CustomTextField extends VBox
 {
-    String errorMessage = "";
-    TextField inputText = new TextField();
-    Label errorMessageText = new Label();
+    private String errorMessage = "";
+    private TextField inputText = new TextField();
+    private Label errorMessageText = new Label();
 
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red

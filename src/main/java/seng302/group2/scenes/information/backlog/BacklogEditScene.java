@@ -25,10 +25,10 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public class BacklogEditScene extends ScrollPane
 {
-    Backlog baseBacklog;
-    RequiredField shortNameField;
-    CustomTextField longNameField;
-    CustomTextArea descriptionField;
+    private Backlog baseBacklog;
+    private RequiredField shortNameField;
+    private CustomTextField longNameField;
+    private CustomTextArea descriptionField;
 
     public BacklogEditScene(Backlog baseBacklog)
     {

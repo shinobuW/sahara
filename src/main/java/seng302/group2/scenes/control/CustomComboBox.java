@@ -21,11 +21,11 @@ import javafx.scene.paint.Color;
  */
 public class CustomComboBox extends VBox
 {
-    boolean required;
-    String errorMessage = "";
-    Label errorMessageText = new Label();
-    ObservableList<String> options = FXCollections.observableArrayList();
-    ComboBox comboBox = new ComboBox(options);
+    private boolean required;
+    private String errorMessage = "";
+    private Label errorMessageText = new Label();
+    private ObservableList<String> options = FXCollections.observableArrayList();
+    private ComboBox comboBox = new ComboBox(options);
     
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red

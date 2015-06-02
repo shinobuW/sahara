@@ -17,10 +17,9 @@ import javafx.scene.layout.VBox;
  */
 public class CustomTextArea extends VBox
 {
-    String errorMessage = "";
-    TextArea inputText = new TextArea();
-   
-    Label errorMessageText = new Label();
+    private String errorMessage = "";
+    private TextArea inputText = new TextArea();
+    private Label errorMessageText = new Label();
 
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red

@@ -8,8 +8,8 @@ import seng302.group2.Global;
 public class CommandManagerTest
 {
 
-    TestObject testObject;
-    Command testCommand;
+    private TestObject testObject;
+    private Command testCommand;
 
 
     private class TestObject

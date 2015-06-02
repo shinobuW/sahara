@@ -36,7 +36,7 @@ public class DeleteDialog
      */
     public static boolean showDeleteDialog(TreeViewItem element)
     {
-        ArrayList<String> dialogText = new ArrayList<String>(2);
+        ArrayList<String> dialogText;
         dialogText = getDeleteDialogText(element);
 
         
@@ -102,11 +102,11 @@ public class DeleteDialog
      * @param element The selected element
      * @return The text of the delete dialog
      */
-    public static ArrayList<String> getDeleteDialogText(TreeViewItem element)
+    private static ArrayList<String> getDeleteDialogText(TreeViewItem element)
     {
-        ArrayList<String> dialogText = new ArrayList<String>(2);
-        String title = "";
-        String message = "";
+        ArrayList<String> dialogText = new ArrayList<>(2);
+        String title;
+        String message;
         if (element.getClass() == Person.class)
         {
             title = "Delete Person?";

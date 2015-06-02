@@ -25,8 +25,8 @@ public class App extends Application
 {
     public static SplitPane content;
     
-    public static Stage mainStage;
-    public static Scene mainScene;
+    private static Stage mainStage;
+    private static Scene mainScene;
     
     /**
      * Refreshes the main scene GUI.

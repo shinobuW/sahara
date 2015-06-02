@@ -9,7 +9,7 @@ import seng302.group2.scenes.control.RequiredField;
 public class NumberFieldValidator
 {
 
-    public static ValidationStatus validateNumberField(String input)
+    private static ValidationStatus validateNumberField(String input)
     {
         if (input == null || input.equals(""))
         {

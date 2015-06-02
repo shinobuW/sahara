@@ -127,7 +127,7 @@ public class ElementTreeContextMenu extends ContextMenu
      * Gets the category of the selected tree item.
      * @return An enum value of the selected tree item's category
      */
-    public static Categories getSelectedCategory()
+    private static Categories getSelectedCategory()
     {
         Categories selectedCategory = Categories.OTHER;
         if (Global.selectedTreeItem.getValue().getClass() == Person.class)
@@ -174,7 +174,7 @@ public class ElementTreeContextMenu extends ContextMenu
      * Displays the edit scene for given element
      * @param category Type of Category
      */
-    public static void showEditScene(Categories category)
+    private static void showEditScene(Categories category)
     {
         switch (category)
         {

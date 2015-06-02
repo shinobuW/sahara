@@ -16,10 +16,10 @@ import java.time.LocalDate;
  */
 public class CustomDatePicker extends VBox
 {
-    boolean required;
-    String errorMessage = "";
-    Label errorMessageText = new Label();
-    DatePicker datePicker = new DatePicker();
+    private boolean required;
+    private String errorMessage = "";
+    private Label errorMessageText = new Label();
+    private DatePicker datePicker = new DatePicker();
 
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red

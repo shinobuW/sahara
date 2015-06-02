@@ -32,7 +32,7 @@ public class CategoryTreeContextMenu extends ContextMenu
      * Displays the appropriate dialogBox for creating a new element
      * @param category Type of category
      */
-    public static void showCreateNewDialog(String category)
+    private static void showCreateNewDialog(String category)
     {
         switch (category)
         {
