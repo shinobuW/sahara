@@ -13,12 +13,9 @@ import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.story.Story;
 
-
-import java.util.Collections;
-
 import static seng302.group2.scenes.MainScene.informationPane;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 import static seng302.group2.util.validation.NumberFieldValidator.validateNumberField;
+import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * A class for displaying the Story edit scene.

@@ -7,8 +7,8 @@ package seng302.group2.util.validation;
 
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomDateField;
-import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.allocation.Allocation;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;

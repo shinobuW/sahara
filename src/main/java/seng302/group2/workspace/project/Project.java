@@ -9,10 +9,10 @@ import seng302.group2.scenes.listdisplay.StoryCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.story.Story;
-import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;

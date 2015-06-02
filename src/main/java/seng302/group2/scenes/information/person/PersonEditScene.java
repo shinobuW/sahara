@@ -169,7 +169,7 @@ public class PersonEditScene
                 dialogSkills.clear();
                 for (TreeViewItem projectSkill : currentWorkspace.getSkills())
                 {
-                    if (!tempPerson.getSkills().contains((Skill) projectSkill))
+                    if (!tempPerson.getSkills().contains(projectSkill))
                     {
                         dialogSkills.add((Skill) projectSkill);
                     }
@@ -188,7 +188,7 @@ public class PersonEditScene
                 dialogSkills.clear();
                 for (TreeViewItem projectSkill : currentWorkspace.getSkills())
                 {
-                    if (!tempPerson.getSkills().contains((Skill)projectSkill))
+                    if (!tempPerson.getSkills().contains(projectSkill))
                     {
                         dialogSkills.add((Skill)projectSkill);
                     }
@@ -224,7 +224,7 @@ public class PersonEditScene
                 boolean skillsUnchanged = true;
                 for (Object skill : personSkillsBox.getItems())
                 {
-                    if (!currentPerson.getSkills().contains((Skill)skill))
+                    if (!currentPerson.getSkills().contains(skill))
                     {
                         skillsUnchanged = false;
                         break;

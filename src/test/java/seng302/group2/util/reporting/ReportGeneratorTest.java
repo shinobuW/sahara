@@ -5,10 +5,7 @@
  */
 package seng302.group2.util.reporting;
 
-import java.text.ParseException;
-import org.junit.Assert;
 import org.junit.Before;
-import seng302.group2.Global;
 import seng302.group2.workspace.Workspace;
 
 /**

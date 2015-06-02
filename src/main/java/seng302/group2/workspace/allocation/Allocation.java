@@ -8,7 +8,6 @@ import seng302.group2.workspace.team.Team;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * A class that represents allocations between teams and projects

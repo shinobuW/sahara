@@ -18,7 +18,6 @@ import seng302.group2.workspace.story.Story;
 import java.util.Collections;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * The edit scene for a backlog

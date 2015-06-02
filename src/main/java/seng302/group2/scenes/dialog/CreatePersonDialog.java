@@ -18,12 +18,8 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.team.Team;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 
 import static seng302.group2.util.validation.DateValidator.stringToDate;
 import static seng302.group2.util.validation.DateValidator.validateBirthDateField;

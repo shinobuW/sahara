@@ -10,8 +10,6 @@ import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.util.validation.NameValidator;
-import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.Workspace;
 
 import static seng302.group2.scenes.MainScene.informationPane;

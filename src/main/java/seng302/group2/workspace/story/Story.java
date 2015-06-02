@@ -7,7 +7,6 @@ import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.release.Release;
 
 import java.io.Serializable;
 import java.util.ArrayList;

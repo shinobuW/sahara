@@ -3,8 +3,6 @@ package seng302.group2.scenes.dialog;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
-import java.util.Optional;
-
 /**
  * Created by Jordane on 20/05/2015.
  */

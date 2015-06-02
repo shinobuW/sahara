@@ -1,7 +1,5 @@
 package seng302.group2.scenes.information.team;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -24,10 +22,12 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.util.validation.ValidationStatus;
-import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.allocation.Allocation;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
@@ -127,7 +127,7 @@ public class TeamHistoryTab extends Tab
                         isValidEdit = false;
                         if (!event.getNewValue().isEmpty())
                         {
-                            Allocation currentAlloc = (Allocation) event.getTableView().getItems()
+                            Allocation currentAlloc = event.getTableView().getItems()
                                     .get(event.getTablePosition().getRow());
 
                             LocalDate newStartDate = LocalDate.parse(event.getNewValue(),
@@ -212,7 +212,7 @@ public class TeamHistoryTab extends Tab
                         isValidEdit = false;
                         if (!event.getNewValue().isEmpty())
                         {
-                            Allocation currentAlloc = (Allocation) event.getTableView().
+                            Allocation currentAlloc = event.getTableView().
                                     getItems().get(event.getTablePosition().getRow());
 
                             LocalDate newEndDate = LocalDate.parse(event.getNewValue(),

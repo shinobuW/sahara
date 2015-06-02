@@ -11,8 +11,6 @@ import seng302.group2.scenes.SceneSwitcher;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.workspace.Workspace;
 
-import static seng302.group2.scenes.MainScene.informationPane;
-
 
 /**
  * The workspace information tab

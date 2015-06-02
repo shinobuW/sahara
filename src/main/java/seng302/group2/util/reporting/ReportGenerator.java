@@ -5,23 +5,13 @@
  */
 package seng302.group2.util.reporting;
 
-import java.io.File;
-import java.time.LocalDate;
-
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javax.xml.transform.OutputKeys;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
- 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -29,8 +19,17 @@ import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.story.Story;
-import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.team.Team;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.File;
+import java.time.LocalDate;
 
 /**
  *
