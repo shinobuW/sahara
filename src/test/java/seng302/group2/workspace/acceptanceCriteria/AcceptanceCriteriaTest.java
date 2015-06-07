@@ -20,7 +20,7 @@ public class AcceptanceCriteriaTest
     @Test
     public void testConstructor()
     {
-        Assert.assertEquals("This is a Demo Text", ac.getText());
+        Assert.assertEquals("This is a Demo Text", ac.getDescription());
         Assert.assertEquals(AcceptanceCriteria.AcState.UNACCEPTED, ac.getState());
         Assert.assertEquals(testStory, ac.getStory());
     }
@@ -39,6 +39,20 @@ public class AcceptanceCriteriaTest
         Assert.assertTrue(testStory.getAcceptanceCriteria().contains(ac));
         Global.commandManager.redo();
         Assert.assertTrue(testStory.getAcceptanceCriteria().isEmpty());
+    }
+
+    /**
+     * Tests the undo/rdo for editing acceptance criteria
+     */
+    @Test
+    public void testEdit()
+    {
+        ac.edit("Testing edit");
+        Assert.assertEquals("Testing edit", ac.getDescription());
+        Global.commandManager.undo();
+        Assert.assertEquals("This is a Demo Text", ac.getDescription());
+        Global.commandManager.redo();
+        Assert.assertEquals("Testing edit", ac.getDescription());
     }
 
 

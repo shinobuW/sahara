@@ -2,17 +2,14 @@ package seng302.group2.workspace.acceptanceCriteria;
 
 import seng302.group2.Global;
 import seng302.group2.util.undoredo.Command;
-import seng302.group2.workspace.allocation.Allocation;
-import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.story.Story;
-import seng302.group2.workspace.team.Team;
 
 /**
  * Created by Shinobu on 30/05/2015.
  */
 public class AcceptanceCriteria
 {
-    private String text;
+    private String description;
     private AcState state;
     private Story story;
     public enum AcState
@@ -23,13 +20,12 @@ public class AcceptanceCriteria
 
     /**
      * Basic constructor
-     * @param text the description of the AC
-     * @param state of the AC
+     * @param description the description of the AC
      * @param story the AC belongs to
      */
-    public AcceptanceCriteria(String text, Story story)
+    public AcceptanceCriteria(String description, Story story)
     {
-        this.text = text;
+        this.description = description;
         this.state = AcState.UNACCEPTED;
         this.story = story;
     }
@@ -40,7 +36,7 @@ public class AcceptanceCriteria
      */
     public void setText(String text)
     {
-        this.text = text;
+        this.description = text;
     }
 
 
@@ -67,9 +63,9 @@ public class AcceptanceCriteria
     /**
      * Get the text
      */
-    public String getText()
+    public String getDescription()
     {
-        return this.text;
+        return this.description;
     }
 
 
@@ -99,6 +95,16 @@ public class AcceptanceCriteria
         Global.commandManager.executeCommand(deleteAc);
     }
 
+    /**
+     * Edits the description to the one given
+     * @param desc the description to be set to
+     */
+    public void edit(String desc)
+    {
+        Command editAc = new EditAcCommand(this, this.description, desc);
+        Global.commandManager.executeCommand(editAc);
+    }
+
     private class DeleteAcCommand implements Command
     {
         private AcceptanceCriteria acceptanceCriteria;
@@ -121,7 +127,39 @@ public class AcceptanceCriteria
         }
     }
 
+    /**
+     * A command class that allows the executing and undoing of story edits
+     */
+    private class EditAcCommand implements Command
+    {
+        private AcceptanceCriteria ac;
+        private String newDescription;
+        private String oldDescription;
 
+        private EditAcCommand(AcceptanceCriteria ac, String old, String newD)
+        {
+            this.ac = ac;
+            this.oldDescription = old;
+            this.newDescription = newD;
+        }
+
+        /**
+         * Executes/Redoes the changes of the story edit
+         */
+        public void execute()
+        {
+            ac.description = newDescription;
+        }
+
+        /**
+         * Undoes the changes of the story edit
+         */
+        public void undo()
+        {
+            ac.description = oldDescription;
+        }
+
+    }
 }
 
 
