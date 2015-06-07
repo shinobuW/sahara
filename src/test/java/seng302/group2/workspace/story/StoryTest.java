@@ -9,8 +9,11 @@ package seng302.group2.workspace.story;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
+import seng302.group2.workspace.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.project.Project;
+
+import java.util.ArrayList;
 
 /**
  * A series of tests relating to Story
@@ -18,13 +21,16 @@ import seng302.group2.workspace.project.Project;
  */
 public class StoryTest
 {
+    Story story = new Story();
+    AcceptanceCriteria ac = new AcceptanceCriteria("requirement", AcceptanceCriteria.AcState.UNACCEPTED, story);
+    ArrayList<AcceptanceCriteria> acList = new ArrayList<>();
+
     /**
      * Test for the story constructors
      */
     @Test
     public void testStoryConstructors()
     {
-        Story story = new Story();
         Project project = new Project();
         Assert.assertEquals("Untitled Story", story.getShortName());
         Assert.assertEquals("", story.getDescription());
@@ -50,7 +56,6 @@ public class StoryTest
     @Test
     public void testStorySetters()
     {
-        Story story = new Story();
         story.setShortName("Test Story");
         story.setLongName("Test Long Name");
         story.setDescription("description");
@@ -69,7 +74,6 @@ public class StoryTest
     public void testComparators()
     {
         Story defaultStory = new Story();
-        Story story = new Story();
 
         // Short name comparator
         story.setShortName("a story");
@@ -89,29 +93,77 @@ public class StoryTest
         Backlog back = new Backlog();
         proj.add(back);
 
-        Story story = new Story("short", "long", "desc", "creator", null, 5);
+        Story story1 = new Story("short", "long", "desc", "creator", null, 5);
         Story story2 = new Story("short2", "long", "desc", "creator", null, 5);
-        story.setProject(proj);
+        story1.setProject(proj);
         story2.setProject(proj);
         story2.setBacklog(back);
 
-        proj.add(story);
+        proj.add(story1);
         back.add(story2);
 
         Assert.assertTrue(back.getStories().contains(story2));
-        Assert.assertTrue(proj.getUnallocatedStories().contains(story));
+        Assert.assertTrue(proj.getUnallocatedStories().contains(story1));
 
-        story.deleteStory();
+        story1.deleteStory();
         story2.deleteStory();
 
         Assert.assertFalse(back.getStories().contains(story2));
-        Assert.assertFalse(proj.getUnallocatedStories().contains(story));
+        Assert.assertFalse(proj.getUnallocatedStories().contains(story1));
 
         Global.commandManager.undo();
         Global.commandManager.undo();
 
         Assert.assertTrue(back.getStories().contains(story2));
-        Assert.assertTrue(proj.getUnallocatedStories().contains(story));
+        Assert.assertTrue(proj.getUnallocatedStories().contains(story1));
     }
 
+
+    /**
+     * Tests that a story properly prepares for serialization
+     */
+    @Test
+    public void testPrepSerialization()
+    {
+        story.getSerializableAc().clear();
+        story.getAcceptanceCriteria().clear();
+
+        story.getAcceptanceCriteria().add(ac);
+        story.prepSerialization();
+
+        acList.add(ac);
+
+        Assert.assertEquals(acList, story.getSerializableAc());
+
+    }
+
+    /**
+     * Tests that a story properly post-pares after deserialization
+     */
+    @Test
+    public void testPostSerialization()
+    {
+        story.getSerializableAc().clear();
+        story.getAcceptanceCriteria().clear();
+        story.getSerializableAc().add(ac);
+        story.postSerialization();
+
+        acList.add(ac);
+        Assert.assertEquals(acList, story.getAcceptanceCriteria());
+    }
+
+
+    /**
+     * Test undo/redo for adding Acceptance Criteria
+     */
+    @Test
+    public void testAdd()
+    {
+        story.add(ac);
+        Assert.assertTrue(story.getAcceptanceCriteria().contains(ac));
+        Global.commandManager.undo();
+        Assert.assertTrue(story.getAcceptanceCriteria().size() == 0);
+        Global.commandManager.redo();
+        Assert.assertTrue(story.getAcceptanceCriteria().contains(ac));
+    }
 }
