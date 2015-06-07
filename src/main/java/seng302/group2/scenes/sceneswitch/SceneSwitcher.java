@@ -92,6 +92,12 @@ public class SceneSwitcher
     }
 
 
+    public static void changeScene(TreeViewItem item, boolean switchToEditScene)
+    {
+        item.switchScene();
+    }
+
+
     /**
      * Changes to the given category scene of the application
      * @param scene The category scene to switch to

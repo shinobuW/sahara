@@ -154,7 +154,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     /*System.out.println(selected + " "
                             + selected.getClass());*/
 
-                    Object selected = null;
+                    TreeViewItem selected = null;
 
                     //Updates the display pane to be pane for the selectItem
                     if (Global.selectedTreeItem == null
@@ -166,8 +166,10 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                     }
                     else
                     {
-                        selected = Global.selectedTreeItem.getValue();
+                        selected = (TreeViewItem) Global.selectedTreeItem.getValue();
                     }
+
+                    selected.switchScene();
 
                     if (selected instanceof Person)
                     {
@@ -224,11 +226,11 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                             SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.PROJECTS);
                             setContextMenu(new CategoryTreeContextMenu(true));
                         }
-                        else if (selected.toString().equals("People"))
+                        /*else if (selected.toString().equals("People"))
                         {
                             SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.PEOPLE);
                             setContextMenu(new CategoryTreeContextMenu(true));
-                        }
+                        }*/
                         else if (selected.toString().equals("Skills"))
                         {
                             SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.SKILLS);
