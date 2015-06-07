@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class StoryTest
 {
     Story story = new Story();
-    AcceptanceCriteria ac = new AcceptanceCriteria("requirement", AcceptanceCriteria.AcState.UNACCEPTED, story);
+    AcceptanceCriteria ac = new AcceptanceCriteria("requirement", story);
     ArrayList<AcceptanceCriteria> acList = new ArrayList<>();
 
     /**
