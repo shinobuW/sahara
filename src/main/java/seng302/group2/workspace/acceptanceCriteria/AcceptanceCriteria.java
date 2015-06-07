@@ -1,6 +1,11 @@
 package seng302.group2.workspace.acceptanceCriteria;
 
+import seng302.group2.Global;
+import seng302.group2.util.undoredo.Command;
+import seng302.group2.workspace.allocation.Allocation;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.story.Story;
+import seng302.group2.workspace.team.Team;
 
 /**
  * Created by Shinobu on 30/05/2015.
@@ -22,14 +27,12 @@ public class AcceptanceCriteria
      * @param state of the AC
      * @param story the AC belongs to
      */
-    public AcceptanceCriteria(String text, AcState state, Story story)
+    public AcceptanceCriteria(String text, Story story)
     {
         this.text = text;
-        this.state = state;
+        this.state = AcState.UNACCEPTED;
         this.story = story;
     }
-
-
 
     /**
      * Sets the text of the AC
@@ -86,6 +89,39 @@ public class AcceptanceCriteria
     {
         return this.story;
     }
+
+    /**
+     * Delete the acceptance maintenance and removes it from story
+     */
+    public void delete()
+    {
+        Command deleteAc = new DeleteAcCommand(this, this.story);
+        Global.commandManager.executeCommand(deleteAc);
+    }
+
+    private class DeleteAcCommand implements Command
+    {
+        private AcceptanceCriteria acceptanceCriteria;
+        private Story story;
+
+        DeleteAcCommand(AcceptanceCriteria ac, Story story)
+        {
+            this.acceptanceCriteria = ac;
+            this.story = story;
+        }
+
+        public void execute()
+        {
+            story.getAcceptanceCriteria().remove(acceptanceCriteria);
+        }
+
+        public void undo()
+        {
+            story.getAcceptanceCriteria().add(acceptanceCriteria);
+        }
+    }
+
+
 }
 
 
