@@ -38,7 +38,7 @@ public abstract class Category extends TreeViewItem
      * @return the children of the category
      */
     @Override
-    public abstract ObservableList getChildren();
+    public abstract ObservableList<TreeViewItem> getChildren();
     /*{
         switch (name)
         {
