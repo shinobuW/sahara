@@ -1,7 +1,7 @@
 package seng302.group2.scenes.control;
 
 import javafx.scene.control.TabPane;
-import seng302.group2.scenes.SceneSwitcher;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 
 import java.util.HashMap;
 import java.util.Map;
