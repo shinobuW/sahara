@@ -13,7 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.SceneSwitcher;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.validation.NameValidator;

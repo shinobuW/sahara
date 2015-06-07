@@ -1,6 +1,7 @@
 package seng302.group2.scenes.listdisplay;
 
 import javafx.collections.ObservableList;
+import seng302.group2.scenes.sceneswitch.switchStrategies.SwitchStrategy;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -8,10 +9,11 @@ import static javafx.collections.FXCollections.observableArrayList;
  * The basic structure of a TreeView item
  * @author Jordane
  */
-public class TreeViewItem implements HierarchyData<TreeViewItem>
+public abstract class TreeViewItem implements HierarchyData<TreeViewItem>
 {
     private String itemName = "";
     private transient ObservableList<TreeViewItem> children = observableArrayList();
+    private SwitchStrategy switchStrategy;
 
     
     /**
@@ -31,7 +33,7 @@ public class TreeViewItem implements HierarchyData<TreeViewItem>
         this.itemName = itemName;
     }
     
-    
+
     /**
      * Gets the children of the TreeViewItem
      * @return The items of the TreeViewItem
@@ -52,4 +54,13 @@ public class TreeViewItem implements HierarchyData<TreeViewItem>
     {
         return this.itemName;
     }
+
+
+    /**
+     * Switches the scene based on the TVItem's switching strategy
+     */
+    public void switchScene()
+    {
+        switchStrategy.switchScene();
+    };
 }

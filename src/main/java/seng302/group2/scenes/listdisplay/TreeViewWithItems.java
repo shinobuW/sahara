@@ -14,7 +14,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.SceneSwitcher;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.contextmenu.CategoryTreeContextMenu;
 import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
 import seng302.group2.workspace.Workspace;

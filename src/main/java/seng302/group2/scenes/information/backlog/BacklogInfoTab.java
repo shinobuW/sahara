@@ -7,7 +7,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.SceneSwitcher;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.story.Story;
