@@ -1,7 +1,8 @@
-package seng302.group2.scenes;
+package seng302.group2.scenes.sceneswitch;
 
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.information.backlog.BacklogCategoryScene;
 import seng302.group2.scenes.information.backlog.BacklogEditScene;
 import seng302.group2.scenes.information.backlog.BacklogScene;
