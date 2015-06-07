@@ -1,17 +1,16 @@
 package seng302.group2.scenes.listdisplay;
 
 import javafx.collections.ObservableList;
-import seng302.group2.Global;
 
 /**
  * Category item in the list display, uses as a header for all the elements of one type, ie 
  * "People" for all persons within the workspace.
  * @author Jordane
  */
-public class Category extends TreeViewItem
+public abstract class Category extends TreeViewItem
 {
     private String name;
-    
+
     /**
      * Basic constructor for a TreeView category
      * @param name The name of the category
@@ -39,8 +38,8 @@ public class Category extends TreeViewItem
      * @return the children of the category
      */
     @Override
-    public ObservableList getChildren()
-    {
+    public abstract ObservableList getChildren();
+    /*{
         switch (name)
         {
             case "Projects":
@@ -56,7 +55,7 @@ public class Category extends TreeViewItem
             default:
                 return null;
         }
-    }
+    }*/
 
     /**
      * Overrides that a category is equal if it has the same children
@@ -70,11 +69,7 @@ public class Category extends TreeViewItem
         {
             return false;
         }
-        if (((Category) obj).getChildren() == this.getChildren()
-                && ((Category) obj).name.equals(this.name))
-        {
-            return true;
-        }
-        return false;
+        return ((Category) obj).getChildren() == this.getChildren()
+                && ((Category) obj).name.equals(this.name);
     }
 }

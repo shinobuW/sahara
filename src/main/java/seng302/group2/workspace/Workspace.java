@@ -18,6 +18,7 @@ import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.scenes.listdisplay.Category;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.scenes.listdisplay.categories.*;
 import seng302.group2.util.revert.Revert;
 import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.Command;
@@ -765,18 +766,14 @@ public class Workspace extends TreeViewItem implements Serializable
         ObservableList<TreeViewItem> root = observableArrayList();
 
         // Make the categories
-        Category projectCategory = new Category("Projects");
-        Category teamsCategory = new Category("Teams");
-        Category peopleCategory = new Category("People");
-        Category rolesCategory = new Category("Roles");
-        Category skillCategory = new Category("Skills");
+        Category projectCategory = new ProjectCategory();
+        Category teamsCategory = new TeamsCategory();
+        Category peopleCategory = new PeopleCategory();
+        Category rolesCategory = new RolesCategory();
+        Category skillCategory = new SkillsCategory();
 
         // Add the categories
-        root.add(projectCategory);
-        root.add(teamsCategory);
-        root.add(peopleCategory);
-        root.add(rolesCategory);
-        root.add(skillCategory);
+        root.addAll(projectCategory, teamsCategory, peopleCategory, rolesCategory, skillCategory);
 
         return root;
     }

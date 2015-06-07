@@ -13,8 +13,8 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem>
 {
     private String itemName = "";
     private transient ObservableList<TreeViewItem> children = observableArrayList();
-    private SwitchStrategy switchStrategy;
 
+    private SwitchStrategy switchStrategy;
     
     /**
      * Blank constructor
@@ -31,6 +31,16 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem>
     public TreeViewItem(String itemName)
     {
         this.itemName = itemName;
+    }
+
+
+    /**
+     * Allows the setting of the switch strategy for children classes
+     * @param switchStrategy The strategy to set
+     */
+    protected void setSwitchStrategy(SwitchStrategy switchStrategy)
+    {
+        this.switchStrategy = switchStrategy;
     }
     
 
@@ -61,6 +71,13 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem>
      */
     public void switchScene()
     {
-        switchStrategy.switchScene();
+        try
+        {
+            switchStrategy.switchScene();
+        }
+        catch (NullPointerException ex)
+        {
+            System.out.println("Switch strategy not implemented for this item yet");
+        }
     };
 }
