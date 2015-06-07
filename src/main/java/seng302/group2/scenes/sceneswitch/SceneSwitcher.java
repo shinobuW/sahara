@@ -28,10 +28,7 @@ import seng302.group2.scenes.information.team.TeamCategoryScene;
 import seng302.group2.scenes.information.team.TeamScene;
 import seng302.group2.scenes.information.workspace.WorkspaceEditScene;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
-import seng302.group2.scenes.listdisplay.BacklogCategory;
-import seng302.group2.scenes.listdisplay.ReleaseCategory;
-import seng302.group2.scenes.listdisplay.StoryCategory;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.scenes.listdisplay.*;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.person.Person;
@@ -86,6 +83,12 @@ public class SceneSwitcher
         ROLES,
         SKILLS,
         TEAMS
+    }
+
+
+    public static void changeScene(TreeViewItem item)
+    {
+        item.switchScene();
     }
 
 
