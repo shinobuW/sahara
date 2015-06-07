@@ -12,7 +12,7 @@ import seng302.group2.workspace.story.Story;
 public class AcceptanceCriteriaTest
 {
     Story testStory = new Story();
-    AcceptanceCriteria ac = new AcceptanceCriteria("This is a Demo Text", AcceptanceCriteria.AcState.DONE, testStory);
+    AcceptanceCriteria ac = new AcceptanceCriteria("This is a Demo Text", AcceptanceCriteria.AcState.ACCEPTED, testStory);
 
     /**
      * Tests the validity of the constructor
@@ -21,7 +21,7 @@ public class AcceptanceCriteriaTest
     public void testConstructor()
     {
         Assert.assertEquals("This is a Demo Text", ac.getText());
-        Assert.assertEquals(AcceptanceCriteria.AcState.DONE, ac.getState());
+        Assert.assertEquals(AcceptanceCriteria.AcState.ACCEPTED, ac.getState());
         Assert.assertEquals(testStory, ac.getStory());
     }
 

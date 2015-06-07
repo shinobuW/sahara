@@ -12,7 +12,6 @@ public class AcceptanceCriteria
     private Story story;
     public enum AcState
     {
-        DONE,
         ACCEPTED,
         UNACCEPTED
     }
