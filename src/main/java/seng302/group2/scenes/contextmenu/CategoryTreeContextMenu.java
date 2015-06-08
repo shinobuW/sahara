@@ -18,8 +18,8 @@ public class CategoryTreeContextMenu extends ContextMenu {
         MenuItem createItem = new MenuItem("Create new...");
         createItem.setDisable(false);
         createItem.setOnAction(e -> {
-            showCreateNewDialog(Global.selectedTreeItem.getValue().toString());
-        });
+                showCreateNewDialog(Global.selectedTreeItem.getValue().toString());
+            });
 
         this.getItems().addAll(createItem);
     }

@@ -89,11 +89,9 @@ public class ElementTreeContextMenu extends ContextMenu {
             editItem.setDisable(false);
             deleteItem.setDisable(false);
 
-            for (Role role : Global.currentWorkspace.getRoles())
-            {
+            for (Role role : Global.currentWorkspace.getRoles()) {
                 if (role.getType() == Role.RoleType.PRODUCT_OWNER
-                        || role.getType() == Role.RoleType.SCRUM_MASTER)
-                {
+                        || role.getType() == Role.RoleType.SCRUM_MASTER) {
                     if (role.getRequiredSkills().contains(selected)) {
                         editItem.setDisable(true);
                         deleteItem.setDisable(true);

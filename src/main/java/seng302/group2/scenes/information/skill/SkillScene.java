@@ -12,7 +12,7 @@ import seng302.group2.workspace.skills.Skill;
  */
 public class SkillScene extends TrackedTabPane {
     public SkillScene(Skill currentSkill) {
-        super(SceneSwitcher.ContentScene.SKILL);
+        super(ContentScene.SKILL);
 
         // Define and add the tabs
         Tab informationTab = new SkillInfoTab(currentSkill);

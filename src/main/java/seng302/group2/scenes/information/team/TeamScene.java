@@ -12,7 +12,7 @@ import seng302.group2.workspace.team.Team;
  */
 public class TeamScene extends TrackedTabPane {
     public TeamScene(Team currentTeam) {
-        super(SceneSwitcher.ContentScene.TEAM);
+        super(ContentScene.TEAM);
 
         // Define and add the tabs
         Tab informationTab = new TeamInfoTab(currentTeam);

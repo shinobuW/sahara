@@ -12,7 +12,7 @@ import seng302.group2.workspace.person.Person;
  */
 public class PersonScene extends TrackedTabPane {
     public PersonScene(Person currentPerson) {
-        super(SceneSwitcher.ContentScene.PROJECT);
+        super(ContentScene.PROJECT);
 
         // Define and add the tabs
         Tab informationTab = new PersonInfoTab(currentPerson);

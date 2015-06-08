@@ -12,7 +12,7 @@ import seng302.group2.workspace.project.Project;
  */
 public class ProjectScene extends TrackedTabPane {
     public ProjectScene(Project currentProject) {
-        super(SceneSwitcher.ContentScene.PROJECT);
+        super(ContentScene.PROJECT);
 
         // Define and add the tabs
         Tab informationTab = new ProjectInfoTab(currentProject);

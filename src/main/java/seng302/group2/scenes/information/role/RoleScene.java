@@ -17,7 +17,7 @@ import seng302.group2.workspace.role.Role;
  */
 public class RoleScene extends TrackedTabPane {
     public RoleScene(Role currentRole) {
-        super(SceneSwitcher.ContentScene.ROLE);
+        super(ContentScene.ROLE);
 
         // Define and add the tabs
         Tab informationTab = new RoleInfoTab(currentRole);

@@ -11,7 +11,7 @@ import seng302.group2.workspace.project.story.Story;
  */
 public class StoryScene extends TrackedTabPane {
     public StoryScene(Story currentStory) {
-        super(SceneSwitcher.ContentScene.STORY);
+        super(ContentScene.STORY);
 
         // Define and add the tabs
         Tab informationTab = new StoryInfoTab(currentStory);

@@ -17,7 +17,7 @@ import seng302.group2.workspace.project.release.Release;
  */
 public class ReleaseScene extends TrackedTabPane {
     public ReleaseScene(Release currentRelease) {
-        super(SceneSwitcher.ContentScene.RELEASE);
+        super(ContentScene.RELEASE);
 
         // Define and add the tabs
         Tab informationTab = new ReleaseInfoTab(currentRelease);

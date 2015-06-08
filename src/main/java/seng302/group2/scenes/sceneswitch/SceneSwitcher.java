@@ -1,66 +1,25 @@
 package seng302.group2.scenes.sceneswitch;
 
-import seng302.group2.App;
-import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.information.backlog.BacklogCategoryScene;
-import seng302.group2.scenes.information.backlog.BacklogEditScene;
-import seng302.group2.scenes.information.backlog.BacklogScene;
-import seng302.group2.scenes.information.person.PersonCategoryScene;
-import seng302.group2.scenes.information.person.PersonEditScene;
-import seng302.group2.scenes.information.person.PersonScene;
-import seng302.group2.scenes.information.project.ProjectCategoryScene;
-import seng302.group2.scenes.information.project.ProjectEditScene;
-import seng302.group2.scenes.information.project.ProjectScene;
-import seng302.group2.scenes.information.release.ReleaseCategoryScene;
-import seng302.group2.scenes.information.release.ReleaseEditScene;
-import seng302.group2.scenes.information.release.ReleaseScene;
-import seng302.group2.scenes.information.role.RoleCategoryScene;
-import seng302.group2.scenes.information.role.RoleScene;
-import seng302.group2.scenes.information.skill.SkillCategoryScene;
-import seng302.group2.scenes.information.skill.SkillEditScene;
-import seng302.group2.scenes.information.skill.SkillScene;
-import seng302.group2.scenes.information.story.StoryCategoryScene;
-import seng302.group2.scenes.information.story.StoryEditScene;
-import seng302.group2.scenes.information.story.StoryScene;
-import seng302.group2.scenes.information.team.TeamCategoryScene;
-import seng302.group2.scenes.information.team.TeamEditScene;
-import seng302.group2.scenes.information.team.TeamScene;
-import seng302.group2.scenes.information.workspace.WorkspaceEditScene;
-import seng302.group2.scenes.information.workspace.WorkspaceScene;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.categories.subCategory.project.BacklogCategory;
-import seng302.group2.scenes.listdisplay.categories.subCategory.project.ReleaseCategory;
-import seng302.group2.scenes.listdisplay.categories.subCategory.project.StoryCategory;
-import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.project.backlog.Backlog;
-import seng302.group2.workspace.project.release.Release;
-import seng302.group2.workspace.project.story.Story;
-import seng302.group2.workspace.role.Role;
-import seng302.group2.workspace.skills.Skill;
-import seng302.group2.workspace.team.Team;
-
 /**
  * Allows easy switching between scenes
  * Created by Jordane on 9/05/2015.
  */
+@Deprecated
 public class SceneSwitcher {
-    public static void changeScene(TreeViewItem item) {
+    /*public static void changeScene(TreeViewItem item) {
         item.switchToCategoryScene();
-    }
+    }*/
 
-    public static void changeScene(TreeViewItem item, boolean switchToEditScene) {
+    /*public static void changeScene(TreeViewItem item, boolean switchToEditScene) {
         item.switchToCategoryScene();
-    }
+    }*/
 
     /**
      * Changes to the given category scene of the application
      *
      * @param scene The category scene to switch to
      */
-    public static void changeScene(CategoryScene scene) {
+    /*public static void changeScene(CategoryScene scene) {
         double[] contentDrags = App.content.getDividerPositions();
 
         switch (scene) {
@@ -89,7 +48,7 @@ public class SceneSwitcher {
         }
 
         App.content.setDividerPositions(contentDrags);
-    }
+    }*/
 
     /**
      * Changes to the scene of the application to the given scene for the given item
@@ -97,7 +56,7 @@ public class SceneSwitcher {
      * @param scene The type of scene to switch to
      * @param item  The item to show as the context of the scene
      */
-    public static void changeScene(ContentScene scene, TreeViewItem item) {
+    /*public static void changeScene(ContentScene scene, TreeViewItem item) {
         double[] contentDrags = App.content.getDividerPositions();
 
         switch (scene) {
@@ -140,7 +99,6 @@ public class SceneSwitcher {
                 }
                 break;
             case ROLE_EDIT:
-                //TODO: Roles edit scene when necc.
                 break;
             case SKILL:
                 if (item.getClass() == Skill.class) {
@@ -220,44 +178,19 @@ public class SceneSwitcher {
         }
 
         App.content.setDividerPositions(contentDrags);
-    }
+    }*/
 
 
-    /**
-     * An enumeration of scenes in the project
-     */
-    public enum ContentScene {
-        PERSON,
-        PERSON_EDIT,
-        PROJECT,
-        PROJECT_EDIT,
-        WORKSPACE,
-        WORKSPACE_EDIT,
-        TEAM,
-        TEAM_EDIT,
-        ROLE,
-        ROLE_EDIT,
-        SKILL,
-        SKILL_EDIT,
-        RELEASE_CATEGORY,
-        RELEASE,
-        RELEASE_EDIT,
-        STORY,
-        STORY_EDIT,
-        STORY_CATEGORY,
-        BACKLOG,
-        BACKLOG_EDIT,
-        BACKLOG_CATEGORY
-    }
+
 
     /**
      * An enumerations of category scenes in the project
      */
-    public enum CategoryScene {
+    /*public enum CategoryScene {
         PEOPLE,
         PROJECTS,
         ROLES,
         SKILLS,
         TEAMS
-    }
+    }*/
 }

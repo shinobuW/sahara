@@ -2,7 +2,6 @@ package seng302.group2.scenes.information.workspace;
 
 import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.Workspace;
 
 /**
@@ -12,7 +11,7 @@ import seng302.group2.workspace.Workspace;
  */
 public class WorkspaceScene extends TrackedTabPane {
     public WorkspaceScene(Workspace currentWorkspace) {
-        super(SceneSwitcher.ContentScene.WORKSPACE);
+        super(ContentScene.WORKSPACE);
 
         // Define and add the tabs
         Tab informationTab = new WorkspaceInfoTab(currentWorkspace);

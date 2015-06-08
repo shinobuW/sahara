@@ -13,18 +13,45 @@ import java.util.Map;
  */
 public class TrackedTabPane extends TabPane {
     /**
+     * An enumeration of scenes in the project
+     */
+    public enum ContentScene {
+        PERSON,
+        PERSON_EDIT,
+        PROJECT,
+        PROJECT_EDIT,
+        WORKSPACE,
+        WORKSPACE_EDIT,
+        TEAM,
+        TEAM_EDIT,
+        ROLE,
+        ROLE_EDIT,
+        SKILL,
+        SKILL_EDIT,
+        RELEASE_CATEGORY,
+        RELEASE,
+        RELEASE_EDIT,
+        STORY,
+        STORY_EDIT,
+        STORY_CATEGORY,
+        BACKLOG,
+        BACKLOG_EDIT,
+        BACKLOG_CATEGORY
+    }
+
+    /**
      * A map to keep of each of the last selected tabs in the scenes
      */
-    public static Map<SceneSwitcher.ContentScene, Integer> contentTabs = new HashMap<>();
+    public static Map<ContentScene, Integer> contentTabs = new HashMap<>();
 
-    private SceneSwitcher.ContentScene scene;
+    private ContentScene scene;
 
     /**
      * Constructor that takes the content scene type to use for storing tracking information
      *
      * @param scene The scene of the tracked tab pane
      */
-    public TrackedTabPane(SceneSwitcher.ContentScene scene) {
+    public TrackedTabPane(ContentScene scene) {
         this.scene = scene;
         this.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 

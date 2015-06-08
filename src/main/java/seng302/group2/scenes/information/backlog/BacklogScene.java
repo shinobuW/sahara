@@ -10,7 +10,7 @@ import seng302.group2.workspace.project.backlog.Backlog;
  */
 public class BacklogScene extends TrackedTabPane {
     public BacklogScene(Backlog currentBacklog) {
-        super(SceneSwitcher.ContentScene.BACKLOG);
+        super(ContentScene.BACKLOG);
 
         // Define and add the tabs
         Tab informationTab = new BacklogInfoTab(currentBacklog);
