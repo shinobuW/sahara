@@ -1,11 +1,12 @@
-package seng302.group2.workspace.story;
+package seng302.group2.workspace.project.story;
 
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.StoryCategorySwitchStrategy;
 import seng302.group2.util.undoredo.Command;
-import seng302.group2.workspace.acceptanceCriteria.AcceptanceCriteria;
-import seng302.group2.workspace.backlog.Backlog;
+import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
+import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.Project;
 
 import java.io.Serializable;

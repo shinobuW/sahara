@@ -3,16 +3,17 @@ package seng302.group2.workspace.project;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.BacklogCategory;
-import seng302.group2.scenes.listdisplay.ReleaseCategory;
-import seng302.group2.scenes.listdisplay.StoryCategory;
+import seng302.group2.scenes.listdisplay.categories.subCategory.project.BacklogCategory;
+import seng302.group2.scenes.listdisplay.categories.subCategory.project.ReleaseCategory;
+import seng302.group2.scenes.listdisplay.categories.subCategory.project.StoryCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.ProjectInformationSwitchStrategy;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.allocation.Allocation;
-import seng302.group2.workspace.backlog.Backlog;
-import seng302.group2.workspace.release.Release;
-import seng302.group2.workspace.story.Story;
+import seng302.group2.workspace.project.backlog.Backlog;
+import seng302.group2.workspace.project.release.Release;
+import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
@@ -54,6 +55,8 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         this.longName = "Untitled Project";
         this.description = "A blank project.";
         addListeners();
+
+        setInformationSwitchStrategy(new ProjectInformationSwitchStrategy());
     }
 
 
@@ -70,6 +73,8 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         this.longName = fullName;
         this.description = description;
         addListeners();
+
+        setInformationSwitchStrategy(new ProjectInformationSwitchStrategy());
     }
 
 
@@ -567,11 +572,11 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     @Override
     public ObservableList<TreeViewItem> getChildren() {
         ObservableList<TreeViewItem> children = observableArrayList();
-        ReleaseCategory releasesCategory = new ReleaseCategory("Releases", this);
+        ReleaseCategory releasesCategory = new ReleaseCategory(this);
         children.add(releasesCategory);
-        BacklogCategory backlogCategory = new BacklogCategory("Backlog", this);
+        BacklogCategory backlogCategory = new BacklogCategory(this);
         children.add(backlogCategory);
-        StoryCategory storiesCategory = new StoryCategory("Unassigned Stories", this);
+        StoryCategory storiesCategory = new StoryCategory(this);
         children.add(storiesCategory);
         return children;
     }

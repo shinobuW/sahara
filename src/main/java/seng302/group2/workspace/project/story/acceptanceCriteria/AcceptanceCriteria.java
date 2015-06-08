@@ -1,8 +1,8 @@
-package seng302.group2.workspace.acceptanceCriteria;
+package seng302.group2.workspace.project.story.acceptanceCriteria;
 
 import seng302.group2.Global;
 import seng302.group2.util.undoredo.Command;
-import seng302.group2.workspace.story.Story;
+import seng302.group2.workspace.project.story.Story;
 
 /**
  * Created by Shinobu on 30/05/2015.
