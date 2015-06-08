@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.apache.log4j.ConsoleAppender;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;

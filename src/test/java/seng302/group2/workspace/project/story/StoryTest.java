@@ -9,9 +9,9 @@ package seng302.group2.workspace.project.story;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
-import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
-import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.backlog.Backlog;
+import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 
 import java.util.ArrayList;
 

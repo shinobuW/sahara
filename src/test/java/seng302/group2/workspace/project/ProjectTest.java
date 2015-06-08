@@ -5,15 +5,15 @@ import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.categories.subCategory.project.BacklogCategory;
 import seng302.group2.scenes.listdisplay.categories.subCategory.project.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.categories.subCategory.project.StoryCategory;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
-import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;

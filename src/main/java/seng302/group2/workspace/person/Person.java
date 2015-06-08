@@ -6,7 +6,6 @@ package seng302.group2.workspace.person;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.sceneswitch.switchStrategies.category.ProjectCategoryCategorySwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.PersonInformationSwitchStrategy;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.Workspace;

@@ -16,7 +16,6 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.dialog.CustomDialog;
-import seng302.group2.scenes.listdisplay.categories.Category;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.categories.*;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.WorkspaceInformationSwitchStrategy;

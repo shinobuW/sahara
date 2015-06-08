@@ -15,19 +15,9 @@ import javafx.scene.control.TreeView;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.contextmenu.CategoryTreeContextMenu;
-import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
 import seng302.group2.scenes.listdisplay.categories.Category;
 import seng302.group2.scenes.listdisplay.categories.subCategory.SubCategory;
 import seng302.group2.scenes.sceneswitch.SceneSwitcher;
-import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.project.backlog.Backlog;
-import seng302.group2.workspace.project.release.Release;
-import seng302.group2.workspace.project.story.Story;
-import seng302.group2.workspace.role.Role;
-import seng302.group2.workspace.skills.Skill;
-import seng302.group2.workspace.team.Team;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -166,7 +156,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
                 }
 
 
-                //TODO comment out, test, and delete
+                /*
                 if (selected instanceof Person) {
                     selected.switchToInfoScene();
                 }
@@ -259,7 +249,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
                             selected);
                     setContextMenu(new ElementTreeContextMenu());
                 }
-                //TODO Right down to here (see last todo)
+                */
             });
     }
 

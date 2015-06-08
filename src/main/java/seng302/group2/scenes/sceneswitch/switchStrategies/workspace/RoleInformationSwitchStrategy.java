@@ -3,12 +3,9 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.workspace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.information.project.ProjectEditScene;
-import seng302.group2.scenes.information.project.ProjectScene;
 import seng302.group2.scenes.information.role.RoleScene;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
-import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.role.Role;
 
 /**

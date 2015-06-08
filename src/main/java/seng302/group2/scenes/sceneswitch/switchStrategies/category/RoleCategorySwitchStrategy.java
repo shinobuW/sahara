@@ -2,7 +2,6 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.category;
 
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.information.person.PersonCategoryScene;
 import seng302.group2.scenes.information.role.RoleCategoryScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy;
 

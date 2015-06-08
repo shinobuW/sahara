@@ -5,12 +5,9 @@ import org.slf4j.LoggerFactory;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.information.backlog.BacklogEditScene;
 import seng302.group2.scenes.information.backlog.BacklogScene;
-import seng302.group2.scenes.information.story.StoryEditScene;
-import seng302.group2.scenes.information.story.StoryScene;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.workspace.project.backlog.Backlog;
-import seng302.group2.workspace.project.story.Story;
 
 /**
  * An switch strategy for people information and edit scenes

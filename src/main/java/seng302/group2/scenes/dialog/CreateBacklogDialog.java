@@ -17,9 +17,9 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.team.Team;
 
 import static javafx.collections.FXCollections.observableArrayList;
