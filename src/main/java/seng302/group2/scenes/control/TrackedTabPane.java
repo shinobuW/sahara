@@ -11,8 +11,7 @@ import java.util.Map;
  * classes.
  * Created by Jordane on 10/05/2015.
  */
-public class TrackedTabPane extends TabPane
-{
+public class TrackedTabPane extends TabPane {
     /**
      * A map to keep of each of the last selected tabs in the scenes
      */
@@ -22,17 +21,16 @@ public class TrackedTabPane extends TabPane
 
     /**
      * Constructor that takes the content scene type to use for storing tracking information
+     *
      * @param scene The scene of the tracked tab pane
      */
-    public TrackedTabPane(SceneSwitcher.ContentScene scene)
-    {
+    public TrackedTabPane(SceneSwitcher.ContentScene scene) {
         this.scene = scene;
         this.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         openLastTab();
 
-        this.getSelectionModel().selectedItemProperty().addListener((event) ->
-            {
+        this.getSelectionModel().selectedItemProperty().addListener((event) -> {
                 contentTabs.put(scene,
                         this.getSelectionModel().getSelectedIndex());
                 //System.out.println("saving last tab");
@@ -43,16 +41,13 @@ public class TrackedTabPane extends TabPane
     /**
      * Opens the last tab stored for the type of scene
      */
-    public void openLastTab()
-    {
+    public void openLastTab() {
         Integer lastTab = 0;
-        if (scene != null)
-        {
+        if (scene != null) {
             //System.out.println("opening last tab from " + scene.toString());
             lastTab = contentTabs.get(scene);
         }
-        if (lastTab != null)
-        {
+        if (lastTab != null) {
             this.getSelectionModel().select(lastTab);
         }
     }

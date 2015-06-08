@@ -9,17 +9,14 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.category.ProjectCatego
  * A category that has the current workspace's projects as children
  * Created by Jordane on 7/06/2015.
  */
-public class ProjectCategory extends Category
-{
-    public ProjectCategory()
-    {
+public class ProjectCategory extends Category {
+    public ProjectCategory() {
         super("Projects");
         setCategorySwitchStrategy(new ProjectCategoryCategorySwitchStrategy());
     }
 
     @Override
-    public ObservableList getChildren()
-    {
+    public ObservableList getChildren() {
         return Global.currentWorkspace.getProjects();
     }
 }

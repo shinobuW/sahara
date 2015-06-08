@@ -15,46 +15,38 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 /**
- *
  * @author Jordane
  */
-public class DateValidator
-{
+public class DateValidator {
     /**
      * Checks is the given string is a valid birth date
+     *
      * @param birthDate the string representation of a birth date
      * @return The validation status of the check
      */
-    public static ValidationStatus isValidBirthdate(String birthDate)
-    {
-        if (birthDate.isEmpty())
-        {
+    public static ValidationStatus isValidBirthdate(String birthDate) {
+        if (birthDate.isEmpty()) {
             return ValidationStatus.NULL;
         }
 
         //Global.datePattern.setLenient(false);
-        try
-        {
+        try {
             String[] date = birthDate.split("/"); //returns an array with the day, month and year
             String year = date[date.length - 1];
-            if (year.length() != 4)
-            {
+            if (year.length() != 4) {
                 return ValidationStatus.PATTERN_MISMATCH;
             }
 
             LocalDate parsedBirthDate = LocalDate.parse(birthDate, Global.dateFormatter);
 
-            if (parsedBirthDate.isAfter(LocalDate.now()))
-            {
+            if (parsedBirthDate.isAfter(LocalDate.now())) {
                 return ValidationStatus.OUT_OF_RANGE;
             }
-            else
-            {
+            else {
                 return ValidationStatus.VALID;
             }
         }
-        catch (DateTimeParseException ex)
-        {
+        catch (DateTimeParseException ex) {
             return ValidationStatus.PATTERN_MISMATCH;
 
         }
@@ -62,40 +54,34 @@ public class DateValidator
 
     /**
      * Checks if the given allocation parameters are valid
-     * @param project the project to allocate team to
-     * @param team the team to allocate
-     * @param startDate to validate
-     * @param endDate to validate
+     *
+     * @param project    the project to allocate team to
+     * @param team       the team to allocate
+     * @param startDate  to validate
+     * @param endDate    to validate
      * @param allocation allocation to be edited if method used for validating allocation
      * @return validation status
      */
     public static ValidationStatus validateAllocation(Project project, Team team,
                                                       LocalDate startDate, LocalDate endDate,
-                                                      Allocation allocation)
-    {
-        if (allocation != null)
-        {
+                                                      Allocation allocation) {
+        if (allocation != null) {
             project = allocation.getProject();
             team = allocation.getTeam();
         }
 
-        if (endDate != null)
-        {
-            if (dateAfter(startDate, endDate))
-            {
+        if (endDate != null) {
+            if (dateAfter(startDate, endDate)) {
                 return ValidationStatus.ALLOCATION_DATES_WRONG_ORDER;
             }
         }
         //Go through project's teams
-        for (Allocation alloc : project.getTeamAllocations())
-        {
-            if (alloc != allocation && alloc.getTeam() == team) //&& alloc.getProject() == project
-            {
+        for (Allocation alloc : project.getTeamAllocations()) {
+            if (alloc != allocation && alloc.getTeam() == team) { //&& alloc.getProject() == project
                 ValidationStatus currentStatus = validateAllocationDate(alloc.getStartDate(),
                         alloc.getEndDate(),
                         startDate, endDate);
-                if (currentStatus != ValidationStatus.VALID)
-                {
+                if (currentStatus != ValidationStatus.VALID) {
                     return currentStatus;
                 }
             }
@@ -103,8 +89,7 @@ public class DateValidator
 
         Allocation currentAlloc = team.getCurrentAllocation();
         ValidationStatus projectComparison = ValidationStatus.VALID;
-        if (currentAlloc != null && currentAlloc != allocation)
-        {
+        if (currentAlloc != null && currentAlloc != allocation) {
             //Check that the team's currently allocated project doesn't overlap with
             // the new allocation
             LocalDate currentAllocStartDate = currentAlloc.getStartDate();
@@ -119,15 +104,15 @@ public class DateValidator
 
     /**
      * Checks for clashing allocations?
-     * @param endDate The end date of the allocation
-     * @param project The project that the allocation is for
+     *
+     * @param endDate   The end date of the allocation
+     * @param project   The project that the allocation is for
      * @param startDate The start date of the allocation
-     * @param team The team that the allocation is for
+     * @param team      The team that the allocation is for
      * @return clashAllocation The first allocation instance it clashes with
      */
     public static ValidationStatus validateAllocation(Project project, Team team,
-                                                      LocalDate startDate, LocalDate endDate)
-    {
+                                                      LocalDate startDate, LocalDate endDate) {
         return validateAllocation(project, team, startDate, endDate, null);
     }
 
@@ -193,58 +178,49 @@ public class DateValidator
     /**
      * Determines the Validation status of a new allocation, checking if there are any illegal
      * overlaps with the start or end dates of other allocations.
+     *
      * @param startDate1 the start date to check
-     * @param endDate1 the end date to check
+     * @param endDate1   the end date to check
      * @param startDate2 the start date to compare to
-     * @param endDate2 the end date to compare to
+     * @param endDate2   the end date to compare to
      * @return The validation status of the check
      */
     private static ValidationStatus validateAllocationDate(LocalDate startDate1, LocalDate endDate1,
-                                                          LocalDate startDate2, LocalDate endDate2)
-    {
+                                                           LocalDate startDate2, LocalDate endDate2) {
         if (datesEqual(startDate1, startDate2)
-                && datesEqual(endDate1, endDate2))
-        {
+                && datesEqual(endDate1, endDate2)) {
             return ValidationStatus.ALLOCATION_DATES_EQUAL;
         }
         else if (dateAfter(startDate1, startDate2)
-                && dateBefore(endDate1, endDate2))
-        {
+                && dateBefore(endDate1, endDate2)) {
             return ValidationStatus.SUPER_OVERLAP; // teamAlloc is between startDate and endDate
         }
         else if (dateAfter(startDate1, startDate2)
-                && datesEqual(endDate1, endDate2))
-        {
+                && datesEqual(endDate1, endDate2)) {
             return ValidationStatus.SUPER_OVERLAP; //when bigger
         }
         else if (datesEqual(startDate1, startDate2)
-                && dateBefore(endDate1, endDate2))
-        {
+                && dateBefore(endDate1, endDate2)) {
             return ValidationStatus.SUPER_OVERLAP;
         }
         else if (dateBefore(startDate1, startDate2)
-                && dateAfter(endDate1, endDate2))
-        {
+                && dateAfter(endDate1, endDate2)) {
             return ValidationStatus.SUB_OVERLAP; // new Allocation between start date and endDate
         }
         else if (dateBefore(startDate1, startDate2)
-                && datesEqual(endDate1, endDate2))
-        {
+                && datesEqual(endDate1, endDate2)) {
             return ValidationStatus.SUB_OVERLAP;
         }
         else if (datesEqual(startDate1, startDate2)
-                && dateAfter(endDate1, endDate2))
-        {
+                && dateAfter(endDate1, endDate2)) {
             return ValidationStatus.SUB_OVERLAP;
         }
         else if (dateBefore(startDate1, startDate2)
-                && dateAfter(endDate1, startDate2))
-        {
+                && dateAfter(endDate1, startDate2)) {
             return ValidationStatus.START_OVERLAP;
         }
         else if (dateAfter(endDate1, startDate2)
-                && dateBefore(startDate1, endDate2))
-        {
+                && dateBefore(startDate1, endDate2)) {
             return ValidationStatus.END_OVERLAP;
         }
         return ValidationStatus.VALID;
@@ -252,71 +228,61 @@ public class DateValidator
 
     /**
      * Checks if date1 and date2 are equal
+     *
      * @param date1 the first date
      * @param date2 the second date
      * @return if date1 and date2 are equal
      */
-    private static boolean datesEqual(LocalDate date1, LocalDate date2)
-    {
-        if (date1 == null && date2 == null)
-        {
+    private static boolean datesEqual(LocalDate date1, LocalDate date2) {
+        if (date1 == null && date2 == null) {
             return true;
         }
-        else if (date1 == null)
-        {
+        else if (date1 == null) {
             return false;
         }
-        else if (date2 == null)
-        {
+        else if (date2 == null) {
             return false;
         }
-        else
-        {
+        else {
             return date1.equals(date2);
-            
+
         }
     }
 
     /**
      * Checks if date1 comes before date2 in the case of 'infinite' nulls
+     *
      * @param date1 the date to check
      * @param date2 the date to compare to
      * @return if date1 comes before date2
      */
-    public static boolean dateBefore(LocalDate date1, LocalDate date2)
-    {
-        if (date1 == null)
-        {
+    public static boolean dateBefore(LocalDate date1, LocalDate date2) {
+        if (date1 == null) {
             return false;
         }
-        else if (date2 == null)
-        {
+        else if (date2 == null) {
             return true;
         }
-        else
-        {
+        else {
             return date1.isBefore(date2);
         }
     }
 
     /**
      * Checks if date1 comes after date2 in the case of 'infinite' nulls
+     *
      * @param date1 the date to check
      * @param date2 the date to compare to
      * @return if date1 comes after date2
      */
-    public static boolean dateAfter(LocalDate date1, LocalDate date2)
-    {
-        if (date1 == null)
-        {
+    public static boolean dateAfter(LocalDate date1, LocalDate date2) {
+        if (date1 == null) {
             return true;
         }
-        else if (date2 == null)
-        {
+        else if (date2 == null) {
             return false;
         }
-        else
-        {
+        else {
             return date1.isAfter(date2);
         }
     }
@@ -324,17 +290,15 @@ public class DateValidator
 
     /**
      * Determines if a LocalDate is in the future.
+     *
      * @param date The date to check against the current time
      * @return A boolean showing if the date is in the future (true) or not (false).
      */
-    public static boolean isFutureDate(LocalDate date)
-    {
-        if (date.isAfter(LocalDate.now()))
-        {
+    public static boolean isFutureDate(LocalDate date) {
+        if (date.isAfter(LocalDate.now())) {
             return true;
         }
-        else
-        {
+        else {
             return false;
         }
     }
@@ -342,25 +306,21 @@ public class DateValidator
     /**
      * Checks that the text in the given CustomDateField is in the "dd/mm/yyyy" format
      * Displays appropriate errors if wrong format
+     *
      * @param dateField The CustomDateField to check
      * @return true if correct format
      */
-    public static boolean isCorrectDateFormat(CustomDateField dateField)
-    {
+    public static boolean isCorrectDateFormat(CustomDateField dateField) {
         String dateString = dateField.getText();
-        if (dateString.isEmpty())
-        {
+        if (dateString.isEmpty()) {
             return true;
         }
-        else
-        {
+        else {
             //Global.datePattern.setLenient(false);
-            try
-            {
+            try {
                 String[] date = dateString.split("/"); //returns an array with the day, month and yr
                 String year = date[date.length - 1];
-                if (year.length() != 4)
-                {
+                if (year.length() != 4) {
                     dateField.showErrorField("* Format must be dd/MM/yyyy");
                     return false;
                 }
@@ -370,8 +330,7 @@ public class DateValidator
                 return true;
 
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 dateField.showErrorField("* Format must be dd/MM/yyyy");
                 return false;
 
@@ -383,13 +342,12 @@ public class DateValidator
     /**
      * Checks whether the birth date format is correct
      * Shows error message and red borders if incorrect
+     *
      * @param customBirthDate the birth date error GUI label
      * @return true if correct format
-     **/
-    public static boolean validateBirthDateField(CustomDateField customBirthDate)
-    {
-        switch (DateValidator.isValidBirthdate(customBirthDate.getText()))
-        {
+     */
+    public static boolean validateBirthDateField(CustomDateField customBirthDate) {
+        switch (DateValidator.isValidBirthdate(customBirthDate.getText())) {
             case VALID:
                 customBirthDate.hideErrorField();
                 return true;
@@ -410,18 +368,16 @@ public class DateValidator
 
     /**
      * Converts string to date
+     *
      * @param releaseDateString String to be converted
      * @return date
      */
-    public static LocalDate stringToDate(String releaseDateString)
-    {
+    public static LocalDate stringToDate(String releaseDateString) {
         LocalDate releaseDate = null;
-        try
-        {
+        try {
             releaseDate = LocalDate.parse(releaseDateString, Global.dateFormatter);
         }
-        catch (DateTimeParseException e)
-        {
+        catch (DateTimeParseException e) {
             System.out.println("Error parsing date");
         }
         return releaseDate;

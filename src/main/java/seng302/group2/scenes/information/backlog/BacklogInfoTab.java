@@ -7,8 +7,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.story.Story;
 
@@ -18,10 +18,8 @@ import static javafx.collections.FXCollections.observableArrayList;
  * The information tab for a backlog
  * Created by cvs20 on 19/05/15.
  */
-public class BacklogInfoTab extends Tab
-{
-    public BacklogInfoTab(Backlog currentBacklog)
-    {
+public class BacklogInfoTab extends Tab {
+    public BacklogInfoTab(Backlog currentBacklog) {
         this.setText("Basic Information");
 
         Pane basicInfoPane = new VBox(10);
@@ -70,13 +68,11 @@ public class BacklogInfoTab extends Tab
                 + currentBacklog.getProject().toString()));
 
 
-        if (currentBacklog.getProductOwner() == null)
-        {
+        if (currentBacklog.getProductOwner() == null) {
             basicInfoPane.getChildren().add(new Label("Backlog Product Owner: "
                     + ""));
         }
-        else
-        {
+        else {
             basicInfoPane.getChildren().add(new Label("Backlog Product Owner: "
                     + currentBacklog.getProductOwner()));
         }
@@ -88,15 +84,12 @@ public class BacklogInfoTab extends Tab
         basicInfoPane.getChildren().add(btnView);
         basicInfoPane.getChildren().add(btnEdit);
 
-        btnEdit.setOnAction((event) ->
-            {
+        btnEdit.setOnAction((event) -> {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG_EDIT, currentBacklog);
             });
 
-        btnView.setOnAction((event) ->
-            {
-                if (storyTable.getSelectionModel().getSelectedItem() != null)
-                {
+        btnView.setOnAction((event) -> {
+                if (storyTable.getSelectionModel().getSelectedItem() != null) {
                     MainScene.treeView.selectItem(storyTable.getSelectionModel().getSelectedItem());
                 }
             });

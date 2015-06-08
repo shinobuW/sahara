@@ -7,8 +7,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.release.Release;
 
 import java.time.format.DateTimeFormatter;
@@ -18,10 +18,8 @@ import java.time.format.DateTimeFormatter;
  * The workspace information tab
  * Created by jml168 on 11/05/15.
  */
-public class ReleaseInfoTab extends Tab
-{
-    public ReleaseInfoTab(Release currentRelease)
-    {
+public class ReleaseInfoTab extends Tab {
+    public ReleaseInfoTab(Release currentRelease) {
         this.setText("Basic Information");
 
         Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
@@ -37,8 +35,7 @@ public class ReleaseInfoTab extends Tab
 
         String releaseDateString = "";
 
-        if (currentRelease.getEstimatedDate() != null)
-        {
+        if (currentRelease.getEstimatedDate() != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             releaseDateString = currentRelease.getEstimatedDate().format(formatter);
         }
@@ -52,8 +49,7 @@ public class ReleaseInfoTab extends Tab
                 + currentRelease.getProject().toString()));
         basicInfoPane.getChildren().add(btnEdit);
 
-        btnEdit.setOnAction((event) ->
-            {
+        btnEdit.setOnAction((event) -> {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE_EDIT, currentRelease);
             });
 

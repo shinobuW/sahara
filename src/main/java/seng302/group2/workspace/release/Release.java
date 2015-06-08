@@ -16,10 +16,10 @@ import java.util.Collections;
 
 /**
  * A release is a sub-member of project and contains information about a release of a project
+ *
  * @author Shinobu, Jordane
  */
-public class Release extends TreeViewItem implements Comparable<Release>
-{
+public class Release extends TreeViewItem implements Comparable<Release> {
     private String shortName;
     private String description;
     private LocalDate estimatedDate;
@@ -29,22 +29,21 @@ public class Release extends TreeViewItem implements Comparable<Release>
     /**
      * Basic constructor
      */
-    public Release()
-    {
+    public Release() {
         this.shortName = "Untitled Release";
         this.description = "Release without project assigned should not exist";
         this.estimatedDate = LocalDate.now();
         this.project = new Project();
     }
 
-    
+
     /**
      * Required Constructor
+     *
      * @param shortName short name to be set
-     * @param project project to be set
+     * @param project   project to be set
      */
-    public Release(String shortName, Project project)
-    {
+    public Release(String shortName, Project project) {
         this.shortName = shortName;
         this.project = project;
     }
@@ -52,84 +51,66 @@ public class Release extends TreeViewItem implements Comparable<Release>
 
     /**
      * Complete Constructor
-     * @param shortName short name to be set
+     *
+     * @param shortName   short name to be set
      * @param description description to be set
      * @param releaseDate release date to be set
-     * @param project project to be set
+     * @param project     project to be set
      */
-    public Release(String shortName, String description, LocalDate releaseDate, Project project)
-    {
+    public Release(String shortName, String description, LocalDate releaseDate, Project project) {
         this.shortName = shortName;
         this.description = description;
         this.estimatedDate = releaseDate;
         this.project = project;
     }
 
-    
+
     // <editor-fold defaultstate="collapsed" desc="Getters"> 
 
 
     /**
      * Gets short name of the release
+     *
      * @return short name of the release
      */
-    public String getShortName()
-    {
+    public String getShortName() {
         return this.shortName;
     }
 
+    /**
+     * Sets the short Name of the release
+     *
+     * @param shortName short name to set
+     */
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
 
     /**
      * Gets the description of the release
+     *
      * @return the description of the release
      */
-    public String getDescription()
-    {
+    public String getDescription() {
         return this.description;
     }
 
+    /**
+     * Sets the Description of the release
+     *
+     * @param description The description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     /**
      * Gets the estimated release date for the release
+     *
      * @return the estimated release date of the release
      */
-    public LocalDate getEstimatedDate()
-    {
+    public LocalDate getEstimatedDate() {
         return this.estimatedDate;
-    }
-
-
-    /**
-     * Gets the project the release belongs to
-     * @return project 
-     */
-    public Project getProject()
-    {
-        return this.project;
-    }
-
-    /**
-     * Gets the persons birth date as a string
-     * @return The persons birth date as a string
-     */
-    public String getDateString()
-    {
-        if (this.estimatedDate == null)
-        {
-            return "";
-        }
-        else
-        {
-            try
-            {
-                return this.getEstimatedDate().format(Global.dateFormatter);
-            }
-            catch (Exception e)
-            {
-                System.out.println("Error parsing date");
-                return "";
-            }
-        }
     }
 
 
@@ -138,108 +119,111 @@ public class Release extends TreeViewItem implements Comparable<Release>
 
     // <editor-fold defaultstate="collapsed" desc="Setters"> 
 
-
-    /** 
-     * Sets the short Name of the release
-     * @param shortName short name to set 
-     */
-    public void setShortName(String shortName)
-    {
-        this.shortName = shortName;
-    }
-
-
-    /**
-     * Sets the Description of the release
-     * @param description The description to set
-     */
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
-
-
     /**
      * Sets the estimated Release Date of the release
+     *
      * @param releaseDate The release date to set
      */
-    public void setEstimatedDate(LocalDate releaseDate)
-    {
+    public void setEstimatedDate(LocalDate releaseDate) {
         this.estimatedDate = releaseDate;
     }
 
-
     /**
-     * Sets the project the release belongs to without an undoable command
-     * @param project project to set
+     * Gets the project the release belongs to
+     *
+     * @return project
      */
-    public void setProjectWithoutUndo(Project project)
-    {
-        this.project = project;
-        project.addWithoutUndo(this);
+    public Project getProject() {
+        return this.project;
     }
 
     /**
      * Sets the project the release belongs to
+     *
      * @param project project to set
      */
-    public void setProject(Project project)
-    {
+    public void setProject(Project project) {
         //this.project.removeWithoutUndo(this);
         this.project = project;
         //project.add(this);
     }
 
-    //</editor-fold>
+    /**
+     * Gets the persons birth date as a string
+     *
+     * @return The persons birth date as a string
+     */
+    public String getDateString() {
+        if (this.estimatedDate == null) {
+            return "";
+        }
+        else {
+            try {
+                return this.getEstimatedDate().format(Global.dateFormatter);
+            }
+            catch (Exception e) {
+                System.out.println("Error parsing date");
+                return "";
+            }
+        }
+    }
 
+    /**
+     * Sets the project the release belongs to without an undoable command
+     *
+     * @param project project to set
+     */
+    public void setProjectWithoutUndo(Project project) {
+        this.project = project;
+        project.addWithoutUndo(this);
+    }
+
+    //</editor-fold>
 
     /**
      * Compares the release to another release based on their short names
+     *
      * @param compareRelease The release to compare to
      * @return The string comparison or the releases short names
      */
     @Override
-    public int compareTo(Release compareRelease)
-    {
+    public int compareTo(Release compareRelease) {
         String release1ShortName = this.getShortName();
         String release2ShortName = compareRelease.getShortName();
         return release1ShortName.compareTo(release2ShortName);
     }
-    
-    
+
+
     /**
      * Deletes a release from the given project.
      */
-    public void deleteRelease()
-    {
+    public void deleteRelease() {
         Command command = new DeleteReleaseCommand(this);
         Global.commandManager.executeCommand(command);
     }
 
 
     @Override
-    public ObservableList<TreeViewItem> getChildren()
-    {
+    public ObservableList<TreeViewItem> getChildren() {
         return null;
     }
-    
+
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.shortName;
     }
 
     /**
      * Creates a Release edit command and executes it with the Global Command Manager, updating
      * the release with the new parameter values.
-     * @param newShortName The new short name
-     * @param newDescription The new description
+     *
+     * @param newShortName     The new short name
+     * @param newDescription   The new description
      * @param newEstimatedDate The new estimated date
-     * @param newProject The new project
+     * @param newProject       The new project
      */
     public void edit(String newShortName, String newDescription, LocalDate newEstimatedDate,
-        Project newProject)
-    {
+                     Project newProject) {
         Command relEdit = new ReleaseEditCommand(this, newShortName, newDescription,
                 newEstimatedDate, newProject);
         Global.commandManager.executeCommand(relEdit);
@@ -249,8 +233,7 @@ public class Release extends TreeViewItem implements Comparable<Release>
     /**
      * A command class that allows the executing and undoing of release edits
      */
-    private class ReleaseEditCommand implements Command
-    {
+    private class ReleaseEditCommand implements Command {
         private Release release;
         private String shortName;
         private String description;
@@ -262,8 +245,7 @@ public class Release extends TreeViewItem implements Comparable<Release>
         private Project oldProject;
 
         private ReleaseEditCommand(Release release, String newShortName, String newDescription,
-                                   LocalDate newEstimatedDate, Project newProject)
-        {
+                                   LocalDate newEstimatedDate, Project newProject) {
             this.release = release;
             this.shortName = newShortName;
             this.description = newDescription;
@@ -278,8 +260,7 @@ public class Release extends TreeViewItem implements Comparable<Release>
         /**
          * Executes/Redoes the changes of the release edit
          */
-        public void execute()
-        {
+        public void execute() {
             release.shortName = shortName;
             release.description = description;
             release.estimatedDate = estimatedDate;
@@ -291,8 +272,7 @@ public class Release extends TreeViewItem implements Comparable<Release>
         /**
          * Undoes the changes of the release edit
          */
-        public void undo()
-        {
+        public void undo() {
             release.shortName = oldShortName;
             release.description = oldDescription;
             release.estimatedDate = oldEstimatedDate;
@@ -301,26 +281,22 @@ public class Release extends TreeViewItem implements Comparable<Release>
         }
     }
 
-    private class DeleteReleaseCommand implements Command
-    {
+    private class DeleteReleaseCommand implements Command {
         private Release release;
         private Project proj;
 
-        DeleteReleaseCommand(Release release)
-        {
+        DeleteReleaseCommand(Release release) {
             this.release = release;
             this.proj = release.getProject();
         }
 
-        public void execute()
-        {
+        public void execute() {
             System.out.println("Exec Release Delete");
             proj.getReleases().remove(release);
             //release.setProject(null);
         }
 
-        public void undo()
-        {
+        public void undo() {
             System.out.println("Undone Release Delete");
             proj.getReleases().add(release);
             //release.setProject(proj);

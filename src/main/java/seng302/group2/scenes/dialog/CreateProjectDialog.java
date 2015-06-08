@@ -16,16 +16,15 @@ import seng302.group2.workspace.project.Project;
 
 /**
  * Class to create a pop up dialog for creating a workspace.
+ *
  * @author Jordane Lew jml168
  */
 @SuppressWarnings("deprecation")
-public class CreateProjectDialog
-{
+public class CreateProjectDialog {
     /**
      * Displays the Dialog box for creating a workspace.
      */
-    public static void show()
-    {
+    public static void show() {
         Dialog dialog = new Dialog(null, "New Project");
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
@@ -49,8 +48,7 @@ public class CreateProjectDialog
         grid.getChildren().add(descriptionTextArea);
         grid.getChildren().add(buttons);
 
-        btnCreate.setOnAction((event) ->
-            {
+        btnCreate.setOnAction((event) -> {
                 boolean correctShortName = ShortNameValidator.validateShortName(
                         shortNameCustomField, null);
                 boolean correctLongName = NameValidator.validateName(longNameCustomField);
@@ -59,15 +57,13 @@ public class CreateProjectDialog
                 String longName = longNameCustomField.getText();
                 String description = descriptionTextArea.getText();
 
-                if (correctShortName && correctLongName)
-                {
+                if (correctShortName && correctLongName) {
                     Project project = new Project(shortName, longName, description);
                     Global.currentWorkspace.add(project);
                     MainScene.treeView.selectItem(project);
                     dialog.hide();
                 }
-                else
-                {
+                else {
                     event.consume();
                 }
             });

@@ -26,15 +26,14 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 
 /**
  * Class to create a pop up dialog for creating a story
+ *
  * @author swi67
  */
-public class CreateStoryDialog
-{
+public class CreateStoryDialog {
     /**
      * Displays the Dialog box for creating a story.
      */
-    public static void show()
-    {
+    public static void show() {
         // Initialise Dialog and GridPane
         Dialog dialog = new Dialog(null, "New Story");
         VBox grid = new VBox();
@@ -59,41 +58,36 @@ public class CreateStoryDialog
         CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
         projectComboBox.getComboBox().setPrefWidth(180);
         RequiredField priorityNumberField = new RequiredField("Priority:");
-        
+
         String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
         projectComboBox.setValue(firstItem);
 
-        for (TreeViewItem project : Global.currentWorkspace.getProjects())
-        {
+        for (TreeViewItem project : Global.currentWorkspace.getProjects()) {
             projectComboBox.addToComboBox(project.toString());
         }
 
-        grid.getChildren().addAll(shortNameCustomField, longNameCustomField, creatorCustomField, 
+        grid.getChildren().addAll(shortNameCustomField, longNameCustomField, creatorCustomField,
                 priorityNumberField, projectComboBox, descriptionTextArea, buttons);
 
         // Create button event
-        btnCreate.setOnAction((event) ->
-            {
+        btnCreate.setOnAction((event) -> {
                 boolean correctShortName = validateShortName(shortNameCustomField, null);
                 boolean correctLongName = validateName(longNameCustomField);
                 boolean correctCreator = validateName(creatorCustomField);
                 boolean correctPriority = validateNumberField(priorityNumberField);
 
-                if (correctShortName && correctLongName && correctCreator && correctPriority)
-                {
+                if (correctShortName && correctLongName && correctCreator && correctPriority) {
                     //get user input
                     String shortName = shortNameCustomField.getText();
                     String longName = longNameCustomField.getText();
                     String creator = creatorCustomField.getText();
                     String description = descriptionTextArea.getText();
                     Integer priority = Integer.parseInt(priorityNumberField.getText());
-                 
+
                     Project project = new Project();
-                    for (TreeViewItem item : Global.currentWorkspace.getProjects())
-                    {
-                        if (item.toString().equals(projectComboBox.getValue()))
-                        {
-                            project = (Project)item;
+                    for (TreeViewItem item : Global.currentWorkspace.getProjects()) {
+                        if (item.toString().equals(projectComboBox.getValue())) {
+                            project = (Project) item;
                         }
                     }
                     Story story = new Story(shortName, longName, description, creator, project,
@@ -102,8 +96,7 @@ public class CreateStoryDialog
                     MainScene.treeView.selectItem(story);
                     dialog.hide();
                 }
-                else
-                {
+                else {
                     event.consume();
                 }
             });
@@ -117,5 +110,5 @@ public class CreateStoryDialog
         dialog.setContent(grid);
         dialog.show();
     }
-    
+
 }

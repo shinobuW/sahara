@@ -32,13 +32,11 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  * @author swi67
  */
 @SuppressWarnings("deprecation")
-public class CreatePersonDialog
-{
+public class CreatePersonDialog {
     /**
      * Displays the Dialog box for creating a person.
      */
-    public static void show()
-    {
+    public static void show() {
         // Initialise Dialog and GridPane
         Dialog dialog = new Dialog(null, "New Person");
         VBox grid = new VBox();
@@ -67,15 +65,13 @@ public class CreatePersonDialog
                 emailTextField, customBirthDate, descriptionTextArea, buttons);
 
         // Create button event
-        btnCreate.setOnAction((event) ->
-            {
+        btnCreate.setOnAction((event) -> {
                 boolean correctDate = validateBirthDateField(customBirthDate);
                 boolean correctShortName = validateShortName(shortNameCustomField, null);
                 boolean correctFirstName = validateName(firstNameCustomField);
                 boolean correctLastName = validateName(lastNameCustomField);
 
-                if (correctDate && correctShortName && correctFirstName && correctLastName)
-                {
+                if (correctDate && correctShortName && correctFirstName && correctLastName) {
                     //get user input
                     String firstName = firstNameCustomField.getText();
                     String lastName = lastNameCustomField.getText();
@@ -86,12 +82,10 @@ public class CreatePersonDialog
                     String birthdateString = customBirthDate.getText();
 
                     LocalDate birthDate;
-                    if (birthdateString.isEmpty())
-                    {
+                    if (birthdateString.isEmpty()) {
                         birthDate = null;
                     }
-                    else
-                    {
+                    else {
                         birthDate = stringToDate(birthdateString);
                     }
 
@@ -101,8 +95,7 @@ public class CreatePersonDialog
                     MainScene.treeView.selectItem(person);
                     dialog.hide();
                 }
-                else
-                {
+                else {
                     btnCreate.disableProperty();
                 }
             });

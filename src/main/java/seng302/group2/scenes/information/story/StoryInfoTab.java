@@ -7,18 +7,16 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.story.Story;
 
 /**
  * The story information tab.
  * Created by drm127 on 17/05/15.
  */
-public class StoryInfoTab extends Tab
-{
-    public StoryInfoTab(Story currentStory)
-    {
+public class StoryInfoTab extends Tab {
+    public StoryInfoTab(Story currentStory) {
         this.setText("Basic Information");
 
         Pane basicInfoPane = new VBox(10);
@@ -43,8 +41,7 @@ public class StoryInfoTab extends Tab
                 + currentStory.getCreator()));
         basicInfoPane.getChildren().add(btnEdit);
 
-        btnEdit.setOnAction((event) ->
-            {
+        btnEdit.setOnAction((event) -> {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY_EDIT, currentStory);
             });
     }

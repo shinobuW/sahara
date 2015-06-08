@@ -1,18 +1,17 @@
 package seng302.group2.scenes.information.project;
 
 import javafx.scene.control.Tab;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.TrackedTabPane;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.project.Project;
 
 /**
  * A class for displaying the project scene
+ *
  * @author jml168
  */
-public class ProjectScene extends TrackedTabPane
-{
-    public ProjectScene(Project currentProject)
-    {
+public class ProjectScene extends TrackedTabPane {
+    public ProjectScene(Project currentProject) {
         super(SceneSwitcher.ContentScene.PROJECT);
 
         // Define and add the tabs

@@ -7,8 +7,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.skills.Skill;
 
 
@@ -16,10 +16,8 @@ import seng302.group2.workspace.skills.Skill;
  * The workspace information tab
  * Created by jml168 on 11/05/15.
  */
-public class SkillInfoTab extends Tab
-{
-    public SkillInfoTab(Skill currentSkill)
-    {
+public class SkillInfoTab extends Tab {
+    public SkillInfoTab(Skill currentSkill) {
         this.setText("Basic Information");
 
         Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
@@ -37,15 +35,13 @@ public class SkillInfoTab extends Tab
                 + currentSkill.getDescription()));
 
         basicInfoPane.getChildren().add(btnEdit);
-        
-        if (currentSkill.getShortName().equals("Product Owner") 
-            || currentSkill.getShortName().equals("Scrum Master"))
-        {
+
+        if (currentSkill.getShortName().equals("Product Owner")
+                || currentSkill.getShortName().equals("Scrum Master")) {
             btnEdit.setDisable(true);
         }
 
-        btnEdit.setOnAction((event) ->
-            {
+        btnEdit.setOnAction((event) -> {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL_EDIT, currentSkill);
             });
     }

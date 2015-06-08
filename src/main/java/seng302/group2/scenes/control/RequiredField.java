@@ -9,12 +9,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 /**
- * Creates a custom  text field where the box may not be empty 
+ * Creates a custom  text field where the box may not be empty
  * and appropriate error messages are displayed when required.
  * Created by Jordane on 24/03/2015.
  */
-public class RequiredField extends VBox
-{
+public class RequiredField extends VBox {
     String errorMessage = "";
     TextField inputText = new TextField();
     Label errorMessageText = new Label();
@@ -22,57 +21,56 @@ public class RequiredField extends VBox
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
      * asterisk.
+     *
      * @param name The node field that is required
      */
-    public RequiredField(String name)
-    {
+    public RequiredField(String name) {
         this.errorMessageText.setText(errorMessage);
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);
         labelBox.spacingProperty().setValue(0);
         labelBox.setAlignment(Pos.CENTER_LEFT);
-        
+
         Label aster = new Label(" * ");
         aster.setTextFill(Color.web("#ff0000"));
-        
+
         errorMessageText.setTextFill(Color.web("#ff0000"));
-        
+
         labelBox.getChildren().addAll(new Label(name), aster);
-        
+
         HBox entry = new HBox();
         entry.setPrefWidth(175);
         entry.getChildren().addAll(labelBox, inputText);
-        entry.setHgrow(labelBox, Priority.ALWAYS);
+        HBox.setHgrow(labelBox, Priority.ALWAYS);
 
         this.getChildren().add(entry);
     }
 
     /**
      * Returns the text inside the text field of the RequiredField.
+     *
      * @return The text of the text field
      */
-    public String getText()
-    {
+    public String getText() {
         return this.inputText.getText();
     }
 
 
     /**
      * Sets the text inside the text field of the RequiredField.
+     *
      * @param text the text to be inserted into the text field
      */
-    public void setText(String text)
-    {
+    public void setText(String text) {
         this.inputText.setText(text);
     }
-    
+
 
     /**
      * Shows the error field.
      */
-    public void showErrorField()
-    {
+    public void showErrorField() {
         inputText.setStyle("-fx-border-color: red;");
         this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
         this.getChildren().add(errorMessageText);
@@ -81,10 +79,10 @@ public class RequiredField extends VBox
 
     /**
      * Shows the error field with the with the given text
+     *
      * @param errorMessage The error message to show
      */
-    public void showErrorField(String errorMessage)
-    {
+    public void showErrorField(String errorMessage) {
         inputText.setStyle("-fx-border-color: red;");
         this.errorMessageText.setText(errorMessage);
         showErrorField();
@@ -94,8 +92,7 @@ public class RequiredField extends VBox
     /**
      * Hides the error field.
      */
-    public void hideErrorField()
-    {
+    public void hideErrorField() {
         inputText.setStyle(null);
         this.getChildren().remove(errorMessageText);
     }

@@ -18,17 +18,16 @@ import java.util.ArrayList;
 
 /**
  * A series of tests relating to Teams
+ *
  * @author Cameron Williams (crw73)
  */
-public class TeamTest
-{
+public class TeamTest {
 
     /**
      * A simple test for the Team constructors
      */
     @Test
-    public void testTeamConstructors()
-    {
+    public void testTeamConstructors() {
         Team team = new Team();
         Assert.assertEquals("unnamed", team.getShortName());
         Assert.assertEquals("", team.getDescription());
@@ -36,20 +35,19 @@ public class TeamTest
         Assert.assertEquals(null, team.getChildren());
         Assert.assertEquals(null, team.getScrumMaster());
         Assert.assertEquals(null, team.getProductOwner());
-        
-        Team team2 = new Team("Arctic Falcon", "An awesome team name"); 
+
+        Team team2 = new Team("Arctic Falcon", "An awesome team name");
         Assert.assertEquals("Arctic Falcon", team2.getShortName());
         Assert.assertEquals("An awesome team name", team2.getDescription());
         Assert.assertEquals("Arctic Falcon", team2.toString());
-        
+
     }
-    
+
     /**
      * Tests for Teams' setter methods.
      */
     @Test
-    public void testTeamSetters()
-    {
+    public void testTeamSetters() {
         Team team = new Team();
         Person po = new Person();
         po.setShortName("Chardonnay");
@@ -57,11 +55,11 @@ public class TeamTest
         team.setDescription("An awesome team name");
         team.setScrumMaster(new Person());
         team.setProductOwner(po);
-        
+
         Assert.assertEquals("Arctic Falcon", team.getShortName());
         Assert.assertEquals("An awesome team name", team.getDescription());
         Assert.assertEquals("Arctic Falcon", team.toString());
-        
+
         Assert.assertEquals("Chardonnay", team.getProductOwner().getShortName());
         Assert.assertEquals("unnamed", team.getScrumMaster().getShortName());
         //Setting Team and People Roles should be seperate
@@ -73,8 +71,7 @@ public class TeamTest
      * Tests the addition and removal of people in teams
      */
     @Test
-    public void testAddPerson()
-    {
+    public void testAddPerson() {
         Team team = new Team();
         Person person = new Person();
 
@@ -95,14 +92,13 @@ public class TeamTest
      * Test the addition and removal of team's project allocations
      */
     @Test
-    public void testAddRemoveAllocation()
-    {
+    public void testAddRemoveAllocation() {
         Team team = new Team();
         Project proj = new Project();
         LocalDate startDate = LocalDate.of(2014, Month.JANUARY, 1);
         LocalDate endDate = LocalDate.of(2014, Month.JANUARY, 10);
         Allocation alloc = new Allocation(proj, team, startDate, endDate);
-        
+
         team.add(alloc);
         Assert.assertTrue(team.getProjectAllocations().contains(alloc));
 
@@ -115,8 +111,7 @@ public class TeamTest
      * Tests whether or not the unassigned team getter works correctly
      */
     @Test
-    public void testIsUnassignedTeam()
-    {
+    public void testIsUnassignedTeam() {
         Team unass = Team.createUnassignedTeam();
         Team ateam = new Team();
 
@@ -129,8 +124,7 @@ public class TeamTest
      * Tests that a team properly prepares for serialization
      */
     @Test
-    public void testPrepSerialization()
-    {
+    public void testPrepSerialization() {
         Team testTeam = new Team();
         Person testPerson = new Person();
 
@@ -147,8 +141,7 @@ public class TeamTest
      * Tests that a team properly post-pares after deserialization
      */
     @Test
-    public void testPostSerialization()
-    {
+    public void testPostSerialization() {
         Team testTeam = new Team();
         Person testPerson = new Person();
 
@@ -160,14 +153,13 @@ public class TeamTest
 
         Assert.assertTrue(testTeam.getPeople().contains(testPerson));
     }
-    
+
     /**
-     * Tests the compareTo method of Team to ensure it correctly returns an int representing if a 
+     * Tests the compareTo method of Team to ensure it correctly returns an int representing if a
      * shortName is larger or not.
      */
     @Test
-    public void testCompareTo()
-    {
+    public void testCompareTo() {
         Team team1 = new Team();
         Team team2 = new Team();
         team1.setShortName("A");
@@ -180,8 +172,7 @@ public class TeamTest
 
 
     @Test
-    public void testBasicEdit()
-    {
+    public void testBasicEdit() {
         Team team = new Team("Arctic Falcon", "An awesome team name");
 
         team.edit("Antarctic Eagle", "An even awesomer team name");
@@ -196,8 +187,7 @@ public class TeamTest
 
 
     @Test
-    public void testDelete()
-    {
+    public void testDelete() {
         Team team = new Team();
         Person p1 = new Person();
         team.getPeople().add(p1);
@@ -216,8 +206,7 @@ public class TeamTest
 
 
     @Test
-    public void testDeleteCascading()
-    {
+    public void testDeleteCascading() {
         Team team = new Team();
         Person p1 = new Person();
         Person p2 = new Person();
@@ -246,8 +235,7 @@ public class TeamTest
 
 
     @Test
-    public void testExtendedEdit()
-    {
+    public void testExtendedEdit() {
         Team team = new Team("Arctic Falcon", "An awesome team name");
         Person bronson = new Person();
         Person moffat = new Person();

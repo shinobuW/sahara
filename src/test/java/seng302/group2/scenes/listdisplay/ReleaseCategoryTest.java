@@ -8,15 +8,13 @@ import seng302.group2.workspace.release.Release;
 /**
  * Created by Jordane on 27/04/2015.
  */
-public class ReleaseCategoryTest
-{
+public class ReleaseCategoryTest {
 
     /**
      * Tests that a release category's project is returned correctly
      */
     @Test
-    public void testGetProject()
-    {
+    public void testGetProject() {
         Project proj = new Project();
         ReleaseCategory category = new ReleaseCategory("Releases", proj);
         ReleaseCategory category2 = new ReleaseCategory("Releases", null);
@@ -29,8 +27,7 @@ public class ReleaseCategoryTest
      * Tests the children of a release category are returned correctly
      */
     @Test
-    public void testGetChildren()
-    {
+    public void testGetChildren() {
         Project proj = new Project();
         ReleaseCategory category = new ReleaseCategory("Releases", proj);
         Assert.assertEquals(proj.getReleases(), category.getProject().getReleases());
@@ -44,8 +41,7 @@ public class ReleaseCategoryTest
      * Tests the equivalence of two release categories are as expected
      */
     @Test
-    public void testEquals()
-    {
+    public void testEquals() {
         Project proj = new Project();
         ReleaseCategory category = new ReleaseCategory("Releases", proj);
         ReleaseCategory category2 = new ReleaseCategory("Releases", null);

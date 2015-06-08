@@ -10,10 +10,10 @@ import java.time.format.DateTimeFormatter;
 /**
  * A class that keeps static local variables for the runtime of the application. Useful for tracking
  * the current workspace, command manager, and other items.
+ *
  * @author Jordane
  */
-public final class Global
-{
+public final class Global {
     public static Workspace currentWorkspace = new Workspace();
     public static TreeItem selectedTreeItem = new TreeItem();
     public static String lastSaveLocation = "/";
@@ -23,18 +23,15 @@ public final class Global
 
     /**
      * Gets the unassigned team
+     *
      * @return the unassigned team
      */
-    public static Team getUnassignedTeam()
-    {
-        if (currentWorkspace.getTeams() == null || currentWorkspace.getTeams().isEmpty())
-        {
+    public static Team getUnassignedTeam() {
+        if (currentWorkspace.getTeams() == null || currentWorkspace.getTeams().isEmpty()) {
             return null;
         }
-        for (Team team : currentWorkspace.getTeams())
-        {
-            if (team.isUnassignedTeam())
-            {
+        for (Team team : currentWorkspace.getTeams()) {
+            if (team.isUnassignedTeam()) {
                 return team;
             }
         }
@@ -45,8 +42,7 @@ public final class Global
     /**
      * Mark the current workspace as changed.
      */
-    public static void setCurrentWorkspaceChanged()
-    {
+    public static void setCurrentWorkspaceChanged() {
         currentWorkspace.setChanged();
         App.refreshWindowTitle();
     }
@@ -55,8 +51,7 @@ public final class Global
     /**
      * Mark the current workspace as unchanged.
      */
-    public static void setCurrentWorkspaceUnchanged()
-    {
+    public static void setCurrentWorkspaceUnchanged() {
         currentWorkspace.setUnchanged();
         App.refreshWindowTitle();
     }

@@ -10,18 +10,17 @@ import org.junit.Test;
 
 /**
  * A test class for NameValidator
+ *
  * @author Jordane
  */
-public class NameValidatorTest
-{
+public class NameValidatorTest {
     /**
      * Test of validateName method, of class NameValidator.
      */
     @Test
-    public void testValidateName()
-    {
+    public void testValidateName() {
         Assert.assertEquals(ValidationStatus.INVALID, NameValidator.validateName(""));
         Assert.assertEquals(ValidationStatus.VALID, NameValidator.validateName("Greg"));
     }
-    
+
 }

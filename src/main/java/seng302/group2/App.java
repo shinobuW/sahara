@@ -21,18 +21,16 @@ import seng302.group2.workspace.Workspace.SaveLoadResult;
  * The executable class for Sahara.
  */
 @SuppressWarnings("deprecation")
-public class App extends Application
-{
+public class App extends Application {
     public static SplitPane content;
-    
+
     private static Stage mainStage;
     private static Scene mainScene;
-    
+
     /**
      * Refreshes the main scene GUI.
      */
-    public static void refreshMainScene()
-    {
+    public static void refreshMainScene() {
         App.content = new SplitPane();
         content.setDividerPositions(0.2);
         App.mainScene = MainScene.getMainScene();
@@ -44,90 +42,32 @@ public class App extends Application
     /**
      * Refreshes the title of the window to show the name of the current workspace, if any.
      */
-    public static void refreshWindowTitle()
-    {
-        if (App.mainStage == null)
-        {
+    public static void refreshWindowTitle() {
+        if (App.mainStage == null) {
             return;
         }
-        if (Global.currentWorkspace == null)
-        {
+        if (Global.currentWorkspace == null) {
             App.mainStage.titleProperty().set("Sahara");
         }
-        else
-        {
-            if (Global.currentWorkspace.getHasUnsavedChanges())
-            {
+        else {
+            if (Global.currentWorkspace.getHasUnsavedChanges()) {
                 App.mainStage.titleProperty().set("Sahara: " + Global.currentWorkspace.getLongName()
                         + "*");
             }
-            else
-            {
+            else {
                 App.mainStage.titleProperty().set("Sahara: "
                         + Global.currentWorkspace.getLongName());
             }
         }
     }
-    
-    
-    /**
-     * The GUI setup and launch of the workspace.
-     * @param primaryStage primary stage
-     */
-    @Override
-    public void start(Stage primaryStage)
-    {
-        Global.currentWorkspace = new Workspace();
-
-        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        
-        // The title of the window
-        primaryStage.setTitle("Sahara");
-      
-        primaryStage.setWidth(1060);
-        primaryStage.setHeight(640);
-        primaryStage.setMinWidth(900);
-        primaryStage.setMinHeight(500);
-	
-	//primaryStage.setWidth(0.75 * screenSize.getWidth());
-        //primaryStage.setHeight(0.75 * screenSize.getHeight());
-        //primaryStage.setMinHeight(0.25 * screenSize.getWidth());
-        //primaryStage.setMinWidth(0.25 * screenSize.getWidth());
-	
-        primaryStage.getIcons().add(new Image("file:images/icon.png"));
-        
-        // Set the scene of the stage to the initial scene
-        content = new SplitPane();
-        App.mainScene = MainScene.getMainScene();
-        primaryStage.setScene(App.mainScene);
-        mainStage = primaryStage;
-
-        // Load the config
-        ConfigLoader.loadConfig();
-        
-        // Exit button handling
-        Platform.setImplicitExit(false);
-        primaryStage.setOnCloseRequest(event ->
-            {
-                exitApp();
-                event.consume();
-            });
-
-        // Show the stage/window
-        App.refreshWindowTitle();
-        mainStage.show();
-    }
-
 
     /**
      * The closure and application tear-down method that should be executed on closure of the
      * application from any branch of the project code
      */
-    public static void exitApp()
-    {
+    public static void exitApp() {
         ConfigLoader.saveConfig();
-        if (!Global.currentWorkspace.getHasUnsavedChanges())
-        {
+        if (!Global.currentWorkspace.getHasUnsavedChanges()) {
             System.exit(0);
             return;  // Clean from a method POV
         }
@@ -137,29 +77,72 @@ public class App extends Application
                 .message("Would you like to save your changes to the current workspace?")
                 .showConfirm();
 
-        if (response == Dialog.ACTION_YES)
-        {
+        if (response == Dialog.ACTION_YES) {
             SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
-            if (saved == SaveLoadResult.SUCCESS)
-            {
+            if (saved == SaveLoadResult.SUCCESS) {
                 // Save configuration again as settings may change on save of workspace
                 ConfigLoader.saveConfig();
                 System.exit(0);
             }
         }
-        else if (response == Dialog.ACTION_NO)
-        {
+        else if (response == Dialog.ACTION_NO) {
             System.exit(0);
         }
     }
 
-    
     /**
      * The main entry of the application.
+     *
      * @param args arguments
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         launch(args);
+    }
+
+    /**
+     * The GUI setup and launch of the workspace.
+     *
+     * @param primaryStage primary stage
+     */
+    @Override
+    public void start(Stage primaryStage) {
+        Global.currentWorkspace = new Workspace();
+
+        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+        // The title of the window
+        primaryStage.setTitle("Sahara");
+
+        primaryStage.setWidth(1060);
+        primaryStage.setHeight(640);
+        primaryStage.setMinWidth(900);
+        primaryStage.setMinHeight(500);
+
+        //primaryStage.setWidth(0.75 * screenSize.getWidth());
+        //primaryStage.setHeight(0.75 * screenSize.getHeight());
+        //primaryStage.setMinHeight(0.25 * screenSize.getWidth());
+        //primaryStage.setMinWidth(0.25 * screenSize.getWidth());
+
+        primaryStage.getIcons().add(new Image("file:images/icon.png"));
+
+        // Set the scene of the stage to the initial scene
+        content = new SplitPane();
+        App.mainScene = MainScene.getMainScene();
+        primaryStage.setScene(App.mainScene);
+        mainStage = primaryStage;
+
+        // Load the config
+        ConfigLoader.loadConfig();
+
+        // Exit button handling
+        Platform.setImplicitExit(false);
+        primaryStage.setOnCloseRequest(event -> {
+                exitApp();
+                event.consume();
+            });
+
+        // Show the stage/window
+        App.refreshWindowTitle();
+        mainStage.show();
     }
 }

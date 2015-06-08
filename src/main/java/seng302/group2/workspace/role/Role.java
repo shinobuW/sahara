@@ -20,26 +20,17 @@ import static javafx.collections.FXCollections.observableArrayList;
 /**
  * @author swi67
  */
-public class Role extends TreeViewItem implements Serializable
-{
-    public enum RoleType
-    {
-        SCRUM_MASTER, PRODUCT_OWNER, DEVELOPMENT_TEAM_MEMBER, OTHER, NONE
-    }
-
-
+public class Role extends TreeViewItem implements Serializable {
     private String shortName;
     private String description;
     private RoleType type;
     private transient ObservableList<Skill> requiredSkills = observableArrayList();
     private List<Skill> serializableRequiredSkills = new ArrayList<>();
     private boolean defaultRole;
-
     /**
      * Basic Role constructor
      */
-    public Role()
-    {
+    public Role() {
         // Initialize as a TreeViewItem
         super("unnamed");
         this.shortName = "role Name";
@@ -49,11 +40,11 @@ public class Role extends TreeViewItem implements Serializable
 
     /**
      * Role Constructor
+     *
      * @param shortName short name to be set
      * @param type      type of role to be set
      */
-    public Role(String shortName, RoleType type)
-    {
+    public Role(String shortName, RoleType type) {
         // Initialize as a TreeViewItem
         super(shortName);
         this.shortName = shortName;
@@ -62,12 +53,12 @@ public class Role extends TreeViewItem implements Serializable
 
     /**
      * Role Constructor
+     *
      * @param shortName   short name to be set
      * @param type        type of role to be set
      * @param description brief description of role
      */
-    public Role(String shortName, RoleType type, String description)
-    {
+    public Role(String shortName, RoleType type, String description) {
         // Initialize as a TreeViewItem
         super(shortName);
         this.shortName = shortName;
@@ -77,12 +68,12 @@ public class Role extends TreeViewItem implements Serializable
 
     /**
      * Role Constructor
+     *
      * @param shortName short name to be set
      * @param type      type of role to be set
      * @param skills    skills required for role
      */
-    public Role(String shortName, RoleType type, ObservableList<Skill> skills)
-    {
+    public Role(String shortName, RoleType type, ObservableList<Skill> skills) {
         // Initialize as a TreeViewItem
         super(shortName);
         this.shortName = shortName;
@@ -93,19 +84,36 @@ public class Role extends TreeViewItem implements Serializable
 
     /**
      * Role Constructor
+     *
      * @param shortName   short name to be set
      * @param type        type of role to be set
      * @param description brief description of role
      * @param skills      skills required for role
      */
-    public Role(String shortName, RoleType type, String description, ObservableList<Skill> skills)
-    {
+    public Role(String shortName, RoleType type, String description, ObservableList<Skill> skills) {
         // Initialize as a TreeViewItem
         super(shortName);
         this.shortName = shortName;
         this.description = description;
         this.requiredSkills = skills;
         this.type = type;
+    }
+
+    /**
+     * Searches all roles in the workspace to find the role for the given type
+     *
+     * @param type The type of role to return
+     * @return The role in the workspace of the given type
+     */
+    public static Role getRoleFromType(RoleType type) {
+        Role role = null;
+        for (Role wsrole : Global.currentWorkspace.getRoles()) {
+            if (wsrole.getType().equals(type)) {
+                role = wsrole;
+                break;
+            }
+        }
+        return role;
     }
 
 
@@ -116,45 +124,76 @@ public class Role extends TreeViewItem implements Serializable
      *
      * @return The short name of the role
      */
-    public String getShortName()
-    {
+    public String getShortName() {
         return this.shortName;
     }
 
     /**
+     * Sets the role's short name
+     *
+     * @param shortName the short name to set
+     */
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+
+    /**
      * Gets the Role's description
-     *Role
+     * Role
+     *
      * @return The description name of the description
      */
-    public String getDescription()
-    {
+    public String getDescription() {
         return this.description;
     }
 
     /**
+     * Sets the role's short name
+     *
+     * @param description the short name to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
      * Gets the type of role
+     *
      * @return Type of role
      */
-    public RoleType getType()
-    {
+    public RoleType getType() {
         return this.type;
     }
 
     /**
-     * Gets the required skills for a role
-     * @return list of skills
+     * Sets the type of role
+     *
+     * @param type RoleType to set
      */
-    public ObservableList<Skill> getRequiredSkills()
-    {
-        return this.requiredSkills;
+    public void setType(RoleType type) {
+        this.type = type;
     }
 
     /**
      * Gets the required skills for a role
+     *
      * @return list of skills
      */
-    public List<Skill> getSerializableRequiredSkills()
-    {
+    public ObservableList<Skill> getRequiredSkills() {
+        return this.requiredSkills;
+    }
+
+
+    //</editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Setters">
+
+    /**
+     * Gets the required skills for a role
+     *
+     * @return list of skills
+     */
+    public List<Skill> getSerializableRequiredSkills() {
         return this.serializableRequiredSkills;
     }
 
@@ -163,64 +202,8 @@ public class Role extends TreeViewItem implements Serializable
      *
      * @return whether the role is a default role or not
      */
-    public boolean isDefault()
-    {
+    public boolean isDefault() {
         return this.defaultRole;
-    }
-    
-    
-    /**
-     * Searches all roles in the workspace to find the role for the given type
-     * @param type The type of role to return
-     * @return The role in the workspace of the given type
-     */
-    public static Role getRoleFromType(RoleType type)
-    {
-        Role role = null;
-        for (Role wsrole : Global.currentWorkspace.getRoles())
-        {
-            if (wsrole.getType().equals(type))
-            {
-                role = wsrole;
-                break;
-            }
-        }
-        return role;
-    }
-    
-
-    //</editor-fold>
-
-    // <editor-fold defaultstate="collapsed" desc="Setters">
-
-    /**
-     * Sets the role's short name
-     *
-     * @param shortName the short name to set
-     */
-    public void setShortName(String shortName)
-    {
-        this.shortName = shortName;
-    }
-
-    /**
-     * Sets the role's short name
-     *
-     * @param description the short name to set
-     */
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
-
-    /**
-     * Sets the type of role
-     *
-     * @param type RoleType to set
-     */
-    public void setType(RoleType type)
-    {
-        this.type = type;
     }
 
     /**
@@ -228,34 +211,28 @@ public class Role extends TreeViewItem implements Serializable
      *
      * @param isDefault Boolean type of default to set
      */
-    public void setDefault(boolean isDefault)
-    {
+    public void setDefault(boolean isDefault) {
         this.defaultRole = isDefault;
+    }
+
+    /**
+     * Prepares a role to be serialized.
+     */
+    public void prepSerialization() {
+        serializableRequiredSkills.clear();
+        for (Skill skill : requiredSkills) {
+            this.serializableRequiredSkills.add(skill);
+        }
     }
 
     //</editor-fold>  
 
     /**
-     * Prepares a role to be serialized.
-     */
-    public void prepSerialization()
-    {
-        serializableRequiredSkills.clear();
-        for (Skill skill : requiredSkills)
-        {
-            this.serializableRequiredSkills.add(skill);
-        }
-    }
-
-
-    /**
      * Deserialization post-processing.
      */
-    public void postSerialization()
-    {
+    public void postSerialization() {
         requiredSkills.clear();
-        for (Skill skill : serializableRequiredSkills)
-        {
+        for (Skill skill : serializableRequiredSkills) {
             this.requiredSkills.add(skill);
         }
     }
@@ -266,14 +243,16 @@ public class Role extends TreeViewItem implements Serializable
      * @return The items of the TreeViewItem
      */
     @Override
-    public ObservableList<TreeViewItem> getChildren()
-    {
+    public ObservableList<TreeViewItem> getChildren() {
         return null;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.shortName;
+    }
+
+    public enum RoleType {
+        SCRUM_MASTER, PRODUCT_OWNER, DEVELOPMENT_TEAM_MEMBER, OTHER, NONE
     }
 }

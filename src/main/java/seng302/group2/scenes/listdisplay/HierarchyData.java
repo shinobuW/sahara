@@ -1,7 +1,7 @@
 package seng302.group2.scenes.listdisplay;
 
 import javafx.collections.ObservableList;
- 
+
 /**
  * Used to mark an object as hierarchical data.
  * This object can then be used as data source for an hierarchical control, like the
@@ -9,8 +9,7 @@ import javafx.collections.ObservableList;
  *
  * @author Christian Schudt
  */
-public interface HierarchyData<T extends HierarchyData>
-{
+public interface HierarchyData<T extends HierarchyData> {
     /**
      * The children collection, which represents the recursive nature of the hierarchy.
      * Each child is again a {@link HierarchyData}.

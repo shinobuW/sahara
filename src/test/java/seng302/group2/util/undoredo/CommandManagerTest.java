@@ -5,72 +5,30 @@ import org.junit.Before;
 import org.junit.Test;
 import seng302.group2.Global;
 
-public class CommandManagerTest
-{
+public class CommandManagerTest {
 
     private TestObject testObject;
     private Command testCommand;
-
-
-    private class TestObject
-    {
-        public String testString;
-        public TestObject(String string)
-        {
-            this.testString = string;
-        }
-    }
-
-
-    private class TestCommand implements Command
-    {
-        TestObject obj;
-        String newName;
-        String oldName;
-
-        public TestCommand(TestObject obj, String newName)
-        {
-            this.obj = obj;
-            this.newName = newName;
-            this.oldName = obj.testString;
-        }
-
-        @Override
-        public void execute()
-        {
-            obj.testString = newName;
-        }
-
-        @Override
-        public void undo()
-        {
-            obj.testString = oldName;
-        }
-    }
-
 
     /**
      * Create and reset objects for testing
      */
     @Before
-    public void setupBefore()
-    {
+    public void setupBefore() {
         Global.commandManager.clear();  // Clear the command stacks
         testObject = new TestObject("original");  // Create a test object for quick use
         testCommand = new TestCommand(testObject, "unoriginal");  // A command that changes testObj
     }
 
     @Test
-    public void testExecuteCommand()
-    {
+    public void testExecuteCommand() {
         Assert.assertEquals(testObject.testString, "original");  // Created, not executed
         Global.commandManager.executeCommand(testCommand);  // Execute
         Assert.assertEquals(testObject.testString, "unoriginal");
     }
 
     @Test
-    public void testIsUndoAvailable()
-    {
+    public void testIsUndoAvailable() {
         Global.commandManager.clear();
         Assert.assertFalse(Global.commandManager.isUndoAvailable());  // No objects pushed
         Global.commandManager.executeCommand(testCommand);  // Push an object
@@ -78,8 +36,7 @@ public class CommandManagerTest
     }
 
     @Test
-    public void testUndo() throws Exception
-    {
+    public void testUndo() throws Exception {
         Assert.assertEquals(testObject.testString, "original");  // Created, not executed
         Global.commandManager.executeCommand(testCommand);  // Execute
         Assert.assertEquals(testObject.testString, "unoriginal");
@@ -88,8 +45,7 @@ public class CommandManagerTest
     }
 
     @Test
-    public void testIsRedoAvailable() throws Exception
-    {
+    public void testIsRedoAvailable() throws Exception {
         Assert.assertFalse(Global.commandManager.isRedoAvailable());  // No objects undone
         Global.commandManager.executeCommand(testCommand);  // Execute
         Assert.assertFalse(Global.commandManager.isRedoAvailable());  // Still no objects undone
@@ -98,8 +54,7 @@ public class CommandManagerTest
     }
 
     @Test
-    public void testRedo() throws Exception
-    {
+    public void testRedo() throws Exception {
         Assert.assertEquals(testObject.testString, "original");  // Created, not executed
         Global.commandManager.executeCommand(testCommand);  // Execute
         Assert.assertEquals(testObject.testString, "unoriginal");  // Executed, not undone
@@ -108,8 +63,7 @@ public class CommandManagerTest
     }
 
     @Test
-    public void testNumUndos()
-    {
+    public void testNumUndos() {
         Assert.assertEquals(0, Global.commandManager.numUndos());
         Global.commandManager.executeCommand(testCommand);
         Assert.assertEquals(1, Global.commandManager.numUndos()); //One more for the changes tracker
@@ -118,8 +72,7 @@ public class CommandManagerTest
     }
 
     @Test
-    public void testNumRedos()
-    {
+    public void testNumRedos() {
         Assert.assertEquals(0, Global.commandManager.numRedos());
         Global.commandManager.executeCommand(testCommand);
         Global.commandManager.undo();
@@ -129,8 +82,7 @@ public class CommandManagerTest
     }
 
     @Test
-    public void testClear()
-    {
+    public void testClear() {
         Global.commandManager.executeCommand(testCommand);
         Global.commandManager.executeCommand(testCommand);
         Global.commandManager.undo();
@@ -142,8 +94,7 @@ public class CommandManagerTest
     }
 
     @Test
-    public void testTrackSave()
-    {
+    public void testTrackSave() {
         Global.commandManager.clear();
         Assert.assertTrue(Global.currentWorkspace.getHasUnsavedChanges());
         Global.commandManager.trackSave();
@@ -154,5 +105,35 @@ public class CommandManagerTest
         Assert.assertFalse(Global.currentWorkspace.getHasUnsavedChanges());
         Global.commandManager.redo();
         Assert.assertTrue(Global.currentWorkspace.getHasUnsavedChanges());
+    }
+
+    private class TestObject {
+        public String testString;
+
+        public TestObject(String string) {
+            this.testString = string;
+        }
+    }
+
+    private class TestCommand implements Command {
+        TestObject obj;
+        String newName;
+        String oldName;
+
+        public TestCommand(TestObject obj, String newName) {
+            this.obj = obj;
+            this.newName = newName;
+            this.oldName = obj.testString;
+        }
+
+        @Override
+        public void execute() {
+            obj.testString = newName;
+        }
+
+        @Override
+        public void undo() {
+            obj.testString = oldName;
+        }
     }
 }

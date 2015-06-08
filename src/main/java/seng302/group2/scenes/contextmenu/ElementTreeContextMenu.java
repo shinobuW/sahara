@@ -3,8 +3,8 @@ package seng302.group2.scenes.contextmenu;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import seng302.group2.Global;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.person.Person;
@@ -19,165 +19,121 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 
 /**
- *ContextMenu class for instances of Person, Skill and Team
+ * ContextMenu class for instances of Person, Skill and Team
+ *
  * @author swi67, jml168, btm38
  */
 @SuppressWarnings("deprecation")
-public class ElementTreeContextMenu extends ContextMenu
-{
-    /**
-     * An enumeration of the categories selected.
-     * Each category my have different menu items associated.
-     */
-    public enum Categories
-    {
-        PERSON,
-        SKILL,
-        TEAM,
-        PROJECT,
-        WORKSPACE,
-        ROLE,
-        RELEASE,
-        STORY,
-        BACKLOG,
-        OTHER  // For anything else, or unresolved.
-    }
-
-
+public class ElementTreeContextMenu extends ContextMenu {
     /**
      * Constructor. Sets the event for contextMenu buttons
      */
-    public ElementTreeContextMenu()
-    {
+    public ElementTreeContextMenu() {
         MenuItem deleteItem = new MenuItem("Delete");
         MenuItem editItem = new MenuItem("Edit");
-        
+
         Categories selectedCategory = getSelectedCategory();
 
         final Categories finalSelectedCategory = selectedCategory;  // for use in lamda expr.
 
         //"Edit" button event
-        editItem.setOnAction(e ->
-            {
+        editItem.setOnAction(e -> {
                 showEditScene(finalSelectedCategory);
             });
-        
+
         //"Delete" button event
-        deleteItem.setOnAction(e -> 
-            {
-                showDeleteDialog((TreeViewItem)Global.selectedTreeItem.getValue());
+        deleteItem.setOnAction(e -> {
+                showDeleteDialog((TreeViewItem) Global.selectedTreeItem.getValue());
             });
 
         this.getItems().addAll(editItem, deleteItem);
 
-        if (selectedCategory == Categories.TEAM)
-        {
+        if (selectedCategory == Categories.TEAM) {
             Team selectedTeam = (Team) Global.selectedTreeItem.getValue();
-            if (selectedTeam.isUnassignedTeam())
-            {
+            if (selectedTeam.isUnassignedTeam()) {
                 editItem.setDisable(true);
                 deleteItem.setDisable(true);
             }
-            else
-            {
+            else {
                 editItem.setDisable(false);
                 deleteItem.setDisable(false);
             }
         }
-        
-        if (selectedCategory == Categories.ROLE)
-        {
+
+        if (selectedCategory == Categories.ROLE) {
             Role selectedRole = (Role) Global.selectedTreeItem.getValue();
-            if (!selectedRole.isDefault())
-            {
+            if (!selectedRole.isDefault()) {
                 editItem.setDisable(true);
                 deleteItem.setDisable(true);
             }
-            else
-            {
+            else {
                 editItem.setDisable(false);
                 deleteItem.setDisable(false);
             }
         }
-        
-        if (selectedCategory == Categories.SKILL)
-        {
+
+        if (selectedCategory == Categories.SKILL) {
             Skill selectedSkill = (Skill) Global.selectedTreeItem.getValue();
             if (selectedSkill.getShortName().equals("Scrum Master")
-                    || selectedSkill.getShortName().equals("Product Owner"))
-            {
+                    || selectedSkill.getShortName().equals("Product Owner")) {
                 editItem.setDisable(true);
                 deleteItem.setDisable(true);
             }
-            else
-            {
+            else {
                 editItem.setDisable(false);
                 deleteItem.setDisable(false);
             }
         }
-        
-        if (selectedCategory == Categories.WORKSPACE)
-        {
+
+        if (selectedCategory == Categories.WORKSPACE) {
             deleteItem.setDisable(true);
         }
     }
 
-
     /**
      * Gets the category of the selected tree item.
+     *
      * @return An enum value of the selected tree item's category
      */
-    private static Categories getSelectedCategory()
-    {
+    private static Categories getSelectedCategory() {
         Categories selectedCategory = Categories.OTHER;
-        if (Global.selectedTreeItem.getValue().getClass() == Person.class)
-        {
+        if (Global.selectedTreeItem.getValue().getClass() == Person.class) {
             selectedCategory = Categories.PERSON;
         }
-        else if (Global.selectedTreeItem.getValue().getClass() == Skill.class)
-        {
+        else if (Global.selectedTreeItem.getValue().getClass() == Skill.class) {
             selectedCategory = Categories.SKILL;
         }
-        else if (Global.selectedTreeItem.getValue().getClass() == Team.class)
-        {
+        else if (Global.selectedTreeItem.getValue().getClass() == Team.class) {
             selectedCategory = Categories.TEAM;
         }
-        else if (Global.selectedTreeItem.getValue().getClass() == Workspace.class)
-        {
+        else if (Global.selectedTreeItem.getValue().getClass() == Workspace.class) {
             selectedCategory = Categories.WORKSPACE;
         }
-        else if (Global.selectedTreeItem.getValue().getClass() == Project.class)
-        {
+        else if (Global.selectedTreeItem.getValue().getClass() == Project.class) {
             selectedCategory = Categories.PROJECT;
         }
-        else if (Global.selectedTreeItem.getValue().getClass() == Role.class)
-        {
+        else if (Global.selectedTreeItem.getValue().getClass() == Role.class) {
             selectedCategory = Categories.ROLE;
         }
-        else if (Global.selectedTreeItem.getValue().getClass() == Release.class)
-        {
+        else if (Global.selectedTreeItem.getValue().getClass() == Release.class) {
             selectedCategory = Categories.RELEASE;
         }
-        else if (Global.selectedTreeItem.getValue().getClass() == Story.class)
-        {
+        else if (Global.selectedTreeItem.getValue().getClass() == Story.class) {
             selectedCategory = Categories.STORY;
         }
-        else if (Global.selectedTreeItem.getValue().getClass() == Backlog.class)
-        {
+        else if (Global.selectedTreeItem.getValue().getClass() == Backlog.class) {
             selectedCategory = Categories.BACKLOG;
         }
         return selectedCategory;
     }
 
-
     /**
      * Displays the edit scene for given element
+     *
      * @param category Type of Category
      */
-    private static void showEditScene(Categories category)
-    {
-        switch (category)
-        {
+    private static void showEditScene(Categories category) {
+        switch (category) {
             case PERSON:
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON_EDIT,
                         (Person) Global.selectedTreeItem.getValue());
@@ -217,5 +173,23 @@ public class ElementTreeContextMenu extends ContextMenu
                 System.out.println("The category was not set");
                 break;
         }
+    }
+
+
+    /**
+     * An enumeration of the categories selected.
+     * Each category my have different menu items associated.
+     */
+    public enum Categories {
+        PERSON,
+        SKILL,
+        TEAM,
+        PROJECT,
+        WORKSPACE,
+        ROLE,
+        RELEASE,
+        STORY,
+        BACKLOG,
+        OTHER  // For anything else, or unresolved.
     }
 }

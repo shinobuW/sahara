@@ -5,24 +5,18 @@ import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.Category;
 import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
-import seng302.group2.workspace.team.Team;
 
 import java.util.Collection;
 import java.util.HashSet;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by Jordane on 7/06/2015.
  */
-public class SkillsCategoryTest
-{
+public class SkillsCategoryTest {
 
     @Test
-    public void testGetChildren() throws Exception
-    {
+    public void testGetChildren() throws Exception {
         Workspace ws = new Workspace();
         Global.currentWorkspace = ws;
         Collection<Skill> skills = new HashSet<>();
@@ -37,15 +31,13 @@ public class SkillsCategoryTest
     }
 
     @Test
-    public void testToString()
-    {
+    public void testToString() {
         Category skillsCat = new SkillsCategory();
         Assert.assertEquals("Skills", skillsCat.toString());
     }
 
     @Test
-    public void testEquals()
-    {
+    public void testEquals() {
         Category s1 = new SkillsCategory();
         Category s2 = new SkillsCategory();
         Assert.assertEquals(s1, s2);

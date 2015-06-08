@@ -7,10 +7,10 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.story.Story;
 
 import static seng302.group2.scenes.MainScene.informationPane;
@@ -21,20 +21,19 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  * A class for displaying the Story edit scene.
  * Created by drm127 on 17/05/15.
  */
-public class StoryEditScene
-{
+public class StoryEditScene {
     /**
      * Gets the Story Edit information scene.
+     *
      * @param currentStory The story to show the information of
      * @return The story Edit information display
      */
-    public static ScrollPane getStoryEditScene(Story currentStory)
-    {
+    public static ScrollPane getStoryEditScene(Story currentStory) {
         informationPane = new VBox(10);
         /*informationPane.setAlignment(Pos.TOP_LEFT);
         informationPane.setHgap(10);
         informationPane.setVgap(10);*/
-        informationPane.setPadding(new Insets(25,25,25,25));
+        informationPane.setPadding(new Insets(25, 25, 25, 25));
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Done");
@@ -64,50 +63,45 @@ public class StoryEditScene
         informationPane.getChildren().add(buttons);
 
 
-        btnCancel.setOnAction((event) ->
-            {
+        btnCancel.setOnAction((event) -> {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY, currentStory);
             });
 
-        btnSave.setOnAction((event) ->
-            {
+        btnSave.setOnAction((event) -> {
                 boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                    currentStory.getShortName());
+                        currentStory.getShortName());
                 boolean longNameUnchanged = longNameTextField.getText().equals(
-                    currentStory.getLongName());
+                        currentStory.getLongName());
                 boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                    currentStory.getDescription());
+                        currentStory.getDescription());
                 boolean priorityUnchanged = priorityNumberField.getText().equals(
-                    currentStory.getPriority());
+                        currentStory.getPriority());
 
                 if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged
-                    &&  priorityUnchanged)
-                {
+                        && priorityUnchanged) {
                     // No changes
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY, currentStory);
                     return;
                 }
 
                 boolean correctShortName = validateShortName(shortNameCustomField,
-                    currentStory.getShortName());
+                        currentStory.getShortName());
                 boolean correctPriority = validateNumberField(priorityNumberField);
 
-                if (correctShortName && correctPriority)
-                {
+                if (correctShortName && correctPriority) {
                     // Valid short name, make the edit
                     currentStory.edit(shortNameCustomField.getText(),
-                        longNameTextField.getText(),
-                        descriptionTextArea.getText(),
-                        currentStory.getProject(),
-                        Integer.parseInt(priorityNumberField.getText()),
-                        currentStory.getBacklog()
+                            longNameTextField.getText(),
+                            descriptionTextArea.getText(),
+                            currentStory.getProject(),
+                            Integer.parseInt(priorityNumberField.getText()),
+                            currentStory.getBacklog()
                     );
 
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY, currentStory);
                     MainScene.treeView.refresh();
                 }
-                else
-                {
+                else {
                     event.consume();
                 }
 

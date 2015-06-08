@@ -16,20 +16,20 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * A class for displaying all releases in a project.
+ *
  * @author David Moseley
  */
-public class ReleaseCategoryScene
-{
+public class ReleaseCategoryScene {
     /**
      * Gets the Release Category Scene
+     *
      * @param selectedCategory The category currently selected
      * @return The release category info scene
      */
-    public static ScrollPane getReleaseCategoryScene(ReleaseCategory selectedCategory)
-    {
+    public static ScrollPane getReleaseCategoryScene(ReleaseCategory selectedCategory) {
         informationPane = new VBox(10);
 
-        informationPane.setPadding(new Insets(25,25,25,25));
+        informationPane.setPadding(new Insets(25, 25, 25, 25));
         Label title = new TitleLabel("Releases in " + selectedCategory.getProject().toString());
 
         Button btnView = new Button("View");
@@ -52,27 +52,22 @@ public class ReleaseCategoryScene
         informationPane.getChildren().add(releaseBox);
         informationPane.getChildren().add(selectionButtons);
 
-        btnView.setOnAction((event) ->
-            {
-                if (releaseBox.getSelectionModel().getSelectedItem() != null)
-                {
+        btnView.setOnAction((event) -> {
+                if (releaseBox.getSelectionModel().getSelectedItem() != null) {
                     MainScene.treeView.selectItem((TreeViewItem)
                             releaseBox.getSelectionModel().getSelectedItem());
                 }
             });
 
 
-        btnDelete.setOnAction((event) ->
-            {
-                if (releaseBox.getSelectionModel().getSelectedItem() != null)
-                {
+        btnDelete.setOnAction((event) -> {
+                if (releaseBox.getSelectionModel().getSelectedItem() != null) {
                     showDeleteDialog((TreeViewItem) releaseBox.getSelectionModel()
                             .getSelectedItem());
                 }
             });
 
-        btnCreate.setOnAction((event) ->
-            {
+        btnCreate.setOnAction((event) -> {
                 CreateReleaseDialog.show(selectedCategory.getProject());
             });
 

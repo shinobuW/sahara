@@ -8,9 +8,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.project.Project;
 
 import java.util.Collections;
@@ -24,18 +24,17 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  * A class for displaying the project edit scene.
  * Created by jml168 on 7/04/15.
  */
-public class ProjectEditScene
-{
+public class ProjectEditScene {
     /**
      * Gets the workspace edit information scene.
+     *
      * @param currentProject The project to display the editable information of
      * @return The Workspace Edit information scene
      */
-    public static ScrollPane getProjectEditScene(Project currentProject)
-    {
+    public static ScrollPane getProjectEditScene(Project currentProject) {
         informationPane = new VBox(10);
 
-        informationPane.setPadding(new Insets(25,25,25,25));
+        informationPane.setPadding(new Insets(25, 25, 25, 25));
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Done");
@@ -112,46 +111,41 @@ public class ProjectEditScene
         informationPane.getChildren().add(h1);*/
         informationPane.getChildren().add(buttons);
 
-        btnSave.setOnAction((event) ->
-            {
+        btnSave.setOnAction((event) -> {
                 boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                    currentProject.getShortName());
+                        currentProject.getShortName());
                 boolean longNameUnchanged = longNameCustomField.getText().equals(
-                    currentProject.getLongName());
+                        currentProject.getLongName());
                 boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                    currentProject.getDescription());
+                        currentProject.getDescription());
 
                 // If no fields have been changed
-                if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged)
-                {
+                if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
                     return;
                 }
 
                 boolean correctShortName = validateShortName(shortNameCustomField,
-                    currentProject.getShortName());
+                        currentProject.getShortName());
                 boolean correctLongName = validateName(longNameCustomField);
 
-                if (correctShortName && correctLongName)
-                {
+                if (correctShortName && correctLongName) {
                     currentProject.edit(shortNameCustomField.getText(),
-                        longNameCustomField.getText(), descriptionTextArea.getText(),
-                        observableArrayList()
+                            longNameCustomField.getText(), descriptionTextArea.getText(),
+                            observableArrayList()
                     );
 
                     Collections.sort(Global.currentWorkspace.getProjects());
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
                     MainScene.treeView.refresh();
                 }
-                else
-                {
+                else {
                     // One or more fields incorrectly validated, stay on the edit scene
                     event.consume();
                 }
             });
 
-        btnCancel.setOnAction((event) ->
-            {
+        btnCancel.setOnAction((event) -> {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
             });
 

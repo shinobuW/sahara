@@ -34,76 +34,67 @@ import static seng302.group2.App.content;
 
 /**
  * A class for holding JavaFX scenes used in the workspace
+ *
  * @author Jordane Lew (jml168)
  */
-public class MainScene
-{
+public class MainScene {
     public static TreeViewWithItems treeView = new TreeViewWithItems(new TreeItem());
     public static Pane informationPane = new Pane();
     public static ScrollPane contentPane = new ScrollPane();
     public static boolean menuHidden = false;
-    
+
     /**
      * Gets the Main Scene for display in the GUI
+     *
      * @return The Main Scene.
      */
-    public static Scene getMainScene()
-    {
+    public static Scene getMainScene() {
         // The root window box
         BorderPane root = new BorderPane();
         MenuBar menuBar = MainMenuBar.getMainMenuBar();
         root.setTop(menuBar);
         //root.getChildren().add(new StackPane(menuBar));
 
-        if (Global.selectedTreeItem == null || Global.selectedTreeItem.getValue() == null)
-        {
+        if (Global.selectedTreeItem == null || Global.selectedTreeItem.getValue() == null) {
             treeView.selectItem(Global.currentWorkspace);
             contentPane.setContent(new WorkspaceScene(
                     Global.currentWorkspace));
         }
-        else if (Global.selectedTreeItem.getValue() instanceof Workspace)
-        {
+        else if (Global.selectedTreeItem.getValue() instanceof Workspace) {
             contentPane.setContent(new WorkspaceScene(
                     (Workspace) Global.selectedTreeItem.getValue()));
         }
-        else if (Global.selectedTreeItem.getValue() instanceof Project)
-        {
+        else if (Global.selectedTreeItem.getValue() instanceof Project) {
             contentPane.setContent(new ProjectScene((Project) Global.selectedTreeItem.getValue()));
         }
-        else if (Global.selectedTreeItem.getValue() instanceof Person)
-        {
+        else if (Global.selectedTreeItem.getValue() instanceof Person) {
             contentPane.setContent(new PersonScene((Person) Global.selectedTreeItem.getValue()));
         }
-        else if (Global.selectedTreeItem.getValue() instanceof Skill)
-        {
+        else if (Global.selectedTreeItem.getValue() instanceof Skill) {
             contentPane.setContent(new SkillScene((Skill) Global.selectedTreeItem.getValue()));
         }
-        else if (Global.selectedTreeItem.getValue() instanceof Team)
-        {
+        else if (Global.selectedTreeItem.getValue() instanceof Team) {
             contentPane.setContent(new TeamScene((Team) Global.selectedTreeItem.getValue()));
         }
-        else if (Global.selectedTreeItem.getValue() instanceof Role)
-        {
+        else if (Global.selectedTreeItem.getValue() instanceof Role) {
             contentPane.setContent(new RoleScene((Role) Global.selectedTreeItem.getValue()));
         }
-        
+
 
         // Create the display menu from the workspace tree
-        
+
         ObservableList<TreeViewItem> children = observableArrayList();
         children.add(Global.currentWorkspace);
 
-        
+
         treeView.setItems(children);
         treeView.setShowRoot(false);
 
-        
-        root.heightProperty().addListener(new ChangeListener<Number>()
-        {
+
+        root.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> arg0,
-                                Number arg1, Number arg2)
-            {
+                                Number arg1, Number arg2) {
                 App.content.setPrefHeight(arg2.doubleValue());
             }
         });
@@ -119,8 +110,7 @@ public class MainScene
         content.getItems().removeAll(treeView, informationPane);
         //content.getChildren().removeAll(treeView, informationPane);
 
-        if (!menuHidden)
-        {
+        if (!menuHidden) {
             content.getItems().add(treeView);
             //content.getChildren().add(treeView);
         }
@@ -131,7 +121,7 @@ public class MainScene
         root.setCenter(content);
 
         content.setDividerPositions(0.225);
-        Platform.runLater(()->content.setDividerPositions(0.225));
+        Platform.runLater(() -> content.setDividerPositions(0.225));
 
         return new Scene(root);
     }

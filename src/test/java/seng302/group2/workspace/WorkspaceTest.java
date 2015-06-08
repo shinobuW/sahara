@@ -19,18 +19,17 @@ import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * A series of tests relating to Workspaces
+ *
  * @author Jordane Lew (jml168)
  * @author Bronson McNaughton (btm38)
  */
-public class WorkspaceTest
-{
+public class WorkspaceTest {
 
     /**
      * A simple test for the Workspace constructors and getters.
      */
     @Test
-    public void testWorkspaceConstructors()
-    {
+    public void testWorkspaceConstructors() {
         Workspace work = new Workspace();
         ObservableList<TreeViewItem> people = observableArrayList();
         Assert.assertEquals("Untitled Workspace", work.getShortName());
@@ -38,11 +37,11 @@ public class WorkspaceTest
         Assert.assertEquals("A blank workspace.", work.getDescription());
         Assert.assertEquals("Untitled Workspace", work.toString());
         Assert.assertEquals(people, work.getPeople());
-        
+
         Workspace work2 = new Workspace("aShortName", "aLongName", "aDescription");
         Assert.assertEquals("aShortName", work2.getShortName());
         Assert.assertEquals("aLongName", work2.getLongName());
-        Assert.assertEquals("aDescription", work2.getDescription());    
+        Assert.assertEquals("aDescription", work2.getDescription());
         Assert.assertEquals("aShortName", work2.toString());
     }
 
@@ -50,33 +49,31 @@ public class WorkspaceTest
      * Tests Projects' setter methods.
      */
     @Test
-    public void testWorkspaceSetters()
-    {
+    public void testWorkspaceSetters() {
         Workspace work = new Workspace();
         work.setShortName("aShortName");
         work.setLongName("aLongName");
         work.setDescription("aDescription");
-        
+
         Assert.assertEquals("aShortName", work.getShortName());
         Assert.assertEquals("aLongName", work.getLongName());
         Assert.assertEquals("aDescription", work.getDescription());
         Assert.assertEquals("aShortName", work.toString());
     }
-    
+
 
     /**
      * Tests that people are correctly added to the workspace through the add() method.
      */
     @Test
-    public void testAddPerson()
-    {
+    public void testAddPerson() {
         Workspace work = new Workspace();
         Global.currentWorkspace = work;
         Person pers = new Person();
         work.add(pers);
 
         Assert.assertTrue(work.getPeople().contains(pers));
-        
+
         work.add(pers);
 
         Assert.assertEquals(2, work.getPeople().size());
@@ -88,20 +85,19 @@ public class WorkspaceTest
         Assert.assertEquals(0, work.getPeople().size());
     }
 
-    
+
     /**
      * Tests that projects are correctly added to the workspace through the add() method.
      */
     @Test
-    public void testAddProject()
-    {
+    public void testAddProject() {
         Workspace work = new Workspace();
         Global.currentWorkspace = work;
         Project proj = new Project();
         work.add(proj);
 
         Assert.assertTrue(work.getProjects().contains(proj));
-        
+
         work.add(proj);
         Assert.assertEquals(2, work.getProjects().size());
         Global.commandManager.undo();
@@ -110,13 +106,12 @@ public class WorkspaceTest
         Assert.assertEquals(0, work.getProjects().size());
     }
 
-    
+
     /**
      * Tests that skills are correctly added to the workspace through the add() method.
      */
     @Test
-    public void testAddSkill()
-    {
+    public void testAddSkill() {
         Workspace work = new Workspace();
         Global.currentWorkspace = work;
         Skill skill = new Skill();
@@ -124,7 +119,7 @@ public class WorkspaceTest
 
         //System.out.println(work.getSkills());
         Assert.assertTrue(work.getSkills().contains(skill));
-        
+
         work.add(skill);
 
         // Also account for the two default skills in workspaces, SM, PO
@@ -137,20 +132,19 @@ public class WorkspaceTest
         Assert.assertEquals(2, work.getSkills().size());
     }
 
-    
+
     /**
      * Tests that teams are correctly added to the workspace through the add() method.
      */
     @Test
-    public void testAddTeam()
-    {
+    public void testAddTeam() {
         Workspace work = new Workspace();
         Global.currentWorkspace = work;
         Team team = new Team();
-        
+
         work.add(team);
         Assert.assertTrue(work.getTeams().contains(team));
-        
+
         work.add(team);
         Assert.assertEquals(3, work.getTeams().size());  // Including the unassigned team
 

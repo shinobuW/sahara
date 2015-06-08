@@ -30,13 +30,11 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  * Class to create a pop up dialog for creating a backlog
  * Created by cvs20 on 19/05/15.
  */
-public class CreateBacklogDialog
-{
+public class CreateBacklogDialog {
     /**
      * Displays the Dialog box for creating a story.
      */
-    public static void show()
-    {
+    public static void show() {
         // Initialise Dialog and GridPane
         Dialog dialog = new Dialog(null, "New Backlog");
         VBox grid = new VBox();
@@ -73,26 +71,22 @@ public class CreateBacklogDialog
         VBox poVBox = new VBox();
         HBox poCombo = new HBox();
         poCombo.getChildren().addAll(poComboHBox, productOwnerComboBox);
-        poCombo.setHgrow(poComboHBox, Priority.ALWAYS);
+        HBox.setHgrow(poComboHBox, Priority.ALWAYS);
         poVBox.getChildren().add(poCombo);
         Label noPoSelectedLabel = new Label("* Please select a product owner");
         noPoSelectedLabel.setTextFill(Color.web("#ff0000"));
 
-        if (Global.currentWorkspace.getProjects().size() > 0)
-        {
+        if (Global.currentWorkspace.getProjects().size() > 0) {
             String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
             projectComboBox.setValue(firstItem);
         }
 
-        for (TreeViewItem project : Global.currentWorkspace.getProjects())
-        {
+        for (TreeViewItem project : Global.currentWorkspace.getProjects()) {
             projectComboBox.addToComboBox(project.toString());
         }
 
-        for (Team team : Global.currentWorkspace.getTeams())
-        {
-            if (team.getProductOwner() != null)
-            {
+        for (Team team : Global.currentWorkspace.getTeams()) {
+            if (team.getProductOwner() != null) {
                 productOwnerOptions.add(team.getProductOwner());
             }
         }
@@ -101,50 +95,40 @@ public class CreateBacklogDialog
                 projectComboBox, poVBox, descriptionTextArea, buttons);
 
 
-
         // Create button event
-        btnCreate.setOnAction((event) ->
-            {
+        btnCreate.setOnAction((event) -> {
                 boolean correctShortName = validateShortName(shortNameCustomField, null);
                 boolean correctLongName = validateName(longNameCustomField);
                 boolean correctProductOwnerCombo = true;
                 boolean correctProjectCombo = true;
 
-                if (productOwnerComboBox.getSelectionModel().getSelectedItem() == null)
-                {
+                if (productOwnerComboBox.getSelectionModel().getSelectedItem() == null) {
                     //Show error
-                    if (!poVBox.getChildren().contains(noPoSelectedLabel))
-                    {
+                    if (!poVBox.getChildren().contains(noPoSelectedLabel)) {
                         poVBox.getChildren().add(noPoSelectedLabel);
                     }
                 }
-                else
-                {
-                    if (poVBox.getChildren().contains(noPoSelectedLabel))
-                    {
+                else {
+                    if (poVBox.getChildren().contains(noPoSelectedLabel)) {
                         poVBox.getChildren().remove(noPoSelectedLabel);
                     }
                 }
 
-                if (correctShortName && correctLongName && correctProductOwnerCombo)
-                {
+                if (correctShortName && correctLongName && correctProductOwnerCombo) {
                     //get user input
                     String shortName = shortNameCustomField.getText();
                     String longName = longNameCustomField.getText();
                     String description = descriptionTextArea.getText();
 
                     Project project = new Project();
-                    for (TreeViewItem item : Global.currentWorkspace.getProjects())
-                    {
-                        if (item.toString().equals(projectComboBox.getValue()))
-                        {
-                            project = (Project)item;
+                    for (TreeViewItem item : Global.currentWorkspace.getProjects()) {
+                        if (item.toString().equals(projectComboBox.getValue())) {
+                            project = (Project) item;
                         }
                     }
 
                     Person productOwner = null;
-                    if (productOwnerComboBox.getValue() != null)
-                    {
+                    if (productOwnerComboBox.getValue() != null) {
                         productOwner = productOwnerComboBox.getValue();
                     }
 
@@ -154,8 +138,7 @@ public class CreateBacklogDialog
                     MainScene.treeView.selectItem(backlog);
                     dialog.hide();
                 }
-                else
-                {
+                else {
                     event.consume();
                 }
             });

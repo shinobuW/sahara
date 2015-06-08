@@ -19,15 +19,13 @@ import static javafx.collections.FXCollections.observableArrayList;
  * A series if tests relating to Backlog
  * Created by cvs20 on 22/05/15.
  */
-public class BacklogTest
-{
+public class BacklogTest {
 
     /**
      * Test for the backlog constructors
      */
     @Test
-    public void testStoryConstructors()
-    {
+    public void testStoryConstructors() {
         Backlog backlog = new Backlog();
         Project project = new Project();
         Person codie = new Person();
@@ -51,8 +49,7 @@ public class BacklogTest
      * Test backlog setters
      */
     @Test
-    public void testBacklogSetters()
-    {
+    public void testBacklogSetters() {
         Backlog backlog = new Backlog();
         Person codie = new Person();
         Project project = new Project();
@@ -71,8 +68,7 @@ public class BacklogTest
     }
 
     @Test
-    public void testAddStory()
-    {
+    public void testAddStory() {
         Backlog backlog = new Backlog();
         Story story = new Story();
 
@@ -88,8 +84,7 @@ public class BacklogTest
 
 
     @Test
-    public void testGetChildren()
-    {
+    public void testGetChildren() {
         Backlog backlog = new Backlog();
         List<Category> exp = observableArrayList();
         Assert.assertEquals(exp, backlog.getChildren());
@@ -97,8 +92,7 @@ public class BacklogTest
 
 
     @Test
-    public void testToString()
-    {
+    public void testToString() {
         Backlog backlogDefault = new Backlog();
         Backlog backlog = new Backlog("short", "long", "desc", null, null);
         Assert.assertEquals("Untitled Backlog", backlogDefault.toString());
@@ -107,8 +101,7 @@ public class BacklogTest
 
 
     @Test
-    public void testCompareTo()
-    {
+    public void testCompareTo() {
         Backlog backlogDefault = new Backlog();
         Backlog backlog = new Backlog("short", "long", "desc", null, null);
         Assert.assertTrue(0 < backlog.compareTo(backlogDefault));
@@ -117,8 +110,7 @@ public class BacklogTest
 
 
     @Test
-    public void testEdit()
-    {
+    public void testEdit() {
         Backlog backlog = new Backlog();
         Story oldStory = new Story();
         backlog.add(oldStory);
@@ -166,8 +158,7 @@ public class BacklogTest
 
 
     @Test
-    public void testDeleteBacklog()
-    {
+    public void testDeleteBacklog() {
         Backlog backlog = new Backlog();
         Project project = new Project();
         project.add(backlog);
@@ -187,8 +178,7 @@ public class BacklogTest
      * Tests both the prepSerialization and postDeserialization methods
      */
     @Test
-    public void testSerializationMethods()
-    {
+    public void testSerializationMethods() {
         Backlog backlog = new Backlog();
 
         Story story = new Story();

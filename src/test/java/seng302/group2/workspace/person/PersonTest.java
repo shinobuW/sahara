@@ -19,8 +19,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 /**
  * Created by Jordane on 27/04/2015.
  */
-public class PersonTest
-{
+public class PersonTest {
 
     // Build some test objects for test operations
     Team unassignedTeam = null;
@@ -41,27 +40,22 @@ public class PersonTest
      * Prepares test objects before executing the Person tests
      */
     @Before
-    public void setUp()
-    {
+    public void setUp() {
         // Find the unassigned team
-        for (TreeViewItem team : Global.currentWorkspace.getTeams())
-        {
+        for (TreeViewItem team : Global.currentWorkspace.getTeams()) {
             Team castedTeam = (Team) team;
-            if (castedTeam.isUnassignedTeam())
-            {
+            if (castedTeam.isUnassignedTeam()) {
                 unassignedTeam = castedTeam;
                 break; // Only one unassigned team
             }
         }
 
         // Set the test date
-        try
-        {
+        try {
             testDate = LocalDate.parse("06/03/1995", Global.dateFormatter);
             testDate2 = LocalDate.parse("19/12/1994", Global.dateFormatter);
         }
-        catch (DateTimeParseException e)
-        {
+        catch (DateTimeParseException e) {
             Assert.fail("The date was not parsed correctly, please review:\n" + e.toString());
         }
     }
@@ -70,8 +64,7 @@ public class PersonTest
      * Tests the getter and setter for a persons short name member
      */
     @Test
-    public void testGetSetShortName()
-    {
+    public void testGetSetShortName() {
         Assert.assertEquals("unnamed", basicPerson.getShortName());
         Assert.assertEquals("btm38", extendedPerson.getShortName());
         basicPerson.setShortName("newShortName");
@@ -82,8 +75,7 @@ public class PersonTest
      * Tests the getter and setter for a persons first name member
      */
     @Test
-    public void testGetSetFirstName()
-    {
+    public void testGetSetFirstName() {
         Assert.assertEquals("firstName", basicPerson.getFirstName());
         Assert.assertEquals("Bronson", extendedPerson.getFirstName());
         basicPerson.setFirstName("newFirstName");
@@ -94,8 +86,7 @@ public class PersonTest
      * Tests the getter and setter for a persons last name member
      */
     @Test
-    public void testGetSetLastName()
-    {
+    public void testGetSetLastName() {
         Assert.assertEquals("lastName", basicPerson.getLastName());
         Assert.assertEquals("McNaughton", extendedPerson.getLastName());
         basicPerson.setLastName("newLastName");
@@ -106,8 +97,7 @@ public class PersonTest
      * Tests the getter and setter for a persons email member
      */
     @Test
-    public void testGetSetEmail()
-    {
+    public void testGetSetEmail() {
         Assert.assertEquals("", basicPerson.getEmail());
         Assert.assertEquals("btm38@gmail.com", extendedPerson.getEmail());
         basicPerson.setEmail("newEmail");
@@ -118,8 +108,7 @@ public class PersonTest
      * Tests the getter and setter for a persons description member
      */
     @Test
-    public void testGetSetDescription()
-    {
+    public void testGetSetDescription() {
         Assert.assertEquals("", basicPerson.getDescription());
         Assert.assertEquals("A really cool dude", extendedPerson.getDescription());
         basicPerson.setDescription("newDesc");
@@ -130,8 +119,7 @@ public class PersonTest
      * Tests the getter and setter for a persons birth date member
      */
     @Test
-    public void testGetSetBirthDate()
-    {
+    public void testGetSetBirthDate() {
         extendedPerson.setBirthDate(testDate2);
         Assert.assertEquals(null, basicPerson.getBirthDate());
         Assert.assertEquals("", basicPerson.getDateString());
@@ -146,8 +134,7 @@ public class PersonTest
      * Tests the getter for a persons team name
      */
     @Test
-    public void testGetSetTeamName()
-    {
+    public void testGetSetTeamName() {
         basicPerson.setTeam(unassignedTeam);
         Assert.assertEquals("Unassigned", basicPerson.getTeamName());
         Assert.assertEquals("Unassigned", extendedPerson.getTeamName());
@@ -159,8 +146,7 @@ public class PersonTest
      * Tests the getter and setter for a persons team member
      */
     @Test
-    public void testGetSetTeam()
-    {
+    public void testGetSetTeam() {
         basicPerson.setTeam(unassignedTeam);
         Assert.assertEquals(unassignedTeam, basicPerson.getTeam());
         Assert.assertEquals(unassignedTeam, extendedPerson.getTeam());
@@ -172,8 +158,7 @@ public class PersonTest
      * Tests the getter and setter for a persons role member
      */
     @Test
-    public void testGetSetRole()
-    {
+    public void testGetSetRole() {
         Assert.assertEquals(null, basicPerson.getRole());
         Assert.assertEquals(null, extendedPerson.getRole());
         basicPerson.setRole(testRole);
@@ -184,8 +169,7 @@ public class PersonTest
      * Tests the getter and setter for a persons skill member
      */
     @Test
-    public void testGetSetSkills()
-    {
+    public void testGetSetSkills() {
         Assert.assertEquals(observableArrayList(), basicPerson.getSkills());
         Assert.assertEquals(observableArrayList(), extendedPerson.getSkills());
 
@@ -200,8 +184,7 @@ public class PersonTest
      * Tests that a person properly prepares for serialization
      */
     @Test
-    public void testPrepSerialization()
-    {
+    public void testPrepSerialization() {
         basicPerson.getSerializableSkills().clear();
         basicPerson.getSkills().clear();
         Assert.assertEquals(new ArrayList<Skill>(), basicPerson.getSerializableSkills());
@@ -220,8 +203,7 @@ public class PersonTest
      * Tests that a person properly post-pares after deserialization
      */
     @Test
-    public void testPostSerialization()
-    {
+    public void testPostSerialization() {
         basicPerson.getSerializableSkills().clear();
         basicPerson.getSkills().clear();
         Assert.assertEquals(new ArrayList<Skill>(), basicPerson.getSerializableSkills());
@@ -240,8 +222,7 @@ public class PersonTest
      * Tests that a persons skills are removed correctly
      */
     @Test
-    public void testRemoveSkill()
-    {
+    public void testRemoveSkill() {
         // Clear
         basicPerson.getSkills().clear();
 
@@ -257,27 +238,24 @@ public class PersonTest
     }
 
     @Test
-    public void testGetChildren() throws Exception
-    {
+    public void testGetChildren() throws Exception {
         Assert.assertNull(basicPerson.getChildren());
     }
 
     @Test
-    public void testToString() throws Exception
-    {
+    public void testToString() throws Exception {
         basicPerson.setShortName("unnamed");
         Assert.assertEquals("unnamed", basicPerson.toString());
         Assert.assertEquals("btm38", extendedPerson.toString());
     }
-    
+
     /**
-     * Tests the compareTo method of Person to ensure it correctly returns an int representing if a 
+     * Tests the compareTo method of Person to ensure it correctly returns an int representing if a
      * shortName is larger or not.
      */
     @Test
-    public void testCompareTo()
-    {
-        Person zedd = new Person("z","first", "last", "", "", null);
+    public void testCompareTo() {
+        Person zedd = new Person("z", "first", "last", "", "", null);
         Assert.assertTrue(extendedPerson.compareTo(zedd) <= 0);
         Assert.assertTrue(zedd.compareTo(extendedPerson) >= 0);
         Assert.assertTrue(zedd.compareTo(zedd) == 0);
@@ -285,8 +263,7 @@ public class PersonTest
 
 
     @Test
-    public void testEdit()
-    {
+    public void testEdit() {
         Person person = new Person("btm38", "Bronson", "McNaughton", "btm38@gmail.com",
                 "A really cool dude", testDate2);
         person.edit("shortName", "firstName",
@@ -311,8 +288,7 @@ public class PersonTest
 
 
     @Test
-    public void testDeletePerson()
-    {
+    public void testDeletePerson() {
         Global.commandManager.clear();
         Person person = new Person();
         Global.currentWorkspace.add(person);

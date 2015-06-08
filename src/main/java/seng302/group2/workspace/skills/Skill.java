@@ -14,113 +14,112 @@ import java.util.List;
 
 /**
  * A basic class to represent skills a person may have
+ *
  * @author crw73
  */
-public class Skill extends TreeViewItem implements Serializable, Comparable<Skill>
-{
+public class Skill extends TreeViewItem implements Serializable, Comparable<Skill> {
     private String shortName;
     private String description;
-    
+
     /**
-    * Basic Skill constructor
-    */
-    public Skill()
-    {
+     * Basic Skill constructor
+     */
+    public Skill() {
         super("unnamed");
         this.shortName = "unnamed";
         this.description = "no description";
     }
-    
-     /**
+
+    /**
      * Basic Skill constructor with all fields
-     * @param shortName A unique short name to identify a Skill
+     *
+     * @param shortName   A unique short name to identify a Skill
      * @param description The Description of a skill
      */
-    public Skill(String shortName, String description)
-    {
+    public Skill(String shortName, String description) {
         // Initialize as a TreeViewItem
         super(shortName);
-        
+
         this.shortName = shortName;
         this.description = description;
     }
-        
+
     // <editor-fold defaultstate="collapsed" desc="Getters"> 
+
     /**
      * Gets a skills short name
+     *
      * @return The short name of the skill
      */
-    public String getShortName()
-    {
+    public String getShortName() {
         return this.shortName;
     }
-    
+
     /**
-     * Gets a skills description
-     * @return The description of the skill
-     */
-    public String getDescription()
-    {
-        return this.description;
-    }
-  
-    //</editor-fold>
-    
-    
-    // <editor-fold defaultstate="collapsed" desc="Setters">
-     /**
      * Sets a skills short name
+     *
      * @param shortName the short name to set
      */
-    public void setShortName(String shortName)
-    {
+    public void setShortName(String shortName) {
         this.shortName = shortName;
     }
-  
+
+    //</editor-fold>
+
+
+    // <editor-fold defaultstate="collapsed" desc="Setters">
+
     /**
      * Gets a skills description
+     *
+     * @return The description of the skill
+     */
+    public String getDescription() {
+        return this.description;
+    }
+
+    /**
+     * Gets a skills description
+     *
      * @param description the description to set
      */
-    public void setDescription(String description)
-    {
+    public void setDescription(String description) {
         this.description = description;
     }
-  
+
     //</editor-fold>
-        
+
     /**
      * Gets the children of the TreeViewItem
+     *
      * @return The items of the TreeViewItem
      */
     @Override
-    public ObservableList<TreeViewItem> getChildren()
-    {
+    public ObservableList<TreeViewItem> getChildren() {
         return null;
     }
 
 
     /**
      * Compares the skill to another skill by their short names
+     *
      * @param compareSkill The skill to compare to
      * @return The result of the string comparison between the teams' short names
      */
     @Override
-    public int compareTo(Skill compareSkill)
-    {
+    public int compareTo(Skill compareSkill) {
         String skill1ShortName = this.getShortName();
         String skill2ShortName = compareSkill.getShortName();
         return skill1ShortName.compareTo(skill2ShortName);
     }
-    
-    
+
+
     /**
      * Deletes the skill and removes it from any people who have the skill.
      * Cannot delete Product Owner or Scrum Master skills.
      */
-    public void deleteSkill()
-    {
-        if (this.shortName.equals("Scrum Master") || this.shortName.equals("Product Owner"))
-        {
+    public void deleteSkill() {
+        if (this.shortName.equals("Scrum Master") || this.shortName.equals("Product Owner")) {
             System.out.println("Can't delete this skill");
             return;
         }
@@ -176,15 +175,13 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
 
     /**
      * Gets a list of people in the current workspace that have this skill
+     *
      * @return People with the skill
      */
-    public List<Person> getPeopleWithSkill()
-    {
+    public List<Person> getPeopleWithSkill() {
         List<Person> people = new ArrayList<>();
-        for (Person person : Global.currentWorkspace.getPeople())
-        {
-            if (person.getSkills().contains(this))
-            {
+        for (Person person : Global.currentWorkspace.getPeople()) {
+            if (person.getSkills().contains(this)) {
                 people.add(person);
             }
         }
@@ -195,23 +192,23 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
     /**
      * Creates a skill edit command and executes it with the Global Command Manager, updating
      * the skill with the new parameter values.
-     * @param newShortName The new short name
+     *
+     * @param newShortName   The new short name
      * @param newDescription The new description
      */
-    public void edit(String newShortName, String newDescription)
-    {
+    public void edit(String newShortName, String newDescription) {
         Command edit = new SkillEditCommand(this, newShortName, newDescription);
         Global.commandManager.executeCommand(edit);
     }
 
-    
+
     /**
      * An overridden version for the String representation of a Skill
+     *
      * @return The short name of the Skill
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return this.shortName;
     }
 
@@ -219,16 +216,14 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
     /**
      * A command class that allows the executing and undoing of skill edits
      */
-    private class SkillEditCommand implements Command
-    {
+    private class SkillEditCommand implements Command {
         private Skill skill;
         private String shortName;
         private String description;
         private String oldShortName;
         private String oldDescription;
 
-        private SkillEditCommand(Skill skill, String newShortName, String newDescription)
-        {
+        private SkillEditCommand(Skill skill, String newShortName, String newDescription) {
             this.skill = skill;
             this.shortName = newShortName;
             this.description = newDescription;
@@ -239,8 +234,7 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
         /**
          * Executes/Redoes the changes of the skill edit
          */
-        public void execute()
-        {
+        public void execute() {
             skill.shortName = shortName;
             skill.description = description;
             Collections.sort(Global.currentWorkspace.getSkills());
@@ -249,40 +243,33 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
         /**
          * Undoes the changes of the skill edit
          */
-        public void undo()
-        {
+        public void undo() {
             skill.shortName = oldShortName;
             skill.description = oldDescription;
             Collections.sort(Global.currentWorkspace.getSkills());
         }
     }
 
-    private class DeleteSkillCommand implements Command
-    {
+    private class DeleteSkillCommand implements Command {
         private Skill skill;
         private Workspace ws;
         private List<Person> people;
 
-        DeleteSkillCommand(Skill skill, Workspace ws)
-        {
+        DeleteSkillCommand(Skill skill, Workspace ws) {
             this.skill = skill;
             this.ws = ws;
             this.people = skill.getPeopleWithSkill();
         }
 
-        public void execute()
-        {
-            for (Person person : this.people)
-            {
+        public void execute() {
+            for (Person person : this.people) {
                 person.getSkills().remove(skill);
             }
             ws.getSkills().remove(skill);
         }
 
-        public void undo()
-        {
-            for (Person person : this.people)
-            {
+        public void undo() {
+            for (Person person : this.people) {
                 person.getSkills().add(skill);
             }
             ws.getSkills().add(skill);

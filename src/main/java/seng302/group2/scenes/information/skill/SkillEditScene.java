@@ -13,9 +13,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.skills.Skill;
 
 import java.util.Collections;
@@ -25,22 +25,22 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 
 /**
  * A class for displaying the skill edit scene.
+ *
  * @author drm127
  */
-public class SkillEditScene
-{
+public class SkillEditScene {
     /**
      * Gets the Skill Edit information scene.
+     *
      * @param currentSkill The skill to show the information of
      * @return The Skill Edit information display
      */
-    public static ScrollPane getSkillEditScene(Skill currentSkill)
-    {
+    public static ScrollPane getSkillEditScene(Skill currentSkill) {
         informationPane = new VBox(10);
         /*informationPane.setAlignment(Pos.TOP_LEFT);
         informationPane.setHgap(10);
         informationPane.setVgap(10);*/
-        informationPane.setPadding(new Insets(25,25,25,25));
+        informationPane.setPadding(new Insets(25, 25, 25, 25));
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Done");
@@ -63,46 +63,40 @@ public class SkillEditScene
         informationPane.getChildren().add(descriptionTextArea);
         informationPane.getChildren().add(buttons);
 
-        btnSave.setOnAction((event) ->
-            {
+        btnSave.setOnAction((event) -> {
                 boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                    currentSkill.getShortName());
+                        currentSkill.getShortName());
                 boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                    currentSkill.getDescription());
+                        currentSkill.getDescription());
 
-                if (shortNameUnchanged && descriptionUnchanged)
-                {
+                if (shortNameUnchanged && descriptionUnchanged) {
                     // No changes
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL, currentSkill);
                     return;
                 }
 
                 boolean correctShortName = validateShortName(shortNameCustomField,
-                    currentSkill.getShortName());
+                        currentSkill.getShortName());
 
-                if (correctShortName)
-                {
+                if (correctShortName) {
                     // Valid short name, make the edit
                     currentSkill.edit(shortNameCustomField.getText(),
-                        descriptionTextArea.getText()
+                            descriptionTextArea.getText()
                     );
 
                     Collections.sort(Global.currentWorkspace.getSkills());
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL, currentSkill);
                     MainScene.treeView.refresh();
                 }
-                else
-                {
+                else {
                     event.consume();
                 }
 
             });
 
-        btnCancel.setOnAction((event) ->
-            {
+        btnCancel.setOnAction((event) -> {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL, currentSkill);
             });
-
 
 
         ScrollPane wrapper = new ScrollPane(informationPane);

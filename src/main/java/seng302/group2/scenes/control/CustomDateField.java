@@ -1,4 +1,5 @@
 package seng302.group2.scenes.control;
+
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -11,69 +12,67 @@ import javafx.scene.paint.Color;
  * Creates a custom date field which displays appropriate error messages when required.
  * Created by Codie on 02/04/2015
  */
-public class CustomDateField extends VBox
-{
+public class CustomDateField extends VBox {
     private String errorMessage = "";
     private TextField inputText = new TextField();
     private Label errorMessageText = new Label();
 
     /**
      * Creates a label and a text field with date layout prompts.
+     *
      * @param name The label for the date field
      */
-    public CustomDateField(String name)
-    {
+    public CustomDateField(String name) {
         this.errorMessageText.setText(errorMessage);
         inputText.setPromptText("dd/mm/yyyy");
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);
         labelBox.spacingProperty().setValue(0);
         labelBox.setAlignment(Pos.CENTER_LEFT);
-                        
+
         labelBox.getChildren().addAll(new Label(name));
         errorMessageText.setTextFill(Color.web("#ff0000"));
         HBox entry = new HBox();
         entry.setPrefWidth(175);
         entry.getChildren().addAll(labelBox, inputText);
-        entry.setHgrow(labelBox, Priority.ALWAYS);
+        HBox.setHgrow(labelBox, Priority.ALWAYS);
 
         this.getChildren().add(entry);
     }
 
     /**
      * Returns the text inside the text field of the CustomDateField.
+     *
      * @return The text of the text field
      */
-    public String getText()
-    {
+    public String getText() {
         return this.inputText.getText();
     }
-    
-    
+
+
     /**
      * Sets the text inside the text field of the CustomDateField.
+     *
      * @param text the text to be inserted into the text field
      */
-    public void setText(String text)
-    {
+    public void setText(String text) {
         this.inputText.setText(text);
     }
 
 
     /**
      * Returns whether or not the field is erroneous by checking it's children for error fields
+     *
      * @return Whether or not the field is erroneous
      */
-    public boolean isErroneous()
-    {
+    public boolean isErroneous() {
         return this.getChildren().contains(errorMessageText);
     }
 
     /**
      * Shows the error field.
      */
-    public void showErrorField()
-    {
+    public void showErrorField() {
         inputText.setStyle("-fx-border-color: red;");
         this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
         this.getChildren().add(errorMessageText);
@@ -82,10 +81,10 @@ public class CustomDateField extends VBox
 
     /**
      * Shows the error field with the with the given text
+     *
      * @param errorMessage The error message to show
      */
-    public void showErrorField(String errorMessage)
-    {
+    public void showErrorField(String errorMessage) {
         inputText.setStyle("-fx-border-color: red;");
         this.errorMessageText.setText(errorMessage);
         showErrorField();
@@ -95,8 +94,7 @@ public class CustomDateField extends VBox
     /**
      * Hides the error field.
      */
-    public void hideErrorField()
-    {
+    public void hideErrorField() {
         inputText.setStyle(null);
         this.getChildren().remove(errorMessageText);
     }

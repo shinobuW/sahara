@@ -7,10 +7,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.story.Story;
@@ -23,15 +23,13 @@ import static javafx.collections.FXCollections.observableArrayList;
  * The edit scene for a backlog
  * Created by cvs20 on 19/05/15.
  */
-public class BacklogEditScene extends ScrollPane
-{
+public class BacklogEditScene extends ScrollPane {
     private Backlog baseBacklog;
     private RequiredField shortNameField;
     private CustomTextField longNameField;
     private CustomTextArea descriptionField;
 
-    public BacklogEditScene(Backlog baseBacklog)
-    {
+    public BacklogEditScene(Backlog baseBacklog) {
         // Init
         this.baseBacklog = baseBacklog;
 
@@ -74,10 +72,8 @@ public class BacklogEditScene extends ScrollPane
         backlogStoryList.addAll(baseBacklog.getStories());
 
         ObservableList<Story> availableStoryList = observableArrayList();
-        for (Story story : baseBacklog.getProject().getUnallocatedStories())
-        {
-            if (story.getBacklog() == null)
-            {
+        for (Story story : baseBacklog.getProject().getUnallocatedStories()) {
+            if (story.getBacklog() == null) {
                 availableStoryList.add(story);
             }
         }
@@ -116,16 +112,14 @@ public class BacklogEditScene extends ScrollPane
 
 
         // Button events
-        btnAssign.setOnAction((event) ->
-            {
+        btnAssign.setOnAction((event) -> {
                 backlogStoryList.addAll(
                         availableStoryListView.getSelectionModel().getSelectedItems());
                 availableStoryList.removeAll(
                         availableStoryListView.getSelectionModel().getSelectedItems());
             });
 
-        btnUnassign.setOnAction((event) ->
-            {
+        btnUnassign.setOnAction((event) -> {
                 availableStoryList.addAll(
                         backlogStoryListView.getSelectionModel().getSelectedItems());
                 backlogStoryList.removeAll(
@@ -133,15 +127,12 @@ public class BacklogEditScene extends ScrollPane
             });
 
 
-        btnCancel.setOnAction((event) ->
-            {
+        btnCancel.setOnAction((event) -> {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG, baseBacklog);
             });
 
-        btnSave.setOnAction((event) ->
-            {
-                if (isValidState())// validation
-                {
+        btnSave.setOnAction((event) -> {
+                if (isValidState()) { // validation
                     // Edit Command.
 
                     baseBacklog.edit(shortNameField.getText(),
@@ -156,8 +147,7 @@ public class BacklogEditScene extends ScrollPane
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG, baseBacklog);
                     MainScene.treeView.refresh();
                 }
-                else
-                {
+                else {
                     event.consume();
                 }
             });
@@ -171,10 +161,10 @@ public class BacklogEditScene extends ScrollPane
 
     /**
      * Checks if the changes in the scene are valid
+     *
      * @return If the changes in the scene are valid
      */
-    private boolean isValidState()
-    {
+    private boolean isValidState() {
         return (shortNameField.getText().equals(baseBacklog.getShortName())  // Is the same,
                 || ShortNameValidator.validateShortName(shortNameField, null));// new name validate
     }

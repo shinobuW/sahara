@@ -9,33 +9,30 @@ import seng302.group2.scenes.dialog.*;
  * Created by Jordane on 14/04/2015.
  * Edited by swi67 14/04/2015
  */
-public class CategoryTreeContextMenu extends ContextMenu
-{
+public class CategoryTreeContextMenu extends ContextMenu {
 
     /**
      * Constructor for context menu for categories
+     *
      * @param enabled the visibility of the context menu
      */
-    public CategoryTreeContextMenu(Boolean enabled)
-    {
+    public CategoryTreeContextMenu(Boolean enabled) {
         MenuItem createItem = new MenuItem("Create new...");
         createItem.setDisable(!enabled);
-        createItem.setOnAction(e ->
-            {
+        createItem.setOnAction(e -> {
                 showCreateNewDialog(Global.selectedTreeItem.getValue().toString());
             });
 
         this.getItems().addAll(createItem);
     }
-    
+
     /**
      * Displays the appropriate dialogBox for creating a new element
+     *
      * @param category Type of category
      */
-    private static void showCreateNewDialog(String category)
-    {
-        switch (category)
-        {
+    private static void showCreateNewDialog(String category) {
+        switch (category) {
             case "Projects":
                 CreateProjectDialog.show();
                 break;

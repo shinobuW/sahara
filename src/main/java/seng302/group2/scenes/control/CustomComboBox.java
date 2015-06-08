@@ -16,25 +16,23 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 /**
- *
  * @author Shinobu
  */
-public class CustomComboBox extends VBox
-{
+public class CustomComboBox extends VBox {
     private boolean required;
     private String errorMessage = "";
     private Label errorMessageText = new Label();
     private ObservableList<String> options = FXCollections.observableArrayList();
     private ComboBox comboBox = new ComboBox(options);
-    
+
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
      * asterisk if the field is required.
-     * @param name The node field
+     *
+     * @param name     The node field
      * @param required Whether or not the field is required
      */
-    public CustomComboBox(String name, boolean required)
-    {
+    public CustomComboBox(String name, boolean required) {
         this.required = required;
         this.errorMessageText.setText(errorMessage);
 
@@ -44,11 +42,9 @@ public class CustomComboBox extends VBox
         labelBox.spacingProperty().setValue(0);
 
 
-
         labelBox.getChildren().addAll(new Label(name));
 
-        if (required)
-        {
+        if (required) {
             Label aster = new Label(" * ");
             aster.setTextFill(Color.web("#ff0000"));
             labelBox.getChildren().add(aster);
@@ -57,17 +53,16 @@ public class CustomComboBox extends VBox
         HBox entry = new HBox();
         entry.setPrefWidth(175);
         entry.getChildren().addAll(labelBox, this.comboBox);
-        entry.setHgrow(labelBox, Priority.ALWAYS);
-        
+        HBox.setHgrow(labelBox, Priority.ALWAYS);
+
         this.comboBox.setMinWidth(135);
         this.getChildren().add(entry);
     }
-    
+
     /**
      * Displays error Field
      */
-    public void showErrorField()
-    {
+    public void showErrorField() {
         comboBox.setStyle("-fx-border-color: red;");
         this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
         this.getChildren().add(errorMessageText);
@@ -75,10 +70,10 @@ public class CustomComboBox extends VBox
 
     /**
      * Shows the error field with the with the given text.
+     *
      * @param errorMessage The error message to show
      */
-    public void showErrorField(String errorMessage)
-    {
+    public void showErrorField(String errorMessage) {
         this.errorMessageText.setTextFill(Color.web("FF0000"));
         this.errorMessageText.setText(errorMessage);
         showErrorField();
@@ -86,43 +81,42 @@ public class CustomComboBox extends VBox
 
     /**
      * Add option item to Combo Box
+     *
      * @param item String item to add
      */
-    public void addToComboBox(String item)
-    {
-        this.options.add(item); 
+    public void addToComboBox(String item) {
+        this.options.add(item);
     }
 
     /**
      * Gets the inner combo box
+     *
      * @return The combo box
      */
-    public ComboBox getComboBox()
-    {
+    public ComboBox getComboBox() {
         return this.comboBox;
     }
 
-    /** Gets the value of the chosen item in combo box
+    /**
+     * Gets the value of the chosen item in combo box
+     *
      * @return The string of the chosen item
      */
-    public String getValue()
-    {
-        if (this.comboBox.getValue() != null)
-        {
+    public String getValue() {
+        if (this.comboBox.getValue() != null) {
             return this.comboBox.getValue().toString();
         }
-        else
-        {
+        else {
             return null;
         }
     }
 
     /**
      * Sets the value of the selected item of combo box
-     * @param value value to set to 
+     *
+     * @param value value to set to
      */
-    public void setValue(String value)
-    {
+    public void setValue(String value) {
         this.comboBox.setValue(value);
     }
 
@@ -130,10 +124,9 @@ public class CustomComboBox extends VBox
     /**
      * Hides the error field.
      */
-    public void hideErrorField()
-    {
+    public void hideErrorField() {
         this.getChildren().remove(errorMessageText);
         this.comboBox.setStyle(null);
     }
-        
+
 }

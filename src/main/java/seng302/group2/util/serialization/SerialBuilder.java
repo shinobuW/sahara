@@ -18,13 +18,10 @@ import seng302.group2.workspace.team.Team;
 import java.time.LocalDate;
 
 /**
- *
  * Created by Jordane on 12/04/2015.
  */
-public class SerialBuilder
-{
-    public static Gson getBuilder()
-    {
+public class SerialBuilder {
+    public static Gson getBuilder() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         new GraphAdapterBuilder()
                 .addType(TreeViewItem.class)
@@ -41,7 +38,7 @@ public class SerialBuilder
                 .addType(LocalDate.class)
                 .addType(Backlog.class)
 
-                //TODO add any new classes
+                        //TODO add any new classes
 
                 .registerOn(gsonBuilder);
         return gsonBuilder.create();

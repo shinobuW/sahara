@@ -14,9 +14,9 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.contextmenu.CategoryTreeContextMenu;
 import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.person.Person;
@@ -40,11 +40,10 @@ import java.util.Map;
  * Each change in the underlying data (adding, removing, sorting) will then be automatically
  * reflected in the UI.
  *
- * @author Christian Schudt (modified by Jordane Lew)
  * @param <T> The type of treeview items
+ * @author Christian Schudt (modified by Jordane Lew)
  */
-public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
-{
+public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
     /**
      * Keep hard references for each listener, so that they don't get garbage collected too soon.
      */
@@ -65,8 +64,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
     /**
      * Creates the tree view.
      */
-    public TreeViewWithItems()
-    {
+    public TreeViewWithItems() {
         super();
         init();
     }
@@ -78,8 +76,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
      * @param root The root tree item.
      * @see TreeView#TreeView(javafx.scene.control.TreeItem)
      */
-    public TreeViewWithItems(TreeItem<T> root)
-    {
+    public TreeViewWithItems(TreeItem<T> root) {
         super(root);
         init();
     }
@@ -88,19 +85,16 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
     /**
      * Refreshes the tree by clearing the root item and updating.
      */
-    public void refresh()
-    {
+    public void refresh() {
         T currentSelection = null;
-        if (Global.selectedTreeItem != null)
-        {
+        if (Global.selectedTreeItem != null) {
             currentSelection = (T) Global.selectedTreeItem.getValue();
         }
 
         clear(getRoot());
         updateItems();
 
-        if (currentSelection != null)
-        {
+        if (currentSelection != null) {
             selectItem(currentSelection);
         }
     }
@@ -109,19 +103,16 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
     /**
      * Initializes the tree view.
      */
-    private void init()
-    {
+    private void init() {
         setMinWidth(160);
         setMaxWidth(320);
 
         setContextMenu(new CategoryTreeContextMenu(true));
 
-        rootProperty().addListener(new ChangeListener<TreeItem<T>>()
-        {
+        rootProperty().addListener(new ChangeListener<TreeItem<T>>() {
             @Override
             public void changed(ObservableValue<? extends TreeItem<T>> observableValue,
-                    TreeItem<T> oldRoot, TreeItem<T> newRoot)
-            {
+                                TreeItem<T> oldRoot, TreeItem<T> newRoot) {
                 clear(oldRoot);
                 updateItems();
             }
@@ -131,11 +122,9 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
 
         /* Do not use ChangeListener, because it won't trigger if old list equals new list (but in
         fact different references). */
-        items.addListener(new InvalidationListener()
-        {
+        items.addListener(new InvalidationListener() {
             @Override
-            public void invalidated(Observable observable)
-            {
+            public void invalidated(Observable observable) {
                 clear(getRoot());
                 updateItems();
             }
@@ -143,164 +132,137 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
 
         /* Sets the App.selectedTreeItem when a new selection is made, and sets the information
          * shown in the main pane to the selected item's details */
-        this.getSelectionModel().selectedItemProperty().addListener(new ChangeListener()
-            {
-                @Override
-                public void changed(ObservableValue observable, Object oldValue, Object newValue)
-                {
-                    TreeItem<Object> selectedItem = (TreeItem<Object>) newValue;
-                    Global.selectedTreeItem = selectedItem;
+        this.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                TreeItem<Object> selectedItem = (TreeItem<Object>) newValue;
+                Global.selectedTreeItem = selectedItem;
 
                     /*System.out.println(selected + " "
                             + selected.getClass());*/
 
-                    TreeViewItem selected = null;
+                TreeViewItem selected = null;
 
-                    //Updates the display pane to be pane for the selectItem
-                    if (Global.selectedTreeItem == null
-                            || Global.selectedTreeItem.getValue() == null)
-                    {
-                        // Nothing is selected, make a default selection?
-                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE,
-                                Global.currentWorkspace);
-                    }
-                    else
-                    {
-                        selected = (TreeViewItem) Global.selectedTreeItem.getValue();
-                    }
+                //Updates the display pane to be pane for the selectItem
+                if (Global.selectedTreeItem == null
+                        || Global.selectedTreeItem.getValue() == null) {
+                    // Nothing is selected, make a default selection?
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE,
+                            Global.currentWorkspace);
+                }
+                else {
+                    selected = (TreeViewItem) Global.selectedTreeItem.getValue();
+                }
 
-                    if (selected instanceof Category)
-                    {
-                        selected.switchToCategoryScene();
-                    }
+                if (selected instanceof Category) {
+                    selected.switchToCategoryScene();
+                }
 
-                    if (selected instanceof Person)
-                    {
-                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON,
-                                (TreeViewItem) selected);
-                        setContextMenu(new ElementTreeContextMenu());
+                if (selected instanceof Person) {
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON,
+                            selected);
+                    setContextMenu(new ElementTreeContextMenu());
+                }
+                else if (selected instanceof Project) {
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT,
+                            selected);
+                    setContextMenu(new ElementTreeContextMenu());
+                }
+                else if (selected instanceof Workspace) {
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE,
+                            selected);
+                    setContextMenu(new ElementTreeContextMenu());
+                }
+                else if (selected instanceof Skill) {
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL,
+                            selected);
+                    setContextMenu(new ElementTreeContextMenu());
+                }
+                else if (selected instanceof Team) {
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM,
+                            selected);
+                    setContextMenu(new ElementTreeContextMenu());
+                }
+                else if (selected instanceof Release) {
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE,
+                            selected);
+                    setContextMenu(new ElementTreeContextMenu());
+                }
+                else if (selected instanceof Story) {
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY,
+                            selected);
+                    setContextMenu(new ElementTreeContextMenu());
+                }
+                else if (selected instanceof Backlog) {
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG,
+                            selected);
+                    setContextMenu(new ElementTreeContextMenu());
+                }
+                else if (selected instanceof Category) {
+                    if (selected.toString().equals("Projects")) {
+                        SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.PROJECTS);
+                        setContextMenu(new CategoryTreeContextMenu(true));
                     }
-                    else if (selected instanceof Project)
-                    {
-                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT,
-                                (TreeViewItem) selected);
-                        setContextMenu(new ElementTreeContextMenu());
-                    }
-                    else if (selected instanceof Workspace)
-                    {
-                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE,
-                                (TreeViewItem) selected);
-                        setContextMenu(new ElementTreeContextMenu());
-                    }
-                    else if (selected instanceof Skill)
-                    {
-                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL,
-                                (TreeViewItem) selected);
-                        setContextMenu(new ElementTreeContextMenu());
-                    }
-                    else if (selected instanceof Team)
-                    {
-                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM,
-                                (TreeViewItem) selected);
-                        setContextMenu(new ElementTreeContextMenu());
-                    }
-                    else if (selected instanceof Release)
-                    {
-                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE,
-                                (TreeViewItem) selected);
-                        setContextMenu(new ElementTreeContextMenu());
-                    }
-                    else if (selected instanceof Story)
-                    {
-                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY,
-                                (TreeViewItem) selected);
-                        setContextMenu(new ElementTreeContextMenu());
-                    }
-                    else if (selected instanceof Backlog)
-                    {
-                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG,
-                                (TreeViewItem) selected);
-                        setContextMenu(new ElementTreeContextMenu());
-                    }
-                    else if (selected instanceof Category)
-                    {
-                        if (selected.toString().equals("Projects"))
-                        {
-                            SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.PROJECTS);
-                            setContextMenu(new CategoryTreeContextMenu(true));
-                        }
                         /*else if (selected.toString().equals("People"))
                         {
                             SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.PEOPLE);
                             setContextMenu(new CategoryTreeContextMenu(true));
                         }*/
-                        else if (selected.toString().equals("Skills"))
-                        {
-                            SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.SKILLS);
-                            setContextMenu(new CategoryTreeContextMenu(true));
-                        }
-                        else if (selected.toString().equals("Teams"))
-                        {
-                            SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.TEAMS);
-                            setContextMenu(new CategoryTreeContextMenu(true));
-                        }
-                        else if (selected.toString().equals("Roles"))
-                        {
-                            SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.ROLES);
-                            setContextMenu(new CategoryTreeContextMenu(false));
-                        }
-                        else if (selected.toString().equals("Releases"))
-                        {
-                            SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE_CATEGORY,
-                                    (TreeViewItem) selected);
+                    else if (selected.toString().equals("Skills")) {
+                        SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.SKILLS);
+                        setContextMenu(new CategoryTreeContextMenu(true));
+                    }
+                    else if (selected.toString().equals("Teams")) {
+                        SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.TEAMS);
+                        setContextMenu(new CategoryTreeContextMenu(true));
+                    }
+                    else if (selected.toString().equals("Roles")) {
+                        SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.ROLES);
+                        setContextMenu(new CategoryTreeContextMenu(false));
+                    }
+                    else if (selected.toString().equals("Releases")) {
+                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE_CATEGORY,
+                                selected);
                             /*App.content.getItems().remove(MainScene.informationPane);
                             ReleaseCategoryScene.getReleaseCategoryScene((ReleaseCategory)
                                     selected);
                             App.content.getItems().add(MainScene.informationPane);*/
-                            setContextMenu(new CategoryTreeContextMenu(true));
-                        }
-                        else if (selected.toString().equals("Unassigned Stories"))
-                        {
-                            SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY_CATEGORY,
-                                    (TreeViewItem) selected);
-                            setContextMenu(new CategoryTreeContextMenu(true));
-                        }
-                        else if (selected.toString().equals("Backlog"))
-                        {
-                            SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG_CATEGORY,
-                                    (TreeViewItem) selected);
-                            boolean PoExists = false;
-                            for (Team team : Global.currentWorkspace.getTeams())
-                            {
-                                if (team.getProductOwner() != null)
-                                {
-                                    PoExists = true;
-                                    break;
-                                }
-                            }
-                            if (!PoExists)
-                            {
-                                setContextMenu(new CategoryTreeContextMenu(false));
-                            }
-                            else
-                            {
-                                setContextMenu(new CategoryTreeContextMenu(true));
-                            }
-                            //setContextMenu(new CategoryTreeContextMenu(true));
-                        }
-                        else
-                        {
-                            setContextMenu(new CategoryTreeContextMenu(true));
-                        }
+                        setContextMenu(new CategoryTreeContextMenu(true));
                     }
-                    else if (selected instanceof Role)
-                    {
-                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.ROLE,
-                                (TreeViewItem) selected);
-                        setContextMenu(new ElementTreeContextMenu());
+                    else if (selected.toString().equals("Unassigned Stories")) {
+                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY_CATEGORY,
+                                selected);
+                        setContextMenu(new CategoryTreeContextMenu(true));
+                    }
+                    else if (selected.toString().equals("Backlog")) {
+                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG_CATEGORY,
+                                selected);
+                        boolean PoExists = false;
+                        for (Team team : Global.currentWorkspace.getTeams()) {
+                            if (team.getProductOwner() != null) {
+                                PoExists = true;
+                                break;
+                            }
+                        }
+                        if (!PoExists) {
+                            setContextMenu(new CategoryTreeContextMenu(false));
+                        }
+                        else {
+                            setContextMenu(new CategoryTreeContextMenu(true));
+                        }
+                        //setContextMenu(new CategoryTreeContextMenu(true));
+                    }
+                    else {
+                        setContextMenu(new CategoryTreeContextMenu(true));
                     }
                 }
-            });
+                else if (selected instanceof Role) {
+                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.ROLE,
+                            selected);
+                    setContextMenu(new ElementTreeContextMenu());
+                }
+            }
+        });
     }
 
 
@@ -309,12 +271,9 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
      *
      * @param root The root.
      */
-    private void clear(TreeItem<T> root)
-    {
-        if (root != null)
-        {
-            for (TreeItem<T> treeItem : root.getChildren())
-            {
+    private void clear(TreeItem<T> root) {
+        if (root != null) {
+            for (TreeItem<T> treeItem : root.getChildren()) {
                 removeRecursively(treeItem);
             }
 
@@ -327,12 +286,9 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
     /**
      * Updates the items
      */
-    private void updateItems()
-    {
-        if (getItems() != null)
-        {
-            for (T value : getItems())
-            {
+    private void updateItems() {
+        if (getItems() != null) {
+            for (T value : getItems()) {
                 getRoot().getChildren().add(addRecursively(value));
             }
 
@@ -349,43 +305,34 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
     /**
      * Gets a {@link javafx.collections.ListChangeListener} for a {@link TreeItem}. It listens to
      * changes on the underlying list and updates the UI accordingly.
+     *
      * @param treeItemChildren The associated tree item's children list.
      * @return The listener.
      */
     private ListChangeListener<T> getListChangeListener(
-            final ObservableList<TreeItem<T>> treeItemChildren)
-    {
-        return new ListChangeListener<T>()
-        {
+            final ObservableList<TreeItem<T>> treeItemChildren) {
+        return new ListChangeListener<T>() {
             @Override
-            public void onChanged(final Change<? extends T> change)
-            {
-                while (change.next())
-                {
-                    if (change.wasUpdated())
-                    {
+            public void onChanged(final Change<? extends T> change) {
+                while (change.next()) {
+                    if (change.wasUpdated()) {
                         // http://javafx-jira.kenai.com/browse/RT-23434
                         continue;
                     }
-                    if (change.wasRemoved())
-                    {
-                        for (int i = change.getRemovedSize() - 1; i >= 0; i--)
-                        {
+                    if (change.wasRemoved()) {
+                        for (int i = change.getRemovedSize() - 1; i >= 0; i--) {
                             removeRecursively(treeItemChildren.remove(change.getFrom() + i));
                         }
                     }
                     // If items have been added
-                    if (change.wasAdded())
-                    {
+                    if (change.wasAdded()) {
                         // Get the new items
-                        for (int i = change.getFrom(); i < change.getTo(); i++)
-                        {
+                        for (int i = change.getFrom(); i < change.getTo(); i++) {
                             treeItemChildren.add(i, addRecursively(change.getList().get(i)));
                         }
                     }
                     // If the list was sorted.
-                    if (change.wasPermutated())
-                    {
+                    if (change.wasPermutated()) {
                         MainScene.treeView.refresh();
                         /*// Store the new order.
                         Map<Integer, TreeItem<T>> tempMap = new HashMap<Integer, TreeItem<T>>();
@@ -412,21 +359,18 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
 
     /**
      * Removes the listener recursively.
+     *
      * @param item The tree item.
      * @return the item removed
      */
-    private TreeItem<T> removeRecursively(TreeItem<T> item)
-    {
-        if (item.getValue() != null && item.getValue().getChildren() != null)
-        {
+    private TreeItem<T> removeRecursively(TreeItem<T> item) {
+        if (item.getValue() != null && item.getValue().getChildren() != null) {
 
-            if (weakListeners.containsKey(item))
-            {
+            if (weakListeners.containsKey(item)) {
                 item.getValue().getChildren().removeListener(weakListeners.remove(item));
                 hardReferences.remove(item);
             }
-            for (TreeItem<T> treeItem : item.getChildren())
-            {
+            for (TreeItem<T> treeItem : item.getChildren()) {
                 removeRecursively(treeItem);
             }
         }
@@ -436,17 +380,16 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
 
     /**
      * Adds the children to the tree recursively.
+     *
      * @param value The initial value.
      * @return The tree item.
      */
-    private TreeItem<T> addRecursively(T value)
-    {
+    private TreeItem<T> addRecursively(T value) {
         TreeItem<T> treeItem = new TreeItem<T>();
         treeItem.setValue(value);
         treeItem.setExpanded(true);
 
-        if (value != null && value.getChildren() != null)
-        {
+        if (value != null && value.getChildren() != null) {
             ListChangeListener<T> listChangeListener =
                     getListChangeListener(treeItem.getChildren());
             WeakListChangeListener<T> weakListener =
@@ -455,8 +398,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
 
             hardReferences.put(treeItem, listChangeListener);
             weakListeners.put(treeItem, weakListener);
-            for (T child : value.getChildren())
-            {
+            for (T child : value.getChildren()) {
                 treeItem.getChildren().add(addRecursively(child));
             }
         }
@@ -466,30 +408,30 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
 
     /**
      * Gets the observable list of items
+     *
      * @return The observable list of items
      */
-    public ObservableList<? extends T> getItems()
-    {
+    public ObservableList<? extends T> getItems() {
         return items.get();
     }
 
 
     /**
      * Sets items for the tree.
+     *
      * @param items The list.
      */
-    public void setItems(ObservableList<? extends T> items)
-    {
+    public void setItems(ObservableList<? extends T> items) {
         this.items.set(items);
     }
 
 
     /**
      * Scans the entire tree from the root and selects the item if it is found.
+     *
      * @param item The (TreeViewItem) item to select
      */
-    public void selectItem(T item)
-    {
+    public void selectItem(T item) {
         selectItem(item, this.getRoot());
     }
 
@@ -498,19 +440,16 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
      * Scans the tree and compares the item to the root TreeItem, if they match, select the TreeItem
      * If not, recursively check the children of the TreeItem. If the item exists in the tree, it
      * will eventually be selected through the depth-first search.
+     *
      * @param item The (TreeViewItem) item to select
      * @param root The root node to start checking, usually this.getRoot()
      */
-    public void selectItem(T item, TreeItem<T> root)
-    {
-        for (TreeItem<T> treeItem : root.getChildren())
-        {
-            if (treeItem.getValue() == item)
-            {
+    public void selectItem(T item, TreeItem<T> root) {
+        for (TreeItem<T> treeItem : root.getChildren()) {
+            if (treeItem.getValue() == item) {
                 getSelectionModel().select(treeItem);
             }
-            else
-            {
+            else {
                 selectItem(item, treeItem);
             }
         }

@@ -22,10 +22,10 @@ import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * A basic class to represent a Person in the real world.
+ *
  * @author crw73
  */
-public class Person extends TreeViewItem implements Serializable, Comparable<Person>
-{
+public class Person extends TreeViewItem implements Serializable, Comparable<Person> {
     private String shortName;
     private String firstName;
     private String lastName;
@@ -37,169 +37,240 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
     private Team team;
     private Role role;
 
-    
+
     /**
      * Basic Person constructor
      */
-    public Person()
-    {
+    public Person() {
         super("unnamed");
         this.shortName = "unnamed";
         this.firstName = "firstName";
         this.lastName = "lastName";
         this.email = "";
         this.description = "";
-        
-        for (TreeViewItem team : Global.currentWorkspace.getTeams())
-        {
+
+        for (TreeViewItem team : Global.currentWorkspace.getTeams()) {
             Team castedTeam = (Team) team;
-            if (castedTeam.isUnassignedTeam())
-            {
+            if (castedTeam.isUnassignedTeam()) {
                 this.team = castedTeam;
                 break; // Only one unassigned team
             }
         }
-        
+
         this.birthDate = null;
     }
-    
-    
+
+
     /**
      * Basic person constructor with all fields
-     * @param shortName A unique short name to identify a Person
-     * @param firstName The first name of the Person
-     * @param lastName The last name of the Person
-     * @param email The email of the Person
-     * @param birthDate The date of birth of the Person
+     *
+     * @param shortName   A unique short name to identify a Person
+     * @param firstName   The first name of the Person
+     * @param lastName    The last name of the Person
+     * @param email       The email of the Person
+     * @param birthDate   The date of birth of the Person
      * @param description A description of the Person
      */
-    public Person(String shortName, String firstName, String lastName, String email, 
-            String description, LocalDate birthDate)
-    {
+    public Person(String shortName, String firstName, String lastName, String email,
+                  String description, LocalDate birthDate) {
         // Initialize as a TreeViewItem
         super(shortName);
-        
+
         this.setShortName(shortName);
         this.setFirstName(firstName);
         this.setLastName(lastName);
         this.setEmail(email);
         this.setDescription(description);
         this.setBirthDate(birthDate);
-        for (TreeViewItem team : Global.currentWorkspace.getTeams())
-        {
+        for (TreeViewItem team : Global.currentWorkspace.getTeams()) {
             Team castedTeam = (Team) team;
-            if (castedTeam.isUnassignedTeam())
-            {
+            if (castedTeam.isUnassignedTeam()) {
                 this.team = castedTeam;
                 break; // Only one unassigned team
             }
         }
     }
-       
+
     // <editor-fold defaultstate="collapsed" desc="Getters"> 
+
     /**
      * Gets the person's short name
+     *
      * @return The short name of the person
      */
-    public String getShortName()
-    {
+    public String getShortName() {
         return this.shortName;
     }
-    
+
+    /**
+     * Sets the person's short name
+     *
+     * @param shortName the short name to set
+     */
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+
     /**
      * Gets the person's first name
+     *
      * @return The first name of the person
      */
-    public String getFirstName()
-    {
+    public String getFirstName() {
         return this.firstName;
     }
-    
+
+    /**
+     * Sets the person's first name
+     *
+     * @param firstName the first name to set
+     */
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     /**
      * Gets the person's last name
+     *
      * @return The last name of the person
      */
-    public String getLastName()
-    {
+    public String getLastName() {
         return this.lastName;
     }
-    
+
+    /**
+     * Sets the person's last name
+     *
+     * @param lastName the last name to set
+     */
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     /**
      * Gets the person's email
+     *
      * @return The email of the person
      */
-    public String getEmail()
-    {
+    public String getEmail() {
         return this.email;
     }
-    
+
+    /**
+     * Sets the person's email
+     *
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     /**
      * Gets the person's description
+     *
      * @return The description of the person
      */
-    public String getDescription()
-    {
+    public String getDescription() {
         return this.description;
     }
-    
+
+    /**
+     * Sets the person's description
+     *
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     /**
      * Gets the person's birth date.
+     *
      * @return The birth date of the person
      */
-    public LocalDate getBirthDate()
-    {
+    public LocalDate getBirthDate() {
         return this.birthDate;
+    }
+
+    //</editor-fold>
+
+
+    // <editor-fold defaultstate="collapsed" desc="Setters">
+
+    /**
+     * Sets the person's birth date
+     *
+     * @param birthDate the birth date to set
+     */
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     /**
      * Gets the person's current team's name.
+     *
      * @return The name of the team the person is currently in
      */
-    public String getTeamName()
-    {
-        if (this.team == null)
-        {
+    public String getTeamName() {
+        if (this.team == null) {
             return "Unassigned";
         }
-        else
-        {
+        else {
             return this.team.getShortName();
         }
     }
 
     /**
      * Gets the ArrayList of serializable skills
+     *
      * @return the serializable skills
      */
-    public List<Skill> getSerializableSkills()
-    {
+    public List<Skill> getSerializableSkills() {
         return serializableSkills;
     }
 
     /**
      * Gets the person's team
+     *
      * @return The person's team
      */
-    public Team getTeam()
-    {
+    public Team getTeam() {
         return this.team;
     }
-    
+
     /**
-    * Gets the person's current role.
-    * @return The current role
-    */
-    public Role getRole()
-    {
+     * Sets the person's current team
+     *
+     * @param team the team the person has been added too
+     */
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    /**
+     * Gets the person's current role.
+     *
+     * @return The current role
+     */
+    public Role getRole() {
         return this.role;
     }
-    
+
+    /**
+     * Sets the person's current team
+     *
+     * @param role the role to set
+     */
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     /**
      * Gets the person's list of Skills.
+     *
      * @return The skills associated with a person
      */
-    public ObservableList<Skill> getSkills()
-    {
+    public ObservableList<Skill> getSkills() {
         /*this.serializableSkills.clear();
         for (Object item : this.skills)
         {
@@ -207,93 +278,15 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
         }*/
         return this.skills;
     }
-    
-    //</editor-fold>
-    
-    
-    // <editor-fold defaultstate="collapsed" desc="Setters">
-    /**
-     * Sets the person's short name
-     * @param shortName the short name to set
-     */
-    public void setShortName(String shortName)
-    {
-        this.shortName = shortName;
-    }
-    
-    /**
-     * Sets the person's first name
-     * @param firstName the first name to set
-     */
-    public void setFirstName(String firstName)
-    {
-        this.firstName = firstName;
-    }
-    
-    /**
-     * Sets the person's last name
-     * @param lastName the last name to set
-     */
-    public void setLastName(String lastName)
-    {
-        this.lastName = lastName;
-    }
-    
-    /**
-     * Sets the person's email
-     * @param email the email to set
-     */
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-    
-    /**
-     * Sets the person's description
-     * @param description the description to set
-     */
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
-    
-    /**
-     * Sets the person's birth date
-     * @param birthDate the birth date to set
-     */
-    public void setBirthDate(LocalDate birthDate)
-    {
-        this.birthDate = birthDate;
-    }
-    
-    /**
-     * Sets the person's current team
-     * @param team the team the person has been added too
-     */
-    public void setTeam(Team team)
-    {
-        this.team = team;
-    }
-    
-    /**
-    * Sets the person's current team
-    * @param role the role to set
-    */
-    public void setRole(Role role)
-    {
-        this.role = role;
-    }
 
     //</editor-fold>
-    
+
     /**
      * Prepares a person to be serialized.
      */
-    public void prepSerialization()
-    {
+    public void prepSerialization() {
         serializableSkills.clear();
-        for (Object item : skills)
-        {
+        for (Object item : skills) {
             this.serializableSkills.add((Skill) item);
         }
     }
@@ -302,104 +295,104 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
     /**
      * Deserialization post-processing.
      */
-    public void postSerialization()
-    {
+    public void postSerialization() {
         skills.clear();
-        for (Object item : serializableSkills)
-        {
+        for (Object item : serializableSkills) {
             this.skills.add((Skill) item);
         }
     }
 
     /**
      * Gets the persons birth date as a string
+     *
      * @return The persons birth date as a string
      */
-    public String getDateString()
-    {
-        if (birthDate == null)
-        {
+    public String getDateString() {
+        if (birthDate == null) {
             return "";
         }
-        else
-        {
-            try
-            {
+        else {
+            try {
                 return this.getBirthDate().format(Global.dateFormatter);
                 //return Global.datePattern.format(this.getBirthDate());
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 System.out.println("Error parsing date");
                 return "";
             }
         }
     }
 
-    
+
     /**
      * Gets the children of the TreeViewItem
+     *
      * @return The items of the TreeViewItem
      */
     @Override
-    public ObservableList<TreeViewItem> getChildren()
-    {
+    public ObservableList<TreeViewItem> getChildren() {
         return null;
     }
 
 
     /**
      * Compares the person to another person based on their short names
+     *
      * @param comparePerson The person to compare to
      * @return The string comparison result of the peoples' short names
      */
     @Override
-    public int compareTo(Person comparePerson)
-    {
+    public int compareTo(Person comparePerson) {
         String pers1ShortName = this.getShortName();
         String pers2ShortName = comparePerson.getShortName();
         return pers1ShortName.compareTo(pers2ShortName);
     }
-    
-    
+
+
     /**
      * Deletes the person and removes them from team if they are in one.
      */
-    public void deletePerson()
-    {
+    public void deletePerson() {
         Command deletePers = new DeletePersonCommand(this, Global.currentWorkspace);
         Global.commandManager.executeCommand(deletePers);
     }
 
 
-
     /**
      * Creates a Person edit command and executes it with the Global Command Manager, updating
      * the person with the new parameter values.
-     * @param newShortName  The persons new shortName
-     * @param newFirstName  The persons new First name
-     * @param newLastName   The perosns new Last name
-     * @param newEmail      The persons new email address
-     * @param newBirthDate  The persons new birth date
+     *
+     * @param newShortName   The persons new shortName
+     * @param newFirstName   The persons new First name
+     * @param newLastName    The perosns new Last name
+     * @param newEmail       The persons new email address
+     * @param newBirthDate   The persons new birth date
      * @param newDescription The persons new description
-     * @param newSkills     the persons new list of skills
-     * @param newTeam  the persons new team
+     * @param newSkills      the persons new list of skills
+     * @param newTeam        the persons new team
      */
     public void edit(String newShortName, String newFirstName, String newLastName,
                      String newEmail, LocalDate newBirthDate, String newDescription,
-                     Team newTeam,ObservableList newSkills)
-    {
+                     Team newTeam, ObservableList newSkills) {
         Command persEdit = new PersonEditCommand(this, newShortName, newFirstName, newLastName,
                 newEmail, newBirthDate, newDescription, newTeam, newSkills);
         Global.commandManager.executeCommand(persEdit);
     }
 
+    /**
+     * An overridden version for the String representation of a Person
+     *
+     * @return The short name of the Person
+     */
+    @Override
+    public String toString() {
+        return this.shortName;
+    }
 
     /**
      * A command class that allows the executing and undoing of project edits
      */
-    private class PersonEditCommand implements Command
-    {
+    private class PersonEditCommand implements Command {
         private Person person;
         private String shortName;
         private String firstName;
@@ -420,9 +413,8 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
         private ObservableList<Skill> oldSkills;
 
         protected PersonEditCommand(Person person, String newShortName, String newFirstName,
-            String newLastName, String newEmail, LocalDate newBirthDate,
-            String newDescription, Team newTeam, ObservableList<Skill> newSkills)
-        {
+                                    String newLastName, String newEmail, LocalDate newBirthDate,
+                                    String newDescription, Team newTeam, ObservableList<Skill> newSkills) {
             this.person = person;
 
             this.shortName = newShortName;
@@ -447,8 +439,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
         /**
          * Executes/Redoes the changes of the person edit
          */
-        public void execute()
-        {
+        public void execute() {
             person.shortName = shortName;
             person.firstName = firstName;
             person.lastName = lastName;
@@ -463,8 +454,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
         /**
          * Undoes the changes of the person edit
          */
-        public void undo()
-        {
+        public void undo() {
             person.shortName = oldShortName;
             person.firstName = oldFirstName;
             person.lastName = oldLastName;
@@ -477,39 +467,24 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
         }
     }
 
-    
-    /**
-     * An overridden version for the String representation of a Person
-     * @return The short name of the Person
-     */
-    @Override
-    public String toString()
-    {
-        return this.shortName;
-    }
-
-    private class DeletePersonCommand implements Command
-    {
+    private class DeletePersonCommand implements Command {
         private Person person;
         private Workspace ws;
         private Team team;
 
-        DeletePersonCommand(Person person, Workspace ws)
-        {
+        DeletePersonCommand(Person person, Workspace ws) {
             this.person = person;
             this.ws = ws;
             this.team = person.getTeam();
         }
 
-        public void execute()
-        {
+        public void execute() {
             team.getPeople().remove(person);
             person.setTeam(null);
             ws.getPeople().remove(person);
         }
 
-        public void undo()
-        {
+        public void undo() {
             team.getPeople().add(person);
             person.setTeam(team);
             ws.getPeople().add(person);

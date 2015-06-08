@@ -21,16 +21,15 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 
 /**
  * Class to create a pop up dialog for creating a skill.
+ *
  * @author drm127
  */
 @SuppressWarnings("deprecation")
-public class CreateSkillDialog 
-{
+public class CreateSkillDialog {
     /**
      * Displays the Dialog box for creating a skill.
      */
-    public static void show()
-    {       
+    public static void show() {
         Dialog dialog = new Dialog(null, "New Skill");
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
@@ -39,44 +38,40 @@ public class CreateSkillDialog
 
         Button btnCreate = new Button("Create");
         Button btnCancel = new Button("Cancel");
-        
+
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnCreate, btnCancel);
-        
+
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description:");
-        
+
         grid.getChildren().add(shortNameCustomField);
         grid.getChildren().add(descriptionTextArea);
         grid.getChildren().add(buttons);
-        
-        btnCreate.setOnAction((event) ->
-            {
+
+        btnCreate.setOnAction((event) -> {
                 boolean correctShortName = validateShortName(shortNameCustomField, null);
-                
+
                 String shortName = shortNameCustomField.getText();
                 String description = descriptionTextArea.getText();
-                
-                if (correctShortName)
-                {
+
+                if (correctShortName) {
                     Skill skill = new Skill(shortName, description);
                     Global.currentWorkspace.add(skill);
                     MainScene.treeView.selectItem(skill);
                     dialog.hide();
                 }
-                else
-                {
+                else {
                     event.consume();
                 }
             });
-        
-        btnCancel.setOnAction((event) ->
-            {
+
+        btnCancel.setOnAction((event) -> {
                 dialog.hide();
             });
-        
+
         dialog.setResizable(false);
         dialog.setIconifiable(false);
         dialog.setContent(grid);

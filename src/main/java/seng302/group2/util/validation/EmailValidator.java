@@ -6,32 +6,28 @@
 package seng302.group2.util.validation;
 
 /**
- *
  * @author Jordane
  */
-public class EmailValidator
-{
+public class EmailValidator {
     /**
      * The defined email pattern to match against.
      */
     private static String emailPattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\."
-                + "[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
-    
+            + "[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+
     /**
      * Checks whether a given string matches the email pattern regular expression.
+     *
      * @param email The email string to validate
      * @return Whether the email is valid
      */
-    public static ValidationStatus validEmail(String email)
-    {
+    public static ValidationStatus validEmail(String email) {
         java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(emailPattern);
         java.util.regex.Matcher matcher = pattern.matcher(email);
-        if (matcher.matches())
-        {
+        if (matcher.matches()) {
             return ValidationStatus.VALID;
         }
-        else
-        {
+        else {
             return ValidationStatus.INVALID;
         }
     }

@@ -14,8 +14,7 @@ import java.time.LocalDate;
  * Creates a custom DatePicker which displays appropriate error messages when required.
  * Created by swi67 on 17/05/15.
  */
-public class CustomDatePicker extends VBox
-{
+public class CustomDatePicker extends VBox {
     private boolean required;
     private String errorMessage = "";
     private Label errorMessageText = new Label();
@@ -24,11 +23,11 @@ public class CustomDatePicker extends VBox
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
      * asterisk if the field is required.
-     * @param name The node field
+     *
+     * @param name     The node field
      * @param required Whether or not the field is required
      */
-    public CustomDatePicker(String name, boolean required)
-    {
+    public CustomDatePicker(String name, boolean required) {
         this.required = required;
         this.errorMessageText.setText(errorMessage);
 
@@ -39,8 +38,7 @@ public class CustomDatePicker extends VBox
 
         labelBox.getChildren().addAll(new Label(name));
 
-        if (required)
-        {
+        if (required) {
             Label aster = new Label(" * ");
             aster.setTextFill(Color.web("#ff0000"));
             labelBox.getChildren().add(aster);
@@ -51,7 +49,7 @@ public class CustomDatePicker extends VBox
 
         entry.setPrefWidth(175);
         entry.getChildren().addAll(labelBox, this.datePicker);
-        entry.setHgrow(labelBox, Priority.ALWAYS);
+        HBox.setHgrow(labelBox, Priority.ALWAYS);
 
         this.datePicker.setStyle("-fx-pref-width: 135;");
         this.getChildren().add(entry);
@@ -60,8 +58,7 @@ public class CustomDatePicker extends VBox
     /**
      * Displays error Field
      */
-    public void showErrorField()
-    {
+    public void showErrorField() {
         datePicker.setStyle("-fx-border-color: red;");
         this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
         this.getChildren().add(errorMessageText);
@@ -69,10 +66,10 @@ public class CustomDatePicker extends VBox
 
     /**
      * Shows the error field with the with the given text.
+     *
      * @param errorMessage The error message to show
      */
-    public void showErrorField(String errorMessage)
-    {
+    public void showErrorField(String errorMessage) {
         this.errorMessageText.setText(errorMessage);
         this.errorMessageText.setTextFill(Color.web("FF0000"));
         showErrorField();
@@ -81,42 +78,40 @@ public class CustomDatePicker extends VBox
     /**
      * Hides the error field.
      */
-    public void hideErrorField()
-    {
+    public void hideErrorField() {
         this.getChildren().remove(errorMessageText);
         this.datePicker.setStyle(null);
     }
 
     /**
      * Gets the inner date picker
+     *
      * @return The date picker
      */
-    public DatePicker getDatePicker()
-    {
+    public DatePicker getDatePicker() {
         return this.datePicker;
     }
 
-    /** Gets the value of the selected date
+    /**
+     * Gets the value of the selected date
+     *
      * @return The value in LocalDate format
      */
-    public LocalDate getValue()
-    {
-        if (this.datePicker.getValue() != null)
-        {
+    public LocalDate getValue() {
+        if (this.datePicker.getValue() != null) {
             return this.datePicker.getValue();
         }
-        else
-        {
+        else {
             return null;
         }
     }
 
     /**
      * Sets the value of the date picker
+     *
      * @param value value to set to
      */
-    public void setValue(LocalDate value)
-    {
+    public void setValue(LocalDate value) {
         this.datePicker.setValue(value);
     }
 }

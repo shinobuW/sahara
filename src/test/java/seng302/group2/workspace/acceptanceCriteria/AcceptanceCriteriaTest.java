@@ -9,8 +9,7 @@ import seng302.group2.workspace.story.Story;
  * A series of tests relating to AcceptanceCriteria class
  * Created by swi67 on 31/05/15.
  */
-public class AcceptanceCriteriaTest
-{
+public class AcceptanceCriteriaTest {
     Story testStory = new Story();
     AcceptanceCriteria ac = new AcceptanceCriteria("This is a Demo Text", testStory);
 
@@ -18,8 +17,7 @@ public class AcceptanceCriteriaTest
      * Tests the validity of the constructor
      */
     @Test
-    public void testConstructor()
-    {
+    public void testConstructor() {
         Assert.assertEquals("This is a Demo Text", ac.getDescription());
         Assert.assertEquals(AcceptanceCriteria.AcState.UNACCEPTED, ac.getState());
         Assert.assertEquals(testStory, ac.getStory());
@@ -30,8 +28,7 @@ public class AcceptanceCriteriaTest
      * Tests the undo/redo command for deleting acceptance maintenance
      */
     @Test
-    public void testDelete()
-    {
+    public void testDelete() {
         testStory.add(ac);
         ac.delete();
         Assert.assertTrue(testStory.getAcceptanceCriteria().isEmpty());
@@ -45,8 +42,7 @@ public class AcceptanceCriteriaTest
      * Tests the undo/rdo for editing acceptance criteria
      */
     @Test
-    public void testEdit()
-    {
+    public void testEdit() {
         ac.edit("Testing edit");
         Assert.assertEquals("Testing edit", ac.getDescription());
         Global.commandManager.undo();

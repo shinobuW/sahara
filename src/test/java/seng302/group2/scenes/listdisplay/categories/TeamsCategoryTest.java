@@ -10,17 +10,13 @@ import seng302.group2.workspace.team.Team;
 import java.util.Collection;
 import java.util.HashSet;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by Jordane on 7/06/2015.
  */
-public class TeamsCategoryTest
-{
+public class TeamsCategoryTest {
 
     @Test
-    public void testGetChildren() throws Exception
-    {
+    public void testGetChildren() throws Exception {
         Workspace ws = new Workspace();
         Global.currentWorkspace = ws;
         Collection<Team> teams = new HashSet<>();
@@ -35,15 +31,13 @@ public class TeamsCategoryTest
     }
 
     @Test
-    public void testToString()
-    {
+    public void testToString() {
         Category teamsCat = new TeamsCategory();
         Assert.assertEquals("Teams", teamsCat.toString());
     }
 
     @Test
-    public void testEquals()
-    {
+    public void testEquals() {
         Category t1 = new TeamsCategory();
         Category t2 = new TeamsCategory();
         Assert.assertEquals(t1, t2);

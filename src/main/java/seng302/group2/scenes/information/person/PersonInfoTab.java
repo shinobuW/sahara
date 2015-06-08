@@ -4,8 +4,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.person.Person;
 
 
@@ -13,10 +13,8 @@ import seng302.group2.workspace.person.Person;
  * The workspace information tab
  * Created by jml168 on 11/05/15.
  */
-public class PersonInfoTab extends Tab
-{
-    public PersonInfoTab(Person currentPerson)
-    {
+public class PersonInfoTab extends Tab {
+    public PersonInfoTab(Person currentPerson) {
         this.setText("Basic Information");
 
         Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
@@ -27,7 +25,7 @@ public class PersonInfoTab extends Tab
 
 
         Label title = new TitleLabel(currentPerson.getFirstName() + " "
-            + currentPerson.getLastName());
+                + currentPerson.getLastName());
 
         Button btnEdit = new Button("Edit");
 
@@ -57,8 +55,7 @@ public class PersonInfoTab extends Tab
 
         basicInfoPane.getChildren().add(btnEdit);
 
-        btnEdit.setOnAction((event) ->
-            {
+        btnEdit.setOnAction((event) -> {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON_EDIT, currentPerson);
             });
 

@@ -41,16 +41,15 @@ import static seng302.group2.util.validation.DateValidator.validateAllocation;
  * history
  * Created by swi67 on 10/05/15.
  */
-public class ProjectHistoryTab extends Tab
-{
+public class ProjectHistoryTab extends Tab {
     private boolean isValidEdit = false;
 
     /**
      * Constructor for project allocation tab
+     *
      * @param currentProject currently selected project
      */
-    public ProjectHistoryTab(Project currentProject)
-    {
+    public ProjectHistoryTab(Project currentProject) {
         this.setText("Allocation History");
         Pane historyPane = new VBox(10);  // The pane that holds the basic info
         historyPane.setBorder(null);
@@ -67,10 +66,8 @@ public class ProjectHistoryTab extends Tab
         historyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         ObservableList<Allocation> data = currentProject.getTeamAllocations();
 
-        Callback<TableColumn, TableCell> cellFactory = new Callback<TableColumn, TableCell>()
-        {
-            public TableCell call(TableColumn col)
-            {
+        Callback<TableColumn, TableCell> cellFactory = new Callback<TableColumn, TableCell>() {
+            public TableCell call(TableColumn col) {
                 return new EditingCell();
             }
         };
@@ -85,116 +82,97 @@ public class ProjectHistoryTab extends Tab
 
         TableColumn startDateCol = new TableColumn<Allocation, String>("Start Date");
         // Sorting comparator.
-        startDateCol.setComparator(new Comparator<String>()
-            {
-                @Override 
-                public int compare(String dateString1, String dateString2) 
-                {
-                    try
-                    {
-                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
-                        Date date1 = format.parse(dateString1);                
-                        Date date2 = format.parse(dateString2);
-                        return Long.compare(date1.getTime(),date2.getTime());
-                    }
-                    catch (ParseException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    return -1;
+        startDateCol.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String dateString1, String dateString2) {
+                try {
+                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
+                    Date date1 = format.parse(dateString1);
+                    Date date2 = format.parse(dateString2);
+                    return Long.compare(date1.getTime(), date2.getTime());
                 }
-            });
-        
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return -1;
+            }
+        });
+
         startDateCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Allocation, String>,
-                        ObservableValue<String>>()
-                {
+                        ObservableValue<String>>() {
                     @Override
                     public ObservableValue<String> call(TableColumn.CellDataFeatures<Allocation,
-                            String> alloc)
-                    {
+                            String> alloc) {
                         SimpleStringProperty property = new SimpleStringProperty();
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                         property.setValue(alloc.getValue().getStartDate().format(formatter));
                         return property;
                     }
                 });
-        
+
         startDateCol.setOnEditCommit(
-            new EventHandler<TableColumn.CellEditEvent<Allocation, String>>()
-            {
-                @Override
-                public void handle(TableColumn.CellEditEvent<Allocation, String> event)
-                {
-                    isValidEdit = false;
-                    if (!event.getNewValue().isEmpty())
-                    {
-                        Allocation currentAlloc = event.getTableView().getItems()
-                                .get(event.getTablePosition().getRow());
+                new EventHandler<TableColumn.CellEditEvent<Allocation, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Allocation, String> event) {
+                        isValidEdit = false;
+                        if (!event.getNewValue().isEmpty()) {
+                            Allocation currentAlloc = event.getTableView().getItems()
+                                    .get(event.getTablePosition().getRow());
 
-                        LocalDate newStartDate = LocalDate.parse(event.getNewValue(),
-                                DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                        ValidationStatus editValidationStatus = validateAllocation(
-                                currentAlloc.getProject(), currentAlloc.getTeam(),
-                                newStartDate, currentAlloc.getEndDate(),
-                                currentAlloc);
+                            LocalDate newStartDate = LocalDate.parse(event.getNewValue(),
+                                    DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                            ValidationStatus editValidationStatus = validateAllocation(
+                                    currentAlloc.getProject(), currentAlloc.getTeam(),
+                                    newStartDate, currentAlloc.getEndDate(),
+                                    currentAlloc);
 
-                        if (editValidationStatus == ValidationStatus.VALID)
-                        {
-                            currentAlloc.editStartDate(newStartDate);
-                            isValidEdit = true;
-                        }
-                        else
-                        {
-                            showErrorDialog(editValidationStatus);
-                            isValidEdit = false;
+                            if (editValidationStatus == ValidationStatus.VALID) {
+                                currentAlloc.editStartDate(newStartDate);
+                                isValidEdit = true;
+                            }
+                            else {
+                                showErrorDialog(editValidationStatus);
+                                isValidEdit = false;
+                            }
                         }
                     }
-                }
-            });
-        
+                });
+
         startDateCol.setCellFactory(cellFactory);
         startDateCol.prefWidthProperty().bind(historyTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
 
         TableColumn endDateCol = new TableColumn("End Date");
         // Sorting comparator.
-        endDateCol.setComparator(new Comparator<String>()
-            {
-                @Override 
-                public int compare(String dateString1, String dateString2) 
-                {
-                    try
-                    {
-                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
-                        Date date1 = format.parse(dateString1);                
-                        Date date2 = format.parse(dateString2);
-                        return Long.compare(date1.getTime(),date2.getTime());
-                    }
-                    catch (ParseException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    return -1;
+        endDateCol.setComparator(new Comparator<String>() {
+            @Override
+            public int compare(String dateString1, String dateString2) {
+                try {
+                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
+                    Date date1 = format.parse(dateString1);
+                    Date date2 = format.parse(dateString2);
+                    return Long.compare(date1.getTime(), date2.getTime());
                 }
-            });
-        
+                catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return -1;
+            }
+        });
+
         endDateCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Allocation, String>,
-                        ObservableValue<String>>()
-                {
+                        ObservableValue<String>>() {
                     @Override
                     public ObservableValue<String> call(TableColumn.CellDataFeatures<Allocation,
-                            String> alloc)
-                    {
+                            String> alloc) {
                         SimpleStringProperty property = new SimpleStringProperty();
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                        if (alloc.getValue().getEndDate() != null)
-                        {
+                        if (alloc.getValue().getEndDate() != null) {
                             property.setValue(alloc.getValue().getEndDate().format(formatter));
                         }
-                        else
-                        {
+                        else {
                             property.setValue("");
                         }
                         return property;
@@ -206,14 +184,11 @@ public class ProjectHistoryTab extends Tab
         endDateCol.setCellFactory(cellFactory);
         endDateCol.setEditable(true);
         endDateCol.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<Allocation, String>>()
-                {
+                new EventHandler<TableColumn.CellEditEvent<Allocation, String>>() {
                     @Override
-                    public void handle(TableColumn.CellEditEvent<Allocation, String> event)
-                    {
+                    public void handle(TableColumn.CellEditEvent<Allocation, String> event) {
                         isValidEdit = false;
-                        if (!event.getNewValue().isEmpty())
-                        {
+                        if (!event.getNewValue().isEmpty()) {
                             Allocation currentAlloc = event.getTableView().
                                     getItems().get(event.getTablePosition().getRow());
 
@@ -222,17 +197,15 @@ public class ProjectHistoryTab extends Tab
 
                             ValidationStatus editValidationStatus =
                                     validateAllocation(currentAlloc.getProject(),
-                                    currentAlloc.getTeam(),
-                                    currentAlloc.getStartDate(), newEndDate,
-                                    currentAlloc);
+                                            currentAlloc.getTeam(),
+                                            currentAlloc.getStartDate(), newEndDate,
+                                            currentAlloc);
 
-                            if (editValidationStatus == ValidationStatus.VALID)
-                            {
+                            if (editValidationStatus == ValidationStatus.VALID) {
                                 currentAlloc.editEndDate(newEndDate);
                                 isValidEdit = true;
                             }
-                            else
-                            {
+                            else {
                                 showErrorDialog(editValidationStatus);
                                 isValidEdit = false;
                             }
@@ -263,80 +236,65 @@ public class ProjectHistoryTab extends Tab
         newAllocationFields.getChildren().addAll(teamComboBox,
                 startDatePicker, endDatePicker);
 
-        teamComboBox.getComboBox().setOnMouseClicked(event ->
-            {
+        teamComboBox.getComboBox().setOnMouseClicked(event -> {
                 teamComboBox.getComboBox().getItems().clear();
-                for (Team team : Global.currentWorkspace.getTeams())
-                {
+                for (Team team : Global.currentWorkspace.getTeams()) {
                     teamComboBox.getComboBox().getItems().add(team);
                 }
                 // Remove the unassigned team
                 teamComboBox.getComboBox().getItems().remove(Global.getUnassignedTeam());
             });
 
-        addButton.setOnAction((event) ->
-            {
+        addButton.setOnAction((event) -> {
                 teamComboBox.hideErrorField();
                 startDatePicker.hideErrorField();
-                if (teamComboBox.getValue() != null && startDatePicker.getValue() != null)
-                {
+                if (teamComboBox.getValue() != null && startDatePicker.getValue() != null) {
                     LocalDate endDate = endDatePicker.getValue();
                     LocalDate startDate = startDatePicker.getValue();
                     Team selectedTeam = null;
 
-                    for (Team team : Global.currentWorkspace.getTeams())
-                    {
-                        if (team.toString().equals(teamComboBox.getValue()))
-                        {
+                    for (Team team : Global.currentWorkspace.getTeams()) {
+                        if (team.toString().equals(teamComboBox.getValue())) {
                             selectedTeam = team;
                         }
                     }
 
                     if (validateAllocation(currentProject, selectedTeam, startDate, endDate)
-                            == ValidationStatus.VALID)
-                    {
+                            == ValidationStatus.VALID) {
                         Allocation alloc = new Allocation(currentProject, selectedTeam,
                                 startDate, endDate);
                         currentProject.add(alloc);
                     }
-                    else
-                    {
+                    else {
                         showErrorDialog(validateAllocation(currentProject,
                                 selectedTeam, startDate, endDate));
                         event.consume();
                     }
                 }
-                else
-                {
-                    if (teamComboBox.getValue() == null)
-                    {
+                else {
+                    if (teamComboBox.getValue() == null) {
                         teamComboBox.showErrorField("Please select a team");
                         event.consume();
                     }
-                    if (startDatePicker.getValue() == null)
-                    {
+                    if (startDatePicker.getValue() == null) {
                         startDatePicker.showErrorField("Please select a date");
                         event.consume();
                     }
                 }
             });
 
-        deleteButton.setOnAction((event) ->
-            {
+        deleteButton.setOnAction((event) -> {
                 Allocation selectedAlloc = historyTable.getSelectionModel().getSelectedItem();
-                if (selectedAlloc != null)
-                {
+                if (selectedAlloc != null) {
                     Action response = Dialogs.create()
                             .title("Delete Allocation?")
                             .message("Do you really want to delete this allocation?")
                             .showConfirm();
 
-                    if (response == org.controlsfx.dialog.Dialog.ACTION_YES)
-                    {
+                    if (response == org.controlsfx.dialog.Dialog.ACTION_YES) {
                         selectedAlloc.delete();
                     }
-                    else if (response == org.controlsfx.dialog.Dialog.ACTION_NO)
-                    {
+                    else if (response == org.controlsfx.dialog.Dialog.ACTION_NO) {
                         event.consume();
                     }
                 }
@@ -347,16 +305,13 @@ public class ProjectHistoryTab extends Tab
         historyTable.getColumns().setAll(columns);
 
         // Listener to disable columns being movable
-        historyTable.getColumns().addListener(new ListChangeListener()
-        {
+        historyTable.getColumns().addListener(new ListChangeListener() {
             public boolean suspended;
 
             @Override
-            public void onChanged(Change change)
-            {
+            public void onChanged(Change change) {
                 change.next();
-                if (change.wasReplaced() && !suspended)
-                {
+                if (change.wasReplaced() && !suspended) {
                     this.suspended = true;
                     historyTable.getColumns().setAll(columns);
                     this.suspended = false;
@@ -369,12 +324,11 @@ public class ProjectHistoryTab extends Tab
 
     /**
      * Displays the appropriate error dialog according to the validation status
+     *
      * @param status the validation status
      */
-    private void showErrorDialog(ValidationStatus status)
-    {
-        switch (status)
-        {
+    private void showErrorDialog(ValidationStatus status) {
+        switch (status) {
             case VALID:
                 break;
             case ALLOCATION_DATES_WRONG_ORDER:
@@ -430,35 +384,28 @@ public class ProjectHistoryTab extends Tab
      * A subclass of TableCell to allow for date pickers to be bound to the cell
      * to allow for start and end date to be edited
      */
-    class EditingCell extends TableCell<Allocation, String>
-    {
+    class EditingCell extends TableCell<Allocation, String> {
 
         public DatePicker datePicker;
 
-        public EditingCell()
-        {
+        public EditingCell() {
         }
 
         @Override
-        public void startEdit()
-        {
-            if (!isEmpty())
-            {
+        public void startEdit() {
+            if (!isEmpty()) {
                 super.startEdit();
                 createTextField();
                 setGraphic(datePicker);
 
-                if (!getText().isEmpty())
-                {
+                if (!getText().isEmpty()) {
                     datePicker.setValue(LocalDate.parse(getText(),
                             DateTimeFormatter.ofPattern("dd/MM/yyyy")));
                 }
-                else
-                {
+                else {
                     datePicker.setValue(null);
                 }
-                Platform.runLater(() ->
-                    {
+                Platform.runLater(() -> {
                         datePicker.requestFocus();
                     });
 
@@ -466,46 +413,35 @@ public class ProjectHistoryTab extends Tab
         }
 
         @Override
-        public void cancelEdit()
-        {
+        public void cancelEdit() {
             super.cancelEdit();
             setGraphic(null);
         }
 
         @Override
-        public void updateItem(String item, boolean empty)
-        {
+        public void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
-            if (empty)
-            {
+            if (empty) {
                 setText(null);
                 setGraphic(null);
             }
-            else
-            {
-                if (isEditing())
-                {
-                    if (!getItem().isEmpty())
-                    {
+            else {
+                if (isEditing()) {
+                    if (!getItem().isEmpty()) {
                         datePicker.setValue(LocalDate.parse(getItem(),
                                 DateTimeFormatter.ofPattern("dd/MM/yyyy")));
                     }
                     setGraphic(datePicker);
                 }
-                else
-                {
-                    if (datePicker == null)
-                    {
+                else {
+                    if (datePicker == null) {
                         setText(getString());
                     }
-                    else
-                    {
-                        if (datePicker.getValue() == null)
-                        {
+                    else {
+                        if (datePicker.getValue() == null) {
                             setText(getString());
                         }
-                        else if (isValidEdit)
-                        {
+                        else if (isValidEdit) {
                             setText(datePicker.getValue().format(Global.dateFormatter));
                         }
                     }
@@ -515,52 +451,40 @@ public class ProjectHistoryTab extends Tab
             }
         }
 
-        private void createTextField()
-        {
+        private void createTextField() {
             datePicker = new DatePicker();
             datePicker.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
-            datePicker.focusedProperty().addListener(new ChangeListener<Boolean>()
-            {
+            datePicker.focusedProperty().addListener(new ChangeListener<Boolean>() {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> arg0,
-                                    Boolean arg1, Boolean arg2)
-                {
-                    if (!arg2)
-                    {
-                        if (datePicker.getValue() != null)
-                        {
+                                    Boolean arg1, Boolean arg2) {
+                    if (!arg2) {
+                        if (datePicker.getValue() != null) {
                             commitEdit(datePicker.getValue().toString());
                         }
-                        else
-                        {
+                        else {
                             commitEdit("");
                         }
                     }
-                    else
-                    {
+                    else {
                         updateItem(getItem(), false);
                     }
                 }
             });
         }
 
-        private String getString()
-        {
+        private String getString() {
             LocalDate date;
 
-            if (getItem().isEmpty())
-            {
+            if (getItem().isEmpty()) {
                 return getItem();
             }
-            else
-            {
-                if (getItem().matches("([0-9]{2})/([0-9]{2})/([0-9]{4})"))
-                {
+            else {
+                if (getItem().matches("([0-9]{2})/([0-9]{2})/([0-9]{4})")) {
                     date = LocalDate.parse(getItem(),
                             DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                 }
-                else
-                {
+                else {
                     date = LocalDate.parse(getItem(),
                             DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 }

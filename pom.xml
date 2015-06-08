@@ -1,5 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>seng302.group2</groupId>
     <artifactId>project-2</artifactId>
@@ -7,183 +8,184 @@
     <version>1.0-SNAPSHOT</version>
     <name>SENG302 Group Project</name>
     <url>http://maven.apache.org</url>
-  
+
     <build>
-      <plugins>
+        <plugins>
 
-        <!-- Maven plugins build -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-shade-plugin</artifactId>
-          <version>2.3</version>
-          <configuration>
-            <!-- put your configurations here -->
-            <transformers>
-              <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                <manifestEntries>
-                  <Main-Class>seng302.group2.App</Main-Class>
-                  <X-Compile-Source-JDK>1.8</X-Compile-Source-JDK>
-                  <X-Compile-Target-JDK>1.8</X-Compile-Target-JDK>
-                </manifestEntries>
-              </transformer>
-            </transformers>
+            <!-- Maven plugins build -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <!-- put your configurations here -->
+                    <transformers>
+                        <transformer
+                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <manifestEntries>
+                                <Main-Class>seng302.group2.App</Main-Class>
+                                <X-Compile-Source-JDK>1.8</X-Compile-Source-JDK>
+                                <X-Compile-Target-JDK>1.8</X-Compile-Target-JDK>
+                            </manifestEntries>
+                        </transformer>
+                    </transformers>
 
-            <!-- The following two lines have been added to shut NetBeans up about
-            project issues relating to internal classes not being able to be found
-            when using the jar artifact in compilation -->
-            <shadedArtifactAttached>true</shadedArtifactAttached>
-            <shadedClassifierName>launcher</shadedClassifierName>
-          </configuration>
+                    <!-- The following two lines have been added to shut NetBeans up about
+                    project issues relating to internal classes not being able to be found
+                    when using the jar artifact in compilation -->
+                    <shadedArtifactAttached>true</shadedArtifactAttached>
+                    <shadedClassifierName>launcher</shadedClassifierName>
+                </configuration>
 
-          <executions>
-            <execution>
-              <phase>package</phase>
-              <goals>
-                <goal>shade</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-        
-        <!-- Maven compiler -->
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.1</version>
-            <configuration>
-                <source>1.8</source>
-                <target>1.8</target>
-            </configuration>
-        </plugin>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
-        <!-- Maven jar build -->
-        <plugin>
-        <!-- Build an executable JAR -->
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <archive>
-            <manifest>
-              <addClasspath>true</addClasspath>
-              <classpathPrefix>lib/</classpathPrefix>
-              <mainClass>seng302.group2.App</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-      </plugin>
+            <!-- Maven compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
 
-
-      <!-- AppAssembler build -->
-      <!--<plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>appassembler-maven-plugin</artifactId>
-          <version>1.9</version>
-
-          <executions>
-              <execution>
-                  <phase>site</phase>
-                  <goals>
-                      <goal>assemble</goal>
-                  </goals>
-              </execution>
-          </executions>
-
-          <configuration>
-              <platforms>
-                  <platform>windows</platform>
-                  <platform>unix</platform>
-              </platforms>
-
-              <assembleDirectory>${project.build.directory}/program</assembleDirectory>
-
-              <binFileExtensions>
-                  <unix>.sh</unix>
-              </binFileExtensions>
-
-              <programs>
-                  <program>
-                      <mainClass>seng302.group2.App</mainClass>
-                      <id>Sahara</id>
-                  </program>
-              </programs>
-              <useWildcardClassPath>true</useWildcardClassPath>
-              <repositoryLayout>flat</repositoryLayout>
-          </configuration>
-      </plugin>-->
+            <!-- Maven jar build -->
+            <plugin>
+                <!-- Build an executable JAR -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>seng302.group2.App</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
 
 
-        <!-- Checkstyle build -->
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>2.9.1</version>
+            <!-- AppAssembler build -->
+            <!--<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>1.9</version>
 
-            <dependencies>
-              <dependency>
-                <groupId>com.puppycrawl.tools</groupId>
-                <artifactId>checkstyle</artifactId>
-                <version>6.4</version>
-              </dependency>
-            </dependencies>
+                <executions>
+                    <execution>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>assemble</goal>
+                        </goals>
+                    </execution>
+                </executions>
 
-          <executions>
-            <execution>
-              <phase>package</phase>
-              <goals>
-                <goal>check</goal>
-              </goals>
-              <configuration>
-                <failOnViolation>true</failOnViolation>
-              </configuration>
-            </execution>
-          </executions>
+                <configuration>
+                    <platforms>
+                        <platform>windows</platform>
+                        <platform>unix</platform>
+                    </platforms>
 
-          <configuration>
-            <configLocation>modified-google-codestyle.xml</configLocation>
-            <encoding>UTF-8</encoding>
-            <consoleOutput>true</consoleOutput>
-            <includeTestSourceDirectory>false</includeTestSourceDirectory>
-            <failsOnError>false</failsOnError>
-            <violationSeverity>warning</violationSeverity>
-            <failOnViolation>false</failOnViolation>
-            <logViolationsToConsole>true</logViolationsToConsole>
-          </configuration>
-        </plugin>
+                    <assembleDirectory>${project.build.directory}/program</assembleDirectory>
+
+                    <binFileExtensions>
+                        <unix>.sh</unix>
+                    </binFileExtensions>
+
+                    <programs>
+                        <program>
+                            <mainClass>seng302.group2.App</mainClass>
+                            <id>Sahara</id>
+                        </program>
+                    </programs>
+                    <useWildcardClassPath>true</useWildcardClassPath>
+                    <repositoryLayout>flat</repositoryLayout>
+                </configuration>
+            </plugin>-->
 
 
-      </plugins>
+            <!-- Checkstyle build -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.9.1</version>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>6.4</version>
+                    </dependency>
+                </dependencies>
+
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <failOnViolation>true</failOnViolation>
+                        </configuration>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <configLocation>modified-google-codestyle.xml</configLocation>
+                    <encoding>UTF-8</encoding>
+                    <consoleOutput>true</consoleOutput>
+                    <includeTestSourceDirectory>false</includeTestSourceDirectory>
+                    <failsOnError>false</failsOnError>
+                    <violationSeverity>warning</violationSeverity>
+                    <failOnViolation>false</failOnViolation>
+                    <logViolationsToConsole>true</logViolationsToConsole>
+                </configuration>
+            </plugin>
+
+
+        </plugins>
     </build>
-  
+
     <dependencies>
-      <!-- JUnit Dependency -->
-      <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.12</version>
-        <scope>test</scope>
-      </dependency>
+        <!-- JUnit Dependency -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
 
-      <!-- GSON Dependency -->
-      <dependency>
-        <groupId>com.google.code.gson</groupId>
-        <artifactId>gson</artifactId>
-        <version>2.2.4</version>
-      </dependency>
+        <!-- GSON Dependency -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.4</version>
+        </dependency>
 
-      <!-- ControlsFX Dependency -->
-      <dependency>
-          <groupId>org.controlsfx</groupId>
-          <artifactId>controlsfx</artifactId>
-          <version>8.20.8</version>
-      </dependency>
+        <!-- ControlsFX Dependency -->
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>8.20.8</version>
+        </dependency>
 
-      <!-- AppAssembler Dependency -->
-      <dependency>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>appassembler-maven-plugin</artifactId>
-          <version>1.9</version>
-      </dependency>
+        <!-- AppAssembler Dependency -->
+        <dependency>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>appassembler-maven-plugin</artifactId>
+            <version>1.9</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
@@ -197,7 +199,7 @@
     <!-- Reports -->
     <reporting>
         <plugins>
-            
+
             <!-- Checkstyle -->
             <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -207,7 +209,7 @@
                     <configLocation>config/sun_checks.xml</configLocation>
                 </configuration>
             </plugin>-->
-            
+
             <!-- Project info reports -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -281,5 +283,5 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-    
+
 </project>

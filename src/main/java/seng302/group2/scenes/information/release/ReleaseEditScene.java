@@ -13,12 +13,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.release.Release;
@@ -30,23 +30,21 @@ import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
- *
  * @author Shinobu
  */
-public class ReleaseEditScene
-{
+public class ReleaseEditScene {
     /**
      * Gets the editable information scene for a release
+     *
      * @param currentRelease the release to display the information of
      * @return the editable information scene for a release
      */
-    public static ScrollPane getReleaseEditScene(Release currentRelease)
-    {
+    public static ScrollPane getReleaseEditScene(Release currentRelease) {
         informationPane = new VBox(10);
         /*informationPane.setAlignment(Pos.TOP_LEFT);
         informationPane.setHgap(10);
         informationPane.setVgap(10);*/
-        informationPane.setPadding(new Insets(25,25,25,25));
+        informationPane.setPadding(new Insets(25, 25, 25, 25));
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Done");
@@ -60,7 +58,7 @@ public class ReleaseEditScene
         CustomTextArea descriptionTextArea = new CustomTextArea("Release Description:", 300);
         CustomDatePicker releaseDatePicker = new CustomDatePicker("Estimated Release Date:",
                 false);
-        
+
         CustomComboBox projectComboBox = new CustomComboBox("Project: ", true);
 
         shortNameCustomField.setMaxWidth(275);
@@ -68,11 +66,10 @@ public class ReleaseEditScene
         releaseDatePicker.setMaxWidth(275);
         projectComboBox.setMaxWidth(275);
 
-        for (TreeViewItem project : Global.currentWorkspace.getProjects())
-        {
+        for (TreeViewItem project : Global.currentWorkspace.getProjects()) {
             projectComboBox.addToComboBox(project.toString());
         }
-        
+
         shortNameCustomField.setText(currentRelease.getShortName());
         descriptionTextArea.setText(currentRelease.getDescription());
         releaseDatePicker.setValue(currentRelease.getEstimatedDate());
@@ -85,16 +82,14 @@ public class ReleaseEditScene
         projectComboBox.setValue(defaultProject);
 
 
-        btnSave.setOnAction((event) ->
-            {
+        btnSave.setOnAction((event) -> {
                 boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                    currentRelease.getShortName());
+                        currentRelease.getShortName());
                 boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                    currentRelease.getDescription());
+                        currentRelease.getDescription());
                 boolean projectUnchanged = projectComboBox.getValue().equals(
-                    currentRelease.getProject());
-                if (shortNameUnchanged && descriptionUnchanged && projectUnchanged)
-                {
+                        currentRelease.getProject());
+                if (shortNameUnchanged && descriptionUnchanged && projectUnchanged) {
                     // No fields have been changed
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
                     return;
@@ -102,53 +97,45 @@ public class ReleaseEditScene
 
                 LocalDate releaseDate = releaseDatePicker.getValue();
 
-                if (releaseDatePicker.getValue() == null)
-                {
+                if (releaseDatePicker.getValue() == null) {
                     releaseDate = null;
                 }
-                else
-                {
-                    if (!DateValidator.isFutureDate(releaseDate))
-                    {
+                else {
+                    if (!DateValidator.isFutureDate(releaseDate)) {
                         releaseDatePicker.showErrorField("Date must be a future date");
                     }
                 }
 
                 boolean correctShortName = validateShortName(shortNameCustomField,
-                    currentRelease.getShortName());
+                        currentRelease.getShortName());
                 // The short name is the same or valid
-                if (correctShortName)
-                {
+                if (correctShortName) {
                     Project project = new Project();
 
-                    for (Project proj : Global.currentWorkspace.getProjects())
-                    {
-                        if (proj.getShortName() == projectComboBox.getValue())
-                        {
+                    for (Project proj : Global.currentWorkspace.getProjects()) {
+                        if (proj.getShortName() == projectComboBox.getValue()) {
                             project = proj;
                             break;
                         }
                     }
 
                     currentRelease.edit(shortNameCustomField.getText(),
-                        descriptionTextArea.getText(),
-                        releaseDate,
-                        project
+                            descriptionTextArea.getText(),
+                            releaseDate,
+                            project
                     );
-                    
+
                     Collections.sort(currentRelease.getProject().getReleases());
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
                     MainScene.treeView.refresh();
                 }
-                else
-                {
+                else {
                     // One or more fields incorrectly validated, stay on the edit scene
                     event.consume();
                 }
             });
 
-        btnCancel.setOnAction((event) ->
-            {
+        btnCancel.setOnAction((event) -> {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
             });
 
@@ -157,5 +144,5 @@ public class ReleaseEditScene
         return wrapper;
 
     }
-    
+
 }

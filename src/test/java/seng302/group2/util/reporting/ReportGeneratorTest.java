@@ -9,18 +9,16 @@ import org.junit.Before;
 import seng302.group2.workspace.Workspace;
 
 /**
- *
  * @author crw73
  */
 public class ReportGeneratorTest {
-    
+
     private Workspace workSpace = new Workspace();
-    
-    
+
+
     @Before
-    public void setUp()
-    {
-        
+    public void setUp() {
+
 
     }
 }

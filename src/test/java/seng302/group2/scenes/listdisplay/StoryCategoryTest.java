@@ -8,14 +8,12 @@ import seng302.group2.workspace.story.Story;
 /**
  * Created by David on 17/05/2015.
  */
-public class StoryCategoryTest
-{
+public class StoryCategoryTest {
     /**
      * Tests that a story category's project is returned correctly
      */
     @Test
-    public void testGetProject()
-    {
+    public void testGetProject() {
         Project proj = new Project();
         StoryCategory category = new StoryCategory("Stories", proj);
         StoryCategory category2 = new StoryCategory("Stories", null);
@@ -28,8 +26,7 @@ public class StoryCategoryTest
      * Tests the children of a story category are returned correctly
      */
     @Test
-    public void testGetChildren()
-    {
+    public void testGetChildren() {
         Project proj = new Project();
         StoryCategory category = new StoryCategory("Stories", proj);
         Assert.assertEquals(proj.getUnallocatedStories(), category.getProject().getUnallocatedStories());
@@ -43,8 +40,7 @@ public class StoryCategoryTest
      * Tests the equivalence of two release categories are as expected
      */
     @Test
-    public void testEquals()
-    {
+    public void testEquals() {
         Project proj = new Project();
         StoryCategory category = new StoryCategory("Stories", proj);
         StoryCategory category2 = new StoryCategory("Stories", null);

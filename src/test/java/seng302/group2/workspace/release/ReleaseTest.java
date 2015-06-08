@@ -15,24 +15,21 @@ import seng302.group2.workspace.project.Project;
 import java.time.LocalDate;
 
 /**
- *
  * @author Shinobu
  */
-public class ReleaseTest
-{
+public class ReleaseTest {
     /**
      * Test constructors
      */
     @Test
-    public void testReleaseConstructor()
-    {
+    public void testReleaseConstructor() {
         Release release1 = new Release();
         Assert.assertEquals("Untitled Release", release1.getShortName());
-        Assert.assertEquals("Release without project assigned should not exist", 
+        Assert.assertEquals("Release without project assigned should not exist",
                 release1.getDescription());
         Assert.assertEquals(LocalDate.now(), release1.getEstimatedDate());
         Assert.assertEquals("Untitled Project", release1.getProject().getShortName());
-        
+
         Project testProject = new Project();
         Release release2 = new Release("Test2", testProject);
         Assert.assertEquals("Test2", release2.getShortName());
@@ -48,35 +45,33 @@ public class ReleaseTest
     }
 
     @Test
-    public void testReleaseSetters()
-    {
+    public void testReleaseSetters() {
         Release testRelease = new Release();
         Project testProject = new Project("Test Project", "Long name", "Description");
         testRelease.setShortName("Release 2.0");
         testRelease.setDescription("Second Release");
         testRelease.setEstimatedDate(LocalDate.parse("26/03/2016", Global.dateFormatter));
         testProject.add(testRelease);
-        
+
         Assert.assertEquals("Release 2.0", testRelease.getShortName());
         Assert.assertEquals("Second Release", testRelease.getDescription());
         Assert.assertEquals(LocalDate.parse("26/03/2016", Global.dateFormatter),
                 testRelease.getEstimatedDate());
-        Assert.assertEquals("Test Project", testRelease.getProject().getShortName());   
+        Assert.assertEquals("Test Project", testRelease.getProject().getShortName());
         Assert.assertTrue(testProject.getReleases().contains(testRelease));
     }
-    
+
     /**
-     * Tests the compareTo method of Release to ensure it correctly returns an int representing if a 
+     * Tests the compareTo method of Release to ensure it correctly returns an int representing if a
      * shortName is larger or not.
      */
     @Test
-    public void testCompareTo()
-    {
+    public void testCompareTo() {
         Release release1 = new Release();
         Release release2 = new Release();
         release1.setShortName("A");
         release2.setShortName("Z");
-        
+
         Assert.assertTrue(release1.compareTo(release2) <= 0);
         Assert.assertTrue(release2.compareTo(release1) >= 0);
         Assert.assertTrue(release1.compareTo(release1) == 0);
@@ -84,8 +79,7 @@ public class ReleaseTest
 
 
     @Test
-    public void testEdit()
-    {
+    public void testEdit() {
         Release release = new Release();
         Project testProject = new Project();
         release.setProject(testProject);
@@ -108,8 +102,7 @@ public class ReleaseTest
     }
 
     @Test
-    public void testDeleteRelease()
-    {
+    public void testDeleteRelease() {
         Release release = new Release();
         Project project = new Project();
         Workspace ws = new Workspace();

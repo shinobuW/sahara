@@ -13,12 +13,10 @@ import java.util.HashSet;
 /**
  * Created by Jordane on 7/06/2015.
  */
-public class ProjectCategoryTest
-{
+public class ProjectCategoryTest {
 
     @Test
-    public void testGetChildren() throws Exception
-    {
+    public void testGetChildren() throws Exception {
         Workspace ws = new Workspace();
         Global.currentWorkspace = ws;
         Collection<Project> projects = new HashSet<>();
@@ -33,15 +31,13 @@ public class ProjectCategoryTest
     }
 
     @Test
-    public void testToString()
-    {
+    public void testToString() {
         Category projectCategory = new ProjectCategory();
         Assert.assertEquals("Projects", projectCategory.toString());
     }
 
     @Test
-    public void testEquals()
-    {
+    public void testEquals() {
         Category p1 = new ProjectCategory();
         Category p2 = new ProjectCategory();
         Assert.assertEquals(p1, p2);

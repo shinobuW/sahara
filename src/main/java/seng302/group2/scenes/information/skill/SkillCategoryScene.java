@@ -16,20 +16,20 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * A class for displaying all skills currently created in a workspace.
+ *
  * @author David Moseley
  */
-public class SkillCategoryScene
-{
+public class SkillCategoryScene {
     /**
      * Gets the Skill Category Scene
+     *
      * @param currentWorkspace The workspace currently being used
      * @return The skill category info scene
      */
-    public static ScrollPane getSkillCategoryScene(Workspace currentWorkspace)
-    {
+    public static ScrollPane getSkillCategoryScene(Workspace currentWorkspace) {
         informationPane = new VBox(10);
 
-        informationPane.setPadding(new Insets(25,25,25,25));
+        informationPane.setPadding(new Insets(25, 25, 25, 25));
         Label title = new TitleLabel("Skills in " + currentWorkspace.getShortName());
 
         Button btnView = new Button("View");
@@ -52,26 +52,21 @@ public class SkillCategoryScene
         informationPane.getChildren().add(selectionButtons);
 
 
-        btnView.setOnAction((event) ->
-            {
-                if (skillBox.getSelectionModel().getSelectedItem() != null)
-                {
+        btnView.setOnAction((event) -> {
+                if (skillBox.getSelectionModel().getSelectedItem() != null) {
                     MainScene.treeView.selectItem((TreeViewItem)
                             skillBox.getSelectionModel().getSelectedItem());
                 }
             });
 
-        btnDelete.setOnAction((event) ->
-            {
-                if (skillBox.getSelectionModel().getSelectedItem() != null)
-                {
+        btnDelete.setOnAction((event) -> {
+                if (skillBox.getSelectionModel().getSelectedItem() != null) {
                     showDeleteDialog((TreeViewItem)
                             skillBox.getSelectionModel().getSelectedItem());
                 }
             });
 
-        btnCreate.setOnAction((event) ->
-            {
+        btnCreate.setOnAction((event) -> {
                 CreateSkillDialog.show();
             });
 

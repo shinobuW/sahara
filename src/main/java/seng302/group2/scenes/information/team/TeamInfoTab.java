@@ -6,9 +6,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.team.Team;
 
@@ -19,14 +19,13 @@ import static javafx.collections.FXCollections.observableArrayList;
  * The workspace information tab
  * Created by jml168 on 11/05/15.
  */
-public class TeamInfoTab extends Tab
-{
+public class TeamInfoTab extends Tab {
     /**
      * Constructor for team basic information tab
+     *
      * @param currentTeam currently selected team
      */
-    public TeamInfoTab(Team currentTeam)
-    {
+    public TeamInfoTab(Team currentTeam) {
         this.setText("Basic Information");
 
         Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
@@ -39,23 +38,18 @@ public class TeamInfoTab extends Tab
         Label title = new TitleLabel(currentTeam.getShortName());
 
         Button btnEdit = new Button("Edit");
-        if (currentTeam.isUnassignedTeam())
-        {
+        if (currentTeam.isUnassignedTeam()) {
             btnEdit.setVisible(false);
         }
-        else
-        {
+        else {
             btnEdit.setVisible(true);
         }
 
 
-        if (currentTeam.isUnassignedTeam())
-        {
-            for (TreeViewItem person : Global.currentWorkspace.getPeople())
-            {
+        if (currentTeam.isUnassignedTeam()) {
+            for (TreeViewItem person : Global.currentWorkspace.getPeople()) {
                 Person castedPerson = (Person) person;
-                if (castedPerson.getTeam() == null)
-                {
+                if (castedPerson.getTeam() == null) {
                     currentTeam.add(castedPerson, false);
                 }
             }
@@ -75,25 +69,20 @@ public class TeamInfoTab extends Tab
                 + currentTeam.getDescription()));
         basicInfoPane.getChildren().add(separator);
 
-        if (!currentTeam.isUnassignedTeam())
-        {
-            if (currentTeam.getProductOwner() != null)
-            {
+        if (!currentTeam.isUnassignedTeam()) {
+            if (currentTeam.getProductOwner() != null) {
                 basicInfoPane.getChildren().add(new Label("Product Owner: "
                         + currentTeam.getProductOwner().toString()));
             }
-            else
-            {
+            else {
                 basicInfoPane.getChildren().add(new Label("Product Owner: "));
             }
 
-            if (currentTeam.getScrumMaster() != null)
-            {
+            if (currentTeam.getScrumMaster() != null) {
                 basicInfoPane.getChildren().add(new Label("Scrum Master: "
                         + currentTeam.getScrumMaster().toString()));
             }
-            else
-            {
+            else {
                 basicInfoPane.getChildren().add(new Label("Scrum Master: "));
             }
 
@@ -102,13 +91,11 @@ public class TeamInfoTab extends Tab
 
             basicInfoPane.getChildren().add(btnEdit);
 
-            btnEdit.setOnAction((event) ->
-                {
+            btnEdit.setOnAction((event) -> {
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM_EDIT, currentTeam);
                 });
         }
-        else
-        {
+        else {
             // Just add the members list
             basicInfoPane.getChildren().add(new Label("Unassigned People: "));
             basicInfoPane.getChildren().add(teamsPeopleBox);
@@ -120,29 +107,22 @@ public class TeamInfoTab extends Tab
     * @param currentTeam It is the team to be converted.
     * @return returns a List of the People converted to a List of their Shortnames
     */
-    public static ObservableList<String> personRoleToString(ObservableList<Person> currentTeam)
-    {
+    public static ObservableList<String> personRoleToString(ObservableList<Person> currentTeam) {
         ObservableList<String> currentStringTeam = observableArrayList();
 
-        for (Person person : currentTeam)
-        {
-            if (person.getRole() != null)
-            {
-                if (person.getRole().toString().equals("Product Owner"))
-                {
+        for (Person person : currentTeam) {
+            if (person.getRole() != null) {
+                if (person.getRole().toString().equals("Product Owner")) {
                     currentStringTeam.add(person.toString() + " (" + person.getRole() + ")");
                 }
-                else if (person.getRole().toString().equals("Scrum Master"))
-                {
+                else if (person.getRole().toString().equals("Scrum Master")) {
                     currentStringTeam.add(person.toString() + " (" + person.getRole() + ")");
                 }
-                else if (person.getRole().toString().equals("Development Team Member"))
-                {
+                else if (person.getRole().toString().equals("Development Team Member")) {
                     currentStringTeam.add(person.toString() + " (" + person.getRole() + ")");
                 }
             }
-            else
-            {
+            else {
                 currentStringTeam.add(person.toString());
             }
         }
@@ -157,29 +137,22 @@ public class TeamInfoTab extends Tab
     * @param currentTeam The team to sort by.
     * @return Returns sorted list.
     */
-    public static ObservableList<Person> sortListView(ObservableList<Person> currentTeam)
-    {
+    public static ObservableList<Person> sortListView(ObservableList<Person> currentTeam) {
         ObservableList<Person> teamList = observableArrayList();
 
-        for (Person person : currentTeam)
-        {
-            if (person.getRole() != null)
-            {
-                if (person.getRole().toString().equals("Product Owner"))
-                {
+        for (Person person : currentTeam) {
+            if (person.getRole() != null) {
+                if (person.getRole().toString().equals("Product Owner")) {
                     teamList.add(person);
                 }
-                else if (person.getRole().toString().equals("Scrum Master"))
-                {
+                else if (person.getRole().toString().equals("Scrum Master")) {
                     teamList.add(person);
                 }
-                else if (person.getRole().toString().equals("Development Team Member"))
-                {
+                else if (person.getRole().toString().equals("Development Team Member")) {
                     teamList.add(person);
                 }
             }
-            else
-            {
+            else {
                 teamList.add(person);
             }
         }

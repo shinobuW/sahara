@@ -8,23 +8,19 @@ import seng302.group2.workspace.team.Team;
 /**
  * Created by Jordane on 27/04/2015.
  */
-public class GlobalTest
-{
+public class GlobalTest {
 
     /**
      * Tests that the workspace gets the unassigned team correctly
      */
     @Test
-    public void testGetUnassignedTeam()
-    {
+    public void testGetUnassignedTeam() {
         Workspace workspace = new Workspace();
         Global.currentWorkspace = workspace;
 
         Team unassignedTeam = null;
-        for (Team team : workspace.getTeams())
-        {
-            if (team.isUnassignedTeam())
-            {
+        for (Team team : workspace.getTeams()) {
+            if (team.isUnassignedTeam()) {
                 unassignedTeam = team;
             }
         }
@@ -37,8 +33,7 @@ public class GlobalTest
      * Tests that setting the current workspace as changed works correctly
      */
     @Test
-    public void testSetCurrentWorkspaceChanged()
-    {
+    public void testSetCurrentWorkspaceChanged() {
         Workspace workspace = new Workspace();
         Global.currentWorkspace = workspace;
 
@@ -51,8 +46,7 @@ public class GlobalTest
      * Tests that setting the current workspace as unchanged works correctly
      */
     @Test
-    public void testSetCurrentWorkspaceUnchanged()
-    {
+    public void testSetCurrentWorkspaceUnchanged() {
         Workspace workspace = new Workspace();
         Global.currentWorkspace = workspace;
 

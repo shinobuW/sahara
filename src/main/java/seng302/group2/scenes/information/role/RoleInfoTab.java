@@ -12,10 +12,8 @@ import seng302.group2.workspace.role.Role;
  * The workspace information tab
  * Created by jml168 on 11/05/15.
  */
-public class RoleInfoTab extends Tab
-{
-    public RoleInfoTab(Role currentRole)
-    {
+public class RoleInfoTab extends Tab {
+    public RoleInfoTab(Role currentRole) {
         this.setText("Basic Information");
 
         Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info

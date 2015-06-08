@@ -11,18 +11,17 @@ import org.junit.Test;
 
 /**
  * A test for the Email validation class
+ *
  * @author Jordane
  */
-public class EmailValidatorTest
-{
+public class EmailValidatorTest {
     /**
      * Test of validEmail method, of class EmailValidator.
      */
     @Test
-    public void testValidEmail()
-    {
+    public void testValidEmail() {
         Assert.assertEquals(ValidationStatus.INVALID, EmailValidator.validEmail(""));
         Assert.assertEquals(ValidationStatus.VALID, EmailValidator.validEmail("abc@gmail.com"));
     }
-    
+
 }

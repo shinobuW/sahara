@@ -16,20 +16,20 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * A class for displaying all teams currently created in a workspace.
+ *
  * @author David Moseley
  */
-public class TeamCategoryScene
-{
+public class TeamCategoryScene {
     /**
      * Gets the Team Category Scene
+     *
      * @param currentWorkspace The workspace currently being used
      * @return The team category info scene
      */
-    public static ScrollPane getTeamCategoryScene(Workspace currentWorkspace)
-    {
+    public static ScrollPane getTeamCategoryScene(Workspace currentWorkspace) {
         informationPane = new VBox(10);
 
-        informationPane.setPadding(new Insets(25,25,25,25));
+        informationPane.setPadding(new Insets(25, 25, 25, 25));
         Label title = new TitleLabel("Teams in " + currentWorkspace.getShortName());
 
         Button btnView = new Button("View");
@@ -53,26 +53,21 @@ public class TeamCategoryScene
         informationPane.getChildren().add(selectionButtons);
 
 
-        btnView.setOnAction((event) ->
-            {
-                if (teamBox.getSelectionModel().getSelectedItem() != null)
-                {
+        btnView.setOnAction((event) -> {
+                if (teamBox.getSelectionModel().getSelectedItem() != null) {
                     MainScene.treeView.selectItem((TreeViewItem)
                             teamBox.getSelectionModel().getSelectedItem());
                 }
             });
 
-        btnDelete.setOnAction((event) ->
-            {
-                if (teamBox.getSelectionModel().getSelectedItem() != null)
-                {
+        btnDelete.setOnAction((event) -> {
+                if (teamBox.getSelectionModel().getSelectedItem() != null) {
                     showDeleteDialog((TreeViewItem)
                             teamBox.getSelectionModel().getSelectedItem());
                 }
             });
 
-        btnCreate.setOnAction((event) ->
-            {
+        btnCreate.setOnAction((event) -> {
                 CreateTeamDialog.show();
             });
 

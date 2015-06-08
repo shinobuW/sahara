@@ -51,8 +51,7 @@ public class AllocationTest {
      * Test that the edits are being performed as expected
      */
     @Test
-    public void testEditAllocation()
-    {
+    public void testEditAllocation() {
         LocalDate testDate = LocalDate.of(2015, Month.MAY, 30);
         alloc.editEndDate(testDate);
         Assert.assertEquals(testDate, alloc.getEndDate());
@@ -73,8 +72,7 @@ public class AllocationTest {
      * Test the delete method of Allocation
      */
     @Test
-    public void testDeleteAllocation()
-    {
+    public void testDeleteAllocation() {
         team.add(alloc);
         alloc.delete();
         Assert.assertEquals(0, team.getProjectAllocations().size());

@@ -23,23 +23,20 @@ import java.time.format.DateTimeParseException;
 
 /**
  * Tests that the short name validator performs correctly.
+ *
  * @author Jordane
  */
-public class ShortNameValidatorTest
-{
+public class ShortNameValidatorTest {
     /**
      * Performs the initialization state before tests are run
      */
     @BeforeClass
-    public static void setUp()
-    {
+    public static void setUp() {
         LocalDate dob = LocalDate.now();
-        try
-        {
+        try {
             dob = LocalDate.parse("19/12/1994", Global.dateFormatter);
         }
-        catch (DateTimeParseException e)
-        {
+        catch (DateTimeParseException e) {
             Assert.fail("Date parsing error, needs fixing");
         }
 
@@ -72,15 +69,14 @@ public class ShortNameValidatorTest
      * Test of validateShortName method, of class ShortNameValidator.
      */
     @Test
-    public void testValidateShortName()
-    {
+    public void testValidateShortName() {
         // People
         Assert.assertEquals(ValidationStatus.INVALID, ShortNameValidator.validateShortName("", null));
         Assert.assertEquals(ValidationStatus.NON_UNIQUE,
                 ShortNameValidator.validateShortName("btm38", null));
         Assert.assertEquals(ValidationStatus.VALID, ShortNameValidator.validateShortName("new", null));
         Assert.assertEquals(ValidationStatus.OUT_OF_RANGE, ShortNameValidator.validateShortName(
-                "this is much more than 20 characters long" , null));
+                "this is much more than 20 characters long", null));
 
         Assert.assertEquals(ValidationStatus.NON_UNIQUE, ShortNameValidator.validateShortName("WS", null));
         Assert.assertEquals(ValidationStatus.NON_UNIQUE, ShortNameValidator.validateShortName("PROJ", null));

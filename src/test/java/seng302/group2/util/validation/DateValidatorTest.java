@@ -9,8 +9,8 @@ package seng302.group2.util.validation;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
-import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.allocation.Allocation;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
@@ -19,16 +19,15 @@ import java.util.Calendar;
 
 /**
  * Test class for the DateValidator
+ *
  * @author Jordane
  */
-public class DateValidatorTest
-{
+public class DateValidatorTest {
     /**
      * Test of isValidBirthdate method, of class DateValidator.
      */
     @Test
-    public void testIsValidBirthdate()
-    {
+    public void testIsValidBirthdate() {
         Assert.assertEquals(ValidationStatus.NULL, DateValidator.isValidBirthdate(""));
         Assert.assertEquals(ValidationStatus.OUT_OF_RANGE,
                 DateValidator.isValidBirthdate("12/12/9999"));
@@ -41,8 +40,7 @@ public class DateValidatorTest
      * Test of isValidAllocationDate method, of class DateValidator
      */
     @Test
-    public void testIsValidAllocationDate()
-    {
+    public void testIsValidAllocationDate() {
         Project proj = new Project();
         Team team = new Team();
         Allocation projAlloc = new Allocation(proj, team,
@@ -51,7 +49,7 @@ public class DateValidatorTest
         team.add(projAlloc);
 
         Assert.assertEquals(ValidationStatus.ALLOCATION_DATES_WRONG_ORDER,
-                DateValidator.validateAllocation(proj, team,  LocalDate.of(2016, Month.JANUARY, 1),
+                DateValidator.validateAllocation(proj, team, LocalDate.of(2016, Month.JANUARY, 1),
                         LocalDate.of(2015, Month.JANUARY, 1)));
 
         Assert.assertEquals(ValidationStatus.START_OVERLAP,
@@ -78,8 +76,7 @@ public class DateValidatorTest
     /**
      * test editing of start date and end date of allocation
      */
-    public void testEdits()
-    {
+    public void testEdits() {
         Project proj = new Project();
         Team team = new Team();
         Allocation testAlloc = new Allocation(proj, team, LocalDate.of(2015, Month.JANUARY, 1),
@@ -127,8 +124,7 @@ public class DateValidatorTest
      * Test of dateBefore method, of class DateValidator
      */
 
-    public void testDateBefore()
-    {
+    public void testDateBefore() {
         LocalDate date1 = LocalDate.parse("01/01/2015", Global.dateFormatter);
         LocalDate date2 = LocalDate.parse("01/01/2016", Global.dateFormatter);
 
@@ -142,8 +138,7 @@ public class DateValidatorTest
      * Test of dateAfter method, of class DateValidator
      */
     @Test
-    public void testDateAfter()
-    {
+    public void testDateAfter() {
         LocalDate date1 = LocalDate.parse("01/01/2015", Global.dateFormatter);
         LocalDate date2 = LocalDate.parse("01/01/2016", Global.dateFormatter);
 
@@ -157,8 +152,7 @@ public class DateValidatorTest
      * Tests the future date validation
      */
     @Test
-    public void testIsFutureDate()
-    {
+    public void testIsFutureDate() {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 1);
         LocalDate date1 = LocalDate.now();
@@ -169,8 +163,7 @@ public class DateValidatorTest
      * Tests that the string to date conversion is equivalent
      */
     @Test
-    public void testStringToDate()
-    {
+    public void testStringToDate() {
         LocalDate testDate = DateValidator.stringToDate("12/12/2015");
         Assert.assertEquals(LocalDate.parse("12/12/2015", Global.dateFormatter), testDate);
     }

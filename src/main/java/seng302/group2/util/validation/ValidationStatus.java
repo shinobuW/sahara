@@ -7,10 +7,10 @@ package seng302.group2.util.validation;
 
 /**
  * An enumeration of validation statuses
+ *
  * @author Jordane
  */
-public enum ValidationStatus
-{
+public enum ValidationStatus {
     // Common statuses
     VALID,
     INVALID,

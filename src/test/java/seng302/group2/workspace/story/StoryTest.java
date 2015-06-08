@@ -17,10 +17,10 @@ import java.util.ArrayList;
 
 /**
  * A series of tests relating to Story
+ *
  * @author swi67
  */
-public class StoryTest
-{
+public class StoryTest {
     Story story = new Story();
     AcceptanceCriteria ac = new AcceptanceCriteria("requirement", story);
     ArrayList<AcceptanceCriteria> acList = new ArrayList<>();
@@ -29,8 +29,7 @@ public class StoryTest
      * Test for the story constructors
      */
     @Test
-    public void testStoryConstructors()
-    {
+    public void testStoryConstructors() {
         Project project = new Project();
         Assert.assertEquals("Untitled Story", story.getShortName());
         Assert.assertEquals("", story.getDescription());
@@ -44,35 +43,33 @@ public class StoryTest
         Assert.assertEquals("test description", testStory.getDescription());
         Assert.assertEquals(1, testStory.getPriority(), 0);
         Assert.assertEquals("Tyler the Creator", testStory.getCreator());
-        Assert.assertEquals("Test Story", testStory.toString()); 
+        Assert.assertEquals("Test Story", testStory.toString());
         Assert.assertEquals(project, testStory.getProject());
 
         Assert.assertNull(testStory.getChildren());
     }
-    
+
     /**
      * Test Story setters
      */
     @Test
-    public void testStorySetters()
-    {
+    public void testStorySetters() {
         story.setShortName("Test Story");
         story.setLongName("Test Long Name");
         story.setDescription("description");
         story.setPriority(5);
         story.setCreator("Shinobu");
-        
+
         Assert.assertEquals("Test Story", story.getShortName());
         Assert.assertEquals("Test Long Name", story.getLongName());
         Assert.assertEquals("description", story.getDescription());
         Assert.assertEquals(5, story.getPriority(), 0);
         Assert.assertEquals("Shinobu", story.getCreator());
     }
-    
+
 
     @Test
-    public void testComparators()
-    {
+    public void testComparators() {
         Story defaultStory = new Story();
 
         // Short name comparator
@@ -87,8 +84,7 @@ public class StoryTest
 
 
     @Test
-    public void testDeleteStory()
-    {
+    public void testDeleteStory() {
         Project proj = new Project();
         Backlog back = new Backlog();
         proj.add(back);
@@ -123,8 +119,7 @@ public class StoryTest
      * Tests that a story properly prepares for serialization
      */
     @Test
-    public void testPrepSerialization()
-    {
+    public void testPrepSerialization() {
         story.getSerializableAc().clear();
         story.getAcceptanceCriteria().clear();
 
@@ -141,8 +136,7 @@ public class StoryTest
      * Tests that a story properly post-pares after deserialization
      */
     @Test
-    public void testPostSerialization()
-    {
+    public void testPostSerialization() {
         story.getSerializableAc().clear();
         story.getAcceptanceCriteria().clear();
         story.getSerializableAc().add(ac);
@@ -157,8 +151,7 @@ public class StoryTest
      * Test undo/redo for adding Acceptance Criteria
      */
     @Test
-    public void testAdd()
-    {
+    public void testAdd() {
         story.add(ac);
         Assert.assertTrue(story.getAcceptanceCriteria().contains(ac));
         Global.commandManager.undo();

@@ -16,20 +16,20 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * A class for displaying all projects currently created in a workspace.
+ *
  * @author David Moseley
  */
-public class ProjectCategoryScene
-{
+public class ProjectCategoryScene {
     /**
      * Gets the Project Category Scene
+     *
      * @param currentWorkspace The workspace currently being used
      * @return The project category info scene
      */
-    public static ScrollPane getProjectCategoryScene(Workspace currentWorkspace)
-    {
+    public static ScrollPane getProjectCategoryScene(Workspace currentWorkspace) {
         informationPane = new VBox(10);
 
-        informationPane.setPadding(new Insets(25,25,25,25));
+        informationPane.setPadding(new Insets(25, 25, 25, 25));
         Label title = new TitleLabel("Projects in " + currentWorkspace.getShortName());
 
         Button btnView = new Button("View");
@@ -53,25 +53,20 @@ public class ProjectCategoryScene
         informationPane.getChildren().add(projectBox);
         informationPane.getChildren().add(createButton);
 
-        btnView.setOnAction((event) ->
-            {
-                if (projectBox.getSelectionModel().getSelectedItem() != null)
-                {
+        btnView.setOnAction((event) -> {
+                if (projectBox.getSelectionModel().getSelectedItem() != null) {
                     MainScene.treeView.selectItem((TreeViewItem)
                             projectBox.getSelectionModel().getSelectedItem());
                 }
             });
-        
-        btnDelete.setOnAction((event) ->
-            {
-                if (projectBox.getSelectionModel().getSelectedItem() != null)
-                {
+
+        btnDelete.setOnAction((event) -> {
+                if (projectBox.getSelectionModel().getSelectedItem() != null) {
                     showDeleteDialog((TreeViewItem)
                             projectBox.getSelectionModel().getSelectedItem());
                 }
             });
-        btnCreate.setOnAction((event) ->
-            {
+        btnCreate.setOnAction((event) -> {
                 CreateProjectDialog.show();
             });
 

@@ -14,20 +14,20 @@ import static seng302.group2.scenes.MainScene.informationPane;
 
 /**
  * A class for displaying all roles currently created in a workspace.
+ *
  * @author David Moseley
  */
-public class RoleCategoryScene
-{
+public class RoleCategoryScene {
     /**
      * Gets the Role Category Scene
+     *
      * @param currentWorkspace The workspace currently being used
      * @return The role category info scene
      */
-    public static ScrollPane getRoleCategoryScene(Workspace currentWorkspace)
-    {
+    public static ScrollPane getRoleCategoryScene(Workspace currentWorkspace) {
         informationPane = new VBox(10);
 
-        informationPane.setPadding(new Insets(25,25,25,25));
+        informationPane.setPadding(new Insets(25, 25, 25, 25));
         Label title = new TitleLabel("Roles in " + currentWorkspace.getShortName());
 
         Button btnView = new Button("View");
@@ -53,10 +53,8 @@ public class RoleCategoryScene
         informationPane.getChildren().add(selectionButtons);
         informationPane.getChildren().add(createButton);
 
-        btnView.setOnAction((event) ->
-            {
-                if (roleBox.getSelectionModel().getSelectedItem() != null)
-                {
+        btnView.setOnAction((event) -> {
+                if (roleBox.getSelectionModel().getSelectedItem() != null) {
                     MainScene.treeView.selectItem((TreeViewItem)
                             roleBox.getSelectionModel().getSelectedItem());
                 }

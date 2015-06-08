@@ -6,18 +6,17 @@
 package seng302.group2.scenes.information.role;
 
 import javafx.scene.control.Tab;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.TrackedTabPane;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.role.Role;
 
 /**
  * A class for displaying the role scene
+ *
  * @author jml168
  */
-public class RoleScene extends TrackedTabPane
-{
-    public RoleScene(Role currentRole)
-    {
+public class RoleScene extends TrackedTabPane {
+    public RoleScene(Role currentRole) {
         super(SceneSwitcher.ContentScene.ROLE);
 
         // Define and add the tabs

@@ -7,13 +7,11 @@ import seng302.group2.Global;
 /**
  * Created by Jordane on 16/04/2015.
  */
-public class ConfigurationTest extends TestCase
-{
+public class ConfigurationTest extends TestCase {
     /**
      * Test that the configuration updates to the values of the runtime state (used before saving)
      */
-    public void testUpdateConfiguration()
-    {
+    public void testUpdateConfiguration() {
         String testLocation = "/aTestLocation/";
         String anotherTestLocation = "/anotherTestLocation/";
         Configuration config = new Configuration();
@@ -33,8 +31,7 @@ public class ConfigurationTest extends TestCase
     /**
      * Test that the runtime updates to the values of the configuration (used after loading)
      */
-    public void testUpdateRuntime()
-    {
+    public void testUpdateRuntime() {
         String testLocation = "/aTestLocation/";
         String anotherTestLocation = "/anotherTestLocation/";
         Configuration config = new Configuration();

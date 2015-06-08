@@ -13,27 +13,23 @@ import java.io.*;
  * Created by Jordane on 13/04/2015.
  */
 @SuppressWarnings("deprecation")
-public class ConfigLoader
-{
+public class ConfigLoader {
     private static String configLocation = "./config";
 
     /**
      * Save the current configuration
      */
-    public static void saveConfig()
-    {
+    public static void saveConfig() {
         Configuration config = new Configuration();
         config.updateConfiguration();
 
         /* GSON SERIALIZATION */
-        try (Writer writer = new FileWriter(configLocation))
-        {
+        try (Writer writer = new FileWriter(configLocation)) {
             Gson gson = new GsonBuilder().create();
             gson.toJson(config, writer);
             writer.close();
         }
-        catch (IOException e)
-        {
+        catch (IOException e) {
             Dialogs.create()
                     .title("Error Saving")
                     .message("An error occurred while trying to save Sahara's configuration "
@@ -46,18 +42,15 @@ public class ConfigLoader
     /**
      * Load the current configuration, if found
      */
-    public static void loadConfig()
-    {
+    public static void loadConfig() {
         /* GSON DESERIALIZATION */
-        try (Reader reader = new FileReader(configLocation))
-        {
+        try (Reader reader = new FileReader(configLocation)) {
             Gson gson = new GsonBuilder().create();
             Configuration config = gson.fromJson(reader, Configuration.class);
             reader.close();
             config.updateRuntime();
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             // Not too worried about the configuration load failures at the moment
         }
     }

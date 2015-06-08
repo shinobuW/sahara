@@ -9,28 +9,27 @@ import java.util.Stack;
  * A command manager that tracks a stack of undo/redo commands, and allows their execution.
  * Created by Jordane on 7/05/2015.
  */
-public class CommandManager
-{
+public class CommandManager {
     private Stack<Command> undos = new Stack<>();
     private Stack<Command> redos = new Stack<>();
     private Command lastSaveCommand = null;
 
     /**
      * Executes the given command
+     *
      * @return The current undo stack.
      */
-    public Stack<Command> getUndos()
-    {
+    public Stack<Command> getUndos() {
         return this.undos;
         //System.out.println("added: " + command.toString());
     }
 
     /**
      * Executes the given command
+     *
      * @return The current undo stack.
      */
-    public void setUndos(Stack<Command> undos)
-    {
+    public void setUndos(Stack<Command> undos) {
         this.undos = undos;
         //System.out.println("added: " + command.toString());
     }
@@ -38,10 +37,10 @@ public class CommandManager
 
     /**
      * Executes the given command
+     *
      * @param command The command to execute
      */
-    public void executeCommand(Command command)
-    {
+    public void executeCommand(Command command) {
         Global.setCurrentWorkspaceChanged();
         command.execute();
         undos.push(command);
@@ -51,19 +50,17 @@ public class CommandManager
 
     /**
      * Checks if the undo stack has items that can be undone
+     *
      * @return If the undo stack isn't empty
      */
-    public boolean isUndoAvailable()
-    {
+    public boolean isUndoAvailable() {
         boolean available = true;
 
         // The case that we just opened a ws and created the saveTrackerCommand
-        if (undos.isEmpty())
-        {
+        if (undos.isEmpty()) {
             available = false;
         }
-        else if (undos.size() == 1 && undos.peek() == lastSaveCommand)
-        {
+        else if (undos.size() == 1 && undos.peek() == lastSaveCommand) {
             Global.setCurrentWorkspaceUnchanged();
             available = false;
         }
@@ -74,24 +71,18 @@ public class CommandManager
     /**
      * Undoes the last action added to the undo stack
      */
-    public void undo()
-    {
-        if (isUndoAvailable())
-        {
-            if (undos.peek().getClass() == SaveTrackerCommand.class)
-            {
+    public void undo() {
+        if (isUndoAvailable()) {
+            if (undos.peek().getClass() == SaveTrackerCommand.class) {
                 // Bring over the save tracker
                 redos.push(undos.pop());
-                if (redos.peek() == lastSaveCommand)
-                {
+                if (redos.peek() == lastSaveCommand) {
                     Global.setCurrentWorkspaceUnchanged();
                 }
-                if (!isUndoAvailable())
-                {
+                if (!isUndoAvailable()) {
                     return;  // Return if it's the last item
                 }
-                else
-                {
+                else {
                     undo();
                     return;
                 }
@@ -105,12 +96,10 @@ public class CommandManager
             redos.push(command);
 
             // Check if we are back to the last save
-            if (!undos.isEmpty() && undos.peek() == lastSaveCommand)
-            {
+            if (!undos.isEmpty() && undos.peek() == lastSaveCommand) {
                 Global.setCurrentWorkspaceUnchanged();
             }
-            else
-            {
+            else {
                 Global.setCurrentWorkspaceChanged();
             }
 
@@ -122,14 +111,11 @@ public class CommandManager
     /**
      * Refreshes the tree in the case that the application is running
      */
-    public void refreshTree()
-    {
-        try
-        {
+    public void refreshTree() {
+        try {
             MainScene.treeView.refresh();
         }
-        catch (ExceptionInInitializerError | NoClassDefFoundError e)
-        {
+        catch (ExceptionInInitializerError | NoClassDefFoundError e) {
             // Caused because it was called without the context of the application running, ie. Unit
             // tests.
         }
@@ -138,10 +124,10 @@ public class CommandManager
 
     /**
      * Checks if the redo stack has items that can be redone
+     *
      * @return If the redo stack isn't empty
      */
-    public boolean isRedoAvailable()
-    {
+    public boolean isRedoAvailable() {
         return !redos.isEmpty();
     }
 
@@ -149,15 +135,11 @@ public class CommandManager
     /**
      * Redoes the last action added to the redo stack
      */
-    public void redo()
-    {
-        if (isRedoAvailable())
-        {
-            if (redos.peek().getClass() == SaveTrackerCommand.class)
-            {
+    public void redo() {
+        if (isRedoAvailable()) {
+            if (redos.peek().getClass() == SaveTrackerCommand.class) {
                 undos.push(redos.pop());
-                if (!isRedoAvailable())
-                {
+                if (!isRedoAvailable()) {
                     return;
                 }
             }
@@ -167,20 +149,16 @@ public class CommandManager
             command.execute();
             undos.push(command);
 
-            if (isRedoAvailable() && redos.peek().getClass() == SaveTrackerCommand.class)
-            {
+            if (isRedoAvailable() && redos.peek().getClass() == SaveTrackerCommand.class) {
                 undos.push(redos.pop());
-                if (undos.peek() == lastSaveCommand)
-                {
+                if (undos.peek() == lastSaveCommand) {
                     Global.setCurrentWorkspaceUnchanged();
                 }
-                else
-                {
+                else {
                     Global.setCurrentWorkspaceChanged();
                 }
             }
-            else
-            {
+            else {
                 Global.setCurrentWorkspaceChanged();
             }
 
@@ -190,20 +168,20 @@ public class CommandManager
 
     /**
      * Finds the number of undo items on the stack
+     *
      * @return the size of the undo stack
      */
-    public int numUndos()
-    {
+    public int numUndos() {
         return undos.size();
     }
 
 
     /**
      * Finds the number of redo items on the stack
+     *
      * @return the size of the redo stack
      */
-    public int numRedos()
-    {
+    public int numRedos() {
         return redos.size();
     }
 
@@ -211,8 +189,7 @@ public class CommandManager
     /**
      * Clears the undo and redo stacks.
      */
-    public void clear()
-    {
+    public void clear() {
         redos = new Stack<>();
         undos = new Stack<>();
     }
@@ -221,8 +198,7 @@ public class CommandManager
     /**
      * Adds an empty command that tracks the last save (unsaved changes)
      */
-    public void trackSave()
-    {
+    public void trackSave() {
         Command lastSave = new SaveTrackerCommand();
         lastSaveCommand = lastSave;
         this.executeCommand(lastSave);
@@ -233,18 +209,15 @@ public class CommandManager
     /**
      * A fake command to keep track of saves
      */
-    private class SaveTrackerCommand implements Command
-    {
+    private class SaveTrackerCommand implements Command {
 
         @Override
-        public void execute()
-        {
+        public void execute() {
             // Do nothing
         }
 
         @Override
-        public void undo()
-        {
+        public void undo() {
             // Do nothing
         }
     }

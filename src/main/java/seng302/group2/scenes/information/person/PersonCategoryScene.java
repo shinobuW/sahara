@@ -16,20 +16,20 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * A class for displaying all people currently created in a workspace.
+ *
  * @author David Moseley
  */
-public class PersonCategoryScene
-{
+public class PersonCategoryScene {
     /**
      * Gets the Person Category Scene
+     *
      * @param currentWorkspace The workspace currently being used
      * @return The person category info scene
      */
-    public static ScrollPane getPersonCategoryScene(Workspace currentWorkspace)
-    {
+    public static ScrollPane getPersonCategoryScene(Workspace currentWorkspace) {
         informationPane = new VBox(10);
 
-        informationPane.setPadding(new Insets(25,25,25,25));
+        informationPane.setPadding(new Insets(25, 25, 25, 25));
         Label title = new TitleLabel("People in " + currentWorkspace.getShortName());
 
         Button btnView = new Button("View");
@@ -57,27 +57,22 @@ public class PersonCategoryScene
 
         //informationPane.getChildren().add(createButton);
 
-        btnView.setOnAction((event) ->
-            {
-                if (personBox.getSelectionModel().getSelectedItem() != null)
-                {
+        btnView.setOnAction((event) -> {
+                if (personBox.getSelectionModel().getSelectedItem() != null) {
                     MainScene.treeView.selectItem((TreeViewItem)
                             personBox.getSelectionModel().getSelectedItem());
                 }
             });
 
 
-        btnDelete.setOnAction((event) ->
-            {
-                if (personBox.getSelectionModel().getSelectedItem() != null)
-                {
-                    showDeleteDialog((TreeViewItem) 
-                        personBox.getSelectionModel().getSelectedItem());
+        btnDelete.setOnAction((event) -> {
+                if (personBox.getSelectionModel().getSelectedItem() != null) {
+                    showDeleteDialog((TreeViewItem)
+                            personBox.getSelectionModel().getSelectedItem());
                 }
             });
 
-        btnCreate.setOnAction((event) ->
-            {
+        btnCreate.setOnAction((event) -> {
                 CreatePersonDialog.show();
             });
 

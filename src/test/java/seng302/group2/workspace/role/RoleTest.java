@@ -16,21 +16,20 @@ import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * A series of tests relating to Role
- * @author swi67 
+ *
+ * @author swi67
  */
-public class RoleTest
-{
+public class RoleTest {
     /**
      * A simple test for the Role constructors
      */
     @Test
-    public void testRoleConstructors()
-    {
+    public void testRoleConstructors() {
         Role role = new Role();
         Assert.assertEquals("role Name", role.getShortName());
         Assert.assertEquals("", role.getDescription());
         Assert.assertEquals("role Name", role.toString());
-        
+
         Role role2 = new Role("QA", Role.RoleType.OTHER);
         Assert.assertEquals("QA", role2.getShortName());
         Assert.assertEquals(Role.RoleType.OTHER, role2.getType());
@@ -49,8 +48,7 @@ public class RoleTest
 
 
     @Test
-    public void testToString()
-    {
+    public void testToString() {
         Role role = new Role();
         Role nullRole = null;
         Assert.assertEquals("role Name", role.toString());
@@ -58,22 +56,18 @@ public class RoleTest
 
 
     @Test
-    public void testGetChildren()
-    {
+    public void testGetChildren() {
         Role role = new Role();
         Assert.assertNull(role.getChildren());
     }
 
 
     @Test
-    public void testGetRoleType()
-    {
+    public void testGetRoleType() {
         Global.currentWorkspace = new Workspace();
         Role poRole = null;
-        for (Role role : Global.currentWorkspace.getRoles())
-        {
-            if (role.getType() == Role.RoleType.PRODUCT_OWNER)
-            {
+        for (Role role : Global.currentWorkspace.getRoles()) {
+            if (role.getType() == Role.RoleType.PRODUCT_OWNER) {
                 poRole = role;
             }
         }
@@ -82,8 +76,7 @@ public class RoleTest
 
 
     @Test
-    public void testPostSerialization()
-    {
+    public void testPostSerialization() {
         Role role = new Role();
         Skill skill = new Skill();
         role.getSerializableRequiredSkills().add(skill);
@@ -98,8 +91,7 @@ public class RoleTest
 
 
     @Test
-    public void testPrepSerialization()
-    {
+    public void testPrepSerialization() {
         Role role = new Role();
         Skill skill = new Skill();
         role.getRequiredSkills().add(skill);
@@ -117,13 +109,12 @@ public class RoleTest
      * Tests for Role setter methods.
      */
     @Test
-    public void testRoleSetters()
-    {
+    public void testRoleSetters() {
         Role role = new Role();
         role.setShortName("Tester");
         role.setDescription("Manual Testing");
         role.setType(Role.RoleType.OTHER);
-        
+
         Assert.assertEquals("Tester", role.getShortName());
         Assert.assertEquals("Manual Testing", role.getDescription());
         Assert.assertEquals(Role.RoleType.OTHER, role.getType());

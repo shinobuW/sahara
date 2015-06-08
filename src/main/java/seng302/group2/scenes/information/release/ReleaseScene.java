@@ -6,18 +6,17 @@
 package seng302.group2.scenes.information.release;
 
 import javafx.scene.control.Tab;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.TrackedTabPane;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.release.Release;
 
 /**
  * A class for displaying the release scene
+ *
  * @author jml168
  */
-public class ReleaseScene extends TrackedTabPane
-{
-    public ReleaseScene(Release currentRelease)
-    {
+public class ReleaseScene extends TrackedTabPane {
+    public ReleaseScene(Release currentRelease) {
         super(SceneSwitcher.ContentScene.RELEASE);
 
         // Define and add the tabs

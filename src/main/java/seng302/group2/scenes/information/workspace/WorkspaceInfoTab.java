@@ -7,8 +7,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.Workspace;
 
 
@@ -16,10 +16,8 @@ import seng302.group2.workspace.Workspace;
  * The workspace information tab
  * Created by jml168 on 11/05/15.
  */
-public class WorkspaceInfoTab extends Tab
-{
-    public WorkspaceInfoTab(Workspace currentWorkspace)
-    {
+public class WorkspaceInfoTab extends Tab {
+    public WorkspaceInfoTab(Workspace currentWorkspace) {
         this.setText("Basic Information");
 
         Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
@@ -40,8 +38,7 @@ public class WorkspaceInfoTab extends Tab
                 + currentWorkspace.getDescription()));
         basicInfoPane.getChildren().add(btnEdit);
 
-        btnEdit.setOnAction((event) ->
-            {
+        btnEdit.setOnAction((event) -> {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE_EDIT,
                         currentWorkspace);
             });

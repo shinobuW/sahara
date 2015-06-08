@@ -21,62 +21,57 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 
 /**
  * Class to create a pop up dialog for creating a team.
+ *
  * @author crw73
  */
 @SuppressWarnings("deprecation")
-public class CreateTeamDialog 
-{
+public class CreateTeamDialog {
     /**
      * Displays the Dialog box for creating a Team.
      */
-    public static void show()
-    {
+    public static void show() {
         Dialog dialog = new Dialog(null, "New Team");
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
         grid.setPadding(insets);
-               
+
         Button btnCreate = new Button("Create");
         Button btnCancel = new Button("Cancel");
-        
+
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnCreate, btnCancel);
-        
+
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Team Description:");
-        
+
         grid.getChildren().add(shortNameCustomField);
         grid.getChildren().add(descriptionTextArea);
         grid.getChildren().add(buttons);
-        
-        btnCreate.setOnAction((event) ->
-            {
+
+        btnCreate.setOnAction((event) -> {
                 boolean correctShortName = validateShortName(shortNameCustomField, null);
-                
+
                 String shortName = shortNameCustomField.getText();
                 String description = descriptionTextArea.getText();
-                
-                if (correctShortName)
-                {
+
+                if (correctShortName) {
                     Team team = new Team(shortName, description);
                     Global.currentWorkspace.add(team);
                     MainScene.treeView.selectItem(team);
                     dialog.hide();
                 }
-                else
-                {
+                else {
                     event.consume();
                 }
             });
-        
-        btnCancel.setOnAction((event) ->
-            {
+
+        btnCancel.setOnAction((event) -> {
                 dialog.hide();
             });
-        
+
         dialog.setResizable(false);
         dialog.setIconifiable(false);
         dialog.setContent(grid);

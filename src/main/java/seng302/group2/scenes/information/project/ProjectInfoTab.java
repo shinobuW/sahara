@@ -6,8 +6,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
 
@@ -17,12 +17,10 @@ import static javafx.collections.FXCollections.observableArrayList;
 /**
  * Created by swi67 on 10/05/15.
  */
-public class ProjectInfoTab extends Tab
-{
+public class ProjectInfoTab extends Tab {
     ObservableList<Team> currentTeams = observableArrayList();
 
-    public ProjectInfoTab(Project currentProject)
-    {
+    public ProjectInfoTab(Project currentProject) {
         this.setText("Basic Information");
 
         Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
@@ -37,11 +35,9 @@ public class ProjectInfoTab extends Tab
         Button btnEdit = new Button("Edit");
 
 
-        this.setOnSelectionChanged(event ->
-            {
+        this.setOnSelectionChanged(event -> {
                 currentTeams.clear();
-                for (Team team : currentProject.getCurrentTeams())
-                {
+                for (Team team : currentProject.getCurrentTeams()) {
                     currentTeams.add(team);
                 }
             });
@@ -53,7 +49,6 @@ public class ProjectInfoTab extends Tab
         basicInfoPane.getChildren().add(new Label("Project Description: "
                 + currentProject.getDescription()));
         basicInfoPane.getChildren().add(separator);
-
 
 
         ListView projectTeamsBox = new ListView(currentTeams);
@@ -76,8 +71,7 @@ public class ProjectInfoTab extends Tab
 
 
         basicInfoPane.getChildren().add(btnEdit);
-        btnEdit.setOnAction((event) ->
-            {
+        btnEdit.setOnAction((event) -> {
                 SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT_EDIT, currentProject);
             });
 

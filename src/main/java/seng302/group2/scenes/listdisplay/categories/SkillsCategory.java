@@ -9,17 +9,14 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.category.SkillsCategor
  * A category that has the current workspace's roles as children
  * Created by Jordane on 7/06/2015.
  */
-public class SkillsCategory extends Category
-{
-    public SkillsCategory()
-    {
+public class SkillsCategory extends Category {
+    public SkillsCategory() {
         super("Skills");
         setCategorySwitchStrategy(new SkillsCategoryCategorySwitchStrategy());
     }
 
     @Override
-    public ObservableList getChildren()
-    {
+    public ObservableList getChildren() {
         return Global.currentWorkspace.getSkills();
     }
 }

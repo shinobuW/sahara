@@ -6,27 +6,20 @@ import seng302.group2.scenes.control.RequiredField;
  * A class for validating the input on number only text fields
  * Created by drm127 on 20/05/15.
  */
-public class NumberFieldValidator
-{
+public class NumberFieldValidator {
 
-    private static ValidationStatus validateNumberField(String input)
-    {
-        if (input == null || input.equals(""))
-        {
+    private static ValidationStatus validateNumberField(String input) {
+        if (input == null || input.equals("")) {
             return ValidationStatus.NULL;
         }
-        else
-        {
-            try
-            {
+        else {
+            try {
                 Integer.parseInt(input);
             }
-            catch (NullPointerException ex)
-            {
+            catch (NullPointerException ex) {
                 return ValidationStatus.NULL;
             }
-            catch (NumberFormatException ex)
-            {
+            catch (NumberFormatException ex) {
                 return ValidationStatus.INVALID;
             }
             return ValidationStatus.VALID;
@@ -35,13 +28,12 @@ public class NumberFieldValidator
 
     /**
      * Checks whether the number is valid
+     *
      * @param numberField the number field
      * @return If the number is valid
      */
-    public static boolean validateNumberField(RequiredField numberField)
-    {
-        switch (NumberFieldValidator.validateNumberField(numberField.getText()))
-        {
+    public static boolean validateNumberField(RequiredField numberField) {
+        switch (NumberFieldValidator.validateNumberField(numberField.getText())) {
             case VALID:
                 numberField.hideErrorField();
                 return true;

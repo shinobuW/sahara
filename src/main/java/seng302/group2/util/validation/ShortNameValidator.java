@@ -17,21 +17,18 @@ import seng302.group2.workspace.team.Team;
 
 
 /**
- *
  * @author Jordane
  */
-public class ShortNameValidator
-{
+public class ShortNameValidator {
     /**
      * Checks whether a given short name is valid (null/empty), but can be non-unique
+     *
      * @param shortNameField is a short name field
      * @return If the short name is valid
      */
     public static boolean validateShortNameNonUnique(RequiredField shortNameField,
-        String currentShortName)
-    {
-        switch (ShortNameValidator.validateShortName(shortNameField.getText(), currentShortName))
-        {
+                                                     String currentShortName) {
+        switch (ShortNameValidator.validateShortName(shortNameField.getText(), currentShortName)) {
             case VALID:
                 shortNameField.hideErrorField();
                 return true;
@@ -52,17 +49,16 @@ public class ShortNameValidator
 
     /**
      * Checks whether a given short name is valid (unique and not null/empty)
-     * @param shortNameField is a short name field
+     *
+     * @param shortNameField  is a short name field
      * @param editedShortName If an element is being edited, the current short name of that element.
      * @return If the short name is valid
      */
-    public static boolean validateShortName(RequiredField shortNameField, String editedShortName)
-    {
+    public static boolean validateShortName(RequiredField shortNameField, String editedShortName) {
         ValidationStatus status;
         status = validateShortName(shortNameField.getText(), editedShortName);
 
-        switch (status)
-        {
+        switch (status) {
             case VALID:
                 //shortNameError.setText(null);
                 //shortNameField.setStyle(null);
@@ -82,87 +78,69 @@ public class ShortNameValidator
                 return false;
         }
     }
-    
+
 
     /**
      * Checks whether a short name is valid (unique and not null/empty).
-     * @param shortName The short name to validate
+     *
+     * @param shortName       The short name to validate
      * @param editedShortName If an element is being edited, the current short name of that element.
      * @return Validation status representing if the short name is valid
      */
-    public static ValidationStatus validateShortName(String shortName, String editedShortName)
-    {
+    public static ValidationStatus validateShortName(String shortName, String editedShortName) {
         //Test if the same
-        if (shortName.equals(editedShortName))
-        {
+        if (shortName.equals(editedShortName)) {
             return ValidationStatus.VALID;
         }
         // Test if valid name
-        if (NameValidator.validateName(shortName) == ValidationStatus.INVALID)
-        {
+        if (NameValidator.validateName(shortName) == ValidationStatus.INVALID) {
             return ValidationStatus.INVALID;
         }
         // Test if short
-        if (shortName.length() > 20)
-        {
+        if (shortName.length() > 20) {
             return ValidationStatus.OUT_OF_RANGE;
         }
 
         // Test if unique
-        if (Global.currentWorkspace.getShortName().equals(shortName))
-        {
+        if (Global.currentWorkspace.getShortName().equals(shortName)) {
             return ValidationStatus.NON_UNIQUE;
         }
 
-        for (Person pers : Global.currentWorkspace.getPeople())
-        {
-            if (pers.getShortName().toUpperCase().equals(shortName.toUpperCase()))
-            {
+        for (Person pers : Global.currentWorkspace.getPeople()) {
+            if (pers.getShortName().toUpperCase().equals(shortName.toUpperCase())) {
                 return ValidationStatus.NON_UNIQUE;
             }
         }
 
-        for (Team team : Global.currentWorkspace.getTeams())
-        {
-            if (team.getShortName().equals(shortName))
-            {
+        for (Team team : Global.currentWorkspace.getTeams()) {
+            if (team.getShortName().equals(shortName)) {
                 return ValidationStatus.NON_UNIQUE;
             }
         }
 
-        for (Skill skill : Global.currentWorkspace.getSkills())
-        {
-            if (skill.getShortName().equals(shortName))
-            {
+        for (Skill skill : Global.currentWorkspace.getSkills()) {
+            if (skill.getShortName().equals(shortName)) {
                 return ValidationStatus.NON_UNIQUE;
             }
         }
 
-        for (Role role : Global.currentWorkspace.getRoles())
-        {
-            if (role.getShortName().equals(shortName))
-            {
+        for (Role role : Global.currentWorkspace.getRoles()) {
+            if (role.getShortName().equals(shortName)) {
                 return ValidationStatus.NON_UNIQUE;
             }
         }
 
-        for (Project proj : Global.currentWorkspace.getProjects())
-        {
-            if (proj.getShortName().equals(shortName))
-            {
+        for (Project proj : Global.currentWorkspace.getProjects()) {
+            if (proj.getShortName().equals(shortName)) {
                 return ValidationStatus.NON_UNIQUE;
             }
-            for (Release rel : proj.getReleases())
-            {
-                if (rel.getShortName().equals(shortName))
-                {
+            for (Release rel : proj.getReleases()) {
+                if (rel.getShortName().equals(shortName)) {
                     return ValidationStatus.NON_UNIQUE;
                 }
             }
-            for (Story story : proj.getUnallocatedStories())
-            {
-                if (story.getShortName().equals(shortName))
-                {
+            for (Story story : proj.getUnallocatedStories()) {
+                if (story.getShortName().equals(shortName)) {
                     return ValidationStatus.NON_UNIQUE;
                 }
             }

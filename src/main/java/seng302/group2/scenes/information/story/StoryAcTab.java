@@ -18,10 +18,8 @@ import seng302.group2.workspace.story.Story;
 
 //* Created by Shinobu on 30/05/2015.
 
-public class StoryAcTab extends Tab
-{
-    public StoryAcTab(Story story)
-    {
+public class StoryAcTab extends Tab {
+    public StoryAcTab(Story story) {
         this.setText("Acceptance Criteria");
         Pane acPane = new VBox(10);  // The pane that holds the basic info
         acPane.setBorder(null);
@@ -58,36 +56,29 @@ public class StoryAcTab extends Tab
 
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
 
-        addButton.setOnAction((event) ->
-            {
-                if (descriptionTextArea.getText() != null)
-                {
+        addButton.setOnAction((event) -> {
+                if (descriptionTextArea.getText() != null) {
                     String description = descriptionTextArea.getText();
                     AcceptanceCriteria newAc = new AcceptanceCriteria(description, story);
                     story.add(newAc);
                 }
-                else
-                {
+                else {
                     event.consume();
                 }
             });
 
-        deleteButton.setOnAction((event) ->
-            {
+        deleteButton.setOnAction((event) -> {
                 AcceptanceCriteria selectedAc = acTable.getSelectionModel().getSelectedItem();
-                if (selectedAc != null)
-                {
+                if (selectedAc != null) {
                     Action response = Dialogs.create()
                             .title("Delete Acceptance Criteria")
                             .message("Do you really want to delete this Acceptance Criteria?")
                             .showConfirm();
 
-                    if (response == org.controlsfx.dialog.Dialog.ACTION_YES)
-                    {
+                    if (response == org.controlsfx.dialog.Dialog.ACTION_YES) {
                         selectedAc.delete();
                     }
-                    else if (response == org.controlsfx.dialog.Dialog.ACTION_NO)
-                    {
+                    else if (response == org.controlsfx.dialog.Dialog.ACTION_NO) {
                         event.consume();
                     }
                 }

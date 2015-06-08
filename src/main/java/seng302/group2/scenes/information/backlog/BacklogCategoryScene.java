@@ -17,18 +17,17 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 /**
  * Created by cvs20 on 19/05/15.
  */
-public class BacklogCategoryScene
-{
+public class BacklogCategoryScene {
     /**
      * Gets the Backlog Category Scene
+     *
      * @param selectedCategory The category currently selected
      * @return The Backlog category info scene
      */
-    public static ScrollPane getBacklogCategoryScene(BacklogCategory selectedCategory)
-    {
+    public static ScrollPane getBacklogCategoryScene(BacklogCategory selectedCategory) {
         informationPane = new VBox(10);
 
-        informationPane.setPadding(new Insets(25,25,25,25));
+        informationPane.setPadding(new Insets(25, 25, 25, 25));
         Label title = new TitleLabel("Backlogs in " + selectedCategory.getProject().toString());
 
         Button btnView = new Button("View");
@@ -51,27 +50,22 @@ public class BacklogCategoryScene
         informationPane.getChildren().add(backlogBox);
         informationPane.getChildren().add(selectionButtons);
 
-        btnView.setOnAction((event) ->
-            {
-                if (backlogBox.getSelectionModel().getSelectedItem() != null)
-                {
+        btnView.setOnAction((event) -> {
+                if (backlogBox.getSelectionModel().getSelectedItem() != null) {
                     MainScene.treeView.selectItem((TreeViewItem)
                             backlogBox.getSelectionModel().getSelectedItem());
                 }
             });
 
 
-        btnDelete.setOnAction((event) ->
-            {
-                if (backlogBox.getSelectionModel().getSelectedItem() != null)
-                {
+        btnDelete.setOnAction((event) -> {
+                if (backlogBox.getSelectionModel().getSelectedItem() != null) {
                     showDeleteDialog((TreeViewItem) backlogBox.getSelectionModel()
                             .getSelectedItem());
                 }
             });
 
-        btnCreate.setOnAction((event) ->
-            {
+        btnCreate.setOnAction((event) -> {
                 CreateBacklogDialog.show();
             });
 

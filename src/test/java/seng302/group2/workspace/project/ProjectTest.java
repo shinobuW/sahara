@@ -9,11 +9,11 @@ import seng302.group2.scenes.listdisplay.BacklogCategory;
 import seng302.group2.scenes.listdisplay.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.StoryCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.release.Release;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.story.Story;
-import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
@@ -25,16 +25,15 @@ import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * A series of tests relating to Projects
+ *
  * @author Jordane Lew (jml168)
  */
-public class ProjectTest extends TestCase
-{
+public class ProjectTest extends TestCase {
     /**
      * A simple test for the Workspace constructors and getters.
      */
     @Test
-    public void testProjectConstructors()
-    {
+    public void testProjectConstructors() {
         Project proj = new Project();
         assertEquals("Untitled Project", proj.getShortName());
         assertEquals("Untitled Project", proj.getLongName());
@@ -53,8 +52,7 @@ public class ProjectTest extends TestCase
      * Tests the projects' setter methods.
      */
     @Test
-    public void testProjectSetters()
-    {
+    public void testProjectSetters() {
         Project proj = new Project();
         proj.setShortName("aShortName");
         proj.setLongName("aLongName");
@@ -71,12 +69,11 @@ public class ProjectTest extends TestCase
      * Tests that releases are added to projects properly
      */
     @Test
-    public void testAddRelease()
-    {
+    public void testAddRelease() {
         Project proj = new Project();
         Release release = new Release("test release", proj);
         proj.add(release);
-        
+
         assertTrue(proj.getReleases().contains(release));
 
         Global.commandManager.undo();
@@ -89,8 +86,7 @@ public class ProjectTest extends TestCase
      * Tests the addition and removal of project's team allocation
      */
     @Test
-    public void testAddRemoveTeamAllocation()
-    {
+    public void testAddRemoveTeamAllocation() {
         LocalDate startDate = LocalDate.of(2015, Month.JANUARY, 1);
         LocalDate endDate = LocalDate.of(2015, Month.JANUARY, 2);
         Project proj = new Project();
@@ -109,8 +105,7 @@ public class ProjectTest extends TestCase
      * Tests the addition and removal of project's backlogs
      */
     @Test
-    public void testAddRemoveTeamBacklog()
-    {
+    public void testAddRemoveTeamBacklog() {
         Project proj = new Project();
         Backlog back = new Backlog();
 
@@ -128,8 +123,7 @@ public class ProjectTest extends TestCase
      * Tests the addition and removal of project's team allocation
      */
     @Test
-    public void testGetAllocationMethods()
-    {
+    public void testGetAllocationMethods() {
         LocalDate startDate = LocalDate.now().minusYears(1);
         LocalDate endDate = LocalDate.now().plusYears(1);
         Project proj = new Project();
@@ -174,8 +168,7 @@ public class ProjectTest extends TestCase
      * Tests that a list of releases as TreeViewItems are fetched correctly
      */
     @Test
-    public void testTreeViewReleases()
-    {
+    public void testTreeViewReleases() {
         Project proj = new Project();
         proj.getReleases().clear();
         Assert.assertTrue(proj.getTreeViewReleases().size() == 0);
@@ -192,8 +185,7 @@ public class ProjectTest extends TestCase
      * Tests that a projects children are correct
      */
     @Test
-    public void testGetChildren()
-    {
+    public void testGetChildren() {
         Project proj = new Project();
         ObservableList<TreeViewItem> children = observableArrayList();
         ReleaseCategory releasesCategory = new ReleaseCategory("Releases", proj);
@@ -224,8 +216,7 @@ public class ProjectTest extends TestCase
 
 
     @Test
-    public void testDeleteProject()
-    {
+    public void testDeleteProject() {
         Project proj = new Project();
         Global.currentWorkspace.add(proj);
         proj.deleteProject(Global.currentWorkspace);
@@ -238,8 +229,7 @@ public class ProjectTest extends TestCase
 
 
     @Test
-    public void testAddStory()
-    {
+    public void testAddStory() {
         Project proj = new Project();
         Backlog back = new Backlog();
         Story loneStory = new Story();
@@ -264,8 +254,7 @@ public class ProjectTest extends TestCase
      * Tests that a project properly prepares for serialization
      */
     @Test
-    public void testPrepSerialization()
-    {
+    public void testPrepSerialization() {
         Project proj = new Project();
         Team testTeam = new Team();
         Release testRelease = new Release();
@@ -310,8 +299,7 @@ public class ProjectTest extends TestCase
      * Tests that a project properly post-pares after deserialization
      */
     @Test
-    public void testPostDeserialization()
-    {
+    public void testPostDeserialization() {
         Project proj = new Project();
         Release testRelease = new Release();
         Backlog testBacklog = new Backlog();
@@ -344,18 +332,17 @@ public class ProjectTest extends TestCase
         Assert.assertTrue(proj.getTeamAllocations().contains(testAllocation));
     }
 
-    
+
     /**
-     * Tests the compareTo method of Project to ensure it correctly returns an int representing if a 
+     * Tests the compareTo method of Project to ensure it correctly returns an int representing if a
      * shortName is larger or not.
      */
     @Test
-    public void testCompareTo()
-    {
+    public void testCompareTo() {
         Project proj = new Project("aShortName", "aLongName", "aDescription");
         Project proj2 = new Project("zShortName", "Long Name", "Description");
 
-       System.out.print(proj.compareTo(proj2));
+        System.out.print(proj.compareTo(proj2));
 
         Assert.assertTrue(proj.compareTo(proj2) <= 0);
         Assert.assertTrue(proj2.compareTo(proj) >= 0);
@@ -364,8 +351,7 @@ public class ProjectTest extends TestCase
 
 
     @Test
-    public void testEdit()
-    {
+    public void testEdit() {
         Project project = new Project("aShortName", "aLongName", "aDescription");
         project.edit("newShortname", "newLongName", "newDescription", null);
 
