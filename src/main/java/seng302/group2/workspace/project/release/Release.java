@@ -10,6 +10,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.BacklogCategorySwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.ReleaseCategorySwitchStrategy;
+import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.ReleaseInformationSwitchStrategy;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
 
@@ -36,6 +37,8 @@ public class Release extends TreeViewItem implements Comparable<Release> {
         this.description = "Release without project assigned should not exist";
         this.estimatedDate = LocalDate.now();
         this.project = new Project();
+
+        setInformationSwitchStrategy(new ReleaseInformationSwitchStrategy());
     }
 
 
@@ -48,6 +51,8 @@ public class Release extends TreeViewItem implements Comparable<Release> {
     public Release(String shortName, Project project) {
         this.shortName = shortName;
         this.project = project;
+
+        setInformationSwitchStrategy(new ReleaseInformationSwitchStrategy());
     }
 
 
@@ -64,6 +69,8 @@ public class Release extends TreeViewItem implements Comparable<Release> {
         this.description = description;
         this.estimatedDate = releaseDate;
         this.project = project;
+
+        setInformationSwitchStrategy(new ReleaseInformationSwitchStrategy());
     }
 
 

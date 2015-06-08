@@ -19,6 +19,7 @@ import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.scenes.listdisplay.categories.Category;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.categories.*;
+import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.WorkspaceInformationSwitchStrategy;
 import seng302.group2.util.revert.Revert;
 import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.Command;
@@ -80,6 +81,8 @@ public class Workspace extends TreeViewItem implements Serializable {
 
         addListeners();
 
+        setInformationSwitchStrategy(new WorkspaceInformationSwitchStrategy());
+
         //updateDefaultRevert();
     }
 
@@ -99,6 +102,8 @@ public class Workspace extends TreeViewItem implements Serializable {
         this.createDefaultElements();
 
         addListeners();
+
+        setInformationSwitchStrategy(new WorkspaceInformationSwitchStrategy());
 
         //updateDefaultRevert();
     }

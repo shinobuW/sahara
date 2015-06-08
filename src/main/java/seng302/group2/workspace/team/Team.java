@@ -6,6 +6,7 @@ package seng302.group2.workspace.team;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.TeamInformationSwitchStrategy;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.allocation.Allocation;
@@ -27,8 +28,6 @@ import static javafx.collections.FXCollections.observableArrayList;
  * @author crw73
  */
 public class Team extends TreeViewItem implements Serializable, Comparable<Team> {
-    public static String birthDatePattern = "dd/MM/yyyy";
-
     private String shortName;
     private String description;
     private Person scrumMaster;
@@ -51,6 +50,8 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         this.shortName = "unnamed";
         this.description = "";
         this.project = null;
+
+        setInformationSwitchStrategy(new TeamInformationSwitchStrategy());
     }
 
 
@@ -66,6 +67,8 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         this.shortName = shortName;
         this.description = description;
         this.project = null;
+
+        setInformationSwitchStrategy(new TeamInformationSwitchStrategy());
     }
 
 

@@ -7,7 +7,7 @@ import seng302.group2.scenes.listdisplay.categories.subCategory.project.BacklogC
 import seng302.group2.scenes.listdisplay.categories.subCategory.project.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.categories.subCategory.project.StoryCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.ProjectInformationSwitchStrategy;
+import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.ProjectInformationSwitchStrategy;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.allocation.Allocation;

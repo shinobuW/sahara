@@ -1,4 +1,4 @@
-package seng302.group2.scenes.sceneswitch.switchStrategies.workspace;
+package seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

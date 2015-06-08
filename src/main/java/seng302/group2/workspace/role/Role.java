@@ -8,6 +8,7 @@ package seng302.group2.workspace.role;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.RoleInformationSwitchStrategy;
 import seng302.group2.workspace.skills.Skill;
 
 import java.io.Serializable;
@@ -36,6 +37,8 @@ public class Role extends TreeViewItem implements Serializable {
         this.shortName = "role Name";
         this.description = "";
         this.type = RoleType.NONE;
+
+        setInformationSwitchStrategy(new RoleInformationSwitchStrategy());
     }
 
     /**
@@ -49,6 +52,8 @@ public class Role extends TreeViewItem implements Serializable {
         super(shortName);
         this.shortName = shortName;
         this.type = type;
+
+        setInformationSwitchStrategy(new RoleInformationSwitchStrategy());
     }
 
     /**
@@ -64,6 +69,8 @@ public class Role extends TreeViewItem implements Serializable {
         this.shortName = shortName;
         this.description = description;
         this.type = type;
+
+        setInformationSwitchStrategy(new RoleInformationSwitchStrategy());
     }
 
     /**
@@ -80,6 +87,8 @@ public class Role extends TreeViewItem implements Serializable {
         this.description = "";
         this.requiredSkills = skills;
         this.type = type;
+
+        setInformationSwitchStrategy(new RoleInformationSwitchStrategy());
     }
 
     /**
@@ -97,6 +106,8 @@ public class Role extends TreeViewItem implements Serializable {
         this.description = description;
         this.requiredSkills = skills;
         this.type = type;
+
+        setInformationSwitchStrategy(new RoleInformationSwitchStrategy());
     }
 
     /**

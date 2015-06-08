@@ -4,8 +4,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.BacklogCategorySwitchStrategy;
-import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.StoryCategorySwitchStrategy;
+import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.BacklogInformationSwitchStrategy;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -38,6 +37,8 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         this.description = "";
         this.productOwner = null;
         this.project = null;
+
+        setInformationSwitchStrategy(new BacklogInformationSwitchStrategy());
     }
 
 
@@ -57,6 +58,8 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         this.description = description;
         this.productOwner = productOwner;
         this.project = project;
+
+        setInformationSwitchStrategy(new BacklogInformationSwitchStrategy());
     }
 
 

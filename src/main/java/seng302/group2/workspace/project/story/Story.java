@@ -3,11 +3,11 @@ package seng302.group2.workspace.project.story;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.StoryCategorySwitchStrategy;
+import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.StoryInformationSwitchStrategy;
 import seng302.group2.util.undoredo.Command;
-import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
-import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.backlog.Backlog;
+import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -54,6 +54,8 @@ public class Story extends TreeViewItem implements Serializable {
         this.creator = null;
         this.project = null;
         this.priority = 0;
+
+        setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }
 
     /**
@@ -74,6 +76,8 @@ public class Story extends TreeViewItem implements Serializable {
         this.creator = creator;
         this.project = project;
         this.priority = priority;
+
+        setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }
 
     /**

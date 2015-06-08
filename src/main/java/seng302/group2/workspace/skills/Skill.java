@@ -3,6 +3,7 @@ package seng302.group2.workspace.skills;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.SkillInformationSwitchStrategy;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
@@ -28,6 +29,8 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
         super("unnamed");
         this.shortName = "unnamed";
         this.description = "no description";
+
+        setInformationSwitchStrategy(new SkillInformationSwitchStrategy());
     }
 
     /**
@@ -42,6 +45,7 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
 
         this.shortName = shortName;
         this.description = description;
+        setInformationSwitchStrategy(new SkillInformationSwitchStrategy());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Getters"> 

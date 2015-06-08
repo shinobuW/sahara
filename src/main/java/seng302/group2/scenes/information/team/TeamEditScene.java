@@ -31,7 +31,7 @@ import static javafx.collections.FXCollections.observableArrayList;
  *
  * @author crw73
  */
-public class NewTeamEditScene extends ScrollPane {
+public class TeamEditScene extends ScrollPane {
     private Team baseTeam;
     private RequiredField shortNameField;
     private CustomTextArea descriptionField;
@@ -42,7 +42,7 @@ public class NewTeamEditScene extends ScrollPane {
     private ComboBox<Role> roleComboBox;
     private Role noneRole = new Role("(none)", Role.RoleType.NONE);
 
-    public NewTeamEditScene(Team baseTeam) {
+    public TeamEditScene(Team baseTeam) {
         // Init
         this.baseTeam = baseTeam;
         allocatedDevelopers.addAll(baseTeam.getDevs());
