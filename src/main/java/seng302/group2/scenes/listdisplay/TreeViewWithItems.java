@@ -15,7 +15,9 @@ import javafx.scene.control.TreeView;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.contextmenu.CategoryTreeContextMenu;
+import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
 import seng302.group2.scenes.listdisplay.categories.Category;
+import seng302.group2.scenes.listdisplay.categories.RolesCategory;
 import seng302.group2.scenes.listdisplay.categories.subCategory.SubCategory;
 import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 
@@ -146,13 +148,19 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
                 // Make a switch based on the type
                 if (selected instanceof SubCategory) {
                     selected.switchToCategoryScene((Category)selected);
+                    setContextMenu(new CategoryTreeContextMenu());
                 }
                 else if (selected instanceof Category) {
                     selected.switchToCategoryScene();
+                    setContextMenu(new CategoryTreeContextMenu());
+                    if (selected instanceof RolesCategory) {
+                        setContextMenu(new CategoryTreeContextMenu(false));
+                    }
                 }
                 else {
                     // Assumed workspace item
                     selected.switchToInfoScene();
+                    setContextMenu(new ElementTreeContextMenu());
                 }
 
 

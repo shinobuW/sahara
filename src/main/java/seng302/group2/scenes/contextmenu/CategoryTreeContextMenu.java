@@ -13,6 +13,20 @@ public class CategoryTreeContextMenu extends ContextMenu {
 
     /**
      * Constructor for context menu for categories
+     */
+    public CategoryTreeContextMenu() {
+        MenuItem createItem = new MenuItem("Create new...");
+        createItem.setDisable(false);
+        createItem.setOnAction(e -> {
+            showCreateNewDialog(Global.selectedTreeItem.getValue().toString());
+        });
+
+        this.getItems().addAll(createItem);
+    }
+
+
+    /**
+     * Constructor for context menu for categories
      *
      * @param enabled the visibility of the context menu
      */

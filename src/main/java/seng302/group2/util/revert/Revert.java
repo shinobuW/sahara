@@ -45,7 +45,7 @@ public class Revert {
         revertWorkspace = json;
         if (Global.commandManager != null) {
             revertUndos = Global.commandManager.getUndos().clone();
-            System.out.println(revertUndos);
+            //System.out.println(revertUndos);
         }
     }
 }
