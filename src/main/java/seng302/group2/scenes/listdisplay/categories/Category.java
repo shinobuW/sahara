@@ -1,6 +1,7 @@
-package seng302.group2.scenes.listdisplay;
+package seng302.group2.scenes.listdisplay.categories;
 
 import javafx.collections.ObservableList;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 /**
  * Category item in the list display, uses as a header for all the elements of one type, ie
@@ -8,7 +9,8 @@ import javafx.collections.ObservableList;
  *
  * @author Jordane
  */
-public abstract class Category extends TreeViewItem {
+public abstract class Category extends TreeViewItem
+{
     private String name;
 
     /**

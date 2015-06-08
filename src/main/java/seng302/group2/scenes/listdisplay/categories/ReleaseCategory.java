@@ -1,12 +1,15 @@
-package seng302.group2.scenes.listdisplay;
+package seng302.group2.scenes.listdisplay.categories;
 
 import javafx.collections.ObservableList;
 import seng302.group2.workspace.project.Project;
 
 /**
- * Created by drm127 on 17/05/15.
+ * Category item in the list display, uses as a header for all the elements of one type, ie
+ * "People" for all persons within the workspace.
+ *
+ * @author Jordane
  */
-public class StoryCategory extends Category {
+public class ReleaseCategory extends Category {
     private Project project;
 
     /**
@@ -15,15 +18,15 @@ public class StoryCategory extends Category {
      * @param name    The name of the category
      * @param project The parent project of this release category
      */
-    public StoryCategory(String name, Project project) {
+    public ReleaseCategory(String name, Project project) {
         super(name);
         this.project = project;
     }
 
     /**
-     * Gets the story category's project
+     * Gets the release category's project
      *
-     * @return the story category's project
+     * @return the release category's project
      */
     public Project getProject() {
         return project;
@@ -39,22 +42,23 @@ public class StoryCategory extends Category {
         if (project == null) {
             return null;
         }
-        return project.getUnallocatedStories();
+        return project.getReleases();
     }
 
+
     /**
-     * Overrides that a story category is equal if it has the same children
+     * Overrides that a release category is equal if it has the same children
      *
      * @param obj the object to compare
      * @return if the objects are equal/equivalent
      */
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof StoryCategory)) {
+        if (!(obj instanceof ReleaseCategory)) {
             return false;
         }
-        if (((StoryCategory) obj).getChildren() == this.getChildren()
-                && ((StoryCategory) obj).project == this.project
+        if (((ReleaseCategory) obj).getChildren() == this.getChildren()
+                && ((ReleaseCategory) obj).project == this.project
                 && obj.toString().equals(this.toString())) {
             return true;
         }
