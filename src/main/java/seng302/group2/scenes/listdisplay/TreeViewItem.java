@@ -1,7 +1,10 @@
 package seng302.group2.scenes.listdisplay;
 
 import javafx.collections.ObservableList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy;
+import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -15,6 +18,10 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
     private transient ObservableList<TreeViewItem> children = observableArrayList();
 
     private CategorySwitchStrategy categorySwitchStrategy;
+    private InformationSwitchStrategy informationSwitchStrategy;
+
+    private Logger logger = LoggerFactory.getLogger(TreeViewItem.class);
+
 
     /**
      * Blank constructor
@@ -34,12 +41,22 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
 
 
     /**
-     * Allows the setting of the switch strategy for children classes
+     * Allows the setting of the category switch strategy for children classes
      *
      * @param categorySwitchStrategy The strategy to set
      */
     protected void setCategorySwitchStrategy(CategorySwitchStrategy categorySwitchStrategy) {
         this.categorySwitchStrategy = categorySwitchStrategy;
+    }
+
+
+    /**
+     * Allows the setting of the information switch strategy for children classes
+     *
+     * @param switchStrategy The strategy to set
+     */
+    protected void setInformationSwitchStrategy(InformationSwitchStrategy switchStrategy) {
+        this.informationSwitchStrategy = switchStrategy;
     }
 
 
@@ -73,7 +90,7 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
             categorySwitchStrategy.switchScene();
         }
         catch (NullPointerException ex) {
-            System.out.println("Switch strategy not implemented for this item yet");
+            logger.info("Switch strategy not implemented for this item yet: " + this.getClass());
         }
     }
 
@@ -83,7 +100,21 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
      */
     public void switchToInfoScene() {
         try {
-            //informationSwitchStrategy.switchScene(this);
+            informationSwitchStrategy.switchScene(this);
+        }
+        catch (NullPointerException ex) {
+            logger.info("Switch strategy not implemented for this item yet: " + this.getClass());
+        }
+    }
+
+
+    /**
+     * Switches the scene based on the TVItem's switching strategy
+     * @param edit Whether or not to switch to the edit scene
+     */
+    public void switchToInfoScene(boolean edit) {
+        try {
+            informationSwitchStrategy.switchScene(this, edit);
         }
         catch (NullPointerException ex) {
             System.out.println("Switch strategy not implemented for this item yet");
