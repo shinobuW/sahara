@@ -39,8 +39,7 @@ public class WorkspaceInfoTab extends Tab {
         basicInfoPane.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) -> {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE_EDIT,
-                        currentWorkspace);
+                currentWorkspace.switchToInfoScene(true);
             });
 
     }

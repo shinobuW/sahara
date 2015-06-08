@@ -128,7 +128,8 @@ public class BacklogEditScene extends ScrollPane {
 
 
         btnCancel.setOnAction((event) -> {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG, baseBacklog);
+                baseBacklog.switchToInfoScene();
+                //SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG, baseBacklog);
             });
 
         btnSave.setOnAction((event) -> {
@@ -144,7 +145,8 @@ public class BacklogEditScene extends ScrollPane {
                     );
 
                     Collections.sort(baseBacklog.getProject().getBacklogs());
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG, baseBacklog);
+                    baseBacklog.switchToInfoScene();
+                    //SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG, baseBacklog);
                     MainScene.treeView.refresh();
                 }
                 else {

@@ -92,7 +92,7 @@ public class TeamInfoTab extends Tab {
             basicInfoPane.getChildren().add(btnEdit);
 
             btnEdit.setOnAction((event) -> {
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM_EDIT, currentTeam);
+                currentTeam.switchToInfoScene(true);
                 });
         }
         else {

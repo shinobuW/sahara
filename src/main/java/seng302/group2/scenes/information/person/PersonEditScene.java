@@ -216,7 +216,7 @@ public class PersonEditScene {
                         && descriptionUnchanged && birthdayUnchanged && emailUnchanged
                         && teamUnchanged && skillsUnchanged) {
                     // No fields have been changed
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON, currentPerson);
+                    currentPerson.switchToInfoScene();
                     return;
                 }
 
@@ -248,7 +248,7 @@ public class PersonEditScene {
                     );
 
                     Collections.sort(Global.currentWorkspace.getPeople());
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON, currentPerson);
+                    currentPerson.switchToInfoScene();
                     MainScene.treeView.refresh();
                 }
                 else {
@@ -258,7 +258,7 @@ public class PersonEditScene {
             });
 
         btnCancel.setOnAction((event) -> {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON, currentPerson);
+                currentPerson.switchToInfoScene();
             });
 
         ScrollPane wrapper = new ScrollPane(informationPane);

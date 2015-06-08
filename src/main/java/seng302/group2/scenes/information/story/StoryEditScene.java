@@ -64,7 +64,7 @@ public class StoryEditScene {
 
 
         btnCancel.setOnAction((event) -> {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY, currentStory);
+                currentStory.switchToInfoScene();
             });
 
         btnSave.setOnAction((event) -> {
@@ -80,7 +80,7 @@ public class StoryEditScene {
                 if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged
                         && priorityUnchanged) {
                     // No changes
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY, currentStory);
+                    currentStory.switchToInfoScene();
                     return;
                 }
 
@@ -98,7 +98,7 @@ public class StoryEditScene {
                             currentStory.getBacklog()
                     );
 
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY, currentStory);
+                    currentStory.switchToInfoScene();
                     MainScene.treeView.refresh();
                 }
                 else {

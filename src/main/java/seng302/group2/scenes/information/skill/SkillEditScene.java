@@ -71,7 +71,7 @@ public class SkillEditScene {
 
                 if (shortNameUnchanged && descriptionUnchanged) {
                     // No changes
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL, currentSkill);
+                    currentSkill.switchToInfoScene();
                     return;
                 }
 
@@ -85,7 +85,7 @@ public class SkillEditScene {
                     );
 
                     Collections.sort(Global.currentWorkspace.getSkills());
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL, currentSkill);
+                    currentSkill.switchToInfoScene();
                     MainScene.treeView.refresh();
                 }
                 else {
@@ -95,7 +95,7 @@ public class SkillEditScene {
             });
 
         btnCancel.setOnAction((event) -> {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL, currentSkill);
+                currentSkill.switchToInfoScene();
             });
 
 

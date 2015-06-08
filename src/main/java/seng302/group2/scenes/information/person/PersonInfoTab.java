@@ -56,7 +56,7 @@ public class PersonInfoTab extends Tab {
         basicInfoPane.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) -> {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON_EDIT, currentPerson);
+                currentPerson.switchToInfoScene(true);
             });
 
     }

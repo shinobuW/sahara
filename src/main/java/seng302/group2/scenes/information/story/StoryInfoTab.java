@@ -42,7 +42,7 @@ public class StoryInfoTab extends Tab {
         basicInfoPane.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) -> {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY_EDIT, currentStory);
+                currentStory.switchToInfoScene(true);
             });
     }
 

@@ -91,7 +91,7 @@ public class ReleaseEditScene {
                         currentRelease.getProject());
                 if (shortNameUnchanged && descriptionUnchanged && projectUnchanged) {
                     // No fields have been changed
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
+                    currentRelease.switchToInfoScene();
                     return;
                 }
 
@@ -126,7 +126,7 @@ public class ReleaseEditScene {
                     );
 
                     Collections.sort(currentRelease.getProject().getReleases());
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
+                    currentRelease.switchToInfoScene();
                     MainScene.treeView.refresh();
                 }
                 else {
@@ -136,7 +136,7 @@ public class ReleaseEditScene {
             });
 
         btnCancel.setOnAction((event) -> {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE, currentRelease);
+                currentRelease.switchToInfoScene();
             });
 
         ScrollPane wrapper = new ScrollPane(informationPane);

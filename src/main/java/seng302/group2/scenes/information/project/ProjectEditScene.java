@@ -121,7 +121,7 @@ public class ProjectEditScene {
 
                 // If no fields have been changed
                 if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
+                    currentProject.switchToInfoScene();
                     return;
                 }
 
@@ -136,7 +136,7 @@ public class ProjectEditScene {
                     );
 
                     Collections.sort(Global.currentWorkspace.getProjects());
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
+                    currentProject.switchToInfoScene();
                     MainScene.treeView.refresh();
                 }
                 else {
@@ -146,7 +146,7 @@ public class ProjectEditScene {
             });
 
         btnCancel.setOnAction((event) -> {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT, currentProject);
+                currentProject.switchToInfoScene();
             });
 
         ScrollPane wrapper = new ScrollPane(informationPane);

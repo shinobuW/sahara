@@ -56,7 +56,7 @@ public class WorkspaceEditScene {
 
 
         btnCancel.setOnAction((event) -> {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE, currentWorkspace);
+                currentWorkspace.switchToInfoScene();
             });
 
         btnSave.setOnAction((event) -> {
@@ -69,8 +69,7 @@ public class WorkspaceEditScene {
 
                 if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
                     // No fields have been changed
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE,
-                            currentWorkspace);
+                    currentWorkspace.switchToInfoScene();
                     return;
                 }
                 // The short name is the same or valid
@@ -84,8 +83,7 @@ public class WorkspaceEditScene {
                             descriptionTextArea.getText()
                     );
 
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE,
-                            currentWorkspace);
+                    currentWorkspace.switchToInfoScene();
                     MainScene.treeView.refresh();
                 }
                 else {

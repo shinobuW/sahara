@@ -42,7 +42,7 @@ public class SkillInfoTab extends Tab {
         }
 
         btnEdit.setOnAction((event) -> {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL_EDIT, currentSkill);
+                currentSkill.switchToInfoScene(true);
             });
     }
 }

@@ -227,7 +227,7 @@ public class TeamEditScene extends ScrollPane {
             });
 
         btnCancel.setOnAction((event) -> {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM, baseTeam);
+                baseTeam.switchToInfoScene();
             });
 
         btnSave.setOnAction((event) -> {
@@ -243,7 +243,7 @@ public class TeamEditScene extends ScrollPane {
                     );
 
                     Collections.sort(Global.currentWorkspace.getTeams());
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM, baseTeam);
+                    baseTeam.switchToInfoScene();
                     MainScene.treeView.refresh();
                 }
                 else {

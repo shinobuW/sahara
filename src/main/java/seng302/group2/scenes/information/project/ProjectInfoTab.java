@@ -72,7 +72,7 @@ public class ProjectInfoTab extends Tab {
 
         basicInfoPane.getChildren().add(btnEdit);
         btnEdit.setOnAction((event) -> {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT_EDIT, currentProject);
+                currentProject.switchToInfoScene(true);
             });
 
     }

@@ -3,6 +3,7 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seng302.group2.scenes.MainScene;
+import seng302.group2.scenes.information.release.ReleaseEditScene;
 import seng302.group2.scenes.information.release.ReleaseScene;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
@@ -30,7 +31,8 @@ public class ReleaseInformationSwitchStrategy implements InformationSwitchStrate
     public void switchScene(TreeViewItem item, boolean editScene) {
         if (item instanceof Release) {
             if (editScene) {
-                logger.warn("There is currently no release edit scene");
+                MainScene.contentPane.setContent(ReleaseEditScene.getReleaseEditScene(
+                        (Release)item));
             }
             else {
                 switchScene(item);

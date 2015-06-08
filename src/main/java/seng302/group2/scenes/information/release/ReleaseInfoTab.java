@@ -50,7 +50,7 @@ public class ReleaseInfoTab extends Tab {
         basicInfoPane.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) -> {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE_EDIT, currentRelease);
+                currentRelease.switchToInfoScene(true);
             });
 
     }

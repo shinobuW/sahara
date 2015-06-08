@@ -85,7 +85,8 @@ public class BacklogInfoTab extends Tab {
         basicInfoPane.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) -> {
-                SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG_EDIT, currentBacklog);
+                currentBacklog.switchToInfoScene(true);
+                //SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG_EDIT, currentBacklog);
             });
 
         btnView.setOnAction((event) -> {
