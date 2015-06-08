@@ -3,7 +3,7 @@ package seng302.group2.scenes.listdisplay.categories;
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.Category;
-import seng302.group2.scenes.sceneswitch.switchStrategies.category.TeamCategorySwitchStrategy;
+import seng302.group2.scenes.sceneswitch.switchStrategies.category.TeamCategoryCategorySwitchStrategy;
 
 /**
  * A category that has the current workspace's roles as children
@@ -14,7 +14,7 @@ public class TeamsCategory extends Category
     public TeamsCategory()
     {
         super("Teams");
-        setSwitchStrategy(new TeamCategorySwitchStrategy());
+        setCategorySwitchStrategy(new TeamCategoryCategorySwitchStrategy());
     }
 
     @Override

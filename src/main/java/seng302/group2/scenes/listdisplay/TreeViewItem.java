@@ -1,7 +1,7 @@
 package seng302.group2.scenes.listdisplay;
 
 import javafx.collections.ObservableList;
-import seng302.group2.scenes.sceneswitch.switchStrategies.SwitchStrategy;
+import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -14,7 +14,7 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem>
     private String itemName = "";
     private transient ObservableList<TreeViewItem> children = observableArrayList();
 
-    private SwitchStrategy switchStrategy;
+    private CategorySwitchStrategy categorySwitchStrategy;
     
     /**
      * Blank constructor
@@ -36,11 +36,11 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem>
 
     /**
      * Allows the setting of the switch strategy for children classes
-     * @param switchStrategy The strategy to set
+     * @param categorySwitchStrategy The strategy to set
      */
-    protected void setSwitchStrategy(SwitchStrategy switchStrategy)
+    protected void setCategorySwitchStrategy(CategorySwitchStrategy categorySwitchStrategy)
     {
-        this.switchStrategy = switchStrategy;
+        this.categorySwitchStrategy = categorySwitchStrategy;
     }
     
 
@@ -69,15 +69,31 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem>
     /**
      * Switches the scene based on the TVItem's switching strategy
      */
-    public void switchScene()
+    public void switchToCategoryScene()
     {
         try
         {
-            switchStrategy.switchScene();
+            categorySwitchStrategy.switchScene();
         }
         catch (NullPointerException ex)
         {
             System.out.println("Switch strategy not implemented for this item yet");
         }
-    };
+    }
+
+
+    /**
+     * Switches the scene based on the TVItem's switching strategy
+     */
+    public void switchToInfoScene()
+    {
+        try
+        {
+            //informationSwitchStrategy.switchScene(this);
+        }
+        catch (NullPointerException ex)
+        {
+            System.out.println("Switch strategy not implemented for this item yet");
+        }
+    }
 }

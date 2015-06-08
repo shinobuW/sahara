@@ -88,13 +88,13 @@ public class SceneSwitcher
 
     public static void changeScene(TreeViewItem item)
     {
-        item.switchScene();
+        item.switchToCategoryScene();
     }
 
 
     public static void changeScene(TreeViewItem item, boolean switchToEditScene)
     {
-        item.switchScene();
+        item.switchToCategoryScene();
     }
 
 

@@ -169,7 +169,10 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T>
                         selected = (TreeViewItem) Global.selectedTreeItem.getValue();
                     }
 
-                    selected.switchScene();
+                    if (selected instanceof Category)
+                    {
+                        selected.switchToCategoryScene();
+                    }
 
                     if (selected instanceof Person)
                     {

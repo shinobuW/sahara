@@ -65,11 +65,7 @@ public abstract class Category extends TreeViewItem
     @Override
     public boolean equals(Object obj)
     {
-        if (!(obj instanceof Category))
-        {
-            return false;
-        }
-        return ((Category) obj).getChildren() == this.getChildren()
+        return obj instanceof Category && ((Category) obj).getChildren() == this.getChildren()
                 && ((Category) obj).name.equals(this.name);
     }
 }
