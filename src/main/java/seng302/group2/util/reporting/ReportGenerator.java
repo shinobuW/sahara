@@ -72,14 +72,14 @@ public class ReportGenerator {
 
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Export Report");
-            if (Global.lastSaveLocation != null && Global.lastSaveLocation != "") {
+            if (Global.lastSaveLocation != null && !Global.lastSaveLocation.equals("")) {
                 fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
             }
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("XML Report", "*.xml")
             );
 
-            File selectedFile = null;
+            File selectedFile;
 
             try {
                 selectedFile = fileChooser.showSaveDialog(new Stage());

@@ -113,6 +113,7 @@ public class BacklogEditScene extends ScrollPane {
 
         // Button events
         btnAssign.setOnAction((event) -> {
+                //TODO Disable adding stories with same priority.
                 backlogStoryList.addAll(
                         availableStoryListView.getSelectionModel().getSelectedItems());
                 availableStoryList.removeAll(

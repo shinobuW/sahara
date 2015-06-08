@@ -21,7 +21,7 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
 
 import static seng302.group2.util.validation.NameValidator.validateName;
-import static seng302.group2.util.validation.NumberFieldValidator.validateNumberField;
+import static seng302.group2.util.validation.PriorityFieldValidator.validatePriorityField;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -74,7 +74,7 @@ public class CreateStoryDialog {
                 boolean correctShortName = validateShortName(shortNameCustomField, null);
                 boolean correctLongName = validateName(longNameCustomField);
                 boolean correctCreator = validateName(creatorCustomField);
-                boolean correctPriority = validateNumberField(priorityNumberField);
+                boolean correctPriority = validatePriorityField(priorityNumberField, null, null);
 
                 if (correctShortName && correctLongName && correctCreator && correctPriority) {
                     //get user input

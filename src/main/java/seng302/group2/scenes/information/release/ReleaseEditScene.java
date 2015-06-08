@@ -113,7 +113,7 @@ public class ReleaseEditScene {
                     Project project = new Project();
 
                     for (Project proj : Global.currentWorkspace.getProjects()) {
-                        if (proj.getShortName() == projectComboBox.getValue()) {
+                        if (proj.getShortName().equals(projectComboBox.getValue())) {
                             project = proj;
                             break;
                         }

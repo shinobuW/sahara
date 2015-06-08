@@ -139,7 +139,7 @@ public class Workspace extends TreeViewItem implements Serializable {
         if (saveAs || workspace.lastSaveLocation == null || workspace.lastSaveLocation.equals("")) {
             // Prime a FileChooser
             FileChooser fileChooser = new FileChooser();
-            if (Global.lastSaveLocation != null && Global.lastSaveLocation != "") {
+            if (Global.lastSaveLocation != null && !Global.lastSaveLocation.equals("")) {
                 //System.out.println("last save dir: " + Global.lastSaveLocation);
                 fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
             }
@@ -150,7 +150,7 @@ public class Workspace extends TreeViewItem implements Serializable {
             );
 
             // Open the FileChooser to choose the save location of the workspace
-            File selectedFile = null;
+            File selectedFile;
             try {
                 selectedFile = fileChooser.showSaveDialog(new Stage());
             }
@@ -213,7 +213,7 @@ public class Workspace extends TreeViewItem implements Serializable {
         // Prime a FileChooser
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Workspace");
-        if (Global.lastSaveLocation != null && Global.lastSaveLocation != "") {
+        if (Global.lastSaveLocation != null && !Global.lastSaveLocation.equals("")) {
             //System.out.println("last save dir: " + Global.lastSaveLocation);
             fileChooser.setInitialDirectory(new File(Global.lastSaveLocation));
         }
@@ -222,7 +222,7 @@ public class Workspace extends TreeViewItem implements Serializable {
         );
 
         // Open the FileChooser and try saving the Workspace as the user specifies
-        File selectedFile = null;
+        File selectedFile;
         try {
             selectedFile = fileChooser.showOpenDialog(new Stage());
         }

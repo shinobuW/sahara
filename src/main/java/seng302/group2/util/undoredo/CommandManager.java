@@ -15,7 +15,7 @@ public class CommandManager {
     private Command lastSaveCommand = null;
 
     /**
-     * Executes the given command
+     * gets the local undo Stack
      *
      * @return The current undo stack.
      */
@@ -25,9 +25,9 @@ public class CommandManager {
     }
 
     /**
-     * Executes the given command
+     * sets the local undo Stack
      *
-     * @return The current undo stack.
+     * @param undos Current stack of undo commands
      */
     public void setUndos(Stack<Command> undos) {
         this.undos = undos;

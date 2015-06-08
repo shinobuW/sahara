@@ -10,11 +10,10 @@ import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.project.story.Story;
 
 import static seng302.group2.scenes.MainScene.informationPane;
-import static seng302.group2.util.validation.NumberFieldValidator.validateNumberField;
+import static seng302.group2.util.validation.PriorityFieldValidator.validatePriorityField;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -86,7 +85,8 @@ public class StoryEditScene {
 
                 boolean correctShortName = validateShortName(shortNameCustomField,
                         currentStory.getShortName());
-                boolean correctPriority = validateNumberField(priorityNumberField);
+                boolean correctPriority = validatePriorityField(priorityNumberField,
+                        currentStory.getBacklog(), currentStory.getPriority());
 
                 if (correctShortName && correctPriority) {
                     // Valid short name, make the edit

@@ -113,7 +113,7 @@ public class DeleteDialog {
         }
         else if (element.getClass() == Skill.class) {
             title = "Delete Skill?";
-            String customSkillMessage = "";
+            String customSkillMessage;
             String namesOfPeopleWithSkill = "";
             Skill deletedSkill = (Skill) element;
             ArrayList<Person> peopleWithSkill = new ArrayList<>();
