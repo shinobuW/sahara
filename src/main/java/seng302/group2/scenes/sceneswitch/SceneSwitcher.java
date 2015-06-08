@@ -28,18 +28,18 @@ import seng302.group2.scenes.information.team.TeamCategoryScene;
 import seng302.group2.scenes.information.team.TeamScene;
 import seng302.group2.scenes.information.workspace.WorkspaceEditScene;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
-import seng302.group2.scenes.listdisplay.BacklogCategory;
-import seng302.group2.scenes.listdisplay.ReleaseCategory;
-import seng302.group2.scenes.listdisplay.StoryCategory;
+import seng302.group2.scenes.listdisplay.categories.subCategory.project.BacklogCategory;
+import seng302.group2.scenes.listdisplay.categories.subCategory.project.ReleaseCategory;
+import seng302.group2.scenes.listdisplay.categories.subCategory.project.StoryCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.backlog.Backlog;
+import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.release.Release;
+import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
-import seng302.group2.workspace.story.Story;
+import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.team.Team;
 
 /**

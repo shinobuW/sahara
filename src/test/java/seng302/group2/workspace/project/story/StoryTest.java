@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package seng302.group2.workspace.story;
+package seng302.group2.workspace.project.story;
 
 
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
-import seng302.group2.workspace.acceptanceCriteria.AcceptanceCriteria;
-import seng302.group2.workspace.backlog.Backlog;
+import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
+import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.Project;
 
 import java.util.ArrayList;

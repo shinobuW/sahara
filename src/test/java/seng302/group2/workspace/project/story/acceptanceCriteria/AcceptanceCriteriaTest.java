@@ -1,9 +1,9 @@
-package seng302.group2.workspace.acceptanceCriteria;
+package seng302.group2.workspace.project.story.acceptanceCriteria;
 
 import junit.framework.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
-import seng302.group2.workspace.story.Story;
+import seng302.group2.workspace.project.story.Story;
 
 /**
  * A series of tests relating to AcceptanceCriteria class

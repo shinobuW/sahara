@@ -2,8 +2,7 @@ package seng302.group2.scenes.listdisplay.categories;
 
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.Category;
-import seng302.group2.scenes.sceneswitch.switchStrategies.category.PersonCategoryCategorySwitchStrategy;
+import seng302.group2.scenes.sceneswitch.switchStrategies.category.PersonCategorySwitchStrategy;
 
 /**
  * A category that has the current workspace's people as children
@@ -12,7 +11,7 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.category.PersonCategor
 public class PeopleCategory extends Category {
     public PeopleCategory() {
         super("People");
-        setCategorySwitchStrategy(new PersonCategoryCategorySwitchStrategy());
+        setCategorySwitchStrategy(new PersonCategorySwitchStrategy());
     }
 
     @Override

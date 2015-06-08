@@ -12,8 +12,8 @@ import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.TitleLabel;
-import seng302.group2.workspace.acceptanceCriteria.AcceptanceCriteria;
-import seng302.group2.workspace.story.Story;
+import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
+import seng302.group2.workspace.project.story.Story;
 
 
 //* Created by Shinobu on 30/05/2015.

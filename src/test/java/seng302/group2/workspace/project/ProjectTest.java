@@ -5,15 +5,15 @@ import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.BacklogCategory;
-import seng302.group2.scenes.listdisplay.ReleaseCategory;
-import seng302.group2.scenes.listdisplay.StoryCategory;
+import seng302.group2.scenes.listdisplay.categories.subCategory.project.BacklogCategory;
+import seng302.group2.scenes.listdisplay.categories.subCategory.project.ReleaseCategory;
+import seng302.group2.scenes.listdisplay.categories.subCategory.project.StoryCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.allocation.Allocation;
-import seng302.group2.workspace.backlog.Backlog;
-import seng302.group2.workspace.release.Release;
+import seng302.group2.workspace.project.backlog.Backlog;
+import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.skills.Skill;
-import seng302.group2.workspace.story.Story;
+import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
@@ -188,11 +188,11 @@ public class ProjectTest extends TestCase {
     public void testGetChildren() {
         Project proj = new Project();
         ObservableList<TreeViewItem> children = observableArrayList();
-        ReleaseCategory releasesCategory = new ReleaseCategory("Releases", proj);
+        ReleaseCategory releasesCategory = new ReleaseCategory(proj);
         children.add(releasesCategory);
-        BacklogCategory backlogCategory = new BacklogCategory("Backlog", proj);
+        BacklogCategory backlogCategory = new BacklogCategory(proj);
         children.add(backlogCategory);
-        StoryCategory storiesCategory = new StoryCategory("Unassigned Stories", proj);
+        StoryCategory storiesCategory = new StoryCategory(proj);
         children.add(storiesCategory);
 
         Assert.assertEquals(children, proj.getChildren());
@@ -204,11 +204,11 @@ public class ProjectTest extends TestCase {
         Story story = new Story();
         proj.add(story);
         children.clear();
-        releasesCategory = new ReleaseCategory("Releases", proj);
+        releasesCategory = new ReleaseCategory(proj);
         children.add(releasesCategory);
-        backlogCategory = new BacklogCategory("Backlog", proj);
+        backlogCategory = new BacklogCategory(proj);
         children.add(backlogCategory);
-        storiesCategory = new StoryCategory("Unassigned Stories", proj);
+        storiesCategory = new StoryCategory(proj);
         children.add(storiesCategory);
 
         Assert.assertEquals(children, proj.getChildren());

@@ -2,8 +2,9 @@ package seng302.group2.scenes.listdisplay;
 
 import org.junit.Assert;
 import org.junit.Test;
+import seng302.group2.scenes.listdisplay.categories.subCategory.project.StoryCategory;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.story.Story;
+import seng302.group2.workspace.project.story.Story;
 
 /**
  * Created by David on 17/05/2015.
@@ -15,8 +16,8 @@ public class StoryCategoryTest {
     @Test
     public void testGetProject() {
         Project proj = new Project();
-        StoryCategory category = new StoryCategory("Stories", proj);
-        StoryCategory category2 = new StoryCategory("Stories", null);
+        StoryCategory category = new StoryCategory(proj);
+        StoryCategory category2 = new StoryCategory(null);
 
         Assert.assertEquals(proj, category.getProject());
         Assert.assertEquals(null, category2.getProject());
@@ -28,7 +29,7 @@ public class StoryCategoryTest {
     @Test
     public void testGetChildren() {
         Project proj = new Project();
-        StoryCategory category = new StoryCategory("Stories", proj);
+        StoryCategory category = new StoryCategory(proj);
         Assert.assertEquals(proj.getUnallocatedStories(), category.getProject().getUnallocatedStories());
 
         Story story = new Story();
@@ -42,15 +43,13 @@ public class StoryCategoryTest {
     @Test
     public void testEquals() {
         Project proj = new Project();
-        StoryCategory category = new StoryCategory("Stories", proj);
-        StoryCategory category2 = new StoryCategory("Stories", null);
-        StoryCategory category3 = new StoryCategory("Story", proj);
-        StoryCategory category4 = new StoryCategory("Stories", proj);
+        StoryCategory category = new StoryCategory(proj);
+        StoryCategory category2 = new StoryCategory(null);
+        StoryCategory category3 = new StoryCategory(proj);
 
-        Assert.assertEquals(category, category4);
         Assert.assertNotEquals(category, category2);
         Assert.assertNotEquals(category3, category2);
-        Assert.assertNotEquals(category, category3);
+        Assert.assertEquals(category, category3);
         Assert.assertNotEquals(category, "Story");
     }
 }

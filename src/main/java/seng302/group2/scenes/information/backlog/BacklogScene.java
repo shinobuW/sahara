@@ -3,7 +3,7 @@ package seng302.group2.scenes.information.backlog;
 import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.sceneswitch.SceneSwitcher;
-import seng302.group2.workspace.backlog.Backlog;
+import seng302.group2.workspace.project.backlog.Backlog;
 
 /**
  * Created by cvs20 on 19/05/15.

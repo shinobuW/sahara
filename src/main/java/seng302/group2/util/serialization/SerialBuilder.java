@@ -6,13 +6,13 @@ import javafx.collections.ObservableList;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.allocation.Allocation;
-import seng302.group2.workspace.backlog.Backlog;
+import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.release.Release;
+import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
-import seng302.group2.workspace.story.Story;
+import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;

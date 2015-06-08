@@ -21,7 +21,7 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.release.Release;
+import seng302.group2.workspace.project.release.Release;
 
 import java.time.LocalDate;
 import java.util.Collections;

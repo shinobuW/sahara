@@ -16,15 +16,17 @@ import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.contextmenu.CategoryTreeContextMenu;
 import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
+import seng302.group2.scenes.listdisplay.categories.Category;
+import seng302.group2.scenes.listdisplay.categories.subCategory.SubCategory;
 import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.backlog.Backlog;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.release.Release;
+import seng302.group2.workspace.project.backlog.Backlog;
+import seng302.group2.workspace.project.release.Release;
+import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
-import seng302.group2.workspace.story.Story;
 import seng302.group2.workspace.team.Team;
 
 import java.util.HashMap;
@@ -44,6 +46,7 @@ import java.util.Map;
  * @author Christian Schudt (modified by Jordane Lew)
  */
 public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
+
     /**
      * Keep hard references for each listener, so that they don't get garbage collected too soon.
      */
@@ -132,14 +135,10 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
 
         /* Sets the App.selectedTreeItem when a new selection is made, and sets the information
          * shown in the main pane to the selected item's details */
-        this.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                TreeItem<Object> selectedItem = (TreeItem<Object>) newValue;
-                Global.selectedTreeItem = selectedItem;
+        this.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
 
-                    /*System.out.println(selected + " "
-                            + selected.getClass());*/
+                Global.selectedTreeItem = newValue;
 
                 TreeViewItem selected = null;
 
@@ -149,19 +148,27 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
                     // Nothing is selected, make a default selection?
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE,
                             Global.currentWorkspace);
-                }
-                else {
-                    selected = (TreeViewItem) Global.selectedTreeItem.getValue();
+                    return;
                 }
 
-                if (selected instanceof Category) {
+                selected = (TreeViewItem) Global.selectedTreeItem.getValue();
+
+                // Make a switch based on the type
+                if (selected instanceof SubCategory) {
+                    selected.switchToCategoryScene((Category)selected);
+                }
+                else if (selected instanceof Category) {
                     selected.switchToCategoryScene();
                 }
+                else {
+                    // Assumed workspace item
+                    selected.switchToInfoScene();
+                }
 
+
+                //TODO comment out, test, and delete
                 if (selected instanceof Person) {
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PERSON,
-                            selected);
-                    setContextMenu(new ElementTreeContextMenu());
+                    selected.switchToInfoScene();
                 }
                 else if (selected instanceof Project) {
                     SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT,
@@ -203,11 +210,6 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
                         SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.PROJECTS);
                         setContextMenu(new CategoryTreeContextMenu(true));
                     }
-                        /*else if (selected.toString().equals("People"))
-                        {
-                            SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.PEOPLE);
-                            setContextMenu(new CategoryTreeContextMenu(true));
-                        }*/
                     else if (selected.toString().equals("Skills")) {
                         SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.SKILLS);
                         setContextMenu(new CategoryTreeContextMenu(true));
@@ -223,10 +225,6 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
                     else if (selected.toString().equals("Releases")) {
                         SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE_CATEGORY,
                                 selected);
-                            /*App.content.getItems().remove(MainScene.informationPane);
-                            ReleaseCategoryScene.getReleaseCategoryScene((ReleaseCategory)
-                                    selected);
-                            App.content.getItems().add(MainScene.informationPane);*/
                         setContextMenu(new CategoryTreeContextMenu(true));
                     }
                     else if (selected.toString().equals("Unassigned Stories")) {
@@ -261,8 +259,8 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
                             selected);
                     setContextMenu(new ElementTreeContextMenu());
                 }
-            }
-        });
+                //TODO Right down to here (see last todo)
+            });
     }
 
 

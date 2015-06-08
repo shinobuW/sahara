@@ -9,7 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.sceneswitch.SceneSwitcher;
-import seng302.group2.workspace.release.Release;
+import seng302.group2.workspace.project.release.Release;
 
 import java.time.format.DateTimeFormatter;
 

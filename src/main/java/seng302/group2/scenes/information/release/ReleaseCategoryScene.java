@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.dialog.CreateReleaseDialog;
-import seng302.group2.scenes.listdisplay.ReleaseCategory;
+import seng302.group2.scenes.listdisplay.categories.subCategory.project.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 import static seng302.group2.scenes.MainScene.informationPane;

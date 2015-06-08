@@ -3,7 +3,6 @@ package seng302.group2.scenes.listdisplay.categories;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.Category;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.project.Project;
 

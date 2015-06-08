@@ -3,8 +3,10 @@ package seng302.group2.scenes.listdisplay;
 import javafx.collections.ObservableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import seng302.group2.scenes.listdisplay.categories.Category;
 import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
+import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrategy;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -19,6 +21,7 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
 
     private CategorySwitchStrategy categorySwitchStrategy;
     private InformationSwitchStrategy informationSwitchStrategy;
+    private SubCategorySwitchStrategy subCategorySwitchStrategy;
 
     private Logger logger = LoggerFactory.getLogger(TreeViewItem.class);
 
@@ -47,6 +50,16 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
      */
     protected void setCategorySwitchStrategy(CategorySwitchStrategy categorySwitchStrategy) {
         this.categorySwitchStrategy = categorySwitchStrategy;
+    }
+
+
+    /**
+     * Allows the setting of the category switch strategy for children classes
+     *
+     * @param subCategorySwitchStrategy The strategy to set
+     */
+    protected void setCategorySwitchStrategy(SubCategorySwitchStrategy subCategorySwitchStrategy) {
+        this.subCategorySwitchStrategy = subCategorySwitchStrategy;
     }
 
 
@@ -88,6 +101,19 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
     public void switchToCategoryScene() {
         try {
             categorySwitchStrategy.switchScene();
+        }
+        catch (NullPointerException ex) {
+            logger.info("Switch strategy not implemented for this item yet: " + this.getClass());
+        }
+    }
+
+
+    /**
+     * Switches the scene based on the TVItem's switching strategy
+     */
+    public void switchToCategoryScene(Category subCategory) {
+        try {
+            subCategorySwitchStrategy.switchScene(subCategory);
         }
         catch (NullPointerException ex) {
             logger.info("Switch strategy not implemented for this item yet: " + this.getClass());

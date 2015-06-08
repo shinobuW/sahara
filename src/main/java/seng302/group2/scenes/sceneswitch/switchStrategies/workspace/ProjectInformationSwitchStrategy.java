@@ -23,7 +23,7 @@ public class ProjectInformationSwitchStrategy implements InformationSwitchStrate
         }
         else {
             // Bad call
-            logger.warn("Tried changing to person scene with a non-person instance");
+            logger.warn("Tried changing to project scene with a non-project instance");
         }
     }
 
@@ -40,7 +40,7 @@ public class ProjectInformationSwitchStrategy implements InformationSwitchStrate
         }
         else {
             // Bad call
-            logger.warn("Tried changing to person scene with a non-person instance");
+            logger.warn("Tried changing to project scene with a non-project instance");
         }
     }
 }

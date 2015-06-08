@@ -2,8 +2,9 @@ package seng302.group2.scenes.listdisplay;
 
 import org.junit.Assert;
 import org.junit.Test;
+import seng302.group2.scenes.listdisplay.categories.subCategory.project.ReleaseCategory;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.release.Release;
+import seng302.group2.workspace.project.release.Release;
 
 /**
  * Created by Jordane on 27/04/2015.
@@ -16,8 +17,8 @@ public class ReleaseCategoryTest {
     @Test
     public void testGetProject() {
         Project proj = new Project();
-        ReleaseCategory category = new ReleaseCategory("Releases", proj);
-        ReleaseCategory category2 = new ReleaseCategory("Releases", null);
+        ReleaseCategory category = new ReleaseCategory(proj);
+        ReleaseCategory category2 = new ReleaseCategory(null);
 
         Assert.assertEquals(proj, category.getProject());
         Assert.assertEquals(null, category2.getProject());
@@ -29,7 +30,7 @@ public class ReleaseCategoryTest {
     @Test
     public void testGetChildren() {
         Project proj = new Project();
-        ReleaseCategory category = new ReleaseCategory("Releases", proj);
+        ReleaseCategory category = new ReleaseCategory(proj);
         Assert.assertEquals(proj.getReleases(), category.getProject().getReleases());
 
         Release release = new Release();
@@ -43,15 +44,13 @@ public class ReleaseCategoryTest {
     @Test
     public void testEquals() {
         Project proj = new Project();
-        ReleaseCategory category = new ReleaseCategory("Releases", proj);
-        ReleaseCategory category2 = new ReleaseCategory("Releases", null);
-        ReleaseCategory category3 = new ReleaseCategory("Release", proj);
-        ReleaseCategory category4 = new ReleaseCategory("Releases", proj);
+        ReleaseCategory category = new ReleaseCategory(proj);
+        ReleaseCategory category2 = new ReleaseCategory(null);
+        ReleaseCategory category3 = new ReleaseCategory(proj);
 
-        Assert.assertEquals(category, category4);
         Assert.assertNotEquals(category, category2);
         Assert.assertNotEquals(category3, category2);
-        Assert.assertNotEquals(category, category3);
+        Assert.assertEquals(category, category3);
         Assert.assertNotEquals(category, "Releases");
     }
 }

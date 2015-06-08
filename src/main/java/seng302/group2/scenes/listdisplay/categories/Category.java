@@ -9,8 +9,7 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
  *
  * @author Jordane
  */
-public abstract class Category extends TreeViewItem
-{
+public abstract class Category extends TreeViewItem {
     private String name;
 
     /**
@@ -68,7 +67,8 @@ public abstract class Category extends TreeViewItem
      */
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof Category && ((Category) obj).getChildren() == this.getChildren()
+        return obj.getClass().equals(this.getClass())
+                && ((Category) obj).getChildren() == this.getChildren()
                 && ((Category) obj).name.equals(this.name);
     }
 }

@@ -1,13 +1,13 @@
-package seng302.group2.workspace.backlog;
+package seng302.group2.workspace.project.backlog;
 
 
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.Category;
+import seng302.group2.scenes.listdisplay.categories.Category;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.story.Story;
+import seng302.group2.workspace.project.story.Story;
 
 import java.util.ArrayList;
 import java.util.Collection;

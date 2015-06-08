@@ -18,7 +18,7 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.story.Story;
+import seng302.group2.workspace.project.story.Story;
 
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.NumberFieldValidator.validateNumberField;

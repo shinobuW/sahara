@@ -11,7 +11,7 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.sceneswitch.SceneSwitcher;
-import seng302.group2.workspace.story.Story;
+import seng302.group2.workspace.project.story.Story;
 
 import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.util.validation.NumberFieldValidator.validateNumberField;
