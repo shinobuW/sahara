@@ -96,7 +96,7 @@ public class GenerateReportDialog {
      * Adds children of the TreeViewItem to its TreeItem wrapper recursively
      * @param root The root tree item
      */
-    private static void addChildren(TreeItem<TreeViewItem> root) {
+    protected static void addChildren(TreeItem<TreeViewItem> root) {
         if (root.getValue() == null || root.getValue().getChildren() == null) {
             return;
         }
@@ -108,7 +108,7 @@ public class GenerateReportDialog {
     }
 
 
-    private static Set<TreeViewItem> getCheckedItems(TreeItem<TreeViewItem> root) {
+    protected static Set<TreeViewItem> getCheckedItems(TreeItem<TreeViewItem> root) {
 
         Set<TreeViewItem> checkedItems = new HashSet<>();
 
