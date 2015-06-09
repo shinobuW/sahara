@@ -1,6 +1,7 @@
 package seng302.group2.scenes.listdisplay.categories;
 
 import javafx.collections.ObservableList;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 /**
@@ -41,23 +42,7 @@ public abstract class Category extends TreeViewItem {
      */
     @Override
     public abstract ObservableList<TreeViewItem> getChildren();
-    /*{
-        switch (name)
-        {
-            case "Projects":
-                return Global.currentWorkspace.getProjects();
-            case "People":
-                return Global.currentWorkspace.getPeople();
-            case "Skills":
-                return Global.currentWorkspace.getSkills();
-            case "Teams":
-                return Global.currentWorkspace.getTeams();
-            case "Roles":
-                return Global.currentWorkspace.getRoles();
-            default:
-                return null;
-        }
-    }*/
+
 
     /**
      * Overrides that a category is equal if it has the same children
@@ -70,5 +55,19 @@ public abstract class Category extends TreeViewItem {
         return obj.getClass().equals(this.getClass())
                 && ((Category) obj).getChildren() == this.getChildren()
                 && ((Category) obj).name.equals(this.name);
+    }
+
+
+    /**
+     * Override of hashCode generation for Categories
+     * @return The integer hashCode for Categories
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31). // two randomly chosen prime numbers
+                // if deriving: appendSuper(super.hashCode()).
+                append(name).
+                //append(otherVariables).
+                toHashCode();
     }
 }

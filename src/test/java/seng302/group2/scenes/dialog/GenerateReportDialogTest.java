@@ -41,27 +41,16 @@ public class GenerateReportDialogTest {
         // Select the Project and Team tree items
         for (TreeItem<TreeViewItem> item : root.getChildren()) {
             ((CheckBoxTreeItem)item).setSelected(true);
-            /*if (item.getValue().toString().equals("Projects")
-                    || item.getValue().toString().equals("Teams")) {
-                ((CheckBoxTreeItem) item).setSelected(true);
-            }*/
         }
 
         Set<TreeViewItem> itemsSet = GenerateReportDialog.getCheckedItems(root);
-
-
-        System.out.println(itemsSet);
-
         recursiveCheckItems(ws, itemsSet);
     }
 
-    private void recursiveCheckItems(TreeViewItem root, Set<TreeViewItem> set) {
 
-        // TODO Try not to exclude categories, don't know why they aren't working right.
-        if (!(root instanceof Category)) {
-            System.out.println(root);
-            Assert.assertTrue(set.contains(root));
-        }
+    private void recursiveCheckItems(TreeViewItem root, Set<TreeViewItem> set) {
+        //System.out.println(root + ": " + System.identityHashCode(root));
+        Assert.assertTrue(set.contains(root));
 
         if (root.getChildren() != null) {
             for (TreeViewItem child : root.getChildren()) {
