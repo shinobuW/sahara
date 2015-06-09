@@ -264,7 +264,8 @@ public class MainMenuBar {
         // Create 'Save' MenuItem
         MenuItem reportItem = new MenuItem("Report");
         reportItem.setOnAction((event) ->
-                ReportGenerator.generateReport());
+                //ReportGenerator.generateReport());
+                GenerateReportDialog.show());
 
         //ShortcutItem not implemented yet
 //        exportItem.setAccelerator(new KeyCodeCombination(KeyCode.S,

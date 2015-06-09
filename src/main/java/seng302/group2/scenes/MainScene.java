@@ -82,11 +82,8 @@ public class MainScene {
 
 
         // Create the display menu from the workspace tree
-
         ObservableList<TreeViewItem> children = observableArrayList();
         children.add(Global.currentWorkspace);
-
-
         treeView.setItems(children);
         treeView.setShowRoot(false);
 

@@ -19,7 +19,6 @@ import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
 import seng302.group2.scenes.listdisplay.categories.Category;
 import seng302.group2.scenes.listdisplay.categories.RolesCategory;
 import seng302.group2.scenes.listdisplay.categories.subCategory.SubCategory;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 
 import java.util.HashMap;
 import java.util.Map;
