@@ -71,9 +71,7 @@ public class GenerateReportDialog {
         treeView.setCellFactory(CheckBoxTreeCell.<TreeViewItem>forTreeView());
 
 
-
         grid.getChildren().addAll(treeView, buttons);
-
 
 
         btnGenerate.setOnAction((event) -> {

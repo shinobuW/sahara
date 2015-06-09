@@ -11,7 +11,7 @@ import seng302.group2.workspace.project.story.Story;
 public class PriorityFieldValidator {
 
     private static ValidationStatus validatePriorityField(String input, Backlog backlog, Integer currentPriority) {
-        System.out.print(input);
+        //System.out.print(input);
         if (input == null || input.equals("")) {
             return ValidationStatus.NULL;
         }
