@@ -1,13 +1,19 @@
 package seng302.group2.workspace.project.story.acceptanceCriteria;
 
+import javafx.scene.control.TreeView;
 import seng302.group2.Global;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.team.Team;
+
+import java.util.Set;
 
 /**
  * Created by Shinobu on 30/05/2015.
  */
-public class AcceptanceCriteria {
+public class AcceptanceCriteria extends TreeViewItem {
     private String description;
     private AcState state;
     private Story story;
@@ -90,6 +96,11 @@ public class AcceptanceCriteria {
         Global.commandManager.executeCommand(editAc);
     }
 
+    @Override
+    public Set<TreeViewItem> getItemsSet() {
+        return null;
+    }
+
     public enum AcState {
         ACCEPTED,
         UNACCEPTED
@@ -110,6 +121,30 @@ public class AcceptanceCriteria {
 
         public void undo() {
             story.getAcceptanceCriteria().add(acceptanceCriteria);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped_ac = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(acceptanceCriteria)) {
+                    this.acceptanceCriteria = (AcceptanceCriteria) item;
+                    mapped_ac = true;
+                }
+            }
+            boolean mapped_story = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(acceptanceCriteria)) {
+                    this.acceptanceCriteria = (AcceptanceCriteria) item;
+                    mapped_story = true;
+                }
+            }
+            return mapped_ac && mapped_story;
         }
     }
 
@@ -139,6 +174,23 @@ public class AcceptanceCriteria {
          */
         public void undo() {
             ac.description = oldDescription;
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(ac)) {
+                    this.ac = (AcceptanceCriteria) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
         }
 
     }

@@ -10,10 +10,7 @@ import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -56,6 +53,13 @@ public class Story extends TreeViewItem implements Serializable {
         this.priority = 0;
 
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
+    }
+
+    @Override
+    public Set<TreeViewItem> getItemsSet() {
+        Set<TreeViewItem> items = new HashSet<>();
+        items.addAll(acceptanceCriteria);
+        return items;
     }
 
     /**
@@ -377,6 +381,37 @@ public class Story extends TreeViewItem implements Serializable {
                 oldProject.getUnallocatedStories().remove(story);
             }
         }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped_story = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(acceptanceCriteria)) {
+                    this.story = (Story) item;
+                    mapped_story = true;
+                }
+            }
+            boolean mapped_project = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(acceptanceCriteria)) {
+                    this.project = (Project) item;
+                    mapped_project = true;
+                }
+            }
+            boolean mapped_backlog = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(backlog)) {
+                    this.backlog = (Backlog) item;
+                    mapped_backlog = true;
+                }
+            }
+            return mapped_backlog && mapped_project && mapped_story;
+        }
     }
 
     /**
@@ -421,6 +456,37 @@ public class Story extends TreeViewItem implements Serializable {
                 proj.getUnallocatedStories().add(story);
             }
         }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped_story = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(story)) {
+                    this.story = (Story) item;
+                    mapped_story = true;
+                }
+            }
+            boolean mapped_project = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(proj)) {
+                    this.proj = (Project) item;
+                    mapped_project = true;
+                }
+            }
+            boolean mapped_backlog = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(backlog)) {
+                    this.backlog = (Backlog) item;
+                    mapped_backlog = true;
+                }
+            }
+            return mapped_backlog && mapped_project && mapped_story;
+        }
     }
 
     private class AddAcceptanceCriteriaCommand implements Command {
@@ -440,6 +506,30 @@ public class Story extends TreeViewItem implements Serializable {
         public void undo() {
             story.getAcceptanceCriteria().remove(ac);
             ac.setStory(null);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped_story = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(story)) {
+                    this.story = (Story) item;
+                    mapped_story = true;
+                }
+            }
+            boolean mapped_ac = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(ac)) {
+                    this.ac = (AcceptanceCriteria) item;
+                    mapped_ac = true;
+                }
+            }
+            return mapped_ac && mapped_story;
         }
     }
 }

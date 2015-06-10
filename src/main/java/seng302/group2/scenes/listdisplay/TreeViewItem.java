@@ -8,6 +8,8 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrategy;
 
+import java.util.Set;
+
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
@@ -71,6 +73,13 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
     protected void setInformationSwitchStrategy(InformationSwitchStrategy switchStrategy) {
         this.informationSwitchStrategy = switchStrategy;
     }
+
+
+    /**
+     * Returns the items inside of the current TreeViewItem
+     * @return A set of items inside of this TreeViewItem
+     */
+    public abstract Set<TreeViewItem> getItemsSet();
 
 
     /**

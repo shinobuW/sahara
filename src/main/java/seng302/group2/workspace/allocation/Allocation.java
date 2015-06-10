@@ -1,19 +1,22 @@
 package seng302.group2.workspace.allocation;
 
 import seng302.group2.Global;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.Set;
 
 /**
  * A class that represents allocations between teams and projects
  * Created by Jordane Lew and David Moseley on 7/05/15.
  */
-public class Allocation implements Serializable, Comparable<Allocation> {
+public class Allocation extends TreeViewItem implements Serializable, Comparable<Allocation> {
     private LocalDate startDate;
     private LocalDate endDate;
     private Project project;
@@ -135,6 +138,11 @@ public class Allocation implements Serializable, Comparable<Allocation> {
         return allocationStarDate.compareTo(allocation2StarDate);
     }
 
+    @Override
+    public Set<TreeViewItem> getItemsSet() {
+        return null;
+    }
+
 
     /**
      * An enumeration for allocation statuses
@@ -200,6 +208,23 @@ public class Allocation implements Serializable, Comparable<Allocation> {
             allocation.endDate = oldEndDate;
             Collections.sort(allocation.getProject().getTeamAllocations());
         }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(allocation)) {
+                    this.allocation = (Allocation) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
     }
 
 
@@ -222,6 +247,37 @@ public class Allocation implements Serializable, Comparable<Allocation> {
         public void undo() {
             team.getProjectAllocations().add(allocation);
             project.getTeamAllocations().add(allocation);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped_alloc = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(allocation)) {
+                    this.allocation = (Allocation) item;
+                    mapped_alloc = true;
+                }
+            }
+            boolean mapped_proj = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(project)) {
+                    this.project = (Project) item;
+                    mapped_proj = true;
+                }
+            }
+            boolean mapped_team = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(team)) {
+                    this.team = (Team) item;
+                    mapped_team = true;
+                }
+            }
+            return mapped_alloc && mapped_proj && mapped_team;
         }
     }
 }

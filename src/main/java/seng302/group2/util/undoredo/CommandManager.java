@@ -2,7 +2,9 @@ package seng302.group2.util.undoredo;
 
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -13,16 +15,6 @@ public class CommandManager {
     private Stack<Command> undos = new Stack<>();
     private Stack<Command> redos = new Stack<>();
     private Command lastSaveCommand = null;
-
-    /**
-     * gets the local undo Stack
-     *
-     * @return The current undo stack.
-     */
-    public Stack<Command> getUndos() {
-        return this.undos;
-        //System.out.println("added: " + command.toString());
-    }
 
     /**
      * sets the local undo Stack
@@ -207,6 +199,15 @@ public class CommandManager {
 
 
     /**
+     * Clones and returns the current undo stack
+     * @return A clone of the current undo stack
+     */
+    public Stack<Command> getUndoCloneStack() {
+        return (Stack<Command>) undos.clone();
+    }
+
+
+    /**
      * A fake command to keep track of saves
      */
     private class SaveTrackerCommand implements Command {
@@ -219,6 +220,12 @@ public class CommandManager {
         @Override
         public void undo() {
             // Do nothing
+        }
+
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            // Do nothing
+            return true;
         }
     }
 }

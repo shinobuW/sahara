@@ -11,9 +11,11 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.ReleaseInformationSwitchStrategy;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.Set;
 
 /**
  * A release is a sub-member of project and contains information about a release of a project
@@ -37,6 +39,11 @@ public class Release extends TreeViewItem implements Comparable<Release> {
         this.project = new Project();
 
         setInformationSwitchStrategy(new ReleaseInformationSwitchStrategy());
+    }
+
+    @Override
+    public Set<TreeViewItem> getItemsSet() {
+        return null;
     }
 
 
@@ -242,6 +249,7 @@ public class Release extends TreeViewItem implements Comparable<Release> {
      */
     private class ReleaseEditCommand implements Command {
         private Release release;
+
         private String shortName;
         private String description;
         private LocalDate estimatedDate;
@@ -286,6 +294,37 @@ public class Release extends TreeViewItem implements Comparable<Release> {
             release.project = oldProject;
             Collections.sort(project.getReleases());
         }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped_rl = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(release)) {
+                    this.release = (Release) item;
+                    mapped_rl = true;
+                }
+            }
+            boolean mapped_project = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(project)) {
+                    this.project = (Project) item;
+                    mapped_project = true;
+                }
+            }
+            boolean mapped_old_project = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(oldProject)) {
+                    this.oldProject = (Project) item;
+                    mapped_old_project = true;
+                }
+            }
+            return mapped_rl && mapped_project && mapped_old_project;
+        }
     }
 
     private class DeleteReleaseCommand implements Command {
@@ -307,6 +346,30 @@ public class Release extends TreeViewItem implements Comparable<Release> {
             System.out.println("Undone Release Delete");
             proj.getReleases().add(release);
             //release.setProject(proj);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped_rl = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(release)) {
+                    this.release = (Release) item;
+                    mapped_rl = true;
+                }
+            }
+            boolean mapped_project = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(project)) {
+                    this.proj = (Project) item;
+                    mapped_project = true;
+                }
+            }
+            return mapped_rl && mapped_project;
         }
     }
 }

@@ -2,10 +2,12 @@ package seng302.group2.util.revert;
 
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.Workspace;
 
+import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -13,9 +15,9 @@ import java.util.Stack;
  * json serialised workspace).
  * Created by crw73 on 12/05/15.
  */
-public class Revert {
+public class RevertManager {
     private static String revertWorkspace;
-    private static Object revertUndos;
+    private static Stack<Command> revertUndos;
 
     /**
      * Reverts to the last revert state by deserialising the last workspace state and making it the
@@ -30,8 +32,13 @@ public class Revert {
 
             Global.currentWorkspace = currentWorkspace;
 
+            for (Command command : revertUndos) {
+                command.map(currentWorkspace.getItemsSet());
+            }
+
             Global.commandManager.clear();
-            Global.commandManager.setUndos((Stack<Command>) revertUndos);
+            Global.commandManager.setUndos(revertUndos);
+
             App.refreshMainScene();
         }
     }
@@ -44,8 +51,7 @@ public class Revert {
     public static void updateRevertState(String json) {
         revertWorkspace = json;
         if (Global.commandManager != null) {
-            revertUndos = Global.commandManager.getUndos().clone();
-            //System.out.println(revertUndos);
+            revertUndos = Global.commandManager.getUndoCloneStack();
         }
     }
 }

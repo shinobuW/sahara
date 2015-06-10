@@ -59,6 +59,16 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         setInformationSwitchStrategy(new ProjectInformationSwitchStrategy());
     }
 
+    @Override
+    public Set<TreeViewItem> getItemsSet() {
+        Set<TreeViewItem> items = new HashSet<>();
+        items.addAll(releases);
+        items.addAll(teamAllocations);
+        items.addAll(unallocatedStories);
+        items.addAll(backlogs);
+        return items;
+    }
+
 
     /**
      * Basic project constructor with input.
@@ -647,24 +657,56 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
             proj.teams = oldTeams;
             Collections.sort(Global.currentWorkspace.getProjects());
         }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(proj)) {
+                    this.proj = (Project) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
     }
 
 
     private class DeleteProjectCommand implements Command {
         private Project proj;
-        private Workspace ws;
 
         DeleteProjectCommand(Project proj, Workspace ws) {
             this.proj = proj;
-            this.ws = ws;
         }
 
         public void execute() {
-            ws.getProjects().remove(proj);
+            Global.currentWorkspace.getProjects().remove(proj);
         }
 
         public void undo() {
-            ws.getProjects().add(proj);
+            Global.currentWorkspace.getProjects().add(proj);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(proj)) {
+                    this.proj = (Project) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
         }
     }
 
@@ -687,6 +729,30 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
             proj.getReleases().remove(release);
             release.setProject(null);
         }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(proj)) {
+                    this.proj = (Project) item;
+                    mapped = true;
+                }
+            }
+            boolean mapped_release = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(release)) {
+                    this.release = (Release) item;
+                    mapped_release = true;
+                }
+            }
+            return mapped && mapped_release;
+        }
     }
 
 
@@ -705,6 +771,30 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
 
         public void undo() {
             proj.getUnallocatedStories().remove(story);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(proj)) {
+                    this.proj = (Project) item;
+                    mapped = true;
+                }
+            }
+            boolean mapped_story = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(story)) {
+                    this.story = (Story) item;
+                    mapped_story = true;
+                }
+            }
+            return mapped && mapped_story;
         }
     }
 
@@ -727,7 +817,32 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
             proj.getBacklogs().remove(backlog);
             backlog.setProject(null);
         }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(proj)) {
+                    this.proj = (Project) item;
+                    mapped = true;
+                }
+            }
+            boolean mapped_bl = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(backlog)) {
+                    this.backlog = (Backlog) item;
+                    mapped_bl = true;
+                }
+            }
+            return mapped && mapped_bl;
+        }
     }
+
 
     private class AddAllocationCommand implements Command {
         private Project proj;
@@ -750,6 +865,37 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
             proj.getTeamAllocations().remove(allocation);
             team.getProjectAllocations().remove(allocation);
             Collections.sort(allocation.getProject().getTeamAllocations());
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(proj)) {
+                    this.proj = (Project) item;
+                    mapped = true;
+                }
+            }
+            boolean mapped_team = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(team)) {
+                    this.team = (Team) item;
+                    mapped_team = true;
+                }
+            }
+            boolean mapped_alloc = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(allocation)) {
+                    this.allocation = (Allocation) item;
+                    mapped_alloc = true;
+                }
+            }
+            return mapped && mapped_alloc && mapped_team;
         }
     }
 }

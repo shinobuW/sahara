@@ -12,13 +12,11 @@ import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.skills.Skill;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -52,6 +50,15 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         this.project = null;
 
         setInformationSwitchStrategy(new TeamInformationSwitchStrategy());
+    }
+
+    @Override
+    public Set<TreeViewItem> getItemsSet() {
+        Set<TreeViewItem> items = new HashSet<>();
+        items.addAll(people);
+        items.addAll(devs);
+        items.addAll(projectAllocations);
+        return items;
     }
 
 
@@ -418,7 +425,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
      * Deletes the team without cascading deletion on the assigned people
      */
     public void deleteTeam() {
-        Command teamDel = new DeleteTeamCommand(this, Global.currentWorkspace);
+        Command teamDel = new DeleteTeamCommand(this);
         Global.commandManager.executeCommand(teamDel);
     }
 
@@ -508,6 +515,18 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
             team.shortName = oldShortName;
             team.description = oldDescription;
         }
+
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(team)) {
+                    this.team = (Team) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
     }
 
 
@@ -594,22 +613,46 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
                 member.setTeam(team);
             }
         }
+
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped_team = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(team)) {
+                    this.team = (Team) item;
+                    mapped_team = true;
+                }
+            }
+            boolean mapped_po = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(productOwner)) {
+                    this.productOwner = (Person) item;
+                    mapped_po = true;
+                }
+            }
+            boolean mapped_sm = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(scrumMaster)) {
+                    this.scrumMaster = (Person) item;
+                    mapped_sm = true;
+                }
+            }
+            return mapped_sm && mapped_po && mapped_team;
+        }
     }
 
 
     private class DeleteTeamCommand implements Command {
         private Team team;
-        private Workspace ws;
         private List<Person> members;
 
-        DeleteTeamCommand(Team team, Workspace ws) {
+        DeleteTeamCommand(Team team) {
             this.team = team;
-            this.ws = ws;
             this.members = team.getPeople();
         }
 
         public void execute() {
-            ws.getTeams().remove(team);
+            Global.currentWorkspace.getTeams().remove(team);
             for (Person member : members) {
                 member.setTeam(null);
             }
@@ -619,18 +662,28 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
             for (Person member : members) {
                 member.setTeam(team);
             }
-            ws.getTeams().add(team);
+            Global.currentWorkspace.getTeams().add(team);
+        }
+
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(team)) {
+                    this.team = (Team) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
         }
     }
 
     private class DeleteTeamCascadingCommand implements Command {
         private Team team;
-        private Workspace ws;
         private List<Person> members = new ArrayList<>();
 
         DeleteTeamCascadingCommand(Team team, Workspace ws) {
             this.team = team;
-            this.ws = ws;
             for (Person p : team.getPeople()) {
                 members.add(p);
             }
@@ -638,17 +691,29 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
 
         public void execute() {
             for (Person member : members) {
-                ws.getPeople().remove(member);
+                Global.currentWorkspace.getPeople().remove(member);
             }
-            ws.getTeams().remove(team);
+            Global.currentWorkspace.getTeams().remove(team);
         }
 
         public void undo() {
             System.out.println("Undone Team Casc Delete");
             for (Person member : members) {
-                ws.getPeople().add(member);
+                Global.currentWorkspace.getPeople().add(member);
             }
-            ws.getTeams().add(team);
+            Global.currentWorkspace.getTeams().add(team);
+        }
+
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(team)) {
+                    this.team = (Team) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
         }
     }
 
@@ -669,6 +734,25 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         public void undo() {
             team.getPeople().remove(person);
             person.setTeam(team);
+        }
+
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped_team = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(team)) {
+                    this.team = (Team) item;
+                    mapped_team = true;
+                }
+            }
+            boolean mapped_person = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(person)) {
+                    this.person = (Person) item;
+                    mapped_person = true;
+                }
+            }
+            return mapped_team && mapped_person;
         }
     }
 
@@ -691,6 +775,32 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         public void undo() {
             proj.getTeamAllocations().remove(allocation);
             team.getProjectAllocations().remove(allocation);
+        }
+
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped_team = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(team)) {
+                    this.team = (Team) item;
+                    mapped_team = true;
+                }
+            }
+            boolean mapped_project = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(proj)) {
+                    this.proj = (Project) item;
+                    mapped_project = true;
+                }
+            }
+            boolean mapped_alloc = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(allocation)) {
+                    this.allocation = (Allocation) item;
+                    mapped_alloc = true;
+                }
+            }
+            return mapped_team && mapped_project && mapped_alloc;
         }
     }
 }

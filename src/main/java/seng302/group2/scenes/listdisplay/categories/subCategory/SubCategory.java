@@ -5,6 +5,8 @@ import javafx.collections.ObservableList;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.categories.Category;
 
+import java.util.Set;
+
 /**
  * Created by Jordane on 8/06/2015.
  */
@@ -18,6 +20,12 @@ public class SubCategory extends Category {
      */
     public SubCategory(String name) {
         super(name);
+    }
+
+
+    @Override
+    public Set<TreeViewItem> getItemsSet() {
+        return null;
     }
 
 

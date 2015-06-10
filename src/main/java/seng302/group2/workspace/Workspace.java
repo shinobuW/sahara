@@ -19,7 +19,7 @@ import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.categories.*;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.WorkspaceInformationSwitchStrategy;
-import seng302.group2.util.revert.Revert;
+import seng302.group2.util.revert.RevertManager;
 import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.person.Person;
@@ -30,9 +30,7 @@ import seng302.group2.workspace.team.Team;
 
 import java.io.*;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -85,6 +83,7 @@ public class Workspace extends TreeViewItem implements Serializable {
         //updateDefaultRevert();
     }
 
+
     /**
      * Basic workspace constructor with input.
      *
@@ -106,6 +105,31 @@ public class Workspace extends TreeViewItem implements Serializable {
 
         //updateDefaultRevert();
     }
+
+
+    /**
+     * Returns a set of all children items inside a workspace
+     * @return A set of all children items inside this workspace
+     */
+    public Set<TreeViewItem> getItemsSet() {
+        Set<TreeViewItem> items = new HashSet<>();
+
+        for (Person person : people) {
+            items.addAll(person.getItemsSet());
+        }
+        for (Skill skill : skills) {
+            items.addAll(skill.getItemsSet());
+        }
+        for (Team team : teams) {
+            items.addAll(team.getItemsSet());
+        }
+        for (Role role : roles) {
+            items.addAll(role.getItemsSet());
+        }
+
+        return items;
+    }
+
 
     /**
      * Saves the current workspace as a file specified by the user.
@@ -179,7 +203,7 @@ public class Workspace extends TreeViewItem implements Serializable {
 
             String json = gson.toJson(workspace);
             //System.out.println(json);
-            Revert.updateRevertState(json);
+            RevertManager.updateRevertState(json);
 
             Global.setCurrentWorkspaceUnchanged();
             Global.lastSaveLocation = Paths.get(workspace.lastSaveLocation).getParent().toString();
@@ -246,7 +270,7 @@ public class Workspace extends TreeViewItem implements Serializable {
 
                 Global.currentWorkspace = gson.fromJson(json.toString(), Workspace.class);
 
-                Revert.updateRevertState(json.toString());
+                RevertManager.updateRevertState(json.toString());
 
                 reader.close();
             }
@@ -386,7 +410,7 @@ public class Workspace extends TreeViewItem implements Serializable {
     private void updateDefaultRevert() {
         prepSerialization(this);
         String json = gson.toJson(this);
-        Revert.updateRevertState(json);
+        RevertManager.updateRevertState(json);
     }
 
     /**
@@ -593,7 +617,7 @@ public class Workspace extends TreeViewItem implements Serializable {
      * @param person The person to add
      */
     public void add(Person person) {
-        Command command = new AddPersonCommand(this, person, Global.getUnassignedTeam());
+        Command command = new AddPersonCommand(person);
         Global.commandManager.executeCommand(command);
     }
 
@@ -618,7 +642,7 @@ public class Workspace extends TreeViewItem implements Serializable {
             return;
         }
 
-        Command addSkill = new AddSkillCommand(Global.currentWorkspace, skill);
+        Command addSkill = new AddSkillCommand(skill);
         Global.commandManager.executeCommand(addSkill);
     }
 
@@ -628,7 +652,7 @@ public class Workspace extends TreeViewItem implements Serializable {
      * @param team The team to add
      */
     public void add(Team team) {
-        Command command = new AddTeamCommand(this, team);
+        Command command = new AddTeamCommand(team);
         Global.commandManager.executeCommand(command);
     }
 
@@ -647,7 +671,7 @@ public class Workspace extends TreeViewItem implements Serializable {
      * @param proj The project to add to the workspace
      */
     public void add(Project proj) {
-        Command command = new AddProjectCommand(this, proj);
+        Command command = new AddProjectCommand(proj);
         Global.commandManager.executeCommand(command);
     }
 
@@ -858,87 +882,162 @@ public class Workspace extends TreeViewItem implements Serializable {
             ws.description = oldDescription;
             App.refreshWindowTitle();  // The project name may have changed
         }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(ws)) {
+                    this.ws = (Workspace) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
     }
 
 
     private class AddProjectCommand implements Command {
         private Project proj;
-        private Workspace ws;
 
-        AddProjectCommand(Workspace ws, Project proj) {
+        AddProjectCommand(Project proj) {
             this.proj = proj;
-            this.ws = ws;
         }
 
         public void execute() {
-            ws.getProjects().add(proj);
+            Global.currentWorkspace.getProjects().add(proj);
         }
 
         public void undo() {
-            ws.getProjects().remove(proj);
+            Global.currentWorkspace.getProjects().remove(proj);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(proj)) {
+                    this.proj = (Project) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
         }
     }
 
 
     private class AddTeamCommand implements Command {
         private Team team;
-        private Workspace ws;
 
-        AddTeamCommand(Workspace ws, Team team) {
+        AddTeamCommand(Team team) {
             this.team = team;
-            this.ws = ws;
         }
 
         public void execute() {
-            ws.getTeams().add(team);
+            Global.currentWorkspace.getTeams().add(team);
         }
 
         public void undo() {
-            ws.getTeams().remove(team);
+            Global.currentWorkspace.getTeams().remove(team);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(team)) {
+                    this.team = (Team) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
         }
     }
 
 
     private class AddPersonCommand implements Command {
         private Person person;
-        private Workspace ws;
-        private Team unassingedTeam;
 
-        AddPersonCommand(Workspace ws, Person person, Team unassingedTeam) {
+        AddPersonCommand(Person person) {
             this.person = person;
-            this.ws = ws;
-            this.unassingedTeam = unassingedTeam;
         }
 
         public void execute() {
-            ws.getPeople().add(person);
-            unassingedTeam.getPeople().add(person);
+            Global.currentWorkspace.getPeople().add(person);
+            Global.getUnassignedTeam().getPeople().add(person);
         }
 
         public void undo() {
-            unassingedTeam.getPeople().remove(person);
-            ws.getPeople().remove(person);
+            Global.getUnassignedTeam().getPeople().remove(person);
+            Global.currentWorkspace.getPeople().remove(person);
             if (Global.getUnassignedTeam() != null) {
                 Global.getUnassignedTeam().getPeople().remove(person);
             }
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(person)) {
+                    this.person = (Person) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
         }
     }
 
     private class AddSkillCommand implements Command {
         private Skill skill;
-        private Workspace ws;
 
-        AddSkillCommand(Workspace ws, Skill skill) {
+        AddSkillCommand(Skill skill) {
             this.skill = skill;
-            this.ws = ws;
         }
 
         public void execute() {
-            ws.getSkills().add(skill);
+            Global.currentWorkspace.getSkills().add(skill);
         }
 
         public void undo() {
-            ws.getSkills().remove(skill);
+            Global.currentWorkspace.getSkills().remove(skill);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(skill)) {
+                    this.skill = (Skill) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
         }
     }
 }

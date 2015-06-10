@@ -6,12 +6,14 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.SkillInformationSwitchStrategy;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A basic class to represent skills a person may have
@@ -31,6 +33,11 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
         this.description = "no description";
 
         setInformationSwitchStrategy(new SkillInformationSwitchStrategy());
+    }
+
+    @Override
+    public Set<TreeViewItem> getItemsSet() {
+        return null;
     }
 
     /**
@@ -252,16 +259,26 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
             skill.description = oldDescription;
             Collections.sort(Global.currentWorkspace.getSkills());
         }
+
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(skill)) {
+                    this.skill = (Skill) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
     }
 
     private class DeleteSkillCommand implements Command {
         private Skill skill;
-        private Workspace ws;
         private List<Person> people;
 
         DeleteSkillCommand(Skill skill, Workspace ws) {
             this.skill = skill;
-            this.ws = ws;
             this.people = skill.getPeopleWithSkill();
         }
 
@@ -269,14 +286,26 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
             for (Person person : this.people) {
                 person.getSkills().remove(skill);
             }
-            ws.getSkills().remove(skill);
+            Global.currentWorkspace.getSkills().remove(skill);
         }
 
         public void undo() {
             for (Person person : this.people) {
                 person.getSkills().add(skill);
             }
-            ws.getSkills().add(skill);
+            Global.currentWorkspace.getSkills().add(skill);
+        }
+
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(skill)) {
+                    this.skill = (Skill) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
         }
     }
 }

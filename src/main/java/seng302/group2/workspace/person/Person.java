@@ -12,12 +12,11 @@ import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
+import sun.reflect.generics.tree.Tree;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -95,6 +94,22 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
 
         setInformationSwitchStrategy(new PersonInformationSwitchStrategy());
     }
+
+
+    /**
+     * Returns a set of all children items inside a person
+     * @return A set of all children items inside this person
+     */
+    public Set<TreeViewItem> getItemsSet() {
+        Set<TreeViewItem> items = new HashSet<>();
+
+        for (Skill skill : skills) {
+            items.addAll(skill.getItemsSet());
+        }
+
+        return items;
+    }
+
 
     // <editor-fold defaultstate="collapsed" desc="Getters"> 
 
@@ -358,7 +373,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
      * Deletes the person and removes them from team if they are in one.
      */
     public void deletePerson() {
-        Command deletePers = new DeletePersonCommand(this, Global.currentWorkspace);
+        Command deletePers = new DeletePersonCommand(this);
         Global.commandManager.executeCommand(deletePers);
     }
 
@@ -470,29 +485,68 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
             person.skills = oldSkills;
             Collections.sort(Global.currentWorkspace.getPeople());
         }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(person)) {
+                    this.person = (Person) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
     }
 
     private class DeletePersonCommand implements Command {
         private Person person;
-        private Workspace ws;
         private Team team;
 
-        DeletePersonCommand(Person person, Workspace ws) {
+        DeletePersonCommand(Person person) {
             this.person = person;
-            this.ws = ws;
             this.team = person.getTeam();
         }
 
         public void execute() {
             team.getPeople().remove(person);
             person.setTeam(null);
-            ws.getPeople().remove(person);
+            Global.currentWorkspace.getPeople().remove(person);
         }
 
         public void undo() {
             team.getPeople().add(person);
             person.setTeam(team);
-            ws.getPeople().add(person);
+            Global.currentWorkspace.getPeople().add(person);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped_person = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(person)) {
+                    this.person = (Person) item;
+                    mapped_person = true;
+                }
+            }
+            boolean mapped_team = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(team)) {
+                    this.team = (Team) item;
+                    mapped_team = true;
+                }
+            }
+            return mapped_person && mapped_team;
         }
     }
 }

@@ -10,10 +10,13 @@ import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.RoleInformationSwitchStrategy;
 import seng302.group2.workspace.skills.Skill;
+import sun.reflect.generics.tree.Tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -39,6 +42,13 @@ public class Role extends TreeViewItem implements Serializable {
         this.type = RoleType.NONE;
 
         setInformationSwitchStrategy(new RoleInformationSwitchStrategy());
+    }
+
+    @Override
+    public Set<TreeViewItem> getItemsSet() {
+        Set<TreeViewItem> items = new HashSet<>();
+        items.addAll(requiredSkills);
+        return items;
     }
 
     /**

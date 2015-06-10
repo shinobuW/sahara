@@ -18,8 +18,7 @@ import seng302.group2.scenes.dialog.*;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.categories.Category;
 import seng302.group2.scenes.listdisplay.categories.subCategory.project.ReleaseCategory;
-import seng302.group2.util.reporting.ReportGenerator;
-import seng302.group2.util.revert.Revert;
+import seng302.group2.util.revert.RevertManager;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.Workspace.SaveLoadResult;
 import seng302.group2.workspace.skills.Skill;
@@ -285,7 +284,7 @@ public class MainMenuBar {
         MenuItem revertItem = new MenuItem("Revert");
         revertItem.setOnAction((event) -> {
                 if (!Global.currentWorkspace.getHasUnsavedChanges()) {
-                    Revert.revertWorkspace();
+                    RevertManager.revertWorkspace();
                     return;
                 }
                 Action response = Dialogs.create()
@@ -296,11 +295,11 @@ public class MainMenuBar {
                 if (response == Dialog.ACTION_YES) {
                     SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
                     if (saved == SaveLoadResult.SUCCESS) {
-                        Revert.revertWorkspace();
+                        RevertManager.revertWorkspace();
                     }
                 }
                 else if (response == Dialog.ACTION_NO) {
-                    Revert.revertWorkspace();
+                    RevertManager.revertWorkspace();
                 }
             });
 

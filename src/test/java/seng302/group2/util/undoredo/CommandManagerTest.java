@@ -4,6 +4,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import seng302.group2.Global;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
+
+import java.util.Set;
 
 public class CommandManagerTest {
 
@@ -134,6 +137,11 @@ public class CommandManagerTest {
         @Override
         public void undo() {
             obj.testString = oldName;
+        }
+
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            return true;
         }
     }
 }

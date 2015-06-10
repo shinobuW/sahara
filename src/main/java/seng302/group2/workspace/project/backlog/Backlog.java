@@ -41,6 +41,13 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         setInformationSwitchStrategy(new BacklogInformationSwitchStrategy());
     }
 
+    @Override
+    public Set<TreeViewItem> getItemsSet() {
+        Set<TreeViewItem> items = new HashSet<>();
+        items.addAll(stories);
+        return items;
+    }
+
 
     /**
      * Backlog Constructor with all fields
@@ -314,6 +321,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
                                    String newDescription, Person newProductOwner,
                                    Project newProject, Collection<Story> newStories) {
             this.backlog = backlog;
+
             this.shortName = newShortName;
             this.longName = newLongName;
             this.description = newDescription;
@@ -404,6 +412,51 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
 
             Collections.sort(backlog.stories, Story.StoryPriorityComparator);
         }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override // BL, PO, Proj, Stories?
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped_po = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(productOwner)) {
+                    this.productOwner = (Person) item;
+                    mapped_po = true;
+                }
+            }
+            boolean mapped_bl = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(backlog)) {
+                    this.backlog = (Backlog) item;
+                    mapped_bl = true;
+                }
+            }
+            boolean mapped_proj = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(project)) {
+                    this.project = (Project) item;
+                    mapped_proj = true;
+                }
+            }
+            boolean mapped_old_proj = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(oldProject)) {
+                    this.oldProject = (Project) item;
+                    mapped_old_proj = true;
+                }
+            }
+            boolean mapped_old_po = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(oldProductOwner)) {
+                    this.oldProductOwner = (Person) item;
+                    mapped_old_po = true;
+                }
+            }
+            return mapped_po && mapped_bl && mapped_proj && mapped_old_proj && mapped_old_po;
+        }
     }
 
     private class DeleteBacklogCommand implements Command {
@@ -427,6 +480,25 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
             proj.getBacklogs().add(backlog);
             backlog.setProject(proj);
             //release.setProject(proj);
+        }
+
+        @Override // BL, PO, Proj, Stories?
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped_bl = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(backlog)) {
+                    this.backlog = (Backlog) item;
+                    mapped_bl = true;
+                }
+            }
+            boolean mapped_proj = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(project)) {
+                    this.proj = (Project) item;
+                    mapped_proj = true;
+                }
+            }
+            return mapped_bl && mapped_proj;
         }
     }
 
@@ -461,6 +533,32 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
             if (backlog.getProject() != null) {
                 backlog.getProject().getUnallocatedStories().add(story);
             }
+        }
+
+        @Override // BL, Proj, Story
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped_bl = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(backlog)) {
+                    this.backlog = (Backlog) item;
+                    mapped_bl = true;
+                }
+            }
+            boolean mapped_proj = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(project)) {
+                    this.proj = (Project) item;
+                    mapped_proj = true;
+                }
+            }
+            boolean mapped_story = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(story)) {
+                    this.story = (Story) item;
+                    mapped_story = true;
+                }
+            }
+            return mapped_bl && mapped_proj && mapped_story;
         }
     }
 }
