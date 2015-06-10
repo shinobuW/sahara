@@ -8,6 +8,7 @@ package seng302.group2.workspace.team;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
+import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -188,18 +189,16 @@ public class TeamTest {
 
     @Test
     public void testDelete() {
+        Global.currentWorkspace = new Workspace();
         Team team = new Team();
         Person p1 = new Person();
         team.getPeople().add(p1);
-
         Global.currentWorkspace.add(p1);
         Global.currentWorkspace.add(team);
         Assert.assertTrue(Global.currentWorkspace.getTeams().contains(team));
-
         team.deleteTeam();
         Assert.assertFalse(Global.currentWorkspace.getTeams().contains(team));
         Assert.assertEquals(null, p1.getTeam());
-
         Global.commandManager.undo();
         Assert.assertTrue(Global.currentWorkspace.getTeams().contains(team));
     }

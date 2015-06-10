@@ -126,13 +126,13 @@ public class ProjectTest extends TestCase {
     public void testGetAllocationMethods() {
         LocalDate startDate = LocalDate.now().minusYears(1);
         LocalDate endDate = LocalDate.now().plusYears(1);
-        Project proj = new Project();
-        Team team = new Team();
+        Project proj = new Project("aproj", "a project", "some project");
+        Team team = new Team("aTeam", "The A team");
         Allocation currentAllocation = new Allocation(proj, team, startDate, endDate);
 
         LocalDate startDate2 = LocalDate.now().plusYears(2);
         LocalDate endDate2 = LocalDate.now().plusYears(3);
-        Team team2 = new Team();
+        Team team2 = new Team("bTeam", "The B team");
         Allocation futureAllocation = new Allocation(proj, team2, startDate2, endDate2);
 
         LocalDate startDate3 = LocalDate.now().minusYears(3);
@@ -140,7 +140,7 @@ public class ProjectTest extends TestCase {
         Team team3 = new Team();
         Allocation pastAllocation = new Allocation(proj, team3, startDate3, endDate3);
 
-        Project anotherProj = new Project();
+        Project anotherProj = new Project("short", "full", "desc");
         Allocation anotherAllocation = new Allocation(anotherProj, team3, startDate3, endDate3);
 
         Global.currentWorkspace.getTeams().addAll(team, team2, team3);
@@ -232,7 +232,7 @@ public class ProjectTest extends TestCase {
     public void testAddStory() {
         Project proj = new Project();
         Backlog back = new Backlog();
-        Story loneStory = new Story();
+        Story loneStory = new Story("short", "long", "desc", "creator", null, 3);
         Story backStory = new Story();
 
         proj.add(back);

@@ -146,4 +146,10 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
             System.out.println("Switch strategy not implemented for this item yet");
         }
     }
+
+    /*@Override
+    public abstract boolean equals(Object object);
+
+    @Override
+    public abstract int hashCode();*/
 }

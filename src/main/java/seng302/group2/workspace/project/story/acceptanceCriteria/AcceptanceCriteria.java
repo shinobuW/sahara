@@ -1,13 +1,18 @@
 package seng302.group2.workspace.project.story.acceptanceCriteria;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.story.Story;
+
+import java.io.Serializable;
 
 /**
  * Created by Shinobu on 30/05/2015.
  */
-public class AcceptanceCriteria {
+public class AcceptanceCriteria extends TreeViewItem implements Serializable, Comparable<AcceptanceCriteria> {
     private String description;
     private AcState state;
     private Story story;
@@ -88,6 +93,37 @@ public class AcceptanceCriteria {
     public void edit(String desc) {
         Command editAc = new EditAcCommand(this, this.description, desc);
         Global.commandManager.executeCommand(editAc);
+    }
+
+    @Override
+    public int compareTo(AcceptanceCriteria ac) {
+        return 0; //TODO
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof AcceptanceCriteria)) {
+            return false;
+        }
+        if (object == this) {
+            return true;
+        }
+
+        AcceptanceCriteria ac = (AcceptanceCriteria) object;
+        return new EqualsBuilder()
+                .append(description, ac.description)
+                .append(state, ac.state)
+                .append(story, ac.story)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(13, 71)
+                .append(description)
+                .append(state)
+                .append(story)
+                .toHashCode();
     }
 
     public enum AcState {

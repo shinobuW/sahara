@@ -6,6 +6,8 @@
 package seng302.group2.workspace.role;
 
 import javafx.collections.ObservableList;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.RoleInformationSwitchStrategy;
@@ -261,6 +263,33 @@ public class Role extends TreeViewItem implements Serializable {
     @Override
     public String toString() {
         return this.shortName;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Role)) {
+            return false;
+        }
+        if (object == this) {
+            return true;
+        }
+        Role role = (Role)object;
+        return new EqualsBuilder()
+                .append(shortName, role.shortName)
+                .append(description, role.description)
+                .append(type, role.type)
+                .append(defaultRole, role.defaultRole)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(13, 71)
+                .append(shortName)
+                .append(description)
+                .append(type)
+                .append(defaultRole)
+                .toHashCode();
     }
 
     public enum RoleType {

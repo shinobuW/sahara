@@ -11,6 +11,8 @@ import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -779,6 +781,31 @@ public class Workspace extends TreeViewItem implements Serializable {
     public String toString() {
         //return getClass().getName() + "@" + Integer.toHexString(hashCode());
         return this.shortName;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Workspace)) {
+            return false;
+        }
+        if (object == this) {
+            return true;
+        }
+        Workspace ws = (Workspace)object;
+        return new EqualsBuilder()
+                .append(shortName, ws.shortName)
+                .append(longName, ws.longName)
+                .append(description, ws.description)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(13, 11)
+                .append(shortName)
+                .append(longName)
+                .append(description)
+                .toHashCode();
     }
 
     /**
