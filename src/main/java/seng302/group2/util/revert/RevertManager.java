@@ -24,7 +24,6 @@ public class RevertManager {
      * current workspace
      */
     public static void revertWorkspace() {
-        System.out.println("called");
         if (revertWorkspace != null) {
             Workspace currentWorkspace = SerialBuilder.getBuilder().fromJson(revertWorkspace,
                     Workspace.class);

@@ -14,7 +14,7 @@ import seng302.group2.workspace.project.release.Release;
  * Created by Jordane on 8/06/2015.
  */
 public class ReleaseInformationSwitchStrategy implements InformationSwitchStrategy {
-    Logger logger = LoggerFactory.getLogger(ReleaseInformationSwitchStrategy.class);
+    transient Logger logger = LoggerFactory.getLogger(ReleaseInformationSwitchStrategy.class);
 
     @Override
     public void switchScene(TreeViewItem item) {

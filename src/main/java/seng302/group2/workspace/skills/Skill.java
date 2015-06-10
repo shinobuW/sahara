@@ -12,10 +12,7 @@ import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A basic class to represent skills a person may have
@@ -39,7 +36,7 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
 
     @Override
     public Set<TreeViewItem> getItemsSet() {
-        return null;
+        return new HashSet<>();
     }
 
     /**

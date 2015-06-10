@@ -5,18 +5,15 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
-import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
-import seng302.group2.workspace.team.Team;
-
-import java.util.Set;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Shinobu on 30/05/2015.
  */
-public class AcceptanceCriteria extends TreeViewItem {
 public class AcceptanceCriteria extends TreeViewItem implements Serializable, Comparable<AcceptanceCriteria> {
     private String description;
     private AcState state;
@@ -133,7 +130,7 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
 
     @Override
     public Set<TreeViewItem> getItemsSet() {
-        return null;
+        return new HashSet<>();
     }
 
     public enum AcState {
@@ -230,5 +227,3 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
 
     }
 }
-
-

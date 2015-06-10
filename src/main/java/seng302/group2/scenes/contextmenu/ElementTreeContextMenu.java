@@ -30,7 +30,7 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
  */
 @SuppressWarnings("deprecation")
 public class ElementTreeContextMenu extends ContextMenu {
-    Logger logger = LoggerFactory.getLogger(ElementTreeContextMenu.class);
+    transient Logger logger = LoggerFactory.getLogger(ElementTreeContextMenu.class);
 
     /**
      * Constructor. Sets the event for contextMenu buttons

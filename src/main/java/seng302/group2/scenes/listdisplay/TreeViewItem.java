@@ -21,11 +21,11 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
     private String itemName = "";
     private transient ObservableList<TreeViewItem> children = observableArrayList();
 
-    private CategorySwitchStrategy categorySwitchStrategy;
-    private InformationSwitchStrategy informationSwitchStrategy;
-    private SubCategorySwitchStrategy subCategorySwitchStrategy;
+    private transient CategorySwitchStrategy categorySwitchStrategy;
+    private transient InformationSwitchStrategy informationSwitchStrategy;
+    private transient SubCategorySwitchStrategy subCategorySwitchStrategy;
 
-    private Logger logger = LoggerFactory.getLogger(TreeViewItem.class);
+    private transient Logger logger = LoggerFactory.getLogger(TreeViewItem.class);
 
 
     /**

@@ -14,7 +14,7 @@ import seng302.group2.workspace.team.Team;
  * Created by Jordane on 8/06/2015.
  */
 public class TeamInformationSwitchStrategy implements InformationSwitchStrategy {
-    Logger logger = LoggerFactory.getLogger(TeamInformationSwitchStrategy.class);
+    transient Logger logger = LoggerFactory.getLogger(TeamInformationSwitchStrategy.class);
 
     @Override
     public void switchScene(TreeViewItem item) {

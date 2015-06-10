@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.categories.Category;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -25,7 +26,7 @@ public class SubCategory extends Category {
 
     @Override
     public Set<TreeViewItem> getItemsSet() {
-        return null;
+        return new HashSet<>();
     }
 
 

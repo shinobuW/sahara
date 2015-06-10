@@ -13,7 +13,7 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrat
  * Created by Jordane on 8/06/2015.
  */
 public class BacklogCategorySwitchStrategy implements SubCategorySwitchStrategy {
-    Logger logger = LoggerFactory.getLogger(BacklogCategorySwitchStrategy.class);
+    transient Logger logger = LoggerFactory.getLogger(BacklogCategorySwitchStrategy.class);
 
     @Override
     public void switchScene(Category backlogCategory) {

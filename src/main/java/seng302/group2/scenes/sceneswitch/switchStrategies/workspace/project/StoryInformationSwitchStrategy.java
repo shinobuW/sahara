@@ -14,7 +14,7 @@ import seng302.group2.workspace.project.story.Story;
  * Created by Jordane on 8/06/2015.
  */
 public class StoryInformationSwitchStrategy implements InformationSwitchStrategy {
-    Logger logger = LoggerFactory.getLogger(StoryInformationSwitchStrategy.class);
+    transient Logger logger = LoggerFactory.getLogger(StoryInformationSwitchStrategy.class);
 
     @Override
     public void switchScene(TreeViewItem item) {

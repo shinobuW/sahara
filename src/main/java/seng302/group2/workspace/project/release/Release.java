@@ -17,6 +17,7 @@ import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCrite
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -45,7 +46,7 @@ public class Release extends TreeViewItem implements Comparable<Release> {
 
     @Override
     public Set<TreeViewItem> getItemsSet() {
-        return null;
+        return new HashSet<>();
     }
 
 

@@ -5,6 +5,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.ProjectCategoryCategorySwitchStrategy;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -19,7 +20,7 @@ public class ProjectCategory extends Category {
 
     @Override
     public Set<TreeViewItem> getItemsSet() {
-        return null;
+        return new HashSet<>();
     }
 
     @Override

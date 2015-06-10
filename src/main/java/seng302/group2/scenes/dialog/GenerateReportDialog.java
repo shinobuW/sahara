@@ -41,7 +41,7 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  */
 @SuppressWarnings("deprecation")
 public class GenerateReportDialog {
-    static Logger logger = LoggerFactory.getLogger(GenerateReportDialog.class);
+    transient static Logger logger = LoggerFactory.getLogger(GenerateReportDialog.class);
 
     /**
      * Displays the Dialog box for creating a skill.

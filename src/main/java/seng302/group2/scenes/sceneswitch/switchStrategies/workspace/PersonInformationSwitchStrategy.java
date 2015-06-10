@@ -14,7 +14,7 @@ import seng302.group2.workspace.person.Person;
  * Created by Jordane on 8/06/2015.
  */
 public class PersonInformationSwitchStrategy implements InformationSwitchStrategy {
-    Logger logger = LoggerFactory.getLogger(PersonInformationSwitchStrategy.class);
+    transient Logger logger = LoggerFactory.getLogger(PersonInformationSwitchStrategy.class);
 
     @Override
     public void switchScene(TreeViewItem item) {

@@ -14,7 +14,7 @@ import seng302.group2.workspace.project.Project;
  * Created by Jordane on 8/06/2015.
  */
 public class ProjectInformationSwitchStrategy implements InformationSwitchStrategy {
-    Logger logger = LoggerFactory.getLogger(ProjectInformationSwitchStrategy.class);
+    transient Logger logger = LoggerFactory.getLogger(ProjectInformationSwitchStrategy.class);
 
     @Override
     public void switchScene(TreeViewItem item) {

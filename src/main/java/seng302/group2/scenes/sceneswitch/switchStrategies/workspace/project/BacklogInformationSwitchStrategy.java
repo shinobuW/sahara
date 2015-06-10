@@ -14,7 +14,7 @@ import seng302.group2.workspace.project.backlog.Backlog;
  * Created by Jordane on 8/06/2015.
  */
 public class BacklogInformationSwitchStrategy implements InformationSwitchStrategy {
-    Logger logger = LoggerFactory.getLogger(BacklogInformationSwitchStrategy.class);
+    transient Logger logger = LoggerFactory.getLogger(BacklogInformationSwitchStrategy.class);
 
     @Override
     public void switchScene(TreeViewItem item) {

@@ -13,7 +13,7 @@ import seng302.group2.workspace.role.Role;
  * Created by Jordane on 8/06/2015.
  */
 public class RoleInformationSwitchStrategy implements InformationSwitchStrategy {
-    Logger logger = LoggerFactory.getLogger(RoleInformationSwitchStrategy.class);
+    transient Logger logger = LoggerFactory.getLogger(RoleInformationSwitchStrategy.class);
 
     @Override
     public void switchScene(TreeViewItem item) {

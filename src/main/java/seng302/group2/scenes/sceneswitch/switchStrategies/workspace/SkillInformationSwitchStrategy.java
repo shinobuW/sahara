@@ -14,7 +14,7 @@ import seng302.group2.workspace.skills.Skill;
  * Created by Jordane on 8/06/2015.
  */
 public class SkillInformationSwitchStrategy implements InformationSwitchStrategy {
-    Logger logger = LoggerFactory.getLogger(SkillInformationSwitchStrategy.class);
+    transient Logger logger = LoggerFactory.getLogger(SkillInformationSwitchStrategy.class);
 
     @Override
     public void switchScene(TreeViewItem item) {

@@ -9,6 +9,7 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.categories.subCategory.project.BacklogCategory;
 import seng302.group2.scenes.listdisplay.categories.subCategory.project.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.categories.subCategory.project.StoryCategory;
+import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
@@ -217,6 +218,7 @@ public class ProjectTest extends TestCase {
 
     @Test
     public void testDeleteProject() {
+        Global.currentWorkspace = new Workspace();
         Project proj = new Project();
         Global.currentWorkspace.add(proj);
         proj.deleteProject(Global.currentWorkspace);

@@ -12,6 +12,7 @@ import seng302.group2.workspace.team.Team;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -169,7 +170,7 @@ public class Allocation extends TreeViewItem implements Serializable, Comparable
 
     @Override
     public Set<TreeViewItem> getItemsSet() {
-        return null;
+        return new HashSet<>();
     }
 
 
