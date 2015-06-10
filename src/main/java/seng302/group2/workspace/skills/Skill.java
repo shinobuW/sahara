@@ -1,6 +1,8 @@
 package seng302.group2.workspace.skills;
 
 import javafx.collections.ObservableList;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.SkillInformationSwitchStrategy;
@@ -221,6 +223,30 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
     @Override
     public String toString() {
         return this.shortName;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Skill)) {
+            return false;
+        }
+        if (object == this) {
+            return true;
+        }
+
+        Skill skill = (Skill)object;
+        return new EqualsBuilder()
+                .append(shortName, skill.shortName)
+                .append(description, skill.description)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(13, 31)
+                .append(shortName)
+                .append(description)
+                .toHashCode();
     }
 
 

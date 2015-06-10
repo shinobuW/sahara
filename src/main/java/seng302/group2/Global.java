@@ -27,15 +27,15 @@ public final class Global {
      * @return the unassigned team
      */
     public static Team getUnassignedTeam() {
-        if (currentWorkspace.getTeams() == null || currentWorkspace.getTeams().isEmpty()) {
-            return null;
+        if (currentWorkspace.getTeams() == null) {
+            Team.createUnassignedTeam();
         }
         for (Team team : currentWorkspace.getTeams()) {
             if (team.isUnassignedTeam()) {
                 return team;
             }
         }
-        return null;
+        return Team.createUnassignedTeam();
     }
 
 

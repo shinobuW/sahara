@@ -2,6 +2,8 @@ package seng302.group2.workspace.project.backlog;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.BacklogInformationSwitchStrategy;
@@ -271,6 +273,36 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
     @Override
     public String toString() {
         return this.shortName;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Backlog)) {
+            return false;
+        }
+        if (object == this) {
+            return true;
+        }
+
+        Backlog backlog = (Backlog)object;
+        return new EqualsBuilder()
+                .append(shortName, backlog.shortName)
+                .append(longName, backlog.longName)
+                .append(description, backlog.description)
+                .append(productOwner, backlog.productOwner)
+                .append(project, backlog.project)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31)
+                .append(shortName)
+                .append(longName)
+                .append(description)
+                .append(productOwner)
+                .append(project)
+                .toHashCode();
     }
 
     /**

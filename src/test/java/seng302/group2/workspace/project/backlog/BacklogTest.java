@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.categories.Category;
+import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
@@ -111,6 +112,7 @@ public class BacklogTest {
 
     @Test
     public void testEdit() {
+        Global.currentWorkspace = new Workspace();
         Backlog backlog = new Backlog();
         Story oldStory = new Story();
         backlog.add(oldStory);
@@ -140,6 +142,8 @@ public class BacklogTest {
         Assert.assertEquals(null, backlog.getProductOwner());
         Assert.assertEquals(null, backlog.getProject());
         Assert.assertTrue(backlog.getStories().contains(oldStory));
+
+        System.out.println(backlog.getStories());
         Assert.assertEquals(1, backlog.getStories().size());
         Assert.assertFalse(story.getBacklog() == backlog);
         Assert.assertTrue(oldStory.getBacklog() == backlog);

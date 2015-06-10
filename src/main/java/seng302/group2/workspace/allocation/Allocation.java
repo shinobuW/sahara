@@ -1,5 +1,7 @@
 package seng302.group2.workspace.allocation;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
@@ -21,6 +23,7 @@ public class Allocation extends TreeViewItem implements Serializable, Comparable
     private LocalDate endDate;
     private Project project;
     private Team team;
+
     public Allocation(Project project, Team team, LocalDate startDate, LocalDate endDate) {
         this.project = project;
         this.team = team;
@@ -136,6 +139,32 @@ public class Allocation extends TreeViewItem implements Serializable, Comparable
         LocalDate allocationStarDate = this.getStartDate();
         LocalDate allocation2StarDate = allocation.getStartDate();
         return allocationStarDate.compareTo(allocation2StarDate);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Allocation)) {
+            return false;
+        }
+        if (object == this) {
+            return true;
+        }
+
+        Allocation alloc = (Allocation)object;
+        return new EqualsBuilder()
+                .append(startDate, alloc.startDate)
+                .append(endDate, alloc.endDate)
+                .append(project, alloc.project)
+                .append(team, alloc.project)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31)
+                .append(startDate)
+                .append(endDate)
+                .toHashCode();
     }
 
     @Override

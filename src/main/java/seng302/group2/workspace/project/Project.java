@@ -2,6 +2,8 @@ package seng302.group2.workspace.project;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.categories.subCategory.project.BacklogCategory;
@@ -546,6 +548,32 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     @Override
     public String toString() {
         return this.shortName;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Project)) {
+            return false;
+        }
+        if (object == this) {
+            return true;
+        }
+
+        Project proj = (Project)object;
+        return new EqualsBuilder()
+                .append(shortName, proj.shortName)
+                .append(longName, proj.longName)
+                .append(description, proj.description)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(71, 13)
+                .append(shortName)
+                .append(longName)
+                .append(description)
+                .toHashCode();
     }
 
 

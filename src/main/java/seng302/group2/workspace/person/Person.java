@@ -4,6 +4,8 @@
 package seng302.group2.workspace.person;
 
 import javafx.collections.ObservableList;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.PersonInformationSwitchStrategy;
@@ -407,6 +409,38 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
     @Override
     public String toString() {
         return this.shortName;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Person)) {
+            return false;
+        }
+        if (object == this) {
+            return true;
+        }
+        Person person = (Person)object;
+        return new EqualsBuilder()
+                .append(shortName, person.shortName)
+                .append(firstName, person.firstName)
+                .append(lastName, person.lastName)
+                .append(email, person.email)
+                .append(birthDate, person.birthDate)
+                .append(description, person.description)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31).
+                append(shortName)
+                .append(firstName)
+                .append(lastName)
+                .append(email)
+                .append(birthDate)
+                .append(description)
+                .toHashCode();
+                //Ignoring team and skills
     }
 
     /**

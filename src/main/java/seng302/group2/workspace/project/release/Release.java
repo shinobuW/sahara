@@ -6,6 +6,8 @@
 package seng302.group2.workspace.project.release;
 
 import javafx.collections.ObservableList;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.ReleaseInformationSwitchStrategy;
@@ -225,6 +227,34 @@ public class Release extends TreeViewItem implements Comparable<Release> {
     @Override
     public String toString() {
         return this.shortName;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof  Release)) {
+            return false;
+        }
+        if (object == this) {
+            return true;
+        }
+
+        Release release = (Release)object;
+        return new EqualsBuilder()
+                .append(shortName, release.shortName)
+                .append(description, release.description)
+                .append(estimatedDate, release.estimatedDate)
+                .append(project, release.project)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31)
+                .append(shortName)
+                .append(description)
+                .append(estimatedDate)
+                .append(project)
+                .toHashCode();
     }
 
     /**

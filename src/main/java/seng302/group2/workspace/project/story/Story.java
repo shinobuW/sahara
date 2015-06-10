@@ -1,6 +1,8 @@
 package seng302.group2.workspace.project.story;
 
 import javafx.collections.ObservableList;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.StoryInformationSwitchStrategy;
@@ -274,6 +276,38 @@ public class Story extends TreeViewItem implements Serializable {
     @Override
     public String toString() {
         return this.shortName;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Story)) {
+            return false;
+        }
+        if (object == this) {
+            return true;
+        }
+
+        Story story = (Story)object;
+        return new EqualsBuilder()
+                .append(shortName, story.shortName)
+                .append(longName, story.longName)
+                .append(description, story.description)
+                .append(project, story.project)
+                .append(priority, story.priority)
+                .append(backlog, story.backlog)
+                .append(creator, story.creator)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(13, 71)
+                .append(shortName)
+                .append(longName)
+                .append(description)
+                .append(creator)
+                .append(priority)
+                .toHashCode();
     }
 
 

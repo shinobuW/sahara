@@ -4,6 +4,8 @@
 package seng302.group2.workspace.team;
 
 import javafx.collections.ObservableList;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.TeamInformationSwitchStrategy;
@@ -447,6 +449,34 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
     @Override
     public String toString() {
         return this.shortName;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (!(object instanceof Team)) {
+            return false;
+        }
+        if (object == this) {
+            return true;
+        }
+
+        //return false;
+
+        Team team = (Team)object;
+        return new EqualsBuilder()
+                .append(shortName, team.shortName)
+                .append(description, team.description)
+                .append(project, team.project)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(13, 31)
+                .append(shortName)
+                .append(description)
+                .append(project)
+                .toHashCode();
     }
 
 

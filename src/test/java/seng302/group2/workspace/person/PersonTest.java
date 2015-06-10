@@ -290,7 +290,8 @@ public class PersonTest {
     @Test
     public void testDeletePerson() {
         Global.commandManager.clear();
-        Person person = new Person();
+        Person person = new Person("short", "firstName", "lastName", "email",
+                "description", LocalDate.now());
         Global.currentWorkspace.add(person);
 
         person.deletePerson();
