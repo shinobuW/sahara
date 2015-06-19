@@ -4,6 +4,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import seng302.group2.Global;
 import seng302.group2.scenes.dialog.*;
+import seng302.group2.scenes.listdisplay.categories.Category;
 
 /**
  * Created by Jordane on 14/04/2015.
@@ -18,7 +19,8 @@ public class CategoryTreeContextMenu extends ContextMenu {
         MenuItem createItem = new MenuItem("Create new...");
         createItem.setDisable(false);
         createItem.setOnAction(e -> {
-                showCreateNewDialog(Global.selectedTreeItem.getValue().toString());
+                ((Category) Global.selectedTreeItem.getValue()).showCreationDialog();
+                //showCreateNewDialog(Global.selectedTreeItem.getValue().toString());
             });
 
         this.getItems().addAll(createItem);
@@ -34,7 +36,8 @@ public class CategoryTreeContextMenu extends ContextMenu {
         MenuItem createItem = new MenuItem("Create new...");
         createItem.setDisable(!enabled);
         createItem.setOnAction(e -> {
-                showCreateNewDialog(Global.selectedTreeItem.getValue().toString());
+                ((Category) Global.selectedTreeItem.getValue()).showCreationDialog();
+                //showCreateNewDialog(Global.selectedTreeItem.getValue().toString());
             });
 
         this.getItems().addAll(createItem);
@@ -45,6 +48,7 @@ public class CategoryTreeContextMenu extends ContextMenu {
      *
      * @param category Type of category
      */
+    @Deprecated
     private static void showCreateNewDialog(String category) {
         switch (category) {
             case "Projects":
