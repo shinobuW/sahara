@@ -45,6 +45,12 @@ public abstract class Category extends TreeViewItem {
 
 
     /**
+     * Shows the creation dialog for the types of items of the category
+     */
+    public abstract void showCreationDialog();
+
+
+    /**
      * Overrides that a category is equal if it has the same children
      *
      * @param obj the object to compare

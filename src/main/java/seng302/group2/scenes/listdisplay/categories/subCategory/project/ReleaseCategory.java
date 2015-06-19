@@ -2,6 +2,7 @@ package seng302.group2.scenes.listdisplay.categories.subCategory.project;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seng302.group2.scenes.dialog.CreateReleaseDialog;
 import seng302.group2.scenes.listdisplay.categories.subCategory.SubCategory;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.ReleaseCategorySwitchStrategy;
 import seng302.group2.workspace.project.Project;
@@ -44,5 +45,10 @@ public class ReleaseCategory extends SubCategory {
             return FXCollections.observableArrayList();
         }
         return ((Project) parent).getReleases();
+    }
+
+    @Override
+    public void showCreationDialog() {
+        CreateReleaseDialog.show();
     }
 }

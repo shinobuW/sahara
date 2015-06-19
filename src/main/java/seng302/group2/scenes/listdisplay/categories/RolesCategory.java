@@ -27,4 +27,9 @@ public class RolesCategory extends Category {
     public ObservableList getChildren() {
         return Global.currentWorkspace.getRoles();
     }
+
+    @Override
+    public void showCreationDialog() {
+        //TODO For role creation
+    }
 }

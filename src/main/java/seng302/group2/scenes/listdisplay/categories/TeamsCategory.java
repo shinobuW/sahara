@@ -2,6 +2,7 @@ package seng302.group2.scenes.listdisplay.categories;
 
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
+import seng302.group2.scenes.dialog.CreateTeamDialog;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.TeamCategoryCategorySwitchStrategy;
 
@@ -26,5 +27,10 @@ public class TeamsCategory extends Category {
     @Override
     public ObservableList getChildren() {
         return Global.currentWorkspace.getTeams();
+    }
+
+    @Override
+    public void showCreationDialog() {
+        CreateTeamDialog.show();
     }
 }

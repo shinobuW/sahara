@@ -2,6 +2,7 @@ package seng302.group2.scenes.listdisplay.categories.subCategory.project;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seng302.group2.scenes.dialog.CreateBacklogDialog;
 import seng302.group2.scenes.listdisplay.categories.subCategory.SubCategory;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.BacklogCategorySwitchStrategy;
 import seng302.group2.workspace.project.Project;
@@ -41,5 +42,10 @@ public class BacklogCategory extends SubCategory {
             return FXCollections.observableArrayList();
         }
         return ((Project) parent).getBacklogs();
+    }
+
+    @Override
+    public void showCreationDialog() {
+        CreateBacklogDialog.show();
     }
 }

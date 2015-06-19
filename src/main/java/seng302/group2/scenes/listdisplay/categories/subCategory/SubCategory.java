@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * Created by Jordane on 8/06/2015.
  */
-public class SubCategory extends Category {
+public abstract class SubCategory extends Category {
     protected TreeViewItem parent;
 
     /**

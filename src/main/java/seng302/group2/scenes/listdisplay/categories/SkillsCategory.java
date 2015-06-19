@@ -2,6 +2,7 @@ package seng302.group2.scenes.listdisplay.categories;
 
 import javafx.collections.ObservableList;
 import seng302.group2.Global;
+import seng302.group2.scenes.dialog.CreateSkillDialog;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.SkillsCategoryCategorySwitchStrategy;
 
@@ -26,5 +27,10 @@ public class SkillsCategory extends Category {
     @Override
     public ObservableList getChildren() {
         return Global.currentWorkspace.getSkills();
+    }
+
+    @Override
+    public void showCreationDialog() {
+        CreateSkillDialog.show();
     }
 }
