@@ -8,6 +8,7 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.p
 import seng302.group2.workspace.project.Project;
 
 /**
+ * THe category item for Backlogs (shown under each projects)
  * Created by cvs20 on 19/05/15.
  */
 public class BacklogCategory extends SubCategory {

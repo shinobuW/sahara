@@ -16,7 +16,6 @@ import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.dialog.CustomDialog;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.role.Role;

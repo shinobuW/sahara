@@ -10,7 +10,6 @@ import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
@@ -130,7 +129,6 @@ public class BacklogEditScene extends ScrollPane {
 
         btnCancel.setOnAction((event) -> {
                 baseBacklog.switchToInfoScene();
-                //SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG, baseBacklog);
             });
 
         btnSave.setOnAction((event) -> {
@@ -147,14 +145,12 @@ public class BacklogEditScene extends ScrollPane {
 
                     Collections.sort(baseBacklog.getProject().getBacklogs());
                     baseBacklog.switchToInfoScene();
-                    //SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG, baseBacklog);
                     MainScene.treeView.refresh();
                 }
                 else {
                     event.consume();
                 }
             });
-
 
         // Finally
         this.setStyle("-fx-background-color:transparent;");
@@ -169,7 +165,7 @@ public class BacklogEditScene extends ScrollPane {
      */
     private boolean isValidState() {
         return (shortNameField.getText().equals(baseBacklog.getShortName())  // Is the same,
-                || ShortNameValidator.validateShortName(shortNameField, null));// new name validate
+                || ShortNameValidator.validateShortName(shortNameField, null)); // new name validate
     }
 
 }

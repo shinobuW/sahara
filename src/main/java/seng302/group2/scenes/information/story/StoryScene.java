@@ -2,7 +2,6 @@ package seng302.group2.scenes.information.story;
 
 import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.project.story.Story;
 
 /**

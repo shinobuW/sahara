@@ -1,11 +1,7 @@
 package seng302.group2.scenes.listdisplay;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -103,26 +99,19 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
 
         setContextMenu(new CategoryTreeContextMenu(true));
 
-        rootProperty().addListener(new ChangeListener<TreeItem<T>>() {
-            @Override
-            public void changed(ObservableValue<? extends TreeItem<T>> observableValue,
-                                TreeItem<T> oldRoot, TreeItem<T> newRoot) {
+        rootProperty().addListener((observableValue, oldRoot, newRoot) -> {
                 clear(oldRoot);
                 updateItems();
-            }
-        });
+            });
 
         setItems(FXCollections.<T>observableArrayList());
 
         /* Do not use ChangeListener, because it won't trigger if old list equals new list (but in
         fact different references). */
-        items.addListener(new InvalidationListener() {
-            @Override
-            public void invalidated(Observable observable) {
+        items.addListener(observable -> {
                 clear(getRoot());
                 updateItems();
-            }
-        });
+            });
 
         /* Sets the App.selectedTreeItem when a new selection is made, and sets the information
          * shown in the main pane to the selected item's details */
@@ -160,102 +149,6 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
                     selected.switchToInfoScene();
                     setContextMenu(new ElementTreeContextMenu());
                 }
-
-
-                /*
-                if (selected instanceof Person) {
-                    selected.switchToInfoScene();
-                }
-                else if (selected instanceof Project) {
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.PROJECT,
-                            selected);
-                    setContextMenu(new ElementTreeContextMenu());
-                }
-                else if (selected instanceof Workspace) {
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.WORKSPACE,
-                            selected);
-                    setContextMenu(new ElementTreeContextMenu());
-                }
-                else if (selected instanceof Skill) {
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.SKILL,
-                            selected);
-                    setContextMenu(new ElementTreeContextMenu());
-                }
-                else if (selected instanceof Team) {
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.TEAM,
-                            selected);
-                    setContextMenu(new ElementTreeContextMenu());
-                }
-                else if (selected instanceof Release) {
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE,
-                            selected);
-                    setContextMenu(new ElementTreeContextMenu());
-                }
-                else if (selected instanceof Story) {
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY,
-                            selected);
-                    setContextMenu(new ElementTreeContextMenu());
-                }
-                else if (selected instanceof Backlog) {
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG,
-                            selected);
-                    setContextMenu(new ElementTreeContextMenu());
-                }
-                else if (selected instanceof Category) {
-                    if (selected.toString().equals("Projects")) {
-                        SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.PROJECTS);
-                        setContextMenu(new CategoryTreeContextMenu(true));
-                    }
-                    else if (selected.toString().equals("Skills")) {
-                        SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.SKILLS);
-                        setContextMenu(new CategoryTreeContextMenu(true));
-                    }
-                    else if (selected.toString().equals("Teams")) {
-                        SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.TEAMS);
-                        setContextMenu(new CategoryTreeContextMenu(true));
-                    }
-                    else if (selected.toString().equals("Roles")) {
-                        SceneSwitcher.changeScene(SceneSwitcher.CategoryScene.ROLES);
-                        setContextMenu(new CategoryTreeContextMenu(false));
-                    }
-                    else if (selected.toString().equals("Releases")) {
-                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.RELEASE_CATEGORY,
-                                selected);
-                        setContextMenu(new CategoryTreeContextMenu(true));
-                    }
-                    else if (selected.toString().equals("Unassigned Stories")) {
-                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.STORY_CATEGORY,
-                                selected);
-                        setContextMenu(new CategoryTreeContextMenu(true));
-                    }
-                    else if (selected.toString().equals("Backlog")) {
-                        SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG_CATEGORY,
-                                selected);
-                        boolean PoExists = false;
-                        for (Team team : Global.currentWorkspace.getTeams()) {
-                            if (team.getProductOwner() != null) {
-                                PoExists = true;
-                                break;
-                            }
-                        }
-                        if (!PoExists) {
-                            setContextMenu(new CategoryTreeContextMenu(false));
-                        }
-                        else {
-                            setContextMenu(new CategoryTreeContextMenu(true));
-                        }
-                        //setContextMenu(new CategoryTreeContextMenu(true));
-                    }
-                    else {
-                        setContextMenu(new CategoryTreeContextMenu(true));
-                    }
-                }
-                else if (selected instanceof Role) {
-                    SceneSwitcher.changeScene(SceneSwitcher.ContentScene.ROLE,
-                            selected);
-                    setContextMenu(new ElementTreeContextMenu());
-                }
-                */
             });
     }
 

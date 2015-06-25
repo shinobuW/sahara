@@ -8,7 +8,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.TitleLabel;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
 
@@ -86,7 +85,6 @@ public class BacklogInfoTab extends Tab {
 
         btnEdit.setOnAction((event) -> {
                 currentBacklog.switchToInfoScene(true);
-                //SceneSwitcher.changeScene(SceneSwitcher.ContentScene.BACKLOG_EDIT, currentBacklog);
             });
 
         btnView.setOnAction((event) -> {

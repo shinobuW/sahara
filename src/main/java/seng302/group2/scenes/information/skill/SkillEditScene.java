@@ -15,7 +15,6 @@ import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.skills.Skill;
 
 import java.util.Collections;

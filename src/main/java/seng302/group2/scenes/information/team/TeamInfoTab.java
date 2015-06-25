@@ -8,7 +8,6 @@ import javafx.scene.layout.VBox;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.team.Team;
 

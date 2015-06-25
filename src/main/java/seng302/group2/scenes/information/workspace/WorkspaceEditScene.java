@@ -9,7 +9,6 @@ import javafx.scene.layout.VBox;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.workspace.Workspace;
 
 import static seng302.group2.scenes.MainScene.informationPane;

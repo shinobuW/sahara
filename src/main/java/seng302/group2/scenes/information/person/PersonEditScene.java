@@ -15,7 +15,6 @@ import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.util.validation.NameValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;

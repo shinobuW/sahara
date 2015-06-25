@@ -42,39 +42,4 @@ public class CategoryTreeContextMenu extends ContextMenu {
 
         this.getItems().addAll(createItem);
     }
-
-    /**
-     * Displays the appropriate dialogBox for creating a new element
-     *
-     * @param category Type of category
-     */
-    @Deprecated
-    private static void showCreateNewDialog(String category) {
-        switch (category) {
-            case "Projects":
-                CreateProjectDialog.show();
-                break;
-            case "People":
-                CreatePersonDialog.show();
-                break;
-            case "Skills":
-                CreateSkillDialog.show();
-                break;
-            case "Teams":
-                CreateTeamDialog.show();
-                break;
-            case "Releases":
-                CreateReleaseDialog.show();
-                break;
-            case "Unassigned Stories":
-                CreateStoryDialog.show();
-                break;
-            case "Backlog":
-                CreateBacklogDialog.show();
-                break;
-            default:
-                System.out.println("Create dialog for that category not implemented (yet?)");
-                break;
-        }
-    }
 }

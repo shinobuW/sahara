@@ -18,7 +18,6 @@ import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.sceneswitch.SceneSwitcher;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
