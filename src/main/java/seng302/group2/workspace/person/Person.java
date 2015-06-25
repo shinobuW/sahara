@@ -534,7 +534,38 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
                     mapped = true;
                 }
             }
-            return mapped;
+            boolean mapped_team = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(team)) {
+                    this.team = (Team) item;
+                    mapped_team = true;
+                }
+            }
+            boolean mapped_old_team = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equals(oldTeam)) {
+                    this.oldTeam = (Team) item;
+                    mapped_old_team = true;
+                }
+            }
+
+            for (Skill skill : skills) {
+                for (TreeViewItem item : stateObjects) {
+                    if (item.equals(skill)) {
+                        skill = (Skill) item;
+                    }
+                }
+            }
+
+            for (Skill skill : oldSkills) {
+                for (TreeViewItem item : stateObjects) {
+                    if (item.equals(skill)) {
+                        skill = (Skill) item;
+                    }
+                }
+            }
+
+            return mapped && mapped_old_team && mapped_team;
         }
     }
 
