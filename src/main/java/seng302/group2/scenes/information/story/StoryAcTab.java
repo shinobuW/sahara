@@ -31,12 +31,12 @@ public class StoryAcTab extends Tab {
         ScrollPane wrapper = new ScrollPane(acPane);
         this.setContent(wrapper);
 
-        TableView<AcceptanceCriteria> acTable = new TableView();
+        TableView<AcceptanceCriteria> acTable = new TableView<>();
         acTable.setEditable(true);
         acTable.fixedCellSizeProperty();
         acTable.setPrefWidth(700);
         acTable.setPrefHeight(400);
-        acTable.setPlaceholder(new Label("This project has no Acceptance Criteria."));
+        acTable.setPlaceholder(new Label("This project has no acceptance criteria."));
         acTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         ObservableList<AcceptanceCriteria> data = story.getAcceptanceCriteria();
 
@@ -48,7 +48,7 @@ public class StoryAcTab extends Tab {
 
         Label title = new TitleLabel("Acceptance Criteria");
 
-        TableColumn descriptionCol = new TableColumn("description");
+        TableColumn descriptionCol = new TableColumn("Description");
         descriptionCol.setEditable(true);
         descriptionCol.setCellFactory(TextFieldTableCell.forTableColumn());
         descriptionCol.setCellValueFactory(new PropertyValueFactory<AcceptanceCriteria, String>("description"));
@@ -56,7 +56,7 @@ public class StoryAcTab extends Tab {
                 new EventHandler<TableColumn.CellEditEvent<AcceptanceCriteria, String>>() {
                     @Override
                     public void handle(TableColumn.CellEditEvent<AcceptanceCriteria, String> event) {
-                        ((AcceptanceCriteria) event.getTableView().getItems().get(
+                        (event.getTableView().getItems().get(
                                 event.getTablePosition().getRow())
                         ).edit(event.getNewValue());
                     }
@@ -64,7 +64,7 @@ public class StoryAcTab extends Tab {
         );
 
         TableColumn stateCol = new TableColumn("State");
-        stateCol.setCellValueFactory(new PropertyValueFactory<AcceptanceCriteria, String>("State"));
+        stateCol.setCellValueFactory(new PropertyValueFactory<AcceptanceCriteria, String>("state"));
 
         acTable.setItems(data);
         TableColumn[] columns = {descriptionCol, stateCol};

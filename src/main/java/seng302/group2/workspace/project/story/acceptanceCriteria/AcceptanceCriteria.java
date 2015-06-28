@@ -21,6 +21,14 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
     private Story story;
 
     /**
+     * An enumeration to represent the states of acceptance criteria
+     */
+    public enum AcState {
+        ACCEPTED,
+        UNACCEPTED
+    }
+
+    /**
      * Basic constructor
      *
      * @param description the description of the AC
@@ -124,11 +132,6 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
     @Override
     public Set<TreeViewItem> getItemsSet() {
         return new HashSet<>();
-    }
-
-    public enum AcState {
-        ACCEPTED,
-        UNACCEPTED
     }
 
     private class DeleteAcCommand implements Command {
