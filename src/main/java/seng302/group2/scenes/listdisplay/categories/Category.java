@@ -57,23 +57,9 @@ public abstract class Category extends TreeViewItem {
      * @return if the objects are equal/equivalent
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equivalentTo(Object obj) {
         return obj.getClass().equals(this.getClass())
                 && ((Category) obj).getChildren() == this.getChildren()
                 && ((Category) obj).name.equals(this.name);
-    }
-
-
-    /**
-     * Override of hashCode generation for Categories
-     * @return The integer hashCode for Categories
-     */
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 31). // two randomly chosen prime numbers
-                // if deriving: appendSuper(super.hashCode()).
-                append(name).
-                //append(otherVariables).
-                toHashCode();
     }
 }

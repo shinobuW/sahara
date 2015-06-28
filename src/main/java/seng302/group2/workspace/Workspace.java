@@ -679,55 +679,6 @@ public class Workspace extends TreeViewItem implements Serializable {
 
 
     /**
-     * Removes a Team from the Workspace's list of Teams.
-     *
-     * @param team The team to remove
-     */
-    /*public void remove(Team team)
-    {
-        if (team.isUnassignedTeam())
-        {
-            return;
-        }
-
-        // Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                team,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DEL, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_DEL, null)
-        ));
-
-        this.teams.remove(team);
-    }*/
-
-    /**
-     * Adds the project to the given workspace without creating an undoable command
-     *
-     * @param proj The project to add to the workspace
-     */
-    public void addWithoutUndo(Project proj) {
-        this.getProjects().add(proj);
-    }
-
-
-    /**
-     * Removes a Project from the Workspace's list of Projects.
-     *
-     * @param project The project to remove
-     */
-    /*public void remove(Project project)
-    {
-        // Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                project,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DEL, null),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DEL, null)
-        ));
-
-        this.projects.remove(project);
-    }*/
-
-    /**
      * Removes a Team from the Workspace's list of Teams without an undoable command
      *
      * @param team The team to remove
@@ -808,7 +759,7 @@ public class Workspace extends TreeViewItem implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equivalentTo(Object object) {
         if (!(object instanceof Workspace)) {
             return false;
         }
@@ -823,14 +774,6 @@ public class Workspace extends TreeViewItem implements Serializable {
                 .isEquals();
     }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(13, 11)
-                .append(shortName)
-                .append(longName)
-                .append(description)
-                .toHashCode();
-    }
 
     /**
      * Gets the children (categories) of the workspace.
@@ -919,7 +862,7 @@ public class Workspace extends TreeViewItem implements Serializable {
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(ws)) {
+                if (item.equivalentTo(ws)) {
                     this.ws = (Workspace) item;
                     mapped = true;
                 }
@@ -953,7 +896,7 @@ public class Workspace extends TreeViewItem implements Serializable {
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(proj)) {
+                if (item.equivalentTo(proj)) {
                     this.proj = (Project) item;
                     mapped = true;
                 }
@@ -987,7 +930,7 @@ public class Workspace extends TreeViewItem implements Serializable {
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(team)) {
+                if (item.equivalentTo(team)) {
                     this.team = (Team) item;
                     mapped = true;
                 }
@@ -1026,7 +969,7 @@ public class Workspace extends TreeViewItem implements Serializable {
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(person)) {
+                if (item.equivalentTo(person)) {
                     this.person = (Person) item;
                     mapped = true;
                 }
@@ -1059,7 +1002,7 @@ public class Workspace extends TreeViewItem implements Serializable {
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(skill)) {
+                if (item.equivalentTo(skill)) {
                     this.skill = (Skill) item;
                     mapped = true;
                 }

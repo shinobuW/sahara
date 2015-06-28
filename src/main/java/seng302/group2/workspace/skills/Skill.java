@@ -2,13 +2,11 @@ package seng302.group2.workspace.skills;
 
 import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.SkillInformationSwitchStrategy;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 
 import java.io.Serializable;
@@ -135,51 +133,6 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
         }
         Command deleteSkill = new DeleteSkillCommand(this, Global.currentWorkspace);
         Global.commandManager.executeCommand(deleteSkill);
-
-        /*ArrayList<UndoableItem> undoActions = new ArrayList<>();
-        if (!deletedSkill.getShortName().equals("Product Owner")
-                && !deletedSkill.getShortName().equals("Scrum Master"))
-        {
-            for (Person personRemoveSkill : Global.currentWorkspace.getPeople())
-            {
-                if (personRemoveSkill.getSkills().contains(deletedSkill))
-                {
-                    undoActions.add(new UndoableItem(
-                            deletedSkill,
-                            new UndoRedoAction(
-                                    UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON,
-                                    personRemoveSkill),
-                            new UndoRedoAction(
-                                    UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_PERSON,
-                                    personRemoveSkill)));
-                    personRemoveSkill.removeSkillFromPerson(deletedSkill, false);
-                }
-            }
-
-            undoActions.add(new UndoableItem(
-                    deletedSkill,
-                    new UndoRedoAction(
-                            UndoRedoPerformer.UndoRedoProperty.SKILL_DEL,
-                            deletedSkill),
-                    new UndoRedoAction(
-                            UndoRedoPerformer.UndoRedoProperty.SKILL_DEL,
-                            deletedSkill)));
-            Global.currentWorkspace.removeWithoutUndo(deletedSkill);
-
-
-            if (undoActions.size() > 0)
-            {
-                Global.undoRedoMan.add(new UndoableItem(
-                        deletedSkill,
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_RECURSIVE,
-                                undoActions),
-                        new UndoRedoAction(
-                                UndoRedoPerformer.UndoRedoProperty.SKILL_DEL_RECURSIVE,
-                                undoActions)
-                ));
-            }
-        }*/
     }
 
 
@@ -223,7 +176,7 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equivalentTo(Object object) {
         if (!(object instanceof Skill)) {
             return false;
         }
@@ -238,20 +191,13 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
                 .isEquals();
     }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(13, 31)
-                .append(shortName)
-                .append(description)
-                .toHashCode();
-    }
-
 
     /**
      * A command class that allows the executing and undoing of skill edits
      */
     private class SkillEditCommand implements Command {
         private Skill skill;
+
         private String shortName;
         private String description;
         private String oldShortName;
@@ -287,7 +233,7 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(skill)) {
+                if (item.equivalentTo(skill)) {
                     this.skill = (Skill) item;
                     mapped = true;
                 }
@@ -323,7 +269,7 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(skill)) {
+                if (item.equivalentTo(skill)) {
                     this.skill = (Skill) item;
                     mapped = true;
                 }

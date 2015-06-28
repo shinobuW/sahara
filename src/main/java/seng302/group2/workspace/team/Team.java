@@ -316,47 +316,6 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
 
 
     /**
-     * Removes a Person from the Team's of Members
-     * Adds a redo item by default
-     *
-     * @param person The person to remove
-     */
-    /*@Deprecated
-    public void remove(Person person)
-    {
-        // Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                person,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DEL_TEAM, this),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DEL_TEAM, this)
-        ));
-
-        this.people.remove(person);
-    }*/
-
-
-    /**
-     * Removes a Person from the Team's of Members
-     *
-     * @param person The person to remove
-     * @param redo   Whether to create an redo item for removing the person
-     */
-    /*@Deprecated
-    public void remove(Person person, Boolean redo)
-    {
-        // Add the undo action to the stack
-        if (redo)
-        {
-            Global.undoRedoMan.add(new UndoableItem(
-                    person,
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DEL_TEAM, this),
-                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_DEL_TEAM, this)
-            ));
-        }
-        this.people.remove(person);
-    }*/
-
-    /**
      * //this.getTeamAllocations().add(allocation);
      * Removes the given allocation from the team's list of allocations
      *
@@ -452,7 +411,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equivalentTo(Object object) {
         if (!(object instanceof Team)) {
             return false;
         }
@@ -468,15 +427,6 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
                 .append(description, team.description)
                 .append(project, team.project)
                 .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(13, 31)
-                .append(shortName)
-                .append(description)
-                .append(project)
-                .toHashCode();
     }
 
 
@@ -550,7 +500,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(team)) {
+                if (item.equivalentTo(team)) {
                     this.team = (Team) item;
                     mapped = true;
                 }
@@ -565,6 +515,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
      */
     private class ExtendedTeamEditCommand implements Command {
         private Team team;
+
         private String shortName;
         private String description;
         private Collection<Person> members = new HashSet<>();
@@ -583,6 +534,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
                                         Collection<Person> newMembers, Person newPO, Person newSM,
                                         Collection<Person> newDevelopers) {
             this.team = team;
+
             this.shortName = newShortName;
             this.description = newDescription;
             this.members.addAll(newMembers);
@@ -648,26 +600,83 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped_team = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(team)) {
+                if (item.equivalentTo(team)) {
                     this.team = (Team) item;
                     mapped_team = true;
                 }
             }
+
             boolean mapped_po = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(productOwner)) {
+                if (item.equivalentTo(productOwner)) {
                     this.productOwner = (Person) item;
                     mapped_po = true;
                 }
             }
+            boolean mapped_old_po = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equivalentTo(oldProductOwner)) {
+                    this.oldProductOwner = (Person) item;
+                    mapped_old_po = true;
+                }
+            }
+
             boolean mapped_sm = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(scrumMaster)) {
+                if (item.equivalentTo(scrumMaster)) {
                     this.scrumMaster = (Person) item;
                     mapped_sm = true;
                 }
             }
-            return mapped_sm && mapped_po && mapped_team;
+            boolean mapped_old_sm = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equivalentTo(oldScrumMaster)) {
+                    this.oldScrumMaster = (Person) item;
+                    mapped_old_sm = true;
+                }
+            }
+
+            // Members collections
+            for (Person member : members) {
+                for (TreeViewItem item : stateObjects) {
+                    if (item.equivalentTo(member)) {
+                        members.remove(member);
+                        members.add((Person)item);
+                        break;
+                    }
+                }
+            }
+            for (Person member : oldMembers) {
+                for (TreeViewItem item : stateObjects) {
+                    if (item.equivalentTo(member)) {
+                        oldMembers.remove(member);
+                        oldMembers.add((Person)item);
+                        break;
+                    }
+                }
+            }
+
+            // Developers collections
+            for (Person dev : developers) {
+                for (TreeViewItem item : stateObjects) {
+                    if (item.equivalentTo(dev)) {
+                        developers.remove(dev);
+                        developers.add((Person)item);
+                        break;
+                    }
+                }
+            }
+            for (Person dev : oldDevelopers) {
+                for (TreeViewItem item : stateObjects) {
+                    if (item.equivalentTo(dev)) {
+                        oldDevelopers.remove(dev);
+                        oldDevelopers.add((Person)item);
+                        break;
+                    }
+                }
+            }
+
+            return mapped_sm && mapped_po && mapped_team && mapped_old_po && mapped_old_sm;
         }
     }
 
@@ -699,11 +708,23 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(team)) {
+                if (item.equivalentTo(team)) {
                     this.team = (Team) item;
                     mapped = true;
                 }
             }
+
+            // Member collection
+            for (Person member : members) {
+                for (TreeViewItem item : stateObjects) {
+                    if (item.equivalentTo(member)) {
+                        members.remove(member);
+                        members.add((Person)item);
+                        break;
+                    }
+                }
+            }
+
             return mapped;
         }
     }
@@ -738,11 +759,23 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(team)) {
+                if (item.equivalentTo(team)) {
                     this.team = (Team) item;
                     mapped = true;
                 }
             }
+
+            // Member collection
+            for (Person member : members) {
+                for (TreeViewItem item : stateObjects) {
+                    if (item.equivalentTo(member)) {
+                        members.remove(member);
+                        members.add((Person)item);
+                        break;
+                    }
+                }
+            }
+
             return mapped;
         }
     }
@@ -770,14 +803,14 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped_team = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(team)) {
+                if (item.equivalentTo(team)) {
                     this.team = (Team) item;
                     mapped_team = true;
                 }
             }
             boolean mapped_person = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(person)) {
+                if (item.equivalentTo(person)) {
                     this.person = (Person) item;
                     mapped_person = true;
                 }
@@ -811,21 +844,21 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped_team = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(team)) {
+                if (item.equivalentTo(team)) {
                     this.team = (Team) item;
                     mapped_team = true;
                 }
             }
             boolean mapped_project = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(proj)) {
+                if (item.equivalentTo(proj)) {
                     this.proj = (Project) item;
                     mapped_project = true;
                 }
             }
             boolean mapped_alloc = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(allocation)) {
+                if (item.equivalentTo(allocation)) {
                     this.allocation = (Allocation) item;
                     mapped_alloc = true;
                 }

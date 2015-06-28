@@ -16,6 +16,7 @@ import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
@@ -551,7 +552,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equivalentTo(Object object) {
         if (!(object instanceof Project)) {
             return false;
         }
@@ -565,15 +566,6 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
                 .append(longName, proj.longName)
                 .append(description, proj.description)
                 .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(71, 13)
-                .append(shortName)
-                .append(longName)
-                .append(description)
-                .toHashCode();
     }
 
 
@@ -593,11 +585,9 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
 
     /**
      * Deletes a project from the given workspace.
-     *
-     * @param ws The workspace to remove the project from
      */
-    public void deleteProject(Workspace ws) {
-        Command command = new DeleteProjectCommand(this, ws);
+    public void deleteProject() {
+        Command command = new DeleteProjectCommand(this);
         Global.commandManager.executeCommand(command);
     }
 
@@ -693,14 +683,35 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
          */
         @Override
         public boolean map(Set<TreeViewItem> stateObjects) {
-            boolean mapped = false;
+            boolean mapped_project = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(proj)) {
+                if (item.equivalentTo(proj)) {
                     this.proj = (Project) item;
-                    mapped = true;
+                    mapped_project = true;
                 }
             }
-            return mapped;
+
+            // Teams collections
+            for (Team team : teams) {
+                for (TreeViewItem item : stateObjects) {
+                    if (item.equivalentTo(team)) {
+                        teams.remove(team);
+                        teams.add((Team)item);
+                        break;
+                    }
+                }
+            }
+            for (Team team : oldTeams) {
+                for (TreeViewItem item : stateObjects) {
+                    if (item.equivalentTo(team)) {
+                        oldTeams.remove(team);
+                        oldTeams.add((Team)item);
+                        break;
+                    }
+                }
+            }
+
+            return mapped_project;
         }
     }
 
@@ -708,7 +719,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     private class DeleteProjectCommand implements Command {
         private Project proj;
 
-        DeleteProjectCommand(Project proj, Workspace ws) {
+        DeleteProjectCommand(Project proj) {
             this.proj = proj;
         }
 
@@ -729,7 +740,7 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(proj)) {
+                if (item.equivalentTo(proj)) {
                     this.proj = (Project) item;
                     mapped = true;
                 }
@@ -767,14 +778,14 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(proj)) {
+                if (item.equivalentTo(proj)) {
                     this.proj = (Project) item;
                     mapped = true;
                 }
             }
             boolean mapped_release = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(release)) {
+                if (item.equivalentTo(release)) {
                     this.release = (Release) item;
                     mapped_release = true;
                 }
@@ -810,14 +821,14 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(proj)) {
+                if (item.equivalentTo(proj)) {
                     this.proj = (Project) item;
                     mapped = true;
                 }
             }
             boolean mapped_story = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(story)) {
+                if (item.equivalentTo(story)) {
                     this.story = (Story) item;
                     mapped_story = true;
                 }
@@ -855,14 +866,14 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(proj)) {
+                if (item.equivalentTo(proj)) {
                     this.proj = (Project) item;
                     mapped = true;
                 }
             }
             boolean mapped_bl = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(backlog)) {
+                if (item.equivalentTo(backlog)) {
                     this.backlog = (Backlog) item;
                     mapped_bl = true;
                 }
@@ -904,21 +915,21 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(proj)) {
+                if (item.equivalentTo(proj)) {
                     this.proj = (Project) item;
                     mapped = true;
                 }
             }
             boolean mapped_team = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(team)) {
+                if (item.equivalentTo(team)) {
                     this.team = (Team) item;
                     mapped_team = true;
                 }
             }
             boolean mapped_alloc = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(allocation)) {
+                if (item.equivalentTo(allocation)) {
                     this.allocation = (Allocation) item;
                     mapped_alloc = true;
                 }

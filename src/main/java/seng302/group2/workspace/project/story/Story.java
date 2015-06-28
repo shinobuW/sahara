@@ -33,6 +33,7 @@ public class Story extends TreeViewItem implements Serializable {
     public static Comparator<Story> StoryNameComparator = (story1, story2) -> {
         return story1.getShortName().compareTo(story2.getShortName());
     };
+
     private String shortName;
     private String longName;
     private String description;
@@ -279,7 +280,7 @@ public class Story extends TreeViewItem implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equivalentTo(Object object) {
         if (!(object instanceof Story)) {
             return false;
         }
@@ -297,17 +298,6 @@ public class Story extends TreeViewItem implements Serializable {
                 .append(backlog, story.backlog)
                 .append(creator, story.creator)
                 .isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(13, 71)
-                .append(shortName)
-                .append(longName)
-                .append(description)
-                .append(creator)
-                .append(priority)
-                .toHashCode();
     }
 
 
@@ -359,6 +349,7 @@ public class Story extends TreeViewItem implements Serializable {
         private StoryEditCommand(Story story, String newShortName, String newLongName,
                                  String newDescription, Project newProject, Integer newPriority, Backlog newBacklog) {
             this.story = story;
+
             this.shortName = newShortName;
             this.longName = newLongName;
             this.description = newDescription;
@@ -425,26 +416,44 @@ public class Story extends TreeViewItem implements Serializable {
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped_story = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(acceptanceCriteria)) {
+                if (item.equivalentTo(story)) {
                     this.story = (Story) item;
                     mapped_story = true;
                 }
             }
+
             boolean mapped_project = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(acceptanceCriteria)) {
+                if (item.equivalentTo(project)) {
                     this.project = (Project) item;
                     mapped_project = true;
                 }
             }
+            boolean mapped_old_project = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equivalentTo(oldProject)) {
+                    this.project = (Project) item;
+                    mapped_old_project = true;
+                }
+            }
+
             boolean mapped_backlog = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(backlog)) {
+                if (item.equivalentTo(backlog)) {
                     this.backlog = (Backlog) item;
                     mapped_backlog = true;
                 }
             }
-            return mapped_backlog && mapped_project && mapped_story;
+            boolean mapped_old_backlog = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equivalentTo(oldBacklog)) {
+                    this.backlog = (Backlog) item;
+                    mapped_old_backlog = true;
+                }
+            }
+
+            return mapped_backlog && mapped_project && mapped_story && mapped_old_backlog
+                    && mapped_old_project;
         }
     }
 

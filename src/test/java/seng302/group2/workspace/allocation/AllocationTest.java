@@ -39,7 +39,6 @@ public class AllocationTest {
      */
     @Test
     public void testIsCurrentAllocation() throws Exception {
-        LocalDate now = LocalDate.now();
         LocalDate tomorrow = LocalDate.now().plusDays(1);
 
         Allocation alloc2 = new Allocation(proj, team, startDate, tomorrow);

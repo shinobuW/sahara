@@ -133,17 +133,18 @@ public class Allocation extends TreeViewItem implements Serializable, Comparable
     }
 
     /**
-     * //TODO
+     * Compares this allocation to another based on the start dates of the allocations
+     * @return the comparison of the start dates of the two allocations
      */
     @Override
     public int compareTo(Allocation allocation) {
-        LocalDate allocationStarDate = this.getStartDate();
+        LocalDate allocationStartDate = this.getStartDate();
         LocalDate allocation2StarDate = allocation.getStartDate();
-        return allocationStarDate.compareTo(allocation2StarDate);
+        return allocationStartDate.compareTo(allocation2StarDate);
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equivalentTo(Object object) {
         if (!(object instanceof Allocation)) {
             return false;
         }
@@ -160,13 +161,6 @@ public class Allocation extends TreeViewItem implements Serializable, Comparable
                 .isEquals();
     }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 31)
-                .append(startDate)
-                .append(endDate)
-                .toHashCode();
-    }
 
     @Override
     public Set<TreeViewItem> getItemsSet() {
@@ -248,7 +242,7 @@ public class Allocation extends TreeViewItem implements Serializable, Comparable
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(allocation)) {
+                if (item.equivalentTo(allocation)) {
                     this.allocation = (Allocation) item;
                     mapped = true;
                 }
@@ -288,21 +282,21 @@ public class Allocation extends TreeViewItem implements Serializable, Comparable
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped_alloc = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(allocation)) {
+                if (item.equivalentTo(allocation)) {
                     this.allocation = (Allocation) item;
                     mapped_alloc = true;
                 }
             }
             boolean mapped_proj = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(project)) {
+                if (item.equivalentTo(project)) {
                     this.project = (Project) item;
                     mapped_proj = true;
                 }
             }
             boolean mapped_team = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(team)) {
+                if (item.equivalentTo(team)) {
                     this.team = (Team) item;
                     mapped_team = true;
                 }

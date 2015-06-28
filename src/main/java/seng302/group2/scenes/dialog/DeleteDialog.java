@@ -53,7 +53,7 @@ public class DeleteDialog {
             }
             else if (element.getClass() == Project.class) {
                 Project deletedProject = (Project) element;
-                deletedProject.deleteProject(Global.currentWorkspace);
+                deletedProject.deleteProject();
                 //Project.deleteProject(deletedProject);
                 App.refreshMainScene();
             }

@@ -156,9 +156,24 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
         }
     }
 
-    /*@Override
-    public abstract boolean equals(Object object);
 
-    @Override
-    public abstract int hashCode();*/
+    /**
+     * Checks whether or not <i>this</i> is <b>equivalent</b> to the passed object
+     * @param object The object to compare to
+     * @return true if <i>this</i> and the object are equivalent
+     */
+    public abstract boolean equivalentTo(Object object);
+
+
+    /**
+     * Checks whether or not <i>this</i> is <b>equivalent</b> to the passed object based only on the
+     * short names and classes of the objects
+     * @param object The object to compare to
+     * @return true if <i>this</i> and the object are equivalent by name and type
+     */
+    public boolean semiEquivalentTo(Object object) {
+        return this.getClass().equals(object.getClass())
+                && ((TreeViewItem) object).itemName.equals(this.itemName);
+    }
+
 }

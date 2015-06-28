@@ -231,7 +231,7 @@ public class Release extends TreeViewItem implements Comparable<Release> {
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equivalentTo(Object object) {
         if (!(object instanceof  Release)) {
             return false;
         }
@@ -248,15 +248,6 @@ public class Release extends TreeViewItem implements Comparable<Release> {
                 .isEquals();
     }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 31)
-                .append(shortName)
-                .append(description)
-                .append(estimatedDate)
-                .append(project)
-                .toHashCode();
-    }
 
     /**
      * Creates a Release edit command and executes it with the Global Command Manager, updating
@@ -285,6 +276,7 @@ public class Release extends TreeViewItem implements Comparable<Release> {
         private String description;
         private LocalDate estimatedDate;
         private Project project;
+
         private String oldShortName;
         private String oldDescription;
         private LocalDate oldEstimatedDate;
@@ -335,21 +327,21 @@ public class Release extends TreeViewItem implements Comparable<Release> {
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped_rl = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(release)) {
+                if (item.equivalentTo(release)) {
                     this.release = (Release) item;
                     mapped_rl = true;
                 }
             }
             boolean mapped_project = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(project)) {
+                if (item.equivalentTo(project)) {
                     this.project = (Project) item;
                     mapped_project = true;
                 }
             }
             boolean mapped_old_project = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(oldProject)) {
+                if (item.equivalentTo(oldProject)) {
                     this.oldProject = (Project) item;
                     mapped_old_project = true;
                 }
@@ -388,14 +380,14 @@ public class Release extends TreeViewItem implements Comparable<Release> {
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped_rl = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(release)) {
+                if (item.equivalentTo(release)) {
                     this.release = (Release) item;
                     mapped_rl = true;
                 }
             }
             boolean mapped_project = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(project)) {
+                if (item.equivalentTo(project)) {
                     this.proj = (Project) item;
                     mapped_project = true;
                 }

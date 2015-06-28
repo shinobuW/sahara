@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * A model class for acceptance criteria items inside of stories
  * Created by Shinobu on 30/05/2015.
  */
 public class AcceptanceCriteria extends TreeViewItem implements Serializable, Comparable<AcceptanceCriteria> {
@@ -103,7 +104,7 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equivalentTo(Object object) {
         if (!(object instanceof AcceptanceCriteria)) {
             return false;
         }
@@ -119,14 +120,6 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
                 .isEquals();
     }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(13, 71)
-                .append(description)
-                .append(state)
-                .append(story)
-                .toHashCode();
-    }
 
     @Override
     public Set<TreeViewItem> getItemsSet() {
@@ -164,15 +157,15 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped_ac = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(acceptanceCriteria)) {
+                if (item.equivalentTo(acceptanceCriteria)) {
                     this.acceptanceCriteria = (AcceptanceCriteria) item;
                     mapped_ac = true;
                 }
             }
             boolean mapped_story = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(acceptanceCriteria)) {
-                    this.acceptanceCriteria = (AcceptanceCriteria) item;
+                if (item.equivalentTo(story)) {
+                    this.story = (Story) item;
                     mapped_story = true;
                 }
             }
@@ -217,7 +210,7 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
         public boolean map(Set<TreeViewItem> stateObjects) {
             boolean mapped = false;
             for (TreeViewItem item : stateObjects) {
-                if (item.equals(ac)) {
+                if (item.equivalentTo(ac)) {
                     this.ac = (AcceptanceCriteria) item;
                     mapped = true;
                 }

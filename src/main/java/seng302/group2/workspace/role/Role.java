@@ -276,7 +276,7 @@ public class Role extends TreeViewItem implements Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equivalentTo(Object object) {
         if (!(object instanceof Role)) {
             return false;
         }
@@ -292,15 +292,6 @@ public class Role extends TreeViewItem implements Serializable {
                 .isEquals();
     }
 
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(13, 71)
-                .append(shortName)
-                .append(description)
-                .append(type)
-                .append(defaultRole)
-                .toHashCode();
-    }
 
     public enum RoleType {
         SCRUM_MASTER, PRODUCT_OWNER, DEVELOPMENT_TEAM_MEMBER, OTHER, NONE
