@@ -73,30 +73,32 @@ public class StoryAcTab extends Tab {
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
 
         addButton.setOnAction((event) -> {
-                    if (descriptionTextArea.getText() != null) {
-                        String description = descriptionTextArea.getText();
-                        AcceptanceCriteria newAc = new AcceptanceCriteria(description, story);
-                        story.add(newAc);
-                    } else {
-                        event.consume();
-                    }
-                });
-
-        deleteButton.setOnAction((event) -> {
-            AcceptanceCriteria selectedAc = acTable.getSelectionModel().getSelectedItem();
-            if (selectedAc != null) {
-                Action response = Dialogs.create()
-                        .title("Delete Acceptance Criteria")
-                        .message("Do you really want to delete this Acceptance Criteria?")
-                        .showConfirm();
-
-                if (response == org.controlsfx.dialog.Dialog.ACTION_YES) {
-                    selectedAc.delete();
-                } else if (response == org.controlsfx.dialog.Dialog.ACTION_NO) {
+                if (descriptionTextArea.getText() != null) {
+                    String description = descriptionTextArea.getText();
+                    AcceptanceCriteria newAc = new AcceptanceCriteria(description, story);
+                    story.add(newAc);
+                }
+                else {
                     event.consume();
                 }
-            }
-        });
+            });
+
+        deleteButton.setOnAction((event) -> {
+                AcceptanceCriteria selectedAc = acTable.getSelectionModel().getSelectedItem();
+                if (selectedAc != null) {
+                    Action response = Dialogs.create()
+                            .title("Delete Acceptance Criteria?")
+                            .message("Do you really want to delete this Acceptance Criteria?")
+                            .showConfirm();
+
+                    if (response == org.controlsfx.dialog.Dialog.ACTION_YES) {
+                        selectedAc.delete();
+                    }
+                    else if (response == org.controlsfx.dialog.Dialog.ACTION_NO) {
+                        event.consume();
+                    }
+                }
+            });
 
         acPane.getChildren().addAll(title, acTable, descriptionTextArea, buttons);
     }
