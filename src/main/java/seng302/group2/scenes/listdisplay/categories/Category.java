@@ -57,6 +57,20 @@ public abstract class Category extends TreeViewItem {
      * @return if the objects are equal/equivalent
      */
     @Override
+    public boolean equals(Object obj) {
+        return obj.getClass().equals(this.getClass())
+                && ((Category) obj).getChildren() == this.getChildren()
+                && ((Category) obj).name.equals(this.name);
+    }
+
+
+    /**
+     * Overrides that a category is equal if it has the same children
+     *
+     * @param obj the object to compare
+     * @return if the objects are equal/equivalent
+     */
+    @Override
     public boolean equivalentTo(Object obj) {
         return obj.getClass().equals(this.getClass())
                 && ((Category) obj).getChildren() == this.getChildren()

@@ -221,7 +221,7 @@ public class ProjectTest extends TestCase {
         Global.currentWorkspace = new Workspace();
         Project proj = new Project();
         Global.currentWorkspace.add(proj);
-        proj.deleteProject(Global.currentWorkspace);
+        proj.deleteProject();
         Assert.assertFalse(Global.currentWorkspace.getProjects().contains(proj));
 
         Global.commandManager.undo();

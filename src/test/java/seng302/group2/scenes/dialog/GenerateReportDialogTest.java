@@ -49,8 +49,16 @@ public class GenerateReportDialogTest {
 
 
     private void recursiveCheckItems(TreeViewItem root, Set<TreeViewItem> set) {
-        //System.out.println(root + ": " + System.identityHashCode(root));
-        Assert.assertTrue(set.contains(root));
+        //System.out.println(root + " in " + set);
+
+        boolean mapped = false;
+        for (TreeViewItem item : set) {
+            if (item.equivalentTo(root)) {
+                mapped = true;
+                break;
+            }
+        }
+        Assert.assertTrue(mapped);
 
         if (root.getChildren() != null) {
             for (TreeViewItem child : root.getChildren()) {
