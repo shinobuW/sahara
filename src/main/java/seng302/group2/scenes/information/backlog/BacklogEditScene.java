@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
@@ -47,6 +48,7 @@ public class BacklogEditScene extends ScrollPane {
         descriptionField = new CustomTextArea("Backlog Description:", 300);
         descriptionField.setText(baseBacklog.getDescription());
         descriptionField.setMaxWidth(275);
+        Label errorField = new Label("");
 
 
         // Story assignment buttons
@@ -106,20 +108,43 @@ public class BacklogEditScene extends ScrollPane {
                 longNameField,
                 descriptionField,
                 storyListViews,
+                errorField,
                 sceneButtons
         );
 
 
         // Button events
+
         btnAssign.setOnAction((event) -> {
-                //TODO Disable adding stories with same priority.
-                backlogStoryList.addAll(
-                        availableStoryListView.getSelectionModel().getSelectedItems());
-                availableStoryList.removeAll(
-                        availableStoryListView.getSelectionModel().getSelectedItems());
+                boolean uniquePriority = true;
+                Story errorStory = null;
+                errorField.setText("");
+                outerloop:
+                for (Story story : backlogStoryList) {
+                    for (Story addedStory : availableStoryListView.getSelectionModel().getSelectedItems()) {
+                        if (story.getPriority().equals(addedStory.getPriority())) {
+                            uniquePriority = false;
+                            errorStory = addedStory;
+                            break outerloop;
+                        }
+                    }
+                }
+
+                if (uniquePriority) {
+                    backlogStoryList.addAll(
+                            availableStoryListView.getSelectionModel().getSelectedItems());
+                    availableStoryList.removeAll(
+                            availableStoryListView.getSelectionModel().getSelectedItems());
+                }
+                else {
+                    errorField.setTextFill(Color.web("#ff0000"));
+                    errorField.setText("* Story \"" + errorStory.getShortName() + "\" must have a unique priority.");
+                }
+
             });
 
         btnUnassign.setOnAction((event) -> {
+                errorField.setText("");
                 availableStoryList.addAll(
                         backlogStoryListView.getSelectionModel().getSelectedItems());
                 backlogStoryList.removeAll(
