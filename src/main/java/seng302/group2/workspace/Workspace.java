@@ -26,6 +26,7 @@ import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.story.estimation.estimationScalesDictionary;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -49,6 +50,7 @@ public class Workspace extends TreeViewItem implements Serializable {
     private String longName;
     private String description;
     private String lastSaveLocation = null;
+    private estimationScalesDictionary estimationScales;
     private transient boolean hasUnsavedChanges = true;
     // Workspace elements
     private transient ObservableList<Team> teams = observableArrayList();
@@ -71,10 +73,8 @@ public class Workspace extends TreeViewItem implements Serializable {
         this.shortName = "Untitled Workspace";
         this.longName = "Untitled Workspace";
         this.description = "A blank workspace.";
-        this.serializablePeople = new ArrayList<>();
-        this.serializableSkills = new ArrayList<>();
-        this.serializableTeams = new ArrayList<>();
-        this.serializableRoles = new ArrayList<>();
+        this.estimationScales = estimationScalesDictionary.addScales();
+
 
         this.createDefaultElements();
 
@@ -98,6 +98,7 @@ public class Workspace extends TreeViewItem implements Serializable {
         this.shortName = shortName;
         this.longName = fullName;
         this.description = description;
+        this.estimationScales = estimationScalesDictionary.addScales();
 
         this.createDefaultElements();
 
