@@ -1,12 +1,12 @@
 package seng302.group2.scenes.information.story;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
@@ -17,6 +17,7 @@ import org.controlsfx.dialog.Dialogs;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.acceptanceCriteria.AcEnumStringConverter;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 
 
@@ -63,8 +64,20 @@ public class StoryAcTab extends Tab {
                 }
         );
 
+
+        ObservableList<AcceptanceCriteria.AcState> acStates = FXCollections.observableArrayList();
+        for (AcceptanceCriteria.AcState state : AcceptanceCriteria.AcState.values()) {
+            acStates.add(state);
+        }
+
+
         TableColumn stateCol = new TableColumn("State");
-        stateCol.setCellValueFactory(new PropertyValueFactory<AcceptanceCriteria, String>("state"));
+        stateCol.setCellFactory(ComboBoxTableCell.forTableColumn(
+                new AcEnumStringConverter(),
+                acStates
+            ));
+        stateCol.setCellValueFactory(new PropertyValueFactory<AcceptanceCriteria, AcceptanceCriteria.AcState>("state"));
+
 
         acTable.setItems(data);
         TableColumn[] columns = {descriptionCol, stateCol};

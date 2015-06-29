@@ -1,6 +1,6 @@
 package seng302.group2.workspace.project.story.acceptanceCriteria;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.workspace.project.story.Story;
@@ -50,6 +50,5 @@ public class AcceptanceCriteriaTest {
         Global.commandManager.redo();
         Assert.assertEquals("Testing edit", ac.getDescription());
     }
-
 
 }
