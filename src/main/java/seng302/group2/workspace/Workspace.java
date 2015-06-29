@@ -12,7 +12,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -26,7 +25,7 @@ import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.project.story.estimation.estimationScalesDictionary;
+import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -50,7 +49,7 @@ public class Workspace extends TreeViewItem implements Serializable {
     private String longName;
     private String description;
     private String lastSaveLocation = null;
-    private estimationScalesDictionary estimationScales;
+    private EstimationScalesDictionary estimationScales;
     private transient boolean hasUnsavedChanges = true;
     // Workspace elements
     private transient ObservableList<Team> teams = observableArrayList();
@@ -73,7 +72,7 @@ public class Workspace extends TreeViewItem implements Serializable {
         this.shortName = "Untitled Workspace";
         this.longName = "Untitled Workspace";
         this.description = "A blank workspace.";
-        this.estimationScales = estimationScalesDictionary.addScales();
+        this.estimationScales = EstimationScalesDictionary.addScales();
 
 
         this.createDefaultElements();
@@ -98,7 +97,7 @@ public class Workspace extends TreeViewItem implements Serializable {
         this.shortName = shortName;
         this.longName = fullName;
         this.description = description;
-        this.estimationScales = estimationScalesDictionary.addScales();
+        this.estimationScales = EstimationScalesDictionary.addScales();
 
         this.createDefaultElements();
 

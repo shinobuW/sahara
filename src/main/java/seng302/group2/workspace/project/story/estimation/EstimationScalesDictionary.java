@@ -11,16 +11,16 @@ import java.util.Map;
  * scales to use alongside the three default scales.
  * Created by drm127 and btm38 on 29/06/15.
  */
-public class estimationScalesDictionary {
+public class EstimationScalesDictionary {
 
-    private static estimationScalesDictionary scales;
+    private static EstimationScalesDictionary scales;
     private Map<String, ArrayList<String>> estimationScaleDict = new HashMap<>();
 
     /**
      * The private constructor for the estimationScalesDictionary class. Is only accessible by itself,
      * to allow conformance to the singleton pattern.
      */
-    private estimationScalesDictionary() {
+    private EstimationScalesDictionary() {
         ArrayList<String> valueList = new ArrayList<>(Arrays.asList("0.5", "1", "2", "3", "5", "8", "13", "20",
                 "40", "100"));
         createScales("Fibonacci", valueList);
@@ -35,9 +35,9 @@ public class estimationScalesDictionary {
      * The publicly accessible method for addition of the estimation scale dictionary to a workspace.
      * @return The single instance of the estimationScalesDictionary.
      */
-    public static estimationScalesDictionary addScales() {
+    public static EstimationScalesDictionary addScales() {
         if (scales == null) {
-            scales = new estimationScalesDictionary();
+            scales = new EstimationScalesDictionary();
         }
         return scales;
     }
@@ -52,7 +52,7 @@ public class estimationScalesDictionary {
         scaleValues.add("inf");
         scaleValues.add("?");
 
-        System.out.println(scaleValues);
+        //System.out.println(scaleValues);
         estimationScaleDict.put(scaleName, scaleValues);
     }
 
