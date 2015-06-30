@@ -3,7 +3,6 @@ package seng302.group2.scenes.contextmenu;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import seng302.group2.Global;
-import seng302.group2.scenes.dialog.*;
 import seng302.group2.scenes.listdisplay.categories.Category;
 
 /**

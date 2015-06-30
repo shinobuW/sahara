@@ -1,7 +1,5 @@
 package seng302.group2.workspace.project.story.acceptanceCriteria;
 
-import javafx.util.StringConverter;
-import org.apache.commons.lang.WordUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;

@@ -1,13 +1,12 @@
 package seng302.group2.util.revert;
 
+import com.google.gson.Gson;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.Workspace;
 
-import java.util.Set;
 import java.util.Stack;
 
 /**
@@ -18,6 +17,7 @@ import java.util.Stack;
 public class RevertManager {
     private static String revertWorkspace;
     private static Stack<Command> revertUndos;
+    private static Gson gson = SerialBuilder.getBuilder();
 
     /**
      * Reverts to the last revert state by deserialising the last workspace state and making it the
@@ -52,5 +52,14 @@ public class RevertManager {
         if (Global.commandManager != null) {
             revertUndos = Global.commandManager.getUndoCloneStack();
         }
+    }
+
+    /**
+     * Updates the reverted state to the current workspace
+     */
+    public static void updateRevertState() {
+        Workspace.prepSerialization(Global.currentWorkspace);
+        String json = gson.toJson(Global.currentWorkspace);
+        updateRevertState(json);
     }
 }

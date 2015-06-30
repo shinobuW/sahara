@@ -3,19 +3,16 @@
  */
 package seng302.group2.workspace.person;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.PersonInformationSwitchStrategy;
 import seng302.group2.util.undoredo.Command;
-import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
-import sun.reflect.generics.tree.Tree;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -107,6 +104,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
         Set<TreeViewItem> items = new HashSet<>();
 
         for (Skill skill : skills) {
+            items.add(skill);
             items.addAll(skill.getItemsSet());
         }
 
@@ -309,6 +307,9 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
      */
     public void prepSerialization() {
         serializableSkills.clear();
+        if (skills == null) {
+            skills = FXCollections.observableArrayList();
+        }
         for (Object item : skills) {
             this.serializableSkills.add((Skill) item);
         }
@@ -543,6 +544,9 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
             }
 
             // Skill collections
+            if (skills == null) {
+                skills = FXCollections.observableArrayList();
+            }
             for (Skill skill : skills) {
                 for (TreeViewItem item : stateObjects) {
                     if (item.equivalentTo(skill)) {

@@ -115,17 +115,22 @@ public class Workspace extends TreeViewItem implements Serializable {
      */
     public Set<TreeViewItem> getItemsSet() {
         Set<TreeViewItem> items = new HashSet<>();
+        items.add(this);
 
-        for (Person person : people) {
+        for (Person person : this.getPeople()) {
+            items.add(person);
             items.addAll(person.getItemsSet());
         }
         for (Skill skill : skills) {
+            items.add(skill);
             items.addAll(skill.getItemsSet());
         }
         for (Team team : teams) {
+            items.add(team);
             items.addAll(team.getItemsSet());
         }
         for (Role role : roles) {
+            items.add(role);
             items.addAll(role.getItemsSet());
         }
 
@@ -623,14 +628,6 @@ public class Workspace extends TreeViewItem implements Serializable {
         Global.commandManager.executeCommand(command);
     }
 
-    /**
-     * Adds a Person to the Workspace's list of Persons without an undoable command
-     *
-     * @param person the person to add
-     */
-    public void addWithoutUndo(Person person) {
-        this.people.add(person);
-    }
 
     /**
      * Adds a Skill to the Workspace's list of Skills.
@@ -677,28 +674,6 @@ public class Workspace extends TreeViewItem implements Serializable {
         Global.commandManager.executeCommand(command);
     }
 
-
-    /**
-     * Removes a Team from the Workspace's list of Teams without an undoable command
-     *
-     * @param team The team to remove
-     */
-    public void removeWithoutUndo(Team team) {
-        if (team.isUnassignedTeam()) {
-            return;
-        }
-
-        this.teams.remove(team);
-    }
-
-    /**
-     * Removes a Project from the Workspace's list of Projects without an undoable command
-     *
-     * @param project The project to remove
-     */
-    public void removeWithoutUndo(Project project) {
-        this.projects.remove(project);
-    }
 
     /**
      * Adds a Role to the Workspace's list of Roles.
