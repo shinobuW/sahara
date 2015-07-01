@@ -56,6 +56,7 @@ public class CreateBacklogDialog {
         RequiredField longNameCustomField = new RequiredField("Long Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
         CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
+        //CustomComboBox scaleComboBox = new CustomComboBox("Estimation Scale:", true);
         //CustomComboBox productOwnerComboBox = new CustomComboBox("Product Owner", false);
 
         ObservableList<Person> productOwnerOptions = observableArrayList();
@@ -64,9 +65,9 @@ public class CreateBacklogDialog {
         Label poComboLabel = new Label("Product Owner:");
         HBox poComboHBox = new HBox(poComboLabel);
 
-        Label aster = new Label(" * ");
-        aster.setTextFill(Color.web("#ff0000"));
-        poComboHBox.getChildren().add(aster);
+        Label aster1 = new Label(" * ");
+        aster1.setTextFill(Color.web("#ff0000"));
+        poComboHBox.getChildren().add(aster1);
 
         VBox poVBox = new VBox();
         HBox poCombo = new HBox();
@@ -75,6 +76,24 @@ public class CreateBacklogDialog {
         poVBox.getChildren().add(poCombo);
         Label noPoSelectedLabel = new Label("* Please select a product owner");
         noPoSelectedLabel.setTextFill(Color.web("#ff0000"));
+
+        ObservableList<String> scaleOptions = observableArrayList();
+        ComboBox<String> scaleComboBox = new ComboBox<>(scaleOptions);
+        scaleComboBox.setStyle("-fx-pref-width: 135;");
+        Label scaleComboLabel = new Label("Estimation Scale:");
+        HBox scaleComboHBox = new HBox(scaleComboLabel);
+
+        Label aster2 = new Label(" * ");
+        aster2.setTextFill(Color.web("#ff0000"));
+        scaleComboHBox.getChildren().add(aster2);
+
+        VBox scaleVBox = new VBox();
+        HBox scaleCombo = new HBox();
+        scaleCombo.getChildren().addAll(scaleComboHBox, scaleComboBox);
+        HBox.setHgrow(scaleComboHBox, Priority.ALWAYS);
+        scaleVBox.getChildren().add(scaleCombo);
+        Label noScaleSelectedLabel = new Label("* Please select an estimation scale");
+        noScaleSelectedLabel.setTextFill(Color.web("#ff0000"));
 
         if (Global.currentWorkspace.getProjects().size() > 0) {
             String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
@@ -85,6 +104,10 @@ public class CreateBacklogDialog {
             projectComboBox.addToComboBox(project.toString());
         }
 
+        for (String scaleName : Global.currentWorkspace.getEstimationScales().getEstimationScaleDict().keySet()) {
+            scaleOptions.add(scaleName);
+        }
+
         for (Team team : Global.currentWorkspace.getTeams()) {
             if (team.getProductOwner() != null) {
                 productOwnerOptions.add(team.getProductOwner());
@@ -92,7 +115,7 @@ public class CreateBacklogDialog {
         }
 
         grid.getChildren().addAll(shortNameCustomField, longNameCustomField,
-                projectComboBox, poVBox, descriptionTextArea, buttons);
+                projectComboBox, poVBox, scaleVBox, descriptionTextArea, buttons);
 
 
         // Create button event
@@ -100,8 +123,10 @@ public class CreateBacklogDialog {
                 boolean correctShortName = validateShortName(shortNameCustomField, null);
                 boolean correctLongName = validateName(longNameCustomField);
                 boolean correctProductOwnerCombo = true;
+                boolean correctScaleCombo = true;
                 boolean correctProjectCombo = true;
 
+                //Po error message show/hide
                 if (productOwnerComboBox.getSelectionModel().getSelectedItem() == null) {
                     //Show error
                     if (!poVBox.getChildren().contains(noPoSelectedLabel)) {
@@ -113,8 +138,22 @@ public class CreateBacklogDialog {
                         poVBox.getChildren().remove(noPoSelectedLabel);
                     }
                 }
+                //Scale error message show/hide
+                if (scaleComboBox.getSelectionModel().getSelectedItem() == null) {
+                    //Show error
+                    correctScaleCombo = false;
+                    if (!scaleVBox.getChildren().contains(noScaleSelectedLabel)) {
+                        scaleVBox.getChildren().add(noScaleSelectedLabel);
+                    }
+                }
+                else {
+                    correctScaleCombo = true;
+                    if (scaleVBox.getChildren().contains(noScaleSelectedLabel)) {
+                        scaleVBox.getChildren().remove(noScaleSelectedLabel);
+                    }
+                }
 
-                if (correctShortName && correctLongName && correctProductOwnerCombo) {
+                if (correctShortName && correctLongName && correctProductOwnerCombo && correctScaleCombo) {
                     //get user input
                     String shortName = shortNameCustomField.getText();
                     String longName = longNameCustomField.getText();
@@ -132,8 +171,10 @@ public class CreateBacklogDialog {
                         productOwner = productOwnerComboBox.getValue();
                     }
 
+                    String scale = scaleComboBox.getValue();
+
                     Backlog backlog = new Backlog(shortName, longName, description, productOwner,
-                            project);
+                            project, scale);
                     project.add(backlog);
                     MainScene.treeView.selectItem(backlog);
                     dialog.hide();

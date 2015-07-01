@@ -27,6 +27,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
     private transient ObservableList<Story> stories = observableArrayList();
     private List<Story> serializableStories = new ArrayList<>();
     private Project project;
+    private String scale;
 
 
     /**
@@ -38,6 +39,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         this.description = "";
         this.productOwner = null;
         this.project = null;
+        this.scale = null;
 
         setInformationSwitchStrategy(new BacklogInformationSwitchStrategy());
     }
@@ -60,12 +62,13 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
      * @param project      the project the backlog belongs to
      */
     public Backlog(String shortName, String longName, String description,
-                   Person productOwner, Project project) {
+                   Person productOwner, Project project, String scale) {
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
         this.productOwner = productOwner;
         this.project = project;
+        this.scale = scale;
 
         setInformationSwitchStrategy(new BacklogInformationSwitchStrategy());
     }
@@ -153,6 +156,15 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
      */
     public Person getProductOwner() {
         return this.productOwner;
+    }
+
+    /**
+     * Gets the estimation scale used in the Backlog
+     *
+     * @return Estimation scale name
+     */
+    public String getScale() {
+        return this.scale;
     }
 
     //</editor-fold>
@@ -290,6 +302,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
                 .append(description, backlog.description)
                 .append(productOwner, backlog.productOwner)
                 .append(project, backlog.project)
+                .append(scale, backlog.scale)
                 .isEquals();
     }
 
@@ -303,11 +316,12 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
      * @param newDescription  The new description
      * @param newProductOwner The new product owner
      * @param newProject      The new project
+     * @param newScale        The new estimation scale
      */
     public void edit(String newShortName, String newLongName, String newDescription,
-                     Person newProductOwner, Project newProject, Collection<Story> newStories) {
+                     Person newProductOwner, Project newProject, String newScale, Collection<Story> newStories) {
         Command relEdit = new BacklogEditCommand(this, newShortName, newLongName, newDescription,
-                newProductOwner, newProject, newStories);
+                newProductOwner, newProject, newScale, newStories);
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -330,6 +344,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         private String description;
         private Person productOwner;
         private Project project;
+        private String scale;
         private Collection<Story> stories = new HashSet<>();
 
         private String oldShortName;
@@ -337,11 +352,12 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         private String oldDescription;
         private Person oldProductOwner;
         private Project oldProject;
+        private String oldScale;
         private Collection<Story> oldStories = new HashSet<>();
 
         private BacklogEditCommand(Backlog backlog, String newShortName, String newLongName,
                                    String newDescription, Person newProductOwner,
-                                   Project newProject, Collection<Story> newStories) {
+                                   Project newProject, String newScale, Collection<Story> newStories) {
             this.backlog = backlog;
 
             this.shortName = newShortName;
@@ -349,6 +365,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
             this.description = newDescription;
             this.productOwner = newProductOwner;
             this.project = newProject;
+            this.scale = newScale;
             this.stories.addAll(newStories);
 
             this.oldShortName = backlog.shortName;
@@ -356,6 +373,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
             this.oldDescription = backlog.description;
             this.oldProductOwner = backlog.productOwner;
             this.oldProject = backlog.project;
+            this.oldScale = backlog.scale;
             this.oldStories.addAll(backlog.stories);
         }
 
@@ -368,6 +386,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
             backlog.description = description;
             backlog.productOwner = productOwner;
             backlog.project = project;
+            backlog.scale = scale;
 
             backlog.stories.removeAll(oldStories);
             backlog.stories.addAll(stories);
@@ -406,6 +425,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
             backlog.description = oldDescription;
             backlog.productOwner = oldProductOwner;
             backlog.project = oldProject;
+            backlog.scale = oldScale;
 
             backlog.stories.removeAll(stories);
             backlog.stories.addAll(oldStories);
@@ -477,6 +497,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
                     mapped_old_proj = true;
                 }
             }
+
 
             // Story collections
             for (Story story : stories) {

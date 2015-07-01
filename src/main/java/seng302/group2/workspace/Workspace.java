@@ -543,6 +543,15 @@ public class Workspace extends TreeViewItem implements Serializable {
         return this.description;
     }
 
+    /**
+     * Gets the workspaces' estimation scale dictionary.
+     *
+     * @return The dictionary of estimation scales for the workspace.
+     */
+    public EstimationScalesDictionary getEstimationScales() {
+        return this.estimationScales;
+    }
+
     // </editor-fold>
 
 
