@@ -80,6 +80,7 @@ public class CommandManager {
                 }
             }
 
+
             // Normal undo
             Command command = undos.pop();
             //System.out.println("undo: " + command);
@@ -96,6 +97,10 @@ public class CommandManager {
             }
 
             refreshTree();
+
+            if (command.getClass() == ChainCommand.class) {
+                undo();
+            }
         }
     }
 
@@ -155,6 +160,10 @@ public class CommandManager {
             }
 
             refreshTree();
+
+            if (command.getClass() == ChainCommand.class) {
+                redo();
+            }
         }
     }
 
