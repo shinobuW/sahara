@@ -50,22 +50,22 @@ public class BacklogCategoryTab extends Tab {
         categoryPane.getChildren().add(selectionButtons);
 
         btnView.setOnAction((event) -> {
-            if (backlogBox.getSelectionModel().getSelectedItem() != null) {
-                MainScene.treeView.selectItem((TreeViewItem)
-                        backlogBox.getSelectionModel().getSelectedItem());
-            }
-        });
+                if (backlogBox.getSelectionModel().getSelectedItem() != null) {
+                    MainScene.treeView.selectItem((TreeViewItem)
+                            backlogBox.getSelectionModel().getSelectedItem());
+                }
+            });
 
 
         btnDelete.setOnAction((event) -> {
-            if (backlogBox.getSelectionModel().getSelectedItem() != null) {
-                showDeleteDialog((TreeViewItem) backlogBox.getSelectionModel()
-                        .getSelectedItem());
-            }
-        });
+                if (backlogBox.getSelectionModel().getSelectedItem() != null) {
+                    showDeleteDialog((TreeViewItem) backlogBox.getSelectionModel()
+                            .getSelectedItem());
+                }
+            });
 
         btnCreate.setOnAction((event) -> {
-            CreateBacklogDialog.show();
-        });
+                CreateBacklogDialog.show();
+            });
     }
 }
