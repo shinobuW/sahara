@@ -97,10 +97,6 @@ public class CommandManager {
             }
 
             refreshTree();
-
-            if (command.getClass() == ChainCommand.class) {
-                undo();
-            }
         }
     }
 
@@ -160,10 +156,6 @@ public class CommandManager {
             }
 
             refreshTree();
-
-            if (command.getClass() == ChainCommand.class) {
-                redo();
-            }
         }
     }
 
