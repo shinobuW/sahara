@@ -176,7 +176,6 @@ public class BacklogEditScene extends ScrollPane {
         btnSave.setOnAction((event) -> {
                 if (isValidState()) { // validation
                     // Edit Command.
-
                     baseBacklog.edit(shortNameField.getText(),
                             longNameField.getText(),
                             descriptionField.getText(),
