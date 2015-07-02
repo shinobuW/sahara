@@ -301,6 +301,15 @@ public class Story extends TreeViewItem implements Serializable {
 
 
     /**
+     * Deletes the given acceptance criteria from the story
+     * @param ac The acceptance criteria to delete
+     */
+    public void delete(AcceptanceCriteria ac) {
+        ac.delete();
+    }
+
+
+    /**
      * Creates a Story edit command and executes it with the Global Command Manager, updating
      * the story with the new parameter values.
      *

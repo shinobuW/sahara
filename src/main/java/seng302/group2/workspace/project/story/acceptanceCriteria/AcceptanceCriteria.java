@@ -91,7 +91,7 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
      * Delete the acceptance maintenance and removes it from story
      */
     public void delete() {
-        Command deleteAc = new DeleteAcCommand(this, this.story);
+        Command deleteAc = new DeleteAcCommand(this);
         Global.commandManager.executeCommand(deleteAc);
     }
 
@@ -147,9 +147,9 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
         private AcceptanceCriteria acceptanceCriteria;
         private Story story;
 
-        DeleteAcCommand(AcceptanceCriteria ac, Story story) {
+        DeleteAcCommand(AcceptanceCriteria ac) {
             this.acceptanceCriteria = ac;
-            this.story = story;
+            this.story = ac.story;
         }
 
         public void execute() {

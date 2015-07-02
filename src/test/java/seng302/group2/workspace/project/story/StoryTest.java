@@ -159,4 +159,26 @@ public class StoryTest {
         Global.commandManager.redo();
         Assert.assertTrue(story.getAcceptanceCriteria().contains(ac));
     }
+
+
+    /**
+     * Test AC interaction
+     */
+    @Test
+    public void testAcInteraction() {
+        Story story = new Story();
+        Assert.assertTrue(story.getAcceptanceCriteria().size() == 0);
+
+        AcceptanceCriteria ac1 = new AcceptanceCriteria("AC1", story);
+        AcceptanceCriteria ac2 = new AcceptanceCriteria("AC2", story);
+
+        story.add(ac1);
+        story.add(ac2);
+        Assert.assertTrue(story.getAcceptanceCriteria().size() == 2);
+        Assert.assertTrue(story.getAcceptanceCriteria().contains(ac1) && story.getAcceptanceCriteria().contains(ac2));
+
+        story.delete(ac2);
+        Assert.assertTrue(story.getAcceptanceCriteria().size() == 1);
+        Assert.assertTrue(story.getAcceptanceCriteria().contains(ac1) && !story.getAcceptanceCriteria().contains(ac2));
+    }
 }
