@@ -27,7 +27,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
     private transient ObservableList<Story> stories = observableArrayList();
     private List<Story> serializableStories = new ArrayList<>();
     private Project project;
-    private String scale;
+    private String scale = "Fibonacci";
 
 
     /**
@@ -39,7 +39,6 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         this.description = "";
         this.productOwner = null;
         this.project = null;
-        this.scale = null;
 
         setInformationSwitchStrategy(new BacklogInformationSwitchStrategy());
     }

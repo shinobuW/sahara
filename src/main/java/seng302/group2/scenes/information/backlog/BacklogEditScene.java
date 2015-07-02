@@ -5,12 +5,16 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
+import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
@@ -28,6 +32,7 @@ public class BacklogEditScene extends ScrollPane {
     private RequiredField shortNameField;
     private CustomTextField longNameField;
     private CustomTextArea descriptionField;
+    private CustomComboBox scaleComboBox;
 
     public BacklogEditScene(Backlog baseBacklog) {
         // Init
@@ -50,6 +55,17 @@ public class BacklogEditScene extends ScrollPane {
         descriptionField.setMaxWidth(275);
         Label errorField = new Label("");
 
+        scaleComboBox = new CustomComboBox("Estimation Scale:", true);
+
+        for (String scaleName : Global.currentWorkspace.getEstimationScales().getEstimationScaleDict().keySet()) {
+            scaleComboBox.addToComboBox(scaleName);
+        }
+
+        scaleComboBox.setValue(baseBacklog.getScale());
+
+        HBox scaleHBox = new HBox();
+        HBox.setHgrow(scaleHBox, Priority.ALWAYS);
+        scaleHBox.getChildren().add(scaleComboBox);
 
         // Story assignment buttons
         Button btnAssign = new Button("<");
@@ -107,6 +123,7 @@ public class BacklogEditScene extends ScrollPane {
                 shortNameField,
                 longNameField,
                 descriptionField,
+                scaleHBox,
                 storyListViews,
                 errorField,
                 sceneButtons
@@ -165,7 +182,7 @@ public class BacklogEditScene extends ScrollPane {
                             descriptionField.getText(),
                             baseBacklog.getProductOwner(),
                             baseBacklog.getProject(),
-                            baseBacklog.getScale(),
+                            scaleComboBox.getValue(),
                             backlogStoryList
                     );
 
@@ -190,6 +207,16 @@ public class BacklogEditScene extends ScrollPane {
      * @return If the changes in the scene are valid
      */
     private boolean isValidState() {
+
+        ButtonType confirm;
+        if (!scaleComboBox.getValue().equals(baseBacklog.getScale())) {
+            confirm = CustomDialog.showConfirmation("Estimation Scale", "All existing estimations "
+            + "will be lost if the scale is changed. Continue?");
+            if (confirm == ButtonType.CANCEL) {
+                return false;
+            }
+
+        }
         return (shortNameField.getText().equals(baseBacklog.getShortName())  // Is the same,
                 || ShortNameValidator.validateShortName(shortNameField, null)); // new name validate
     }

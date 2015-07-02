@@ -51,7 +51,7 @@ public class CustomComboBox extends VBox {
         }
 
         HBox entry = new HBox();
-        entry.setPrefWidth(175);
+        entry.setPrefWidth(275);
         entry.getChildren().addAll(labelBox, this.comboBox);
         HBox.setHgrow(labelBox, Priority.ALWAYS);
 
@@ -119,6 +119,10 @@ public class CustomComboBox extends VBox {
     public void setValue(String value) {
         this.comboBox.setValue(value);
     }
+
+    /**
+     * Sets the width of the label within
+     */
 
 
     /**

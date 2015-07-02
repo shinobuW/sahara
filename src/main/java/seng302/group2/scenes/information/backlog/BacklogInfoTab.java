@@ -76,6 +76,9 @@ public class BacklogInfoTab extends Tab {
                     + currentBacklog.getProductOwner()));
         }
 
+        basicInfoPane.getChildren().add(new Label("Estimation Scale: "
+                + currentBacklog.getScale()));
+
         basicInfoPane.getChildren().add(new Separator());
         basicInfoPane.getChildren().add(new Label("Stories: "));
         basicInfoPane.getChildren().add(storyTable);
