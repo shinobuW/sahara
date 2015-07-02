@@ -72,7 +72,7 @@ public class Workspace extends TreeViewItem implements Serializable {
         this.shortName = "Untitled Workspace";
         this.longName = "Untitled Workspace";
         this.description = "A blank workspace.";
-        this.estimationScales = EstimationScalesDictionary.addScales();
+        this.estimationScales = EstimationScalesDictionary.getEstimationScale();
 
 
         this.createDefaultElements();
@@ -97,7 +97,7 @@ public class Workspace extends TreeViewItem implements Serializable {
         this.shortName = shortName;
         this.longName = fullName;
         this.description = description;
-        this.estimationScales = EstimationScalesDictionary.addScales();
+        this.estimationScales = EstimationScalesDictionary.getEstimationScale();
 
         this.createDefaultElements();
 
