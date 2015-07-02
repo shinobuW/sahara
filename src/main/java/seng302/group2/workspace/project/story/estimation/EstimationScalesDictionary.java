@@ -55,6 +55,7 @@ public class EstimationScalesDictionary {
         scaleValues.add(0, "0");
         scaleValues.add("inf");
         scaleValues.add("?");
+        scaleValues.add("-");
 
         //System.out.println(scaleValues);
         estimationScaleDict.put(scaleName, scaleValues);

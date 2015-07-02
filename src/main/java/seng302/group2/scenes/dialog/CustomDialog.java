@@ -32,9 +32,9 @@ public class CustomDialog {
      */
     public static ButtonType showConfirmation(String title, String question) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText("Look, a Confirmation Dialog");
-        alert.setContentText("Are you ok with this?");
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(question);
 
         return alert.showAndWait().get();
     }

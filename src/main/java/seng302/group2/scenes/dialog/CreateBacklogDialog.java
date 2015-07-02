@@ -129,11 +129,13 @@ public class CreateBacklogDialog {
                 //Po error message show/hide
                 if (productOwnerComboBox.getSelectionModel().getSelectedItem() == null) {
                     //Show error
+                    correctProductOwnerCombo = false;
                     if (!poVBox.getChildren().contains(noPoSelectedLabel)) {
                         poVBox.getChildren().add(noPoSelectedLabel);
                     }
                 }
                 else {
+                    correctProductOwnerCombo = true;
                     if (poVBox.getChildren().contains(noPoSelectedLabel)) {
                         poVBox.getChildren().remove(noPoSelectedLabel);
                     }
