@@ -19,8 +19,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.reporting.ReportGenerator;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -64,9 +67,10 @@ public class GenerateReportDialog {
 
 
         btnGenerate.setOnAction((event) -> {
-                Set<TreeViewItem> checkedItems = getCheckedItems(root);
+                List<TreeViewItem> checkedItems = getCheckedItems(root);
                 // TODO: Plug in custom generation method
                 logger.info(checkedItems.toString());
+                ReportGenerator.generateReport();
             });
 
 
@@ -95,11 +99,11 @@ public class GenerateReportDialog {
     }
 
 
-    protected static Set<TreeViewItem> getCheckedItems(TreeItem<TreeViewItem> root) {
+    protected static List<TreeViewItem> getCheckedItems(TreeItem<TreeViewItem> root) {
 
-        Set<TreeViewItem> checkedItems = new HashSet<>();
+        List<TreeViewItem> checkedItems = new ArrayList<>();
 
-        if (((CheckBoxTreeItem)root).isSelected()) {
+        if (((CheckBoxTreeItem)root).isSelected() || ((CheckBoxTreeItem)root).isIndeterminate() ) {
             checkedItems.add(root.getValue());
         }
 

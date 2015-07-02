@@ -101,7 +101,17 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
      * @param desc the description to be set to
      */
     public void edit(String desc) {
-        Command editAc = new EditAcCommand(this, this.description, desc);
+        Command editAc = new EditAcCommand(this, desc);
+        Global.commandManager.executeCommand(editAc);
+    }
+
+    /**
+     * Edits the state to the one given
+     *
+     * @param state the state to be set to
+     */
+    public void edit(AcState state) {
+        Command editAc = new EditAcStateCommand(this, state);
         Global.commandManager.executeCommand(editAc);
     }
 
@@ -178,15 +188,69 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
     /**
      * A command class that allows the executing and undoing of story edits
      */
+    private class EditAcStateCommand implements Command {
+        private AcceptanceCriteria ac;
+
+        private AcState newAcState;
+        private AcState oldAcState;
+
+        private EditAcStateCommand(AcceptanceCriteria ac, AcState newState) {
+            this.ac = ac;
+
+            this.oldAcState = ac.state;
+            this.newAcState = newState;
+        }
+
+        /**
+         * Executes/Redoes the changes of the story edit
+         */
+        public void execute() {
+            ac.state = newAcState;
+        }
+
+        /**
+         * Undoes the changes of the story edit
+         */
+        public void undo() {
+            ac.state = oldAcState;
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         *
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<TreeViewItem> stateObjects) {
+            boolean mapped = false;
+            for (TreeViewItem item : stateObjects) {
+                if (item.equivalentTo(ac)) {
+                    this.ac = (AcceptanceCriteria) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
+    }
+
+
+
+
+    /**
+     * A command class that allows the executing and undoing of story edits
+     */
     private class EditAcCommand implements Command {
         private AcceptanceCriteria ac;
+
         private String newDescription;
         private String oldDescription;
 
-        private EditAcCommand(AcceptanceCriteria ac, String old, String newD) {
+        private EditAcCommand(AcceptanceCriteria ac, String newDesc) {
             this.ac = ac;
-            this.oldDescription = old;
-            this.newDescription = newD;
+
+            this.oldDescription = ac.description;
+            this.newDescription = newDesc;
         }
 
         /**
