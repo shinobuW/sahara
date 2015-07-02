@@ -20,6 +20,8 @@ import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcEnumStringConverter;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 
+import java.awt.print.Book;
+
 
 //* Created by Shinobu on 30/05/2015.
 
@@ -71,13 +73,23 @@ public class StoryAcTab extends Tab {
         }
 
 
+        AcEnumStringConverter converter = new AcEnumStringConverter();
         TableColumn stateCol = new TableColumn("State");
+        stateCol.setCellValueFactory(new PropertyValueFactory<AcceptanceCriteria, AcceptanceCriteria.AcState>("state"));
         stateCol.setCellFactory(ComboBoxTableCell.forTableColumn(
-                new AcEnumStringConverter(),
+                converter,
                 acStates
             ));
-        stateCol.setCellValueFactory(new PropertyValueFactory<AcceptanceCriteria, AcceptanceCriteria.AcState>("state"));
-
+        stateCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<AcceptanceCriteria, AcceptanceCriteria.AcState>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<AcceptanceCriteria, AcceptanceCriteria.AcState> event) {
+                        (event.getTableView().getItems().get(
+                                event.getTablePosition().getRow())
+                        ).edit(event.getNewValue());
+                    }
+                }
+        );
 
         acTable.setItems(data);
         TableColumn[] columns = {descriptionCol, stateCol};
