@@ -52,8 +52,8 @@ public class EstimationScalesDictionary {
      * @param scaleValues An arraylist of strings representing the values to be used in the new scale.
      */
     public void createScales(String scaleName, ArrayList<String> scaleValues) {
-        scaleValues.add("-");
-        scaleValues.add(0, "0");
+        scaleValues.add(0, "-");
+        scaleValues.add(1, "0");
         scaleValues.add("inf");
         scaleValues.add("?");
 
