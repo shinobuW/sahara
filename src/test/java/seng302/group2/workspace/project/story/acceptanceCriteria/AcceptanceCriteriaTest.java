@@ -39,16 +39,32 @@ public class AcceptanceCriteriaTest {
     }
 
     /**
-     * Tests the undo/rdo for editing acceptance criteria
+     * Tests the undo/redo for editing acceptance criteria
      */
     @Test
-    public void testEdit() {
+    public void testEditUndoRedo() {
         ac.edit("Testing edit");
         Assert.assertEquals("Testing edit", ac.getDescription());
         Global.commandManager.undo();
         Assert.assertEquals("This is a Demo Text", ac.getDescription());
         Global.commandManager.redo();
         Assert.assertEquals("Testing edit", ac.getDescription());
+    }
+
+
+    /**
+     * Tests edits of the acceptance criteria's state
+     */
+    @Test
+    public void testStateEdit() {
+        AcceptanceCriteria ac = new AcceptanceCriteria("", null);
+        Assert.assertEquals(AcceptanceCriteria.AcState.UNACCEPTED, ac.getState());
+        ac.edit(AcceptanceCriteria.AcState.ACCEPTED);
+        Assert.assertEquals(AcceptanceCriteria.AcState.ACCEPTED, ac.getState());
+        Global.commandManager.undo();
+        Assert.assertEquals(AcceptanceCriteria.AcState.UNACCEPTED, ac.getState());
+        Global.commandManager.redo();
+        Assert.assertEquals(AcceptanceCriteria.AcState.ACCEPTED, ac.getState());
     }
 
 }

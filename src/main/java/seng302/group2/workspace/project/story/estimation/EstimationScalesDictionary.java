@@ -35,13 +35,17 @@ public class EstimationScalesDictionary {
      * The publicly accessible method for addition of the estimation scale dictionary to a workspace.
      * @return The single instance of the estimationScalesDictionary.
      */
-    public static EstimationScalesDictionary addScales() {
+    public static EstimationScalesDictionary getEstimationScale() {
         if (scales == null) {
             scales = new EstimationScalesDictionary();
         }
         return scales;
     }
 
+    /**
+     * Returns a type of Map<String></String>, ArrayList<String> which contains all the various estimation scales.
+     * @return estimation scale dictionary.
+     */
     public Map<String, ArrayList<String>> getEstimationScaleDict() {
         return this.estimationScaleDict;
     }
@@ -52,12 +56,12 @@ public class EstimationScalesDictionary {
      * @param scaleValues An arraylist of strings representing the values to be used in the new scale.
      */
     public void createScales(String scaleName, ArrayList<String> scaleValues) {
-        scaleValues.add(0, "0");
+        scaleValues.add(0, "-");
+        scaleValues.add(1, "0");
         scaleValues.add("inf");
         scaleValues.add("?");
-        scaleValues.add("-");
 
-        //System.out.println(scaleValues);
+
         estimationScaleDict.put(scaleName, scaleValues);
     }
 
