@@ -83,7 +83,8 @@ public class StoryAcTab extends Tab {
         stateCol.setOnEditCommit(
                 new EventHandler<TableColumn.CellEditEvent<AcceptanceCriteria, AcceptanceCriteria.AcState>>() {
                     @Override
-                    public void handle(TableColumn.CellEditEvent<AcceptanceCriteria, AcceptanceCriteria.AcState> event) {
+                    public void handle(TableColumn.CellEditEvent<AcceptanceCriteria,
+                            AcceptanceCriteria.AcState> event) {
                         (event.getTableView().getItems().get(
                                 event.getTablePosition().getRow())
                         ).edit(event.getNewValue());
