@@ -18,8 +18,7 @@ public class BacklogCategorySwitchStrategy implements SubCategorySwitchStrategy 
     @Override
     public void switchScene(Category backlogCategory) {
         if (backlogCategory instanceof BacklogCategory) {
-            MainScene.contentPane.setContent(BacklogCategoryScene.getBacklogCategoryScene(
-                    (BacklogCategory) backlogCategory));
+            MainScene.contentPane.setContent(new BacklogCategoryScene((BacklogCategory) backlogCategory));
         }
         else {
             logger.warn("Tried changing to backlog cat scene with a non-backlog cat instance");
