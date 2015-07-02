@@ -50,7 +50,6 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
     private ObjectProperty<ObservableList<? extends T>> items =
             new SimpleObjectProperty<ObservableList<? extends T>>(this, "items");
 
-
     /**
      * Creates the tree view.
      */

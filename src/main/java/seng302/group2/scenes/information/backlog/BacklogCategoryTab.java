@@ -12,7 +12,6 @@ import seng302.group2.scenes.dialog.CreateBacklogDialog;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.categories.subCategory.project.BacklogCategory;
 
-import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
