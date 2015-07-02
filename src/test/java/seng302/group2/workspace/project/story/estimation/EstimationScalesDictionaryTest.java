@@ -14,12 +14,18 @@ public class EstimationScalesDictionaryTest {
     Map<String, ArrayList<String>> estimationScaleDict = testDict.getEstimationScaleDict();
 
     @Test
-    public void testGetEstimationScale() throws Exception {
+    /**
+     * Tests the construction (uses singleton pattern) of the estimation scale class.
+     */
+    public void testGetEstimationScale(){
         Assert.assertEquals(testDict, testDict2);
     }
 
+    /**
+     * Tests that the estimtaion scale dictionary is correctly returned.
+     */
     @Test
-    public void testGetEstimationScaleDict() throws Exception {
+    public void testGetEstimationScaleDict() {
         Map<String, ArrayList<String>> testEstimationScaleDict = testDict2.getEstimationScaleDict();
 
         Map<String, ArrayList<String>> compareEstimationScaleDict = new HashMap<>();
@@ -43,8 +49,11 @@ public class EstimationScalesDictionaryTest {
 
     }
 
+    /**
+     * Tests the addition of new scales to the scale dictionary.
+     */
     @Test
-    public void testCreateScales() throws Exception {
+    public void testCreateScales() {
         ArrayList<String> AlphabetList = new ArrayList<>(Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H"));
         testDict.createScales("Alphabet", AlphabetList);
 

@@ -42,6 +42,10 @@ public class EstimationScalesDictionary {
         return scales;
     }
 
+    /**
+     * Returns a type of Map<String></String>, ArrayList<String> which contains all the various estimation scales.
+     * @return estimation scale dictionary.
+     */
     public Map<String, ArrayList<String>> getEstimationScaleDict() {
         return this.estimationScaleDict;
     }
