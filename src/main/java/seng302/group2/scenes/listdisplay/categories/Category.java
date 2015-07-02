@@ -1,7 +1,6 @@
 package seng302.group2.scenes.listdisplay.categories;
 
 import javafx.collections.ObservableList;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 /**

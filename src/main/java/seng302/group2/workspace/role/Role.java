@@ -7,12 +7,10 @@ package seng302.group2.workspace.role;
 
 import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.RoleInformationSwitchStrategy;
 import seng302.group2.workspace.skills.Skill;
-import sun.reflect.generics.tree.Tree;
 
 import java.io.Serializable;
 import java.util.ArrayList;

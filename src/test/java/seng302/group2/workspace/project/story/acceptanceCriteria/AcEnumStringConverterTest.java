@@ -2,8 +2,6 @@ package seng302.group2.workspace.project.story.acceptanceCriteria;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class AcEnumStringConverterTest {
 
     AcEnumStringConverter converter = new AcEnumStringConverter();

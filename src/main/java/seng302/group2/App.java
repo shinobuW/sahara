@@ -31,6 +31,9 @@ public class App extends Application {
      * Refreshes the main scene GUI.
      */
     public static void refreshMainScene() {
+        if (App.mainStage == null) {
+            return;  // App is not running (Tests)
+        }
         App.content = new SplitPane();
         content.setDividerPositions(0.2);
         App.mainScene = MainScene.getMainScene();
@@ -44,7 +47,7 @@ public class App extends Application {
      */
     public static void refreshWindowTitle() {
         if (App.mainStage == null) {
-            return;
+            return;  // App is not running (Tests)
         }
         if (Global.currentWorkspace == null) {
             App.mainStage.titleProperty().set("Sahara");

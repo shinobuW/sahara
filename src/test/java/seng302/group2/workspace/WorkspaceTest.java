@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.revert.RevertManager;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
@@ -44,6 +45,7 @@ public class WorkspaceTest {
         Assert.assertEquals("aDescription", work2.getDescription());
         Assert.assertEquals("aShortName", work2.toString());
     }
+
 
     /**
      * Tests Projects' setter methods.

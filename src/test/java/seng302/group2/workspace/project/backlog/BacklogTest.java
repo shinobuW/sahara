@@ -38,12 +38,13 @@ public class BacklogTest {
         Assert.assertEquals(null, backlog.getProject());
 
         Backlog testBacklog = new Backlog("Test Story", "A long name",
-                "Test description", codie, project);
+                "Test description", codie, project, "ScaleName");
         Assert.assertEquals("Test Story", testBacklog.getShortName());
         Assert.assertEquals("A long name", testBacklog.getLongName());
         Assert.assertEquals("Test description", testBacklog.getDescription());
         Assert.assertEquals(codie, testBacklog.getProductOwner());
         Assert.assertEquals(project, testBacklog.getProject());
+        Assert.assertEquals("ScaleName", testBacklog.getScale());
     }
 
     /**
@@ -95,7 +96,7 @@ public class BacklogTest {
     @Test
     public void testToString() {
         Backlog backlogDefault = new Backlog();
-        Backlog backlog = new Backlog("short", "long", "desc", null, null);
+        Backlog backlog = new Backlog("short", "long", "desc", null, null, "scale");
         Assert.assertEquals("Untitled Backlog", backlogDefault.toString());
         Assert.assertEquals("short", backlog.toString());
     }
@@ -104,7 +105,7 @@ public class BacklogTest {
     @Test
     public void testCompareTo() {
         Backlog backlogDefault = new Backlog();
-        Backlog backlog = new Backlog("short", "long", "desc", null, null);
+        Backlog backlog = new Backlog("short", "long", "desc", null, null, "scale");
         Assert.assertTrue(0 < backlog.compareTo(backlogDefault));
         Assert.assertEquals(30, backlog.compareTo(backlogDefault));
     }
@@ -123,13 +124,14 @@ public class BacklogTest {
         Story story = new Story();
         stories.add(story);
 
-        backlog.edit("short", "long", "desc", po, proj, stories);
+        backlog.edit("short", "long", "desc", po, proj, "scale", stories);
 
         Assert.assertEquals("short", backlog.getShortName());
         Assert.assertEquals("long", backlog.getLongName());
         Assert.assertEquals("desc", backlog.getDescription());
         Assert.assertEquals(po, backlog.getProductOwner());
         Assert.assertEquals(proj, backlog.getProject());
+        Assert.assertEquals("scale", backlog.getScale());
         Assert.assertEquals(stories, backlog.getStories());
         Assert.assertTrue(story.getBacklog() == backlog);
         Assert.assertFalse(oldStory.getBacklog() == backlog);
@@ -141,6 +143,7 @@ public class BacklogTest {
         Assert.assertEquals("", backlog.getDescription());
         Assert.assertEquals(null, backlog.getProductOwner());
         Assert.assertEquals(null, backlog.getProject());
+        Assert.assertEquals(null, backlog.getScale());
         Assert.assertTrue(backlog.getStories().contains(oldStory));
 
         System.out.println(backlog.getStories());
@@ -155,6 +158,7 @@ public class BacklogTest {
         Assert.assertEquals("desc", backlog.getDescription());
         Assert.assertEquals(po, backlog.getProductOwner());
         Assert.assertEquals(proj, backlog.getProject());
+        Assert.assertEquals("scale", backlog.getScale());
         Assert.assertEquals(stories, backlog.getStories());
         Assert.assertTrue(story.getBacklog() == backlog);
         Assert.assertFalse(oldStory.getBacklog() == backlog);

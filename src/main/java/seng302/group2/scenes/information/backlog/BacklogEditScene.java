@@ -165,6 +165,7 @@ public class BacklogEditScene extends ScrollPane {
                             descriptionField.getText(),
                             baseBacklog.getProductOwner(),
                             baseBacklog.getProject(),
+                            baseBacklog.getScale(),
                             backlogStoryList
                     );
 

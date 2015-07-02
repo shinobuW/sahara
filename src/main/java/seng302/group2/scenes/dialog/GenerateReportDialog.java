@@ -5,7 +5,6 @@
  */
 package seng302.group2.scenes.dialog;
 
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -19,20 +18,10 @@ import org.controlsfx.dialog.Dialog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.control.CustomTextArea;
-import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.TreeViewWithItems;
-import seng302.group2.workspace.skills.Skill;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
-
-import static javafx.collections.FXCollections.observableArrayList;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * Class to create a pop up dialog for creating a skill.

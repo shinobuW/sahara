@@ -1,12 +1,10 @@
 package seng302.group2.workspace.allocation;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;

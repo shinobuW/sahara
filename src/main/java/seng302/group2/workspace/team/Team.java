@@ -5,7 +5,6 @@ package seng302.group2.workspace.team;
 
 import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.TeamInformationSwitchStrategy;
@@ -14,7 +13,6 @@ import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.skills.Skill;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -57,9 +55,11 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
     @Override
     public Set<TreeViewItem> getItemsSet() {
         Set<TreeViewItem> items = new HashSet<>();
+
         items.addAll(people);
         items.addAll(devs);
         items.addAll(projectAllocations);
+
         return items;
     }
 

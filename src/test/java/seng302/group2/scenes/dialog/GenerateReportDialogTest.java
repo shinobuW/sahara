@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.categories.Category;
 import seng302.group2.workspace.Workspace;
 
 import java.util.Set;

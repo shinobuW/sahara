@@ -42,6 +42,10 @@ public class EstimationScalesDictionary {
         return scales;
     }
 
+    public Map<String, ArrayList<String>> getEstimationScaleDict() {
+        return this.estimationScaleDict;
+    }
+
     /**
      * A method for the creation of new estimation scales, and their addition to the dictionary.
      * @param scaleName The name of the new scale.

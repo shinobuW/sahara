@@ -7,13 +7,11 @@ package seng302.group2.workspace.project.release;
 
 import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.ReleaseInformationSwitchStrategy;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 
 import java.time.LocalDate;
 import java.util.Collections;
