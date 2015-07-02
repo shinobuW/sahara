@@ -136,6 +136,15 @@ public class CustomTextArea extends VBox {
 
 
     /**
+     * Returns the inner text area
+     * @return The inner text area
+     */
+    public TextArea getTextArea() {
+        return this.inputText;
+    }
+
+
+    /**
      * Hides the error field.
      */
     public void hideErrorField() {

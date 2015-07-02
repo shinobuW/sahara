@@ -8,7 +8,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomComboBox;

@@ -10,7 +10,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.util.revert.RevertManager;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;

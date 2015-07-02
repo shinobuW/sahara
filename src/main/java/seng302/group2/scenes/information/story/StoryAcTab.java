@@ -20,11 +20,11 @@ import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcEnumStringConverter;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 
-import java.awt.print.Book;
 
-
-//* Created by Shinobu on 30/05/2015.
-
+/**
+ * A tab to show detail of a story's acceptance criteria, that allows the addition, change, and removal of acceptance
+ * criteria from a story
+ */
 public class StoryAcTab extends Tab {
     public StoryAcTab(Story story) {
         this.setText("Acceptance Criteria");
@@ -96,10 +96,35 @@ public class StoryAcTab extends Tab {
         TableColumn[] columns = {descriptionCol, stateCol};
         acTable.getColumns().setAll(columns);
 
-        CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
 
+        deleteButton.setDisable(true);
+        acTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                if (newSelection != null) {
+                    deleteButton.setDisable(false);
+                }
+                else {
+                    deleteButton.setDisable(true);
+                }
+            });
+
+
+
+        CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
+        descriptionTextArea.getTextArea().textProperty().addListener((observable, oldValue, newValue) -> {
+                if (descriptionTextArea.getText().isEmpty()) {
+                    addButton.setDisable(true);
+                }
+                else {
+                    addButton.setDisable(false);
+                }
+            });
+
+
+
+
+        addButton.setDisable(true);
         addButton.setOnAction((event) -> {
-                if (descriptionTextArea.getText() != null) {
+                if (!descriptionTextArea.getText().isEmpty()) {
                     String description = descriptionTextArea.getText();
                     AcceptanceCriteria newAc = new AcceptanceCriteria(description, story);
                     story.add(newAc);

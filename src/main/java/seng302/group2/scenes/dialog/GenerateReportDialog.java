@@ -22,9 +22,7 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.reporting.ReportGenerator;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Class to create a pop up dialog for creating a skill.
