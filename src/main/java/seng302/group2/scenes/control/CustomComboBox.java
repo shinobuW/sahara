@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -66,6 +67,35 @@ public class CustomComboBox extends VBox {
         comboBox.setStyle("-fx-border-color: red;");
         this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
         this.getChildren().add(errorMessageText);
+    }
+
+    /**
+     * Disables the combobox.
+     */
+    public void disable() {
+        this.comboBox.setDisable(true);
+    }
+
+    /**
+     * Enables the combobox.
+     */
+    public void enable() {
+        this.comboBox.setDisable(false);
+    }
+
+    /**
+     * Sets the tooltip of the combobox.
+     * @param tool The tooltip
+     */
+    public void setTooltip(Tooltip tool) {
+        this.comboBox.setTooltip(tool);
+    }
+
+    /**
+     * Removes the tooltip of the combobox.
+     */
+    public void removeTooltip() {
+        this.comboBox.setTooltip(null);
     }
 
     /**

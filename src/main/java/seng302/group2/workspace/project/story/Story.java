@@ -40,6 +40,7 @@ public class Story extends TreeViewItem implements Serializable {
     private Project project;
     private Integer priority;
     private Backlog backlog;
+    private String estimate;
     private transient ObservableList<AcceptanceCriteria> acceptanceCriteria = observableArrayList();
     private List<AcceptanceCriteria> serializableAcceptanceCriteria = new ArrayList<>();
 
@@ -53,6 +54,7 @@ public class Story extends TreeViewItem implements Serializable {
         this.creator = null;
         this.project = null;
         this.priority = 0;
+        this.estimate = "-";
 
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }
@@ -82,6 +84,7 @@ public class Story extends TreeViewItem implements Serializable {
         this.creator = creator;
         this.project = project;
         this.priority = priority;
+        this.estimate = "-";
 
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }
@@ -213,6 +216,22 @@ public class Story extends TreeViewItem implements Serializable {
     }
 
     /**
+     * Gets the estimate value of this story
+     */
+    public String getEstimate() {
+        return this.estimate;
+    }
+
+    /**
+     * Sets the estimate value of this story
+     *
+     * @param estimate The new estimate value
+     */
+    public void setEstimate(String estimate) {
+        this.estimate = estimate;
+    }
+
+    /**
      * Gets the acceptance criteria of this story
      */
     public ObservableList<AcceptanceCriteria> getAcceptanceCriteria() {
@@ -295,6 +314,7 @@ public class Story extends TreeViewItem implements Serializable {
                 .append(project, story.project)
                 .append(priority, story.priority)
                 .append(backlog, story.backlog)
+                .append(estimate, story.estimate)
                 .append(creator, story.creator)
                 .isEquals();
     }
@@ -310,9 +330,9 @@ public class Story extends TreeViewItem implements Serializable {
      * @param newPriority    The new priority
      */
     public void edit(String newShortName, String newLongName, String newDescription,
-                     Project newProject, Integer newPriority, Backlog newBacklog) {
+                     Project newProject, Integer newPriority, Backlog newBacklog, String newEstimate) {
         Command relEdit = new StoryEditCommand(this, newShortName, newLongName,
-                newDescription, newProject, newPriority, newBacklog);
+                newDescription, newProject, newPriority, newBacklog, newEstimate);
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -337,6 +357,7 @@ public class Story extends TreeViewItem implements Serializable {
         private Project project;
         private Integer priority;
         private Backlog backlog;
+        private String estimate;
 
         private String oldShortName;
         private String oldLongName;
@@ -344,9 +365,11 @@ public class Story extends TreeViewItem implements Serializable {
         private Project oldProject;
         private Integer oldPriority;
         private Backlog oldBacklog;
+        private String oldEstimate;
 
         private StoryEditCommand(Story story, String newShortName, String newLongName,
-                                 String newDescription, Project newProject, Integer newPriority, Backlog newBacklog) {
+                                 String newDescription, Project newProject, Integer newPriority,
+                                 Backlog newBacklog, String newEstimate) {
             this.story = story;
 
             this.shortName = newShortName;
@@ -355,6 +378,7 @@ public class Story extends TreeViewItem implements Serializable {
             this.project = newProject;
             this.priority = newPriority;
             this.backlog = newBacklog;
+            this.estimate = newEstimate;
 
             this.oldShortName = story.shortName;
             this.oldLongName = story.longName;
@@ -362,6 +386,7 @@ public class Story extends TreeViewItem implements Serializable {
             this.oldProject = story.project;
             this.oldPriority = story.priority;
             this.oldBacklog = story.backlog;
+            this.oldEstimate = story.estimate;
         }
 
         /**
@@ -374,6 +399,7 @@ public class Story extends TreeViewItem implements Serializable {
             story.project = project;
             story.priority = priority;
             story.backlog = backlog;
+            story.estimate = estimate;
             Collections.sort(project.getUnallocatedStories(), Story.StoryNameComparator);
             if (backlog != null) {
                 Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
@@ -396,6 +422,7 @@ public class Story extends TreeViewItem implements Serializable {
             story.project = oldProject;
             story.priority = oldPriority;
             story.backlog = oldBacklog;
+            story.estimate = oldEstimate;
             Collections.sort(project.getUnallocatedStories(), Story.StoryNameComparator);
             Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
 

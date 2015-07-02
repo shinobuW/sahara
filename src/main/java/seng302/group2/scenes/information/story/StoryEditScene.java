@@ -4,13 +4,20 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
+import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
+import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.project.story.Story;
+
+import java.util.ArrayList;
 
 import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.util.validation.PriorityFieldValidator.validatePriorityField;
@@ -46,6 +53,27 @@ public class StoryEditScene {
         CustomTextField longNameTextField = new CustomTextField("Long Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Story Description:", 300);
         RequiredField priorityNumberField = new RequiredField("Story Priority:");
+        CustomComboBox estimateComboBox = new CustomComboBox("Estimate:", false);
+
+        String key = currentStory.getBacklog().getScale();
+        ArrayList<String> valueList = Global.currentWorkspace.getEstimationScales().getEstimationScaleDict().get(key);
+        for (String value : valueList) {
+            estimateComboBox.addToComboBox(value);
+        }
+
+        estimateComboBox.setValue(currentStory.getEstimate());
+
+        HBox estimateHBox = new HBox();
+        HBox.setHgrow(estimateHBox, Priority.ALWAYS);
+        estimateHBox.getChildren().add(estimateComboBox);
+
+        if (currentStory.getAcceptanceCriteria().isEmpty() || currentStory.getBacklog() == null) {
+            estimateComboBox.disable();
+            Tooltip tool = new Tooltip("A Story must be assigned to a backlog and have at least one Acceptance "
+                    + "criteria before an estimate can be given.");
+            Tooltip.install(estimateHBox, tool);
+            estimateComboBox.setTooltip(tool);
+        }
 
         shortNameCustomField.setMaxWidth(275);
         descriptionTextArea.setMaxWidth(275);
@@ -59,6 +87,7 @@ public class StoryEditScene {
         informationPane.getChildren().add(longNameTextField);
         informationPane.getChildren().add(descriptionTextArea);
         informationPane.getChildren().add(priorityNumberField);
+        informationPane.getChildren().add(estimateHBox);
         informationPane.getChildren().add(buttons);
 
 
@@ -95,7 +124,8 @@ public class StoryEditScene {
                             descriptionTextArea.getText(),
                             currentStory.getProject(),
                             Integer.parseInt(priorityNumberField.getText()),
-                            currentStory.getBacklog()
+                            currentStory.getBacklog(),
+                            estimateComboBox.getValue()
                     );
 
                     currentStory.switchToInfoScene();
