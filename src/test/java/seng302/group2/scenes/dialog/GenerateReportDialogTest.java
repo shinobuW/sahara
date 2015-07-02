@@ -8,7 +8,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
 
-import java.util.Set;
+import java.util.List;
 
 public class GenerateReportDialogTest {
 
@@ -42,16 +42,16 @@ public class GenerateReportDialogTest {
             ((CheckBoxTreeItem)item).setSelected(true);
         }
 
-        Set<TreeViewItem> itemsSet = GenerateReportDialog.getCheckedItems(root);
+        List<TreeViewItem> itemsSet = GenerateReportDialog.getCheckedItems(root);
         recursiveCheckItems(ws, itemsSet);
     }
 
 
-    private void recursiveCheckItems(TreeViewItem root, Set<TreeViewItem> set) {
+    private void recursiveCheckItems(TreeViewItem root, List<TreeViewItem> list) {
         //System.out.println(root + " in " + set);
 
         boolean mapped = false;
-        for (TreeViewItem item : set) {
+        for (TreeViewItem item : list) {
             if (item.equivalentTo(root)) {
                 mapped = true;
                 break;
@@ -61,7 +61,7 @@ public class GenerateReportDialogTest {
 
         if (root.getChildren() != null) {
             for (TreeViewItem child : root.getChildren()) {
-                recursiveCheckItems(child, set);
+                recursiveCheckItems(child, list);
             }
         }
     }
