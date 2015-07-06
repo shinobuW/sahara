@@ -7,6 +7,7 @@ package seng302.group2.workspace.role;
 
 import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.RoleInformationSwitchStrategy;
@@ -259,6 +260,15 @@ public class Role extends TreeViewItem implements Serializable {
     }
 
     /**
+     * Method for creating an XML element for the Role within report generation
+     * @return element for XML generation
+     */
+    @Override
+    public Element generateXML() {
+        return null;
+    }
+
+    /**
      * Gets the children of the TreeViewItem
      *
      * @return The items of the TreeViewItem
@@ -292,6 +302,6 @@ public class Role extends TreeViewItem implements Serializable {
 
 
     public enum RoleType {
-        SCRUM_MASTER, PRODUCT_OWNER, DEVELOPMENT_TEAM_MEMBER, OTHER, NONE
+        SCRUM_MASTER, PRODUCT_OWNER, DEVELOPMENT_TEAM_MEMBER, NONE
     }
 }

@@ -3,6 +3,7 @@ package seng302.group2.workspace.project.backlog;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.BacklogInformationSwitchStrategy;
@@ -248,6 +249,15 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         }
 
         Collections.sort(this.stories, Story.StoryPriorityComparator);
+    }
+
+    /**
+     * Method for creating an XML element for the Backlog within report generation
+     * @return element for XML generation
+     */
+    @Override
+    public Element generateXML() {
+        return null;
     }
 
 

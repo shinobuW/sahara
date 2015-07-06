@@ -2,6 +2,7 @@ package seng302.group2.workspace.skills;
 
 import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.SkillInformationSwitchStrategy;
@@ -164,6 +165,14 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
         Global.commandManager.executeCommand(edit);
     }
 
+    /**
+     * Method for creating an XML element for the Skill within report generation
+     * @return element for XML generation
+     */
+    @Override
+    public Element generateXML() {
+        return null;
+    }
 
     /**
      * An overridden version for the String representation of a Skill

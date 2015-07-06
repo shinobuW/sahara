@@ -1,6 +1,7 @@
 package seng302.group2.workspace.allocation;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
@@ -128,6 +129,15 @@ public class Allocation extends TreeViewItem implements Serializable, Comparable
     public void delete() {
         Command deleteAlloc = new DeleteAllocationCommand(this, this.project, this.team);
         Global.commandManager.executeCommand(deleteAlloc);
+    }
+
+    /**
+     * Method for creating an XML element for the Allocation within report generation
+     * @return element for XML generation
+     */
+    @Override
+    public Element generateXML() {
+        return null;
     }
 
     /**

@@ -5,14 +5,17 @@ package seng302.group2.workspace.team;
 
 import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.TeamInformationSwitchStrategy;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.role.Role;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -355,6 +358,83 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         for (Allocation alloc : serializableProjectAllocations) {
             this.projectAllocations.add(alloc);
         }
+    }
+
+    /**
+     * Method for creating an XML element for the Team within report generation
+     * @return element for XML generation
+     */
+    @Override
+    public Element generateXML() {
+        Element teamElement = ReportGenerator.doc.createElement("team");
+        System.out.println(shortName);
+        //WorkSpace Elements
+        Element teamShortName = ReportGenerator.doc.createElement("identifier");
+        teamShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
+        teamElement.appendChild(teamShortName);
+
+        Element teamDescription = ReportGenerator.doc.createElement("description");
+        teamDescription.appendChild(ReportGenerator.doc.createTextNode(description));
+        teamElement.appendChild(teamDescription);
+
+        if (getCurrentAllocation() != null) {
+            Element projectAllocatedTo = ReportGenerator.doc.createElement("assigned-project");
+            projectAllocatedTo.appendChild(ReportGenerator.doc.createTextNode(getCurrentAllocation()
+                    .getProject().toString()));
+            teamElement.appendChild(projectAllocatedTo);
+
+            Element teamStartDate = ReportGenerator.doc.createElement("allocation-start-date");
+            teamStartDate.appendChild(ReportGenerator.doc.createTextNode(this.getCurrentAllocation()
+                    .getStartDate().format(Global.dateFormatter)));
+            teamElement.appendChild(teamStartDate);
+
+            Element teamEndDate = ReportGenerator.doc.createElement("allocation-end-date");
+            teamEndDate.appendChild(ReportGenerator.doc.createTextNode(this.getCurrentAllocation()
+                    .getEndDate().format(Global.dateFormatter)));
+            teamElement.appendChild(teamEndDate);
+        }
+
+        Element productOwnerElement = ReportGenerator.doc.createElement("product-owner");
+        if (productOwner != null) {
+            Element teamProductOwner = productOwner.generateXML();
+            productOwnerElement.appendChild(teamProductOwner);
+        }
+        teamElement.appendChild(productOwnerElement);
+
+        Element scrumMasterElement = ReportGenerator.doc.createElement("scrum-master");
+        if (scrumMaster != null) {
+            Element teamScrumMaster = scrumMaster.generateXML();
+            scrumMasterElement.appendChild(teamScrumMaster);
+        }
+        teamElement.appendChild(scrumMasterElement);
+
+        Element devElement = ReportGenerator.doc.createElement("devs");
+        for (Person person : people) {
+            if (person.getRole() != null) {
+                if (person.getRole().getType() == Role.RoleType.DEVELOPMENT_TEAM_MEMBER) {
+                    Element personElement = person.generateXML();
+                    devElement.appendChild(personElement);
+                }
+            }
+        }
+        teamElement.appendChild(devElement);
+
+        Element othersElement = ReportGenerator.doc.createElement("others");
+        for (Person person : people) {
+            if (person.getRole() != null) {
+                if (person.getRole().getType() == Role.RoleType.NONE) {
+                    Element personElement = person.generateXML();
+                    othersElement.appendChild(personElement);
+                }
+            }
+            if (person.getRole() == null) {
+                Element personElement = person.generateXML();
+                othersElement.appendChild(personElement);
+            }
+        }
+        teamElement.appendChild(othersElement);
+
+        return teamElement;
     }
 
     /**

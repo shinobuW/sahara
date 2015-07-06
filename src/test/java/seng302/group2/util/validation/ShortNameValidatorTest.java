@@ -54,7 +54,7 @@ public class ShortNameValidatorTest {
         Person apers = new Person();
         apers.setShortName("PERS");
         Skill skill = new Skill("SKILL", "Desc");
-        Role role = new Role("ROLE", Role.RoleType.OTHER);
+        Role role = new Role("ROLE", Role.RoleType.NONE);
 
         proj.addWithoutUndo(rel);
         ws.getProjects().add(proj);

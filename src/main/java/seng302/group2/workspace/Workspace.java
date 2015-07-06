@@ -751,64 +751,81 @@ public class Workspace extends TreeViewItem implements Serializable {
         Element workSpaceDescription = ReportGenerator.doc.createElement("description");
         workSpaceDescription.appendChild(ReportGenerator.doc.createTextNode(this.getDescription()));
         workSpaceElement.appendChild(workSpaceDescription);
+        ReportGenerator.generatedItems.remove(0);
 
-        int i = 0;
-        while (i < ReportGenerator.generatedItems.size()) {
-            TreeViewItem item = ReportGenerator.generatedItems.get(i);
-            Element xmlElement = item.generateXML();
-        }
-
-        Element projectElements = ReportGenerator.doc.createElement("projects");
-        for (Project project : this.getProjects()) {
-            Element projectElement = generateProject(project);
-            projectElements.appendChild(projectElement);
-        }
-        workSpaceElement.appendChild(projectElements);
-
-        Element roleElements = ReportGenerator.doc.createElement("roles");
-        for (Role role : this.getRoles()) {
-            Element roleElement = generateRole(role);
-            roleElements.appendChild(roleElement);
-
-        }
-        workSpaceElement.appendChild(roleElements);
-
-        Element teamElements = ReportGenerator.doc.createElement("unassigned-teams");
-        for (Team team : this.getTeams()) {
-            if (team.getCurrentAllocation() == null && !team.isUnassignedTeam()) {
-                System.out.println(team + " Team name");
-                Element teamElement = generateTeam(team);
-                teamElements.appendChild(teamElement);
-            }
-        }
-        workSpaceElement.appendChild(teamElements);
-
-        Element peopleElements = ReportGenerator.doc.createElement("unassigned-people");
-        for (Team team : this.getTeams()) {
-            if (team.isUnassignedTeam()) {
-                for (Person person : team.getPeople()) {
-                    Element personElement = generatePerson(person);
-                    peopleElements.appendChild(personElement);
+        for (TreeViewItem item : this.getChildren())
+        {
+            System.out.println(item);
+            if (ReportGenerator.generatedItems.contains(item))
+            {
+                Element xmlElement = item.generateXML();
+                if (xmlElement != null) {
+                    workSpaceElement.appendChild(xmlElement);
                 }
+                ReportGenerator.generatedItems.remove(item);
             }
         }
-        workSpaceElement.appendChild(peopleElements);
-
-        Element skillElements = ReportGenerator.doc.createElement("unassigned-skills");
-        for (Skill skill : this.getSkills()) {
-            boolean assigned = false;
-            for (Person person : this.getPeople()) {
-                if (person.getSkills().contains(skill)) {
-                    assigned = true;
-                    break;
-                }
-            }
-            if (!assigned) {
-                Element skillElement = generateSkill(skill);
-                skillElements.appendChild(skillElement);
-            }
-        }
-        workSpaceElement.appendChild(skillElements);
+//
+//        while (ReportGenerator.iterator < ReportGenerator.generatedItems.size()) {
+//            TreeViewItem item = ReportGenerator.generatedItems.get(ReportGenerator.iterator);
+//            Element xmlElement = item.generateXML();
+//            if (xmlElement != null) {
+//                workSpaceElement.appendChild(xmlElement);
+//            }
+//            ReportGenerator.generatedItems.remove(item);
+//        }
+//
+//        Element projectElements = ReportGenerator.doc.createElement("projects");
+//        for (Project project : this.getProjects()) {
+//            Element projectElement = project.generateXML();
+//            projectElements.appendChild(projectElement);
+//        }
+//        workSpaceElement.appendChild(projectElements);
+//
+//        Element roleElements = ReportGenerator.doc.createElement("roles");
+//        for (Role role : this.getRoles()) {
+//            Element roleElement = role.generateXML();
+//            roleElements.appendChild(roleElement);
+//
+//        }
+//        workSpaceElement.appendChild(roleElements);
+//
+//        Element teamElements = ReportGenerator.doc.createElement("unassigned-teams");
+//        for (Team team : this.getTeams()) {
+//            if (team.getCurrentAllocation() == null && !team.isUnassignedTeam()) {
+//                System.out.println(team + " Team name");
+//                Element teamElement = team.generateXML();
+//                teamElements.appendChild(teamElement);
+//            }
+//        }
+//        workSpaceElement.appendChild(teamElements);
+//
+//        Element peopleElements = ReportGenerator.doc.createElement("unassigned-people");
+//        for (Team team : this.getTeams()) {
+//            if (team.isUnassignedTeam()) {
+//                for (Person person : team.getPeople()) {
+//                    Element personElement = person.generateXML();
+//                    peopleElements.appendChild(personElement);
+//                }
+//            }
+//        }
+//        workSpaceElement.appendChild(peopleElements);
+//
+//        Element skillElements = ReportGenerator.doc.createElement("unassigned-skills");
+//        for (Skill skill : this.getSkills()) {
+//            boolean assigned = false;
+//            for (Person person : this.getPeople()) {
+//                if (person.getSkills().contains(skill)) {
+//                    assigned = true;
+//                    break;
+//                }
+//            }
+//            if (!assigned) {
+//                Element skillElement = skill.generateXML();
+//                skillElements.appendChild(skillElement);
+//            }
+//        }
+//        workSpaceElement.appendChild(skillElements);
 
         return workSpaceElement;
     }
