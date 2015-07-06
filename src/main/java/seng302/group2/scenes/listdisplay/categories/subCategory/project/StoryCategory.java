@@ -2,9 +2,12 @@ package seng302.group2.scenes.listdisplay.categories.subCategory.project;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.w3c.dom.Element;
 import seng302.group2.scenes.dialog.CreateStoryDialog;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.categories.subCategory.SubCategory;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.StoryCategorySwitchStrategy;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.project.Project;
 
 /**
@@ -29,6 +32,26 @@ public class StoryCategory extends SubCategory {
      */
     public Project getProject() {
         return (Project) parent;
+    }
+
+
+    /**
+     * Method for creating an XML element for the Team within report generation
+     * @return element for XML generation
+     */
+    @Override
+    public Element generateXML() {
+        Element storyElements = ReportGenerator.doc.createElement("stories");
+        for (Object item : getChildren()) {
+            if (ReportGenerator.generatedItems.contains((TreeViewItem) item)) {
+                Element xmlElement = ((TreeViewItem) item).generateXML();
+                if (xmlElement != null) {
+                    storyElements.appendChild(xmlElement);
+                }
+                ReportGenerator.generatedItems.remove(item);
+            }
+        }
+        return storyElements;
     }
 
     /**

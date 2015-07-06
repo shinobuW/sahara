@@ -753,11 +753,9 @@ public class Workspace extends TreeViewItem implements Serializable {
         workSpaceElement.appendChild(workSpaceDescription);
         ReportGenerator.generatedItems.remove(0);
 
-        for (TreeViewItem item : this.getChildren())
-        {
+        for (TreeViewItem item : this.getChildren()) {
             System.out.println(item);
-            if (ReportGenerator.generatedItems.contains(item))
-            {
+            if (ReportGenerator.generatedItems.contains(item)) {
                 Element xmlElement = item.generateXML();
                 if (xmlElement != null) {
                     workSpaceElement.appendChild(xmlElement);
