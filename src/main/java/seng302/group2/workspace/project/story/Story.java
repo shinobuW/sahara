@@ -2,6 +2,7 @@ package seng302.group2.workspace.project.story;
 
 import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.StoryInformationSwitchStrategy;
@@ -256,6 +257,15 @@ public class Story extends TreeViewItem implements Serializable {
         for (Object item : serializableAcceptanceCriteria) {
             this.acceptanceCriteria.add((AcceptanceCriteria) item);
         }
+    }
+
+    /**
+     * Method for creating an XML element for the Story within report generation
+     * @return element for XML generation
+     */
+    @Override
+    public Element generateXML() {
+        return null;
     }
 
     /**

@@ -1,6 +1,7 @@
 package seng302.group2.workspace.project.story.acceptanceCriteria;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.undoredo.Command;
@@ -113,6 +114,15 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
     public void edit(AcState state) {
         Command editAc = new EditAcStateCommand(this, state);
         Global.commandManager.executeCommand(editAc);
+    }
+
+    /**
+     * Method for creating an XML element for the Team within report generation
+     * @return element for XML generation
+     */
+    @Override
+    public Element generateXML() {
+        return null;
     }
 
     @Override

@@ -41,6 +41,7 @@ public class ReportGenerator {
     private static DocumentBuilder docBuilder = null;
     public static Document doc = null;
     public static List<TreeViewItem> generatedItems = null;
+    public static int iterator = 0;
 
     public static boolean generateReport(List<TreeViewItem> checkedItems) {
         generatedItems = checkedItems;
@@ -238,7 +239,7 @@ public class ReportGenerator {
         Element othersElement = doc.createElement("others");
         for (Person person : team.getPeople()) {
             if (person.getRole() != null) {
-                if (person.getRole().getType() == Role.RoleType.OTHER) {
+                if (person.getRole().getType() == Role.RoleType.NONE) {
                     Element personElement = generatePerson(person);
                     othersElement.appendChild(personElement);
                 }
@@ -314,7 +315,7 @@ public class ReportGenerator {
         Element othersElement = doc.createElement("others");
         for (Person person : team.getPeople()) {
             if (person.getRole() != null) {
-                if (person.getRole().getType() == Role.RoleType.OTHER) {
+                if (person.getRole().getType() == Role.RoleType.NONE) {
                     Element personElement = generatePerson(person);
                     othersElement.appendChild(personElement);
                 }

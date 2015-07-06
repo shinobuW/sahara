@@ -7,6 +7,7 @@ package seng302.group2.workspace.project.release;
 
 import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.ReleaseInformationSwitchStrategy;
@@ -215,6 +216,15 @@ public class Release extends TreeViewItem implements Comparable<Release> {
     public void deleteRelease() {
         Command command = new DeleteReleaseCommand(this);
         Global.commandManager.executeCommand(command);
+    }
+
+    /**
+     * Method for creating an XML element for the Release within report generation
+     * @return element for XML generation
+     */
+    @Override
+    public Element generateXML() {
+        return null;
     }
 
 

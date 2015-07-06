@@ -159,9 +159,8 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
 
 
     /**
-     * Checks whether or not <i>this</i> is <b>equivalent</b> to the passed object
-     * @param object The object to compare to
-     * @return true if <i>this</i> and the object are equivalent
+     * Abstract method for creating an XML element for the report generation
+     * @return element for XML generation
      */
     public abstract Element generateXML();
 
