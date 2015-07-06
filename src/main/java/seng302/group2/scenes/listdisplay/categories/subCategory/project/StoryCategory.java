@@ -42,10 +42,8 @@ public class StoryCategory extends SubCategory {
     @Override
     public Element generateXML() {
         Element storyElements = ReportGenerator.doc.createElement("stories");
-        for (Object item : getChildren())
-        {
-            if (ReportGenerator.generatedItems.contains((TreeViewItem) item))
-            {
+        for (Object item : getChildren()) {
+            if (ReportGenerator.generatedItems.contains((TreeViewItem) item)) {
                 Element xmlElement = ((TreeViewItem) item).generateXML();
                 if (xmlElement != null) {
                     storyElements.appendChild(xmlElement);

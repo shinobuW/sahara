@@ -42,10 +42,8 @@ public class BacklogCategory extends SubCategory {
     @Override
     public Element generateXML() {
         Element backlogElements = ReportGenerator.doc.createElement("backlogs");
-        for (Object item : getChildren())
-        {
-            if (ReportGenerator.generatedItems.contains((TreeViewItem) item))
-            {
+        for (Object item : getChildren()) {
+            if (ReportGenerator.generatedItems.contains((TreeViewItem) item)) {
                 Element xmlElement = ((TreeViewItem) item).generateXML();
                 if (xmlElement != null) {
                     backlogElements.appendChild(xmlElement);
