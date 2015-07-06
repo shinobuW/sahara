@@ -41,6 +41,7 @@ public class Story extends TreeViewItem implements Serializable {
     private Integer priority;
     private Backlog backlog;
     private String estimate;
+    private boolean ready;
     private transient ObservableList<AcceptanceCriteria> acceptanceCriteria = observableArrayList();
     private List<AcceptanceCriteria> serializableAcceptanceCriteria = new ArrayList<>();
 
@@ -55,6 +56,7 @@ public class Story extends TreeViewItem implements Serializable {
         this.project = null;
         this.priority = 0;
         this.estimate = "-";
+        this.ready = false;
 
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }
@@ -67,7 +69,7 @@ public class Story extends TreeViewItem implements Serializable {
     }
 
     /**
-     * Story Constructor with all fields
+     * Story Constructor with all fields. Ready state set to false
      *
      * @param shortName   short name to identify the story
      * @param longName    long name
@@ -85,6 +87,7 @@ public class Story extends TreeViewItem implements Serializable {
         this.project = project;
         this.priority = priority;
         this.estimate = "-";
+        this.ready = false;
 
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }
@@ -232,6 +235,33 @@ public class Story extends TreeViewItem implements Serializable {
     }
 
     /**
+     * Gets the ready state of the story
+     * @return the ready state
+     */
+    public boolean getReady() {
+        boolean ready = this.ready;
+        return ready;
+    }
+
+    /**
+     * Sets the story ready state to ready
+     */
+    public void setToReady() {
+        Command relEdit = new StoryEditCommand(this, this.shortName, this.longName,
+                this.description, this.project, this.priority, this.backlog, this.estimate, true);
+        Global.commandManager.executeCommand(relEdit);
+    }
+
+    /**
+     * Sets the ready state of the story to not ready
+     */
+    public void setNotReady() {
+        Command relEdit = new StoryEditCommand(this, this.shortName, this.longName,
+                this.description, this.project, this.priority, this.backlog, this.estimate, false);
+        Global.commandManager.executeCommand(relEdit);
+    }
+
+    /**
      * Gets the acceptance criteria of this story
      */
     public ObservableList<AcceptanceCriteria> getAcceptanceCriteria() {
@@ -316,6 +346,7 @@ public class Story extends TreeViewItem implements Serializable {
                 .append(backlog, story.backlog)
                 .append(estimate, story.estimate)
                 .append(creator, story.creator)
+                .append(ready, story.ready)
                 .isEquals();
     }
 
@@ -337,11 +368,15 @@ public class Story extends TreeViewItem implements Serializable {
      * @param newDescription The new description
      * @param newProject     The new project
      * @param newPriority    The new priority
+     * @param newBacklog     The new backlog
+     * @param newEstimate    The new estimate
+     * @param newReady       The new ready state
      */
     public void edit(String newShortName, String newLongName, String newDescription,
-                     Project newProject, Integer newPriority, Backlog newBacklog, String newEstimate) {
+                     Project newProject, Integer newPriority, Backlog newBacklog, String newEstimate,
+                     boolean newReady) {
         Command relEdit = new StoryEditCommand(this, newShortName, newLongName,
-                newDescription, newProject, newPriority, newBacklog, newEstimate);
+                newDescription, newProject, newPriority, newBacklog, newEstimate, newReady);
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -367,6 +402,7 @@ public class Story extends TreeViewItem implements Serializable {
         private Integer priority;
         private Backlog backlog;
         private String estimate;
+        private boolean ready;
 
         private String oldShortName;
         private String oldLongName;
@@ -375,10 +411,11 @@ public class Story extends TreeViewItem implements Serializable {
         private Integer oldPriority;
         private Backlog oldBacklog;
         private String oldEstimate;
+        private boolean oldReady;
 
         private StoryEditCommand(Story story, String newShortName, String newLongName,
                                  String newDescription, Project newProject, Integer newPriority,
-                                 Backlog newBacklog, String newEstimate) {
+                                 Backlog newBacklog, String newEstimate, boolean newReady) {
             this.story = story;
 
             this.shortName = newShortName;
@@ -388,6 +425,7 @@ public class Story extends TreeViewItem implements Serializable {
             this.priority = newPriority;
             this.backlog = newBacklog;
             this.estimate = newEstimate;
+            this.ready = newReady;
 
             this.oldShortName = story.shortName;
             this.oldLongName = story.longName;
@@ -396,6 +434,7 @@ public class Story extends TreeViewItem implements Serializable {
             this.oldPriority = story.priority;
             this.oldBacklog = story.backlog;
             this.oldEstimate = story.estimate;
+            this.oldReady = story.ready;
         }
 
         /**
@@ -409,6 +448,8 @@ public class Story extends TreeViewItem implements Serializable {
             story.priority = priority;
             story.backlog = backlog;
             story.estimate = estimate;
+            story.ready = ready;
+
             Collections.sort(project.getUnallocatedStories(), Story.StoryNameComparator);
             if (backlog != null) {
                 Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
@@ -432,6 +473,7 @@ public class Story extends TreeViewItem implements Serializable {
             story.priority = oldPriority;
             story.backlog = oldBacklog;
             story.estimate = oldEstimate;
+            story.ready = oldReady;
             Collections.sort(project.getUnallocatedStories(), Story.StoryNameComparator);
             Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
 

@@ -124,7 +124,8 @@ public class StoryEditScene {
                             currentStory.getProject(),
                             Integer.parseInt(priorityNumberField.getText()),
                             currentStory.getBacklog(),
-                            estimateComboBox.getValue()
+                            estimateComboBox.getValue(),
+                            currentStory.getReady()
                     );
 
                     currentStory.switchToInfoScene();
