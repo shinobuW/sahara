@@ -6,6 +6,7 @@ import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.SkillInformationSwitchStrategy;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
@@ -171,7 +172,18 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
      */
     @Override
     public Element generateXML() {
-        return null;
+        Element skillElement = ReportGenerator.doc.createElement("skill");
+
+        //WorkSpace Elements
+        Element skillShortName = ReportGenerator.doc.createElement("identifier");
+        skillShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
+        skillElement.appendChild(skillShortName);
+
+        Element skillDescription = ReportGenerator.doc.createElement("description");
+        skillDescription.appendChild(ReportGenerator.doc.createTextNode(description));
+        skillElement.appendChild(skillDescription);
+
+        return skillElement;
     }
 
     /**
