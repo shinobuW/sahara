@@ -3,6 +3,7 @@ package seng302.group2.scenes.listdisplay;
 import javafx.collections.ObservableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Element;
 import seng302.group2.scenes.listdisplay.categories.Category;
 import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
@@ -156,6 +157,13 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
         }
     }
 
+
+    /**
+     * Checks whether or not <i>this</i> is <b>equivalent</b> to the passed object
+     * @param object The object to compare to
+     * @return true if <i>this</i> and the object are equivalent
+     */
+    public abstract Element generateXML();
 
     /**
      * Checks whether or not <i>this</i> is <b>equivalent</b> to the passed object
