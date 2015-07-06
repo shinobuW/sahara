@@ -809,22 +809,6 @@ public class Workspace extends TreeViewItem implements Serializable {
 //        }
 //        workSpaceElement.appendChild(peopleElements);
 //
-//        Element skillElements = ReportGenerator.doc.createElement("unassigned-skills");
-//        for (Skill skill : this.getSkills()) {
-//            boolean assigned = false;
-//            for (Person person : this.getPeople()) {
-//                if (person.getSkills().contains(skill)) {
-//                    assigned = true;
-//                    break;
-//                }
-//            }
-//            if (!assigned) {
-//                Element skillElement = skill.generateXML();
-//                skillElements.appendChild(skillElement);
-//            }
-//        }
-//        workSpaceElement.appendChild(skillElements);
-
         return workSpaceElement;
     }
 

@@ -367,7 +367,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
         personElement.appendChild(teamFirstName);
 
         Element teamLastName = ReportGenerator.doc.createElement("last-name");
-        teamLastName.appendChild(ReportGenerator.doc.createTextNode(email));
+        teamLastName.appendChild(ReportGenerator.doc.createTextNode(lastName));
         personElement.appendChild(teamLastName);
 
         Element teamEmail = ReportGenerator.doc.createElement("email");
@@ -382,10 +382,10 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
         teamDescription.appendChild(ReportGenerator.doc.createTextNode(description));
         personElement.appendChild(teamDescription);
 
-//        for (Skill skill : skills) {
-//            Element skillElement = skill.generateXML();
-//            personElement.appendChild(skillElement);
-//        }
+        for (Skill skill : skills) {
+            Element skillElement = skill.generateXML();
+            personElement.appendChild(skillElement);
+        }
 
         return personElement;
     }
