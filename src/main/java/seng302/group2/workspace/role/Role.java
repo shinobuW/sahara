@@ -11,6 +11,7 @@ import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.RoleInformationSwitchStrategy;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.skills.Skill;
 
 import java.io.Serializable;
@@ -265,7 +266,25 @@ public class Role extends TreeViewItem implements Serializable {
      */
     @Override
     public Element generateXML() {
-        return null;
+        Element roleElement = ReportGenerator.doc.createElement("role");
+
+        //WorkSpace Elements
+        Element roleShortName = ReportGenerator.doc.createElement("identifier");
+        roleShortName.appendChild(ReportGenerator.doc.createTextNode(getShortName()));
+        roleElement.appendChild(roleShortName);
+
+        Element roleDescription = ReportGenerator.doc.createElement("description");
+        roleDescription.appendChild(ReportGenerator.doc.createTextNode(getDescription()));
+        roleElement.appendChild(roleDescription);
+
+        Element roleRequiredSkills = ReportGenerator.doc.createElement("required-skills");
+        for (Skill skill : getRequiredSkills()) {
+            Element skillElement = skill.generateXML();
+            roleRequiredSkills.appendChild(skillElement);
+        }
+        roleElement.appendChild(roleRequiredSkills);
+
+        return roleElement;
     }
 
     /**

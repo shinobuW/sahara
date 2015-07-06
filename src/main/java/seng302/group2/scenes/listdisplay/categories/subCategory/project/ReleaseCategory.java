@@ -2,9 +2,12 @@ package seng302.group2.scenes.listdisplay.categories.subCategory.project;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.w3c.dom.Element;
 import seng302.group2.scenes.dialog.CreateReleaseDialog;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.categories.subCategory.SubCategory;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.ReleaseCategorySwitchStrategy;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.project.Project;
 
 /**
@@ -45,6 +48,25 @@ public class ReleaseCategory extends SubCategory {
             return FXCollections.observableArrayList();
         }
         return ((Project) parent).getReleases();
+    }
+
+    /**
+     * Method for creating an XML element for the Release within report generation
+     * @return element for XML generation
+     */
+    @Override
+    public Element generateXML() {
+        Element releaseElements = ReportGenerator.doc.createElement("releases");
+        for (Object item : getChildren()) {
+            if (ReportGenerator.generatedItems.contains((TreeViewItem) item)) {
+                Element xmlElement = ((TreeViewItem) item).generateXML();
+                if (xmlElement != null) {
+                    releaseElements.appendChild(xmlElement);
+                }
+                ReportGenerator.generatedItems.remove(item);
+            }
+        }
+        return releaseElements;
     }
 
     @Override

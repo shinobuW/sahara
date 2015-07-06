@@ -11,6 +11,7 @@ import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.ReleaseInformationSwitchStrategy;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
 
@@ -224,7 +225,22 @@ public class Release extends TreeViewItem implements Comparable<Release> {
      */
     @Override
     public Element generateXML() {
-        return null;
+        Element releaseElement = ReportGenerator.doc.createElement("release");
+
+        //WorkSpace Elements
+        Element releaseShortName = ReportGenerator.doc.createElement("identifier");
+        releaseShortName.appendChild(ReportGenerator.doc.createTextNode(getShortName()));
+        releaseElement.appendChild(releaseShortName);
+
+        Element releaseDescription = ReportGenerator.doc.createElement("description");
+        releaseDescription.appendChild(ReportGenerator.doc.createTextNode(getDescription()));
+        releaseElement.appendChild(releaseDescription);
+
+        Element releaseDate = ReportGenerator.doc.createElement("release-date");
+        releaseDate.appendChild(ReportGenerator.doc.createTextNode(getDateString()));
+        releaseElement.appendChild(releaseDate);
+
+        return releaseElement;
     }
 
 

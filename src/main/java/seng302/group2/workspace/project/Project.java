@@ -571,6 +571,20 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         }
         projectElement.appendChild(teamElements);
 
+        Element teamPreviousElements = ReportGenerator.doc.createElement("previous-teams");
+        for (Allocation allocation : this.getPastAllocations()) {
+            Element teamElement = allocation.generateXML();
+            teamPreviousElements.appendChild(teamElement);
+        }
+        projectElement.appendChild(teamPreviousElements);
+
+        Element teamFutureElements = ReportGenerator.doc.createElement("future-teams");
+        for (Allocation allocation : this.getFutureAllocations()) {
+            Element teamElement = allocation.generateXML();
+            teamFutureElements.appendChild(teamElement);
+        }
+        projectElement.appendChild(teamFutureElements);
+
         for (TreeViewItem item : this.getChildren()) {
             if (ReportGenerator.generatedItems.contains(item)) {
                 Element xmlElement = item.generateXML();

@@ -4,6 +4,7 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
@@ -137,7 +138,24 @@ public class Allocation extends TreeViewItem implements Serializable, Comparable
      */
     @Override
     public Element generateXML() {
-        return null;
+        Element allocationElement = ReportGenerator.doc.createElement("team");
+
+        //WorkSpace Elements
+        Element allocatedTeam = ReportGenerator.doc.createElement("team-name");
+        allocatedTeam.appendChild(ReportGenerator.doc.createTextNode(getTeam().toString()));
+        allocationElement.appendChild(allocatedTeam);
+
+        Element allocationStartDate = ReportGenerator.doc.createElement("allocation-start-date");
+        allocationStartDate.appendChild(ReportGenerator.doc.createTextNode(getStartDate().format(
+                Global.dateFormatter)));
+        allocationElement.appendChild(allocationStartDate);
+
+        Element allocationEndDate = ReportGenerator.doc.createElement("allocation-end-date");
+        allocationEndDate.appendChild(ReportGenerator.doc.createTextNode(getEndDate().format(
+                Global.dateFormatter)));
+        allocationElement.appendChild(allocationEndDate);
+
+        return allocationElement;
     }
 
     /**
