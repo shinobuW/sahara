@@ -6,6 +6,7 @@ import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.StoryInformationSwitchStrategy;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -265,7 +266,30 @@ public class Story extends TreeViewItem implements Serializable {
      */
     @Override
     public Element generateXML() {
-        return null;
+        Element storyElement = ReportGenerator.doc.createElement("story");
+
+        //WorkSpace Elements
+        Element storyShortName = ReportGenerator.doc.createElement("identifier");
+        storyShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
+        storyElement.appendChild(storyShortName);
+
+        Element storyLongName = ReportGenerator.doc.createElement("long-name");
+        storyLongName.appendChild(ReportGenerator.doc.createTextNode(longName));
+        storyElement.appendChild(storyLongName);
+
+        Element storyDescription = ReportGenerator.doc.createElement("description");
+        storyDescription.appendChild(ReportGenerator.doc.createTextNode(description));
+        storyElement.appendChild(storyDescription);
+
+        Element storyCreator = ReportGenerator.doc.createElement("creator");
+        storyCreator.appendChild(ReportGenerator.doc.createTextNode(creator));
+        storyElement.appendChild(storyCreator);
+
+        Element storyPriority = ReportGenerator.doc.createElement("priority");
+        storyPriority.appendChild(ReportGenerator.doc.createTextNode(priority.toString()));
+        storyElement.appendChild(storyPriority);
+
+        return storyElement;
     }
 
     /**
