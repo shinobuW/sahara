@@ -3,12 +3,14 @@ package seng302.group2.workspace.project;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.categories.subCategory.project.BacklogCategory;
 import seng302.group2.scenes.listdisplay.categories.subCategory.project.ReleaseCategory;
 import seng302.group2.scenes.listdisplay.categories.subCategory.project.StoryCategory;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.ProjectInformationSwitchStrategy;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -537,6 +539,64 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         return stories;
     }
 
+    /**
+     * Method for creating an XML element for the Project within report generation
+     * @return element for XML generation
+     */
+    @Override
+    public Element generateXML() {
+        System.out.println(shortName);
+        Element projectElement = ReportGenerator.doc.createElement("project");
+
+        //WorkSpace Elements
+        Element projectShortName = ReportGenerator.doc.createElement("identifier");
+        projectShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
+        projectElement.appendChild(projectShortName);
+
+        Element projectLongName = ReportGenerator.doc.createElement("long-name");
+        projectLongName.appendChild(ReportGenerator.doc.createTextNode(longName));
+        projectElement.appendChild(projectLongName);
+
+        Element projectDescription = ReportGenerator.doc.createElement("description");
+        projectDescription.appendChild(ReportGenerator.doc.createTextNode(description));
+        projectElement.appendChild(projectDescription);
+
+        Element teamElements = ReportGenerator.doc.createElement("current-teams");
+        for (Team team : this.getCurrentTeams()) {
+            if (ReportGenerator.generatedItems.contains(team)) {
+                Element teamElement = team.generateXML();
+                teamElements.appendChild(teamElement);
+                ReportGenerator.generatedItems.remove(team);
+            }
+        }
+        projectElement.appendChild(teamElements);
+
+        Element teamPreviousElements = ReportGenerator.doc.createElement("previous-teams");
+        for (Allocation allocation : this.getPastAllocations()) {
+            Element teamElement = allocation.generateXML();
+            teamPreviousElements.appendChild(teamElement);
+        }
+        projectElement.appendChild(teamPreviousElements);
+
+        Element teamFutureElements = ReportGenerator.doc.createElement("future-teams");
+        for (Allocation allocation : this.getFutureAllocations()) {
+            Element teamElement = allocation.generateXML();
+            teamFutureElements.appendChild(teamElement);
+        }
+        projectElement.appendChild(teamFutureElements);
+
+        for (TreeViewItem item : this.getChildren()) {
+            if (ReportGenerator.generatedItems.contains(item)) {
+                Element xmlElement = item.generateXML();
+                if (xmlElement != null) {
+                    projectElement.appendChild(xmlElement);
+                }
+                ReportGenerator.generatedItems.remove(item);
+            }
+        }
+
+        return projectElement;
+    }
 
     /**
      * An overridden version for the String representation of a Workspace.

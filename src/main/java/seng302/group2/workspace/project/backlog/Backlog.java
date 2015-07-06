@@ -3,9 +3,11 @@ package seng302.group2.workspace.project.backlog;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.BacklogInformationSwitchStrategy;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -248,6 +250,41 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         }
 
         Collections.sort(this.stories, Story.StoryPriorityComparator);
+    }
+
+    /**
+     * Method for creating an XML element for the Backlog within report generation
+     * @return element for XML generation
+     */
+    @Override
+    public Element generateXML() {
+        Element backlogElement = ReportGenerator.doc.createElement("backlog");
+
+        //WorkSpace Elements
+        Element backlogShortName = ReportGenerator.doc.createElement("identifier");
+        backlogShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
+        backlogElement.appendChild(backlogShortName);
+
+        Element backlogLongName = ReportGenerator.doc.createElement("long-name");
+        backlogLongName.appendChild(ReportGenerator.doc.createTextNode(longName));
+        backlogElement.appendChild(backlogLongName);
+
+        Element backlogDescription = ReportGenerator.doc.createElement("description");
+        backlogDescription.appendChild(ReportGenerator.doc.createTextNode(description));
+        backlogElement.appendChild(backlogDescription);
+
+        Element backlogProductOwner = ReportGenerator.doc.createElement("product-owner");
+        backlogProductOwner.appendChild(ReportGenerator.doc.createTextNode(productOwner.toString()));
+        backlogElement.appendChild(backlogProductOwner);
+
+        Element backlogStories = ReportGenerator.doc.createElement("stories");
+        for (Story story : getStories()) {
+            Element storyElement = story.generateXML();
+            backlogStories.appendChild(storyElement);
+        }
+        backlogElement.appendChild(backlogStories);
+
+        return backlogElement;
     }
 
 

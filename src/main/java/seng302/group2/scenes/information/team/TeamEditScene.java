@@ -204,12 +204,15 @@ public class TeamEditScene extends ScrollPane {
                 switch (selectedRole.getType()) {
                     case PRODUCT_OWNER:
                         allocatedProductOwner = selectedPerson;
+                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER));
                         break;
                     case SCRUM_MASTER:
                         allocatedScrumMaster = selectedPerson;
+                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.SCRUM_MASTER));
                         break;
                     case DEVELOPMENT_TEAM_MEMBER:
                         allocatedDevelopers.add(selectedPerson);
+                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
                         break;
                     case NONE:
                         if (allocatedProductOwner == selectedPerson) {
@@ -219,6 +222,7 @@ public class TeamEditScene extends ScrollPane {
                             allocatedScrumMaster = null;
                         }
                         allocatedDevelopers.remove(selectedPerson);
+                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.NONE));
                         break;
                     default:
                         break;

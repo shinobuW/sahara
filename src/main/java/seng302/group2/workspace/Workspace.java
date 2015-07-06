@@ -13,6 +13,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.controlsfx.dialog.Dialogs;
+import org.w3c.dom.Element;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
@@ -20,6 +21,8 @@ import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.categories.*;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.WorkspaceInformationSwitchStrategy;
+import seng302.group2.util.reporting.ReportGenerator;
+import seng302.group2.util.reporting.ReportGenerator.*;
 import seng302.group2.util.revert.RevertManager;
 import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.Command;
@@ -729,6 +732,84 @@ public class Workspace extends TreeViewItem implements Serializable {
         root.addAll(projectCategory, teamsCategory, peopleCategory, rolesCategory, skillCategory);
 
         return root;
+    }
+
+
+    @Override
+    public Element generateXML() {
+        Element workSpaceElement = ReportGenerator.doc.createElement("workspace");
+
+        //WorkSpace Elements
+        Element workSpaceShortName = ReportGenerator.doc.createElement("identifier");
+        workSpaceShortName.appendChild(ReportGenerator.doc.createTextNode(this.getShortName()));
+        workSpaceElement.appendChild(workSpaceShortName);
+
+        Element workSpaceLongName = ReportGenerator.doc.createElement("long-name");
+        workSpaceLongName.appendChild(ReportGenerator.doc.createTextNode(this.getLongName()));
+        workSpaceElement.appendChild(workSpaceLongName);
+
+        Element workSpaceDescription = ReportGenerator.doc.createElement("description");
+        workSpaceDescription.appendChild(ReportGenerator.doc.createTextNode(this.getDescription()));
+        workSpaceElement.appendChild(workSpaceDescription);
+        ReportGenerator.generatedItems.remove(0);
+
+        for (TreeViewItem item : this.getChildren()) {
+            System.out.println(item);
+            if (ReportGenerator.generatedItems.contains(item)) {
+                Element xmlElement = item.generateXML();
+                if (xmlElement != null) {
+                    workSpaceElement.appendChild(xmlElement);
+                }
+                ReportGenerator.generatedItems.remove(item);
+            }
+        }
+//
+//        while (ReportGenerator.iterator < ReportGenerator.generatedItems.size()) {
+//            TreeViewItem item = ReportGenerator.generatedItems.get(ReportGenerator.iterator);
+//            Element xmlElement = item.generateXML();
+//            if (xmlElement != null) {
+//                workSpaceElement.appendChild(xmlElement);
+//            }
+//            ReportGenerator.generatedItems.remove(item);
+//        }
+//
+//        Element projectElements = ReportGenerator.doc.createElement("projects");
+//        for (Project project : this.getProjects()) {
+//            Element projectElement = project.generateXML();
+//            projectElements.appendChild(projectElement);
+//        }
+//        workSpaceElement.appendChild(projectElements);
+//
+//        Element roleElements = ReportGenerator.doc.createElement("roles");
+//        for (Role role : this.getRoles()) {
+//            Element roleElement = role.generateXML();
+//            roleElements.appendChild(roleElement);
+//
+//        }
+//        workSpaceElement.appendChild(roleElements);
+//
+//        Element teamElements = ReportGenerator.doc.createElement("unassigned-teams");
+//        for (Team team : this.getTeams()) {
+//            if (team.getCurrentAllocation() == null && !team.isUnassignedTeam()) {
+//                System.out.println(team + " Team name");
+//                Element teamElement = team.generateXML();
+//                teamElements.appendChild(teamElement);
+//            }
+//        }
+//        workSpaceElement.appendChild(teamElements);
+//
+//        Element peopleElements = ReportGenerator.doc.createElement("unassigned-people");
+//        for (Team team : this.getTeams()) {
+//            if (team.isUnassignedTeam()) {
+//                for (Person person : team.getPeople()) {
+//                    Element personElement = person.generateXML();
+//                    peopleElements.appendChild(personElement);
+//                }
+//            }
+//        }
+//        workSpaceElement.appendChild(peopleElements);
+//
+        return workSpaceElement;
     }
 
     /**

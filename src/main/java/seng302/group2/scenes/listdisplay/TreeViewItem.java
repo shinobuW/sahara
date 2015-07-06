@@ -3,6 +3,7 @@ package seng302.group2.scenes.listdisplay;
 import javafx.collections.ObservableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Element;
 import seng302.group2.scenes.listdisplay.categories.Category;
 import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
@@ -156,6 +157,12 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
         }
     }
 
+
+    /**
+     * Abstract method for creating an XML element for the report generation
+     * @return element for XML generation
+     */
+    public abstract Element generateXML();
 
     /**
      * Checks whether or not <i>this</i> is <b>equivalent</b> to the passed object

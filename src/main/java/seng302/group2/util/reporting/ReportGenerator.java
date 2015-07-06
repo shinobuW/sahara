@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.workspace.Workspace;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
@@ -30,6 +31,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author crw73
@@ -37,9 +39,12 @@ import java.time.LocalDate;
 public class ReportGenerator {
     private static DocumentBuilderFactory docFactory = null;
     private static DocumentBuilder docBuilder = null;
-    private static Document doc = null;
+    public static Document doc = null;
+    public static List<TreeViewItem> generatedItems = null;
+    public static int iterator = 0;
 
-    public static boolean generateReport() {
+    public static boolean generateReport(List<TreeViewItem> checkedItems) {
+        generatedItems = checkedItems;
         try {
             docFactory = DocumentBuilderFactory.newInstance();
             docBuilder = docFactory.newDocumentBuilder();
@@ -58,9 +63,10 @@ public class ReportGenerator {
             report.appendChild(header);
 
             //WorkSpace Node
-            Element workspaceElement = generateWorkSpace(Global.currentWorkspace);
-            //System.out.println(Global.currentWorkspace);
-            report.appendChild(workspaceElement);
+            TreeViewItem item = generatedItems.get(0);
+            Element xmlElement = item.generateXML();
+            report.appendChild(xmlElement);
+
             doc.appendChild(report);
 
             // write the content into xml file
@@ -117,76 +123,7 @@ public class ReportGenerator {
         return true;
     }
 
-    private static Element generateWorkSpace(Workspace workspace) {
-        Element workSpaceElement = doc.createElement("workspace");
 
-        //WorkSpace Elements
-        Element workSpaceShortName = doc.createElement("identifier");
-        workSpaceShortName.appendChild(doc.createTextNode(workspace.getShortName()));
-        workSpaceElement.appendChild(workSpaceShortName);
-
-        Element workSpaceLongName = doc.createElement("long-name");
-        workSpaceLongName.appendChild(doc.createTextNode(workspace.getLongName()));
-        workSpaceElement.appendChild(workSpaceLongName);
-
-        Element workSpaceDescription = doc.createElement("description");
-        workSpaceDescription.appendChild(doc.createTextNode(workspace.getDescription()));
-        workSpaceElement.appendChild(workSpaceDescription);
-
-        Element projectElements = doc.createElement("projects");
-        for (Project project : workspace.getProjects()) {
-            Element projectElement = generateProject(project);
-            projectElements.appendChild(projectElement);
-        }
-        workSpaceElement.appendChild(projectElements);
-
-        Element roleElements = doc.createElement("roles");
-        for (Role role : workspace.getRoles()) {
-            Element roleElement = generateRole(role);
-            roleElements.appendChild(roleElement);
-
-        }
-        workSpaceElement.appendChild(roleElements);
-
-        Element teamElements = doc.createElement("unassigned-teams");
-        for (Team team : workspace.getTeams()) {
-            if (team.getCurrentAllocation() == null && !team.isUnassignedTeam()) {
-                System.out.println(team + " Team name");
-                Element teamElement = generateTeam(team);
-                teamElements.appendChild(teamElement);
-            }
-        }
-        workSpaceElement.appendChild(teamElements);
-
-        Element peopleElements = doc.createElement("unassigned-people");
-        for (Team team : workspace.getTeams()) {
-            if (team.isUnassignedTeam()) {
-                for (Person person : team.getPeople()) {
-                    Element personElement = generatePerson(person);
-                    peopleElements.appendChild(personElement);
-                }
-            }
-        }
-        workSpaceElement.appendChild(peopleElements);
-
-        Element skillElements = doc.createElement("unassigned-skills");
-        for (Skill skill : workspace.getSkills()) {
-            boolean assigned = false;
-            for (Person person : workspace.getPeople()) {
-                if (person.getSkills().contains(skill)) {
-                    assigned = true;
-                    break;
-                }
-            }
-            if (!assigned) {
-                Element skillElement = generateSkill(skill);
-                skillElements.appendChild(skillElement);
-            }
-        }
-        workSpaceElement.appendChild(skillElements);
-
-        return workSpaceElement;
-    }
 
     private static Element generateProject(Project project) {
         Element projectElement = doc.createElement("project");
@@ -302,7 +239,7 @@ public class ReportGenerator {
         Element othersElement = doc.createElement("others");
         for (Person person : team.getPeople()) {
             if (person.getRole() != null) {
-                if (person.getRole().getType() == Role.RoleType.OTHER) {
+                if (person.getRole().getType() == Role.RoleType.NONE) {
                     Element personElement = generatePerson(person);
                     othersElement.appendChild(personElement);
                 }
@@ -378,7 +315,7 @@ public class ReportGenerator {
         Element othersElement = doc.createElement("others");
         for (Person person : team.getPeople()) {
             if (person.getRole() != null) {
-                if (person.getRole().getType() == Role.RoleType.OTHER) {
+                if (person.getRole().getType() == Role.RoleType.NONE) {
                     Element personElement = generatePerson(person);
                     othersElement.appendChild(personElement);
                 }

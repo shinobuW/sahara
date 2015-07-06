@@ -1,6 +1,7 @@
 package seng302.group2.scenes.listdisplay.categories;
 
 import javafx.collections.ObservableList;
+import org.w3c.dom.Element;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 
 /**
@@ -20,6 +21,14 @@ public abstract class Category extends TreeViewItem {
     public Category(String name) {
         super(name);
         this.name = name;
+    }
+
+    /**
+     * Method for creating an XML element for the Team within report generation
+     * @return element for XML generation
+     */
+    public Element generateXML() {
+        return null;
     }
 
 

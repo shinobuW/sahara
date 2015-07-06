@@ -2,9 +2,12 @@ package seng302.group2.scenes.listdisplay.categories.subCategory.project;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.w3c.dom.Element;
 import seng302.group2.scenes.dialog.CreateBacklogDialog;
+import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.listdisplay.categories.subCategory.SubCategory;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.BacklogCategorySwitchStrategy;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.project.Project;
 
 /**
@@ -30,6 +33,25 @@ public class BacklogCategory extends SubCategory {
      */
     public Project getProject() {
         return (Project) parent;
+    }
+
+    /**
+     * Method for creating an XML element for the Team within report generation
+     * @return element for XML generation
+     */
+    @Override
+    public Element generateXML() {
+        Element backlogElements = ReportGenerator.doc.createElement("backlogs");
+        for (Object item : getChildren()) {
+            if (ReportGenerator.generatedItems.contains((TreeViewItem) item)) {
+                Element xmlElement = ((TreeViewItem) item).generateXML();
+                if (xmlElement != null) {
+                    backlogElements.appendChild(xmlElement);
+                }
+                ReportGenerator.generatedItems.remove(item);
+            }
+        }
+        return backlogElements;
     }
 
     /**

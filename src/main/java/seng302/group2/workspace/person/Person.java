@@ -6,9 +6,11 @@ package seng302.group2.workspace.person;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.PersonInformationSwitchStrategy;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
@@ -345,6 +347,47 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
                 return "";
             }
         }
+    }
+
+    /**
+     * Method for creating an XML element for the Person within report generation
+     * @return element for XML generation
+     */
+    @Override
+    public Element generateXML() {
+        Element personElement = ReportGenerator.doc.createElement("person");
+
+        //WorkSpace Elements
+        Element teamShortName = ReportGenerator.doc.createElement("identifier");
+        teamShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
+        personElement.appendChild(teamShortName);
+
+        Element teamFirstName = ReportGenerator.doc.createElement("first-name");
+        teamFirstName.appendChild(ReportGenerator.doc.createTextNode(firstName));
+        personElement.appendChild(teamFirstName);
+
+        Element teamLastName = ReportGenerator.doc.createElement("last-name");
+        teamLastName.appendChild(ReportGenerator.doc.createTextNode(lastName));
+        personElement.appendChild(teamLastName);
+
+        Element teamEmail = ReportGenerator.doc.createElement("email");
+        teamEmail.appendChild(ReportGenerator.doc.createTextNode(email));
+        personElement.appendChild(teamEmail);
+
+        Element teamBirthDate = ReportGenerator.doc.createElement("birth-date");
+        teamBirthDate.appendChild(ReportGenerator.doc.createTextNode(getDateString()));
+        personElement.appendChild(teamBirthDate);
+
+        Element teamDescription = ReportGenerator.doc.createElement("description");
+        teamDescription.appendChild(ReportGenerator.doc.createTextNode(description));
+        personElement.appendChild(teamDescription);
+
+        for (Skill skill : skills) {
+            Element skillElement = skill.generateXML();
+            personElement.appendChild(skillElement);
+        }
+
+        return personElement;
     }
 
 

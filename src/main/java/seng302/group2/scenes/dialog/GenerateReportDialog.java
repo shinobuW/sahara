@@ -68,7 +68,9 @@ public class GenerateReportDialog {
                 List<TreeViewItem> checkedItems = getCheckedItems(root);
                 // TODO: Plug in custom generation method
                 logger.info(checkedItems.toString());
-                ReportGenerator.generateReport();
+                if (!checkedItems.isEmpty()) {
+                    ReportGenerator.generateReport(checkedItems);
+                }
             });
 
 
