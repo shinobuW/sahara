@@ -8,6 +8,7 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.StoryInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
@@ -337,6 +338,13 @@ public class Story extends TreeViewItem implements Serializable {
         Element storyPriority = ReportGenerator.doc.createElement("priority");
         storyPriority.appendChild(ReportGenerator.doc.createTextNode(priority.toString()));
         storyElement.appendChild(storyPriority);
+
+        Element teamFutureElements = ReportGenerator.doc.createElement("acceptance-criteria");
+        for (AcceptanceCriteria acceptanceCriteria : this.acceptanceCriteria) {
+            Element teamElement = acceptanceCriteria.generateXML();
+            teamFutureElements.appendChild(teamElement);
+        }
+        storyElement.appendChild(teamFutureElements);
 
         return storyElement;
     }

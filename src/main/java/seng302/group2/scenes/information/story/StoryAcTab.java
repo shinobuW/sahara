@@ -120,14 +120,13 @@ public class StoryAcTab extends Tab {
             });
 
 
-
-
         addButton.setDisable(true);
         addButton.setOnAction((event) -> {
                 if (!descriptionTextArea.getText().isEmpty()) {
                     String description = descriptionTextArea.getText();
                     AcceptanceCriteria newAc = new AcceptanceCriteria(description, story);
                     story.add(newAc);
+                    descriptionTextArea.getTextArea().clear();
                 }
                 else {
                     event.consume();

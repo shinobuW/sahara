@@ -1,9 +1,11 @@
 package seng302.group2.workspace.project.story.acceptanceCriteria;
 
+import javafx.util.StringConverter;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.story.Story;
 
@@ -122,7 +124,20 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
      */
     @Override
     public Element generateXML() {
-        return null;
+        Element acceptanceElement = ReportGenerator.doc.createElement("acceptance-criteria");
+
+        //WorkSpace Elements
+        Element acceptanceCriteria = ReportGenerator.doc.createElement("description");
+        acceptanceCriteria.appendChild(ReportGenerator.doc.createTextNode(description));
+        acceptanceElement.appendChild(acceptanceCriteria);
+
+        Element state = ReportGenerator.doc.createElement("state");
+        StringConverter<AcState> converter = new AcEnumStringConverter();
+
+        state.appendChild(ReportGenerator.doc.createTextNode(converter.toString(this.state)));
+        acceptanceElement.appendChild(state);
+
+        return acceptanceElement;
     }
 
     @Override
