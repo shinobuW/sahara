@@ -438,6 +438,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
             if (!scale.equals(oldScale)) {
                 for (Story story : stories) {
                     story.setEstimate("-");
+                    story.setReady(false);
                 }
             }
 
