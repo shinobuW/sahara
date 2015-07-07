@@ -70,6 +70,7 @@ public class GenerateReportDialog {
                 logger.info(checkedItems.toString());
                 if (!checkedItems.isEmpty()) {
                     ReportGenerator.generateReport(checkedItems);
+                    dialog.hide();
                 }
             });
 
