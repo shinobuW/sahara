@@ -494,6 +494,9 @@ public class Story extends TreeViewItem implements Serializable {
                 estimate = "-";
                 ready = false;
             }
+            if (estimate.equals("-")) {
+                ready = false;
+            }
         }
 
         /**
@@ -514,8 +517,7 @@ public class Story extends TreeViewItem implements Serializable {
                 Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
             }
 
-            /* If the story if being added to a backlog in the project, remove it from the
-            unassigned stories.*/
+            /* If the story if being added to a backlog in the project, remove it from the unassigned stories.*/
             if (backlog != null && project != null) {
                 project.getUnallocatedStories().remove(story);
             }
@@ -536,8 +538,7 @@ public class Story extends TreeViewItem implements Serializable {
             Collections.sort(project.getUnallocatedStories(), Story.StoryNameComparator);
             Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
 
-            /* If the story if being added back into a backlog in the project, remove it from the
-            unassigned stories.*/
+            /* If the story if being added back into a backlog in the project, remove it from the unassigned stories.*/
             if (oldBacklog != null && oldProject != null) {
                 oldProject.getUnallocatedStories().remove(story);
             }
