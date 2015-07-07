@@ -96,22 +96,22 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     public void addListeners() {
         //System.out.println("Listeners added");
         releases.addListener((ListChangeListener<Release>) change -> {
-            if (change.next() && !change.wasPermutated()) {
-                Collections.sort(releases);
-            }
-        });
+                if (change.next() && !change.wasPermutated()) {
+                    Collections.sort(releases);
+                }
+            });
 
         unallocatedStories.addListener((ListChangeListener<Story>) change -> {
-            if (change.next() && !change.wasPermutated()) {
-                Collections.sort(unallocatedStories, Story.StoryNameComparator);
-            }
-        });
+                if (change.next() && !change.wasPermutated()) {
+                    Collections.sort(unallocatedStories, Story.StoryNameComparator);
+                }
+            });
 
         backlogs.addListener((ListChangeListener<Backlog>) change -> {
-            if (change.next() && !change.wasPermutated()) {
-                Collections.sort(backlogs);
-            }
-        });
+                if (change.next() && !change.wasPermutated()) {
+                    Collections.sort(backlogs);
+                }
+            });
         for (Backlog bl : backlogs) {
             bl.addListeners();
         }
