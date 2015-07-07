@@ -88,7 +88,7 @@ public class StoryEditScene {
                 else {
                     readyStateCheck.setDisable(false);
                 }
-        });
+            });
 
         HBox estimateHBox = new HBox();
         HBox.setHgrow(estimateHBox, Priority.ALWAYS);
