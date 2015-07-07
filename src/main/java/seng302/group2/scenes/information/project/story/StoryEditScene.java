@@ -3,6 +3,7 @@ package seng302.group2.scenes.information.project.story;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
@@ -54,6 +55,9 @@ public class StoryEditScene {
         RequiredField priorityNumberField = new RequiredField("Story Priority:");
         CustomComboBox estimateComboBox = new CustomComboBox("Estimate:", false);
 
+        CheckBox readyStateCheck = new CheckBox("Ready?");
+
+
         String key = currentStory.getBacklog().getScale();
         ArrayList<String> valueList = Global.currentWorkspace.getEstimationScales().getEstimationScaleDict().get(key);
         for (String value : valueList) {
@@ -62,12 +66,37 @@ public class StoryEditScene {
 
         estimateComboBox.setValue(currentStory.getEstimate());
 
+
+        readyStateCheck.setSelected(currentStory.getReady());
+        if (currentStory.getBacklog() == null
+                || currentStory.getEstimate().equals("-")
+                || currentStory.getAcceptanceCriteria().isEmpty()) {
+            readyStateCheck.setSelected(false);
+            readyStateCheck.setDisable(true);
+        }
+        else {
+            readyStateCheck.setDisable(false);
+        }
+
+        estimateComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
+                if (currentStory.getBacklog() == null
+                        || (newValue != null && newValue.equals("-"))
+                        || currentStory.getAcceptanceCriteria().isEmpty()) {
+                    readyStateCheck.setSelected(false);
+                    readyStateCheck.setDisable(true);
+                }
+                else {
+                    readyStateCheck.setDisable(false);
+                }
+        });
+
         HBox estimateHBox = new HBox();
         HBox.setHgrow(estimateHBox, Priority.ALWAYS);
         estimateHBox.getChildren().add(estimateComboBox);
 
         if (currentStory.getAcceptanceCriteria().isEmpty() || currentStory.getBacklog() == null) {
             estimateComboBox.disable();
+            estimateComboBox.setValue("-");
             Tooltip tool = new Tooltip("A Story must be assigned to a backlog and have at least one Acceptance "
                     + "criteria before an estimate can be given.");
             Tooltip.install(estimateHBox, tool);
@@ -82,13 +111,13 @@ public class StoryEditScene {
         descriptionTextArea.setText(currentStory.getDescription());
         priorityNumberField.setText(currentStory.getPriority().toString());
 
-        informationPane.getChildren().add(shortNameCustomField);
-        informationPane.getChildren().add(longNameTextField);
-        informationPane.getChildren().add(descriptionTextArea);
-        informationPane.getChildren().add(priorityNumberField);
-        informationPane.getChildren().add(estimateHBox);
-        informationPane.getChildren().add(buttons);
-
+        informationPane.getChildren().addAll(shortNameCustomField,
+                longNameTextField,
+                descriptionTextArea,
+                priorityNumberField,
+                estimateHBox,
+                readyStateCheck,
+                buttons);
 
         btnCancel.setOnAction((event) -> {
                 currentStory.switchToInfoScene();
@@ -125,7 +154,7 @@ public class StoryEditScene {
                             Integer.parseInt(priorityNumberField.getText()),
                             currentStory.getBacklog(),
                             estimateComboBox.getValue(),
-                            currentStory.getReady()
+                            readyStateCheck.selectedProperty().get()
                     );
 
                     currentStory.switchToInfoScene();

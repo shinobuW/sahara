@@ -259,22 +259,13 @@ public class Story extends TreeViewItem implements Serializable {
         return state;
     }
 
-    /**
-     * Sets the story ready state to ready
-     */
-    public void setToReady() {
-        Command relEdit = new StoryEditCommand(this, this.shortName, this.longName,
-                this.description, this.project, this.priority, this.backlog, this.estimate, true);
-        Global.commandManager.executeCommand(relEdit);
-    }
 
     /**
-     * Sets the ready state of the story to not ready
+     * Sets the story's ready state to the given boolean
+     * @param ready The boolean state to set
      */
-    public void setNotReady() {
-        Command relEdit = new StoryEditCommand(this, this.shortName, this.longName,
-                this.description, this.project, this.priority, this.backlog, this.estimate, false);
-        Global.commandManager.executeCommand(relEdit);
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
     /**
@@ -351,6 +342,15 @@ public class Story extends TreeViewItem implements Serializable {
         Element storyPriority = ReportGenerator.doc.createElement("priority");
         storyPriority.appendChild(ReportGenerator.doc.createTextNode(priority.toString()));
         storyElement.appendChild(storyPriority);
+
+        Element storyReady = ReportGenerator.doc.createElement("ready");
+        if (ready) {
+            storyReady.appendChild(ReportGenerator.doc.createTextNode("true"));
+        }
+        else {
+            storyReady.appendChild(ReportGenerator.doc.createTextNode("false"));
+        }
+        storyElement.appendChild(storyReady);
 
         Element teamFutureElements = ReportGenerator.doc.createElement("story-acceptance-criteria");
         for (AcceptanceCriteria acceptanceCriteria : this.acceptanceCriteria) {
@@ -490,6 +490,11 @@ public class Story extends TreeViewItem implements Serializable {
             this.oldBacklog = story.backlog;
             this.oldEstimate = story.estimate;
             this.oldReady = story.ready;
+
+            if (backlog == null) {
+                estimate = "-";
+                ready = false;
+            }
         }
 
         /**
