@@ -337,7 +337,7 @@ public class Story extends TreeViewItem implements Serializable {
         storyPriority.appendChild(ReportGenerator.doc.createTextNode(priority.toString()));
         storyElement.appendChild(storyPriority);
 
-        Element teamFutureElements = ReportGenerator.doc.createElement("acceptance-criteria");
+        Element teamFutureElements = ReportGenerator.doc.createElement("story-acceptance-criteria");
         for (AcceptanceCriteria acceptanceCriteria : this.acceptanceCriteria) {
             Element teamElement = acceptanceCriteria.generateXML();
             teamFutureElements.appendChild(teamElement);
