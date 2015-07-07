@@ -392,6 +392,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
         private Collection<Story> oldStories = new HashSet<>();
 
         private Map<Story, String> oldEstimateDict = new HashMap<>();
+        private Map<Story, Boolean> oldReadyStateDict = new HashMap<>();
 
         private BacklogEditCommand(Backlog backlog, String newShortName, String newLongName,
                                    String newDescription, Person newProductOwner,
@@ -416,6 +417,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
 
             for (Story story : oldStories) {
                 oldEstimateDict.put(story, story.getEstimate());
+                oldReadyStateDict.put(story, story.getReady());
             }
         }
 
@@ -461,6 +463,13 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
                 }
             }
 
+            Set<Story> removedStories = new HashSet<>(oldStories);
+            removedStories.removeAll(stories);
+            for (Story story : removedStories) {
+                story.setReady(false);
+                story.setEstimate("-");
+            }
+
             Collections.sort(backlog.stories, Story.StoryPriorityComparator);
         }
 
@@ -502,6 +511,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
 
             for (Story story : oldStories) {
                 story.setEstimate(oldEstimateDict.get(story));
+                story.setReady(oldReadyStateDict.get(story));
             }
 
             Collections.sort(backlog.stories, Story.StoryPriorityComparator);

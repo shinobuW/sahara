@@ -240,7 +240,6 @@ public class Story extends TreeViewItem implements Serializable {
      * @return the ready state
      */
     public boolean getReady() {
-        boolean ready = this.ready;
         return ready;
     }
 
