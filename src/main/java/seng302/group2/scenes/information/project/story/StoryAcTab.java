@@ -1,4 +1,4 @@
-package seng302.group2.scenes.information.story;
+package seng302.group2.scenes.information.project.story;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,4 +1,4 @@
-package seng302.group2.scenes.information.backlog;
+package seng302.group2.scenes.information.project.backlog;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

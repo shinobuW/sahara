@@ -1,4 +1,4 @@
-package seng302.group2.scenes.information.release;
+package seng302.group2.scenes.information.project.release;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;

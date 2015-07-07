@@ -3,7 +3,7 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.information.release.ReleaseCategoryScene;
+import seng302.group2.scenes.information.project.release.ReleaseCategoryScene;
 import seng302.group2.scenes.listdisplay.categories.Category;
 import seng302.group2.scenes.listdisplay.categories.subCategory.project.ReleaseCategory;
 import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrategy;

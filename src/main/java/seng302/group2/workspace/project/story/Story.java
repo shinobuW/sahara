@@ -8,7 +8,6 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.StoryInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
-import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
@@ -44,7 +43,7 @@ public class Story extends TreeViewItem implements Serializable {
     private Integer priority;
     private Backlog backlog;
     private String estimate;
-    private boolean ready;
+    private boolean ready = false;
     private transient ObservableList<AcceptanceCriteria> acceptanceCriteria = observableArrayList();
     private List<AcceptanceCriteria> serializableAcceptanceCriteria = new ArrayList<>();
 
@@ -59,7 +58,6 @@ public class Story extends TreeViewItem implements Serializable {
         this.project = null;
         this.priority = 0;
         this.estimate = "-";
-        this.ready = false;
 
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }

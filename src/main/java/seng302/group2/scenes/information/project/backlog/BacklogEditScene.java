@@ -1,4 +1,4 @@
-package seng302.group2.scenes.information.backlog;
+package seng302.group2.scenes.information.project.backlog;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;

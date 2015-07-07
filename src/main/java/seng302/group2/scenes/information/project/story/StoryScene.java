@@ -1,4 +1,4 @@
-package seng302.group2.scenes.information.story;
+package seng302.group2.scenes.information.project.story;
 
 import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
