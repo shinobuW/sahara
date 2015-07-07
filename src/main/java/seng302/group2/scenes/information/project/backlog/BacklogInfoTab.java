@@ -46,17 +46,21 @@ public class BacklogInfoTab extends Tab {
 
         TableColumn storyCol = new TableColumn("Story");
         storyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
-
         storyCol.prefWidthProperty().bind(storyTable.widthProperty()
-                .subtract(2).divide(100).multiply(80));
+                .subtract(2).divide(100).multiply(60));
 
         TableColumn priorityCol = new TableColumn("Priority");
         priorityCol.setCellValueFactory(new PropertyValueFactory<Story, Integer>("priority"));
         priorityCol.prefWidthProperty().bind(storyTable.widthProperty()
                 .subtract(2).divide(100).multiply(20));
 
+        TableColumn readyCol = new TableColumn("Ready");
+        readyCol.setCellValueFactory(new PropertyValueFactory<Story, Boolean>("ready"));
+        readyCol.prefWidthProperty().bind(storyTable.widthProperty()
+                .subtract(2).divide(100).multiply(20));
+
         storyTable.setItems(data);
-        storyTable.getColumns().addAll(priorityCol, storyCol);
+        storyTable.getColumns().addAll(priorityCol, storyCol, readyCol);
 
         basicInfoPane.getChildren().add(title);
         basicInfoPane.getChildren().add(new Label("Short Name: "

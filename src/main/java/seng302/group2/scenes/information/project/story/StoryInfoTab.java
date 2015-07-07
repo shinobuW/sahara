@@ -16,6 +16,7 @@ import seng302.group2.workspace.project.story.Story;
  */
 public class StoryInfoTab extends Tab {
     public StoryInfoTab(Story currentStory) {
+
         this.setText("Basic Information");
 
         Pane basicInfoPane = new VBox(10);

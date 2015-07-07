@@ -171,18 +171,30 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
     private class DeleteAcCommand implements Command {
         private AcceptanceCriteria acceptanceCriteria;
         private Story story;
+        private boolean oldStoryReady = false;
+        private String oldEstimate;
 
         DeleteAcCommand(AcceptanceCriteria ac) {
             this.acceptanceCriteria = ac;
             this.story = ac.story;
+            if (story != null) {
+                oldStoryReady = story.getReady();
+                oldEstimate = story.getEstimate();
+            }
         }
 
         public void execute() {
             story.getAcceptanceCriteria().remove(acceptanceCriteria);
+            if (story.getAcceptanceCriteria().isEmpty()) {
+                story.setReady(false);
+                story.setEstimate("-");
+            }
         }
 
         public void undo() {
             story.getAcceptanceCriteria().add(acceptanceCriteria);
+            story.setReady(oldStoryReady);
+            story.setEstimate(oldEstimate);
         }
 
         /**

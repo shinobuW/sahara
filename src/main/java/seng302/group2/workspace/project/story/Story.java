@@ -240,7 +240,6 @@ public class Story extends TreeViewItem implements Serializable {
      * @return the ready state
      */
     public boolean getReady() {
-        boolean ready = this.ready;
         return ready;
     }
 
@@ -259,22 +258,13 @@ public class Story extends TreeViewItem implements Serializable {
         return state;
     }
 
-    /**
-     * Sets the story ready state to ready
-     */
-    public void setToReady() {
-        Command relEdit = new StoryEditCommand(this, this.shortName, this.longName,
-                this.description, this.project, this.priority, this.backlog, this.estimate, true);
-        Global.commandManager.executeCommand(relEdit);
-    }
 
     /**
-     * Sets the ready state of the story to not ready
+     * Sets the story's ready state to the given boolean
+     * @param ready The boolean state to set
      */
-    public void setNotReady() {
-        Command relEdit = new StoryEditCommand(this, this.shortName, this.longName,
-                this.description, this.project, this.priority, this.backlog, this.estimate, false);
-        Global.commandManager.executeCommand(relEdit);
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
     /**
@@ -351,6 +341,15 @@ public class Story extends TreeViewItem implements Serializable {
         Element storyPriority = ReportGenerator.doc.createElement("priority");
         storyPriority.appendChild(ReportGenerator.doc.createTextNode(priority.toString()));
         storyElement.appendChild(storyPriority);
+
+        Element storyReady = ReportGenerator.doc.createElement("ready");
+        if (ready) {
+            storyReady.appendChild(ReportGenerator.doc.createTextNode("true"));
+        }
+        else {
+            storyReady.appendChild(ReportGenerator.doc.createTextNode("false"));
+        }
+        storyElement.appendChild(storyReady);
 
         Element teamFutureElements = ReportGenerator.doc.createElement("story-acceptance-criteria");
         for (AcceptanceCriteria acceptanceCriteria : this.acceptanceCriteria) {
@@ -490,6 +489,14 @@ public class Story extends TreeViewItem implements Serializable {
             this.oldBacklog = story.backlog;
             this.oldEstimate = story.estimate;
             this.oldReady = story.ready;
+
+            if (backlog == null) {
+                estimate = "-";
+                ready = false;
+            }
+            if (estimate.equals("-")) {
+                ready = false;
+            }
         }
 
         /**
@@ -510,8 +517,7 @@ public class Story extends TreeViewItem implements Serializable {
                 Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
             }
 
-            /* If the story if being added to a backlog in the project, remove it from the
-            unassigned stories.*/
+            /* If the story if being added to a backlog in the project, remove it from the unassigned stories.*/
             if (backlog != null && project != null) {
                 project.getUnallocatedStories().remove(story);
             }
@@ -532,8 +538,7 @@ public class Story extends TreeViewItem implements Serializable {
             Collections.sort(project.getUnallocatedStories(), Story.StoryNameComparator);
             Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
 
-            /* If the story if being added back into a backlog in the project, remove it from the
-            unassigned stories.*/
+            /* If the story if being added back into a backlog in the project, remove it from the unassigned stories.*/
             if (oldBacklog != null && oldProject != null) {
                 oldProject.getUnallocatedStories().remove(story);
             }
