@@ -38,6 +38,8 @@ public class StoryInfoTab extends Tab {
                 + currentStory.getPriority()));
         basicInfoPane.getChildren().add(new Label("Estimate: "
                 + currentStory.getEstimate()));
+        basicInfoPane.getChildren().add(new Label("State: "
+                + currentStory.getReadyState()));
         basicInfoPane.getChildren().add(new Label("Story Creator: "
                 + currentStory.getCreator()));
         basicInfoPane.getChildren().add(btnEdit);

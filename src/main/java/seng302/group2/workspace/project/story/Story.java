@@ -245,6 +245,21 @@ public class Story extends TreeViewItem implements Serializable {
     }
 
     /**
+     * A method to return the ready state of a story as a string
+     * @return The ready state of a story as a string
+     */
+    public String getReadyState() {
+        String state;
+        if (ready) {
+            state = "Ready";
+        }
+        else {
+            state = "Not Ready";
+        }
+        return state;
+    }
+
+    /**
      * Sets the story ready state to ready
      */
     public void setToReady() {
