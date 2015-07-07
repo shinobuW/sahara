@@ -367,7 +367,7 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
     @Override
     public Element generateXML() {
         Element teamElement = ReportGenerator.doc.createElement("team");
-        System.out.println(shortName);
+
         //WorkSpace Elements
         Element teamShortName = ReportGenerator.doc.createElement("identifier");
         teamShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
@@ -376,23 +376,37 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         Element teamDescription = ReportGenerator.doc.createElement("description");
         teamDescription.appendChild(ReportGenerator.doc.createTextNode(description));
         teamElement.appendChild(teamDescription);
-
+        System.out.println(getProjectAllocations());
         if (getCurrentAllocation() != null) {
             Element projectAllocatedTo = ReportGenerator.doc.createElement("assigned-project");
             projectAllocatedTo.appendChild(ReportGenerator.doc.createTextNode(getCurrentAllocation()
                     .getProject().toString()));
             teamElement.appendChild(projectAllocatedTo);
 
-            Element teamStartDate = ReportGenerator.doc.createElement("allocation-start-date");
+            Element teamStartDate = ReportGenerator.doc.createElement("current-allocation-start");
             teamStartDate.appendChild(ReportGenerator.doc.createTextNode(this.getCurrentAllocation()
                     .getStartDate().format(Global.dateFormatter)));
             teamElement.appendChild(teamStartDate);
 
-            Element teamEndDate = ReportGenerator.doc.createElement("allocation-end-date");
+            Element teamEndDate = ReportGenerator.doc.createElement("current-allocation-end");
             teamEndDate.appendChild(ReportGenerator.doc.createTextNode(this.getCurrentAllocation()
                     .getEndDate().format(Global.dateFormatter)));
             teamElement.appendChild(teamEndDate);
         }
+
+        Element projectPreviousElements = ReportGenerator.doc.createElement("previous-allocations");
+        for (Allocation allocation : this.getPastAllocations()) {
+            Element projectElement = allocation.generateXML();
+            projectPreviousElements.appendChild(projectElement);
+        }
+        teamElement.appendChild(projectPreviousElements);
+
+        Element projectFutureElements = ReportGenerator.doc.createElement("future-allocations");
+        for (Allocation allocation : this.getFutureAllocations()) {
+            Element projectElement = allocation.generateXML();
+            projectFutureElements.appendChild(projectElement);
+        }
+        teamElement.appendChild(projectFutureElements);
 
         Element productOwnerElement = ReportGenerator.doc.createElement("product-owner");
         if (productOwner != null) {
@@ -435,6 +449,48 @@ public class Team extends TreeViewItem implements Serializable, Comparable<Team>
         teamElement.appendChild(othersElement);
 
         return teamElement;
+    }
+
+    /**
+     * Gets a set of the teams that have been previously assigned
+     * to the project through the team allocations
+     *
+     * @return a set of the teams that have been assigned to the project
+     */
+    public Set<Allocation> getPastAllocations() {
+        Set<Allocation> allocations = new HashSet<>();
+        LocalDate now = LocalDate.now();
+        for (Allocation alloc : projectAllocations) {
+            if (alloc.getStartDate().isBefore(now)
+                    && alloc.getEndDate().isBefore(now)) {
+                allocations.add(alloc);
+            }
+        }
+        return allocations;
+    }
+
+    /**
+     * Gets a set of the allocations the team has for the future
+     *
+     * @return a set of the allocations
+     */
+    public Set<Allocation> getFutureAllocations() {
+        Set<Allocation> allocations = new HashSet<>();
+        LocalDate now = LocalDate.now();
+        for (Allocation alloc : projectAllocations) {
+            if (alloc.getEndDate() != null) {
+                if (alloc.getStartDate().isAfter(now)
+                        && alloc.getEndDate().isAfter(now)) {
+                    allocations.add(alloc);
+                }
+            }
+            else {
+                if (alloc.getStartDate().isAfter(now)) {
+                    allocations.add(alloc);
+                }
+            }
+        }
+        return allocations;
     }
 
     /**

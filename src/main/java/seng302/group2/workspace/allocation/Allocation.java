@@ -138,12 +138,16 @@ public class Allocation extends TreeViewItem implements Serializable, Comparable
      */
     @Override
     public Element generateXML() {
-        Element allocationElement = ReportGenerator.doc.createElement("team");
+        Element allocationElement = ReportGenerator.doc.createElement("allocation");
 
         //WorkSpace Elements
         Element allocatedTeam = ReportGenerator.doc.createElement("team-name");
-        allocatedTeam.appendChild(ReportGenerator.doc.createTextNode(getTeam().toString()));
+        allocatedTeam.appendChild(ReportGenerator.doc.createTextNode(team.toString()));
         allocationElement.appendChild(allocatedTeam);
+
+        Element allocatedProject = ReportGenerator.doc.createElement("project-name");
+        allocatedProject.appendChild(ReportGenerator.doc.createTextNode(project.toString()));
+        allocationElement.appendChild(allocatedProject);
 
         Element allocationStartDate = ReportGenerator.doc.createElement("allocation-start-date");
         allocationStartDate.appendChild(ReportGenerator.doc.createTextNode(getStartDate().format(

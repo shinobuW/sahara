@@ -96,22 +96,22 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
     public void addListeners() {
         //System.out.println("Listeners added");
         releases.addListener((ListChangeListener<Release>) change -> {
-                if (change.next() && !change.wasPermutated()) {
-                    Collections.sort(releases);
-                }
-            });
+            if (change.next() && !change.wasPermutated()) {
+                Collections.sort(releases);
+            }
+        });
 
         unallocatedStories.addListener((ListChangeListener<Story>) change -> {
-                if (change.next() && !change.wasPermutated()) {
-                    Collections.sort(unallocatedStories, Story.StoryNameComparator);
-                }
-            });
+            if (change.next() && !change.wasPermutated()) {
+                Collections.sort(unallocatedStories, Story.StoryNameComparator);
+            }
+        });
 
         backlogs.addListener((ListChangeListener<Backlog>) change -> {
-                if (change.next() && !change.wasPermutated()) {
-                    Collections.sort(backlogs);
-                }
-            });
+            if (change.next() && !change.wasPermutated()) {
+                Collections.sort(backlogs);
+            }
+        });
         for (Backlog bl : backlogs) {
             bl.addListeners();
         }
@@ -545,7 +545,6 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
      */
     @Override
     public Element generateXML() {
-        System.out.println(shortName);
         Element projectElement = ReportGenerator.doc.createElement("project");
 
         //WorkSpace Elements
@@ -571,14 +570,14 @@ public class Project extends TreeViewItem implements Serializable, Comparable<Pr
         }
         projectElement.appendChild(teamElements);
 
-        Element teamPreviousElements = ReportGenerator.doc.createElement("previous-teams");
+        Element teamPreviousElements = ReportGenerator.doc.createElement("previous-allocations");
         for (Allocation allocation : this.getPastAllocations()) {
             Element teamElement = allocation.generateXML();
             teamPreviousElements.appendChild(teamElement);
         }
         projectElement.appendChild(teamPreviousElements);
 
-        Element teamFutureElements = ReportGenerator.doc.createElement("future-teams");
+        Element teamFutureElements = ReportGenerator.doc.createElement("future-allocations");
         for (Allocation allocation : this.getFutureAllocations()) {
             Element teamElement = allocation.generateXML();
             teamFutureElements.appendChild(teamElement);
