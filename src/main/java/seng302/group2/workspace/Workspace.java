@@ -763,52 +763,7 @@ public class Workspace extends TreeViewItem implements Serializable {
                 ReportGenerator.generatedItems.remove(item);
             }
         }
-//
-//        while (ReportGenerator.iterator < ReportGenerator.generatedItems.size()) {
-//            TreeViewItem item = ReportGenerator.generatedItems.get(ReportGenerator.iterator);
-//            Element xmlElement = item.generateXML();
-//            if (xmlElement != null) {
-//                workSpaceElement.appendChild(xmlElement);
-//            }
-//            ReportGenerator.generatedItems.remove(item);
-//        }
-//
-//        Element projectElements = ReportGenerator.doc.createElement("projects");
-//        for (Project project : this.getProjects()) {
-//            Element projectElement = project.generateXML();
-//            projectElements.appendChild(projectElement);
-//        }
-//        workSpaceElement.appendChild(projectElements);
-//
-//        Element roleElements = ReportGenerator.doc.createElement("roles");
-//        for (Role role : this.getRoles()) {
-//            Element roleElement = role.generateXML();
-//            roleElements.appendChild(roleElement);
-//
-//        }
-//        workSpaceElement.appendChild(roleElements);
-//
-//        Element teamElements = ReportGenerator.doc.createElement("unassigned-teams");
-//        for (Team team : this.getTeams()) {
-//            if (team.getCurrentAllocation() == null && !team.isUnassignedTeam()) {
-//                System.out.println(team + " Team name");
-//                Element teamElement = team.generateXML();
-//                teamElements.appendChild(teamElement);
-//            }
-//        }
-//        workSpaceElement.appendChild(teamElements);
-//
-//        Element peopleElements = ReportGenerator.doc.createElement("unassigned-people");
-//        for (Team team : this.getTeams()) {
-//            if (team.isUnassignedTeam()) {
-//                for (Person person : team.getPeople()) {
-//                    Element personElement = person.generateXML();
-//                    peopleElements.appendChild(personElement);
-//                }
-//            }
-//        }
-//        workSpaceElement.appendChild(peopleElements);
-//
+
         return workSpaceElement;
     }
 
