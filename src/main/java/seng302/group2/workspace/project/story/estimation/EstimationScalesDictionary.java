@@ -16,9 +16,9 @@ public class EstimationScalesDictionary {
     private static EstimationScalesDictionary scales;
     private Map<String, ArrayList<String>> estimationScaleDict = new HashMap<>();
 
-    private static Map<defaultValues, String> defaultValuesDict = new HashMap<>();
+    private static Map<DefaultValues, String> defaultValuesDict = new HashMap<>();
 
-    public enum defaultValues {
+    public enum DefaultValues {
         NONE,
         ZERO,
         INFINITE,
@@ -33,10 +33,10 @@ public class EstimationScalesDictionary {
      */
     static {
         defaultValuesDict = new HashMap<>();
-        defaultValuesDict.put(defaultValues.NONE, "-");
-        defaultValuesDict.put(defaultValues.ZERO, "0");
-        defaultValuesDict.put(defaultValues.INFINITE, infSymbol);
-        defaultValuesDict.put(defaultValues.QUESTION, "?");
+        defaultValuesDict.put(DefaultValues.NONE, "-");
+        defaultValuesDict.put(DefaultValues.ZERO, "0");
+        defaultValuesDict.put(DefaultValues.INFINITE, infSymbol);
+        defaultValuesDict.put(DefaultValues.QUESTION, "?");
     }
 
 
@@ -45,7 +45,7 @@ public class EstimationScalesDictionary {
      * @param value the value to return the string of
      * @return the string value for the given default scale enum
      */
-    public static String getScaleValue(defaultValues value) {
+    public static String getScaleValue(DefaultValues value) {
         return defaultValuesDict.get(value);
     }
 
@@ -101,10 +101,10 @@ public class EstimationScalesDictionary {
      * @param scaleValues An arraylist of strings representing the values to be used in the new scale.
      */
     public void createScales(String scaleName, ArrayList<String> scaleValues) {
-        scaleValues.add(0, defaultValuesDict.get(defaultValues.NONE));
-        scaleValues.add(1, defaultValuesDict.get(defaultValues.ZERO));
-        scaleValues.add(defaultValuesDict.get(defaultValues.INFINITE));
-        scaleValues.add(defaultValuesDict.get(defaultValues.QUESTION));
+        scaleValues.add(0, defaultValuesDict.get(DefaultValues.NONE));
+        scaleValues.add(1, defaultValuesDict.get(DefaultValues.ZERO));
+        scaleValues.add(defaultValuesDict.get(DefaultValues.INFINITE));
+        scaleValues.add(defaultValuesDict.get(DefaultValues.QUESTION));
 
         estimationScaleDict.put(scaleName, scaleValues);
     }

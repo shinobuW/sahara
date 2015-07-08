@@ -43,7 +43,7 @@ public class Story extends TreeViewItem implements Serializable {
     private Project project;
     private Integer priority;
     private Backlog backlog;
-    private String estimate = EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.defaultValues.NONE);
+    private String estimate = EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.DefaultValues.NONE);
     private boolean ready = false;
     private transient ObservableList<AcceptanceCriteria> acceptanceCriteria = observableArrayList();
     private List<AcceptanceCriteria> serializableAcceptanceCriteria = new ArrayList<>();
@@ -489,11 +489,11 @@ public class Story extends TreeViewItem implements Serializable {
             this.oldReady = story.ready;
 
             if (backlog == null) {
-                estimate = EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.defaultValues.NONE);
+                estimate = EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.DefaultValues.NONE);
                 ready = false;
             }
             if (estimate.equals(EstimationScalesDictionary.getScaleValue(
-                    EstimationScalesDictionary.defaultValues.NONE))) {
+                    EstimationScalesDictionary.DefaultValues.NONE))) {
                 ready = false;
             }
         }

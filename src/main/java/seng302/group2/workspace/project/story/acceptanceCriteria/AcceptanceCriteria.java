@@ -189,7 +189,7 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
             if (story.getAcceptanceCriteria().isEmpty()) {
                 story.setReady(false);
                 story.setEstimate(EstimationScalesDictionary.getScaleValue(
-                        EstimationScalesDictionary.defaultValues.NONE));
+                        EstimationScalesDictionary.DefaultValues.NONE));
             }
         }
 

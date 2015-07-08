@@ -439,7 +439,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
             if (!scale.equals(oldScale)) {
                 for (Story story : stories) {
                     story.setEstimate(EstimationScalesDictionary.getScaleValue(
-                            EstimationScalesDictionary.defaultValues.NONE));
+                            EstimationScalesDictionary.DefaultValues.NONE));
                     story.setReady(false);
                 }
             }
@@ -471,7 +471,7 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
             for (Story story : removedStories) {
                 story.setReady(false);
                 story.setEstimate(EstimationScalesDictionary.getScaleValue(
-                        EstimationScalesDictionary.defaultValues.NONE));
+                        EstimationScalesDictionary.DefaultValues.NONE));
             }
 
             Collections.sort(backlog.stories, Story.StoryPriorityComparator);

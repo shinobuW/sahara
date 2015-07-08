@@ -71,7 +71,7 @@ public class StoryEditScene {
         readyStateCheck.setSelected(currentStory.getReady());
         if (currentStory.getBacklog() == null
                 || currentStory.getEstimate().equals(EstimationScalesDictionary.getScaleValue(
-                EstimationScalesDictionary.defaultValues.NONE))
+                EstimationScalesDictionary.DefaultValues.NONE))
                 || currentStory.getAcceptanceCriteria().isEmpty()) {
             readyStateCheck.setSelected(false);
             readyStateCheck.setDisable(true);
@@ -83,7 +83,7 @@ public class StoryEditScene {
         estimateComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
                 if (currentStory.getBacklog() == null
                         || (newValue != null && newValue.equals(EstimationScalesDictionary.getScaleValue(
-                        EstimationScalesDictionary.defaultValues.NONE)))
+                        EstimationScalesDictionary.DefaultValues.NONE)))
                         || currentStory.getAcceptanceCriteria().isEmpty()) {
                     readyStateCheck.setSelected(false);
                     readyStateCheck.setDisable(true);
@@ -99,7 +99,8 @@ public class StoryEditScene {
 
         if (currentStory.getAcceptanceCriteria().isEmpty() || currentStory.getBacklog() == null) {
             estimateComboBox.disable();
-            estimateComboBox.setValue(EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.defaultValues.NONE));
+            estimateComboBox.setValue(EstimationScalesDictionary.getScaleValue(
+                    EstimationScalesDictionary.DefaultValues.NONE));
             Tooltip tool = new Tooltip("A Story must be assigned to a backlog and have at least one Acceptance "
                     + "criteria before an estimate can be given.");
             Tooltip.install(estimateHBox, tool);
