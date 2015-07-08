@@ -16,6 +16,7 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 
 import java.util.ArrayList;
 
@@ -69,7 +70,8 @@ public class StoryEditScene {
 
         readyStateCheck.setSelected(currentStory.getReady());
         if (currentStory.getBacklog() == null
-                || currentStory.getEstimate().equals("-")
+                || currentStory.getEstimate().equals(EstimationScalesDictionary.getScaleValue(
+                EstimationScalesDictionary.defaultValues.NONE))
                 || currentStory.getAcceptanceCriteria().isEmpty()) {
             readyStateCheck.setSelected(false);
             readyStateCheck.setDisable(true);
@@ -80,7 +82,8 @@ public class StoryEditScene {
 
         estimateComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
                 if (currentStory.getBacklog() == null
-                        || (newValue != null && newValue.equals("-"))
+                        || (newValue != null && newValue.equals(EstimationScalesDictionary.getScaleValue(
+                        EstimationScalesDictionary.defaultValues.NONE)))
                         || currentStory.getAcceptanceCriteria().isEmpty()) {
                     readyStateCheck.setSelected(false);
                     readyStateCheck.setDisable(true);
@@ -96,7 +99,7 @@ public class StoryEditScene {
 
         if (currentStory.getAcceptanceCriteria().isEmpty() || currentStory.getBacklog() == null) {
             estimateComboBox.disable();
-            estimateComboBox.setValue("-");
+            estimateComboBox.setValue(EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.defaultValues.NONE));
             Tooltip tool = new Tooltip("A Story must be assigned to a backlog and have at least one Acceptance "
                     + "criteria before an estimate can be given.");
             Tooltip.install(estimateHBox, tool);

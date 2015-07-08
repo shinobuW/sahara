@@ -11,6 +11,7 @@ import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
+import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 
 import java.io.Serializable;
 import java.util.*;
@@ -42,10 +43,13 @@ public class Story extends TreeViewItem implements Serializable {
     private Project project;
     private Integer priority;
     private Backlog backlog;
-    private String estimate;
+    private String estimate = EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.defaultValues.NONE);
     private boolean ready = false;
     private transient ObservableList<AcceptanceCriteria> acceptanceCriteria = observableArrayList();
     private List<AcceptanceCriteria> serializableAcceptanceCriteria = new ArrayList<>();
+
+    public static String stateReady = "Ready";
+    public static String stateNotReady = "Not Ready";
 
     /**
      * Basic Story constructor
@@ -57,7 +61,6 @@ public class Story extends TreeViewItem implements Serializable {
         this.creator = null;
         this.project = null;
         this.priority = 0;
-        this.estimate = "-";
 
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }
@@ -87,7 +90,6 @@ public class Story extends TreeViewItem implements Serializable {
         this.creator = creator;
         this.project = project;
         this.priority = priority;
-        this.estimate = "-";
         this.ready = false;
 
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
@@ -248,14 +250,10 @@ public class Story extends TreeViewItem implements Serializable {
      * @return The ready state of a story as a string
      */
     public String getReadyState() {
-        String state;
         if (ready) {
-            state = "Ready";
+            return stateReady;
         }
-        else {
-            state = "Not Ready";
-        }
-        return state;
+        return stateNotReady;
     }
 
 
@@ -491,10 +489,11 @@ public class Story extends TreeViewItem implements Serializable {
             this.oldReady = story.ready;
 
             if (backlog == null) {
-                estimate = "-";
+                estimate = EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.defaultValues.NONE);
                 ready = false;
             }
-            if (estimate.equals("-")) {
+            if (estimate.equals(EstimationScalesDictionary.getScaleValue(
+                    EstimationScalesDictionary.defaultValues.NONE))) {
                 ready = false;
             }
         }

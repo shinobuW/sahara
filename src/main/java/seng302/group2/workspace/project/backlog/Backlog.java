@@ -12,6 +12,7 @@ import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 
 import java.io.Serializable;
 import java.util.*;
@@ -437,7 +438,8 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
 
             if (!scale.equals(oldScale)) {
                 for (Story story : stories) {
-                    story.setEstimate("-");
+                    story.setEstimate(EstimationScalesDictionary.getScaleValue(
+                            EstimationScalesDictionary.defaultValues.NONE));
                     story.setReady(false);
                 }
             }
@@ -468,7 +470,8 @@ public class Backlog extends TreeViewItem implements Serializable, Comparable<Ba
             removedStories.removeAll(stories);
             for (Story story : removedStories) {
                 story.setReady(false);
-                story.setEstimate("-");
+                story.setEstimate(EstimationScalesDictionary.getScaleValue(
+                        EstimationScalesDictionary.defaultValues.NONE));
             }
 
             Collections.sort(backlog.stories, Story.StoryPriorityComparator);

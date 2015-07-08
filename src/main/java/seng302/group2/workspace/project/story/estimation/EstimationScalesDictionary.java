@@ -16,20 +16,65 @@ public class EstimationScalesDictionary {
     private static EstimationScalesDictionary scales;
     private Map<String, ArrayList<String>> estimationScaleDict = new HashMap<>();
 
+    private static Map<defaultValues, String> defaultValuesDict = new HashMap<>();
+
+    public enum defaultValues {
+        NONE,
+        ZERO,
+        INFINITE,
+        QUESTION
+    }
+
+    public static String infSymbol = "\u221E";
+
+
+    /**
+     * Initialises the default values dictionary for use in all estimation scales
+     */
+    static {
+        defaultValuesDict = new HashMap<>();
+        defaultValuesDict.put(defaultValues.NONE, "-");
+        defaultValuesDict.put(defaultValues.ZERO, "0");
+        defaultValuesDict.put(defaultValues.INFINITE, infSymbol);
+        defaultValuesDict.put(defaultValues.QUESTION, "?");
+    }
+
+
+    /**
+     * Looks up the default values dictionary to find the string value for the given default scale enum
+     * @param value the value to return the string of
+     * @return the string value for the given default scale enum
+     */
+    public static String getScaleValue(defaultValues value) {
+        return defaultValuesDict.get(value);
+    }
+
+
+    /**
+     * Creates the default scales for use in the application
+     */
+    private void createDefaultScales() {
+        ArrayList<String> valueList = new ArrayList<>(Arrays.asList("0.5", "1", "2", "3", "5", "8", "13", "20",
+                "40", "100"));
+        createScales("Fibonacci", valueList);
+
+        valueList = new ArrayList<>(Arrays.asList("Chihuahua", "Pug", "Bulldog", "Shiba Inu", "Border Collie",
+                "Border Collie", "Siberian Husky", "German Shepherd", "Great Dane"));
+        createScales("Dog Breeds", valueList);
+
+        valueList = new ArrayList<>(Arrays.asList("2XS", "XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL"));
+        createScales("T-Shirt Sizes", valueList);
+    }
+
+
     /**
      * The private constructor for the estimationScalesDictionary class. Is only accessible by itself,
      * to allow conformance to the singleton pattern.
      */
     private EstimationScalesDictionary() {
-        ArrayList<String> valueList = new ArrayList<>(Arrays.asList("0.5", "1", "2", "3", "5", "8", "13", "20",
-                "40", "100"));
-        createScales("Fibonacci", valueList);
-        valueList = new ArrayList<>(Arrays.asList("Chihuahua", "Pug", "Bulldog", "Shiba Inu", "Border Collie",
-                "Border Collie", "Siberian Husky", "German Shepherd", "Great Dane"));
-        createScales("Dog Breeds", valueList);
-        valueList = new ArrayList<>(Arrays.asList("2XS", "XS", "S", "M", "L", "XL", "2XL", "3XL", "4XL"));
-        createScales("T-Shirt Sizes", valueList);
+        createDefaultScales();
     }
+
 
     /**
      * The publicly accessible method for addition of the estimation scale dictionary to a workspace.
@@ -56,11 +101,10 @@ public class EstimationScalesDictionary {
      * @param scaleValues An arraylist of strings representing the values to be used in the new scale.
      */
     public void createScales(String scaleName, ArrayList<String> scaleValues) {
-        scaleValues.add(0, "-");
-        scaleValues.add(1, "0");
-        scaleValues.add("inf");
-        scaleValues.add("?");
-
+        scaleValues.add(0, defaultValuesDict.get(defaultValues.NONE));
+        scaleValues.add(1, defaultValuesDict.get(defaultValues.ZERO));
+        scaleValues.add(defaultValuesDict.get(defaultValues.INFINITE));
+        scaleValues.add(defaultValuesDict.get(defaultValues.QUESTION));
 
         estimationScaleDict.put(scaleName, scaleValues);
     }

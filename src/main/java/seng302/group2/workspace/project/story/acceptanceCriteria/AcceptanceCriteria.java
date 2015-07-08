@@ -8,6 +8,7 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -187,7 +188,8 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
             story.getAcceptanceCriteria().remove(acceptanceCriteria);
             if (story.getAcceptanceCriteria().isEmpty()) {
                 story.setReady(false);
-                story.setEstimate("-");
+                story.setEstimate(EstimationScalesDictionary.getScaleValue(
+                        EstimationScalesDictionary.defaultValues.NONE));
             }
         }
 

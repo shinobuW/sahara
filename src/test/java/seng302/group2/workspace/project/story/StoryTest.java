@@ -162,6 +162,25 @@ public class StoryTest {
 
 
     /**
+     * Test Ready and Ready State methods
+     */
+    @Test
+    public void testReadyState() {
+        Story story = new Story();
+        Assert.assertFalse(story.getReady());
+        Assert.assertEquals(Story.stateNotReady, story.getReadyState());
+
+        story.setReady(true);
+        Assert.assertTrue(story.getReady());
+        Assert.assertEquals(Story.stateReady, story.getReadyState());
+
+        story.setReady(false);
+        Assert.assertFalse(story.getReady());
+        Assert.assertEquals(Story.stateNotReady, story.getReadyState());
+    }
+
+
+    /**
      * Test AC interaction
      */
     @Test
