@@ -47,6 +47,8 @@ public class Story extends TreeViewItem implements Serializable {
     private boolean ready = false;
     private transient ObservableList<AcceptanceCriteria> acceptanceCriteria = observableArrayList();
     private List<AcceptanceCriteria> serializableAcceptanceCriteria = new ArrayList<>();
+    private Set<Story> dependencies = new HashSet<>();
+
 
     public static String stateReady = "Ready";
     public static String stateNotReady = "Not Ready";
@@ -81,6 +83,7 @@ public class Story extends TreeViewItem implements Serializable {
      * @param creator     creator of the story
      * @param project     project the story belongs to
      * @param priority    the projects priority
+     *
      */
     public Story(String shortName, String longName, String description, String creator,
                  Project project, Integer priority) {
@@ -210,6 +213,24 @@ public class Story extends TreeViewItem implements Serializable {
      */
     public Backlog getBacklog() {
         return this.backlog;
+    }
+
+    /**
+     * Gets the dependencies this story has.
+     *
+     * @return the set of dependencies
+     */
+    public Set<Story> getDependencies() {
+        return this.dependencies;
+    }
+
+    /**
+     * Gets the dependencies this story has.
+     *
+     * @return the set of dependencies
+     */
+    public void setDependencies(Story story) {
+        this.dependencies.add(story);
     }
 
     /**

@@ -1,14 +1,15 @@
 package seng302.group2.scenes.information.project.story;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.workspace.project.story.Story;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * The story information tab.
@@ -30,6 +31,24 @@ public class StoryInfoTab extends Tab {
 
         Button btnEdit = new Button("Edit");
 
+        TableView<Story> dependenciesTable = new TableView<>();
+        dependenciesTable.setEditable(true);
+        dependenciesTable.setPrefWidth(500);
+        dependenciesTable.setPrefHeight(200);
+        dependenciesTable.setPlaceholder(new Label("There are currently no stories dependant on this story."));
+        dependenciesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        ObservableList<Story> data = observableArrayList();
+        data.addAll(currentStory.getDependencies());
+
+        TableColumn storyCol = new TableColumn("Dependencies");
+        storyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
+        storyCol.prefWidthProperty().bind(dependenciesTable.widthProperty()
+                .subtract(2).divide(100).multiply(60));
+
+        dependenciesTable.setItems(data);
+        dependenciesTable.getColumns().addAll(storyCol);
+
         basicInfoPane.getChildren().add(title);
         basicInfoPane.getChildren().add(new Label("Story Description: "
                 + currentStory.getDescription()));
@@ -43,6 +62,7 @@ public class StoryInfoTab extends Tab {
                 + currentStory.getReadyState()));
         basicInfoPane.getChildren().add(new Label("Story Creator: "
                 + currentStory.getCreator()));
+        basicInfoPane.getChildren().add(dependenciesTable);
         basicInfoPane.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) -> {

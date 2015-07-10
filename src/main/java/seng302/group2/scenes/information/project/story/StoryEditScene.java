@@ -1,11 +1,9 @@
 package seng302.group2.scenes.information.project.story;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -20,6 +18,7 @@ import seng302.group2.workspace.project.story.estimation.EstimationScalesDiction
 
 import java.util.ArrayList;
 
+import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.util.validation.PriorityFieldValidator.validatePriorityField;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
@@ -58,6 +57,12 @@ public class StoryEditScene {
 
         CheckBox readyStateCheck = new CheckBox("Ready?");
 
+        Button btnAssign = new Button("<");
+        Button btnUnassign = new Button(">");
+        VBox assignmentButtons = new VBox();
+        assignmentButtons.spacingProperty().setValue(10);
+        assignmentButtons.getChildren().addAll(btnAssign, btnUnassign);
+        assignmentButtons.setAlignment(Pos.CENTER);
 
         String key = currentStory.getBacklog().getScale();
         ArrayList<String> valueList = Global.currentWorkspace.getEstimationScales().getEstimationScaleDict().get(key);
@@ -115,12 +120,46 @@ public class StoryEditScene {
         descriptionTextArea.setText(currentStory.getDescription());
         priorityNumberField.setText(currentStory.getPriority().toString());
 
+        ObservableList<Story> dependantStoryList = observableArrayList();
+        dependantStoryList.addAll(currentStory.getDependencies());
+
+        ObservableList<Story> availableStoryList = observableArrayList();
+        for (Story story : currentStory.getBacklog().getProject().getUnallocatedStories()) {
+            if (story.getBacklog() == null) {
+                availableStoryList.add(story);
+            }
+        }
+        availableStoryList.removeAll(dependantStoryList);
+
+        ListView<Story> dependantStoriesListView = new ListView<>(dependantStoryList);
+        dependantStoriesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        dependantStoriesListView.getSelectionModel().select(0);
+
+        ListView<Story> availableStoryListView = new ListView<>(availableStoryList);
+        availableStoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        availableStoryListView.getSelectionModel().select(0);
+
+        VBox backlogStoryBox = new VBox(10);
+        backlogStoryBox.getChildren().add(new Label("Dependant Stories: "));
+        backlogStoryBox.getChildren().add(dependantStoriesListView);
+
+        VBox availableStoryBox = new VBox(10);
+        availableStoryBox.getChildren().add(new Label("Available Stories: "));
+        availableStoryBox.getChildren().add(availableStoryListView);
+
+        HBox storyListViews = new HBox(10);
+        storyListViews.getChildren().addAll(backlogStoryBox, assignmentButtons, availableStoryBox);
+        storyListViews.setPrefHeight(192);
+
+
+
         informationPane.getChildren().addAll(shortNameCustomField,
                 longNameTextField,
                 descriptionTextArea,
                 priorityNumberField,
                 estimateHBox,
                 readyStateCheck,
+                storyListViews,
                 buttons);
 
         btnCancel.setOnAction((event) -> {
