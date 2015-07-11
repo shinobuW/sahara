@@ -38,16 +38,34 @@ public class StoryInfoTab extends Tab {
         dependenciesTable.setPlaceholder(new Label("There are currently no stories dependant on this story."));
         dependenciesTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        ObservableList<Story> data = observableArrayList();
-        data.addAll(currentStory.getDependencies());
+        ObservableList<Story> dataDependencies = observableArrayList();
+        dataDependencies.addAll(currentStory.getDependencies());
 
         TableColumn storyCol = new TableColumn("Dependencies");
         storyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
         storyCol.prefWidthProperty().bind(dependenciesTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
-        dependenciesTable.setItems(data);
+        dependenciesTable.setItems(dataDependencies);
         dependenciesTable.getColumns().addAll(storyCol);
+
+        TableView<Story> dependantsTable = new TableView<>();
+        dependantsTable.setEditable(true);
+        dependantsTable.setPrefWidth(500);
+        dependantsTable.setPrefHeight(200);
+        dependantsTable.setPlaceholder(new Label("This story is not currently dependant on another"));
+        dependantsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        ObservableList<Story> dataDependants = observableArrayList();
+        dataDependants.addAll(currentStory.getDepedants());
+
+        TableColumn storyCol2 = new TableColumn("Dependants");
+        storyCol2.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
+        storyCol2.prefWidthProperty().bind(dependantsTable.widthProperty()
+                .subtract(2).divide(100).multiply(60));
+
+        dependantsTable.setItems(dataDependants);
+        dependantsTable.getColumns().addAll(storyCol2);
 
         basicInfoPane.getChildren().add(title);
         basicInfoPane.getChildren().add(new Label("Story Description: "
@@ -62,6 +80,7 @@ public class StoryInfoTab extends Tab {
                 + currentStory.getReadyState()));
         basicInfoPane.getChildren().add(new Label("Story Creator: "
                 + currentStory.getCreator()));
+        basicInfoPane.getChildren().add(dependantsTable);
         basicInfoPane.getChildren().add(dependenciesTable);
         basicInfoPane.getChildren().add(btnEdit);
 

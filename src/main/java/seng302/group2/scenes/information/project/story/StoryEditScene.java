@@ -131,6 +131,7 @@ public class StoryEditScene {
             availableStoryList.add(story);
         }
         availableStoryList.removeAll(dependantStoryList);
+        availableStoryList.remove(currentStory);
 
         ListView<Story> dependantStoriesListView = new ListView<>(dependantStoryList);
         dependantStoriesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -201,9 +202,11 @@ public class StoryEditScene {
 
                 for (Story story : dependantStoryList) {
                     currentStory.setDependencies(story);
+                    story.setDependants(currentStory);
                 }
                 for (Story story : availableStoryList) {
                     currentStory.removeDependencies(story);
+                    story.removeDependants(currentStory);
                 }
 
                 boolean correctShortName = validateShortName(shortNameCustomField,
