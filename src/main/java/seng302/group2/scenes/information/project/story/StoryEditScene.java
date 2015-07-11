@@ -13,6 +13,7 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 
@@ -40,6 +41,7 @@ public class StoryEditScene {
         informationPane.setHgap(10);
         informationPane.setVgap(10);*/
         informationPane.setPadding(new Insets(25, 25, 25, 25));
+        Label errorField = new Label("");
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Done");
@@ -123,11 +125,10 @@ public class StoryEditScene {
         ObservableList<Story> dependantStoryList = observableArrayList();
         dependantStoryList.addAll(currentStory.getDependencies());
 
+        Backlog currentBacklog = currentStory.getBacklog();
         ObservableList<Story> availableStoryList = observableArrayList();
-        for (Story story : currentStory.getBacklog().getProject().getUnallocatedStories()) {
-            if (story.getBacklog() == null) {
-                availableStoryList.add(story);
-            }
+        for (Story story : currentBacklog.getProject().getAllStories()) {
+            availableStoryList.add(story);
         }
         availableStoryList.removeAll(dependantStoryList);
 
@@ -162,6 +163,21 @@ public class StoryEditScene {
                 storyListViews,
                 buttons);
 
+        btnAssign.setOnAction((event) -> {
+                dependantStoryList.addAll(
+                        availableStoryListView.getSelectionModel().getSelectedItems());
+                availableStoryList.removeAll(
+                        availableStoryListView.getSelectionModel().getSelectedItems());
+
+            });
+        btnUnassign.setOnAction((event) -> {
+                availableStoryList.addAll(
+                        dependantStoriesListView.getSelectionModel().getSelectedItems());
+                dependantStoryList.removeAll(
+                        dependantStoriesListView.getSelectionModel().getSelectedItems());
+
+            });
+
         btnCancel.setOnAction((event) -> {
                 currentStory.switchToInfoScene();
             });
@@ -181,6 +197,13 @@ public class StoryEditScene {
                     // No changes
                     currentStory.switchToInfoScene();
                     return;
+                }
+
+                for (Story story : dependantStoryList) {
+                    currentStory.setDependencies(story);
+                }
+                for (Story story : availableStoryList) {
+                    currentStory.removeDependencies(story);
                 }
 
                 boolean correctShortName = validateShortName(shortNameCustomField,

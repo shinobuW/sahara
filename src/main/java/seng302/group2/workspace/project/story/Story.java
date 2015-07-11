@@ -48,6 +48,7 @@ public class Story extends TreeViewItem implements Serializable {
     private transient ObservableList<AcceptanceCriteria> acceptanceCriteria = observableArrayList();
     private List<AcceptanceCriteria> serializableAcceptanceCriteria = new ArrayList<>();
     private Set<Story> dependencies = new HashSet<>();
+    private Set<Story> depedants = new HashSet<>();
 
 
     public static String stateReady = "Ready";
@@ -216,6 +217,40 @@ public class Story extends TreeViewItem implements Serializable {
     }
 
     /**
+     * Gets the stories the current story is dependant of
+     *
+     * @return the stories, the current story is dependant of
+     */
+    public Set<Story> getDepedants() {
+        return this.depedants;
+    }
+
+    /**
+     * Sets the dependant stories this story has.
+     *
+     */
+    public void setDependants(Story story) {
+
+        this.depedants.add(story);
+    }
+
+    /**
+     * Removes the dependants this story has.
+     *
+     */
+    public void removeDependants(Story story) {
+        this.depedants.remove(story);
+    }
+
+    /**
+     * Removes the dependencies this story has.
+     *
+     */
+    public void removeDependencies(Story story) {
+        this.dependencies.remove(story);
+    }
+
+    /**
      * Gets the dependencies this story has.
      *
      * @return the set of dependencies
@@ -225,9 +260,8 @@ public class Story extends TreeViewItem implements Serializable {
     }
 
     /**
-     * Gets the dependencies this story has.
+     * Sets the dependencies this story has.
      *
-     * @return the set of dependencies
      */
     public void setDependencies(Story story) {
         this.dependencies.add(story);
