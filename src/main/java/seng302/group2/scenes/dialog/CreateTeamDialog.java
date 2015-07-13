@@ -11,8 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
+import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.team.Team;
@@ -60,7 +60,7 @@ public class CreateTeamDialog {
                 if (correctShortName) {
                     Team team = new Team(shortName, description);
                     Global.currentWorkspace.add(team);
-                    MainScene.treeView.selectItem(team);
+                    App.mainPane.selectItem(team);
                     dialog.hide();
                 }
                 else {

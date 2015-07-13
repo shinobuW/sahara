@@ -5,7 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.MainScene;
+import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
@@ -55,7 +55,7 @@ public class RoleCategoryScene {
 
         btnView.setOnAction((event) -> {
                 if (roleBox.getSelectionModel().getSelectedItem() != null) {
-                    MainScene.treeView.selectItem((SaharaItem)
+                    App.mainPane.selectItem((SaharaItem)
                             roleBox.getSelectionModel().getSelectedItem());
                 }
             });

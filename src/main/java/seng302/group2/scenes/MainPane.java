@@ -108,4 +108,8 @@ public class MainPane extends BorderPane {
             }
         });
     }
+
+    public void selectItem(HierarchyData item) {
+        treeView.selectItem(item);
+    }
 }

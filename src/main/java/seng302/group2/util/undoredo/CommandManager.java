@@ -1,7 +1,7 @@
 package seng302.group2.util.undoredo;
 
+import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.workspace.SaharaItem;
 
 import java.util.Set;
@@ -106,7 +106,7 @@ public class CommandManager {
      */
     public void refreshTree() {
         try {
-            MainScene.treeView.refresh();
+            App.mainPane.refreshTree();
         }
         catch (ExceptionInInitializerError | NoClassDefFoundError e) {
             // Caused because it was called without the context of the application running, ie. Unit

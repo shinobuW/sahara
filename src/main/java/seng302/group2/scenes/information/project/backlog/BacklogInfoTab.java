@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.MainScene;
+import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
@@ -96,7 +96,7 @@ public class BacklogInfoTab extends Tab {
 
         btnView.setOnAction((event) -> {
                 if (storyTable.getSelectionModel().getSelectedItem() != null) {
-                    MainScene.treeView.selectItem(storyTable.getSelectionModel().getSelectedItem());
+                    App.mainPane.selectItem(storyTable.getSelectionModel().getSelectedItem());
                 }
             });
     }

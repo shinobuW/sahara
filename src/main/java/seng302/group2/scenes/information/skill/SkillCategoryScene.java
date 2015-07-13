@@ -5,7 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.MainScene;
+import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
 import seng302.group2.workspace.SaharaItem;
@@ -54,7 +54,7 @@ public class SkillCategoryScene {
 
         btnView.setOnAction((event) -> {
                 if (skillBox.getSelectionModel().getSelectedItem() != null) {
-                    MainScene.treeView.selectItem((SaharaItem)
+                    App.mainPane.selectItem((SaharaItem)
                             skillBox.getSelectionModel().getSelectedItem());
                 }
             });

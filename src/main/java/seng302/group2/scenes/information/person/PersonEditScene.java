@@ -11,11 +11,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.*;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.util.validation.NameValidator;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -248,7 +248,7 @@ public class PersonEditScene {
 
                     Collections.sort(Global.currentWorkspace.getPeople());
                     currentPerson.switchToInfoScene();
-                    MainScene.treeView.refresh();
+                    App.mainPane.refreshTree();
                 }
                 else {
                     // One or more fields incorrectly validated, stay on the edit scene

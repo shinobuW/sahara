@@ -8,15 +8,15 @@ import javafx.collections.ObservableList;
 import javafx.collections.WeakListChangeListener;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.contextmenu.CategoryTreeContextMenu;
 import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
 import seng302.group2.workspace.HierarchyData;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.Category;
 import seng302.group2.workspace.categories.RolesCategory;
 import seng302.group2.workspace.categories.subCategory.SubCategory;
-import seng302.group2.workspace.SaharaItem;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -221,7 +221,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
                     }
                     // If the list was sorted.
                     if (change.wasPermutated()) {
-                        MainScene.treeView.refresh();
+                        App.mainPane.refreshTree();
                         /*// Store the new order.
                         Map<Integer, TreeItem<T>> tempMap = new HashMap<Integer, TreeItem<T>>();
 

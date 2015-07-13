@@ -6,8 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.MainScene;
-import seng302.group2.workspace.SaharaItem;
+import seng302.group2.App;
 import seng302.group2.workspace.project.story.Story;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -63,15 +62,13 @@ public class StoryDependenciesTab extends Tab {
         Button btnView = new Button("View");
 
         btnView.setOnAction((event) -> {
-            if (dependsTable.getSelectionModel().getSelectedItem() != null) {
-                MainScene.treeView.selectItem((SaharaItem)
-                        dependsTable.getSelectionModel().getSelectedItem());
-            }
-            if (dependantsTable.getSelectionModel().getSelectedItem() != null) {
-                MainScene.treeView.selectItem((SaharaItem)
-                        dependantsTable.getSelectionModel().getSelectedItem());
-            }
-        });
+                if (dependsTable.getSelectionModel().getSelectedItem() != null) {
+                    App.mainPane.selectItem(dependsTable.getSelectionModel().getSelectedItem());
+                }
+                if (dependantsTable.getSelectionModel().getSelectedItem() != null) {
+                    App.mainPane.selectItem(dependantsTable.getSelectionModel().getSelectedItem());
+                }
+            });
 
         dependenciesPane.getChildren().add(dependsTable);
         dependenciesPane.getChildren().add(dependantsTable);
