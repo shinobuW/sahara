@@ -38,8 +38,13 @@ public class StoryDependenciesTab extends Tab {
         storyCol.prefWidthProperty().bind(dependantsTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
+        TableColumn priorityCol = new TableColumn("Priority");
+        priorityCol.setCellValueFactory(new PropertyValueFactory<Story, Integer>("priority"));
+        priorityCol.prefWidthProperty().bind(dependantsTable.widthProperty()
+                .subtract(2).divide(100).multiply(20));
+
         dependantsTable.setItems(dataDependencies);
-        dependantsTable.getColumns().addAll(storyCol);
+        dependantsTable.getColumns().addAll(storyCol, priorityCol);
 
         TableView<Story> dependsTable = new TableView<>();
         dependsTable.setEditable(true);
@@ -56,8 +61,13 @@ public class StoryDependenciesTab extends Tab {
         storyCol2.prefWidthProperty().bind(dependsTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
+        TableColumn priorityCol2 = new TableColumn("Priority");
+        priorityCol2.setCellValueFactory(new PropertyValueFactory<Story, Integer>("priority"));
+        priorityCol2.prefWidthProperty().bind(dependsTable.widthProperty()
+                .subtract(2).divide(100).multiply(20));
+
         dependsTable.setItems(dataDependants);
-        dependsTable.getColumns().addAll(storyCol2);
+        dependsTable.getColumns().addAll(storyCol2, priorityCol2);
 
         Button btnView = new Button("View");
 
