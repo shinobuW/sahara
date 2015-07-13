@@ -27,6 +27,7 @@ public class TrackedTabPane extends TabPane {
         ROLE_EDIT,
         SKILL,
         SKILL_EDIT,
+        SKILL_CATEGORY,
         RELEASE_CATEGORY,
         RELEASE,
         RELEASE_EDIT,
