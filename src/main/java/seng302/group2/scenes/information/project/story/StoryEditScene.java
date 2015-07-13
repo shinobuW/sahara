@@ -126,9 +126,8 @@ public class StoryEditScene {
 
         Backlog currentBacklog = currentStory.getBacklog();
         ObservableList<Story> availableStoryList = FXCollections.observableArrayList();
-        for (Story story : currentBacklog.getProject().getAllStories()) {
-            availableStoryList.add(story);
-        }
+        availableStoryList.addAll(currentBacklog.getProject().getAllStories());
+
         availableStoryList.removeAll(dependantStoryList);
         availableStoryList.remove(currentStory);
 
@@ -190,10 +189,14 @@ public class StoryEditScene {
                 boolean descriptionUnchanged = descriptionTextArea.getText().equals(
                         currentStory.getDescription());
                 boolean priorityUnchanged = priorityNumberField.getText().equals(
-                        currentStory.getPriority());
+                        currentStory.getPriority().toString());
+                boolean readyChanged = readyStateCheck.isSelected() == currentStory.getReady();
+                boolean estimateChanged = estimateComboBox.getValue().equals(currentStory.getEstimate());
+                boolean dependChanged = currentStory.getDependencies().retainAll(dependantStoriesListView.getItems());
+
 
                 if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged
-                        && priorityUnchanged) {
+                        && priorityUnchanged && readyChanged && estimateChanged && dependChanged) {
                     // No changes
                     currentStory.switchToInfoScene();
                     return;

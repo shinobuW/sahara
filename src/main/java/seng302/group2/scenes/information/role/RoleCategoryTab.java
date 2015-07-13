@@ -38,7 +38,7 @@ public class RoleCategoryTab extends Tab {
         //createButton.getChildren().add(btnCreate);
         createButton.setAlignment(Pos.CENTER_RIGHT);
 
-        ListView roleBox = new ListView(currentWorkspace.getRoles());
+        ListView roleBox = new ListView<>(currentWorkspace.getRoles());
         roleBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         roleBox.setMaxWidth(450);
 

@@ -10,6 +10,7 @@ import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.workspace.Workspace;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -43,7 +44,7 @@ public class SkillCategoryTab extends Tab {
         selectionButtons.getChildren().add(btnCreate);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
-        ListView skillBox = new ListView(currentWorkspace.getSkills());
+        ListView skillBox = new ListView<>(currentWorkspace.getSkills());
         skillBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         skillBox.setMaxWidth(275);
 

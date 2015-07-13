@@ -42,7 +42,7 @@ public class StoryCategoryScene {
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
 
-        ListView storyBox = new ListView(selectedCategory.getProject().getUnallocatedStories());
+        ListView storyBox = new ListView<>(selectedCategory.getProject().getUnallocatedStories());
         storyBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         storyBox.setMaxWidth(275);
 
