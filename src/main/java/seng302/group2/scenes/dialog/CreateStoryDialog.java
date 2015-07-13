@@ -16,7 +16,7 @@ import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
 
@@ -62,7 +62,7 @@ public class CreateStoryDialog {
         String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
         projectComboBox.setValue(firstItem);
 
-        for (TreeViewItem project : Global.currentWorkspace.getProjects()) {
+        for (SaharaItem project : Global.currentWorkspace.getProjects()) {
             projectComboBox.addToComboBox(project.toString());
         }
 
@@ -85,7 +85,7 @@ public class CreateStoryDialog {
                     Integer priority = Integer.parseInt(priorityNumberField.getText());
 
                     Project project = new Project();
-                    for (TreeViewItem item : Global.currentWorkspace.getProjects()) {
+                    for (SaharaItem item : Global.currentWorkspace.getProjects()) {
                         if (item.toString().equals(projectComboBox.getValue())) {
                             project = (Project) item;
                         }

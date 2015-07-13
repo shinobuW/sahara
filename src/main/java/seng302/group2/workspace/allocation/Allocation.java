@@ -3,7 +3,7 @@ package seng302.group2.workspace.allocation;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
@@ -19,7 +19,7 @@ import java.util.Set;
  * A class that represents allocations between teams and projects
  * Created by Jordane Lew and David Moseley on 7/05/15.
  */
-public class Allocation extends TreeViewItem implements Serializable, Comparable<Allocation> {
+public class Allocation extends SaharaItem implements Serializable, Comparable<Allocation> {
     private LocalDate startDate;
     private LocalDate endDate;
     private Project project;
@@ -193,7 +193,7 @@ public class Allocation extends TreeViewItem implements Serializable, Comparable
 
 
     @Override
-    public Set<TreeViewItem> getItemsSet() {
+    public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }
 
@@ -269,9 +269,9 @@ public class Allocation extends TreeViewItem implements Serializable, Comparable
          * @return If the item was successfully mapped
          */
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(allocation)) {
                     this.allocation = (Allocation) item;
                     mapped = true;
@@ -309,23 +309,23 @@ public class Allocation extends TreeViewItem implements Serializable, Comparable
          * @return If the item was successfully mapped
          */
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped_alloc = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(allocation)) {
                     this.allocation = (Allocation) item;
                     mapped_alloc = true;
                 }
             }
             boolean mapped_proj = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(project)) {
                     this.project = (Project) item;
                     mapped_proj = true;
                 }
             }
             boolean mapped_team = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(team)) {
                     this.team = (Team) item;
                     mapped_team = true;

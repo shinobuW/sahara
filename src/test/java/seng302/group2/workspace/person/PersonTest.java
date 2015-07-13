@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -42,7 +42,7 @@ public class PersonTest {
     @Before
     public void setUp() {
         // Find the unassigned team
-        for (TreeViewItem team : Global.currentWorkspace.getTeams()) {
+        for (SaharaItem team : Global.currentWorkspace.getTeams()) {
             Team castedTeam = (Team) team;
             if (castedTeam.isUnassignedTeam()) {
                 unassignedTeam = castedTeam;

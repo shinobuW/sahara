@@ -5,11 +5,11 @@ import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.categories.subCategory.project.BacklogCategory;
-import seng302.group2.scenes.listdisplay.categories.subCategory.project.ReleaseCategory;
-import seng302.group2.scenes.listdisplay.categories.subCategory.project.StoryCategory;
-import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
+import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
+import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
+import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
@@ -188,7 +188,7 @@ public class ProjectTest extends TestCase {
     @Test
     public void testGetChildren() {
         Project proj = new Project();
-        ObservableList<TreeViewItem> children = observableArrayList();
+        ObservableList<SaharaItem> children = observableArrayList();
         ReleaseCategory releasesCategory = new ReleaseCategory(proj);
         children.add(releasesCategory);
         BacklogCategory backlogCategory = new BacklogCategory(proj);

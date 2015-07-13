@@ -14,7 +14,7 @@ import org.controlsfx.dialog.Dialog;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.*;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
@@ -59,7 +59,7 @@ public class CreateReleaseDialog {
         String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
         projectComboBox.setValue(firstItem);
 
-        for (TreeViewItem project : Global.currentWorkspace.getProjects()) {
+        for (SaharaItem project : Global.currentWorkspace.getProjects()) {
             projectComboBox.addToComboBox(project.toString());
         }
 
@@ -76,7 +76,7 @@ public class CreateReleaseDialog {
                 boolean correctShortName = validateShortName(shortNameCustomField, null);
 
                 Project project = new Project();
-                for (TreeViewItem item : Global.currentWorkspace.getProjects()) {
+                for (SaharaItem item : Global.currentWorkspace.getProjects()) {
                     if (item.toString().equals(projectComboBox.getValue())) {
                         project = (Project) item;
                     }
@@ -148,7 +148,7 @@ public class CreateReleaseDialog {
         //String firstItem = Global.currentWorkspace.getProjects().get(0).getShortName();
         //projectComboBox.setValue(firstItem);
 
-        for (TreeViewItem project : Global.currentWorkspace.getProjects()) {
+        for (SaharaItem project : Global.currentWorkspace.getProjects()) {
             projectComboBox.addToComboBox(project.toString());
         }
         projectComboBox.setValue(defaultProject.toString());
@@ -168,7 +168,7 @@ public class CreateReleaseDialog {
 
                 Project project = new Project();
 
-                for (TreeViewItem item : Global.currentWorkspace.getProjects()) {
+                for (SaharaItem item : Global.currentWorkspace.getProjects()) {
                     if (item.toString().equals(projectComboBox.getValue())) {
                         project = (Project) item;
                     }

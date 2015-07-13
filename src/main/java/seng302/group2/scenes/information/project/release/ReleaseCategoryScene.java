@@ -8,8 +8,8 @@ import javafx.scene.layout.VBox;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.dialog.CreateReleaseDialog;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.categories.subCategory.project.ReleaseCategory;
+import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
 
 import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -54,7 +54,7 @@ public class ReleaseCategoryScene {
 
         btnView.setOnAction((event) -> {
                 if (releaseBox.getSelectionModel().getSelectedItem() != null) {
-                    MainScene.treeView.selectItem((TreeViewItem)
+                    MainScene.treeView.selectItem((SaharaItem)
                             releaseBox.getSelectionModel().getSelectedItem());
                 }
             });
@@ -62,7 +62,7 @@ public class ReleaseCategoryScene {
 
         btnDelete.setOnAction((event) -> {
                 if (releaseBox.getSelectionModel().getSelectedItem() != null) {
-                    showDeleteDialog((TreeViewItem) releaseBox.getSelectionModel()
+                    showDeleteDialog((SaharaItem) releaseBox.getSelectionModel()
                             .getSelectedItem());
                 }
             });

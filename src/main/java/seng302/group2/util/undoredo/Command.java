@@ -1,6 +1,6 @@
 package seng302.group2.util.undoredo;
 
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 
 import java.util.Set;
 
@@ -24,5 +24,5 @@ public interface Command {
      * @param stateObjects A set of objects to search through
      * @return If the item was successfully mapped
      */
-    public boolean map(Set<TreeViewItem> stateObjects);
+    public boolean map(Set<SaharaItem> stateObjects);
 }

@@ -1,7 +1,7 @@
 /*
  * SENG302 Group 2
  */
-package seng302.group2.workspace;
+package seng302.group2.workspace.workspace;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -18,11 +18,10 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.dialog.CustomDialog;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.categories.*;
+import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.categories.*;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.WorkspaceInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
-import seng302.group2.util.reporting.ReportGenerator.*;
 import seng302.group2.util.revert.RevertManager;
 import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.Command;
@@ -46,7 +45,7 @@ import static javafx.collections.FXCollections.observableArrayList;
  * @author Jordane Lew (jml168)
  */
 @SuppressWarnings("deprecation")
-public class Workspace extends TreeViewItem implements Serializable {
+public class Workspace extends SaharaItem implements Serializable {
     private static Gson gson = SerialBuilder.getBuilder();
     private String shortName;
     private String longName;
@@ -116,8 +115,8 @@ public class Workspace extends TreeViewItem implements Serializable {
      * Returns a set of all children items inside a workspace
      * @return A set of all children items inside this workspace
      */
-    public Set<TreeViewItem> getItemsSet() {
-        Set<TreeViewItem> items = new HashSet<>();
+    public Set<SaharaItem> getItemsSet() {
+        Set<SaharaItem> items = new HashSet<>();
         items.add(this);
 
         for (Person person : this.getPeople()) {
@@ -717,9 +716,9 @@ public class Workspace extends TreeViewItem implements Serializable {
      *
      * @return A list of categories of the workspace
      */
-    public ObservableList<TreeViewItem> getCategories() {
+    public ObservableList<SaharaItem> getCategories() {
         // Prime the list
-        ObservableList<TreeViewItem> root = observableArrayList();
+        ObservableList<SaharaItem> root = observableArrayList();
 
         // Make the categories
         Category projectCategory = new ProjectCategory();
@@ -753,7 +752,7 @@ public class Workspace extends TreeViewItem implements Serializable {
         workSpaceElement.appendChild(workSpaceDescription);
         ReportGenerator.generatedItems.remove(0);
 
-        for (TreeViewItem item : this.getChildren()) {
+        for (SaharaItem item : this.getChildren()) {
             System.out.println(item);
             if (ReportGenerator.generatedItems.contains(item)) {
                 Element xmlElement = item.generateXML();
@@ -801,7 +800,7 @@ public class Workspace extends TreeViewItem implements Serializable {
      * @return the children (categories) of the workspace
      */
     @Override
-    public ObservableList<TreeViewItem> getChildren() {
+    public ObservableList<SaharaItem> getChildren() {
         return getCategories();
     }
 
@@ -879,9 +878,9 @@ public class Workspace extends TreeViewItem implements Serializable {
          * @return If the item was successfully mapped
          */
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(ws)) {
                     this.ws = (Workspace) item;
                     mapped = true;
@@ -913,9 +912,9 @@ public class Workspace extends TreeViewItem implements Serializable {
          * @return If the item was successfully mapped
          */
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(proj)) {
                     this.proj = (Project) item;
                     mapped = true;
@@ -947,9 +946,9 @@ public class Workspace extends TreeViewItem implements Serializable {
          * @return If the item was successfully mapped
          */
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(team)) {
                     this.team = (Team) item;
                     mapped = true;
@@ -986,9 +985,9 @@ public class Workspace extends TreeViewItem implements Serializable {
          * @return If the item was successfully mapped
          */
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(person)) {
                     this.person = (Person) item;
                     mapped = true;
@@ -1019,9 +1018,9 @@ public class Workspace extends TreeViewItem implements Serializable {
          * @return If the item was successfully mapped
          */
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(skill)) {
                     this.skill = (Skill) item;
                     mapped = true;

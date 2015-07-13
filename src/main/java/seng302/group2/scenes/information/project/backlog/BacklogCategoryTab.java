@@ -9,8 +9,8 @@ import javafx.scene.layout.VBox;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.dialog.CreateBacklogDialog;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.categories.subCategory.project.BacklogCategory;
+import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
@@ -50,7 +50,7 @@ public class BacklogCategoryTab extends Tab {
 
         btnView.setOnAction((event) -> {
                 if (backlogBox.getSelectionModel().getSelectedItem() != null) {
-                    MainScene.treeView.selectItem((TreeViewItem)
+                    MainScene.treeView.selectItem((SaharaItem)
                             backlogBox.getSelectionModel().getSelectedItem());
                 }
             });
@@ -58,7 +58,7 @@ public class BacklogCategoryTab extends Tab {
 
         btnDelete.setOnAction((event) -> {
                 if (backlogBox.getSelectionModel().getSelectedItem() != null) {
-                    showDeleteDialog((TreeViewItem) backlogBox.getSelectionModel()
+                    showDeleteDialog((SaharaItem) backlogBox.getSelectionModel()
                             .getSelectedItem());
                 }
             });

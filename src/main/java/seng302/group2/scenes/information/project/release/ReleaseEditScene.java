@@ -17,7 +17,7 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
@@ -65,7 +65,7 @@ public class ReleaseEditScene {
         releaseDatePicker.setMaxWidth(275);
         projectComboBox.setMaxWidth(275);
 
-        for (TreeViewItem project : Global.currentWorkspace.getProjects()) {
+        for (SaharaItem project : Global.currentWorkspace.getProjects()) {
             projectComboBox.addToComboBox(project.toString());
         }
 

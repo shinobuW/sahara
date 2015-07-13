@@ -2,7 +2,7 @@ package seng302.group2.scenes.information.workspace;
 
 import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
-import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.workspace.Workspace;
 
 /**
  * A class for displaying the project scene

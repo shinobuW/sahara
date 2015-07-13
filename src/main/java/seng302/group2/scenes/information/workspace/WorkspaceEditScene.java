@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.workspace.Workspace;
 
 import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;

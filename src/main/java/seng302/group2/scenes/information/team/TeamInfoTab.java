@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.TitleLabel;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.team.Team;
 
@@ -46,7 +46,7 @@ public class TeamInfoTab extends Tab {
 
 
         if (currentTeam.isUnassignedTeam()) {
-            for (TreeViewItem person : Global.currentWorkspace.getPeople()) {
+            for (SaharaItem person : Global.currentWorkspace.getPeople()) {
                 Person castedPerson = (Person) person;
                 if (castedPerson.getTeam() == null) {
                     currentTeam.add(castedPerson, false);

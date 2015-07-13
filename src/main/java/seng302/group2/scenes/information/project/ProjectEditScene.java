@@ -79,7 +79,7 @@ public class ProjectEditScene {
         ObservableList<Team> addedTeams = observableArrayList();
 	
 	
-        for (TreeViewItem projectTeam : Global.currentWorkspace.getTeams())
+        for (SaharaItem projectTeam : Global.currentWorkspace.getTeams())
         {
             if (!((Team)projectTeam).isUnassignedTeam()
                     && !currentProject.getTeams().contains(projectTeam))

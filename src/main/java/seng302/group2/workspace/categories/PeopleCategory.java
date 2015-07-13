@@ -1,10 +1,10 @@
-package seng302.group2.scenes.listdisplay.categories;
+package seng302.group2.workspace.categories;
 
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.dialog.CreatePersonDialog;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.PersonCategorySwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 
@@ -29,8 +29,8 @@ public class PeopleCategory extends Category {
     public Element generateXML() {
         Element peopleElements = ReportGenerator.doc.createElement("unassigned-people");
         for (Object item : getChildren()) {
-            if (ReportGenerator.generatedItems.contains((TreeViewItem) item)) {
-                Element xmlElement = ((TreeViewItem) item).generateXML();
+            if (ReportGenerator.generatedItems.contains((SaharaItem) item)) {
+                Element xmlElement = ((SaharaItem) item).generateXML();
                 if (xmlElement != null) {
                     peopleElements.appendChild(xmlElement);
                 }
@@ -41,7 +41,7 @@ public class PeopleCategory extends Category {
     }
 
     @Override
-    public Set<TreeViewItem> getItemsSet() {
+    public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }
 

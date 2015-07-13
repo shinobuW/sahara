@@ -15,12 +15,12 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.dialog.*;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.categories.Category;
-import seng302.group2.scenes.listdisplay.categories.subCategory.project.ReleaseCategory;
+import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.categories.Category;
+import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
 import seng302.group2.util.revert.RevertManager;
-import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.Workspace.SaveLoadResult;
+import seng302.group2.workspace.workspace.Workspace;
+import seng302.group2.workspace.workspace.Workspace.SaveLoadResult;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
@@ -367,7 +367,7 @@ public class MainMenuBar {
     private static MenuItem createDeleteTreeItem() {
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction((event) -> {
-                showDeleteDialog((TreeViewItem) Global.selectedTreeItem.getValue());
+                showDeleteDialog((SaharaItem) Global.selectedTreeItem.getValue());
             });
 
         deleteItem.setAccelerator(new KeyCodeCombination(KeyCode.DELETE,

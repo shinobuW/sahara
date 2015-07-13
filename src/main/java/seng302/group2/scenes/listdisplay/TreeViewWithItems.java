@@ -12,9 +12,11 @@ import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.contextmenu.CategoryTreeContextMenu;
 import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
-import seng302.group2.scenes.listdisplay.categories.Category;
-import seng302.group2.scenes.listdisplay.categories.RolesCategory;
-import seng302.group2.scenes.listdisplay.categories.subCategory.SubCategory;
+import seng302.group2.workspace.HierarchyData;
+import seng302.group2.workspace.categories.Category;
+import seng302.group2.workspace.categories.RolesCategory;
+import seng302.group2.workspace.categories.subCategory.SubCategory;
+import seng302.group2.workspace.SaharaItem;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +26,8 @@ import java.util.Map;
  * This class extends the {@link TreeView} to use items as a data source.
  * This allows you to treat a {@link TreeView} in a similar way as a
  * {@link javafx.scene.control.ListView} or {@link javafx.scene.control.TableView}.
- * Each item in the list must implement the {@link HierarchyData} interface, in order to map the
- * recursive nature of the tree data to the tree view.
+ * Each item in the list must implement the {@link seng302.group2.workspace.HierarchyData} interface, in order to map
+ * the recursive nature of the tree data to the tree view.
  * Each change in the underlying data (adding, removing, sorting) will then be automatically
  * reflected in the UI.
  *
@@ -119,7 +121,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
 
                 Global.selectedTreeItem = newValue;
 
-                TreeViewItem selected = null;
+                SaharaItem selected = null;
 
                 //Updates the display pane to be pane for the selectItem
                 if (Global.selectedTreeItem == null
@@ -129,7 +131,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
                     return;
                 }
 
-                selected = (TreeViewItem) Global.selectedTreeItem.getValue();
+                selected = (SaharaItem) Global.selectedTreeItem.getValue();
 
                 // Make a switch based on the type
                 if (selected instanceof SubCategory) {
@@ -315,7 +317,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
     /**
      * Scans the entire tree from the root and selects the item if it is found.
      *
-     * @param item The (TreeViewItem) item to select
+     * @param item The (SaharaItem) item to select
      */
     public void selectItem(T item) {
         selectItem(item, this.getRoot());
@@ -327,7 +329,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
      * If not, recursively check the children of the TreeItem. If the item exists in the tree, it
      * will eventually be selected through the depth-first search.
      *
-     * @param item The (TreeViewItem) item to select
+     * @param item The (SaharaItem) item to select
      * @param root The root node to start checking, usually this.getRoot()
      */
     public void selectItem(T item, TreeItem<T> root) {

@@ -4,7 +4,7 @@ import javafx.util.StringConverter;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.story.Story;
@@ -18,7 +18,7 @@ import java.util.Set;
  * A model class for acceptance criteria items inside of stories
  * Created by Shinobu on 30/05/2015.
  */
-public class AcceptanceCriteria extends TreeViewItem implements Serializable, Comparable<AcceptanceCriteria> {
+public class AcceptanceCriteria extends SaharaItem implements Serializable, Comparable<AcceptanceCriteria> {
     private String description;
     private AcState state;
     private Story story;
@@ -165,7 +165,7 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
 
 
     @Override
-    public Set<TreeViewItem> getItemsSet() {
+    public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }
 
@@ -205,16 +205,16 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
          * @return If the item was successfully mapped
          */
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped_ac = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(acceptanceCriteria)) {
                     this.acceptanceCriteria = (AcceptanceCriteria) item;
                     mapped_ac = true;
                 }
             }
             boolean mapped_story = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(story)) {
                     this.story = (Story) item;
                     mapped_story = true;
@@ -261,9 +261,9 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
          * @return If the item was successfully mapped
          */
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(ac)) {
                     this.ac = (AcceptanceCriteria) item;
                     mapped = true;
@@ -312,9 +312,9 @@ public class AcceptanceCriteria extends TreeViewItem implements Serializable, Co
          * @return If the item was successfully mapped
          */
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(ac)) {
                     this.ac = (AcceptanceCriteria) item;
                     mapped = true;

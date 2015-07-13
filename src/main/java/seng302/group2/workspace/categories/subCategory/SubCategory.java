@@ -1,9 +1,9 @@
-package seng302.group2.scenes.listdisplay.categories.subCategory;
+package seng302.group2.workspace.categories.subCategory;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.categories.Category;
+import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.categories.Category;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +12,7 @@ import java.util.Set;
  * Created by Jordane on 8/06/2015.
  */
 public abstract class SubCategory extends Category {
-    protected TreeViewItem parent;
+    protected SaharaItem parent;
 
     /**
      * Basic constructor for a TreeView category
@@ -25,7 +25,7 @@ public abstract class SubCategory extends Category {
 
 
     @Override
-    public Set<TreeViewItem> getItemsSet() {
+    public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }
 
@@ -35,14 +35,14 @@ public abstract class SubCategory extends Category {
      *
      * @param name The name of the category
      */
-    public SubCategory(String name, TreeViewItem parent) {
+    public SubCategory(String name, SaharaItem parent) {
         super(name);
         this.parent = parent;
     }
 
 
     @Override
-    public ObservableList<TreeViewItem> getChildren() {
+    public ObservableList<SaharaItem> getChildren() {
         return FXCollections.observableArrayList();
     }
 }

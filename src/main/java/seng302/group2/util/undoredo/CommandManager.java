@@ -2,7 +2,7 @@ package seng302.group2.util.undoredo;
 
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 
 import java.util.Set;
 import java.util.Stack;
@@ -224,7 +224,7 @@ public class CommandManager {
         }
 
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             // Do nothing
             return true;
         }

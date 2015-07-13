@@ -1,11 +1,11 @@
-package seng302.group2.scenes.listdisplay.categories.subCategory.project;
+package seng302.group2.workspace.categories.subCategory.project;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.scenes.dialog.CreateBacklogDialog;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.categories.subCategory.SubCategory;
+import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.categories.subCategory.SubCategory;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.BacklogCategorySwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.project.Project;
@@ -43,8 +43,8 @@ public class BacklogCategory extends SubCategory {
     public Element generateXML() {
         Element backlogElements = ReportGenerator.doc.createElement("backlogs");
         for (Object item : getChildren()) {
-            if (ReportGenerator.generatedItems.contains((TreeViewItem) item)) {
-                Element xmlElement = ((TreeViewItem) item).generateXML();
+            if (ReportGenerator.generatedItems.contains((SaharaItem) item)) {
+                Element xmlElement = ((SaharaItem) item).generateXML();
                 if (xmlElement != null) {
                     backlogElements.appendChild(xmlElement);
                 }

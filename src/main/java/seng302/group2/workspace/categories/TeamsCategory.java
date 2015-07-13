@@ -1,10 +1,10 @@
-package seng302.group2.scenes.listdisplay.categories;
+package seng302.group2.workspace.categories;
 
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.dialog.CreateTeamDialog;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.TeamCategoryCategorySwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.team.Team;
@@ -30,8 +30,8 @@ public class TeamsCategory extends Category {
     public Element generateXML() {
         Element teamElements = ReportGenerator.doc.createElement("unassigned-teams");
         for (Object item : getChildren()) {
-            if (ReportGenerator.generatedItems.contains((TreeViewItem) item) && !((Team) item).isUnassignedTeam()) {
-                Element xmlElement = ((TreeViewItem) item).generateXML();
+            if (ReportGenerator.generatedItems.contains((SaharaItem) item) && !((Team) item).isUnassignedTeam()) {
+                Element xmlElement = ((SaharaItem) item).generateXML();
                 if (xmlElement != null) {
                     teamElements.appendChild(xmlElement);
                 }
@@ -42,7 +42,7 @@ public class TeamsCategory extends Category {
     }
 
     @Override
-    public Set<TreeViewItem> getItemsSet() {
+    public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }
 

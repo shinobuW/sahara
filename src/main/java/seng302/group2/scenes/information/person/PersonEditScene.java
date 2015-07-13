@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 import seng302.group2.Global;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.*;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.util.validation.NameValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
@@ -78,7 +78,7 @@ public class PersonEditScene {
         ObservableList<Skill> dialogSkillsCopy = observableArrayList();
 
 
-        for (TreeViewItem projectSkill : currentWorkspace.getSkills()) {
+        for (SaharaItem projectSkill : currentWorkspace.getSkills()) {
             if (!currentPerson.getSkills().contains(projectSkill)) {
                 dialogSkills.add((Skill) projectSkill);
                 dialogSkillsCopy.add((Skill) projectSkill);
@@ -158,7 +158,7 @@ public class PersonEditScene {
                 }
 
                 dialogSkills.clear();
-                for (TreeViewItem projectSkill : currentWorkspace.getSkills()) {
+                for (SaharaItem projectSkill : currentWorkspace.getSkills()) {
                     if (!tempPerson.getSkills().contains(projectSkill)) {
                         dialogSkills.add((Skill) projectSkill);
                     }
@@ -173,7 +173,7 @@ public class PersonEditScene {
                 }
 
                 dialogSkills.clear();
-                for (TreeViewItem projectSkill : currentWorkspace.getSkills()) {
+                for (SaharaItem projectSkill : currentWorkspace.getSkills()) {
                     if (!tempPerson.getSkills().contains(projectSkill)) {
                         dialogSkills.add((Skill) projectSkill);
                     }

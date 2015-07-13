@@ -1,8 +1,8 @@
-package seng302.group2.scenes.listdisplay.categories;
+package seng302.group2.workspace.categories;
 
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 
 /**
  * Category item in the list display, uses as a header for all the elements of one type, ie
@@ -10,7 +10,7 @@ import seng302.group2.scenes.listdisplay.TreeViewItem;
  *
  * @author Jordane
  */
-public abstract class Category extends TreeViewItem {
+public abstract class Category extends SaharaItem {
     private String name;
 
     /**
@@ -49,7 +49,7 @@ public abstract class Category extends TreeViewItem {
      * @return the children of the category
      */
     @Override
-    public abstract ObservableList<TreeViewItem> getChildren();
+    public abstract ObservableList<SaharaItem> getChildren();
 
 
     /**
