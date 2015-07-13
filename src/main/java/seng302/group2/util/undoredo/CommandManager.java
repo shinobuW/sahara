@@ -108,7 +108,7 @@ public class CommandManager {
         try {
             App.mainPane.refreshTree();
         }
-        catch (ExceptionInInitializerError | NoClassDefFoundError e) {
+        catch (ExceptionInInitializerError | NoClassDefFoundError | NullPointerException e) {
             // Caused because it was called without the context of the application running, ie. Unit
             // tests.
         }
