@@ -2,7 +2,9 @@ package seng302.group2.util.undoredo;
 
 import seng302.group2.workspace.SaharaItem;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Set;
 
 /**
  * A command that nests a collection of other commands such that they can be

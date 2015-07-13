@@ -11,6 +11,7 @@ import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.dialog.CreatePersonDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
+
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**

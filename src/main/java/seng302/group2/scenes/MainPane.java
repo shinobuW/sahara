@@ -1,10 +1,7 @@
 package seng302.group2.scenes;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
@@ -13,15 +10,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.contextmenu.CategoryTreeContextMenu;
-import seng302.group2.scenes.contextmenu.ElementTreeContextMenu;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.scenes.menu.MainMenuBar;
-import seng302.group2.workspace.HierarchyData;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.Category;
-import seng302.group2.workspace.categories.RolesCategory;
 import seng302.group2.workspace.categories.subCategory.SubCategory;
 
 import static seng302.group2.App.content;

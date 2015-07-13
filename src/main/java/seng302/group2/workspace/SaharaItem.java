@@ -4,10 +4,10 @@ import javafx.collections.ObservableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
-import seng302.group2.workspace.categories.Category;
 import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrategy;
+import seng302.group2.workspace.categories.Category;
 
 import java.util.Set;
 

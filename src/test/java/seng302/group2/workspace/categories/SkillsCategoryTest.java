@@ -3,8 +3,8 @@ package seng302.group2.workspace.categories;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
-import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.Collection;
 import java.util.HashSet;

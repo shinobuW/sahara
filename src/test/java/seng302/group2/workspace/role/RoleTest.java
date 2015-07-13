@@ -9,8 +9,8 @@ import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
-import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.workspace.Workspace;
 
 import static javafx.collections.FXCollections.observableArrayList;
 

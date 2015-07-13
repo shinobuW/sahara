@@ -5,14 +5,13 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.workspace.Workspace;
-
-import static seng302.group2.scenes.MainScene.informationPane;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * A class for displaying the workspace edit scene.
@@ -26,7 +25,7 @@ public class WorkspaceEditScene {
      * @return The Workspace Edit information scene
      */
     public static ScrollPane getWorkspaceEditScene(Workspace currentWorkspace) {
-        informationPane = new VBox(10);
+        Pane informationPane = new VBox(10);
         /*informationPane.setAlignment(Pos.TOP_LEFT);
         informationPane.setHgap(10);
         informationPane.setVgap(10);*/
@@ -72,9 +71,9 @@ public class WorkspaceEditScene {
                     return;
                 }
                 // The short name is the same or valid
-                boolean correctShortName = validateShortName(shortNameCustomField,
+                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
                         currentWorkspace.getShortName());
-                boolean correctLongName = validateShortName(longNameCustomField,
+                boolean correctLongName = ShortNameValidator.validateShortName(longNameCustomField,
                         currentWorkspace.getLongName());
                 if (correctShortName && correctLongName) {
                     currentWorkspace.edit(shortNameCustomField.getText(),

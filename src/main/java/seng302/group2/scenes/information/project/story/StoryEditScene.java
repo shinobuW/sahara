@@ -1,10 +1,12 @@
 package seng302.group2.scenes.information.project.story;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
@@ -13,16 +15,13 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.util.validation.PriorityFieldValidator;
+import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 
 import java.util.ArrayList;
-
-import static javafx.collections.FXCollections.observableArrayList;
-import static seng302.group2.scenes.MainScene.informationPane;
-import static seng302.group2.util.validation.PriorityFieldValidator.validatePriorityField;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * A class for displaying the Story edit scene.
@@ -36,7 +35,7 @@ public class StoryEditScene {
      * @return The story Edit information display
      */
     public static ScrollPane getStoryEditScene(Story currentStory) {
-        informationPane = new VBox(10);
+        Pane informationPane = new VBox(10);
         /*informationPane.setAlignment(Pos.TOP_LEFT);
         informationPane.setHgap(10);
         informationPane.setVgap(10);*/
@@ -122,11 +121,11 @@ public class StoryEditScene {
         descriptionTextArea.setText(currentStory.getDescription());
         priorityNumberField.setText(currentStory.getPriority().toString());
 
-        ObservableList<Story> dependantStoryList = observableArrayList();
+        ObservableList<Story> dependantStoryList = FXCollections.observableArrayList();
         dependantStoryList.addAll(currentStory.getDependencies());
 
         Backlog currentBacklog = currentStory.getBacklog();
-        ObservableList<Story> availableStoryList = observableArrayList();
+        ObservableList<Story> availableStoryList = FXCollections.observableArrayList();
         for (Story story : currentBacklog.getProject().getAllStories()) {
             availableStoryList.add(story);
         }
@@ -209,9 +208,9 @@ public class StoryEditScene {
                     story.removeDependants(currentStory);
                 }
 
-                boolean correctShortName = validateShortName(shortNameCustomField,
+                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
                         currentStory.getShortName());
-                boolean correctPriority = validatePriorityField(priorityNumberField,
+                boolean correctPriority = PriorityFieldValidator.validatePriorityField(priorityNumberField,
                         currentStory.getBacklog(), currentStory.getPriority());
 
                 if (correctShortName && correctPriority) {

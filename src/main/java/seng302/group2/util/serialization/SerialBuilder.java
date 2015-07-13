@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.collections.ObservableList;
 import seng302.group2.workspace.SaharaItem;
-import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -14,6 +13,7 @@ import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.workspace.Workspace;
 
 import java.time.LocalDate;
 

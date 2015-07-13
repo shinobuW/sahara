@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -18,15 +19,13 @@ import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.util.validation.DateValidator;
+import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 
 import java.time.LocalDate;
 import java.util.Collections;
-
-import static seng302.group2.scenes.MainScene.informationPane;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * @author Shinobu
@@ -39,7 +38,7 @@ public class ReleaseEditScene {
      * @return the editable information scene for a release
      */
     public static ScrollPane getReleaseEditScene(Release currentRelease) {
-        informationPane = new VBox(10);
+        Pane informationPane = new VBox(10);
         /*informationPane.setAlignment(Pos.TOP_LEFT);
         informationPane.setHgap(10);
         informationPane.setVgap(10);*/
@@ -105,7 +104,7 @@ public class ReleaseEditScene {
                     }
                 }
 
-                boolean correctShortName = validateShortName(shortNameCustomField,
+                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
                         currentRelease.getShortName());
                 // The short name is the same or valid
                 if (correctShortName) {

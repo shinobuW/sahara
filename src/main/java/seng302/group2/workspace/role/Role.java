@@ -9,9 +9,9 @@ import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.RoleInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.skills.Skill;
 
 import java.io.Serializable;

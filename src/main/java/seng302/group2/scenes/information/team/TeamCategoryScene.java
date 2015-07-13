@@ -4,15 +4,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.dialog.CreateTeamDialog;
+import seng302.group2.scenes.dialog.DeleteDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
-
-import static seng302.group2.scenes.MainScene.informationPane;
-import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * A class for displaying all teams currently created in a workspace.
@@ -27,7 +26,7 @@ public class TeamCategoryScene {
      * @return The team category info scene
      */
     public static ScrollPane getTeamCategoryScene(Workspace currentWorkspace) {
-        informationPane = new VBox(10);
+        Pane informationPane = new VBox(10);
 
         informationPane.setPadding(new Insets(25, 25, 25, 25));
         Label title = new TitleLabel("Teams in " + currentWorkspace.getShortName());
@@ -62,7 +61,7 @@ public class TeamCategoryScene {
 
         btnDelete.setOnAction((event) -> {
                 if (teamBox.getSelectionModel().getSelectedItem() != null) {
-                    showDeleteDialog((SaharaItem)
+                    DeleteDialog.showDeleteDialog((SaharaItem)
                             teamBox.getSelectionModel().getSelectedItem());
                 }
             });

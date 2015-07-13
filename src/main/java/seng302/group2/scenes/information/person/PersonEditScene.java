@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -25,7 +26,6 @@ import java.util.Collections;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.Global.currentWorkspace;
-import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.util.validation.DateValidator.validateBirthDateField;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
@@ -42,7 +42,7 @@ public class PersonEditScene {
      * @return The Person Edit information scene
      */
     public static ScrollPane getPersonEditScene(Person currentPerson) {
-        informationPane = new VBox(10);
+        Pane informationPane = new VBox(10);
 
         informationPane.setPadding(new Insets(25, 25, 25, 25));
 

@@ -18,8 +18,8 @@ import org.controlsfx.dialog.Dialog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seng302.group2.Global;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.util.reporting.ReportGenerator;
+import seng302.group2.workspace.SaharaItem;
 
 import java.util.ArrayList;
 import java.util.List;
