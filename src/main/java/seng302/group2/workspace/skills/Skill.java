@@ -182,7 +182,6 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
         Element skillDescription = ReportGenerator.doc.createElement("description");
         skillDescription.appendChild(ReportGenerator.doc.createTextNode(description));
         skillElement.appendChild(skillDescription);
-
         return skillElement;
     }
 

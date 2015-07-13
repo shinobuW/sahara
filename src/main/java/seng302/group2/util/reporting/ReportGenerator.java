@@ -33,6 +33,18 @@ public class ReportGenerator {
     public static List<SaharaItem> generatedItems = null;
     public static int iterator = 0;
 
+    //Constructor only exists to setup basic report elements for tests
+    public ReportGenerator() {
+        try {
+            docFactory = DocumentBuilderFactory.newInstance();
+            docBuilder = docFactory.newDocumentBuilder();
+            doc = docBuilder.newDocument();
+        }
+        catch (Exception e) {
+
+        }
+    }
+
     public static boolean generateReport(List<SaharaItem> checkedItems) {
         generatedItems = checkedItems;
         try {
