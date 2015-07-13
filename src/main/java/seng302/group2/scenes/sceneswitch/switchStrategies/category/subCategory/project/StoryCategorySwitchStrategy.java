@@ -2,11 +2,11 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import seng302.group2.scenes.MainScene;
+import seng302.group2.App;
 import seng302.group2.scenes.information.project.story.StoryCategoryScene;
+import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrategy;
 import seng302.group2.workspace.categories.Category;
 import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
-import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrategy;
 
 /**
  * A switch strategy for project story categories
@@ -18,7 +18,7 @@ public class StoryCategorySwitchStrategy implements SubCategorySwitchStrategy {
     @Override
     public void switchScene(Category storyCategory) {
         if (storyCategory instanceof StoryCategory) {
-            MainScene.contentPane.setContent(StoryCategoryScene.getStoryCategoryScene(
+            App.mainPane.setContent(StoryCategoryScene.getStoryCategoryScene(
                     (StoryCategory) storyCategory));
         }
         else {

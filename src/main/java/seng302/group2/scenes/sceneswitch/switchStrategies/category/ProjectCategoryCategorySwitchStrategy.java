@@ -1,7 +1,7 @@
 package seng302.group2.scenes.sceneswitch.switchStrategies.category;
 
+import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.information.project.ProjectCategoryScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy;
 
@@ -12,7 +12,7 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy
 public class ProjectCategoryCategorySwitchStrategy implements CategorySwitchStrategy {
     @Override
     public void switchScene() {
-        MainScene.contentPane.setContent(ProjectCategoryScene.getProjectCategoryScene(
+        App.mainPane.setContent(ProjectCategoryScene.getProjectCategoryScene(
                 Global.currentWorkspace));
     }
 }

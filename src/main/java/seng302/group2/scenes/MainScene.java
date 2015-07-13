@@ -3,6 +3,7 @@ package seng302.group2.scenes;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
@@ -12,25 +13,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.information.person.PersonScene;
-import seng302.group2.scenes.information.project.ProjectScene;
-import seng302.group2.scenes.information.project.story.StoryScene;
-import seng302.group2.scenes.information.role.RoleScene;
-import seng302.group2.scenes.information.skill.SkillScene;
-import seng302.group2.scenes.information.team.TeamScene;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.scenes.menu.MainMenuBar;
-import seng302.group2.workspace.workspace.Workspace;
-import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.project.story.Story;
-import seng302.group2.workspace.role.Role;
-import seng302.group2.workspace.skills.Skill;
-import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.HierarchyData;
+import seng302.group2.workspace.SaharaItem;
 
-import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.App.content;
 
 
@@ -39,11 +27,13 @@ import static seng302.group2.App.content;
  *
  * @author Jordane Lew (jml168)
  */
+@Deprecated
 public class MainScene {
     public static TreeViewWithItems treeView = new TreeViewWithItems(new TreeItem());
     public static Pane informationPane = new Pane();
     public static ScrollPane contentPane = new ScrollPane();
     public static boolean menuHidden = false;
+
 
     /**
      * Gets the Main Scene for display in the GUI
@@ -59,10 +49,14 @@ public class MainScene {
 
         if (Global.selectedTreeItem == null || Global.selectedTreeItem.getValue() == null) {
             treeView.selectItem(Global.currentWorkspace);
-            contentPane.setContent(new WorkspaceScene(
-                    Global.currentWorkspace));
+            contentPane.setContent(new WorkspaceScene(Global.currentWorkspace));
         }
-        else if (Global.selectedTreeItem.getValue() instanceof Workspace) {
+        else {
+            treeView.selectItem((HierarchyData)Global.selectedTreeItem.getValue());
+            //((SaharaItem)Global.selectedTreeItem.getValue()).switchToInfoScene();
+            //contentPane.setContent(();
+        }
+        /*else if (Global.selectedTreeItem.getValue() instanceof Workspace) {
             contentPane.setContent(new WorkspaceScene(
                     (Workspace) Global.selectedTreeItem.getValue()));
         }
@@ -83,14 +77,15 @@ public class MainScene {
         }
         else if (Global.selectedTreeItem.getValue() instanceof Story) {
             contentPane.setContent(new StoryScene((Story) Global.selectedTreeItem.getValue()));
-        }
+        }*/
 
 
-        // Create the display menu from the workspace tree
-        ObservableList<SaharaItem> children = observableArrayList();
+// Create the display menu from the workspace tree
+        ObservableList<SaharaItem> children = FXCollections.observableArrayList();
         children.add(Global.currentWorkspace);
-        treeView.setItems(children);
         treeView.setShowRoot(false);
+        treeView.setItems(children);
+
 
 
         root.heightProperty().addListener(new ChangeListener<Number>() {
@@ -109,8 +104,9 @@ public class MainScene {
         content.boundsInParentProperty();
         informationPane.boundsInParentProperty();
 
-        content.getItems().removeAll(treeView, informationPane);
+        //content.getItems().removeAll(treeView, informationPane);
         //content.getChildren().removeAll(treeView, informationPane);
+        content.getItems().clear();
 
         if (!menuHidden) {
             content.getItems().add(treeView);

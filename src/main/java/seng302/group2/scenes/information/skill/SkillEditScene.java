@@ -11,8 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.skills.Skill;
@@ -85,7 +85,7 @@ public class SkillEditScene {
 
                     Collections.sort(Global.currentWorkspace.getSkills());
                     currentSkill.switchToInfoScene();
-                    MainScene.treeView.refresh();
+                    App.mainPane.refreshTree();
                 }
                 else {
                     event.consume();

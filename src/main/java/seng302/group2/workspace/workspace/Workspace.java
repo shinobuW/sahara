@@ -16,15 +16,14 @@ import org.controlsfx.dialog.Dialogs;
 import org.w3c.dom.Element;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.dialog.CustomDialog;
-import seng302.group2.workspace.SaharaItem;
-import seng302.group2.workspace.categories.*;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.WorkspaceInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.revert.RevertManager;
 import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.Command;
+import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.categories.*;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
@@ -318,7 +317,7 @@ public class Workspace extends SaharaItem implements Serializable {
             Global.commandManager.clear();
             Global.commandManager.trackSave();
 
-            MainScene.treeView.selectItem(Global.currentWorkspace);
+            App.mainPane.selectItem(Global.currentWorkspace);
 
             return SaveLoadResult.SUCCESS;
         }
