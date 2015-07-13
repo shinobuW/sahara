@@ -18,11 +18,15 @@ import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
- * A class for displaying all people currently created in a workspace.
+ * A class for displaying the person category scene.
  *
  * @author David Moseley
  */
 public class PersonCategoryScene extends TrackedTabPane {
+    /**
+     * Constructor for the PersonCategoryScene class.
+     * @param currentWorkspace the current workspace
+     */
     public PersonCategoryScene(Workspace currentWorkspace) {
         super(ContentScene.PERSON_CATEGORY);
 

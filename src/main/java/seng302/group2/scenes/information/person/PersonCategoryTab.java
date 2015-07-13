@@ -14,9 +14,14 @@ import seng302.group2.workspace.workspace.Workspace;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
+ * A class for displaying a tab showing data on all the People
  * Created by btm38 on 13/07/15.
  */
 public class PersonCategoryTab extends Tab {
+    /**
+     * Constructor for PersonCategoryTab class.
+     * @param currentWorkspace The current workspace
+     */
     public PersonCategoryTab(Workspace currentWorkspace) {
         this.setText("Basic Information");
         Pane categoryPane = new VBox(10);
@@ -52,11 +57,11 @@ public class PersonCategoryTab extends Tab {
         //categoryPane.getChildren().add(createButton);
 
         btnView.setOnAction((event) -> {
-            if (personBox.getSelectionModel().getSelectedItem() != null) {
-                App.mainPane.selectItem((SaharaItem)
-                        personBox.getSelectionModel().getSelectedItem());
-            }
-        });
+                if (personBox.getSelectionModel().getSelectedItem() != null) {
+                    App.mainPane.selectItem((SaharaItem)
+                            personBox.getSelectionModel().getSelectedItem());
+                }
+            });
 
 
         btnDelete.setOnAction((event) -> {
@@ -69,6 +74,5 @@ public class PersonCategoryTab extends Tab {
         btnCreate.setOnAction((event) -> {
                 CreatePersonDialog.show();
             });
-
     }
 }

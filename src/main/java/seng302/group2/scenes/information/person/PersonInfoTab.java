@@ -9,7 +9,7 @@ import seng302.group2.workspace.person.Person;
 
 
 /**
- * The workspace information tab
+ * The person information tab
  * Created by jml168 on 11/05/15.
  */
 public class PersonInfoTab extends Tab {
