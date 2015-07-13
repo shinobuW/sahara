@@ -12,7 +12,6 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy
 public class PersonCategorySwitchStrategy implements CategorySwitchStrategy {
     @Override
     public void switchScene() {
-        App.mainPane.setContent(PersonCategoryScene.getPersonCategoryScene(
-                Global.currentWorkspace));
+        App.mainPane.setContent(new PersonCategoryScene(Global.currentWorkspace));
     }
 }

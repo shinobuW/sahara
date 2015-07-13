@@ -17,6 +17,7 @@ public class TrackedTabPane extends TabPane {
     public enum ContentScene {
         PERSON,
         PERSON_EDIT,
+        PERSON_CATEGORY,
         PROJECT,
         PROJECT_EDIT,
         WORKSPACE,
