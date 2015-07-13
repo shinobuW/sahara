@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.ReleaseInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
@@ -25,7 +25,7 @@ import java.util.Set;
  *
  * @author Shinobu, Jordane
  */
-public class Release extends TreeViewItem implements Comparable<Release> {
+public class Release extends SaharaItem implements Comparable<Release> {
     private String shortName;
     private String description;
     private LocalDate estimatedDate;
@@ -45,7 +45,7 @@ public class Release extends TreeViewItem implements Comparable<Release> {
     }
 
     @Override
-    public Set<TreeViewItem> getItemsSet() {
+    public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }
 
@@ -245,7 +245,7 @@ public class Release extends TreeViewItem implements Comparable<Release> {
 
 
     @Override
-    public ObservableList<TreeViewItem> getChildren() {
+    public ObservableList<SaharaItem> getChildren() {
         return null;
     }
 
@@ -348,23 +348,23 @@ public class Release extends TreeViewItem implements Comparable<Release> {
          * @return If the item was successfully mapped
          */
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped_rl = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(release)) {
                     this.release = (Release) item;
                     mapped_rl = true;
                 }
             }
             boolean mapped_project = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(project)) {
                     this.project = (Project) item;
                     mapped_project = true;
                 }
             }
             boolean mapped_old_project = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(oldProject)) {
                     this.oldProject = (Project) item;
                     mapped_old_project = true;
@@ -401,16 +401,16 @@ public class Release extends TreeViewItem implements Comparable<Release> {
          * @return If the item was successfully mapped
          */
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped_rl = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(release)) {
                     this.release = (Release) item;
                     mapped_rl = true;
                 }
             }
             boolean mapped_project = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(project)) {
                     this.proj = (Project) item;
                     mapped_project = true;

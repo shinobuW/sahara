@@ -3,7 +3,7 @@ package seng302.group2.scenes.contextmenu;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.categories.Category;
+import seng302.group2.workspace.categories.Category;
 
 /**
  * Created by Jordane on 14/04/2015.

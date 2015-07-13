@@ -8,8 +8,8 @@ import javafx.scene.layout.VBox;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.dialog.CreateTeamDialog;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.workspace.Workspace;
 
 import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -55,14 +55,14 @@ public class TeamCategoryScene {
 
         btnView.setOnAction((event) -> {
                 if (teamBox.getSelectionModel().getSelectedItem() != null) {
-                    MainScene.treeView.selectItem((TreeViewItem)
+                    MainScene.treeView.selectItem((SaharaItem)
                             teamBox.getSelectionModel().getSelectedItem());
                 }
             });
 
         btnDelete.setOnAction((event) -> {
                 if (teamBox.getSelectionModel().getSelectedItem() != null) {
-                    showDeleteDialog((TreeViewItem)
+                    showDeleteDialog((SaharaItem)
                             teamBox.getSelectionModel().getSelectedItem());
                 }
             });

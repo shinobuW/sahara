@@ -5,12 +5,12 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.Command;
-import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.Stack;
 
 /**
- * Allows {@link seng302.group2.workspace.Workspace}s to be reverted to the last given state (as a
+ * Allows {@link seng302.group2.workspace.workspace.Workspace}s to be reverted to the last given state (as a
  * json serialised workspace).
  * Created by crw73 on 12/05/15.
  */

@@ -10,17 +10,7 @@ import javafx.stage.Stage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.allocation.Allocation;
-import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.project.backlog.Backlog;
-import seng302.group2.workspace.project.release.Release;
-import seng302.group2.workspace.project.story.Story;
-import seng302.group2.workspace.role.Role;
-import seng302.group2.workspace.skills.Skill;
-import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.SaharaItem;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -40,10 +30,10 @@ public class ReportGenerator {
     private static DocumentBuilderFactory docFactory = null;
     private static DocumentBuilder docBuilder = null;
     public static Document doc = null;
-    public static List<TreeViewItem> generatedItems = null;
+    public static List<SaharaItem> generatedItems = null;
     public static int iterator = 0;
 
-    public static boolean generateReport(List<TreeViewItem> checkedItems) {
+    public static boolean generateReport(List<SaharaItem> checkedItems) {
         generatedItems = checkedItems;
         try {
             docFactory = DocumentBuilderFactory.newInstance();
@@ -63,7 +53,7 @@ public class ReportGenerator {
             report.appendChild(header);
 
             //WorkSpace Node
-            TreeViewItem item = generatedItems.get(0);
+            SaharaItem item = generatedItems.get(0);
             Element xmlElement = item.generateXML();
             report.appendChild(xmlElement);
 

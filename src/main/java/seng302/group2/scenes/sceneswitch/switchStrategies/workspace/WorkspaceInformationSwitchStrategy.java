@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.information.workspace.WorkspaceEditScene;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
-import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.workspace.Workspace;
 
 /**
  * An switch strategy for people information and edit scenes
@@ -17,7 +17,7 @@ public class WorkspaceInformationSwitchStrategy implements InformationSwitchStra
     transient Logger logger = LoggerFactory.getLogger(WorkspaceInformationSwitchStrategy.class);
 
     @Override
-    public void switchScene(TreeViewItem item) {
+    public void switchScene(SaharaItem item) {
         if (item instanceof Workspace) {
             MainScene.contentPane.setContent(new WorkspaceScene((Workspace) item));
         }
@@ -28,7 +28,7 @@ public class WorkspaceInformationSwitchStrategy implements InformationSwitchStra
     }
 
     @Override
-    public void switchScene(TreeViewItem item, boolean editScene) {
+    public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Workspace) {
             if (editScene) {
                 MainScene.contentPane.setContent(WorkspaceEditScene.getWorkspaceEditScene((Workspace) item));

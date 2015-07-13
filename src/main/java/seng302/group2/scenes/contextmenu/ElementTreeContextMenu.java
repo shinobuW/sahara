@@ -5,8 +5,8 @@ import javafx.scene.control.MenuItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -34,7 +34,7 @@ public class ElementTreeContextMenu extends ContextMenu {
 
         final Categories finalSelectedCategory = selectedCategory;  // for use in lamda expr.*/
 
-        TreeViewItem selected = (TreeViewItem) Global.selectedTreeItem.getValue();
+        SaharaItem selected = (SaharaItem) Global.selectedTreeItem.getValue();
 
         //"Edit" button event
         editItem.setOnAction(e -> {

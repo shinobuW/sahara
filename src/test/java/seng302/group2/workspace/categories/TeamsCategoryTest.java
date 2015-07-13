@@ -1,9 +1,9 @@
-package seng302.group2.scenes.listdisplay.categories;
+package seng302.group2.workspace.categories;
 
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
-import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.team.Team;
 
 import java.util.Collection;

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package seng302.group2.workspace;
+package seng302.group2.workspace.workspace;
 
 import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
@@ -31,7 +31,7 @@ public class WorkspaceTest {
     @Test
     public void testWorkspaceConstructors() {
         Workspace work = new Workspace();
-        ObservableList<TreeViewItem> people = observableArrayList();
+        ObservableList<SaharaItem> people = observableArrayList();
         Assert.assertEquals("Untitled Workspace", work.getShortName());
         Assert.assertEquals("Untitled Workspace", work.getLongName());
         Assert.assertEquals("A blank workspace.", work.getDescription());

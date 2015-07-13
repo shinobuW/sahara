@@ -16,7 +16,7 @@ import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -100,7 +100,7 @@ public class CreateBacklogDialog {
             projectComboBox.setValue(firstItem);
         }
 
-        for (TreeViewItem project : Global.currentWorkspace.getProjects()) {
+        for (SaharaItem project : Global.currentWorkspace.getProjects()) {
             projectComboBox.addToComboBox(project.toString());
         }
 
@@ -162,7 +162,7 @@ public class CreateBacklogDialog {
                     String description = descriptionTextArea.getText();
 
                     Project project = new Project();
-                    for (TreeViewItem item : Global.currentWorkspace.getProjects()) {
+                    for (SaharaItem item : Global.currentWorkspace.getProjects()) {
                         if (item.toString().equals(projectComboBox.getValue())) {
                             project = (Project) item;
                         }

@@ -2,7 +2,7 @@ package seng302.group2;
 
 import org.junit.Assert;
 import org.junit.Test;
-import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.team.Team;
 
 /**

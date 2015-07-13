@@ -8,7 +8,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.TitleLabel;
-import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.workspace.Workspace;
 
 
 /**

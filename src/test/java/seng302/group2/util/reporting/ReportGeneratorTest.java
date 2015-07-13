@@ -6,7 +6,7 @@
 package seng302.group2.util.reporting;
 
 import org.junit.Before;
-import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.workspace.Workspace;
 
 /**
  * @author crw73

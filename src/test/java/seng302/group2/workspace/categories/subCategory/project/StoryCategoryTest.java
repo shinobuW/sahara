@@ -1,8 +1,8 @@
-package seng302.group2.scenes.listdisplay;
+package seng302.group2.workspace.categories.subCategory.project;
 
 import org.junit.Assert;
 import org.junit.Test;
-import seng302.group2.scenes.listdisplay.categories.subCategory.project.StoryCategory;
+import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
 

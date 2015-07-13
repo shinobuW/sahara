@@ -3,7 +3,7 @@ package seng302.group2.util.revert;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
-import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.workspace.Workspace;
 
 /**
  * Created by Jordane on 30/06/2015.

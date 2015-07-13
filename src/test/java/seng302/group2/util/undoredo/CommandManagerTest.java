@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 
 import java.util.Set;
 
@@ -140,7 +140,7 @@ public class CommandManagerTest {
         }
 
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             return true;
         }
     }

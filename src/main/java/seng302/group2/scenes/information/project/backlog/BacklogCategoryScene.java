@@ -2,7 +2,7 @@ package seng302.group2.scenes.information.project.backlog;
 
 import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
-import seng302.group2.scenes.listdisplay.categories.subCategory.project.BacklogCategory;
+import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
 
 /**
  * Created by cvs20 on 19/05/15.

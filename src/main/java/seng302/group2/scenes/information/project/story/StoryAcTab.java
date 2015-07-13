@@ -14,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialogs;
+import seng302.group2.App;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.workspace.project.story.Story;
@@ -143,6 +144,7 @@ public class StoryAcTab extends Tab {
 
                     if (response == org.controlsfx.dialog.Dialog.ACTION_YES) {
                         selectedAc.delete();
+                        App.refreshMainScene();
                     }
                     else if (response == org.controlsfx.dialog.Dialog.ACTION_NO) {
                         event.consume();

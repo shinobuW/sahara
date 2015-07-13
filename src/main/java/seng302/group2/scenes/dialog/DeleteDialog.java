@@ -10,7 +10,7 @@ import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -35,7 +35,7 @@ public class DeleteDialog {
      * @param element The element to be deleted
      * @return if the user confirms for the element to be deleted
      */
-    public static boolean showDeleteDialog(TreeViewItem element) {
+    public static boolean showDeleteDialog(SaharaItem element) {
         ArrayList<String> dialogText;
         dialogText = getDeleteDialogText(element);
 
@@ -94,7 +94,7 @@ public class DeleteDialog {
      * @param element The selected element
      * @return The text of the delete dialog
      */
-    private static ArrayList<String> getDeleteDialogText(TreeViewItem element) {
+    private static ArrayList<String> getDeleteDialogText(SaharaItem element) {
         ArrayList<String> dialogText = new ArrayList<>(2);
         String title;
         String message;

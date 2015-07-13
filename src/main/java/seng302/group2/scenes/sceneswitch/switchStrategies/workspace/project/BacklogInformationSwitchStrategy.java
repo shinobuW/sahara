@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.information.project.backlog.BacklogEditScene;
 import seng302.group2.scenes.information.project.backlog.BacklogScene;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.workspace.project.backlog.Backlog;
 
@@ -17,7 +17,7 @@ public class BacklogInformationSwitchStrategy implements InformationSwitchStrate
     transient Logger logger = LoggerFactory.getLogger(BacklogInformationSwitchStrategy.class);
 
     @Override
-    public void switchScene(TreeViewItem item) {
+    public void switchScene(SaharaItem item) {
         if (item instanceof Backlog) {
             MainScene.contentPane.setContent(new BacklogScene((Backlog) item));
         }
@@ -28,7 +28,7 @@ public class BacklogInformationSwitchStrategy implements InformationSwitchStrate
     }
 
     @Override
-    public void switchScene(TreeViewItem item, boolean editScene) {
+    public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Backlog) {
             if (editScene) {
                 MainScene.contentPane.setContent(new BacklogEditScene((Backlog) item));

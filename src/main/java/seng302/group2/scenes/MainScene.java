@@ -14,16 +14,18 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.information.person.PersonScene;
 import seng302.group2.scenes.information.project.ProjectScene;
+import seng302.group2.scenes.information.project.story.StoryScene;
 import seng302.group2.scenes.information.role.RoleScene;
 import seng302.group2.scenes.information.skill.SkillScene;
 import seng302.group2.scenes.information.team.TeamScene;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.listdisplay.TreeViewWithItems;
 import seng302.group2.scenes.menu.MainMenuBar;
-import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -79,10 +81,13 @@ public class MainScene {
         else if (Global.selectedTreeItem.getValue() instanceof Role) {
             contentPane.setContent(new RoleScene((Role) Global.selectedTreeItem.getValue()));
         }
+        else if (Global.selectedTreeItem.getValue() instanceof Story) {
+            contentPane.setContent(new StoryScene((Story) Global.selectedTreeItem.getValue()));
+        }
 
 
         // Create the display menu from the workspace tree
-        ObservableList<TreeViewItem> children = observableArrayList();
+        ObservableList<SaharaItem> children = observableArrayList();
         children.add(Global.currentWorkspace);
         treeView.setItems(children);
         treeView.setShowRoot(false);

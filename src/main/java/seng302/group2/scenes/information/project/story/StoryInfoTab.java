@@ -41,7 +41,7 @@ public class StoryInfoTab extends Tab {
         ObservableList<Story> dataDependencies = observableArrayList();
         dataDependencies.addAll(currentStory.getDependencies());
 
-        TableColumn storyCol = new TableColumn("Dependencies");
+        TableColumn storyCol = new TableColumn("Dependants");
         storyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
         storyCol.prefWidthProperty().bind(dependenciesTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
@@ -59,7 +59,7 @@ public class StoryInfoTab extends Tab {
         ObservableList<Story> dataDependants = observableArrayList();
         dataDependants.addAll(currentStory.getDepedants());
 
-        TableColumn storyCol2 = new TableColumn("Dependants");
+        TableColumn storyCol2 = new TableColumn("Depends On");
         storyCol2.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
         storyCol2.prefWidthProperty().bind(dependantsTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));

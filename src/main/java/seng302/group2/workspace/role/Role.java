@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.RoleInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.skills.Skill;
@@ -26,7 +26,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 /**
  * @author swi67
  */
-public class Role extends TreeViewItem implements Serializable {
+public class Role extends SaharaItem implements Serializable {
     private String shortName;
     private String description;
     private RoleType type;
@@ -37,7 +37,7 @@ public class Role extends TreeViewItem implements Serializable {
      * Basic Role constructor
      */
     public Role() {
-        // Initialize as a TreeViewItem
+        // Initialize as a SaharaItem
         super("unnamed");
         this.shortName = "role Name";
         this.description = "";
@@ -47,8 +47,8 @@ public class Role extends TreeViewItem implements Serializable {
     }
 
     @Override
-    public Set<TreeViewItem> getItemsSet() {
-        Set<TreeViewItem> items = new HashSet<>();
+    public Set<SaharaItem> getItemsSet() {
+        Set<SaharaItem> items = new HashSet<>();
         items.addAll(requiredSkills);
         return items;
     }
@@ -60,7 +60,7 @@ public class Role extends TreeViewItem implements Serializable {
      * @param type      type of role to be set
      */
     public Role(String shortName, RoleType type) {
-        // Initialize as a TreeViewItem
+        // Initialize as a SaharaItem
         super(shortName);
         this.shortName = shortName;
         this.type = type;
@@ -76,7 +76,7 @@ public class Role extends TreeViewItem implements Serializable {
      * @param description brief description of role
      */
     public Role(String shortName, RoleType type, String description) {
-        // Initialize as a TreeViewItem
+        // Initialize as a SaharaItem
         super(shortName);
         this.shortName = shortName;
         this.description = description;
@@ -93,7 +93,7 @@ public class Role extends TreeViewItem implements Serializable {
      * @param skills    skills required for role
      */
     public Role(String shortName, RoleType type, ObservableList<Skill> skills) {
-        // Initialize as a TreeViewItem
+        // Initialize as a SaharaItem
         super(shortName);
         this.shortName = shortName;
         this.description = "";
@@ -112,7 +112,7 @@ public class Role extends TreeViewItem implements Serializable {
      * @param skills      skills required for role
      */
     public Role(String shortName, RoleType type, String description, ObservableList<Skill> skills) {
-        // Initialize as a TreeViewItem
+        // Initialize as a SaharaItem
         super(shortName);
         this.shortName = shortName;
         this.description = description;
@@ -288,12 +288,12 @@ public class Role extends TreeViewItem implements Serializable {
     }
 
     /**
-     * Gets the children of the TreeViewItem
+     * Gets the children of the SaharaItem
      *
-     * @return The items of the TreeViewItem
+     * @return The items of the SaharaItem
      */
     @Override
-    public ObservableList<TreeViewItem> getChildren() {
+    public ObservableList<SaharaItem> getChildren() {
         return null;
     }
 

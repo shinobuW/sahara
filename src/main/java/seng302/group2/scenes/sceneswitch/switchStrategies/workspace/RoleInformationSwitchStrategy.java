@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.information.role.RoleScene;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.workspace.role.Role;
 
@@ -16,7 +16,7 @@ public class RoleInformationSwitchStrategy implements InformationSwitchStrategy 
     transient Logger logger = LoggerFactory.getLogger(RoleInformationSwitchStrategy.class);
 
     @Override
-    public void switchScene(TreeViewItem item) {
+    public void switchScene(SaharaItem item) {
         if (item instanceof Role) {
             MainScene.contentPane.setContent(new RoleScene((Role) item));
         }
@@ -27,7 +27,7 @@ public class RoleInformationSwitchStrategy implements InformationSwitchStrategy 
     }
 
     @Override
-    public void switchScene(TreeViewItem item, boolean editScene) {
+    public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Role) {
             if (editScene) {
                 logger.error("Currently there is no role edit scene");

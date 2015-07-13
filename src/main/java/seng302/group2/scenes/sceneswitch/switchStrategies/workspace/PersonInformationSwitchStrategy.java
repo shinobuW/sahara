@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.information.person.PersonEditScene;
 import seng302.group2.scenes.information.person.PersonScene;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.workspace.person.Person;
 
@@ -17,7 +17,7 @@ public class PersonInformationSwitchStrategy implements InformationSwitchStrateg
     transient Logger logger = LoggerFactory.getLogger(PersonInformationSwitchStrategy.class);
 
     @Override
-    public void switchScene(TreeViewItem item) {
+    public void switchScene(SaharaItem item) {
         if (item instanceof Person) {
             MainScene.contentPane.setContent(new PersonScene((Person) item));
         }
@@ -28,7 +28,7 @@ public class PersonInformationSwitchStrategy implements InformationSwitchStrateg
     }
 
     @Override
-    public void switchScene(TreeViewItem item, boolean editScene) {
+    public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Person) {
             if (editScene) {
                 MainScene.contentPane.setContent(PersonEditScene.getPersonEditScene((Person) item));

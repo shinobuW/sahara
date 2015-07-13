@@ -14,8 +14,8 @@ import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.util.config.ConfigLoader;
-import seng302.group2.workspace.Workspace;
-import seng302.group2.workspace.Workspace.SaveLoadResult;
+import seng302.group2.workspace.workspace.Workspace;
+import seng302.group2.workspace.workspace.Workspace.SaveLoadResult;
 
 /**
  * The executable class for Sahara.

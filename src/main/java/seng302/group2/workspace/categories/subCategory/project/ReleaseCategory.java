@@ -1,11 +1,11 @@
-package seng302.group2.scenes.listdisplay.categories.subCategory.project;
+package seng302.group2.workspace.categories.subCategory.project;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.scenes.dialog.CreateReleaseDialog;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.categories.subCategory.SubCategory;
+import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.categories.subCategory.SubCategory;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.ReleaseCategorySwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.project.Project;
@@ -58,8 +58,8 @@ public class ReleaseCategory extends SubCategory {
     public Element generateXML() {
         Element releaseElements = ReportGenerator.doc.createElement("releases");
         for (Object item : getChildren()) {
-            if (ReportGenerator.generatedItems.contains((TreeViewItem) item)) {
-                Element xmlElement = ((TreeViewItem) item).generateXML();
+            if (ReportGenerator.generatedItems.contains((SaharaItem) item)) {
+                Element xmlElement = ((SaharaItem) item).generateXML();
                 if (xmlElement != null) {
                     releaseElements.appendChild(xmlElement);
                 }

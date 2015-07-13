@@ -4,11 +4,11 @@ import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.SkillInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
-import seng302.group2.workspace.Workspace;
+import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.person.Person;
 
 import java.io.Serializable;
@@ -19,7 +19,7 @@ import java.util.*;
  *
  * @author crw73
  */
-public class Skill extends TreeViewItem implements Serializable, Comparable<Skill> {
+public class Skill extends SaharaItem implements Serializable, Comparable<Skill> {
     private String shortName;
     private String description;
 
@@ -35,7 +35,7 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
     }
 
     @Override
-    public Set<TreeViewItem> getItemsSet() {
+    public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }
 
@@ -46,7 +46,7 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
      * @param description The Description of a skill
      */
     public Skill(String shortName, String description) {
-        // Initialize as a TreeViewItem
+        // Initialize as a SaharaItem
         super(shortName);
 
         this.shortName = shortName;
@@ -100,12 +100,12 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
     //</editor-fold>
 
     /**
-     * Gets the children of the TreeViewItem
+     * Gets the children of the SaharaItem
      *
-     * @return The items of the TreeViewItem
+     * @return The items of the SaharaItem
      */
     @Override
-    public ObservableList<TreeViewItem> getChildren() {
+    public ObservableList<SaharaItem> getChildren() {
         return null;
     }
 
@@ -251,9 +251,9 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
         }
 
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(skill)) {
                     this.skill = (Skill) item;
                     mapped = true;
@@ -287,9 +287,9 @@ public class Skill extends TreeViewItem implements Serializable, Comparable<Skil
         }
 
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(skill)) {
                     this.skill = (Skill) item;
                     mapped = true;

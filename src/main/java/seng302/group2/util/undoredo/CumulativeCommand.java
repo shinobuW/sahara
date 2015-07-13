@@ -1,6 +1,6 @@
 package seng302.group2.util.undoredo;
 
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 
 import java.util.*;
 
@@ -60,7 +60,7 @@ public class CumulativeCommand implements Command {
     }
 
     @Override
-    public boolean map(Set<TreeViewItem> stateObjects) {
+    public boolean map(Set<SaharaItem> stateObjects) {
         boolean result = true;
         for (Command command : commands) {
             if (!command.map(stateObjects)) {

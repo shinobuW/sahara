@@ -1,9 +1,9 @@
-package seng302.group2.scenes.listdisplay.categories;
+package seng302.group2.workspace.categories;
 
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.RoleCategorySwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 
@@ -21,7 +21,7 @@ public class RolesCategory extends Category {
     }
 
     @Override
-    public Set<TreeViewItem> getItemsSet() {
+    public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }
 
@@ -38,8 +38,8 @@ public class RolesCategory extends Category {
     public Element generateXML() {
         Element roleElements = ReportGenerator.doc.createElement("roles");
         for (Object item : getChildren()) {
-            if (ReportGenerator.generatedItems.contains((TreeViewItem) item)) {
-                Element xmlElement = ((TreeViewItem) item).generateXML();
+            if (ReportGenerator.generatedItems.contains((SaharaItem) item)) {
+                Element xmlElement = ((SaharaItem) item).generateXML();
                 if (xmlElement != null) {
                     roleElements.appendChild(xmlElement);
                 }

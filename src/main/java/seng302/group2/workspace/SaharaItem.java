@@ -1,10 +1,10 @@
-package seng302.group2.scenes.listdisplay;
+package seng302.group2.workspace;
 
 import javafx.collections.ObservableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
-import seng302.group2.scenes.listdisplay.categories.Category;
+import seng302.group2.workspace.categories.Category;
 import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrategy;
@@ -18,30 +18,30 @@ import static javafx.collections.FXCollections.observableArrayList;
  *
  * @author Jordane
  */
-public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
+public abstract class SaharaItem implements HierarchyData<SaharaItem> {
     private String itemName = "";
-    private transient ObservableList<TreeViewItem> children = observableArrayList();
+    private transient ObservableList<SaharaItem> children = observableArrayList();
 
     private transient CategorySwitchStrategy categorySwitchStrategy;
     private transient InformationSwitchStrategy informationSwitchStrategy;
     private transient SubCategorySwitchStrategy subCategorySwitchStrategy;
 
-    private transient Logger logger = LoggerFactory.getLogger(TreeViewItem.class);
+    private transient Logger logger = LoggerFactory.getLogger(SaharaItem.class);
 
 
     /**
      * Blank constructor
      */
-    public TreeViewItem() {
+    public SaharaItem() {
     }
 
 
     /**
-     * Constructor for a TreeViewItem
+     * Constructor for a SaharaItem
      *
-     * @param itemName The name of the TreeViewItem
+     * @param itemName The name of the SaharaItem
      */
-    public TreeViewItem(String itemName) {
+    public SaharaItem(String itemName) {
         this.itemName = itemName;
     }
 
@@ -77,27 +77,27 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
 
 
     /**
-     * Returns the items inside of the current TreeViewItem
-     * @return A set of items inside of this TreeViewItem
+     * Returns the items inside of the current SaharaItem
+     * @return A set of items inside of this SaharaItem
      */
-    public abstract Set<TreeViewItem> getItemsSet();
+    public abstract Set<SaharaItem> getItemsSet();
 
 
     /**
-     * Gets the children of the TreeViewItem
+     * Gets the children of the SaharaItem
      *
-     * @return The items of the TreeViewItem
+     * @return The items of the SaharaItem
      */
     @Override
-    public ObservableList<TreeViewItem> getChildren() {
+    public ObservableList<SaharaItem> getChildren() {
         return children;
     }
 
 
     /**
-     * Gets the string representation of the TreeViewItem
+     * Gets the string representation of the SaharaItem
      *
-     * @return The TreeViewItem name
+     * @return The SaharaItem name
      */
     @Override
     public String toString() {
@@ -180,7 +180,7 @@ public abstract class TreeViewItem implements HierarchyData<TreeViewItem> {
      */
     public boolean semiEquivalentTo(Object object) {
         return this.getClass().equals(object.getClass())
-                && ((TreeViewItem) object).itemName.equals(this.itemName);
+                && ((SaharaItem) object).itemName.equals(this.itemName);
     }
 
 }

@@ -1,6 +1,6 @@
 package seng302.group2.scenes.sceneswitch.switchStrategies;
 
-import seng302.group2.scenes.listdisplay.categories.Category;
+import seng302.group2.workspace.categories.Category;
 
 /**
  * Created by Jordane on 8/06/2015.

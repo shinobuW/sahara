@@ -1,10 +1,10 @@
-package seng302.group2.scenes.listdisplay.categories;
+package seng302.group2.workspace.categories;
 
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.SkillsCategoryCategorySwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.person.Person;
@@ -30,16 +30,16 @@ public class SkillsCategory extends Category {
     public Element generateXML() {
         Element skillElements = ReportGenerator.doc.createElement("unassigned-skills");
         for (Object item : getChildren()) {
-            if (ReportGenerator.generatedItems.contains((TreeViewItem) item)) {
+            if (ReportGenerator.generatedItems.contains((SaharaItem) item)) {
                 boolean assigned = false;
                 for (Person person : Global.currentWorkspace.getPeople()) {
-                    if (person.getSkills().contains(((TreeViewItem) item))) {
+                    if (person.getSkills().contains(((SaharaItem) item))) {
                         assigned = true;
                         break;
                     }
                 }
                 if (!assigned) {
-                    Element xmlElement = ((TreeViewItem) item).generateXML();
+                    Element xmlElement = ((SaharaItem) item).generateXML();
                     if (xmlElement != null) {
                         skillElements.appendChild(xmlElement);
                     }
@@ -51,7 +51,7 @@ public class SkillsCategory extends Category {
     }
 
     @Override
-    public Set<TreeViewItem> getItemsSet() {
+    public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }
 

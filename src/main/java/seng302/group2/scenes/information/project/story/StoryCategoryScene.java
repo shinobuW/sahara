@@ -8,8 +8,8 @@ import javafx.scene.layout.VBox;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.dialog.CreateStoryDialog;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
-import seng302.group2.scenes.listdisplay.categories.subCategory.project.StoryCategory;
+import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
 
 import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -52,7 +52,7 @@ public class StoryCategoryScene {
 
         btnView.setOnAction((event) -> {
                 if (storyBox.getSelectionModel().getSelectedItem() != null) {
-                    MainScene.treeView.selectItem((TreeViewItem)
+                    MainScene.treeView.selectItem((SaharaItem)
                             storyBox.getSelectionModel().getSelectedItem());
                 }
             });
@@ -60,7 +60,7 @@ public class StoryCategoryScene {
 
         btnDelete.setOnAction((event) -> {
                 if (storyBox.getSelectionModel().getSelectedItem() != null) {
-                    showDeleteDialog((TreeViewItem) storyBox.getSelectionModel()
+                    showDeleteDialog((SaharaItem) storyBox.getSelectionModel()
                             .getSelectedItem());
                 }
             });

@@ -18,7 +18,7 @@ import org.controlsfx.dialog.Dialog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.util.reporting.ReportGenerator;
 
 import java.util.ArrayList;
@@ -53,19 +53,19 @@ public class GenerateReportDialog {
 
 
 
-        TreeItem<TreeViewItem> root = new CheckBoxTreeItem<>(Global.currentWorkspace);
+        TreeItem<SaharaItem> root = new CheckBoxTreeItem<>(Global.currentWorkspace);
         addChildren(root);
         root.setExpanded(true);
 
-        TreeView<TreeViewItem> treeView = new TreeView<>(root);
-        treeView.setCellFactory(CheckBoxTreeCell.<TreeViewItem>forTreeView());
+        TreeView<SaharaItem> treeView = new TreeView<>(root);
+        treeView.setCellFactory(CheckBoxTreeCell.<SaharaItem>forTreeView());
 
 
         grid.getChildren().addAll(treeView, buttons);
 
 
         btnGenerate.setOnAction((event) -> {
-                List<TreeViewItem> checkedItems = getCheckedItems(root);
+                List<SaharaItem> checkedItems = getCheckedItems(root);
                 // TODO: Plug in custom generation method
                 logger.info(checkedItems.toString());
                 if (!checkedItems.isEmpty()) {
@@ -85,24 +85,24 @@ public class GenerateReportDialog {
 
 
     /**
-     * Adds children of the TreeViewItem to its TreeItem wrapper recursively
+     * Adds children of the SaharaItem to its TreeItem wrapper recursively
      * @param root The root tree item
      */
-    protected static void addChildren(TreeItem<TreeViewItem> root) {
+    protected static void addChildren(TreeItem<SaharaItem> root) {
         if (root.getValue() == null || root.getValue().getChildren() == null) {
             return;
         }
-        for (TreeViewItem item : root.getValue().getChildren()) {
-            TreeItem<TreeViewItem> child = new CheckBoxTreeItem<>(item);
+        for (SaharaItem item : root.getValue().getChildren()) {
+            TreeItem<SaharaItem> child = new CheckBoxTreeItem<>(item);
             root.getChildren().add(child);
             addChildren(child);
         }
     }
 
 
-    protected static List<TreeViewItem> getCheckedItems(TreeItem<TreeViewItem> root) {
+    protected static List<SaharaItem> getCheckedItems(TreeItem<SaharaItem> root) {
 
-        List<TreeViewItem> checkedItems = new ArrayList<>();
+        List<SaharaItem> checkedItems = new ArrayList<>();
 
         if (((CheckBoxTreeItem)root).isSelected() || ((CheckBoxTreeItem)root).isIndeterminate() ) {
             checkedItems.add(root.getValue());

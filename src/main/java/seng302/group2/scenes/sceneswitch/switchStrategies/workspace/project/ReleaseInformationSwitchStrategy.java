@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.information.project.release.ReleaseEditScene;
 import seng302.group2.scenes.information.project.release.ReleaseScene;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.workspace.project.release.Release;
 
@@ -17,7 +17,7 @@ public class ReleaseInformationSwitchStrategy implements InformationSwitchStrate
     transient Logger logger = LoggerFactory.getLogger(ReleaseInformationSwitchStrategy.class);
 
     @Override
-    public void switchScene(TreeViewItem item) {
+    public void switchScene(SaharaItem item) {
         if (item instanceof Release) {
             MainScene.contentPane.setContent(new ReleaseScene((Release) item));
         }
@@ -28,7 +28,7 @@ public class ReleaseInformationSwitchStrategy implements InformationSwitchStrate
     }
 
     @Override
-    public void switchScene(TreeViewItem item, boolean editScene) {
+    public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Release) {
             if (editScene) {
                 MainScene.contentPane.setContent(ReleaseEditScene.getReleaseEditScene(

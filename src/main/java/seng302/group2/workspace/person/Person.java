@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
-import seng302.group2.scenes.listdisplay.TreeViewItem;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.PersonInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
@@ -27,7 +27,7 @@ import static javafx.collections.FXCollections.observableArrayList;
  *
  * @author crw73
  */
-public class Person extends TreeViewItem implements Serializable, Comparable<Person> {
+public class Person extends SaharaItem implements Serializable, Comparable<Person> {
     private String shortName;
     private String firstName;
     private String lastName;
@@ -51,7 +51,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
         this.email = "";
         this.description = "";
 
-        for (TreeViewItem team : Global.currentWorkspace.getTeams()) {
+        for (SaharaItem team : Global.currentWorkspace.getTeams()) {
             Team castedTeam = (Team) team;
             if (castedTeam.isUnassignedTeam()) {
                 this.team = castedTeam;
@@ -77,7 +77,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
      */
     public Person(String shortName, String firstName, String lastName, String email,
                   String description, LocalDate birthDate) {
-        // Initialize as a TreeViewItem
+        // Initialize as a SaharaItem
         super(shortName);
 
         this.setShortName(shortName);
@@ -86,7 +86,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
         this.setEmail(email);
         this.setDescription(description);
         this.setBirthDate(birthDate);
-        for (TreeViewItem team : Global.currentWorkspace.getTeams()) {
+        for (SaharaItem team : Global.currentWorkspace.getTeams()) {
             Team castedTeam = (Team) team;
             if (castedTeam.isUnassignedTeam()) {
                 this.team = castedTeam;
@@ -102,8 +102,8 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
      * Returns a set of all children items inside a person
      * @return A set of all children items inside this person
      */
-    public Set<TreeViewItem> getItemsSet() {
-        Set<TreeViewItem> items = new HashSet<>();
+    public Set<SaharaItem> getItemsSet() {
+        Set<SaharaItem> items = new HashSet<>();
 
         for (Skill skill : skills) {
             items.add(skill);
@@ -392,12 +392,12 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
 
 
     /**
-     * Gets the children of the TreeViewItem
+     * Gets the children of the SaharaItem
      *
-     * @return The items of the TreeViewItem
+     * @return The items of the SaharaItem
      */
     @Override
-    public ObservableList<TreeViewItem> getChildren() {
+    public ObservableList<SaharaItem> getChildren() {
         return null;
     }
 
@@ -563,23 +563,23 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
          * @return If the item was successfully mapped
          */
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(person)) {
                     this.person = (Person) item;
                     mapped = true;
                 }
             }
             boolean mapped_team = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(team)) {
                     this.team = (Team) item;
                     mapped_team = true;
                 }
             }
             boolean mapped_old_team = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(oldTeam)) {
                     this.oldTeam = (Team) item;
                     mapped_old_team = true;
@@ -591,7 +591,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
                 skills = FXCollections.observableArrayList();
             }
             for (Skill skill : skills) {
-                for (TreeViewItem item : stateObjects) {
+                for (SaharaItem item : stateObjects) {
                     if (item.equivalentTo(skill)) {
                         skills.remove(skill);
                         skills.add((Skill)item);
@@ -600,7 +600,7 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
                 }
             }
             for (Skill skill : oldSkills) {
-                for (TreeViewItem item : stateObjects) {
+                for (SaharaItem item : stateObjects) {
                     if (item.equivalentTo(skill)) {
                         oldSkills.remove(skill);
                         oldSkills.add((Skill)item);
@@ -640,16 +640,16 @@ public class Person extends TreeViewItem implements Serializable, Comparable<Per
          * @return If the item was successfully mapped
          */
         @Override
-        public boolean map(Set<TreeViewItem> stateObjects) {
+        public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped_person = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(person)) {
                     this.person = (Person) item;
                     mapped_person = true;
                 }
             }
             boolean mapped_team = false;
-            for (TreeViewItem item : stateObjects) {
+            for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(team)) {
                     this.team = (Team) item;
                     mapped_team = true;
