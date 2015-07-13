@@ -5,11 +5,15 @@ import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.workspace.skills.Skill;
 
 /**
- * A class for displaying the role scene
+ * A class for displaying the skill scene
  *
  * @author jml168
  */
 public class SkillScene extends TrackedTabPane {
+    /**
+     * Constructor for the SkillScene class. Displays an instance of SkillInfoTab.
+     * @param currentSkill the current skill for which information will be displayed
+     */
     public SkillScene(Skill currentSkill) {
         super(ContentScene.SKILL);
 

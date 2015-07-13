@@ -14,9 +14,14 @@ import seng302.group2.workspace.workspace.Workspace;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
+ * Shows the Skill Category Tab, which has information about all the skills in the workspace.
  * Created by btm38 on 13/07/15.
  */
 public class SkillCategoryTab extends Tab {
+    /**
+     * Basic constructor for the SkillCategoryTab.
+     * @param currentWorkspace the current workspace
+     */
     public SkillCategoryTab(Workspace currentWorkspace) {
         this.setText("Basic Information");
         Pane skillPane = new VBox(10);

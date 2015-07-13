@@ -12,10 +12,14 @@ import seng302.group2.workspace.skills.Skill;
 
 
 /**
- * The workspace information tab
+ * The skill information tab
  * Created by jml168 on 11/05/15.
  */
 public class SkillInfoTab extends Tab {
+    /**
+     * Constructor for the SkillInfoTab class.
+     * @param currentSkill the current skill for which information will be displayed
+     */
     public SkillInfoTab(Skill currentSkill) {
         this.setText("Basic Information");
 

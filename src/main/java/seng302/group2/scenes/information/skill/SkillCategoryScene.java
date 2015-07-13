@@ -25,6 +25,10 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
  * @author David Moseley, Bronson McNaughton
  */
 public class SkillCategoryScene extends TrackedTabPane {
+    /**
+     * Constructor for the SkillCategoryScene class.
+     * @param currentWorkspace the current workspace
+     */
     public SkillCategoryScene(Workspace currentWorkspace) {
         super(TrackedTabPane.ContentScene.SKILL_CATEGORY);
 
