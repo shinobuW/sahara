@@ -47,22 +47,22 @@ public class SkillCategoryTab extends Tab {
 
 
         btnView.setOnAction((event) -> {
-            if (skillBox.getSelectionModel().getSelectedItem() != null) {
-                MainScene.treeView.selectItem((SaharaItem)
-                        skillBox.getSelectionModel().getSelectedItem());
-            }
-        });
+                if (skillBox.getSelectionModel().getSelectedItem() != null) {
+                    MainScene.treeView.selectItem((SaharaItem)
+                            skillBox.getSelectionModel().getSelectedItem());
+                }
+            });
 
         btnDelete.setOnAction((event) -> {
-            if (skillBox.getSelectionModel().getSelectedItem() != null) {
-                showDeleteDialog((SaharaItem)
-                        skillBox.getSelectionModel().getSelectedItem());
-            }
-        });
+                if (skillBox.getSelectionModel().getSelectedItem() != null) {
+                    showDeleteDialog((SaharaItem)
+                            skillBox.getSelectionModel().getSelectedItem());
+                }
+            });
 
         btnCreate.setOnAction((event) -> {
-            CreateSkillDialog.show();
-        });
+                CreateSkillDialog.show();
+            });
     }
 }
 
