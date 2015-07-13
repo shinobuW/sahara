@@ -7,7 +7,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.TrackedTabPane;
+import seng302.group2.scenes.information.project.backlog.BacklogCategoryTab;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
 import seng302.group2.workspace.workspace.Workspace;
 
 import static seng302.group2.scenes.MainScene.informationPane;
@@ -17,65 +20,13 @@ import static seng302.group2.scenes.MainScene.informationPane;
  *
  * @author David Moseley
  */
-public class RoleCategoryScene {
-    /**
-     * Gets the Role Category Scene
-     *
-     * @param currentWorkspace The workspace currently being used
-     * @return The role category info scene
-     */
-    public static ScrollPane getRoleCategoryScene(Workspace currentWorkspace) {
-        informationPane = new VBox(10);
+public class RoleCategoryScene extends TrackedTabPane {
+    public RoleCategoryScene(Workspace currentWorkspace) {
+        super(ContentScene.ROLE_CATEGORY);
 
-        informationPane.setPadding(new Insets(25, 25, 25, 25));
-        Label title = new TitleLabel("Roles in " + currentWorkspace.getShortName());
+        // Define and add the tabs
+        Tab categoryTab = new RoleCategoryTab(currentWorkspace);
 
-        Button btnView = new Button("View");
-        //Button btnDelete = new Button("Delete");
-        //Button btnCreate = new Button("Create New Role");
-
-        HBox selectionButtons = new HBox();
-        selectionButtons.spacingProperty().setValue(10);
-        selectionButtons.getChildren().add(btnView);
-        //selectionButtons.getChildren().add(btnDelete);
-        selectionButtons.setAlignment(Pos.TOP_LEFT);
-
-        HBox createButton = new HBox();
-        //createButton.getChildren().add(btnCreate);
-        createButton.setAlignment(Pos.CENTER_RIGHT);
-
-        ListView roleBox = new ListView(currentWorkspace.getRoles());
-        roleBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        roleBox.setMaxWidth(450);
-
-        informationPane.getChildren().add(title);
-        informationPane.getChildren().add(roleBox);
-        informationPane.getChildren().add(selectionButtons);
-        informationPane.getChildren().add(createButton);
-
-        btnView.setOnAction((event) -> {
-                if (roleBox.getSelectionModel().getSelectedItem() != null) {
-                    MainScene.treeView.selectItem((SaharaItem)
-                            roleBox.getSelectionModel().getSelectedItem());
-                }
-            });
-
-
-        /*btnDelete.setOnAction((event) ->
-            {
-                if (roleBox.getSelectionModel().getSelectedItem() != null)
-                {
-                    Role.deleteRole((Role) roleBox.getSelectionModel().getSelectedItem());
-                }
-            });*/
-
-        /*btnCreate.setOnAction((event) ->
-            {
-                CreateRoleDialog.show();
-            });*/
-
-        ScrollPane wrapper = new ScrollPane(informationPane);
-        wrapper.setStyle("-fx-background-color:transparent;");
-        return wrapper;
+        this.getTabs().addAll(categoryTab);  // Add the tabs to the pane
     }
 }
