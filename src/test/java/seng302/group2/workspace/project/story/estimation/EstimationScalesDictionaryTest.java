@@ -34,7 +34,7 @@ public class EstimationScalesDictionaryTest {
                 "40", "100", EstimationScalesDictionary.infSymbol, "?"));
         compareEstimationScaleDict.put("Fibonacci", valueList);
 
-        valueList = new ArrayList<>(Arrays.asList("-", "0", "Chihuahua", "Pug", "Bulldog", "Shiba Inu", "Border Collie",
+        valueList = new ArrayList<>(Arrays.asList("-", "0", "Chihuahua", "Pug", "Bulldog", "Shiba Inu",
                 "Border Collie", "Siberian Husky", "German Shepherd", "Great Dane", EstimationScalesDictionary.infSymbol, "?"));
         compareEstimationScaleDict.put("Dog Breeds", valueList);
 

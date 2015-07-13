@@ -58,7 +58,7 @@ public class EstimationScalesDictionary {
                 "40", "100"));
         createScales("Fibonacci", valueList);
 
-        valueList = new ArrayList<>(Arrays.asList("Chihuahua", "Pug", "Bulldog", "Shiba Inu", "Border Collie",
+        valueList = new ArrayList<>(Arrays.asList("Chihuahua", "Pug", "Bulldog", "Shiba Inu",
                 "Border Collie", "Siberian Husky", "German Shepherd", "Great Dane"));
         createScales("Dog Breeds", valueList);
 
