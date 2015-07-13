@@ -2,11 +2,11 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import seng302.group2.scenes.MainScene;
+import seng302.group2.App;
 import seng302.group2.scenes.information.project.ProjectEditScene;
 import seng302.group2.scenes.information.project.ProjectScene;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
 
 /**
@@ -19,7 +19,8 @@ public class ProjectInformationSwitchStrategy implements InformationSwitchStrate
     @Override
     public void switchScene(SaharaItem item) {
         if (item instanceof Project) {
-            MainScene.contentPane.setContent(new ProjectScene((Project) item));
+            App.mainPane.setContent(new ProjectScene((Project)item));
+            //MainScene.contentPane.setContent(new ProjectScene((Project) item));
         }
         else {
             // Bad call
@@ -31,7 +32,7 @@ public class ProjectInformationSwitchStrategy implements InformationSwitchStrate
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Project) {
             if (editScene) {
-                MainScene.contentPane.setContent(ProjectEditScene.getProjectEditScene(
+                App.mainPane.setContent(ProjectEditScene.getProjectEditScene(
                         (Project) item));
             }
             else {

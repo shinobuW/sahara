@@ -2,11 +2,11 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import seng302.group2.scenes.MainScene;
+import seng302.group2.App;
 import seng302.group2.scenes.information.project.release.ReleaseCategoryScene;
+import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrategy;
 import seng302.group2.workspace.categories.Category;
 import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
-import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrategy;
 
 /**
  * A switch strategy for project release categories
@@ -18,7 +18,7 @@ public class ReleaseCategorySwitchStrategy implements SubCategorySwitchStrategy 
     @Override
     public void switchScene(Category releaseCategory) {
         if (releaseCategory instanceof ReleaseCategory) {
-            MainScene.contentPane.setContent(ReleaseCategoryScene.getReleaseCategoryScene(
+            App.mainPane.setContent(ReleaseCategoryScene.getReleaseCategoryScene(
                     (ReleaseCategory) releaseCategory));
         }
         else {

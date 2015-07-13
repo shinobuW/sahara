@@ -13,16 +13,15 @@ import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.dialog.*;
+import seng302.group2.util.revert.RevertManager;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.Category;
 import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
-import seng302.group2.util.revert.RevertManager;
-import seng302.group2.workspace.workspace.Workspace;
-import seng302.group2.workspace.workspace.Workspace.SaveLoadResult;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.workspace.Workspace;
+import seng302.group2.workspace.workspace.Workspace.SaveLoadResult;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
@@ -383,8 +382,9 @@ public class MainMenuBar {
     private static MenuItem createToggleTreeItem() {
         MenuItem toggleItem = new MenuItem("Toggle Menu");
         toggleItem.setOnAction((event) -> {
-                MainScene.menuHidden = !MainScene.menuHidden;
-                App.refreshMainScene();
+                App.mainPane.toggleTree();
+                //MainScene.menuHidden = !MainScene.menuHidden;
+                //App.refreshMainScene();
             });
 
         toggleItem.setAccelerator(new KeyCodeCombination(KeyCode.M,
