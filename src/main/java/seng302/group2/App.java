@@ -35,11 +35,8 @@ public class App extends Application {
         if (App.mainStage == null) {
             return;  // App is not running (Tests)
         }
-        //App.content = new SplitPane();
-        //content.setDividerPositions(0.2);
-        //mainStage.setScene(mainScene);
 
-        mainPane.refreshTree();
+        mainPane.refreshAll();
 
         App.refreshWindowTitle();
     }
