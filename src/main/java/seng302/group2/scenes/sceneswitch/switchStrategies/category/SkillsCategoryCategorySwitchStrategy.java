@@ -12,7 +12,6 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy
 public class SkillsCategoryCategorySwitchStrategy implements CategorySwitchStrategy {
     @Override
     public void switchScene() {
-        MainScene.contentPane.setContent(SkillCategoryScene.getSkillCategoryScene(
-                Global.currentWorkspace));
+        MainScene.contentPane.setContent(new SkillCategoryScene(Global.currentWorkspace));
     }
 }
