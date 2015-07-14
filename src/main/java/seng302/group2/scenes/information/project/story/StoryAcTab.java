@@ -9,6 +9,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DataFormat;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -17,6 +21,7 @@ import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcEnumStringConverter;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
@@ -27,6 +32,9 @@ import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCrite
  * criteria from a story
  */
 public class StoryAcTab extends Tab {
+
+    private static final DataFormat SERIALIZED_MIME_TYPE = new DataFormat("application/x-java-serialized-object");
+
     public StoryAcTab(Story story) {
         this.setText("Acceptance Criteria");
         Pane acPane = new VBox(10);  // The pane that holds the basic info
@@ -39,10 +47,63 @@ public class StoryAcTab extends Tab {
         acTable.setEditable(true);
         acTable.fixedCellSizeProperty();
         acTable.setPrefWidth(700);
-        acTable.setPrefHeight(400);
+        acTable.setPrefHeight(288);
         acTable.setPlaceholder(new Label("This project has no acceptance criteria."));
         acTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         ObservableList<AcceptanceCriteria> data = story.getAcceptanceCriteria();
+
+
+        // A row factory snippet to allow item drag and drop re-ordering
+        acTable.setRowFactory(tv -> {
+            TableRow<AcceptanceCriteria> row = new TableRow<>();
+
+            row.setOnDragDetected(event -> {
+                if (!row.isEmpty()) {
+                    Integer index = row.getIndex();
+                    Dragboard db = row.startDragAndDrop(TransferMode.MOVE);
+                    db.setDragView(row.snapshot(null, null));
+                    ClipboardContent cc = new ClipboardContent();
+                    cc.put(SERIALIZED_MIME_TYPE, index);
+                    db.setContent(cc);
+                    event.consume();
+                }
+            });
+
+            row.setOnDragOver(event -> {
+                Dragboard db = event.getDragboard();
+                if (db.hasContent(SERIALIZED_MIME_TYPE)) {
+                    if (row.getIndex() != ((Integer)db.getContent(SERIALIZED_MIME_TYPE)).intValue()) {
+                        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                        event.consume();
+                    }
+                }
+            });
+
+            row.setOnDragDropped(event -> {
+                Dragboard db = event.getDragboard();
+                if (db.hasContent(SERIALIZED_MIME_TYPE)) {
+                    int draggedIndex = (Integer) db.getContent(SERIALIZED_MIME_TYPE);
+                    AcceptanceCriteria draggedAC = acTable.getItems().remove(draggedIndex);
+
+                    int dropIndex ;
+
+                    if (row.isEmpty()) {
+                        dropIndex = acTable.getItems().size() ;
+                    } else {
+                        dropIndex = row.getIndex();
+                    }
+
+                    acTable.getItems().add(dropIndex, draggedAC);
+
+                    event.setDropCompleted(true);
+                    acTable.getSelectionModel().select(dropIndex);
+                    event.consume();
+                }
+            });
+
+            return row ;
+        });
+
 
         HBox buttons = new HBox(10);
         buttons.setAlignment(Pos.BOTTOM_RIGHT);
@@ -110,7 +171,7 @@ public class StoryAcTab extends Tab {
 
 
 
-        CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("New Acceptance Criteria:");
         descriptionTextArea.getTextArea().textProperty().addListener((observable, oldValue, newValue) -> {
                 if (descriptionTextArea.getText().isEmpty()) {
                     addButton.setDisable(true);
