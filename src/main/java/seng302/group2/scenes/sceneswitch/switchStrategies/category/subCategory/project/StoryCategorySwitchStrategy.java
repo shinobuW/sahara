@@ -18,8 +18,7 @@ public class StoryCategorySwitchStrategy implements SubCategorySwitchStrategy {
     @Override
     public void switchScene(Category storyCategory) {
         if (storyCategory instanceof StoryCategory) {
-            App.mainPane.setContent(StoryCategoryScene.getStoryCategoryScene(
-                    (StoryCategory) storyCategory));
+            App.mainPane.setContent(new StoryCategoryScene((StoryCategory) storyCategory));
         }
         else {
             logger.warn("Tried changing to story cat scene with a non-story cat instance");

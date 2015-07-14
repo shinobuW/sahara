@@ -5,13 +5,15 @@ import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.workspace.workspace.Workspace;
 
 /**
- * A class for displaying all skills currently created in a workspace.
+ * A class for displaying the skill category. Contains information
+ * about all the skills in the workspace.
  *
- * @author David Moseley, Bronson McNaughton
+ * Created by btm38 on 14/07/15.
  */
 public class SkillCategoryScene extends TrackedTabPane {
     /**
-     * Constructor for the SkillCategoryScene class.
+     * Constructor for the SkillCategoryScene class. Creates a tab
+     * of SkillCategoryTab and displays it.
      * @param currentWorkspace the current workspace
      */
     public SkillCategoryScene(Workspace currentWorkspace) {
