@@ -278,6 +278,10 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
         backlogProductOwner.appendChild(ReportGenerator.doc.createTextNode(productOwner.toString()));
         backlogElement.appendChild(backlogProductOwner);
 
+        Element backlogScale = ReportGenerator.doc.createElement("estimation-scale");
+        backlogScale.appendChild(ReportGenerator.doc.createTextNode(scale));
+        backlogElement.appendChild(backlogScale);
+
         Element backlogStories = ReportGenerator.doc.createElement("stories");
         for (Story story : getStories()) {
             Element storyElement = story.generateXML();

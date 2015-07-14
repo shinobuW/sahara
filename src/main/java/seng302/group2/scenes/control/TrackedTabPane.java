@@ -24,6 +24,7 @@ public class TrackedTabPane extends TabPane {
         WORKSPACE_EDIT,
         TEAM,
         TEAM_EDIT,
+        TEAM_CATEGORY,
         ROLE,
         ROLE_EDIT,
         ROLE_CATEGORY,

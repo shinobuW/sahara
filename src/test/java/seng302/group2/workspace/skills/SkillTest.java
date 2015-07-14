@@ -2,8 +2,8 @@ package seng302.group2.workspace.skills;
 
 import org.junit.Assert;
 import org.junit.Test;
-import seng302.group2.Global;
 import org.w3c.dom.Element;
+import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;
 
 
