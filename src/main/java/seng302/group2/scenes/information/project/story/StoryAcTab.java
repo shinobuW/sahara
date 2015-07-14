@@ -55,54 +55,55 @@ public class StoryAcTab extends Tab {
 
         // A row factory snippet to allow item drag and drop re-ordering
         acTable.setRowFactory(tv -> {
-            TableRow<AcceptanceCriteria> row = new TableRow<>();
+                TableRow<AcceptanceCriteria> row = new TableRow<>();
 
-            row.setOnDragDetected(event -> {
-                if (!row.isEmpty()) {
-                    Integer index = row.getIndex();
-                    Dragboard db = row.startDragAndDrop(TransferMode.MOVE);
-                    db.setDragView(row.snapshot(null, null));
-                    ClipboardContent cc = new ClipboardContent();
-                    cc.put(SERIALIZED_MIME_TYPE, index);
-                    db.setContent(cc);
-                    event.consume();
-                }
+                row.setOnDragDetected(event -> {
+                        if (!row.isEmpty()) {
+                            Integer index = row.getIndex();
+                            Dragboard db = row.startDragAndDrop(TransferMode.MOVE);
+                            db.setDragView(row.snapshot(null, null));
+                            ClipboardContent cc = new ClipboardContent();
+                            cc.put(SERIALIZED_MIME_TYPE, index);
+                            db.setContent(cc);
+                            event.consume();
+                        }
+                    });
+
+                row.setOnDragOver(event -> {
+                        Dragboard db = event.getDragboard();
+                        if (db.hasContent(SERIALIZED_MIME_TYPE)) {
+                            if (row.getIndex() != ((Integer)db.getContent(SERIALIZED_MIME_TYPE)).intValue()) {
+                                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                                event.consume();
+                            }
+                        }
+                    });
+
+                row.setOnDragDropped(event -> {
+                        Dragboard db = event.getDragboard();
+                        if (db.hasContent(SERIALIZED_MIME_TYPE)) {
+                            int draggedIndex = (Integer) db.getContent(SERIALIZED_MIME_TYPE);
+                            AcceptanceCriteria draggedAC = acTable.getItems().remove(draggedIndex);
+
+                            int dropIndex ;
+
+                            if (row.isEmpty()) {
+                                dropIndex = acTable.getItems().size() ;
+                            }
+                            else {
+                                dropIndex = row.getIndex();
+                            }
+
+                            acTable.getItems().add(dropIndex, draggedAC);
+
+                            event.setDropCompleted(true);
+                            acTable.getSelectionModel().select(dropIndex);
+                            event.consume();
+                        }
+                    });
+
+                return row ;
             });
-
-            row.setOnDragOver(event -> {
-                Dragboard db = event.getDragboard();
-                if (db.hasContent(SERIALIZED_MIME_TYPE)) {
-                    if (row.getIndex() != ((Integer)db.getContent(SERIALIZED_MIME_TYPE)).intValue()) {
-                        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-                        event.consume();
-                    }
-                }
-            });
-
-            row.setOnDragDropped(event -> {
-                Dragboard db = event.getDragboard();
-                if (db.hasContent(SERIALIZED_MIME_TYPE)) {
-                    int draggedIndex = (Integer) db.getContent(SERIALIZED_MIME_TYPE);
-                    AcceptanceCriteria draggedAC = acTable.getItems().remove(draggedIndex);
-
-                    int dropIndex ;
-
-                    if (row.isEmpty()) {
-                        dropIndex = acTable.getItems().size() ;
-                    } else {
-                        dropIndex = row.getIndex();
-                    }
-
-                    acTable.getItems().add(dropIndex, draggedAC);
-
-                    event.setDropCompleted(true);
-                    acTable.getSelectionModel().select(dropIndex);
-                    event.consume();
-                }
-            });
-
-            return row ;
-        });
 
 
         HBox buttons = new HBox(10);
