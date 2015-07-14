@@ -2,7 +2,9 @@ package seng302.group2.workspace.allocation;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
 
@@ -83,5 +85,22 @@ public class AllocationTest {
         Assert.assertTrue(proj.getTeamAllocations().contains(alloc));
     }
 
+    /**
+     * Tests for Allocations' XML generator method.
+     */
+    @Test
+    public void testGenerateXML() {
+        new ReportGenerator();
+
+        Element allocationElement = alloc.generateXML();
+        Assert.assertEquals("[#text: unnamed]", allocationElement.getChildNodes().item(0).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: Untitled Project]", allocationElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: 12/04/2015]", allocationElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: 30/05/2100]", allocationElement.getChildNodes().item(3).getChildNodes().item(0).toString());
+        ;
+    }
 
 }

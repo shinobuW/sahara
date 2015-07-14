@@ -8,7 +8,9 @@ package seng302.group2.workspace.project.story;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
@@ -199,5 +201,34 @@ public class StoryTest {
         story.delete(ac2);
         Assert.assertTrue(story.getAcceptanceCriteria().size() == 1);
         Assert.assertTrue(story.getAcceptanceCriteria().contains(ac1) && !story.getAcceptanceCriteria().contains(ac2));
+    }
+
+    /**
+     * Tests for Roles' XML generator method.
+     */
+    @Test
+    public void testGenerateXML() {
+        new ReportGenerator();
+        Story story = new Story("short", "long", "desc", "creator", null, 5);
+        story.setEstimate("10");
+
+        Element storyElement = story.generateXML();
+        Assert.assertEquals("[#text: short]", storyElement.getChildNodes().item(0).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: long]", storyElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: desc]", storyElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: creator]", storyElement.getChildNodes().item(3).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: 5]", storyElement.getChildNodes().item(4).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: 10]", storyElement.getChildNodes().item(5).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: false]", storyElement.getChildNodes().item(6).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals(0, storyElement.getChildNodes().item(7).getChildNodes().getLength());
+        ;
+
     }
 }

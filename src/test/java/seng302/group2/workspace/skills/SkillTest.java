@@ -89,7 +89,7 @@ public class SkillTest {
     }
 
     /**
-     * Tests for Skills' setter methods.
+     * Tests for Skills' XML generator method.
      */
     @Test
     public void testGenerateXML() {

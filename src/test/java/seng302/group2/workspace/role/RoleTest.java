@@ -8,7 +8,9 @@ package seng302.group2.workspace.role;
 import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.Test;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.workspace.Workspace;
 
@@ -120,4 +122,22 @@ public class RoleTest {
         Assert.assertEquals(Role.RoleType.NONE, role.getType());
     }
 
+
+    /**
+     * Tests for Roles' XML generator method.
+     */
+    @Test
+    public void testGenerateXML() {
+        new ReportGenerator();
+        Role role = new Role();
+        role.setShortName("Tester");
+        role.setDescription("Manual Testing");
+        role.setType(Role.RoleType.NONE);
+
+        Element roleElement = role.generateXML();
+        Assert.assertEquals("[#text: Tester]", roleElement.getChildNodes().item(0).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: Manual Testing]", roleElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        ;
+    }
 }
