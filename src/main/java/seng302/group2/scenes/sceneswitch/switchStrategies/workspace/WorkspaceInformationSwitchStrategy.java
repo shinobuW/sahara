@@ -2,11 +2,11 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.workspace;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import seng302.group2.scenes.MainScene;
+import seng302.group2.App;
 import seng302.group2.scenes.information.workspace.WorkspaceEditScene;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
 
 /**
@@ -19,7 +19,7 @@ public class WorkspaceInformationSwitchStrategy implements InformationSwitchStra
     @Override
     public void switchScene(SaharaItem item) {
         if (item instanceof Workspace) {
-            MainScene.contentPane.setContent(new WorkspaceScene((Workspace) item));
+            App.mainPane.setContent(new WorkspaceScene((Workspace) item));
         }
         else {
             // Bad call
@@ -31,7 +31,7 @@ public class WorkspaceInformationSwitchStrategy implements InformationSwitchStra
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Workspace) {
             if (editScene) {
-                MainScene.contentPane.setContent(WorkspaceEditScene.getWorkspaceEditScene((Workspace) item));
+                App.mainPane.setContent(WorkspaceEditScene.getWorkspaceEditScene((Workspace) item));
             }
             else {
                 switchScene(item);

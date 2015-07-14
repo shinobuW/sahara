@@ -6,8 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.dialog.Dialog;
+import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.workspace.Workspace;
@@ -61,7 +61,7 @@ public class CreateWorkspaceDialog {
                     Workspace workspace;
                     workspace = new Workspace(shortName, longName, description);
                     Global.currentWorkspace = workspace;
-                    MainScene.treeView.selectItem(Global.currentWorkspace);
+                    App.mainPane.selectItem(Global.currentWorkspace);
                     dialog.hide();
                 }
                 else {

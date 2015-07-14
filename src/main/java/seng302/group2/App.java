@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
-import seng302.group2.scenes.MainScene;
+import seng302.group2.scenes.MainPane;
 import seng302.group2.util.config.ConfigLoader;
 import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.workspace.Workspace.SaveLoadResult;
@@ -24,6 +24,7 @@ import seng302.group2.workspace.workspace.Workspace.SaveLoadResult;
 public class App extends Application {
     public static SplitPane content;
 
+    public static MainPane mainPane;
     private static Stage mainStage;
     private static Scene mainScene;
 
@@ -34,10 +35,9 @@ public class App extends Application {
         if (App.mainStage == null) {
             return;  // App is not running (Tests)
         }
-        App.content = new SplitPane();
-        content.setDividerPositions(0.2);
-        App.mainScene = MainScene.getMainScene();
-        mainStage.setScene(App.mainScene);
+
+        mainPane.refreshAll();
+
         App.refreshWindowTitle();
     }
 
@@ -111,6 +111,8 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         Global.currentWorkspace = new Workspace();
 
+
+
         //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
         // The title of the window
@@ -130,7 +132,8 @@ public class App extends Application {
 
         // Set the scene of the stage to the initial scene
         content = new SplitPane();
-        App.mainScene = MainScene.getMainScene();
+        mainPane = new MainPane();
+        App.mainScene = new Scene(mainPane);
         primaryStage.setScene(App.mainScene);
         mainStage = primaryStage;
 

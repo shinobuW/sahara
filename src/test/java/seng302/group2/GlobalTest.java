@@ -2,8 +2,8 @@ package seng302.group2;
 
 import org.junit.Assert;
 import org.junit.Test;
-import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.workspace.Workspace;
 
 /**
  * Created by Jordane on 27/04/2015.

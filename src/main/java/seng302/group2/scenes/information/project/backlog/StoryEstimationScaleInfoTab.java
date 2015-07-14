@@ -2,6 +2,7 @@ package seng302.group2.scenes.information.project.backlog;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -36,6 +37,7 @@ public class StoryEstimationScaleInfoTab extends Tab {
         Label scaleComboLabel = new Label("Estimation Scales: ");
         HBox scaleComboHBox = new HBox(scaleComboLabel);
         HBox.setHgrow(scaleComboHBox, Priority.ALWAYS);
+        scaleComboHBox.setAlignment(Pos.CENTER_LEFT);
         scaleComboHBox.getChildren().add(scaleComboBox);
 
         for (String scaleName : Global.currentWorkspace.getEstimationScales().getEstimationScaleDict().keySet()) {

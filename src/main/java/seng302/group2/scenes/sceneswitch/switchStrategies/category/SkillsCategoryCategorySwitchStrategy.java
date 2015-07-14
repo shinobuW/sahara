@@ -1,7 +1,7 @@
 package seng302.group2.scenes.sceneswitch.switchStrategies.category;
 
+import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.information.skill.SkillCategoryScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy;
 
@@ -12,7 +12,6 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy
 public class SkillsCategoryCategorySwitchStrategy implements CategorySwitchStrategy {
     @Override
     public void switchScene() {
-        MainScene.contentPane.setContent(SkillCategoryScene.getSkillCategoryScene(
-                Global.currentWorkspace));
+        App.mainPane.setContent(new SkillCategoryScene(Global.currentWorkspace));
     }
 }

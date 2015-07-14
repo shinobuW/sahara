@@ -6,10 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seng302.group2.Global;
 import seng302.group2.workspace.SaharaItem;
-import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.workspace.Workspace;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 

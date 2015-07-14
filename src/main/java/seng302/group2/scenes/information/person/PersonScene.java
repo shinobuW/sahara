@@ -10,6 +10,10 @@ import seng302.group2.workspace.person.Person;
  * @author crw73
  */
 public class PersonScene extends TrackedTabPane {
+    /**
+     * Basic constructor for the PersonScene.
+     * @param currentPerson the person for which the information will be displayed.
+     */
     public PersonScene(Person currentPerson) {
         super(ContentScene.PROJECT);
 

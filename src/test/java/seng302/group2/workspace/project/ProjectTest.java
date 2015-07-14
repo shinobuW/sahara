@@ -6,16 +6,16 @@ import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
 import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
 import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
-import seng302.group2.workspace.workspace.Workspace;
-import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.workspace.Workspace;
 
 import java.time.LocalDate;
 import java.time.Month;

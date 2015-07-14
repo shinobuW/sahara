@@ -3,6 +3,9 @@ package seng302.group2.workspace.skills;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
+import org.w3c.dom.Element;
+import seng302.group2.util.reporting.ReportGenerator;
+
 
 /**
  * A series of tests relating to Skills
@@ -83,5 +86,20 @@ public class SkillTest {
         Global.commandManager.undo();
 
         Assert.assertTrue(Global.currentWorkspace.getSkills().contains(skill));
+    }
+
+    /**
+     * Tests for Skills' setter methods.
+     */
+    @Test
+    public void testGenerateXML() {
+        new ReportGenerator();
+        Skill skill = new Skill("C#", "A better language than Java");
+
+        Element skillElement = skill.generateXML();
+        Assert.assertEquals("[#text: C#]", skillElement.getChildNodes().item(0).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: A better language than Java]", skillElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        ;
     }
 }

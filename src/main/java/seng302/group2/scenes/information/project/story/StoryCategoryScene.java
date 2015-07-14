@@ -4,17 +4,17 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.MainScene;
+import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.dialog.CreateStoryDialog;
+import seng302.group2.scenes.dialog.DeleteDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
 
-import static seng302.group2.scenes.MainScene.informationPane;
-import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
-
 /**
+ * A scene to show information about the stories in Sahara
  * Created by drm127 on 17/05/15.
  */
 public class StoryCategoryScene {
@@ -25,7 +25,7 @@ public class StoryCategoryScene {
      * @return The story category info scene
      */
     public static ScrollPane getStoryCategoryScene(StoryCategory selectedCategory) {
-        informationPane = new VBox(10);
+        Pane informationPane = new VBox(10);
 
         informationPane.setPadding(new Insets(25, 25, 25, 25));
         Label title = new TitleLabel("Stories in " + selectedCategory.getProject().toString());
@@ -42,7 +42,7 @@ public class StoryCategoryScene {
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
 
-        ListView storyBox = new ListView(selectedCategory.getProject().getUnallocatedStories());
+        ListView storyBox = new ListView<>(selectedCategory.getProject().getUnallocatedStories());
         storyBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         storyBox.setMaxWidth(275);
 
@@ -52,7 +52,7 @@ public class StoryCategoryScene {
 
         btnView.setOnAction((event) -> {
                 if (storyBox.getSelectionModel().getSelectedItem() != null) {
-                    MainScene.treeView.selectItem((SaharaItem)
+                    App.mainPane.selectItem((SaharaItem)
                             storyBox.getSelectionModel().getSelectedItem());
                 }
             });
@@ -60,7 +60,7 @@ public class StoryCategoryScene {
 
         btnDelete.setOnAction((event) -> {
                 if (storyBox.getSelectionModel().getSelectedItem() != null) {
-                    showDeleteDialog((SaharaItem) storyBox.getSelectionModel()
+                    DeleteDialog.showDeleteDialog((SaharaItem) storyBox.getSelectionModel()
                             .getSelectedItem());
                 }
             });

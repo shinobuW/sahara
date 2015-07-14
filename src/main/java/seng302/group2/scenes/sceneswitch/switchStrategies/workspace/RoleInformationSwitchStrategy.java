@@ -2,10 +2,10 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.workspace;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import seng302.group2.scenes.MainScene;
+import seng302.group2.App;
 import seng302.group2.scenes.information.role.RoleScene;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.role.Role;
 
 /**
@@ -18,7 +18,7 @@ public class RoleInformationSwitchStrategy implements InformationSwitchStrategy 
     @Override
     public void switchScene(SaharaItem item) {
         if (item instanceof Role) {
-            MainScene.contentPane.setContent(new RoleScene((Role) item));
+            App.mainPane.setContent(new RoleScene((Role) item));
         }
         else {
             // Bad call

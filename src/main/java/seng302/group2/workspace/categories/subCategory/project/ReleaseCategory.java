@@ -4,10 +4,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.scenes.dialog.CreateReleaseDialog;
-import seng302.group2.workspace.SaharaItem;
-import seng302.group2.workspace.categories.subCategory.SubCategory;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.ReleaseCategorySwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
+import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.categories.subCategory.SubCategory;
 import seng302.group2.workspace.project.Project;
 
 /**

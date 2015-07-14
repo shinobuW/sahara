@@ -144,7 +144,7 @@ public class StoryAcTab extends Tab {
 
                     if (response == org.controlsfx.dialog.Dialog.ACTION_YES) {
                         selectedAc.delete();
-                        App.refreshMainScene();
+                        App.mainPane.refreshContent();
                     }
                     else if (response == org.controlsfx.dialog.Dialog.ACTION_NO) {
                         event.consume();

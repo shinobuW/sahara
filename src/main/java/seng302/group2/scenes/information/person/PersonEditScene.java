@@ -10,12 +10,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainScene;
 import seng302.group2.scenes.control.*;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.util.validation.NameValidator;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -25,7 +26,6 @@ import java.util.Collections;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.Global.currentWorkspace;
-import static seng302.group2.scenes.MainScene.informationPane;
 import static seng302.group2.util.validation.DateValidator.validateBirthDateField;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
@@ -42,7 +42,7 @@ public class PersonEditScene {
      * @return The Person Edit information scene
      */
     public static ScrollPane getPersonEditScene(Person currentPerson) {
-        informationPane = new VBox(10);
+        Pane informationPane = new VBox(10);
 
         informationPane.setPadding(new Insets(25, 25, 25, 25));
 
@@ -248,7 +248,7 @@ public class PersonEditScene {
 
                     Collections.sort(Global.currentWorkspace.getPeople());
                     currentPerson.switchToInfoScene();
-                    MainScene.treeView.refresh();
+                    App.mainPane.refreshTree();
                 }
                 else {
                     // One or more fields incorrectly validated, stay on the edit scene

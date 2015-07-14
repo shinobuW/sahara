@@ -4,9 +4,9 @@ import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.SkillsCategoryCategorySwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 
 import java.util.HashSet;

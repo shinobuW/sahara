@@ -3,9 +3,9 @@ package seng302.group2.workspace.categories;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.RoleCategorySwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
+import seng302.group2.workspace.SaharaItem;
 
 import java.util.HashSet;
 import java.util.Set;

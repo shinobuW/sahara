@@ -2,11 +2,11 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import seng302.group2.scenes.MainScene;
+import seng302.group2.App;
 import seng302.group2.scenes.information.project.backlog.BacklogEditScene;
 import seng302.group2.scenes.information.project.backlog.BacklogScene;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.backlog.Backlog;
 
 /**
@@ -19,7 +19,7 @@ public class BacklogInformationSwitchStrategy implements InformationSwitchStrate
     @Override
     public void switchScene(SaharaItem item) {
         if (item instanceof Backlog) {
-            MainScene.contentPane.setContent(new BacklogScene((Backlog) item));
+            App.mainPane.setContent(new BacklogScene((Backlog) item));
         }
         else {
             // Bad call
@@ -31,7 +31,7 @@ public class BacklogInformationSwitchStrategy implements InformationSwitchStrate
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Backlog) {
             if (editScene) {
-                MainScene.contentPane.setContent(new BacklogEditScene((Backlog) item));
+                App.mainPane.setContent(new BacklogEditScene((Backlog) item));
             }
             else {
                 switchScene(item);
