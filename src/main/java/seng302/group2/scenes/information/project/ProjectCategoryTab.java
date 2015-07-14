@@ -14,15 +14,13 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
 
 /**
- * A class for displaying all projects currently created in a workspace.
- *
- * Created by btm38 on 14/07/15.
+ * A class for displaying a tab showing data on all the projects in the workspace.
+ * Created by btm38 on 13/07/15.
  */
 public class ProjectCategoryTab extends Tab {
     /**
-     * Gets the Project Category Tab.
-     *
-     * @param currentWorkspace The workspace currently being used
+     * Constructor for ProjectCategoryTab class.
+     * @param currentWorkspace The current workspace
      */
     public ProjectCategoryTab(Workspace currentWorkspace) {
         this.setText("Basic Information");

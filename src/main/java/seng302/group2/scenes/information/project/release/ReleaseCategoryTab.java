@@ -14,15 +14,13 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
 
 /**
- * A class for displaying all releases in a project.
- *
- * Created by btm38 on 14/07/15.
+ * A class for displaying a tab showing data on all the releases in the current project.
+ * Created by btm38 on 13/07/15.
  */
 public class ReleaseCategoryTab extends Tab {
     /**
-     * The Release Category Tab constructor.
-     *
-     * @param selectedCategory The category currently selected
+     * Constructor for ReleaseCategoryTab class.
+     * @param selectedCategory The current selected category
      */
     public ReleaseCategoryTab(ReleaseCategory selectedCategory) {
         this.setText("Basic Information");

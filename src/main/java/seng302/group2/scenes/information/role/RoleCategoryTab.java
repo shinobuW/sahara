@@ -12,22 +12,20 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
 
 /**
- * A class for displaying all roles currently created in a workspace.
- *
- * Created by btm38 on 14/07/15.
+ * A class for displaying a tab showing data on all the roles in the workspace.
+ * Created by btm38 on 13/07/15.
  */
 public class RoleCategoryTab extends Tab {
     /**
-     * Gets the Release Category Tab.
-     *
-     * @param currentWorkspace The workspace currently being used
+     * Constructor for RoleCategoryTab class.
+     * @param currentWorkspace The current workspace
      */
     public RoleCategoryTab(Workspace currentWorkspace) {
         this.setText("Basic Information");
-        Pane rolePane = new VBox(10);
-        rolePane.setBorder(null);
-        rolePane.setPadding(new Insets(25, 25, 25, 25));
-        ScrollPane wrapper = new ScrollPane(rolePane);
+        Pane categoryPane = new VBox(10);
+        categoryPane.setBorder(null);
+        categoryPane.setPadding(new Insets(25, 25, 25, 25));
+        ScrollPane wrapper = new ScrollPane(categoryPane);
         this.setContent(wrapper);
         Label title = new TitleLabel("Roles in " + currentWorkspace.getShortName());
 
@@ -49,10 +47,10 @@ public class RoleCategoryTab extends Tab {
         roleBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         roleBox.setMaxWidth(450);
 
-        rolePane.getChildren().add(title);
-        rolePane.getChildren().add(roleBox);
-        rolePane.getChildren().add(selectionButtons);
-        rolePane.getChildren().add(createButton);
+        categoryPane.getChildren().add(title);
+        categoryPane.getChildren().add(roleBox);
+        categoryPane.getChildren().add(selectionButtons);
+        categoryPane.getChildren().add(createButton);
 
         btnView.setOnAction((event) -> {
                 if (roleBox.getSelectionModel().getSelectedItem() != null) {

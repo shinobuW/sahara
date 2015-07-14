@@ -15,9 +15,14 @@ import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
- * Created by btm38 on 2/07/15.
+ * A class for displaying a tab showing data on all the backlogs in the current project.
+ * Created by btm38 on 13/07/15.
  */
 public class BacklogCategoryTab extends Tab {
+    /**
+     * Constructor for BacklogCategoryTab class.
+     * @param selectedCategory The current selected category
+     */
     public BacklogCategoryTab(BacklogCategory selectedCategory) {
         this.setText("Basic Information");
         Pane categoryPane = new VBox(10);

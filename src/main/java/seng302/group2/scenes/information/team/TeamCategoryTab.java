@@ -14,14 +14,13 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
 
 /**
- * Shows the Team Category Tab, which has information about all the teams in the workspace.
- * Created by btm38 on 14/07/15.
+ * A class for displaying a tab showing data on all the team in the workspace.
+ * Created by btm38 on 13/07/15.
  */
 public class TeamCategoryTab extends Tab {
     /**
-     * Constructor for the Team Category Tab
-     *
-     * @param currentWorkspace The workspace currently being used
+     * Constructor for TeamCategoryTab class.
+     * @param currentWorkspace The current workspace
      */
     public TeamCategoryTab(Workspace currentWorkspace) {
         this.setText("Basic Information");

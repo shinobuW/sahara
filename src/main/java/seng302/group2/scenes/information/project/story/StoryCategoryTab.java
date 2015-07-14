@@ -14,15 +14,13 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
 
 /**
- * A class for displaying all stories in a project.
- *
- * Created by btm38 on 14/07/15.
+ * A class for displaying a tab showing data on all the stories in the current project.
+ * Created by btm38 on 13/07/15.
  */
 public class StoryCategoryTab extends Tab {
     /**
-     * The Story Category Tab constructor
-     *
-     * @param selectedCategory The category currently selected
+     * Constructor for StoryCategoryTab class.
+     * @param selectedCategory The current selected category
      */
     public StoryCategoryTab(StoryCategory selectedCategory) {
         this.setText("Basic Information");
