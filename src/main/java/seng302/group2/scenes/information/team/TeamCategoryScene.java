@@ -1,18 +1,7 @@
 package seng302.group2.scenes.information.team;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import seng302.group2.App;
-import seng302.group2.scenes.control.TitleLabel;
+import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
-import seng302.group2.scenes.dialog.CreateTeamDialog;
-import seng302.group2.scenes.dialog.DeleteDialog;
-import seng302.group2.scenes.information.skill.SkillCategoryTab;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
 
 /**
