@@ -2,10 +2,14 @@ package seng302.group2.scenes.information.project.backlog;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -19,8 +23,8 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public class BacklogInfoTab extends Tab {
     public BacklogInfoTab(Backlog currentBacklog) {
+        final Stage stage;
         this.setText("Basic Information");
-
         Pane basicInfoPane = new VBox(10);
 
         basicInfoPane.setBorder(null);
@@ -31,10 +35,15 @@ public class BacklogInfoTab extends Tab {
         Label title = new TitleLabel(currentBacklog.getLongName());
 
         Button btnEdit = new Button("Edit");
-
         Button btnView = new Button("View");
+        Button btnHighlight = new Button("Highlight");
 
-        TableView<Story> storyTable = new TableView();
+        HBox buttonHBox = new HBox();
+        buttonHBox.spacingProperty().setValue(10);
+        buttonHBox.alignmentProperty().set(Pos.TOP_LEFT);
+        buttonHBox.getChildren().addAll(btnView, btnHighlight);
+
+        TableView<Story> storyTable = new TableView<>();
         storyTable.setEditable(true);
         storyTable.setPrefWidth(500);
         storyTable.setPrefHeight(200);
@@ -84,10 +93,11 @@ public class BacklogInfoTab extends Tab {
                 + currentBacklog.getScale()));
 
         basicInfoPane.getChildren().add(new Separator());
+
         basicInfoPane.getChildren().add(new Label("Stories: "));
         basicInfoPane.getChildren().add(storyTable);
 
-        basicInfoPane.getChildren().add(btnView);
+        basicInfoPane.getChildren().add(buttonHBox);
         basicInfoPane.getChildren().add(btnEdit);
 
         btnEdit.setOnAction((event) -> {
@@ -98,6 +108,64 @@ public class BacklogInfoTab extends Tab {
                 if (storyTable.getSelectionModel().getSelectedItem() != null) {
                     App.mainPane.selectItem(storyTable.getSelectionModel().getSelectedItem());
                 }
+            });
+
+
+        btnHighlight.setOnAction((event) -> {
+                storyCol.setCellFactory(new Callback<TableColumn<Story, String>, TableCell<Story, String>>() {
+                    @Override
+                    public TableCell<Story, String> call(TableColumn<Story, String> param) {
+                        TableCell<Story, String> cell = new TableCell<Story, String>() {
+                            public void updateItem(String string, boolean empty) {
+                                if (string != null) {
+                                    setStyle("-fx-background-color: green");
+                                    setText(string);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                });
+
+                priorityCol.setCellFactory(new Callback<TableColumn<Story, Integer>, TableCell<Story, Integer>>() {
+                    @Override
+                    public TableCell<Story, Integer> call(TableColumn<Story, Integer> param) {
+                        TableCell<Story, Integer> cell = new TableCell<Story, Integer>() {
+                            public void updateItem(Integer item, boolean empty) {
+                                if (item != null) {
+                                    setStyle("-fx-background-color: green");
+                                    setText(item.toString());
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                });
+
+                readyCol.setCellFactory(new Callback<TableColumn<Story, Boolean>, TableCell<Story, Boolean>>() {
+                    @Override
+                    public TableCell<Story, Boolean> call(TableColumn<Story, Boolean> param) {
+                        TableCell<Story, Boolean> cell = new TableCell<Story, Boolean>() {
+                            public void updateItem(Boolean item, boolean empty) {
+                                if (item != null) {
+                                    if (item == false) {
+                                        setStyle("-fx-background-color: red");
+                                    }
+                                    if (item == true) {
+                                        setStyle("-fx-background-color: green");
+                                    }
+                                    setText(item.toString());
+                                }
+                                /*else {
+                                    setStyle("-fx-background-color: red");
+                                    setText(item.toString());
+                                }
+                                */
+                            }
+                        };
+                        return cell;
+                    }
+                });
             });
     }
 }
