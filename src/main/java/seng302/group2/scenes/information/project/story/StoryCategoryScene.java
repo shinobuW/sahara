@@ -8,69 +8,33 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
-import seng302.group2.scenes.dialog.CreateStoryDialog;
+import seng302.group2.scenes.control.TrackedTabPane;
+import seng302.group2.scenes.dialog.CreateReleaseDialog;
 import seng302.group2.scenes.dialog.DeleteDialog;
+import seng302.group2.scenes.information.project.release.ReleaseCategoryTab;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
 import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
+import seng302.group2.workspace.project.release.Release;
 
 /**
- * A scene to show information about the stories in Sahara
- * Created by drm127 on 17/05/15.
+ * A class for displaying the story category. Contains information
+ * about all the stories in the project.
+ *
+ * Created by btm38 on 14/07/15.
  */
-public class StoryCategoryScene {
+public class StoryCategoryScene extends TrackedTabPane {
     /**
-     * Gets the Story Category Scene
-     *
-     * @param selectedCategory The category currently selected
-     * @return The story category info scene
+     * Constructor for the StoryCategoryScene class. Creates a tab
+     * of StoryCategoryTab and displays it.
+     * @param selectedCategory the current workspace
      */
-    public static ScrollPane getStoryCategoryScene(StoryCategory selectedCategory) {
-        Pane informationPane = new VBox(10);
+    public StoryCategoryScene(StoryCategory selectedCategory) {
+        super(ContentScene.RELEASE_CATEGORY);
 
-        informationPane.setPadding(new Insets(25, 25, 25, 25));
-        Label title = new TitleLabel("Stories in " + selectedCategory.getProject().toString());
+        // Define and add the tabs
+        Tab informationTab = new StoryCategoryTab(selectedCategory);
 
-        Button btnView = new Button("View");
-        Button btnDelete = new Button("Delete");
-        Button btnCreate = new Button("Create New Story");
-
-        HBox selectionButtons = new HBox();
-        selectionButtons.spacingProperty().setValue(10);
-        selectionButtons.getChildren().add(btnView);
-        selectionButtons.getChildren().add(btnDelete);
-        selectionButtons.getChildren().add(btnCreate);
-        selectionButtons.setAlignment(Pos.TOP_LEFT);
-
-
-        ListView storyBox = new ListView<>(selectedCategory.getProject().getUnallocatedStories());
-        storyBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        storyBox.setMaxWidth(275);
-
-        informationPane.getChildren().add(title);
-        informationPane.getChildren().add(storyBox);
-        informationPane.getChildren().add(selectionButtons);
-
-        btnView.setOnAction((event) -> {
-                if (storyBox.getSelectionModel().getSelectedItem() != null) {
-                    App.mainPane.selectItem((SaharaItem)
-                            storyBox.getSelectionModel().getSelectedItem());
-                }
-            });
-
-
-        btnDelete.setOnAction((event) -> {
-                if (storyBox.getSelectionModel().getSelectedItem() != null) {
-                    DeleteDialog.showDeleteDialog((SaharaItem) storyBox.getSelectionModel()
-                            .getSelectedItem());
-                }
-            });
-
-        btnCreate.setOnAction((event) -> {
-                CreateStoryDialog.show();
-            });
-
-        ScrollPane wrapper = new ScrollPane(informationPane);
-        wrapper.setStyle("-fx-background-color:transparent;");
-        return wrapper;
+        this.getTabs().addAll(informationTab);  // Add the tabs to the pane
     }
 }

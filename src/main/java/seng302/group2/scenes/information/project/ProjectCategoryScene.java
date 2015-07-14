@@ -16,13 +16,15 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
 
 /**
- * A class for displaying all projects currently created in a workspace.
+ * A class for displaying the project category. Contains information
+ * about all the projects in the workspace.
  *
- * @author Bronson McNaughton
+ * Created by btm38 on 14/07/15.
  */
 public class ProjectCategoryScene extends TrackedTabPane {
     /**
-     * Constructor for the ProjectCategoryScene class.
+     * Constructor for the ProjectCategoryScene class. Creates a tab
+     * of ProjectCategoryTab and displays it.
      * @param currentWorkspace the current workspace
      */
     public ProjectCategoryScene(Workspace currentWorkspace) {
