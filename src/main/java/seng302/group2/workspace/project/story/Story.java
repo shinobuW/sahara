@@ -404,12 +404,12 @@ public class Story extends SaharaItem implements Serializable {
         }
         storyElement.appendChild(storyReady);
 
-        Element teamFutureElements = ReportGenerator.doc.createElement("story-acceptance-criteria");
+        Element acceptanceCriteriaElement = ReportGenerator.doc.createElement("story-acceptance-criteria");
         for (AcceptanceCriteria acceptanceCriteria : this.acceptanceCriteria) {
-            Element teamElement = acceptanceCriteria.generateXML();
-            teamFutureElements.appendChild(teamElement);
+            Element acElement = acceptanceCriteria.generateXML();
+            acceptanceCriteriaElement.appendChild(acElement);
         }
-        storyElement.appendChild(teamFutureElements);
+        storyElement.appendChild(acceptanceCriteriaElement);
 
         return storyElement;
     }
