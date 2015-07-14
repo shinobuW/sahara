@@ -12,9 +12,16 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
 
 /**
- * Created by btm38 on 13/07/15.
+ * A class for displaying all roles currently created in a workspace.
+ *
+ * Created by btm38 on 14/07/15.
  */
 public class RoleCategoryTab extends Tab {
+    /**
+     * Gets the Release Category Tab.
+     *
+     * @param currentWorkspace The workspace currently being used
+     */
     public RoleCategoryTab(Workspace currentWorkspace) {
         this.setText("Basic Information");
         Pane rolePane = new VBox(10);

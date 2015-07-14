@@ -10,6 +10,10 @@ import seng302.group2.workspace.workspace.Workspace;
  * @author David Moseley
  */
 public class RoleCategoryScene extends TrackedTabPane {
+    /**
+     * Constructor for the RoleCategoryScene class.
+     * @param currentWorkspace the current workspace
+     */
     public RoleCategoryScene(Workspace currentWorkspace) {
         super(ContentScene.ROLE_CATEGORY);
 
