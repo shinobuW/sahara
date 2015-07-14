@@ -236,6 +236,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
     public void prepSerialization() {
         serializableStories.clear();
         for (Story story : stories) {
+            story.prepSerialization();
             this.serializableStories.add(story);
         }
     }
@@ -247,6 +248,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
     public void postDeserialization() {
         stories.clear();
         for (Story story : serializableStories) {
+            story.postSerialization();
             this.stories.add(story);
         }
 

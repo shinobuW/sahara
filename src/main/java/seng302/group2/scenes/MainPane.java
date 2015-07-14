@@ -62,11 +62,6 @@ public class MainPane extends BorderPane {
             treeView.setShowRoot(false);
         }
 
-        // Create the display menu from the workspace tree
-        /*ObservableList<SaharaItem> children = FXCollections.observableArrayList();
-        children.add(Global.currentWorkspace);
-        treeView.setItems(children);*/
-
         SaharaItem selectedItem = null;
         if (treeView.getSelectionModel().getSelectedItem() != null) {
             selectedItem = treeView.getSelectionModel().getSelectedItem().getValue();

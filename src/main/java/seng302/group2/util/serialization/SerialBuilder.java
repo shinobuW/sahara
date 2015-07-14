@@ -10,6 +10,8 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
+import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -37,6 +39,7 @@ public class SerialBuilder {
                 .addType(Story.class)
                 .addType(LocalDate.class)
                 .addType(Backlog.class)
+                .addType(AcceptanceCriteria.class)
 
                         //TODO add any new classes
 

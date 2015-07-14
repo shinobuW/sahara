@@ -472,15 +472,14 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
             this.serializableReleases.add((Release) item);
         }
 
-        System.out.println("allocation serial prep");
         serializableTeamAllocations.clear();
         for (Allocation item : teamAllocations) {
-            System.out.println("there is an allocation");
             this.serializableTeamAllocations.add(item);
         }
 
         serializableStories.clear();
         for (Story item : unallocatedStories) {
+            item.prepSerialization();
             this.serializableStories.add(item);
         }
 
@@ -514,6 +513,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
 
         unallocatedStories.clear();
         for (Story story : serializableStories) {
+            story.postSerialization();
             this.unallocatedStories.add(story);
         }
 
