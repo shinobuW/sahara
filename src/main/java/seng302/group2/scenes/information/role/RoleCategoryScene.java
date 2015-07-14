@@ -5,11 +5,17 @@ import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.workspace.workspace.Workspace;
 
 /**
- * A class for displaying all roles currently created in a workspace.
+ * A class for displaying the role category. Contains information
+ * about all the roles in the workspace.
  *
- * @author David Moseley
+ * Created by btm38 on 14/07/15.
  */
 public class RoleCategoryScene extends TrackedTabPane {
+    /**
+     * Constructor for the RoleCategoryScene class. Creates a tab
+     * of RoleCategoryTab and displays it.
+     * @param currentWorkspace the current workspace
+     */
     public RoleCategoryScene(Workspace currentWorkspace) {
         super(ContentScene.ROLE_CATEGORY);
 

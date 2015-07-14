@@ -15,7 +15,7 @@ import seng302.group2.workspace.workspace.Workspace;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
- * A class for displaying a tab showing data on all the People
+ * A class for displaying a tab showing data on all the people in the workspace.
  * Created by btm38 on 13/07/15.
  */
 public class PersonCategoryTab extends Tab {

@@ -15,20 +15,20 @@ import seng302.group2.workspace.workspace.Workspace;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
- * Shows the Skill Category Tab, which has information about all the skills in the workspace.
+ * A class for displaying a tab showing data on all the skills in the workspace.
  * Created by btm38 on 13/07/15.
  */
 public class SkillCategoryTab extends Tab {
     /**
-     * Basic constructor for the SkillCategoryTab.
-     * @param currentWorkspace the current workspace
+     * Constructor for SkillCategoryTab class.
+     * @param currentWorkspace The current workspace
      */
     public SkillCategoryTab(Workspace currentWorkspace) {
         this.setText("Basic Information");
-        Pane skillPane = new VBox(10);
-        skillPane.setBorder(null);
-        skillPane.setPadding(new Insets(25, 25, 25, 25));
-        ScrollPane wrapper = new ScrollPane(skillPane);
+        Pane categoryPane = new VBox(10);
+        categoryPane.setBorder(null);
+        categoryPane.setPadding(new Insets(25, 25, 25, 25));
+        ScrollPane wrapper = new ScrollPane(categoryPane);
         this.setContent(wrapper);
         Label title = new TitleLabel("Skills in " + currentWorkspace.getShortName());
 
@@ -47,9 +47,9 @@ public class SkillCategoryTab extends Tab {
         skillBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         skillBox.setMaxWidth(275);
 
-        skillPane.getChildren().add(title);
-        skillPane.getChildren().add(skillBox);
-        skillPane.getChildren().add(selectionButtons);
+        categoryPane.getChildren().add(title);
+        categoryPane.getChildren().add(skillBox);
+        categoryPane.getChildren().add(selectionButtons);
 
 
         btnView.setOnAction((event) -> {

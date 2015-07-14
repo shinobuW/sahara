@@ -18,8 +18,7 @@ public class ReleaseCategorySwitchStrategy implements SubCategorySwitchStrategy 
     @Override
     public void switchScene(Category releaseCategory) {
         if (releaseCategory instanceof ReleaseCategory) {
-            App.mainPane.setContent(ReleaseCategoryScene.getReleaseCategoryScene(
-                    (ReleaseCategory) releaseCategory));
+            App.mainPane.setContent(new ReleaseCategoryScene((ReleaseCategory) releaseCategory));
         }
         else {
             logger.warn("Tried changing to release cat scene with a non-release cat instance");
