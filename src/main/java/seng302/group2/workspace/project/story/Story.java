@@ -40,6 +40,7 @@ public class Story extends SaharaItem implements Serializable {
     private String longName;
     private String description;
     private String creator;
+    private STORYCOLOUR colour;
     private Project project;
     private Integer priority;
     private Backlog backlog;
@@ -64,6 +65,7 @@ public class Story extends SaharaItem implements Serializable {
         this.creator = null;
         this.project = null;
         this.priority = 0;
+        this.colour = null;
 
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }
@@ -95,6 +97,7 @@ public class Story extends SaharaItem implements Serializable {
         this.project = project;
         this.priority = priority;
         this.ready = false;
+        this.colour = null;
 
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }
@@ -235,6 +238,34 @@ public class Story extends SaharaItem implements Serializable {
     }
 
     /**
+     * Sets the colour of the story in highlight mode.
+     * @param colour The colour the story colour is set to
+     */
+    public void setColour(STORYCOLOUR colour) {
+        this.colour = colour;
+    }
+
+    /**
+     * Gets the string form of the story colour
+     * @return the colour of the story in highlight mode
+     */
+    public String getColour() {
+        switch (colour) {
+            case GREEN:
+                return "green";
+            case ORANGE:
+                return "orange";
+            case RED:
+                return "red";
+            default:
+                return "";
+        }
+    }
+
+    /**
+     *
+     */
+    /**
      * Removes the dependants this story has.
      *
      */
@@ -310,7 +341,6 @@ public class Story extends SaharaItem implements Serializable {
         }
         return stateNotReady;
     }
-
 
     /**
      * Sets the story's ready state to the given boolean
@@ -816,5 +846,14 @@ public class Story extends SaharaItem implements Serializable {
             }
             return mapped_ac && mapped_story;
         }
+    }
+
+    /**
+     *
+     */
+    public enum STORYCOLOUR {
+        GREEN,
+        ORANGE,
+        RED
     }
 }
