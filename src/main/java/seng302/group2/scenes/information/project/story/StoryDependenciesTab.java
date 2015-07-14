@@ -31,9 +31,9 @@ public class StoryDependenciesTab extends Tab {
         dependantsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         ObservableList<Story> dataDependencies = observableArrayList();
-        dataDependencies.addAll(currentStory.getDependencies());
+        dataDependencies.addAll(currentStory.getDependentOnThis());
 
-        TableColumn storyCol = new TableColumn("Dependants");
+        TableColumn storyCol = new TableColumn("Dependant On This");
         storyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
         storyCol.prefWidthProperty().bind(dependantsTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
@@ -54,9 +54,9 @@ public class StoryDependenciesTab extends Tab {
         dependsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         ObservableList<Story> dataDependants = observableArrayList();
-        dataDependants.addAll(currentStory.getDepedants());
+        dataDependants.addAll(currentStory.getDependentOn());
 
-        TableColumn storyCol2 = new TableColumn("Depends On");
+        TableColumn storyCol2 = new TableColumn("Dependent On");
         storyCol2.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
         storyCol2.prefWidthProperty().bind(dependsTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
