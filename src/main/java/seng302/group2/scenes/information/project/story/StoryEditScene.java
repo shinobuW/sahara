@@ -121,17 +121,17 @@ public class StoryEditScene {
         descriptionTextArea.setText(currentStory.getDescription());
         priorityNumberField.setText(currentStory.getPriority().toString());
 
-        ObservableList<Story> dependantStoryList = FXCollections.observableArrayList();
-        dependantStoryList.addAll(currentStory.getDependencies());
+        ObservableList<Story> dependentOnList = FXCollections.observableArrayList();
+        dependentOnList.addAll(currentStory.getDependentOn());
 
         Backlog currentBacklog = currentStory.getBacklog();
         ObservableList<Story> availableStoryList = FXCollections.observableArrayList();
         availableStoryList.addAll(currentBacklog.getProject().getAllStories());
 
-        availableStoryList.removeAll(dependantStoryList);
+        availableStoryList.removeAll(dependentOnList);
         availableStoryList.remove(currentStory);
 
-        ListView<Story> dependantStoriesListView = new ListView<>(dependantStoryList);
+        ListView<Story> dependantStoriesListView = new ListView<>(dependentOnList);
         dependantStoriesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         dependantStoriesListView.getSelectionModel().select(0);
 
@@ -140,7 +140,7 @@ public class StoryEditScene {
         availableStoryListView.getSelectionModel().select(0);
 
         VBox backlogStoryBox = new VBox(10);
-        backlogStoryBox.getChildren().add(new Label("Dependant Stories: "));
+        backlogStoryBox.getChildren().add(new Label("Dependant On: "));
         backlogStoryBox.getChildren().add(dependantStoriesListView);
 
         VBox availableStoryBox = new VBox(10);
@@ -163,7 +163,7 @@ public class StoryEditScene {
                 buttons);
 
         btnAssign.setOnAction((event) -> {
-                dependantStoryList.addAll(
+                dependentOnList.addAll(
                         availableStoryListView.getSelectionModel().getSelectedItems());
                 availableStoryList.removeAll(
                         availableStoryListView.getSelectionModel().getSelectedItems());
@@ -172,7 +172,7 @@ public class StoryEditScene {
         btnUnassign.setOnAction((event) -> {
                 availableStoryList.addAll(
                         dependantStoriesListView.getSelectionModel().getSelectedItems());
-                dependantStoryList.removeAll(
+                dependentOnList.removeAll(
                         dependantStoriesListView.getSelectionModel().getSelectedItems());
 
             });
@@ -192,7 +192,8 @@ public class StoryEditScene {
                         currentStory.getPriority().toString());
                 boolean readyChanged = readyStateCheck.isSelected() == currentStory.getReady();
                 boolean estimateChanged = estimateComboBox.getValue().equals(currentStory.getEstimate());
-                boolean dependChanged = currentStory.getDependencies().retainAll(dependantStoriesListView.getItems());
+                boolean dependChanged = currentStory.getDependentOnThis()
+                        .retainAll(dependantStoriesListView.getItems());
 
 
                 if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged
@@ -200,15 +201,6 @@ public class StoryEditScene {
                     // No changes
                     currentStory.switchToInfoScene();
                     return;
-                }
-
-                for (Story story : dependantStoryList) {
-                    currentStory.setDependencies(story);
-                    story.setDependants(currentStory);
-                }
-                for (Story story : availableStoryList) {
-                    currentStory.removeDependencies(story);
-                    story.removeDependants(currentStory);
                 }
 
                 boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
@@ -225,7 +217,8 @@ public class StoryEditScene {
                             Integer.parseInt(priorityNumberField.getText()),
                             currentStory.getBacklog(),
                             estimateComboBox.getValue(),
-                            readyStateCheck.selectedProperty().get()
+                            readyStateCheck.selectedProperty().get(),
+                            dependentOnList
                     );
 
                     currentStory.switchToInfoScene();

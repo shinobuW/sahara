@@ -47,8 +47,8 @@ public class Story extends SaharaItem implements Serializable {
     private boolean ready = false;
     private transient ObservableList<AcceptanceCriteria> acceptanceCriteria = observableArrayList();
     private List<AcceptanceCriteria> serializableAcceptanceCriteria = new ArrayList<>();
-    private Set<Story> dependencies = new HashSet<>();
-    private Set<Story> depedants = new HashSet<>();
+    private Set<Story> dependentOnThis = new HashSet<>();
+    private Set<Story> dependentOn = new HashSet<>();
 
 
     public static String stateReady = "Ready";
@@ -221,8 +221,8 @@ public class Story extends SaharaItem implements Serializable {
      *
      * @return the stories, the current story is dependant of
      */
-    public Set<Story> getDepedants() {
-        return this.depedants;
+    public Set<Story> getDependentOn() {
+        return this.dependentOn;
     }
 
     /**
@@ -231,7 +231,7 @@ public class Story extends SaharaItem implements Serializable {
      */
     public void setDependants(Story story) {
 
-        this.depedants.add(story);
+        this.dependentOn.add(story);
     }
 
     /**
@@ -239,32 +239,32 @@ public class Story extends SaharaItem implements Serializable {
      *
      */
     public void removeDependants(Story story) {
-        this.depedants.remove(story);
+        this.dependentOn.remove(story);
     }
 
     /**
-     * Removes the dependencies this story has.
+     * Removes the dependentOnThis this story has.
      *
      */
     public void removeDependencies(Story story) {
-        this.dependencies.remove(story);
+        this.dependentOnThis.remove(story);
     }
 
     /**
-     * Gets the dependencies this story has.
+     * Gets the dependentOnThis this story has.
      *
-     * @return the set of dependencies
+     * @return the set of dependentOnThis
      */
-    public Set<Story> getDependencies() {
-        return this.dependencies;
+    public Set<Story> getDependentOnThis() {
+        return this.dependentOnThis;
     }
 
     /**
-     * Sets the dependencies this story has.
+     * Sets the dependentOnThis this story has.
      *
      */
-    public void setDependencies(Story story) {
-        this.dependencies.add(story);
+    public void setDependentOnThis(Story story) {
+        this.dependentOnThis.add(story);
     }
 
     /**
@@ -485,9 +485,9 @@ public class Story extends SaharaItem implements Serializable {
      */
     public void edit(String newShortName, String newLongName, String newDescription,
                      Project newProject, Integer newPriority, Backlog newBacklog, String newEstimate,
-                     boolean newReady) {
+                     boolean newReady, List<Story> newDependentOn) {
         Command relEdit = new StoryEditCommand(this, newShortName, newLongName,
-                newDescription, newProject, newPriority, newBacklog, newEstimate, newReady);
+                newDescription, newProject, newPriority, newBacklog, newEstimate, newReady, newDependentOn);
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -514,6 +514,7 @@ public class Story extends SaharaItem implements Serializable {
         private Backlog backlog;
         private String estimate;
         private boolean ready;
+        private Collection<Story> dependentOn;
 
         private String oldShortName;
         private String oldLongName;
@@ -523,10 +524,11 @@ public class Story extends SaharaItem implements Serializable {
         private Backlog oldBacklog;
         private String oldEstimate;
         private boolean oldReady;
+        private Collection<Story> oldDependentOn;
 
         private StoryEditCommand(Story story, String newShortName, String newLongName,
                                  String newDescription, Project newProject, Integer newPriority,
-                                 Backlog newBacklog, String newEstimate, boolean newReady) {
+                                 Backlog newBacklog, String newEstimate, boolean newReady, List<Story> newDependentOn) {
             this.story = story;
 
             this.shortName = newShortName;
@@ -537,6 +539,8 @@ public class Story extends SaharaItem implements Serializable {
             this.backlog = newBacklog;
             this.estimate = newEstimate;
             this.ready = newReady;
+            this.dependentOn = new HashSet<>();
+            this.dependentOn.addAll(newDependentOn);
 
             this.oldShortName = story.shortName;
             this.oldLongName = story.longName;
@@ -546,6 +550,8 @@ public class Story extends SaharaItem implements Serializable {
             this.oldBacklog = story.backlog;
             this.oldEstimate = story.estimate;
             this.oldReady = story.ready;
+            this.oldDependentOn = new HashSet<>();
+            this.oldDependentOn.addAll(story.dependentOn);
 
             if (backlog == null) {
                 estimate = EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.DefaultValues.NONE);
@@ -570,6 +576,9 @@ public class Story extends SaharaItem implements Serializable {
             story.estimate = estimate;
             story.ready = ready;
 
+            story.dependentOn.clear();
+            story.dependentOn.addAll(dependentOn);
+
             Collections.sort(project.getUnallocatedStories(), Story.StoryNameComparator);
             if (backlog != null) {
                 Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
@@ -579,6 +588,24 @@ public class Story extends SaharaItem implements Serializable {
             if (backlog != null && project != null) {
                 project.getUnallocatedStories().remove(story);
             }
+
+            Collection<Story> removedDependencies = new HashSet<>();
+            Collection<Story> addedDependencies = new HashSet<>();
+
+            removedDependencies.addAll(oldDependentOn);
+            removedDependencies.removeAll(dependentOn);
+            addedDependencies.addAll(dependentOn);
+            addedDependencies.removeAll(oldDependentOn);
+            System.out.println("depends on now: " + dependentOn);
+
+            for (Story removedStory : removedDependencies) {
+                removedStory.dependentOnThis.remove(story);
+            }
+            for (Story addedStory : addedDependencies) {
+                addedStory.dependentOnThis.add(story);
+            }
+            System.out.println("added: " + addedDependencies);
+            System.out.println("removed: " + removedDependencies);
         }
 
         /**
@@ -593,12 +620,32 @@ public class Story extends SaharaItem implements Serializable {
             story.backlog = oldBacklog;
             story.estimate = oldEstimate;
             story.ready = oldReady;
+
+            story.dependentOn.clear();
+            story.dependentOn.addAll(oldDependentOn);
+
             Collections.sort(project.getUnallocatedStories(), Story.StoryNameComparator);
             Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
 
             /* If the story if being added back into a backlog in the project, remove it from the unassigned stories.*/
             if (oldBacklog != null && oldProject != null) {
                 oldProject.getUnallocatedStories().remove(story);
+            }
+
+
+            Collection<Story> removedDependencies = new HashSet<>();
+            Collection<Story> addedDependencies = new HashSet<>();
+
+            removedDependencies.addAll(oldDependentOn);
+            removedDependencies.removeAll(dependentOn);
+            addedDependencies.addAll(dependentOn);
+            addedDependencies.removeAll(oldDependentOn);
+
+            for (Story removedStory : removedDependencies) {
+                removedStory.dependentOnThis.add(story);
+            }
+            for (Story addedStory : addedDependencies) {
+                addedStory.dependentOnThis.remove(story);
             }
         }
 
