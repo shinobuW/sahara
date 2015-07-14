@@ -246,28 +246,16 @@ public class Story extends SaharaItem implements Serializable {
     }
 
     /**
-     * Gets the string form of the story colour
+     * Gets the string form of the story colour t
      * @return the colour of the story in highlight mode
      */
     public String getColour() {
-        switch (colour) {
-            case GREEN:
-                return "green";
-            case ORANGE:
-                return "orange";
-            case RED:
-                return "red";
-            default:
-                return "";
-        }
+        String cssColour = this.colour == null ? "null" : this.colour.toString().toLowerCase();
+        return cssColour;
     }
 
     /**
-     *
-     */
-    /**
      * Removes the dependants this story has.
-     *
      */
     public void removeDependants(Story story) {
         this.depedants.remove(story);
@@ -802,7 +790,7 @@ public class Story extends SaharaItem implements Serializable {
     }
 
     /**
-     *
+     * enum used for colour setter
      */
     public enum STORYCOLOUR {
         GREEN,
