@@ -101,6 +101,7 @@ public class AllocationTest {
         ;
         Assert.assertEquals("[#text: 30/05/2100]", allocationElement.getChildNodes().item(3).getChildNodes().item(0).toString());
         ;
+        Assert.assertEquals(4, allocationElement.getChildNodes().getLength());
     }
 
 }

@@ -382,10 +382,12 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         teamDescription.appendChild(ReportGenerator.doc.createTextNode(description));
         personElement.appendChild(teamDescription);
 
+        Element skillsElement = ReportGenerator.doc.createElement("skills");
         for (Skill skill : skills) {
             Element skillElement = skill.generateXML();
-            personElement.appendChild(skillElement);
+            skillsElement.appendChild(skillElement);
         }
+        personElement.appendChild(skillsElement);
 
         return personElement;
     }

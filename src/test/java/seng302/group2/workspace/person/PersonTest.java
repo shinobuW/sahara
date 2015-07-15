@@ -4,13 +4,16 @@ import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
@@ -298,5 +301,63 @@ public class PersonTest {
         Assert.assertFalse(Global.currentWorkspace.getPeople().contains(person));
         Global.commandManager.undo();
         Assert.assertTrue(Global.currentWorkspace.getPeople().contains(person));
+    }
+
+    /**
+     * Tests for Roles' XML generator method.
+     */
+    @Test
+    public void testGenerateXML() {
+        new ReportGenerator();
+        Person person = new Person("short", "firstName", "lastName", "email",
+                "description", LocalDate.of(2015, Month.APRIL, 12));
+
+        Element personElement = person.generateXML();
+        Assert.assertEquals("[#text: short]", personElement.getChildNodes().item(0).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: firstName]", personElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: lastName]", personElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: email]", personElement.getChildNodes().item(3).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: 12/04/2015]", personElement.getChildNodes().item(4).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: description]", personElement.getChildNodes().item(5).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals(0, personElement.getChildNodes().item(6).getChildNodes().getLength());
+        ;
+        Assert.assertEquals(7, personElement.getChildNodes().getLength());
+
+    }
+
+    /**
+     * Tests for Roles' XML generator method.
+     */
+    @Test
+    public void testGenerateXMLSkills() {
+        new ReportGenerator();
+        Person person = new Person("short", "firstName", "lastName", "email",
+                "description", LocalDate.of(2015, Month.APRIL, 12));
+        person.getSkills().add(new Skill());
+        person.getSkills().add(new Skill());
+
+        Element personElement = person.generateXML();
+        Assert.assertEquals("[#text: short]", personElement.getChildNodes().item(0).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: firstName]", personElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: lastName]", personElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: email]", personElement.getChildNodes().item(3).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: 12/04/2015]", personElement.getChildNodes().item(4).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: description]", personElement.getChildNodes().item(5).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals(2, personElement.getChildNodes().item(6).getChildNodes().getLength());
+        ;
+        Assert.assertEquals(7, personElement.getChildNodes().getLength());
+
     }
 }

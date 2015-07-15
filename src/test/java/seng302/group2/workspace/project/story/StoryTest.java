@@ -229,6 +229,7 @@ public class StoryTest {
         ;
         Assert.assertEquals(0, storyElement.getChildNodes().item(7).getChildNodes().getLength());
         ;
+        Assert.assertEquals(8, storyElement.getChildNodes().getLength());
 
     }
 }

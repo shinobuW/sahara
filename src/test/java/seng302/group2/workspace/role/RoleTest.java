@@ -139,5 +139,6 @@ public class RoleTest {
         ;
         Assert.assertEquals("[#text: Manual Testing]", roleElement.getChildNodes().item(1).getChildNodes().item(0).toString());
         ;
+        Assert.assertEquals(3, roleElement.getChildNodes().getLength());
     }
 }

@@ -101,5 +101,6 @@ public class SkillTest {
         ;
         Assert.assertEquals("[#text: A better language than Java]", skillElement.getChildNodes().item(1).getChildNodes().item(0).toString());
         ;
+        Assert.assertEquals(2, skillElement.getChildNodes().getLength());
     }
 }
