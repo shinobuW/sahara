@@ -9,7 +9,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -24,6 +23,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 public class BacklogInfoTab extends Tab {
     public BacklogInfoTab(Backlog currentBacklog) {
         final Stage stage;
+        final Boolean[] highlightMode = {false};
         this.setText("Basic Information");
         Pane basicInfoPane = new VBox(10);
 
@@ -67,7 +67,6 @@ public class BacklogInfoTab extends Tab {
         readyCol.setCellValueFactory(new PropertyValueFactory<Story, Boolean>("ready"));
         readyCol.prefWidthProperty().bind(storyTable.widthProperty()
                 .subtract(2).divide(100).multiply(20));
-
         storyTable.setItems(data);
         storyTable.getColumns().addAll(priorityCol, storyCol, readyCol);
 
@@ -110,62 +109,31 @@ public class BacklogInfoTab extends Tab {
                 }
             });
 
-
-        btnHighlight.setOnAction((event) -> {
-                storyCol.setCellFactory(new Callback<TableColumn<Story, String>, TableCell<Story, String>>() {
-                    @Override
-                    public TableCell<Story, String> call(TableColumn<Story, String> param) {
-                        TableCell<Story, String> cell = new TableCell<Story, String>() {
-                            public void updateItem(String string, boolean empty) {
-                                if (string != null) {
-                                    setStyle("-fx-background-color: green");
-                                    setText(string);
-                                }
-                            }
-                        };
-                        return cell;
+        storyTable.setRowFactory(param -> new TableRow<Story>() {
+                @Override
+                protected void updateItem(Story item, boolean empty) {
+                    if (item == null) {
+                        return;
                     }
-                });
+                    super.updateItem(item, empty);
 
-                priorityCol.setCellFactory(new Callback<TableColumn<Story, Integer>, TableCell<Story, Integer>>() {
-                    @Override
-                    public TableCell<Story, Integer> call(TableColumn<Story, Integer> param) {
-                        TableCell<Story, Integer> cell = new TableCell<Story, Integer>() {
-                            public void updateItem(Integer item, boolean empty) {
-                                if (item != null) {
-                                    setStyle("-fx-background-color: green");
-                                    setText(item.toString());
-                                }
-                            }
-                        };
-                        return cell;
+                    if (highlightMode[0] == true) {
+                        setStyle("-fx-background-color: green;");
                     }
-                });
+                    else {
+                        setStyle(null);
+                    }
+                }
+            });
 
-                readyCol.setCellFactory(new Callback<TableColumn<Story, Boolean>, TableCell<Story, Boolean>>() {
-                    @Override
-                    public TableCell<Story, Boolean> call(TableColumn<Story, Boolean> param) {
-                        TableCell<Story, Boolean> cell = new TableCell<Story, Boolean>() {
-                            public void updateItem(Boolean item, boolean empty) {
-                                if (item != null) {
-                                    if (item == false) {
-                                        setStyle("-fx-background-color: red");
-                                    }
-                                    if (item == true) {
-                                        setStyle("-fx-background-color: green");
-                                    }
-                                    setText(item.toString());
-                                }
-                                /*else {
-                                    setStyle("-fx-background-color: red");
-                                    setText(item.toString());
-                                }
-                                */
-                            }
-                        };
-                        return cell;
-                    }
-                });
+        btnHighlight.setOnAction((event) ->
+            {
+                highlightMode[0] = !highlightMode[0];
+                System.out.println(highlightMode[0]);
+                for (int i = 0; i < storyTable.getColumns().size(); i++) {
+                    ((TableColumn)(storyTable.getColumns().get(i))).setVisible(false);
+                    ((TableColumn)(storyTable.getColumns().get(i))).setVisible(true);
+                }
             });
     }
 }
