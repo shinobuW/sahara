@@ -21,9 +21,12 @@ import static javafx.collections.FXCollections.observableArrayList;
  * Created by cvs20 on 19/05/15.
  */
 public class BacklogInfoTab extends Tab {
+
+    static final Boolean[] highlightMode = {false};
+
     public BacklogInfoTab(Backlog currentBacklog) {
         final Stage stage;
-        final Boolean[] highlightMode = {false};
+
         this.setText("Basic Information");
         Pane basicInfoPane = new VBox(10);
 
@@ -116,9 +119,9 @@ public class BacklogInfoTab extends Tab {
                         return;
                     }
                     super.updateItem(item, empty);
-
-                    if (highlightMode[0] == true) {
-                        setStyle("-fx-background-color: green;");
+                    item.bindColour();
+                    if (highlightMode[0] == true && item.getColour() != "transparent") {
+                        setStyle("-fx-background-color: " + item.getColour() + ";");
                     }
                     else {
                         setStyle(null);
@@ -129,11 +132,17 @@ public class BacklogInfoTab extends Tab {
         btnHighlight.setOnAction((event) ->
             {
                 highlightMode[0] = !highlightMode[0];
-                System.out.println(highlightMode[0]);
+
                 for (int i = 0; i < storyTable.getColumns().size(); i++) {
                     ((TableColumn)(storyTable.getColumns().get(i))).setVisible(false);
                     ((TableColumn)(storyTable.getColumns().get(i))).setVisible(true);
                 }
+                storyCol.prefWidthProperty().bind(storyTable.widthProperty()
+                        .subtract(2).divide(100).multiply(60));
+                priorityCol.prefWidthProperty().bind(storyTable.widthProperty()
+                        .subtract(2).divide(100).multiply(20));
+                readyCol.prefWidthProperty().bind(storyTable.widthProperty()
+                        .subtract(2).divide(100).multiply(20));
             });
     }
 }

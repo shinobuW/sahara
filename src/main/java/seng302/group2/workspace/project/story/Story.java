@@ -65,7 +65,7 @@ public class Story extends SaharaItem implements Serializable {
         this.creator = null;
         this.project = null;
         this.priority = 0;
-        this.colour = null;
+        this.colour = STORYCOLOUR.DEFAULT;
 
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }
@@ -97,7 +97,7 @@ public class Story extends SaharaItem implements Serializable {
         this.project = project;
         this.priority = priority;
         this.ready = false;
-        this.colour = null;
+        this.colour = STORYCOLOUR.DEFAULT;
 
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }
@@ -238,11 +238,28 @@ public class Story extends SaharaItem implements Serializable {
     }
 
     /**
-     * Sets the colour of the story in highlight mode.
-     * @param colour The colour the story colour is set to
+     * Sets the highlight colour of the story to its appropriate colour according to the criteria
      */
-    public void setColour(STORYCOLOUR colour) {
-        this.colour = colour;
+    public void bindColour() {
+        Boolean red = false;
+        for (Story story : this.dependentOnThis) {
+            if (story.priority < this.priority) {
+                red = true;
+            }
+        }
+        if (red == true) {
+            this.colour = STORYCOLOUR.RED;
+        }
+        else if (this.ready) {
+            this.colour = STORYCOLOUR.GREEN;
+        }
+        else if (this.estimate.equals(EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary
+                .DefaultValues.NONE)) && this.acceptanceCriteria.size() > 0) {
+            this.colour = STORYCOLOUR.ORANGE;
+        }
+        else {
+            this.colour = STORYCOLOUR.DEFAULT;
+        }
     }
 
     /**
@@ -250,8 +267,18 @@ public class Story extends SaharaItem implements Serializable {
      * @return the colour of the story in highlight mode
      */
     public String getColour() {
-        String cssColour = this.colour == null ? "null" : this.colour.toString().toLowerCase();
-        return cssColour;
+        switch (colour) {
+            case GREEN:
+                return "#aaffaa";
+            case ORANGE:
+                return "orange";
+            case RED:
+                return "#ffaaaa";
+            case DEFAULT:
+                return "transparent";
+            default:
+                return "transparent";
+        }
     }
 
     /**
@@ -842,6 +869,7 @@ public class Story extends SaharaItem implements Serializable {
     public enum STORYCOLOUR {
         GREEN,
         ORANGE,
-        RED
+        RED,
+        DEFAULT
     }
 }
