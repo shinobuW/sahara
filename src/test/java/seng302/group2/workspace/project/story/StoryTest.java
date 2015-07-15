@@ -14,6 +14,7 @@ import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
+import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 
 import java.util.ArrayList;
 
@@ -231,5 +232,27 @@ public class StoryTest {
         ;
         Assert.assertEquals(8, storyElement.getChildNodes().getLength());
 
+    }
+
+    /**
+     * Tests the highlightColour and getColour methods
+     */
+    @Test
+    public void testColourMethods() {
+        Assert.assertEquals("transparent", story.getColour());
+
+        story.setPriority(200);
+        Story lowPriorityStory = new Story();
+        lowPriorityStory.setPriority(100);
+        story.setDependentOnThis(lowPriorityStory);
+        Assert.assertEquals("#ffaaaa", story.getColour()); //red
+
+        story.setPriority(3);
+        story.getAcceptanceCriteria().add(ac);
+        story.setEstimate(EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.DefaultValues.NONE));
+        Assert.assertEquals("orange", story.getColour()); // orange
+
+        story.setReady(true);
+        Assert.assertEquals("#aaffaa", story.getColour()); //green
     }
 }
