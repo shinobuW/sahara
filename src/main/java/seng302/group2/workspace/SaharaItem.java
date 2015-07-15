@@ -9,7 +9,9 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrat
 import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrategy;
 import seng302.group2.workspace.categories.Category;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -28,11 +30,18 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
 
     private transient Logger logger = LoggerFactory.getLogger(SaharaItem.class);
 
+    static final AtomicLong NEXT_ID = new AtomicLong(0);
+    final long id = NEXT_ID.getAndIncrement();
+
+    // The pool of all Sahara items
+    static Set<SaharaItem> itemPool = new HashSet<>();
+
 
     /**
      * Blank constructor
      */
     public SaharaItem() {
+        itemPool.add(this);
     }
 
 
@@ -43,6 +52,55 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
      */
     public SaharaItem(String itemName) {
         this.itemName = itemName;
+        itemPool.add(this);
+    }
+
+
+    /**
+     * Gets the Sahara item's ID
+     * @return The ID of this Sahara item
+     */
+    private long getId() {
+        return id;
+    }
+
+
+    /**
+     * Checks all IDs in the current pool of Sahara items and sets the minimum ID for new items
+     */
+    public static void refreshIDs() {
+        long maxID = 0;
+        for (SaharaItem item : itemPool) {
+            if (item.getId() > maxID) {
+                maxID = item.getId();
+            }
+        }
+        setStartId(maxID);
+    }
+
+
+    /**
+     * Sets the new starting ID for new Sahara items
+     * @param startId The ID to start from
+     */
+    public static void setStartId(long startId) {
+        if (startId > NEXT_ID.get()) {
+            NEXT_ID.set(startId);
+        }
+    }
+
+    /**
+     * Sets the new starting ID for new Sahara items
+     * @param startId The ID to start from
+     * @param force Whether or not to override the current ID regardless whether or not it is less than the current ID
+     */
+    public static void setStartId(long startId, boolean force) {
+        if (force) {
+            NEXT_ID.set(startId);
+        }
+        else {
+            setStartId(startId);
+        }
     }
 
 
@@ -169,7 +227,10 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
      * @param object The object to compare to
      * @return true if <i>this</i> and the object are equivalent
      */
-    public abstract boolean equivalentTo(Object object);
+    public boolean equivalentTo(Object object) {
+        return object instanceof SaharaItem
+                && ((SaharaItem) object).getId() == this.getId();
+    }
 
 
     /**

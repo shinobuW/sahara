@@ -49,7 +49,12 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
     @Override
     public Set<SaharaItem> getItemsSet() {
         Set<SaharaItem> items = new HashSet<>();
+
+        for (Story story : stories) {
+            items.addAll(story.getItemsSet());
+        }
         items.addAll(stories);
+
         return items;
     }
 
@@ -328,27 +333,6 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
     public String toString() {
         return this.shortName;
     }
-
-    @Override
-    public boolean equivalentTo(Object object) {
-        if (!(object instanceof Backlog)) {
-            return false;
-        }
-        if (object == this) {
-            return true;
-        }
-
-        Backlog backlog = (Backlog)object;
-        return new EqualsBuilder()
-                .append(shortName, backlog.shortName)
-                .append(longName, backlog.longName)
-                .append(description, backlog.description)
-                .append(productOwner, backlog.productOwner)
-                .append(project, backlog.project)
-                .append(scale, backlog.scale)
-                .isEquals();
-    }
-
 
     /**
      * Creates a Backlog edit command and executes it with the Global Command Manager, updating

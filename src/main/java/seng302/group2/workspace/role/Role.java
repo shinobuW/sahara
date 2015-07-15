@@ -302,24 +302,6 @@ public class Role extends SaharaItem implements Serializable {
         return this.shortName;
     }
 
-    @Override
-    public boolean equivalentTo(Object object) {
-        if (!(object instanceof Role)) {
-            return false;
-        }
-        if (object == this) {
-            return true;
-        }
-        Role role = (Role)object;
-        return new EqualsBuilder()
-                .append(shortName, role.shortName)
-                .append(description, role.description)
-                .append(type, role.type)
-                .append(defaultRole, role.defaultRole)
-                .isEquals();
-    }
-
-
     public enum RoleType {
         SCRUM_MASTER, PRODUCT_OWNER, DEVELOPMENT_TEAM_MEMBER, NONE
     }

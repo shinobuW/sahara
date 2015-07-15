@@ -195,23 +195,6 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
         return this.shortName;
     }
 
-    @Override
-    public boolean equivalentTo(Object object) {
-        if (!(object instanceof Skill)) {
-            return false;
-        }
-        if (object == this) {
-            return true;
-        }
-
-        Skill skill = (Skill)object;
-        return new EqualsBuilder()
-                .append(shortName, skill.shortName)
-                .append(description, skill.description)
-                .isEquals();
-    }
-
-
     /**
      * A command class that allows the executing and undoing of skill edits
      */

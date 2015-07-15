@@ -66,8 +66,21 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         Set<SaharaItem> items = new HashSet<>();
         items.addAll(releases);
         items.addAll(teamAllocations);
+
+        for (Story story : unallocatedStories) {
+            items.addAll(story.getItemsSet());
+        }
         items.addAll(unallocatedStories);
+
+        for (Backlog bl : backlogs) {
+            items.addAll(bl.getItemsSet());
+        }
         items.addAll(backlogs);
+        for (Release release : releases) {
+            items.addAll(release.getItemsSet());
+        }
+        items.addAll(releases);
+
         return items;
     }
 
@@ -606,24 +619,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
     public String toString() {
         return this.shortName;
     }
-
-    @Override
-    public boolean equivalentTo(Object object) {
-        if (!(object instanceof Project)) {
-            return false;
-        }
-        if (object == this) {
-            return true;
-        }
-
-        Project proj = (Project)object;
-        return new EqualsBuilder()
-                .append(shortName, proj.shortName)
-                .append(longName, proj.longName)
-                .append(description, proj.description)
-                .isEquals();
-    }
-
 
     /**
      * Compares to another project based on their short names

@@ -104,10 +104,17 @@ public class MainPane extends BorderPane {
      * Refreshes the content child of the pane
      */
     public void refreshContent() {
-        SaharaItem selected = (SaharaItem) Global.selectedTreeItem.getValue();
-        if (selected == null) {
+        SaharaItem selected = null;
+        try {
+            selected = (SaharaItem) Global.selectedTreeItem.getValue();
+            if (selected == null) {
+                return;
+            }
+        }
+        catch (NullPointerException ex) {
             return;
         }
+
 
         // Refresh based on the selected item's type
         if (selected instanceof SubCategory) {

@@ -458,30 +458,6 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         return this.shortName;
     }
 
-
-    /**
-     * Returns whether or not the person is <b>equivalent</b> to the passed object
-     * @param object The object to compare to
-     * @return true if the objects are equivalent
-     */
-    public boolean equivalentTo(Object object) {
-        if (!(object instanceof Person)) {
-            return false;
-        }
-        if (object == this) {
-            return true;
-        }
-        Person person = (Person)object;
-        return new EqualsBuilder()
-                .append(shortName, person.shortName)
-                .append(firstName, person.firstName)
-                .append(lastName, person.lastName)
-                .append(email, person.email)
-                .append(birthDate, person.birthDate)
-                .append(description, person.description)
-                .isEquals();
-    }
-
     /**
      * A command class that allows the executing and undoing of project edits
      */
