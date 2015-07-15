@@ -313,7 +313,7 @@ public class Story extends SaharaItem implements Serializable {
      * Sets the dependentOnThis this story has.
      *
      */
-    public void setDependentOnThis(Story story) {
+    public void addDependentOnThis(Story story) {
         this.dependentOnThis.add(story);
     }
 
