@@ -174,25 +174,6 @@ public class Allocation extends SaharaItem implements Serializable, Comparable<A
     }
 
     @Override
-    public boolean equivalentTo(Object object) {
-        if (!(object instanceof Allocation)) {
-            return false;
-        }
-        if (object == this) {
-            return true;
-        }
-
-        Allocation alloc = (Allocation)object;
-        return new EqualsBuilder()
-                .append(startDate, alloc.startDate)
-                .append(endDate, alloc.endDate)
-                .append(project, alloc.project)
-                .append(team, alloc.project)
-                .isEquals();
-    }
-
-
-    @Override
     public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }

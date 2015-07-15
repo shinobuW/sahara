@@ -74,6 +74,9 @@ public class Story extends SaharaItem implements Serializable {
     public Set<SaharaItem> getItemsSet() {
         Set<SaharaItem> items = new HashSet<>();
         items.addAll(acceptanceCriteria);
+        for (AcceptanceCriteria ac : acceptanceCriteria) {
+            items.addAll(ac.getItemsSet());
+        }
         return items;
     }
 
@@ -482,30 +485,6 @@ public class Story extends SaharaItem implements Serializable {
     public String toString() {
         return this.shortName;
     }
-
-    @Override
-    public boolean equivalentTo(Object object) {
-        if (!(object instanceof Story)) {
-            return false;
-        }
-        if (object == this) {
-            return true;
-        }
-
-        Story story = (Story)object;
-        return new EqualsBuilder()
-                .append(shortName, story.shortName)
-                .append(longName, story.longName)
-                .append(description, story.description)
-                .append(project, story.project)
-                .append(priority, story.priority)
-                .append(backlog, story.backlog)
-                .append(estimate, story.estimate)
-                .append(creator, story.creator)
-                .append(ready, story.ready)
-                .isEquals();
-    }
-
 
     /**
      * Deletes the given acceptance criteria from the story

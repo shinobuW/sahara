@@ -546,26 +546,6 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         return this.shortName;
     }
 
-    @Override
-    public boolean equivalentTo(Object object) {
-        if (!(object instanceof Team)) {
-            return false;
-        }
-        if (object == this) {
-            return true;
-        }
-
-        //return false;
-
-        Team team = (Team)object;
-        return new EqualsBuilder()
-                .append(shortName, team.shortName)
-                .append(description, team.description)
-                .append(project, team.project)
-                .isEquals();
-    }
-
-
     /**
      * Creates a team edit command and executes it with the Global Command Manager, updating
      * the team with the new parameter values.

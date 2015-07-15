@@ -147,24 +147,6 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
     }
 
     @Override
-    public boolean equivalentTo(Object object) {
-        if (!(object instanceof AcceptanceCriteria)) {
-            return false;
-        }
-        if (object == this) {
-            return true;
-        }
-
-        AcceptanceCriteria ac = (AcceptanceCriteria) object;
-        return new EqualsBuilder()
-                .append(description, ac.description)
-                .append(state, ac.state)
-                .append(story, ac.story)
-                .isEquals();
-    }
-
-
-    @Override
     public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }

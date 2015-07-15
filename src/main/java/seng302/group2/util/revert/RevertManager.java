@@ -5,6 +5,7 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.Command;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.Stack;
@@ -25,18 +26,22 @@ public class RevertManager {
      */
     public static void revertWorkspace() {
         if (revertWorkspace != null) {
+            Stack<Command> undos = (Stack<Command>)revertUndos.clone();
+
             Workspace currentWorkspace = SerialBuilder.getBuilder().fromJson(revertWorkspace,
                     Workspace.class);
             Workspace.postDeserialization(currentWorkspace);
 
             Global.currentWorkspace = currentWorkspace;
 
-            for (Command command : revertUndos) {
+            Global.commandManager.clear();
+            Global.commandManager.setUndos(undos);
+
+            for (Command command : undos) {
                 command.map(currentWorkspace.getItemsSet());
             }
 
-            Global.commandManager.clear();
-            Global.commandManager.setUndos(revertUndos);
+            SaharaItem.refreshIDs();
 
             App.refreshMainScene();
         }
@@ -61,5 +66,18 @@ public class RevertManager {
         Workspace.prepSerialization(Global.currentWorkspace);
         String json = gson.toJson(Global.currentWorkspace);
         updateRevertState(json);
+    }
+
+    /**
+     * Clears the revert state including the serialised workspace and undo/redo history
+     */
+    public static void clear() {
+        revertWorkspace = null;
+        try {
+            revertUndos.clear();
+        }
+        catch (NullPointerException ex) {
+            revertUndos = new Stack<>();
+        }
     }
 }

@@ -254,25 +254,6 @@ public class Release extends SaharaItem implements Comparable<Release> {
         return this.shortName;
     }
 
-    @Override
-    public boolean equivalentTo(Object object) {
-        if (!(object instanceof  Release)) {
-            return false;
-        }
-        if (object == this) {
-            return true;
-        }
-
-        Release release = (Release)object;
-        return new EqualsBuilder()
-                .append(shortName, release.shortName)
-                .append(description, release.description)
-                .append(estimatedDate, release.estimatedDate)
-                .append(project, release.project)
-                .isEquals();
-    }
-
-
     /**
      * Creates a Release edit command and executes it with the Global Command Manager, updating
      * the release with the new parameter values.

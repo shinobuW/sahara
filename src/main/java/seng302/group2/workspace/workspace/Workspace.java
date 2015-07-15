@@ -52,6 +52,7 @@ public class Workspace extends SaharaItem implements Serializable {
     private String lastSaveLocation = null;
     private EstimationScalesDictionary estimationScales;
     private transient boolean hasUnsavedChanges = true;
+
     // Workspace elements
     private transient ObservableList<Team> teams = observableArrayList();
     private List<Team> serializableTeams = new ArrayList<>();
@@ -75,6 +76,8 @@ public class Workspace extends SaharaItem implements Serializable {
         this.description = "A blank workspace.";
         this.estimationScales = EstimationScalesDictionary.getEstimationScale();
 
+        SaharaItem.setStartId(0, true);
+        RevertManager.clear();
 
         this.createDefaultElements();
 
@@ -100,6 +103,9 @@ public class Workspace extends SaharaItem implements Serializable {
         this.description = description;
         this.estimationScales = EstimationScalesDictionary.getEstimationScale();
 
+        SaharaItem.setStartId(0, true);
+        RevertManager.clear();
+
         this.createDefaultElements();
 
         addListeners();
@@ -118,6 +124,10 @@ public class Workspace extends SaharaItem implements Serializable {
         Set<SaharaItem> items = new HashSet<>();
         items.add(this);
 
+        for (Project proj : this.getProjects()) {
+            items.add(proj);
+            items.addAll(proj.getItemsSet());
+        }
         for (Person person : this.getPeople()) {
             items.add(person);
             items.addAll(person.getItemsSet());
@@ -410,6 +420,8 @@ public class Workspace extends SaharaItem implements Serializable {
         for (Project proj : workspace.getProjects()) {
             proj.addListeners();
         }
+
+        SaharaItem.refreshIDs();
     }
 
 
@@ -776,23 +788,6 @@ public class Workspace extends SaharaItem implements Serializable {
         return this.shortName;
     }
 
-    @Override
-    public boolean equivalentTo(Object object) {
-        if (!(object instanceof Workspace)) {
-            return false;
-        }
-        if (object == this) {
-            return true;
-        }
-        Workspace ws = (Workspace)object;
-        return new EqualsBuilder()
-                .append(shortName, ws.shortName)
-                .append(longName, ws.longName)
-                .append(description, ws.description)
-                .isEquals();
-    }
-
-
     /**
      * Gets the children (categories) of the workspace.
      *
@@ -913,12 +908,14 @@ public class Workspace extends SaharaItem implements Serializable {
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
+            System.out.println(stateObjects);
             for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(proj)) {
                     this.proj = (Project) item;
                     mapped = true;
                 }
             }
+            System.out.println("mapped add: " + mapped);
             return mapped;
         }
     }
