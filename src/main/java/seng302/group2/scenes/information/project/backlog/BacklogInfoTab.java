@@ -113,21 +113,21 @@ public class BacklogInfoTab extends Tab {
             });
 
         storyTable.setRowFactory(param -> new TableRow<Story>() {
-                @Override
-                protected void updateItem(Story item, boolean empty) {
-                    if (item == null) {
-                        return;
-                    }
-                    super.updateItem(item, empty);
-                    item.bindColour();
-                    if (highlightMode[0] == true && item.getColour() != "transparent") {
-                        setStyle("-fx-background-color: " + item.getColour() + ";");
-                    }
-                    else {
-                        setStyle(null);
-                    }
+            @Override
+            protected void updateItem(Story item, boolean empty) {
+                if (item == null) {
+                    return;
                 }
-            });
+                super.updateItem(item, empty);
+                item.setHighlightColour();
+                if (highlightMode[0] == true && item.getColour() != "transparent") {
+                    setStyle("-fx-background-color: " + item.getColour() + ";");
+                }
+                else {
+                    setStyle(null);
+                }
+            }
+        });
 
         btnHighlight.setOnAction((event) ->
             {

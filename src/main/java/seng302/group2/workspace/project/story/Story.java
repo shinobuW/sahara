@@ -243,7 +243,7 @@ public class Story extends SaharaItem implements Serializable {
     /**
      * Sets the highlight colour of the story to its appropriate colour according to the criteria
      */
-    public void bindColour() {
+    public void setHighlightColour() {
         Boolean red = false;
         for (Story story : this.dependentOnThis) {
             if (story.priority < this.priority) {
@@ -270,6 +270,7 @@ public class Story extends SaharaItem implements Serializable {
      * @return the colour of the story in highlight mode
      */
     public String getColour() {
+        this.setHighlightColour();
         switch (colour) {
             case GREEN:
                 return "#aaffaa";
@@ -798,6 +799,9 @@ public class Story extends SaharaItem implements Serializable {
         }
     }
 
+    /**
+     * Command to add and remove acceptance criteria
+     */
     private class AddAcceptanceCriteriaCommand implements Command {
         private Story story;
         private AcceptanceCriteria ac;
