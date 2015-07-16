@@ -60,7 +60,7 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
      * Gets the Sahara item's ID
      * @return The ID of this Sahara item
      */
-    private long getId() {
+    public long getId() {
         return id;
     }
 
