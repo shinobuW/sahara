@@ -28,9 +28,9 @@ public class RoleTest {
     @Test
     public void testRoleConstructors() {
         Role role = new Role();
-        Assert.assertEquals("role Name", role.getShortName());
+        Assert.assertEquals("Untitled Role", role.getShortName());
         Assert.assertEquals("", role.getDescription());
-        Assert.assertEquals("role Name", role.toString());
+        Assert.assertEquals("Untitled Role", role.toString());
 
         Role role2 = new Role("QA", Role.RoleType.NONE);
         Assert.assertEquals("QA", role2.getShortName());
@@ -53,7 +53,7 @@ public class RoleTest {
     public void testToString() {
         Role role = new Role();
         Role nullRole = null;
-        Assert.assertEquals("role Name", role.toString());
+        Assert.assertEquals("Untitled Role", role.toString());
     }
 
 

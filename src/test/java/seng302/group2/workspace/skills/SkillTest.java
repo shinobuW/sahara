@@ -20,9 +20,9 @@ public class SkillTest {
     @Test
     public void testSkillConstructors() {
         Skill skill = new Skill();
-        Assert.assertEquals("unnamed", skill.getShortName());
+        Assert.assertEquals("Untitled Skill", skill.getShortName());
         Assert.assertEquals("no description", skill.getDescription());
-        Assert.assertEquals("unnamed", skill.toString());
+        Assert.assertEquals("Untitled Skill", skill.toString());
         Assert.assertEquals(null, skill.getChildren());
 
         Skill skill2 = new Skill("C#", "A better language than Java");

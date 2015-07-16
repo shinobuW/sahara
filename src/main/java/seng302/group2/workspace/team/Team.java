@@ -272,20 +272,10 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
 
     /**
      * Adds a Person to the Teams list of Members
+     *  @param person The person to add
      *
-     * @param person The person to add
-     * @param undo   Whether to create an undo item for adding the person
      */
-    public void add(Person person, Boolean undo) {
-//        // Add the undo action to the stack
-//        if (undo)
-//        {
-//            Global.undoRedoMan.add(new UndoableItem(
-//                    person,
-//                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this),
-//                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this)
-//            ));
-//        }
+    public void add(Person person) {
         this.people.add(person);
     }
 
@@ -380,9 +370,11 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         Element teamDescription = ReportGenerator.doc.createElement("description");
         teamDescription.appendChild(ReportGenerator.doc.createTextNode(description));
         teamElement.appendChild(teamDescription);
+
         if (getCurrentAllocation() != null) {
             Element allocationID = ReportGenerator.doc.createElement("current-allocation-ID");
-            allocationID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(getCurrentAllocation().getId())));
+            allocationID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(getCurrentAllocation()
+                    .getId())));
             teamElement.appendChild(allocationID);
 
             Element projectAllocatedTo = ReportGenerator.doc.createElement("assigned-project");

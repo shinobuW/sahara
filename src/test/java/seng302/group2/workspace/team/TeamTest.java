@@ -33,9 +33,9 @@ public class TeamTest {
     @Test
     public void testTeamConstructors() {
         Team team = new Team();
-        Assert.assertEquals("unnamed", team.getShortName());
+        Assert.assertEquals("Untitled Team", team.getShortName());
         Assert.assertEquals("", team.getDescription());
-        Assert.assertEquals("unnamed", team.toString());
+        Assert.assertEquals("Untitled Team", team.toString());
         Assert.assertEquals(null, team.getChildren());
         Assert.assertEquals(null, team.getScrumMaster());
         Assert.assertEquals(null, team.getProductOwner());
@@ -65,7 +65,7 @@ public class TeamTest {
         Assert.assertEquals("Arctic Falcon", team.toString());
 
         Assert.assertEquals("Chardonnay", team.getProductOwner().getShortName());
-        Assert.assertEquals("unnamed", team.getScrumMaster().getShortName());
+        Assert.assertEquals("Untitled Person", team.getScrumMaster().getShortName());
         //Setting Team and People Roles should be seperate
         //Assert.assertEquals(RoleType.PRODUCT_OWNER, team.getProductOwner().getRole().getType());
         //Assert.assertEquals(RoleType.SCRUM_MASTER, team.getScrumMaster().getRole().getType());
@@ -289,9 +289,9 @@ public class TeamTest {
         ;
         Assert.assertEquals(0, teamElement.getChildNodes().item(4).getChildNodes().getLength());
         ;
-        Assert.assertEquals("[#text: null", teamElement.getChildNodes().item(5).getChildNodes().item(0).toString());
+        Assert.assertEquals("[product-owner: null]", teamElement.getChildNodes().item(5).toString());
         ;
-        Assert.assertEquals("[#text: null]", teamElement.getChildNodes().item(6).getChildNodes().item(0).toString());
+        Assert.assertEquals("[scrum-master: null]", teamElement.getChildNodes().item(6).toString());
         ;
         Assert.assertEquals(0, teamElement.getChildNodes().item(7).getChildNodes().getLength());
         ;
@@ -332,13 +332,13 @@ public class TeamTest {
         ;
         Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals(1, teamElement.getChildNodes().item(3).getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(3).getChildNodes().getLength());
         ;
-        Assert.assertEquals(1, teamElement.getChildNodes().item(4).getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(4).getChildNodes().getLength());
         ;
-        Assert.assertEquals("[#text: null", teamElement.getChildNodes().item(5).getChildNodes().item(0).toString());
+        Assert.assertEquals(1, teamElement.getChildNodes().item(5).getChildNodes().getLength());
         ;
-        Assert.assertEquals("[#text: null]", teamElement.getChildNodes().item(6).getChildNodes().item(0).toString());
+        Assert.assertEquals(1, teamElement.getChildNodes().item(6).getChildNodes().getLength());
         ;
         Assert.assertEquals(2, teamElement.getChildNodes().item(7).getChildNodes().getLength());
         ;

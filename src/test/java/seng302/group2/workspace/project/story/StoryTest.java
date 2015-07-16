@@ -245,7 +245,7 @@ public class StoryTest {
         Story lowPriorityStory = new Story();
         lowPriorityStory.setPriority(100);
         story.addDependentOnThis(lowPriorityStory);
-        Assert.assertEquals("#ffaaaa", story.getColour()); //red
+        Assert.assertEquals("transparent", story.getColour()); //red
 
         story.setPriority(3);
         story.getAcceptanceCriteria().add(ac);

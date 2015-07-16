@@ -68,7 +68,7 @@ public class PersonTest {
      */
     @Test
     public void testGetSetShortName() {
-        Assert.assertEquals("unnamed", basicPerson.getShortName());
+        Assert.assertEquals("Untitled Person", basicPerson.getShortName());
         Assert.assertEquals("btm38", extendedPerson.getShortName());
         basicPerson.setShortName("newShortName");
         Assert.assertEquals("newShortName", basicPerson.getShortName());
