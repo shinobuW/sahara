@@ -30,7 +30,7 @@ public class AllocationTest {
     @Test
     public void testConstructors() {
         Assert.assertEquals("Untitled Project", alloc.getProject().getShortName());
-        Assert.assertEquals("unnamed", alloc.getTeam().getShortName());
+        Assert.assertEquals("Untitled Team", alloc.getTeam().getShortName());
         Assert.assertEquals(startDate, alloc.getStartDate());
         Assert.assertEquals(endDate, alloc.getEndDate());
     }
@@ -93,13 +93,13 @@ public class AllocationTest {
         new ReportGenerator();
 
         Element allocationElement = alloc.generateXML();
-        Assert.assertEquals("[#text: unnamed]", allocationElement.getChildNodes().item(0).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: Untitled Team]", allocationElement.getChildNodes().item(1).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals("[#text: Untitled Project]", allocationElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: Untitled Project]", allocationElement.getChildNodes().item(2).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals("[#text: 12/04/2015]", allocationElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: 12/04/2015]", allocationElement.getChildNodes().item(3).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals("[#text: 30/05/2100]", allocationElement.getChildNodes().item(3).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: 30/05/2100]", allocationElement.getChildNodes().item(4).getChildNodes().item(0).toString());
         ;
         Assert.assertEquals(4, allocationElement.getChildNodes().getLength());
     }

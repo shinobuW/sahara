@@ -31,7 +31,7 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
     private transient Logger logger = LoggerFactory.getLogger(SaharaItem.class);
 
     static final AtomicLong NEXT_ID = new AtomicLong(0);
-    final long id = NEXT_ID.getAndIncrement();
+    protected final long id = NEXT_ID.getAndIncrement();
 
     // The pool of all Sahara items
     static Set<SaharaItem> itemPool = new HashSet<>();

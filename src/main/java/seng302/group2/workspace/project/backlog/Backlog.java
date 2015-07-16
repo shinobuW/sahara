@@ -37,6 +37,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
      * Basic Backlog constructor
      */
     public Backlog() {
+        super("Untitled Backlog");
         this.shortName = "Untitled Backlog";
         this.longName = "Untitled Backlog";
         this.description = "";
@@ -70,6 +71,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
      */
     public Backlog(String shortName, String longName, String description,
                    Person productOwner, Project project, String scale) {
+        super(shortName);
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
@@ -269,6 +271,10 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
         Element backlogElement = ReportGenerator.doc.createElement("backlog");
 
         //WorkSpace Elements
+        Element backlogID = ReportGenerator.doc.createElement("ID");
+        backlogID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        backlogElement.appendChild(backlogID);
+
         Element backlogShortName = ReportGenerator.doc.createElement("identifier");
         backlogShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
         backlogElement.appendChild(backlogShortName);

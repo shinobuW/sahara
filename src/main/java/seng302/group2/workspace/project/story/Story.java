@@ -1,7 +1,6 @@
 package seng302.group2.workspace.project.story;
 
 import javafx.collections.ObservableList;
-import org.apache.commons.lang.builder.EqualsBuilder;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.StoryInformationSwitchStrategy;
@@ -59,6 +58,7 @@ public class Story extends SaharaItem implements Serializable {
      * Basic Story constructor
      */
     public Story() {
+        super("Untitled Story");
         this.shortName = "Untitled Story";
         this.longName = "Untitled Story";
         this.description = "";
@@ -93,6 +93,7 @@ public class Story extends SaharaItem implements Serializable {
      */
     public Story(String shortName, String longName, String description, String creator,
                  Project project, Integer priority) {
+        super(shortName);
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
@@ -245,7 +246,7 @@ public class Story extends SaharaItem implements Serializable {
      */
     public void setHighlightColour() {
         Boolean red = false;
-        for (Story story : this.dependentOnThis) {
+        for (Story story : this.dependentOn) {
             if (story.priority < this.priority) {
                 red = true;
             }
@@ -424,6 +425,10 @@ public class Story extends SaharaItem implements Serializable {
         Element storyElement = ReportGenerator.doc.createElement("story");
 
         //WorkSpace Elements
+        Element storyID = ReportGenerator.doc.createElement("ID");
+        storyID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        storyElement.appendChild(storyID);
+
         Element storyShortName = ReportGenerator.doc.createElement("identifier");
         storyShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
         storyElement.appendChild(storyShortName);
@@ -621,7 +626,6 @@ public class Story extends SaharaItem implements Serializable {
             removedDependencies.removeAll(dependentOn);
             addedDependencies.addAll(dependentOn);
             addedDependencies.removeAll(oldDependentOn);
-            System.out.println("depends on now: " + dependentOn);
 
             for (Story removedStory : removedDependencies) {
                 removedStory.dependentOnThis.remove(story);
@@ -629,8 +633,6 @@ public class Story extends SaharaItem implements Serializable {
             for (Story addedStory : addedDependencies) {
                 addedStory.dependentOnThis.add(story);
             }
-            System.out.println("added: " + addedDependencies);
-            System.out.println("removed: " + removedDependencies);
         }
 
         /**

@@ -36,6 +36,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
      * Basic constructor
      */
     public Release() {
+        super("Untitled Release");
         this.shortName = "Untitled Release";
         this.description = "Release without project assigned should not exist";
         this.estimatedDate = LocalDate.now();
@@ -57,6 +58,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
      * @param project   project to be set
      */
     public Release(String shortName, Project project) {
+        super(shortName);
         this.shortName = shortName;
         this.project = project;
 
@@ -228,6 +230,10 @@ public class Release extends SaharaItem implements Comparable<Release> {
         Element releaseElement = ReportGenerator.doc.createElement("release");
 
         //WorkSpace Elements
+        Element releaseID = ReportGenerator.doc.createElement("ID");
+        releaseID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        releaseElement.appendChild(releaseID);
+
         Element releaseShortName = ReportGenerator.doc.createElement("identifier");
         releaseShortName.appendChild(ReportGenerator.doc.createTextNode(getShortName()));
         releaseElement.appendChild(releaseShortName);

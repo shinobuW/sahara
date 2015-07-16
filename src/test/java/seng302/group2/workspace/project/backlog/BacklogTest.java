@@ -146,7 +146,6 @@ public class BacklogTest {
         Assert.assertEquals("Fibonacci", backlog.getScale());
         Assert.assertTrue(backlog.getStories().contains(oldStory));
 
-        System.out.println(backlog.getStories());
         Assert.assertEquals(1, backlog.getStories().size());
         Assert.assertFalse(story.getBacklog() == backlog);
         Assert.assertTrue(oldStory.getBacklog() == backlog);

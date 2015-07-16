@@ -31,6 +31,10 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
         UNACCEPTED
     }
 
+    private AcceptanceCriteria() {
+        super();
+    }
+
     /**
      * Basic constructor
      *
@@ -38,6 +42,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
      * @param story       the AC belongs to
      */
     public AcceptanceCriteria(String description, Story story) {
+        super();
         this.description = description;
         this.state = AcState.UNACCEPTED;
         this.story = story;
@@ -128,6 +133,10 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
         Element acceptanceElement = ReportGenerator.doc.createElement("acceptance-criteria");
 
         //WorkSpace Elements
+        Element acceptanceID = ReportGenerator.doc.createElement("ID");
+        acceptanceID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        acceptanceElement.appendChild(acceptanceID);
+
         Element acceptanceCriteria = ReportGenerator.doc.createElement("description");
         acceptanceCriteria.appendChild(ReportGenerator.doc.createTextNode(description));
         acceptanceElement.appendChild(acceptanceCriteria);
