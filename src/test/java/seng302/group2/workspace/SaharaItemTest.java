@@ -6,6 +6,9 @@ import seng302.group2.Global;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.workspace.Workspace;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.Assert.*;
 
 public class SaharaItemTest {
@@ -29,5 +32,25 @@ public class SaharaItemTest {
 
         SaharaItem.setStartId(9001, false);
         Assert.assertNotEquals(9001, SaharaItem.NEXT_ID);
+    }
+
+    @Test
+    public void testId() {
+        SaharaItem.setStartId(0, true);
+        Person person = new Person();
+        SaharaItem.setStartId(0, true);
+        Person person2 = new Person();
+        Assert.assertEquals(person.getId(), person2.getId());
+
+        Person person3 = new Person();
+        Assert.assertNotEquals(person.getId(), person3.getId());
+
+        Set<Long> ids = new HashSet<>();
+        int i = 0;
+        while (i < 100) {
+            SaharaItem item = new Person();
+            Assert.assertTrue(ids.add(item.getId()));
+            i++;
+        }
     }
 }
