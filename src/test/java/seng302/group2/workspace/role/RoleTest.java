@@ -28,9 +28,9 @@ public class RoleTest {
     @Test
     public void testRoleConstructors() {
         Role role = new Role();
-        Assert.assertEquals("role Name", role.getShortName());
+        Assert.assertEquals("Untitled Role", role.getShortName());
         Assert.assertEquals("", role.getDescription());
-        Assert.assertEquals("role Name", role.toString());
+        Assert.assertEquals("Untitled Role", role.toString());
 
         Role role2 = new Role("QA", Role.RoleType.NONE);
         Assert.assertEquals("QA", role2.getShortName());
@@ -53,7 +53,7 @@ public class RoleTest {
     public void testToString() {
         Role role = new Role();
         Role nullRole = null;
-        Assert.assertEquals("role Name", role.toString());
+        Assert.assertEquals("Untitled Role", role.toString());
     }
 
 
@@ -135,10 +135,10 @@ public class RoleTest {
         role.setType(Role.RoleType.NONE);
 
         Element roleElement = role.generateXML();
-        Assert.assertEquals("[#text: Tester]", roleElement.getChildNodes().item(0).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: Tester]", roleElement.getChildNodes().item(1).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals("[#text: Manual Testing]", roleElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: Manual Testing]", roleElement.getChildNodes().item(2).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals(3, roleElement.getChildNodes().getLength());
+        Assert.assertEquals(4, roleElement.getChildNodes().getLength());
     }
 }

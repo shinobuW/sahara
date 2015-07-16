@@ -68,7 +68,7 @@ public class PersonTest {
      */
     @Test
     public void testGetSetShortName() {
-        Assert.assertEquals("unnamed", basicPerson.getShortName());
+        Assert.assertEquals("Untitled Person", basicPerson.getShortName());
         Assert.assertEquals("btm38", extendedPerson.getShortName());
         basicPerson.setShortName("newShortName");
         Assert.assertEquals("newShortName", basicPerson.getShortName());
@@ -304,7 +304,7 @@ public class PersonTest {
     }
 
     /**
-     * Tests for Roles' XML generator method.
+     * Tests for Persons' XML generator method for when the person doesn't have skills.
      */
     @Test
     public void testGenerateXML() {
@@ -313,26 +313,26 @@ public class PersonTest {
                 "description", LocalDate.of(2015, Month.APRIL, 12));
 
         Element personElement = person.generateXML();
-        Assert.assertEquals("[#text: short]", personElement.getChildNodes().item(0).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: short]", personElement.getChildNodes().item(1).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals("[#text: firstName]", personElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: firstName]", personElement.getChildNodes().item(2).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals("[#text: lastName]", personElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: lastName]", personElement.getChildNodes().item(3).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals("[#text: email]", personElement.getChildNodes().item(3).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: email]", personElement.getChildNodes().item(4).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals("[#text: 12/04/2015]", personElement.getChildNodes().item(4).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: 12/04/2015]", personElement.getChildNodes().item(5).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals("[#text: description]", personElement.getChildNodes().item(5).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: description]", personElement.getChildNodes().item(6).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals(0, personElement.getChildNodes().item(6).getChildNodes().getLength());
+        Assert.assertEquals(0, personElement.getChildNodes().item(7).getChildNodes().getLength());
         ;
-        Assert.assertEquals(7, personElement.getChildNodes().getLength());
+        Assert.assertEquals(8, personElement.getChildNodes().getLength());
 
     }
 
     /**
-     * Tests for Roles' XML generator method.
+     * Tests for Persons' XML generator method when the Person has skills.
      */
     @Test
     public void testGenerateXMLSkills() {
@@ -343,21 +343,21 @@ public class PersonTest {
         person.getSkills().add(new Skill());
 
         Element personElement = person.generateXML();
-        Assert.assertEquals("[#text: short]", personElement.getChildNodes().item(0).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: short]", personElement.getChildNodes().item(1).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals("[#text: firstName]", personElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: firstName]", personElement.getChildNodes().item(2).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals("[#text: lastName]", personElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: lastName]", personElement.getChildNodes().item(3).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals("[#text: email]", personElement.getChildNodes().item(3).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: email]", personElement.getChildNodes().item(4).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals("[#text: 12/04/2015]", personElement.getChildNodes().item(4).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: 12/04/2015]", personElement.getChildNodes().item(5).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals("[#text: description]", personElement.getChildNodes().item(5).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: description]", personElement.getChildNodes().item(6).getChildNodes().item(0).toString());
         ;
-        Assert.assertEquals(2, personElement.getChildNodes().item(6).getChildNodes().getLength());
+        Assert.assertEquals(2, personElement.getChildNodes().item(7).getChildNodes().getLength());
         ;
-        Assert.assertEquals(7, personElement.getChildNodes().getLength());
+        Assert.assertEquals(8, personElement.getChildNodes().getLength());
 
     }
 }
