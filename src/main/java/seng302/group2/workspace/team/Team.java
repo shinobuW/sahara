@@ -47,8 +47,8 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      * Basic Team constructor
      */
     public Team() {
-        super("unnamed");
-        this.shortName = "unnamed";
+        super("Untitled Team");
+        this.shortName = "Untitled Team";
         this.description = "";
         this.project = null;
 
@@ -369,6 +369,10 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         Element teamElement = ReportGenerator.doc.createElement("team");
 
         //WorkSpace Elements
+        Element teamID = ReportGenerator.doc.createElement("ID");
+        teamID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        teamElement.appendChild(teamID);
+
         Element teamShortName = ReportGenerator.doc.createElement("identifier");
         teamShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
         teamElement.appendChild(teamShortName);
@@ -376,8 +380,11 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         Element teamDescription = ReportGenerator.doc.createElement("description");
         teamDescription.appendChild(ReportGenerator.doc.createTextNode(description));
         teamElement.appendChild(teamDescription);
-        System.out.println(getProjectAllocations());
         if (getCurrentAllocation() != null) {
+            Element allocationID = ReportGenerator.doc.createElement("current-allocation-ID");
+            allocationID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(getCurrentAllocation().getId())));
+            teamElement.appendChild(allocationID);
+
             Element projectAllocatedTo = ReportGenerator.doc.createElement("assigned-project");
             projectAllocatedTo.appendChild(ReportGenerator.doc.createTextNode(getCurrentAllocation()
                     .getProject().toString()));

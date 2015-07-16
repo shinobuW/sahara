@@ -25,6 +25,10 @@ public class Allocation extends SaharaItem implements Serializable, Comparable<A
     private Project project;
     private Team team;
 
+    private Allocation() {
+        super();
+    }
+
     public Allocation(Project project, Team team, LocalDate startDate, LocalDate endDate) {
         this.project = project;
         this.team = team;
@@ -141,6 +145,10 @@ public class Allocation extends SaharaItem implements Serializable, Comparable<A
         Element allocationElement = ReportGenerator.doc.createElement("allocation");
 
         //WorkSpace Elements
+        Element allocationID = ReportGenerator.doc.createElement("ID");
+        allocationID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        allocationElement.appendChild(allocationID);
+
         Element allocatedTeam = ReportGenerator.doc.createElement("team-name");
         allocatedTeam.appendChild(ReportGenerator.doc.createTextNode(team.toString()));
         allocationElement.appendChild(allocatedTeam);

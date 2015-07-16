@@ -70,7 +70,7 @@ public class Workspace extends SaharaItem implements Serializable {
      * Basic Workspace constructor.
      */
     public Workspace() {
-        super("Workspace");
+        super("Untitled Workspace");
         this.shortName = "Untitled Workspace";
         this.longName = "Untitled Workspace";
         this.description = "A blank workspace.";
@@ -744,12 +744,19 @@ public class Workspace extends SaharaItem implements Serializable {
         return root;
     }
 
-
+    /**
+     * Method for creating an XML element for the Workspace within report generation
+     * @return element for XML generation
+     */
     @Override
     public Element generateXML() {
         Element workSpaceElement = ReportGenerator.doc.createElement("workspace");
 
         //WorkSpace Elements
+        Element workSpaceID = ReportGenerator.doc.createElement("ID");
+        workSpaceID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        workSpaceElement.appendChild(workSpaceID);
+
         Element workSpaceShortName = ReportGenerator.doc.createElement("identifier");
         workSpaceShortName.appendChild(ReportGenerator.doc.createTextNode(this.getShortName()));
         workSpaceElement.appendChild(workSpaceShortName);
@@ -764,7 +771,6 @@ public class Workspace extends SaharaItem implements Serializable {
         ReportGenerator.generatedItems.remove(0);
 
         for (SaharaItem item : this.getChildren()) {
-            System.out.println(item);
             if (ReportGenerator.generatedItems.contains(item)) {
                 Element xmlElement = item.generateXML();
                 if (xmlElement != null) {
@@ -908,14 +914,12 @@ public class Workspace extends SaharaItem implements Serializable {
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
-            System.out.println(stateObjects);
             for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(proj)) {
                     this.proj = (Project) item;
                     mapped = true;
                 }
             }
-            System.out.println("mapped add: " + mapped);
             return mapped;
         }
     }

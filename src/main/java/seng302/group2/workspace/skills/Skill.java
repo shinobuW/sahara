@@ -27,8 +27,8 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
      * Basic Skill constructor
      */
     public Skill() {
-        super("unnamed");
-        this.shortName = "unnamed";
+        super("Untitled Skill");
+        this.shortName = "Untitled Skill";
         this.description = "no description";
 
         setInformationSwitchStrategy(new SkillInformationSwitchStrategy());
@@ -175,7 +175,11 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
         Element skillElement = ReportGenerator.doc.createElement("skill");
 
         //WorkSpace Elements
-        Element skillShortName = ReportGenerator.doc.createElement("identifier");
+        Element skillID = ReportGenerator.doc.createElement("ID");
+        skillID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        skillElement.appendChild(skillID);
+
+        Element skillShortName = ReportGenerator.doc.createElement("shortname");
         skillShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
         skillElement.appendChild(skillShortName);
 

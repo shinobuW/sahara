@@ -38,8 +38,8 @@ public class Role extends SaharaItem implements Serializable {
      */
     public Role() {
         // Initialize as a SaharaItem
-        super("unnamed");
-        this.shortName = "role Name";
+        super("Untitled Role");
+        this.shortName = "Untitled Role";
         this.description = "";
         this.type = RoleType.NONE;
 
@@ -269,6 +269,10 @@ public class Role extends SaharaItem implements Serializable {
         Element roleElement = ReportGenerator.doc.createElement("role");
 
         //WorkSpace Elements
+        Element roleID = ReportGenerator.doc.createElement("ID");
+        roleID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        roleElement.appendChild(roleID);
+
         Element roleShortName = ReportGenerator.doc.createElement("identifier");
         roleShortName.appendChild(ReportGenerator.doc.createTextNode(getShortName()));
         roleElement.appendChild(roleShortName);

@@ -59,6 +59,7 @@ public class Story extends SaharaItem implements Serializable {
      * Basic Story constructor
      */
     public Story() {
+        super("Untitled Story");
         this.shortName = "Untitled Story";
         this.longName = "Untitled Story";
         this.description = "";
@@ -93,6 +94,7 @@ public class Story extends SaharaItem implements Serializable {
      */
     public Story(String shortName, String longName, String description, String creator,
                  Project project, Integer priority) {
+        super(shortName);
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
@@ -424,6 +426,10 @@ public class Story extends SaharaItem implements Serializable {
         Element storyElement = ReportGenerator.doc.createElement("story");
 
         //WorkSpace Elements
+        Element storyID = ReportGenerator.doc.createElement("ID");
+        storyID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        storyElement.appendChild(storyID);
+
         Element storyShortName = ReportGenerator.doc.createElement("identifier");
         storyShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
         storyElement.appendChild(storyShortName);

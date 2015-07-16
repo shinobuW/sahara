@@ -561,6 +561,10 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         Element projectElement = ReportGenerator.doc.createElement("project");
 
         //WorkSpace Elements
+        Element projectID = ReportGenerator.doc.createElement("ID");
+        projectID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        projectElement.appendChild(projectID);
+
         Element projectShortName = ReportGenerator.doc.createElement("identifier");
         projectShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
         projectElement.appendChild(projectShortName);
