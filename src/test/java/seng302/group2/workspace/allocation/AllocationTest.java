@@ -94,14 +94,10 @@ public class AllocationTest {
 
         Element allocationElement = alloc.generateXML();
         Assert.assertEquals("[#text: Untitled Team]", allocationElement.getChildNodes().item(1).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: Untitled Project]", allocationElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: 12/04/2015]", allocationElement.getChildNodes().item(3).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: 30/05/2100]", allocationElement.getChildNodes().item(4).getChildNodes().item(0).toString());
-        ;
-        Assert.assertEquals(4, allocationElement.getChildNodes().getLength());
+        Assert.assertEquals(5, allocationElement.getChildNodes().getLength());
     }
 
 }

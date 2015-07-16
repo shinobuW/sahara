@@ -314,19 +314,12 @@ public class PersonTest {
 
         Element personElement = person.generateXML();
         Assert.assertEquals("[#text: short]", personElement.getChildNodes().item(1).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: firstName]", personElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: lastName]", personElement.getChildNodes().item(3).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: email]", personElement.getChildNodes().item(4).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: 12/04/2015]", personElement.getChildNodes().item(5).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: description]", personElement.getChildNodes().item(6).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals(0, personElement.getChildNodes().item(7).getChildNodes().getLength());
-        ;
         Assert.assertEquals(8, personElement.getChildNodes().getLength());
 
     }
@@ -344,19 +337,12 @@ public class PersonTest {
 
         Element personElement = person.generateXML();
         Assert.assertEquals("[#text: short]", personElement.getChildNodes().item(1).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: firstName]", personElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: lastName]", personElement.getChildNodes().item(3).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: email]", personElement.getChildNodes().item(4).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: 12/04/2015]", personElement.getChildNodes().item(5).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: description]", personElement.getChildNodes().item(6).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals(2, personElement.getChildNodes().item(7).getChildNodes().getLength());
-        ;
         Assert.assertEquals(8, personElement.getChildNodes().getLength());
 
     }

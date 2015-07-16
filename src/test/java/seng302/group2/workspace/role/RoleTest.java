@@ -136,9 +136,7 @@ public class RoleTest {
 
         Element roleElement = role.generateXML();
         Assert.assertEquals("[#text: Tester]", roleElement.getChildNodes().item(1).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: Manual Testing]", roleElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals(4, roleElement.getChildNodes().getLength());
     }
 }

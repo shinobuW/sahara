@@ -282,26 +282,18 @@ public class TeamTest {
 
         Element teamElement = team.generateXML();
         Assert.assertEquals("[#text: shortname]", teamElement.getChildNodes().item(1).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals(0, teamElement.getChildNodes().item(3).getChildNodes().getLength());
-        ;
         Assert.assertEquals(0, teamElement.getChildNodes().item(4).getChildNodes().getLength());
-        ;
         Assert.assertEquals("[product-owner: null]", teamElement.getChildNodes().item(5).toString());
-        ;
         Assert.assertEquals("[scrum-master: null]", teamElement.getChildNodes().item(6).toString());
-        ;
         Assert.assertEquals(0, teamElement.getChildNodes().item(7).getChildNodes().getLength());
-        ;
         Assert.assertEquals(0, teamElement.getChildNodes().item(8).getChildNodes().getLength());
-        ;
         Assert.assertEquals(9, teamElement.getChildNodes().getLength());
     }
 
     /**
-     * Tests for Teams' XML generator method for when the team doesn't have allocations or People.
+     * Tests for Teams' XML generator method for when the team doesn't have allocations.
      */
     @Test
     public void testGenerateXMLPeople() {
@@ -329,21 +321,57 @@ public class TeamTest {
 
         Element teamElement = team.generateXML();
         Assert.assertEquals("[#text: shortname]", teamElement.getChildNodes().item(1).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals(0, teamElement.getChildNodes().item(3).getChildNodes().getLength());
-        ;
         Assert.assertEquals(0, teamElement.getChildNodes().item(4).getChildNodes().getLength());
-        ;
         Assert.assertEquals(1, teamElement.getChildNodes().item(5).getChildNodes().getLength());
-        ;
         Assert.assertEquals(1, teamElement.getChildNodes().item(6).getChildNodes().getLength());
-        ;
         Assert.assertEquals(2, teamElement.getChildNodes().item(7).getChildNodes().getLength());
-        ;
         Assert.assertEquals(4, teamElement.getChildNodes().item(8).getChildNodes().getLength());
-        ;
+        Assert.assertEquals(9, teamElement.getChildNodes().getLength());
+    }
+
+    /**
+     * Tests for Teams' XML generator method for when the team doesn't have People.
+     */
+    @Test
+    public void testGenerateXMLAllocations() {
+        new ReportGenerator();
+        Team team = new Team("shortname", "description");
+        Allocation allocation1 = new Allocation(new Project(), new Team(), LocalDate.of(1994, Month.DECEMBER, 01), LocalDate.of(1994, Month.DECEMBER, 02));
+        Allocation allocation2 = new Allocation(new Project(), new Team(), LocalDate.of(1994, Month.DECEMBER, 01), LocalDate.of(1994, Month.DECEMBER, 02));
+        team.add(allocation1);
+        team.add(allocation2);
+
+        Element teamElement = team.generateXML();
+        Assert.assertEquals("[#text: shortname]", teamElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(3).getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(4).getChildNodes().getLength());
+        Assert.assertEquals("[product-owner: null]", teamElement.getChildNodes().item(5).toString());
+        Assert.assertEquals("[scrum-master: null]", teamElement.getChildNodes().item(6).toString());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(7).getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(8).getChildNodes().getLength());
+        Assert.assertEquals(9, teamElement.getChildNodes().getLength());
+    }
+
+    /**
+     * Tests for Teams' XML generator method.
+     */
+    @Test
+    public void testGenerateXMLAll() {
+        new ReportGenerator();
+        Team team = new Team("shortname", "description");
+
+        Element teamElement = team.generateXML();
+        Assert.assertEquals("[#text: shortname]", teamElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(3).getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(4).getChildNodes().getLength());
+        Assert.assertEquals("[product-owner: null]", teamElement.getChildNodes().item(5).toString());
+        Assert.assertEquals("[scrum-master: null]", teamElement.getChildNodes().item(6).toString());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(7).getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(8).getChildNodes().getLength());
         Assert.assertEquals(9, teamElement.getChildNodes().getLength());
     }
 

@@ -212,17 +212,11 @@ public class BacklogTest {
 
         Element backlogElement = backlog.generateXML();
         Assert.assertEquals("[#text: shortname]", backlogElement.getChildNodes().item(1).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: longname]", backlogElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: description]", backlogElement.getChildNodes().item(3).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: Untitled Person]", backlogElement.getChildNodes().item(4).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: thing]", backlogElement.getChildNodes().item(5).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals(0, backlogElement.getChildNodes().item(6).getChildNodes().getLength());
-        ;
         Assert.assertEquals(7, backlogElement.getChildNodes().getLength());
 
     }
@@ -241,19 +235,12 @@ public class BacklogTest {
 
         Element backlogElement = backlog.generateXML();
         Assert.assertEquals("[#text: shortname]", backlogElement.getChildNodes().item(1).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: longname]", backlogElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: description]", backlogElement.getChildNodes().item(3).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: Untitled Person]", backlogElement.getChildNodes().item(4).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: thing]", backlogElement.getChildNodes().item(5).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals(2, backlogElement.getChildNodes().item(6).getChildNodes().getLength());
-        ;
         Assert.assertEquals(7, backlogElement.getChildNodes().getLength());
-
     }
 
 

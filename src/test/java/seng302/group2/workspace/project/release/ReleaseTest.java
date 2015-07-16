@@ -131,11 +131,8 @@ public class ReleaseTest {
 
         Element releaseElement = release.generateXML();
         Assert.assertEquals("[#text: shortname]", releaseElement.getChildNodes().item(1).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: description]", releaseElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-        ;
         Assert.assertEquals("[#text: 12/04/2015]", releaseElement.getChildNodes().item(3).getChildNodes().item(0).toString());
-        ;
 
         Assert.assertEquals(4, releaseElement.getChildNodes().getLength());
 
