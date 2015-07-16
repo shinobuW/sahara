@@ -16,6 +16,7 @@ import org.controlsfx.dialog.Dialogs;
 import org.w3c.dom.Element;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.WorkspaceInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
@@ -328,6 +329,8 @@ public class Workspace extends SaharaItem implements Serializable {
             Global.commandManager.trackSave();
 
             App.mainPane.selectItem(Global.currentWorkspace);
+
+            TrackedTabPane.clearHistory();
 
             return SaveLoadResult.SUCCESS;
         }
