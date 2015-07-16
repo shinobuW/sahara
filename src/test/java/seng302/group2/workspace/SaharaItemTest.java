@@ -9,8 +9,11 @@ import seng302.group2.workspace.workspace.Workspace;
 import static org.junit.Assert.*;
 
 public class SaharaItemTest {
+    /**
+     * A test to check the functionality of the ID functions
+     */
     @Test
-    public void testSetStartId() throws Exception {
+    public void testSetStartId() {
         SaharaItem.setStartId(0, true);
         Person person = new Person();
         Assert.assertEquals(0, person.getId());
