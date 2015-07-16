@@ -7,10 +7,13 @@ package seng302.group2.workspace.team;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.time.LocalDate;
@@ -76,13 +79,13 @@ public class TeamTest {
         Team team = new Team();
         Person person = new Person();
 
-        team.add(person, true);
+        team.add(person);
         Assert.assertTrue(team.getPeople().contains(person));
 
         team.getPeople().remove(person);
         Assert.assertFalse(team.getPeople().contains(person));
 
-        team.add(person, true);
+        team.add(person);
         Assert.assertTrue(team.getPeople().contains(person));
 
         team.getPeople().remove(person);
@@ -132,7 +135,7 @@ public class TeamTest {
         testTeam.getSerializablePeople().clear();
         Assert.assertTrue(testTeam.getSerializablePeople().isEmpty());
 
-        testTeam.add(testPerson, true);
+        testTeam.add(testPerson);
         testTeam.prepSerialization();
 
         Assert.assertTrue(testTeam.getSerializablePeople().contains(testPerson));
@@ -268,4 +271,81 @@ public class TeamTest {
         Assert.assertNull(team.getProductOwner());
 
     }
+
+    /**
+     * Tests for Teams' XML generator method for when the team doesn't have allocations or People.
+     */
+    @Test
+    public void testGenerateXML() {
+        new ReportGenerator();
+        Team team = new Team("shortname", "description");
+
+        Element teamElement = team.generateXML();
+        Assert.assertEquals("[#text: shortname]", teamElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals(0, teamElement.getChildNodes().item(3).getChildNodes().getLength());
+        ;
+        Assert.assertEquals(0, teamElement.getChildNodes().item(4).getChildNodes().getLength());
+        ;
+        Assert.assertEquals("[#text: null", teamElement.getChildNodes().item(5).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: null]", teamElement.getChildNodes().item(6).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals(0, teamElement.getChildNodes().item(7).getChildNodes().getLength());
+        ;
+        Assert.assertEquals(0, teamElement.getChildNodes().item(8).getChildNodes().getLength());
+        ;
+        Assert.assertEquals(9, teamElement.getChildNodes().getLength());
+    }
+
+    /**
+     * Tests for Teams' XML generator method for when the team doesn't have allocations or People.
+     */
+    @Test
+    public void testGenerateXMLPeople() {
+        new ReportGenerator();
+        Team team = new Team("shortname", "description");
+        Person productOwner = new Person();
+        Person scrumMaster = new Person();
+        Person dev1 = new Person();
+        dev1.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
+        Person dev2 = new Person();
+        dev2.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
+        Person other1 = new Person();
+        Person other2 = new Person();
+        Person other3 = new Person();
+        Person other4 = new Person();
+
+        team.setProductOwner(productOwner);
+        team.setScrumMaster(scrumMaster);
+        team.add(dev1);
+        team.add(dev2);
+        team.add(other1);
+        team.add(other2);
+        team.add(other3);
+        team.add(other4);
+
+        Element teamElement = team.generateXML();
+        Assert.assertEquals("[#text: shortname]", teamElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals(1, teamElement.getChildNodes().item(3).getChildNodes().getLength());
+        ;
+        Assert.assertEquals(1, teamElement.getChildNodes().item(4).getChildNodes().getLength());
+        ;
+        Assert.assertEquals("[#text: null", teamElement.getChildNodes().item(5).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals("[#text: null]", teamElement.getChildNodes().item(6).getChildNodes().item(0).toString());
+        ;
+        Assert.assertEquals(2, teamElement.getChildNodes().item(7).getChildNodes().getLength());
+        ;
+        Assert.assertEquals(4, teamElement.getChildNodes().item(8).getChildNodes().getLength());
+        ;
+        Assert.assertEquals(9, teamElement.getChildNodes().getLength());
+    }
+
+
 }
