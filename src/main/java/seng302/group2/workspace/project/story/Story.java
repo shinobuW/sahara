@@ -1,7 +1,6 @@
 package seng302.group2.workspace.project.story;
 
 import javafx.collections.ObservableList;
-import org.apache.commons.lang.builder.EqualsBuilder;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.StoryInformationSwitchStrategy;
@@ -245,7 +244,7 @@ public class Story extends SaharaItem implements Serializable {
      */
     public void setHighlightColour() {
         Boolean red = false;
-        for (Story story : this.dependentOnThis) {
+        for (Story story : this.dependentOn) {
             if (story.priority < this.priority) {
                 red = true;
             }
@@ -621,7 +620,6 @@ public class Story extends SaharaItem implements Serializable {
             removedDependencies.removeAll(dependentOn);
             addedDependencies.addAll(dependentOn);
             addedDependencies.removeAll(oldDependentOn);
-            System.out.println("depends on now: " + dependentOn);
 
             for (Story removedStory : removedDependencies) {
                 removedStory.dependentOnThis.remove(story);
@@ -629,8 +627,6 @@ public class Story extends SaharaItem implements Serializable {
             for (Story addedStory : addedDependencies) {
                 addedStory.dependentOnThis.add(story);
             }
-            System.out.println("added: " + addedDependencies);
-            System.out.println("removed: " + removedDependencies);
         }
 
         /**
