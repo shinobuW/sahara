@@ -338,21 +338,32 @@ public class TeamTest {
     public void testGenerateXMLAllocations() {
         new ReportGenerator();
         Team team = new Team("shortname", "description");
-        Allocation allocation1 = new Allocation(new Project(), new Team(), LocalDate.of(1994, Month.DECEMBER, 01), LocalDate.of(1994, Month.DECEMBER, 02));
-        Allocation allocation2 = new Allocation(new Project(), new Team(), LocalDate.of(1994, Month.DECEMBER, 01), LocalDate.of(1994, Month.DECEMBER, 02));
-        team.add(allocation1);
-        team.add(allocation2);
+
+        Allocation pastAllocation1 = new Allocation(new Project(), team, LocalDate.of(1994, Month.DECEMBER, 01), LocalDate.of(1994, Month.DECEMBER, 02));
+        Allocation pastAllocation2 = new Allocation(new Project(), team, LocalDate.of(1994, Month.DECEMBER, 01), LocalDate.of(1994, Month.DECEMBER, 02));
+        Allocation currentAllocation = new Allocation(new Project(), team, LocalDate.of(2000, Month.JANUARY, 01), LocalDate.of(3000, Month.JANUARY, 01));
+        Allocation futureAllocation1 = new Allocation(new Project(), team, LocalDate.of(3000, Month.DECEMBER, 31), LocalDate.of(3001, Month.DECEMBER, 31));
+        Allocation futureAllocation2 = new Allocation(new Project(), team, LocalDate.of(3002, Month.DECEMBER, 31), LocalDate.of(3911, Month.DECEMBER, 31));
+
+        team.add(pastAllocation1);
+        team.add(pastAllocation2);
+        team.add(currentAllocation);
+        team.add(futureAllocation1);
+        team.add(futureAllocation2);
 
         Element teamElement = team.generateXML();
         Assert.assertEquals("[#text: shortname]", teamElement.getChildNodes().item(1).getChildNodes().item(0).toString());
         Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-        Assert.assertEquals(0, teamElement.getChildNodes().item(3).getChildNodes().getLength());
-        Assert.assertEquals(0, teamElement.getChildNodes().item(4).getChildNodes().getLength());
-        Assert.assertEquals("[product-owner: null]", teamElement.getChildNodes().item(5).toString());
-        Assert.assertEquals("[scrum-master: null]", teamElement.getChildNodes().item(6).toString());
-        Assert.assertEquals(0, teamElement.getChildNodes().item(7).getChildNodes().getLength());
-        Assert.assertEquals(0, teamElement.getChildNodes().item(8).getChildNodes().getLength());
-        Assert.assertEquals(9, teamElement.getChildNodes().getLength());
+        Assert.assertEquals("[#text: Untitled Project]", teamElement.getChildNodes().item(4).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: 01/01/2000]", teamElement.getChildNodes().item(5).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: 01/01/3000]", teamElement.getChildNodes().item(6).getChildNodes().item(0).toString());
+        Assert.assertEquals(2, teamElement.getChildNodes().item(7).getChildNodes().getLength());
+        Assert.assertEquals(2, teamElement.getChildNodes().item(8).getChildNodes().getLength());
+        Assert.assertEquals("[product-owner: null]", teamElement.getChildNodes().item(9).toString());
+        Assert.assertEquals("[scrum-master: null]", teamElement.getChildNodes().item(10).toString());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(11).getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(12).getChildNodes().getLength());
+        Assert.assertEquals(13, teamElement.getChildNodes().getLength());
     }
 
     /**
@@ -363,16 +374,51 @@ public class TeamTest {
         new ReportGenerator();
         Team team = new Team("shortname", "description");
 
+        Person productOwner = new Person();
+        Person scrumMaster = new Person();
+        Person dev1 = new Person();
+        dev1.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
+        Person dev2 = new Person();
+        dev2.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
+        Person other1 = new Person();
+        Person other2 = new Person();
+        Person other3 = new Person();
+        Person other4 = new Person();
+
+        Allocation pastAllocation1 = new Allocation(new Project(), team, LocalDate.of(1994, Month.DECEMBER, 01), LocalDate.of(1994, Month.DECEMBER, 02));
+        Allocation pastAllocation2 = new Allocation(new Project(), team, LocalDate.of(1994, Month.DECEMBER, 01), LocalDate.of(1994, Month.DECEMBER, 02));
+        Allocation currentAllocation = new Allocation(new Project(), team, LocalDate.of(2000, Month.JANUARY, 01), LocalDate.of(3000, Month.JANUARY, 01));
+        Allocation futureAllocation1 = new Allocation(new Project(), team, LocalDate.of(3000, Month.DECEMBER, 31), LocalDate.of(3001, Month.DECEMBER, 31));
+        Allocation futureAllocation2 = new Allocation(new Project(), team, LocalDate.of(3002, Month.DECEMBER, 31), LocalDate.of(3911, Month.DECEMBER, 31));
+
+        team.setProductOwner(productOwner);
+        team.setScrumMaster(scrumMaster);
+        team.add(dev1);
+        team.add(dev2);
+        team.add(other1);
+        team.add(other2);
+        team.add(other3);
+        team.add(other4);
+
+        team.add(pastAllocation1);
+        team.add(pastAllocation2);
+        team.add(currentAllocation);
+        team.add(futureAllocation1);
+        team.add(futureAllocation2);
+
         Element teamElement = team.generateXML();
         Assert.assertEquals("[#text: shortname]", teamElement.getChildNodes().item(1).getChildNodes().item(0).toString());
         Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-        Assert.assertEquals(0, teamElement.getChildNodes().item(3).getChildNodes().getLength());
-        Assert.assertEquals(0, teamElement.getChildNodes().item(4).getChildNodes().getLength());
-        Assert.assertEquals("[product-owner: null]", teamElement.getChildNodes().item(5).toString());
-        Assert.assertEquals("[scrum-master: null]", teamElement.getChildNodes().item(6).toString());
-        Assert.assertEquals(0, teamElement.getChildNodes().item(7).getChildNodes().getLength());
-        Assert.assertEquals(0, teamElement.getChildNodes().item(8).getChildNodes().getLength());
-        Assert.assertEquals(9, teamElement.getChildNodes().getLength());
+        Assert.assertEquals("[#text: Untitled Project]", teamElement.getChildNodes().item(4).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: 01/01/2000]", teamElement.getChildNodes().item(5).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: 01/01/3000]", teamElement.getChildNodes().item(6).getChildNodes().item(0).toString());
+        Assert.assertEquals(2, teamElement.getChildNodes().item(7).getChildNodes().getLength());
+        Assert.assertEquals(2, teamElement.getChildNodes().item(8).getChildNodes().getLength());
+        Assert.assertEquals(1, teamElement.getChildNodes().item(9).getChildNodes().getLength());
+        Assert.assertEquals(1, teamElement.getChildNodes().item(10).getChildNodes().getLength());
+        Assert.assertEquals(2, teamElement.getChildNodes().item(11).getChildNodes().getLength());
+        Assert.assertEquals(4, teamElement.getChildNodes().item(12).getChildNodes().getLength());
+        Assert.assertEquals(13, teamElement.getChildNodes().getLength());
     }
 
 

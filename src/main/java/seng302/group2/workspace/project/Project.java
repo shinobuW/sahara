@@ -601,6 +601,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         }
         projectElement.appendChild(teamFutureElements);
 
+        //Generate the children of the Project, ie Releases, Backlogs and Unassigned Stories.
         for (SaharaItem item : this.getChildren()) {
             if (ReportGenerator.generatedItems.contains(item)) {
                 Element xmlElement = item.generateXML();
