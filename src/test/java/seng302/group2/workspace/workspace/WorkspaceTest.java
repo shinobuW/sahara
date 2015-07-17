@@ -10,10 +10,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
+
+import java.time.LocalDate;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -155,5 +158,34 @@ public class WorkspaceTest {
         Assert.assertEquals(1, work.getTeams().size());
         Global.commandManager.undo();
         Assert.assertEquals(1, work.getTeams().size());  // Can't remove the unassigned team
+    }
+
+    @Test
+    public void testGenerateXml() {
+        Workspace ws = new Workspace();
+        Person assignedPerson = new Person("Assigned Person", "first name", "last name", "email", "description", LocalDate.now());
+        Person unassginedPerson = new Person("Unassigned Person", "first name", "last name", "email", "description", LocalDate.now());
+        Skill assignedSkill = new Skill("Assigned Skill", "description");
+        Skill unassignedSkill = new Skill("unassigned Skill", "description");
+        Project proj = new Project();
+        Team assignedTeam = new Team("assigned team", "description");
+        Team unassignedTeam = Team.createUnassignedTeam();
+        Allocation alloc = new Allocation(proj, unassignedTeam, LocalDate.now(), LocalDate.now());
+        proj.add(alloc);
+
+        assignedTeam.add(assignedPerson);
+
+        ws.add(proj);
+        ws.add(unassignedTeam);
+        ws.add(assignedTeam);
+        ws.add(assignedPerson);
+        ws.add(unassginedPerson);
+        ws.add(assignedSkill);
+        ws.add(unassignedSkill);
+
+//        Element workspaceElement = ws.generateXML();
+//        Assert.assertEquals("[#text: Test]", projectElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+//        Assert.assertEquals("[#text: Test project]", projectElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+//        Assert.assertEquals("[#text: Used for testing]", projectElement.getChildNodes().item(3).getChildNodes().item(0).toString());
     }
 }
