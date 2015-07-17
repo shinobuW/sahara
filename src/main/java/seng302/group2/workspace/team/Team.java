@@ -370,27 +370,12 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         teamDescription.appendChild(ReportGenerator.doc.createTextNode(description));
         teamElement.appendChild(teamDescription);
 
+        Element currentAllocations = ReportGenerator.doc.createElement("current-allocation");
         if (getCurrentAllocation() != null) {
-            Element allocationID = ReportGenerator.doc.createElement("current-allocation-ID");
-            allocationID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(getCurrentAllocation()
-                    .getId())));
-            teamElement.appendChild(allocationID);
-
-            Element projectAllocatedTo = ReportGenerator.doc.createElement("assigned-project");
-            projectAllocatedTo.appendChild(ReportGenerator.doc.createTextNode(getCurrentAllocation()
-                    .getProject().toString()));
-            teamElement.appendChild(projectAllocatedTo);
-
-            Element teamStartDate = ReportGenerator.doc.createElement("current-allocation-start");
-            teamStartDate.appendChild(ReportGenerator.doc.createTextNode(this.getCurrentAllocation()
-                    .getStartDate().format(Global.dateFormatter)));
-            teamElement.appendChild(teamStartDate);
-
-            Element teamEndDate = ReportGenerator.doc.createElement("current-allocation-end");
-            teamEndDate.appendChild(ReportGenerator.doc.createTextNode(this.getCurrentAllocation()
-                    .getEndDate().format(Global.dateFormatter)));
-            teamElement.appendChild(teamEndDate);
+            Element currentAllocation = getCurrentAllocation().generateXML();
+            currentAllocations.appendChild(currentAllocation);
         }
+        teamElement.appendChild(currentAllocations);
 
         Element projectPreviousElements = ReportGenerator.doc.createElement("previous-allocations");
         for (Allocation allocation : this.getPastAllocations()) {

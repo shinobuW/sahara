@@ -298,11 +298,12 @@ public class TeamTest {
         Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
         Assert.assertEquals(0, teamElement.getChildNodes().item(3).getChildNodes().getLength());
         Assert.assertEquals(0, teamElement.getChildNodes().item(4).getChildNodes().getLength());
-        Assert.assertEquals("[product-owner: null]", teamElement.getChildNodes().item(5).toString());
-        Assert.assertEquals("[scrum-master: null]", teamElement.getChildNodes().item(6).toString());
-        Assert.assertEquals(0, teamElement.getChildNodes().item(7).getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(5).getChildNodes().getLength());
+        Assert.assertEquals("[product-owner: null]", teamElement.getChildNodes().item(6).toString());
+        Assert.assertEquals("[scrum-master: null]", teamElement.getChildNodes().item(7).toString());
         Assert.assertEquals(0, teamElement.getChildNodes().item(8).getChildNodes().getLength());
-        Assert.assertEquals(9, teamElement.getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(9).getChildNodes().getLength());
+        Assert.assertEquals(10, teamElement.getChildNodes().getLength());
     }
 
     /**
@@ -337,11 +338,12 @@ public class TeamTest {
         Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
         Assert.assertEquals(0, teamElement.getChildNodes().item(3).getChildNodes().getLength());
         Assert.assertEquals(0, teamElement.getChildNodes().item(4).getChildNodes().getLength());
-        Assert.assertEquals(1, teamElement.getChildNodes().item(5).getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(5).getChildNodes().getLength());
         Assert.assertEquals(1, teamElement.getChildNodes().item(6).getChildNodes().getLength());
-        Assert.assertEquals(2, teamElement.getChildNodes().item(7).getChildNodes().getLength());
-        Assert.assertEquals(4, teamElement.getChildNodes().item(8).getChildNodes().getLength());
-        Assert.assertEquals(9, teamElement.getChildNodes().getLength());
+        Assert.assertEquals(1, teamElement.getChildNodes().item(7).getChildNodes().getLength());
+        Assert.assertEquals(2, teamElement.getChildNodes().item(8).getChildNodes().getLength());
+        Assert.assertEquals(4, teamElement.getChildNodes().item(9).getChildNodes().getLength());
+        Assert.assertEquals(10, teamElement.getChildNodes().getLength());
     }
 
     /**
@@ -367,16 +369,14 @@ public class TeamTest {
         Element teamElement = team.generateXML();
         Assert.assertEquals("[#text: shortname]", teamElement.getChildNodes().item(1).getChildNodes().item(0).toString());
         Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-        Assert.assertEquals("[#text: Untitled Project]", teamElement.getChildNodes().item(4).getChildNodes().item(0).toString());
-        Assert.assertEquals("[#text: 01/01/2000]", teamElement.getChildNodes().item(5).getChildNodes().item(0).toString());
-        Assert.assertEquals("[#text: 01/01/3000]", teamElement.getChildNodes().item(6).getChildNodes().item(0).toString());
-        Assert.assertEquals(2, teamElement.getChildNodes().item(7).getChildNodes().getLength());
-        Assert.assertEquals(2, teamElement.getChildNodes().item(8).getChildNodes().getLength());
-        Assert.assertEquals("[product-owner: null]", teamElement.getChildNodes().item(9).toString());
-        Assert.assertEquals("[scrum-master: null]", teamElement.getChildNodes().item(10).toString());
-        Assert.assertEquals(0, teamElement.getChildNodes().item(11).getChildNodes().getLength());
-        Assert.assertEquals(0, teamElement.getChildNodes().item(12).getChildNodes().getLength());
-        Assert.assertEquals(13, teamElement.getChildNodes().getLength());
+        Assert.assertEquals(1, teamElement.getChildNodes().item(3).getChildNodes().getLength());
+        Assert.assertEquals(2, teamElement.getChildNodes().item(4).getChildNodes().getLength());
+        Assert.assertEquals(2, teamElement.getChildNodes().item(5).getChildNodes().getLength());
+        Assert.assertEquals("[product-owner: null]", teamElement.getChildNodes().item(6).toString());
+        Assert.assertEquals("[scrum-master: null]", teamElement.getChildNodes().item(7).toString());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(8).getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(9).getChildNodes().getLength());
+        Assert.assertEquals(10, teamElement.getChildNodes().getLength());
     }
 
     /**
@@ -422,16 +422,14 @@ public class TeamTest {
         Element teamElement = team.generateXML();
         Assert.assertEquals("[#text: shortname]", teamElement.getChildNodes().item(1).getChildNodes().item(0).toString());
         Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-        Assert.assertEquals("[#text: Untitled Project]", teamElement.getChildNodes().item(4).getChildNodes().item(0).toString());
-        Assert.assertEquals("[#text: 01/01/2000]", teamElement.getChildNodes().item(5).getChildNodes().item(0).toString());
-        Assert.assertEquals("[#text: 01/01/3000]", teamElement.getChildNodes().item(6).getChildNodes().item(0).toString());
-        Assert.assertEquals(2, teamElement.getChildNodes().item(7).getChildNodes().getLength());
+        Assert.assertEquals(1, teamElement.getChildNodes().item(3).getChildNodes().getLength());
+        Assert.assertEquals(2, teamElement.getChildNodes().item(4).getChildNodes().getLength());
+        Assert.assertEquals(2, teamElement.getChildNodes().item(5).getChildNodes().getLength());
+        Assert.assertEquals(1, teamElement.getChildNodes().item(6).getChildNodes().getLength());
+        Assert.assertEquals(1, teamElement.getChildNodes().item(7).getChildNodes().getLength());
         Assert.assertEquals(2, teamElement.getChildNodes().item(8).getChildNodes().getLength());
-        Assert.assertEquals(1, teamElement.getChildNodes().item(9).getChildNodes().getLength());
-        Assert.assertEquals(1, teamElement.getChildNodes().item(10).getChildNodes().getLength());
-        Assert.assertEquals(2, teamElement.getChildNodes().item(11).getChildNodes().getLength());
-        Assert.assertEquals(4, teamElement.getChildNodes().item(12).getChildNodes().getLength());
-        Assert.assertEquals(13, teamElement.getChildNodes().getLength());
+        Assert.assertEquals(4, teamElement.getChildNodes().item(9).getChildNodes().getLength());
+        Assert.assertEquals(10, teamElement.getChildNodes().getLength());
     }
 
 

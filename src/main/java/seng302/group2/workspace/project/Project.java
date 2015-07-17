@@ -577,7 +577,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         projectDescription.appendChild(ReportGenerator.doc.createTextNode(description));
         projectElement.appendChild(projectDescription);
 
-        Element teamElements = ReportGenerator.doc.createElement("current-allocations");
+        Element teamElements = ReportGenerator.doc.createElement("current-teams");
         for (Team team : this.getCurrentTeams()) {
             if (ReportGenerator.generatedItems.contains(team)) {
                 Element teamElement = team.generateXML();
