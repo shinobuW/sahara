@@ -4,12 +4,15 @@ import javafx.collections.ObservableList;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
 import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
 import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.story.Story;
@@ -344,7 +347,6 @@ public class ProjectTest extends TestCase {
         Project proj = new Project("aShortName", "aLongName", "aDescription");
         Project proj2 = new Project("zShortName", "Long Name", "Description");
 
-        //System.out.print(proj.compareTo(proj2));
         Assert.assertTrue(proj.compareTo(proj2) <= 0);
         Assert.assertTrue(proj2.compareTo(proj) >= 0);
         Assert.assertTrue(proj.compareTo(proj) == 0);
@@ -365,5 +367,59 @@ public class ProjectTest extends TestCase {
         assertEquals("aShortName", project.getShortName());
         assertEquals("aLongName", project.getLongName());
         assertEquals("aDescription", project.getDescription());
+    }
+
+
+    /**
+     * Test for project when it has all attributes i.e allocation, backlog, team, release and story
+     */
+    @Test
+    public void testGenerateXml() {
+        new ReportGenerator();
+        Project project = new Project("Test", "Test project", "Used for testing");
+        Story story = new Story();
+        Team team = new Team("Test team", "test description");
+        Person person = new Person();
+        Global.currentWorkspace.add(team);
+        Allocation allocationNow = new Allocation(project, team, LocalDate.now(), LocalDate.now());
+        Allocation prevAllocation = new Allocation(project, team, LocalDate.now().minusDays(1), LocalDate.now().minusDays(1));
+        Allocation prevAllocation2 = new Allocation(project, team, LocalDate.now().minusDays(2), LocalDate.now().minusDays(2));
+        Allocation futureAllocation = new Allocation(project, team, LocalDate.now().plusDays(2), LocalDate.now().plusDays(2));
+        Release release = new Release("Test Release", project);
+        Release release2 = new Release("Release 2", project);
+        Backlog backlog = new Backlog("Backlog", "Long Backlog name", "Backlog description", person, project, "-");
+        project.add(story);
+        project.add(release);
+        project.add(release2);
+        project.add(backlog);
+        project.add(allocationNow);
+        project.add(prevAllocation);
+        project.add(prevAllocation2);
+        project.add(futureAllocation);
+        project.getChildren().add(release);
+
+        ReportGenerator.generatedItems = project.getChildren();
+        ReportGenerator.generatedItems.add(release); //Simulate checked items in generateXml dialog
+        ReportGenerator.generatedItems.add(release2);
+        ReportGenerator.generatedItems.add(backlog);
+        ReportGenerator.generatedItems.add(story);
+        ReportGenerator.generatedItems.add(team);
+        Element projectElement = project.generateXML();
+        Assert.assertEquals("[#text: Test]", projectElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: Test project]", projectElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: Used for testing]", projectElement.getChildNodes().item(3).getChildNodes().item(0).toString());
+
+        //<current-allocations>
+        Assert.assertEquals(1, projectElement.getChildNodes().item(4).getChildNodes().getLength());
+        //<previous-allocations>
+        Assert.assertEquals(2, projectElement.getChildNodes().item(5).getChildNodes().getLength());
+        //<future-allocations>
+        Assert.assertEquals(1, projectElement.getChildNodes().item(6).getChildNodes().getLength());
+        //<releases>
+        Assert.assertEquals(2, projectElement.getChildNodes().item(7).getChildNodes().getLength());
+        //<backlog>
+        Assert.assertEquals(1, projectElement.getChildNodes().item(8).getChildNodes().getLength());
+        //<unassigned-stories>
+        Assert.assertEquals(1, projectElement.getChildNodes().item(9).getChildNodes().getLength());
     }
 }

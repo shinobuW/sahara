@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.*;
+import seng302.group2.workspace.categories.PeopleCategory;
 
 public class SaharaItemTest {
     /**
@@ -52,5 +53,18 @@ public class SaharaItemTest {
             Assert.assertTrue(ids.add(item.getId()));
             i++;
         }
+    }
+    
+    @Test
+    public void testEquivalentTo() {
+        Person person1 = new Person();
+        Person person2 = new Person();
+        
+        PeopleCategory peopleCategory1 = new PeopleCategory();
+        
+        Assert.assertTrue(person1.equivalentTo(person1));
+        Assert.assertFalse(person1.equivalentTo(person2));
+        
+        Assert.assertFalse(person1.equivalentTo(peopleCategory1));
     }
 }

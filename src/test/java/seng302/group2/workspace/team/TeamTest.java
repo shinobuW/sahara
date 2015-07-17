@@ -123,6 +123,19 @@ public class TeamTest {
         Assert.assertFalse(ateam.isUnassignedTeam());
     }
 
+    /**
+     * Test the method which returns the current allocations
+     */
+    @Test
+    public void testGetCurrentAllocations() {
+        Team team = new Team();
+        Project proj = new Project();
+        Allocation allocToday = new Allocation(proj, team, LocalDate.now(), LocalDate.now());
+        proj.add(allocToday);
+
+        Assert.assertEquals(allocToday, team.getCurrentAllocation());
+    }
+
 
     /**
      * Tests that a team properly prepares for serialization

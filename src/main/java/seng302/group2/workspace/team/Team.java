@@ -4,7 +4,6 @@
 package seng302.group2.workspace.team;
 
 import javafx.collections.ObservableList;
-import org.apache.commons.lang.builder.EqualsBuilder;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.TeamInformationSwitchStrategy;
@@ -261,9 +260,9 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         Allocation currentAllocation = null;
         LocalDate now = LocalDate.now();
         for (Allocation allocation : this.getProjectAllocations()) {
-            if (allocation.getStartDate().isBefore(now)
+            if ((allocation.getStartDate().isBefore(now) || allocation.getStartDate().isEqual(LocalDate.now()))
                     && (allocation.getEndDate() == null
-                    || allocation.getEndDate().isAfter(now))) {
+                    || allocation.getEndDate().isAfter(now) || allocation.getEndDate().isEqual(LocalDate.now()))) {
                 currentAllocation = allocation;
             }
         }
