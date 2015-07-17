@@ -41,7 +41,7 @@ public class StoryCategory extends SubCategory {
      */
     @Override
     public Element generateXML() {
-        Element storyElements = ReportGenerator.doc.createElement("stories");
+        Element storyElements = ReportGenerator.doc.createElement("unassigned-stories");
         for (Object item : getChildren()) {
             if (ReportGenerator.generatedItems.contains((SaharaItem) item)) {
                 Element xmlElement = ((SaharaItem) item).generateXML();
