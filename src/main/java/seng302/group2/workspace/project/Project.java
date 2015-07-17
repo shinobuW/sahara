@@ -577,7 +577,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         projectDescription.appendChild(ReportGenerator.doc.createTextNode(description));
         projectElement.appendChild(projectDescription);
 
-        Element teamElements = ReportGenerator.doc.createElement("current-teams");
+        Element teamElements = ReportGenerator.doc.createElement("current-allocations");
         for (Team team : this.getCurrentTeams()) {
             if (ReportGenerator.generatedItems.contains(team)) {
                 Element teamElement = team.generateXML();
@@ -601,6 +601,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         }
         projectElement.appendChild(teamFutureElements);
 
+        //Generate the children of the Project, ie Releases, Backlogs and Unassigned Stories.
         for (SaharaItem item : this.getChildren()) {
             if (ReportGenerator.generatedItems.contains(item)) {
                 Element xmlElement = item.generateXML();
