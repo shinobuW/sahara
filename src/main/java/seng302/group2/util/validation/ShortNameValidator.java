@@ -17,6 +17,7 @@ import seng302.group2.workspace.team.Team;
 
 
 /**
+ * A class for checking the validity of a short name.
  * @author Jordane
  */
 public class ShortNameValidator {

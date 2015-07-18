@@ -15,6 +15,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 /**
+ * A class used to check the validity of inputted Dates.
  * @author Jordane
  */
 public class DateValidator {
