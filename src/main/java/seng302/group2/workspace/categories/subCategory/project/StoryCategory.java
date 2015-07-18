@@ -67,6 +67,9 @@ public class StoryCategory extends SubCategory {
         return ((Project) parent).getUnallocatedStories();
     }
 
+    /**
+     * Shows the Story Creation dialog.
+     */
     @Override
     public void showCreationDialog() {
         CreateStoryDialog.show();

@@ -16,6 +16,10 @@ import java.util.Set;
  * Created by Jordane on 7/06/2015.
  */
 public class ProjectCategory extends Category {
+    
+    /**
+     * Constructor for the ProjectCategory class.
+     */
     public ProjectCategory() {
         super("Projects");
         setCategorySwitchStrategy(new ProjectCategorySwitchStrategy());
@@ -40,16 +44,27 @@ public class ProjectCategory extends Category {
         return projectElements;
     }
 
+    /**
+     * Returns the items held by the ProjectCategory, blank as the project category has no child items.
+     * @return a blank hash set
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }
 
+    /**
+     * Returns a list of all the projects in the workspace.
+     * @return An ObservableList of the Projects in the workspace.
+     */
     @Override
     public ObservableList getChildren() {
         return Global.currentWorkspace.getProjects();
     }
 
+    /**
+     * Shows the project creation dialog.
+     */
     @Override
     public void showCreationDialog() {
         CreateProjectDialog.show();

@@ -15,16 +15,28 @@ import java.util.Set;
  * Created by Jordane on 7/06/2015.
  */
 public class RolesCategory extends Category {
+    
+    /**
+     * Constructor for the RolesCategory class.
+     */
     public RolesCategory() {
         super("Roles");
         setCategorySwitchStrategy(new RoleCategorySwitchStrategy());
     }
 
+    /**
+     * Returns the items held by the RolesCategory, blank as the roles category has no child items.
+     * @return a blank hash set
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }
 
+    /**
+     * Returns a list of all the roles in the workspace.
+     * @return An ObservableList of the Roles in the workspace.
+     */
     @Override
     public ObservableList getChildren() {
         return Global.currentWorkspace.getRoles();
@@ -49,7 +61,9 @@ public class RolesCategory extends Category {
         return roleElements;
     }
 
-
+    /**
+     * Show the role creation dialog, if and when this is implemented.
+     */
     @Override
     public void showCreationDialog() {
         //TODO For role creation

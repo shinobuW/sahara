@@ -67,6 +67,9 @@ public class BacklogCategory extends SubCategory {
         return ((Project) parent).getBacklogs();
     }
 
+    /**
+     * Shows the Backlog Creation dialog.
+     */
     @Override
     public void showCreationDialog() {
         CreateBacklogDialog.show();
