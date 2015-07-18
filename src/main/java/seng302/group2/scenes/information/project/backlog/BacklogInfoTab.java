@@ -3,11 +3,15 @@ package seng302.group2.scenes.information.project.backlog;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
@@ -50,6 +54,33 @@ public class BacklogInfoTab extends Tab {
         buttonHBox.spacingProperty().setValue(10);
         buttonHBox.alignmentProperty().set(Pos.TOP_LEFT);
         buttonHBox.getChildren().addAll(btnView, btnHighlight);
+
+        HBox greenKeyHbox = new HBox(8);
+        Rectangle green = new Rectangle(250,25,20,20);
+        green.setFill(Color.web("#aaffaa"));
+        green.setStrokeWidth(3);
+        green.setArcWidth(10);
+        green.setArcHeight(10);
+        Label greenKeyLabel = new Label("= Ready with no issues");
+        greenKeyHbox.getChildren().addAll(green, greenKeyLabel);
+
+        HBox orangeKeyHbox = new HBox(8);
+        Rectangle orange = new Rectangle(250,25,20,20);
+        orange.setFill(Color.ORANGE);
+        orange.setStrokeWidth(3);
+        orange.setArcWidth(10);
+        orange.setArcHeight(10);
+        Label orangeKeyLabel = new Label("= Has Accenptance Criteria Defined. Ready to be estimated");
+        orangeKeyHbox.getChildren().addAll(orange, orangeKeyLabel);
+
+        HBox redKeyHbox = new HBox(8);
+        Rectangle red = new Rectangle(250,25,20,20);
+        red.setFill(Color.web("#fd4949"));
+        red.setStrokeWidth(3);
+        red.setArcWidth(10);
+        red.setArcHeight(10);
+        Label redKeyLabel = new Label("= Depends on a story with lower priority");
+        redKeyHbox.getChildren().addAll(red, redKeyLabel);
 
         TableView<Story> storyTable = new TableView<>();
         storyTable.setEditable(true);
@@ -106,6 +137,7 @@ public class BacklogInfoTab extends Tab {
 
         basicInfoPane.getChildren().add(buttonHBox);
         basicInfoPane.getChildren().add(btnEdit);
+        basicInfoPane.getChildren().addAll(greenKeyHbox, orangeKeyHbox, redKeyHbox);
 
         btnEdit.setOnAction((event) -> {
                 currentBacklog.switchToInfoScene(true);

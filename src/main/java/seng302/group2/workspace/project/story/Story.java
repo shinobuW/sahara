@@ -282,7 +282,7 @@ public class Story extends SaharaItem implements Serializable {
             case ORANGE:
                 return "orange";
             case RED:
-                return "#ffaaaa";
+                return "#fd4949";
             case DEFAULT:
                 return "transparent";
             default:

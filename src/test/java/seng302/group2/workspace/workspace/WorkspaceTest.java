@@ -8,13 +8,20 @@ package seng302.group2.workspace.workspace;
 import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.Test;
+import org.parboiled.parserunners.ProfilingParseRunner;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.util.reporting.ReportGenerator;
+import seng302.group2.util.reporting.ReportGeneratorTest;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.allocation.Allocation;
+import seng302.group2.workspace.categories.ProjectCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
+import sun.awt.GlobalCursorManager;
 
 import java.time.LocalDate;
 
@@ -121,7 +128,6 @@ public class WorkspaceTest {
         Skill skill = new Skill();
         work.add(skill);
 
-        //System.out.println(work.getSkills());
         Assert.assertTrue(work.getSkills().contains(skill));
 
         work.add(skill);
@@ -160,32 +166,55 @@ public class WorkspaceTest {
         Assert.assertEquals(1, work.getTeams().size());  // Can't remove the unassigned team
     }
 
+    /**
+     * Tests the Workspace's generateXml() method
+     */
     @Test
     public void testGenerateXml() {
-        Workspace ws = new Workspace();
-        Person assignedPerson = new Person("Assigned Person", "first name", "last name", "email", "description", LocalDate.now());
-        Person unassginedPerson = new Person("Unassigned Person", "first name", "last name", "email", "description", LocalDate.now());
-        Skill assignedSkill = new Skill("Assigned Skill", "description");
+        new ReportGenerator();
+        Workspace ws = new Workspace("SS", "Shinobi Solutions", "We're better than Google");
+        Global.currentWorkspace = ws;
+        Person unassignedPerson = new Person("Unssigned Person", "first name", "last name", "email", "description", LocalDate.now());
+        Person unassignedPerson2 = new Person("Unssigned Person", "first name", "last name", "email", "description", LocalDate.now());
         Skill unassignedSkill = new Skill("unassigned Skill", "description");
         Project proj = new Project();
-        Team assignedTeam = new Team("assigned team", "description");
-        Team unassignedTeam = Team.createUnassignedTeam();
-        Allocation alloc = new Allocation(proj, unassignedTeam, LocalDate.now(), LocalDate.now());
-        proj.add(alloc);
+        Team unassignedTeam = new Team();
 
-        assignedTeam.add(assignedPerson);
+        Global.currentWorkspace.add(proj);
+        Global.currentWorkspace.add(unassignedPerson);
+        Global.currentWorkspace.add(unassignedPerson2);
+        Global.currentWorkspace.add(unassignedSkill);
+        Global.currentWorkspace.add(proj);
+        Global.currentWorkspace.add(unassignedTeam);
 
-        ws.add(proj);
-        ws.add(unassignedTeam);
-        ws.add(assignedTeam);
-        ws.add(assignedPerson);
-        ws.add(unassginedPerson);
-        ws.add(assignedSkill);
-        ws.add(unassignedSkill);
+        ReportGenerator.generatedItems = ws.getChildren();
+        ReportGenerator.generatedItems.add(new ProjectCategory());
+        ReportGenerator.generatedItems.add(ws);
+        ReportGenerator.generatedItems.add(proj);
+        ReportGenerator.generatedItems.add(unassignedTeam);
+        ReportGenerator.generatedItems.add(unassignedPerson);
+        ReportGenerator.generatedItems.add(unassignedPerson2);
+        ReportGenerator.generatedItems.add(unassignedSkill);
 
-//        Element workspaceElement = ws.generateXML();
-//        Assert.assertEquals("[#text: Test]", projectElement.getChildNodes().item(1).getChildNodes().item(0).toString());
-//        Assert.assertEquals("[#text: Test project]", projectElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-//        Assert.assertEquals("[#text: Used for testing]", projectElement.getChildNodes().item(3).getChildNodes().item(0).toString());
+        for(Role role: Global.currentWorkspace.getRoles()) {
+            ReportGenerator.generatedItems.add(role);
+        }
+
+        Element wsElement  = Global.currentWorkspace.generateXML();
+
+        Assert.assertEquals("[#text: SS]", wsElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: Shinobi Solutions]", wsElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: We're better than Google]", wsElement.getChildNodes().item(3).getChildNodes().item(0).toString());
+
+        //<projects>
+        Assert.assertEquals(1, wsElement.getChildNodes().item(4).getChildNodes().getLength());
+        //<unassigned-teams>
+        Assert.assertEquals(1, wsElement.getChildNodes().item(5).getChildNodes().getLength());
+        //<unassigned-people>
+        Assert.assertEquals(2, wsElement.getChildNodes().item(6).getChildNodes().getLength());
+        //<Roles>
+        Assert.assertEquals(3, wsElement.getChildNodes().item(7).getChildNodes().getLength());
+        //<unassigned-skills>
+        Assert.assertEquals(1, wsElement.getChildNodes().item(8).getChildNodes().getLength());
     }
 }
