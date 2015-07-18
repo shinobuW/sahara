@@ -118,6 +118,12 @@ public class BacklogInfoTab extends Tab {
             });
 
         storyTable.setRowFactory(param -> new TableRow<Story>() {
+            
+            /**
+             * An Overidden updateItem method to control the highlighting of cells in the backlog info tab.
+             * @param item The item to be updated
+             * @param empty Whether the cell is empty or not
+             */
             @Override
             protected void updateItem(Story item, boolean empty) {
                 if (item == null) {

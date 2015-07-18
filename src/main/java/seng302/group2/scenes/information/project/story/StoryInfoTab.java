@@ -15,6 +15,12 @@ import seng302.group2.workspace.project.story.Story;
  * Created by drm127 on 17/05/15.
  */
 public class StoryInfoTab extends Tab {
+    
+    /**
+     * Constructor for the Story Info Tab
+     * 
+     * @param currentStory The currently selected Story 
+     */
     public StoryInfoTab(Story currentStory) {
 
         this.setText("Basic Information");

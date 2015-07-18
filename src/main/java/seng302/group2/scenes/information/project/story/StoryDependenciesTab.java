@@ -15,6 +15,12 @@ import static javafx.collections.FXCollections.observableArrayList;
  * Created by cvs20 on 13/07/15.
  */
 public class StoryDependenciesTab extends Tab {
+    
+    /**
+     * Constructor for the Story Dependencies Tab.
+     * 
+     * @param currentStory The currently selected story
+     */
     public StoryDependenciesTab(Story currentStory) {
         this.setText("Dependencies");
         Pane dependenciesPane = new VBox(10);  // The pane that holds the basic info

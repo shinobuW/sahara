@@ -13,6 +13,12 @@ import seng302.group2.workspace.role.Role;
  * Created by jml168 on 11/05/15.
  */
 public class RoleInfoTab extends Tab {
+    
+    /**
+     * Constructor for the Role Info Tab
+     * 
+     * @param currentRole The currently selected Role. 
+     */
     public RoleInfoTab(Role currentRole) {
         this.setText("Basic Information");
 

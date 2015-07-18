@@ -9,6 +9,13 @@ import seng302.group2.workspace.project.story.Story;
  * Created by drm127 on 17/05/15.
  */
 public class StoryScene extends TrackedTabPane {
+    
+    /**
+     * Constructor for the Story Scene. Creates instances of the StoryInfoTab, StoryAcTab and StoryDependenciedTab
+     * and displays them.
+     * 
+     * @param currentStory The currently selected story.
+     */
     public StoryScene(Story currentStory) {
         super(ContentScene.STORY);
 
