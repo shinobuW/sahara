@@ -70,6 +70,10 @@ public class Story extends SaharaItem implements Serializable {
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }
 
+    /**
+     * Gets the set of SaharaItems 'belonging' to the Story (It's Acceptance Criteria).
+     * @return A set of SaharaItems belonging to the story
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         Set<SaharaItem> items = new HashSet<>();
@@ -555,7 +559,20 @@ public class Story extends SaharaItem implements Serializable {
         private String oldEstimate;
         private boolean oldReady;
         private Collection<Story> oldDependentOn;
-
+        
+        /**
+         * Constructor for the Story Edit command.
+         * @param story The story to be edited
+         * @param newShortName The new short name for the story
+         * @param newLongName The new long name for the story
+         * @param newDescription The new description of the story
+         * @param newProject The new project to which the story belongs
+         * @param newPriority The new priority value for the story
+         * @param newBacklog The new backlog to which the story belongs
+         * @param newEstimate The new estimate value for the story
+         * @param newReady The story's new readiness state
+         * @param newDependentOn The new list of stories the story is dependant on
+         */
         private StoryEditCommand(Story story, String newShortName, String newLongName,
                                  String newDescription, Project newProject, Integer newPriority,
                                  Backlog newBacklog, String newEstimate, boolean newReady, List<Story> newDependentOn) {
@@ -808,16 +825,27 @@ public class Story extends SaharaItem implements Serializable {
         private Story story;
         private AcceptanceCriteria ac;
 
+        /**
+         * Constructor for the acceptance criteria addition command
+         * @param story The story to which the acceptance criteria is to be added
+         * @param ac The acceptance criteria to be added
+         */
         AddAcceptanceCriteriaCommand(Story story, AcceptanceCriteria ac) {
             this.story = story;
             this.ac = ac;
         }
 
+        /**
+         * Executes the acceptance criteria addition command
+         */
         public void execute() {
             story.getAcceptanceCriteria().add(ac);
             ac.setStory(story);
         }
 
+        /**
+         * Undoes the acceptance criteria addition command
+         */
         public void undo() {
             story.getAcceptanceCriteria().remove(ac);
             ac.setStory(null);

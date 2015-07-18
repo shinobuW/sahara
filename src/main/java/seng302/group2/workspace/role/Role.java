@@ -24,6 +24,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 
 
 /**
+ * A class representing the Roles a person may have within a Workspace, Team or Project.
  * @author swi67
  */
 public class Role extends SaharaItem implements Serializable {
@@ -46,6 +47,10 @@ public class Role extends SaharaItem implements Serializable {
         setInformationSwitchStrategy(new RoleInformationSwitchStrategy());
     }
 
+    /**
+     * Gets the set of SaharaItems 'belonging' to the Role (It's required skills).
+     * @return A set of SaharaItems belonging to the role
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         Set<SaharaItem> items = new HashSet<>();
@@ -301,6 +306,10 @@ public class Role extends SaharaItem implements Serializable {
         return null;
     }
 
+    /**
+     * Overridden toString method for the Role class
+     * @return The string representation of the Role 
+     */
     @Override
     public String toString() {
         return this.shortName;

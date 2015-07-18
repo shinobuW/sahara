@@ -595,21 +595,34 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         }
     }
 
+    /**
+     * A command class for allowing the deletion of people.
+     */
     private class DeletePersonCommand implements Command {
         private Person person;
         private Team team;
 
+        /**
+         * Constructor for the person deletion command.
+         * @param person The person to be deleted.
+         */
         DeletePersonCommand(Person person) {
             this.person = person;
             this.team = person.getTeam();
         }
 
+        /**
+         * Executes the person deletion command.
+         */
         public void execute() {
             team.getPeople().remove(person);
             person.setTeam(null);
             Global.currentWorkspace.getPeople().remove(person);
         }
 
+        /**
+         * Undoes the person deletion command.
+         */
         public void undo() {
             team.getPeople().add(person);
             person.setTeam(team);

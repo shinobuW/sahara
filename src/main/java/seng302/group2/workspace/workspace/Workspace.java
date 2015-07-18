@@ -430,6 +430,9 @@ public class Workspace extends SaharaItem implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="Getters">
 
+    /**
+     * Updates the revert state for the workspace
+     */
     private void updateDefaultRevert() {
         prepSerialization(this);
         String json = gson.toJson(this);
@@ -843,7 +846,14 @@ public class Workspace extends SaharaItem implements Serializable {
         private String oldShortName;
         private String oldLongName;
         private String oldDescription;
-
+        
+        /**
+         * Constructor for the Workspace editing command
+         * @param ws The workspace to be edited
+         * @param newShortName The new short name for the workspace
+         * @param newLongName The new long name for the workspace
+         * @param newDescription The new description for the workspace
+         */
         private WorkspaceEditCommand(Workspace ws, String newShortName, String newLongName,
                                      String newDescription) {
             this.ws = ws;
@@ -893,18 +903,30 @@ public class Workspace extends SaharaItem implements Serializable {
         }
     }
 
-
+    /**
+     * A command class for allowing the addition of Projects to a Workspace
+     */
     private class AddProjectCommand implements Command {
         private Project proj;
 
+        /**
+         * Constructor for the project addition command
+         * @param proj The project to be added
+         */
         AddProjectCommand(Project proj) {
             this.proj = proj;
         }
 
+        /**
+         * Executes the project addition command
+         */
         public void execute() {
             Global.currentWorkspace.getProjects().add(proj);
         }
 
+        /**
+         * Undoes the project addition command
+         */
         public void undo() {
             Global.currentWorkspace.getProjects().remove(proj);
         }
@@ -927,18 +949,30 @@ public class Workspace extends SaharaItem implements Serializable {
         }
     }
 
-
+    /**
+     * A command class for allowing the addition of Teams to a Workspace
+     */
     private class AddTeamCommand implements Command {
         private Team team;
 
+        /**
+         * Constructor for the team addition command
+         * @param team The team to be added
+         */
         AddTeamCommand(Team team) {
             this.team = team;
         }
 
+        /**
+         * Executes the team addition command
+         */
         public void execute() {
             Global.currentWorkspace.getTeams().add(team);
         }
 
+        /**
+         * Undoes the team addition command
+         */
         public void undo() {
             Global.currentWorkspace.getTeams().remove(team);
         }
@@ -961,19 +995,31 @@ public class Workspace extends SaharaItem implements Serializable {
         }
     }
 
-
+    /**
+     * A command class for allowing the addition of People to a Workspace
+     */
     private class AddPersonCommand implements Command {
         private Person person;
 
+        /**
+         * Constructor for the person addition command
+         * @param person The person to be added
+         */
         AddPersonCommand(Person person) {
             this.person = person;
         }
 
+        /**
+         * Executes the person addition command
+         */
         public void execute() {
             Global.currentWorkspace.getPeople().add(person);
             Global.getUnassignedTeam().getPeople().add(person);
         }
 
+        /**
+         * Undoes the person addition command
+         */
         public void undo() {
             Global.getUnassignedTeam().getPeople().remove(person);
             Global.currentWorkspace.getPeople().remove(person);
@@ -1000,17 +1046,30 @@ public class Workspace extends SaharaItem implements Serializable {
         }
     }
 
+    /**
+     * A command class for allowing the addition of Skills to a Workspace
+     */
     private class AddSkillCommand implements Command {
         private Skill skill;
 
+        /**
+         * Constructor for the skill addition command
+         * @param skill The skill to be added
+         */
         AddSkillCommand(Skill skill) {
             this.skill = skill;
         }
 
+        /**
+         * Executes the skill addition command
+         */
         public void execute() {
             Global.currentWorkspace.getSkills().add(skill);
         }
 
+        /**
+         * Undoes the skill addition command
+         */
         public void undo() {
             Global.currentWorkspace.getSkills().remove(skill);
         }

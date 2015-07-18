@@ -54,6 +54,10 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         setInformationSwitchStrategy(new TeamInformationSwitchStrategy());
     }
 
+    /**
+     * Gets the set of SaharaItems 'belonging' to the Team: People, those in Dev roles, and its allocations
+     * @return A set of SaharaItems belonging to the team
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         Set<SaharaItem> items = new HashSet<>();
@@ -695,6 +699,11 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             }
         }
 
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped_team = false;
@@ -779,16 +788,25 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         }
     }
 
-
+    /**
+     * A command class for allowing the deletion of Teams
+     */
     private class DeleteTeamCommand implements Command {
         private Team team;
         private List<Person> members;
 
+        /**
+         * Constructor of the team deletion command
+         * @param team The team to be deleted
+         */
         DeleteTeamCommand(Team team) {
             this.team = team;
             this.members = team.getPeople();
         }
 
+        /**
+         * Executes the team deletion command
+         */
         public void execute() {
             Global.currentWorkspace.getTeams().remove(team);
             for (Person member : members) {
@@ -796,6 +814,9 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             }
         }
 
+        /**
+         * Undoes the team deletion command
+         */
         public void undo() {
             for (Person member : members) {
                 member.setTeam(team);
@@ -803,6 +824,11 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             Global.currentWorkspace.getTeams().add(team);
         }
 
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
@@ -828,10 +854,18 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         }
     }
 
+    /**
+     * A class for allowing the cascading deletion of the members of a team upon the teams deletion
+     */
     private class DeleteTeamCascadingCommand implements Command {
         private Team team;
         private List<Person> members = new ArrayList<>();
 
+        /**
+         * Constructor for the cascading team deletion command
+         * @param team The team to be deleted
+         * @param ws The workspace to which the team belonged
+         */
         DeleteTeamCascadingCommand(Team team, Workspace ws) {
             this.team = team;
             for (Person p : team.getPeople()) {
@@ -839,6 +873,9 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             }
         }
 
+        /**
+         * Executes the cascading team deletion command
+         */
         public void execute() {
             for (Person member : members) {
                 Global.currentWorkspace.getPeople().remove(member);
@@ -846,6 +883,9 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             Global.currentWorkspace.getTeams().remove(team);
         }
 
+        /**
+         * Undoes the team deletion command
+         */
         public void undo() {
             System.out.println("Undone Team Casc Delete");
             for (Person member : members) {
@@ -854,6 +894,11 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             Global.currentWorkspace.getTeams().add(team);
         }
 
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
@@ -879,25 +924,44 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         }
     }
 
+    /**
+     * A command class for allowing the addition of People to Teams
+     */
     private class AddPersonCommand implements Command {
         private Person person;
         private Team team;
 
+        /**
+         * Constructor for the person addition command
+         * @param team The team to which the person is added
+         * @param person The person to be added
+         */
         AddPersonCommand(Team team, Person person) {
             this.person = person;
             this.team = team;
         }
 
+        /**
+         * Executes the person addition command
+         */
         public void execute() {
             team.getPeople().add(person);
             person.setTeam(team);
         }
 
+        /**
+         * Undoes the person addition command
+         */
         public void undo() {
             team.getPeople().remove(person);
             person.setTeam(team);
         }
 
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped_team = false;
@@ -918,27 +982,47 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         }
     }
 
+    /**
+     * A command class for allowing the addition of Allocations to Teams
+     */
     private class AddAllocationCommand implements Command {
         private Project proj;
         private Team team;
         private Allocation allocation;
 
+        /**
+         * Constructor for the allocation addition command
+         * @param proj The project to which the team is allocated
+         * @param team The team to be allocated
+         * @param allocation The allocation to be added
+         */
         AddAllocationCommand(Project proj, Team team, Allocation allocation) {
             this.proj = proj;
             this.team = team;
             this.allocation = allocation;
         }
 
+        /**
+         * Executes the allocation addition command
+         */
         public void execute() {
             proj.getTeamAllocations().add(allocation);
             team.getProjectAllocations().add(allocation);
         }
 
+        /**
+         * Undoes the allocation addition command
+         */
         public void undo() {
             proj.getTeamAllocations().remove(allocation);
             team.getProjectAllocations().remove(allocation);
         }
 
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped_team = false;
