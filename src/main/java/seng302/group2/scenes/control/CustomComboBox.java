@@ -151,11 +151,6 @@ public class CustomComboBox extends VBox {
     }
 
     /**
-     * Sets the width of the label within
-     */
-
-
-    /**
      * Hides the error field.
      */
     public void hideErrorField() {

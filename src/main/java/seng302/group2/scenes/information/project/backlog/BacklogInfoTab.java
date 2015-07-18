@@ -24,6 +24,11 @@ public class BacklogInfoTab extends Tab {
 
     static final Boolean[] highlightMode = {false};
 
+    /**
+     * Constructor for the Backlog Info tab
+     * 
+     * @param currentBacklog The currently selected backlog 
+     */
     public BacklogInfoTab(Backlog currentBacklog) {
         final Stage stage;
 

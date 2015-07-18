@@ -8,6 +8,12 @@ import seng302.group2.workspace.project.backlog.Backlog;
  * Created by cvs20 on 19/05/15.
  */
 public class BacklogScene extends TrackedTabPane {
+    
+    /**
+     * Constructor for the Backlog scene
+     * 
+     * @param currentBacklog The currently selected Backlog
+     */
     public BacklogScene(Backlog currentBacklog) {
         super(ContentScene.BACKLOG);
 

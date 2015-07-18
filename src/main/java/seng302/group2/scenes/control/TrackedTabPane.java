@@ -84,7 +84,7 @@ public class TrackedTabPane extends TabPane {
     }
 
     /**
-     *
+     * Clears the content tabs.
      */
     public static void clearHistory() {
         contentTabs.clear();
