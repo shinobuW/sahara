@@ -15,6 +15,11 @@ import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
 public class BacklogCategorySwitchStrategy implements SubCategorySwitchStrategy {
     transient Logger logger = LoggerFactory.getLogger(BacklogCategorySwitchStrategy.class);
 
+    /**
+     * Sets the Main Pane to be an instance of the BacklogCategoryScene.
+     * 
+     * @param backlogCategory The backlog Category to display.
+     */
     @Override
     public void switchScene(Category backlogCategory) {
         if (backlogCategory instanceof BacklogCategory) {

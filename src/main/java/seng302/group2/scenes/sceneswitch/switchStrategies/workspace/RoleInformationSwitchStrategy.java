@@ -15,6 +15,10 @@ import seng302.group2.workspace.role.Role;
 public class RoleInformationSwitchStrategy implements InformationSwitchStrategy {
     transient Logger logger = LoggerFactory.getLogger(RoleInformationSwitchStrategy.class);
 
+    /**
+     * Sets the main pane to be an instance of the Role Scene. 
+     * @param item The SaharaItem for the scene to be constructed with. 
+     */
     @Override
     public void switchScene(SaharaItem item) {
         if (item instanceof Role) {
@@ -26,6 +30,11 @@ public class RoleInformationSwitchStrategy implements InformationSwitchStrategy 
         }
     }
 
+    /**
+     * Sets the main pane to be an instance of the Role Edit Scene.
+     * @param item The SaharaItem for the scene to be constructed with.
+     * @param editScene Whether the edit scene is to be shown.
+     */
     @Override
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Role) {

@@ -16,6 +16,10 @@ import seng302.group2.workspace.project.story.Story;
 public class StoryInformationSwitchStrategy implements InformationSwitchStrategy {
     transient Logger logger = LoggerFactory.getLogger(StoryInformationSwitchStrategy.class);
 
+    /**
+     * Sets the main pane to be an instance of the Story Scene. 
+     * @param item The SaharaItem for the scene to be constructed with. 
+     */
     @Override
     public void switchScene(SaharaItem item) {
         if (item instanceof Story) {
@@ -27,6 +31,11 @@ public class StoryInformationSwitchStrategy implements InformationSwitchStrategy
         }
     }
 
+    /**
+     * Sets the main pane to be an instance of the Story Edit Scene.
+     * @param item The SaharaItem for the scene to be constructed with.
+     * @param editScene Whether the edit scene is to be shown.
+     */
     @Override
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Story) {

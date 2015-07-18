@@ -10,6 +10,12 @@ import seng302.group2.workspace.workspace.Workspace;
  * @author jml168
  */
 public class WorkspaceScene extends TrackedTabPane {
+    
+    /**
+     * Constructor for the Workspace Scene. Creates an instance of the WorkspaceInfoTab and displays it.
+     * 
+     * @param currentWorkspace The currently selected Workspace. 
+     */
     public WorkspaceScene(Workspace currentWorkspace) {
         super(ContentScene.WORKSPACE);
 

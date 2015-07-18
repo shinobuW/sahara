@@ -16,6 +16,10 @@ import seng302.group2.workspace.project.release.Release;
 public class ReleaseInformationSwitchStrategy implements InformationSwitchStrategy {
     transient Logger logger = LoggerFactory.getLogger(ReleaseInformationSwitchStrategy.class);
 
+    /**
+     * Sets the main pane to be an instance of the Release Scene. 
+     * @param item The SaharaItem for the scene to be constructed with. 
+     */
     @Override
     public void switchScene(SaharaItem item) {
         if (item instanceof Release) {
@@ -27,6 +31,11 @@ public class ReleaseInformationSwitchStrategy implements InformationSwitchStrate
         }
     }
 
+    /**
+     * Sets the main pane to be an instance of the Release Edit Scene.
+     * @param item The SaharaItem for the scene to be constructed with.
+     * @param editScene Whether the edit scene is to be shown.
+     */
     @Override
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Release) {

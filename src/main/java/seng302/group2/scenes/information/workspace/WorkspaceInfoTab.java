@@ -16,6 +16,12 @@ import seng302.group2.workspace.workspace.Workspace;
  * Created by jml168 on 11/05/15.
  */
 public class WorkspaceInfoTab extends Tab {
+    
+    /**
+     * Constructor of the Workspace Info Tab.
+     * 
+     * @param currentWorkspace The currently selected Workspace.
+     */
     public WorkspaceInfoTab(Workspace currentWorkspace) {
         this.setText("Basic Information");
 

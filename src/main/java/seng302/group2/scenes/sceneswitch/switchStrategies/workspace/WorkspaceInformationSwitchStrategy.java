@@ -16,6 +16,10 @@ import seng302.group2.workspace.workspace.Workspace;
 public class WorkspaceInformationSwitchStrategy implements InformationSwitchStrategy {
     transient Logger logger = LoggerFactory.getLogger(WorkspaceInformationSwitchStrategy.class);
 
+    /**
+     * Sets the main pane to be an instance of the Workspace Scene. 
+     * @param item The SaharaItem for the scene to be constructed with. 
+     */
     @Override
     public void switchScene(SaharaItem item) {
         if (item instanceof Workspace) {
@@ -27,6 +31,11 @@ public class WorkspaceInformationSwitchStrategy implements InformationSwitchStra
         }
     }
 
+    /**
+     * Sets the main pane to be an instance of the Workspace Edit Scene.
+     * @param item The SaharaItem for the scene to be constructed with.
+     * @param editScene Whether the edit scene is to be shown.
+     */
     @Override
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Workspace) {

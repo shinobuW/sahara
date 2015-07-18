@@ -16,6 +16,10 @@ import seng302.group2.workspace.team.Team;
 public class TeamInformationSwitchStrategy implements InformationSwitchStrategy {
     transient Logger logger = LoggerFactory.getLogger(TeamInformationSwitchStrategy.class);
 
+    /**
+     * Sets the main pane to be an instance of the Team Scene. 
+     * @param item The SaharaItem for the scene to be constructed with. 
+     */
     @Override
     public void switchScene(SaharaItem item) {
         if (item instanceof Team) {
@@ -27,6 +31,11 @@ public class TeamInformationSwitchStrategy implements InformationSwitchStrategy 
         }
     }
 
+    /**
+     * Sets the main pane to be an instance of the Team Edit Scene.
+     * @param item The SaharaItem for the scene to be constructed with.
+     * @param editScene Whether the edit scene is to be shown.
+     */
     @Override
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Team) {
