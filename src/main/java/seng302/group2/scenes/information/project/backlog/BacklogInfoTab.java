@@ -56,7 +56,7 @@ public class BacklogInfoTab extends Tab {
         green.setStrokeWidth(3);
         green.setArcWidth(10);
         green.setArcHeight(10);
-        Label greenKeyLabel = new Label("= Ready without issues");
+        Label greenKeyLabel = new Label("= Ready with no issues");
         greenKeyHbox.getChildren().addAll(green, greenKeyLabel);
 
         HBox orangeKeyHbox = new HBox(8);
