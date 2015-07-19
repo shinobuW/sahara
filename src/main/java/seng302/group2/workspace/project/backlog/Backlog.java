@@ -73,6 +73,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
      * @param description  description
      * @param productOwner product owner of the backlog
      * @param project      the project the backlog belongs to
+     * @param scale        the estimation scale of the backlog
      */
     public Backlog(String shortName, String longName, String description,
                    Person productOwner, Project project, String scale) {
@@ -359,6 +360,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
      * @param newProductOwner The new product owner
      * @param newProject      The new project
      * @param newScale        The new estimation scale
+     * @param newStories      The new stories in the backlog
      */
     public void edit(String newShortName, String newLongName, String newDescription,
                      Person newProductOwner, Project newProject, String newScale, Collection<Story> newStories) {

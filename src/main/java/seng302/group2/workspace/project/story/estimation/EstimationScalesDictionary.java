@@ -78,6 +78,7 @@ public class EstimationScalesDictionary {
 
     /**
      * The publicly accessible method for addition of the estimation scale dictionary to a workspace.
+     *
      * @return The single instance of the estimationScalesDictionary.
      */
     public static EstimationScalesDictionary getEstimationScale() {
@@ -88,8 +89,9 @@ public class EstimationScalesDictionary {
     }
 
     /**
-     * Returns a type of Map<String></String>, ArrayList<String> which contains all the various estimation scales.
-     * @return estimation scale dictionary.
+     * Returns a type of Map%lt;String%gt;%lt;String%gt;, ArrayList%lt;String%gt; which contains all the various estimation scales.
+     *
+     * @return estimation scale dictionary
      */
     public Map<String, ArrayList<String>> getEstimationScaleDict() {
         return this.estimationScaleDict;

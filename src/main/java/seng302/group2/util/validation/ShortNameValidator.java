@@ -25,10 +25,10 @@ public class ShortNameValidator {
      * Checks whether a given short name is valid (null/empty), but can be non-unique
      *
      * @param shortNameField is a short name field
+     * @param currentShortName the current short name
      * @return If the short name is valid
      */
-    public static boolean validateShortNameNonUnique(RequiredField shortNameField,
-                                                     String currentShortName) {
+    public static boolean validateShortNameNonUnique(RequiredField shortNameField, String currentShortName) {
         switch (ShortNameValidator.validateShortName(shortNameField.getText(), currentShortName)) {
             case VALID:
                 shortNameField.hideErrorField();
