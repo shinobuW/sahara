@@ -89,7 +89,8 @@ public class EstimationScalesDictionary {
     }
 
     /**
-     * Returns a type of Map%lt;String%gt;%lt;String%gt;, ArrayList%lt;String%gt; which contains all the various estimation scales.
+     * Returns a type of Map%lt;String%gt;%lt;String%gt;, ArrayList%lt;String%gt;
+     * which contains all the various estimation scales.
      *
      * @return estimation scale dictionary
      */
