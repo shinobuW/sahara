@@ -66,6 +66,8 @@ public class Workspace extends SaharaItem implements Serializable {
     private transient ObservableList<Role> roles = observableArrayList();
     private List<Role> serializableRoles = new ArrayList();
 
+    private double version = App.version;
+
 
     /**
      * Basic Workspace constructor.

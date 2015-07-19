@@ -25,6 +25,7 @@ public class App extends Application {
     public static SplitPane content;
 
     public static MainPane mainPane;
+    public static double version = 0.4;
     private static Stage mainStage;
     private static Scene mainScene;
 
