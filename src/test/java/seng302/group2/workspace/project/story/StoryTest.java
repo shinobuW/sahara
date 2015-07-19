@@ -6,6 +6,7 @@
 package seng302.group2.workspace.project.story;
 
 
+import javafx.scene.paint.Color;
 import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Element;
@@ -242,9 +243,17 @@ public class StoryTest {
         story.setPriority(3);
         story.getAcceptanceCriteria().add(ac);
         story.setEstimate(EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.DefaultValues.NONE));
-        Assert.assertEquals("orange", story.getColour()); // orange
+        Assert.assertEquals(Story.toRGBCode(Story.orangeHighlight), story.getColour()); // orange
 
         story.setReady(true);
-        Assert.assertEquals("#aaffaa", story.getColour()); //green
+        Assert.assertEquals(Story.toRGBCode(Story.greenHighlight), story.getColour()); //green
+    }
+
+    @Test
+    public void testToRGBCode() {
+        Assert.assertEquals("#FF0000FF", Story.toRGBCode(Color.RED));
+        Assert.assertEquals("#008000FF", Story.toRGBCode(Color.GREEN));
+        Assert.assertEquals("#0000FFFF", Story.toRGBCode(Color.BLUE));
+        Assert.assertEquals("#80808080", Story.toRGBCode(Color.color(128/255.0, 128/255.0, 128/255.0, 128/255.0)));
     }
 }

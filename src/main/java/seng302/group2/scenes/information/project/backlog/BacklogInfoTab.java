@@ -7,6 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -57,7 +58,7 @@ public class BacklogInfoTab extends Tab {
 
         HBox greenKeyHbox = new HBox(8);
         Rectangle green = new Rectangle(250,25,20,20);
-        green.setFill(Color.web("#aaffaa"));
+        green.setFill(Story.greenHighlight);
         green.setStrokeWidth(3);
         green.setArcWidth(10);
         green.setArcHeight(10);
@@ -66,21 +67,24 @@ public class BacklogInfoTab extends Tab {
 
         HBox orangeKeyHbox = new HBox(8);
         Rectangle orange = new Rectangle(250,25,20,20);
-        orange.setFill(Color.ORANGE);
+        orange.setFill(Story.orangeHighlight);
         orange.setStrokeWidth(3);
         orange.setArcWidth(10);
         orange.setArcHeight(10);
-        Label orangeKeyLabel = new Label("= Has Accenptance Criteria Defined. Ready to be estimated");
+        Label orangeKeyLabel = new Label("= Requires estimation");
         orangeKeyHbox.getChildren().addAll(orange, orangeKeyLabel);
 
         HBox redKeyHbox = new HBox(8);
         Rectangle red = new Rectangle(250,25,20,20);
-        red.setFill(Color.web("#fd4949"));
+        red.setFill(Story.redHighlight);
         red.setStrokeWidth(3);
         red.setArcWidth(10);
         red.setArcHeight(10);
-        Label redKeyLabel = new Label("= Depends on a story with lower priority");
+        Label redKeyLabel = new Label("= Dependent on a story with a lower priority");
         redKeyHbox.getChildren().addAll(red, redKeyLabel);
+
+        Pane keyBox = new VBox(4);
+        keyBox.getChildren().addAll(greenKeyHbox, orangeKeyHbox, redKeyHbox);
 
         TableView<Story> storyTable = new TableView<>();
         storyTable.setEditable(true);
@@ -135,9 +139,10 @@ public class BacklogInfoTab extends Tab {
         basicInfoPane.getChildren().add(new Label("Stories: "));
         basicInfoPane.getChildren().add(storyTable);
 
-        basicInfoPane.getChildren().add(buttonHBox);
-        basicInfoPane.getChildren().add(btnEdit);
-        basicInfoPane.getChildren().addAll(greenKeyHbox, orangeKeyHbox, redKeyHbox);
+        basicInfoPane.getChildren().addAll(buttonHBox, btnEdit);
+        if (highlightMode[0]) {
+            basicInfoPane.getChildren().add(keyBox);
+        }
 
         btnEdit.setOnAction((event) -> {
                 currentBacklog.switchToInfoScene(true);
@@ -163,7 +168,7 @@ public class BacklogInfoTab extends Tab {
                 }
                 super.updateItem(item, empty);
                 item.setHighlightColour();
-                if (highlightMode[0] == true && item.getColour() != "transparent") {
+                if (highlightMode[0] && item.getColour() != "transparent") {
                     setStyle("-fx-background-color: " + item.getColour() + ";");
                 }
                 else {
@@ -174,6 +179,13 @@ public class BacklogInfoTab extends Tab {
 
         btnHighlight.setOnAction((event) ->
             {
+                if (highlightMode[0]) {
+                    basicInfoPane.getChildren().remove(keyBox);
+                }
+                else {
+                    basicInfoPane.getChildren().add(keyBox);
+                }
+
                 highlightMode[0] = !highlightMode[0];
 
                 for (int i = 0; i < storyTable.getColumns().size(); i++) {
