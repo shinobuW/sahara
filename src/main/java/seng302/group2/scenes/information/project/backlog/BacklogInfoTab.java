@@ -3,15 +3,11 @@ package seng302.group2.scenes.information.project.backlog;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import seng302.group2.App;
@@ -27,7 +23,7 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public class BacklogInfoTab extends Tab {
 
-    static final Boolean[] highlightMode = {false};
+    static Boolean highlightMode = Boolean.FALSE;
 
     /**
      * Constructor for the Backlog Info tab
@@ -140,7 +136,7 @@ public class BacklogInfoTab extends Tab {
         basicInfoPane.getChildren().add(storyTable);
 
         basicInfoPane.getChildren().addAll(buttonHBox, btnEdit);
-        if (highlightMode[0]) {
+        if (highlightMode) {
             basicInfoPane.getChildren().add(keyBox);
         }
 
@@ -168,7 +164,7 @@ public class BacklogInfoTab extends Tab {
                 }
                 super.updateItem(item, empty);
                 item.setHighlightColour();
-                if (highlightMode[0] && item.getColour() != "transparent") {
+                if (highlightMode && item.getColour() != "transparent") {
                     setStyle("-fx-background-color: " + item.getColour() + ";");
                 }
                 else {
@@ -179,14 +175,14 @@ public class BacklogInfoTab extends Tab {
 
         btnHighlight.setOnAction((event) ->
             {
-                if (highlightMode[0]) {
+                if (highlightMode) {
                     basicInfoPane.getChildren().remove(keyBox);
                 }
                 else {
                     basicInfoPane.getChildren().add(keyBox);
                 }
 
-                highlightMode[0] = !highlightMode[0];
+                highlightMode = !highlightMode;
 
                 for (int i = 0; i < storyTable.getColumns().size(); i++) {
                     ((TableColumn)(storyTable.getColumns().get(i))).setVisible(false);
