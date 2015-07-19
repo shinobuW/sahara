@@ -71,6 +71,8 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
 
     /**
      * Get the text
+     *
+     * @return the description of the acceptance criteria
      */
     public String getDescription() {
         return this.description;
@@ -78,6 +80,8 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
 
     /**
      * Gets the state
+     *
+     * @return the state of the acceptance criteria
      */
     public AcState getState() {
         return this.state;
@@ -85,6 +89,8 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
 
     /**
      * Gets the story the AC belongs to
+     *
+     * @return the story of the acceptance criteria
      */
     public Story getStory() {
         return this.story;

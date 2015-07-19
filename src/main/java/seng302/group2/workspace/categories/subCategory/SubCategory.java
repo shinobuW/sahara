@@ -38,6 +38,7 @@ public abstract class SubCategory extends Category {
      * Basic constructor for a TreeView category
      *
      * @param name The name of the category
+     * @param parent The parent of the category
      */
     public SubCategory(String name, SaharaItem parent) {
         super(name);

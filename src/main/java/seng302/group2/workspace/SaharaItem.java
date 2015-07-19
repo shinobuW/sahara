@@ -178,6 +178,7 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
 
     /**
      * Switches the scene based on the TVItem's switching strategy
+     * @param subCategory the sub category to switch to
      */
     public void switchToCategoryScene(Category subCategory) {
         try {
