@@ -1,6 +1,7 @@
 package seng302.group2.workspace.project.story;
 
 import javafx.collections.ObservableList;
+import javafx.scene.paint.Color;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.StoryInformationSwitchStrategy;
@@ -53,6 +54,10 @@ public class Story extends SaharaItem implements Serializable {
 
     public static String stateReady = "Ready";
     public static String stateNotReady = "Not Ready";
+
+    public static Color greenHighlight = Color.color(0.4, 1, 0, 0.4);
+    public static Color orangeHighlight = Color.color(1, 0.6, 0, 0.4);
+    public static Color redHighlight = Color.color(1, 0, 0, 0.4);
 
     /**
      * Basic Story constructor
@@ -255,7 +260,7 @@ public class Story extends SaharaItem implements Serializable {
                 red = true;
             }
         }
-        if (red == true) {
+        if (red) {
             this.colour = STORYCOLOUR.RED;
         }
         else if (this.ready) {
@@ -270,6 +275,20 @@ public class Story extends SaharaItem implements Serializable {
         }
     }
 
+
+    /**
+     * Converts a JavaFX colour into an html/web colour string (including opacity)
+     * @param color The colour to convert
+     * @return The web equivalent of the colour
+     */
+    public static String toRGBCode(Color color) {
+        return String.format("#%02X%02X%02X%02X",
+                (int)(color.getRed() * 255),
+                (int)(color.getGreen() * 255),
+                (int)(color.getBlue() * 255),
+                (int)(color.getOpacity() * 255));
+    }
+
     /**
      * Gets the string form of the story colour t
      * @return the colour of the story in highlight mode
@@ -278,11 +297,11 @@ public class Story extends SaharaItem implements Serializable {
         this.setHighlightColour();
         switch (colour) {
             case GREEN:
-                return "#aaffaa";
+                return toRGBCode(greenHighlight);//"#aaffaa";
             case ORANGE:
-                return "orange";
+                return toRGBCode(orangeHighlight);
             case RED:
-                return "#fd4949";
+                return toRGBCode(redHighlight);//"#fd4949";
             case DEFAULT:
                 return "transparent";
             default:
