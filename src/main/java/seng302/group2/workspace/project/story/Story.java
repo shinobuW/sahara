@@ -486,12 +486,12 @@ public class Story extends SaharaItem implements Serializable {
         storyEstimate.appendChild(ReportGenerator.doc.createTextNode(estimate));
         storyElement.appendChild(storyEstimate);
 
-        Element storyReady = ReportGenerator.doc.createElement("ready");
+        Element storyReady = ReportGenerator.doc.createElement("ready_state");
         if (ready) {
-            storyReady.appendChild(ReportGenerator.doc.createTextNode("true"));
+            storyReady.appendChild(ReportGenerator.doc.createTextNode("Ready"));
         }
         else {
-            storyReady.appendChild(ReportGenerator.doc.createTextNode("false"));
+            storyReady.appendChild(ReportGenerator.doc.createTextNode("Not Ready"));
         }
         storyElement.appendChild(storyReady);
 
