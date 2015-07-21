@@ -1,4 +1,4 @@
-package seng302.group2.scenes.listdisplay;
+package seng302.group2.scenes.treeView;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

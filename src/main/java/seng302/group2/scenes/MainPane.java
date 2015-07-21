@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
-import seng302.group2.scenes.listdisplay.TreeViewWithItems;
+import seng302.group2.scenes.treeView.TreeViewWithItems;
 import seng302.group2.scenes.menu.MainMenuBar;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.Category;
