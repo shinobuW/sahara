@@ -11,7 +11,6 @@ import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import org.apache.commons.lang.builder.EqualsBuilder;
 import org.controlsfx.dialog.Dialogs;
 import org.w3c.dom.Element;
 import seng302.group2.App;

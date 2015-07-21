@@ -2,15 +2,11 @@ package seng302.group2.workspace;
 
 import org.junit.Assert;
 import org.junit.Test;
-import seng302.group2.Global;
+import seng302.group2.workspace.categories.PeopleCategory;
 import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import static org.junit.Assert.*;
-import seng302.group2.workspace.categories.PeopleCategory;
 
 public class SaharaItemTest {
     /**

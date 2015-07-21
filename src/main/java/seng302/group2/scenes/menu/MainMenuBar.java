@@ -13,7 +13,6 @@ import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainPane;
 import seng302.group2.scenes.dialog.*;
 import seng302.group2.util.revert.RevertManager;
 import seng302.group2.workspace.SaharaItem;

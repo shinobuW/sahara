@@ -1,6 +1,5 @@
 package seng302.group2.workspace.allocation;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;

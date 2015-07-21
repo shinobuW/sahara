@@ -24,7 +24,6 @@ public class HierarchyTracker {
         for (TreeItem<SaharaItem> item : tree.getTreeItems()) {
             collapseMap.put(item.getValue(), item.isExpanded());
         }
-        System.out.println(collapseMap);
     }
 
     /**

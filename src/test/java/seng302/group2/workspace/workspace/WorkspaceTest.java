@@ -8,20 +8,16 @@ package seng302.group2.workspace.workspace;
 import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.Test;
-import org.parboiled.parserunners.ProfilingParseRunner;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;
-import seng302.group2.util.reporting.ReportGeneratorTest;
 import seng302.group2.workspace.SaharaItem;
-import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.categories.ProjectCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
-import sun.awt.GlobalCursorManager;
 
 import java.time.LocalDate;
 
