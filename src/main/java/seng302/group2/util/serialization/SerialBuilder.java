@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import javafx.collections.ObservableList;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.allocation.Allocation;
+import seng302.group2.workspace.categories.*;
+import seng302.group2.workspace.categories.subCategory.SubCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -40,9 +42,19 @@ public class SerialBuilder {
                 .addType(Backlog.class)
                 .addType(AcceptanceCriteria.class)
 
-                        //TODO add any new classes
+                // TODO REMINDER: Add any new classes. Do not delete.
+
+                // Category classes
+                .addType(Category.class)
+                .addType(SubCategory.class)
+                .addType(PeopleCategory.class)
+                .addType(ProjectCategory.class)
+                .addType(RolesCategory.class)
+                .addType(SkillsCategory.class)
+                .addType(TeamsCategory.class)
 
                 .registerOn(gsonBuilder);
+
         return gsonBuilder.create();
     }
 }

@@ -42,9 +42,9 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
     private transient ObservableList<Backlog> backlogs = observableArrayList();
     private List<Backlog> serializableBacklogs = new ArrayList<>();
 
-    private ReleaseCategory releasesCategory = new ReleaseCategory(this);
-    private BacklogCategory backlogCategory = new BacklogCategory(this);
-    private StoryCategory storiesCategory = new StoryCategory(this);
+    private transient ReleaseCategory releasesCategory = new ReleaseCategory(this);
+    private transient BacklogCategory backlogCategory = new BacklogCategory(this);
+    private transient StoryCategory storiesCategory = new StoryCategory(this);
 
 
     @Deprecated

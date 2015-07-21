@@ -13,8 +13,9 @@ import seng302.group2.workspace.SaharaItem;
 public abstract class Category extends SaharaItem {
     private String name;
 
+
     /**
-     * Basic constructor for a TreeView category
+     * Basic constructor for a category
      *
      * @param name The name of the category
      */

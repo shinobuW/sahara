@@ -66,11 +66,11 @@ public class Workspace extends SaharaItem implements Serializable {
     private List<Role> serializableRoles = new ArrayList();
 
     // Make the categories
-    private Category projectCategory = new ProjectCategory();
-    private Category teamsCategory = new TeamsCategory();
-    private Category peopleCategory = new PeopleCategory();
-    private Category rolesCategory = new RolesCategory();
-    private Category skillCategory = new SkillsCategory();
+    private transient Category projectCategory = new ProjectCategory();
+    private transient Category teamsCategory = new TeamsCategory();
+    private transient Category peopleCategory = new PeopleCategory();
+    private transient Category rolesCategory = new RolesCategory();
+    private transient Category skillCategory = new SkillsCategory();
 
 
     /**

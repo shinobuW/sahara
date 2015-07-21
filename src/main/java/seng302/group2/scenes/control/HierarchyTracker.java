@@ -46,7 +46,8 @@ public class HierarchyTracker {
     public static Boolean isExpanded(SaharaItem item) {
         if (collapseMap.containsKey(item)) {
             return collapseMap.get(item);
-        } else {
+        }
+        else {
             return Boolean.TRUE;
         }
     }

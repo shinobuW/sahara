@@ -342,16 +342,25 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
         }
     }
 
-    public Collection<TreeItem<T>> getTreeItems() {
-        Collection<TreeItem<T>> items = new HashSet<>();
+    /**
+     * Returns a set of all treeItems inside of the tree.
+     * @return A set of all treeItems inside of the tree
+     */
+    public Set<TreeItem<T>> getTreeItems() {
+        Set<TreeItem<T>> items = new HashSet<>();
         items.add(this.getRoot());
         items.addAll(getTreeItemChildren(this.getRoot()));
 
         return items;
     }
 
-    private Collection<TreeItem<T>> getTreeItemChildren(TreeItem<T> treeItem) {
-        Collection<TreeItem<T>> items = new HashSet<>();
+    /**
+     * Returns a set of children of a treeItem that already exists within the tree.
+     * @param treeItem The tree item to explore the children of
+     * @return The children tree items of the given tree item
+     */
+    private Set<TreeItem<T>> getTreeItemChildren(TreeItem<T> treeItem) {
+        Set<TreeItem<T>> items = new HashSet<>();
 
         for (TreeItem<T> item : treeItem.getChildren()) {
             items.add(item);
