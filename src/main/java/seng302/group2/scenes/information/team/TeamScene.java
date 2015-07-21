@@ -18,7 +18,7 @@ public class TeamScene extends TrackedTabPane {
      * @param currentTeam The currently selected Team.
      */
     public TeamScene(Team currentTeam) {
-        super(ContentScene.TEAM);
+        super(ContentScene.TEAM, currentTeam);
 
         // Define and add the tabs
         Tab informationTab = new TeamInfoTab(currentTeam);

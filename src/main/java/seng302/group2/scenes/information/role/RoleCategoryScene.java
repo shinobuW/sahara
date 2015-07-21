@@ -17,7 +17,7 @@ public class RoleCategoryScene extends TrackedTabPane {
      * @param currentWorkspace the current workspace
      */
     public RoleCategoryScene(Workspace currentWorkspace) {
-        super(ContentScene.ROLE_CATEGORY);
+        super(ContentScene.ROLE_CATEGORY, currentWorkspace);
 
         // Define and add the tabs
         Tab categoryTab = new RoleCategoryTab(currentWorkspace);

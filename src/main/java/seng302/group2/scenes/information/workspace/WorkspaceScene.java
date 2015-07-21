@@ -17,7 +17,7 @@ public class WorkspaceScene extends TrackedTabPane {
      * @param currentWorkspace The currently selected Workspace. 
      */
     public WorkspaceScene(Workspace currentWorkspace) {
-        super(ContentScene.WORKSPACE);
+        super(ContentScene.WORKSPACE, currentWorkspace);
 
         // Define and add the tabs
         Tab informationTab = new WorkspaceInfoTab(currentWorkspace);

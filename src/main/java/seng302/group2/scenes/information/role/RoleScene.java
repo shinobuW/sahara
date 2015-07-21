@@ -22,7 +22,7 @@ public class RoleScene extends TrackedTabPane {
      * @param currentRole The currently selected Role. 
      */
     public RoleScene(Role currentRole) {
-        super(ContentScene.ROLE);
+        super(ContentScene.ROLE, currentRole);
 
         // Define and add the tabs
         Tab informationTab = new RoleInfoTab(currentRole);

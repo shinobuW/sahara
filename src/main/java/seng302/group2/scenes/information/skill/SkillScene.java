@@ -15,7 +15,7 @@ public class SkillScene extends TrackedTabPane {
      * @param currentSkill the current skill for which information will be displayed
      */
     public SkillScene(Skill currentSkill) {
-        super(ContentScene.SKILL);
+        super(ContentScene.SKILL, currentSkill);
 
         // Define and add the tabs
         Tab informationTab = new SkillInfoTab(currentSkill);

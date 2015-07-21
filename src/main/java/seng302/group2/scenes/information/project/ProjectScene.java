@@ -16,7 +16,7 @@ public class ProjectScene extends TrackedTabPane {
      * @param currentProject The currently selected project. 
      */
     public ProjectScene(Project currentProject) {
-        super(ContentScene.PROJECT);
+        super(ContentScene.PROJECT, currentProject);
 
         // Define and add the tabs
         Tab informationTab = new ProjectInfoTab(currentProject);

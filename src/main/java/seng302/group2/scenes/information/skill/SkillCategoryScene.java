@@ -17,7 +17,7 @@ public class SkillCategoryScene extends TrackedTabPane {
      * @param currentWorkspace the current workspace
      */
     public SkillCategoryScene(Workspace currentWorkspace) {
-        super(TrackedTabPane.ContentScene.SKILL_CATEGORY);
+        super(TrackedTabPane.ContentScene.SKILL_CATEGORY, currentWorkspace);
 
         // Define and add the tabs
         Tab categoryTab = new SkillCategoryTab(currentWorkspace);

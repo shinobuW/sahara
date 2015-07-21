@@ -17,7 +17,7 @@ public class StoryCategoryScene extends TrackedTabPane {
      * @param selectedCategory the current workspace
      */
     public StoryCategoryScene(StoryCategory selectedCategory) {
-        super(ContentScene.RELEASE_CATEGORY);
+        super(ContentScene.RELEASE_CATEGORY, selectedCategory.getProject());
 
         // Define and add the tabs
         Tab informationTab = new StoryCategoryTab(selectedCategory);

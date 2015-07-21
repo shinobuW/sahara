@@ -15,7 +15,7 @@ public class BacklogScene extends TrackedTabPane {
      * @param currentBacklog The currently selected Backlog
      */
     public BacklogScene(Backlog currentBacklog) {
-        super(ContentScene.BACKLOG);
+        super(ContentScene.BACKLOG, currentBacklog.getProject());
 
         // Define and add the tabs
         Tab informationTab = new BacklogInfoTab(currentBacklog);

@@ -17,7 +17,7 @@ public class PersonCategoryScene extends TrackedTabPane {
      * @param currentWorkspace the current workspace
      */
     public PersonCategoryScene(Workspace currentWorkspace) {
-        super(ContentScene.PERSON_CATEGORY);
+        super(ContentScene.PERSON_CATEGORY, currentWorkspace);
 
         // Define and add the tabs
         Tab categoryTab = new PersonCategoryTab(currentWorkspace);

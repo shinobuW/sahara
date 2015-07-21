@@ -1,8 +1,10 @@
 package seng302.group2.scenes.control;
 
 import javafx.scene.control.TabPane;
+import seng302.group2.workspace.SaharaItem;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -11,6 +13,7 @@ import java.util.Map;
  * Created by Jordane on 10/05/2015.
  */
 public class TrackedTabPane extends TabPane {
+
     /**
      * An enumeration of scenes in the project
      */
@@ -43,28 +46,31 @@ public class TrackedTabPane extends TabPane {
         BACKLOG_CATEGORY
     }
 
+
     /**
      * A map to keep of each of the last selected tabs in the scenes
      */
-    public static Map<ContentScene, Integer> contentTabs = new HashMap<>();
+    private static Map<SaharaItem, Map<ContentScene, Integer>> contentTabs = new LinkedHashMap<>();
 
     private ContentScene scene;
+    private SaharaItem item;
 
     /**
      * Constructor that takes the content scene type to use for storing tracking information
      *
      * @param scene The scene of the tracked tab pane
      */
-    public TrackedTabPane(ContentScene scene) {
+    public TrackedTabPane(ContentScene scene, SaharaItem item) {
+        this.item = item;
         this.scene = scene;
         this.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         openLastTab();
 
         this.getSelectionModel().selectedItemProperty().addListener((event) -> {
-                contentTabs.put(scene,
-                        this.getSelectionModel().getSelectedIndex());
-                //System.out.println("saving last tab");
+                contentTabs.put(item, new LinkedHashMap<>());
+                Map<ContentScene, Integer> itemMap = contentTabs.get(item);
+                itemMap.put(scene, this.getSelectionModel().getSelectedIndex());
             });
     }
 
@@ -74,9 +80,9 @@ public class TrackedTabPane extends TabPane {
      */
     public void openLastTab() {
         Integer lastTab = 0;
-        if (scene != null) {
+        if (scene != null && item != null && contentTabs.get(item) != null) {
             //System.out.println("opening last tab from " + scene.toString());
-            lastTab = contentTabs.get(scene);
+            lastTab = contentTabs.get(item).get(scene);
         }
         if (lastTab != null) {
             this.getSelectionModel().select(lastTab);

@@ -15,7 +15,7 @@ public class PersonScene extends TrackedTabPane {
      * @param currentPerson the person for which the information will be displayed.
      */
     public PersonScene(Person currentPerson) {
-        super(ContentScene.PROJECT);
+        super(ContentScene.PROJECT, currentPerson);
 
         // Define and add the tabs
         Tab informationTab = new PersonInfoTab(currentPerson);

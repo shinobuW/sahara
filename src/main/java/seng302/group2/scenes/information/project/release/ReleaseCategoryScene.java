@@ -17,7 +17,7 @@ public class ReleaseCategoryScene extends TrackedTabPane {
      * @param selectedCategory the current workspace
      */
     public ReleaseCategoryScene(ReleaseCategory selectedCategory) {
-        super(ContentScene.RELEASE_CATEGORY);
+        super(ContentScene.RELEASE_CATEGORY, selectedCategory.getProject());
 
         // Define and add the tabs
         Tab informationTab = new ReleaseCategoryTab(selectedCategory);

@@ -22,7 +22,7 @@ public class ReleaseScene extends TrackedTabPane {
      * @param currentRelease The currently selected Release
      */
     public ReleaseScene(Release currentRelease) {
-        super(ContentScene.RELEASE);
+        super(ContentScene.RELEASE, currentRelease.getProject());
 
         // Define and add the tabs
         Tab informationTab = new ReleaseInfoTab(currentRelease);

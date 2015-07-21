@@ -17,7 +17,7 @@ public class ProjectCategoryScene extends TrackedTabPane {
      * @param currentWorkspace the current workspace
      */
     public ProjectCategoryScene(Workspace currentWorkspace) {
-        super(TrackedTabPane.ContentScene.PROJECT_CATEGORY);
+        super(TrackedTabPane.ContentScene.PROJECT_CATEGORY, currentWorkspace);
 
         // Define and add the tabs
         Tab categoryTab = new ProjectCategoryTab(currentWorkspace);

@@ -17,7 +17,7 @@ public class StoryScene extends TrackedTabPane {
      * @param currentStory The currently selected story.
      */
     public StoryScene(Story currentStory) {
-        super(ContentScene.STORY);
+        super(ContentScene.STORY, currentStory);
 
         // Define and add the tabs
         Tab informationTab = new StoryInfoTab(currentStory);
