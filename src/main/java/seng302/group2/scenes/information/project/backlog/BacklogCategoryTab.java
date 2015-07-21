@@ -7,10 +7,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
+import seng302.group2.Global;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.dialog.CreateBacklogDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
+import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.role.Role;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
@@ -48,6 +51,16 @@ public class BacklogCategoryTab extends Tab {
         ListView backlogBox = new ListView(selectedCategory.getProject().getBacklogs());
         backlogBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         backlogBox.setMaxWidth(450);
+
+        boolean poExists = false;
+        for (Person person : Global.currentWorkspace.getPeople()) {
+            if (person.getSkills().containsAll(Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER)
+                    .getRequiredSkills())) {
+                poExists = true;
+            }
+        }
+        btnCreate.setDisable(!poExists);
+
 
         categoryPane.getChildren().add(title);
         categoryPane.getChildren().add(backlogBox);

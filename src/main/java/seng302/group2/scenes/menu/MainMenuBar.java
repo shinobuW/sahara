@@ -11,6 +11,7 @@ import javafx.scene.input.KeyCombination;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
+import org.sonatype.guice.plexus.config.Roles;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.dialog.*;
@@ -18,6 +19,8 @@ import seng302.group2.util.revert.RevertManager;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.Category;
 import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
+import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 import seng302.group2.workspace.workspace.Workspace;
@@ -487,14 +490,14 @@ public class MainMenuBar extends MenuBar {
         newBranch.setOnShowing((event) -> {
                 newBacklogItem.setDisable(true);
                 boolean PoExists = false;
-                for (Team team : Global.currentWorkspace.getTeams()) {
-                    if (team.getProductOwner() != null) {
+                for (Person person : Global.currentWorkspace.getPeople()) {
+                    if (person.getSkills().containsAll(Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER)
+                            .getRequiredSkills())) {
                         PoExists = true;
-                        break;
                     }
                 }
                 if (PoExists && !Global.currentWorkspace.getProjects().isEmpty()) {
-                    newBacklogItem.setDisable(false);
+                    newBacklogItem.setDisable(false);  // Enable
                 }
 
                 if (Global.currentWorkspace.getProjects().isEmpty()) {

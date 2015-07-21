@@ -17,6 +17,9 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.Category;
 import seng302.group2.workspace.categories.RolesCategory;
 import seng302.group2.workspace.categories.subCategory.SubCategory;
+import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
+import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.role.Role;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -139,6 +142,17 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
                 if (selected instanceof SubCategory) {
                     selected.switchToCategoryScene((Category)selected);
                     setContextMenu(new CategoryTreeContextMenu());
+                    if (selected instanceof BacklogCategory) {
+                        boolean PoExists = false;
+                        for (Person person : Global.currentWorkspace.getPeople()) {
+                            if (person.getSkills().containsAll(Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER)
+                                    .getRequiredSkills())) {
+
+                                PoExists = true;
+                            }
+                        }
+                        setContextMenu(new CategoryTreeContextMenu(PoExists));
+                    }
                 }
                 else if (selected instanceof Category) {
                     selected.switchToCategoryScene();
