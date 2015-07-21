@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.HierarchyTracker;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
 import seng302.group2.scenes.treeView.TreeViewWithItems;
 import seng302.group2.scenes.menu.MainMenuBar;
@@ -38,6 +39,8 @@ public class MainPane extends BorderPane {
     public MainPane() {
         this.init();
 
+        HierarchyTracker.expandAll(treeView);
+
         if (contentPane == null) {
             contentPane = new ScrollPane();
         }
@@ -62,6 +65,8 @@ public class MainPane extends BorderPane {
             treeView.setShowRoot(false);
         }
 
+        HierarchyTracker.refreshMap(treeView);
+
         SaharaItem selectedItem = null;
         if (treeView.getSelectionModel().getSelectedItem() != null) {
             selectedItem = treeView.getSelectionModel().getSelectedItem().getValue();
@@ -76,6 +81,15 @@ public class MainPane extends BorderPane {
         else if (Global.selectedTreeItem != null && Global.selectedTreeItem.getValue() != null) {
             treeView.selectItem((SaharaItem) Global.selectedTreeItem.getValue());
         }
+
+        HierarchyTracker.restoreMap(treeView);
+    }
+
+    /**
+     * Expands all of the items inside of the tree recursively
+     */
+    public void expandTree() {
+        HierarchyTracker.expandAll(treeView);
     }
 
     /**

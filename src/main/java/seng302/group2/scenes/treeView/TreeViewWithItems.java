@@ -18,8 +18,7 @@ import seng302.group2.workspace.categories.Category;
 import seng302.group2.workspace.categories.RolesCategory;
 import seng302.group2.workspace.categories.subCategory.SubCategory;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -96,7 +95,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
      */
     private void init() {
         setMinWidth(160);
-        setMaxWidth(320);
+        setMaxWidth(400);
 
         setContextMenu(new CategoryTreeContextMenu(true));
 
@@ -341,6 +340,25 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
                 selectItem(item, treeItem);
             }
         }
+    }
+
+    public Collection<TreeItem<T>> getTreeItems() {
+        Collection<TreeItem<T>> items = new HashSet<>();
+        items.add(this.getRoot());
+        items.addAll(getTreeItemChildren(this.getRoot()));
+
+        return items;
+    }
+
+    private Collection<TreeItem<T>> getTreeItemChildren(TreeItem<T> treeItem) {
+        Collection<TreeItem<T>> items = new HashSet<>();
+
+        for (TreeItem<T> item : treeItem.getChildren()) {
+            items.add(item);
+            items.addAll(getTreeItemChildren(item));
+        }
+
+        return items;
     }
 
 }

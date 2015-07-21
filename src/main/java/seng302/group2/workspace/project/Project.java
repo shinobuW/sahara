@@ -42,6 +42,11 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
     private transient ObservableList<Backlog> backlogs = observableArrayList();
     private List<Backlog> serializableBacklogs = new ArrayList<>();
 
+    private ReleaseCategory releasesCategory = new ReleaseCategory(this);
+    private BacklogCategory backlogCategory = new BacklogCategory(this);
+    private StoryCategory storiesCategory = new StoryCategory(this);
+
+
     @Deprecated
     private transient ObservableList<Team> teams = observableArrayList();
     @Deprecated
@@ -651,12 +656,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
     @Override
     public ObservableList<SaharaItem> getChildren() {
         ObservableList<SaharaItem> children = observableArrayList();
-        ReleaseCategory releasesCategory = new ReleaseCategory(this);
-        children.add(releasesCategory);
-        BacklogCategory backlogCategory = new BacklogCategory(this);
-        children.add(backlogCategory);
-        StoryCategory storiesCategory = new StoryCategory(this);
-        children.add(storiesCategory);
+        children.addAll(releasesCategory, backlogCategory, storiesCategory);
         return children;
     }
 
