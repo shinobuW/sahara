@@ -140,7 +140,7 @@ public class MainPane extends BorderPane {
      * Performs the initialisation tasks of the main pane including adding children elements and styling
      */
     private void init() {
-        MenuBar menuBar = MainMenuBar.getMainMenuBar();
+        MenuBar menuBar = new MainMenuBar();
         this.setTop(menuBar);
         this.refreshTree();
 

@@ -23,7 +23,6 @@ import seng302.group2.workspace.workspace.Workspace.SaveLoadResult;
 @SuppressWarnings("deprecation")
 public class App extends Application {
     public static SplitPane content;
-
     public static MainPane mainPane;
     private static Stage mainStage;
     private static Scene mainScene;

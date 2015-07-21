@@ -31,7 +31,7 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
  * @author Jordane Lew (jml168)
  */
 @SuppressWarnings("deprecation")
-public class MainMenuBar {
+public class MainMenuBar extends MenuBar {
     /**
      * Creates a menu item "Workspace" and sets the on action event if "Workspace" is clicked.
      *
@@ -59,10 +59,16 @@ public class MainMenuBar {
                         CreateWorkspaceDialog.show();
                         App.refreshMainScene();
                     }
+                    else {
+                        System.out.println("There was an error saving the file. Cancelling");
+                    }
                 }
                 else if (response == Dialog.ACTION_NO) {
                     CreateWorkspaceDialog.show();
                     App.refreshMainScene();
+                }
+                if (response != Dialog.ACTION_CANCEL) {
+                    Global.commandManager.clear();
                 }
             });
 
@@ -398,12 +404,12 @@ public class MainMenuBar {
      *
      * @return The MenuBar with all required items.
      */
-    public static MenuBar getMainMenuBar() {
+    public MainMenuBar() {
         // The menus and menu bar creation
-        MenuBar menuBar = new MenuBar();
+        //MenuBar menuBar = new MenuBar();
 
         Menu fileMenu = new Menu("File");
-        menuBar.getMenus().add(fileMenu);
+        this.getMenus().add(fileMenu);
 
         // Create 'New >' sub-menu
         Menu newBranch = new Menu("New");
@@ -437,7 +443,7 @@ public class MainMenuBar {
 
         // Create 'Edit >' sub-menu
         Menu editMenu = new Menu("Edit");
-        menuBar.getMenus().add(editMenu);
+        this.getMenus().add(editMenu);
 
 
         //Create MenuItems for Edit submenu
@@ -448,7 +454,7 @@ public class MainMenuBar {
 
         // Create 'Display >' sub-menu
         Menu displayMenu = new Menu("Display");
-        menuBar.getMenus().add(displayMenu);
+        this.getMenus().add(displayMenu);
         // Create MenuItems for Display submenu
         MenuItem toggleTree = createToggleTreeItem();
         displayMenu.getItems().addAll(toggleTree);
@@ -456,7 +462,7 @@ public class MainMenuBar {
 
         // Create 'Generate >' menu
         Menu generateMenu = new Menu("Generate");
-        menuBar.getMenus().add(generateMenu);
+        this.getMenus().add(generateMenu);
         MenuItem reportItem = createReportItem();
         generateMenu.getItems().add(reportItem);
 
@@ -532,6 +538,6 @@ public class MainMenuBar {
                     deleteTreeItem.setDisable(false);
                 }
             });
-        return menuBar;
+
     }
 }
