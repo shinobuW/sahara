@@ -27,13 +27,17 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
      * Basic Skill constructor
      */
     public Skill() {
-        super("unnamed");
-        this.shortName = "unnamed";
+        super("Untitled Skill");
+        this.shortName = "Untitled Skill";
         this.description = "no description";
 
         setInformationSwitchStrategy(new SkillInformationSwitchStrategy());
     }
 
+    /**
+     * Returns the items held by the Skill, blank as the skill has no child items.
+     * @return a blank hash set
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
@@ -175,7 +179,11 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
         Element skillElement = ReportGenerator.doc.createElement("skill");
 
         //WorkSpace Elements
-        Element skillShortName = ReportGenerator.doc.createElement("identifier");
+        Element skillID = ReportGenerator.doc.createElement("ID");
+        skillID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        skillElement.appendChild(skillID);
+
+        Element skillShortName = ReportGenerator.doc.createElement("shortname");
         skillShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
         skillElement.appendChild(skillShortName);
 
@@ -232,6 +240,11 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
             Collections.sort(Global.currentWorkspace.getSkills());
         }
 
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
@@ -245,15 +258,26 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
         }
     }
 
+    /**
+     * A command class for allowing the deletion of Skills from a Workspace.
+     */
     private class DeleteSkillCommand implements Command {
         private Skill skill;
         private List<Person> people;
 
+        /**
+         * Constructor for the skill deletion command
+         * @param skill The skill to be deleted
+         * @param ws The workspace to which the skill belonged
+         */
         DeleteSkillCommand(Skill skill, Workspace ws) {
             this.skill = skill;
             this.people = skill.getPeopleWithSkill();
         }
 
+        /**
+         * Executes the skill deletion command
+         */
         public void execute() {
             for (Person person : this.people) {
                 person.getSkills().remove(skill);
@@ -261,6 +285,9 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
             Global.currentWorkspace.getSkills().remove(skill);
         }
 
+        /**
+         * Undoes the skill deletion command
+         */
         public void undo() {
             for (Person person : this.people) {
                 person.getSkills().add(skill);
@@ -268,6 +295,11 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
             Global.currentWorkspace.getSkills().add(skill);
         }
 
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;

@@ -15,6 +15,12 @@ import seng302.group2.workspace.role.Role;
  * @author jml168
  */
 public class RoleScene extends TrackedTabPane {
+    
+    /**
+     * Constructor for the Role Scene. Creates an instance of the Role Info Tab and displays it.
+     * 
+     * @param currentRole The currently selected Role. 
+     */
     public RoleScene(Role currentRole) {
         super(ContentScene.ROLE);
 

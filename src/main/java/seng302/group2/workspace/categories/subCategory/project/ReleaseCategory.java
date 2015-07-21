@@ -69,6 +69,9 @@ public class ReleaseCategory extends SubCategory {
         return releaseElements;
     }
 
+    /**
+     * Shows the Release Creation dialog.
+     */
     @Override
     public void showCreationDialog() {
         CreateReleaseDialog.show();

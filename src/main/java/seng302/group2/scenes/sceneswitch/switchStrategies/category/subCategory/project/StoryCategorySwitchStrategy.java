@@ -15,6 +15,11 @@ import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
 public class StoryCategorySwitchStrategy implements SubCategorySwitchStrategy {
     transient Logger logger = LoggerFactory.getLogger(StoryCategorySwitchStrategy.class);
 
+    /**
+     * Sets the Main Pane to be an instance of the StoryCategoryScene.
+     * 
+     * @param storyCategory The Story Category to display.
+     */
     @Override
     public void switchScene(Category storyCategory) {
         if (storyCategory instanceof StoryCategory) {

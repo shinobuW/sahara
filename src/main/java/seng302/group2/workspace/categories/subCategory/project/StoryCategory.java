@@ -41,7 +41,7 @@ public class StoryCategory extends SubCategory {
      */
     @Override
     public Element generateXML() {
-        Element storyElements = ReportGenerator.doc.createElement("stories");
+        Element storyElements = ReportGenerator.doc.createElement("unassigned-stories");
         for (Object item : getChildren()) {
             if (ReportGenerator.generatedItems.contains((SaharaItem) item)) {
                 Element xmlElement = ((SaharaItem) item).generateXML();
@@ -67,6 +67,9 @@ public class StoryCategory extends SubCategory {
         return ((Project) parent).getUnallocatedStories();
     }
 
+    /**
+     * Shows the Story Creation dialog.
+     */
     @Override
     public void showCreationDialog() {
         CreateStoryDialog.show();

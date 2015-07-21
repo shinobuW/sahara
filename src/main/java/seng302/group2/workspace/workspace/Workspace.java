@@ -16,6 +16,7 @@ import org.controlsfx.dialog.Dialogs;
 import org.w3c.dom.Element;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.WorkspaceInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
@@ -71,13 +72,15 @@ public class Workspace extends SaharaItem implements Serializable {
     private transient Category peopleCategory = new PeopleCategory();
     private transient Category rolesCategory = new RolesCategory();
     private transient Category skillCategory = new SkillsCategory();
+    
+    private double version = App.version;
 
 
     /**
      * Basic Workspace constructor.
      */
     public Workspace() {
-        super("Workspace");
+        super("Untitled Workspace");
         this.shortName = "Untitled Workspace";
         this.longName = "Untitled Workspace";
         this.description = "A blank workspace.";
@@ -336,6 +339,8 @@ public class Workspace extends SaharaItem implements Serializable {
 
             App.mainPane.selectItem(Global.currentWorkspace);
 
+            TrackedTabPane.clearHistory();
+
             return SaveLoadResult.SUCCESS;
         }
         else {
@@ -434,6 +439,9 @@ public class Workspace extends SaharaItem implements Serializable {
 
     // <editor-fold defaultstate="collapsed" desc="Getters">
 
+    /**
+     * Updates the revert state for the workspace
+     */
     private void updateDefaultRevert() {
         prepSerialization(this);
         String json = gson.toJson(this);
@@ -744,12 +752,19 @@ public class Workspace extends SaharaItem implements Serializable {
         return root;
     }
 
-
+    /**
+     * Method for creating an XML element for the Workspace within report generation
+     * @return element for XML generation
+     */
     @Override
     public Element generateXML() {
         Element workSpaceElement = ReportGenerator.doc.createElement("workspace");
 
         //WorkSpace Elements
+        Element workSpaceID = ReportGenerator.doc.createElement("ID");
+        workSpaceID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        workSpaceElement.appendChild(workSpaceID);
+
         Element workSpaceShortName = ReportGenerator.doc.createElement("identifier");
         workSpaceShortName.appendChild(ReportGenerator.doc.createTextNode(this.getShortName()));
         workSpaceElement.appendChild(workSpaceShortName);
@@ -764,7 +779,6 @@ public class Workspace extends SaharaItem implements Serializable {
         ReportGenerator.generatedItems.remove(0);
 
         for (SaharaItem item : this.getChildren()) {
-            System.out.println(item);
             if (ReportGenerator.generatedItems.contains(item)) {
                 Element xmlElement = item.generateXML();
                 if (xmlElement != null) {
@@ -834,7 +848,14 @@ public class Workspace extends SaharaItem implements Serializable {
         private String oldShortName;
         private String oldLongName;
         private String oldDescription;
-
+        
+        /**
+         * Constructor for the Workspace editing command
+         * @param ws The workspace to be edited
+         * @param newShortName The new short name for the workspace
+         * @param newLongName The new long name for the workspace
+         * @param newDescription The new description for the workspace
+         */
         private WorkspaceEditCommand(Workspace ws, String newShortName, String newLongName,
                                      String newDescription) {
             this.ws = ws;
@@ -884,18 +905,30 @@ public class Workspace extends SaharaItem implements Serializable {
         }
     }
 
-
+    /**
+     * A command class for allowing the addition of Projects to a Workspace
+     */
     private class AddProjectCommand implements Command {
         private Project proj;
 
+        /**
+         * Constructor for the project addition command
+         * @param proj The project to be added
+         */
         AddProjectCommand(Project proj) {
             this.proj = proj;
         }
 
+        /**
+         * Executes the project addition command
+         */
         public void execute() {
             Global.currentWorkspace.getProjects().add(proj);
         }
 
+        /**
+         * Undoes the project addition command
+         */
         public void undo() {
             Global.currentWorkspace.getProjects().remove(proj);
         }
@@ -908,30 +941,40 @@ public class Workspace extends SaharaItem implements Serializable {
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
-            System.out.println(stateObjects);
             for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(proj)) {
                     this.proj = (Project) item;
                     mapped = true;
                 }
             }
-            System.out.println("mapped add: " + mapped);
             return mapped;
         }
     }
 
-
+    /**
+     * A command class for allowing the addition of Teams to a Workspace
+     */
     private class AddTeamCommand implements Command {
         private Team team;
 
+        /**
+         * Constructor for the team addition command
+         * @param team The team to be added
+         */
         AddTeamCommand(Team team) {
             this.team = team;
         }
 
+        /**
+         * Executes the team addition command
+         */
         public void execute() {
             Global.currentWorkspace.getTeams().add(team);
         }
 
+        /**
+         * Undoes the team addition command
+         */
         public void undo() {
             Global.currentWorkspace.getTeams().remove(team);
         }
@@ -954,19 +997,31 @@ public class Workspace extends SaharaItem implements Serializable {
         }
     }
 
-
+    /**
+     * A command class for allowing the addition of People to a Workspace
+     */
     private class AddPersonCommand implements Command {
         private Person person;
 
+        /**
+         * Constructor for the person addition command
+         * @param person The person to be added
+         */
         AddPersonCommand(Person person) {
             this.person = person;
         }
 
+        /**
+         * Executes the person addition command
+         */
         public void execute() {
             Global.currentWorkspace.getPeople().add(person);
             Global.getUnassignedTeam().getPeople().add(person);
         }
 
+        /**
+         * Undoes the person addition command
+         */
         public void undo() {
             Global.getUnassignedTeam().getPeople().remove(person);
             Global.currentWorkspace.getPeople().remove(person);
@@ -993,17 +1048,30 @@ public class Workspace extends SaharaItem implements Serializable {
         }
     }
 
+    /**
+     * A command class for allowing the addition of Skills to a Workspace
+     */
     private class AddSkillCommand implements Command {
         private Skill skill;
 
+        /**
+         * Constructor for the skill addition command
+         * @param skill The skill to be added
+         */
         AddSkillCommand(Skill skill) {
             this.skill = skill;
         }
 
+        /**
+         * Executes the skill addition command
+         */
         public void execute() {
             Global.currentWorkspace.getSkills().add(skill);
         }
 
+        /**
+         * Undoes the skill addition command
+         */
         public void undo() {
             Global.currentWorkspace.getSkills().remove(skill);
         }

@@ -388,9 +388,15 @@ public class ProjectHistoryTab extends Tab {
 
         public DatePicker datePicker;
 
+        /**
+         * Blank constructor for EditingCell
+         */
         public EditingCell() {
         }
 
+        /**
+         * Start editing the Datepicker cell
+         */
         @Override
         public void startEdit() {
             if (!isEmpty()) {
@@ -412,12 +418,20 @@ public class ProjectHistoryTab extends Tab {
             }
         }
 
+        /**
+         * Cancel the editing of the cell.
+         */
         @Override
         public void cancelEdit() {
             super.cancelEdit();
             setGraphic(null);
         }
 
+        /**
+         * Updates the item in the cell
+         * @param item The item to update
+         * @param empty Whether the cell is empty or not
+         */
         @Override
         public void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
@@ -451,6 +465,9 @@ public class ProjectHistoryTab extends Tab {
             }
         }
 
+        /**
+         * Creates a text field for use in the editing cell
+         */
         private void createTextField() {
             datePicker = new DatePicker();
             datePicker.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
@@ -473,6 +490,10 @@ public class ProjectHistoryTab extends Tab {
             });
         }
 
+        /**
+         * Returns a string in a Date format for use in the cell
+         * @return The string in Date format
+         */
         private String getString() {
             LocalDate date;
 

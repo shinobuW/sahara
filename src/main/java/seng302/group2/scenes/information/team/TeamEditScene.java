@@ -41,6 +41,11 @@ public class TeamEditScene extends ScrollPane {
     private ComboBox<Role> roleComboBox;
     private Role noneRole = new Role("(none)", Role.RoleType.NONE);
 
+    /**
+     * Constructor for the Team Edit Scene.
+     * 
+     * @param baseTeam The currently selected Team. 
+     */
     public TeamEditScene(Team baseTeam) {
         // Init
         this.baseTeam = baseTeam;

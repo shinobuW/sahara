@@ -8,6 +8,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
@@ -22,8 +23,13 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public class BacklogInfoTab extends Tab {
 
-    static final Boolean[] highlightMode = {false};
+    static Boolean highlightMode = Boolean.FALSE;
 
+    /**
+     * Constructor for the Backlog Info tab
+     * 
+     * @param currentBacklog The currently selected backlog 
+     */
     public BacklogInfoTab(Backlog currentBacklog) {
         final Stage stage;
 
@@ -45,6 +51,36 @@ public class BacklogInfoTab extends Tab {
         buttonHBox.spacingProperty().setValue(10);
         buttonHBox.alignmentProperty().set(Pos.TOP_LEFT);
         buttonHBox.getChildren().addAll(btnView, btnHighlight);
+
+        HBox greenKeyHbox = new HBox(8);
+        Rectangle green = new Rectangle(250,25,20,20);
+        green.setFill(Story.greenHighlight);
+        green.setStrokeWidth(3);
+        green.setArcWidth(10);
+        green.setArcHeight(10);
+        Label greenKeyLabel = new Label("= Ready with no issues");
+        greenKeyHbox.getChildren().addAll(green, greenKeyLabel);
+
+        HBox orangeKeyHbox = new HBox(8);
+        Rectangle orange = new Rectangle(250,25,20,20);
+        orange.setFill(Story.orangeHighlight);
+        orange.setStrokeWidth(3);
+        orange.setArcWidth(10);
+        orange.setArcHeight(10);
+        Label orangeKeyLabel = new Label("= Requires estimation");
+        orangeKeyHbox.getChildren().addAll(orange, orangeKeyLabel);
+
+        HBox redKeyHbox = new HBox(8);
+        Rectangle red = new Rectangle(250,25,20,20);
+        red.setFill(Story.redHighlight);
+        red.setStrokeWidth(3);
+        red.setArcWidth(10);
+        red.setArcHeight(10);
+        Label redKeyLabel = new Label("= Dependent on a story with a lower priority");
+        redKeyHbox.getChildren().addAll(red, redKeyLabel);
+
+        Pane keyBox = new VBox(4);
+        keyBox.getChildren().addAll(greenKeyHbox, orangeKeyHbox, redKeyHbox);
 
         TableView<Story> storyTable = new TableView<>();
         storyTable.setEditable(true);
@@ -99,8 +135,10 @@ public class BacklogInfoTab extends Tab {
         basicInfoPane.getChildren().add(new Label("Stories: "));
         basicInfoPane.getChildren().add(storyTable);
 
-        basicInfoPane.getChildren().add(buttonHBox);
-        basicInfoPane.getChildren().add(btnEdit);
+        basicInfoPane.getChildren().addAll(buttonHBox, btnEdit);
+        if (highlightMode) {
+            basicInfoPane.getChildren().add(keyBox);
+        }
 
         btnEdit.setOnAction((event) -> {
                 currentBacklog.switchToInfoScene(true);
@@ -113,6 +151,12 @@ public class BacklogInfoTab extends Tab {
             });
 
         storyTable.setRowFactory(param -> new TableRow<Story>() {
+            
+            /**
+             * An Overidden updateItem method to control the highlighting of cells in the backlog info tab.
+             * @param item The item to be updated
+             * @param empty Whether the cell is empty or not
+             */
             @Override
             protected void updateItem(Story item, boolean empty) {
                 if (item == null) {
@@ -120,7 +164,7 @@ public class BacklogInfoTab extends Tab {
                 }
                 super.updateItem(item, empty);
                 item.setHighlightColour();
-                if (highlightMode[0] == true && item.getColour() != "transparent") {
+                if (highlightMode && item.getColour() != "transparent") {
                     setStyle("-fx-background-color: " + item.getColour() + ";");
                 }
                 else {
@@ -131,7 +175,14 @@ public class BacklogInfoTab extends Tab {
 
         btnHighlight.setOnAction((event) ->
             {
-                highlightMode[0] = !highlightMode[0];
+                if (highlightMode) {
+                    basicInfoPane.getChildren().remove(keyBox);
+                }
+                else {
+                    basicInfoPane.getChildren().add(keyBox);
+                }
+
+                highlightMode = !highlightMode;
 
                 for (int i = 0; i < storyTable.getColumns().size(); i++) {
                     ((TableColumn)(storyTable.getColumns().get(i))).setVisible(false);

@@ -10,6 +10,13 @@ import seng302.group2.workspace.team.Team;
  * @author crw73
  */
 public class TeamScene extends TrackedTabPane {
+    
+    /**
+     * Constructor for the Team scene. Creates an instance of the TeamInfoTab and displays it. If the team is not
+     * the unassigned team, also creates an instance of the TeamHistoryTab to display.
+     * 
+     * @param currentTeam The currently selected Team.
+     */
     public TeamScene(Team currentTeam) {
         super(ContentScene.TEAM);
 

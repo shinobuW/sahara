@@ -8,11 +8,14 @@ package seng302.group2.workspace.project.release;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.time.LocalDate;
+import java.time.Month;
 
 /**
  * @author Shinobu
@@ -114,5 +117,24 @@ public class ReleaseTest {
         Assert.assertFalse(project.getReleases().contains(release));
         Global.commandManager.undo();
         Assert.assertTrue(project.getReleases().contains(release));
+    }
+
+    /**
+     * Tests for Releases' XML generator method.
+     */
+    @Test
+    public void testGenerateXML() {
+        new ReportGenerator();
+
+        Release release = new Release("shortname", "description", LocalDate.of(2015, Month.APRIL, 12), new Project());
+
+
+        Element releaseElement = release.generateXML();
+        Assert.assertEquals("[#text: shortname]", releaseElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: description]", releaseElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: 12/04/2015]", releaseElement.getChildNodes().item(3).getChildNodes().item(0).toString());
+
+        Assert.assertEquals(4, releaseElement.getChildNodes().getLength());
+
     }
 }

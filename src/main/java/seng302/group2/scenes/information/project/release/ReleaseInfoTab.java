@@ -18,6 +18,12 @@ import java.time.format.DateTimeFormatter;
  * Created by jml168 on 11/05/15.
  */
 public class ReleaseInfoTab extends Tab {
+    
+    /**
+     * Constructor for the Release Info Tab
+     * 
+     * @param currentRelease The currently selected Release
+     */
     public ReleaseInfoTab(Release currentRelease) {
         this.setText("Basic Information");
 

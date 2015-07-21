@@ -32,12 +32,20 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
     }
 
     /**
+     * Blank Constructor
+     */
+    private AcceptanceCriteria() {
+        super();
+    }
+
+    /**
      * Basic constructor
      *
      * @param description the description of the AC
      * @param story       the AC belongs to
      */
     public AcceptanceCriteria(String description, Story story) {
+        super();
         this.description = description;
         this.state = AcState.UNACCEPTED;
         this.story = story;
@@ -63,6 +71,8 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
 
     /**
      * Get the text
+     *
+     * @return the description of the acceptance criteria
      */
     public String getDescription() {
         return this.description;
@@ -70,6 +80,8 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
 
     /**
      * Gets the state
+     *
+     * @return the state of the acceptance criteria
      */
     public AcState getState() {
         return this.state;
@@ -77,6 +89,8 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
 
     /**
      * Gets the story the AC belongs to
+     *
+     * @return the story of the acceptance criteria
      */
     public Story getStory() {
         return this.story;
@@ -128,6 +142,10 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
         Element acceptanceElement = ReportGenerator.doc.createElement("acceptance-criteria");
 
         //WorkSpace Elements
+        Element acceptanceID = ReportGenerator.doc.createElement("ID");
+        acceptanceID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        acceptanceElement.appendChild(acceptanceID);
+
         Element acceptanceCriteria = ReportGenerator.doc.createElement("description");
         acceptanceCriteria.appendChild(ReportGenerator.doc.createTextNode(description));
         acceptanceElement.appendChild(acceptanceCriteria);
@@ -141,22 +159,38 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
         return acceptanceElement;
     }
 
+    /**
+     * Compares the Acceptance Criteria to another AC (Yet to be fully implemented)
+     * @param ac The AC to compare to
+     * @return An integer representing the result of the comparison
+     */
     @Override
     public int compareTo(AcceptanceCriteria ac) {
         return 0; //TODO
     }
 
+    /**
+     * Returns the items held by the Acceptance Criteria, blank as the AC has no child items.
+     * @return a blank hash set
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }
 
+    /**
+     * A command class for allowing the deletion of Acceptance Criteria from Stories.
+     */
     private class DeleteAcCommand implements Command {
         private AcceptanceCriteria acceptanceCriteria;
         private Story story;
         private boolean oldStoryReady = false;
         private String oldEstimate;
 
+        /**
+         * Constructor for the Acceptance Criteria deletion command.
+         * @param ac The AC to be deleted.
+         */
         DeleteAcCommand(AcceptanceCriteria ac) {
             this.acceptanceCriteria = ac;
             this.story = ac.story;
@@ -166,6 +200,9 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
             }
         }
 
+        /**
+         * Executes the acceptance criteria deletion command.
+         */
         public void execute() {
             story.getAcceptanceCriteria().remove(acceptanceCriteria);
             if (story.getAcceptanceCriteria().isEmpty()) {
@@ -175,6 +212,9 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
             }
         }
 
+        /**
+         * Undoes the acceptance criteria deletion command.
+         */
         public void undo() {
             story.getAcceptanceCriteria().add(acceptanceCriteria);
             story.setReady(oldStoryReady);
@@ -215,6 +255,11 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
         private AcState newAcState;
         private AcState oldAcState;
 
+        /**
+         * Constructor for the Acceptance Criteria state editing command.
+         * @param ac The AC to be edited.
+         * @param newState The new state the AC is in.
+         */
         private EditAcStateCommand(AcceptanceCriteria ac, AcState newState) {
             this.ac = ac;
 
@@ -223,7 +268,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
         }
 
         /**
-         * Executes/Redoes the changes of the story edit
+         * Executes the changes of the story edit
          */
         public void execute() {
             ac.state = newAcState;
@@ -267,6 +312,11 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
         private String newDescription;
         private String oldDescription;
 
+        /**
+         * Constructor for the Acceptance Criteria editing command.
+         * @param ac The AC to be edited.
+         * @param newDesc The new description for the AC.
+         */
         private EditAcCommand(AcceptanceCriteria ac, String newDesc) {
             this.ac = ac;
 
@@ -275,7 +325,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
         }
 
         /**
-         * Executes/Redoes the changes of the story edit
+         * Executes the changes of the story edit
          */
         public void execute() {
             ac.description = newDescription;

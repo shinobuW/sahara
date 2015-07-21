@@ -16,6 +16,10 @@ import seng302.group2.workspace.project.backlog.Backlog;
 public class BacklogInformationSwitchStrategy implements InformationSwitchStrategy {
     transient Logger logger = LoggerFactory.getLogger(BacklogInformationSwitchStrategy.class);
 
+    /**
+     * Sets the main pane to be an instance of the Backlog Scene. 
+     * @param item The SaharaItem for the scene to be constructed with. 
+     */
     @Override
     public void switchScene(SaharaItem item) {
         if (item instanceof Backlog) {
@@ -27,6 +31,11 @@ public class BacklogInformationSwitchStrategy implements InformationSwitchStrate
         }
     }
 
+    /**
+     * Sets the main pane to be an instance of the Backlog Edit Scene.
+     * @param item The SaharaItem for the scene to be constructed with.
+     * @param editScene Whether the edit scene is to be shown.
+     */
     @Override
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Backlog) {

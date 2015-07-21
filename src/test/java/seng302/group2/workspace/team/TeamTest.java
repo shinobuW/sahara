@@ -7,10 +7,13 @@ package seng302.group2.workspace.team;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.time.LocalDate;
@@ -30,9 +33,9 @@ public class TeamTest {
     @Test
     public void testTeamConstructors() {
         Team team = new Team();
-        Assert.assertEquals("unnamed", team.getShortName());
+        Assert.assertEquals("Untitled Team", team.getShortName());
         Assert.assertEquals("", team.getDescription());
-        Assert.assertEquals("unnamed", team.toString());
+        Assert.assertEquals("Untitled Team", team.toString());
         Assert.assertEquals(null, team.getChildren());
         Assert.assertEquals(null, team.getScrumMaster());
         Assert.assertEquals(null, team.getProductOwner());
@@ -62,7 +65,7 @@ public class TeamTest {
         Assert.assertEquals("Arctic Falcon", team.toString());
 
         Assert.assertEquals("Chardonnay", team.getProductOwner().getShortName());
-        Assert.assertEquals("unnamed", team.getScrumMaster().getShortName());
+        Assert.assertEquals("Untitled Person", team.getScrumMaster().getShortName());
         //Setting Team and People Roles should be seperate
         //Assert.assertEquals(RoleType.PRODUCT_OWNER, team.getProductOwner().getRole().getType());
         //Assert.assertEquals(RoleType.SCRUM_MASTER, team.getScrumMaster().getRole().getType());
@@ -76,13 +79,13 @@ public class TeamTest {
         Team team = new Team();
         Person person = new Person();
 
-        team.add(person, true);
+        team.add(person);
         Assert.assertTrue(team.getPeople().contains(person));
 
         team.getPeople().remove(person);
         Assert.assertFalse(team.getPeople().contains(person));
 
-        team.add(person, true);
+        team.add(person);
         Assert.assertTrue(team.getPeople().contains(person));
 
         team.getPeople().remove(person);
@@ -120,6 +123,19 @@ public class TeamTest {
         Assert.assertFalse(ateam.isUnassignedTeam());
     }
 
+    /**
+     * Test the method which returns the current allocations
+     */
+    @Test
+    public void testGetCurrentAllocations() {
+        Team team = new Team();
+        Project proj = new Project();
+        Allocation allocToday = new Allocation(proj, team, LocalDate.now(), LocalDate.now());
+        proj.add(allocToday);
+
+        Assert.assertEquals(allocToday, team.getCurrentAllocation());
+    }
+
 
     /**
      * Tests that a team properly prepares for serialization
@@ -132,7 +148,7 @@ public class TeamTest {
         testTeam.getSerializablePeople().clear();
         Assert.assertTrue(testTeam.getSerializablePeople().isEmpty());
 
-        testTeam.add(testPerson, true);
+        testTeam.add(testPerson);
         testTeam.prepSerialization();
 
         Assert.assertTrue(testTeam.getSerializablePeople().contains(testPerson));
@@ -268,4 +284,153 @@ public class TeamTest {
         Assert.assertNull(team.getProductOwner());
 
     }
+
+    /**
+     * Tests for Teams' XML generator method for when the team doesn't have allocations or People.
+     */
+    @Test
+    public void testGenerateXML() {
+        new ReportGenerator();
+        Team team = new Team("shortname", "description");
+
+        Element teamElement = team.generateXML();
+        Assert.assertEquals("[#text: shortname]", teamElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(3).getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(4).getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(5).getChildNodes().getLength());
+        Assert.assertEquals("[product-owner: null]", teamElement.getChildNodes().item(6).toString());
+        Assert.assertEquals("[scrum-master: null]", teamElement.getChildNodes().item(7).toString());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(8).getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(9).getChildNodes().getLength());
+        Assert.assertEquals(10, teamElement.getChildNodes().getLength());
+    }
+
+    /**
+     * Tests for Teams' XML generator method for when the team doesn't have allocations.
+     */
+    @Test
+    public void testGenerateXMLPeople() {
+        new ReportGenerator();
+        Team team = new Team("shortname", "description");
+        Person productOwner = new Person();
+        Person scrumMaster = new Person();
+        Person dev1 = new Person();
+        dev1.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
+        Person dev2 = new Person();
+        dev2.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
+        Person other1 = new Person();
+        Person other2 = new Person();
+        Person other3 = new Person();
+        Person other4 = new Person();
+
+        team.setProductOwner(productOwner);
+        team.setScrumMaster(scrumMaster);
+        team.add(dev1);
+        team.add(dev2);
+        team.add(other1);
+        team.add(other2);
+        team.add(other3);
+        team.add(other4);
+
+        Element teamElement = team.generateXML();
+        Assert.assertEquals("[#text: shortname]", teamElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(3).getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(4).getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(5).getChildNodes().getLength());
+        Assert.assertEquals(1, teamElement.getChildNodes().item(6).getChildNodes().getLength());
+        Assert.assertEquals(1, teamElement.getChildNodes().item(7).getChildNodes().getLength());
+        Assert.assertEquals(2, teamElement.getChildNodes().item(8).getChildNodes().getLength());
+        Assert.assertEquals(4, teamElement.getChildNodes().item(9).getChildNodes().getLength());
+        Assert.assertEquals(10, teamElement.getChildNodes().getLength());
+    }
+
+    /**
+     * Tests for Teams' XML generator method for when the team doesn't have People.
+     */
+    @Test
+    public void testGenerateXMLAllocations() {
+        new ReportGenerator();
+        Team team = new Team("shortname", "description");
+
+        Allocation pastAllocation1 = new Allocation(new Project(), team, LocalDate.of(1994, Month.DECEMBER, 01), LocalDate.of(1994, Month.DECEMBER, 02));
+        Allocation pastAllocation2 = new Allocation(new Project(), team, LocalDate.of(1994, Month.DECEMBER, 01), LocalDate.of(1994, Month.DECEMBER, 02));
+        Allocation currentAllocation = new Allocation(new Project(), team, LocalDate.of(2000, Month.JANUARY, 01), LocalDate.of(3000, Month.JANUARY, 01));
+        Allocation futureAllocation1 = new Allocation(new Project(), team, LocalDate.of(3000, Month.DECEMBER, 31), LocalDate.of(3001, Month.DECEMBER, 31));
+        Allocation futureAllocation2 = new Allocation(new Project(), team, LocalDate.of(3002, Month.DECEMBER, 31), LocalDate.of(3911, Month.DECEMBER, 31));
+
+        team.add(pastAllocation1);
+        team.add(pastAllocation2);
+        team.add(currentAllocation);
+        team.add(futureAllocation1);
+        team.add(futureAllocation2);
+
+        Element teamElement = team.generateXML();
+        Assert.assertEquals("[#text: shortname]", teamElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        Assert.assertEquals(1, teamElement.getChildNodes().item(3).getChildNodes().getLength());
+        Assert.assertEquals(2, teamElement.getChildNodes().item(4).getChildNodes().getLength());
+        Assert.assertEquals(2, teamElement.getChildNodes().item(5).getChildNodes().getLength());
+        Assert.assertEquals("[product-owner: null]", teamElement.getChildNodes().item(6).toString());
+        Assert.assertEquals("[scrum-master: null]", teamElement.getChildNodes().item(7).toString());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(8).getChildNodes().getLength());
+        Assert.assertEquals(0, teamElement.getChildNodes().item(9).getChildNodes().getLength());
+        Assert.assertEquals(10, teamElement.getChildNodes().getLength());
+    }
+
+    /**
+     * Tests for Teams' XML generator method.
+     */
+    @Test
+    public void testGenerateXMLAll() {
+        new ReportGenerator();
+        Team team = new Team("shortname", "description");
+
+        Person productOwner = new Person();
+        Person scrumMaster = new Person();
+        Person dev1 = new Person();
+        dev1.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
+        Person dev2 = new Person();
+        dev2.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
+        Person other1 = new Person();
+        Person other2 = new Person();
+        Person other3 = new Person();
+        Person other4 = new Person();
+
+        Allocation pastAllocation1 = new Allocation(new Project(), team, LocalDate.of(1994, Month.DECEMBER, 01), LocalDate.of(1994, Month.DECEMBER, 02));
+        Allocation pastAllocation2 = new Allocation(new Project(), team, LocalDate.of(1994, Month.DECEMBER, 01), LocalDate.of(1994, Month.DECEMBER, 02));
+        Allocation currentAllocation = new Allocation(new Project(), team, LocalDate.of(2000, Month.JANUARY, 01), LocalDate.of(3000, Month.JANUARY, 01));
+        Allocation futureAllocation1 = new Allocation(new Project(), team, LocalDate.of(3000, Month.DECEMBER, 31), LocalDate.of(3001, Month.DECEMBER, 31));
+        Allocation futureAllocation2 = new Allocation(new Project(), team, LocalDate.of(3002, Month.DECEMBER, 31), LocalDate.of(3911, Month.DECEMBER, 31));
+
+        team.setProductOwner(productOwner);
+        team.setScrumMaster(scrumMaster);
+        team.add(dev1);
+        team.add(dev2);
+        team.add(other1);
+        team.add(other2);
+        team.add(other3);
+        team.add(other4);
+
+        team.add(pastAllocation1);
+        team.add(pastAllocation2);
+        team.add(currentAllocation);
+        team.add(futureAllocation1);
+        team.add(futureAllocation2);
+
+        Element teamElement = team.generateXML();
+        Assert.assertEquals("[#text: shortname]", teamElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: description]", teamElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        Assert.assertEquals(1, teamElement.getChildNodes().item(3).getChildNodes().getLength());
+        Assert.assertEquals(2, teamElement.getChildNodes().item(4).getChildNodes().getLength());
+        Assert.assertEquals(2, teamElement.getChildNodes().item(5).getChildNodes().getLength());
+        Assert.assertEquals(1, teamElement.getChildNodes().item(6).getChildNodes().getLength());
+        Assert.assertEquals(1, teamElement.getChildNodes().item(7).getChildNodes().getLength());
+        Assert.assertEquals(2, teamElement.getChildNodes().item(8).getChildNodes().getLength());
+        Assert.assertEquals(4, teamElement.getChildNodes().item(9).getChildNodes().getLength());
+        Assert.assertEquals(10, teamElement.getChildNodes().getLength());
+    }
+
+
 }

@@ -66,6 +66,10 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         setInformationSwitchStrategy(new ProjectInformationSwitchStrategy());
     }
 
+    /**
+     * Gets the set of SaharaItems 'belonging' to the Project: Backlogs, Releases, Unallocated Stories, Allocations
+     * @return A set of SaharaItems belonging to the project
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         Set<SaharaItem> items = new HashSet<>();
@@ -566,6 +570,10 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         Element projectElement = ReportGenerator.doc.createElement("project");
 
         //WorkSpace Elements
+        Element projectID = ReportGenerator.doc.createElement("ID");
+        projectID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        projectElement.appendChild(projectID);
+
         Element projectShortName = ReportGenerator.doc.createElement("identifier");
         projectShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
         projectElement.appendChild(projectShortName);
@@ -602,6 +610,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         }
         projectElement.appendChild(teamFutureElements);
 
+        //Generate the children of the Project, ie Releases, Backlogs and Unassigned Stories.
         for (SaharaItem item : this.getChildren()) {
             if (ReportGenerator.generatedItems.contains(item)) {
                 Element xmlElement = item.generateXML();
@@ -767,17 +776,30 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
     }
 
 
+    /**
+     * A command class for allowing the deletion of Projects.
+     */
     private class DeleteProjectCommand implements Command {
         private Project proj;
 
+        /**
+         * Constructor for the project deletion command.
+         * @param proj the project to be deleted.
+         */
         DeleteProjectCommand(Project proj) {
             this.proj = proj;
         }
 
+        /**
+         * Executes the project deletion command.
+         */
         public void execute() {
             Global.currentWorkspace.getProjects().remove(proj);
         }
 
+        /**
+         * Undoes the project deletion command.
+         */
         public void undo() {
             Global.currentWorkspace.getProjects().add(proj);
         }
@@ -800,21 +822,34 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         }
     }
 
-
+    /**
+     * A command class for allowing the adding of Releases to Projects.
+     */
     private class AddReleaseCommand implements Command {
         private Release release;
         private Project proj;
 
+        /**
+         * Constructor for the release addition command.
+         * @param proj The project to which the release is being added.
+         * @param release The release to be added.
+         */
         AddReleaseCommand(Project proj, Release release) {
             this.proj = proj;
             this.release = release;
         }
 
+        /**
+         * Executes the release addition command.
+         */
         public void execute() {
             proj.getReleases().add(release);
             release.setProject(proj);
         }
 
+        /**
+         * Undoes the release addition command.
+         */
         public void undo() {
             proj.getReleases().remove(release);
             release.setProject(null);
@@ -845,20 +880,33 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         }
     }
 
-
+    /**
+     * A command class for allowing the addition of Stories to Projects.
+     */
     private class AddStoryCommand implements Command {
         private Story story;
         private Project proj;
 
+        /**
+         * Constructor for the story addition command.
+         * @param proj The project to which the story is to be added.
+         * @param story The story to be added.
+         */
         AddStoryCommand(Project proj, Story story) {
             this.proj = proj;
             this.story = story;
         }
 
+        /**
+         * Executes the story addition command.
+         */
         public void execute() {
             proj.getUnallocatedStories().add(story);
         }
 
+        /**
+         * Undoes the story addition command.
+         */
         public void undo() {
             proj.getUnallocatedStories().remove(story);
         }
@@ -888,21 +936,34 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         }
     }
 
-
+    /**
+     * A command class for allowing the addition of Backlogs to Projects.
+     */
     private class AddBacklogCommand implements Command {
         private Backlog backlog;
         private Project proj;
 
+        /**
+         * Constructor for the backlog addition command.
+         * @param proj The project to which the backlog is to be added.
+         * @param backlog The backlog to be added.
+         */
         AddBacklogCommand(Project proj, Backlog backlog) {
             this.proj = proj;
             this.backlog = backlog;
         }
 
+        /**
+         * Executes the backlog addition command.
+         */
         public void execute() {
             proj.getBacklogs().add(backlog);
             backlog.setProject(proj);
         }
 
+        /**
+         * Undoes the backlog addition command.
+         */
         public void undo() {
             proj.getBacklogs().remove(backlog);
             backlog.setProject(null);
@@ -933,24 +994,38 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         }
     }
 
-
+    /**
+     * A command class for allowing the addition of Allocations to Projects.
+     */
     private class AddAllocationCommand implements Command {
         private Project proj;
         private Team team;
         private Allocation allocation;
 
+        /**
+         * Constructor for the allocation addition command.
+         * @param proj The project to which the team is allocated.
+         * @param team The team allocated to the project.
+         * @param allocation The allocation to be added.
+         */
         AddAllocationCommand(Project proj, Team team, Allocation allocation) {
             this.proj = proj;
             this.team = team;
             this.allocation = allocation;
         }
 
+        /**
+         * Executes the allocation addition command.
+         */
         public void execute() {
             proj.getTeamAllocations().add(allocation);
             team.getProjectAllocations().add(allocation);
             Collections.sort(allocation.getProject().getTeamAllocations());
         }
 
+        /**
+         * Undoes the allocation addition command.
+         */
         public void undo() {
             proj.getTeamAllocations().remove(allocation);
             team.getProjectAllocations().remove(allocation);

@@ -17,6 +17,10 @@ import java.util.Set;
  * Created by Jordane on 7/06/2015.
  */
 public class SkillsCategory extends Category {
+    
+    /**
+     * Constructor for the SkillsCategory class.
+     */
     public SkillsCategory() {
         super("Skills");
         setCategorySwitchStrategy(new SkillsCategoryCategorySwitchStrategy());
@@ -50,16 +54,27 @@ public class SkillsCategory extends Category {
         return skillElements;
     }
 
+    /**
+     * Returns the items held by the SkillsCategory, blank as the skills category has no child items.
+     * @return a blank hash set
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }
 
+    /**
+     * Returns a list of all the skills in the workspace.
+     * @return An ObservableList of the Skills in the workspace.
+     */
     @Override
     public ObservableList getChildren() {
         return Global.currentWorkspace.getSkills();
     }
 
+    /**
+     * Shows the Skill creation dialog.
+     */
     @Override
     public void showCreationDialog() {
         CreateSkillDialog.show();

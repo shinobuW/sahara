@@ -44,8 +44,8 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
      * Basic Person constructor
      */
     public Person() {
-        super("unnamed");
-        this.shortName = "unnamed";
+        super("Untitled Person");
+        this.shortName = "Untitled Person";
         this.firstName = "firstName";
         this.lastName = "lastName";
         this.email = "";
@@ -358,29 +358,33 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         Element personElement = ReportGenerator.doc.createElement("person");
 
         //WorkSpace Elements
-        Element teamShortName = ReportGenerator.doc.createElement("identifier");
-        teamShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
-        personElement.appendChild(teamShortName);
+        Element personID = ReportGenerator.doc.createElement("ID");
+        personID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        personElement.appendChild(personID);
 
-        Element teamFirstName = ReportGenerator.doc.createElement("first-name");
-        teamFirstName.appendChild(ReportGenerator.doc.createTextNode(firstName));
-        personElement.appendChild(teamFirstName);
+        Element personShortName = ReportGenerator.doc.createElement("identifier");
+        personShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
+        personElement.appendChild(personShortName);
 
-        Element teamLastName = ReportGenerator.doc.createElement("last-name");
-        teamLastName.appendChild(ReportGenerator.doc.createTextNode(lastName));
-        personElement.appendChild(teamLastName);
+        Element personFirstName = ReportGenerator.doc.createElement("first-name");
+        personFirstName.appendChild(ReportGenerator.doc.createTextNode(firstName));
+        personElement.appendChild(personFirstName);
 
-        Element teamEmail = ReportGenerator.doc.createElement("email");
-        teamEmail.appendChild(ReportGenerator.doc.createTextNode(email));
-        personElement.appendChild(teamEmail);
+        Element personLastName = ReportGenerator.doc.createElement("last-name");
+        personLastName.appendChild(ReportGenerator.doc.createTextNode(lastName));
+        personElement.appendChild(personLastName);
 
-        Element teamBirthDate = ReportGenerator.doc.createElement("birth-date");
-        teamBirthDate.appendChild(ReportGenerator.doc.createTextNode(getDateString()));
-        personElement.appendChild(teamBirthDate);
+        Element personEmail = ReportGenerator.doc.createElement("email");
+        personEmail.appendChild(ReportGenerator.doc.createTextNode(email));
+        personElement.appendChild(personEmail);
 
-        Element teamDescription = ReportGenerator.doc.createElement("description");
-        teamDescription.appendChild(ReportGenerator.doc.createTextNode(description));
-        personElement.appendChild(teamDescription);
+        Element personBirthDate = ReportGenerator.doc.createElement("birth-date");
+        personBirthDate.appendChild(ReportGenerator.doc.createTextNode(getDateString()));
+        personElement.appendChild(personBirthDate);
+
+        Element personDescription = ReportGenerator.doc.createElement("description");
+        personDescription.appendChild(ReportGenerator.doc.createTextNode(description));
+        personElement.appendChild(personDescription);
 
         Element skillsElement = ReportGenerator.doc.createElement("skills");
         for (Skill skill : skills) {
@@ -591,21 +595,34 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         }
     }
 
+    /**
+     * A command class for allowing the deletion of people.
+     */
     private class DeletePersonCommand implements Command {
         private Person person;
         private Team team;
 
+        /**
+         * Constructor for the person deletion command.
+         * @param person The person to be deleted.
+         */
         DeletePersonCommand(Person person) {
             this.person = person;
             this.team = person.getTeam();
         }
 
+        /**
+         * Executes the person deletion command.
+         */
         public void execute() {
             team.getPeople().remove(person);
             person.setTeam(null);
             Global.currentWorkspace.getPeople().remove(person);
         }
 
+        /**
+         * Undoes the person deletion command.
+         */
         public void undo() {
             team.getPeople().add(person);
             person.setTeam(team);

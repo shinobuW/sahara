@@ -36,6 +36,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
      * Basic constructor
      */
     public Release() {
+        super("Untitled Release");
         this.shortName = "Untitled Release";
         this.description = "Release without project assigned should not exist";
         this.estimatedDate = LocalDate.now();
@@ -44,6 +45,10 @@ public class Release extends SaharaItem implements Comparable<Release> {
         setInformationSwitchStrategy(new ReleaseInformationSwitchStrategy());
     }
 
+    /**
+     * Returns the items held by the release, blank as the release has no child items.
+     * @return a blank hash set
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
@@ -57,6 +62,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
      * @param project   project to be set
      */
     public Release(String shortName, Project project) {
+        super(shortName);
         this.shortName = shortName;
         this.project = project;
 
@@ -228,6 +234,10 @@ public class Release extends SaharaItem implements Comparable<Release> {
         Element releaseElement = ReportGenerator.doc.createElement("release");
 
         //WorkSpace Elements
+        Element releaseID = ReportGenerator.doc.createElement("ID");
+        releaseID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        releaseElement.appendChild(releaseID);
+
         Element releaseShortName = ReportGenerator.doc.createElement("identifier");
         releaseShortName.appendChild(ReportGenerator.doc.createTextNode(getShortName()));
         releaseElement.appendChild(releaseShortName);
@@ -243,12 +253,19 @@ public class Release extends SaharaItem implements Comparable<Release> {
         return releaseElement;
     }
 
-
+    /**
+     * Returns a list of the children of the release class
+     * @return null (for now)
+     */
     @Override
     public ObservableList<SaharaItem> getChildren() {
         return null;
     }
 
+    /**
+     * The overidden toString method of the Release class.
+     * @return A string representation of the Release.
+     */
     @Override
     public String toString() {
         return this.shortName;
@@ -286,7 +303,15 @@ public class Release extends SaharaItem implements Comparable<Release> {
         private String oldDescription;
         private LocalDate oldEstimatedDate;
         private Project oldProject;
-
+        
+        /**
+         * Constructor for the Release Edit command
+         * @param release The release to be edited
+         * @param newShortName The new short name for the release
+         * @param newDescription The new description for the release
+         * @param newEstimatedDate The new estimated date for the release
+         * @param newProject The new project to which the release is assigned
+         */
         private ReleaseEditCommand(Release release, String newShortName, String newDescription,
                                    LocalDate newEstimatedDate, Project newProject) {
             this.release = release;
@@ -355,21 +380,34 @@ public class Release extends SaharaItem implements Comparable<Release> {
         }
     }
 
+    /**
+     * A command class for allowing the deletion of Releases.
+     */
     private class DeleteReleaseCommand implements Command {
         private Release release;
         private Project proj;
 
+        /**
+         * Constructor for the release deletion command
+         * @param release The release to be deleted.
+         */
         DeleteReleaseCommand(Release release) {
             this.release = release;
             this.proj = release.getProject();
         }
 
+        /**
+         * Executes the release deletion command.
+         */
         public void execute() {
             System.out.println("Exec Release Delete");
             proj.getReleases().remove(release);
             //release.setProject(null);
         }
 
+        /**
+         * Undoes the release deletion command.
+         */
         public void undo() {
             System.out.println("Undone Release Delete");
             proj.getReleases().add(release);

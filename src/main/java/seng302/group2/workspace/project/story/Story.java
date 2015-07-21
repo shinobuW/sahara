@@ -1,7 +1,7 @@
 package seng302.group2.workspace.project.story;
 
 import javafx.collections.ObservableList;
-import org.apache.commons.lang.builder.EqualsBuilder;
+import javafx.scene.paint.Color;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.StoryInformationSwitchStrategy;
@@ -29,6 +29,7 @@ public class Story extends SaharaItem implements Serializable {
     public static Comparator<Story> StoryPriorityComparator = (story1, story2) -> {
         return story2.getPriority().compareTo(story1.getPriority());
     };
+
     /**
      * A comparator that returns the comparison of two story's short names
      */
@@ -55,10 +56,15 @@ public class Story extends SaharaItem implements Serializable {
     public static String stateReady = "Ready";
     public static String stateNotReady = "Not Ready";
 
+    public static Color greenHighlight = Color.color(0.4, 1, 0, 0.4);
+    public static Color orangeHighlight = Color.color(1, 0.6, 0, 0.4);
+    public static Color redHighlight = Color.color(1, 0, 0, 0.4);
+
     /**
      * Basic Story constructor
      */
     public Story() {
+        super("Untitled Story");
         this.shortName = "Untitled Story";
         this.longName = "Untitled Story";
         this.description = "";
@@ -70,6 +76,10 @@ public class Story extends SaharaItem implements Serializable {
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }
 
+    /**
+     * Gets the set of SaharaItems 'belonging' to the Story (It's Acceptance Criteria).
+     * @return A set of SaharaItems belonging to the story
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         Set<SaharaItem> items = new HashSet<>();
@@ -93,6 +103,7 @@ public class Story extends SaharaItem implements Serializable {
      */
     public Story(String shortName, String longName, String description, String creator,
                  Project project, Integer priority) {
+        super(shortName);
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
@@ -234,6 +245,7 @@ public class Story extends SaharaItem implements Serializable {
     /**
      * Sets the dependant stories this story has.
      *
+     * @param story A story this story is dependent on
      */
     public void setDependants(Story story) {
 
@@ -245,12 +257,12 @@ public class Story extends SaharaItem implements Serializable {
      */
     public void setHighlightColour() {
         Boolean red = false;
-        for (Story story : this.dependentOnThis) {
+        for (Story story : this.dependentOn) {
             if (story.priority < this.priority) {
                 red = true;
             }
         }
-        if (red == true) {
+        if (red) {
             this.colour = STORYCOLOUR.RED;
         }
         else if (this.ready) {
@@ -265,6 +277,20 @@ public class Story extends SaharaItem implements Serializable {
         }
     }
 
+
+    /**
+     * Converts a JavaFX colour into an html/web colour string (including opacity)
+     * @param color The colour to convert
+     * @return The web equivalent of the colour
+     */
+    public static String toRGBCode(Color color) {
+        return String.format("#%02X%02X%02X%02X",
+                (int)(color.getRed() * 255),
+                (int)(color.getGreen() * 255),
+                (int)(color.getBlue() * 255),
+                (int)(color.getOpacity() * 255));
+    }
+
     /**
      * Gets the string form of the story colour t
      * @return the colour of the story in highlight mode
@@ -273,11 +299,11 @@ public class Story extends SaharaItem implements Serializable {
         this.setHighlightColour();
         switch (colour) {
             case GREEN:
-                return "#aaffaa";
+                return toRGBCode(greenHighlight);//"#aaffaa";
             case ORANGE:
-                return "orange";
+                return toRGBCode(orangeHighlight);
             case RED:
-                return "#ffaaaa";
+                return toRGBCode(redHighlight);//"#fd4949";
             case DEFAULT:
                 return "transparent";
             default:
@@ -287,6 +313,8 @@ public class Story extends SaharaItem implements Serializable {
 
     /**
      * Removes the dependants this story has.
+     *
+     * @param story Story to remove the dependents from
      */
     public void removeDependants(Story story) {
         this.dependentOn.remove(story);
@@ -295,6 +323,7 @@ public class Story extends SaharaItem implements Serializable {
     /**
      * Removes the dependentOnThis this story has.
      *
+     * @param story the story to have its dependentOnThis removed.
      */
     public void removeDependencies(Story story) {
         this.dependentOnThis.remove(story);
@@ -312,8 +341,9 @@ public class Story extends SaharaItem implements Serializable {
     /**
      * Sets the dependentOnThis this story has.
      *
+     * @param story The story for which its dependentOnThis field is to be set.
      */
-    public void setDependentOnThis(Story story) {
+    public void addDependentOnThis(Story story) {
         this.dependentOnThis.add(story);
     }
 
@@ -328,6 +358,8 @@ public class Story extends SaharaItem implements Serializable {
 
     /**
      * Gets the estimate value of this story
+     *
+     * @return The estimate value of the story.
      */
     public String getEstimate() {
         return this.estimate;
@@ -371,6 +403,8 @@ public class Story extends SaharaItem implements Serializable {
 
     /**
      * Gets the acceptance criteria of this story
+     *
+     * @return the acceptance criteria of the story
      */
     public ObservableList<AcceptanceCriteria> getAcceptanceCriteria() {
         return this.acceptanceCriteria;
@@ -424,6 +458,10 @@ public class Story extends SaharaItem implements Serializable {
         Element storyElement = ReportGenerator.doc.createElement("story");
 
         //WorkSpace Elements
+        Element storyID = ReportGenerator.doc.createElement("ID");
+        storyID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        storyElement.appendChild(storyID);
+
         Element storyShortName = ReportGenerator.doc.createElement("identifier");
         storyShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
         storyElement.appendChild(storyShortName);
@@ -448,12 +486,12 @@ public class Story extends SaharaItem implements Serializable {
         storyEstimate.appendChild(ReportGenerator.doc.createTextNode(estimate));
         storyElement.appendChild(storyEstimate);
 
-        Element storyReady = ReportGenerator.doc.createElement("ready");
+        Element storyReady = ReportGenerator.doc.createElement("ready_state");
         if (ready) {
-            storyReady.appendChild(ReportGenerator.doc.createTextNode("true"));
+            storyReady.appendChild(ReportGenerator.doc.createTextNode("Ready"));
         }
         else {
-            storyReady.appendChild(ReportGenerator.doc.createTextNode("false"));
+            storyReady.appendChild(ReportGenerator.doc.createTextNode("Not Ready"));
         }
         storyElement.appendChild(storyReady);
 
@@ -501,12 +539,14 @@ public class Story extends SaharaItem implements Serializable {
      * the story with the new parameter values.
      *
      * @param newShortName   The new short name
+     * @param newLongName    The new long name
      * @param newDescription The new description
      * @param newProject     The new project
      * @param newPriority    The new priority
      * @param newBacklog     The new backlog
      * @param newEstimate    The new estimate
      * @param newReady       The new ready state
+     * @param newDependentOn The new dependent ons
      */
     public void edit(String newShortName, String newLongName, String newDescription,
                      Project newProject, Integer newPriority, Backlog newBacklog, String newEstimate,
@@ -550,7 +590,20 @@ public class Story extends SaharaItem implements Serializable {
         private String oldEstimate;
         private boolean oldReady;
         private Collection<Story> oldDependentOn;
-
+        
+        /**
+         * Constructor for the Story Edit command.
+         * @param story The story to be edited
+         * @param newShortName The new short name for the story
+         * @param newLongName The new long name for the story
+         * @param newDescription The new description of the story
+         * @param newProject The new project to which the story belongs
+         * @param newPriority The new priority value for the story
+         * @param newBacklog The new backlog to which the story belongs
+         * @param newEstimate The new estimate value for the story
+         * @param newReady The story's new readiness state
+         * @param newDependentOn The new list of stories the story is dependant on
+         */
         private StoryEditCommand(Story story, String newShortName, String newLongName,
                                  String newDescription, Project newProject, Integer newPriority,
                                  Backlog newBacklog, String newEstimate, boolean newReady, List<Story> newDependentOn) {
@@ -621,7 +674,6 @@ public class Story extends SaharaItem implements Serializable {
             removedDependencies.removeAll(dependentOn);
             addedDependencies.addAll(dependentOn);
             addedDependencies.removeAll(oldDependentOn);
-            System.out.println("depends on now: " + dependentOn);
 
             for (Story removedStory : removedDependencies) {
                 removedStory.dependentOnThis.remove(story);
@@ -629,8 +681,6 @@ public class Story extends SaharaItem implements Serializable {
             for (Story addedStory : addedDependencies) {
                 addedStory.dependentOnThis.add(story);
             }
-            System.out.println("added: " + addedDependencies);
-            System.out.println("removed: " + removedDependencies);
         }
 
         /**
@@ -806,16 +856,27 @@ public class Story extends SaharaItem implements Serializable {
         private Story story;
         private AcceptanceCriteria ac;
 
+        /**
+         * Constructor for the acceptance criteria addition command
+         * @param story The story to which the acceptance criteria is to be added
+         * @param ac The acceptance criteria to be added
+         */
         AddAcceptanceCriteriaCommand(Story story, AcceptanceCriteria ac) {
             this.story = story;
             this.ac = ac;
         }
 
+        /**
+         * Executes the acceptance criteria addition command
+         */
         public void execute() {
             story.getAcceptanceCriteria().add(ac);
             ac.setStory(story);
         }
 
+        /**
+         * Undoes the acceptance criteria addition command
+         */
         public void undo() {
             story.getAcceptanceCriteria().remove(ac);
             ac.setStory(null);

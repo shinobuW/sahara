@@ -49,7 +49,7 @@ public class TeamInfoTab extends Tab {
             for (SaharaItem person : Global.currentWorkspace.getPeople()) {
                 Person castedPerson = (Person) person;
                 if (castedPerson.getTeam() == null) {
-                    currentTeam.add(castedPerson, false);
+                    currentTeam.add(castedPerson);
                 }
             }
         }

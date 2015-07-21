@@ -10,6 +10,11 @@ import seng302.group2.workspace.project.Project;
  * @author jml168
  */
 public class ProjectScene extends TrackedTabPane {
+    /**
+     * Constructor for the Project Scene tab
+     * 
+     * @param currentProject The currently selected project. 
+     */
     public ProjectScene(Project currentProject) {
         super(ContentScene.PROJECT);
 

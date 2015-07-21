@@ -47,6 +47,9 @@ public class CumulativeCommand implements Command {
         return commands.size();
     }
 
+    /**
+     * Executes the Command
+     */
     @Override
     public void execute() {
         for (Command command : commands) {
@@ -54,6 +57,9 @@ public class CumulativeCommand implements Command {
         }
     }
 
+    /**
+     * Undoes the Command
+     */
     @Override
     public void undo() {
         for (Command command : commands) {
@@ -61,6 +67,11 @@ public class CumulativeCommand implements Command {
         }
     }
 
+    /**
+     * Searches the stateObjects to find an equal model class to map to
+     * @param stateObjects A set of objects to search through
+     * @return If the item was successfully mapped
+     */
     @Override
     public boolean map(Set<SaharaItem> stateObjects) {
         boolean result = true;

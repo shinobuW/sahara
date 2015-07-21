@@ -20,9 +20,9 @@ public class SkillTest {
     @Test
     public void testSkillConstructors() {
         Skill skill = new Skill();
-        Assert.assertEquals("unnamed", skill.getShortName());
+        Assert.assertEquals("Untitled Skill", skill.getShortName());
         Assert.assertEquals("no description", skill.getDescription());
-        Assert.assertEquals("unnamed", skill.toString());
+        Assert.assertEquals("Untitled Skill", skill.toString());
         Assert.assertEquals(null, skill.getChildren());
 
         Skill skill2 = new Skill("C#", "A better language than Java");
@@ -97,10 +97,8 @@ public class SkillTest {
         Skill skill = new Skill("C#", "A better language than Java");
 
         Element skillElement = skill.generateXML();
-        Assert.assertEquals("[#text: C#]", skillElement.getChildNodes().item(0).getChildNodes().item(0).toString());
-        ;
-        Assert.assertEquals("[#text: A better language than Java]", skillElement.getChildNodes().item(1).getChildNodes().item(0).toString());
-        ;
-        Assert.assertEquals(2, skillElement.getChildNodes().getLength());
+        Assert.assertEquals("[#text: C#]", skillElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: A better language than Java]", skillElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        Assert.assertEquals(3, skillElement.getChildNodes().getLength());
     }
 }

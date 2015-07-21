@@ -23,7 +23,6 @@ public class CommandManager {
      */
     public void setUndos(Stack<Command> undos) {
         this.undos = undos;
-        //System.out.println("added: " + command.toString());
     }
 
 
@@ -37,7 +36,6 @@ public class CommandManager {
         command.execute();
         undos.push(command);
         redos.clear();
-        //System.out.println("added: " + command.toString());
     }
 
     /**

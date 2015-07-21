@@ -10,6 +10,10 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy
  * Created by jml168 on 7/06/15.
  */
 public class PersonCategorySwitchStrategy implements CategorySwitchStrategy {
+    
+    /**
+     * Sets the Main Pane to be an instance of the PersonCategoryScene.
+     */
     @Override
     public void switchScene() {
         App.mainPane.setContent(new PersonCategoryScene(Global.currentWorkspace));

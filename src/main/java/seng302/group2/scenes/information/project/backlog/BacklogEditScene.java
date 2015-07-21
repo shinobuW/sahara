@@ -34,6 +34,11 @@ public class BacklogEditScene extends ScrollPane {
     private CustomTextArea descriptionField;
     private CustomComboBox scaleComboBox;
 
+    /**
+     * Constructor for the Backlog Edit Scene
+     * 
+     * @param baseBacklog the currently selected backlog
+     */
     public BacklogEditScene(Backlog baseBacklog) {
         // Init
         this.baseBacklog = baseBacklog;

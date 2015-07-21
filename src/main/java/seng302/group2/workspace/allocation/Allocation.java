@@ -25,6 +25,21 @@ public class Allocation extends SaharaItem implements Serializable, Comparable<A
     private Project project;
     private Team team;
 
+    /**
+     * Blank constructor
+     */
+    private Allocation() {
+        super();
+    }
+
+    /**
+     * Constructor for the Allocation model class. Allocations hold information about the projects teams are assigned
+     * to, with the start and end dates of such assignations.
+     * @param project The project to which the team is assigned.
+     * @param team The team which is assigned to the project.
+     * @param startDate The start date of the allocation.
+     * @param endDate The end date of the allocation.
+     */
     public Allocation(Project project, Team team, LocalDate startDate, LocalDate endDate) {
         this.project = project;
         this.team = team;
@@ -141,6 +156,10 @@ public class Allocation extends SaharaItem implements Serializable, Comparable<A
         Element allocationElement = ReportGenerator.doc.createElement("allocation");
 
         //WorkSpace Elements
+        Element allocationID = ReportGenerator.doc.createElement("ID");
+        allocationID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        allocationElement.appendChild(allocationID);
+
         Element allocatedTeam = ReportGenerator.doc.createElement("team-name");
         allocatedTeam.appendChild(ReportGenerator.doc.createTextNode(team.toString()));
         allocationElement.appendChild(allocatedTeam);
@@ -173,6 +192,10 @@ public class Allocation extends SaharaItem implements Serializable, Comparable<A
         return allocationStartDate.compareTo(allocation2StarDate);
     }
 
+    /**
+     * Returns the items held by the allocation, blank as the allocation has no child items.
+     * @return a blank hash set
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
@@ -204,6 +227,9 @@ public class Allocation extends SaharaItem implements Serializable, Comparable<A
 //        return alloc1.getEndDate().compareTo(alloc2.getEndDate());
 //    };
 
+    /**
+     * A class for allowing allocations to be undone/redone following the command pattern.
+     */
     private class AllocationEditCommand implements Command {
         private Allocation allocation;
 
@@ -213,7 +239,12 @@ public class Allocation extends SaharaItem implements Serializable, Comparable<A
         private LocalDate oldStartDate;
         private LocalDate oldEndDate;
 
-
+        /**
+         * Constructor for the Allocation edit command.
+         * @param alloc The allocation to be edited.
+         * @param newStartDate The new start date
+         * @param newEndDate The new end date
+         */
         protected AllocationEditCommand(Allocation alloc, LocalDate newStartDate,
                                         LocalDate newEndDate) {
             this.allocation = alloc;
@@ -262,23 +293,38 @@ public class Allocation extends SaharaItem implements Serializable, Comparable<A
         }
     }
 
-
+    /**
+     * A class for allowing the deletion of allocations, and the undoing/redoing of this action using the
+     * command pattern.
+     */
     private class DeleteAllocationCommand implements Command {
         private Allocation allocation;
         private Project project;
         private Team team;
-
+        
+        /**
+         * Constructor for the allocation deletion command.
+         * @param allocation The allocation to be deleted.
+         * @param project The project the allocation belongs to
+         * @param team The team the allocation is for
+         */
         DeleteAllocationCommand(Allocation allocation, Project project, Team team) {
             this.allocation = allocation;
             this.project = project;
             this.team = team;
         }
 
+        /**
+         * Executes the command
+         */
         public void execute() {
             team.getProjectAllocations().remove(allocation);
             project.getTeamAllocations().remove(allocation);
         }
 
+        /**
+         * Undoes the command
+         */
         public void undo() {
             team.getProjectAllocations().add(allocation);
             project.getTeamAllocations().add(allocation);

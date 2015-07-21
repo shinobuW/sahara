@@ -4,7 +4,6 @@
 package seng302.group2.workspace.team;
 
 import javafx.collections.ObservableList;
-import org.apache.commons.lang.builder.EqualsBuilder;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.TeamInformationSwitchStrategy;
@@ -47,14 +46,18 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      * Basic Team constructor
      */
     public Team() {
-        super("unnamed");
-        this.shortName = "unnamed";
+        super("Untitled Team");
+        this.shortName = "Untitled Team";
         this.description = "";
         this.project = null;
 
         setInformationSwitchStrategy(new TeamInformationSwitchStrategy());
     }
 
+    /**
+     * Gets the set of SaharaItems 'belonging' to the Team: People, those in Dev roles, and its allocations
+     * @return A set of SaharaItems belonging to the team
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         Set<SaharaItem> items = new HashSet<>();
@@ -261,9 +264,9 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         Allocation currentAllocation = null;
         LocalDate now = LocalDate.now();
         for (Allocation allocation : this.getProjectAllocations()) {
-            if (allocation.getStartDate().isBefore(now)
+            if ((allocation.getStartDate().isBefore(now) || allocation.getStartDate().isEqual(LocalDate.now()))
                     && (allocation.getEndDate() == null
-                    || allocation.getEndDate().isAfter(now))) {
+                    || allocation.getEndDate().isAfter(now) || allocation.getEndDate().isEqual(LocalDate.now()))) {
                 currentAllocation = allocation;
             }
         }
@@ -272,20 +275,10 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
 
     /**
      * Adds a Person to the Teams list of Members
+     *  @param person The person to add
      *
-     * @param person The person to add
-     * @param undo   Whether to create an undo item for adding the person
      */
-    public void add(Person person, Boolean undo) {
-//        // Add the undo action to the stack
-//        if (undo)
-//        {
-//            Global.undoRedoMan.add(new UndoableItem(
-//                    person,
-//                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this),
-//                    new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.PERSON_ADD_TEAM, this)
-//            ));
-//        }
+    public void add(Person person) {
         this.people.add(person);
     }
 
@@ -369,6 +362,10 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         Element teamElement = ReportGenerator.doc.createElement("team");
 
         //WorkSpace Elements
+        Element teamID = ReportGenerator.doc.createElement("ID");
+        teamID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        teamElement.appendChild(teamID);
+
         Element teamShortName = ReportGenerator.doc.createElement("identifier");
         teamShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
         teamElement.appendChild(teamShortName);
@@ -376,23 +373,13 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         Element teamDescription = ReportGenerator.doc.createElement("description");
         teamDescription.appendChild(ReportGenerator.doc.createTextNode(description));
         teamElement.appendChild(teamDescription);
-        System.out.println(getProjectAllocations());
+
+        Element currentAllocations = ReportGenerator.doc.createElement("current-allocation");
         if (getCurrentAllocation() != null) {
-            Element projectAllocatedTo = ReportGenerator.doc.createElement("assigned-project");
-            projectAllocatedTo.appendChild(ReportGenerator.doc.createTextNode(getCurrentAllocation()
-                    .getProject().toString()));
-            teamElement.appendChild(projectAllocatedTo);
-
-            Element teamStartDate = ReportGenerator.doc.createElement("current-allocation-start");
-            teamStartDate.appendChild(ReportGenerator.doc.createTextNode(this.getCurrentAllocation()
-                    .getStartDate().format(Global.dateFormatter)));
-            teamElement.appendChild(teamStartDate);
-
-            Element teamEndDate = ReportGenerator.doc.createElement("current-allocation-end");
-            teamEndDate.appendChild(ReportGenerator.doc.createTextNode(this.getCurrentAllocation()
-                    .getEndDate().format(Global.dateFormatter)));
-            teamElement.appendChild(teamEndDate);
+            Element currentAllocation = getCurrentAllocation().generateXML();
+            currentAllocations.appendChild(currentAllocation);
         }
+        teamElement.appendChild(currentAllocations);
 
         Element projectPreviousElements = ReportGenerator.doc.createElement("previous-allocations");
         for (Allocation allocation : this.getPastAllocations()) {
@@ -712,6 +699,11 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             }
         }
 
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped_team = false;
@@ -796,16 +788,25 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         }
     }
 
-
+    /**
+     * A command class for allowing the deletion of Teams
+     */
     private class DeleteTeamCommand implements Command {
         private Team team;
         private List<Person> members;
 
+        /**
+         * Constructor of the team deletion command
+         * @param team The team to be deleted
+         */
         DeleteTeamCommand(Team team) {
             this.team = team;
             this.members = team.getPeople();
         }
 
+        /**
+         * Executes the team deletion command
+         */
         public void execute() {
             Global.currentWorkspace.getTeams().remove(team);
             for (Person member : members) {
@@ -813,6 +814,9 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             }
         }
 
+        /**
+         * Undoes the team deletion command
+         */
         public void undo() {
             for (Person member : members) {
                 member.setTeam(team);
@@ -820,6 +824,11 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             Global.currentWorkspace.getTeams().add(team);
         }
 
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
@@ -845,10 +854,18 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         }
     }
 
+    /**
+     * A class for allowing the cascading deletion of the members of a team upon the teams deletion
+     */
     private class DeleteTeamCascadingCommand implements Command {
         private Team team;
         private List<Person> members = new ArrayList<>();
 
+        /**
+         * Constructor for the cascading team deletion command
+         * @param team The team to be deleted
+         * @param ws The workspace to which the team belonged
+         */
         DeleteTeamCascadingCommand(Team team, Workspace ws) {
             this.team = team;
             for (Person p : team.getPeople()) {
@@ -856,6 +873,9 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             }
         }
 
+        /**
+         * Executes the cascading team deletion command
+         */
         public void execute() {
             for (Person member : members) {
                 Global.currentWorkspace.getPeople().remove(member);
@@ -863,6 +883,9 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             Global.currentWorkspace.getTeams().remove(team);
         }
 
+        /**
+         * Undoes the team deletion command
+         */
         public void undo() {
             System.out.println("Undone Team Casc Delete");
             for (Person member : members) {
@@ -871,6 +894,11 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             Global.currentWorkspace.getTeams().add(team);
         }
 
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
@@ -896,25 +924,44 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         }
     }
 
+    /**
+     * A command class for allowing the addition of People to Teams
+     */
     private class AddPersonCommand implements Command {
         private Person person;
         private Team team;
 
+        /**
+         * Constructor for the person addition command
+         * @param team The team to which the person is added
+         * @param person The person to be added
+         */
         AddPersonCommand(Team team, Person person) {
             this.person = person;
             this.team = team;
         }
 
+        /**
+         * Executes the person addition command
+         */
         public void execute() {
             team.getPeople().add(person);
             person.setTeam(team);
         }
 
+        /**
+         * Undoes the person addition command
+         */
         public void undo() {
             team.getPeople().remove(person);
             person.setTeam(team);
         }
 
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped_team = false;
@@ -935,27 +982,47 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         }
     }
 
+    /**
+     * A command class for allowing the addition of Allocations to Teams
+     */
     private class AddAllocationCommand implements Command {
         private Project proj;
         private Team team;
         private Allocation allocation;
 
+        /**
+         * Constructor for the allocation addition command
+         * @param proj The project to which the team is allocated
+         * @param team The team to be allocated
+         * @param allocation The allocation to be added
+         */
         AddAllocationCommand(Project proj, Team team, Allocation allocation) {
             this.proj = proj;
             this.team = team;
             this.allocation = allocation;
         }
 
+        /**
+         * Executes the allocation addition command
+         */
         public void execute() {
             proj.getTeamAllocations().add(allocation);
             team.getProjectAllocations().add(allocation);
         }
 
+        /**
+         * Undoes the allocation addition command
+         */
         public void undo() {
             proj.getTeamAllocations().remove(allocation);
             team.getProjectAllocations().remove(allocation);
         }
 
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped_team = false;

@@ -15,6 +15,12 @@ import seng302.group2.workspace.project.release.Release;
  * @author jml168
  */
 public class ReleaseScene extends TrackedTabPane {
+    
+    /**
+     * Constuctor for the Release Scene. Creates an instance of the ReleaseInfoTab class and displays it.
+     * 
+     * @param currentRelease The currently selected Release
+     */
     public ReleaseScene(Release currentRelease) {
         super(ContentScene.RELEASE);
 

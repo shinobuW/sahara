@@ -3,7 +3,9 @@ package seng302.group2.workspace.project.backlog;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.categories.Category;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -146,7 +148,6 @@ public class BacklogTest {
         Assert.assertEquals("Fibonacci", backlog.getScale());
         Assert.assertTrue(backlog.getStories().contains(oldStory));
 
-        System.out.println(backlog.getStories());
         Assert.assertEquals(1, backlog.getStories().size());
         Assert.assertFalse(story.getBacklog() == backlog);
         Assert.assertTrue(oldStory.getBacklog() == backlog);
@@ -200,4 +201,48 @@ public class BacklogTest {
 //        Assert.assertTrue(backlog.getStories().contains(story2));
 //        Assert.assertEquals(2, backlog.getStories().size());
     }
+
+    /**
+     * Tests for Backlogs' XML generator method for when the backlog doesn't have any stories.
+     */
+    @Test
+    public void testGenerateXML() {
+        new ReportGenerator();
+        Backlog backlog = new Backlog("shortname", "longname", "description", new Person(), new Project(), "thing");
+
+        Element backlogElement = backlog.generateXML();
+        Assert.assertEquals("[#text: shortname]", backlogElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: longname]", backlogElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: description]", backlogElement.getChildNodes().item(3).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: Untitled Person]", backlogElement.getChildNodes().item(4).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: thing]", backlogElement.getChildNodes().item(5).getChildNodes().item(0).toString());
+        Assert.assertEquals(0, backlogElement.getChildNodes().item(6).getChildNodes().getLength());
+        Assert.assertEquals(7, backlogElement.getChildNodes().getLength());
+
+    }
+
+    /**
+     * Tests for Backlogs' XML generator method for when the backlog has stories.
+     */
+    @Test
+    public void testGenerateXMLStories() {
+        new ReportGenerator();
+        Backlog backlog = new Backlog("shortname", "longname", "description", new Person(), new Project(), "thing");
+        Story story1 = new Story();
+        Story story2 = new Story();
+        backlog.add(story1);
+        backlog.add(story2);
+
+        Element backlogElement = backlog.generateXML();
+        Assert.assertEquals("[#text: shortname]", backlogElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: longname]", backlogElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: description]", backlogElement.getChildNodes().item(3).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: Untitled Person]", backlogElement.getChildNodes().item(4).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: thing]", backlogElement.getChildNodes().item(5).getChildNodes().item(0).toString());
+        Assert.assertEquals(2, backlogElement.getChildNodes().item(6).getChildNodes().getLength());
+        Assert.assertEquals(7, backlogElement.getChildNodes().getLength());
+    }
+
+
+
 }

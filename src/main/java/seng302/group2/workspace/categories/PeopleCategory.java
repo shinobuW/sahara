@@ -16,6 +16,10 @@ import java.util.Set;
  * Created by Jordane on 7/06/2015.
  */
 public class PeopleCategory extends Category {
+    
+    /**
+     * Constructor for the PeopleCategory class.
+     */
     public PeopleCategory() {
         super("People");
         setCategorySwitchStrategy(new PersonCategorySwitchStrategy());
@@ -40,16 +44,27 @@ public class PeopleCategory extends Category {
         return peopleElements;
     }
 
+    /**
+     * Returns the items held by the PeopleCategory, blank as the people category has no child items.
+     * @return a blank hash set
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }
 
+    /**
+     * Returns a list of all the people in the workspace.
+     * @return An ObservableList of the People in the workspace.
+     */
     @Override
     public ObservableList getChildren() {
         return Global.currentWorkspace.getPeople();
     }
 
+    /**
+     * Shows the Person creation dialog.
+     */
     @Override
     public void showCreationDialog() {
         CreatePersonDialog.show();

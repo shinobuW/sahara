@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package seng302.group2.util.reporting;
 
 import javafx.stage.FileChooser;
@@ -24,6 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
+ * A class for generating an XML report showing information about elements of the workspace selected by the user.
  * @author crw73
  */
 public class ReportGenerator {
@@ -33,7 +29,9 @@ public class ReportGenerator {
     public static List<SaharaItem> generatedItems = null;
     public static int iterator = 0;
 
-    //Constructor only exists to setup basic report elements for tests
+    /**
+     * Basic Constructor, only used to set up basic report elements for tests
+     */
     public ReportGenerator() {
         try {
             docFactory = DocumentBuilderFactory.newInstance();
@@ -45,6 +43,11 @@ public class ReportGenerator {
         }
     }
 
+    /**
+     * Generates a report outputted to an XML file using a list of checked items from the workspace
+     * @param checkedItems A list of the items chosen to be included in the report
+     * @return A boolean showing whether the report has been successfully generated
+     */
     public static boolean generateReport(List<SaharaItem> checkedItems) {
         generatedItems = checkedItems;
         try {

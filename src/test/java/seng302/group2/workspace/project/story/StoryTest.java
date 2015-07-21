@@ -6,6 +6,7 @@
 package seng302.group2.workspace.project.story;
 
 
+import javafx.scene.paint.Color;
 import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Element;
@@ -214,23 +215,15 @@ public class StoryTest {
         story.setEstimate("10");
 
         Element storyElement = story.generateXML();
-        Assert.assertEquals("[#text: short]", storyElement.getChildNodes().item(0).getChildNodes().item(0).toString());
-        ;
-        Assert.assertEquals("[#text: long]", storyElement.getChildNodes().item(1).getChildNodes().item(0).toString());
-        ;
-        Assert.assertEquals("[#text: desc]", storyElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-        ;
-        Assert.assertEquals("[#text: creator]", storyElement.getChildNodes().item(3).getChildNodes().item(0).toString());
-        ;
-        Assert.assertEquals("[#text: 5]", storyElement.getChildNodes().item(4).getChildNodes().item(0).toString());
-        ;
-        Assert.assertEquals("[#text: 10]", storyElement.getChildNodes().item(5).getChildNodes().item(0).toString());
-        ;
-        Assert.assertEquals("[#text: false]", storyElement.getChildNodes().item(6).getChildNodes().item(0).toString());
-        ;
-        Assert.assertEquals(0, storyElement.getChildNodes().item(7).getChildNodes().getLength());
-        ;
-        Assert.assertEquals(8, storyElement.getChildNodes().getLength());
+        Assert.assertEquals("[#text: short]", storyElement.getChildNodes().item(1).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: long]", storyElement.getChildNodes().item(2).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: desc]", storyElement.getChildNodes().item(3).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: creator]", storyElement.getChildNodes().item(4).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: 5]", storyElement.getChildNodes().item(5).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: 10]", storyElement.getChildNodes().item(6).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: false]", storyElement.getChildNodes().item(7).getChildNodes().item(0).toString());
+        Assert.assertEquals(0, storyElement.getChildNodes().item(8).getChildNodes().getLength());
+        Assert.assertEquals(9, storyElement.getChildNodes().getLength());
 
     }
 
@@ -244,15 +237,23 @@ public class StoryTest {
         story.setPriority(200);
         Story lowPriorityStory = new Story();
         lowPriorityStory.setPriority(100);
-        story.setDependentOnThis(lowPriorityStory);
-        Assert.assertEquals("#ffaaaa", story.getColour()); //red
+        story.addDependentOnThis(lowPriorityStory);
+        Assert.assertEquals("transparent", story.getColour()); //red
 
         story.setPriority(3);
         story.getAcceptanceCriteria().add(ac);
         story.setEstimate(EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.DefaultValues.NONE));
-        Assert.assertEquals("orange", story.getColour()); // orange
+        Assert.assertEquals(Story.toRGBCode(Story.orangeHighlight), story.getColour()); // orange
 
         story.setReady(true);
-        Assert.assertEquals("#aaffaa", story.getColour()); //green
+        Assert.assertEquals(Story.toRGBCode(Story.greenHighlight), story.getColour()); //green
+    }
+
+    @Test
+    public void testToRGBCode() {
+        Assert.assertEquals("#FF0000FF", Story.toRGBCode(Color.RED));
+        Assert.assertEquals("#008000FF", Story.toRGBCode(Color.GREEN));
+        Assert.assertEquals("#0000FFFF", Story.toRGBCode(Color.BLUE));
+        Assert.assertEquals("#80808080", Story.toRGBCode(Color.color(128/255.0, 128/255.0, 128/255.0, 128/255.0)));
     }
 }

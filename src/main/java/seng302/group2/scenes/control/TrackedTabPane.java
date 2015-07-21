@@ -82,4 +82,11 @@ public class TrackedTabPane extends TabPane {
             this.getSelectionModel().select(lastTab);
         }
     }
+
+    /**
+     * Clears the content tabs.
+     */
+    public static void clearHistory() {
+        contentTabs.clear();
+    }
 }

@@ -4,7 +4,7 @@ import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.dialog.CreateProjectDialog;
-import seng302.group2.scenes.sceneswitch.switchStrategies.category.ProjectCategoryCategorySwitchStrategy;
+import seng302.group2.scenes.sceneswitch.switchStrategies.category.ProjectCategorySwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
 
@@ -16,9 +16,13 @@ import java.util.Set;
  * Created by Jordane on 7/06/2015.
  */
 public class ProjectCategory extends Category {
+    
+    /**
+     * Constructor for the ProjectCategory class.
+     */
     public ProjectCategory() {
         super("Projects");
-        setCategorySwitchStrategy(new ProjectCategoryCategorySwitchStrategy());
+        setCategorySwitchStrategy(new ProjectCategorySwitchStrategy());
     }
 
     /**
@@ -40,16 +44,27 @@ public class ProjectCategory extends Category {
         return projectElements;
     }
 
+    /**
+     * Returns the items held by the ProjectCategory, blank as the project category has no child items.
+     * @return a blank hash set
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }
 
+    /**
+     * Returns a list of all the projects in the workspace.
+     * @return An ObservableList of the Projects in the workspace.
+     */
     @Override
     public ObservableList getChildren() {
         return Global.currentWorkspace.getProjects();
     }
 
+    /**
+     * Shows the project creation dialog.
+     */
     @Override
     public void showCreationDialog() {
         CreateProjectDialog.show();

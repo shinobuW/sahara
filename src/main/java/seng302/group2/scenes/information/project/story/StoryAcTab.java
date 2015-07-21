@@ -35,6 +35,11 @@ public class StoryAcTab extends Tab {
 
     private static final DataFormat SERIALIZED_MIME_TYPE = new DataFormat("application/x-java-serialized-object");
 
+    /**
+     * Constructor for the Story Acceptance Criteria Tab.
+     * 
+     * @param story The currently selected Story
+     */
     public StoryAcTab(Story story) {
         this.setText("Acceptance Criteria");
         Pane acPane = new VBox(10);  // The pane that holds the basic info

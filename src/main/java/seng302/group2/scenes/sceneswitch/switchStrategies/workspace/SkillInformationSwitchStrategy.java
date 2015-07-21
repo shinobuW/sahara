@@ -16,6 +16,10 @@ import seng302.group2.workspace.skills.Skill;
 public class SkillInformationSwitchStrategy implements InformationSwitchStrategy {
     transient Logger logger = LoggerFactory.getLogger(SkillInformationSwitchStrategy.class);
 
+    /**
+     * Sets the main pane to be an instance of the Skill Scene. 
+     * @param item The SaharaItem for the scene to be constructed with. 
+     */
     @Override
     public void switchScene(SaharaItem item) {
         if (item instanceof Skill) {
@@ -27,6 +31,11 @@ public class SkillInformationSwitchStrategy implements InformationSwitchStrategy
         }
     }
 
+    /**
+     * Sets the main pane to be an instance of the Skill Edit Scene.
+     * @param item The SaharaItem for the scene to be constructed with.
+     * @param editScene Whether the edit scene is to be shown.
+     */
     @Override
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Skill) {

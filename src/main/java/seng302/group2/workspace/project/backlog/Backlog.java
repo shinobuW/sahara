@@ -20,6 +20,7 @@ import java.util.*;
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
+ * A class to represent a backlog of stories within a project.
  * Created by cvs20 on 19/05/15.
  */
 public class Backlog extends SaharaItem implements Serializable, Comparable<Backlog> {
@@ -37,6 +38,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
      * Basic Backlog constructor
      */
     public Backlog() {
+        super("Untitled Backlog");
         this.shortName = "Untitled Backlog";
         this.longName = "Untitled Backlog";
         this.description = "";
@@ -46,6 +48,10 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
         setInformationSwitchStrategy(new BacklogInformationSwitchStrategy());
     }
 
+    /**
+     * Gets the set of SaharaItems 'belonging' to the Backlog (It's Stories).
+     * @return A set of SaharaItems belonging to the backlog
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         Set<SaharaItem> items = new HashSet<>();
@@ -67,9 +73,11 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
      * @param description  description
      * @param productOwner product owner of the backlog
      * @param project      the project the backlog belongs to
+     * @param scale        the estimation scale of the backlog
      */
     public Backlog(String shortName, String longName, String description,
                    Person productOwner, Project project, String scale) {
+        super(shortName);
         this.shortName = shortName;
         this.longName = longName;
         this.description = description;
@@ -218,6 +226,10 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
         return this.stories;
     }
 
+    /**
+     * Gets the serializable stories belonging to the backlog
+     * @return A List of Stories
+     */
     public List<Story> getSerializableStories() {
         return serializableStories;
     }
@@ -269,6 +281,10 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
         Element backlogElement = ReportGenerator.doc.createElement("backlog");
 
         //WorkSpace Elements
+        Element backlogID = ReportGenerator.doc.createElement("ID");
+        backlogID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        backlogElement.appendChild(backlogID);
+
         Element backlogShortName = ReportGenerator.doc.createElement("identifier");
         backlogShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
         backlogElement.appendChild(backlogShortName);
@@ -344,6 +360,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
      * @param newProductOwner The new product owner
      * @param newProject      The new project
      * @param newScale        The new estimation scale
+     * @param newStories      The new stories in the backlog
      */
     public void edit(String newShortName, String newLongName, String newDescription,
                      Person newProductOwner, Project newProject, String newScale, Collection<Story> newStories) {
@@ -580,15 +597,25 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
         }
     }
 
+    /**
+     * A command class for allowing the deletion of Backlogs.
+     */
     private class DeleteBacklogCommand implements Command {
         private Backlog backlog;
         private Project proj;
 
+        /**
+         * Constructor for the backlog deletion command.
+         * @param backlog The backlog to be deleted.
+         */
         DeleteBacklogCommand(Backlog backlog) {
             this.backlog = backlog;
             this.proj = backlog.getProject();
         }
 
+        /**
+         * Executes the backlog deletion command.
+         */
         public void execute() {
             //System.out.println("Exec Backlog Delete");
             proj.getBacklogs().remove(backlog);
@@ -596,6 +623,9 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             //release.setProject(null);
         }
 
+        /**
+         * Undoes the backlog deletion command.
+         */
         public void undo() {
             //System.out.println("Undone Backlog Delete");
             proj.getBacklogs().add(backlog);
@@ -603,6 +633,11 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             //release.setProject(proj);
         }
 
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
         @Override // BL, PO, Proj, Stories?
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped_bl = false;
@@ -623,17 +658,28 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
         }
     }
 
+    /**
+     * A command class for allowing the addition of Stories to Backlogs.
+     */
     private class AddStoryCommand implements Command {
         private Project proj;
         private Backlog backlog;
         private Story story;
 
+        /**
+         * Constructor for the story addition command.
+         * @param backlog The backlog to which the story is to be added.
+         * @param story The story to be added.
+         */
         AddStoryCommand(Backlog backlog, Story story) {
             //this.proj = proj;
             this.backlog = backlog;
             this.story = story;
         }
 
+        /**
+         * Executes the Story addition command
+         */
         public void execute() {
             /*if (proj != null)
             {
@@ -645,6 +691,9 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             }
         }
 
+        /**
+         * Undoes the story addition command.
+         */
         public void undo() {
             /*if (proj != null)
             {
@@ -656,6 +705,11 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             }
         }
 
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
         @Override // BL, Proj, Story
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped_bl = false;

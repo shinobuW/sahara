@@ -24,6 +24,10 @@ public abstract class SubCategory extends Category {
     }
 
 
+    /**
+     * Returns the items held by the item, in this case none as it is an abstract class.
+     * @return A blank hash set
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
@@ -34,6 +38,7 @@ public abstract class SubCategory extends Category {
      * Basic constructor for a TreeView category
      *
      * @param name The name of the category
+     * @param parent The parent of the category
      */
     public SubCategory(String name, SaharaItem parent) {
         super(name);
@@ -41,6 +46,10 @@ public abstract class SubCategory extends Category {
     }
 
 
+    /**
+     * Returns a list of all the children of the item.
+     * @return An observableArrayList
+     */
     @Override
     public ObservableList<SaharaItem> getChildren() {
         return FXCollections.observableArrayList();

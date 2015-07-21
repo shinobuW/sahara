@@ -99,7 +99,11 @@ public class GenerateReportDialog {
         }
     }
 
-
+    /**
+     * Gets a list of items that have been checked.
+     * @param root The root tree item  
+     * @return A list of the checked items
+     */
     protected static List<SaharaItem> getCheckedItems(TreeItem<SaharaItem> root) {
 
         List<SaharaItem> checkedItems = new ArrayList<>();

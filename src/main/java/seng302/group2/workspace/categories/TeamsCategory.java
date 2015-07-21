@@ -17,6 +17,10 @@ import java.util.Set;
  * Created by Jordane on 7/06/2015.
  */
 public class TeamsCategory extends Category {
+    
+    /**
+     * Constructor for the TeamsCategory class.
+     */
     public TeamsCategory() {
         super("Teams");
         setCategorySwitchStrategy(new TeamCategoryCategorySwitchStrategy());
@@ -41,16 +45,27 @@ public class TeamsCategory extends Category {
         return teamElements;
     }
 
+    /**
+     * Returns the items held by the SkillsCategory, blank as the teams category has no child items.
+     * @return a blank hash set
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         return new HashSet<>();
     }
 
+    /**
+     * Returns a list of all the teams in the workspace.
+     * @return An ObservableList of the Teams in the workspace.
+     */
     @Override
     public ObservableList getChildren() {
         return Global.currentWorkspace.getTeams();
     }
 
+    /**
+     * Shows the Team Creation dialog.
+     */
     @Override
     public void showCreationDialog() {
         CreateTeamDialog.show();

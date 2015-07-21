@@ -19,6 +19,11 @@ import static javafx.collections.FXCollections.observableArrayList;
 public class ProjectInfoTab extends Tab {
     ObservableList<Team> currentTeams = observableArrayList();
 
+    /**
+     * Constructor for Project info tab
+     * 
+     * @param currentProject currently selected project
+     */
     public ProjectInfoTab(Project currentProject) {
         this.setText("Basic Information");
 

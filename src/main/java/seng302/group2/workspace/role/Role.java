@@ -24,6 +24,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 
 
 /**
+ * A class representing the Roles a person may have within a Workspace, Team or Project.
  * @author swi67
  */
 public class Role extends SaharaItem implements Serializable {
@@ -38,14 +39,18 @@ public class Role extends SaharaItem implements Serializable {
      */
     public Role() {
         // Initialize as a SaharaItem
-        super("unnamed");
-        this.shortName = "role Name";
+        super("Untitled Role");
+        this.shortName = "Untitled Role";
         this.description = "";
         this.type = RoleType.NONE;
 
         setInformationSwitchStrategy(new RoleInformationSwitchStrategy());
     }
 
+    /**
+     * Gets the set of SaharaItems 'belonging' to the Role (It's required skills).
+     * @return A set of SaharaItems belonging to the role
+     */
     @Override
     public Set<SaharaItem> getItemsSet() {
         Set<SaharaItem> items = new HashSet<>();
@@ -269,6 +274,10 @@ public class Role extends SaharaItem implements Serializable {
         Element roleElement = ReportGenerator.doc.createElement("role");
 
         //WorkSpace Elements
+        Element roleID = ReportGenerator.doc.createElement("ID");
+        roleID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        roleElement.appendChild(roleID);
+
         Element roleShortName = ReportGenerator.doc.createElement("identifier");
         roleShortName.appendChild(ReportGenerator.doc.createTextNode(getShortName()));
         roleElement.appendChild(roleShortName);
@@ -297,6 +306,10 @@ public class Role extends SaharaItem implements Serializable {
         return null;
     }
 
+    /**
+     * Overridden toString method for the Role class
+     * @return The string representation of the Role 
+     */
     @Override
     public String toString() {
         return this.shortName;

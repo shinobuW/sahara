@@ -6,6 +6,7 @@
 package seng302.group2.util.validation;
 
 /**
+ * A class for checking the validity of inputted Email addresses.
  * @author Jordane
  */
 public class EmailValidator {

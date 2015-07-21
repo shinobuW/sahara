@@ -15,6 +15,11 @@ import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
 public class ReleaseCategorySwitchStrategy implements SubCategorySwitchStrategy {
     transient Logger logger = LoggerFactory.getLogger(ReleaseCategorySwitchStrategy.class);
 
+    /**
+     * Sets the Main Pane to be an instance of the ReleaseCategoryScene.
+     * 
+     * @param releaseCategory The Release Category to display.
+     */
     @Override
     public void switchScene(Category releaseCategory) {
         if (releaseCategory instanceof ReleaseCategory) {
