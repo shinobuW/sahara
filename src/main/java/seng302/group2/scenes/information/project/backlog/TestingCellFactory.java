@@ -14,7 +14,7 @@ import seng302.group2.workspace.project.story.Story;
 /**
  * Created by Jordane on 23/07/2015.
  */
-public class TESTING_CellFactory extends ListCell<Story> {
+public class TestingCellFactory extends ListCell<Story> {
     @Override
     public void updateItem(Story item, boolean empty) {
         super.updateItem(item, empty);
@@ -45,6 +45,10 @@ public class TESTING_CellFactory extends ListCell<Story> {
             
             content.getChildren().addAll(rect, info);
             setGraphic(content);
+        }
+        else {
+            //System.out.println("Item is null");
+            setGraphic(null);
         }
 
         setTextOverrun(OverrunStyle.CLIP);
