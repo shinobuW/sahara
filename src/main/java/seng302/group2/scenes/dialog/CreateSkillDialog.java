@@ -7,16 +7,23 @@ package seng302.group2.scenes.dialog;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
 
+import java.time.LocalDate;
+import java.util.Map;
+
+import static seng302.group2.util.validation.DateValidator.stringToDate;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -30,51 +37,49 @@ public class CreateSkillDialog {
      * Displays the Dialog box for creating a skill.
      */
     public static void show() {
-        Dialog dialog = new Dialog(null, "New Skill");
+        javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
+        dialog.setTitle("New Skill");
+
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
         grid.setPadding(insets);
+        dialog.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 500px;");
 
-        Button btnCreate = new Button("Create");
-        Button btnCancel = new Button("Cancel");
-
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
-        buttons.getChildren().addAll(btnCreate, btnCancel);
+        ButtonType btnCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(btnCreate, ButtonType.CANCEL);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description:");
 
         grid.getChildren().add(shortNameCustomField);
         grid.getChildren().add(descriptionTextArea);
-        grid.getChildren().add(buttons);
 
-        btnCreate.setOnAction((event) -> {
-                boolean correctShortName = validateShortName(shortNameCustomField, null);
+        dialog.getDialogPane().setContent(grid);
 
-                String shortName = shortNameCustomField.getText();
-                String description = descriptionTextArea.getText();
+        Node createButton = dialog.getDialogPane().lookupButton(btnCreate);
+        createButton.setDisable(true);
 
-                if (correctShortName) {
+        //Validation
+        shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                Boolean correctShortName = validateShortName(shortNameCustomField, null);
+                createButton.setDisable(!correctShortName);
+            });
+
+        dialog.setResultConverter(b -> {
+                if (b == btnCreate) {
+                    String shortName = shortNameCustomField.getText();
+                    String description = descriptionTextArea.getText();
                     Skill skill = new Skill(shortName, description);
                     Global.currentWorkspace.add(skill);
                     App.mainPane.selectItem(skill);
-                    dialog.hide();
+                    dialog.close();
                 }
-                else {
-                    event.consume();
-                }
-            });
-
-        btnCancel.setOnAction((event) -> {
-                dialog.hide();
+                return null;
             });
 
         dialog.setResizable(false);
-        dialog.setIconifiable(false);
-        dialog.setContent(grid);
         dialog.show();
     }
 }
