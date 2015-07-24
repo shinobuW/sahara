@@ -90,6 +90,12 @@ public class CustomDateField extends VBox {
         showErrorField();
     }
 
+    /**
+     * Gets the input text field
+     */
+    public TextField getTextField() {
+        return this.inputText;
+    }
 
     /**
      * Hides the error field.
