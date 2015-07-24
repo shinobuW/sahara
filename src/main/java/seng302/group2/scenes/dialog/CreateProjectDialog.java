@@ -1,18 +1,21 @@
 package seng302.group2.scenes.dialog;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
+import javafx.scene.Node;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
-import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.util.validation.NameValidator;
-import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.Project;
+
+import java.util.Map;
+
+import static seng302.group2.util.validation.NameValidator.validateName;
+import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * Class to create a pop up dialog for creating a workspace.
@@ -24,20 +27,27 @@ public class CreateProjectDialog {
     /**
      * Displays the Dialog box for creating a workspace.
      */
+    static Boolean correctShortName = Boolean.FALSE;
+    static Boolean correctLongName = Boolean.FALSE;
+
     public static void show() {
-        Dialog dialog = new Dialog(null, "New Project");
+        correctShortName = false;
+        correctLongName = false;
+        javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
+        dialog.setTitle("New Project");
+        dialog.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 500px;");
+
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
         grid.setPadding(insets);
 
-        Button btnCreate = new Button("Create");
-        Button btnCancel = new Button("Cancel");
+        ButtonType btnCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(btnCreate, ButtonType.CANCEL);
 
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
-        buttons.getChildren().addAll(btnCreate, btnCancel);
+        //Add grid of controls to dialog
+        dialog.getDialogPane().setContent(grid);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         RequiredField longNameCustomField = new RequiredField("Long Name:");
@@ -46,34 +56,60 @@ public class CreateProjectDialog {
         grid.getChildren().add(shortNameCustomField);
         grid.getChildren().add(longNameCustomField);
         grid.getChildren().add(descriptionTextArea);
-        grid.getChildren().add(buttons);
 
-        btnCreate.setOnAction((event) -> {
-                boolean correctShortName = ShortNameValidator.validateShortName(
-                        shortNameCustomField, null);
-                boolean correctLongName = NameValidator.validateName(longNameCustomField);
+        // Request focus on the username field by default.
+        Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
 
-                String shortName = shortNameCustomField.getText();
-                String longName = longNameCustomField.getText();
-                String description = descriptionTextArea.getText();
+        Node createButton = dialog.getDialogPane().lookupButton(btnCreate);
+        createButton.setDisable(true);
 
-                if (correctShortName && correctLongName) {
-                    Project project = new Project(shortName, longName, description);
-                    Global.currentWorkspace.add(project);
-                    App.mainPane.selectItem(project);
-                    dialog.hide();
-                }
-                else {
-                    event.consume();
-                }
+        shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctShortName = validateShortName(shortNameCustomField, null);
+                createButton.setDisable(!(correctShortName && correctLongName));
             });
 
-        btnCancel.setOnAction((event) ->
-                dialog.hide());
+        longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctLongName = validateName(longNameCustomField);
+                createButton.setDisable(!(correctShortName && correctLongName));
+            });
+
+        dialog.setResultConverter(b -> {
+                if (b == btnCreate) {
+                    String shortName = shortNameCustomField.getText();
+                    String longName = longNameCustomField.getText();
+                    String description = descriptionTextArea.getText();
+
+                    if (correctShortName && correctLongName) {
+                        Project project = new Project(shortName, longName, description);
+                        Global.currentWorkspace.add(project);
+                        App.mainPane.selectItem(project);
+                        dialog.close();
+                    }
+                }
+                return null;
+            });
+
+        //Validation
+
+
+//        btnCreate.setOnAction((event) -> {
+//                String shortName = shortNameCustomField.getText();
+//                String longName = longNameCustomField.getText();
+//                String description = descriptionTextArea.getText();
+//
+//                if (correctShortName && correctLongName) {
+//                    Project project = new Project(shortName, longName, description);
+//                    Global.currentWorkspace.add(project);
+//                    App.mainPane.selectItem(project);
+//                    dialog.hide();
+//                }
+//                else {
+//                    event.consume();
+//                }
+//            });
+//
 
         dialog.setResizable(false);
-        dialog.setIconifiable(false);
-        dialog.setContent(grid);
         dialog.show();
     }
 }
