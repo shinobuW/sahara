@@ -5,12 +5,11 @@
  */
 package seng302.group2.scenes.dialog;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
-import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomDateField;
@@ -20,11 +19,13 @@ import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.person.Person;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 import static seng302.group2.util.validation.DateValidator.stringToDate;
 import static seng302.group2.util.validation.DateValidator.validateBirthDateField;
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
+
 
 /**
  * Class to create a pop up dialog for creating a person.
@@ -38,20 +39,21 @@ public class CreatePersonDialog {
      */
     public static void show() {
         // Initialise Dialog and GridPane
-        Dialog dialog = new Dialog(null, "New Person");
+        javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
+        dialog.setTitle("New Person");
+        dialog.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 400px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 350;");
+
+
+        ButtonType btnCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(btnCreate, ButtonType.CANCEL);
+
+
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
         grid.setPadding(insets);
 
-        // Initialise Input fields
-        Button btnCreate = new Button("Create");
-        Button btnCancel = new Button("Cancel");
-
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
-        buttons.getChildren().addAll(btnCreate, btnCancel);
 
         // Add elements to grid
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
@@ -62,51 +64,95 @@ public class CreatePersonDialog {
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
 
         grid.getChildren().addAll(shortNameCustomField, firstNameCustomField, lastNameCustomField,
-                emailTextField, customBirthDate, descriptionTextArea, buttons);
+                emailTextField, customBirthDate, descriptionTextArea);
 
-        // Create button event
-        btnCreate.setOnAction((event) -> {
-                boolean correctDate = validateBirthDateField(customBirthDate);
-                boolean correctShortName = validateShortName(shortNameCustomField, null);
-                boolean correctFirstName = validateName(firstNameCustomField);
-                boolean correctLastName = validateName(lastNameCustomField);
+        //Add grid of controls to dialog
+        dialog.getDialogPane().setContent(grid);
 
-                if (correctDate && correctShortName && correctFirstName && correctLastName) {
-                    //get user input
-                    String firstName = firstNameCustomField.getText();
-                    String lastName = lastNameCustomField.getText();
-                    String shortName = shortNameCustomField.getText();
-                    String email = emailTextField.getText();
-                    String description = descriptionTextArea.getText();
+        // Request focus on the username field by default.
+        Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
 
-                    String birthdateString = customBirthDate.getText();
 
-                    LocalDate birthDate;
-                    if (birthdateString.isEmpty()) {
-                        birthDate = null;
+        dialog.setResultConverter(b -> {
+                if (b == btnCreate) {
+                    boolean correctDate = validateBirthDateField(customBirthDate);
+                    boolean correctShortName = validateShortName(shortNameCustomField, null);
+                    boolean correctFirstName = validateName(firstNameCustomField);
+                    boolean correctLastName = validateName(lastNameCustomField);
+
+                    if (correctDate && correctShortName && correctFirstName && correctLastName) {
+                        //get user input
+                        String firstName = firstNameCustomField.getText();
+                        String lastName = lastNameCustomField.getText();
+                        String shortName = shortNameCustomField.getText();
+                        String email = emailTextField.getText();
+                        String description = descriptionTextArea.getText();
+
+                        String birthdateString = customBirthDate.getText();
+
+                        LocalDate birthDate;
+                        if (birthdateString.isEmpty()) {
+                            birthDate = null;
+                        }
+                        else {
+                            birthDate = stringToDate(birthdateString);
+                        }
+
+                        Person person = new Person(shortName, firstName, lastName, email, description,
+                                birthDate);
+                        Global.currentWorkspace.add(person);
+                        App.mainPane.selectItem(person);
+                        dialog.close();
                     }
-                    else {
-                        birthDate = stringToDate(birthdateString);
-                    }
 
-                    Person person = new Person(shortName, firstName, lastName, email, description,
-                            birthDate);
-                    Global.currentWorkspace.add(person);
-                    App.mainPane.selectItem(person);
-                    dialog.hide();
                 }
-                else {
-                    btnCreate.disableProperty();
-                }
+                return null;
             });
 
-        // Cancel button event
-        btnCancel.setOnAction((event) ->
-                dialog.hide());
+        //Optional<Map<String, String>> result = dialog.showAndWait();
+
+
+        // Create button event
+//        btnCreate.setOnAction((event) -> {
+//                boolean correctDate = validateBirthDateField(customBirthDate);
+//                boolean correctShortName = validateShortName(shortNameCustomField, null);
+//                boolean correctFirstName = validateName(firstNameCustomField);
+//                boolean correctLastName = validateName(lastNameCustomField);
+//
+//                if (correctDate && correctShortName && correctFirstName && correctLastName) {
+//                    //get user input
+//                    String firstName = firstNameCustomField.getText();
+//                    String lastName = lastNameCustomField.getText();
+//                    String shortName = shortNameCustomField.getText();
+//                    String email = emailTextField.getText();
+//                    String description = descriptionTextArea.getText();
+//
+//                    String birthdateString = customBirthDate.getText();
+//
+//                    LocalDate birthDate;
+//                    if (birthdateString.isEmpty()) {
+//                        birthDate = null;
+//                    }
+//                    else {
+//                        birthDate = stringToDate(birthdateString);
+//                    }
+//
+//                    Person person = new Person(shortName, firstName, lastName, email, description,
+//                            birthDate);
+//                    Global.currentWorkspace.add(person);
+//                    App.mainP dialog.close();
+//                    dialog.hide();
+//                }
+//                else {
+//                    btnCreate.disableProperty();
+//                }
+//            });
+//
+//        // Cancel button event
+//        btnCancel.setOnAction((event) ->
+//                dialog.hide());
 
         dialog.setResizable(false);
-        dialog.setIconifiable(false);
-        dialog.setContent(grid);
         dialog.show();
     }
 }

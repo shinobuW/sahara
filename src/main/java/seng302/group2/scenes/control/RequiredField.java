@@ -88,6 +88,13 @@ public class RequiredField extends VBox {
         showErrorField();
     }
 
+    /**
+     * Gets the input text field
+     * @return textfield
+     */
+    public TextField getTextField() {
+        return inputText;
+    }
 
     /**
      * Hides the error field.
