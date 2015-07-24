@@ -7,6 +7,7 @@ package seng302.group2.scenes.dialog;
 
 import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
@@ -34,26 +35,32 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  */
 @SuppressWarnings("deprecation")
 public class CreatePersonDialog {
+
+    static Boolean correctDate = Boolean.TRUE;
+    static Boolean correctShortName = Boolean.FALSE;
+    static Boolean correctFirstName = Boolean.FALSE;
+    static Boolean correctLastName = Boolean.FALSE;
     /**
      * Displays the Dialog box for creating a person.
      */
     public static void show() {
+        correctDate = Boolean.TRUE;
+        correctShortName = Boolean.FALSE;
+        correctFirstName = Boolean.FALSE;
+        correctLastName = Boolean.FALSE;
         // Initialise Dialog and GridPane
         javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
         dialog.setTitle("New Person");
-        dialog.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 400px; -fx-pref-width: 600px; "
-                + "-fx-pref-height: 350;");
-
+        dialog.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 500px;");
 
         ButtonType btnCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(btnCreate, ButtonType.CANCEL);
-
 
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
         grid.setPadding(insets);
-
 
         // Add elements to grid
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
@@ -72,14 +79,33 @@ public class CreatePersonDialog {
         // Request focus on the username field by default.
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
 
+        Node createButton = dialog.getDialogPane().lookupButton(btnCreate);
+        createButton.setDisable(true);
+
+        //Validation
+        shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctShortName = validateShortName(shortNameCustomField, null);
+                createButton.setDisable(!(correctShortName && correctFirstName && correctLastName && correctDate));
+            });
+
+        firstNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newvalue) -> {
+                correctFirstName = validateName(firstNameCustomField);
+                createButton.setDisable(!(correctShortName && correctFirstName && correctLastName && correctDate));
+            });
+
+        lastNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctLastName = validateName(lastNameCustomField);
+                createButton.setDisable(!(correctShortName && correctFirstName && correctLastName && correctDate));
+            });
+
+        customBirthDate.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctDate = validateBirthDateField(customBirthDate);
+                createButton.setDisable(!(correctShortName && correctFirstName && correctLastName && correctDate));
+            });
+
 
         dialog.setResultConverter(b -> {
                 if (b == btnCreate) {
-                    boolean correctDate = validateBirthDateField(customBirthDate);
-                    boolean correctShortName = validateShortName(shortNameCustomField, null);
-                    boolean correctFirstName = validateName(firstNameCustomField);
-                    boolean correctLastName = validateName(lastNameCustomField);
-
                     if (correctDate && correctShortName && correctFirstName && correctLastName) {
                         //get user input
                         String firstName = firstNameCustomField.getText();
@@ -104,53 +130,9 @@ public class CreatePersonDialog {
                         App.mainPane.selectItem(person);
                         dialog.close();
                     }
-
                 }
                 return null;
             });
-
-        //Optional<Map<String, String>> result = dialog.showAndWait();
-
-
-        // Create button event
-//        btnCreate.setOnAction((event) -> {
-//                boolean correctDate = validateBirthDateField(customBirthDate);
-//                boolean correctShortName = validateShortName(shortNameCustomField, null);
-//                boolean correctFirstName = validateName(firstNameCustomField);
-//                boolean correctLastName = validateName(lastNameCustomField);
-//
-//                if (correctDate && correctShortName && correctFirstName && correctLastName) {
-//                    //get user input
-//                    String firstName = firstNameCustomField.getText();
-//                    String lastName = lastNameCustomField.getText();
-//                    String shortName = shortNameCustomField.getText();
-//                    String email = emailTextField.getText();
-//                    String description = descriptionTextArea.getText();
-//
-//                    String birthdateString = customBirthDate.getText();
-//
-//                    LocalDate birthDate;
-//                    if (birthdateString.isEmpty()) {
-//                        birthDate = null;
-//                    }
-//                    else {
-//                        birthDate = stringToDate(birthdateString);
-//                    }
-//
-//                    Person person = new Person(shortName, firstName, lastName, email, description,
-//                            birthDate);
-//                    Global.currentWorkspace.add(person);
-//                    App.mainP dialog.close();
-//                    dialog.hide();
-//                }
-//                else {
-//                    btnCreate.disableProperty();
-//                }
-//            });
-//
-//        // Cancel button event
-//        btnCancel.setOnAction((event) ->
-//                dialog.hide());
 
         dialog.setResizable(false);
         dialog.show();
