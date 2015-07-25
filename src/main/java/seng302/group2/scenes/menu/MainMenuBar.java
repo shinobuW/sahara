@@ -11,7 +11,6 @@ import javafx.scene.input.KeyCombination;
 import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.Dialogs;
-import org.sonatype.guice.plexus.config.Roles;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.dialog.*;
@@ -43,43 +42,47 @@ public class MainMenuBar extends MenuBar {
     private static MenuItem createWorkspaceItem() {
         MenuItem newWorkspaceItem = new MenuItem("Workspace");
         newWorkspaceItem.setOnAction((ActionEvent event) -> {
-                if (Global.currentWorkspace == null
-                        || !Global.currentWorkspace.getHasUnsavedChanges()) {
-                    CreateWorkspaceDialog.show();
-                    App.refreshMainScene();
-                    Global.commandManager.clear();
-                    return;
-                }
-
-                Action response = Dialogs.create()
-                        .title("Save Workspace?")
-                        .message("Would you like to save your changes to the current workspace?")
-                        .showConfirm();
-
-                if (response == Dialog.ACTION_YES) {
-                    SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
-                    if (saved == SaveLoadResult.SUCCESS) {
-                        CreateWorkspaceDialog.show();
-                        App.refreshMainScene();
-                    }
-                    else {
-                        System.out.println("There was an error saving the file. Cancelling");
-                    }
-                }
-                else if (response == Dialog.ACTION_NO) {
-                    CreateWorkspaceDialog.show();
-                    App.refreshMainScene();
-                }
-                if (response != Dialog.ACTION_CANCEL) {
-                    Global.commandManager.clear();
-                    App.mainPane.expandTree();
-                }
+                newWorkspaceAction();
             });
 
         newWorkspaceItem.setAccelerator(new KeyCodeCombination(KeyCode.N,
                 KeyCombination.CONTROL_DOWN,
                 KeyCombination.SHORTCUT_DOWN));
         return newWorkspaceItem;
+    }
+
+    static void newWorkspaceAction() {
+        if (Global.currentWorkspace == null
+                || !Global.currentWorkspace.getHasUnsavedChanges()) {
+            CreateWorkspaceDialog.show();
+            App.refreshMainScene();
+            Global.commandManager.clear();
+            return;
+        }
+
+        Action response = Dialogs.create()
+                .title("Save Workspace?")
+                .message("Would you like to save your changes to the current workspace?")
+                .showConfirm();
+
+        if (response == Dialog.ACTION_YES) {
+            SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
+            if (saved == SaveLoadResult.SUCCESS) {
+                CreateWorkspaceDialog.show();
+                App.refreshMainScene();
+            }
+            else {
+                System.out.println("There was an error saving the file. Cancelling");
+            }
+        }
+        else if (response == Dialog.ACTION_NO) {
+            CreateWorkspaceDialog.show();
+            App.refreshMainScene();
+        }
+        if (response != Dialog.ACTION_CANCEL) {
+            Global.commandManager.clear();
+            App.mainPane.expandTree();
+        }
     }
 
 
@@ -157,9 +160,7 @@ public class MainMenuBar extends MenuBar {
     private static MenuItem createStoryItem() {
 
         MenuItem newStoryItem = new MenuItem("Story");
-        newStoryItem.setOnAction((event) -> {
-                CreateStoryDialog.show();
-            });
+        newStoryItem.setOnAction((event) -> CreateStoryDialog.show());
         return newStoryItem;
     }
 
@@ -200,31 +201,33 @@ public class MainMenuBar extends MenuBar {
     private static MenuItem createOpenItem() {
         // Create 'Open' MenuItem
         MenuItem openItem = new MenuItem("Open");
-        openItem.setOnAction((event) -> {
-                if (!Global.currentWorkspace.getHasUnsavedChanges()) {
-                    Workspace.loadWorkspace();
-                    return;
-                }
-                Action response = Dialogs.create()
-                        .title("Save Workspace?")
-                        .message("Would you like to save your changes to the current workspace?")
-                        .showConfirm();
-
-                if (response == Dialog.ACTION_YES) {
-                    SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
-                    if (saved == SaveLoadResult.SUCCESS) {
-                        Workspace.loadWorkspace();
-                        //App.refreshMainScene();
-                    }
-                }
-                else if (response == Dialog.ACTION_NO) {
-                    Workspace.loadWorkspace();
-                    //App.refreshMainScene();
-                }
-            });
+        openItem.setOnAction((event) -> loadAction());
         openItem.setAccelerator(new KeyCodeCombination(KeyCode.O,
                 KeyCombination.CONTROL_DOWN, KeyCombination.SHORTCUT_DOWN));
         return openItem;
+    }
+
+    static void loadAction() {
+        if (!Global.currentWorkspace.getHasUnsavedChanges()) {
+            Workspace.loadWorkspace();
+            return;
+        }
+        Action response = Dialogs.create()
+                .title("Save Workspace?")
+                .message("Would you like to save your changes to the current workspace?")
+                .showConfirm();
+
+        if (response == Dialog.ACTION_YES) {
+            SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
+            if (saved == SaveLoadResult.SUCCESS) {
+                Workspace.loadWorkspace();
+                //App.refreshMainScene();
+            }
+        }
+        else if (response == Dialog.ACTION_NO) {
+            Workspace.loadWorkspace();
+            //App.refreshMainScene();
+        }
     }
 
     /**
@@ -235,13 +238,16 @@ public class MainMenuBar extends MenuBar {
     private static MenuItem createSaveItem() {
         // Create 'Save' MenuItem
         MenuItem saveItem = new MenuItem("Save");
-        saveItem.setOnAction((event) ->
-                Workspace.saveWorkspace(Global.currentWorkspace, false));
+        saveItem.setOnAction((event) -> saveAction());
 
         saveItem.setAccelerator(new KeyCodeCombination(KeyCode.S,
                 KeyCombination.CONTROL_DOWN,
                 KeyCombination.SHORTCUT_DOWN));
         return saveItem;
+    }
+
+    static void saveAction() {
+        Workspace.saveWorkspace(Global.currentWorkspace, false);
     }
 
     /**
@@ -273,13 +279,17 @@ public class MainMenuBar extends MenuBar {
         MenuItem reportItem = new MenuItem("Report");
         reportItem.setOnAction((event) ->
                 //ReportGenerator.generateReport());
-                GenerateReportDialog.show());
+                reportAction());
 
         //ShortcutItem not implemented yet
 //        exportItem.setAccelerator(new KeyCodeCombination(KeyCode.S,
 //                KeyCombination.CONTROL_DOWN,
 //                KeyCombination.SHORTCUT_DOWN));
         return reportItem;
+    }
+
+    static void reportAction() {
+        GenerateReportDialog.show();
     }
 
     /**
@@ -341,13 +351,16 @@ public class MainMenuBar extends MenuBar {
     private static MenuItem createUndoItem() {
         // Create 'Undo' MenuItem
         MenuItem undoItem = new MenuItem("Undo");
-        undoItem.setOnAction((event) ->
-                Global.commandManager.undo());
+        undoItem.setOnAction((event) -> undoAction());
 
         undoItem.setAccelerator(new KeyCodeCombination(KeyCode.Z,
                 KeyCombination.CONTROL_DOWN,
                 KeyCombination.SHORTCUT_DOWN));
         return undoItem;
+    }
+
+    static void undoAction() {
+        Global.commandManager.undo();
     }
 
     /**
@@ -359,12 +372,16 @@ public class MainMenuBar extends MenuBar {
         // Create 'Redo' MenuItem
         MenuItem redoItem = new MenuItem("Redo");
         redoItem.setOnAction((event) ->
-                Global.commandManager.redo());
+                redoAction());
 
         redoItem.setAccelerator(new KeyCodeCombination(KeyCode.Y,
                 KeyCombination.CONTROL_DOWN,
                 KeyCombination.SHORTCUT_DOWN));
         return redoItem;
+    }
+
+    static void redoAction() {
+        Global.commandManager.redo();
     }
 
     /**
