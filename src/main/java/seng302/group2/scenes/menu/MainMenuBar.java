@@ -404,9 +404,7 @@ public class MainMenuBar extends MenuBar {
     }
 
     /**
-     * Creates the Menu Bar for the Scene
-     *
-     * @return The MenuBar with all required items.
+     * Constructor for the Menu Bar
      */
     public MainMenuBar() {
         // The menus and menu bar creation

@@ -5,14 +5,17 @@ import javafx.collections.FXCollections;
 import javafx.scene.Node;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ToolBar;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.HierarchyTracker;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
 import seng302.group2.scenes.menu.MainMenuBar;
+import seng302.group2.scenes.menu.MainToolbar;
 import seng302.group2.scenes.treeView.TreeViewWithItems;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.Category;
@@ -155,7 +158,11 @@ public class MainPane extends BorderPane {
      */
     private void init() {
         MenuBar menuBar = new MainMenuBar();
-        this.setTop(menuBar);
+        ToolBar toolBar = new MainToolbar();
+        VBox topBar = new VBox();
+        topBar.getChildren().addAll(menuBar, toolBar);
+        this.setTop(topBar);
+
         this.refreshTree();
 
         contentPane = new ScrollPane(informationPane);
