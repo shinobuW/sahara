@@ -163,9 +163,15 @@ public class StoryEditScene {
                 buttons);
 
         btnAssign.setOnAction((event) -> {
-                if (currentStory.checkAddCycle(availableStoryListView.getSelectionModel().getSelectedItem())) {
-                    // TODO Implement dialog
-                    System.out.println("Adds a cycle. Not added.");
+                Story adding = availableStoryListView.getSelectionModel().getSelectedItem();
+                if (currentStory.checkAddCycle(adding)) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Conflicting Dependencies");
+                    alert.setHeaderText("Unable to add '" + adding+ "'");
+                    alert.setContentText(
+                            "Adding this story would create a cycle in " + currentStory + "'s dependencies");
+
+                    alert.showAndWait();
                 }
                 else {
                     dependentOnList.addAll(
