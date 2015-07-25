@@ -312,39 +312,12 @@ public class Story extends SaharaItem implements Serializable {
     }
 
     /**
-     * Removes the dependants this story has.
-     *
-     * @param story Story to remove the dependents from
-     */
-    public void removeDependants(Story story) {
-        this.dependentOn.remove(story);
-    }
-
-    /**
-     * Removes the dependentOnThis this story has.
-     *
-     * @param story the story to have its dependentOnThis removed.
-     */
-    public void removeDependencies(Story story) {
-        this.dependentOnThis.remove(story);
-    }
-
-    /**
      * Gets the dependentOnThis this story has.
      *
      * @return the set of dependentOnThis
      */
     public Set<Story> getDependentOnThis() {
         return this.dependentOnThis;
-    }
-
-    /**
-     * Sets the dependentOnThis this story has.
-     *
-     * @param story The story for which its dependentOnThis field is to be set.
-     */
-    public void addDependentOnThis(Story story) {
-        this.dependentOnThis.add(story);
     }
 
     /**
@@ -384,10 +357,55 @@ public class Story extends SaharaItem implements Serializable {
 
 
     /**
-     * Traverses the dependencies of the story and returns if there are any cyclic dependencies
+     * Traverses the dependencies of the story (DFS) and returns if there are any cyclic dependencies
      * @return Whether or not the story has cyclic dependencies
      */
     public boolean hasDependencyCycle() {
+        // http://www.geeksforgeeks.org/detect-cycle-in-a-graph/
+        Set<Story> visited = new HashSet<>();
+        Set<Story> backTrack = new HashSet<>();
+
+        // Call the recursive helper function to detect cycle in different DFS trees
+        for (Story story : dependentOn) {
+            if (recursiveCycleCheck(story, visited, backTrack)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    private boolean recursiveCycleCheck(Story story, Set<Story> visited, Set<Story> backTrack) {
+        if (!visited.contains(story)) {
+            // Mark the current node as visited and part of recursion (backTrack) stack
+            visited.add(story);
+            backTrack.add(story);
+
+            // Recursively traverse for all the vertices adjacent to this vertex
+            for (Story adjStory : story.dependentOn) {
+                if (!visited.contains(adjStory) && recursiveCycleCheck(adjStory, visited, backTrack)) {
+                    return true;
+                }
+                else if (backTrack.contains(adjStory)) {
+                    return true;
+                }
+            }
+        }
+
+        backTrack.remove(story);  // remove the vertex from recursion (backTrack) stack
+        return false;
+    }
+
+    private boolean cycleCheckTraverse(Set<Story> traversedItems) {
+        if (!traversedItems.add(this)) {
+            // Item wasn't added to set (duplicate)
+            System.out.println("Can't add " + this + " to " + traversedItems);
+            return true;  // There was a cycle
+        }
+        for (Story dependent : getDependentOn()) {
+            dependent.cycleCheckTraverse(traversedItems);
+        }
         return false;
     }
 
