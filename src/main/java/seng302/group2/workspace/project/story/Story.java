@@ -49,7 +49,7 @@ public class Story extends SaharaItem implements Serializable {
     private boolean ready = false;
     private transient ObservableList<AcceptanceCriteria> acceptanceCriteria = observableArrayList();
     private List<AcceptanceCriteria> serializableAcceptanceCriteria = new ArrayList<>();
-    private Set<Story> dependentOnThis = new HashSet<>();
+    //private Set<Story> dependentOnThis = new HashSet<>();
     private Set<Story> dependentOn = new HashSet<>();
 
 
@@ -243,16 +243,6 @@ public class Story extends SaharaItem implements Serializable {
     }
 
     /**
-     * Sets the dependant stories this story has.
-     *
-     * @param story A story this story is dependent on
-     */
-    public void setDependants(Story story) {
-
-        this.dependentOn.add(story);
-    }
-
-    /**
      * Sets the highlight colour of the story to its appropriate colour according to the criteria
      */
     public void setHighlightColour() {
@@ -317,7 +307,13 @@ public class Story extends SaharaItem implements Serializable {
      * @return the set of dependentOnThis
      */
     public Set<Story> getDependentOnThis() {
-        return this.dependentOnThis;
+        Set<Story> stories = new HashSet<>();
+        for (SaharaItem item : Global.currentWorkspace.getItemsSet()) {
+            if (item instanceof Story && ((Story) item).dependentOn.contains(this)) {
+                stories.add((Story)item);
+            }
+        }
+        return stories;
     }
 
     /**
@@ -395,6 +391,23 @@ public class Story extends SaharaItem implements Serializable {
 
         backTrack.remove(story);  // remove the vertex from recursion (backTrack) stack
         return false;
+    }
+
+
+    /**
+     * Checks if a cycle will be added if a dependency is to be created with the given story added to the stories'
+     * dependencies
+     * @param story The story to check the addition of. Presumed to have no cycles to start with.
+     * @return If the added story adds a cycle to the dependencies of this story.
+     */
+    public boolean checkAddCycle(Story story) {
+        if (this.dependentOn.contains(story)) {
+            return true; // Assumed that the story has no cycles to start
+        }
+        this.dependentOn.add(story);
+        boolean cycle = hasDependencyCycle();
+        this.dependentOn.remove(story);
+        return cycle;
     }
 
     private boolean cycleCheckTraverse(Set<Story> traversedItems) {
@@ -581,6 +594,7 @@ public class Story extends SaharaItem implements Serializable {
                      boolean newReady, List<Story> newDependentOn) {
         Command relEdit = new StoryEditCommand(this, newShortName, newLongName,
                 newDescription, newProject, newPriority, newBacklog, newEstimate, newReady, newDependentOn);
+
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -694,21 +708,6 @@ public class Story extends SaharaItem implements Serializable {
             if (backlog != null && project != null) {
                 project.getUnallocatedStories().remove(story);
             }
-
-            Collection<Story> removedDependencies = new HashSet<>();
-            Collection<Story> addedDependencies = new HashSet<>();
-
-            removedDependencies.addAll(oldDependentOn);
-            removedDependencies.removeAll(dependentOn);
-            addedDependencies.addAll(dependentOn);
-            addedDependencies.removeAll(oldDependentOn);
-
-            for (Story removedStory : removedDependencies) {
-                removedStory.dependentOnThis.remove(story);
-            }
-            for (Story addedStory : addedDependencies) {
-                addedStory.dependentOnThis.add(story);
-            }
         }
 
         /**
@@ -733,22 +732,6 @@ public class Story extends SaharaItem implements Serializable {
             /* If the story if being added back into a backlog in the project, remove it from the unassigned stories.*/
             if (oldBacklog != null && oldProject != null) {
                 oldProject.getUnallocatedStories().remove(story);
-            }
-
-
-            Collection<Story> removedDependencies = new HashSet<>();
-            Collection<Story> addedDependencies = new HashSet<>();
-
-            removedDependencies.addAll(oldDependentOn);
-            removedDependencies.removeAll(dependentOn);
-            addedDependencies.addAll(dependentOn);
-            addedDependencies.removeAll(oldDependentOn);
-
-            for (Story removedStory : removedDependencies) {
-                removedStory.dependentOnThis.add(story);
-            }
-            for (Story addedStory : addedDependencies) {
-                addedStory.dependentOnThis.remove(story);
             }
         }
 

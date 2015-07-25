@@ -29,28 +29,10 @@ public class StoryDependenciesTab extends Tab {
         ScrollPane wrapper = new ScrollPane(dependenciesPane);
         this.setContent(wrapper);
 
-        TableView<Story> dependantsTable = new TableView<>();
-        dependantsTable.setEditable(true);
-        dependantsTable.setPrefWidth(500);
-        dependantsTable.setPrefHeight(200);
-        dependantsTable.setPlaceholder(new Label("There are currently no stories dependant on this story."));
-        dependantsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        ObservableList<Story> dataDependencies = observableArrayList();
-        dataDependencies.addAll(currentStory.getDependentOnThis());
 
-        TableColumn storyCol = new TableColumn("Dependant On This");
-        storyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
-        storyCol.prefWidthProperty().bind(dependantsTable.widthProperty()
-                .subtract(2).divide(100).multiply(60));
 
-        TableColumn priorityCol = new TableColumn("Priority");
-        priorityCol.setCellValueFactory(new PropertyValueFactory<Story, Integer>("priority"));
-        priorityCol.prefWidthProperty().bind(dependantsTable.widthProperty()
-                .subtract(2).divide(100).multiply(20));
 
-        dependantsTable.setItems(dataDependencies);
-        dependantsTable.getColumns().addAll(storyCol, priorityCol);
 
         TableView<Story> dependsTable = new TableView<>();
         dependsTable.setEditable(true);
@@ -62,18 +44,44 @@ public class StoryDependenciesTab extends Tab {
         ObservableList<Story> dataDependants = observableArrayList();
         dataDependants.addAll(currentStory.getDependentOn());
 
-        TableColumn storyCol2 = new TableColumn("Dependent On");
+        TableColumn<Story, String> storyCol2 = new TableColumn<>("Dependent On");
         storyCol2.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
         storyCol2.prefWidthProperty().bind(dependsTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
-        TableColumn priorityCol2 = new TableColumn("Priority");
+        TableColumn<Story, Integer> priorityCol2 = new TableColumn<>("Priority");
         priorityCol2.setCellValueFactory(new PropertyValueFactory<Story, Integer>("priority"));
         priorityCol2.prefWidthProperty().bind(dependsTable.widthProperty()
                 .subtract(2).divide(100).multiply(20));
 
         dependsTable.setItems(dataDependants);
         dependsTable.getColumns().addAll(storyCol2, priorityCol2);
+
+
+
+        TableView<Story> dependantsTable = new TableView<>();
+        dependantsTable.setEditable(true);
+        dependantsTable.setPrefWidth(500);
+        dependantsTable.setPrefHeight(200);
+        dependantsTable.setPlaceholder(new Label("There are currently no stories dependant on this story."));
+        dependantsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        ObservableList<Story> dataDependencies = observableArrayList();
+        dataDependencies.addAll(currentStory.getDependentOnThis());
+
+        TableColumn<Story, String> storyCol = new TableColumn<>("Dependant On This");
+        storyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
+        storyCol.prefWidthProperty().bind(dependantsTable.widthProperty()
+                .subtract(2).divide(100).multiply(60));
+
+        TableColumn<Story, Integer> priorityCol = new TableColumn<>("Priority");
+        priorityCol.setCellValueFactory(new PropertyValueFactory<Story, Integer>("priority"));
+        priorityCol.prefWidthProperty().bind(dependantsTable.widthProperty()
+                .subtract(2).divide(100).multiply(20));
+
+        dependantsTable.setItems(dataDependencies);
+        dependantsTable.getColumns().addAll(storyCol, priorityCol);
+
 
         Button btnView = new Button("View");
 

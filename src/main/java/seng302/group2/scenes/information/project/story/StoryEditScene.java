@@ -163,17 +163,22 @@ public class StoryEditScene {
                 buttons);
 
         btnAssign.setOnAction((event) -> {
-                dependentOnList.addAll(
-                        availableStoryListView.getSelectionModel().getSelectedItems());
-                availableStoryList.removeAll(
-                        availableStoryListView.getSelectionModel().getSelectedItems());
-
+                if (currentStory.checkAddCycle(availableStoryListView.getSelectionModel().getSelectedItem())) {
+                    // TODO Implement dialog
+                    System.out.println("Adds a cycle. Not added.");
+                }
+                else {
+                    dependentOnList.addAll(
+                            availableStoryListView.getSelectionModel().getSelectedItem());
+                    availableStoryList.removeAll(
+                            availableStoryListView.getSelectionModel().getSelectedItem());
+                }
             });
         btnUnassign.setOnAction((event) -> {
                 availableStoryList.addAll(
-                        dependantStoriesListView.getSelectionModel().getSelectedItems());
+                        dependantStoriesListView.getSelectionModel().getSelectedItem());
                 dependentOnList.removeAll(
-                        dependantStoriesListView.getSelectionModel().getSelectedItems());
+                        dependantStoriesListView.getSelectionModel().getSelectedItem());
 
             });
 
@@ -190,14 +195,18 @@ public class StoryEditScene {
                         currentStory.getDescription());
                 boolean priorityUnchanged = priorityNumberField.getText().equals(
                         currentStory.getPriority().toString());
-                boolean readyChanged = readyStateCheck.isSelected() == currentStory.getReady();
-                boolean estimateChanged = estimateComboBox.getValue().equals(currentStory.getEstimate());
-                boolean dependChanged = currentStory.getDependentOnThis()
-                        .retainAll(dependantStoriesListView.getItems());
+                boolean readyUnchanged = readyStateCheck.isSelected() == currentStory.getReady();
+                boolean estimateUnchanged = estimateComboBox.getValue().equals(currentStory.getEstimate());
+
+                boolean dependentChanged = true;
+                if (currentStory.getDependentOn().containsAll(dependentOnList)
+                        && dependentOnList.containsAll(currentStory.getDependentOn())) {
+                    dependentChanged = false;
+                }
 
 
                 if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged
-                        && priorityUnchanged && readyChanged && estimateChanged && dependChanged) {
+                        && priorityUnchanged && readyUnchanged && estimateUnchanged && !dependentChanged) {
                     // No changes
                     currentStory.switchToInfoScene();
                     return;
