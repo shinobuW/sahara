@@ -382,6 +382,16 @@ public class Story extends SaharaItem implements Serializable {
         return ready;
     }
 
+
+    /**
+     * Traverses the dependencies of the story and returns if there are any cyclic dependencies
+     * @return Whether or not the story has cyclic dependencies
+     */
+    public boolean hasDependencyCycle() {
+        return false;
+    }
+
+
     /**
      * A method to return the ready state of a story as a string
      * @return The ready state of a story as a string

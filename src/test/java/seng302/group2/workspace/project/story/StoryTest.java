@@ -256,4 +256,101 @@ public class StoryTest {
         Assert.assertEquals("#0000FFFF", Story.toRGBCode(Color.BLUE));
         Assert.assertEquals("#80808080", Story.toRGBCode(Color.color(128/255.0, 128/255.0, 128/255.0, 128/255.0)));
     }
+
+
+    /**
+     * Checks whether cyclic dependency check returns true if a story depends on itself
+     * A -> A
+     */
+    @Test
+    public void testHasCyclicDependencies_Single() {
+        Story storyA = new Story("A", "Story A", "", "", null, 0);
+        storyA.getDependentOn().add(storyA);
+
+        Assert.assertTrue(storyA.hasDependencyCycle());
+    }
+
+
+    /**
+     * Checks whether cyclic dependency check returns false for a simple story scenario without cycles
+     * A -> B
+     */
+    @Test
+    public void testHasCyclicDependencies_None_Simple() {
+        Story storyA, storyB;
+        storyA = new Story("A", "Story A", "", "", null, 0);
+        storyB = new Story("B", "Story B", "", "", null, 0);
+        storyA.getDependentOn().add(storyB);
+
+        Assert.assertFalse(storyA.hasDependencyCycle());
+        Assert.assertFalse(storyB.hasDependencyCycle());
+    }
+
+
+    /**
+     * Checks whether cyclic dependency check returns false for a story scenario without cycles
+     * A -> B -> C -> D
+     * A -> C
+     * B -> D
+     */
+    @Test
+    public void testHasCyclicDependencies_None_Adv() {
+        Story storyA, storyB, storyC, storyD;
+        storyA = new Story("A", "Story A", "", "", null, 0);
+        storyB = new Story("B", "Story B", "", "", null, 0);
+        storyC = new Story("C", "Story C", "", "", null, 0);
+        storyD = new Story("D", "Story D", "", "", null, 0);
+        storyA.getDependentOn().add(storyB);
+        storyB.getDependentOn().add(storyC);
+        storyC.getDependentOn().add(storyD);
+        storyA.getDependentOn().add(storyC);
+        storyB.getDependentOn().add(storyD);
+
+        Assert.assertFalse(storyA.hasDependencyCycle());
+        Assert.assertFalse(storyB.hasDependencyCycle());
+        Assert.assertFalse(storyC.hasDependencyCycle());
+        Assert.assertFalse(storyD.hasDependencyCycle());
+    }
+
+
+    /**
+     * Checks whether cyclic dependency check returns expected values for a simple story scenario with cycles
+     * A -> B
+     * B -> A
+     */
+    @Test
+    public void testHasCyclicDependencies_Simple() {
+        Story storyA, storyB;
+        storyA = new Story("A", "Story A", "", "", null, 0);
+        storyB = new Story("B", "Story B", "", "", null, 0);
+        storyA.getDependentOn().add(storyB);
+        storyB.getDependentOn().add(storyA);
+
+        Assert.assertTrue(storyA.hasDependencyCycle());
+        Assert.assertTrue(storyB.hasDependencyCycle());
+    }
+
+
+    /**
+     * Checks whether cyclic dependency check returns expected values for a story scenario with cycles
+     * A -> B -> C -> D
+     * B -> A
+     */
+    @Test
+    public void testHasCyclicDependencies_Adv() {
+        Story storyA, storyB, storyC, storyD;
+        storyA = new Story("A", "Story A", "", "", null, 0);
+        storyB = new Story("B", "Story B", "", "", null, 0);
+        storyC = new Story("C", "Story C", "", "", null, 0);
+        storyD = new Story("D", "Story D", "", "", null, 0);
+        storyA.getDependentOn().add(storyB);
+        storyB.getDependentOn().add(storyC);
+        storyC.getDependentOn().add(storyD);
+        storyB.getDependentOn().add(storyA);
+
+        Assert.assertTrue(storyA.hasDependencyCycle());
+        Assert.assertTrue(storyB.hasDependencyCycle());
+        Assert.assertFalse(storyC.hasDependencyCycle());
+        Assert.assertFalse(storyD.hasDependencyCycle());
+    }
 }
