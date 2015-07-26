@@ -1,4 +1,4 @@
-package seng302.group2.scenes.control;
+package seng302.group2.scenes.control.search;
 
 import javafx.scene.control.TextField;
 
@@ -15,9 +15,9 @@ public class SearchBox extends TextField {
         //this.setHeight(10);
         this.setStyle("-fx-border-radius: 12 12 12 12;"
                         + "-fx-background-radius: 12 12 12 12; "
-                        + "-fx-background-image: url('images/search.png');"
+                        + "-fx-background-image: url('/icons/search.png');"
                         + "-fx-background-repeat: no-repeat; "
-                        + "-fx-background-position: right center; "
+                        + "-fx-background-position: right 6px center; "
         );
 
     }
