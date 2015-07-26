@@ -172,9 +172,9 @@ public class MainMenuBar extends MenuBar {
 
         MenuItem newStoryItem = new MenuItem("Story");
         newStoryItem.setOnAction((event) -> {
-                javafx.scene.control.Dialog creationDialog = new CreateStoryDialog();
-                //creationDialog.show();
-            });
+            javafx.scene.control.Dialog creationDialog = new CreateStoryDialog();
+            //creationDialog.show();
+        });
         return newStoryItem;
     }
 
@@ -283,6 +283,16 @@ public class MainMenuBar extends MenuBar {
                 KeyCombination.SHIFT_DOWN,
                 KeyCombination.SHORTCUT_DOWN));
         return saveAsItem;
+    }
+
+    private static MenuItem createSearchItem() {
+        MenuItem findItem = new MenuItem("Find");
+        findItem.setOnAction((event) -> App.mainPane.focusSearch());
+
+        findItem.setAccelerator(new KeyCodeCombination(KeyCode.F,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
+        return findItem;
     }
 
     /**
@@ -485,6 +495,7 @@ public class MainMenuBar extends MenuBar {
 
 
         //Create MenuItems for Edit submenu
+        MenuItem searchItem = createSearchItem();
         MenuItem undoItem = createUndoItem();
         MenuItem redoItem = createRedoItem();
         MenuItem deleteTreeItem = createDeleteTreeItem();
@@ -510,7 +521,7 @@ public class MainMenuBar extends MenuBar {
                 saveItem, saveAsItem, revertItem, new SeparatorMenuItem(),
                 quitProgramItem);
 
-        editMenu.getItems().addAll(undoItem, redoItem, deleteTreeItem);
+        editMenu.getItems().addAll(searchItem, undoItem, redoItem, deleteTreeItem);
 
         fileMenu.setOnShowing((event) -> {
                 if (Global.currentWorkspace.getHasUnsavedChanges()) {

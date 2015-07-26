@@ -36,6 +36,7 @@ public class MainPane extends BorderPane {
     private ScrollPane contentPane;
     private boolean menuHidden = false;
     private double[] dividerPositions;
+    MainToolbar toolBar = null;
 
     /**
      * The default constructor of the main pane that performs basic initialisation
@@ -160,7 +161,7 @@ public class MainPane extends BorderPane {
      */
     private void init() {
         MenuBar menuBar = new MainMenuBar();
-        ToolBar toolBar = new MainToolbar();
+        toolBar = new MainToolbar();
         VBox topBar = new VBox();
         topBar.getChildren().addAll(menuBar, toolBar);
         this.setTop(topBar);
@@ -184,5 +185,12 @@ public class MainPane extends BorderPane {
      */
     public void selectItem(SaharaItem item) {
         treeView.selectItem(item);
+    }
+
+    /**
+     * Sets the focus on the toolbar's search field
+     */
+    public void focusSearch() {
+        toolBar.focusSearch();
     }
 }

@@ -90,4 +90,11 @@ public class MainToolbar extends ToolBar {
         redoButton.setOnAction((event) -> MainMenuBar.redoAction());
         generateButton.setOnAction((event) -> MainMenuBar.reportAction());
     }
+
+    /**
+     * Sets the focus to the search field of the toolbar
+     */
+    public void focusSearch() {
+        searchBox.requestFocus();
+    }
 }
