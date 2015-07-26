@@ -144,7 +144,7 @@ public class MainMenuBar extends MenuBar {
 
         MenuItem newReleaseItem = new MenuItem("Release");
         newReleaseItem.setOnAction((event) -> {
-                CreateReleaseDialog.show();
+                CreateReleaseDialog.show(null);
             });
         newReleaseItem.setAccelerator(new KeyCodeCombination(KeyCode.R,
                 KeyCombination.CONTROL_DOWN,
