@@ -2,14 +2,10 @@ package seng302.group2.scenes.dialog;
 
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
@@ -18,9 +14,7 @@ import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.Map;
 
-import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortNameNonUnique;
 
 /**
  * Class to create a pop up dialog for creating a workspace.
