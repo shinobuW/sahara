@@ -67,7 +67,7 @@ public class StoryCategoryTab extends Tab {
             });
 
         btnCreate.setOnAction((event) -> {
-                CreateStoryDialog.show();
+                new CreateStoryDialog();
             });
     }
 }

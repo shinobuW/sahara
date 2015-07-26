@@ -5,12 +5,14 @@
  */
 package seng302.group2.scenes.dialog;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
@@ -19,6 +21,8 @@ import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
+
+import java.util.Map;
 
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.PriorityFieldValidator.validatePriorityField;
@@ -30,25 +34,35 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  * @author swi67
  */
 public class CreateStoryDialog {
-    /**
-     * Displays the Dialog box for creating a story.
-     */
-    public static void show() {
-        // Initialise Dialog and GridPane
-        Dialog dialog = new Dialog(null, "New Story");
+    static Boolean correctShortName = Boolean.FALSE;
+    static Boolean correctCreator = Boolean.FALSE;
+    static Boolean correctLongName = Boolean.FALSE;
+    static Boolean correctPriority = Boolean.FALSE;
+
+
+    public CreateStoryDialog() {
+        correctCreator = false;
+        correctLongName = false;
+        correctShortName = false;
+        correctPriority = false;
+
+        // Initialise Dialog
+        javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
+        dialog.setTitle("New Story");
+        dialog.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 500px;");
+
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
         grid.setPadding(insets);
 
-        // Initialise Input fields
-        Button btnCreate = new Button("Create");
-        Button btnCancel = new Button("Cancel");
+        ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
-        buttons.getChildren().addAll(btnCreate, btnCancel);
 
         // Add elements to grid
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
@@ -69,45 +83,62 @@ public class CreateStoryDialog {
         grid.getChildren().addAll(shortNameCustomField, longNameCustomField, creatorCustomField,
                 priorityNumberField, projectComboBox, descriptionTextArea, buttons);
 
-        // Create button event
-        btnCreate.setOnAction((event) -> {
-                boolean correctShortName = validateShortName(shortNameCustomField, null);
-                boolean correctLongName = validateName(longNameCustomField);
-                boolean correctCreator = validateName(creatorCustomField);
-                boolean correctPriority = validatePriorityField(priorityNumberField, null, null);
+        //Add grid of controls to dialog
+        dialog.getDialogPane().setContent(grid);
 
-                if (correctShortName && correctLongName && correctCreator && correctPriority) {
-                    //get user input
-                    String shortName = shortNameCustomField.getText();
-                    String longName = longNameCustomField.getText();
-                    String creator = creatorCustomField.getText();
-                    String description = descriptionTextArea.getText();
-                    Integer priority = Integer.parseInt(priorityNumberField.getText());
+        // Request focus on the username field by default.
+        Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
 
-                    Project project = new Project();
-                    for (SaharaItem item : Global.currentWorkspace.getProjects()) {
-                        if (item.toString().equals(projectComboBox.getValue())) {
-                            project = (Project) item;
-                        }
-                    }
-                    Story story = new Story(shortName, longName, description, creator, project,
-                            priority);
-                    project.add(story);
-                    App.mainPane.selectItem(story);
-                    dialog.hide();
-                }
-                else {
-                    event.consume();
-                }
+        Node createButton = dialog.getDialogPane().lookupButton(btnTypeCreate);
+        createButton.setDisable(true);
+
+        //Validation
+        shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctShortName = validateShortName(shortNameCustomField, null);
+                createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
             });
 
-        // Cancel button event
-        btnCancel.setOnAction((event) ->
-                dialog.hide());
+        creatorCustomField.getTextField().textProperty().addListener((observable, oldValue, newvalue) -> {
+                correctCreator = validateName(creatorCustomField);
+                createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
+            });
 
+        longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctLongName = validateName(longNameCustomField);
+                createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
+            });
+
+        priorityNumberField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctPriority = validatePriorityField(priorityNumberField, null, null);
+                createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
+            });
+
+        dialog.setResultConverter(b -> {
+                if (b == btnTypeCreate) {
+                    if (correctShortName && correctLongName && correctCreator && correctPriority) {
+                        //get user input
+                        String shortName = shortNameCustomField.getText();
+                        String longName = longNameCustomField.getText();
+                        String creator = creatorCustomField.getText();
+                        String description = descriptionTextArea.getText();
+                        Integer priority = Integer.parseInt(priorityNumberField.getText());
+
+                        Project project = new Project();
+                        for (SaharaItem item : Global.currentWorkspace.getProjects()) {
+                            if (item.toString().equals(projectComboBox.getValue())) {
+                                project = (Project) item;
+                            }
+                        }
+                        Story story = new Story(shortName, longName, description, creator, project,
+                                priority);
+                        project.add(story);
+                        App.mainPane.selectItem(story);
+                        dialog.close();
+                    }
+                }
+                return null;
+            });
         dialog.setResizable(false);
-        dialog.setIconifiable(false);
-        dialog.setContent(grid);
         dialog.show();
     }
 

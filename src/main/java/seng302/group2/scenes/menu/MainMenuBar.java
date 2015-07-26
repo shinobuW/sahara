@@ -160,7 +160,7 @@ public class MainMenuBar extends MenuBar {
     private static MenuItem createStoryItem() {
 
         MenuItem newStoryItem = new MenuItem("Story");
-        newStoryItem.setOnAction((event) -> CreateStoryDialog.show());
+        newStoryItem.setOnAction((event) -> new CreateStoryDialog());
         return newStoryItem;
     }
 
