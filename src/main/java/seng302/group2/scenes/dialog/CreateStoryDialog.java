@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
@@ -33,7 +34,7 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  *
  * @author swi67
  */
-public class CreateStoryDialog {
+public class CreateStoryDialog extends Dialog<Map<String, String>> {
     static Boolean correctShortName = Boolean.FALSE;
     static Boolean correctCreator = Boolean.FALSE;
     static Boolean correctLongName = Boolean.FALSE;
@@ -48,8 +49,8 @@ public class CreateStoryDialog {
 
         // Initialise Dialog
         javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
-        dialog.setTitle("New Story");
-        dialog.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
+        this.setTitle("New Story");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");
 
         VBox grid = new VBox();
@@ -58,7 +59,7 @@ public class CreateStoryDialog {
         grid.setPadding(insets);
 
         ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
+        this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
@@ -84,12 +85,12 @@ public class CreateStoryDialog {
                 priorityNumberField, projectComboBox, descriptionTextArea, buttons);
 
         //Add grid of controls to dialog
-        dialog.getDialogPane().setContent(grid);
+        this.getDialogPane().setContent(grid);
 
         // Request focus on the username field by default.
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
 
-        Node createButton = dialog.getDialogPane().lookupButton(btnTypeCreate);
+        Node createButton = this.getDialogPane().lookupButton(btnTypeCreate);
         createButton.setDisable(true);
 
         //Validation
@@ -113,7 +114,7 @@ public class CreateStoryDialog {
                 createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
             });
 
-        dialog.setResultConverter(b -> {
+        this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
                     if (correctShortName && correctLongName && correctCreator && correctPriority) {
                         //get user input
@@ -133,13 +134,13 @@ public class CreateStoryDialog {
                                 priority);
                         project.add(story);
                         App.mainPane.selectItem(story);
-                        dialog.close();
+                        this.close();
                     }
                 }
                 return null;
             });
-        dialog.setResizable(false);
-        dialog.show();
+        this.setResizable(false);
+        this.show();
     }
 
 }

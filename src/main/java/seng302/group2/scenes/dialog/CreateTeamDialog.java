@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -27,14 +28,14 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  * @author crw73
  */
 @SuppressWarnings("deprecation")
-public class CreateTeamDialog {
+public class CreateTeamDialog extends Dialog<Map<String, String>> {
     /**
      * Displays the Dialog box for creating a Team.
      */
-    public static void show() {
+    public CreateTeamDialog() {
         javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
-        dialog.setTitle("New Team");
-        dialog.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
+        this.setTitle("New Team");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");
 
         VBox grid = new VBox();
@@ -43,7 +44,7 @@ public class CreateTeamDialog {
         grid.setPadding(insets);
 
         ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
+        this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Team Description:");
@@ -55,16 +56,16 @@ public class CreateTeamDialog {
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
 
         //Add grid of controls to dialog
-        dialog.getDialogPane().setContent(grid);
+        this.getDialogPane().setContent(grid);
 
-        Node createButton = dialog.getDialogPane().lookupButton(btnTypeCreate);
+        Node createButton = this.getDialogPane().lookupButton(btnTypeCreate);
         createButton.setDisable(true);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 createButton.setDisable(!validateShortName(shortNameCustomField, null));
             });
 
-        dialog.setResultConverter(b -> {
+        this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
                     //get user input
                     String shortName = shortNameCustomField.getText();
@@ -73,13 +74,13 @@ public class CreateTeamDialog {
                     Team team = new Team(shortName, description);
                     Global.currentWorkspace.add(team);
                     App.mainPane.selectItem(team);
-                    dialog.close();
+                    this.close();
 
                 }
                 return null;
             });
 
-        dialog.setResizable(false);
-        dialog.show();
+        this.setResizable(false);
+        this.show();
     }
 }

@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.dialog.CreateBacklogDialog;
 import seng302.group2.scenes.dialog.CreateReleaseDialog;
 import seng302.group2.scenes.dialog.DeleteDialog;
 import seng302.group2.workspace.SaharaItem;
@@ -67,7 +68,8 @@ public class ReleaseCategoryTab extends Tab {
             });
 
         btnCreate.setOnAction((event) -> {
-                CreateReleaseDialog.show(selectedCategory.getProject());
+                javafx.scene.control.Dialog creationDialog = new CreateReleaseDialog(selectedCategory.getProject());
+                creationDialog.show();
             });
 
     }

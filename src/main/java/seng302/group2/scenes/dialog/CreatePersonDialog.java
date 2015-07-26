@@ -10,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -33,28 +34,28 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  *
  * @author swi67
  */
-public class CreatePersonDialog {
+public class CreatePersonDialog extends Dialog<Map<String, String>> {
 
-    static Boolean correctDate = Boolean.TRUE;
-    static Boolean correctShortName = Boolean.FALSE;
-    static Boolean correctFirstName = Boolean.FALSE;
-    static Boolean correctLastName = Boolean.FALSE;
+    Boolean correctDate = Boolean.TRUE;
+    Boolean correctShortName = Boolean.FALSE;
+    Boolean correctFirstName = Boolean.FALSE;
+    Boolean correctLastName = Boolean.FALSE;
     /**
      * Displays the Dialog box for creating a person.
      */
-    public static void show() {
+    public CreatePersonDialog() {
         correctDate = Boolean.TRUE;
         correctShortName = Boolean.FALSE;
         correctFirstName = Boolean.FALSE;
         correctLastName = Boolean.FALSE;
         // Initialise Dialog and GridPane
         javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
-        dialog.setTitle("New Person");
-        dialog.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
+        this.setTitle("New Person");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");
 
         ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
+        this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
@@ -73,12 +74,12 @@ public class CreatePersonDialog {
                 emailTextField, customBirthDate, descriptionTextArea);
 
         //Add grid of controls to dialog
-        dialog.getDialogPane().setContent(grid);
+        this.getDialogPane().setContent(grid);
 
         // Request focus on the username field by default.
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
 
-        Node createButton = dialog.getDialogPane().lookupButton(btnTypeCreate);
+        Node createButton = this.getDialogPane().lookupButton(btnTypeCreate);
         createButton.setDisable(true);
 
         //Validation
@@ -103,7 +104,7 @@ public class CreatePersonDialog {
             });
 
 
-        dialog.setResultConverter(b -> {
+        this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
                     //get user input
                     String firstName = firstNameCustomField.getText();
@@ -126,13 +127,13 @@ public class CreatePersonDialog {
                             birthDate);
                     Global.currentWorkspace.add(person);
                     App.mainPane.selectItem(person);
-                    dialog.close();
+                    this.close();
 
                 }
                 return null;
             });
 
-        dialog.setResizable(false);
-        dialog.show();
+        this.setResizable(false);
+        this.show();
     }
 }

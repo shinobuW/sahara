@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -23,19 +24,19 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  * @author Jordane Lew jml168
  */
 
-public class CreateProjectDialog {
+public class CreateProjectDialog extends Dialog<Map<String, String>> {
     /**
      * Displays the Dialog box for creating a workspace.
      */
-    static Boolean correctShortName = Boolean.FALSE;
-    static Boolean correctLongName = Boolean.FALSE;
+    Boolean correctShortName = Boolean.FALSE;
+    Boolean correctLongName = Boolean.FALSE;
 
-    public static void show() {
+    public CreateProjectDialog() {
         correctShortName = false;
         correctLongName = false;
         javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
-        dialog.setTitle("New Project");
-        dialog.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
+        this.setTitle("New Project");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");
 
         VBox grid = new VBox();
@@ -44,10 +45,10 @@ public class CreateProjectDialog {
         grid.setPadding(insets);
 
         ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
+        this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
         //Add grid of controls to dialog
-        dialog.getDialogPane().setContent(grid);
+        this.getDialogPane().setContent(grid);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         RequiredField longNameCustomField = new RequiredField("Long Name:");
@@ -60,7 +61,7 @@ public class CreateProjectDialog {
         // Request focus on the username field by default.
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
 
-        Node createButton = dialog.getDialogPane().lookupButton(btnTypeCreate);
+        Node createButton = this.getDialogPane().lookupButton(btnTypeCreate);
         createButton.setDisable(true);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
@@ -73,7 +74,7 @@ public class CreateProjectDialog {
                 createButton.setDisable(!(correctShortName && correctLongName));
             });
 
-        dialog.setResultConverter(b -> {
+        this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
                     String shortName = shortNameCustomField.getText();
                     String longName = longNameCustomField.getText();
@@ -83,12 +84,12 @@ public class CreateProjectDialog {
                         Project project = new Project(shortName, longName, description);
                         Global.currentWorkspace.add(project);
                         App.mainPane.selectItem(project);
-                        dialog.close();
+                        this.close();
                     }
                 }
                 return null;
             });
-        dialog.setResizable(false);
-        dialog.show();
+        this.setResizable(false);
+        this.show();
     }
 }

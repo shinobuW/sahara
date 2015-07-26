@@ -41,9 +41,9 @@ public class MainMenuBar extends MenuBar {
      */
     private static MenuItem createWorkspaceItem() {
         MenuItem newWorkspaceItem = new MenuItem("Workspace");
-        newWorkspaceItem.setOnAction((ActionEvent event) -> {
-                newWorkspaceAction();
-            });
+        newWorkspaceItem.setOnAction((ActionEvent event) ->
+                        newWorkspaceAction()
+        );
 
         newWorkspaceItem.setAccelerator(new KeyCodeCombination(KeyCode.N,
                 KeyCombination.CONTROL_DOWN,
@@ -54,7 +54,8 @@ public class MainMenuBar extends MenuBar {
     static void newWorkspaceAction() {
         if (Global.currentWorkspace == null
                 || !Global.currentWorkspace.getHasUnsavedChanges()) {
-            CreateWorkspaceDialog.show();
+            javafx.scene.control.Dialog creationDialog = new CreateWorkspaceDialog();
+            creationDialog.show();
             App.refreshMainScene();
             Global.commandManager.clear();
             return;
@@ -68,7 +69,8 @@ public class MainMenuBar extends MenuBar {
         if (response == Dialog.ACTION_YES) {
             SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
             if (saved == SaveLoadResult.SUCCESS) {
-                CreateWorkspaceDialog.show();
+                javafx.scene.control.Dialog creationDialog = new CreateWorkspaceDialog();
+                creationDialog.show();
                 App.refreshMainScene();
             }
             else {
@@ -76,7 +78,8 @@ public class MainMenuBar extends MenuBar {
             }
         }
         else if (response == Dialog.ACTION_NO) {
-            CreateWorkspaceDialog.show();
+            javafx.scene.control.Dialog creationDialog = new CreateWorkspaceDialog();
+            creationDialog.show();
             App.refreshMainScene();
         }
         if (response != Dialog.ACTION_CANCEL) {
@@ -93,8 +96,10 @@ public class MainMenuBar extends MenuBar {
      */
     private static MenuItem createProjectItem() {
         MenuItem newProjectItem = new MenuItem("Project");
-        newProjectItem.setOnAction((ActionEvent event) ->
-                CreateProjectDialog.show());
+        newProjectItem.setOnAction((ActionEvent event) -> {
+                javafx.scene.control.Dialog creationDialog = new CreateProjectDialog();
+                creationDialog.show();
+            });
 
         newProjectItem.setAccelerator(new KeyCodeCombination(KeyCode.P,
                 KeyCombination.CONTROL_DOWN,
@@ -112,8 +117,10 @@ public class MainMenuBar extends MenuBar {
      */
     private static MenuItem createPersonItem() {
         MenuItem newPersonItem = new MenuItem("Person");
-        newPersonItem.setOnAction((event) ->
-                CreatePersonDialog.show());
+        newPersonItem.setOnAction((event) -> {
+                javafx.scene.control.Dialog creationDialog = new CreatePersonDialog();
+                creationDialog.show();
+            });
         newPersonItem.setAccelerator(new KeyCodeCombination(KeyCode.P,
                 KeyCombination.CONTROL_DOWN,
                 KeyCombination.SHORTCUT_DOWN));
@@ -127,8 +134,10 @@ public class MainMenuBar extends MenuBar {
      */
     private static MenuItem createSkillItem() {
         MenuItem newSkillItem = new MenuItem("Skill");
-        newSkillItem.setOnAction((event) ->
-                CreateSkillDialog.show());
+        newSkillItem.setOnAction((event) -> {
+                javafx.scene.control.Dialog creationDialog = new CreateSkillDialog();
+                creationDialog.show();
+            });
         newSkillItem.setAccelerator(new KeyCodeCombination(KeyCode.K,
                 KeyCombination.CONTROL_DOWN,
                 KeyCombination.SHORTCUT_DOWN));
@@ -144,7 +153,8 @@ public class MainMenuBar extends MenuBar {
 
         MenuItem newReleaseItem = new MenuItem("Release");
         newReleaseItem.setOnAction((event) -> {
-                CreateReleaseDialog.show(null);
+                javafx.scene.control.Dialog creationDialog = new CreateReleaseDialog(null);
+                creationDialog.show();
             });
         newReleaseItem.setAccelerator(new KeyCodeCombination(KeyCode.R,
                 KeyCombination.CONTROL_DOWN,
@@ -160,7 +170,10 @@ public class MainMenuBar extends MenuBar {
     private static MenuItem createStoryItem() {
 
         MenuItem newStoryItem = new MenuItem("Story");
-        newStoryItem.setOnAction((event) -> new CreateStoryDialog());
+        newStoryItem.setOnAction((event) -> {
+                javafx.scene.control.Dialog creationDialog = new CreateStoryDialog();
+                //creationDialog.show();
+            });
         return newStoryItem;
     }
 
@@ -186,8 +199,10 @@ public class MainMenuBar extends MenuBar {
      */
     private static MenuItem createTeamItem() {
         MenuItem newTeamItem = new MenuItem("Team");
-        newTeamItem.setOnAction((event) ->
-                CreateTeamDialog.show());
+        newTeamItem.setOnAction((event) -> {
+                javafx.scene.control.Dialog creationDialog = new CreateTeamDialog();
+                creationDialog.show();
+            });
         newTeamItem.setAccelerator(new KeyCodeCombination(KeyCode.T,
                 KeyCombination.CONTROL_DOWN,
                 KeyCombination.SHORTCUT_DOWN));
@@ -558,6 +573,5 @@ public class MainMenuBar extends MenuBar {
                     deleteTreeItem.setDisable(false);
                 }
             });
-
     }
 }

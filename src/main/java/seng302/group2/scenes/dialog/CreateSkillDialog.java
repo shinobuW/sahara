@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -25,23 +26,23 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  *
  * @author drm127
  */
-public class CreateSkillDialog {
+public class CreateSkillDialog extends Dialog<Map<String, String>> {
     /**
      * Displays the Dialog box for creating a skill.
      */
-    public static void show() {
+    public CreateSkillDialog() {
         javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
-        dialog.setTitle("New Skill");
+        this.setTitle("New Skill");
 
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
         grid.setPadding(insets);
-        dialog.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");
 
         ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
+        this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description:");
@@ -49,9 +50,9 @@ public class CreateSkillDialog {
         grid.getChildren().add(shortNameCustomField);
         grid.getChildren().add(descriptionTextArea);
 
-        dialog.getDialogPane().setContent(grid);
+        this.getDialogPane().setContent(grid);
 
-        Node createButton = dialog.getDialogPane().lookupButton(btnTypeCreate);
+        Node createButton = this.getDialogPane().lookupButton(btnTypeCreate);
         createButton.setDisable(true);
 
         //Validation
@@ -60,19 +61,19 @@ public class CreateSkillDialog {
                 createButton.setDisable(!correctShortName);
             });
 
-        dialog.setResultConverter(b -> {
+        this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
                     String shortName = shortNameCustomField.getText();
                     String description = descriptionTextArea.getText();
                     Skill skill = new Skill(shortName, description);
                     Global.currentWorkspace.add(skill);
                     App.mainPane.selectItem(skill);
-                    dialog.close();
+                    this.close();
                 }
                 return null;
             });
 
-        dialog.setResizable(false);
-        dialog.show();
+        this.setResizable(false);
+        this.show();
     }
 }
