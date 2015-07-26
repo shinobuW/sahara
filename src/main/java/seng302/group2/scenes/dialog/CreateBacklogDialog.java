@@ -5,7 +5,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -14,10 +13,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -153,65 +150,70 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
 
         // Validation.
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-            correctShortName = validateShortName(shortNameCustomField, null);
-            createButton.setDisable(!(correctShortName && correctLongName && projectSelected() & poSelected() & scaleSelected()));
-        });
+                correctShortName = validateShortName(shortNameCustomField, null);
+                createButton.setDisable(!(correctShortName && correctLongName
+                        && projectSelected() & poSelected() & scaleSelected()));
+            });
 
         longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newvalue) -> {
-            correctLongName = validateName(longNameCustomField);
-            createButton.setDisable(!(correctShortName && correctLongName && projectSelected() & poSelected() & scaleSelected()));
-        });
+                correctLongName = validateName(longNameCustomField);
+                createButton.setDisable(!(correctShortName && correctLongName
+                        && projectSelected() & poSelected() & scaleSelected()));
+            });
 
         projComboBox.valueProperty().addListener(new ChangeListener<Project>() {
             @Override
             public void changed(ObservableValue<? extends Project> observable, Project oldValue, Project newValue) {
-                createButton.setDisable(!(correctShortName && correctLongName && projectSelected() & poSelected() & scaleSelected()));
+                createButton.setDisable(!(correctShortName && correctLongName
+                        && projectSelected() && poSelected() && scaleSelected()));
             }
-        });
+            });
 
         productOwnerComboBox.valueProperty().addListener(new ChangeListener<Person>() {
             @Override
             public void changed(ObservableValue<? extends Person> observable, Person oldValue, Person newValue) {
-                createButton.setDisable(!(correctShortName && correctLongName && projectSelected() & poSelected() & scaleSelected()));
+                createButton.setDisable(!(correctShortName && correctLongName
+                        && projectSelected() && poSelected() && scaleSelected()));
             }
-        });
+            });
 
         scaleComboBox.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                createButton.setDisable(!(correctShortName && correctLongName && projectSelected() & poSelected() & scaleSelected()));
+                createButton.setDisable(!(correctShortName && correctLongName
+                        && projectSelected() && poSelected() && scaleSelected()));
             }
-        });
+            });
 
         // Create button event
         this.setResultConverter(b -> {
-            if (b == btnTypeCreate) {
-                String shortName = shortNameCustomField.getText();
-                String longName = longNameCustomField.getText();
-                String description = descriptionTextArea.getText();
+                if (b == btnTypeCreate) {
+                    String shortName = shortNameCustomField.getText();
+                    String longName = longNameCustomField.getText();
+                    String description = descriptionTextArea.getText();
 
-                Project project = new Project();
-                for (Project item : Global.currentWorkspace.getProjects()) {
-                    if (item.equals(projComboBox.getValue())) {
-                        project = item;
+                    Project project = new Project();
+                    for (Project item : Global.currentWorkspace.getProjects()) {
+                        if (item.equals(projComboBox.getValue())) {
+                            project = item;
+                        }
                     }
+
+                    Person productOwner = productOwnerComboBox.getValue();
+                    String scale = scaleComboBox.getValue();
+
+                    Backlog backlog = new Backlog(shortName, longName, description, productOwner,
+                            project, scale);
+
+                    project.add(backlog);
+                    System.out.println(project);
+                    System.out.println(project.getBacklogs());
+                    App.mainPane.selectItem(backlog);
+                    this.close();
+
                 }
-
-                Person productOwner = productOwnerComboBox.getValue();
-                String scale = scaleComboBox.getValue();
-
-                Backlog backlog = new Backlog(shortName, longName, description, productOwner,
-                        project, scale);
-
-                project.add(backlog);
-                System.out.println(project);
-                System.out.println(project.getBacklogs());
-                App.mainPane.selectItem(backlog);
-                this.close();
-
-            }
-            return null;
-        });
+                return null;
+            });
 
         this.setResizable(false);
         this.show();

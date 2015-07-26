@@ -4,8 +4,6 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import seng302.group2.Global;
 import seng302.group2.workspace.categories.Category;
-import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
-import seng302.group2.workspace.project.backlog.Backlog;
 
 /**
  * Created by Jordane on 14/04/2015.

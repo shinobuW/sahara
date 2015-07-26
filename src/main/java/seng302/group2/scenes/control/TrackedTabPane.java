@@ -3,7 +3,6 @@ package seng302.group2.scenes.control;
 import javafx.scene.control.TabPane;
 import seng302.group2.workspace.SaharaItem;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
