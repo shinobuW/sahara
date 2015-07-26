@@ -6,15 +6,9 @@
 package seng302.group2.scenes.dialog;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBoxTreeItem;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTreeCell;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.controlsfx.dialog.Dialog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seng302.group2.Global;
@@ -23,6 +17,7 @@ import seng302.group2.workspace.SaharaItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class to create a pop up dialog for creating a skill.
@@ -30,28 +25,23 @@ import java.util.List;
  * @author drm127
  */
 @SuppressWarnings("deprecation")
-public class GenerateReportDialog {
+public class GenerateReportDialog extends Dialog<Map<String, String>> {
     static transient Logger logger = LoggerFactory.getLogger(GenerateReportDialog.class);
-
     /**
      * Displays the Dialog box for creating a skill.
      */
-    public static void show() {
-        Dialog dialog = new Dialog(null, "Generate Report");
+    public GenerateReportDialog() {
+        this.setTitle("Generate Report");
+        this.getDialogPane().setStyle(" -fx-max-width:450px; -fx-max-height: 480; -fx-pref-width: 450px; "
+                + "-fx-pref-height: 480;");
+
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
         grid.setPadding(insets);
 
-        Button btnGenerate = new Button("Generate");
-        Button btnCancel = new Button("Cancel");
-
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
-        buttons.getChildren().addAll(btnGenerate, btnCancel);
-
-
+        ButtonType btnTypeCreate = new ButtonType("Generate", ButtonBar.ButtonData.OK_DONE);
+        this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
         TreeItem<SaharaItem> root = new CheckBoxTreeItem<>(Global.currentWorkspace);
         addChildren(root);
@@ -60,27 +50,27 @@ public class GenerateReportDialog {
         TreeView<SaharaItem> treeView = new TreeView<>(root);
         treeView.setCellFactory(CheckBoxTreeCell.<SaharaItem>forTreeView());
 
+        grid.getChildren().addAll(treeView);
 
-        grid.getChildren().addAll(treeView, buttons);
+        //Add grid of controls to dialog
+        this.getDialogPane().setContent(grid);
 
-
-        btnGenerate.setOnAction((event) -> {
-                List<SaharaItem> checkedItems = getCheckedItems(root);
-                // TODO: Plug in custom generation method
-                logger.info(checkedItems.toString());
-                if (!checkedItems.isEmpty()) {
-                    ReportGenerator.generateReport(checkedItems);
-                    dialog.hide();
+        this.setResultConverter(b -> {
+                if (b == btnTypeCreate) {
+                    List<SaharaItem> checkedItems = getCheckedItems(root);
+                    // TODO: Plug in custom generation method
+                    logger.info(checkedItems.toString());
+                    if (!checkedItems.isEmpty()) {
+                        ReportGenerator.generateReport(checkedItems);
+                        this.close();
+                    }
                 }
+                return null;
             });
-
-
-        btnCancel.setOnAction((event) -> dialog.hide());
-
-        dialog.setResizable(true);
-        dialog.setIconifiable(false);
-        dialog.setContent(grid);
-        dialog.show();
+        // TODO: fix resizable bug
+        // This bug still exsists but the window is no-longer resizable. May have
+        // to look into in the future if we want resizable windows.
+        this.setResizable(false);
     }
 
 

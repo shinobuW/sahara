@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -14,6 +15,7 @@ import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.Map;
 
+import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -22,14 +24,18 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  * @author David Moseley drm127
  */
 @SuppressWarnings("deprecation")
-public class CreateWorkspaceDialog {
+public class CreateWorkspaceDialog extends Dialog<Map<String, String>> {
+
+    Boolean correctShortName = Boolean.FALSE;
+    Boolean correctLongName = Boolean.FALSE;
     /**
      * Displays the Dialog box for creating a workspace.
      */
-    public static void show() {
-        javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
-        dialog.setTitle("New Workspace");
-        dialog.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
+    public CreateWorkspaceDialog() {
+        correctShortName = Boolean.FALSE;
+        correctLongName = Boolean.FALSE;
+        this.setTitle("New Workspace");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");
 
         VBox grid = new VBox();
@@ -38,7 +44,7 @@ public class CreateWorkspaceDialog {
         grid.setPadding(insets);
 
         ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
+        this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         RequiredField longNameCustomField = new RequiredField("Long Name:");
@@ -52,17 +58,24 @@ public class CreateWorkspaceDialog {
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
 
         //Add grid of controls to dialog
-        dialog.getDialogPane().setContent(grid);
+        this.getDialogPane().setContent(grid);
 
-        Node createButton = dialog.getDialogPane().lookupButton(btnTypeCreate);
+        Node createButton = this.getDialogPane().lookupButton(btnTypeCreate);
         createButton.setDisable(true);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                createButton.setDisable(!validateShortName(shortNameCustomField, null));
+                correctShortName = validateShortName(shortNameCustomField, null);
+                createButton.setDisable(!(correctShortName && correctLongName));
+            });
+
+        longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctLongName = validateName(longNameCustomField);
+                createButton.setDisable(!(correctShortName && correctLongName));
             });
 
 
-        dialog.setResultConverter(b -> {
+
+        this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
                     String shortName = shortNameCustomField.getText();
                     String longName = longNameCustomField.getText();
@@ -72,13 +85,13 @@ public class CreateWorkspaceDialog {
                     Global.currentWorkspace = workspace;
                     App.mainPane.selectItem(Global.currentWorkspace);
                     App.mainPane.refreshAll();
-                    dialog.close();
+                    this.close();
                 }
                 return null;
             });
 
-        dialog.setResizable(false);
-        dialog.show();
+        this.setResizable(false);
+        this.show();
 
     }
 }

@@ -72,6 +72,6 @@ public class StoryCategory extends SubCategory {
      */
     @Override
     public void showCreationDialog() {
-        CreateStoryDialog.show();
+        new CreateStoryDialog();
     }
 }

@@ -47,7 +47,6 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
         correctShortName = Boolean.FALSE;
         correctLongName = Boolean.FALSE;
 
-        //javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
         this.setTitle("New Backlog");
         this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");
@@ -206,8 +205,6 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
                             project, scale);
 
                     project.add(backlog);
-                    System.out.println(project);
-                    System.out.println(project.getBacklogs());
                     App.mainPane.selectItem(backlog);
                     this.close();
 
@@ -231,30 +228,3 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
         return !(scaleComboBox.getValue() == null);
     }
 }
-
-//Po error message show/hide
-//            if (productOwnerComboBox.getSelectionModel().getSelectedItem() == null) {
-//                //Show error
-//                correctProductOwnerCombo = false;
-//                if (!poVBox.getChildren().contains(noPoSelectedLabel)) {
-//                    poVBox.getChildren().add(noPoSelectedLabel);
-//                }
-//            } else {
-//                correctProductOwnerCombo = true;
-//                if (poVBox.getChildren().contains(noPoSelectedLabel)) {
-//                    poVBox.getChildren().remove(noPoSelectedLabel);
-//                }
-//            }
-//            //Scale error message show/hide
-//            if (scaleComboBox.getSelectionModel().getSelectedItem() == null) {
-//                //Show error
-//                correctScaleCombo = false;
-//                if (!scaleVBox.getChildren().contains(noScaleSelectedLabel)) {
-//                    scaleVBox.getChildren().add(noScaleSelectedLabel);
-//                }
-//            } else {
-//                correctScaleCombo = true;
-//                if (scaleVBox.getChildren().contains(noScaleSelectedLabel)) {
-//                    scaleVBox.getChildren().remove(noScaleSelectedLabel);
-//                }
-//            }

@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
@@ -32,14 +33,14 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 /**
  * @author Shinobu
  */
-public class CreateReleaseDialog {
+public class CreateReleaseDialog extends Dialog<Map<String, String>> {
     /**
      * Shows the release creation dialog
      */
 
-    static boolean correctShortName;
-    static boolean correctDate;
-    public static void show(Project defaultProject) {
+    Boolean correctShortName = Boolean.FALSE;
+    Boolean correctDate = Boolean.FALSE;
+    public CreateReleaseDialog(Project defaultProject) {
         correctShortName = Boolean.FALSE;
         correctDate = Boolean.TRUE;
 
@@ -48,9 +49,8 @@ public class CreateReleaseDialog {
             return;
         }
 
-        javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
-        dialog.setTitle("New Release");
-        dialog.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
+        this.setTitle("New Release");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");
 
         VBox grid = new VBox();
@@ -59,7 +59,7 @@ public class CreateReleaseDialog {
         grid.setPadding(insets);
 
         ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
+        this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
@@ -85,12 +85,12 @@ public class CreateReleaseDialog {
         grid.getChildren().addAll(shortNameCustomField, descriptionTextArea, releaseDateField, projectComboBox);
 
         //Add grid of controls to dialog
-        dialog.getDialogPane().setContent(grid);
+        this.getDialogPane().setContent(grid);
 
         // Request focus on the username field by default.
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
 
-        Node createButton = dialog.getDialogPane().lookupButton(btnTypeCreate);
+        Node createButton = this.getDialogPane().lookupButton(btnTypeCreate);
         createButton.setDisable(true);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
@@ -119,7 +119,7 @@ public class CreateReleaseDialog {
                 }
             });
 
-        dialog.setResultConverter(b -> {
+        this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
                     String shortName = shortNameCustomField.getText();
                     String description = descriptionTextArea.getText();
@@ -137,7 +137,7 @@ public class CreateReleaseDialog {
                         Release release = new Release(shortName, description, releaseDate, project);
                         project.add(release);
                         App.mainPane.selectItem(release);
-                        dialog.close();
+                        this.close();
                     }
                     else {
                         if (!DateValidator.isFutureDate(releaseDate)) {
@@ -148,7 +148,7 @@ public class CreateReleaseDialog {
                                     project);
                             project.add(release);
                             App.mainPane.selectItem(release);
-                            dialog.close();
+                            this.close();
                         }
                     }
                 }
@@ -157,7 +157,7 @@ public class CreateReleaseDialog {
                 }
                 return null;
             });
-        dialog.setResizable(false);
-        dialog.show();
+        this.setResizable(false);
+        this.show();
     }
 }

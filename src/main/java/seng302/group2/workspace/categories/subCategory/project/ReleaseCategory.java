@@ -3,6 +3,7 @@ package seng302.group2.workspace.categories.subCategory.project;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
+import seng302.group2.scenes.dialog.CreateBacklogDialog;
 import seng302.group2.scenes.dialog.CreateReleaseDialog;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.ReleaseCategorySwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
@@ -74,6 +75,7 @@ public class ReleaseCategory extends SubCategory {
      */
     @Override
     public void showCreationDialog() {
-        CreateReleaseDialog.show(getProject());
+        javafx.scene.control.Dialog creationDialog = new CreateReleaseDialog(getProject());
+        creationDialog.show();
     }
 }
