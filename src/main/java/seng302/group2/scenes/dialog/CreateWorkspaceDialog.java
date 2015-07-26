@@ -64,9 +64,8 @@ public class CreateWorkspaceDialog {
         createButton.setDisable(true);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-            createButton.setDisable(!validateShortName(shortNameCustomField, null));
-        });
-
+                createButton.setDisable(!validateShortName(shortNameCustomField, null));
+            });
 
 
         dialog.setResultConverter(b -> {
@@ -87,5 +86,5 @@ public class CreateWorkspaceDialog {
         dialog.setResizable(false);
         dialog.show();
 
-        }
     }
+}
