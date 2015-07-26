@@ -172,9 +172,9 @@ public class MainMenuBar extends MenuBar {
 
         MenuItem newStoryItem = new MenuItem("Story");
         newStoryItem.setOnAction((event) -> {
-            javafx.scene.control.Dialog creationDialog = new CreateStoryDialog();
-            //creationDialog.show();
-        });
+                javafx.scene.control.Dialog creationDialog = new CreateStoryDialog();
+                //creationDialog.show();
+            });
         return newStoryItem;
     }
 
