@@ -6,6 +6,9 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import seng302.group2.scenes.control.SearchBox;
 
 
 /**
@@ -22,11 +25,19 @@ public class MainToolbar extends ToolBar {
     Button redoButton = new Button();
     Button generateButton = new Button();
 
+
+    SearchBox searchBox = new SearchBox();
+
+
     /**
      * The constructor for the tool bar
      */
     public MainToolbar() {
         setActions();
+
+        HBox leftRightSeparator = new HBox();
+        HBox.setHgrow(leftRightSeparator, Priority.ALWAYS);
+
         this.getItems().addAll(
                 newButton,
                 openButton,
@@ -35,7 +46,9 @@ public class MainToolbar extends ToolBar {
                 undoButton,
                 redoButton,
                 new Separator(),
-                generateButton
+                generateButton,
+                leftRightSeparator,
+                searchBox
         );
     }
 

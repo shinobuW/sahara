@@ -62,7 +62,6 @@ public class CreateWorkspaceDialog {
             });
 
 
-
         dialog.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
                     String shortName = shortNameCustomField.getText();
