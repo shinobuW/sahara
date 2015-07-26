@@ -25,14 +25,15 @@ import java.util.Map;
  * @author drm127
  */
 @SuppressWarnings("deprecation")
-public class GenerateReportDialog {
+public class GenerateReportDialog extends Dialog<Map<String, String>> {
     static transient Logger logger = LoggerFactory.getLogger(GenerateReportDialog.class);
     /**
      * Displays the Dialog box for creating a skill.
      */
     public GenerateReportDialog() {
-        javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
-        dialog.setTitle("New Person");
+        this.setTitle("Generate Report");
+        this.getDialogPane().setStyle(" -fx-max-width:450px; -fx-max-height: 480; -fx-pref-width: 450px; "
+                + "-fx-pref-height: 480;");
 
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
@@ -40,7 +41,7 @@ public class GenerateReportDialog {
         grid.setPadding(insets);
 
         ButtonType btnTypeCreate = new ButtonType("Generate", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
+        this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
         TreeItem<SaharaItem> root = new CheckBoxTreeItem<>(Global.currentWorkspace);
         addChildren(root);
@@ -52,23 +53,24 @@ public class GenerateReportDialog {
         grid.getChildren().addAll(treeView);
 
         //Add grid of controls to dialog
-        dialog.getDialogPane().setContent(grid);
+        this.getDialogPane().setContent(grid);
 
-        dialog.setResultConverter(b -> {
-                if (b == btnTypeCreate) {
-                    List<SaharaItem> checkedItems = getCheckedItems(root);
-                    // TODO: Plug in custom generation method
-                    logger.info(checkedItems.toString());
-                    if (!checkedItems.isEmpty()) {
-                        ReportGenerator.generateReport(checkedItems);
-                        dialog.close();
+        this.setResultConverter(b -> {
+            if (b == btnTypeCreate) {
+                List<SaharaItem> checkedItems = getCheckedItems(root);
+                // TODO: Plug in custom generation method
+                logger.info(checkedItems.toString());
+                if (!checkedItems.isEmpty()) {
+                    ReportGenerator.generateReport(checkedItems);
+                        this.close();
                     }
                 }
                 return null;
             });
         // TODO: fix resizable bug
-        dialog.setResizable(true);
-        dialog.show();
+        // This bug still exsists but the window is no-longer resizable. May have
+        // to look into in the future if we want resizable windows.
+        this.setResizable(false);
     }
 
 

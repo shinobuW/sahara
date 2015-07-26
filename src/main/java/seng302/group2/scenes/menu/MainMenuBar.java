@@ -305,7 +305,8 @@ public class MainMenuBar extends MenuBar {
     }
 
     static void reportAction() {
-        new GenerateReportDialog();
+        javafx.scene.control.Dialog creationDialog = new GenerateReportDialog();
+        creationDialog.show();
     }
 
     /**
