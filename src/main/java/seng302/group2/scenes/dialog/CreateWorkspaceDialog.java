@@ -34,7 +34,6 @@ public class CreateWorkspaceDialog extends Dialog<Map<String, String>> {
     public CreateWorkspaceDialog() {
         correctShortName = Boolean.FALSE;
         correctLongName = Boolean.FALSE;
-        javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
         this.setTitle("New Workspace");
         this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");

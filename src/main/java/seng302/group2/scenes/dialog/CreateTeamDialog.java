@@ -33,7 +33,6 @@ public class CreateTeamDialog extends Dialog<Map<String, String>> {
      * Displays the Dialog box for creating a Team.
      */
     public CreateTeamDialog() {
-        javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
         this.setTitle("New Team");
         this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");

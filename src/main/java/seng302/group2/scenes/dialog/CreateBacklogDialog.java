@@ -47,7 +47,6 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
         correctShortName = Boolean.FALSE;
         correctLongName = Boolean.FALSE;
 
-        //javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
         this.setTitle("New Backlog");
         this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");

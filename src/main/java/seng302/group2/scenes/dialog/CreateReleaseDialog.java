@@ -49,7 +49,6 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
             return;
         }
 
-        javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
         this.setTitle("New Release");
         this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");

@@ -31,7 +31,6 @@ public class CreateSkillDialog extends Dialog<Map<String, String>> {
      * Displays the Dialog box for creating a skill.
      */
     public CreateSkillDialog() {
-        javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
         this.setTitle("New Skill");
 
         VBox grid = new VBox();

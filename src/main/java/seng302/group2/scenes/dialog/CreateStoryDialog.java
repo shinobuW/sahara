@@ -48,7 +48,6 @@ public class CreateStoryDialog extends Dialog<Map<String, String>> {
         correctPriority = false;
 
         // Initialise Dialog
-        javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
         this.setTitle("New Story");
         this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");

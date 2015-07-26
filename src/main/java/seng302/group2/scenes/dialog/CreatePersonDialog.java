@@ -48,8 +48,7 @@ public class CreatePersonDialog extends Dialog<Map<String, String>> {
         correctShortName = Boolean.FALSE;
         correctFirstName = Boolean.FALSE;
         correctLastName = Boolean.FALSE;
-        // Initialise Dialog and GridPane
-        javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
+
         this.setTitle("New Person");
         this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");

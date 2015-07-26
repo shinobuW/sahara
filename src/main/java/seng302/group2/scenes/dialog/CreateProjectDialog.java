@@ -34,7 +34,6 @@ public class CreateProjectDialog extends Dialog<Map<String, String>> {
     public CreateProjectDialog() {
         correctShortName = false;
         correctLongName = false;
-        javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
         this.setTitle("New Project");
         this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");
