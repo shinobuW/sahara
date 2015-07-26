@@ -100,15 +100,21 @@ public class CreateReleaseDialog {
             });
 
         releaseDateField.getDatePicker().setOnAction(event -> {
-                correctDate = false;
                 LocalDate releaseDate = releaseDateField.getValue();
-                if ((DateValidator.isFutureDate(releaseDate) || releaseDate == null) && correctShortName) {
+                correctDate = DateValidator.isFutureDate(releaseDate);
+
+                if (correctDate) {
                     releaseDateField.hideErrorField();
+                }
+                else {
+                    releaseDateField.showErrorField("Date must be a future date");
+                }
+
+                if ((DateValidator.isFutureDate(releaseDate) || releaseDate == null) && correctShortName) {
                     correctDate = true;
                     createButton.setDisable(!(correctShortName && correctDate));
                 }
                 else {
-                    releaseDateField.showErrorField("Date must be a future date");
                     createButton.setDisable(true);
                 }
             });
