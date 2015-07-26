@@ -27,6 +27,7 @@ import seng302.group2.workspace.workspace.Workspace.SaveLoadResult;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
+
 /**
  * The main menu bar of the workspace window(s).
  *
@@ -410,7 +411,8 @@ public class MainMenuBar extends MenuBar {
     private static MenuItem createDeleteTreeItem() {
         MenuItem deleteItem = new MenuItem("Delete");
         deleteItem.setOnAction((event) -> {
-                showDeleteDialog((SaharaItem) Global.selectedTreeItem.getValue());
+                showDeleteDialog((SaharaItem) Global.selectedTreeItem
+                        .getValue());
             });
 
         deleteItem.setAccelerator(new KeyCodeCombination(KeyCode.DELETE,

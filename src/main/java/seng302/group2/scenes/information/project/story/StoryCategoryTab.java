@@ -9,9 +9,10 @@ import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.dialog.CreateStoryDialog;
-import seng302.group2.scenes.dialog.DeleteDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
+
+import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * A class for displaying a tab showing data on all the stories in the current project.
@@ -61,8 +62,8 @@ public class StoryCategoryTab extends Tab {
 
         btnDelete.setOnAction((event) -> {
                 if (storyBox.getSelectionModel().getSelectedItem() != null) {
-                    DeleteDialog.showDeleteDialog((SaharaItem) storyBox.getSelectionModel()
-                            .getSelectedItem());
+                    showDeleteDialog((SaharaItem) storyBox
+                            .getSelectionModel().getSelectedItem());
                 }
             });
 

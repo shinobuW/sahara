@@ -8,11 +8,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
-import seng302.group2.scenes.dialog.CreateBacklogDialog;
 import seng302.group2.scenes.dialog.CreateReleaseDialog;
-import seng302.group2.scenes.dialog.DeleteDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
+
+import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * A class for displaying a tab showing data on all the releases in the current project.
@@ -62,8 +62,8 @@ public class ReleaseCategoryTab extends Tab {
 
         btnDelete.setOnAction((event) -> {
                 if (releaseBox.getSelectionModel().getSelectedItem() != null) {
-                    DeleteDialog.showDeleteDialog((SaharaItem) releaseBox.getSelectionModel()
-                            .getSelectedItem());
+                    showDeleteDialog((SaharaItem) releaseBox
+                            .getSelectionModel().getSelectedItem());
                 }
             });
 

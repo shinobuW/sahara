@@ -8,11 +8,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
-import seng302.group2.scenes.dialog.CreateBacklogDialog;
 import seng302.group2.scenes.dialog.CreateProjectDialog;
-import seng302.group2.scenes.dialog.DeleteDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
+
+import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * A class for displaying a tab showing data on all the projects in the workspace.
@@ -62,7 +62,7 @@ public class ProjectCategoryTab extends Tab {
 
         btnDelete.setOnAction((event) -> {
                 if (projectBox.getSelectionModel().getSelectedItem() != null) {
-                    DeleteDialog.showDeleteDialog((SaharaItem)
+                    showDeleteDialog((SaharaItem)
                             projectBox.getSelectionModel().getSelectedItem());
                 }
             });

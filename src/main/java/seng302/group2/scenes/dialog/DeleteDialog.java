@@ -5,9 +5,8 @@
  */
 package seng302.group2.scenes.dialog;
 
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.workspace.SaharaItem;
@@ -21,6 +20,7 @@ import seng302.group2.workspace.team.Team;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * The deletion dialog for deleting workspace elements
@@ -39,14 +39,15 @@ public class DeleteDialog {
         ArrayList<String> dialogText;
         dialogText = getDeleteDialogText(element);
 
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(dialogText.get(0));
+        alert.setHeaderText("Delete " + "'" + element.toString() + "'?");
+        alert.setContentText(dialogText.get(1));
+        alert.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 200px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 200px;");
+        Optional<ButtonType> result  = alert.showAndWait();
 
-        Action response = Dialogs.create()
-                .title(dialogText.get(0))
-                .message(dialogText.get(1))
-                .actions(Dialog.ACTION_YES, Dialog.ACTION_CANCEL)
-                .showConfirm();
-
-        if (response == Dialog.ACTION_YES) {
+        if (result.get() == ButtonType.OK) {
             if (element.getClass() == Person.class) {
                 Person deletedPerson = (Person) element;
                 deletedPerson.deletePerson();

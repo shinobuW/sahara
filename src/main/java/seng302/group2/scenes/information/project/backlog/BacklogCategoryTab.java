@@ -17,6 +17,7 @@ import seng302.group2.workspace.role.Role;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
+
 /**
  * A class for displaying a tab showing data on all the backlogs in the current project.
  * Created by btm38 on 13/07/15.
@@ -76,8 +77,8 @@ public class BacklogCategoryTab extends Tab {
 
         btnDelete.setOnAction((event) -> {
                 if (backlogBox.getSelectionModel().getSelectedItem() != null) {
-                    showDeleteDialog((SaharaItem) backlogBox.getSelectionModel()
-                            .getSelectedItem());
+                    showDeleteDialog((SaharaItem) backlogBox
+                            .getSelectionModel().getSelectedItem());
                 }
             });
 
