@@ -3,6 +3,7 @@ package seng302.group2.scenes.menu;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToolBar;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -53,6 +54,21 @@ public class MainToolbar extends ToolBar {
         undoButton.setGraphic(new ImageView(imageUndo));
         redoButton.setGraphic(new ImageView(imageRedo));
         generateButton.setGraphic(new ImageView(imageGenerate));
+
+        Tooltip toolNew = new Tooltip("New Workspace");
+        Tooltip toolOpen = new Tooltip("Open Workspace");
+        Tooltip toolSave = new Tooltip("Save Workspace");
+        Tooltip toolUndo = new Tooltip("Undo");
+        Tooltip toolRedo = new Tooltip("Redo");
+        Tooltip toolGenerate = new Tooltip("Generate Report");
+
+        Tooltip.install(newButton, toolNew);
+        Tooltip.install(openButton, toolOpen);
+        Tooltip.install(saveButton, toolSave);
+        Tooltip.install(undoButton, toolUndo);
+        Tooltip.install(redoButton, toolRedo);
+        Tooltip.install(generateButton, toolGenerate);
+
 
         newButton.setOnAction(e -> MainMenuBar.newWorkspaceAction());
         openButton.setOnAction(e -> MainMenuBar.loadAction());
