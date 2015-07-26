@@ -543,6 +543,14 @@ public class Story extends SaharaItem implements Serializable {
         }
         storyElement.appendChild(acceptanceCriteriaElement);
 
+        Element dependenciesElement = ReportGenerator.doc.createElement("story-dependencies");
+        for (Story dependency : this.dependentOn) {
+            Element dependencyElement = ReportGenerator.doc.createElement("dependency");
+            dependencyElement.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(dependency.getId())));
+            dependenciesElement.appendChild(dependencyElement);
+        }
+        storyElement.appendChild(dependenciesElement);
+
         return storyElement;
     }
 
