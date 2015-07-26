@@ -5,24 +5,28 @@
  */
 package seng302.group2.scenes.dialog;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.*;
+import seng302.group2.scenes.control.CustomComboBox;
+import seng302.group2.scenes.control.CustomDatePicker;
+import seng302.group2.scenes.control.CustomTextArea;
+import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 
 import java.time.LocalDate;
+import java.util.Map;
 
-import static seng302.group2.util.validation.DateValidator.isCorrectDateFormat;
-import static seng302.group2.util.validation.DateValidator.stringToDate;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -32,65 +36,102 @@ public class CreateReleaseDialog {
     /**
      * Shows the release creation dialog
      */
-    public static void show() {
+
+    static boolean correctShortName;
+    static boolean correctDate;
+    public static void show(Project defaultProject) {
+        correctShortName = Boolean.FALSE;
+        correctDate = Boolean.TRUE;
+
         if (Global.currentWorkspace.getProjects().isEmpty()) {
             // There are no projects to create releases for
             return;
         }
-        Dialog dialog = new Dialog(null, "New Release");
+
+        javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
+        dialog.setTitle("New Release");
+        dialog.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 500px;");
+
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
         grid.setPadding(insets);
 
-        Button btnCreate = new Button("Create");
-        Button btnCancel = new Button("Cancel");
+        ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
-        buttons.getChildren().addAll(btnCreate, btnCancel);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
         CustomDatePicker releaseDateField = new CustomDatePicker("Estimated Release Date:", false);
         CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
 
-        String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
-        projectComboBox.setValue(firstItem);
-
         for (SaharaItem project : Global.currentWorkspace.getProjects()) {
             projectComboBox.addToComboBox(project.toString());
         }
 
-        grid.getChildren().add(shortNameCustomField);
-        grid.getChildren().add(descriptionTextArea);
-        grid.getChildren().add(releaseDateField);
-        grid.getChildren().add(projectComboBox);
-        grid.getChildren().add(buttons);
+        if (defaultProject == null) {
+            String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
+            projectComboBox.setValue(firstItem);
+        }
+        else {
+            projectComboBox.setValue(defaultProject.toString());
+        }
 
-        btnCreate.setOnAction((event) -> {
-                String shortName = shortNameCustomField.getText();
-                String description = descriptionTextArea.getText();
+        grid.getChildren().addAll(shortNameCustomField, descriptionTextArea, releaseDateField, projectComboBox);
 
-                boolean correctShortName = validateShortName(shortNameCustomField, null);
+        //Add grid of controls to dialog
+        dialog.getDialogPane().setContent(grid);
 
-                Project project = new Project();
-                for (SaharaItem item : Global.currentWorkspace.getProjects()) {
-                    if (item.toString().equals(projectComboBox.getValue())) {
-                        project = (Project) item;
-                    }
+        // Request focus on the username field by default.
+        Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
+
+        Node createButton = dialog.getDialogPane().lookupButton(btnTypeCreate);
+        createButton.setDisable(true);
+
+        shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctShortName = validateShortName(shortNameCustomField, null);
+
+                createButton.setDisable(!(correctShortName && correctDate));
+            });
+
+        releaseDateField.getDatePicker().setOnAction(event -> {
+                correctDate = false;
+                LocalDate releaseDate = releaseDateField.getValue();
+                if ((DateValidator.isFutureDate(releaseDate) || releaseDate == null) && correctShortName) {
+                    releaseDateField.hideErrorField();
+                    correctDate = true;
+                    createButton.setDisable(!(correctShortName && correctDate));
                 }
+                else {
+                    releaseDateField.showErrorField("Date must be a future date");
+                    createButton.setDisable(true);
+                }
+            });
 
-                if (correctShortName) {
+        dialog.setResultConverter(b -> {
+                if (b == btnTypeCreate) {
+                    String shortName = shortNameCustomField.getText();
+                    String description = descriptionTextArea.getText();
                     LocalDate releaseDate = releaseDateField.getValue();
 
+                    Project project = new Project();
+                    for (SaharaItem item : Global.currentWorkspace.getProjects()) {
+                        if (item.toString().equals(projectComboBox.getValue())) {
+                            project = (Project) item;
+                        }
+                    }
 
                     if (releaseDate == null) {
                         releaseDate = null;
                         Release release = new Release(shortName, description, releaseDate, project);
                         project.add(release);
-                        dialog.hide();
+                        App.mainPane.selectItem(release);
+                        dialog.close();
                     }
                     else {
                         if (!DateValidator.isFutureDate(releaseDate)) {
@@ -101,114 +142,16 @@ public class CreateReleaseDialog {
                                     project);
                             project.add(release);
                             App.mainPane.selectItem(release);
-                            dialog.hide();
+                            dialog.close();
                         }
                     }
                 }
-                else {
-                    event.consume();
+                for (SaharaItem project : Global.currentWorkspace.getProjects()) {
+                    projectComboBox.addToComboBox(project.toString());
                 }
+                return null;
             });
-        btnCancel.setOnAction((event) -> {
-                dialog.hide();
-            });
-
         dialog.setResizable(false);
-        dialog.setIconifiable(false);
-        dialog.setContent(grid);
-        dialog.show();
-    }
-
-
-    /**
-     * Shows the release creation dialog defaulting to the given project
-     *
-     * @param defaultProject The default project to create the release in
-     */
-    public static void show(Project defaultProject) {
-        Dialog dialog = new Dialog(null, "New Release");
-        VBox grid = new VBox();
-        grid.spacingProperty().setValue(10);
-        Insets insets = new Insets(20, 20, 20, 20);
-        grid.setPadding(insets);
-
-        Button btnCreate = new Button("Create");
-        Button btnCancel = new Button("Cancel");
-
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
-        buttons.getChildren().addAll(btnCreate, btnCancel);
-
-        RequiredField shortNameCustomField = new RequiredField("Short Name");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Description");
-        CustomDateField releaseDateField = new CustomDateField("Estimated Release Date");
-        CustomComboBox projectComboBox = new CustomComboBox("Project", true);
-
-        //String firstItem = Global.currentWorkspace.getProjects().get(0).getShortName();
-        //projectComboBox.setValue(firstItem);
-
-        for (SaharaItem project : Global.currentWorkspace.getProjects()) {
-            projectComboBox.addToComboBox(project.toString());
-        }
-        projectComboBox.setValue(defaultProject.toString());
-
-        grid.getChildren().add(shortNameCustomField);
-        grid.getChildren().add(descriptionTextArea);
-        grid.getChildren().add(releaseDateField);
-        grid.getChildren().add(projectComboBox);
-        grid.getChildren().add(buttons);
-
-        btnCreate.setOnAction((event) -> {
-                String shortName = shortNameCustomField.getText();
-                String description = descriptionTextArea.getText();
-
-                boolean correctDate = isCorrectDateFormat(releaseDateField);
-                boolean correctShortName = validateShortName(shortNameCustomField, null);
-
-                Project project = new Project();
-
-                for (SaharaItem item : Global.currentWorkspace.getProjects()) {
-                    if (item.toString().equals(projectComboBox.getValue())) {
-                        project = (Project) item;
-                    }
-                }
-
-                if (correctShortName && correctDate) {
-                    String releaseDateString = releaseDateField.getText();
-
-                    LocalDate releaseDate;
-                    if (releaseDateString.isEmpty()) {
-                        releaseDate = null;
-                        Release release = new Release(shortName, description, releaseDate, project);
-                        project.add(release);
-                        dialog.hide();
-                    }
-                    else {
-                        releaseDate = stringToDate(releaseDateString);
-                        if (!DateValidator.isFutureDate(releaseDate)) {
-                            releaseDateField.showErrorField("Date must be a future date");
-                        }
-                        else {
-                            Release release = new Release(shortName, description, releaseDate,
-                                    project);
-                            project.add(release);
-                            dialog.hide();
-                        }
-                    }
-                }
-                else {
-                    event.consume();
-                }
-            });
-
-        btnCancel.setOnAction((event) -> {
-                dialog.hide();
-            });
-
-        dialog.setResizable(false);
-        dialog.setIconifiable(false);
-        dialog.setContent(grid);
         dialog.show();
     }
 }

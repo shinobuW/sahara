@@ -74,6 +74,6 @@ public class ReleaseCategory extends SubCategory {
      */
     @Override
     public void showCreationDialog() {
-        CreateReleaseDialog.show();
+        CreateReleaseDialog.show(getProject());
     }
 }
