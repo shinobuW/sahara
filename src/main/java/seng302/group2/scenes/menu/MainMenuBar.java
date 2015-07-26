@@ -290,7 +290,7 @@ public class MainMenuBar extends MenuBar {
     }
 
     static void reportAction() {
-        GenerateReportDialog.show();
+        new GenerateReportDialog();
     }
 
     /**
