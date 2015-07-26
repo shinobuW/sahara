@@ -22,7 +22,7 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  *
  * @author Jordane Lew jml168
  */
-@SuppressWarnings("deprecation")
+
 public class CreateProjectDialog {
     /**
      * Displays the Dialog box for creating a workspace.
@@ -43,8 +43,8 @@ public class CreateProjectDialog {
         Insets insets = new Insets(20, 20, 20, 20);
         grid.setPadding(insets);
 
-        ButtonType btnCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(btnCreate, ButtonType.CANCEL);
+        ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
         //Add grid of controls to dialog
         dialog.getDialogPane().setContent(grid);
@@ -60,7 +60,7 @@ public class CreateProjectDialog {
         // Request focus on the username field by default.
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
 
-        Node createButton = dialog.getDialogPane().lookupButton(btnCreate);
+        Node createButton = dialog.getDialogPane().lookupButton(btnTypeCreate);
         createButton.setDisable(true);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
@@ -74,7 +74,7 @@ public class CreateProjectDialog {
             });
 
         dialog.setResultConverter(b -> {
-                if (b == btnCreate) {
+                if (b == btnTypeCreate) {
                     String shortName = shortNameCustomField.getText();
                     String longName = longNameCustomField.getText();
                     String description = descriptionTextArea.getText();
@@ -88,27 +88,6 @@ public class CreateProjectDialog {
                 }
                 return null;
             });
-
-        //Validation
-
-
-//        btnCreate.setOnAction((event) -> {
-//                String shortName = shortNameCustomField.getText();
-//                String longName = longNameCustomField.getText();
-//                String description = descriptionTextArea.getText();
-//
-//                if (correctShortName && correctLongName) {
-//                    Project project = new Project(shortName, longName, description);
-//                    Global.currentWorkspace.add(project);
-//                    App.mainPane.selectItem(project);
-//                    dialog.hide();
-//                }
-//                else {
-//                    event.consume();
-//                }
-//            });
-//
-
         dialog.setResizable(false);
         dialog.show();
     }
