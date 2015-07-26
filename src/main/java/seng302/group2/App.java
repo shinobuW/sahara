@@ -128,7 +128,7 @@ public class App extends Application {
         //primaryStage.setMinHeight(0.25 * screenSize.getWidth());
         //primaryStage.setMinWidth(0.25 * screenSize.getWidth());
 
-        primaryStage.getIcons().add(new Image("file:images/icon.png"));
+        primaryStage.getIcons().add(new Image("/icon.png"));
 
         // Set the scene of the stage to the initial scene
         content = new SplitPane();

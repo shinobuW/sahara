@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import seng302.group2.scenes.control.SearchBox;
+import seng302.group2.scenes.control.search.SearchBox;
 
 
 /**
@@ -54,12 +54,12 @@ public class MainToolbar extends ToolBar {
 
     private void setActions() {
 
-        Image imageNew = new Image("file:images/toolbar_icons/document-new.png");
-        Image imageOpen = new Image("file:images/toolbar_icons/document-open.png");
-        Image imageSave = new Image("file:images/toolbar_icons/document-save.png");
-        Image imageUndo = new Image("file:images/toolbar_icons/edit-undo.png");
-        Image imageRedo = new Image("file:images/toolbar_icons/edit-redo.png");
-        Image imageGenerate = new Image("file:images/toolbar_icons/document-export.png");
+        Image imageNew = new Image("icons/document-new.png");
+        Image imageOpen = new Image("icons/document-open.png");
+        Image imageSave = new Image("icons/document-save.png");
+        Image imageUndo = new Image("icons/edit-undo.png");
+        Image imageRedo = new Image("icons/edit-redo.png");
+        Image imageGenerate = new Image("icons/document-export.png");
 
         newButton.setGraphic(new ImageView(imageNew));
         openButton.setGraphic(new ImageView(imageOpen));
