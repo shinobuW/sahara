@@ -6,24 +6,18 @@
 package seng302.group2.scenes.dialog;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
 
-import java.time.LocalDate;
 import java.util.Map;
 
-import static seng302.group2.util.validation.DateValidator.stringToDate;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -31,7 +25,6 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  *
  * @author drm127
  */
-@SuppressWarnings("deprecation")
 public class CreateSkillDialog {
     /**
      * Displays the Dialog box for creating a skill.
@@ -47,8 +40,8 @@ public class CreateSkillDialog {
         dialog.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");
 
-        ButtonType btnCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(btnCreate, ButtonType.CANCEL);
+        ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description:");
@@ -58,7 +51,7 @@ public class CreateSkillDialog {
 
         dialog.getDialogPane().setContent(grid);
 
-        Node createButton = dialog.getDialogPane().lookupButton(btnCreate);
+        Node createButton = dialog.getDialogPane().lookupButton(btnTypeCreate);
         createButton.setDisable(true);
 
         //Validation
@@ -68,7 +61,7 @@ public class CreateSkillDialog {
             });
 
         dialog.setResultConverter(b -> {
-                if (b == btnCreate) {
+                if (b == btnTypeCreate) {
                     String shortName = shortNameCustomField.getText();
                     String description = descriptionTextArea.getText();
                     Skill skill = new Skill(shortName, description);
