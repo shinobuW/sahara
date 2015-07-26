@@ -22,6 +22,7 @@ import seng302.group2.workspace.categories.Category;
 import seng302.group2.workspace.categories.subCategory.SubCategory;
 
 import static seng302.group2.App.content;
+import static seng302.group2.App.refreshWindowTitle;
 
 
 /**
@@ -151,6 +152,7 @@ public class MainPane extends BorderPane {
     public void refreshAll() {
         refreshTree();
         refreshContent();
+        refreshWindowTitle();
     }
 
     /**
