@@ -33,7 +33,6 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  *
  * @author swi67
  */
-@SuppressWarnings("deprecation")
 public class CreatePersonDialog {
 
     static Boolean correctDate = Boolean.TRUE;
@@ -54,8 +53,8 @@ public class CreatePersonDialog {
         dialog.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 500px;");
 
-        ButtonType btnCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(btnCreate, ButtonType.CANCEL);
+        ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
@@ -79,7 +78,7 @@ public class CreatePersonDialog {
         // Request focus on the username field by default.
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
 
-        Node createButton = dialog.getDialogPane().lookupButton(btnCreate);
+        Node createButton = dialog.getDialogPane().lookupButton(btnTypeCreate);
         createButton.setDisable(true);
 
         //Validation
@@ -105,31 +104,30 @@ public class CreatePersonDialog {
 
 
         dialog.setResultConverter(b -> {
-                if (b == btnCreate) {
-                    if (correctDate && correctShortName && correctFirstName && correctLastName) {
-                        //get user input
-                        String firstName = firstNameCustomField.getText();
-                        String lastName = lastNameCustomField.getText();
-                        String shortName = shortNameCustomField.getText();
-                        String email = emailTextField.getText();
-                        String description = descriptionTextArea.getText();
+                if (b == btnTypeCreate) {
+                    //get user input
+                    String firstName = firstNameCustomField.getText();
+                    String lastName = lastNameCustomField.getText();
+                    String shortName = shortNameCustomField.getText();
+                    String email = emailTextField.getText();
+                    String description = descriptionTextArea.getText();
 
-                        String birthdateString = customBirthDate.getText();
+                    String birthdateString = customBirthDate.getText();
 
-                        LocalDate birthDate;
-                        if (birthdateString.isEmpty()) {
-                            birthDate = null;
-                        }
-                        else {
-                            birthDate = stringToDate(birthdateString);
-                        }
-
-                        Person person = new Person(shortName, firstName, lastName, email, description,
-                                birthDate);
-                        Global.currentWorkspace.add(person);
-                        App.mainPane.selectItem(person);
-                        dialog.close();
+                    LocalDate birthDate;
+                    if (birthdateString.isEmpty()) {
+                        birthDate = null;
                     }
+                    else {
+                        birthDate = stringToDate(birthdateString);
+                    }
+
+                    Person person = new Person(shortName, firstName, lastName, email, description,
+                            birthDate);
+                    Global.currentWorkspace.add(person);
+                    App.mainPane.selectItem(person);
+                    dialog.close();
+
                 }
                 return null;
             });
