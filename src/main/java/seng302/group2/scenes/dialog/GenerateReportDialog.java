@@ -56,12 +56,12 @@ public class GenerateReportDialog extends Dialog<Map<String, String>> {
         this.getDialogPane().setContent(grid);
 
         this.setResultConverter(b -> {
-            if (b == btnTypeCreate) {
-                List<SaharaItem> checkedItems = getCheckedItems(root);
-                // TODO: Plug in custom generation method
-                logger.info(checkedItems.toString());
-                if (!checkedItems.isEmpty()) {
-                    ReportGenerator.generateReport(checkedItems);
+                if (b == btnTypeCreate) {
+                    List<SaharaItem> checkedItems = getCheckedItems(root);
+                    // TODO: Plug in custom generation method
+                    logger.info(checkedItems.toString());
+                    if (!checkedItems.isEmpty()) {
+                        ReportGenerator.generateReport(checkedItems);
                         this.close();
                     }
                 }
