@@ -82,7 +82,8 @@ public class BacklogCategoryTab extends Tab {
             });
 
         btnCreate.setOnAction((event) -> {
-                CreateBacklogDialog.show();
+                javafx.scene.control.Dialog creationDialog = new CreateBacklogDialog();
+                creationDialog.show();
             });
     }
 }

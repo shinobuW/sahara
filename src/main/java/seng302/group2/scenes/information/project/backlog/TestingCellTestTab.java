@@ -3,8 +3,13 @@ package seng302.group2.scenes.information.project.backlog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
-import javafx.scene.input.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -16,8 +21,6 @@ import seng302.group2.workspace.project.story.Story;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * The information tab for a backlog

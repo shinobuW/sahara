@@ -1,26 +1,26 @@
 package seng302.group2.scenes.dialog;
 
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import org.controlsfx.dialog.Dialog;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.team.Team;
+
+import java.util.Map;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.util.validation.NameValidator.validateName;
@@ -30,44 +30,69 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  * Class to create a pop up dialog for creating a backlog
  * Created by cvs20 on 19/05/15.
  */
-public class CreateBacklogDialog {
+public class CreateBacklogDialog extends Dialog<Map<String, String>> {
+    Boolean correctShortName = Boolean.FALSE;
+    Boolean correctLongName = Boolean.FALSE;
+
+    ComboBox<Project> projComboBox;
+    ComboBox<Person> productOwnerComboBox;
+    ComboBox<String> scaleComboBox;
+
+
+
     /**
      * Displays the Dialog box for creating a story.
      */
-    public static void show() {
-        // Initialise Dialog and GridPane
-        Dialog dialog = new Dialog(null, "New Backlog");
+    public CreateBacklogDialog() {
+        correctShortName = Boolean.FALSE;
+        correctLongName = Boolean.FALSE;
+
+        //javafx.scene.control.Dialog<Map<String, String>> dialog = new javafx.scene.control.Dialog<>();
+        this.setTitle("New Backlog");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 500px;");
+
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
         grid.setPadding(insets);
 
-        // Initialise Input fields
-        Button btnCreate = new Button("Create");
-        Button btnCancel = new Button("Cancel");
+        ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
+        this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
-        buttons.getChildren().addAll(btnCreate, btnCancel);
-
-        // Add elements to grid
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         RequiredField longNameCustomField = new RequiredField("Long Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
-        CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
-        //CustomComboBox scaleComboBox = new CustomComboBox("Estimation Scale:", true);
-        //CustomComboBox productOwnerComboBox = new CustomComboBox("Product Owner", false);
 
+        // Create project combo box.
+        ObservableList<Project> projectOptions = observableArrayList();
+        projComboBox = new ComboBox<>(projectOptions);
+        projComboBox.setStyle("-fx-pref-width: 135;");
+        Label projComboLabel = new Label("Project:");
+        HBox projComboHBox = new HBox(projComboLabel);
+
+        Label aster1 = new Label(" * ");
+        aster1.setTextFill(Color.web("#ff0000"));
+        projComboHBox.getChildren().add(aster1);
+
+        VBox projVBox = new VBox();
+        HBox projCombo = new HBox();
+        projCombo.getChildren().addAll(projComboHBox, projComboBox);
+        HBox.setHgrow(projComboHBox, Priority.ALWAYS);
+        projVBox.getChildren().add(projCombo);
+        Label noProjSelectedLabel = new Label("* Please select a project");
+        noProjSelectedLabel.setTextFill(Color.web("#ff0000"));
+
+        // Create PO combo box
         ObservableList<Person> productOwnerOptions = observableArrayList();
-        ComboBox<Person> productOwnerComboBox = new ComboBox<>(productOwnerOptions);
+        productOwnerComboBox = new ComboBox<>(productOwnerOptions);
         productOwnerComboBox.setStyle("-fx-pref-width: 135;");
         Label poComboLabel = new Label("Product Owner:");
         HBox poComboHBox = new HBox(poComboLabel);
 
-        Label aster1 = new Label(" * ");
-        aster1.setTextFill(Color.web("#ff0000"));
-        poComboHBox.getChildren().add(aster1);
+        Label aster2 = new Label(" * ");
+        aster2.setTextFill(Color.web("#ff0000"));
+        poComboHBox.getChildren().add(aster2);
 
         VBox poVBox = new VBox();
         HBox poCombo = new HBox();
@@ -77,15 +102,17 @@ public class CreateBacklogDialog {
         Label noPoSelectedLabel = new Label("* Please select a product owner");
         noPoSelectedLabel.setTextFill(Color.web("#ff0000"));
 
+
+        //Create Scales combo box
         ObservableList<String> scaleOptions = observableArrayList();
-        ComboBox<String> scaleComboBox = new ComboBox<>(scaleOptions);
+        scaleComboBox = new ComboBox<>(scaleOptions);
         scaleComboBox.setStyle("-fx-pref-width: 135;");
         Label scaleComboLabel = new Label("Estimation Scale:");
         HBox scaleComboHBox = new HBox(scaleComboLabel);
 
-        Label aster2 = new Label(" * ");
-        aster2.setTextFill(Color.web("#ff0000"));
-        scaleComboHBox.getChildren().add(aster2);
+        Label aster3 = new Label(" * ");
+        aster3.setTextFill(Color.web("#ff0000"));
+        scaleComboHBox.getChildren().add(aster3);
 
         VBox scaleVBox = new VBox();
         HBox scaleCombo = new HBox();
@@ -95,13 +122,8 @@ public class CreateBacklogDialog {
         Label noScaleSelectedLabel = new Label("* Please select an estimation scale");
         noScaleSelectedLabel.setTextFill(Color.web("#ff0000"));
 
-        if (Global.currentWorkspace.getProjects().size() > 0) {
-            String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
-            projectComboBox.setValue(firstItem);
-        }
-
-        for (SaharaItem project : Global.currentWorkspace.getProjects()) {
-            projectComboBox.addToComboBox(project.toString());
+        for (Project project : Global.currentWorkspace.getProjects()) {
+            projectOptions.add(project);
         }
 
         for (String scaleName : Global.currentWorkspace.getEstimationScales().getEstimationScaleDict().keySet()) {
@@ -115,84 +137,124 @@ public class CreateBacklogDialog {
         }
 
         grid.getChildren().addAll(shortNameCustomField, longNameCustomField,
-                projectComboBox, poVBox, scaleVBox, descriptionTextArea, buttons);
+                projVBox, poVBox, scaleVBox, descriptionTextArea);
 
+        // Request focus on the short name field by default.
+        Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
+
+        //Add grid of controls to dialog
+        this.getDialogPane().setContent(grid);
+
+        Node createButton = this.getDialogPane().lookupButton(btnTypeCreate);
+        createButton.setDisable(true);
+
+        // Validation.
+        shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctShortName = validateShortName(shortNameCustomField, null);
+                createButton.setDisable(!(correctShortName && correctLongName
+                        && projectSelected() & poSelected() & scaleSelected()));
+            });
+
+        longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newvalue) -> {
+                correctLongName = validateName(longNameCustomField);
+                createButton.setDisable(!(correctShortName && correctLongName
+                        && projectSelected() & poSelected() & scaleSelected()));
+            });
+
+        projComboBox.valueProperty().addListener(new ChangeListener<Project>() {
+            @Override
+            public void changed(ObservableValue<? extends Project> observable, Project oldValue, Project newValue) {
+                createButton.setDisable(!(correctShortName && correctLongName
+                        && projectSelected() && poSelected() && scaleSelected()));
+            }
+            });
+
+        productOwnerComboBox.valueProperty().addListener(new ChangeListener<Person>() {
+            @Override
+            public void changed(ObservableValue<? extends Person> observable, Person oldValue, Person newValue) {
+                createButton.setDisable(!(correctShortName && correctLongName
+                        && projectSelected() && poSelected() && scaleSelected()));
+            }
+            });
+
+        scaleComboBox.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                createButton.setDisable(!(correctShortName && correctLongName
+                        && projectSelected() && poSelected() && scaleSelected()));
+            }
+            });
 
         // Create button event
-        btnCreate.setOnAction((event) -> {
-                boolean correctShortName = validateShortName(shortNameCustomField, null);
-                boolean correctLongName = validateName(longNameCustomField);
-                boolean correctProductOwnerCombo = true;
-                boolean correctScaleCombo = true;
-                boolean correctProjectCombo = true;
-
-                //Po error message show/hide
-                if (productOwnerComboBox.getSelectionModel().getSelectedItem() == null) {
-                    //Show error
-                    correctProductOwnerCombo = false;
-                    if (!poVBox.getChildren().contains(noPoSelectedLabel)) {
-                        poVBox.getChildren().add(noPoSelectedLabel);
-                    }
-                }
-                else {
-                    correctProductOwnerCombo = true;
-                    if (poVBox.getChildren().contains(noPoSelectedLabel)) {
-                        poVBox.getChildren().remove(noPoSelectedLabel);
-                    }
-                }
-                //Scale error message show/hide
-                if (scaleComboBox.getSelectionModel().getSelectedItem() == null) {
-                    //Show error
-                    correctScaleCombo = false;
-                    if (!scaleVBox.getChildren().contains(noScaleSelectedLabel)) {
-                        scaleVBox.getChildren().add(noScaleSelectedLabel);
-                    }
-                }
-                else {
-                    correctScaleCombo = true;
-                    if (scaleVBox.getChildren().contains(noScaleSelectedLabel)) {
-                        scaleVBox.getChildren().remove(noScaleSelectedLabel);
-                    }
-                }
-
-                if (correctShortName && correctLongName && correctProductOwnerCombo && correctScaleCombo) {
-                    //get user input
+        this.setResultConverter(b -> {
+                if (b == btnTypeCreate) {
                     String shortName = shortNameCustomField.getText();
                     String longName = longNameCustomField.getText();
                     String description = descriptionTextArea.getText();
 
                     Project project = new Project();
-                    for (SaharaItem item : Global.currentWorkspace.getProjects()) {
-                        if (item.toString().equals(projectComboBox.getValue())) {
-                            project = (Project) item;
+                    for (Project item : Global.currentWorkspace.getProjects()) {
+                        if (item.equals(projComboBox.getValue())) {
+                            project = item;
                         }
                     }
 
-                    Person productOwner = null;
-                    if (productOwnerComboBox.getValue() != null) {
-                        productOwner = productOwnerComboBox.getValue();
-                    }
-
+                    Person productOwner = productOwnerComboBox.getValue();
                     String scale = scaleComboBox.getValue();
 
                     Backlog backlog = new Backlog(shortName, longName, description, productOwner,
                             project, scale);
+
                     project.add(backlog);
+                    System.out.println(project);
+                    System.out.println(project.getBacklogs());
                     App.mainPane.selectItem(backlog);
-                    dialog.hide();
+                    this.close();
+
                 }
-                else {
-                    event.consume();
-                }
+                return null;
             });
 
-        // Cancel button event
-        btnCancel.setOnAction((event) ->
-                dialog.hide());
+        this.setResizable(false);
+        this.show();
+    }
 
-        dialog.setResizable(false);
-        dialog.setIconifiable(false);
-        dialog.setContent(grid);
-        dialog.show();
+    private Boolean projectSelected() {
+        return !(projComboBox.getValue() == null);
+    }
+
+    private Boolean poSelected() {
+        return !(productOwnerComboBox.getValue() == null);
+    }
+
+    private Boolean scaleSelected() {
+        return !(scaleComboBox.getValue() == null);
     }
 }
+
+//Po error message show/hide
+//            if (productOwnerComboBox.getSelectionModel().getSelectedItem() == null) {
+//                //Show error
+//                correctProductOwnerCombo = false;
+//                if (!poVBox.getChildren().contains(noPoSelectedLabel)) {
+//                    poVBox.getChildren().add(noPoSelectedLabel);
+//                }
+//            } else {
+//                correctProductOwnerCombo = true;
+//                if (poVBox.getChildren().contains(noPoSelectedLabel)) {
+//                    poVBox.getChildren().remove(noPoSelectedLabel);
+//                }
+//            }
+//            //Scale error message show/hide
+//            if (scaleComboBox.getSelectionModel().getSelectedItem() == null) {
+//                //Show error
+//                correctScaleCombo = false;
+//                if (!scaleVBox.getChildren().contains(noScaleSelectedLabel)) {
+//                    scaleVBox.getChildren().add(noScaleSelectedLabel);
+//                }
+//            } else {
+//                correctScaleCombo = true;
+//                if (scaleVBox.getChildren().contains(noScaleSelectedLabel)) {
+//                    scaleVBox.getChildren().remove(noScaleSelectedLabel);
+//                }
+//            }
