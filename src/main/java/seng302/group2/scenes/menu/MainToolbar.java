@@ -3,6 +3,8 @@ package seng302.group2.scenes.menu;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToolBar;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 
 /**
@@ -10,13 +12,14 @@ import javafx.scene.control.ToolBar;
  */
 public class MainToolbar extends ToolBar {
 
-    static Button newButton = new Button("New");
-    static Button openButton = new Button("Open");
-    static Button saveButton = new Button("Save");
-    static Button undoButton = new Button("Undo");
-    static Button redoButton = new Button("Redo");
-    static Button generateButton = new Button("Generate");
 
+
+    Button newButton = new Button();
+    Button openButton = new Button();
+    Button saveButton = new Button();
+    Button undoButton = new Button();
+    Button redoButton = new Button();
+    Button generateButton = new Button();
 
     /**
      * The constructor for the tool bar
@@ -36,6 +39,21 @@ public class MainToolbar extends ToolBar {
     }
 
     private void setActions() {
+
+        Image imageNew = new Image("file:images/toolbar_icons/document-new.png");
+        Image imageOpen = new Image("file:images/toolbar_icons/document-open.png");
+        Image imageSave = new Image("file:images/toolbar_icons/document-save.png");
+        Image imageUndo = new Image("file:images/toolbar_icons/edit-undo.png");
+        Image imageRedo = new Image("file:images/toolbar_icons/edit-redo.png");
+        Image imageGenerate = new Image("file:images/toolbar_icons/document-export.png");
+
+        newButton.setGraphic(new ImageView(imageNew));
+        openButton.setGraphic(new ImageView(imageOpen));
+        saveButton.setGraphic(new ImageView(imageSave));
+        undoButton.setGraphic(new ImageView(imageUndo));
+        redoButton.setGraphic(new ImageView(imageRedo));
+        generateButton.setGraphic(new ImageView(imageGenerate));
+
         newButton.setOnAction(e -> MainMenuBar.newWorkspaceAction());
         openButton.setOnAction(e -> MainMenuBar.loadAction());
         saveButton.setOnAction(e -> MainMenuBar.saveAction());

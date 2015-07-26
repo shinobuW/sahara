@@ -11,6 +11,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
+import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.role.Role;
@@ -41,6 +42,7 @@ public class SerialBuilder {
                 .addType(LocalDate.class)
                 .addType(Backlog.class)
                 .addType(AcceptanceCriteria.class)
+                .addType(Sprint.class)
 
                 // TODO REMINDER: Add any new classes. Do not delete.
 
