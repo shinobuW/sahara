@@ -7,8 +7,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.control.SearchableText;
-import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.workspace.skills.Skill;
 
 import java.util.ArrayList;

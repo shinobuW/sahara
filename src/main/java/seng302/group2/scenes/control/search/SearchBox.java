@@ -1,9 +1,6 @@
 package seng302.group2.scenes.control.search;
 
-import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import seng302.group2.App;
 import seng302.group2.scenes.information.skill.SkillInfoTab;
 import seng302.group2.scenes.information.skill.SkillScene;
@@ -26,31 +23,13 @@ public class SearchBox extends TextField {
                         + "-fx-background-position: right 6px center; "
         );
 
+        // Adds some search functionality on the release of a key (so it includes what was entered)
         this.setOnKeyReleased(ke -> {
-            String text = "Key Typed: " + ke.getCharacter();
-            if (ke.isAltDown()) {
-                text += " , alt down";
-            }
-            if (ke.isControlDown()) {
-                text += " , ctrl down";
-            }
-            if (ke.isMetaDown()) {
-                text += " , meta down";
-            }
-            if (ke.isShiftDown()) {
-                text += " , shift down";
-            }
-            if (App.mainPane.getContent() instanceof SkillScene) {
-
-                System.out.println("Querying: " + this.getText());
-                if (!this.getText().isEmpty()) {
+                if (App.mainPane.getContent() instanceof SkillScene) {  // TODO Abstract out to some searchable GUI
+                    System.out.println("Querying: " + this.getText());
                     ((SkillInfoTab) ((SkillScene) App.mainPane.getContent()).getCurrentTab()).query(this.getText());
                 }
-
-                //System.out.println(App.mainPane.getContent().getClass() + ", " + (ke.getCode() == KeyCode.ENTER));
-            }
-
-        });
+            });
 
     }
 }

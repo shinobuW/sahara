@@ -1,9 +1,6 @@
-package seng302.group2.scenes.control;
+package seng302.group2.scenes.control.search;
 
-import javafx.collections.FXCollections;
-import javafx.scene.Node;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -65,10 +62,9 @@ public class SearchableText extends TextFlow {
         int index = content.toLowerCase().indexOf(query);
 
 
-        if (index == -1) {
-            return false;  // Query not in text
+        if (index == -1 || query.trim().isEmpty()) {
+            return false;  // Query not in text, keep a single, stitched Text node.
         }
-
 
         List<Text> builtText = new ArrayList<>();
         while (index != -1) {
@@ -82,7 +78,7 @@ public class SearchableText extends TextFlow {
             content = content.substring(index + query.length());
             index = content.toLowerCase().indexOf(query);
             if (index != -1) {
-                builtText.remove(builtText.size()-1);
+                builtText.remove(builtText.size() - 1);
             }
         }
 
