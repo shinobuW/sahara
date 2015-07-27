@@ -1,16 +1,11 @@
 package seng302.group2.scenes.menu;
 
 import javafx.event.ActionEvent;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
+
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.dialog.*;
@@ -24,6 +19,8 @@ import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.workspace.Workspace.SaveLoadResult;
+
+import java.util.Optional;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
@@ -62,12 +59,24 @@ public class MainMenuBar extends MenuBar {
             return;
         }
 
-        Action response = Dialogs.create()
-                .title("Save Workspace?")
-                .message("Would you like to save your changes to the current workspace?")
-                .showConfirm();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Save");
+        alert.setHeaderText("Save Workspace?");
+        alert.setContentText("Would you like to save your changes to the current workspace?");
+        alert.getDialogPane().setStyle(" -fx-max-width:400px; -fx-max-height: 100px; -fx-pref-width: 400px; "
+                + "-fx-pref-height: 100px;");
 
-        if (response == Dialog.ACTION_YES) {
+        ButtonType buttonTypeYes = new ButtonType("Yes");
+        ButtonType buttonTypeNo = new ButtonType("No");
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+
+
+        Optional<ButtonType> result  = alert.showAndWait();
+
+
+        if (result.get() == buttonTypeYes) {
             SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
             if (saved == SaveLoadResult.SUCCESS) {
                 javafx.scene.control.Dialog creationDialog = new CreateWorkspaceDialog();
@@ -78,12 +87,12 @@ public class MainMenuBar extends MenuBar {
                 System.out.println("There was an error saving the file. Cancelling");
             }
         }
-        else if (response == Dialog.ACTION_NO) {
+        else if (result.get() == buttonTypeNo) {
             javafx.scene.control.Dialog creationDialog = new CreateWorkspaceDialog();
             creationDialog.show();
             App.refreshMainScene();
         }
-        if (response != Dialog.ACTION_CANCEL) {
+        if (result.get() != buttonTypeCancel) {
             Global.commandManager.clear();
             App.mainPane.expandTree();
         }
@@ -229,19 +238,29 @@ public class MainMenuBar extends MenuBar {
             Workspace.loadWorkspace();
             return;
         }
-        Action response = Dialogs.create()
-                .title("Save Workspace?")
-                .message("Would you like to save your changes to the current workspace?")
-                .showConfirm();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Save");
+        alert.setHeaderText("Save Workspace?");
+        alert.setContentText("Would you like to save your changes to the current workspace?");
+        alert.getDialogPane().setStyle(" -fx-max-width:400px; -fx-max-height: 100px; -fx-pref-width: 400px; "
+                + "-fx-pref-height: 100px;");
 
-        if (response == Dialog.ACTION_YES) {
+        ButtonType buttonTypeYes = new ButtonType("Yes");
+        ButtonType buttonTypeNo = new ButtonType("No");
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+
+        Optional<ButtonType> result  = alert.showAndWait();
+
+        if (result.get() == buttonTypeYes) {
             SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
             if (saved == SaveLoadResult.SUCCESS) {
                 Workspace.loadWorkspace();
                 //App.refreshMainScene();
             }
         }
-        else if (response == Dialog.ACTION_NO) {
+        else if (result.get() == buttonTypeNo) {
             Workspace.loadWorkspace();
             //App.refreshMainScene();
         }
@@ -334,18 +353,30 @@ public class MainMenuBar extends MenuBar {
                     RevertManager.revertWorkspace();
                     return;
                 }
-                Action response = Dialogs.create()
-                        .title("Save Workspace?")
-                        .message("Would you like to save your changes to the current workspace?")
-                        .showConfirm();
 
-                if (response == Dialog.ACTION_YES) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Save");
+                alert.setHeaderText("Save Workspace?");
+                alert.setContentText("Would you like to save your changes to the current workspace?");
+                alert.getDialogPane().setStyle(" -fx-max-width:400px; -fx-max-height: 100px; -fx-pref-width: 400px; "
+                        + "-fx-pref-height: 100px;");
+
+                ButtonType buttonTypeYes = new ButtonType("Yes");
+                ButtonType buttonTypeNo = new ButtonType("No");
+                ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+
+
+                Optional<ButtonType> result  = alert.showAndWait();
+
+                if (result.get() == buttonTypeYes) {
                     SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
                     if (saved == SaveLoadResult.SUCCESS) {
                         RevertManager.revertWorkspace();
                     }
                 }
-                else if (response == Dialog.ACTION_NO) {
+                else if (result.get() == buttonTypeNo) {
                     RevertManager.revertWorkspace();
                 }
             });
