@@ -12,6 +12,7 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
+import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.io.Serializable;
 import java.util.*;
@@ -51,6 +52,8 @@ public class Story extends SaharaItem implements Serializable {
     private List<AcceptanceCriteria> serializableAcceptanceCriteria = new ArrayList<>();
     //private Set<Story> dependentOnThis = new HashSet<>();
     private Set<Story> dependentOn = new HashSet<>();
+    private transient ObservableList<Task> tasks = observableArrayList();
+    private List<Task> serializableTasks = new ArrayList<>();
 
 
     public static String stateReady = "Ready";
@@ -268,7 +271,6 @@ public class Story extends SaharaItem implements Serializable {
         }
     }
 
-
     /**
      * Converts a JavaFX colour into an html/web colour string (including opacity)
      * @param color The colour to convert
@@ -435,6 +437,38 @@ public class Story extends SaharaItem implements Serializable {
         return stateNotReady;
     }
 
+    /**
+     * Gets the tasks of this story
+     *
+     * @return the tasks of the story
+     */
+    public ObservableList<Task> getTasks() {
+        this.serializableTasks.clear();
+        for (Object item : this.tasks) {
+            this.serializableTasks.add((Task) item);
+        }
+        return this.tasks;
+    }
+
+    /**
+     * Gets the serializable tasks
+     *
+     * @return the serializable tasks
+     */
+    public List<Task> getSerializableTasks() {
+        return serializableTasks;
+    }
+
+    /**
+     * Adds a task to the story
+     *
+     * @param task ac to be added
+     */
+    public void add(Task task) {
+        // TODO
+        //Command command = new AddTaskCommand(this, task);
+        //Global.commandManager.executeCommand(command);
+    }
     /**
      * Sets the story's ready state to the given boolean
      * @param ready The boolean state to set
