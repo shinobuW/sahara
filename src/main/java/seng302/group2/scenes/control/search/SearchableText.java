@@ -9,16 +9,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A searchable TextFlow that allows querying to highlight and alert the user of text they are trying to find through
+ * other search elements such as a SearchBox.
  * Created by Jordane on 27/07/2015.
  */
 public class SearchableText extends TextFlow {
     List<Text> texts = new ArrayList<>();
 
+    /**
+     * Creates a SearchableText TextFlow element
+     * @param content The initial string text of the SearchableText
+     */
     public SearchableText(String content) {
         texts.add(new Text(content));
         updateFlow();
     }
 
+
+    /**
+     * Sets the current text of the SearchableText to the string given
+     * @param content The string text for the SearchableText to adopt
+     */
     public void setText(String content) {
         texts.clear();
         texts.add(new Text(content));
@@ -26,6 +37,9 @@ public class SearchableText extends TextFlow {
     }
 
 
+    /**
+     * Updates the text inside the SearchableText to match any updated children
+     */
     void updateFlow() {
         this.getChildren().clear();
         this.getChildren().remove(0, this.getChildren().size());
@@ -52,6 +66,12 @@ public class SearchableText extends TextFlow {
     }
 
 
+    /**
+     * Performs a basic string query on the SearchableText element, highlighting any matches with a flashy styling.
+     * Queries are case-insensitive
+     * @param query The string to query
+     * @return If at least one match was found
+     */
     public boolean query(String query) {
         query = query.toLowerCase();
         Text text = stitch();

@@ -6,16 +6,17 @@ import seng302.group2.scenes.information.skill.SkillInfoTab;
 import seng302.group2.scenes.information.skill.SkillScene;
 
 /**
+ * A stylised TextField that also performs a basic search query on the current scene content through a key listener
  * Created by jml168 on 26/07/15.
  */
 public class SearchBox extends TextField {
+    /**
+     * Creates a search box element for searching text in the current content scene
+     */
     public SearchBox() {
-
-        // Round the edges
-
         this.setPromptText("Search...");
 
-        //this.setHeight(10);
+        // Rounds the edges, adds an icon, and makes it look like a search box!
         this.setStyle("-fx-border-radius: 12 12 12 12;"
                         + "-fx-background-radius: 12 12 12 12; "
                         + "-fx-background-image: url('/icons/search.png');"
@@ -30,6 +31,5 @@ public class SearchBox extends TextField {
                     ((SkillInfoTab) ((SkillScene) App.mainPane.getContent()).getCurrentTab()).query(this.getText());
                 }
             });
-
     }
 }
