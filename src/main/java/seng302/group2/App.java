@@ -6,16 +6,18 @@ package seng302.group2;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialog;
-import org.controlsfx.dialog.Dialogs;
 import seng302.group2.scenes.MainPane;
 import seng302.group2.util.config.ConfigLoader;
 import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.workspace.Workspace.SaveLoadResult;
+
+import java.util.Optional;
 
 /**
  * The executable class for Sahara.
@@ -75,12 +77,23 @@ public class App extends Application {
             return;  // Clean from a method POV
         }
 
-        Action response = Dialogs.create()
-                .title("Save Workspace?")
-                .message("Would you like to save your changes to the current workspace?")
-                .showConfirm();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Save");
+        alert.setHeaderText("Save Workspace?");
+        alert.setContentText("Would you like to save your changes to the current workspace?");
+        alert.getDialogPane().setStyle(" -fx-max-width:400px; -fx-max-height: 100px; -fx-pref-width: 400px; "
+                + "-fx-pref-height: 100px;");
 
-        if (response == Dialog.ACTION_YES) {
+        ButtonType buttonTypeYes = new ButtonType("Yes");
+        ButtonType buttonTypeNo = new ButtonType("No");
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
+
+
+        Optional<ButtonType> result  = alert.showAndWait();
+
+        if (result.get() == buttonTypeYes) {
             SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
             if (saved == SaveLoadResult.SUCCESS) {
                 // Save configuration again as settings may change on save of workspace
@@ -88,7 +101,7 @@ public class App extends Application {
                 System.exit(0);
             }
         }
-        else if (response == Dialog.ACTION_NO) {
+        else if (result.get() == buttonTypeNo) {
             System.exit(0);
         }
     }
