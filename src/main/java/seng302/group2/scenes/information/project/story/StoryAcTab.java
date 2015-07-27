@@ -16,14 +16,14 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialogs;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcEnumStringConverter;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
+
+import java.util.Optional;
 
 
 /**
@@ -203,16 +203,26 @@ public class StoryAcTab extends Tab {
         deleteButton.setOnAction((event) -> {
                 AcceptanceCriteria selectedAc = acTable.getSelectionModel().getSelectedItem();
                 if (selectedAc != null) {
-                    Action response = Dialogs.create()
-                            .title("Delete Acceptance Criteria?")
-                            .message("Do you really want to delete this Acceptance Criteria?")
-                            .showConfirm();
 
-                    if (response == org.controlsfx.dialog.Dialog.ACTION_YES) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Delete");
+                    alert.setHeaderText("Delete Acceptance Criteria?");
+                    alert.setContentText("Do you really want to delete this Acceptance Criteria?");
+                    alert.getDialogPane().setStyle(" -fx-max-width:400px; -fx-max-height: 100px; -fx-pref-width: 400px;"
+                            + "-fx-pref-height: 100px;");
+
+                    ButtonType buttonTypeYes = new ButtonType("Yes");
+                    ButtonType buttonTypeNo = new ButtonType("No");
+
+                    alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+                    Optional<ButtonType> result  = alert.showAndWait();
+
+                    if (result.get() == buttonTypeYes) {
                         selectedAc.delete();
                         App.mainPane.refreshContent();
                     }
-                    else if (response == org.controlsfx.dialog.Dialog.ACTION_NO) {
+                    else if (result.get() == buttonTypeNo) {
                         event.consume();
                     }
                 }
