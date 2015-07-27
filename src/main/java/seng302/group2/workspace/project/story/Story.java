@@ -87,6 +87,7 @@ public class Story extends SaharaItem implements Serializable {
         for (AcceptanceCriteria ac : acceptanceCriteria) {
             items.addAll(ac.getItemsSet());
         }
+        // TODO add in tasks
         return items;
     }
 
@@ -546,7 +547,8 @@ public class Story extends SaharaItem implements Serializable {
         Element dependenciesElement = ReportGenerator.doc.createElement("story-dependencies");
         for (Story dependency : this.dependentOn) {
             Element dependencyElement = ReportGenerator.doc.createElement("dependency");
-            dependencyElement.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(dependency.getId())));
+            dependencyElement.appendChild(ReportGenerator.doc.createTextNode(String
+                    .valueOf(dependency.getShortName())));
             dependenciesElement.appendChild(dependencyElement);
         }
         storyElement.appendChild(dependenciesElement);
