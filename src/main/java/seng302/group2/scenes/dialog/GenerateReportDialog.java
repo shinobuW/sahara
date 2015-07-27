@@ -24,7 +24,7 @@ import java.util.Map;
  *
  * @author drm127
  */
-@SuppressWarnings("deprecation")
+
 public class GenerateReportDialog extends Dialog<Map<String, String>> {
     static transient Logger logger = LoggerFactory.getLogger(GenerateReportDialog.class);
     /**
