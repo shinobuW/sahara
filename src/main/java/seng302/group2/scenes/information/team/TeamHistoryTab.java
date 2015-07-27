@@ -15,8 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
-import org.controlsfx.control.action.Action;
-import org.controlsfx.dialog.Dialogs;
+
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
@@ -32,6 +31,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Optional;
 
 import static seng302.group2.util.validation.DateValidator.validateAllocation;
 
@@ -282,15 +282,23 @@ public class TeamHistoryTab extends Tab {
         deleteButton.setOnAction((event) -> {
                 Allocation selectedAlloc = historyTable.getSelectionModel().getSelectedItem();
                 if (selectedAlloc != null) {
-                    Action response = Dialogs.create()
-                            .title("Delete Allocation?")
-                            .message("Do you really want to delete this allocation?")
-                            .showConfirm();
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Delete");
+                    alert.setHeaderText("Delete Allocation?");
+                    alert.setContentText("Do you really want to delete this allocation?");
+                    alert.getDialogPane().setStyle(" -fx-max-width:450; -fx-max-height: 100px; -fx-pref-width: 450px; "
+                            + "-fx-pref-height: 100px;");
 
-                    if (response == org.controlsfx.dialog.Dialog.ACTION_YES) {
+                    ButtonType buttonTypeYes = new ButtonType("Yes");
+                    ButtonType buttonTypeNo = new ButtonType("No");
+
+                    alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+                    Optional<ButtonType> result  = alert.showAndWait();
+
+                    if (result.get() == buttonTypeYes) {
                         selectedAlloc.delete();
                     }
-                    else if (response == org.controlsfx.dialog.Dialog.ACTION_NO) {
+                    else if (result.get() == buttonTypeNo) {
                         event.consume();
                     }
                 }
@@ -326,46 +334,64 @@ public class TeamHistoryTab extends Tab {
             case VALID:
                 break;
             case ALLOCATION_DATES_WRONG_ORDER:
-                Dialogs.create()
-                        .title("Allocation Date Error")
-                        .message("The end date of your new allocation cannot be before the start"
-                                + " date!")
-                        .showError();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.getDialogPane().setStyle(" -fx-max-width:450px; -fx-max-height: 70px; -fx-pref-width: 450px; "
+                        + "-fx-pref-height: 70px;");
+                alert.setTitle("Error");
+                alert.setHeaderText("Allocation Date Error");
+                alert.setContentText("The end date of your new allocation cannot be before the start"
+                        + " date!");
+                alert.showAndWait();
                 break;
             case ALLOCATION_DATES_EQUAL:
-                Dialogs.create()
-                        .title("Allocation Date Error")
-                        .message("An allocation for that team with those start and end dates"
-                                + " already exists!")
-                        .showError();
+                Alert alertDatesEquals = new Alert(Alert.AlertType.ERROR);
+                alertDatesEquals.getDialogPane().setStyle(" -fx-max-width:500px; -fx-max-height: 100px; "
+                        + "-fx-pref-width: 500px; -fx-pref-height: 100px;");
+                alertDatesEquals.setTitle("Error");
+                alertDatesEquals.setHeaderText("Allocation Date Error");
+                alertDatesEquals.setContentText("An allocation for that team with those start and end dates"
+                        + " already exists!");
+                alertDatesEquals.showAndWait();
                 break;
             case START_OVERLAP:
-                Dialogs.create()
-                        .title("Allocation Date Error")
-                        .message("The start date of your new allocation overlaps with an already"
-                                + " existing allocation for that team.")
-                        .showError();
+                Alert alertOverlap = new Alert(Alert.AlertType.ERROR);
+                alertOverlap.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; "
+                        + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
+                alertOverlap.setTitle("Error");
+                alertOverlap.setHeaderText("Allocation Date Error");
+                alertOverlap.setContentText("The start date of your new allocation overlaps with an already"
+                        + " existing allocation for that team.");
+                alertOverlap.showAndWait();
                 break;
             case END_OVERLAP:
-                Dialogs.create()
-                        .title("Allocation Date Error")
-                        .message("The end date of your new allocation overlaps with an already"
-                                + " existing allocation for that team.")
-                        .showError();
+                Alert alertEndOverlap = new Alert(Alert.AlertType.ERROR);
+                alertEndOverlap.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; "
+                        + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
+                alertEndOverlap.setTitle("Error");
+                alertEndOverlap.setHeaderText("Allocation Date Error");
+                alertEndOverlap.setContentText("The end date of your new allocation overlaps with an already"
+                        + " existing allocation for that team.");
+                alertEndOverlap.showAndWait();
                 break;
             case SUPER_OVERLAP:
-                Dialogs.create()
-                        .title("Allocation Date Error")
-                        .message("The start and end dates of your new allocation encompass an"
-                                + " existing allocation for that team.")
-                        .showError();
+                Alert alertSuperOverlap = new Alert(Alert.AlertType.ERROR);
+                alertSuperOverlap.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; "
+                        + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
+                alertSuperOverlap.setTitle("Error");
+                alertSuperOverlap.setHeaderText("Allocation Date Error");
+                alertSuperOverlap.setContentText("The start and end dates of your new allocation encompass an"
+                        + " existing allocation for that team.");
+                alertSuperOverlap.showAndWait();
                 break;
             case SUB_OVERLAP:
-                Dialogs.create()
-                        .title("Allocation Date Error")
-                        .message("The start and end dates of your new allocation are encompassed"
-                                + " by an existing allocation for that team.")
-                        .showError();
+                Alert alertSubOverlap = new Alert(Alert.AlertType.ERROR);
+                alertSubOverlap.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; "
+                        + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
+                alertSubOverlap.setTitle("Error");
+                alertSubOverlap.setHeaderText("Allocation Date Error");
+                alertSubOverlap.setContentText("The start and end dates of your new allocation are encompassed"
+                        + " by an existing allocation for that team.");
+                alertSubOverlap.showAndWait();
                 break;
             default:
                 System.out.println("Error: Cannot recognise validation status");
