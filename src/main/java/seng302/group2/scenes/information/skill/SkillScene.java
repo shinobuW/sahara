@@ -22,4 +22,8 @@ public class SkillScene extends TrackedTabPane {
 
         this.getTabs().addAll(informationTab);  // Add the tabs to the pane
     }
+
+    public Tab getCurrentTab() {
+        return this.getSelectionModel().getSelectedItem();
+    }
 }

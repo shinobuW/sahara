@@ -7,8 +7,12 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import seng302.group2.scenes.control.SearchableText;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.workspace.skills.Skill;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -16,11 +20,35 @@ import seng302.group2.workspace.skills.Skill;
  * Created by jml168 on 11/05/15.
  */
 public class SkillInfoTab extends Tab {
+
+    List<SearchableText> searchableTexts = new ArrayList<>();
+
+    SearchableText title = new SearchableText("Short Name");
+
+
+    private void init() {
+        searchableTexts.add(title);
+    }
+
+
+    public boolean query(String query) {
+        boolean found = false;
+        for (SearchableText text : searchableTexts) {
+            if (text != null && text.query(query)) {
+                found = true;
+            }
+        }
+        return found;
+    }
+
+
     /**
      * Constructor for the SkillInfoTab class.
      * @param currentSkill the current skill for which information will be displayed
      */
     public SkillInfoTab(Skill currentSkill) {
+        init();
+
         this.setText("Basic Information");
 
         Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
@@ -29,7 +57,7 @@ public class SkillInfoTab extends Tab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        Label title = new TitleLabel(currentSkill.getShortName());
+        title.setText(currentSkill.getShortName());
 
         Button btnEdit = new Button("Edit");
 

@@ -119,6 +119,10 @@ public class MainPane extends BorderPane {
         contentPane.setContent(node);
     }
 
+    public Node getContent() {
+        return contentPane.getContent();
+    }
+
     /**
      * Refreshes the content child of the pane
      */
