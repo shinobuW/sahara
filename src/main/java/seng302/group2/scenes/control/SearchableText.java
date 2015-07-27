@@ -56,12 +56,13 @@ public class SearchableText extends TextFlow {
 
 
     public boolean query(String query) {
+        query = query.toLowerCase();
         Text text = stitch();
         String content = text.getText();
 
         System.out.println("whole text: " + content);
 
-        int index = content.indexOf(query);
+        int index = content.toLowerCase().indexOf(query);
 
 
         if (index == -1) {
@@ -75,12 +76,14 @@ public class SearchableText extends TextFlow {
             match.setFill(Color.RED);
             match.setFont(Font.font(20));
             builtText.add(new Text(content.substring(0, index)));  // Start
-            builtText.add(match);  // Query match, TODO add formatting?
+            builtText.add(match);  // Query match
             builtText.add(new Text(content.substring(index + query.length(), content.length())));  // End
 
             content = content.substring(index + query.length());
-            index = content.length() - content.indexOf(query);
-            break;
+            index = content.toLowerCase().indexOf(query);
+            if (index != -1) {
+                builtText.remove(builtText.size()-1);
+            }
         }
 
         texts.clear();
