@@ -81,8 +81,8 @@ public class App extends Application {
         alert.setTitle("Save");
         alert.setHeaderText("Save Workspace?");
         alert.setContentText("Would you like to save your changes to the current workspace?");
-        alert.getDialogPane().setStyle(" -fx-max-width:400px; -fx-max-height: 100px; -fx-pref-width: 400px; "
-                + "-fx-pref-height: 100px;");
+        alert.getDialogPane().setStyle(" -fx-max-width:500px; -fx-max-height: 180px; -fx-pref-width: 500px; "
+                + "-fx-pref-height: 180px;");
 
         ButtonType buttonTypeYes = new ButtonType("Yes");
         ButtonType buttonTypeNo = new ButtonType("No");
