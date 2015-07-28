@@ -8,10 +8,12 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.Back
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.categories.subCategory.project.task.TaskCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
+import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.io.Serializable;
 import java.util.*;
@@ -29,8 +31,13 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
     private Person productOwner;
     private transient ObservableList<Story> stories = observableArrayList();
     private List<Story> serializableStories = new ArrayList<>();
+    private transient ObservableList<Task> unallocatedTasks = observableArrayList();
+    private List<Task> serializableTasks = new ArrayList<>();
     private Project project;
     private String scale = "Fibonacci";
+
+    private transient TaskCategory tasksCategory = new TaskCategory(this);
+
 
 
     /**
@@ -59,6 +66,11 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             items.addAll(story.getItemsSet());
         }
         items.addAll(stories);
+
+        for (Task task : unallocatedTasks) {
+            items.addAll(task.getItemsSet());
+        }
+        items.addAll(unallocatedTasks);
 
         return items;
     }
@@ -92,10 +104,15 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
      * Adds listeners to the backlog stories for sorting
      */
     public void addListeners() {
-        stories.addListener((ListChangeListener<Story>) change ->
-            {
+        stories.addListener((ListChangeListener<Story>) change -> {
                 if (change.next() && !change.wasPermutated()) {
                     Collections.sort(stories, Story.StoryPriorityComparator);
+                }
+            });
+
+        unallocatedTasks.addListener((ListChangeListener<Task>) change -> {
+                if (change.next() && !change.wasPermutated()) {
+                    Collections.sort(unallocatedTasks, Task.TaskNameComparator);
                 }
             });
     }
@@ -226,6 +243,15 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
     }
 
     /**
+     * Gets the unallocatedTasks of the project
+     *
+     * @return list of unallocatedTasks
+     */
+    public ObservableList<Task> getUnallocatedTasks() {
+        return this.unallocatedTasks;
+    }
+
+    /**
      * Gets the serializable stories belonging to the backlog
      * @return A List of Stories
      */
@@ -255,6 +281,12 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             story.prepSerialization();
             this.serializableStories.add(story);
         }
+
+        serializableTasks.clear();
+        for (Task item : unallocatedTasks) {
+            item.prepSerialization();
+            this.serializableTasks.add(item);
+        }
     }
 
 
@@ -268,7 +300,27 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             this.stories.add(story);
         }
 
+        unallocatedTasks.clear();
+        for (Task task : serializableTasks) {
+            task.postSerialization();
+            this.unallocatedTasks.add(task);
+        }
+
         Collections.sort(this.stories, Story.StoryPriorityComparator);
+    }
+
+    /**
+     * Gets all of the stories within the project (unassigned and assigned)
+     *
+     * @return all of the stories within the project (unassigned and assigned)
+     */
+    public Set<Task> getAllTasks() {
+        Set<Task> tasks = new HashSet<>();
+        tasks.addAll(unallocatedTasks);
+        for (Story story : stories) {
+            tasks.addAll(story.getTasks());
+        }
+        return tasks;
     }
 
     /**
@@ -322,7 +374,12 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
      */
     @Override
     public ObservableList getChildren() {
-        return this.getStories();
+        ObservableList<SaharaItem> children = observableArrayList();
+        for (Story story : this.getStories()) {
+            children.addAll(story);
+        }
+        children.addAll(tasksCategory);
+        return children;
     }
 
 

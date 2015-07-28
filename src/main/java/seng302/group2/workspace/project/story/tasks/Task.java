@@ -20,7 +20,7 @@ public class Task extends SaharaItem implements Serializable {
     /**
      * A comparator that returns the comparison of two story's short names
      */
-    public static Comparator<Task> StoryNameComparator = (task1, task2) -> {
+    public static Comparator<Task> TaskNameComparator = (task1, task2) -> {
         return task1.getShortName().compareTo(task2.getShortName());
     };
 
