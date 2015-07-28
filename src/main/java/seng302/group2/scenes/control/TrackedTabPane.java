@@ -42,7 +42,10 @@ public class TrackedTabPane extends TabPane {
         STORY_CATEGORY,
         BACKLOG,
         BACKLOG_EDIT,
-        BACKLOG_CATEGORY
+        BACKLOG_CATEGORY,
+        TASK,
+        TASK_EDIT,
+        TASK_CATEGORY
     }
 
 
