@@ -35,8 +35,8 @@ public class CreateProjectDialog extends Dialog<Map<String, String>> {
         correctShortName = false;
         correctLongName = false;
         this.setTitle("New Project");
-        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
-                + "-fx-pref-height: 500px;");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 300px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 300px;");
 
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
