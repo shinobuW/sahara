@@ -43,8 +43,8 @@ public class DeleteDialog {
         alert.setTitle(dialogText.get(0));
         alert.setHeaderText("Delete " + "'" + element.toString() + "'?");
         alert.setContentText(dialogText.get(1));
-        alert.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 200px; -fx-pref-width: 600px; "
-                + "-fx-pref-height: 200px;");
+        alert.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 170px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 170px;");
         Optional<ButtonType> result  = alert.showAndWait();
 
         if (result.get() == ButtonType.OK) {
