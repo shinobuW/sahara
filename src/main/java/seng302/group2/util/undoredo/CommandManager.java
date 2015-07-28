@@ -37,7 +37,7 @@ public class CommandManager {
         command.execute();
         undos.push(command);
         redos.clear();
-        MainToolbar.undoRedoToggle();
+        //MainToolbar.undoRedoToggle();
 
     }
 
@@ -98,7 +98,7 @@ public class CommandManager {
             }
 
             refreshTree();
-            MainToolbar.undoRedoToggle();
+            //MainToolbar.undoRedoToggle();
         }
     }
 
@@ -158,7 +158,7 @@ public class CommandManager {
             }
 
             refreshTree();
-            MainToolbar.undoRedoToggle();
+            //MainToolbar.undoRedoToggle();
         }
     }
 
