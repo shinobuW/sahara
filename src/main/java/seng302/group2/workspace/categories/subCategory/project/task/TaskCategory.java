@@ -64,7 +64,7 @@ public class TaskCategory extends SubCategory {
         if (parent == null) {
             return FXCollections.observableArrayList();
         }
-        return ((Project) parent).getUnallocatedStories();
+        return ((Backlog) parent).getUnallocatedTasks();
     }
 
     /**

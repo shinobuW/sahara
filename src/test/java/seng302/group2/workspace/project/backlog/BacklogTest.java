@@ -7,6 +7,7 @@ import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.categories.Category;
+import seng302.group2.workspace.categories.subCategory.project.task.TaskCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
@@ -91,6 +92,8 @@ public class BacklogTest {
     public void testGetChildren() {
         Backlog backlog = new Backlog();
         List<Category> exp = observableArrayList();
+        TaskCategory taskCategory = new TaskCategory(backlog);
+        exp.add(taskCategory);
         Assert.assertEquals(exp, backlog.getChildren());
     }
 
