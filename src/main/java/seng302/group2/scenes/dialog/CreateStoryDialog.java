@@ -49,8 +49,8 @@ public class CreateStoryDialog extends Dialog<Map<String, String>> {
 
         // Initialise Dialog
         this.setTitle("New Story");
-        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
-                + "-fx-pref-height: 500px;");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 400px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 400px;");
 
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);

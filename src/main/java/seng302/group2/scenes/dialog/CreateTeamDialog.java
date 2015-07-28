@@ -34,8 +34,8 @@ public class CreateTeamDialog extends Dialog<Map<String, String>> {
      */
     public CreateTeamDialog() {
         this.setTitle("New Team");
-        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
-                + "-fx-pref-height: 500px;");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 250px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 250px;");
 
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
