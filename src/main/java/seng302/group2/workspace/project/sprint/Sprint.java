@@ -1,17 +1,22 @@
 package seng302.group2.workspace.project.sprint;
 
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.SprintInformationSwitchStrategy;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.categories.subCategory.project.task.TaskCategory;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * A class to hold information around scrum sprints
@@ -28,6 +33,10 @@ public class Sprint extends SaharaItem {
     private String description = "";
     LocalDate startDate = LocalDate.now();
     LocalDate endDate = LocalDate.now().plusWeeks(2);
+    private transient ObservableList<Task> unallocatedTasks = observableArrayList();
+    private List<Task> serializableTasks = new ArrayList<>();
+
+    private transient TaskCategory tasksCategory = new TaskCategory(this);
 
 
     /**
@@ -146,6 +155,79 @@ public class Sprint extends SaharaItem {
         return endDate;
     }
 
+    /**
+     * Gets the unallocatedTasks of the Sprint
+     *
+     * @return list of unallocatedTasks
+     */
+    public ObservableList<Task> getUnallocatedTasks() {
+        return this.unallocatedTasks;
+    }
+
+    /**
+     * Gets all of the tasks within the sprint (unassigned and assigned)
+     *
+     * @return all of the tasks within the sprint (unassigned and assigned)
+     */
+    public Set<Task> getAllTasks() {
+        Set<Task> tasks = new HashSet<>();
+        tasks.addAll(unallocatedTasks);
+        for (Story story : stories) {
+            tasks.addAll(story.getTasks());
+        }
+        return tasks;
+    }
+
+    /**
+     * Gets the children of the SaharaItem
+     *
+     * @return The items of the SaharaItem
+     */
+    @Override
+    public ObservableList getChildren() {
+        ObservableList<SaharaItem> children = observableArrayList();
+        children.addAll(tasksCategory);
+        return children;
+    }
+
+    /**
+     * Adds listeners to the Sprint tasks for sorting
+     */
+    public void addListeners() {
+
+        unallocatedTasks.addListener((ListChangeListener<Task>) change ->
+            {
+                if (change.next() && !change.wasPermutated()) {
+                    Collections.sort(unallocatedTasks, Task.TaskNameComparator);
+                }
+            });
+    }
+
+    /**
+     * Prepares the backlog to be serialized.
+     */
+    public void prepSerialization() {
+
+        serializableTasks.clear();
+        for (Task item : unallocatedTasks) {
+            item.prepSerialization();
+            this.serializableTasks.add(item);
+        }
+    }
+
+
+    /**
+     * Deserialization post-processing.
+     */
+    public void postDeserialization() {
+        unallocatedTasks.clear();
+        for (Task task : serializableTasks) {
+            task.postSerialization();
+            this.unallocatedTasks.add(task);
+        }
+
+    }
+
 
     /**
      * Gets the underlying item set in the hierarchy of sprints
@@ -153,8 +235,14 @@ public class Sprint extends SaharaItem {
      */
     @Override
     public Set<SaharaItem> getItemsSet() {
-        // Nothing new is really created under this hierarchy (yet), just referenced from somewhere else
-        return new HashSet<>();
+        Set<SaharaItem> items = new HashSet<>();
+
+        for (Task task : unallocatedTasks) {
+            items.addAll(task.getItemsSet());
+        }
+        items.addAll(unallocatedTasks);
+
+        return items;
     }
 
     /**

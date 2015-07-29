@@ -14,7 +14,7 @@ public class TaskCategoryScene extends TrackedTabPane {
      * @param selectedCategory the current workspace
      */
     public TaskCategoryScene(TaskCategory selectedCategory) {
-        super(TrackedTabPane.ContentScene.STORY_CATEGORY, selectedCategory.getBacklog());
+        super(TrackedTabPane.ContentScene.STORY_CATEGORY, selectedCategory.getSprint());
 
         // Define and add the tabs
         Tab informationTab = new TaskCategoryTab(selectedCategory);

@@ -30,7 +30,7 @@ public class TaskCategoryTab extends Tab {
         categoryPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(categoryPane);
         this.setContent(wrapper);
-        Label title = new TitleLabel("Stories in " + selectedCategory.getBacklog().toString());
+        Label title = new TitleLabel("Stories in " + selectedCategory.getSprint().toString());
 
         Button btnView = new Button("View");
         Button btnDelete = new Button("Delete");
@@ -44,7 +44,7 @@ public class TaskCategoryTab extends Tab {
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
 
-        ListView taskBox = new ListView<>(selectedCategory.getBacklog().getUnallocatedTasks());
+        ListView taskBox = new ListView<>(selectedCategory.getSprint().getUnallocatedTasks());
         taskBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         taskBox.setMaxWidth(275);
 

@@ -10,6 +10,7 @@ import seng302.group2.workspace.categories.Category;
 import seng302.group2.workspace.categories.subCategory.project.task.TaskCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.workspace.Workspace;
 
@@ -90,11 +91,11 @@ public class BacklogTest {
 
     @Test
     public void testGetChildren() {
-        Backlog backlog = new Backlog();
+        Sprint sprint = new Sprint();
         List<Category> exp = observableArrayList();
-        TaskCategory taskCategory = new TaskCategory(backlog);
+        TaskCategory taskCategory = new TaskCategory(sprint);
         exp.add(taskCategory);
-        Assert.assertEquals(exp, backlog.getChildren());
+        Assert.assertEquals(exp, sprint.getChildren());
     }
 
 

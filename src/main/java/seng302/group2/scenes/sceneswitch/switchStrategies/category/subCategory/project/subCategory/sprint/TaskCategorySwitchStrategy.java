@@ -1,4 +1,4 @@
-package seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.subCategory.backlog;
+package seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.subCategory.sprint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

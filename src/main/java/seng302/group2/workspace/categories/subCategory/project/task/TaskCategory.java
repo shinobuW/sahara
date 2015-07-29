@@ -4,12 +4,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.scenes.dialog.CreateStoryDialog;
-import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.StoryCategorySwitchStrategy;
+import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.subCategory.sprint.TaskCategorySwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.SubCategory;
-import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
+import seng302.group2.workspace.project.sprint.Sprint;
 
 /**
  * Created by cvs20 on 28/07/15.
@@ -18,20 +18,20 @@ public class TaskCategory extends SubCategory {
     /**
      * Basic constructor for a TreeView category
      *
-     * @param backlog The parent project of this release category
+     * @param sprint The parent project of this release category
      */
-    public TaskCategory(Backlog backlog) {
-        super("Unassigned Tasks", backlog);
-        setCategorySwitchStrategy(new StoryCategorySwitchStrategy());
+    public TaskCategory(Sprint sprint) {
+        super("Unassigned Tasks", sprint);
+        setCategorySwitchStrategy(new TaskCategorySwitchStrategy());
     }
 
     /**
-     * Gets the story category's project
+     * Gets the story category's sprint
      *
-     * @return the story category's project
+     * @return the story category's sprint
      */
-    public Backlog getBacklog() {
-        return (Backlog) parent;
+    public Sprint getSprint() {
+        return (Sprint) parent;
     }
 
 
@@ -64,7 +64,7 @@ public class TaskCategory extends SubCategory {
         if (parent == null) {
             return FXCollections.observableArrayList();
         }
-        return ((Backlog) parent).getUnallocatedTasks();
+        return ((Sprint) parent).getUnallocatedTasks();
     }
 
     /**
