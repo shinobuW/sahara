@@ -28,7 +28,7 @@ public class BacklogInfoTab extends Tab {
     /**
      * Constructor for the Backlog Info tab
      * 
-     * @param currentBacklog The currently selected backlog 
+     * @param currentBacklog The currently selected backlog
      */
     public BacklogInfoTab(Backlog currentBacklog) {
         final Stage stage;

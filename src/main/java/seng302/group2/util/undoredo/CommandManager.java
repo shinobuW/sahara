@@ -37,7 +37,12 @@ public class CommandManager {
         command.execute();
         undos.push(command);
         redos.clear();
-        //MainToolbar.undoRedoToggle();
+        try {
+            MainToolbar.undoRedoToggle();
+        }
+        catch (ExceptionInInitializerError | NoClassDefFoundError ex) {
+            return;
+        }
 
     }
 
@@ -98,7 +103,13 @@ public class CommandManager {
             }
 
             refreshTree();
-            //MainToolbar.undoRedoToggle();
+
+            try {
+                MainToolbar.undoRedoToggle();
+            }
+            catch (ExceptionInInitializerError | NoClassDefFoundError ex) {
+                return;
+            }
         }
     }
 
@@ -158,7 +169,12 @@ public class CommandManager {
             }
 
             refreshTree();
-            //MainToolbar.undoRedoToggle();
+            try {
+                MainToolbar.undoRedoToggle();
+            }
+            catch (ExceptionInInitializerError | NoClassDefFoundError ex) {
+                return;
+            }
         }
     }
 
@@ -188,6 +204,12 @@ public class CommandManager {
     public void clear() {
         redos = new Stack<>();
         undos = new Stack<>();
+        try {
+            MainToolbar.undoRedoToggle();
+        }
+        catch (ExceptionInInitializerError | NoClassDefFoundError ex) {
+            return;
+        }
     }
 
 

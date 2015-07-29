@@ -13,6 +13,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import seng302.group2.scenes.MainPane;
+import seng302.group2.scenes.menu.MainToolbar;
 import seng302.group2.util.config.ConfigLoader;
 import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.workspace.Workspace.SaveLoadResult;
@@ -41,6 +42,8 @@ public class App extends Application {
         mainPane.refreshAll();
 
         App.refreshWindowTitle();
+
+        MainToolbar.undoRedoToggle();
     }
 
 
@@ -64,6 +67,8 @@ public class App extends Application {
                         + Global.currentWorkspace.getLongName());
             }
         }
+
+
     }
 
     /**

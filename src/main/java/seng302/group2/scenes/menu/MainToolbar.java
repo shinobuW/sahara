@@ -91,7 +91,7 @@ public class MainToolbar extends ToolBar {
         redoButton.setOnAction((event) -> MainMenuBar.redoAction());
         generateButton.setOnAction((event) -> MainMenuBar.reportAction());
 
-        //undoRedoToggle();
+        undoRedoToggle();
     }
 
     /**
@@ -101,12 +101,12 @@ public class MainToolbar extends ToolBar {
         searchBox.requestFocus();
     }
 
-//    /**
-//     * Disables / Enables the undo/redo button depending on whether the
-//     * commands are available.
-//     */
-//    public static void undoRedoToggle() {
-//        MainToolbar.undoButton.setDisable(!Global.commandManager.isUndoAvailable());
-//        MainToolbar.redoButton.setDisable(!Global.commandManager.isRedoAvailable());
-//    }
+    /**
+     * Disables / Enables the undo/redo button depending on whether the
+     * commands are available.
+     */
+    public static void undoRedoToggle() {
+        MainToolbar.undoButton.setDisable(!Global.commandManager.isUndoAvailable());
+        MainToolbar.redoButton.setDisable(!Global.commandManager.isRedoAvailable());
+    }
 }
