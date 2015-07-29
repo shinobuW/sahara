@@ -14,6 +14,7 @@ import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
+import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -39,6 +40,7 @@ public class SerialBuilder {
                 .addType(Role.class)
                 .addType(Allocation.class)
                 .addType(Story.class)
+                .addType(Task.class)
                 .addType(LocalDate.class)
                 .addType(Backlog.class)
                 .addType(AcceptanceCriteria.class)

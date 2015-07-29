@@ -21,9 +21,9 @@ public class StoryScene extends TrackedTabPane {
 
         // Define and add the tabs
         Tab informationTab = new StoryInfoTab(currentStory);
-        Tab accepetanceCriteriaTab = new StoryAcTab(currentStory);
+        Tab acceptanceCriteriaTab = new StoryAcTab(currentStory);
         Tab dependantTab = new StoryDependenciesTab(currentStory);
 
-        this.getTabs().addAll(informationTab, accepetanceCriteriaTab, dependantTab);  // Add the tabs to the pane
+        this.getTabs().addAll(informationTab, acceptanceCriteriaTab, dependantTab);  // Add the tabs to the pane
     }
 }

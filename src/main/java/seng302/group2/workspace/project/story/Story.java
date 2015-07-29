@@ -90,7 +90,10 @@ public class Story extends SaharaItem implements Serializable {
         for (AcceptanceCriteria ac : acceptanceCriteria) {
             items.addAll(ac.getItemsSet());
         }
-        // TODO add in tasks
+        items.addAll(tasks);
+        for (Task task : tasks) {
+            items.addAll(task.getItemsSet());
+        }
         return items;
     }
 
@@ -586,6 +589,13 @@ public class Story extends SaharaItem implements Serializable {
             dependenciesElement.appendChild(dependencyElement);
         }
         storyElement.appendChild(dependenciesElement);
+
+        Element tasksElement = ReportGenerator.doc.createElement("tasks");
+        for (Task task : this.tasks) {
+            Element taskElement = task.generateXML();
+            tasksElement.appendChild(taskElement);
+        }
+        storyElement.appendChild(tasksElement);
 
         return storyElement;
     }

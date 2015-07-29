@@ -2,6 +2,7 @@ package seng302.group2.util.undoredo;
 
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.menu.MainToolbar;
 import seng302.group2.workspace.SaharaItem;
 
 import java.util.Set;
@@ -36,6 +37,8 @@ public class CommandManager {
         command.execute();
         undos.push(command);
         redos.clear();
+        //MainToolbar.undoRedoToggle();
+
     }
 
     /**
@@ -95,6 +98,7 @@ public class CommandManager {
             }
 
             refreshTree();
+            //MainToolbar.undoRedoToggle();
         }
     }
 
@@ -154,6 +158,7 @@ public class CommandManager {
             }
 
             refreshTree();
+            //MainToolbar.undoRedoToggle();
         }
     }
 

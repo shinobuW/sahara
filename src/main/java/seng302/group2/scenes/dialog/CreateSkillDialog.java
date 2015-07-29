@@ -37,8 +37,8 @@ public class CreateSkillDialog extends Dialog<Map<String, String>> {
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
         grid.setPadding(insets);
-        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
-                + "-fx-pref-height: 500px;");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 250px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 250px;");
 
         ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
         this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);

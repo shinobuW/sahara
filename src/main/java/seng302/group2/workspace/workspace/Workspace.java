@@ -8,15 +8,17 @@ import com.google.gson.JsonSyntaxException;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import org.controlsfx.dialog.Dialogs;
 import org.w3c.dom.Element;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.TrackedTabPane;
-import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.WorkspaceInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.revert.RevertManager;
@@ -168,10 +170,11 @@ public class Workspace extends SaharaItem implements Serializable {
     public static SaveLoadResult saveWorkspace(Workspace workspace, boolean saveAs) {
         // If there is no current workspace open, display a dialog and skip saving
         if (workspace == null) {
-            Dialogs.create()
-                    .title("No open workspace")
-                    .message("There is currently no workspace open to save")
-                    .showWarning();
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning");
+            alert.setHeaderText("No open workspace");
+            alert.setContentText("There is currently no workspace open to save");
+            alert.showAndWait();
 
             return SaveLoadResult.NULLWORKSPACE;
         }
@@ -181,8 +184,11 @@ public class Workspace extends SaharaItem implements Serializable {
         if (workspace.lastSaveLocation != null) {
             File f = new File(workspace.lastSaveLocation);
             if (!f.exists()) {
-                CustomDialog.showDialog("File doesn't exist", "The file no longer exists. Please"
-                        + " choose another save location", Alert.AlertType.ERROR);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Load Error");
+                alert.setContentText("The file no longer exists. Please choose another save location");
+                alert.showAndWait();
                 saveAs = true;
             }
         }
@@ -246,13 +252,39 @@ public class Workspace extends SaharaItem implements Serializable {
             return SaveLoadResult.SUCCESS;
         }
         catch (IOException e) {
-            Dialogs.create()
-                    .title("Error Saving")
-                    .message("An error occurred while trying to save the file")
-                    .showException(e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error Saving");
+            alert.setContentText("An error occurred while trying to save the file");
+
+            // Create expandable Exception.
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            String exceptionText = sw.toString();
+
+            Label label = new Label("The exception stacktrace was:");
+
+            TextArea textArea = new TextArea(exceptionText);
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+
+            textArea.setMaxWidth(Double.MAX_VALUE);
+            textArea.setMaxHeight(Double.MAX_VALUE);
+            GridPane.setVgrow(textArea, Priority.ALWAYS);
+            GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+            GridPane expContent = new GridPane();
+            expContent.setMaxWidth(Double.MAX_VALUE);
+            expContent.add(label, 0, 0);
+            expContent.add(textArea, 0, 1);
+
+            // Set expandable Exception into the dialog pane.
+            alert.getDialogPane().setExpandableContent(expContent);
+
+            alert.showAndWait();
             return SaveLoadResult.IOEXCEPTION;
         }
-
     }
 
     /**
@@ -302,26 +334,54 @@ public class Workspace extends SaharaItem implements Serializable {
                 reader.close();
             }
             catch (FileNotFoundException e) {
-                Dialogs.create()
-                        .title("File Not Found")
-                        .message("The specified file could not be found.")
-                        .showWarning();
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText("File not found");
+                alert.setContentText("The specified file could not be found.");
+                alert.showAndWait();
+
                 return SaveLoadResult.FILENOTFOUND;
             }
             catch (JsonSyntaxException e) {
                 e.printStackTrace();
-                Dialogs.create()
-                        .title("File outdated")
-                        .message("The specified file was created with a deprecated version of "
-                                + "Sahara.\nThe file cannot be loaded.")
-                        .showError();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("File outdated");
+                alert.setContentText("The specified file was created with a deprecated version of Sahara.\n"
+                        + "The file cannot be loaded.");
+                alert.showAndWait();
                 return SaveLoadResult.FILENOTFOUND;
             }
             catch (IOException e) {
-                Dialogs.create()
-                        .title("Error Loading")
-                        .message("An error occurred while trying to load the file.")
-                        .showException(e);
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Error Loading");
+                alert.setContentText("An error occurred while trying to load the file.");
+
+                StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw);
+                e.printStackTrace(pw);
+                String exceptionText = sw.toString();
+
+                Label label = new Label("The exception stacktrace was:");
+
+                TextArea textArea = new TextArea(exceptionText);
+                textArea.setEditable(false);
+                textArea.setWrapText(true);
+
+                textArea.setMaxWidth(Double.MAX_VALUE);
+                textArea.setMaxHeight(Double.MAX_VALUE);
+                GridPane.setVgrow(textArea, Priority.ALWAYS);
+                GridPane.setHgrow(textArea, Priority.ALWAYS);
+
+                GridPane expContent = new GridPane();
+                expContent.setMaxWidth(Double.MAX_VALUE);
+                expContent.add(label, 0, 0);
+                expContent.add(textArea, 0, 1);
+
+                alert.getDialogPane().setExpandableContent(expContent);
+                alert.showAndWait();
+
                 return SaveLoadResult.IOEXCEPTION;
             }
 

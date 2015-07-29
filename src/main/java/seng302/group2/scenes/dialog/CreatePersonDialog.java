@@ -50,8 +50,8 @@ public class CreatePersonDialog extends Dialog<Map<String, String>> {
         correctLastName = Boolean.FALSE;
 
         this.setTitle("New Person");
-        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
-                + "-fx-pref-height: 500px;");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 400px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 400px;");
 
         ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
         this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);

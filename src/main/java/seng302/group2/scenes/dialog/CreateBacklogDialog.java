@@ -48,8 +48,8 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
         correctLongName = Boolean.FALSE;
 
         this.setTitle("New Backlog");
-        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
-                + "-fx-pref-height: 500px;");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 350px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 350px;");
 
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);

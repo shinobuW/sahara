@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import seng302.group2.Global;
 import seng302.group2.scenes.control.search.SearchBox;
 
 
@@ -21,8 +22,8 @@ public class MainToolbar extends ToolBar {
     Button newButton = new Button();
     Button openButton = new Button();
     Button saveButton = new Button();
-    Button undoButton = new Button();
-    Button redoButton = new Button();
+    static Button undoButton = new Button();
+    static Button redoButton = new Button();
     Button generateButton = new Button();
 
 
@@ -89,6 +90,8 @@ public class MainToolbar extends ToolBar {
         undoButton.setOnAction((event) -> MainMenuBar.undoAction());
         redoButton.setOnAction((event) -> MainMenuBar.redoAction());
         generateButton.setOnAction((event) -> MainMenuBar.reportAction());
+
+        //undoRedoToggle();
     }
 
     /**
@@ -97,4 +100,13 @@ public class MainToolbar extends ToolBar {
     public void focusSearch() {
         searchBox.requestFocus();
     }
+
+//    /**
+//     * Disables / Enables the undo/redo button depending on whether the
+//     * commands are available.
+//     */
+//    public static void undoRedoToggle() {
+//        MainToolbar.undoButton.setDisable(!Global.commandManager.isUndoAvailable());
+//        MainToolbar.redoButton.setDisable(!Global.commandManager.isRedoAvailable());
+//    }
 }

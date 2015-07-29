@@ -50,8 +50,8 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
         }
 
         this.setTitle("New Release");
-        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
-                + "-fx-pref-height: 500px;");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 330px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 330px;");
 
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
@@ -82,7 +82,7 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
             projectComboBox.setValue(defaultProject.toString());
         }
 
-        grid.getChildren().addAll(shortNameCustomField, descriptionTextArea, releaseDateField, projectComboBox);
+        grid.getChildren().addAll(shortNameCustomField, releaseDateField, projectComboBox, descriptionTextArea);
 
         //Add grid of controls to dialog
         this.getDialogPane().setContent(grid);
