@@ -118,6 +118,14 @@ public class CustomComboBox extends VBox {
         this.options.add(item);
     }
 
+
+    /**
+     * Removes all options inside the combo box
+     */
+    public void removeAll() {
+        this.options.removeAll();
+    }
+
     /**
      * Gets the inner combo box
      *

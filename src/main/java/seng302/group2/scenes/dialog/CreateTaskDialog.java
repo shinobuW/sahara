@@ -1,22 +1,19 @@
 package seng302.group2.scenes.dialog;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
@@ -56,21 +53,21 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
 
         // Add elements to grid
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
-        CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
-        projectComboBox.getComboBox().setPrefWidth(180);
-        CustomComboBox backlogComboBox = new CustomComboBox("Backlog:", true);
-        backlogComboBox.getComboBox().setPrefWidth(180);
+        ComboBox<Project> projectComboBox = new ComboBox<>();
+        projectComboBox.setPrefWidth(180);
+        ComboBox<Backlog> backlogComboBox = new ComboBox<>();
+        backlogComboBox.setPrefWidth(180);
         backlogComboBox.setDisable(true);
-        CustomComboBox storyComboBox = new CustomComboBox("Story:", true);
-        storyComboBox.getComboBox().setPrefWidth(180);
+        ComboBox<Story> storyComboBox = new ComboBox<>();
+        storyComboBox.setPrefWidth(180);
         storyComboBox.setDisable(true);
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
 
-        String firstPItem = Global.currentWorkspace.getProjects().get(0).toString();
-        projectComboBox.setValue(firstPItem);
+        //String firstPItem = Global.currentWorkspace.getProjects().get(0).toString();
+        //projectComboBox.setValue(firstPItem);
 
-        for (SaharaItem project : Global.currentWorkspace.getProjects()) {
-            projectComboBox.addToComboBox(project.toString());
+        for (Project project : Global.currentWorkspace.getProjects()) {
+            projectComboBox.getItems().add(project);
         }
 
         grid.getChildren().addAll(shortNameCustomField, projectComboBox,
@@ -86,77 +83,40 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                 createButton.setDisable(!(correctShortName));
             });
 
-        projectComboBox.getComboBox().valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue observable, String oldValue, String newValue) {
-                Project selectedProject = new Project();
-                for (Project project : Global.currentWorkspace.getProjects()) {
-                    if (project.getShortName().equals(newValue)) {
-                        selectedProject = project;
-                    }
+        projectComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue == null) {
+                    return;
                 }
 
-                backlogComboBox.getComboBox().getItems().removeAll();
-                for (Backlog backlog : selectedProject.getBacklogs()) {
-                    backlogComboBox.addToComboBox(backlog.toString());
+                backlogComboBox.getItems().clear();
+                storyComboBox.getItems().clear();
+                for (Backlog backlog : newValue.getBacklogs()) {
+                    backlogComboBox.getItems().add(backlog);
                 }
+
                 backlogComboBox.setDisable(false);
-            }
-        });
+            });
 
-        backlogComboBox.getComboBox().valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue observable, String oldValue, String newValue) {
-                Project selectedProject = new Project();
-                for (Project project : Global.currentWorkspace.getProjects()) {
-                    if (project.getShortName().equals(projectComboBox.getValue())) {
-                        selectedProject = project;
-                    }
+        backlogComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue == null) {
+                    return;
                 }
-
-                Backlog selectedBacklog = new Backlog();
-                for (Backlog backlog : selectedProject.getBacklogs()) {
-                    if (backlog.getShortName().equals(newValue)) {
-                        selectedBacklog = backlog;
-                    }
-                }
-
-                storyComboBox.getComboBox().getItems().removeAll();
-                for (Story story : selectedBacklog.getStories()) {
-                    storyComboBox.addToComboBox(story.toString());
+                storyComboBox.getItems().clear();
+                for (Story story : newValue.getStories()) {
+                    storyComboBox.getItems().add(story);
                 }
                 storyComboBox.setDisable(false);
-            }
-        });
+            });
 
         this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
-                    Project selectedProject = new Project();
-                    for (Project project : Global.currentWorkspace.getProjects()) {
-                        if (project.getShortName().equals(projectComboBox.getValue())) {
-                            selectedProject = project;
-                        }
-                    }
 
-                    Backlog selectedBacklog = new Backlog();
-                    for (Backlog backlog : selectedProject.getBacklogs()) {
-                        if (backlog.getShortName().equals(backlogComboBox.getValue())) {
-                            selectedBacklog = backlog;
-                        }
-                    }
-
-                    Story selectedStory = new Story();
-                    for (Story story : selectedBacklog.getStories()) {
-                        if (story.getShortName().equals(storyComboBox.getValue())) {
-                            selectedStory = story;
-                        }
-                    }
                     if (correctShortName) {
                         //get user input
                         String shortName = shortNameCustomField.getText();
                         String description = descriptionTextArea.getText();
                         Task task = new Task(shortName, description);
-                        selectedStory.add(task);
+                        storyComboBox.getSelectionModel().getSelectedItem().add(task);
                         App.mainPane.selectItem(task);
                         this.close();
                     }
