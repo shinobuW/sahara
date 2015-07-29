@@ -48,6 +48,7 @@ public class Sprint extends SaharaItem {
      */
     public Sprint() {
         super("Untitled Sprint");
+        addListeners();
 
         setInformationSwitchStrategy(new SprintInformationSwitchStrategy());
     }
@@ -75,6 +76,8 @@ public class Sprint extends SaharaItem {
         this.backlog = backlog;
         this.team = team;
         this.release = release;
+
+        addListeners();
 
         setInformationSwitchStrategy(new SprintInformationSwitchStrategy());
     }
