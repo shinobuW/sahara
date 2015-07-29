@@ -25,6 +25,8 @@ public class CustomComboBox extends VBox {
     private Label errorMessageText = new Label();
     private ObservableList<String> options = FXCollections.observableArrayList();
     private ComboBox comboBox = new ComboBox(options);
+    private Label astrLabel = new Label(" * ");
+    private Label titleLabel = new Label();
 
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
@@ -42,11 +44,11 @@ public class CustomComboBox extends VBox {
         labelBox.setAlignment(Pos.CENTER_LEFT);
         labelBox.spacingProperty().setValue(0);
 
-
-        labelBox.getChildren().addAll(new Label(name));
+        titleLabel.setText(name);
+        labelBox.getChildren().addAll(titleLabel);
 
         if (required) {
-            Label aster = new Label(" * ");
+            Label aster = astrLabel;
             aster.setTextFill(Color.web("#ff0000"));
             labelBox.getChildren().add(aster);
         }
@@ -73,6 +75,8 @@ public class CustomComboBox extends VBox {
      * Disables the combobox.
      */
     public void disable() {
+        titleLabel.setDisable(true);
+        astrLabel.setDisable(true);
         this.comboBox.setDisable(true);
     }
 
