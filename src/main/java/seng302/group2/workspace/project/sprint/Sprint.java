@@ -1,6 +1,7 @@
 package seng302.group2.workspace.project.sprint;
 
 import org.w3c.dom.Element;
+import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.SprintInformationSwitchStrategy;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -30,6 +31,42 @@ public class Sprint extends SaharaItem {
 
 
     /**
+     * Basic constructor
+     */
+    public Sprint() {
+        super("Untitled Sprint");
+
+        setInformationSwitchStrategy(new SprintInformationSwitchStrategy());
+    }
+
+    /**
+     * Complete Constructor
+     *
+     * @param longName The name of the sprint
+     * @param goal The goal of the sprint
+     * @param description The description of the sprint
+     * @param startDate The start date of the sprint
+     * @param endDate The end date of the sprint
+     * @param backlog The backlog of the sprint
+     * @param team The team working on the sprint
+     * @param release The release to which the sprint is dedicated
+     */
+    public Sprint(String longName, String goal, String description, LocalDate startDate, LocalDate endDate,
+                  Backlog backlog, Team team, Release release) {
+
+        this.longName = longName;
+        this.description = description;
+        this.goal = goal;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.backlog = backlog;
+        this.team = team;
+        this.release = release;
+
+        setInformationSwitchStrategy(new SprintInformationSwitchStrategy());
+    }
+
+    /**
      * Gets the team allocated to the sprint
      * @return The team allocated to the sprint
      */
@@ -53,6 +90,21 @@ public class Sprint extends SaharaItem {
         return backlog.getProject();
     }
 
+    /**
+     * Gets the Release with which the sprint is associated.
+     * @return The release the sprint is assigned
+     */
+    public Release getRelease() {
+        return release;
+    }
+
+    /**
+     * Gets the stories to be worked on in this sprint.
+     * @return The set of stories in this sprint.
+     */
+    public Set<Story> getStories() {
+        return stories;
+    }
 
     /**
      * Gets the short name/label of the sprint
