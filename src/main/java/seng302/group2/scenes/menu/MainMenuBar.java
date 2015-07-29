@@ -173,9 +173,9 @@ public class MainMenuBar extends MenuBar {
     }
 
     /**
-     * Create a menu item "Release" and sets the action event if "Release" is clicked.
+     * Create a menu item "Story" and sets the action event if "Story" is clicked.
      *
-     * @return MenuItem Release
+     * @return MenuItem Story
      */
     private static MenuItem createStoryItem() {
 
@@ -185,6 +185,21 @@ public class MainMenuBar extends MenuBar {
                 //creationDialog.show();
             });
         return newStoryItem;
+    }
+
+    /**
+     * Create a menu item "Task" and sets the action event if "Task" is clicked.
+     *
+     * @return MenuItem Task
+     */
+    private static MenuItem createTaskItem() {
+
+        MenuItem newTaskItem = new MenuItem("Task");
+        newTaskItem.setOnAction((event) -> {
+                javafx.scene.control.Dialog creationDialog = new CreateTaskDialog();
+                //creationDialog.show();
+            });
+        return newTaskItem;
     }
 
     /**
@@ -505,6 +520,7 @@ public class MainMenuBar extends MenuBar {
         MenuItem newReleaseItem = createReleaseItem();
         MenuItem newStoryItem = createStoryItem();
         MenuItem newBacklogItem = createBacklogItem();
+        MenuItem newTaskItem = createTaskItem();
 
         // Create other items for file menu
         MenuItem openItem = createOpenItem();
@@ -521,6 +537,7 @@ public class MainMenuBar extends MenuBar {
         newBranch.getItems().add(newReleaseItem);
         newBranch.getItems().add(newStoryItem);
         newBranch.getItems().add(newBacklogItem);
+        newBranch.getItems().add(newTaskItem);
 
 
         // Create 'Edit >' sub-menu
