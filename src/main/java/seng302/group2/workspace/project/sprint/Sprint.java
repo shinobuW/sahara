@@ -194,9 +194,12 @@ public class Sprint extends SaharaItem {
      * @return The items of the SaharaItem
      */
     @Override
-    public ObservableList getChildren() {
+    public ObservableList<SaharaItem> getChildren() {
         ObservableList<SaharaItem> children = observableArrayList();
+
         children.addAll(tasksCategory);
+        children.addAll(stories);
+
         return children;
     }
 
@@ -204,7 +207,6 @@ public class Sprint extends SaharaItem {
      * Adds listeners to the Sprint tasks for sorting
      */
     public void addListeners() {
-
         unallocatedTasks.addListener((ListChangeListener<Task>) change ->
             {
                 if (change.next() && !change.wasPermutated()) {
@@ -217,6 +219,11 @@ public class Sprint extends SaharaItem {
      * Prepares the backlog to be serialized.
      */
     public void prepSerialization() {
+        serializableStories.clear();
+        for (Story story : stories) {
+            story.prepSerialization();
+            this.serializableStories.add(story);
+        }
 
         serializableTasks.clear();
         for (Task item : unallocatedTasks) {
@@ -236,6 +243,13 @@ public class Sprint extends SaharaItem {
             this.unallocatedTasks.add(task);
         }
 
+        stories.clear();
+        for (Story story : serializableStories) {
+            story.postSerialization();
+            this.stories.add(story);
+        }
+
+        Collections.sort(this.stories, Story.StoryPriorityComparator);
     }
 
 
@@ -263,30 +277,6 @@ public class Sprint extends SaharaItem {
     public void add(Story story) {
         Command addStory = new AddStoryCommand(this, story);
         Global.commandManager.executeCommand(addStory);
-    }
-
-    /**
-     * Prepares the sprint to be serialized.
-     */
-    public void prepSerialization() {
-        serializableStories.clear();
-        for (Story story : stories) {
-            story.prepSerialization();
-            this.serializableStories.add(story);
-        }
-    }
-
-    /**
-     * Deserialization post-processing.
-     */
-    public void postDeserialization() {
-        stories.clear();
-        for (Story story : serializableStories) {
-            story.postSerialization();
-            this.stories.add(story);
-        }
-
-        Collections.sort(this.stories, Story.StoryPriorityComparator);
     }
 
 
@@ -345,19 +335,6 @@ public class Sprint extends SaharaItem {
         return sprintElement;
     }
 
-    /**
-     * Gets the children of the SaharaItem
-     *
-     * @return The items of the SaharaItem
-     */
-    @Override
-    public ObservableList getChildren() {
-        ObservableList<SaharaItem> children = observableArrayList();
-        for (Story story : this.getStories()) {
-            children.addAll(story);
-        }
-        return children;
-    }
 
     /**
      * Gets the string representation of a sprint
