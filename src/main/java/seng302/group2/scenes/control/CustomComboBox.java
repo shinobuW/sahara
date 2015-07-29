@@ -19,12 +19,12 @@ import javafx.scene.paint.Color;
 /**
  * @author Shinobu
  */
-public class CustomComboBox extends VBox {
+public class CustomComboBox<T> extends VBox {
     private boolean required;
     private String errorMessage = "";
     private Label errorMessageText = new Label();
-    private ObservableList<String> options = FXCollections.observableArrayList();
-    private ComboBox comboBox = new ComboBox(options);
+    private ObservableList<T> options = FXCollections.observableArrayList();
+    private ComboBox<T> comboBox = new ComboBox<>(options);
     private Label astrLabel = new Label(" * ");
     private Label titleLabel = new Label();
 
@@ -118,7 +118,7 @@ public class CustomComboBox extends VBox {
      *
      * @param item String item to add
      */
-    public void addToComboBox(String item) {
+    public void addToComboBox(T item) {
         this.options.add(item);
     }
 
@@ -126,8 +126,8 @@ public class CustomComboBox extends VBox {
     /**
      * Removes all options inside the combo box
      */
-    public void removeAll() {
-        this.options.removeAll();
+    public void clear() {
+        options.clear();
     }
 
     /**
@@ -158,7 +158,7 @@ public class CustomComboBox extends VBox {
      *
      * @param value value to set to
      */
-    public void setValue(String value) {
+    public void setValue(T value) {
         this.comboBox.setValue(value);
     }
 
