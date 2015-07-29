@@ -469,8 +469,8 @@ public class Story extends SaharaItem implements Serializable {
      */
     public void add(Task task) {
         // TODO
-        //Command command = new AddTaskCommand(this, task);
-        //Global.commandManager.executeCommand(command);
+        // Command command = new AddTaskCommand(this, task);
+        // Global.commandManager.executeCommand(command);
     }
     /**
      * Sets the story's ready state to the given boolean

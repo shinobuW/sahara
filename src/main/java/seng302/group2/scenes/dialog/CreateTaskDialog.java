@@ -60,8 +60,10 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         projectComboBox.getComboBox().setPrefWidth(180);
         CustomComboBox backlogComboBox = new CustomComboBox("Backlog:", true);
         backlogComboBox.getComboBox().setPrefWidth(180);
+        backlogComboBox.setDisable(true);
         CustomComboBox storyComboBox = new CustomComboBox("Story:", true);
         storyComboBox.getComboBox().setPrefWidth(180);
+        storyComboBox.setDisable(true);
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
 
         String firstPItem = Global.currentWorkspace.getProjects().get(0).toString();
@@ -71,8 +73,8 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
             projectComboBox.addToComboBox(project.toString());
         }
 
-        grid.getChildren().addAll(shortNameCustomField, descriptionTextArea,projectComboBox,
-                backlogComboBox,storyComboBox, buttons);
+        grid.getChildren().addAll(shortNameCustomField, projectComboBox,
+                backlogComboBox,storyComboBox, descriptionTextArea, buttons);
 
         this.getDialogPane().setContent(grid);
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
@@ -98,6 +100,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                 for (Backlog backlog : selectedProject.getBacklogs()) {
                     backlogComboBox.addToComboBox(backlog.toString());
                 }
+                backlogComboBox.setDisable(false);
             }
         });
 
@@ -122,18 +125,38 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                 for (Story story : selectedBacklog.getStories()) {
                     storyComboBox.addToComboBox(story.toString());
                 }
+                storyComboBox.setDisable(false);
             }
         });
 
         this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
+                    Project selectedProject = new Project();
+                    for (Project project : Global.currentWorkspace.getProjects()) {
+                        if (project.getShortName().equals(projectComboBox.getValue())) {
+                            selectedProject = project;
+                        }
+                    }
+
+                    Backlog selectedBacklog = new Backlog();
+                    for (Backlog backlog : selectedProject.getBacklogs()) {
+                        if (backlog.getShortName().equals(backlogComboBox.getValue())) {
+                            selectedBacklog = backlog;
+                        }
+                    }
+
+                    Story selectedStory = new Story();
+                    for (Story story : selectedBacklog.getStories()) {
+                        if (story.getShortName().equals(storyComboBox.getValue())) {
+                            selectedStory = story;
+                        }
+                    }
                     if (correctShortName) {
                         //get user input
                         String shortName = shortNameCustomField.getText();
                         String description = descriptionTextArea.getText();
-                        Story story = new Story();
                         Task task = new Task(shortName, description);
-                        story.add(task);
+                        selectedStory.add(task);
                         App.mainPane.selectItem(task);
                         this.close();
                     }
