@@ -84,7 +84,7 @@ public class App extends Application {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Save");
-        alert.setHeaderText("Save Workspace?");
+        alert.setHeaderText("Unsaved Changes");
         alert.setContentText("Would you like to save your changes to the current workspace?");
         alert.getDialogPane().setStyle(" -fx-max-width:500px; -fx-max-height: 180px; -fx-pref-width: 500px; "
                 + "-fx-pref-height: 180px;");

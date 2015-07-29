@@ -213,7 +213,7 @@ public class Workspace extends SaharaItem implements Serializable {
             }
             catch (IllegalArgumentException e) {
                 // The file directory is invalid, try again with 'root'
-                System.out.println("Bad directory");
+                //System.out.println("Bad directory");
                 fileChooser.setInitialDirectory(new File("/"));
                 selectedFile = fileChooser.showSaveDialog(new Stage());
             }
