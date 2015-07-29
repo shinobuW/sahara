@@ -11,10 +11,12 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
 import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
+import seng302.group2.workspace.categories.subCategory.project.SprintCategory;
 import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
+import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -198,6 +200,8 @@ public class ProjectTest extends TestCase {
         children.add(backlogCategory);
         StoryCategory storiesCategory = new StoryCategory(proj);
         children.add(storiesCategory);
+        SprintCategory sprintCategory = new SprintCategory(proj);
+        children.add(sprintCategory);
 
         Assert.assertEquals(children, proj.getChildren());
 
@@ -207,6 +211,9 @@ public class ProjectTest extends TestCase {
         proj.add(backlog);
         Story story = new Story();
         proj.add(story);
+        Sprint sprint = new Sprint();
+        proj.add(sprint);
+
         children.clear();
         releasesCategory = new ReleaseCategory(proj);
         children.add(releasesCategory);
@@ -214,6 +221,8 @@ public class ProjectTest extends TestCase {
         children.add(backlogCategory);
         storiesCategory = new StoryCategory(proj);
         children.add(storiesCategory);
+        sprintCategory = new SprintCategory(proj);
+        children.add(sprintCategory);
 
         Assert.assertEquals(children, proj.getChildren());
     }
@@ -265,22 +274,26 @@ public class ProjectTest extends TestCase {
         Release testRelease = new Release();
         Backlog testBacklog = new Backlog();
         Story testStory = new Story();
+        Sprint testSprint = new Sprint();
         Allocation testAllocation = new Allocation(proj, testTeam, LocalDate.now(),
                 LocalDate.now());
 
         proj.getSerializableReleases().clear();
-        proj.getSerilizableBacklogs().clear();
-        proj.getSerilizableStories().clear();
+        proj.getSerializableBacklogs().clear();
+        proj.getSerializableStories().clear();
+        proj.getSerializableSprints().clear();
         proj.getSerializableTeamAllocations();
 
-        Assert.assertEquals(new ArrayList<Skill>(), proj.getSerilizableStories());
-        Assert.assertEquals(new ArrayList<Backlog>(), proj.getSerilizableBacklogs());
+        Assert.assertEquals(new ArrayList<Skill>(), proj.getSerializableStories());
+        Assert.assertEquals(new ArrayList<Backlog>(), proj.getSerializableBacklogs());
         Assert.assertEquals(new ArrayList<Release>(), proj.getSerializableReleases());
+        Assert.assertEquals(new ArrayList<Sprint>(), proj.getSerializableSprints());
         Assert.assertEquals(new ArrayList<Allocation>(), proj.getSerializableTeamAllocations());
 
         proj.add(testBacklog);
         proj.add(testStory);
         proj.add(testRelease);
+        proj.add(testSprint);
         proj.add(testAllocation);
 
         proj.prepSerialization();
@@ -288,15 +301,18 @@ public class ProjectTest extends TestCase {
         ArrayList<Story> stories = new ArrayList<>();
         ArrayList<Release> releases = new ArrayList<>();
         ArrayList<Backlog> backlogs = new ArrayList<>();
+        ArrayList<Sprint> sprints = new ArrayList<>();
         ArrayList<Allocation> allocations = new ArrayList<>();
         stories.add(testStory);
         releases.add(testRelease);
         backlogs.add(testBacklog);
+        sprints.add(testSprint);
         allocations.add(testAllocation);
 
-        Assert.assertEquals(backlogs, proj.getSerilizableBacklogs());
-        Assert.assertEquals(stories, proj.getSerilizableStories());
+        Assert.assertEquals(backlogs, proj.getSerializableBacklogs());
+        Assert.assertEquals(stories, proj.getSerializableStories());
         Assert.assertEquals(releases, proj.getSerializableReleases());
+        Assert.assertEquals(sprints, proj.getSerializableSprints());
         Assert.assertEquals(allocations, proj.getSerializableTeamAllocations());
     }
 
@@ -308,6 +324,7 @@ public class ProjectTest extends TestCase {
         Project proj = new Project();
         Release testRelease = new Release();
         Backlog testBacklog = new Backlog();
+        Sprint testSprint = new Sprint();
         Story testStory = new Story();
         Allocation testAllocation = new Allocation(proj, new Team(), LocalDate.now(),
                 LocalDate.now());
@@ -315,16 +332,19 @@ public class ProjectTest extends TestCase {
         proj.getReleases().clear();
         proj.getUnallocatedStories().clear();
         proj.getBacklogs().clear();
+        proj.getSprints().clear();
         proj.getTeamAllocations().clear();
 
-        Assert.assertEquals(new ArrayList<Skill>(), proj.getReleases());
+        Assert.assertEquals(new ArrayList<Release>(), proj.getReleases());
         Assert.assertTrue(proj.getUnallocatedStories().isEmpty());
         Assert.assertTrue(proj.getBacklogs().isEmpty());
+        Assert.assertTrue(proj.getSprints().isEmpty());
         Assert.assertTrue(proj.getTeamAllocations().isEmpty());
 
         proj.getSerializableReleases().add(testRelease);
-        proj.getSerilizableStories().add(testStory);
-        proj.getSerilizableBacklogs().add(testBacklog);
+        proj.getSerializableStories().add(testStory);
+        proj.getSerializableBacklogs().add(testBacklog);
+        proj.getSerializableSprints().add(testSprint);
         proj.getSerializableTeamAllocations().add(testAllocation);
 
         proj.postSerialization();
@@ -333,6 +353,7 @@ public class ProjectTest extends TestCase {
 
         Assert.assertEquals(releases, proj.getReleases());
         Assert.assertTrue(proj.getBacklogs().contains(testBacklog));
+        Assert.assertTrue(proj.getSprints().contains(testSprint));
         Assert.assertTrue(proj.getUnallocatedStories().contains(testStory));
         Assert.assertTrue(proj.getTeamAllocations().contains(testAllocation));
     }

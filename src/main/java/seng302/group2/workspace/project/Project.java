@@ -11,9 +11,11 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
 import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
+import seng302.group2.workspace.categories.subCategory.project.SprintCategory;
 import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
+import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.team.Team;
 
@@ -40,10 +42,13 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
     private List<Story> serializableStories = new ArrayList<>();
     private transient ObservableList<Backlog> backlogs = observableArrayList();
     private List<Backlog> serializableBacklogs = new ArrayList<>();
+    private transient ObservableList<Sprint> sprints = observableArrayList();
+    private List<Sprint> serializableSprints = new ArrayList<>();
 
     private transient ReleaseCategory releasesCategory = new ReleaseCategory(this);
     private transient BacklogCategory backlogCategory = new BacklogCategory(this);
     private transient StoryCategory storiesCategory = new StoryCategory(this);
+    private transient SprintCategory sprintsCategory = new SprintCategory(this);
 
 
     @Deprecated
@@ -66,7 +71,8 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
     }
 
     /**
-     * Gets the set of SaharaItems 'belonging' to the Project: Backlogs, Releases, Unallocated Stories, Allocations
+     * Gets the set of SaharaItems 'belonging' to the Project: Backlogs, Releases, Unallocated Stories, Allocations,
+     * Sprints
      * @return A set of SaharaItems belonging to the project
      */
     @Override
@@ -88,6 +94,9 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
             items.addAll(release.getItemsSet());
         }
         items.addAll(releases);
+        for (Sprint sprint : sprints) {
+            items.addAll(sprint.getItemsSet());
+        }
 
         return items;
     }
@@ -136,6 +145,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         for (Backlog bl : backlogs) {
             bl.addListeners();
         }
+
     }
 
 
@@ -291,6 +301,15 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
     }
 
     /**
+     * Gets the sprints of the project
+     *
+     * @return list of sprints
+     */
+    public ObservableList<Sprint> getSprints() {
+        return this.sprints;
+    }
+
+    /**
      * Returns the releases of a project casted as TreeViewItems
      *
      * @return list of releases casted as TreeViewItems
@@ -345,7 +364,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      *
      * @return the serializable releases
      */
-    public List<Story> getSerilizableStories() {
+    public List<Story> getSerializableStories() {
         return serializableStories;
     }
     //</editor-fold>
@@ -355,8 +374,18 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      *
      * @return the serializable Backlogs
      */
-    public List<Backlog> getSerilizableBacklogs() {
+    public List<Backlog> getSerializableBacklogs() {
         return serializableBacklogs;
+    }
+
+    /**
+     * Gets the serializable Sprints
+     *
+     * @return the serializable Sprints
+     */
+    //TODO add this to test methods
+    public List<Sprint> getSerializableSprints() {
+        return serializableSprints;
     }
 
 
@@ -467,6 +496,16 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         Global.commandManager.executeCommand(command);
     }
 
+    /**
+     * Adds a Sprint to the Project's list of Sprints.
+     *
+     * @param sprint The sprint to add
+     */
+    public void add(Sprint sprint) {
+        Command command = new AddSprintCommand(this, sprint);
+        Global.commandManager.executeCommand(command);
+    }
+
 
     /**
      * Adds a team allocation to the list of project's team allocations
@@ -509,6 +548,12 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
             backlog.prepSerialization();
             this.serializableBacklogs.add(backlog);
         }
+
+        serializableSprints.clear();
+        for (Sprint sprint : sprints) {
+            sprint.prepSerialization();
+            this.serializableSprints.add(sprint);
+        }
     }
 
 
@@ -542,6 +587,12 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         for (Backlog backlog : serializableBacklogs) {
             backlog.postDeserialization();
             this.backlogs.add(backlog);
+        }
+
+        sprints.clear();
+        for (Sprint sprint : serializableSprints) {
+            sprint.postDeserialization();
+            this.sprints.add(sprint);
         }
     }
 
@@ -609,7 +660,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         }
         projectElement.appendChild(teamFutureElements);
 
-        //Generate the children of the Project, ie Releases, Backlogs and Unassigned Stories.
+        //Generate the children of the Project, ie Releases, Backlogs, Sprints and Unassigned Stories.
         for (SaharaItem item : this.getChildren()) {
             if (ReportGenerator.generatedItems.contains(item)) {
                 Element xmlElement = item.generateXML();
@@ -664,7 +715,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
     @Override
     public ObservableList<SaharaItem> getChildren() {
         ObservableList<SaharaItem> children = observableArrayList();
-        children.addAll(releasesCategory, backlogCategory, storiesCategory);
+        children.addAll(releasesCategory, backlogCategory, storiesCategory, sprintsCategory);
         return children;
     }
 
@@ -990,6 +1041,62 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
                 }
             }
             return mapped && mapped_bl;
+        }
+    }
+
+    /**
+     * A command class for allowing the addition of Sprints to Projects.
+     */
+    private class AddSprintCommand implements Command {
+        private Sprint sprint;
+        private Project proj;
+
+        /**
+         * Constructor for the sprint addition command.
+         * @param proj The project to which the sprint is to be added.
+         * @param sprint The sprint to be added.
+         */
+        AddSprintCommand(Project proj, Sprint sprint) {
+            this.proj = proj;
+            this.sprint = sprint;
+        }
+
+        /**
+         * Executes the sprint addition command.
+         */
+        public void execute() {
+            proj.getSprints().add(sprint);
+        }
+
+        /**
+         * Undoes the sprint addition command.
+         */
+        public void undo() {
+            proj.getSprints().remove(sprint);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(proj)) {
+                    this.proj = (Project) item;
+                    mapped = true;
+                }
+            }
+            boolean mapped_sp = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(sprint)) {
+                    this.sprint = (Sprint) item;
+                    mapped_sp = true;
+                }
+            }
+            return mapped && mapped_sp;
         }
     }
 
