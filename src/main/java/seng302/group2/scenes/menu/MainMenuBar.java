@@ -420,6 +420,7 @@ public class MainMenuBar extends MenuBar {
 
     static void undoAction() {
         Global.commandManager.undo();
+        MainToolbar.undoRedoToggle();
     }
 
     /**
@@ -441,6 +442,8 @@ public class MainMenuBar extends MenuBar {
 
     static void redoAction() {
         Global.commandManager.redo();
+        MainToolbar.undoRedoToggle();
+
     }
 
     /**
