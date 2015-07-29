@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -65,10 +66,24 @@ public class StoryEditScene {
         assignmentButtons.getChildren().addAll(btnAssign, btnUnassign);
         assignmentButtons.setAlignment(Pos.CENTER);
 
-        String key = currentStory.getBacklog().getScale();
-        ArrayList<String> valueList = Global.currentWorkspace.getEstimationScales().getEstimationScaleDict().get(key);
-        for (String value : valueList) {
-            estimateComboBox.addToComboBox(value);
+        HBox estimateHBox = new HBox();
+
+        boolean unassigned = false;
+        if (currentStory.getBacklog() == null) {
+            unassigned = true;
+        }
+        if (unassigned) {
+            estimateComboBox.disable();
+            Tooltip estimateTT = new Tooltip("Stories cannot be estimated without belonging to a backlog");
+            Tooltip.install(estimateHBox, estimateTT);
+        }
+        else {
+            String key = currentStory.getBacklog().getScale();
+            ArrayList<String> valueList = Global.currentWorkspace.getEstimationScales()
+                    .getEstimationScaleDict().get(key);
+            for (String value : valueList) {
+                estimateComboBox.addToComboBox(value);
+            }
         }
 
         estimateComboBox.setValue(currentStory.getEstimate());
@@ -84,6 +99,7 @@ public class StoryEditScene {
         }
         else {
             readyStateCheck.setDisable(false);
+            readyStateCheck.setTooltip(new Tooltip("Stories cannot be estimated without belonging to a backlog"));
         }
 
         estimateComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -99,7 +115,7 @@ public class StoryEditScene {
                 }
             });
 
-        HBox estimateHBox = new HBox();
+
         HBox.setHgrow(estimateHBox, Priority.ALWAYS);
         estimateHBox.getChildren().add(estimateComboBox);
 
@@ -126,7 +142,9 @@ public class StoryEditScene {
 
         Backlog currentBacklog = currentStory.getBacklog();
         ObservableList<Story> availableStoryList = FXCollections.observableArrayList();
-        availableStoryList.addAll(currentBacklog.getProject().getAllStories());
+        if (!unassigned) {
+            availableStoryList.addAll(currentBacklog.getProject().getAllStories());
+        }
 
         availableStoryList.removeAll(dependentOnList);
         availableStoryList.remove(currentStory);
@@ -140,16 +158,28 @@ public class StoryEditScene {
         availableStoryListView.getSelectionModel().select(0);
 
         VBox backlogStoryBox = new VBox(10);
+        VBox availableStoryBox = new VBox(10);
+        HBox storyListViews = new HBox(10);
+
+
         backlogStoryBox.getChildren().add(new Label("Dependant On: "));
         backlogStoryBox.getChildren().add(dependantStoriesListView);
 
-        VBox availableStoryBox = new VBox(10);
+
         availableStoryBox.getChildren().add(new Label("Available Stories: "));
         availableStoryBox.getChildren().add(availableStoryListView);
 
-        HBox storyListViews = new HBox(10);
+
         storyListViews.getChildren().addAll(backlogStoryBox, assignmentButtons, availableStoryBox);
         storyListViews.setPrefHeight(192);
+
+        if (unassigned) {
+            for (Node child : storyListViews.getChildren()) {
+                child.setDisable(true);
+            }
+            Tooltip estimateTT = new Tooltip("Stories cannot be estimated without belonging to a backlog");
+            Tooltip.install(storyListViews, estimateTT);
+        }
 
 
 
