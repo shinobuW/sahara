@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.dialog.CreateSprintDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.SprintCategory;
 
@@ -66,10 +67,9 @@ public class SprintCategoryTab extends Tab {
                 }
             });*/
 
-        /*btnCreate.setOnAction((event) -> {
-                javafx.scene.control.Dialog creationDialog = new CreateSprintDialog(selectedCategory.getProject());
-                creationDialog.show();
-            });*/
+        btnCreate.setOnAction((event) -> {
+                new CreateSprintDialog();
+            });
 
     }
 
