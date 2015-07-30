@@ -8,7 +8,6 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.p
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.SubCategory;
-import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.sprint.Sprint;
 
 /**

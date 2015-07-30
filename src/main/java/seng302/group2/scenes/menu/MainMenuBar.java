@@ -5,7 +5,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.dialog.*;
@@ -170,6 +169,22 @@ public class MainMenuBar extends MenuBar {
                 KeyCombination.CONTROL_DOWN,
                 KeyCombination.SHORTCUT_DOWN));
         return newReleaseItem;
+    }
+
+    /**
+     * Create a menu item "Sprint" and sets the action event if "Sprint" is clicked.
+     *
+     * @return MenuItem Sprint
+     */
+    private static MenuItem createSprintItem() {
+
+        MenuItem newSprintItem = new MenuItem("Sprint");
+        newSprintItem.setOnAction((event) -> {
+                javafx.scene.control.Dialog creationDialog = new CreateSprintDialog();
+                creationDialog.show();
+            });
+
+        return newSprintItem;
     }
 
     /**
@@ -514,13 +529,14 @@ public class MainMenuBar extends MenuBar {
         // Create MenuItems for New submenu
         MenuItem newWorkspaceItem = createWorkspaceItem();
         MenuItem newProjectItem = createProjectItem();
+        MenuItem newReleaseItem = createReleaseItem();
+        MenuItem newBacklogItem = createBacklogItem();
+        MenuItem newStoryItem = createStoryItem();
+        MenuItem newTaskItem = createTaskItem();
+        MenuItem newSprintItem = createSprintItem();
+        MenuItem newTeamItem = createTeamItem();
         MenuItem newPersonItem = createPersonItem();
         MenuItem newSkillItem = createSkillItem();
-        MenuItem newTeamItem = createTeamItem();
-        MenuItem newReleaseItem = createReleaseItem();
-        MenuItem newStoryItem = createStoryItem();
-        MenuItem newBacklogItem = createBacklogItem();
-        MenuItem newTaskItem = createTaskItem();
 
         // Create other items for file menu
         MenuItem openItem = createOpenItem();
@@ -531,13 +547,14 @@ public class MainMenuBar extends MenuBar {
 
         newBranch.getItems().add(newWorkspaceItem);
         newBranch.getItems().add(newProjectItem);
+        newBranch.getItems().add(newReleaseItem);
+        newBranch.getItems().add(newBacklogItem);
+        newBranch.getItems().add(newStoryItem);
+        newBranch.getItems().add(newTaskItem);
+        newBranch.getItems().add(newSprintItem);
+        newBranch.getItems().add(newTeamItem);
         newBranch.getItems().add(newPersonItem);
         newBranch.getItems().add(newSkillItem);
-        newBranch.getItems().add(newTeamItem);
-        newBranch.getItems().add(newReleaseItem);
-        newBranch.getItems().add(newStoryItem);
-        newBranch.getItems().add(newBacklogItem);
-        newBranch.getItems().add(newTaskItem);
 
 
         // Create 'Edit >' sub-menu

@@ -43,7 +43,6 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
 
     public CreateSprintDialog() {
         //TODO add date validation
-        //TODO add short name validation
         //TODO fix up sizing
 
         this.setTitle("New Sprint");
@@ -150,39 +149,42 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
             });
 
         backlogComboBox.valueProperty().addListener(new ChangeListener<Backlog>() {
-            @Override
-            public void changed(ObservableValue<? extends Backlog> observable, Backlog oldValue, Backlog newValue) {
-                teamComboBox.setDisable(false);
-                releaseComboBox.setDisable(false);
-                createButton.setDisable(false);
-                teamOptions.clear();
-                for (Team team : newValue.getProject().getCurrentTeams()) {
-                    teamOptions.add(team);
+                @Override
+                public void changed(ObservableValue<? extends Backlog> observable, Backlog oldValue, Backlog newValue) {
+                    teamComboBox.setValue(null);
+                    teamComboBox.setDisable(false);
+                    releaseComboBox.setValue(null);
+                    releaseComboBox.setDisable(false);
+                    createButton.setDisable(false);
+                    teamOptions.clear();
+
+                    for (Team team : newValue.getProject().getCurrentTeams()) {
+                        teamOptions.add(team);
+                    }
+                    releaseOptions.clear();
+                    for (Release release : newValue.getProject().getReleases()) {
+                        releaseOptions.add(release);
+                    }
+                    createButton.setDisable(!(correctShortName && correctLongName
+                            && backlogSelected() & teamSelected() & releaseSelected()));
                 }
-                releaseOptions.clear();
-                for (Release release : newValue.getProject().getReleases()) {
-                    releaseOptions.add(release);
-                }
-                createButton.setDisable(!(correctShortName && correctLongName
-                        && backlogSelected() & teamSelected() & releaseSelected()));
-            }
-        });
+            });
 
         teamComboBox.valueProperty().addListener(new ChangeListener<Team>() {
-            @Override
-            public void changed(ObservableValue<? extends Team> observable, Team oldValue, Team newValue) {
-                createButton.setDisable(!(correctShortName && correctLongName
-                        && backlogSelected() & teamSelected() & releaseSelected()));
-            }
-        });
+                @Override
+                public void changed(ObservableValue<? extends Team> observable, Team oldValue, Team newValue) {
+                    createButton.setDisable(!(correctShortName && correctLongName
+                            && backlogSelected() & teamSelected() & releaseSelected()));
+                }
+            });
 
         releaseComboBox.valueProperty().addListener(new ChangeListener<Release>() {
-            @Override
-            public void changed(ObservableValue<? extends Release> observable, Release oldValue, Release newValue) {
-                createButton.setDisable(!(correctShortName && correctLongName
-                        && backlogSelected() & teamSelected() & releaseSelected()));
-            }
-        });
+                @Override
+                public void changed(ObservableValue<? extends Release> observable, Release oldValue, Release newValue) {
+                    createButton.setDisable(!(correctShortName && correctLongName
+                            && backlogSelected() & teamSelected() & releaseSelected()));
+                }
+            });
 
         this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {

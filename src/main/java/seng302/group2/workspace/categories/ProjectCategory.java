@@ -3,7 +3,6 @@ package seng302.group2.workspace.categories;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
-import seng302.group2.scenes.dialog.CreateBacklogDialog;
 import seng302.group2.scenes.dialog.CreateProjectDialog;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.ProjectCategorySwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;

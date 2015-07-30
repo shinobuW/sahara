@@ -130,9 +130,7 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
         }
 
         for (Team team : Global.currentWorkspace.getTeams()) {
-            System.out.println(team);
             if (team.getProductOwner() != null) {
-                System.out.println(team.getProductOwner().toString());
                 productOwnerOptions.add(team.getProductOwner());
             }
         }

@@ -8,12 +8,10 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.Back
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
-import seng302.group2.workspace.categories.subCategory.project.task.TaskCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
-import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.io.Serializable;
 import java.util.*;
