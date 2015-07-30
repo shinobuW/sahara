@@ -60,9 +60,6 @@ public class CreateStoryDialog extends Dialog<Map<String, String>> {
         ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
         this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
 
         // Add elements to grid
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
@@ -81,7 +78,7 @@ public class CreateStoryDialog extends Dialog<Map<String, String>> {
         }
 
         grid.getChildren().addAll(shortNameCustomField, longNameCustomField, creatorCustomField,
-                priorityNumberField, projectComboBox, descriptionTextArea, buttons);
+                priorityNumberField, projectComboBox, descriptionTextArea);
 
         //Add grid of controls to dialog
         this.getDialogPane().setContent(grid);

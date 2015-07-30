@@ -47,10 +47,6 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
         this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
-
         // Add elements to grid
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         ComboBox<Project> projectComboBox = new ComboBox<>();
@@ -71,7 +67,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         }
 
         grid.getChildren().addAll(shortNameCustomField, projectComboBox,
-                backlogComboBox,storyComboBox, descriptionTextArea, buttons);
+                backlogComboBox,storyComboBox, descriptionTextArea);
 
         this.getDialogPane().setContent(grid);
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
