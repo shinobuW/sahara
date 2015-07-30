@@ -12,6 +12,8 @@ import seng302.group2.scenes.dialog.CreateSprintDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.SprintCategory;
 
+import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
+
 /**
  * A class for displaying a tab showing data on all the sprints in the current project.
  * Created by drm127 on 29/07/15.
@@ -33,13 +35,13 @@ public class SprintCategoryTab extends Tab {
         Label title = new TitleLabel("Sprints in " + selectedCategory.getProject().toString());
 
         Button btnView = new Button("View");
-        //Button btnDelete = new Button("Delete");
+        Button btnDelete = new Button("Delete");
         Button btnCreate = new Button("Create New Sprint");
 
         HBox selectionButtons = new HBox();
         selectionButtons.spacingProperty().setValue(10);
         selectionButtons.getChildren().add(btnView);
-        //selectionButtons.getChildren().add(btnDelete);
+        selectionButtons.getChildren().add(btnDelete);
         selectionButtons.getChildren().add(btnCreate);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
@@ -60,12 +62,12 @@ public class SprintCategoryTab extends Tab {
             });
 
 
-        /*btnDelete.setOnAction((event) -> {
+        btnDelete.setOnAction((event) -> {
                 if (sprintBox.getSelectionModel().getSelectedItem() != null) {
                     showDeleteDialog((SaharaItem) sprintBox
                             .getSelectionModel().getSelectedItem());
                 }
-            });*/
+            });
 
         btnCreate.setOnAction((event) -> {
                 new CreateSprintDialog();
