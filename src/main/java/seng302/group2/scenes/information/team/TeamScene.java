@@ -29,4 +29,19 @@ public class TeamScene extends TrackedTabPane {
             this.getTabs().addAll(historyTab);  // Add the tabs to the pane
         }
     }
+
+    /**
+     * Constructor for the Team scene. Creates an instance of the TeamEditTab and displays it.
+     *
+     * @param currentTeam The currently selected Team.
+     * @param editScene A boolean stating whether the scene is to be edited or not.
+     */
+    public TeamScene(Team currentTeam, boolean editScene) {
+        super(ContentScene.TEAM_EDIT, currentTeam);
+
+        // Define and add the tabs
+        Tab editTab = new TeamEditTab(currentTeam);
+        this.getTabs().addAll(editTab);
+
+    }
 }

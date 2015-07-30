@@ -26,6 +26,7 @@ import java.util.Collections;
  *
  * @author drm127
  */
+@Deprecated
 public class SkillEditScene {
     /**
      * Gets the Skill Edit information scene.

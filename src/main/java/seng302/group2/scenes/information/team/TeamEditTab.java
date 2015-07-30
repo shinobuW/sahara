@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package seng302.group2.scenes.information.team;
 
 import javafx.collections.ObservableList;
@@ -10,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -26,12 +22,10 @@ import java.util.*;
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
- * A class for displaying the team edit scene.
- *
- * @author crw73
+ * A class for displaying a tab used to edit teams.
+ * Created by btm38 on 30/07/15.
  */
-@Deprecated
-public class TeamEditScene extends ScrollPane {
+public class TeamEditTab extends Tab {
     private Team baseTeam;
     private RequiredField shortNameField;
     private CustomTextArea descriptionField;
@@ -43,11 +37,11 @@ public class TeamEditScene extends ScrollPane {
     private Role noneRole = new Role("(none)", Role.RoleType.NONE);
 
     /**
-     * Constructor for the Team Edit Scene.
-     *
+     * Constructor for the Team Edit Tab. This constructor creates a JavaFX ScrollPane
+     * which is then populated with relevant controls and shown.
      * @param baseTeam The currently selected Team.
      */
-    public TeamEditScene(Team baseTeam) {
+    public TeamEditTab(Team baseTeam) {
         // Init
         this.baseTeam = baseTeam;
         allocatedDevelopers.addAll(baseTeam.getDevs());
@@ -56,8 +50,12 @@ public class TeamEditScene extends ScrollPane {
 
 
         // Setup basic GUI
-        VBox container = new VBox(10);
-        container.setPadding(new Insets(25, 25, 25, 25));
+        this.setText("Edit Team");
+        Pane editPane = new VBox(10);
+        editPane.setBorder(null);
+        editPane.setPadding(new Insets(25, 25, 25, 25));
+        ScrollPane wrapper = new ScrollPane(editPane);
+        this.setContent(wrapper);
 
 
         // Basic information fields
@@ -146,7 +144,7 @@ public class TeamEditScene extends ScrollPane {
 
 
         // Adding of gui elements to the container (VBox)
-        container.getChildren().addAll(
+        editPane.getChildren().addAll(
                 shortNameField,
                 descriptionField,
                 memberListViews,
@@ -158,112 +156,108 @@ public class TeamEditScene extends ScrollPane {
         // Listeners
         // Update the roles combo when the selected person changes
         teamMembersListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
-                roleList.clear();
-                if (teamMembersListView.getSelectionModel().getSelectedItems().size() == 1) {
-                    roleComboBox.setDisable(false);
-                    btnRoleAssign.setDisable(false);
-                    updateRoles(teamMembersListView.getSelectionModel().getSelectedItems().get(0));
-                }
-                else {
-                    // No person, or more than one person, selected
-                    roleComboBox.setDisable(true);
-                    btnRoleAssign.setDisable(true);
-                }
-            });
+            roleList.clear();
+            if (teamMembersListView.getSelectionModel().getSelectedItems().size() == 1) {
+                roleComboBox.setDisable(false);
+                btnRoleAssign.setDisable(false);
+                updateRoles(teamMembersListView.getSelectionModel().getSelectedItems().get(0));
+            }
+            else {
+                // No person, or more than one person, selected
+                roleComboBox.setDisable(true);
+                btnRoleAssign.setDisable(true);
+            }
+        });
 
 
         // Button events
         btnAssign.setOnAction((event) -> {
-                teamMembersList.addAll(
-                        availablePeopleListView.getSelectionModel().getSelectedItems());
-                availablePeopleList.removeAll(
-                        availablePeopleListView.getSelectionModel().getSelectedItems());
-            });
+            teamMembersList.addAll(
+                    availablePeopleListView.getSelectionModel().getSelectedItems());
+            availablePeopleList.removeAll(
+                    availablePeopleListView.getSelectionModel().getSelectedItems());
+        });
 
         btnUnassign.setOnAction((event) -> {
-                Collection<Person> selectedPeople = new ArrayList<Person>();
-                selectedPeople.addAll(teamMembersListView.getSelectionModel().
-                        getSelectedItems());
-                availablePeopleList.addAll(selectedPeople);
-                teamMembersList.removeAll(selectedPeople);
+            Collection<Person> selectedPeople = new ArrayList<Person>();
+            selectedPeople.addAll(teamMembersListView.getSelectionModel().
+                    getSelectedItems());
+            availablePeopleList.addAll(selectedPeople);
+            teamMembersList.removeAll(selectedPeople);
 
-                for (Person person : selectedPeople) {
-                    if (allocatedProductOwner == person) {
-                        allocatedProductOwner = null;
-                    }
-                    if (allocatedScrumMaster == person) {
-                        allocatedProductOwner = null;
-                    }
-                    if (allocatedDevelopers.contains(person)) {
-                        allocatedDevelopers.remove(person);
-                    }
+            for (Person person : selectedPeople) {
+                if (allocatedProductOwner == person) {
+                    allocatedProductOwner = null;
                 }
-            });
+                if (allocatedScrumMaster == person) {
+                    allocatedProductOwner = null;
+                }
+                if (allocatedDevelopers.contains(person)) {
+                    allocatedDevelopers.remove(person);
+                }
+            }
+        });
 
         btnRoleAssign.setOnAction((event) -> {
-                Person selectedPerson =
-                        teamMembersListView.getSelectionModel().getSelectedItems().get(0);
-                Role selectedRole = roleComboBox.getSelectionModel().getSelectedItem();
-                if (selectedRole == null) {
-                    System.out.println("No selected role");
-                }
-                switch (selectedRole.getType()) {
-                    case PRODUCT_OWNER:
-                        allocatedProductOwner = selectedPerson;
-                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER));
-                        break;
-                    case SCRUM_MASTER:
-                        allocatedScrumMaster = selectedPerson;
-                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.SCRUM_MASTER));
-                        break;
-                    case DEVELOPMENT_TEAM_MEMBER:
-                        allocatedDevelopers.add(selectedPerson);
-                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
-                        break;
-                    case NONE:
-                        if (allocatedProductOwner == selectedPerson) {
-                            allocatedProductOwner = null;
-                        }
-                        if (allocatedScrumMaster == selectedPerson) {
-                            allocatedScrumMaster = null;
-                        }
-                        allocatedDevelopers.remove(selectedPerson);
-                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.NONE));
-                        break;
-                    default:
-                        break;
-                }
-            });
+            Person selectedPerson =
+                    teamMembersListView.getSelectionModel().getSelectedItems().get(0);
+            Role selectedRole = roleComboBox.getSelectionModel().getSelectedItem();
+            if (selectedRole == null) {
+                System.out.println("No selected role");
+            }
+            switch (selectedRole.getType()) {
+                case PRODUCT_OWNER:
+                    allocatedProductOwner = selectedPerson;
+                    selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER));
+                    break;
+                case SCRUM_MASTER:
+                    allocatedScrumMaster = selectedPerson;
+                    selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.SCRUM_MASTER));
+                    break;
+                case DEVELOPMENT_TEAM_MEMBER:
+                    allocatedDevelopers.add(selectedPerson);
+                    selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
+                    break;
+                case NONE:
+                    if (allocatedProductOwner == selectedPerson) {
+                        allocatedProductOwner = null;
+                    }
+                    if (allocatedScrumMaster == selectedPerson) {
+                        allocatedScrumMaster = null;
+                    }
+                    allocatedDevelopers.remove(selectedPerson);
+                    selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.NONE));
+                    break;
+                default:
+                    break;
+            }
+        });
 
         btnCancel.setOnAction((event) -> {
-                baseTeam.switchToInfoScene();
-            });
+            baseTeam.switchToInfoScene();
+        });
 
         btnSave.setOnAction((event) -> {
-                if (isValidState()) { // validation
-                    // Edit Command.
+            if (isValidState()) { // validation
+                // Edit Command.
 
-                    baseTeam.edit(shortNameField.getText(),
-                            descriptionField.getText(),
-                            teamMembersList,
-                            allocatedProductOwner,
-                            allocatedScrumMaster,
-                            allocatedDevelopers
-                    );
+                baseTeam.edit(shortNameField.getText(),
+                        descriptionField.getText(),
+                        teamMembersList,
+                        allocatedProductOwner,
+                        allocatedScrumMaster,
+                        allocatedDevelopers
+                );
 
-                    Collections.sort(Global.currentWorkspace.getTeams());
-                    baseTeam.switchToInfoScene();
-                    App.mainPane.refreshTree();
-                }
-                else {
-                    event.consume();
-                }
-            });
+                Collections.sort(Global.currentWorkspace.getTeams());
+                baseTeam.switchToInfoScene();
+                App.mainPane.refreshTree();
+            }
+            else {
+                event.consume();
+            }
+        });
 
-
-        // Finally
-        this.setStyle("-fx-background-color:transparent;");
-        this.setContent(container);
     }
 
 
@@ -325,5 +319,4 @@ public class TeamEditScene extends ScrollPane {
             return false;
         }
     }
-
 }

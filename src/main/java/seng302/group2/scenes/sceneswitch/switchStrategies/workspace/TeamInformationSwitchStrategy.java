@@ -3,7 +3,6 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.workspace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seng302.group2.App;
-import seng302.group2.scenes.information.team.TeamEditScene;
 import seng302.group2.scenes.information.team.TeamScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.workspace.SaharaItem;
@@ -40,7 +39,7 @@ public class TeamInformationSwitchStrategy implements InformationSwitchStrategy 
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Team) {
             if (editScene) {
-                App.mainPane.setContent(new TeamEditScene((Team) item));
+                App.mainPane.setContent(new TeamScene((Team) item, true));
             }
             else {
                 switchScene(item);

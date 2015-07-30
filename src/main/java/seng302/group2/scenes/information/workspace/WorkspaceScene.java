@@ -24,4 +24,18 @@ public class WorkspaceScene extends TrackedTabPane {
 
         this.getTabs().addAll(informationTab);  // Add the tabs to the pane
     }
+
+    /**
+     * Constructor for the Workspace Scene. Creates an instance of the WorkspaceInfoTab and displays it.
+     *
+     * @param currentWorkspace The currently selected Workspace.
+     */
+    public WorkspaceScene(Workspace currentWorkspace, boolean editScene) {
+        super(ContentScene.WORKSPACE_EDIT, currentWorkspace);
+
+        // Define and add the tabs
+        Tab editTab = new WorkspaceEditTab(currentWorkspace);
+
+        this.getTabs().addAll(editTab);  // Add the tabs to the pane
+    }
 }

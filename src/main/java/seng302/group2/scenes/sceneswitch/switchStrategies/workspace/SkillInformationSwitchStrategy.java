@@ -40,8 +40,7 @@ public class SkillInformationSwitchStrategy implements InformationSwitchStrategy
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Skill) {
             if (editScene) {
-                App.mainPane.setContent(SkillEditScene.getSkillEditScene(
-                        (Skill) item));
+                App.mainPane.setContent(new SkillScene((Skill) item, true));
             }
             else {
                 switchScene(item);

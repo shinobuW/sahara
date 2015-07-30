@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -14,23 +15,24 @@ import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.workspace.Workspace;
 
 /**
- * A class for displaying the workspace edit scene.
- * Created by btm38 on 7/04/15.
+ * A class for displaying a tab used to edit workspaces.
+ * Created by btm38 on 30/07/15.
  */
-@Deprecated
-public class WorkspaceEditScene {
+public class WorkspaceEditTab extends Tab {
+
     /**
-     * Gets the workspace edit information scene.
-     *
-     * @param currentWorkspace The workspace to get the editable information scene for
-     * @return The Workspace Edit information scene
+     * Constructor for the WorkspaceEditTab class. This constructor creates a JavaFX ScrollPane
+     * which is then populated with relevant controls and shown.
+     * @param currentWorkspace The workspace being edited
      */
-    public static ScrollPane getWorkspaceEditScene(Workspace currentWorkspace) {
-        Pane informationPane = new VBox(10);
-        /*informationPane.setAlignment(Pos.TOP_LEFT);
-        informationPane.setHgap(10);
-        informationPane.setVgap(10);*/
-        informationPane.setPadding(new Insets(25, 25, 25, 25));
+    public WorkspaceEditTab(Workspace currentWorkspace)
+    {
+        this.setText("Edit Workspace");
+        Pane editPane = new VBox(10);
+        editPane.setBorder(null);
+        editPane.setPadding(new Insets(25, 25, 25, 25));
+        ScrollPane wrapper = new ScrollPane(editPane);
+        this.setContent(wrapper);
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Done");
@@ -48,10 +50,10 @@ public class WorkspaceEditScene {
         longNameCustomField.setText(currentWorkspace.getLongName());
         descriptionTextArea.setText(currentWorkspace.getDescription());
 
-        informationPane.getChildren().add(shortNameCustomField);
-        informationPane.getChildren().add(longNameCustomField);
-        informationPane.getChildren().add(descriptionTextArea);
-        informationPane.getChildren().add(buttons);
+        editPane.getChildren().add(shortNameCustomField);
+        editPane.getChildren().add(longNameCustomField);
+        editPane.getChildren().add(descriptionTextArea);
+        editPane.getChildren().add(buttons);
 
 
         btnCancel.setOnAction((event) -> {
@@ -91,9 +93,5 @@ public class WorkspaceEditScene {
                 }
 
             });
-
-        ScrollPane wrapper = new ScrollPane(informationPane);
-        wrapper.setStyle("-fx-background-color:transparent;");
-        return wrapper;
     }
 }
