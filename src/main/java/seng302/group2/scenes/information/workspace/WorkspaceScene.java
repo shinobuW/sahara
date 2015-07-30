@@ -26,9 +26,10 @@ public class WorkspaceScene extends TrackedTabPane {
     }
 
     /**
-     * Constructor for the Workspace Scene. Creates an instance of the WorkspaceInfoTab and displays it.
+     * Constructor for the Workspace Scene. This should only be used to display an edit tab.
      *
-     * @param currentWorkspace The currently selected Workspace.
+     * @param currentWorkspace the person who will be edited
+     * @param editScene boolean - if the scene if an edit scene
      */
     public WorkspaceScene(Workspace currentWorkspace, boolean editScene) {
         super(ContentScene.WORKSPACE_EDIT, currentWorkspace);

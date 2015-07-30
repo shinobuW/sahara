@@ -18,14 +18,15 @@ import seng302.group2.workspace.skills.Skill;
 import java.util.Collections;
 
 /**
+ * A class for displaying a tab used to edit skills.
  * Created by btm38 on 30/07/15.
  */
 public class SkillEditTab extends Tab {
     /**
-     * Constructor for the SkillEditTab. This constructor creates a JavaFX ScrollPane
-     * which is then populated with relevant controls and shown.
+     * Constructor for the SkillEditTab class. This constructor creates a JavaFX ScrollPane
+     * which is populated with relevant controls and then shown.
      *
-     * @param currentSkill The skill being edited.
+     * @param currentSkill The skill being edited
      */
     public SkillEditTab(Skill currentSkill) {
         this.setText("Edit Skill");
@@ -57,39 +58,39 @@ public class SkillEditTab extends Tab {
         editPane.getChildren().add(buttons);
 
         btnSave.setOnAction((event) -> {
-            boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                    currentSkill.getShortName());
-            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                    currentSkill.getDescription());
+                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                        currentSkill.getShortName());
+                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                        currentSkill.getDescription());
 
-            if (shortNameUnchanged && descriptionUnchanged) {
-                // No changes
-                currentSkill.switchToInfoScene();
-                return;
-            }
+                if (shortNameUnchanged && descriptionUnchanged) {
+                    // No changes
+                    currentSkill.switchToInfoScene();
+                    return;
+                }
 
-            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                    currentSkill.getShortName());
+                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                        currentSkill.getShortName());
 
-            if (correctShortName) {
-                // Valid short name, make the edit
-                currentSkill.edit(shortNameCustomField.getText(),
-                        descriptionTextArea.getText()
-                );
+                if (correctShortName) {
+                    // Valid short name, make the edit
+                    currentSkill.edit(shortNameCustomField.getText(),
+                            descriptionTextArea.getText()
+                    );
 
-                Collections.sort(Global.currentWorkspace.getSkills());
-                currentSkill.switchToInfoScene();
-                App.mainPane.refreshTree();
-            }
-            else {
-                event.consume();
-            }
+                    Collections.sort(Global.currentWorkspace.getSkills());
+                    currentSkill.switchToInfoScene();
+                    App.mainPane.refreshTree();
+                }
+                else {
+                    event.consume();
+                }
 
-        });
+            });
 
         btnCancel.setOnAction((event) -> {
-            currentSkill.switchToInfoScene();
-        });
+                currentSkill.switchToInfoScene();
+            });
     }
 }
 

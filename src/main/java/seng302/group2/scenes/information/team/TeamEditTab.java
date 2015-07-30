@@ -37,9 +37,10 @@ public class TeamEditTab extends Tab {
     private Role noneRole = new Role("(none)", Role.RoleType.NONE);
 
     /**
-     * Constructor for the Team Edit Tab. This constructor creates a JavaFX ScrollPane
-     * which is then populated with relevant controls and shown.
-     * @param baseTeam The currently selected Team.
+     * Constructor for the Team Edit Tab class. This constructor creates a JavaFX ScrollPane
+     * which is populated with relevant controls and then shown.
+     *
+     * @param baseTeam The team being edited
      */
     public TeamEditTab(Team baseTeam) {
         // Init
@@ -156,108 +157,107 @@ public class TeamEditTab extends Tab {
         // Listeners
         // Update the roles combo when the selected person changes
         teamMembersListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
-            roleList.clear();
-            if (teamMembersListView.getSelectionModel().getSelectedItems().size() == 1) {
-                roleComboBox.setDisable(false);
-                btnRoleAssign.setDisable(false);
-                updateRoles(teamMembersListView.getSelectionModel().getSelectedItems().get(0));
-            }
-            else {
-                // No person, or more than one person, selected
-                roleComboBox.setDisable(true);
-                btnRoleAssign.setDisable(true);
-            }
-        });
+                roleList.clear();
+                if (teamMembersListView.getSelectionModel().getSelectedItems().size() == 1) {
+                    roleComboBox.setDisable(false);
+                    btnRoleAssign.setDisable(false);
+                    updateRoles(teamMembersListView.getSelectionModel().getSelectedItems().get(0));
+                }
+                else {
+                    // No person, or more than one person, selected
+                    roleComboBox.setDisable(true);
+                    btnRoleAssign.setDisable(true);
+                }
+            });
 
 
         // Button events
         btnAssign.setOnAction((event) -> {
-            teamMembersList.addAll(
-                    availablePeopleListView.getSelectionModel().getSelectedItems());
-            availablePeopleList.removeAll(
-                    availablePeopleListView.getSelectionModel().getSelectedItems());
-        });
+                teamMembersList.addAll(
+                        availablePeopleListView.getSelectionModel().getSelectedItems());
+                availablePeopleList.removeAll(
+                        availablePeopleListView.getSelectionModel().getSelectedItems());
+            });
 
         btnUnassign.setOnAction((event) -> {
-            Collection<Person> selectedPeople = new ArrayList<Person>();
-            selectedPeople.addAll(teamMembersListView.getSelectionModel().
-                    getSelectedItems());
-            availablePeopleList.addAll(selectedPeople);
-            teamMembersList.removeAll(selectedPeople);
+                Collection<Person> selectedPeople = new ArrayList<Person>();
+                selectedPeople.addAll(teamMembersListView.getSelectionModel().
+                        getSelectedItems());
+                availablePeopleList.addAll(selectedPeople);
+                teamMembersList.removeAll(selectedPeople);
 
-            for (Person person : selectedPeople) {
-                if (allocatedProductOwner == person) {
-                    allocatedProductOwner = null;
-                }
-                if (allocatedScrumMaster == person) {
-                    allocatedProductOwner = null;
-                }
-                if (allocatedDevelopers.contains(person)) {
-                    allocatedDevelopers.remove(person);
-                }
-            }
-        });
-
-        btnRoleAssign.setOnAction((event) -> {
-            Person selectedPerson =
-                    teamMembersListView.getSelectionModel().getSelectedItems().get(0);
-            Role selectedRole = roleComboBox.getSelectionModel().getSelectedItem();
-            if (selectedRole == null) {
-                System.out.println("No selected role");
-            }
-            switch (selectedRole.getType()) {
-                case PRODUCT_OWNER:
-                    allocatedProductOwner = selectedPerson;
-                    selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER));
-                    break;
-                case SCRUM_MASTER:
-                    allocatedScrumMaster = selectedPerson;
-                    selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.SCRUM_MASTER));
-                    break;
-                case DEVELOPMENT_TEAM_MEMBER:
-                    allocatedDevelopers.add(selectedPerson);
-                    selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
-                    break;
-                case NONE:
-                    if (allocatedProductOwner == selectedPerson) {
+                for (Person person : selectedPeople) {
+                    if (allocatedProductOwner == person) {
                         allocatedProductOwner = null;
                     }
-                    if (allocatedScrumMaster == selectedPerson) {
-                        allocatedScrumMaster = null;
+                    if (allocatedScrumMaster == person) {
+                        allocatedProductOwner = null;
                     }
-                    allocatedDevelopers.remove(selectedPerson);
-                    selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.NONE));
-                    break;
-                default:
-                    break;
-            }
-        });
+                    if (allocatedDevelopers.contains(person)) {
+                        allocatedDevelopers.remove(person);
+                    }
+                }
+            });
+
+        btnRoleAssign.setOnAction((event) -> {
+                Person selectedPerson =
+                        teamMembersListView.getSelectionModel().getSelectedItems().get(0);
+                Role selectedRole = roleComboBox.getSelectionModel().getSelectedItem();
+                if (selectedRole == null) {
+                    System.out.println("No selected role");
+                }
+                switch (selectedRole.getType()) {
+                    case PRODUCT_OWNER:
+                        allocatedProductOwner = selectedPerson;
+                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER));
+                        break;
+                    case SCRUM_MASTER:
+                        allocatedScrumMaster = selectedPerson;
+                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.SCRUM_MASTER));
+                        break;
+                    case DEVELOPMENT_TEAM_MEMBER:
+                        allocatedDevelopers.add(selectedPerson);
+                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
+                        break;
+                    case NONE:
+                        if (allocatedProductOwner == selectedPerson) {
+                            allocatedProductOwner = null;
+                        }
+                        if (allocatedScrumMaster == selectedPerson) {
+                            allocatedScrumMaster = null;
+                        }
+                        allocatedDevelopers.remove(selectedPerson);
+                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.NONE));
+                        break;
+                    default:
+                        break;
+                }
+            });
 
         btnCancel.setOnAction((event) -> {
-            baseTeam.switchToInfoScene();
-        });
+                baseTeam.switchToInfoScene();
+            });
 
         btnSave.setOnAction((event) -> {
-            if (isValidState()) { // validation
-                // Edit Command.
+                if (isValidState()) { // validation
+                    // Edit Command.
 
-                baseTeam.edit(shortNameField.getText(),
-                        descriptionField.getText(),
-                        teamMembersList,
-                        allocatedProductOwner,
-                        allocatedScrumMaster,
-                        allocatedDevelopers
-                );
+                    baseTeam.edit(shortNameField.getText(),
+                            descriptionField.getText(),
+                            teamMembersList,
+                            allocatedProductOwner,
+                            allocatedScrumMaster,
+                            allocatedDevelopers
+                    );
 
-                Collections.sort(Global.currentWorkspace.getTeams());
-                baseTeam.switchToInfoScene();
-                App.mainPane.refreshTree();
-            }
-            else {
-                event.consume();
-            }
-        });
-
+                    Collections.sort(Global.currentWorkspace.getTeams());
+                    baseTeam.switchToInfoScene();
+                    App.mainPane.refreshTree();
+                }
+                else {
+                    event.consume();
+                }
+            });
     }
 
 

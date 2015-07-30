@@ -32,7 +32,7 @@ public class PersonInformationSwitchStrategy implements InformationSwitchStrateg
     }
 
     /**
-     * Sets the main pane to be an instance of the Person Edit Scene.
+     * Sets the main pane to be an instance of the Person Scene.
      * @param item The SaharaItem for the scene to be constructed with.
      * @param editScene Whether the edit scene is to be shown.
      */
@@ -40,7 +40,7 @@ public class PersonInformationSwitchStrategy implements InformationSwitchStrateg
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Person) {
             if (editScene) {
-                App.mainPane.setContent(PersonEditScene.getPersonEditScene((Person) item));
+                App.mainPane.setContent(new PersonScene((Person)item, true));
             }
             else {
                 switchScene(item);

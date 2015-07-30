@@ -24,4 +24,19 @@ public class ProjectScene extends TrackedTabPane {
 
         this.getTabs().addAll(informationTab, allocation);  // Add the tabs to the pane
     }
+
+    /**
+     * Constructor for the ProjectScene. This should only be used to display an edit tab.
+     * @param currentProject the project to be edited.
+     * @param editScene boolean - if the scene is an edit scene
+     */
+    public ProjectScene(Project currentProject, boolean editScene) {
+        super(ContentScene.PROJECT_EDIT, currentProject);
+
+        // Define and add the tabs
+        Tab informationTab = new ProjectInfoTab(currentProject);
+        Tab allocation = new ProjectHistoryTab(currentProject);
+
+        this.getTabs().addAll(informationTab, allocation);  // Add the tabs to the pane
+    }
 }

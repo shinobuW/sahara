@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -19,21 +20,22 @@ import seng302.group2.workspace.project.Project;
 import java.util.Collections;
 
 /**
- * A class for displaying the project edit scene.
- * Created by jml168 on 7/04/15.
+ * Created by btm38 on 30/07/15.
  */
-@Deprecated
-public class ProjectEditScene {
+public class ProjectEditTab extends Tab {
     /**
      * Gets the workspace edit information scene.
      *
      * @param currentProject The project to display the editable information of
      * @return The Workspace Edit information scene
      */
-    public static ScrollPane getProjectEditScene(Project currentProject) {
-        Pane informationPane = new VBox(10);
-
-        informationPane.setPadding(new Insets(25, 25, 25, 25));
+    public ProjectEditTab(Project currentProject) {
+        this.setText("Edit Project");
+        Pane editPane = new VBox(10);
+        editPane.setBorder(null);
+        editPane.setPadding(new Insets(25, 25, 25, 25));
+        ScrollPane wrapper = new ScrollPane(editPane);
+        this.setContent(wrapper);
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Done");
@@ -64,11 +66,11 @@ public class ProjectEditScene {
         teamButtons.getChildren().add(btnDelete);
         teamButtons.setAlignment(Pos.CENTER);
 
-        informationPane.getChildren().add(shortNameCustomField);
-        informationPane.getChildren().add(longNameCustomField);
-        informationPane.getChildren().add(descriptionTextArea);
+        editPane.getChildren().add(shortNameCustomField);
+        editPane.getChildren().add(longNameCustomField);
+        editPane.getChildren().add(descriptionTextArea);
 
-        informationPane.getChildren().add(buttons);
+        editPane.getChildren().add(buttons);
 
         btnSave.setOnAction((event) -> {
                 boolean shortNameUnchanged = shortNameCustomField.getText().equals(
@@ -108,8 +110,6 @@ public class ProjectEditScene {
                 currentProject.switchToInfoScene();
             });
 
-        ScrollPane wrapper = new ScrollPane(informationPane);
-        wrapper.setStyle("-fx-background-color:transparent;");
-        return wrapper;
     }
 }
+

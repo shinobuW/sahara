@@ -31,7 +31,7 @@ public class TeamInformationSwitchStrategy implements InformationSwitchStrategy 
     }
 
     /**
-     * Sets the main pane to be an instance of the Team Edit Scene.
+     * Sets the main pane to be an instance of the Team Scene.
      * @param item The SaharaItem for the scene to be constructed with.
      * @param editScene Whether the edit scene is to be shown.
      */

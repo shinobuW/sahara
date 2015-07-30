@@ -24,9 +24,9 @@ public class SkillScene extends TrackedTabPane {
     }
 
     /**
-     * Constructor for the SkillScene class. Displays an instance of SkillEditTab.
-     * @param currentSkill the current skill for which information will be displayed
-     * @param editScene whether the scene to be displayed is the edit scene or not.
+     * Constructor for the SkillScene class. This should only be used to display an edit tab.
+     * @param currentSkill the skill which will be edited
+     * @param editScene boolean - if the scene is an edit scene
      */
     public SkillScene(Skill currentSkill, boolean editScene) {
         super(ContentScene.SKILL_EDIT, currentSkill);

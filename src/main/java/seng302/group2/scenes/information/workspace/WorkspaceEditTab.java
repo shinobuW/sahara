@@ -15,18 +15,17 @@ import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.workspace.Workspace;
 
 /**
- * A class for displaying a tab used to edit workspaces.
+ * A class for displaying a tab used to edit the workspaces.
  * Created by btm38 on 30/07/15.
  */
 public class WorkspaceEditTab extends Tab {
 
     /**
      * Constructor for the WorkspaceEditTab class. This constructor creates a JavaFX ScrollPane
-     * which is then populated with relevant controls and shown.
+     * which is populated with relevant controls and then shown.
      * @param currentWorkspace The workspace being edited
      */
-    public WorkspaceEditTab(Workspace currentWorkspace)
-    {
+    public WorkspaceEditTab(Workspace currentWorkspace) {
         this.setText("Edit Workspace");
         Pane editPane = new VBox(10);
         editPane.setBorder(null);
