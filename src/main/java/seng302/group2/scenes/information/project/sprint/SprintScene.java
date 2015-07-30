@@ -23,4 +23,17 @@ public class SprintScene extends TrackedTabPane {
 
         this.getTabs().addAll(informationTab);  // Add the tabs to the pane
     }
+
+    /**
+     * Constructor for the SprintScene. This sohuld only be used to display an edit tab.
+     * @param currentSprint the sprint for which information will be displayed.
+     */
+    public SprintScene(Sprint currentSprint, boolean editScene) {
+        super(ContentScene.SPRINT_EDIT, currentSprint);
+
+        //Define and add the tabs
+        Tab editTab = new SprintEditTab(currentSprint);
+
+        this.getTabs().addAll(editTab);  // Add the tabs to the pane
+    }
 }

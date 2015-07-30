@@ -33,7 +33,7 @@ public class TeamScene extends TrackedTabPane {
     /**
      * Constructor for the PersonScene. This should only used to display an edit tab.
      * @param currentTeam the team who will be edited
-     * @param editScene boolean - if the scene is an edit scene
+     * @param editScene a boolean - if the scene is an edit scene
      */
     public TeamScene(Team currentTeam, boolean editScene) {
         super(ContentScene.TEAM_EDIT, currentTeam);

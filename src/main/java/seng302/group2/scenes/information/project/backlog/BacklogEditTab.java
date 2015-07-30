@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -24,11 +25,9 @@ import java.util.Collections;
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
- * The edit scene for a backlog
- * Created by cvs20 on 19/05/15.
+ * Created by btm38 on 30/07/15.
  */
-@Deprecated
-public class BacklogEditScene extends ScrollPane {
+public class BacklogEditTab extends Tab {
     private Backlog baseBacklog;
     private RequiredField shortNameField;
     private CustomTextField longNameField;
@@ -36,18 +35,22 @@ public class BacklogEditScene extends ScrollPane {
     private CustomComboBox scaleComboBox;
 
     /**
-     * Constructor for the Backlog Edit Scene
-     * 
-     * @param baseBacklog the currently selected backlog
+     * Constructor for the BacklogEditTab class. This constructor creates a JavaFX ScrollPane
+     * which is populated with relevant controls then shown.
+     *
+     * @param baseBacklog the backlog being edited
      */
-    public BacklogEditScene(Backlog baseBacklog) {
+    public BacklogEditTab(Backlog baseBacklog) {
         // Init
         this.baseBacklog = baseBacklog;
 
         // Setup basic GUI
-        VBox container = new VBox(10);
-        container.setPadding(new Insets(25, 25, 25, 25));
-
+        this.setText("Edit Backlog");
+        Pane editPane = new VBox(10);
+        editPane.setBorder(null);
+        editPane.setPadding(new Insets(25, 25, 25, 25));
+        ScrollPane wrapper = new ScrollPane(editPane);
+        this.setContent(wrapper);
 
         // Basic information fields
         shortNameField = new RequiredField("Short Name:");
@@ -125,7 +128,7 @@ public class BacklogEditScene extends ScrollPane {
         storyListViews.setPrefHeight(192);
 
         // Adding of gui elements to the container (VBox)
-        container.getChildren().addAll(
+        editPane.getChildren().addAll(
                 shortNameField,
                 longNameField,
                 descriptionField,
@@ -199,10 +202,6 @@ public class BacklogEditScene extends ScrollPane {
                     event.consume();
                 }
             });
-
-        // Finally
-        this.setStyle("-fx-background-color:transparent;");
-        this.setContent(container);
     }
 
 
@@ -216,7 +215,7 @@ public class BacklogEditScene extends ScrollPane {
         ButtonType confirm;
         if (!scaleComboBox.getValue().equals(baseBacklog.getScale())) {
             confirm = CustomDialog.showConfirmation("Estimation Scale", "All existing estimations "
-            + "will be lost if the scale is changed. Continue?");
+                    + "will be lost if the scale is changed. Continue?");
             if (confirm == ButtonType.CANCEL) {
                 return false;
             }
@@ -227,3 +226,4 @@ public class BacklogEditScene extends ScrollPane {
     }
 
 }
+

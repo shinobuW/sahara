@@ -40,8 +40,7 @@ public class StoryInformationSwitchStrategy implements InformationSwitchStrategy
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Story) {
             if (editScene) {
-                App.mainPane.setContent(StoryEditScene.getStoryEditScene(
-                        (Story) item));
+                App.mainPane.setContent(new StoryScene((Story) item, true));
             }
             else {
                 switchScene(item);

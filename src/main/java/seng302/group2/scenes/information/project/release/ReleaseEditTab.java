@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package seng302.group2.scenes.information.project.release;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -28,22 +24,23 @@ import java.time.LocalDate;
 import java.util.Collections;
 
 /**
- * @author Shinobu
+ * A class for displaying a tab used to edit releases.
+ * Created by btm38 on 30/07/15.
  */
-@Deprecated
-public class ReleaseEditScene {
+public class ReleaseEditTab extends Tab {
     /**
-     * Gets the editable information scene for a release
+     * Constructor for the ReleaseEditTab class. This constructor creates a JavaFX ScrollPane
+     * which is populated with relevant controls then shown.
      *
-     * @param currentRelease the release to display the information of
-     * @return the editable information scene for a release
+     * @param currentRelease the release being edited
      */
-    public static ScrollPane getReleaseEditScene(Release currentRelease) {
-        Pane informationPane = new VBox(10);
-        /*informationPane.setAlignment(Pos.TOP_LEFT);
-        informationPane.setHgap(10);
-        informationPane.setVgap(10);*/
-        informationPane.setPadding(new Insets(25, 25, 25, 25));
+    public ReleaseEditTab(Release currentRelease) {
+        this.setText("Edit Release");
+        Pane editPane = new VBox(10);
+        editPane.setBorder(null);
+        editPane.setPadding(new Insets(25, 25, 25, 25));
+        ScrollPane wrapper = new ScrollPane(editPane);
+        this.setContent(wrapper);
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Done");
@@ -73,7 +70,7 @@ public class ReleaseEditScene {
         descriptionTextArea.setText(currentRelease.getDescription());
         releaseDatePicker.setValue(currentRelease.getEstimatedDate());
 
-        informationPane.getChildren().addAll(shortNameCustomField, descriptionTextArea,
+        editPane.getChildren().addAll(shortNameCustomField, descriptionTextArea,
                 releaseDatePicker, buttons);
         //informationPane.getChildren().add(projectComboBox);
 
@@ -137,11 +134,6 @@ public class ReleaseEditScene {
         btnCancel.setOnAction((event) -> {
                 currentRelease.switchToInfoScene();
             });
-
-        ScrollPane wrapper = new ScrollPane(informationPane);
-        wrapper.setStyle("-fx-background-color:transparent;");
-        return wrapper;
-
     }
-
 }
+

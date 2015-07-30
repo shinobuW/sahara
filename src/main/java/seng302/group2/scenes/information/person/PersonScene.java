@@ -24,9 +24,9 @@ public class PersonScene extends TrackedTabPane {
     }
 
     /**
-     * Constructor for the PersonScene. This should only be used to display an edit tab.
+     * Constructor for the PersonScene. This creates an instance of the PersonEditTab tab and displays it.
      * @param currentPerson the person who will be edited
-     * @param editScene boolean - if the scene is an edit scene
+     * @param editScene a boolean - if the scene is an edit scene
      */
     public PersonScene(Person currentPerson, boolean editScene) {
         super(ContentScene.PERSON_EDIT, currentPerson);

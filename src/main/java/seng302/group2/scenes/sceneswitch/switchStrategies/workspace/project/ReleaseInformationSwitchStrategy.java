@@ -40,8 +40,7 @@ public class ReleaseInformationSwitchStrategy implements InformationSwitchStrate
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Release) {
             if (editScene) {
-                App.mainPane.setContent(ReleaseEditScene.getReleaseEditScene(
-                        (Release)item));
+                App.mainPane.setContent(new ReleaseScene((Release) item, true));
             }
             else {
                 switchScene(item);

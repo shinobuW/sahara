@@ -17,7 +17,7 @@ import seng302.group2.workspace.project.release.Release;
 public class ReleaseScene extends TrackedTabPane {
     
     /**
-     * Constuctor for the Release Scene. Creates an instance of the ReleaseInfoTab class and displays it.
+     * Constructor for the Release Scene. Creates an instance of the ReleaseInfoTab class and displays it.
      * 
      * @param currentRelease The currently selected Release
      */
@@ -28,5 +28,20 @@ public class ReleaseScene extends TrackedTabPane {
         Tab informationTab = new ReleaseInfoTab(currentRelease);
 
         this.getTabs().addAll(informationTab);  // Add the tabs to the pane
+    }
+
+    /**
+     * Constructor for the Release Scene. This creates an instance of the ReleaseEditTab tab and displays it.
+     *
+     * @param currentRelease the release to be edited
+     * @param editScene a boolean - if the scene is an edit scene
+     */
+    public ReleaseScene(Release currentRelease, boolean editScene) {
+        super(ContentScene.RELEASE_EDIT, currentRelease.getProject());
+
+        // Define and add the tabs
+        Tab editTab = new ReleaseEditTab(currentRelease);
+
+        this.getTabs().addAll(editTab);  // Add the tabs to the pane
     }
 }

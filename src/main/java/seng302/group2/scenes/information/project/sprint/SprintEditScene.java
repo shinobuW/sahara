@@ -9,7 +9,7 @@ import seng302.group2.workspace.project.sprint.Sprint;
  * A class for displaying the sprint edit scene
  * Created by drm127 on 29/07/15.
  */
-
+@Deprecated
 public class SprintEditScene {
 
     /**

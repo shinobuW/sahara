@@ -25,24 +25,23 @@ import seng302.group2.workspace.project.story.estimation.EstimationScalesDiction
 import java.util.ArrayList;
 
 /**
- * A class for displaying the Story edit scene.
- * Created by drm127 on 17/05/15.
+ * A class for displaying a tab used to edit stories.
+ * Created by btm38 on 30/07/15.
  */
-@Deprecated
-public class StoryEditScene {
+public class StoryEditTab extends Tab {
     /**
-     * Gets the Story Edit information scene.
+     * Constructor for the StoryEditTab class. This constructor creates a JavaFX ScrollPane
+     * which is populated with relevant controls then shown.
      *
-     * @param currentStory The story to show the information of
-     * @return The story Edit information display
+     * @param currentStory The story being edited
      */
-    public static ScrollPane getStoryEditScene(Story currentStory) {
-        Pane informationPane = new VBox(10);
-        /*informationPane.setAlignment(Pos.TOP_LEFT);
-        informationPane.setHgap(10);
-        informationPane.setVgap(10);*/
-        informationPane.setPadding(new Insets(25, 25, 25, 25));
-        Label errorField = new Label("");
+    public StoryEditTab(Story currentStory) {
+        this.setText("Edit Story");
+        Pane editPane = new VBox(10);
+        editPane.setBorder(null);
+        editPane.setPadding(new Insets(25, 25, 25, 25));
+        ScrollPane wrapper = new ScrollPane(editPane);
+        this.setContent(wrapper);
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Done");
@@ -184,7 +183,7 @@ public class StoryEditScene {
 
 
 
-        informationPane.getChildren().addAll(shortNameCustomField,
+        editPane.getChildren().addAll(shortNameCustomField,
                 longNameTextField,
                 descriptionTextArea,
                 priorityNumberField,
@@ -211,6 +210,7 @@ public class StoryEditScene {
                             availableStoryListView.getSelectionModel().getSelectedItem());
                 }
             });
+
         btnUnassign.setOnAction((event) -> {
                 availableStoryList.addAll(
                         dependantStoriesListView.getSelectionModel().getSelectedItem());
@@ -276,8 +276,5 @@ public class StoryEditScene {
 
             });
 
-        ScrollPane wrapper = new ScrollPane(informationPane);
-        wrapper.setStyle("-fx-background-color:transparent;");
-        return wrapper;
     }
 }

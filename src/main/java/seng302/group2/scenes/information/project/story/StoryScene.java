@@ -26,4 +26,19 @@ public class StoryScene extends TrackedTabPane {
 
         this.getTabs().addAll(informationTab, acceptanceCriteriaTab, dependantTab);  // Add the tabs to the pane
     }
+
+    /**
+     * Constructor for the Stor Scene. This creates an instance of the StoryEditTab tab and displays it.
+     *
+     * @param currentStory The story to be edited
+     * @param editScene a boolean - if the scene is an edit scene
+     */
+    public StoryScene(Story currentStory, boolean editScene) {
+        super(ContentScene.STORY_EDIT, currentStory);
+
+        // Define and add the tabs
+        Tab editTab = new StoryEditTab(currentStory);
+
+        this.getTabs().addAll(editTab);  // Add the tabs to the pane
+    }
 }

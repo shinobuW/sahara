@@ -32,7 +32,7 @@ public class BacklogInformationSwitchStrategy implements InformationSwitchStrate
     }
 
     /**
-     * Sets the main pane to be an instance of the Backlog Edit Scene.
+     * Sets the main pane to be an instance of the Backlog Scene.
      * @param item The SaharaItem for the scene to be constructed with.
      * @param editScene Whether the edit scene is to be shown.
      */
@@ -40,7 +40,7 @@ public class BacklogInformationSwitchStrategy implements InformationSwitchStrate
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Backlog) {
             if (editScene) {
-                App.mainPane.setContent(new BacklogEditScene((Backlog) item));
+                App.mainPane.setContent(new BacklogScene((Backlog) item, true));
             }
             else {
                 switchScene(item);
