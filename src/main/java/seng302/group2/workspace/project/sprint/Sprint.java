@@ -65,12 +65,12 @@ public class Sprint extends SaharaItem {
      * @param team The team working on the sprint
      * @param release The release to which the sprint is dedicated
      */
-    public Sprint(String longName, String goal, String description, LocalDate startDate, LocalDate endDate,
+    public Sprint(String goal, String longName, String description, LocalDate startDate, LocalDate endDate,
                   Backlog backlog, Team team, Release release) {
 
+        this.goal = goal;
         this.longName = longName;
         this.description = description;
-        this.goal = goal;
         this.startDate = startDate;
         this.endDate = endDate;
         this.backlog = backlog;

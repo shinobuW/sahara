@@ -130,7 +130,9 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
         }
 
         for (Team team : Global.currentWorkspace.getTeams()) {
+            System.out.println(team);
             if (team.getProductOwner() != null) {
+                System.out.println(team.getProductOwner().toString());
                 productOwnerOptions.add(team.getProductOwner());
             }
         }
@@ -191,13 +193,7 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
                     String longName = longNameCustomField.getText();
                     String description = descriptionTextArea.getText();
 
-                    Project project = new Project();
-                    for (Project item : Global.currentWorkspace.getProjects()) {
-                        if (item.equals(projComboBox.getValue())) {
-                            project = item;
-                        }
-                    }
-
+                    Project project = projComboBox.getValue();
                     Person productOwner = productOwnerComboBox.getValue();
                     String scale = scaleComboBox.getValue();
 
