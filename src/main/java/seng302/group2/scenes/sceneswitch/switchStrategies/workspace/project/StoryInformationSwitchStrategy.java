@@ -3,7 +3,6 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seng302.group2.App;
-import seng302.group2.scenes.information.project.story.StoryEditScene;
 import seng302.group2.scenes.information.project.story.StoryScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.workspace.SaharaItem;

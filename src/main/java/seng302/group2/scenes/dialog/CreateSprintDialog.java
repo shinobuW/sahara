@@ -46,6 +46,8 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
      * is shown after construction.
      */
     public CreateSprintDialog() {
+        correctShortName = Boolean.FALSE;
+        correctLongName = Boolean.FALSE;
         //TODO add date validation
         //TODO fix up sizing
 
