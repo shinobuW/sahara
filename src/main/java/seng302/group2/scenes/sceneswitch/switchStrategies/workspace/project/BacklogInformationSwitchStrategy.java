@@ -3,7 +3,6 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seng302.group2.App;
-import seng302.group2.scenes.information.project.backlog.BacklogEditScene;
 import seng302.group2.scenes.information.project.backlog.BacklogScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.workspace.SaharaItem;
@@ -32,7 +31,7 @@ public class BacklogInformationSwitchStrategy implements InformationSwitchStrate
     }
 
     /**
-     * Sets the main pane to be an instance of the Backlog Edit Scene.
+     * Sets the main pane to be an instance of the Backlog Scene.
      * @param item The SaharaItem for the scene to be constructed with.
      * @param editScene Whether the edit scene is to be shown.
      */
@@ -40,7 +39,7 @@ public class BacklogInformationSwitchStrategy implements InformationSwitchStrate
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Backlog) {
             if (editScene) {
-                App.mainPane.setContent(new BacklogEditScene((Backlog) item));
+                App.mainPane.setContent(new BacklogScene((Backlog) item, true));
             }
             else {
                 switchScene(item);

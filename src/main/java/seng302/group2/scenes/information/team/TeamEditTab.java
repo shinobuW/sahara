@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package seng302.group2.scenes.information.team;
 
 import javafx.collections.ObservableList;
@@ -10,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -26,12 +22,10 @@ import java.util.*;
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
- * A class for displaying the team edit scene.
- *
- * @author crw73
+ * A class for displaying a tab used to edit teams.
+ * Created by btm38 on 30/07/15.
  */
-@Deprecated
-public class TeamEditScene extends ScrollPane {
+public class TeamEditTab extends Tab {
     private Team baseTeam;
     private RequiredField shortNameField;
     private CustomTextArea descriptionField;
@@ -43,11 +37,12 @@ public class TeamEditScene extends ScrollPane {
     private Role noneRole = new Role("(none)", Role.RoleType.NONE);
 
     /**
-     * Constructor for the Team Edit Scene.
+     * Constructor for the Team Edit Tab class. This constructor creates a JavaFX ScrollPane
+     * which is populated with relevant controls and then shown.
      *
-     * @param baseTeam The currently selected Team.
+     * @param baseTeam The team being edited
      */
-    public TeamEditScene(Team baseTeam) {
+    public TeamEditTab(Team baseTeam) {
         // Init
         this.baseTeam = baseTeam;
         allocatedDevelopers.addAll(baseTeam.getDevs());
@@ -56,8 +51,12 @@ public class TeamEditScene extends ScrollPane {
 
 
         // Setup basic GUI
-        VBox container = new VBox(10);
-        container.setPadding(new Insets(25, 25, 25, 25));
+        this.setText("Edit Team");
+        Pane editPane = new VBox(10);
+        editPane.setBorder(null);
+        editPane.setPadding(new Insets(25, 25, 25, 25));
+        ScrollPane wrapper = new ScrollPane(editPane);
+        this.setContent(wrapper);
 
 
         // Basic information fields
@@ -146,7 +145,7 @@ public class TeamEditScene extends ScrollPane {
 
 
         // Adding of gui elements to the container (VBox)
-        container.getChildren().addAll(
+        editPane.getChildren().addAll(
                 shortNameField,
                 descriptionField,
                 memberListViews,
@@ -259,11 +258,6 @@ public class TeamEditScene extends ScrollPane {
                     event.consume();
                 }
             });
-
-
-        // Finally
-        this.setStyle("-fx-background-color:transparent;");
-        this.setContent(container);
     }
 
 
@@ -325,5 +319,4 @@ public class TeamEditScene extends ScrollPane {
             return false;
         }
     }
-
 }

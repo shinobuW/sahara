@@ -15,11 +15,25 @@ public class PersonScene extends TrackedTabPane {
      * @param currentPerson the person for which the information will be displayed.
      */
     public PersonScene(Person currentPerson) {
-        super(ContentScene.PROJECT, currentPerson);
+        super(ContentScene.PERSON, currentPerson);
 
         // Define and add the tabs
         Tab informationTab = new PersonInfoTab(currentPerson);
 
         this.getTabs().addAll(informationTab);  // Add the tabs to the pane
+    }
+
+    /**
+     * Constructor for the PersonScene. This creates an instance of the PersonEditTab tab and displays it.
+     * @param currentPerson the person who will be edited
+     * @param editScene a boolean - if the scene is an edit scene
+     */
+    public PersonScene(Person currentPerson, boolean editScene) {
+        super(ContentScene.PERSON_EDIT, currentPerson);
+
+        // Define and add the tabs
+        Tab editTab = new PersonEditTab(currentPerson);
+
+        this.getTabs().addAll(editTab);  // Add the tabs to the pane
     }
 }

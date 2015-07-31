@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -13,20 +14,24 @@ import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 /**
- * A class for displaying the Task edit scene.
- * Created by cvs20 on 28/07/15.
+ * A class for displaying a tab used to edit people.
+ * Created by btm38 on 30/07/15.
  */
-@Deprecated
-public class TaskEditScene {
+public class TaskEditTab extends Tab {
     /**
-     * Gets the Task Edit information scene.
+     * Constructor for the PersonEditTab class. This constructor creates a JavaFX ScrollPane
+     * which is populated with relevant controls then shown.
      *
-     * @param currentTask The task to show the information of
-     * @return The task Edit information display
+     * @param currentTask The person being edited
      */
-    public static ScrollPane getTaskEditScene(Task currentTask) {
-        Pane informationPane = new VBox(10);
-        informationPane.setPadding(new Insets(25, 25, 25, 25));
+    public TaskEditTab(Task currentTask) {
+        this.setText("Edit Task");
+        Pane editPane = new VBox(10);
+        editPane.setBorder(null);
+        editPane.setPadding(new Insets(25, 25, 25, 25));
+        ScrollPane wrapper = new ScrollPane(editPane);
+        this.setContent(wrapper);
+
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Done");
@@ -48,7 +53,7 @@ public class TaskEditScene {
         descriptionTextArea.setText(currentTask.getDescription());
         impedimentsTextArea.setText(currentTask.getImpediments());
 
-        informationPane.getChildren().addAll(shortNameCustomField,
+        editPane.getChildren().addAll(shortNameCustomField,
                 descriptionTextArea,
                 impedimentsTextArea,
                 buttons);
@@ -78,28 +83,24 @@ public class TaskEditScene {
 
                 if (correctShortName) {
                     // Valid short name, make the edit
-    //                currentTask.edit(shortNameCustomField.getText(),
-    //                        longNameTextField.getText(),
-    //                        descriptionTextArea.getText(),
-    //                        currentStory.getProject(),
-    //                        Integer.parseInt(priorityNumberField.getText()),
-    //                        currentStory.getBacklog(),
-    //                        estimateComboBox.getValue(),
-    //                        readyStateCheck.selectedProperty().get(),
-    //                        dependentOnList
-    //                );
-    //
-    //                currentStory.switchToInfoScene();
-    //                App.mainPane.refreshTree();
+                    //                currentTask.edit(shortNameCustomField.getText(),
+                    //                        longNameTextField.getText(),
+                    //                        descriptionTextArea.getText(),
+                    //                        currentStory.getProject(),
+                    //                        Integer.parseInt(priorityNumberField.getText()),
+                    //                        currentStory.getBacklog(),
+                    //                        estimateComboBox.getValue(),
+                    //                        readyStateCheck.selectedProperty().get(),
+                    //                        dependentOnList
+                    //                );
+                    //
+                    //                currentStory.switchToInfoScene();
+                    //                App.mainPane.refreshTree();
                 }
                 else {
                     event.consume();
                 }
 
             });
-
-        ScrollPane wrapper = new ScrollPane(informationPane);
-        wrapper.setStyle("-fx-background-color:transparent;");
-        return wrapper;
     }
 }

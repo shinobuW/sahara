@@ -3,7 +3,6 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.workspace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seng302.group2.App;
-import seng302.group2.scenes.information.person.PersonEditScene;
 import seng302.group2.scenes.information.person.PersonScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.workspace.SaharaItem;
@@ -32,7 +31,7 @@ public class PersonInformationSwitchStrategy implements InformationSwitchStrateg
     }
 
     /**
-     * Sets the main pane to be an instance of the Person Edit Scene.
+     * Sets the main pane to be an instance of the Person Scene.
      * @param item The SaharaItem for the scene to be constructed with.
      * @param editScene Whether the edit scene is to be shown.
      */
@@ -40,7 +39,7 @@ public class PersonInformationSwitchStrategy implements InformationSwitchStrateg
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Person) {
             if (editScene) {
-                App.mainPane.setContent(PersonEditScene.getPersonEditScene((Person) item));
+                App.mainPane.setContent(new PersonScene((Person)item, true));
             }
             else {
                 switchScene(item);

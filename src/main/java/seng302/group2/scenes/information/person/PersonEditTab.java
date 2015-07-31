@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package seng302.group2.scenes.information.person;
 
 import javafx.collections.ObservableList;
@@ -30,22 +25,23 @@ import static seng302.group2.util.validation.DateValidator.validateBirthDateFiel
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
- * A class for displaying the person edit scene.
- *
- * @author swi67
+ * A class for displaying a tab used to edit people.
+ * Created by btm38 on 30/07/15.
  */
-@Deprecated
-public class PersonEditScene {
+public class PersonEditTab extends Tab {
     /**
-     * Gets the Person Edit information scene
+     * Constructor for the PersonEditTab class. This constructor creates a JavaFX ScrollPane
+     * which is populated with relevant controls then shown.
      *
-     * @param currentPerson The person to display information of
-     * @return The Person Edit information scene
+     * @param currentPerson The person being edited
      */
-    public static ScrollPane getPersonEditScene(Person currentPerson) {
-        Pane informationPane = new VBox(10);
-
-        informationPane.setPadding(new Insets(25, 25, 25, 25));
+    public PersonEditTab(Person currentPerson) {
+        this.setText("Edit Person");
+        Pane editPane = new VBox(10);
+        editPane.setBorder(null);
+        editPane.setPadding(new Insets(25, 25, 25, 25));
+        ScrollPane wrapper = new ScrollPane(editPane);
+        this.setContent(wrapper);
 
         Button btnSave = new Button("Done");
         Button btnCancel = new Button("Cancel");
@@ -131,13 +127,13 @@ public class PersonEditScene {
         descriptionTextArea.setMaxWidth(275);
         teamBox.setMaxWidth(275);
 
-        informationPane.getChildren().add(shortNameCustomField);
-        informationPane.getChildren().add(firstNameCustomField);
-        informationPane.getChildren().add(lastNameCustomField);
-        informationPane.getChildren().add(emailTextField);
-        informationPane.getChildren().add(customBirthDate);
-        informationPane.getChildren().add(descriptionTextArea);
-        informationPane.getChildren().add(teamBox);
+        editPane.getChildren().add(shortNameCustomField);
+        editPane.getChildren().add(firstNameCustomField);
+        editPane.getChildren().add(lastNameCustomField);
+        editPane.getChildren().add(emailTextField);
+        editPane.getChildren().add(customBirthDate);
+        editPane.getChildren().add(descriptionTextArea);
+        editPane.getChildren().add(teamBox);
 
         VBox v1 = new VBox(10);
         v1.getChildren().addAll(new Label("Skills: "), personSkillsBox);
@@ -147,9 +143,9 @@ public class PersonEditScene {
         HBox h1 = new HBox(10);
 
         h1.getChildren().addAll(v1, skillsButtons, v2);
-        informationPane.getChildren().add(h1);
+        editPane.getChildren().add(h1);
 
-        informationPane.getChildren().add(buttons);
+        editPane.getChildren().add(buttons);
 
         btnAdd.setOnAction((event) -> {
                 ObservableList<Skill> selectedSkills =
@@ -260,10 +256,5 @@ public class PersonEditScene {
         btnCancel.setOnAction((event) -> {
                 currentPerson.switchToInfoScene();
             });
-
-        ScrollPane wrapper = new ScrollPane(informationPane);
-        wrapper.setStyle("-fx-background-color:transparent;");
-        return wrapper;
     }
-
 }

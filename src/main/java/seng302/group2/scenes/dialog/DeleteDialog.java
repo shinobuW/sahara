@@ -14,6 +14,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
+import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -77,6 +78,10 @@ public class DeleteDialog {
             else if (element.getClass() == Backlog.class) {
                 Backlog deletedBacklog = (Backlog) element;
                 deletedBacklog.deleteBacklog();
+            }
+            else if (element.getClass() == Sprint.class) {
+                Sprint deletedSprint = (Sprint) element;
+                deletedSprint.deleteSprint();
             }
             else {
                 System.out.printf("Deletion dialog for that element has not been deleted");
@@ -207,6 +212,12 @@ public class DeleteDialog {
             Backlog deletedBacklog = (Backlog) element;
             message = MessageFormat.format("Are you sure you want to delete the backlog \"{0}",
                     deletedBacklog.toString() + "\"?");
+        }
+        else if (element.getClass() == Sprint.class) {
+            title = "Delete Sprint";
+            Sprint deletedSprint = (Sprint) element;
+            message = MessageFormat.format("Are you sure you want to delete the sprint \"{0}",
+                    deletedSprint.toString() + "\"?");
         }
         else {
             title = "Delete Item";

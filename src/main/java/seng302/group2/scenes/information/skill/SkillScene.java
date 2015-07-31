@@ -23,6 +23,20 @@ public class SkillScene extends TrackedTabPane {
         this.getTabs().addAll(informationTab);  // Add the tabs to the pane
     }
 
+    /**
+     * Constructor for the SkillScene class. This creates an instance of the SkillEditTab tab and displays it.
+     * @param currentSkill the skill which will be edited
+     * @param editScene a boolean - if the scene is an edit scene
+     */
+    public SkillScene(Skill currentSkill, boolean editScene) {
+        super(ContentScene.SKILL_EDIT, currentSkill);
+
+        // Define and add the tabs
+        Tab editTab = new SkillEditTab(currentSkill);
+
+        this.getTabs().addAll(editTab);  // Add the tabs to the pane
+    }
+
     public Tab getCurrentTab() {
         return this.getSelectionModel().getSelectedItem();
     }

@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package seng302.group2.scenes.information.skill;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -22,24 +18,23 @@ import seng302.group2.workspace.skills.Skill;
 import java.util.Collections;
 
 /**
- * A class for displaying the skill edit scene.
- *
- * @author drm127
+ * A class for displaying a tab used to edit skills.
+ * Created by btm38 on 30/07/15.
  */
-@Deprecated
-public class SkillEditScene {
+public class SkillEditTab extends Tab {
     /**
-     * Gets the Skill Edit information scene.
+     * Constructor for the SkillEditTab class. This constructor creates a JavaFX ScrollPane
+     * which is populated with relevant controls and then shown.
      *
-     * @param currentSkill The skill to show the information of
-     * @return The Skill Edit information display
+     * @param currentSkill The skill being edited
      */
-    public static ScrollPane getSkillEditScene(Skill currentSkill) {
-        Pane informationPane = new VBox(10);
-        /*informationPane.setAlignment(Pos.TOP_LEFT);
-        informationPane.setHgap(10);
-        informationPane.setVgap(10);*/
-        informationPane.setPadding(new Insets(25, 25, 25, 25));
+    public SkillEditTab(Skill currentSkill) {
+        this.setText("Edit Skill");
+        Pane editPane = new VBox(10);
+        editPane.setBorder(null);
+        editPane.setPadding(new Insets(25, 25, 25, 25));
+        ScrollPane wrapper = new ScrollPane(editPane);
+        this.setContent(wrapper);
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Done");
@@ -58,9 +53,9 @@ public class SkillEditScene {
         shortNameCustomField.setText(currentSkill.getShortName());
         descriptionTextArea.setText(currentSkill.getDescription());
 
-        informationPane.getChildren().add(shortNameCustomField);
-        informationPane.getChildren().add(descriptionTextArea);
-        informationPane.getChildren().add(buttons);
+        editPane.getChildren().add(shortNameCustomField);
+        editPane.getChildren().add(descriptionTextArea);
+        editPane.getChildren().add(buttons);
 
         btnSave.setOnAction((event) -> {
                 boolean shortNameUnchanged = shortNameCustomField.getText().equals(
@@ -96,10 +91,6 @@ public class SkillEditScene {
         btnCancel.setOnAction((event) -> {
                 currentSkill.switchToInfoScene();
             });
-
-
-        ScrollPane wrapper = new ScrollPane(informationPane);
-        wrapper.setStyle("-fx-background-color:transparent;");
-        return wrapper;
     }
 }
+
