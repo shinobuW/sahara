@@ -7,9 +7,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.team.Team;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -18,7 +24,10 @@ import static javafx.collections.FXCollections.observableArrayList;
  * The workspace information tab
  * Created by jml168 on 11/05/15.
  */
-public class TeamInfoTab extends Tab {
+public class TeamInfoTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
+
     /**
      * Constructor for team basic information tab
      *
@@ -157,5 +166,11 @@ public class TeamInfoTab extends Tab {
         }
 
         return teamList;
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

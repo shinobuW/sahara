@@ -8,9 +8,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.dialog.CreatePersonDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
@@ -18,7 +24,9 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
  * A class for displaying a tab showing data on all the people in the workspace.
  * Created by btm38 on 13/07/15.
  */
-public class PersonCategoryTab extends Tab {
+public class PersonCategoryTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
     /**
      * Constructor for PersonCategoryTab class.
      * @param currentWorkspace The current workspace
@@ -76,5 +84,11 @@ public class PersonCategoryTab extends Tab {
                 javafx.scene.control.Dialog creationDialog = new CreatePersonDialog();
                 creationDialog.show();
             });
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

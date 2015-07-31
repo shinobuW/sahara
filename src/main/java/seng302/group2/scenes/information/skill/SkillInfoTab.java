@@ -4,13 +4,16 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.workspace.skills.Skill;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -18,36 +21,15 @@ import java.util.List;
  * The skill information tab
  * Created by jml168 on 11/05/15.
  */
-public class SkillInfoTab extends Tab {
+public class SkillInfoTab extends SearchableTab {
 
-    List<SearchableText> searchableTexts = new ArrayList<>();
-
-    SearchableText title = new SearchableText("Short Name");
-
-
-    private void init() {
-        searchableTexts.add(title);
-    }
-
-
-    public boolean query(String query) {
-        boolean found = false;
-        for (SearchableText text : searchableTexts) {
-            if (text != null && text.query(query)) {
-                found = true;
-            }
-        }
-        return found;
-    }
-
+    List<SearchableControl> searchControls = new ArrayList<>();
 
     /**
      * Constructor for the SkillInfoTab class.
      * @param currentSkill the current skill for which information will be displayed
      */
     public SkillInfoTab(Skill currentSkill) {
-        init();
-
         this.setText("Basic Information");
 
         Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
@@ -56,13 +38,17 @@ public class SkillInfoTab extends Tab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
+
+        SearchableText title = new SearchableText("Short Name");
         title.setText(currentSkill.getShortName());
+
+        SearchableText desc = new SearchableText("Skill Description");
+        desc.setText("Skill Description: " + currentSkill.getShortName());
+
 
         Button btnEdit = new Button("Edit");
 
-        basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new Label("Skill Description: "
-                + currentSkill.getDescription()));
+        basicInfoPane.getChildren().addAll(title, desc);
 
         basicInfoPane.getChildren().add(btnEdit);
 
@@ -71,8 +57,15 @@ public class SkillInfoTab extends Tab {
             btnEdit.setDisable(true);
         }
 
-        btnEdit.setOnAction((event) -> {
-                currentSkill.switchToInfoScene(true);
-            });
+        btnEdit.setOnAction((event) -> currentSkill.switchToInfoScene(true));
+
+        Collections.addAll(searchControls, title, desc);
+    }
+
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

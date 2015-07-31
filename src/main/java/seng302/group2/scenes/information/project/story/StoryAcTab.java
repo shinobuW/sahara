@@ -19,10 +19,15 @@ import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcEnumStringConverter;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -30,7 +35,10 @@ import java.util.Optional;
  * A tab to show detail of a story's acceptance criteria, that allows the addition, change, and removal of acceptance
  * criteria from a story
  */
-public class StoryAcTab extends Tab {
+public class StoryAcTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
+
 
     private static final DataFormat SERIALIZED_MIME_TYPE = new DataFormat("application/x-java-serialized-object");
 
@@ -231,4 +239,9 @@ public class StoryAcTab extends Tab {
         acPane.getChildren().addAll(title, acTable, descriptionTextArea, buttons);
     }
 
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
 }

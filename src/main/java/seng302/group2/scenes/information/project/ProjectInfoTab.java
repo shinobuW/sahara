@@ -7,8 +7,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -16,8 +22,10 @@ import static javafx.collections.FXCollections.observableArrayList;
 /**
  * Created by swi67 on 10/05/15.
  */
-public class ProjectInfoTab extends Tab {
+public class ProjectInfoTab extends SearchableTab {
     ObservableList<Team> currentTeams = observableArrayList();
+
+    List<SearchableControl> searchControls = new ArrayList<>();
 
     /**
      * Constructor for Project info tab
@@ -79,5 +87,11 @@ public class ProjectInfoTab extends Tab {
                 currentProject.switchToInfoScene(true);
             });
 
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

@@ -11,14 +11,23 @@ import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.workspace.Workspace;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * A class for displaying a tab used to edit the workspaces.
  * Created by btm38 on 30/07/15.
  */
-public class WorkspaceEditTab extends Tab {
+public class WorkspaceEditTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
+
 
     /**
      * Constructor for the WorkspaceEditTab class. This constructor creates a JavaFX ScrollPane
@@ -92,5 +101,11 @@ public class WorkspaceEditTab extends Tab {
                 }
 
             });
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

@@ -5,14 +5,22 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.person.Person;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 /**
  * The person information tab
  * Created by jml168 on 11/05/15.
  */
-public class PersonInfoTab extends Tab {
+public class PersonInfoTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
     public PersonInfoTab(Person currentPerson) {
         this.setText("Basic Information");
 
@@ -58,5 +66,11 @@ public class PersonInfoTab extends Tab {
                 currentPerson.switchToInfoScene(true);
             });
 
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

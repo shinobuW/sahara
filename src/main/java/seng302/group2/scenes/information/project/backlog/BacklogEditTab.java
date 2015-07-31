@@ -15,19 +15,25 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * Created by btm38 on 30/07/15.
  */
-public class BacklogEditTab extends Tab {
+public class BacklogEditTab extends SearchableTab {
+    List<SearchableControl> searchControls = new ArrayList<>();
     private Backlog baseBacklog;
     private RequiredField shortNameField;
     private CustomTextField longNameField;
@@ -225,5 +231,9 @@ public class BacklogEditTab extends Tab {
                 || ShortNameValidator.validateShortName(shortNameField, null)); // new name validate
     }
 
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
 }
 

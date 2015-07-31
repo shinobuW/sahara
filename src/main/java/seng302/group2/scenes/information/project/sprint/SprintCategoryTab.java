@@ -8,9 +8,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.dialog.CreateSprintDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.SprintCategory;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
@@ -18,7 +24,9 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
  * A class for displaying a tab showing data on all the sprints in the current project.
  * Created by drm127 on 29/07/15.
  */
-public class SprintCategoryTab extends Tab {
+public class SprintCategoryTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
 
     /**
      * Constructor for SprintCategoryTab class.
@@ -75,4 +83,8 @@ public class SprintCategoryTab extends Tab {
 
     }
 
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
 }

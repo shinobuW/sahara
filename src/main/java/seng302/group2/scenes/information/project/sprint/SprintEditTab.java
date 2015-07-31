@@ -5,13 +5,21 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.project.sprint.Sprint;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * A class for displaying a tab used to edit people.
  * Created by btm38 on 30/07/15.
  */
-public class SprintEditTab extends Tab {
+public class SprintEditTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
 
     /**
      * Constructor for the SprintEditTab class. This constructor creates a JavaFX ScrollPane
@@ -28,5 +36,11 @@ public class SprintEditTab extends Tab {
         this.setContent(wrapper);
 
         //TODO
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

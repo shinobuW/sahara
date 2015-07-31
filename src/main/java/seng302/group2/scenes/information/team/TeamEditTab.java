@@ -11,6 +11,8 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.person.Person;
@@ -25,7 +27,10 @@ import static javafx.collections.FXCollections.observableArrayList;
  * A class for displaying a tab used to edit teams.
  * Created by btm38 on 30/07/15.
  */
-public class TeamEditTab extends Tab {
+public class TeamEditTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
+
     private Team baseTeam;
     private RequiredField shortNameField;
     private CustomTextArea descriptionField;
@@ -318,5 +323,11 @@ public class TeamEditTab extends Tab {
                     Alert.AlertType.WARNING);
             return false;
         }
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

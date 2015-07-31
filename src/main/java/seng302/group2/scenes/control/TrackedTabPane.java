@@ -1,8 +1,11 @@
 package seng302.group2.scenes.control;
 
 import javafx.scene.control.TabPane;
+import seng302.group2.scenes.control.search.SearchableScene;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.SaharaItem;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -11,7 +14,10 @@ import java.util.Map;
  * classes.
  * Created by Jordane on 10/05/2015.
  */
-public class TrackedTabPane extends TabPane {
+public abstract class TrackedTabPane extends SearchableScene {
+
+    @Override
+    public abstract Collection<SearchableTab> getSearchableTabs();
 
     /**
      * An enumeration of scenes in the project

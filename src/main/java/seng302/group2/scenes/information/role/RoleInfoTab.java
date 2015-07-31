@@ -5,15 +5,23 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.role.Role;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 /**
  * The workspace information tab
  * Created by jml168 on 11/05/15.
  */
-public class RoleInfoTab extends Tab {
-    
+public class RoleInfoTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
+
     /**
      * Constructor for the Role Info Tab
      * 
@@ -42,5 +50,11 @@ public class RoleInfoTab extends Tab {
 
         basicInfoPane.getChildren().add(new Label("Required Skills: "));
         basicInfoPane.getChildren().add(skillsBox);
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

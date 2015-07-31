@@ -2,7 +2,12 @@ package seng302.group2.scenes.information.project;
 
 import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.project.Project;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * A class for displaying the project scene
@@ -10,6 +15,9 @@ import seng302.group2.workspace.project.Project;
  * @author jml168
  */
 public class ProjectScene extends TrackedTabPane {
+
+    Collection<SearchableTab> searchableTabs = new HashSet<>();
+
     /**
      * Constructor for the Project Scene tab
      * 
@@ -19,10 +27,11 @@ public class ProjectScene extends TrackedTabPane {
         super(ContentScene.PROJECT, currentProject);
 
         // Define and add the tabs
-        Tab informationTab = new ProjectInfoTab(currentProject);
-        Tab allocation = new ProjectHistoryTab(currentProject);
+        SearchableTab informationTab = new ProjectInfoTab(currentProject);
+        SearchableTab allocation = new ProjectHistoryTab(currentProject);
+        Collections.addAll(searchableTabs, informationTab, allocation);
 
-        this.getTabs().addAll(informationTab, allocation);  // Add the tabs to the pane
+        this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 
     /**
@@ -37,5 +46,10 @@ public class ProjectScene extends TrackedTabPane {
         Tab editTab = new ProjectEditTab(currentProject);
 
         this.getTabs().addAll(editTab);  // Add the tabs to the pane
+    }
+
+    @Override
+    public Collection<SearchableTab> getSearchableTabs() {
+        return searchableTabs;
     }
 }

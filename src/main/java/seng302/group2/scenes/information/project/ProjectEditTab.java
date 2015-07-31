@@ -13,16 +13,24 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.util.validation.NameValidator;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.Project;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by btm38 on 30/07/15.
  */
-public class ProjectEditTab extends Tab {
+public class ProjectEditTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
+
     /**
      * Gets the workspace edit information scene.
      *
@@ -110,6 +118,12 @@ public class ProjectEditTab extends Tab {
                 currentProject.switchToInfoScene();
             });
 
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }
 

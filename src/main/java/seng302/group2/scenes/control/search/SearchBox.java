@@ -5,6 +5,8 @@ import seng302.group2.App;
 import seng302.group2.scenes.information.skill.SkillInfoTab;
 import seng302.group2.scenes.information.skill.SkillScene;
 
+import java.util.Collection;
+
 /**
  * A stylised TextField that also performs a basic search query on the current scene content through a key listener
  * Created by jml168 on 26/07/15.
@@ -26,9 +28,11 @@ public class SearchBox extends TextField {
 
         // Adds some search functionality on the release of a key (so it includes what was entered)
         this.setOnKeyReleased(ke -> {
-                if (App.mainPane.getContent() instanceof SkillScene) {  // TODO Abstract out to some searchable GUI
+                if (App.mainPane.getContent() instanceof SearchableScene) {
                     System.out.println("Querying: " + this.getText());
-                    ((SkillInfoTab) ((SkillScene) App.mainPane.getContent()).getCurrentTab()).query(this.getText());
+                    // TODO Do something with tabs
+                    Collection<SearchableTab> tabs =
+                            ((SearchableScene) App.mainPane.getContent()).query(this.getText());
                 }
             });
     }

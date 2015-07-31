@@ -12,8 +12,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -21,8 +27,9 @@ import static javafx.collections.FXCollections.observableArrayList;
  * The information tab for a backlog
  * Created by cvs20 on 19/05/15.
  */
-public class BacklogInfoTab extends Tab {
+public class BacklogInfoTab extends SearchableTab {
 
+    List<SearchableControl> searchControls = new ArrayList<>();
     static Boolean highlightMode = Boolean.FALSE;
 
     /**
@@ -195,5 +202,11 @@ public class BacklogInfoTab extends Tab {
                 readyCol.prefWidthProperty().bind(storyTable.widthProperty()
                         .subtract(2).divide(100).multiply(20));
             });
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

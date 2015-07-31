@@ -2,7 +2,12 @@ package seng302.group2.scenes.information.person;
 
 import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.person.Person;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * A class for displaying the Person Scene
@@ -10,6 +15,9 @@ import seng302.group2.workspace.person.Person;
  * @author crw73
  */
 public class PersonScene extends TrackedTabPane {
+
+    Collection<SearchableTab> searchableTabs = new HashSet<>();
+
     /**
      * Basic constructor for the PersonScene.
      * @param currentPerson the person for which the information will be displayed.
@@ -29,11 +37,18 @@ public class PersonScene extends TrackedTabPane {
      * @param editScene a boolean - if the scene is an edit scene
      */
     public PersonScene(Person currentPerson, boolean editScene) {
+
         super(ContentScene.PERSON_EDIT, currentPerson);
 
         // Define and add the tabs
-        Tab editTab = new PersonEditTab(currentPerson);
+        SearchableTab editTab = new PersonEditTab(currentPerson);
+        Collections.addAll(searchableTabs, editTab);
 
-        this.getTabs().addAll(editTab);  // Add the tabs to the pane
+        this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
+    }
+
+    @Override
+    public Collection<SearchableTab> getSearchableTabs() {
+        return searchableTabs;
     }
 }

@@ -7,14 +7,22 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.chart.BurndownChart;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.project.sprint.Sprint;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 /**
  * A class for displaying a tab showing a sprints burndown graph.
  * Created by btm38 on 31/07/15.
  */
-public class SprintBurndownTab extends Tab {
+public class SprintBurndownTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
     private NumberAxis xAxis = new NumberAxis();
     private NumberAxis yAxis = new NumberAxis();
     /**
@@ -40,5 +48,11 @@ public class SprintBurndownTab extends Tab {
     private void configureAxis() {
         xAxis.setLabel("Sprint Duration (Days)");
         yAxis.setLabel("Hours worked by JD");
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

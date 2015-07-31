@@ -8,16 +8,22 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.project.release.Release;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 /**
  * The workspace information tab
  * Created by jml168 on 11/05/15.
  */
-public class ReleaseInfoTab extends Tab {
+public class ReleaseInfoTab extends SearchableTab {
+    List<SearchableControl> searchControls = new ArrayList<>();
     
     /**
      * Constructor for the Release Info Tab
@@ -58,5 +64,11 @@ public class ReleaseInfoTab extends Tab {
                 currentRelease.switchToInfoScene(true);
             });
 
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }
