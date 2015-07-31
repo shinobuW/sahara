@@ -34,6 +34,10 @@ public class TeamCategoryScene extends TrackedTabPane {
         this.getTabs().addAll(searchableTabs);
     }
 
+    /**
+     * Gets all the SearchableTabs on this scene
+     * @return collection of SearchableTabs
+     */
     @Override
     public Collection<SearchableTab> getSearchableTabs() {
         return searchableTabs;

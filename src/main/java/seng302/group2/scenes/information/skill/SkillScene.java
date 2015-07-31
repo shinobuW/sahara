@@ -52,6 +52,10 @@ public class SkillScene extends TrackedTabPane {
         return this.getSelectionModel().getSelectedItem();
     }
 
+    /**
+     * Gets all the SearchableTabs on this scene
+     * @return collection of SearchableTabs
+     */
     @Override
     public Collection<SearchableTab> getSearchableTabs() {
         return searchableTabs;

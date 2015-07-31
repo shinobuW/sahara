@@ -53,6 +53,10 @@ public class ReleaseScene extends TrackedTabPane {
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 
+    /**
+     * Gets all the SearchableTabs on this scene
+     * @return collection of tabs
+     */
     @Override
     public Collection<SearchableTab> getSearchableTabs() {
         return searchableTabs;

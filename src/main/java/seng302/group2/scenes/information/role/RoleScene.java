@@ -36,6 +36,11 @@ public class RoleScene extends TrackedTabPane {
         this.getTabs().addAll(informationTab);  // Add the tabs to the pane
     }
 
+
+    /**
+     * Gets all the SearchableTabs on this scene
+     * @return collection of SearchableTabs
+     */
     @Override
     public Collection<SearchableTab> getSearchableTabs() {
         return searchableTabs;
