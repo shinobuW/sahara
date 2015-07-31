@@ -11,8 +11,14 @@ import seng302.group2.scenes.dialog.*;
 import seng302.group2.util.revert.RevertManager;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.Category;
+import seng302.group2.workspace.categories.ProjectCategory;
+import seng302.group2.workspace.categories.RolesCategory;
+import seng302.group2.workspace.categories.subCategory.SubCategory;
 import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
+import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.backlog.Backlog;
+import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -624,17 +630,19 @@ public class MainMenuBar extends MenuBar {
             });
 
         editMenu.setOnShowing((event) -> {
+            System.out.println(Global.selectedTreeItem.getValue().getClass());
                 redoItem.setDisable(!Global.commandManager.isRedoAvailable());
                 undoItem.setDisable(!Global.commandManager.isUndoAvailable());
 
                 if (Global.selectedTreeItem == null || Global.selectedTreeItem.getValue() == null) {
                     deleteTreeItem.setDisable(true);
                 }
-                else if (Global.selectedTreeItem.getValue().getClass() == Category.class
-                        || Global.selectedTreeItem.getValue().getClass() == ReleaseCategory.class
-                        || Global.selectedTreeItem.getValue().getClass() == Category.class
-                        || Global.selectedTreeItem.getValue().getClass() == Workspace.class) {
-                    // Non-deleteable classes (for now?)
+                else if (Global.selectedTreeItem.getValue().getClass().getSuperclass() == Category.class
+                        || Global.selectedTreeItem.getValue().getClass().getSuperclass() == SubCategory.class)
+                {
+                    deleteTreeItem.setDisable(true);
+                }
+                else if (Global.selectedTreeItem.getValue().getClass() == Workspace.class) {
                     deleteTreeItem.setDisable(true);
                 }
                 else if (Global.selectedTreeItem.getValue().getClass() == Skill.class) {
@@ -646,6 +654,9 @@ public class MainMenuBar extends MenuBar {
                     else {
                         deleteTreeItem.setDisable(false);
                     }
+                }
+                else if (Global.selectedTreeItem.getValue().getClass() == Role.class) {
+                    deleteTreeItem.setDisable(true);
                 }
                 else if (Global.selectedTreeItem.getValue().getClass() == Team.class) {
                     Team selectedTeam = (Team) Global.selectedTreeItem.getValue();
