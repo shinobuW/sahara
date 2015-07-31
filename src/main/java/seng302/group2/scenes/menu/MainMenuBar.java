@@ -11,14 +11,8 @@ import seng302.group2.scenes.dialog.*;
 import seng302.group2.util.revert.RevertManager;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.Category;
-import seng302.group2.workspace.categories.ProjectCategory;
-import seng302.group2.workspace.categories.RolesCategory;
 import seng302.group2.workspace.categories.subCategory.SubCategory;
-import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
-import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
 import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.project.backlog.Backlog;
-import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -630,7 +624,6 @@ public class MainMenuBar extends MenuBar {
             });
 
         editMenu.setOnShowing((event) -> {
-            System.out.println(Global.selectedTreeItem.getValue().getClass());
                 redoItem.setDisable(!Global.commandManager.isRedoAvailable());
                 undoItem.setDisable(!Global.commandManager.isUndoAvailable());
 
@@ -638,8 +631,7 @@ public class MainMenuBar extends MenuBar {
                     deleteTreeItem.setDisable(true);
                 }
                 else if (Global.selectedTreeItem.getValue().getClass().getSuperclass() == Category.class
-                        || Global.selectedTreeItem.getValue().getClass().getSuperclass() == SubCategory.class)
-                {
+                        || Global.selectedTreeItem.getValue().getClass().getSuperclass() == SubCategory.class) {
                     deleteTreeItem.setDisable(true);
                 }
                 else if (Global.selectedTreeItem.getValue().getClass() == Workspace.class) {
