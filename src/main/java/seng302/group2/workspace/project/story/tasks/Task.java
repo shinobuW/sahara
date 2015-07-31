@@ -30,16 +30,22 @@ public class Task extends SaharaItem implements Serializable {
     private TASKSTATE state;
     private transient ObservableList<Person> responsibilities = observableArrayList();
     private List<Person> serializableResponsibilities = new ArrayList<>();
+    private transient ObservableList<Log> logs = observableArrayList();
+    private List<Log> serializableLogs = new ArrayList<>();
     // TODO Effort left and Spent for logging
 
 
     /**
-     * Returns the items held by the Task, blank as the Task has no child items.
-     * @return a blank hash set
+     * Returns the items held by the Task
+     * @return set of logs associated with the task
      */
     @Override
     public Set<SaharaItem> getItemsSet() {
-        return new HashSet<>();
+        Set<SaharaItem> items = new HashSet<>();
+        for (Log log : this.logs) {
+            items.add(log);
+        }
+        return items;
     }
 
 
@@ -152,6 +158,14 @@ public class Task extends SaharaItem implements Serializable {
     }
 
     /**
+     * Gets the logs associated to this task
+     * @return list of logs
+     */
+    public ObservableList<Log> getLogs() {
+        return this.logs;
+    }
+
+    /**
      * Adds a Person to the Tasks responsibility list
      *  @param person The person to add
      */
@@ -167,6 +181,11 @@ public class Task extends SaharaItem implements Serializable {
         for (Object item : responsibilities) {
             this.serializableResponsibilities.add((Person) item);
         }
+
+        serializableLogs.clear();
+        for (Object item : logs) {
+            this.serializableLogs.add((Log) item);
+        }
     }
 
 
@@ -177,6 +196,10 @@ public class Task extends SaharaItem implements Serializable {
         responsibilities.clear();
         for (Object item : serializableResponsibilities) {
             this.responsibilities.add((Person) item);
+        }
+        logs.clear();
+        for (Object item : serializableLogs) {
+            this.logs.add((Log) item);
         }
     }
 
