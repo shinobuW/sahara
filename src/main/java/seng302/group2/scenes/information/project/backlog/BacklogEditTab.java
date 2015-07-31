@@ -30,6 +30,7 @@ import java.util.List;
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
+ * The backlog edit tab.
  * Created by btm38 on 30/07/15.
  */
 public class BacklogEditTab extends SearchableTab {
@@ -231,6 +232,10 @@ public class BacklogEditTab extends SearchableTab {
                 || ShortNameValidator.validateShortName(shortNameField, null)); // new name validate
     }
 
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
     @Override
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;

@@ -25,7 +25,6 @@ public class WorkspaceInfoTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
 
-
     /**
      * Constructor of the Workspace Info Tab.
      * 
@@ -58,6 +57,10 @@ public class WorkspaceInfoTab extends SearchableTab {
 
     }
 
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
     @Override
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;

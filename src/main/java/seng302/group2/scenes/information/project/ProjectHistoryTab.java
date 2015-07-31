@@ -409,6 +409,10 @@ public class ProjectHistoryTab extends SearchableTab {
         }
     }
 
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
     @Override
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;

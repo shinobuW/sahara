@@ -15,18 +15,21 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * The information tab for a backlog
  * Created by cvs20 on 19/05/15.
  */
-public class TestingCellTestTab extends Tab {
+public class TestingCellTestTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
 
     ObservableList<Story> laneOneStories = FXCollections.observableArrayList();
     ObservableList<Story> laneTwoStories = FXCollections.observableArrayList();
@@ -133,5 +136,14 @@ public class TestingCellTestTab extends Tab {
                 laneTwoStories.remove(story);
                 dragEvent.setDropCompleted(true);
             });
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

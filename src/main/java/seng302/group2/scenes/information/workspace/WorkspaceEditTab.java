@@ -28,7 +28,6 @@ public class WorkspaceEditTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
 
-
     /**
      * Constructor for the WorkspaceEditTab class. This constructor creates a JavaFX ScrollPane
      * which is populated with relevant controls and then shown.
@@ -103,8 +102,11 @@ public class WorkspaceEditTab extends SearchableTab {
             });
     }
 
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
     @Override
-    // TODO
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;
     }
