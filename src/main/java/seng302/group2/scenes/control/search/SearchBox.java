@@ -19,7 +19,7 @@ public class SearchBox extends TextField {
         // Rounds the edges, adds an icon, and makes it look like a search box!
         this.setStyle("-fx-border-radius: 12 12 12 12;"
                         + "-fx-background-radius: 12 12 12 12; "
-                        + "-fx-background-image: url('/icons/search.png');"
+                        + "-fx-background-image: url('/icons/search-new.png');"
                         + "-fx-background-repeat: no-repeat; "
                         + "-fx-background-position: right 6px center; "
         );
