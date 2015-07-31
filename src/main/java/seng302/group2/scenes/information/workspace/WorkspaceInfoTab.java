@@ -8,15 +8,24 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.workspace.Workspace;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 /**
  * The workspace information tab
  * Created by jml168 on 11/05/15.
  */
-public class WorkspaceInfoTab extends Tab {
-    
+public class WorkspaceInfoTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
+
+
     /**
      * Constructor of the Workspace Info Tab.
      * 
@@ -47,5 +56,10 @@ public class WorkspaceInfoTab extends Tab {
                 currentWorkspace.switchToInfoScene(true);
             });
 
+    }
+
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

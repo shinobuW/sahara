@@ -12,16 +12,24 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.skills.Skill;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * A class for displaying a tab used to edit skills.
  * Created by btm38 on 30/07/15.
  */
-public class SkillEditTab extends Tab {
+public class SkillEditTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
+
     /**
      * Constructor for the SkillEditTab class. This constructor creates a JavaFX ScrollPane
      * which is populated with relevant controls and then shown.
@@ -91,6 +99,12 @@ public class SkillEditTab extends Tab {
         btnCancel.setOnAction((event) -> {
                 currentSkill.switchToInfoScene();
             });
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }
 

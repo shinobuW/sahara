@@ -10,6 +10,8 @@ import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.*;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.util.validation.NameValidator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
@@ -17,7 +19,10 @@ import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.Global.currentWorkspace;
@@ -28,7 +33,9 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  * A class for displaying a tab used to edit people.
  * Created by btm38 on 30/07/15.
  */
-public class PersonEditTab extends Tab {
+public class PersonEditTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
     /**
      * Constructor for the PersonEditTab class. This constructor creates a JavaFX ScrollPane
      * which is populated with relevant controls then shown.
@@ -256,5 +263,11 @@ public class PersonEditTab extends Tab {
         btnCancel.setOnAction((event) -> {
                 currentPerson.switchToInfoScene();
             });
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

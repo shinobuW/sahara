@@ -7,15 +7,24 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.project.story.Story;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * Created by cvs20 on 13/07/15.
  */
-public class StoryDependenciesTab extends Tab {
-    
+public class StoryDependenciesTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
+
+
     /**
      * Constructor for the Story Dependencies Tab.
      * 
@@ -97,5 +106,11 @@ public class StoryDependenciesTab extends Tab {
         dependenciesPane.getChildren().add(dependsTable);
         dependenciesPane.getChildren().add(dependantsTable);
         dependenciesPane.getChildren().add(btnView);
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

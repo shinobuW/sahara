@@ -14,7 +14,9 @@ import seng302.group2.scenes.dialog.CreateProjectDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
@@ -23,6 +25,9 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
  * Created by btm38 on 13/07/15.
  */
 public class ProjectCategoryTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
+
     /**
      * Constructor for ProjectCategoryTab class.
      * @param currentWorkspace The current workspace
@@ -78,7 +83,8 @@ public class ProjectCategoryTab extends SearchableTab {
     }
 
     @Override
+    // TODO
     public Collection<SearchableControl> getSearchableControls() {
-        return null; //TODO
+        return searchControls;
     }
 }

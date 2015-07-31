@@ -25,18 +25,6 @@ public class SkillInfoTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
 
-
-    public boolean query(String query) {
-        boolean found = false;
-        for (SearchableControl control : searchControls) {
-            if (control != null && control.query(query)) {
-                found = true;
-            }
-        }
-        return found;
-    }
-
-
     /**
      * Constructor for the SkillInfoTab class.
      * @param currentSkill the current skill for which information will be displayed
@@ -76,6 +64,7 @@ public class SkillInfoTab extends SearchableTab {
 
 
     @Override
+    // TODO
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;
     }

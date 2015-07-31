@@ -19,6 +19,8 @@ import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.util.validation.ValidationStatus;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.Project;
@@ -28,9 +30,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 import static seng302.group2.util.validation.DateValidator.validateAllocation;
 
@@ -39,7 +39,10 @@ import static seng302.group2.util.validation.DateValidator.validateAllocation;
  * history
  * Created by swi67 on 15/05/15.
  */
-public class TeamHistoryTab extends Tab {
+public class TeamHistoryTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
+
     Boolean isValidEdit;
 
     /**
@@ -396,6 +399,12 @@ public class TeamHistoryTab extends Tab {
                 System.out.println("Error: Cannot recognise validation status");
                 break;
         }
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 
 

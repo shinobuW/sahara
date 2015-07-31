@@ -8,16 +8,25 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.dialog.CreateStoryDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.task.TaskCategory;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * Created by cvs20 on 28/07/15.
  */
-public class TaskCategoryTab extends Tab {
+public class TaskCategoryTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
+
 
     /**
      * Constructor for TaskCategoryTab class
@@ -72,4 +81,9 @@ public class TaskCategoryTab extends Tab {
             });
     }
 
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
 }

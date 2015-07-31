@@ -7,9 +7,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -17,8 +23,11 @@ import static javafx.collections.FXCollections.observableArrayList;
  * The story information tab.
  * Created by drm127 on 17/05/15.
  */
-public class StoryInfoTab extends Tab {
-    
+public class StoryInfoTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
+
+
     /**
      * Constructor for the Story Info Tab
      * 
@@ -100,4 +109,9 @@ public class StoryInfoTab extends Tab {
             });
     }
 
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
 }

@@ -6,8 +6,14 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -15,7 +21,9 @@ import static javafx.collections.FXCollections.observableArrayList;
  * The sprint information tab.
  * Created by drm127 on 29/07/15.
  */
-public class SprintInfoTab extends Tab {
+public class SprintInfoTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
 
     /**
      * Constructor for the sprint information tab.
@@ -67,5 +75,11 @@ public class SprintInfoTab extends Tab {
 
 
 
+    }
+
+    @Override
+    // TODO
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

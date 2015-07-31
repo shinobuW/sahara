@@ -9,11 +9,17 @@ import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.dialog.CreateBacklogDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.role.Role;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
@@ -22,7 +28,9 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
  * A class for displaying a tab showing data on all the backlogs in the current project.
  * Created by btm38 on 13/07/15.
  */
-public class BacklogCategoryTab extends Tab {
+public class BacklogCategoryTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
     /**
      * Constructor for BacklogCategoryTab class.
      * @param selectedCategory The current selected category
@@ -86,5 +94,10 @@ public class BacklogCategoryTab extends Tab {
                 javafx.scene.control.Dialog creationDialog = new CreateBacklogDialog();
                 creationDialog.show();
             });
+    }
+
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }
