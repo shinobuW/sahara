@@ -52,8 +52,11 @@ public class RoleInfoTab extends SearchableTab {
         basicInfoPane.getChildren().add(skillsBox);
     }
 
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
     @Override
-    // TODO
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;
     }

@@ -25,6 +25,7 @@ public class SprintBurndownTab extends SearchableTab {
     List<SearchableControl> searchControls = new ArrayList<>();
     private NumberAxis xAxis = new NumberAxis();
     private NumberAxis yAxis = new NumberAxis();
+
     /**
      * Constructor for SprintBurndownTab.
      *
@@ -50,8 +51,11 @@ public class SprintBurndownTab extends SearchableTab {
         yAxis.setLabel("Hours worked by JD");
     }
 
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
     @Override
-    // TODO
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;
     }

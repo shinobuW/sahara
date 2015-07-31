@@ -10,8 +10,12 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -19,7 +23,13 @@ import static javafx.collections.FXCollections.observableArrayList;
  * A tab for displaying the values of the various story estimation scales available in the workspace.
  * Created by drm127 on 13/07/15.
  */
-public class StoryEstimationScaleInfoTab extends Tab {
+public class StoryEstimationScaleInfoTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
+
+    /**
+     * Constructor for the StoryEstimationInfoTab class
+     */
     public StoryEstimationScaleInfoTab() {
         this.setText("Available Scales");
         Pane scaleInfoPane = new VBox(10);
@@ -62,5 +72,14 @@ public class StoryEstimationScaleInfoTab extends Tab {
         scaleInfoPane.getChildren().add(instructions);
         scaleInfoPane.getChildren().add(scaleComboHBox);
         scaleInfoPane.getChildren().add(scaleValuesList);
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }
