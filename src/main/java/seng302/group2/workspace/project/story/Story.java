@@ -468,9 +468,8 @@ public class Story extends SaharaItem implements Serializable {
      * @param task ac to be added
      */
     public void add(Task task) {
-        // TODO
-        // Command command = new AddTaskCommand(this, task);
-        // Global.commandManager.executeCommand(command);
+        Command command = new AddTaskCommand(this, task);
+        Global.commandManager.executeCommand(command);
     }
     /**
      * Sets the story's ready state to the given boolean
@@ -965,6 +964,62 @@ public class Story extends SaharaItem implements Serializable {
             for (SaharaItem item : stateObjects) {
                 if (item.equals(ac)) {
                     this.ac = (AcceptanceCriteria) item;
+                    mapped_ac = true;
+                }
+            }
+            return mapped_ac && mapped_story;
+        }
+    }
+
+    /**
+     * Command to add and remove acceptance criteria
+     */
+    private class AddTaskCommand implements Command {
+        private Story story;
+        private Task task;
+
+        /**
+         * Constructor for the acceptance criteria addition command
+         * @param story The story to which the acceptance criteria is to be added
+         * @param task The acceptance criteria to be added
+         */
+        AddTaskCommand(Story story, Task task) {
+            this.story = story;
+            this.task = task;
+        }
+
+        /**
+         * Executes the acceptance criteria addition command
+         */
+        public void execute() {
+            story.getTasks().add(task);
+        }
+
+        /**
+         * Undoes the acceptance criteria addition command
+         */
+        public void undo() {
+            story.getTasks().remove(task);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped_story = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equals(story)) {
+                    this.story = (Story) item;
+                    mapped_story = true;
+                }
+            }
+            boolean mapped_ac = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equals(task)) {
+                    this.task = (Task) item;
                     mapped_ac = true;
                 }
             }
