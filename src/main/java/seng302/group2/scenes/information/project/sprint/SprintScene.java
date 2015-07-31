@@ -20,8 +20,9 @@ public class SprintScene extends TrackedTabPane {
 
         //Define and add the tabs
         Tab informationTab = new SprintInfoTab(currentSprint);
+        Tab burndownTab = new SprintBurndownTab(currentSprint);
 
-        this.getTabs().addAll(informationTab);  // Add the tabs to the pane
+        this.getTabs().addAll(informationTab, burndownTab);  // Add the tabs to the pane
     }
 
     /**

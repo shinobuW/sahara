@@ -40,8 +40,7 @@ public class SprintInformationSwitchStrategy implements InformationSwitchStrateg
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Sprint) {
             if (editScene) {
-                App.mainPane.setContent(SprintEditScene.getSprintEditScene(
-                        (Sprint) item));
+                App.mainPane.setContent(new SprintScene((Sprint) item, true));
             }
             else {
                 switchScene(item);
