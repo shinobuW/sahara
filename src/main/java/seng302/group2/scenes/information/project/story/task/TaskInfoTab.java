@@ -8,13 +8,22 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.TitleLabel;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.project.story.tasks.Task;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * The task information tab.
  * Created by cvs20 on 28/07/15.
  */
-public class TaskInfoTab extends Tab {
+public class TaskInfoTab extends SearchableTab {
+
+    List<SearchableControl> searchControls = new ArrayList<>();
+    //TODO Refactor into searchable controls and populate
 
     /**
      * Constructor for the Task Info Tab
@@ -48,5 +57,10 @@ public class TaskInfoTab extends Tab {
                 currentTask.switchToInfoScene(true);
             });
 
+    }
+
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 }

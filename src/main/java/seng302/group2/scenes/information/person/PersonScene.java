@@ -29,6 +29,7 @@ public class PersonScene extends TrackedTabPane {
      * @param editScene a boolean - if the scene is an edit scene
      */
     public PersonScene(Person currentPerson, boolean editScene) {
+
         super(ContentScene.PERSON_EDIT, currentPerson);
 
         // Define and add the tabs

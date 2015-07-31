@@ -13,7 +13,7 @@ import java.util.List;
  * other search elements such as a SearchBox.
  * Created by Jordane on 27/07/2015.
  */
-public class SearchableText extends TextFlow {
+public class SearchableText extends TextFlow implements SearchableControl {
     List<Text> texts = new ArrayList<>();
 
     /**
@@ -72,6 +72,7 @@ public class SearchableText extends TextFlow {
      * @param query The string to query
      * @return If at least one match was found
      */
+    @Override
     public boolean query(String query) {
         query = query.toLowerCase();
         Text text = stitch();
