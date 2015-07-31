@@ -1,13 +1,7 @@
-package seng302.group2.util.chart;
+package seng302.group2.scenes.control.chart;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
 import javafx.scene.chart.*;
-import javafx.stage.Stage;
 import seng302.group2.workspace.project.sprint.Sprint;
-
-import javax.sound.sampled.Line;
-import java.awt.geom.Line2D;
 
 
 /**
