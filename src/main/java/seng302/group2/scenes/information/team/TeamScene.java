@@ -2,7 +2,12 @@ package seng302.group2.scenes.information.team;
 
 import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.team.Team;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * A class for displaying the Team Scene
@@ -10,7 +15,9 @@ import seng302.group2.workspace.team.Team;
  * @author crw73
  */
 public class TeamScene extends TrackedTabPane {
-    
+
+    Collection<SearchableTab> searchableTabs = new HashSet<>();
+
     /**
      * Constructor for the Team scene. Creates an instance of the TeamInfoTab and displays it. If the team is not
      * the unassigned team, also creates an instance of the TeamHistoryTab to display.
@@ -39,8 +46,15 @@ public class TeamScene extends TrackedTabPane {
         super(ContentScene.TEAM_EDIT, currentTeam);
 
         // Define and add the tabs
-        Tab editTab = new TeamEditTab(currentTeam);
+        SearchableTab editTab = new TeamEditTab(currentTeam);
+        Collections.addAll(searchableTabs, editTab);
+
         this.getTabs().addAll(editTab);
 
+    }
+
+    @Override
+    public Collection<SearchableTab> getSearchableTabs() {
+        return searchableTabs;
     }
 }

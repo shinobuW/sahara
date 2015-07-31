@@ -6,6 +6,7 @@ import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 
 /**
@@ -28,8 +29,9 @@ public class ProjectCategoryScene extends TrackedTabPane {
 
         // Define and add the tabs
         SearchableTab categoryTab = new ProjectCategoryTab(currentWorkspace);
+        Collections.addAll(searchableTabs, categoryTab);
 
-        this.getTabs().addAll(categoryTab);
+        this.getTabs().addAll(searchableTabs);
     }
 
     @Override

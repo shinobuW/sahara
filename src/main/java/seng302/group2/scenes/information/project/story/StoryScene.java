@@ -2,14 +2,22 @@ package seng302.group2.scenes.information.project.story;
 
 import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.project.story.Story;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * A class for displaying the story scene
  * Created by drm127 on 17/05/15.
  */
 public class StoryScene extends TrackedTabPane {
-    
+
+    Collection<SearchableTab> searchableTabs = new HashSet<>();
+
     /**
      * Constructor for the Story Scene. Creates instances of the StoryInfoTab, StoryAcTab and StoryDependenciedTab
      * and displays them.
@@ -18,6 +26,8 @@ public class StoryScene extends TrackedTabPane {
      */
     public StoryScene(Story currentStory) {
         super(ContentScene.STORY, currentStory);
+
+
 
         // Define and add the tabs
         Tab informationTab = new StoryInfoTab(currentStory);
@@ -37,8 +47,14 @@ public class StoryScene extends TrackedTabPane {
         super(ContentScene.STORY_EDIT, currentStory);
 
         // Define and add the tabs
-        Tab editTab = new StoryEditTab(currentStory);
+        SearchableTab editTab = new StoryEditTab(currentStory);
+        Collections.addAll(searchableTabs, editTab);
 
-        this.getTabs().addAll(editTab);  // Add the tabs to the pane
+        this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
+    }
+
+    @Override
+    public Collection<SearchableTab> getSearchableTabs() {
+        return searchableTabs;
     }
 }

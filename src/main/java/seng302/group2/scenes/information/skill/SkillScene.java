@@ -42,9 +42,10 @@ public class SkillScene extends TrackedTabPane {
         super(ContentScene.SKILL_EDIT, currentSkill);
 
         // Define and add the tabs
-        Tab editTab = new SkillEditTab(currentSkill);
+        SearchableTab editTab = new SkillEditTab(currentSkill);
+        Collections.addAll(searchableTabs, editTab);
 
-        this.getTabs().addAll(editTab);  // Add the tabs to the pane
+        this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 
     public Tab getCurrentTab() {
