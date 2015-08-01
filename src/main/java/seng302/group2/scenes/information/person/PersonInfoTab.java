@@ -7,10 +7,12 @@ import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.workspace.person.Person;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -31,7 +33,7 @@ public class PersonInfoTab extends SearchableTab {
         this.setContent(wrapper);
 
 
-        Label title = new TitleLabel(currentPerson.getFirstName() + " "
+        SearchableText title = new SearchableText(currentPerson.getFirstName() + " "
                 + currentPerson.getLastName());
 
         Button btnEdit = new Button("Edit");
@@ -43,24 +45,22 @@ public class PersonInfoTab extends SearchableTab {
 
         final Separator separator = new Separator();
 
-        basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new Label("Short Name: " + currentPerson.getShortName()));
-        basicInfoPane.getChildren().add(new Label("Email Address: " + currentPerson.getEmail()));
-        basicInfoPane.getChildren().add(new Label("Birth Date: "
-                + currentPerson.getDateString()));
-        basicInfoPane.getChildren().add(new Label("Person Description: "
-                + currentPerson.getDescription()));
-        basicInfoPane.getChildren().add(new Label("Team: " + currentPerson.getTeamName()));
+        SearchableText shortName = new SearchableText("Short Name: " + currentPerson.getShortName());
+        SearchableText emailAddress = new SearchableText("Email Address: " + currentPerson.getEmail());
+        SearchableText birthDate = new SearchableText("Birth Date: "
+                + currentPerson.getDateString());
+        SearchableText desc = new SearchableText("Person Description: "
+                + currentPerson.getDescription());
+        SearchableText team = new SearchableText("Team: " + currentPerson.getTeamName());
 
         String roleString = currentPerson.getRole() == null ? "" :
                 currentPerson.getRole().toString();
-        basicInfoPane.getChildren().add(new Label("Role: " + roleString));
 
-        basicInfoPane.getChildren().add(separator);
-        basicInfoPane.getChildren().add(new Label("Skills: "));
-        basicInfoPane.getChildren().add(personSkillsBox);
-
-        basicInfoPane.getChildren().add(btnEdit);
+        SearchableText role = new SearchableText("Role: " + roleString);
+        SearchableText skill  = new SearchableText("Skills: ");
+        basicInfoPane.getChildren().addAll(title, shortName, emailAddress, birthDate, desc, team, role, separator,
+                skill, personSkillsBox, btnEdit);
+        Collections.addAll(searchControls, title, shortName, emailAddress, birthDate, desc, team, role, skill);
 
         btnEdit.setOnAction((event) -> {
                 currentPerson.switchToInfoScene(true);

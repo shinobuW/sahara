@@ -7,10 +7,12 @@ import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.workspace.role.Role;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -37,19 +39,18 @@ public class RoleInfoTab extends SearchableTab {
         this.setContent(wrapper);
 
 
-        Label title = new TitleLabel(currentRole.getShortName());
+        SearchableText title = new SearchableText(currentRole.getShortName());
 
         ListView skillsBox = new ListView(currentRole.getRequiredSkills());
         skillsBox.setPrefHeight(192);
         skillsBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         skillsBox.setMaxWidth(450);
 
-        basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new Label("Role Description: "
-                + currentRole.getDescription()));
-
-        basicInfoPane.getChildren().add(new Label("Required Skills: "));
-        basicInfoPane.getChildren().add(skillsBox);
+        SearchableText desc = new SearchableText("Role Description: "
+                + currentRole.getDescription());
+        SearchableText required = new SearchableText("Required Skills: ");
+        basicInfoPane.getChildren().addAll(title, desc, required, skillsBox);
+        Collections.addAll(searchControls, title, desc, required);
     }
 
     /**
