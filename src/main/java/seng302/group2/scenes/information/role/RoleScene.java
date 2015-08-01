@@ -11,6 +11,7 @@ import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.role.Role;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 
 /**
@@ -32,8 +33,8 @@ public class RoleScene extends TrackedTabPane {
 
         // Define and add the tabs
         SearchableTab informationTab = new RoleInfoTab(currentRole);
-
-        this.getTabs().addAll(informationTab);  // Add the tabs to the pane
+        Collections.addAll(searchableTabs, informationTab);
+        this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 
 
