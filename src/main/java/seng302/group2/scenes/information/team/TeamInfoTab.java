@@ -9,12 +9,14 @@ import seng302.group2.Global;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.team.Team;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -43,7 +45,7 @@ public class TeamInfoTab extends SearchableTab {
         this.setContent(wrapper);
 
 
-        Label title = new TitleLabel(currentTeam.getShortName());
+        SearchableText title = new SearchableText(currentTeam.getShortName());
 
         Button btnEdit = new Button("Edit");
         if (currentTeam.isUnassignedTeam()) {
@@ -71,11 +73,11 @@ public class TeamInfoTab extends SearchableTab {
         teamsPeopleBox.setMaxWidth(275);
 
         Separator separator = new Separator();
+        SearchableText desc = new SearchableText("Team Description: "
+                + currentTeam.getDescription());
+        basicInfoPane.getChildren().addAll(title, desc, separator);
 
-        basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new Label("Team Description: "
-                + currentTeam.getDescription()));
-        basicInfoPane.getChildren().add(separator);
+        Collections.addAll(searchControls, title, desc);
 
         if (!currentTeam.isUnassignedTeam()) {
             if (currentTeam.getProductOwner() != null) {
