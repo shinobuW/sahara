@@ -43,9 +43,9 @@ public class ProjectScene extends TrackedTabPane {
         super(ContentScene.PROJECT_EDIT, currentProject);
 
         // Define and add the tabs
-        Tab editTab = new ProjectEditTab(currentProject);
-
-        this.getTabs().addAll(editTab);  // Add the tabs to the pane
+        SearchableTab editTab = new ProjectEditTab(currentProject);
+        Collections.addAll(searchableTabs, editTab);
+        this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 
     /**

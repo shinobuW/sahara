@@ -27,9 +27,9 @@ public class WorkspaceScene extends TrackedTabPane {
         super(ContentScene.WORKSPACE, currentWorkspace);
 
         // Define and add the tabs
-        Tab informationTab = new WorkspaceInfoTab(currentWorkspace);
-
-        this.getTabs().addAll(informationTab);  // Add the tabs to the pane
+        SearchableTab informationTab = new WorkspaceInfoTab(currentWorkspace);
+        Collections.addAll(searchableTabs, informationTab);
+        this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 
     /**

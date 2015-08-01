@@ -28,8 +28,9 @@ public class TeamScene extends TrackedTabPane {
         super(ContentScene.TEAM, currentTeam);
 
         // Define and add the tabs
-        Tab informationTab = new TeamInfoTab(currentTeam);
-        this.getTabs().addAll(informationTab);
+        SearchableTab informationTab = new TeamInfoTab(currentTeam);
+        Collections.addAll(searchableTabs, informationTab);
+        this.getTabs().addAll(searchableTabs);
 
         if (!currentTeam.isUnassignedTeam()) {
             Tab historyTab = new TeamHistoryTab(currentTeam);

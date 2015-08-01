@@ -32,9 +32,9 @@ public class ReleaseScene extends TrackedTabPane {
         super(ContentScene.RELEASE, currentRelease.getProject());
 
         // Define and add the tabs
-        Tab informationTab = new ReleaseInfoTab(currentRelease);
-
-        this.getTabs().addAll(informationTab);  // Add the tabs to the pane
+        SearchableTab informationTab = new ReleaseInfoTab(currentRelease);
+        Collections.addAll(searchableTabs, informationTab);
+        this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 
     /**

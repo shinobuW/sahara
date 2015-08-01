@@ -1,6 +1,7 @@
 package seng302.group2.scenes.information.project.story;
 
 import javafx.scene.control.Tab;
+import org.omg.PortableServer.POAPackage.ServantAlreadyActive;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
@@ -30,11 +31,11 @@ public class StoryScene extends TrackedTabPane {
 
 
         // Define and add the tabs
-        Tab informationTab = new StoryInfoTab(currentStory);
-        Tab acceptanceCriteriaTab = new StoryAcTab(currentStory);
-        Tab dependantTab = new StoryDependenciesTab(currentStory);
-
-        this.getTabs().addAll(informationTab, acceptanceCriteriaTab, dependantTab);  // Add the tabs to the pane
+        SearchableTab informationTab = new StoryInfoTab(currentStory);
+        SearchableTab acceptanceCriteriaTab = new StoryAcTab(currentStory);
+        SearchableTab dependantTab = new StoryDependenciesTab(currentStory);
+        Collections.addAll(searchableTabs, informationTab, acceptanceCriteriaTab, dependantTab);
+        this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 
     /**
