@@ -29,8 +29,7 @@ public class SearchBox extends TextField {
         // Adds some search functionality on the release of a key (so it includes what was entered)
         this.setOnKeyReleased(ke -> {
                 if (App.mainPane.getContent() instanceof SearchableScene) {
-                    System.out.println("Querying: " + this.getText());
-                    // TODO Do something with tabs
+                    //System.out.println("Querying: " + this.getText());
                     Collection<SearchableTab> tabs =
                             ((SearchableScene) App.mainPane.getContent()).query(this.getText());
                 }

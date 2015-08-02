@@ -15,18 +15,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableText;
 
 /**
  * @author Shinobu
  */
-public class CustomComboBox<T> extends VBox {
+public class CustomComboBox<T> extends VBox implements SearchableControl {
     private boolean required;
     private String errorMessage = "";
     private Label errorMessageText = new Label();
     private ObservableList<T> options = FXCollections.observableArrayList();
     private ComboBox<T> comboBox = new ComboBox<>(options);
     private Label astrLabel = new Label(" * ");
-    private Label titleLabel = new Label();
+    private SearchableText titleLabel = new SearchableText();
 
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
@@ -135,7 +137,7 @@ public class CustomComboBox<T> extends VBox {
      *
      * @return The combo box
      */
-    public ComboBox getComboBox() {
+    public ComboBox<T> getComboBox() {
         return this.comboBox;
     }
 
@@ -170,4 +172,33 @@ public class CustomComboBox<T> extends VBox {
         this.comboBox.setStyle(null);
     }
 
+    /**
+     * Queries the combo box to find any elements containing the given query string. If found inside the combo box, the
+     * combo box border will be highlighted, and if found in the label text, the matching text will be highlighted.
+     * @param query The query string to search
+     * @return Whether any elements inside of the combobox or label were found to contain the query string
+     */
+    @Override
+    public boolean query(String query) {
+        if (query.trim().isEmpty()) {
+            comboBox.setStyle("-fx-border-color: inherit");
+            return false;
+        }
+        boolean foundCombo = false;
+        for (T item : comboBox.getItems()) {
+            if (item.toString().toLowerCase().contains(query.toLowerCase())) {
+                foundCombo = true;
+            }
+        }
+        if (foundCombo) {
+            comboBox.setStyle("-fx-border-color: " + SearchableControl.highlightColour + ";");
+        }
+        else {
+            comboBox.setStyle("-fx-border-color: inherit");
+        }
+
+        boolean foundText = titleLabel.query(query);
+
+        return foundCombo || foundText;
+    }
 }

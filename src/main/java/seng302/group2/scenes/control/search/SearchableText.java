@@ -1,7 +1,5 @@
 package seng302.group2.scenes.control.search;
 
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
@@ -14,14 +12,23 @@ import java.util.List;
  * Created by Jordane on 27/07/2015.
  */
 public class SearchableText extends TextFlow implements SearchableControl {
-    List<Text> texts = new ArrayList<>();
+    List<TextFlow> texts = new ArrayList<>();
+
+    /**
+     * Creates a SearchableText TextFlow element
+     */
+    public SearchableText() {
+        texts.add(new TextFlow());
+        updateFlow();
+    }
+
 
     /**
      * Creates a SearchableText TextFlow element
      * @param content The initial string text of the SearchableText
      */
     public SearchableText(String content) {
-        texts.add(new Text(content));
+        texts.add(new TextFlow(new Text(content)));
         updateFlow();
     }
 
@@ -32,7 +39,7 @@ public class SearchableText extends TextFlow implements SearchableControl {
      */
     public void setText(String content) {
         texts.clear();
-        texts.add(new Text(content));
+        texts.add(new TextFlow(new Text(content)));
         updateFlow();
     }
 
@@ -53,12 +60,12 @@ public class SearchableText extends TextFlow implements SearchableControl {
      */
     private Text stitch() {
         String content = "";
-        for (Text text : texts) {
-            content += text.getText();
+        for (TextFlow tFlow : texts) {
+            content += ((Text)(tFlow.getChildren().get(0))).getText();
         }
         texts.clear();
         Text stitched = new Text(content);
-        texts.add(stitched);
+        texts.add(new TextFlow(stitched));
 
         updateFlow();
 
@@ -78,23 +85,27 @@ public class SearchableText extends TextFlow implements SearchableControl {
         Text text = stitch();
         String content = text.getText();
 
-        System.out.println("whole text: " + content);
+        //System.out.println("whole text: " + content);
 
         int index = content.toLowerCase().indexOf(query);
 
 
         if (index == -1 || query.trim().isEmpty()) {
+            for (TextFlow flow : texts) {
+                flow.setStyle("-fx-border-color: inherit");
+                updateFlow();
+            }
             return false;  // Query not in text, keep a single, stitched Text node.
         }
 
-        List<Text> builtText = new ArrayList<>();
+        List<TextFlow> builtText = new ArrayList<>();
         while (index != -1) {
-            Text match = new Text(content.substring(index, index + query.length()));
-            match.setFill(Color.RED);
-            match.setFont(Font.font(20));
-            builtText.add(new Text(content.substring(0, index)));  // Start
+            Text matchText = new Text(content.substring(index, index + query.length()));
+            TextFlow match = new TextFlow(matchText);
+            match.setStyle("-fx-background-color:" + SearchableControl.highlightColour + ";");
+            builtText.add(new TextFlow(new Text(content.substring(0, index))));  // Start
             builtText.add(match);  // Query match
-            builtText.add(new Text(content.substring(index + query.length(), content.length())));  // End
+            builtText.add(new TextFlow(new Text(content.substring(index + query.length(), content.length()))));  // End
 
             content = content.substring(index + query.length());
             index = content.toLowerCase().indexOf(query);
