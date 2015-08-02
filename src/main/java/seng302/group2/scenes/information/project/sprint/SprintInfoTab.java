@@ -52,7 +52,7 @@ public class SprintInfoTab extends SearchableTab {
 
         basicInfoPane.getChildren().add(title);
         basicInfoPane.getChildren().add(new Label("Sprint Name: " + currentSprint.getLongName()));
-        basicInfoPane.getChildren().add(new Label("Sprint Goal: " + currentSprint.getShortName()));
+        basicInfoPane.getChildren().add(new Label("Sprint Goal: " + currentSprint.getGoal()));
         basicInfoPane.getChildren().add(new Label("Start Date: " + currentSprint.getStartDate()));
         basicInfoPane.getChildren().add(new Label("End Date: " + currentSprint.getEndDate()));
         basicInfoPane.getChildren().add(new Label("Description: " + currentSprint.getDescription()));

@@ -9,12 +9,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -39,16 +42,18 @@ public class StoryEstimationScaleInfoTab extends SearchableTab {
         this.setContent(wrapper);
 
         Label title = new TitleLabel("Story Estimation Scales in " + Global.currentWorkspace.getShortName());
-        Label instructions = new Label("Please select an estimation scale to view its values.");
+        SearchableText instructions = new SearchableText("Please select an estimation scale to view its values.");
 
         ObservableList<String> scaleOptions = observableArrayList();
-        ComboBox<String> scaleComboBox = new ComboBox<>(scaleOptions);
+        CustomComboBox<String> scaleComboBox = new CustomComboBox<>("Estimation Scales", false);
+        scaleComboBox.getComboBox().setItems(scaleOptions);
+
         scaleComboBox.setStyle("-fx-pref-width: 135;");
-        Label scaleComboLabel = new Label("Estimation Scales: ");
-        HBox scaleComboHBox = new HBox(scaleComboLabel);
-        HBox.setHgrow(scaleComboHBox, Priority.ALWAYS);
-        scaleComboHBox.setAlignment(Pos.CENTER_LEFT);
-        scaleComboHBox.getChildren().add(scaleComboBox);
+        //Label scaleComboLabel = new Label("Estimation Scales: ");
+        //HBox scaleComboHBox = new HBox(scaleComboLabel);
+        //HBox.setHgrow(scaleComboHBox, Priority.ALWAYS);
+        //scaleComboHBox.setAlignment(Pos.CENTER_LEFT);
+        //scaleComboHBox.getChildren().add(scaleComboBox);
 
         for (String scaleName : Global.currentWorkspace.getEstimationScales().getEstimationScaleDict().keySet()) {
             scaleOptions.add(scaleName);
@@ -58,7 +63,7 @@ public class StoryEstimationScaleInfoTab extends SearchableTab {
         ListView<String> scaleValuesList = new ListView<>(scaleValues);
         scaleValuesList.setPrefHeight(300);
 
-        scaleComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+        scaleComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
                 scaleValues.clear();
                 ArrayList<String> valueList = Global.currentWorkspace.getEstimationScales().
                         getEstimationScaleDict().get(newValue);
@@ -70,8 +75,10 @@ public class StoryEstimationScaleInfoTab extends SearchableTab {
 
         scaleInfoPane.getChildren().add(title);
         scaleInfoPane.getChildren().add(instructions);
-        scaleInfoPane.getChildren().add(scaleComboHBox);
+        scaleInfoPane.getChildren().add(scaleComboBox);
         scaleInfoPane.getChildren().add(scaleValuesList);
+
+        Collections.addAll(searchControls, instructions, scaleComboBox);
     }
 
     /**

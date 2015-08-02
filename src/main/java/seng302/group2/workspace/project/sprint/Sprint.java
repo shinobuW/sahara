@@ -132,7 +132,7 @@ public class Sprint extends SaharaItem {
      * Gets the short name/label of the sprint
      * @return The sprint goal
      */
-    public String getShortName() {
+    public String getGoal() {
         return goal;
     }
 
@@ -189,6 +189,14 @@ public class Sprint extends SaharaItem {
             tasks.addAll(story.getTasks());
         }
         return tasks;
+    }
+
+    /**
+     * Gets the serializable stories belonging to the sprint
+     * @return A List of Stories
+     */
+    public List<Story> getSerializableStories() {
+        return serializableStories;
     }
 
     /**
@@ -304,6 +312,10 @@ public class Sprint extends SaharaItem {
         sprintLongName.appendChild(ReportGenerator.doc.createTextNode(longName));
         sprintElement.appendChild(sprintLongName);
 
+        Element sprintDescription = ReportGenerator.doc.createElement("description");
+        sprintDescription.appendChild(ReportGenerator.doc.createTextNode(description));
+        sprintElement.appendChild(sprintDescription);
+
         Element sprintStartDate = ReportGenerator.doc.createElement("start-date");
         sprintStartDate.appendChild(ReportGenerator.doc.createTextNode(startDate.toString()));
         sprintElement.appendChild(sprintStartDate);
@@ -312,17 +324,13 @@ public class Sprint extends SaharaItem {
         sprintEndDate.appendChild(ReportGenerator.doc.createTextNode(endDate.toString()));
         sprintElement.appendChild(sprintEndDate);
 
-        Element sprintDescription = ReportGenerator.doc.createElement("description");
-        sprintDescription.appendChild(ReportGenerator.doc.createTextNode(description));
-        sprintElement.appendChild(sprintDescription);
+        Element sprintBacklog = ReportGenerator.doc.createElement("backlog");
+        sprintBacklog.appendChild(ReportGenerator.doc.createTextNode(backlog.toString()));
+        sprintElement.appendChild(sprintBacklog);
 
         Element sprintTeam = ReportGenerator.doc.createElement("team");
         sprintTeam.appendChild(ReportGenerator.doc.createTextNode(team.toString()));
         sprintElement.appendChild(sprintTeam);
-
-        Element sprintBacklog = ReportGenerator.doc.createElement("backlog");
-        sprintBacklog.appendChild(ReportGenerator.doc.createTextNode(backlog.toString()));
-        sprintElement.appendChild(sprintBacklog);
 
         Element sprintRelease = ReportGenerator.doc.createElement("release");
         sprintRelease.appendChild(ReportGenerator.doc.createTextNode(release.toString()));

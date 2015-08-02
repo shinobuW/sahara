@@ -30,7 +30,7 @@ public class BacklogTest {
      * Test for the backlog constructors
      */
     @Test
-    public void testStoryConstructors() {
+    public void testBacklogConstructors() {
         Backlog backlog = new Backlog();
         Project project = new Project();
         Person codie = new Person();
@@ -202,8 +202,8 @@ public class BacklogTest {
         Story story2 = new Story();
         backlog.getSerializableStories().add(story2);
         backlog.postDeserialization();
-//        Assert.assertTrue(backlog.getStories().contains(story2));
-//        Assert.assertEquals(2, backlog.getStories().size());
+        Assert.assertTrue(backlog.getStories().contains(story2));
+        Assert.assertEquals(2, backlog.getStories().size());
     }
 
     /**
