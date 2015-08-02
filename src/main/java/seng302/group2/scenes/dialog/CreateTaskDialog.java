@@ -111,6 +111,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                         String description = descriptionTextArea.getText();
                         Task task = new Task(shortName, description);
                         storyComboBox.getSelectionModel().getSelectedItem().add(task);
+                        App.refreshMainScene();
                         App.mainPane.selectItem(task);
                         this.close();
                     }
