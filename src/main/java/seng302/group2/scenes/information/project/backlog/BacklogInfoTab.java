@@ -14,11 +14,13 @@ import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -65,7 +67,7 @@ public class BacklogInfoTab extends SearchableTab {
         green.setStrokeWidth(3);
         green.setArcWidth(10);
         green.setArcHeight(10);
-        Label greenKeyLabel = new Label("= Ready with no issues");
+        SearchableText greenKeyLabel = new SearchableText("= Ready with no issues");
         greenKeyHbox.getChildren().addAll(green, greenKeyLabel);
 
         HBox orangeKeyHbox = new HBox(8);
@@ -74,7 +76,7 @@ public class BacklogInfoTab extends SearchableTab {
         orange.setStrokeWidth(3);
         orange.setArcWidth(10);
         orange.setArcHeight(10);
-        Label orangeKeyLabel = new Label("= Requires estimation");
+        SearchableText orangeKeyLabel = new SearchableText("= Requires estimation");
         orangeKeyHbox.getChildren().addAll(orange, orangeKeyLabel);
 
         HBox redKeyHbox = new HBox(8);
@@ -83,7 +85,7 @@ public class BacklogInfoTab extends SearchableTab {
         red.setStrokeWidth(3);
         red.setArcWidth(10);
         red.setArcHeight(10);
-        Label redKeyLabel = new Label("= Dependent on a story with a lower priority");
+        SearchableText redKeyLabel = new SearchableText("= Dependent on a story with a lower priority");
         redKeyHbox.getChildren().addAll(red, redKeyLabel);
 
         Pane keyBox = new VBox(4);
@@ -116,31 +118,28 @@ public class BacklogInfoTab extends SearchableTab {
         storyTable.setItems(data);
         storyTable.getColumns().addAll(priorityCol, storyCol, readyCol);
 
-        basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new Label("Short Name: "
-                + currentBacklog.getShortName()));
-        basicInfoPane.getChildren().add(new Label("Backlog Description: "
-                + currentBacklog.getDescription()));
-        basicInfoPane.getChildren().add(new Label("Project: "
-                + currentBacklog.getProject().toString()));
 
-
+        SearchableText shortName = new SearchableText("Short Name: " + currentBacklog.getShortName());
+        SearchableText description = new SearchableText("Backlog Description: " + currentBacklog.getDescription());
+        SearchableText project = new SearchableText("Project: " + currentBacklog.getProject());
+        SearchableText po;
         if (currentBacklog.getProductOwner() == null) {
-            basicInfoPane.getChildren().add(new Label("Backlog Product Owner: "
-                    + ""));
+            po = new SearchableText("Product Owner: (none)");
         }
         else {
-            basicInfoPane.getChildren().add(new Label("Backlog Product Owner: "
-                    + currentBacklog.getProductOwner()));
+            po = new SearchableText("Product Owner: " + currentBacklog.getProductOwner());
         }
+        SearchableText estScale = new SearchableText("Estimation Scale: " + currentBacklog.getScale());
 
-        basicInfoPane.getChildren().add(new Label("Estimation Scale: "
-                + currentBacklog.getScale()));
+        basicInfoPane.getChildren().addAll(title, shortName, description, project, po, estScale);
+
 
         basicInfoPane.getChildren().add(new Separator());
 
-        basicInfoPane.getChildren().add(new Label("Stories: "));
-        basicInfoPane.getChildren().add(storyTable);
+
+        SearchableText storiesTableLabel = new SearchableText("Stories: ");
+        basicInfoPane.getChildren().addAll(storiesTableLabel, storyTable);
+
 
         basicInfoPane.getChildren().addAll(buttonHBox, btnEdit);
         if (highlightMode) {
@@ -202,6 +201,9 @@ public class BacklogInfoTab extends SearchableTab {
                 readyCol.prefWidthProperty().bind(storyTable.widthProperty()
                         .subtract(2).divide(100).multiply(20));
             });
+
+        Collections.addAll(searchControls, orangeKeyLabel, greenKeyLabel, redKeyLabel, shortName, description, project,
+                po, estScale, storiesTableLabel);
     }
 
     /**
