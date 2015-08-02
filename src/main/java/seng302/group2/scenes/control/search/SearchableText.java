@@ -16,6 +16,15 @@ public class SearchableText extends TextFlow implements SearchableControl {
 
     /**
      * Creates a SearchableText TextFlow element
+     */
+    public SearchableText() {
+        texts.add(new TextFlow());
+        updateFlow();
+    }
+
+
+    /**
+     * Creates a SearchableText TextFlow element
      * @param content The initial string text of the SearchableText
      */
     public SearchableText(String content) {
@@ -76,12 +85,16 @@ public class SearchableText extends TextFlow implements SearchableControl {
         Text text = stitch();
         String content = text.getText();
 
-        System.out.println("whole text: " + content);
+        //System.out.println("whole text: " + content);
 
         int index = content.toLowerCase().indexOf(query);
 
 
         if (index == -1 || query.trim().isEmpty()) {
+            for (TextFlow flow : texts) {
+                flow.setStyle("-fx-border-color: inherit");
+                updateFlow();
+            }
             return false;  // Query not in text, keep a single, stitched Text node.
         }
 
