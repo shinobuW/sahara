@@ -45,7 +45,7 @@ public class TaskInfoTab extends SearchableTab {
         Button btnEdit = new Button("Edit");
 
         basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new Label("Story Description: "
+        basicInfoPane.getChildren().add(new Label("Task Description: "
                 + currentTask.getDescription()));
         basicInfoPane.getChildren().add(new Label("Impediments: "
                 + currentTask.getImpediments()));

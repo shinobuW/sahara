@@ -25,7 +25,8 @@ public class TaskScene extends TrackedTabPane {
      * @param currentTask The currently selected task.
      */
     public TaskScene(Task currentTask) {
-        super(TrackedTabPane.ContentScene.TASK, currentTask);
+        
+        super(ContentScene.TASK, currentTask);
 
         // Define and add the tabs
         SearchableTab informationTab = new TaskInfoTab(currentTask);

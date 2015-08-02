@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.story.TaskInformationSwitchStrategy;
 
 /**
  * Created by cvs20 on 27/07/15.
@@ -58,12 +59,14 @@ public class Task extends SaharaItem implements Serializable {
         this.description = "";
         this.impediments = "";
         this.state = TASKSTATE.NOT_STARTED;
-        setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
+        setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
     }
 
 
     /**
      * Basic Task constructor
+     * @param shortName The shortname of the Task
+     * @param description The description of the task
      */
     public Task(String shortName, String description) {
         super(shortName);
@@ -72,7 +75,7 @@ public class Task extends SaharaItem implements Serializable {
         this.impediments = "";
         this.state = TASKSTATE.NOT_STARTED;
 
-        setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
+        setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
     }
 
 

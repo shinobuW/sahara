@@ -39,7 +39,7 @@ public class StoryScene extends TrackedTabPane {
     }
 
     /**
-     * Constructor for the Stor Scene. This creates an instance of the StoryEditTab tab and displays it.
+     * Constructor for the Story Scene. This creates an instance of the StoryEditTab tab and displays it.
      *
      * @param currentStory The story to be edited
      * @param editScene a boolean - if the scene is an edit scene

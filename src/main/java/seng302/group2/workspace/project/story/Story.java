@@ -606,7 +606,10 @@ public class Story extends SaharaItem implements Serializable {
      */
     @Override
     public ObservableList<SaharaItem> getChildren() {
-        return null;
+        ObservableList<SaharaItem> children = observableArrayList();
+
+        children.addAll(tasks);
+        return children;
     }
 
     /**
