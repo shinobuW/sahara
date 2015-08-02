@@ -465,7 +465,7 @@ public class Story extends SaharaItem implements Serializable {
     /**
      * Adds a task to the story
      *
-     * @param task ac to be added
+     * @param task task to be added
      */
     public void add(Task task) {
         Command command = new AddTaskCommand(this, task);

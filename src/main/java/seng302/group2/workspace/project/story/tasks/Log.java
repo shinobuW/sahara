@@ -29,6 +29,25 @@ public class Log extends SaharaItem implements Serializable {
      * @param logger the person working on the task
      * @param duration the duration the logger spent on the task in hours
      * @param startTime the time the logger started working on the task
+     */
+    public Log(Task task, Person logger, long duration, LocalDate startTime) {
+        this.task = task;
+        this.logger = logger;
+        this.startTime = startTime;
+
+        if (startTime == null && endTime == null) {
+            this.duration = duration;
+        }
+        else {
+            this.duration = Duration.between(this.startTime, this.endTime).toHours();
+        }
+    }
+    
+    /**
+     *
+     * @param logger the person working on the task
+     * @param duration the duration the logger spent on the task in hours
+     * @param startTime the time the logger started working on the task
      * @param endTime the time the logger finished working on the task
      */
     public Log(Task task, Person logger, long duration, LocalDate startTime, LocalDate endTime) {
@@ -38,10 +57,10 @@ public class Log extends SaharaItem implements Serializable {
         this.endTime = endTime;
 
         if (startTime == null && endTime == null) {
-            this.duration = Duration.between(this.startTime, this.endTime).toHours();
+            this.duration = duration;
         }
         else {
-            this.duration = duration;
+            this.duration = Duration.between(this.startTime, this.endTime).toHours();
         }
     }
 

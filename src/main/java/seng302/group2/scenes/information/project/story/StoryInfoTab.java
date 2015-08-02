@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import javafx.collections.ListChangeListener;
 
 /**
  * The story information tab.
@@ -61,15 +62,14 @@ public class StoryInfoTab extends SearchableTab {
         basicInfoPane.getChildren().add(new Label("Story Creator: "
                 + currentStory.getCreator()));
 
-        TableView<Story> taskTable = new TableView<>();
+        TableView<Task> taskTable = new TableView<>();
         taskTable.setEditable(false);
         taskTable.setPrefWidth(500);
         taskTable.setPrefHeight(200);
         taskTable.setPlaceholder(new Label("There are currently no tasks in this story."));
         taskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        ObservableList<Task> data = observableArrayList();
-        data.addAll(currentStory.getTasks());
+        ObservableList<Task> data = currentStory.getTasks();
 
         TableColumn nameCol = new TableColumn("Name");
         nameCol.setCellValueFactory(new PropertyValueFactory<Task, String>("shortName"));
@@ -99,11 +99,30 @@ public class StoryInfoTab extends SearchableTab {
         spentCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
+        taskTable.setItems(data);
+        TableColumn[] columns = {nameCol, stateCol, responsibilitiesCol, leftCol, spentCol};
+        taskTable.getColumns().setAll(columns);
+
+        // Listener to disable columns being movable
+        taskTable.getColumns().addListener(new ListChangeListener() {
+            public boolean suspended;
+
+            @Override
+            public void onChanged(ListChangeListener.Change change) {
+                change.next();
+                if (change.wasReplaced() && !suspended) {
+                    this.suspended = true;
+                    taskTable.getColumns().setAll(columns);
+                    this.suspended = false;
+                }
+            }
+        });
+        
         basicInfoPane.getChildren().add(taskTable);
         basicInfoPane.getChildren().add(btnEdit);
 
 
-
+        
         btnEdit.setOnAction((event) -> {
                 currentStory.switchToInfoScene(true);
             });
