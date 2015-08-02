@@ -50,7 +50,6 @@ public class StoryTest {
         Assert.assertEquals("Test Story", testStory.toString());
         Assert.assertEquals(project, testStory.getProject());
 
-        Assert.assertNull(testStory.getChildren());
     }
 
     /**
