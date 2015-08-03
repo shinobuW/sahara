@@ -1,5 +1,6 @@
 package seng302.group2.scenes.information.project.story;
 
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -16,9 +17,6 @@ import seng302.group2.workspace.project.story.tasks.Task;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import static javafx.collections.FXCollections.observableArrayList;
-import javafx.collections.ListChangeListener;
 
 /**
  * The story information tab.

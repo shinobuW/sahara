@@ -1,15 +1,12 @@
 package seng302.group2.scenes.information.project.story;
 
-import javafx.scene.control.Tab;
-import org.omg.PortableServer.POAPackage.ServantAlreadyActive;
 import seng302.group2.scenes.control.TrackedTabPane;
-import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.project.story.Story;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 
 /**
  * A class for displaying the story scene
@@ -17,7 +14,7 @@ import java.util.HashSet;
  */
 public class StoryScene extends TrackedTabPane {
 
-    Collection<SearchableTab> searchableTabs = new HashSet<>();
+    Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
     /**
      * Constructor for the Story Scene. Creates instances of the StoryInfoTab, StoryAcTab and StoryDependenciedTab

@@ -1,13 +1,12 @@
 package seng302.group2.scenes.information.project.sprint;
 
-import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.categories.subCategory.project.SprintCategory;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 
 /**
  * A class for displaying the sprint category. Contains information
@@ -17,7 +16,7 @@ import java.util.HashSet;
  */
 public class SprintCategoryScene extends TrackedTabPane {
 
-    Collection<SearchableTab> searchableTabs = new HashSet<>();
+    Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
     public SprintCategoryScene(SprintCategory selectedCategory) {
         super(ContentScene.SPRINT_CATEGORY, selectedCategory.getProject());

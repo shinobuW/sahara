@@ -3,7 +3,6 @@ package seng302.group2.scenes.information.project.sprint;
 import javafx.geometry.Insets;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.chart.BurndownChart;

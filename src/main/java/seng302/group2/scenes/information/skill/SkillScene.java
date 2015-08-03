@@ -2,13 +2,12 @@ package seng302.group2.scenes.information.skill;
 
 import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
-import seng302.group2.scenes.control.search.SearchableScene;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.skills.Skill;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 
 /**
  * A class for displaying the skill scene
@@ -17,7 +16,7 @@ import java.util.HashSet;
  */
 public class SkillScene extends TrackedTabPane {
 
-    Collection<SearchableTab> searchableTabs = new HashSet<>();
+    Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
     /**
      * Constructor for the SkillScene class. Displays an instance of SkillInfoTab.

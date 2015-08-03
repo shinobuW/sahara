@@ -2,7 +2,10 @@ package seng302.group2.scenes.information.project.backlog;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -11,7 +14,6 @@ import seng302.group2.Global;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.dialog.CreateBacklogDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
@@ -20,7 +22,6 @@ import seng302.group2.workspace.role.Role;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;

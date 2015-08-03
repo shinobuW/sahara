@@ -2,8 +2,6 @@ package seng302.group2.scenes.control.search;
 
 import javafx.scene.control.TextField;
 import seng302.group2.App;
-import seng302.group2.scenes.information.skill.SkillInfoTab;
-import seng302.group2.scenes.information.skill.SkillScene;
 
 import java.util.Collection;
 

@@ -5,9 +5,9 @@ import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.team.Team;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 
 /**
  * A class for displaying the Team Scene
@@ -16,7 +16,7 @@ import java.util.HashSet;
  */
 public class TeamScene extends TrackedTabPane {
 
-    Collection<SearchableTab> searchableTabs = new HashSet<>();
+    Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
     /**
      * Constructor for the Team scene. Creates an instance of the TeamInfoTab and displays it. If the team is not

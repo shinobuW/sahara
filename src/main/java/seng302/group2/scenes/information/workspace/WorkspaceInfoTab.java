@@ -2,12 +2,9 @@ package seng302.group2.scenes.information.workspace;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;

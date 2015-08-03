@@ -2,7 +2,7 @@ package seng302.group2.workspace.project.story.tasks;
 
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
-import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.StoryInformationSwitchStrategy;
+import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.story.TaskInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.story.TaskInformationSwitchStrategy;
 
 /**
  * Created by cvs20 on 27/07/15.

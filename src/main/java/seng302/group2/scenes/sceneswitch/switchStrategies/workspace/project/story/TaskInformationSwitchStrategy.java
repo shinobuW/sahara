@@ -8,12 +8,9 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.sto
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import seng302.group2.App;
-import seng302.group2.scenes.information.project.story.StoryScene;
 import seng302.group2.scenes.information.project.story.task.TaskScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
-import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.StoryInformationSwitchStrategy;
 import seng302.group2.workspace.SaharaItem;
-import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 /**

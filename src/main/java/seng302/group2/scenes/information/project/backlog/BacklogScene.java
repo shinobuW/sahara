@@ -1,13 +1,12 @@
 package seng302.group2.scenes.information.project.backlog;
 
-import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.project.backlog.Backlog;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 
 /**
  * A class for displaying the Backlog Scene.
@@ -16,7 +15,7 @@ import java.util.HashSet;
  */
 public class BacklogScene extends TrackedTabPane {
 
-    Collection<SearchableTab> searchableTabs = new HashSet<>();
+    Collection<SearchableTab> searchableTabs = new ArrayList<>();
     
     /**
      * Constructor for the Backlog scene

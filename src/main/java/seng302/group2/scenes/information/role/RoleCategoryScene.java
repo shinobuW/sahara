@@ -1,13 +1,12 @@
 package seng302.group2.scenes.information.role;
 
-import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.workspace.Workspace;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 
 /**
  * A class for displaying the role category. Contains information
@@ -17,7 +16,7 @@ import java.util.HashSet;
  */
 public class RoleCategoryScene extends TrackedTabPane {
 
-    Collection<SearchableTab> searchableTabs = new HashSet<>();
+    Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
     /**
      * Constructor for the RoleCategoryScene class. Creates a tab

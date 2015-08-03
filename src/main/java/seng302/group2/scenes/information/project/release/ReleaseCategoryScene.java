@@ -1,13 +1,12 @@
 package seng302.group2.scenes.information.project.release;
 
-import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 
 /**
  * A class for displaying the release category. Contains information
@@ -17,7 +16,7 @@ import java.util.HashSet;
  */
 public class ReleaseCategoryScene extends TrackedTabPane {
 
-    Collection<SearchableTab> searchableTabs = new HashSet<>();
+    Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
     /**
      * Constructor for the ReleaseCategoryScene class. Creates a tab

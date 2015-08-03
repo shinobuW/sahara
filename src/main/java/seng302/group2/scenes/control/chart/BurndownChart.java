@@ -39,11 +39,14 @@ public class BurndownChart extends LineChart {
 
         this.setTitle(currentSprint.getGoal() + " burndown");
         //define series
-        XYChart.Series series1 = new XYChart.Series();
+        Series<Number, Number> series1 = new Series();
         series1.setName("Test Series 1");
 
-        XYChart.Series series2 = new XYChart.Series();
+        Series<Number, Number> series2 = new Series();
         series2.setName("Test Series 2");
+
+        Series<Number, Number> referenceVelocity = new Series();
+        referenceVelocity.setName("Reference Velocity");
 
         //populate series with mock data
         series1.getData().add(new XYChart.Data(0, 0));
@@ -72,10 +75,16 @@ public class BurndownChart extends LineChart {
         series2.getData().add(new XYChart.Data(10, 7));
         series2.getData().add(new XYChart.Data(11, 0));
 
+        referenceVelocity.getData().add(new XYChart.Data(0, 35));
+        referenceVelocity.getData().add(new XYChart.Data(11, 0));
 
-        series1.nodeProperty().setValue("-fx-stroke-width: 100px;");
+
+
+
+        //referenceVelocity.nodeProperty().get().setStyle("-fx-stroke-width: 1px;");
         this.getData().add(series1);
         this.getData().add(series2);
+        this.getData().add(referenceVelocity);
 
     }
 }
