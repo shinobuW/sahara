@@ -1,0 +1,7 @@
+.chart {
+    -fx-padding: 10px;
+    -fx-background-color: aqua;
+}
+.chart-content {
+    -fx-padding: 30px;
+}

@@ -17,6 +17,14 @@ public class BurndownChart extends LineChart {
 
     public BurndownChart(Axis axis, Axis axis2) {
         super(axis, axis2);
+        try {
+            String css = this.getClass().getResource("/styles/chart.css").toExternalForm();
+            this.getStylesheets().add(css);
+            //this.getStylesheets().add("/main/java/seng302.group2/util/style/chart.css");
+        }
+        catch (Exception ex) {
+            System.err.println("Cannot acquire stylesheet: " + ex.toString());
+        }
     }
 
     public void populateGraph(Sprint currentSprint) {
