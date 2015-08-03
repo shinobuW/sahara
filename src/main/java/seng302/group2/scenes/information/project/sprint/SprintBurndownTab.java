@@ -42,10 +42,15 @@ public class SprintBurndownTab extends SearchableTab {
         //defining the axes
         configureAxis();
         BurndownChart burndown = new BurndownChart(xAxis, yAxis);
+        burndown.setPrefSize(800, 600);
+        burndown.setMaxSize(800, 600);
         burndown.populateGraph(currentSprint);
         burndownPane.getChildren().add(burndown);
     }
 
+    /**
+     * Sets the axis configuration.
+     */
     private void configureAxis() {
         xAxis.setLabel("Date");
         yAxis.setLabel("Hours");

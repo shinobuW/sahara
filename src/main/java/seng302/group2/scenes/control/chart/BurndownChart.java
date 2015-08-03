@@ -8,7 +8,8 @@ import seng302.group2.workspace.project.sprint.Sprint;
 
 
 /**
-* Created by btm38 on 31/07/15.
+ * A class for displaying a burndown chart.
+ * Created by btm38 on 31/07/15.
 */
 public class BurndownChart extends LineChart {
     private NumberAxis xAxis = new NumberAxis();
@@ -27,7 +28,16 @@ public class BurndownChart extends LineChart {
         }
     }
 
+
+    /**
+     * Populates the chart with the information passed through in the current sprint.
+     * This function will define the series, css, titles, and any other graph functionality.
+     * @param currentSprint the sprint the chart is displaying.
+     */
     public void populateGraph(Sprint currentSprint) {
+
+
+        this.setTitle(currentSprint.getGoal() + " burndown");
         //define series
         XYChart.Series series1 = new XYChart.Series();
         series1.setName("Test Series 1");
@@ -66,7 +76,6 @@ public class BurndownChart extends LineChart {
         series1.nodeProperty().setValue("-fx-stroke-width: 100px;");
         this.getData().add(series1);
         this.getData().add(series2);
-
 
     }
 }
