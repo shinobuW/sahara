@@ -1,4 +1,4 @@
-package seng302.group2.scenes.information.project.story;
+package seng302.group2.scenes.information.project.sprint;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +17,7 @@ import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
 
@@ -42,13 +43,13 @@ public class TestingCellTestTab extends SearchableTab {
     /**
      * Constructor for the Backlog Info tab
      *
-     * @param currentStory The currently selected backlog
+     * @param currentSprint The currently selected backlog
      */
-    public TestingCellTestTab(Story currentStory) {
+    public TestingCellTestTab(Sprint currentSprint) {
         lanes.add(laneOne);
         lanes.add(laneTwo);
         initializeListeners();
-        laneOneStories.addAll(currentStory.getTasks());
+        laneOneStories.addAll(currentSprint.getAllTasks());
 
         this.setText("TEST | Tasks");
         Pane basicInfoPane = new VBox(10);
@@ -58,7 +59,7 @@ public class TestingCellTestTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        Label title = new TitleLabel(currentStory.getLongName());
+        Label title = new TitleLabel(currentSprint.getLongName());
         basicInfoPane.getChildren().add(title);
 
         basicInfoPane.getChildren().add(new Label("Tasks: "));

@@ -1,4 +1,4 @@
-package seng302.group2.scenes.information.project.story;
+package seng302.group2.scenes.information.project.sprint;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

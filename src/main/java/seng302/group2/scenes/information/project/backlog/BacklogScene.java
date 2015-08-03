@@ -2,7 +2,6 @@ package seng302.group2.scenes.information.project.backlog;
 
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.information.project.story.TestingCellTestTab;
 import seng302.group2.workspace.project.backlog.Backlog;
 
 import java.util.ArrayList;

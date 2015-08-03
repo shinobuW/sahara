@@ -2,6 +2,7 @@ package seng302.group2.scenes.information.project.story;
 
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.information.project.sprint.TestingCellTestTab;
 import seng302.group2.workspace.project.story.Story;
 
 import java.util.ArrayList;
@@ -31,9 +32,8 @@ public class StoryScene extends TrackedTabPane {
         SearchableTab informationTab = new StoryInfoTab(currentStory);
         SearchableTab acceptanceCriteriaTab = new StoryAcTab(currentStory);
         SearchableTab dependantTab = new StoryDependenciesTab(currentStory);
-        SearchableTab scrumboardTab = new TestingCellTestTab(currentStory);
 
-        Collections.addAll(searchableTabs, informationTab, acceptanceCriteriaTab, dependantTab, scrumboardTab);
+        Collections.addAll(searchableTabs, informationTab, acceptanceCriteriaTab, dependantTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 
