@@ -40,15 +40,15 @@ public class SprintBurndownTab extends SearchableTab {
         this.setContent(wrapper);
 
         //defining the axes
-        //configureAxis();
+        configureAxis();
         BurndownChart burndown = new BurndownChart(xAxis, yAxis);
         burndown.populateGraph(currentSprint);
         burndownPane.getChildren().add(burndown);
     }
 
     private void configureAxis() {
-        xAxis.setLabel("Sprint Duration (Days)");
-        yAxis.setLabel("Hours worked by JD");
+        xAxis.setLabel("Date");
+        yAxis.setLabel("Hours");
     }
 
     /**
