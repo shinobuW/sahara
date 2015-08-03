@@ -11,6 +11,9 @@ import java.io.Serializable;
 import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import seng302.group2.Global;
+import seng302.group2.util.undoredo.Command;
+import seng302.group2.workspace.project.story.Story;
 
 /**
  * Created by cvs20 on 27/07/15.
@@ -28,6 +31,7 @@ public class Task extends SaharaItem implements Serializable {
     private String description;
     private String impediments;
     private TASKSTATE state;
+    private Story story;
     private transient ObservableList<Person> responsibilities = observableArrayList();
     private List<Person> serializableResponsibilities = new ArrayList<>();
     private transient ObservableList<Log> logs = observableArrayList();
@@ -57,6 +61,7 @@ public class Task extends SaharaItem implements Serializable {
         this.shortName = "Untitled Task";
         this.description = "";
         this.impediments = "";
+        this.story = null;
         this.state = TASKSTATE.NOT_STARTED;
         setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
     }
@@ -67,13 +72,14 @@ public class Task extends SaharaItem implements Serializable {
      * @param shortName The shortname of the Task
      * @param description The description of the task
      */
-    public Task(String shortName, String description) {
+    public Task(String shortName, String description, Story story) {
         super(shortName);
         this.shortName = shortName;
         this.description = description;
         this.impediments = "";
         this.state = TASKSTATE.NOT_STARTED;
-
+        this.story = story;
+        
         setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
     }
 
@@ -121,6 +127,15 @@ public class Task extends SaharaItem implements Serializable {
      */
     public TASKSTATE getState() {
         return this.state;
+    }
+    
+    /**
+     * Gets the story of the current task
+     *
+     * @return the story the Task is on
+     */
+    public Story getStory() {
+        return this.story;
     }
 
     /**
@@ -248,7 +263,194 @@ public class Task extends SaharaItem implements Serializable {
         PENDING,
         DEFERRED
     }
+ 
 
+    /**
+     * Creates a Task edit command and executes it with the Global Command Manager, updating
+     * the task with the new parameter values.
+     *
+     * @param newShortName   The new short name
+     * @param newDescription The new description
+     * @param newImpediments The new Impediments
+     * @param newState    The new state
+     * @param newResponsibilities The new Responsibilities
+     * @param newLogs The new Logs
+     */
+    public void edit(String newShortName, String newDescription, String newImpediments, TASKSTATE newState
+                     , List<Person> newResponsibilities,  List<Log> newLogs) {
+        Command relEdit = new TaskEditCommand(this, newShortName, newDescription, newImpediments,
+                newState, newResponsibilities, newLogs);
+
+        Global.commandManager.executeCommand(relEdit);
+    }
+    
+    /**
+     * A command class that allows the executing and undoing of task edits
+     */
+    private class TaskEditCommand implements Command {
+        private Task task;
+
+        private String shortName;
+        private String description;
+        private String impediments;
+        private Collection<Person> responsibilities;
+        private Collection<Log> logs;
+
+
+        private String oldShortName;
+        private String oldDescription;
+        private String oldImpediments;
+        private Collection<Person> oldResponsibilities;
+        private Collection<Log> oldLogs;
+        
+        /**
+         * Constructor for the Task Edit command.
+         * @param story The story to be edited
+         * @param newShortName   The new short name
+         * @param newDescription The new description
+         * @param newImpediments The new Impediments
+         * @param newState    The new state
+         * @param newResponsibilities The new Responsibilities
+         * @param newLogs The new Logs
+         */
+        private TaskEditCommand(Task task, String newShortName, String newDescription, 
+                String newImpediments, TASKSTATE newState,
+                List<Person> newResponsibilities,  List<Log> newLogs) {
+            this.task = task;
+
+            this.shortName = newShortName;
+            this.description = newDescription;
+            this.impediments = newImpediments;
+            this.responsibilities = new HashSet<>();
+            this.responsibilities.addAll(newResponsibilities);
+            this.logs = new HashSet<>();
+            this.logs.addAll(newLogs);
+
+            this.oldShortName = task.shortName;
+            this.oldDescription = task.description;
+            this.oldImpediments = task.impediments;
+            this.oldResponsibilities = new HashSet<>();
+            this.oldResponsibilities.addAll(task.responsibilities);
+            this.oldLogs = new HashSet<>();
+            this.oldLogs.addAll(task.logs);
+
+            
+        }
+
+        /**
+         * Executes/Redoes the changes of the task edit
+         */
+        public void execute() {
+            task.shortName = shortName;
+            task.description = description;
+            task.impediments = impediments;
+            
+            task.responsibilities.clear();
+            task.responsibilities.addAll(responsibilities);
+            
+            task.logs.clear();
+            task.logs.addAll(logs);
+        }
+
+        /**
+         * Undoes the changes of the task edit
+         */
+        public void undo() {
+            task.shortName = oldShortName;
+            task.description = oldDescription;
+            task.description = oldImpediments;
+           
+
+            task.responsibilities.clear();
+            task.responsibilities.addAll(oldResponsibilities);
+            
+            task.logs.clear();
+            task.logs.addAll(oldLogs);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped_task = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(task)) {
+                    this.task = (Task) item;
+                    mapped_task = true;
+                }
+            }
+
+            return  mapped_task;
+        }
+    }
+    
+    
+    /**
+     * A class for implementing task deletion in the Command undo/redo structure.
+     */
+    private class DeleteTaskCommand implements Command {
+        private Task task;
+        private Story story;
+        // TODO maybe needs sprint added in here as well for tasks without a story.
+        
+        /**
+         * Contructor for a task deletion command.
+         *
+         * @param task The task to delete
+         */
+        DeleteTaskCommand(Task task) {
+            this.task = task;
+            this.story = task.getStory();
+        }
+
+        /**
+         * Executes the deletion of a task.
+         */
+        public void execute() {
+            if (story != null) {
+                story.getTasks().remove(task);
+            }
+        }
+
+        /**
+         * Undoes the deletion of a task.
+         */
+        public void undo() {
+            if (story != null) {
+                story.getTasks().add(task);
+            }
+            
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped_task = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equals(task)) {
+                    this.task = (Task) item;
+                    mapped_task = true;
+                }
+            }
+            
+            boolean mapped_story = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equals(story)) {
+                    this.story = (Story) item;
+                    mapped_story = true;
+                }
+            }
+            
+            return mapped_task && mapped_story;
+        }
+    }
 
 
 }
