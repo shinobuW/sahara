@@ -3,11 +3,11 @@ package seng302.group2.scenes.dialog;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Dialog;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
@@ -47,13 +47,57 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
 
         // Add elements to grid
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
+
+        //Create Project Combo box
         ComboBox<Project> projectComboBox = new ComboBox<>();
-        projectComboBox.setPrefWidth(180);
+        projectComboBox.setStyle("-fx-pref-width: 175;");
+        Label projectComboLabel = new Label("Project:");
+        HBox projectComboHBox = new HBox(projectComboLabel);
+
+        Label aster1 = new Label(" * ");
+        aster1.setTextFill(Color.web("#ff0000"));
+        projectComboHBox.getChildren().add(aster1);
+
+        VBox projectVBox = new VBox();
+        HBox projectCombo = new HBox();
+        projectCombo.getChildren().addAll(projectComboHBox, projectComboBox);
+        HBox.setHgrow(projectComboHBox, Priority.ALWAYS);
+        projectVBox.getChildren().add(projectCombo);
+
+        //Create Backlog Combo Box
         ComboBox<Backlog> backlogComboBox = new ComboBox<>();
-        backlogComboBox.setPrefWidth(180);
-        backlogComboBox.setDisable(true);
+        backlogComboBox.setStyle("-fx-pref-width: 175;");
+        Label backlogComboLabel = new Label("Backlog:");
+        HBox backlogComboHBox = new HBox(backlogComboLabel);
+
+        Label aster2 = new Label(" * ");
+        aster2.setTextFill(Color.web("#ff0000"));
+        backlogComboHBox.getChildren().add(aster2);
+
+        VBox backlogVBox = new VBox();
+        HBox backlogCombo = new HBox();
+        backlogCombo.getChildren().addAll(backlogComboHBox, backlogComboBox);
+        HBox.setHgrow(backlogComboHBox, Priority.ALWAYS);
+        backlogVBox.getChildren().add(backlogCombo);
+
+        //Create Story Combo Box
         ComboBox<Story> storyComboBox = new ComboBox<>();
-        storyComboBox.setPrefWidth(180);
+        storyComboBox.setStyle("-fx-pref-width: 175;");
+        Label storyComboLabel = new Label("Story:");
+        HBox storyComboHBox = new HBox(storyComboLabel);
+
+        Label aster3 = new Label(" * ");
+        aster3.setTextFill(Color.web("#ff0000"));
+        storyComboHBox.getChildren().add(aster3);
+
+        VBox storyVBox = new VBox();
+        HBox storyCombo = new HBox();
+        storyCombo.getChildren().addAll(storyComboHBox, storyComboBox);
+        HBox.setHgrow(storyComboHBox, Priority.ALWAYS);
+        storyVBox.getChildren().add(storyCombo);
+        
+
+        backlogComboBox.setDisable(true);
         storyComboBox.setDisable(true);
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
 
@@ -64,8 +108,8 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
             projectComboBox.getItems().add(project);
         }
 
-        grid.getChildren().addAll(shortNameCustomField, projectComboBox,
-                backlogComboBox,storyComboBox, descriptionTextArea);
+        grid.getChildren().addAll(shortNameCustomField, projectVBox,
+                backlogVBox, storyVBox, descriptionTextArea);
 
         this.getDialogPane().setContent(grid);
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
@@ -111,6 +155,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                         String description = descriptionTextArea.getText();
                         Task task = new Task(shortName, description);
                         storyComboBox.getSelectionModel().getSelectedItem().add(task);
+                        App.refreshMainScene();
                         App.mainPane.selectItem(task);
                         this.close();
                     }
