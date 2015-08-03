@@ -1,4 +1,4 @@
-package seng302.group2.scenes.information.project.backlog;
+package seng302.group2.scenes.information.project.story;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,8 +17,8 @@ import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.SaharaItem;
-import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.*;
 
@@ -30,27 +30,27 @@ public class TestingCellTestTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
 
-    ObservableList<Story> laneOneStories = FXCollections.observableArrayList();
-    ObservableList<Story> laneTwoStories = FXCollections.observableArrayList();
+    ObservableList<Task> laneOneStories = FXCollections.observableArrayList();
+    ObservableList<Task> laneTwoStories = FXCollections.observableArrayList();
 
-    ListView<Story> laneOne = new ListView<>(laneOneStories);
-    ListView<Story> laneTwo = new ListView<>(laneTwoStories);
+    ListView<Task> laneOne = new ListView<>(laneOneStories);
+    ListView<Task> laneTwo = new ListView<>(laneTwoStories);
 
-    Set<ListView<Story>> lanes = new HashSet<>();
+    Set<ListView<Task>> lanes = new HashSet<>();
 
 
     /**
      * Constructor for the Backlog Info tab
      *
-     * @param currentBacklog The currently selected backlog
+     * @param currentStory The currently selected backlog
      */
-    public TestingCellTestTab(Backlog currentBacklog) {
+    public TestingCellTestTab(Story currentStory) {
         lanes.add(laneOne);
         lanes.add(laneTwo);
         initializeListeners();
-        laneOneStories.addAll(currentBacklog.getStories());
+        laneOneStories.addAll(currentStory.getTasks());
 
-        this.setText("TEST");
+        this.setText("TEST | Tasks");
         Pane basicInfoPane = new VBox(10);
 
         basicInfoPane.setBorder(null);
@@ -58,10 +58,10 @@ public class TestingCellTestTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        Label title = new TitleLabel(currentBacklog.getLongName());
+        Label title = new TitleLabel(currentStory.getLongName());
         basicInfoPane.getChildren().add(title);
 
-        basicInfoPane.getChildren().add(new Label("Stories: "));
+        basicInfoPane.getChildren().add(new Label("Tasks: "));
 
         laneOne.setCellFactory(list -> new TestingCellFactory());
         laneTwo.setCellFactory(List -> new TestingCellFactory());
@@ -74,11 +74,11 @@ public class TestingCellTestTab extends SearchableTab {
 
 
 
-    public Story getStoryByName(String name) {
+    public Task getTaskByName(String name) {
         System.out.println("Name: " + name);
         for (SaharaItem item : Global.currentWorkspace.getItemsSet()) {
-            if (item instanceof Story && ((Story) item).getShortName().equals(name)) {
-                return (Story)item;
+            if (item instanceof Task && ((Task) item).getShortName().equals(name)) {
+                return (Task)item;
             }
         }
         return null;
@@ -107,11 +107,11 @@ public class TestingCellTestTab extends SearchableTab {
         laneTwo.setOnDragDropped(dragEvent -> {
                 String player = dragEvent.getDragboard().getString();
 
-                Story story = getStoryByName(player);
-                if (!laneTwoStories.contains(story)) {
-                    laneTwoStories.add(story);
+                Task task = getTaskByName(player);
+                if (!laneTwoStories.contains(task)) {
+                    laneTwoStories.add(task);
                 }
-                laneOneStories.remove(story);
+                laneOneStories.remove(task);
                 dragEvent.setDropCompleted(true);
             });
         // drag from right to left
@@ -128,11 +128,11 @@ public class TestingCellTestTab extends SearchableTab {
         laneOne.setOnDragDropped(dragEvent -> {
                 String player = dragEvent.getDragboard().getString();
 
-                Story story = getStoryByName(player);
-                if (!laneOneStories.contains(story)) {
-                    laneOneStories.add(story);
+                Task task = getTaskByName(player);
+                if (!laneOneStories.contains(task)) {
+                    laneOneStories.add(task);
                 }
-                laneTwoStories.remove(story);
+                laneTwoStories.remove(task);
                 dragEvent.setDropCompleted(true);
             });
     }

@@ -31,7 +31,9 @@ public class StoryScene extends TrackedTabPane {
         SearchableTab informationTab = new StoryInfoTab(currentStory);
         SearchableTab acceptanceCriteriaTab = new StoryAcTab(currentStory);
         SearchableTab dependantTab = new StoryDependenciesTab(currentStory);
-        Collections.addAll(searchableTabs, informationTab, acceptanceCriteriaTab, dependantTab);
+        SearchableTab scrumboardTab = new TestingCellTestTab(currentStory);
+
+        Collections.addAll(searchableTabs, informationTab, acceptanceCriteriaTab, dependantTab, scrumboardTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 
@@ -46,8 +48,8 @@ public class StoryScene extends TrackedTabPane {
 
         // Define and add the tabs
         SearchableTab editTab = new StoryEditTab(currentStory);
-        Collections.addAll(searchableTabs, editTab);
 
+        Collections.addAll(searchableTabs, editTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 

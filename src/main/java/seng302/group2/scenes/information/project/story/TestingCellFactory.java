@@ -1,4 +1,4 @@
-package seng302.group2.scenes.information.project.backlog;
+package seng302.group2.scenes.information.project.story;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,13 +10,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.tasks.Task;
 
 /**
  * Created by Jordane on 23/07/2015.
  */
-public class TestingCellFactory extends ListCell<Story> {
+public class TestingCellFactory extends ListCell<Task> {
     @Override
-    public void updateItem(Story item, boolean empty) {
+    public void updateItem(Task item, boolean empty) {
         super.updateItem(item, empty);
         if (item != null) {
             HBox content = new HBox();
@@ -25,7 +26,7 @@ public class TestingCellFactory extends ListCell<Story> {
 
 
             Rectangle rect = new Rectangle(4, 48);
-            rect.setFill(Color.web(item.getColour()));
+            rect.setFill(Color.ALICEBLUE); //(Color.web(item.getColour()));
 
 
             VBox info = new VBox();

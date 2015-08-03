@@ -2,6 +2,7 @@ package seng302.group2.scenes.information.project.backlog;
 
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.information.project.story.TestingCellTestTab;
 import seng302.group2.workspace.project.backlog.Backlog;
 
 import java.util.ArrayList;
@@ -28,8 +29,8 @@ public class BacklogScene extends TrackedTabPane {
         // Define and add the tabs
         SearchableTab informationTab = new BacklogInfoTab(currentBacklog);
         SearchableTab scaleInfoTab = new StoryEstimationScaleInfoTab();
-        SearchableTab testTab = new TestingCellTestTab(currentBacklog);
-        Collections.addAll(searchableTabs, informationTab, scaleInfoTab, testTab);
+
+        Collections.addAll(searchableTabs, informationTab, scaleInfoTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 
