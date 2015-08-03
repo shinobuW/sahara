@@ -23,7 +23,7 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
 
     public SearchableListView(ObservableList<Skill> listItems) {
         super();
-        for (Skill i : listItems){
+        for (Skill i : listItems) {
             listView.getItems().add((T) i);
         }
 
