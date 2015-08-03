@@ -12,9 +12,10 @@ import seng302.group2.workspace.project.sprint.Sprint;
  * Created by btm38 on 31/07/15.
 */
 public class BurndownChart extends LineChart {
-    private NumberAxis xAxis = new NumberAxis();
-    private NumberAxis yAxis = new NumberAxis();
-    private LineChart<Number,Number> burndownChart = new LineChart<>(xAxis,yAxis);
+    //do i need these privateS?
+    // private NumberAxis xAxis = new NumberAxis();
+    // private NumberAxis yAxis = new NumberAxis();
+    // private LineChart<Number,Number> burndownChart = new LineChart<>(xAxis,yAxis);
 
     public BurndownChart(Axis axis, Axis axis2) {
         super(axis, axis2);

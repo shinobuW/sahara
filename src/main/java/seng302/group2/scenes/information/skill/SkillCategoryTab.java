@@ -7,11 +7,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
+import seng302.group2.Global;
+import seng302.group2.scenes.control.SearchableListView;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
@@ -39,7 +43,7 @@ public class SkillCategoryTab extends SearchableTab {
         categoryPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(categoryPane);
         this.setContent(wrapper);
-        Label title = new TitleLabel("Skills in " + currentWorkspace.getShortName());
+        SearchableText title = new SearchableText("Skills in " + currentWorkspace.getShortName());
 
         Button btnView = new Button("View");
         Button btnDelete = new Button("Delete");
@@ -52,13 +56,22 @@ public class SkillCategoryTab extends SearchableTab {
         selectionButtons.getChildren().add(btnCreate);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
-        ListView skillBox = new ListView<>(currentWorkspace.getSkills());
+        SearchableListView<Skill> skillBox = new SearchableListView<>(currentWorkspace.getSkills());
+        for (Skill i : currentWorkspace.getSkills()) {
+            skillBox.getItems().add(i);
+        }
+
         skillBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         skillBox.setMaxWidth(275);
 
         categoryPane.getChildren().add(title);
         categoryPane.getChildren().add(skillBox);
         categoryPane.getChildren().add(selectionButtons);
+
+        searchControls.add(title);
+        searchControls.add(skillBox);
+        System.out.println();
+
 
 
         btnView.setOnAction((event) -> {
