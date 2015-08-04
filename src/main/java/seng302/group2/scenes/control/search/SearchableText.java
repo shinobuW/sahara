@@ -13,6 +13,9 @@ import java.util.List;
  */
 public class SearchableText extends TextFlow implements SearchableControl {
     List<TextFlow> texts = new ArrayList<>();
+    String styleDefault = "-fx-border-color: inherit;";
+    String styleInject = "";
+    String styleHighlighted = "-fx-background-color:" + SearchableControl.highlightColour + ";";
 
     /**
      * Creates a SearchableText TextFlow element
@@ -22,12 +25,22 @@ public class SearchableText extends TextFlow implements SearchableControl {
         updateFlow();
     }
 
-
     /**
      * Creates a SearchableText TextFlow element
      * @param content The initial string text of the SearchableText
      */
     public SearchableText(String content) {
+        texts.add(new TextFlow(new Text(content)));
+        updateFlow();
+    }
+
+
+    /**
+     * Creates a SearchableText TextFlow element with the applied JavaFX style string
+     */
+    public SearchableText(String content, String style) {
+        this.styleInject = style;
+        this.setStyle(styleInject);
         texts.add(new TextFlow(new Text(content)));
         updateFlow();
     }
@@ -92,7 +105,7 @@ public class SearchableText extends TextFlow implements SearchableControl {
 
         if (index == -1 || query.trim().isEmpty()) {
             for (TextFlow flow : texts) {
-                flow.setStyle("-fx-border-color: inherit");
+                flow.setStyle(styleDefault + styleInject);
                 updateFlow();
             }
             return false;  // Query not in text, keep a single, stitched Text node.
@@ -102,7 +115,7 @@ public class SearchableText extends TextFlow implements SearchableControl {
         while (index != -1) {
             Text matchText = new Text(content.substring(index, index + query.length()));
             TextFlow match = new TextFlow(matchText);
-            match.setStyle("-fx-background-color:" + SearchableControl.highlightColour + ";");
+            match.setStyle(styleInject + styleHighlighted);
             builtText.add(new TextFlow(new Text(content.substring(0, index))));  // Start
             builtText.add(match);  // Query match
             builtText.add(new TextFlow(new Text(content.substring(index + query.length(), content.length()))));  // End

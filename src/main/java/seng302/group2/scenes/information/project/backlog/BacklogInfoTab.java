@@ -15,6 +15,7 @@ import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
 
@@ -40,8 +41,6 @@ public class BacklogInfoTab extends SearchableTab {
      * @param currentBacklog The currently selected backlog
      */
     public BacklogInfoTab(Backlog currentBacklog) {
-        final Stage stage;
-
         this.setText("Basic Information");
         Pane basicInfoPane = new VBox(10);
 
@@ -50,7 +49,7 @@ public class BacklogInfoTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        Label title = new TitleLabel(currentBacklog.getLongName());
+        SearchableText title = new SearchableTitle(currentBacklog.getLongName());
 
         Button btnEdit = new Button("Edit");
         Button btnView = new Button("View");
@@ -203,7 +202,7 @@ public class BacklogInfoTab extends SearchableTab {
             });
 
         Collections.addAll(searchControls, orangeKeyLabel, greenKeyLabel, redKeyLabel, shortName, description, project,
-                po, estScale, storiesTableLabel);
+                po, estScale, storiesTableLabel, title);
     }
 
     /**
