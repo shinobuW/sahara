@@ -1,4 +1,4 @@
-/.workspace
-/target/
-/config
-/.idea
+target
+config
+project-2.iml
+.idea
