@@ -183,13 +183,15 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctShortName = validateShortName(shortNameCustomField, null);
                 createButton.setDisable(!(correctShortName && correctLongName
-                        && backlogSelected() && teamSelected() && releaseSelected() && startDateSelected() && endDateSelected()));
+                        && backlogSelected() && teamSelected() && releaseSelected()
+                        && startDateSelected() && endDateSelected()));
             });
 
         longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newvalue) -> {
                 correctLongName = validateName(longNameCustomField);
                 createButton.setDisable(!(correctShortName && correctLongName
-                        && backlogSelected() && teamSelected() && releaseSelected() && startDateSelected() && endDateSelected()));
+                        && backlogSelected() && teamSelected() && releaseSelected()
+                        && startDateSelected() && endDateSelected()));
             });
 
         backlogComboBox.valueProperty().addListener(new ChangeListener<Backlog>() {
@@ -289,9 +291,13 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
         return !(releaseComboBox.getValue() == null);
     }
 
-    private Boolean startDateSelected() { return !(sprintStartDatePicker.getValue() == null); }
+    private Boolean startDateSelected() {
+        return !(sprintStartDatePicker.getValue() == null);
+    }
 
-    private Boolean endDateSelected() { return !(sprintEndDatePicker.getValue() == null); }
+    private Boolean endDateSelected() {
+        return !(sprintEndDatePicker.getValue() == null);
+    }
 
 
 }
