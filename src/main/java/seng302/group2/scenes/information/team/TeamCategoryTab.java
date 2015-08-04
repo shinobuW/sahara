@@ -41,7 +41,7 @@ public class TeamCategoryTab extends SearchableTab {
         categoryPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(categoryPane);
         this.setContent(wrapper);
-        SearchableText title = new SearchableTitle("Teafgs in " + currentWorkspace.getShortName(), searchControls);
+        SearchableText title = new SearchableTitle("Teams in " + currentWorkspace.getShortName(), searchControls);
 
         Button btnView = new Button("View");
         Button btnDelete = new Button("Delete");
