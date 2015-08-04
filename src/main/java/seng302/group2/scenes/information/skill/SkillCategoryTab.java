@@ -13,6 +13,7 @@ import seng302.group2.scenes.control.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.skills.Skill;
@@ -43,7 +44,7 @@ public class SkillCategoryTab extends SearchableTab {
         categoryPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(categoryPane);
         this.setContent(wrapper);
-        SearchableText title = new SearchableText("Skills in " + currentWorkspace.getShortName());
+        SearchableText title = new SearchableTitle("Skills in " + currentWorkspace.getShortName());
 
         Button btnView = new Button("View");
         Button btnDelete = new Button("Delete");

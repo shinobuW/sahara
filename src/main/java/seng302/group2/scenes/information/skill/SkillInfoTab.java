@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.skills.Skill;
 
 import java.util.ArrayList;
@@ -38,12 +39,8 @@ public class SkillInfoTab extends SearchableTab {
         this.setContent(wrapper);
 
 
-        SearchableText title = new SearchableText("Short Name");
-        title.setText(currentSkill.getShortName());
-
-        SearchableText desc = new SearchableText("Skill Description");
-        desc.setText("Skill Description: " + currentSkill.getShortName());
-
+        SearchableText title = new SearchableTitle(currentSkill.getShortName());
+        SearchableText desc = new SearchableText("Description: " + currentSkill.getDescription());
 
         Button btnEdit = new Button("Edit");
 

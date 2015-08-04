@@ -7,6 +7,7 @@ import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.person.Person;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ public class PersonInfoTab extends SearchableTab {
         this.setContent(wrapper);
 
 
-        SearchableText title = new SearchableText(currentPerson.getFirstName() + " "
+        SearchableText title = new SearchableTitle(currentPerson.getFirstName() + " "
                 + currentPerson.getLastName());
 
         Button btnEdit = new Button("Edit");
@@ -59,6 +60,7 @@ public class PersonInfoTab extends SearchableTab {
         SearchableText skill  = new SearchableText("Skills: ");
         basicInfoPane.getChildren().addAll(title, shortName, emailAddress, birthDate, desc, team, role, separator,
                 skill, personSkillsBox, btnEdit);
+
         Collections.addAll(searchControls, title, shortName, emailAddress, birthDate, desc, team, role, skill);
 
         btnEdit.setOnAction((event) -> {
