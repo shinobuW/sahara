@@ -5,14 +5,16 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -37,7 +39,7 @@ public class SprintInfoTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        Label title = new TitleLabel(currentSprint.getLongName());
+        SearchableText title = new SearchableTitle(currentSprint.getLongName());
 
         Button btnEdit = new Button("Edit");
 
@@ -51,20 +53,25 @@ public class SprintInfoTab extends SearchableTab {
         final Separator separator = new Separator();
 
         basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new Label("Sprint Name: " + currentSprint.getLongName()));
-        basicInfoPane.getChildren().add(new Label("Sprint Goal: " + currentSprint.getGoal()));
-        basicInfoPane.getChildren().add(new Label("Start Date: " + currentSprint.getStartDate()));
-        basicInfoPane.getChildren().add(new Label("End Date: " + currentSprint.getEndDate()));
-        basicInfoPane.getChildren().add(new Label("Description: " + currentSprint.getDescription()));
+        basicInfoPane.getChildren().add(new SearchableText("Sprint Name: " + currentSprint.getLongName(),
+                searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Sprint Goal: " + currentSprint.getGoal(),
+                searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Start Date: " + currentSprint.getStartDate(),
+                searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("End Date: " + currentSprint.getEndDate(),
+                searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Description: " + currentSprint.getDescription(),
+                searchControls));
 
         basicInfoPane.getChildren().add(separator);
 
-        basicInfoPane.getChildren().add(new Label("Team: " + currentSprint.getTeam()));
-        basicInfoPane.getChildren().add(new Label("Project: " + currentSprint.getProject()));
-        basicInfoPane.getChildren().add(new Label("Backlog: " + currentSprint.getBacklog()));
-        basicInfoPane.getChildren().add(new Label("Release: " + currentSprint.getRelease()));
+        basicInfoPane.getChildren().add(new SearchableText("Team: " + currentSprint.getTeam(), searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Project: " + currentSprint.getProject(), searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Backlog: " + currentSprint.getBacklog(), searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Release: " + currentSprint.getRelease(), searchControls));
 
-        basicInfoPane.getChildren().add(new Label("Stories: "));
+        basicInfoPane.getChildren().add(new SearchableText("Stories: ", searchControls));
         basicInfoPane.getChildren().add(sprintStoryBox);
 
         basicInfoPane.getChildren().add(btnEdit);
@@ -74,7 +81,7 @@ public class SprintInfoTab extends SearchableTab {
             });
 
 
-
+        Collections.addAll(searchControls, title);
     }
 
     /**

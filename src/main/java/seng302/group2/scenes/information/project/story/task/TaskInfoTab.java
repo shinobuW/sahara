@@ -2,13 +2,13 @@ package seng302.group2.scenes.information.project.story.task;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.ArrayList;
@@ -39,19 +39,19 @@ public class TaskInfoTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        Label title = new TitleLabel(currentTask.getShortName());
+        SearchableText title = new SearchableTitle(currentTask.getShortName(), searchControls);
 
         Button btnEdit = new Button("Edit");
 
         basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new Label("Task Description: "
-                + currentTask.getDescription()));
-        basicInfoPane.getChildren().add(new Label("Impediments: "
-                + currentTask.getImpediments()));
-        basicInfoPane.getChildren().add(new Label("Task State: "
-                + currentTask.getState().toString()));
-        basicInfoPane.getChildren().add(new Label("Responsibilities: "
-                + currentTask.getResponsibilities()));
+        basicInfoPane.getChildren().add(new SearchableText("Task Description: "
+                + currentTask.getDescription(), searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Impediments: "
+                + currentTask.getImpediments(), searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Task State: "
+                + currentTask.getState().toString(), searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Responsibilities: "
+                + currentTask.getResponsibilities(), searchControls));
         btnEdit.setOnAction((event) -> {
                 currentTask.switchToInfoScene(true);
             });

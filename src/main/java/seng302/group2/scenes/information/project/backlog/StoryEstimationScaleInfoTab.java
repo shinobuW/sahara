@@ -2,17 +2,16 @@ package seng302.group2.scenes.information.project.backlog;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
-import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,7 +39,8 @@ public class StoryEstimationScaleInfoTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(scaleInfoPane);
         this.setContent(wrapper);
 
-        Label title = new TitleLabel("Story Estimation Scales in " + Global.currentWorkspace.getShortName());
+        SearchableText title = new SearchableTitle("Story Estimation Scales in "
+                + Global.currentWorkspace.getShortName());
         SearchableText instructions = new SearchableText("Please select an estimation scale to view its values.");
 
         ObservableList<String> scaleOptions = observableArrayList();
@@ -77,7 +77,7 @@ public class StoryEstimationScaleInfoTab extends SearchableTab {
         scaleInfoPane.getChildren().add(scaleComboBox);
         scaleInfoPane.getChildren().add(scaleValuesList);
 
-        Collections.addAll(searchControls, instructions, scaleComboBox);
+        Collections.addAll(searchControls, instructions, scaleComboBox, title);
     }
 
     /**

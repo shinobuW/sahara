@@ -18,17 +18,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomTextArea;
-import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcEnumStringConverter;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 /**
@@ -60,7 +58,8 @@ public class StoryAcTab extends SearchableTab {
         acTable.fixedCellSizeProperty();
         acTable.setPrefWidth(700);
         acTable.setPrefHeight(288);
-        acTable.setPlaceholder(new Label("This project has no acceptance criteria."));
+        SearchableText noAcLabel = new SearchableText("This project has no acceptance criteria");
+        acTable.setPlaceholder(noAcLabel);
         acTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         ObservableList<AcceptanceCriteria> data = story.getAcceptanceCriteria();
 
@@ -124,7 +123,7 @@ public class StoryAcTab extends SearchableTab {
         Button deleteButton = new Button("Delete");
         buttons.getChildren().addAll(addButton, deleteButton);
 
-        Label title = new TitleLabel("Acceptance Criteria");
+        SearchableText title = new SearchableTitle("Acceptance Criteria");
 
         TableColumn descriptionCol = new TableColumn("Description");
         descriptionCol.setEditable(true);
@@ -237,6 +236,7 @@ public class StoryAcTab extends SearchableTab {
             });
 
         acPane.getChildren().addAll(title, acTable, descriptionTextArea, buttons);
+        Collections.addAll(searchControls, title, noAcLabel);
     }
 
     /**

@@ -9,9 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import seng302.group2.App;
-import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
@@ -94,7 +92,8 @@ public class BacklogInfoTab extends SearchableTab {
         storyTable.setEditable(true);
         storyTable.setPrefWidth(500);
         storyTable.setPrefHeight(200);
-        storyTable.setPlaceholder(new Label("There are currently no stories in this backlog."));
+        storyTable.setPlaceholder(new SearchableText("There are currently no stories in this backlog.",
+                searchControls));
         storyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         ObservableList<Story> data = observableArrayList();

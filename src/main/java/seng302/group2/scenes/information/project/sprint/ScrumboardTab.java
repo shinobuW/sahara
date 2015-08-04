@@ -3,7 +3,6 @@ package seng302.group2.scenes.information.project.sprint;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.ClipboardContent;
@@ -13,12 +12,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.sprint.Sprint;
-import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.*;
@@ -27,7 +26,7 @@ import java.util.*;
  * The information tab for a backlog
  * Created by cvs20 on 19/05/15.
  */
-public class TestingCellTestTab extends SearchableTab {
+public class ScrumboardTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
 
@@ -45,7 +44,7 @@ public class TestingCellTestTab extends SearchableTab {
      *
      * @param currentSprint The currently selected backlog
      */
-    public TestingCellTestTab(Sprint currentSprint) {
+    public ScrumboardTab(Sprint currentSprint) {
         lanes.add(laneOne);
         lanes.add(laneTwo);
         initializeListeners();
@@ -59,10 +58,10 @@ public class TestingCellTestTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        Label title = new TitleLabel(currentSprint.getLongName());
+        SearchableText title = new SearchableTitle(currentSprint.getLongName());
         basicInfoPane.getChildren().add(title);
 
-        basicInfoPane.getChildren().add(new Label("Tasks: "));
+        basicInfoPane.getChildren().add(new SearchableText("Tasks: ", searchControls));
 
         laneOne.setCellFactory(list -> new TestingCellFactory());
         laneTwo.setCellFactory(List -> new TestingCellFactory());
@@ -71,8 +70,9 @@ public class TestingCellTestTab extends SearchableTab {
         lists.getChildren().addAll(laneOne, laneTwo);
 
         basicInfoPane.getChildren().addAll(lists);
-    }
 
+        Collections.addAll(searchControls, title);
+    }
 
 
     public Task getTaskByName(String name) {

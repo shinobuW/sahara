@@ -2,14 +2,18 @@ package seng302.group2.scenes.information.project;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
-import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.scenes.dialog.CreateProjectDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
@@ -39,7 +43,7 @@ public class ProjectCategoryTab extends SearchableTab {
         categoryPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(categoryPane);
         this.setContent(wrapper);
-        Label title = new TitleLabel("Projects in " + currentWorkspace.getShortName());
+        SearchableText title = new SearchableTitle("Projects in " + currentWorkspace.getShortName(), searchControls);
 
         Button btnView = new Button("View");
         Button btnDelete = new Button("Delete");

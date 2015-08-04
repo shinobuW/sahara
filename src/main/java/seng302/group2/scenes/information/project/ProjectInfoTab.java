@@ -6,9 +6,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
 
@@ -42,7 +43,7 @@ public class ProjectInfoTab extends SearchableTab {
         this.setContent(wrapper);
 
 
-        Label title = new TitleLabel(currentProject.getLongName());
+        SearchableText title = new SearchableTitle(currentProject.getLongName(), searchControls);
 
         Button btnEdit = new Button("Edit");
 
@@ -57,9 +58,10 @@ public class ProjectInfoTab extends SearchableTab {
         Separator separator = new Separator();
 
         basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new Label("Short Name: " + currentProject.getShortName()));
-        basicInfoPane.getChildren().add(new Label("Project Description: "
-                + currentProject.getDescription()));
+        basicInfoPane.getChildren().add(new SearchableText("Short Name: " + currentProject.getShortName(),
+                searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Project Description: "
+                + currentProject.getDescription(), searchControls));
         basicInfoPane.getChildren().add(separator);
 
 
@@ -75,8 +77,8 @@ public class ProjectInfoTab extends SearchableTab {
         HBox listBoxes = new HBox(12);
         VBox teamsBox = new VBox();
         VBox releaseBox = new VBox();
-        teamsBox.getChildren().addAll(new Label("Current Teams:"), projectTeamsBox);
-        releaseBox.getChildren().addAll(new Label("Releases:"), projectReleaseBox);
+        teamsBox.getChildren().addAll(new SearchableText("Current Teams:", searchControls), projectTeamsBox);
+        releaseBox.getChildren().addAll(new SearchableText("Releases:", searchControls), projectReleaseBox);
         listBoxes.getChildren().addAll(teamsBox, releaseBox);
 
         basicInfoPane.getChildren().add(listBoxes);
