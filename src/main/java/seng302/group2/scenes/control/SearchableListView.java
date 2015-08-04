@@ -12,12 +12,11 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
     private ListView<T> listView = new ListView<>();
     //private ListView listView = new ListView();
 
-    public SearchableListView(ObservableList<Skill> listItems) {
+    public SearchableListView(ObservableList<T> listItems) {
         super();
-        for (Skill i : listItems) {
-            listView.getItems().add((T) i);
+        for (T i : listItems) {
+            listView.getItems().add(i);
         }
-
     }
 
     @Override
@@ -36,9 +35,7 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
         }
 
         if (foundList) {
-            System.out.println("IT FUKN WORKS KINDA");
-            String css = this.getClass().getResource("/styles/chart.css").toExternalForm();
-            listView.getStylesheets().add(css);
+            this.setStyle("-fx-border-color: " + SearchableControl.highlightColour + ";");
 
         }
 

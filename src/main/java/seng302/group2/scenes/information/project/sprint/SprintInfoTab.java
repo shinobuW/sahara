@@ -12,6 +12,7 @@ import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -51,6 +52,11 @@ public class SprintInfoTab extends SearchableTab {
         sprintStoryBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         final Separator separator = new Separator();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String startDateString = currentSprint.getStartDate().format(formatter);
+        String endDateString = currentSprint.getEndDate().format(formatter);
+
 
         basicInfoPane.getChildren().add(title);
         basicInfoPane.getChildren().add(new SearchableText("Sprint Name: " + currentSprint.getLongName(),
