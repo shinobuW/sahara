@@ -8,10 +8,9 @@ package seng302.group2.scenes.dialog;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
@@ -24,6 +23,7 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
@@ -61,7 +61,7 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
 
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
-        CustomDatePicker releaseDateField = new CustomDatePicker("Estimated Release Date:", false);
+        CustomDatePicker releaseDatePicker = new CustomDatePicker("Estimated Release Date:", false);
         CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
 
         for (SaharaItem project : Global.currentWorkspace.getProjects()) {
@@ -76,7 +76,26 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
             projectComboBox.setValue(defaultProject.toString());
         }
 
-        grid.getChildren().addAll(shortNameCustomField, releaseDateField, projectComboBox, descriptionTextArea);
+        final Callback<DatePicker, DateCell> dayCellFactory =
+            new Callback<DatePicker, DateCell>() {
+                @Override
+                public DateCell call(final DatePicker datePicker) {
+                    return new DateCell() {
+                        @Override
+                        public void updateItem(LocalDate item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (item.isBefore(LocalDate.now())) {
+                                setDisable(true);
+                                setStyle("-fx-background-color: #ffc0cb;");
+                            }
+
+                        }
+                    };
+                }
+            };
+        releaseDatePicker.getDatePicker().setDayCellFactory(dayCellFactory);
+
+        grid.getChildren().addAll(shortNameCustomField, releaseDatePicker, projectComboBox, descriptionTextArea);
 
         //Add grid of controls to dialog
         this.getDialogPane().setContent(grid);
@@ -93,15 +112,15 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
                 createButton.setDisable(!(correctShortName && correctDate));
             });
 
-        releaseDateField.getDatePicker().setOnAction(event -> {
-                LocalDate releaseDate = releaseDateField.getValue();
+        releaseDatePicker.getDatePicker().setOnAction(event -> {
+                LocalDate releaseDate = releaseDatePicker.getValue();
                 correctDate = DateValidator.isFutureDate(releaseDate);
 
                 if (correctDate) {
-                    releaseDateField.hideErrorField();
+                    releaseDatePicker.hideErrorField();
                 }
                 else {
-                    releaseDateField.showErrorField("Date must be a future date");
+                    releaseDatePicker.showErrorField("Date must be a future date");
                 }
 
                 if ((DateValidator.isFutureDate(releaseDate) || releaseDate == null) && correctShortName) {
@@ -117,7 +136,7 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
                 if (b == btnTypeCreate) {
                     String shortName = shortNameCustomField.getText();
                     String description = descriptionTextArea.getText();
-                    LocalDate releaseDate = releaseDateField.getValue();
+                    LocalDate releaseDate = releaseDatePicker.getValue();
 
                     Project project = new Project();
                     for (SaharaItem item : Global.currentWorkspace.getProjects()) {
@@ -135,7 +154,7 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
                     }
                     else {
                         if (!DateValidator.isFutureDate(releaseDate)) {
-                            releaseDateField.showErrorField("Date must be a future date");
+                            releaseDatePicker.showErrorField("Date must be a future date");
                         }
                         else {
                             Release release = new Release(shortName, description, releaseDate,
