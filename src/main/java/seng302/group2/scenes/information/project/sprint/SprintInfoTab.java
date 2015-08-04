@@ -11,6 +11,7 @@ import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -50,11 +51,16 @@ public class SprintInfoTab extends SearchableTab {
 
         final Separator separator = new Separator();
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String startDateString = currentSprint.getStartDate().format(formatter);
+        String endDateString = currentSprint.getEndDate().format(formatter);
+
+
         basicInfoPane.getChildren().add(title);
         basicInfoPane.getChildren().add(new Label("Sprint Name: " + currentSprint.getLongName()));
         basicInfoPane.getChildren().add(new Label("Sprint Goal: " + currentSprint.getGoal()));
-        basicInfoPane.getChildren().add(new Label("Start Date: " + currentSprint.getStartDate()));
-        basicInfoPane.getChildren().add(new Label("End Date: " + currentSprint.getEndDate()));
+        basicInfoPane.getChildren().add(new Label("Start Date: " + startDateString));
+        basicInfoPane.getChildren().add(new Label("End Date: " + endDateString));
         basicInfoPane.getChildren().add(new Label("Description: " + currentSprint.getDescription()));
 
         basicInfoPane.getChildren().add(separator);

@@ -1,14 +1,18 @@
 package seng302.group2.scenes.control;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.util.Callback;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Creates a custom DatePicker which displays appropriate error messages when required.
@@ -104,6 +108,10 @@ public class CustomDatePicker extends VBox {
         else {
             return null;
         }
+    }
+
+    public void setDateRestrictions() {
+
     }
 
     /**
