@@ -4,6 +4,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -37,8 +38,38 @@ public class SearchableText extends TextFlow implements SearchableControl {
 
     /**
      * Creates a SearchableText TextFlow element with the applied JavaFX style string
+     * @param content The string text for the SearchableText to adopt
+     * @param collection The collection to add this text to (on the fly)
+     */
+    public SearchableText(String content, Collection<SearchableControl> collection) {
+        collection.add(this);
+        texts.clear();
+        texts.add(new TextFlow(new Text(content)));
+        updateFlow();
+    }
+
+
+    /**
+     * Creates a SearchableText TextFlow element with the applied JavaFX style string
+     * @param content The string text for the SearchableText to adopt
+     * @param style The style for the SearchableText to adopt
      */
     public SearchableText(String content, String style) {
+        this.styleInject = style;
+        this.setStyle(styleInject);
+        texts.add(new TextFlow(new Text(content)));
+        updateFlow();
+    }
+
+
+    /**
+     * Creates a SearchableText TextFlow element with the applied JavaFX style string
+     * @param content The string text for the SearchableText to adopt
+     * @param style The style for the SearchableText to adopt
+     * @param collection The collection to add this text to (on the fly)
+     */
+    public SearchableText(String content, String style, Collection<SearchableControl> collection) {
+        collection.add(this);
         this.styleInject = style;
         this.setStyle(styleInject);
         texts.add(new TextFlow(new Text(content)));

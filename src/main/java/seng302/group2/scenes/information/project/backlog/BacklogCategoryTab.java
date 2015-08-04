@@ -11,9 +11,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.scenes.dialog.CreateBacklogDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
@@ -22,6 +23,7 @@ import seng302.group2.workspace.role.Role;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -46,7 +48,7 @@ public class BacklogCategoryTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(categoryPane);
         this.setContent(wrapper);
 
-        TitleLabel title = new TitleLabel("Backlogs in " + selectedCategory.getProject().toString());
+        SearchableText title = new SearchableTitle("Backlogs in " + selectedCategory.getProject().toString());
 
         Button btnView = new Button("View");
         Button btnDelete = new Button("Delete");
@@ -98,7 +100,7 @@ public class BacklogCategoryTab extends SearchableTab {
                 creationDialog.show();
             });
 
-        //Collections.addAll(searchControls, );
+        Collections.addAll(searchControls, title);
     }
 
     /**

@@ -18,9 +18,10 @@ import javafx.util.Callback;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
-import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.util.validation.ValidationStatus;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.Project;
@@ -59,22 +60,18 @@ public class ProjectHistoryTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(historyPane);
         this.setContent(wrapper);
 
-        TableView<Allocation> historyTable = new TableView();
+        TableView<Allocation> historyTable = new TableView<>();
         historyTable.setEditable(true);
         historyTable.fixedCellSizeProperty();
         historyTable.setPrefWidth(700);
         historyTable.setPrefHeight(400);
-        historyTable.setPlaceholder(new Label("This project has no team allocations."));
+        historyTable.setPlaceholder(new SearchableText("This project has no team allocations.", searchControls));
         historyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         ObservableList<Allocation> data = currentProject.getTeamAllocations();
 
-        Callback<TableColumn, TableCell> cellFactory = new Callback<TableColumn, TableCell>() {
-            public TableCell call(TableColumn col) {
-                return new EditingCell();
-            }
-        };
+        Callback<TableColumn, TableCell> cellFactory = col -> new EditingCell();
 
-        Label title = new TitleLabel("Allocation History");
+        SearchableText title = new SearchableTitle("Allocation History", searchControls);
 
         TableColumn teamCol = new TableColumn("Team");
         teamCol.setCellValueFactory(new PropertyValueFactory<Allocation, String>("Team"));
@@ -225,6 +222,9 @@ public class ProjectHistoryTab extends SearchableTab {
         CustomComboBox teamComboBox = new CustomComboBox("Team", true);
         CustomDatePicker startDatePicker = new CustomDatePicker("Start Date", true);
         CustomDatePicker endDatePicker = new CustomDatePicker("End Date", false);
+
+        Collections.addAll(searchControls, teamComboBox, startDatePicker, endDatePicker);
+
         startDatePicker.getDatePicker().setStyle("-fx-pref-width: 200;");
         endDatePicker.getDatePicker().setStyle("-fx-pref-width: 200;");
         teamComboBox.getComboBox().setStyle("-fx-pref-width: 250;");

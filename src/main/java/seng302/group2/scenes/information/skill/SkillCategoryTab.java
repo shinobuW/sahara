@@ -2,17 +2,18 @@ package seng302.group2.scenes.information.skill;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
-import seng302.group2.Global;
 import seng302.group2.scenes.control.SearchableListView;
-import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.skills.Skill;
@@ -43,7 +44,7 @@ public class SkillCategoryTab extends SearchableTab {
         categoryPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(categoryPane);
         this.setContent(wrapper);
-        SearchableText title = new SearchableText("Skills in " + currentWorkspace.getShortName());
+        SearchableText title = new SearchableTitle("Skills in " + currentWorkspace.getShortName());
 
         Button btnView = new Button("View");
         Button btnDelete = new Button("Delete");

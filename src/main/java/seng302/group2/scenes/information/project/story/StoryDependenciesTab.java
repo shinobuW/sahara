@@ -2,17 +2,23 @@ package seng302.group2.scenes.information.project.story;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.project.story.Story;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -38,16 +44,14 @@ public class StoryDependenciesTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(dependenciesPane);
         this.setContent(wrapper);
 
-
-
-
-
+        SearchableText title = new SearchableTitle("Dependencies of " + currentStory.getShortName());
 
         TableView<Story> dependsTable = new TableView<>();
         dependsTable.setEditable(true);
         dependsTable.setPrefWidth(500);
         dependsTable.setPrefHeight(200);
-        dependsTable.setPlaceholder(new Label("This story is not currently dependant on another"));
+        SearchableText noDependants = new SearchableText("This story is not currently dependant on another");
+        dependsTable.setPlaceholder(noDependants);
         dependsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         ObservableList<Story> dataDependants = observableArrayList();
@@ -72,7 +76,8 @@ public class StoryDependenciesTab extends SearchableTab {
         dependantsTable.setEditable(true);
         dependantsTable.setPrefWidth(500);
         dependantsTable.setPrefHeight(200);
-        dependantsTable.setPlaceholder(new Label("There are currently no stories dependant on this story."));
+        SearchableText noDependents = new SearchableText("There are currently no stories dependant on this story");
+        dependantsTable.setPlaceholder(noDependants);
         dependantsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         ObservableList<Story> dataDependencies = observableArrayList();
@@ -106,6 +111,8 @@ public class StoryDependenciesTab extends SearchableTab {
         dependenciesPane.getChildren().add(dependsTable);
         dependenciesPane.getChildren().add(dependantsTable);
         dependenciesPane.getChildren().add(btnView);
+
+        Collections.addAll(searchControls, noDependants, noDependents, title);
     }
 
     /**

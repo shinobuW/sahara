@@ -9,6 +9,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.team.Team;
@@ -44,7 +45,7 @@ public class TeamInfoTab extends SearchableTab {
         this.setContent(wrapper);
 
 
-        SearchableText title = new SearchableText(currentTeam.getShortName());
+        SearchableText title = new SearchableTitle(currentTeam.getShortName());
 
         Button btnEdit = new Button("Edit");
         if (currentTeam.isUnassignedTeam()) {
@@ -80,22 +81,22 @@ public class TeamInfoTab extends SearchableTab {
 
         if (!currentTeam.isUnassignedTeam()) {
             if (currentTeam.getProductOwner() != null) {
-                basicInfoPane.getChildren().add(new Label("Product Owner: "
-                        + currentTeam.getProductOwner().toString()));
+                basicInfoPane.getChildren().add(new SearchableText("Product Owner: "
+                        + currentTeam.getProductOwner().toString(), searchControls));
             }
             else {
-                basicInfoPane.getChildren().add(new Label("Product Owner: "));
+                basicInfoPane.getChildren().add(new SearchableText("Product Owner: ", searchControls));
             }
 
             if (currentTeam.getScrumMaster() != null) {
-                basicInfoPane.getChildren().add(new Label("Scrum Master: "
-                        + currentTeam.getScrumMaster().toString()));
+                basicInfoPane.getChildren().add(new SearchableText("Scrum Master: "
+                        + currentTeam.getScrumMaster().toString(), searchControls));
             }
             else {
-                basicInfoPane.getChildren().add(new Label("Scrum Master: "));
+                basicInfoPane.getChildren().add(new SearchableText("Scrum Master: ", searchControls));
             }
 
-            basicInfoPane.getChildren().add(new Label("Team Members: "));
+            basicInfoPane.getChildren().add(new SearchableText("Team Members: ", searchControls));
             basicInfoPane.getChildren().add(teamsPeopleBox);
 
             basicInfoPane.getChildren().add(btnEdit);
@@ -106,7 +107,7 @@ public class TeamInfoTab extends SearchableTab {
         }
         else {
             // Just add the members list
-            basicInfoPane.getChildren().add(new Label("Unassigned People: "));
+            basicInfoPane.getChildren().add(new SearchableText("Unassigned People: ", searchControls));
             basicInfoPane.getChildren().add(teamsPeopleBox);
         }
     }

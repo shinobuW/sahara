@@ -8,10 +8,13 @@ import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.chart.BurndownChart;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.project.sprint.Sprint;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -38,6 +41,9 @@ public class SprintBurndownTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(burndownPane);
         this.setContent(wrapper);
 
+        SearchableText title = new SearchableTitle(currentSprint.getGoal() + " Burndown");
+        burndownPane.getChildren().add(title);
+
         //defining the axes
         configureAxis();
         BurndownChart burndown = new BurndownChart(xAxis, yAxis);
@@ -45,6 +51,9 @@ public class SprintBurndownTab extends SearchableTab {
         burndown.setMaxSize(800, 600);
         burndown.populateGraph(currentSprint);
         burndownPane.getChildren().add(burndown);
+
+        // Add all our searchable controls on the page to the collection of searchable items
+        Collections.addAll(searchControls, title);
     }
 
     /**

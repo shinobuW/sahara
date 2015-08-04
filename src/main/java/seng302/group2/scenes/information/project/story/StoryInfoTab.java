@@ -3,19 +3,24 @@ package seng302.group2.scenes.information.project.story;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -43,28 +48,29 @@ public class StoryInfoTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        Label title = new TitleLabel(currentStory.getShortName());
+        SearchableText title = new SearchableTitle(currentStory.getShortName());
 
         Button btnEdit = new Button("Edit");
 
         basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new Label("Story Description: " + currentStory.getDescription()));
-        basicInfoPane.getChildren().add(new Label("Project: "
-                + currentStory.getProject().toString()));
-        basicInfoPane.getChildren().add(new Label("Priority: "
-                + currentStory.getPriority()));
-        basicInfoPane.getChildren().add(new Label("Estimate: "
-                + currentStory.getEstimate()));
-        basicInfoPane.getChildren().add(new Label("State: "
-                + currentStory.getReadyState()));
-        basicInfoPane.getChildren().add(new Label("Story Creator: "
-                + currentStory.getCreator()));
+        basicInfoPane.getChildren().add(new SearchableText("Story Description: " + currentStory.getDescription(),
+                searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Project: "
+                + currentStory.getProject().toString(), searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Priority: "
+                + currentStory.getPriority(), searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Estimate: "
+                + currentStory.getEstimate(), searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("State: "
+                + currentStory.getReadyState(), searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Story Creator: "
+                + currentStory.getCreator(), searchControls));
 
         TableView<Task> taskTable = new TableView<>();
         taskTable.setEditable(false);
         taskTable.setPrefWidth(500);
         taskTable.setPrefHeight(200);
-        taskTable.setPlaceholder(new Label("There are currently no tasks in this story."));
+        taskTable.setPlaceholder(new SearchableText("There are currently no tasks in this story.", searchControls));
         taskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         ObservableList<Task> data = currentStory.getTasks();
@@ -124,6 +130,8 @@ public class StoryInfoTab extends SearchableTab {
         btnEdit.setOnAction((event) -> {
                 currentStory.switchToInfoScene(true);
             });
+
+        Collections.addAll(searchControls, title);
     }
 
     /**

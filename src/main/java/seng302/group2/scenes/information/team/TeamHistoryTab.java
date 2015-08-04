@@ -21,6 +21,8 @@ import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.util.validation.ValidationStatus;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.Project;
@@ -62,17 +64,13 @@ public class TeamHistoryTab extends SearchableTab {
         historyTable.setEditable(true);
         historyTable.setPrefWidth(700);
         historyTable.setPrefHeight(400);
-        historyTable.setPlaceholder(new Label("This team has no project allocations."));
+        historyTable.setPlaceholder(new SearchableText("This team has no project allocations.", searchControls));
         historyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         ObservableList<Allocation> data = currentTeam.getProjectAllocations();
 
-        Callback<TableColumn, TableCell> cellFactory = new Callback<TableColumn, TableCell>() {
-            public TableCell call(TableColumn col) {
-                return new EditingCell();
-            }
-        };
+        Callback<TableColumn, TableCell> cellFactory = col -> new EditingCell();
 
-        Label title = new TitleLabel("Allocation History");
+        SearchableText title = new SearchableTitle(currentTeam.getShortName() + " Allocation History", searchControls);
 
         TableColumn teamCol = new TableColumn("Project");
         teamCol.setCellValueFactory(new PropertyValueFactory<Allocation, String>("Project"));

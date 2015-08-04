@@ -2,7 +2,6 @@ package seng302.group2.scenes.control.chart;
 
 import javafx.scene.chart.Axis;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import seng302.group2.workspace.project.sprint.Sprint;
 

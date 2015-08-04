@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class WorkspaceInfoTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        SearchableText title = new SearchableText(currentWorkspace.getLongName());
+        SearchableText title = new SearchableTitle(currentWorkspace.getLongName());
         Button btnEdit = new Button("Edit");
         SearchableText shortName = new SearchableText("Short Name: "
                 + currentWorkspace.getShortName());

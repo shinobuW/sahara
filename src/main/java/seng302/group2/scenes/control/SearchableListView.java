@@ -1,18 +1,9 @@
 package seng302.group2.scenes.control;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.workspace.SaharaItem;
-import seng302.group2.workspace.skills.Skill;
-
 import javafx.scene.control.ListView;
-import java.util.ArrayList;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.workspace.skills.Skill;
 
 /**
  * Created by btm38 on 3/08/15.

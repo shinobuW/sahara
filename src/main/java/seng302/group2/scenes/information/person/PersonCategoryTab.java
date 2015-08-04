@@ -10,6 +10,8 @@ import seng302.group2.App;
 import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.scenes.dialog.CreatePersonDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
@@ -38,7 +40,7 @@ public class PersonCategoryTab extends SearchableTab {
         categoryPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(categoryPane);
         this.setContent(wrapper);
-        Label title = new TitleLabel("People in " + currentWorkspace.getShortName());
+        SearchableText title = new SearchableTitle("People in " + currentWorkspace.getShortName(), searchControls);
 
         Button btnView = new Button("View");
         Button btnDelete = new Button("Delete");

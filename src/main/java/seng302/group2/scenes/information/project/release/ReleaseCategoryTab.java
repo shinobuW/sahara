@@ -2,20 +2,25 @@ package seng302.group2.scenes.information.project.release;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
-import seng302.group2.scenes.control.TitleLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.scenes.dialog.CreateReleaseDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -38,7 +43,7 @@ public class ReleaseCategoryTab extends SearchableTab {
         categoryPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(categoryPane);
         this.setContent(wrapper);
-        Label title = new TitleLabel("Releases in " + selectedCategory.getProject().toString());
+        SearchableText title = new SearchableTitle("Releases in " + selectedCategory.getProject().toString());
 
         Button btnView = new Button("View");
         Button btnDelete = new Button("Delete");
@@ -80,6 +85,7 @@ public class ReleaseCategoryTab extends SearchableTab {
                 creationDialog.show();
             });
 
+        Collections.addAll(searchControls, title);
     }
 
     /**

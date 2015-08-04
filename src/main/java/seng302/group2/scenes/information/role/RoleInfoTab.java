@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.role.Role;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class RoleInfoTab extends SearchableTab {
         this.setContent(wrapper);
 
 
-        SearchableText title = new SearchableText(currentRole.getShortName());
+        SearchableText title = new SearchableTitle(currentRole.getShortName());
 
         ListView skillsBox = new ListView(currentRole.getRequiredSkills());
         skillsBox.setPrefHeight(192);

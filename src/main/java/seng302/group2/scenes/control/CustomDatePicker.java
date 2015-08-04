@@ -10,19 +10,24 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.util.Callback;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableText;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Creates a custom DatePicker which displays appropriate error messages when required.
  * Created by swi67 on 17/05/15.
  */
-public class CustomDatePicker extends VBox {
+public class CustomDatePicker extends VBox implements SearchableControl {
     private boolean required;
     private String errorMessage = "";
     private Label errorMessageText = new Label();
     private DatePicker datePicker = new DatePicker();
+    private Set<SearchableControl> searchControls = new HashSet<>();
 
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
@@ -40,7 +45,7 @@ public class CustomDatePicker extends VBox {
         labelBox.spacingProperty().setValue(0);
         labelBox.setAlignment(Pos.CENTER_LEFT);
 
-        labelBox.getChildren().addAll(new Label(name));
+        labelBox.getChildren().addAll(new SearchableText(name, this.searchControls));
 
         if (required) {
             Label aster = new Label(" * ");
@@ -121,5 +126,23 @@ public class CustomDatePicker extends VBox {
      */
     public void setValue(LocalDate value) {
         this.datePicker.setValue(value);
+    }
+
+
+    /**
+     * Queries the date picker to find any elements containing the given query string. If found inside the date picker,
+     * the picker border will be highlighted, and if found in the label text, the matching text will be highlighted.
+     * @param query The query string to search
+     * @return Whether any elements inside of the date picker or label were found to contain the query string
+     */
+    @Override
+    public boolean query(String query) {
+        boolean found = false;
+        for (SearchableControl control : searchControls) {
+            if (control.query(query)) {
+                found = true;
+            }
+        }
+        return found;
     }
 }
