@@ -9,6 +9,7 @@ import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.util.conversion.GeneralEnumStringConverter;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.ArrayList;
@@ -48,10 +49,14 @@ public class TaskInfoTab extends SearchableTab {
                 + currentTask.getDescription(), searchControls));
         basicInfoPane.getChildren().add(new SearchableText("Impediments: "
                 + currentTask.getImpediments(), searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Task State: "
-                + currentTask.getState().toString(), searchControls));
+
+        GeneralEnumStringConverter converter = new GeneralEnumStringConverter();
+        basicInfoPane.getChildren().add(new SearchableText(converter.toString("Task State: "
+                + currentTask.getState().toString()), searchControls));
+
         basicInfoPane.getChildren().add(new SearchableText("Responsibilities: "
                 + currentTask.getResponsibilities(), searchControls));
+
         btnEdit.setOnAction((event) -> {
                 currentTask.switchToInfoScene(true);
             });
