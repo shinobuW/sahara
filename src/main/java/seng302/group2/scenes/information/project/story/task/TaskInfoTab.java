@@ -52,11 +52,15 @@ public class TaskInfoTab extends SearchableTab {
                 + currentTask.getState().toString(), searchControls));
         basicInfoPane.getChildren().add(new SearchableText("Responsibilities: "
                 + currentTask.getResponsibilities(), searchControls));
+        basicInfoPane.getChildren().add(btnEdit);
         btnEdit.setOnAction((event) -> {
                 currentTask.switchToInfoScene(true);
             });
 
+
+
     }
+
 
     /**
      * Gets all the searchable controls on this tab.
