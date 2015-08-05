@@ -43,6 +43,7 @@ public class TaskCategoryTab extends SearchableTab {
      * @param selectedCategory The current selected category
      */
     public TaskCategoryTab(TaskCategory selectedCategory) {
+        //TODO When shortname validation done on Stories table for tasks, also needs to be implemented here
         this.setText("Tasks");
         Pane basicInfoPane = new VBox(10);
 
@@ -52,6 +53,10 @@ public class TaskCategoryTab extends SearchableTab {
         basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
+
+        SearchableText title = new SearchableTitle("Tasks without a Story", searchControls);
+        basicInfoPane.getChildren().add(title);
+
 
         TableView<Task> taskTable = new TableView<>();
         taskTable.setEditable(false);
