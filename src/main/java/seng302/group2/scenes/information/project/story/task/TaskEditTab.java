@@ -109,8 +109,8 @@ public class TaskEditTab extends SearchableTab {
 
             });
         btnCancel.setOnAction((event) -> {
-            currentTask.switchToInfoScene();
-        });
+                currentTask.switchToInfoScene();
+            });
     }
 
     /**

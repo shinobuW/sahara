@@ -94,14 +94,12 @@ public class TaskEditScene {
                     App.mainPane.refreshTree();
                 }
                 else {
-                    System.out.println("not correct short name");
                     event.consume();
                 }
 
             });
 
         btnCancel.setOnAction((event) -> {
-            System.out.println("hit");
                 currentTask.switchToInfoScene();
             });
 
