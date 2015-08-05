@@ -187,7 +187,7 @@ public class BacklogEditScene extends ScrollPane {
                             descriptionField.getText(),
                             baseBacklog.getProductOwner(),
                             baseBacklog.getProject(),
-                            scaleComboBox.getValue(),
+                            scaleComboBox.getValue().toString(),
                             backlogStoryList
                     );
 

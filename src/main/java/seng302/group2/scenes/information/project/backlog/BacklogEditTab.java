@@ -197,7 +197,7 @@ public class BacklogEditTab extends SearchableTab {
                             descriptionField.getText(),
                             baseBacklog.getProductOwner(),
                             baseBacklog.getProject(),
-                            scaleComboBox.getValue(),
+                            scaleComboBox.getValue().toString(),
                             backlogStoryList
                     );
 

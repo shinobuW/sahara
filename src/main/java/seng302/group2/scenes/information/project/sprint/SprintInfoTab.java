@@ -53,11 +53,6 @@ public class SprintInfoTab extends SearchableTab {
 
         final Separator separator = new Separator();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String startDateString = currentSprint.getStartDate().format(formatter);
-        String endDateString = currentSprint.getEndDate().format(formatter);
-
-
         basicInfoPane.getChildren().add(title);
         basicInfoPane.getChildren().add(new SearchableText("Sprint Name: " + currentSprint.getLongName(),
                 searchControls));

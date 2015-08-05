@@ -47,7 +47,7 @@ public class SprintInformationSwitchStrategy implements InformationSwitchStrateg
         }
         else {
             // Bad call
-            logger.warn("Tried changing to release scene with a non-release instance");
+            logger.warn("Tried changing to sprint scene with a non-sprint instance");
         }
     }
 

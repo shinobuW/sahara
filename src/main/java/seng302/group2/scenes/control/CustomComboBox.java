@@ -146,9 +146,9 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
      *
      * @return The string of the chosen item
      */
-    public String getValue() {
+    public T getValue() {
         if (this.comboBox.getValue() != null) {
-            return this.comboBox.getValue().toString();
+            return this.comboBox.getValue();
         }
         else {
             return null;

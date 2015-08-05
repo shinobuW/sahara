@@ -269,7 +269,7 @@ public class StoryEditTab extends SearchableTab {
                             currentStory.getProject(),
                             Integer.parseInt(priorityNumberField.getText()),
                             currentStory.getBacklog(),
-                            estimateComboBox.getValue(),
+                            estimateComboBox.getValue().toString(),
                             readyStateCheck.selectedProperty().get(),
                             dependentOnList
                     );
