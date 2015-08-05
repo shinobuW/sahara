@@ -104,7 +104,8 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                         @Override
                         public void updateItem(LocalDate item, boolean empty) {
                             super.updateItem(item, empty);
-                            if (item.isBefore(sprintStartDatePicker.getValue().plusDays(1))) {
+                            if ((sprintStartDatePicker.getValue() != null)
+                                    && (item.isBefore(sprintStartDatePicker.getValue()))) {
                                 setDisable(true);
                                 setStyle("-fx-background-color: #ffc0cb;");
                             }
@@ -112,12 +113,15 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                                 setDisable(true);
                                 setStyle("-fx-background-color: #ffc0cb;");
                             }
-                            long p = ChronoUnit.DAYS.between(
-                                    sprintStartDatePicker.getValue(), item
-                            );
-                            setTooltip(new Tooltip(
-                                            "Sprint duration: " + p + " days.")
-                            );
+                            if (sprintStartDatePicker.getValue() != null) {
+                                long p = ChronoUnit.DAYS.between(
+                                        sprintStartDatePicker.getValue(), item
+                                );
+                                setTooltip(new Tooltip(
+                                                "Sprint duration: " + p + " days.")
+                                );
+                            }
+
                         }
                     };
                 }
@@ -215,6 +219,9 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 @Override
                 public void changed(ObservableValue<? extends Backlog> observable,
                                     Backlog oldValue, Backlog newValue) {
+                    System.out.println("backlog");
+                    sprintEndDatePicker.setDisable(true);
+                    sprintStartDatePicker.setDisable(true);
                     teamComboBox.setValue(null);
                     teamComboBox.setDisable(false);
                     releaseComboBox.setValue(null);
@@ -245,9 +252,15 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 @Override
                 public void changed(ObservableValue<? extends Release> observable,
                                     Release oldValue, Release newValue) {
-                    sprintStartDatePicker.setDisable(false);
-                    sprintStartDatePicker.setValue(null);
-                    toggleCreate();
+                    System.out.println("relesase");
+
+                    if (newValue != null) {
+                        sprintStartDatePicker.setDisable(false);
+                        sprintStartDatePicker.setValue(null);
+                        sprintEndDatePicker.setValue(null);
+                        sprintEndDatePicker.setDisable(true);
+                        toggleCreate();
+                    }
                 }
             });
 
@@ -255,10 +268,15 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 @Override
                 public void changed(ObservableValue<? extends LocalDate> observable,
                                     LocalDate oldValue, LocalDate newValue) {
-                    if ((sprintEndDatePicker.getValue() != null) && newValue.isAfter(sprintEndDatePicker.getValue())) {
+                    System.out.println("sprint s");
+                    if ((sprintEndDatePicker.getValue() != null) && (newValue != null)
+                            && newValue.isAfter(sprintEndDatePicker.getValue())) {
+                        sprintEndDatePicker.setDisable(false);
                         sprintEndDatePicker.setValue(null);
                     }
-                    sprintEndDatePicker.setDisable(false);
+                    else if (newValue != null) {
+                        sprintEndDatePicker.setDisable(false);
+                    }
                     toggleCreate();
                 }
             });
@@ -268,8 +286,10 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 @Override
                 public void changed(ObservableValue<? extends LocalDate> observable,
                                     LocalDate oldValue, LocalDate newValue) {
-                    toggleCreate();
-
+                    if (newValue != null) {
+                        System.out.println("sprint e");
+                        toggleCreate();
+                    }
                 }
             });
 
