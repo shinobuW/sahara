@@ -1,14 +1,20 @@
 package seng302.group2.scenes.information.project.story.task;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.util.conversion.GeneralEnumStringConverter;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.ArrayList;
@@ -48,10 +54,25 @@ public class TaskInfoTab extends SearchableTab {
                 + currentTask.getDescription(), searchControls));
         basicInfoPane.getChildren().add(new SearchableText("Impediments: "
                 + currentTask.getImpediments(), searchControls));
+
+        GeneralEnumStringConverter converter = new GeneralEnumStringConverter();
         basicInfoPane.getChildren().add(new SearchableText("Task State: "
-                + currentTask.getState().toString(), searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Responsibilities: "
-                + currentTask.getResponsibilities(), searchControls));
+                + converter.toString(currentTask.getState().toString()), searchControls));
+
+        ObservableList<Person> responsibilitiesList = FXCollections.observableArrayList();
+        responsibilitiesList.addAll(currentTask.getResponsibilities());
+
+        ListView<Person> responsibilitiesListView = new ListView<>(responsibilitiesList);
+        responsibilitiesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        responsibilitiesListView.getSelectionModel().select(0);
+
+        VBox responsibilitiesBox = new VBox(10);
+        responsibilitiesBox.getChildren().add(new SearchableText("Responsibilities: "));
+        responsibilitiesBox.getChildren().add(responsibilitiesListView);
+        responsibilitiesBox.setPrefHeight(192);
+
+        basicInfoPane.getChildren().add(responsibilitiesBox);
+        basicInfoPane.getChildren().add(btnEdit);
         btnEdit.setOnAction((event) -> {
                 currentTask.switchToInfoScene(true);
             });
