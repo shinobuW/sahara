@@ -205,6 +205,14 @@ public class Task extends SaharaItem implements Serializable {
     public void add(Person person) {
         this.responsibilities.add(person);
     }
+    
+    /**
+     * Adds a log to the Tasks Logs list
+     *  @param log The log to add
+     */
+    public void add(Log log) {
+        this.logs.add(log);
+    }
 
     /**
      * Prepares a Task to be serialized.
