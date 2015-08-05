@@ -305,7 +305,7 @@ public class Task extends SaharaItem implements Serializable {
         
         /**
          * Constructor for the Task Edit command.
-         * @param story The story to be edited
+         * @param task The story to be edited
          * @param newShortName   The new short name
          * @param newDescription The new description
          * @param newImpediments The new Impediments

@@ -7,11 +7,14 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import seng302.group2.App;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.util.validation.ShortNameValidator;
+import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.ArrayList;
@@ -90,25 +93,23 @@ public class TaskEditTab extends SearchableTab {
 
 
                 if (correctShortName) {
-                    // Valid short name, make the edit
-                    //                currentTask.edit(shortNameCustomField.getText(),
-                    //                        longNameTextField.getText(),
-                    //                        descriptionTextArea.getText(),
-                    //                        currentStory.getProject(),
-                    //                        Integer.parseInt(priorityNumberField.getText()),
-                    //                        currentStory.getBacklog(),
-                    //                        estimateComboBox.getValue(),
-                    //                        readyStateCheck.selectedProperty().get(),
-                    //                        dependentOnList
-                    //                );
-                    //
-                    //                currentStory.switchToInfoScene();
-                    //                App.mainPane.refreshTree();
+    //                    Valid short name, make the edit
+                    currentTask.edit(shortNameCustomField.getText(),
+                            descriptionTextArea.getText(),
+                            impedimentsTextArea.getText(),
+                            Task.TASKSTATE.NOT_STARTED,
+                            new ArrayList<Person>(), new ArrayList<Log>());
+
+                    currentTask.switchToInfoScene();
+                    App.mainPane.refreshTree();
                 }
                 else {
                     event.consume();
                 }
 
+            });
+        btnCancel.setOnAction((event) -> {
+                currentTask.switchToInfoScene();
             });
     }
 

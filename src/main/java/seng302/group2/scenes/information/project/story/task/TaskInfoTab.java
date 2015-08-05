@@ -9,6 +9,8 @@ import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.story.Story;
 import seng302.group2.util.conversion.GeneralEnumStringConverter;
 import seng302.group2.workspace.project.story.tasks.Task;
 
@@ -49,14 +51,23 @@ public class TaskInfoTab extends SearchableTab {
                 + currentTask.getDescription(), searchControls));
         basicInfoPane.getChildren().add(new SearchableText("Impediments: "
                 + currentTask.getImpediments(), searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Task State: "
+                + currentTask.getState().toString(), searchControls));
 
-        GeneralEnumStringConverter converter = new GeneralEnumStringConverter();
-        basicInfoPane.getChildren().add(new SearchableText(converter.toString("Task State: "
-                + currentTask.getState().toString()), searchControls));
+        ObservableList<Person> responsibilitiesList = observableArrayList();
+        responsibilitiesList.addAll(currentTask.getResponsibilities());
 
-        basicInfoPane.getChildren().add(new SearchableText("Responsibilities: "
-                + currentTask.getResponsibilities(), searchControls));
+        ListView<Person> responsibilitiesListView = new ListView<>(responsibilitiesList);
+        responsibilitiesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        responsibilitiesListView.getSelectionModel().select(0);
 
+        VBox responsibilitiesBox = new VBox(10);
+        responsibilitiesBox.getChildren().add(new SearchableText("Responsibilities: "));
+        responsibilitiesBox.getChildren().add(responsibilitiesListView);
+        responsibilitiesBox.setPrefHeight(192);
+
+        basicInfoPane.getChildren().add(responsibilitiesBox);
+        basicInfoPane.getChildren().add(btnEdit);
         btnEdit.setOnAction((event) -> {
                 currentTask.switchToInfoScene(true);
             });
