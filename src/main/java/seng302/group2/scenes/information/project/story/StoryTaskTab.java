@@ -105,6 +105,12 @@ public class StoryTaskTab extends SearchableTab {
             }
         });
 
+        Button btnView = new Button("View");
+
+        btnView.setOnAction((event) -> {
+                App.mainPane.selectItem(taskTable.getSelectionModel().getSelectedItem());
+            });
+
         VBox addTaskBox = new VBox(10);
         SearchableText task = new SearchableText("Add Quick Tasks:", "-fx-font-weight: bold;");
 
@@ -116,6 +122,7 @@ public class StoryTaskTab extends SearchableTab {
         addTaskBox.getChildren().addAll(task, shortNameCustomField, btnAdd);
 
         basicInfoPane.getChildren().add(taskTable);
+        basicInfoPane.getChildren().add(btnView);
         basicInfoPane.getChildren().add(addTaskBox);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
