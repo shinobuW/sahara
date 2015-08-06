@@ -38,7 +38,7 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  */
 public class SprintEditTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
+    Set<SearchableControl> searchControls = new HashSet<>();
 
     static Boolean correctGoal = Boolean.FALSE;
     static Boolean correctLongName = Boolean.FALSE;
@@ -76,16 +76,16 @@ public class SprintEditTab extends SearchableTab {
         buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        goalCustomField = new RequiredField("Goal:");
-        longNameCustomField = new RequiredField("Long Name; ");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Sprint Description:", 300);
+        goalCustomField = new RequiredField("Goal:", searchControls);
+        longNameCustomField = new RequiredField("Long Name:", searchControls);
+        CustomTextArea descriptionTextArea = new CustomTextArea("Sprint Description:", 300, searchControls);
 
-        backlogComboBox = new CustomComboBox<>("Backlog: ", true);
-        teamComboBox = new CustomComboBox<>("Team: ", true);
-        releaseComboBox = new CustomComboBox<>("Release: ", true);
+        backlogComboBox = new CustomComboBox<>("Backlog:", true, searchControls);
+        teamComboBox = new CustomComboBox<>("Team:", true, searchControls);
+        releaseComboBox = new CustomComboBox<>("Release:", true, searchControls);
 
-        sprintStartDatePicker = new CustomDatePicker("Start Date:", false);
-        sprintEndDatePicker  = new CustomDatePicker("End Date: ", false);
+        sprintStartDatePicker = new CustomDatePicker("Start Date:", false, searchControls);
+        sprintEndDatePicker  = new CustomDatePicker("End Date:", false, searchControls);
 
 
         goalCustomField.setMaxWidth(275);

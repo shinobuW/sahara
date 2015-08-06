@@ -17,6 +17,7 @@ import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -60,18 +61,18 @@ public class BacklogEditTab extends SearchableTab {
         this.setContent(wrapper);
 
         // Basic information fields
-        shortNameField = new RequiredField("Short Name:");
+        shortNameField = new RequiredField("Short Name:", searchControls);
         shortNameField.setText(baseBacklog.getShortName());
         shortNameField.setMaxWidth(275);
-        longNameField = new CustomTextField("Long Name:");
+        longNameField = new CustomTextField("Long Name:", searchControls);
         longNameField.setText(baseBacklog.getLongName());
         longNameField.setMaxWidth(275);
-        descriptionField = new CustomTextArea("Backlog Description:", 300);
+        descriptionField = new CustomTextArea("Backlog Description:", 300, searchControls);
         descriptionField.setText(baseBacklog.getDescription());
         descriptionField.setMaxWidth(275);
-        Label errorField = new Label("");
+        SearchableText errorField = new SearchableText("", searchControls);
 
-        scaleComboBox = new CustomComboBox("Estimation Scale:", true);
+        scaleComboBox = new CustomComboBox("Estimation Scale:", true, searchControls);
 
         for (String scaleName : Global.currentWorkspace.getEstimationScales().getEstimationScaleDict().keySet()) {
             scaleComboBox.addToComboBox(scaleName);
@@ -123,11 +124,11 @@ public class BacklogEditTab extends SearchableTab {
         availableStoryListView.getSelectionModel().select(0);
 
         VBox backlogStoryBox = new VBox(10);
-        backlogStoryBox.getChildren().add(new Label("Backlog Stories: "));
+        backlogStoryBox.getChildren().add(new SearchableText("Backlog Stories: ", searchControls));
         backlogStoryBox.getChildren().add(backlogStoryListView);
 
         VBox availableStoryBox = new VBox(10);
-        availableStoryBox.getChildren().add(new Label("Available Stories: "));
+        availableStoryBox.getChildren().add(new SearchableText("Available Stories: ", searchControls));
         availableStoryBox.getChildren().add(availableStoryListView);
 
         HBox storyListViews = new HBox(10);
@@ -170,7 +171,7 @@ public class BacklogEditTab extends SearchableTab {
                             availableStoryListView.getSelectionModel().getSelectedItems());
                 }
                 else {
-                    errorField.setTextFill(Color.web("#ff0000"));
+                    errorField.setStyle("-fx-text-fill: #ff0000;");
                     errorField.setText("* Story \"" + errorStory.getShortName() + "\" must have a unique priority.");
                 }
 

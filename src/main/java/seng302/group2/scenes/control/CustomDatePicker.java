@@ -15,6 +15,7 @@ import seng302.group2.scenes.control.search.SearchableText;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,7 +24,7 @@ import java.util.Set;
  * Created by swi67 on 17/05/15.
  */
 public class CustomDatePicker extends VBox implements SearchableControl {
-    private boolean required;
+    private boolean required = false;
     private String errorMessage = "";
     private Label errorMessageText = new Label();
     private DatePicker datePicker = new DatePicker();
@@ -63,6 +64,44 @@ public class CustomDatePicker extends VBox implements SearchableControl {
         this.datePicker.setStyle("-fx-pref-width: 135;");
         this.getChildren().add(entry);
     }
+
+
+    /**
+     * Creates a required label HBox inside of the VBox containing a Label with an appended red
+     * asterisk if the field is required.
+     *
+     * @param name     The node field
+     * @param required Whether or not the field is required
+     */
+    public CustomDatePicker(String name, boolean required, Collection<SearchableControl> searchableControls) {
+        searchableControls.add(this);
+        this.required = required;
+        this.errorMessageText.setText(errorMessage);
+
+        HBox labelBox = new HBox();
+        labelBox.setPrefWidth(165);
+        labelBox.spacingProperty().setValue(0);
+        labelBox.setAlignment(Pos.CENTER_LEFT);
+
+        labelBox.getChildren().addAll(new SearchableText(name, this.searchControls));
+
+        if (required) {
+            Label aster = new Label(" * ");
+            aster.setTextFill(Color.web("#ff0000"));
+            labelBox.getChildren().add(aster);
+        }
+
+
+        HBox entry = new HBox();
+
+        entry.setPrefWidth(175);
+        entry.getChildren().addAll(labelBox, this.datePicker);
+        HBox.setHgrow(labelBox, Priority.ALWAYS);
+
+        this.datePicker.setStyle("-fx-pref-width: 135;");
+        this.getChildren().add(entry);
+    }
+
 
     /**
      * Displays error Field

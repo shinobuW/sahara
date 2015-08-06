@@ -52,9 +52,9 @@ public class ProjectEditTab extends SearchableTab {
         buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name:");
-        RequiredField longNameCustomField = new RequiredField("Long Name:");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description:", 300);
+        RequiredField shortNameCustomField = new RequiredField("Short Name:", searchControls);
+        RequiredField longNameCustomField = new RequiredField("Long Name:", searchControls);
+        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description:", 300, searchControls);
 
         shortNameCustomField.setMaxWidth(275);
         longNameCustomField.setMaxWidth(275);

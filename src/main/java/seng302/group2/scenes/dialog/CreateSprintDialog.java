@@ -57,8 +57,8 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
         //TODO fix up sizing
 
         this.setTitle("New Sprint");
-        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 400px; -fx-pref-width: 600px; "
-                + "-fx-pref-height: 400px;");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 500px;");
 
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
