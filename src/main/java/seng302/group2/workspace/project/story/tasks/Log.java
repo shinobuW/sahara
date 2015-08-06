@@ -35,7 +35,7 @@ public class Log extends SaharaItem implements Serializable {
         this.logger = logger;
         this.startTime = startTime;
 
-        if (startTime == null && endTime == null) {
+        if (endTime == null) {
             this.duration = duration;
         }
         else {

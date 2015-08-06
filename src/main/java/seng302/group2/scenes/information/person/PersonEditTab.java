@@ -12,6 +12,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.util.validation.NameValidator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
@@ -94,7 +95,7 @@ public class PersonEditTab extends SearchableTab {
         skillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         skillsBox.setMaxWidth(275);
 
-        CustomComboBox teamBox = new CustomComboBox("Team: ", false);
+        CustomComboBox teamBox = new CustomComboBox("Team: ", searchControls);
 
 
         Team currentTeam = currentPerson.getTeam();
@@ -109,12 +110,12 @@ public class PersonEditTab extends SearchableTab {
             teamBox.setValue(currentTeam.toString());
         }
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name:");
-        RequiredField firstNameCustomField = new RequiredField("First Name:");
-        RequiredField lastNameCustomField = new RequiredField("Last Name:");
-        CustomTextField emailTextField = new CustomTextField("Email:");
-        CustomDateField customBirthDate = new CustomDateField("Birth Date:");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Person Description:", 300);
+        RequiredField shortNameCustomField = new RequiredField("Short Name:", searchControls);
+        RequiredField firstNameCustomField = new RequiredField("First Name:", searchControls);
+        RequiredField lastNameCustomField = new RequiredField("Last Name:", searchControls);
+        CustomTextField emailTextField = new CustomTextField("Email:", searchControls);
+        CustomDateField customBirthDate = new CustomDateField("Birth Date:", searchControls);
+        CustomTextArea descriptionTextArea = new CustomTextArea("Person Description:", 300, searchControls);
 
         firstNameCustomField.setText(currentPerson.getFirstName());
         lastNameCustomField.setText(currentPerson.getLastName());
@@ -143,9 +144,9 @@ public class PersonEditTab extends SearchableTab {
         editPane.getChildren().add(teamBox);
 
         VBox v1 = new VBox(10);
-        v1.getChildren().addAll(new Label("Skills: "), personSkillsBox);
+        v1.getChildren().addAll(new SearchableText("Skills: ", searchControls), personSkillsBox);
         VBox v2 = new VBox(10);
-        v2.getChildren().addAll(new Label("Available Skills: "), skillsBox);
+        v2.getChildren().addAll(new SearchableText("Available Skills: ", searchControls), skillsBox);
 
         HBox h1 = new HBox(10);
 

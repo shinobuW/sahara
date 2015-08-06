@@ -29,8 +29,9 @@ public class TaskScene extends TrackedTabPane {
 
         // Define and add the tabs
         SearchableTab informationTab = new TaskInfoTab(currentTask);
+        SearchableTab loggingTab = new TaskLoggingTab(currentTask);
 
-        Collections.addAll(searchableTabs, informationTab);
+        Collections.addAll(searchableTabs, informationTab, loggingTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 
