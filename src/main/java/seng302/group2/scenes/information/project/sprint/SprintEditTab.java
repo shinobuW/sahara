@@ -21,9 +21,7 @@ import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * A class for displaying a tab used to edit people.
@@ -31,7 +29,7 @@ import java.util.List;
  */
 public class SprintEditTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
+    Set<SearchableControl> searchControls = new HashSet<>();
 
     static Boolean correctShortName = Boolean.FALSE;
     static Boolean correctLongName = Boolean.FALSE;
@@ -58,16 +56,16 @@ public class SprintEditTab extends SearchableTab {
         buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField goalCustomField = new RequiredField("Goal:");
-        RequiredField longNameCustomField = new RequiredField("Long Name; ");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Sprint Description:", 300);
+        RequiredField goalCustomField = new RequiredField("Goal:", searchControls);
+        RequiredField longNameCustomField = new RequiredField("Long Name:", searchControls);
+        CustomTextArea descriptionTextArea = new CustomTextArea("Sprint Description:", 300, searchControls);
 
-        CustomComboBox<Backlog> backlogComboBox = new CustomComboBox<>("Backlog: ", true);
-        CustomComboBox<Team> teamComboBox = new CustomComboBox<>("Team: ", true);
-        CustomComboBox<Release> releaseComboBox = new CustomComboBox<>("Release: ", true);
+        CustomComboBox<Backlog> backlogComboBox = new CustomComboBox<>("Backlog:", true, searchControls);
+        CustomComboBox<Team> teamComboBox = new CustomComboBox<>("Team:", true, searchControls);
+        CustomComboBox<Release> releaseComboBox = new CustomComboBox<>("Release:", true, searchControls);
 
-        CustomDatePicker sprintStartDatePicker = new CustomDatePicker("Start Date:", false);
-        CustomDatePicker sprintEndDatePicker  = new CustomDatePicker("End Date: ", false);
+        CustomDatePicker sprintStartDatePicker = new CustomDatePicker("Start Date:", false, searchControls);
+        CustomDatePicker sprintEndDatePicker  = new CustomDatePicker("End Date:", false, searchControls);
 
 
         goalCustomField.setMaxWidth(275);
