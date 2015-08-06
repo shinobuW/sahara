@@ -18,6 +18,7 @@ public class SearchableText extends TextFlow implements SearchableControl {
     String styleInject = "";
     String styleHighlighted = "-fx-background-color:" + SearchableControl.highlightColour + ";";
 
+
     /**
      * Creates a SearchableText TextFlow element
      */
@@ -25,6 +26,7 @@ public class SearchableText extends TextFlow implements SearchableControl {
         texts.add(new TextFlow());
         updateFlow();
     }
+
 
     /**
      * Creates a SearchableText TextFlow element
