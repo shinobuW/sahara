@@ -104,21 +104,21 @@ public class CustomTextArea extends VBox implements SearchableControl {
         this.getChildren().add(entry);
 
         inputText.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode() == KeyCode.TAB) {
-                TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
-                if (skin.getBehavior() != null) {
-                    TextAreaBehavior behavior = skin.getBehavior();
-                    if (event.isControlDown()) {
-                        behavior.callAction("InsertTab");
+                if (event.getCode() == KeyCode.TAB) {
+                    TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
+                    if (skin.getBehavior() != null) {
+                        TextAreaBehavior behavior = skin.getBehavior();
+                        if (event.isControlDown()) {
+                            behavior.callAction("InsertTab");
+                        }
+                        else {
+                            behavior.callAction("TraverseNext");
+                        }
+                        event.consume();
                     }
-                    else {
-                        behavior.callAction("TraverseNext");
-                    }
-                    event.consume();
-                }
 
-            }
-        });
+                }
+            });
     }
 
     /**
@@ -150,21 +150,21 @@ public class CustomTextArea extends VBox implements SearchableControl {
         this.getChildren().add(entry);
 
         inputText.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode() == KeyCode.TAB) {
-                TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
-                if (skin.getBehavior() != null) {
-                    TextAreaBehavior behavior = skin.getBehavior();
-                    if (event.isControlDown()) {
-                        behavior.callAction("InsertTab");
+                if (event.getCode() == KeyCode.TAB) {
+                    TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
+                    if (skin.getBehavior() != null) {
+                        TextAreaBehavior behavior = skin.getBehavior();
+                        if (event.isControlDown()) {
+                            behavior.callAction("InsertTab");
+                        }
+                        else {
+                            behavior.callAction("TraverseNext");
+                        }
+                        event.consume();
                     }
-                    else {
-                        behavior.callAction("TraverseNext");
-                    }
-                    event.consume();
-                }
 
-            }
-        });
+                }
+            });
     }
 
 
@@ -199,21 +199,21 @@ public class CustomTextArea extends VBox implements SearchableControl {
         this.getChildren().add(entry);
 
         inputText.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            if (event.getCode() == KeyCode.TAB) {
-                TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
-                if (skin.getBehavior() != null) {
-                    TextAreaBehavior behavior = skin.getBehavior();
-                    if (event.isControlDown()) {
-                        behavior.callAction("InsertTab");
+                if (event.getCode() == KeyCode.TAB) {
+                    TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
+                    if (skin.getBehavior() != null) {
+                        TextAreaBehavior behavior = skin.getBehavior();
+                        if (event.isControlDown()) {
+                            behavior.callAction("InsertTab");
+                        }
+                        else {
+                            behavior.callAction("TraverseNext");
+                        }
+                        event.consume();
                     }
-                    else {
-                        behavior.callAction("TraverseNext");
-                    }
-                    event.consume();
-                }
 
-            }
-        });
+                }
+            });
     }
 
     /**
