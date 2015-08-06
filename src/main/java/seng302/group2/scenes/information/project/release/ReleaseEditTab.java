@@ -56,12 +56,12 @@ public class ReleaseEditTab extends SearchableTab {
         buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name:");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Release Description:", 300);
+        RequiredField shortNameCustomField = new RequiredField("Short Name:", searchControls);
+        CustomTextArea descriptionTextArea = new CustomTextArea("Release Description:", 300, searchControls);
         CustomDatePicker releaseDatePicker = new CustomDatePicker("Estimated Release Date:",
-                false);
+                false, searchControls);
 
-        CustomComboBox projectComboBox = new CustomComboBox("Project: ", true);
+        CustomComboBox projectComboBox = new CustomComboBox("Project: ", true, searchControls);
 
         shortNameCustomField.setMaxWidth(275);
         descriptionTextArea.setMaxWidth(275);

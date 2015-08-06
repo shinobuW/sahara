@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.scenes.dialog.CreateStoryDialog;
+import seng302.group2.scenes.dialog.CreateTaskDialog;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.subCategory.sprint.TaskCategorySwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
@@ -17,10 +18,10 @@ public class TaskCategory extends SubCategory {
     /**
      * Basic constructor for a TreeView category
      *
-     * @param sprint The parent project of this release category
+     * @param sprint The parent project of this Task category
      */
     public TaskCategory(Sprint sprint) {
-        super("Unassigned Tasks", sprint);
+        super("Tasks without a Story", sprint);
         setCategorySwitchStrategy(new TaskCategorySwitchStrategy());
     }
 
@@ -40,7 +41,7 @@ public class TaskCategory extends SubCategory {
      */
     @Override
     public Element generateXML() {
-        Element storyElements = ReportGenerator.doc.createElement("unassigned-stories");
+        Element storyElements = ReportGenerator.doc.createElement("tasks-without-a-story");
         for (Object item : getChildren()) {
             if (ReportGenerator.generatedItems.contains((SaharaItem) item)) {
                 Element xmlElement = ((SaharaItem) item).generateXML();
@@ -71,6 +72,6 @@ public class TaskCategory extends SubCategory {
      */
     @Override
     public void showCreationDialog() {
-        new CreateStoryDialog();
+        new CreateTaskDialog();
     }
 }

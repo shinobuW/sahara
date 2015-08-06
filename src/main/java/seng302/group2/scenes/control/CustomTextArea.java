@@ -10,15 +10,22 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableText;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Creates a custom text area which displays appropriate error messages when required.
  * Created by Codie on 02/04/2015
  */
-public class CustomTextArea extends VBox {
+public class CustomTextArea extends VBox implements SearchableControl {
     private String errorMessage = "";
     private TextArea inputText = new TextArea();
     private Label errorMessageText = new Label();
+    private Set<SearchableControl> searchControls = new HashSet<>();
 
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
@@ -37,7 +44,55 @@ public class CustomTextArea extends VBox {
         labelBox.spacingProperty().setValue(0);
         labelBox.setAlignment(Pos.CENTER_LEFT);
 
-        labelBox.getChildren().addAll(new Label(name));
+        labelBox.getChildren().addAll(new SearchableText(name, searchControls));
+
+        Insets insets = new Insets(0, 0, 5, 0);
+        labelBox.setPadding(insets);
+
+        VBox entry = new VBox();
+        entry.setPrefWidth(175);
+        entry.getChildren().addAll(labelBox, inputText);
+
+        this.getChildren().add(entry);
+
+        inputText.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                if (event.getCode() == KeyCode.TAB) {
+                    TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
+                    if (skin.getBehavior() != null) {
+                        TextAreaBehavior behavior = skin.getBehavior();
+                        if (event.isControlDown()) {
+                            behavior.callAction("InsertTab");
+                        }
+                        else {
+                            behavior.callAction("TraverseNext");
+                        }
+                        event.consume();
+                    }
+
+                }
+            });
+    }
+
+    /**
+     * Creates a required label HBox inside of the VBox containing a Label with an appended red
+     * asterisk.
+     *
+     * @param name The node field that is required
+     * @param searchableControls The collection of searchable controls to add this control too
+     */
+    public CustomTextArea(String name, Collection<SearchableControl> searchableControls) {
+        searchableControls.add(this);
+        this.errorMessageText.setText(errorMessage);
+        inputText.setWrapText(true);
+        inputText.setPrefRowCount(5);
+
+
+        HBox labelBox = new HBox();
+        labelBox.setPrefWidth(175);
+        labelBox.spacingProperty().setValue(0);
+        labelBox.setAlignment(Pos.CENTER_LEFT);
+
+        labelBox.getChildren().addAll(new SearchableText(name, searchControls));
 
         Insets insets = new Insets(0, 0, 5, 0);
         labelBox.setPadding(insets);
@@ -83,7 +138,7 @@ public class CustomTextArea extends VBox {
         labelBox.setPrefWidth(175);
         labelBox.spacingProperty().setValue(0);
 
-        labelBox.getChildren().addAll(new Label(name));
+        labelBox.getChildren().addAll(new SearchableText(name, searchControls));
 
         Insets insets = new Insets(0, 0, 5, 0);
         labelBox.setPadding(insets);
@@ -93,6 +148,72 @@ public class CustomTextArea extends VBox {
         entry.getChildren().addAll(labelBox, inputText);
 
         this.getChildren().add(entry);
+
+        inputText.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                if (event.getCode() == KeyCode.TAB) {
+                    TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
+                    if (skin.getBehavior() != null) {
+                        TextAreaBehavior behavior = skin.getBehavior();
+                        if (event.isControlDown()) {
+                            behavior.callAction("InsertTab");
+                        }
+                        else {
+                            behavior.callAction("TraverseNext");
+                        }
+                        event.consume();
+                    }
+
+                }
+            });
+    }
+
+
+    /**
+     * Creates a required label HBox inside of the VBox containing a Label with an appended red
+     * asterisk.
+     *
+     * @param name  The node field that is required
+     * @param width The width of the area
+     * @param searchableControls The collection of searchable controls to add this control too
+     */
+    public CustomTextArea(String name, int width, Collection<SearchableControl> searchableControls) {
+        searchableControls.add(this);
+        this.errorMessageText.setText(errorMessage);
+        inputText.setWrapText(true);
+        inputText.setPrefRowCount(5);
+
+
+        HBox labelBox = new HBox();
+        labelBox.setPrefWidth(175);
+        labelBox.spacingProperty().setValue(0);
+
+        labelBox.getChildren().addAll(new SearchableText(name, searchControls));
+
+        Insets insets = new Insets(0, 0, 5, 0);
+        labelBox.setPadding(insets);
+
+        VBox entry = new VBox();
+        entry.setPrefWidth(width);
+        entry.getChildren().addAll(labelBox, inputText);
+
+        this.getChildren().add(entry);
+
+        inputText.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+                if (event.getCode() == KeyCode.TAB) {
+                    TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
+                    if (skin.getBehavior() != null) {
+                        TextAreaBehavior behavior = skin.getBehavior();
+                        if (event.isControlDown()) {
+                            behavior.callAction("InsertTab");
+                        }
+                        else {
+                            behavior.callAction("TraverseNext");
+                        }
+                        event.consume();
+                    }
+
+                }
+            });
     }
 
     /**
@@ -150,6 +271,30 @@ public class CustomTextArea extends VBox {
     public void hideErrorField() {
         inputText.setStyle(null);
         this.getChildren().remove(errorMessageText);
+    }
+
+    @Override
+    public boolean query(String query) {
+        boolean found = false;
+        
+        if (query.isEmpty()) {
+            inputText.setStyle("-fx-border-color: inherit");
+            return false;
+        }
+
+        for (SearchableControl control : searchControls) {
+            found = found || control.query(query);
+        }
+
+        if (inputText.getText().contains(query)) {
+            found = true;
+            inputText.setStyle("-fx-border-color: " + SearchableControl.highlightColour);
+        }
+        else {
+            inputText.setStyle("-fx-border-color: inherit");
+        }
+
+        return found;
     }
 }
 

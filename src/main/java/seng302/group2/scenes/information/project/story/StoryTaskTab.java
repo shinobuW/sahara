@@ -1,71 +1,62 @@
-package seng302.group2.scenes.information.project.story.task;
+package seng302.group2.scenes.information.project.story;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
+import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTitle;
-import seng302.group2.scenes.dialog.CreateStoryDialog;
-import seng302.group2.workspace.SaharaItem;
-import seng302.group2.workspace.categories.subCategory.project.task.TaskCategory;
+import seng302.group2.util.conversion.GeneralEnumStringConverter;
+import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.project.sprint.Sprint;
+import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
- * Created by cvs20 on 28/07/15.
+ * Created by cvs20 on 5/08/15.
  */
-public class TaskCategoryTab extends SearchableTab {
+public class StoryTaskTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
     static Boolean correctShortName = Boolean.FALSE;
 
-
     /**
-     * Constructor for TaskCategoryTab class
-     * @param selectedCategory The current selected category
+     * Constructor for the Story Task Tab
+     *
+     * @param currentStory The currently selected Story
      */
-    public TaskCategoryTab(TaskCategory selectedCategory) {
-        //TODO When shortname validation done on Stories table for tasks, also needs to be implemented here
+    public StoryTaskTab(Story currentStory) {
+
         this.setText("Tasks");
         Pane basicInfoPane = new VBox(10);
-
-        Sprint currentSprint = selectedCategory.getSprint();
 
         basicInfoPane.setBorder(null);
         basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        SearchableText title = new SearchableTitle("Tasks without a Story", searchControls);
-        basicInfoPane.getChildren().add(title);
-
-
         TableView<Task> taskTable = new TableView<>();
         taskTable.setEditable(false);
         taskTable.setPrefWidth(500);
         taskTable.setPrefHeight(200);
-        taskTable.setPlaceholder(new SearchableText("There are currently no tasks without a story.", searchControls));
+        taskTable.setPlaceholder(new SearchableText("There are currently no tasks in this story.", searchControls));
         taskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        ObservableList<Task> data = currentSprint.getUnallocatedTasks();
+        ObservableList<Task> data = currentStory.getTasks();
 
         TableColumn nameCol = new TableColumn("Name");
         nameCol.setCellValueFactory(new PropertyValueFactory<Task, String>("shortName"));
@@ -114,6 +105,12 @@ public class TaskCategoryTab extends SearchableTab {
             }
         });
 
+        Button btnView = new Button("View");
+
+        btnView.setOnAction((event) -> {
+                App.mainPane.selectItem(taskTable.getSelectionModel().getSelectedItem());
+            });
+
         VBox addTaskBox = new VBox(10);
         SearchableText task = new SearchableText("Add Quick Tasks:", "-fx-font-weight: bold;");
 
@@ -125,6 +122,7 @@ public class TaskCategoryTab extends SearchableTab {
         addTaskBox.getChildren().addAll(task, shortNameCustomField, btnAdd);
 
         basicInfoPane.getChildren().add(taskTable);
+        basicInfoPane.getChildren().add(btnView);
         basicInfoPane.getChildren().add(addTaskBox);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
@@ -132,19 +130,17 @@ public class TaskCategoryTab extends SearchableTab {
                 btnAdd.setDisable(!(correctShortName));
 
             });
-
         btnAdd.setOnAction((event) -> {
                 if (correctShortName) {
                     //get user input
                     String shortName = shortNameCustomField.getText();
-                    Task newTask = new Task(shortName, "", null);
-                    currentSprint.getUnallocatedTasks().add(newTask);
+                    Task newTask = new Task(shortName, "", currentStory);
+                    currentStory.add(newTask);
                     App.refreshMainScene();
                 }
             });
 
     }
-
     /**
      * Gets all the searchable controls on this tab.
      * @return a collection of all the searchable controls on this tab.
@@ -153,4 +149,5 @@ public class TaskCategoryTab extends SearchableTab {
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;
     }
+
 }

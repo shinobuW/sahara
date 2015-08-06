@@ -18,17 +18,52 @@ import javafx.scene.paint.Color;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableText;
 
+import java.util.Collection;
+
 /**
  * @author Shinobu
  */
 public class CustomComboBox<T> extends VBox implements SearchableControl {
-    private boolean required;
+    private boolean required = false;
     private String errorMessage = "";
     private Label errorMessageText = new Label();
     private ObservableList<T> options = FXCollections.observableArrayList();
     private ComboBox<T> comboBox = new ComboBox<>(options);
     private Label astrLabel = new Label(" * ");
     private SearchableText titleLabel = new SearchableText();
+
+
+    /**
+     * Creates a required label HBox inside of the VBox containing a Label with an appended red
+     * asterisk if the field is required.
+     *
+     * @param name     The node field
+     */
+    public CustomComboBox(String name) {
+        this.errorMessageText.setText(errorMessage);
+
+        HBox labelBox = new HBox();
+        labelBox.setPrefWidth(165);
+        labelBox.setAlignment(Pos.CENTER_LEFT);
+        labelBox.spacingProperty().setValue(0);
+
+        titleLabel.setText(name);
+        labelBox.getChildren().addAll(titleLabel);
+
+        if (required) {
+            Label aster = astrLabel;
+            aster.setTextFill(Color.web("#ff0000"));
+            labelBox.getChildren().add(aster);
+        }
+
+        HBox entry = new HBox();
+        entry.setPrefWidth(275);
+        entry.getChildren().addAll(labelBox, this.comboBox);
+        HBox.setHgrow(labelBox, Priority.ALWAYS);
+
+        this.comboBox.setMinWidth(135);
+        this.getChildren().add(entry);
+    }
 
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
@@ -38,6 +73,76 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
      * @param required Whether or not the field is required
      */
     public CustomComboBox(String name, boolean required) {
+        this.required = required;
+        this.errorMessageText.setText(errorMessage);
+
+        HBox labelBox = new HBox();
+        labelBox.setPrefWidth(165);
+        labelBox.setAlignment(Pos.CENTER_LEFT);
+        labelBox.spacingProperty().setValue(0);
+
+        titleLabel.setText(name);
+        labelBox.getChildren().addAll(titleLabel);
+
+        if (required) {
+            Label aster = astrLabel;
+            aster.setTextFill(Color.web("#ff0000"));
+            labelBox.getChildren().add(aster);
+        }
+
+        HBox entry = new HBox();
+        entry.setPrefWidth(275);
+        entry.getChildren().addAll(labelBox, this.comboBox);
+        HBox.setHgrow(labelBox, Priority.ALWAYS);
+
+        this.comboBox.setMinWidth(135);
+        this.getChildren().add(entry);
+    }
+
+    /**
+     * Creates a required label HBox inside of the VBox containing a Label with an appended red
+     * asterisk if the field is required.
+     *
+     * @param name     The node field
+     * @param searchableControls The collection of searchable controls to add this to
+     */
+    public CustomComboBox(String name, Collection<SearchableControl> searchableControls) {
+        searchableControls.add(this);
+        this.errorMessageText.setText(errorMessage);
+
+        HBox labelBox = new HBox();
+        labelBox.setPrefWidth(165);
+        labelBox.setAlignment(Pos.CENTER_LEFT);
+        labelBox.spacingProperty().setValue(0);
+
+        titleLabel.setText(name);
+        labelBox.getChildren().addAll(titleLabel);
+
+        if (required) {
+            Label aster = astrLabel;
+            aster.setTextFill(Color.web("#ff0000"));
+            labelBox.getChildren().add(aster);
+        }
+
+        HBox entry = new HBox();
+        entry.setPrefWidth(275);
+        entry.getChildren().addAll(labelBox, this.comboBox);
+        HBox.setHgrow(labelBox, Priority.ALWAYS);
+
+        this.comboBox.setMinWidth(135);
+        this.getChildren().add(entry);
+    }
+
+    /**
+     * Creates a required label HBox inside of the VBox containing a Label with an appended red
+     * asterisk if the field is required.
+     *
+     * @param name     The node field
+     * @param required Whether or not the field is required
+     * @param searchableControls The collection of searchable controls to add this to
+     */
+    public CustomComboBox(String name, boolean required, Collection<SearchableControl> searchableControls) {
+        searchableControls.add(this);
         this.required = required;
         this.errorMessageText.setText(errorMessage);
 
@@ -146,9 +251,9 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
      *
      * @return The string of the chosen item
      */
-    public String getValue() {
+    public T getValue() {
         if (this.comboBox.getValue() != null) {
-            return this.comboBox.getValue().toString();
+            return this.comboBox.getValue();
         }
         else {
             return null;

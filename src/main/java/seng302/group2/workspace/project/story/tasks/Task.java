@@ -4,6 +4,7 @@ import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.story.TaskInformationSwitchStrategy;
+import seng302.group2.util.conversion.GeneralEnumStringConverter;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
@@ -36,8 +37,10 @@ public class Task extends SaharaItem implements Serializable {
     private List<Person> serializableResponsibilities = new ArrayList<>();
     private transient ObservableList<Log> logs = observableArrayList();
     private List<Log> serializableLogs = new ArrayList<>();
+    private String stringState;
     // TODO Effort left and Spent for logging
 
+    GeneralEnumStringConverter converter = new GeneralEnumStringConverter();
 
     /**
      * Returns the items held by the Task
@@ -63,6 +66,8 @@ public class Task extends SaharaItem implements Serializable {
         this.impediments = "";
         this.story = null;
         this.state = TASKSTATE.NOT_STARTED;
+        this.stringState = converter.toString(this.getState().toString());
+
         setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
     }
 
@@ -78,11 +83,11 @@ public class Task extends SaharaItem implements Serializable {
         this.description = description;
         this.impediments = "";
         this.state = TASKSTATE.NOT_STARTED;
+        this.stringState = converter.toString(this.getState().toString());
         this.story = story;
         
         setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
     }
-
 
     /**
      * Gets the short name of the task
@@ -128,6 +133,15 @@ public class Task extends SaharaItem implements Serializable {
     public TASKSTATE getState() {
         return this.state;
     }
+
+    /**
+     * Gets the state of the current task
+     *
+     * @return the state as one of the Enum values
+     */
+    public String getStringState() {
+        return this.stringState;
+    }
     
     /**
      * Gets the story of the current task
@@ -145,6 +159,8 @@ public class Task extends SaharaItem implements Serializable {
      */
     public void setState(TASKSTATE state) {
         this.state = state;
+        this.stringState = converter.toString(this.getState().toString());
+
     }
 
     /**
@@ -188,6 +204,14 @@ public class Task extends SaharaItem implements Serializable {
      */
     public void add(Person person) {
         this.responsibilities.add(person);
+    }
+    
+    /**
+     * Adds a log to the Tasks Logs list
+     *  @param log The log to add
+     */
+    public void add(Log log) {
+        this.logs.add(log);
     }
 
     /**
