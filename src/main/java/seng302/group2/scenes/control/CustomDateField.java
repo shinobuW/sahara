@@ -7,15 +7,22 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableText;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Creates a custom date field which displays appropriate error messages when required.
  * Created by Codie on 02/04/2015
  */
-public class CustomDateField extends VBox {
+public class CustomDateField extends VBox implements SearchableControl {
     private String errorMessage = "";
     private TextField inputText = new TextField();
     private Label errorMessageText = new Label();
+    Set<SearchableControl> searchControls = new HashSet<>();
 
     /**
      * Creates a label and a text field with date layout prompts.
@@ -30,7 +37,32 @@ public class CustomDateField extends VBox {
         labelBox.spacingProperty().setValue(0);
         labelBox.setAlignment(Pos.CENTER_LEFT);
 
-        labelBox.getChildren().addAll(new Label(name));
+        labelBox.getChildren().addAll(new SearchableText(name, searchControls));
+        errorMessageText.setTextFill(Color.web("#ff0000"));
+        HBox entry = new HBox();
+        entry.setPrefWidth(175);
+        entry.getChildren().addAll(labelBox, inputText);
+        HBox.setHgrow(labelBox, Priority.ALWAYS);
+
+        this.getChildren().add(entry);
+    }
+
+    /**
+     * Creates a label and a text field with date layout prompts.
+     *
+     * @param name The label for the date field
+     * @param controlCollection The collection of searchable controls to add this control too
+     */
+    public CustomDateField(String name, Collection<SearchableControl> controlCollection) {
+        controlCollection.add(this);
+        this.errorMessageText.setText(errorMessage);
+        inputText.setPromptText("dd/mm/yyyy");
+        HBox labelBox = new HBox();
+        labelBox.setPrefWidth(175);
+        labelBox.spacingProperty().setValue(0);
+        labelBox.setAlignment(Pos.CENTER_LEFT);
+
+        labelBox.getChildren().addAll(new SearchableText(name, searchControls));
         errorMessageText.setTextFill(Color.web("#ff0000"));
         HBox entry = new HBox();
         entry.setPrefWidth(175);
@@ -103,5 +135,14 @@ public class CustomDateField extends VBox {
     public void hideErrorField() {
         inputText.setStyle(null);
         this.getChildren().remove(errorMessageText);
+    }
+
+    @Override
+    public boolean query(String query) {
+        boolean found = false;
+        for (SearchableControl control : searchControls) {
+            found = found || control.query(query);
+        }
+        return found;
     }
 }
