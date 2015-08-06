@@ -1,6 +1,5 @@
 package seng302.group2.scenes.control.search;
 
-import javafx.application.Application;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -13,22 +12,12 @@ import seng302.group2.scenes.JavaFxTestApp;
 public class SearchableTextTest {
 
     /**
-     * NOTE: This first block doesn't add to the tests, but allows us to text some JavaFX controls without running
-     * inside a real application.
-     * http://stackoverflow.com/questions/11385604/how-do-you-unit-test-a-javafx-controller-with-junit
+     * Initialises a dud JavaFX Application so that we may test JavaFX GUI controls and interactions
      */
     @BeforeClass
     public static void initJFX() {
-        Thread t = new Thread("JavaFX Init Thread") {
-            public void run() {
-                Application.launch(JavaFxTestApp.class, new String[0]);
-            }
-        };
-        t.setDaemon(true);
-        t.start();
+        JavaFxTestApp.initJFX();
     }
-
-
 
     @Test
     public void testSetText() throws Exception {

@@ -9,8 +9,25 @@ import javafx.stage.Stage;
  * Created by jml168 on 7/08/15.
  */
 public class JavaFxTestApp extends Application {
+
+    /**
+     * NOTE: This class doesn't add to the unit tests, but allows us to test some JavaFX controls without running
+     * inside a real application.
+     * http://stackoverflow.com/questions/11385604/how-do-you-unit-test-a-javafx-controller-with-junit
+     */
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         // noop
+    }
+
+    public static void initJFX() {
+        Thread t = new Thread("JavaFX Init Thread") {
+            public void run() {
+                Application.launch(JavaFxTestApp.class, new String[0]);
+            }
+        };
+        t.setDaemon(true);
+        t.start();
     }
 }
