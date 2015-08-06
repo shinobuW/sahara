@@ -11,8 +11,10 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.control.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.person.Person;
@@ -29,7 +31,7 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public class TeamEditTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
+    Set<SearchableControl> searchControls = new HashSet<>();
 
     private Team baseTeam;
     private RequiredField shortNameField;
@@ -65,10 +67,10 @@ public class TeamEditTab extends SearchableTab {
 
 
         // Basic information fields
-        shortNameField = new RequiredField("Short Name:");
+        shortNameField = new RequiredField("Short Name:", searchControls);
         shortNameField.setText(baseTeam.getShortName());
         shortNameField.setMaxWidth(275);
-        descriptionField = new CustomTextArea("Team Description:", 300);
+        descriptionField = new CustomTextArea("Team Description:", 300, searchControls);
         descriptionField.setText(baseTeam.getDescription());
         descriptionField.setMaxWidth(275);
 
@@ -116,20 +118,21 @@ public class TeamEditTab extends SearchableTab {
 
 
         // List views
-        ListView<Person> teamMembersListView = new ListView<>(teamMembersList);
+        SearchableListView<Person> teamMembersListView = new SearchableListView<>(teamMembersList, searchControls);
         teamMembersListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         teamMembersListView.getSelectionModel().select(0);
 
-        ListView<Person> availablePeopleListView = new ListView<>(availablePeopleList);
+        SearchableListView<Person> availablePeopleListView = new SearchableListView<>(availablePeopleList,
+                searchControls);
         availablePeopleListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         availablePeopleListView.getSelectionModel().select(0);
 
         VBox teamMembersBox = new VBox(10);
-        teamMembersBox.getChildren().add(new Label("Team Members: "));
+        teamMembersBox.getChildren().add(new SearchableText("Team Members: ", searchControls));
         teamMembersBox.getChildren().add(teamMembersListView);
 
         VBox availablePeopleBox = new VBox(10);
-        availablePeopleBox.getChildren().add(new Label("Available People: "));
+        availablePeopleBox.getChildren().add(new SearchableText("Available People: ", searchControls));
         availablePeopleBox.getChildren().add(availablePeopleListView);
 
         HBox memberListViews = new HBox(10);
@@ -185,7 +188,7 @@ public class TeamEditTab extends SearchableTab {
             });
 
         btnUnassign.setOnAction((event) -> {
-                Collection<Person> selectedPeople = new ArrayList<Person>();
+                Collection<Person> selectedPeople = new ArrayList<>();
                 selectedPeople.addAll(teamMembersListView.getSelectionModel().
                         getSelectedItems());
                 availablePeopleList.addAll(selectedPeople);

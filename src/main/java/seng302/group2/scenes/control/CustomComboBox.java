@@ -287,11 +287,10 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
     public boolean query(String query) {
         if (query.trim().isEmpty()) {
             comboBox.setStyle("-fx-border-color: inherit");
-            return false;
         }
         boolean foundCombo = false;
         for (T item : comboBox.getItems()) {
-            if (item.toString().toLowerCase().contains(query.toLowerCase())) {
+            if (item.toString().toLowerCase().contains(query.toLowerCase()) && !query.trim().isEmpty()) {
                 foundCombo = true;
             }
         }

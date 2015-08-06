@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class SearchableText extends TextFlow implements SearchableControl {
     List<TextFlow> texts = new ArrayList<>();
-    String styleDefault = "-fx-border-color: inherit;";
+    String styleDefault = "-fx-background-color: inherit;";
     String styleInject = "";
     String styleHighlighted = "-fx-background-color:" + SearchableControl.highlightColour + ";";
 
@@ -133,12 +133,11 @@ public class SearchableText extends TextFlow implements SearchableControl {
 
         int index = content.toLowerCase().indexOf(query);
 
-
         if (index == -1 || query.trim().isEmpty()) {
             for (TextFlow flow : texts) {
                 flow.setStyle(styleDefault + styleInject);
-                updateFlow();
             }
+            updateFlow();
             return false;  // Query not in text, keep a single, stitched Text node.
         }
 

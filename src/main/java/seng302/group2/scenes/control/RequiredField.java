@@ -87,6 +87,7 @@ public class RequiredField extends VBox implements SearchableControl {
         this.getChildren().add(entry);
     }
 
+
     /**
      * Returns the text inside the text field of the RequiredField.
      *
@@ -128,6 +129,7 @@ public class RequiredField extends VBox implements SearchableControl {
         showErrorField();
     }
 
+
     /**
      * Gets the input text field
      * @return textfield
@@ -135,6 +137,7 @@ public class RequiredField extends VBox implements SearchableControl {
     public TextField getTextField() {
         return inputText;
     }
+
 
     /**
      * Hides the error field.
@@ -144,12 +147,12 @@ public class RequiredField extends VBox implements SearchableControl {
         this.getChildren().remove(errorMessageText);
     }
 
+
     @Override
     public boolean query(String query) {
         query = query.toLowerCase();
         if (query.isEmpty()) {
             inputText.setStyle("-fx-border-color: inherit");
-            return false;
         }
 
         boolean found = false;
@@ -157,7 +160,7 @@ public class RequiredField extends VBox implements SearchableControl {
             found = found || control.query(query);
         }
 
-        if (inputText.getText().toLowerCase().contains(query)) {
+        if (inputText.getText().toLowerCase().contains(query) && !query.trim().isEmpty()) {
             found = true;
             inputText.setStyle("-fx-border-color: " + SearchableControl.highlightColour);
         }

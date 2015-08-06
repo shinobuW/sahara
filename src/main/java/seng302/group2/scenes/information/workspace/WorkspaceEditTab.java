@@ -15,9 +15,7 @@ import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.workspace.Workspace;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * A class for displaying a tab used to edit the workspaces.
@@ -25,7 +23,7 @@ import java.util.List;
  */
 public class WorkspaceEditTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
+    Set<SearchableControl> searchControls = new HashSet<>();
 
     /**
      * Constructor for the WorkspaceEditTab class. This constructor creates a JavaFX ScrollPane
@@ -48,9 +46,9 @@ public class WorkspaceEditTab extends SearchableTab {
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name:");
-        RequiredField longNameCustomField = new RequiredField("Long Name:");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Workspace Description:", 300);
+        RequiredField shortNameCustomField = new RequiredField("Short Name:", searchControls);
+        RequiredField longNameCustomField = new RequiredField("Long Name:", searchControls);
+        CustomTextArea descriptionTextArea = new CustomTextArea("Workspace Description:", 300, searchControls);
 
         shortNameCustomField.setText(currentWorkspace.getShortName());
         longNameCustomField.setText(currentWorkspace.getLongName());
