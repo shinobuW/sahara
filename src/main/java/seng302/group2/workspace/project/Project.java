@@ -310,19 +310,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
     }
 
     /**
-     * Returns the releases of a project casted as TreeViewItems
-     *
-     * @return list of releases casted as TreeViewItems
-     */
-    public ObservableList<SaharaItem> getTreeViewReleases() {
-        ObservableList<SaharaItem> treeViewReleases = observableArrayList();
-        for (Object item : this.releases) {
-            treeViewReleases.add((SaharaItem) item);
-        }
-        return treeViewReleases;
-    }
-
-    /**
      * Gets the description of the project
      *
      * @return The description of the project
@@ -338,16 +325,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      */
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    /**
-     * Gets the serializable teams
-     *
-     * @return the serializable teams
-     */
-    @Deprecated
-    public List<Team> getSerializableTeams() {
-        return serializableTeams;
     }
 
     /**
@@ -410,37 +387,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
     }
 
     //</editor-fold>
-
-
-    /**
-     * Adds a Team to the Project list of Teams
-     * Adds an undo item by default
-     * @param team The team to add
-     */
-    /*
-    @Deprecated
-    public void add(Team team)
-    {
-        // Add the undo action to the stack
-        Global.undoRedoMan.add(new UndoableItem(
-                team,
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT, this),
-                new UndoRedoAction(UndoRedoPerformer.UndoRedoProperty.TEAM_ADD_PROJECT, this)
-        ));
-
-        this.teams.add(team);
-    }*/
-
-    /**
-     * Adds a Team to the Project list of Teams
-     * @param team The team to add
-     */
-    /*
-    @Deprecated
-    public void addWithoutUndo(Team team)
-    {
-        this.teams.add(team);
-    }*/
 
     /**
      * Adds a Project to the Project list of Stories

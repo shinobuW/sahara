@@ -87,6 +87,37 @@ public class ProjectTest extends TestCase {
         assertFalse(proj.getReleases().contains(release));
     }
 
+    /**
+     * Tests that sprints are added to projects properly
+     */
+    @Test
+    public void testAddSprint() {
+        Project proj = new Project();
+        Sprint sprint = new Sprint();
+        proj.add(sprint);
+
+        assertTrue(proj.getSprints().contains(sprint));
+
+        Global.commandManager.undo();
+
+        assertFalse(proj.getSprints().contains(sprint));
+    }
+
+    /**
+     * Tests that backlogs are added to projects properly
+     */
+    @Test
+    public void testAddBacklog() {
+        Project proj = new Project();
+        Backlog backlog = new Backlog();
+        proj.add(backlog);
+
+        assertTrue(proj.getBacklogs().contains(backlog));
+
+        Global.commandManager.undo();
+
+        assertFalse(proj.getBacklogs().contains(backlog));
+    }
 
     /**
      * Tests the addition and removal of project's team allocation
@@ -168,24 +199,6 @@ public class ProjectTest extends TestCase {
         Assert.assertFalse(proj.getPastAllocations().contains(futureAllocation));
         Assert.assertTrue(proj.getPastAllocations().contains(pastAllocation));
     }
-
-
-    /**
-     * Tests that a list of releases as TreeViewItems are fetched correctly
-     */
-    @Test
-    public void testTreeViewReleases() {
-        Project proj = new Project();
-        proj.getReleases().clear();
-        Assert.assertTrue(proj.getTreeViewReleases().size() == 0);
-
-        Release release = new Release("test release", proj);
-        proj.add(release);
-
-        Assert.assertTrue(proj.getTreeViewReleases().size() == 1);
-        Assert.assertEquals(proj.getTreeViewReleases().get(0), release);
-    }
-
 
     /**
      * Tests that a projects children are correct
