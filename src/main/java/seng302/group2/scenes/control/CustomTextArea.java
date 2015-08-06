@@ -276,9 +276,24 @@ public class CustomTextArea extends VBox implements SearchableControl {
     @Override
     public boolean query(String query) {
         boolean found = false;
+        
+        if (query.isEmpty()) {
+            inputText.setStyle("-fx-border-color: inherit");
+            return false;
+        }
+
         for (SearchableControl control : searchControls) {
             found = found || control.query(query);
         }
+
+        if (inputText.getText().contains(query)) {
+            found = true;
+            inputText.setStyle("-fx-border-color: " + SearchableControl.highlightColour);
+        }
+        else {
+            inputText.setStyle("-fx-border-color: inherit");
+        }
+
         return found;
     }
 }

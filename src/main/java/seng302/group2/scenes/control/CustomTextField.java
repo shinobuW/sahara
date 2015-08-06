@@ -125,10 +125,25 @@ public class CustomTextField extends VBox implements SearchableControl {
 
     @Override
     public boolean query(String query) {
+        query = query.toLowerCase();
+        if (query.isEmpty()) {
+            inputText.setStyle("-fx-border-color: inherit");
+            return false;
+        }
+
         boolean found = false;
         for (SearchableControl control : searchControls) {
             found = found || control.query(query);
         }
+
+        if (inputText.getText().toLowerCase().contains(query)) {
+            found = true;
+            inputText.setStyle("-fx-border-color: " + SearchableControl.highlightColour);
+        }
+        else {
+            inputText.setStyle("-fx-border-color: inherit");
+        }
+
         return found;
     }
 }
