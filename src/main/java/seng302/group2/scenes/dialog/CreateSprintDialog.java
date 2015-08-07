@@ -57,8 +57,8 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
         //TODO fix up sizing
 
         this.setTitle("New Sprint");
-        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 400px; -fx-pref-width: 600px; "
-                + "-fx-pref-height: 400px;");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 500px;");
 
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
@@ -218,7 +218,6 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 @Override
                 public void changed(ObservableValue<? extends Backlog> observable,
                                     Backlog oldValue, Backlog newValue) {
-                    System.out.println("backlog");
                     sprintEndDatePicker.setDisable(true);
                     sprintStartDatePicker.setDisable(true);
                     teamComboBox.setValue(null);
@@ -251,7 +250,6 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 @Override
                 public void changed(ObservableValue<? extends Release> observable,
                                     Release oldValue, Release newValue) {
-                    System.out.println("relesase");
 
                     if (newValue != null) {
                         sprintStartDatePicker.setDisable(false);
@@ -267,7 +265,6 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 @Override
                 public void changed(ObservableValue<? extends LocalDate> observable,
                                     LocalDate oldValue, LocalDate newValue) {
-                    System.out.println("sprint s");
                     if ((sprintEndDatePicker.getValue() != null) && (newValue != null)
                             && newValue.isAfter(sprintEndDatePicker.getValue())) {
                         sprintEndDatePicker.setDisable(false);
@@ -286,7 +283,6 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 public void changed(ObservableValue<? extends LocalDate> observable,
                                     LocalDate oldValue, LocalDate newValue) {
                     if (newValue != null) {
-                        System.out.println("sprint e");
                         toggleCreate();
                     }
                 }
