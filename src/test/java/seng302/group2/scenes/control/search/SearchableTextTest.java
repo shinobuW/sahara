@@ -63,6 +63,10 @@ public class SearchableTextTest {
         Assert.assertEquals("some ", ((Text)sText.texts.get(0).getChildren().get(0)).getText());  // before
         Assert.assertEquals("text", ((Text)sText.texts.get(1).getChildren().get(0)).getText());  // match
         Assert.assertEquals("", ((Text)sText.texts.get(2).getChildren().get(0)).getText());  // after
+
+        // Check highlighting of matching element
+        Assert.assertTrue(sText.texts.get(1).getStyle().contains(
+                "-fx-background-color:" + SearchableControl.highlightColour));
     }
 
 
@@ -78,5 +82,11 @@ public class SearchableTextTest {
         Assert.assertEquals(" t", ((Text)sText.texts.get(2).getChildren().get(0)).getText());  // after
         Assert.assertEquals("e", ((Text)sText.texts.get(3).getChildren().get(0)).getText());  // match
         Assert.assertEquals("xt", ((Text)sText.texts.get(4).getChildren().get(0)).getText());  // after
+
+        // Check highlighting of matching elements
+        Assert.assertTrue(sText.texts.get(1).getStyle().contains(
+                "-fx-background-color:" + SearchableControl.highlightColour));
+        Assert.assertTrue(sText.texts.get(3).getStyle().contains(
+                "-fx-background-color:" + SearchableControl.highlightColour));
     }
 }
