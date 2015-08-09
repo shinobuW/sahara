@@ -5,45 +5,30 @@
  */
 package seng302.group2.scenes.information.project.story.task;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import javafx.collections.FXCollections;
-import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import seng302.group2.App;
-import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
-import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
-import seng302.group2.util.conversion.GeneralEnumStringConverter;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
+
+import java.time.LocalDate;
+import java.util.*;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  *
@@ -71,7 +56,7 @@ public class TaskLoggingTab extends SearchableTab {
         taskTable.setEditable(false);
         taskTable.setPrefWidth(500);
         taskTable.setPrefHeight(200);
-        taskTable.setPlaceholder(new SearchableText("There are currently no tasks in this story.", searchControls));
+        taskTable.setPlaceholder(new SearchableText("There are currently no logs in this task.", searchControls));
         taskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         ObservableList<Log> data = currentTask.getLogs();
@@ -129,12 +114,29 @@ public class TaskLoggingTab extends SearchableTab {
         Button deleteButton = new Button("Delete");
         buttons.getChildren().addAll(addButton, deleteButton);
         
-        
-        
         HBox newLogFields = new HBox(35);
         final ComboBox<Person> personComboBox = new ComboBox<>(observableArrayList());
         CustomDatePicker startDatePicker = new CustomDatePicker("Start Date", true);
         CustomDatePicker endDatePicker = new CustomDatePicker("End Date", false);
+
+        final Callback<DatePicker, DateCell> endDateCellFactory =
+            new Callback<DatePicker, DateCell>() {
+                @Override
+                public DateCell call(final DatePicker datePicker) {
+                    return new DateCell() {
+                        @Override
+                        public void updateItem(LocalDate item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (item.isBefore(startDatePicker.getValue())) {
+                                setDisable(true);
+                                setStyle("-fx-background-color: #ffc0cb;");
+                            }
+                        }
+                    };
+                }
+            };
+
+        endDatePicker.getDatePicker().setDayCellFactory(endDateCellFactory);
 
         startDatePicker.getDatePicker().setStyle("-fx-pref-width: 200;");
         endDatePicker.getDatePicker().setStyle("-fx-pref-width: 200;");
@@ -149,24 +151,26 @@ public class TaskLoggingTab extends SearchableTab {
         newLogFields.getChildren().addAll(personComboBox,
                 startDatePicker, endDatePicker);
 
-        personComboBox.setOnMouseClicked(event -> {
-                personComboBox.getItems().clear();
-                //TODO not going to work on tasks without a story
-                for (Team team : currentTask.getStory().getBacklog().getProject().getCurrentTeams()) {
-                    for (Person person : team.getPeople()) {
-                        personComboBox.getItems().add(person);
-                    }
+        personComboBox.getItems().clear();
+        Set<Team> teams = currentTask.getStory().getBacklog().getProject().getCurrentTeams();
+        if (teams.isEmpty()) {
+            personComboBox.setDisable(true);
+        }
+        else {
+            personComboBox.setDisable(false);
+            for (Team team : teams) {
+                for (Person person : team.getPeople()) {
+                    personComboBox.getItems().add(person);
                 }
-            });
+            }
+        }
 
         addButton.setOnAction((event) -> {
                 startDatePicker.hideErrorField();
                 if (personComboBox.getValue() != null && startDatePicker.getValue() != null) {
                     LocalDate endDate = endDatePicker.getValue();
                     LocalDate startDate = startDatePicker.getValue();
-                    Person selectedPerson = null;
-
-                    selectedPerson = personComboBox.getValue();
+                    Person selectedPerson = personComboBox.getValue();
 
                     if (true) {
                         Log newLog = new Log(currentTask, selectedPerson, 90, startDate);
@@ -216,14 +220,11 @@ public class TaskLoggingTab extends SearchableTab {
                 }
             });
 
-        
         basicInfoPane.getChildren().add(taskTable);
         basicInfoPane.getChildren().add(btnView);
         basicInfoPane.getChildren().add(newLogFields);
         basicInfoPane.getChildren().add(buttons);
 
-       
-        
     }
 
     /**
