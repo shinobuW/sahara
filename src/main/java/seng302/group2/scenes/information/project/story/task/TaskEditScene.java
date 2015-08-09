@@ -16,7 +16,6 @@ import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A class for displaying the Task edit scene.

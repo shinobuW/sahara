@@ -23,7 +23,6 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.Map;
 
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;

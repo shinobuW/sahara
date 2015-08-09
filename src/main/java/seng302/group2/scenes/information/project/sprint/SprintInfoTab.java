@@ -52,15 +52,17 @@ public class SprintInfoTab extends SearchableTab {
         sprintStoryBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         final Separator separator = new Separator();
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         basicInfoPane.getChildren().add(title);
         basicInfoPane.getChildren().add(new SearchableText("Sprint Name: " + currentSprint.getLongName(),
                 searchControls));
         basicInfoPane.getChildren().add(new SearchableText("Sprint Goal: " + currentSprint.getGoal(),
                 searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Start Date: " + currentSprint.getStartDate(),
+        String startDateString = currentSprint.getStartDate().format(formatter);
+        basicInfoPane.getChildren().add(new SearchableText("Start Date: " + startDateString,
                 searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("End Date: " + currentSprint.getEndDate(),
+        String endDateString = currentSprint.getEndDate().format(formatter);
+        basicInfoPane.getChildren().add(new SearchableText("End Date: " + endDateString,
                 searchControls));
         basicInfoPane.getChildren().add(new SearchableText("Description: " + currentSprint.getDescription(),
                 searchControls));

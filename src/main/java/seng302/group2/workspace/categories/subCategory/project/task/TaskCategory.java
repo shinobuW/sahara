@@ -3,7 +3,6 @@ package seng302.group2.workspace.categories.subCategory.project.task;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
-import seng302.group2.scenes.dialog.CreateStoryDialog;
 import seng302.group2.scenes.dialog.CreateTaskDialog;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project.subCategory.sprint.TaskCategorySwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;

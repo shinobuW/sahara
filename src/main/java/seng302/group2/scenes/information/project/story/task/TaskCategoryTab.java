@@ -3,10 +3,11 @@ package seng302.group2.scenes.information.project.story.task;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
@@ -15,8 +16,6 @@ import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTitle;
-import seng302.group2.scenes.dialog.CreateStoryDialog;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.task.TaskCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.sprint.Sprint;
@@ -26,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**

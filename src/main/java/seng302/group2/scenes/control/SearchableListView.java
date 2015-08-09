@@ -3,7 +3,6 @@ package seng302.group2.scenes.control;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.workspace.skills.Skill;
 
 import java.util.Collection;
 
