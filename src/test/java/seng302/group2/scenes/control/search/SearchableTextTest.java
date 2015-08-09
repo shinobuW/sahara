@@ -31,15 +31,16 @@ public class SearchableTextTest {
     }
 
     @Test
-    public void testUpdateFlow() throws Exception {
+    public void testSetAndUpdateFlow() throws Exception {
         SearchableText sText = new SearchableText("some text");
         // Invalidate our use of the searchable text by adding new stuff that isn't searchable
         //sText.getChildren().addAll(new Label("stuff"), new Text("that shouldn't be here"), new Label());
+        sText.setText("some other text");
 
         sText.updateFlow();  // Update the text from the actual strings we use through the set
 
         Assert.assertEquals(1, sText.getChildren().size());
-        Assert.assertEquals("some text", ((Text)sText.texts.get(0).getChildren().get(0)).getText());
+        Assert.assertEquals("some other text", ((Text)sText.texts.get(0).getChildren().get(0)).getText());
     }
 
     @Test
