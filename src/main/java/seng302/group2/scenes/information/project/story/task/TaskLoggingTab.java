@@ -61,9 +61,14 @@ public class TaskLoggingTab extends SearchableTab {
 
         ObservableList<Log> data = currentTask.getLogs();
 
-        TableColumn loggerCol = new TableColumn("Name");
+        TableColumn loggerCol = new TableColumn("Logger");
         loggerCol.setCellValueFactory(new PropertyValueFactory<Task, Person>("logger"));
         loggerCol.prefWidthProperty().bind(taskTable.widthProperty()
+                .subtract(2).divide(100).multiply(60));
+
+        TableColumn descriptionCol = new TableColumn("Description");
+        descriptionCol.setCellValueFactory(new PropertyValueFactory<Task, String>("description"));
+        descriptionCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
         
         TableColumn startTimeCol = new TableColumn("Start Time");
@@ -172,15 +177,11 @@ public class TaskLoggingTab extends SearchableTab {
                     LocalDate startDate = startDatePicker.getValue();
                     Person selectedPerson = personComboBox.getValue();
 
-                    if (true) {
-                        Log newLog = new Log(currentTask, selectedPerson, 90, startDate);
-                        currentTask.add(newLog);
-                        App.refreshMainScene(); 
-                    }
-                    else {
-                        
-                        event.consume();
-                    }
+
+//                    Log newLog = new Log(currentTask, " ", selectedPerson, 90, startDate, endDate);
+//                    currentTask.add(newLog);
+                    App.refreshMainScene();
+
                 }
                 else {
                     if (personComboBox.getValue() == null) {

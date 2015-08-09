@@ -22,47 +22,36 @@ public class Log extends SaharaItem implements Serializable {
     private long duration;
     private Person logger;
     private Task task;
+    private String description;
 
 
     /**
-     *
-     * @param logger the person working on the task
-     * @param duration the duration the logger spent on the task in hours
-     * @param startTime the time the logger started working on the task
+     *Basic constructor which takes in all the fields as parameters. Duration is calculated from the start time and end
+     * time if the duration is not given.
+     * @param task the task the los is for
+     * @param description description of the work accomplished
+     * @param logger the person logging the time
+     * @param duration the duration the person worked on
+     * @param startTime time the logger started working on the task
+     * @param endTime time the logger finished working on the task
      */
-    public Log(Task task, Person logger, long duration, LocalDate startTime) {
+    public Log(Task task, String description, Person logger, long duration, LocalDate startTime, LocalDate endTime) {
         this.task = task;
         this.logger = logger;
         this.startTime = startTime;
-
-        if (endTime == null) {
-            this.duration = duration;
-        }
-        else {
-            this.duration = Duration.between(this.startTime, this.endTime).toHours();
-        }
-    }
-    
-    /**
-     *
-     * @param logger the person working on the task
-     * @param duration the duration the logger spent on the task in hours
-     * @param startTime the time the logger started working on the task
-     * @param endTime the time the logger finished working on the task
-     */
-    public Log(Task task, Person logger, long duration, LocalDate startTime, LocalDate endTime) {
-        this.task = task;
-        this.logger = logger;
+        this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
 
-        if (startTime == null && endTime == null) {
+
+        if (startTime == null || endTime == null) {
             this.duration = duration;
         }
         else {
             this.duration = Duration.between(this.startTime, this.endTime).toHours();
         }
     }
+
 
 
     /**
@@ -171,24 +160,28 @@ public class Log extends SaharaItem implements Serializable {
         private LocalDate startTime;
         private LocalDate endTime;
         private Long duration;
+        private String description;
 
         private Person oldLogger;
         private LocalDate oldStartTime;
         private LocalDate oldEndTime;
         private Long oldDuration;
+        private String oldDescription;
 
         protected LogEditCommand(Log log, Person newLogger, LocalDate newStartDate, LocalDate newEndDate,
-                                 Long newDuration) {
+                                 Long newDuration, String newDescription) {
             this.log = log;
             this.logger = newLogger;
             this.startTime = newStartDate;
             this.endTime = newEndDate;
             this.duration = newDuration;
+            this.description = newDescription;
 
             this.oldLogger = log.logger;
             this.oldStartTime = log.startTime;
             this.oldEndTime = log.endTime;
             this.oldDuration = log.duration;
+            this.oldDescription = log.description;
         }
 
 
@@ -200,6 +193,7 @@ public class Log extends SaharaItem implements Serializable {
             log.startTime = startTime;
             log.endTime = endTime;
             log.duration = duration;
+            log.description = description;
             if (startTime == null && endTime == null) {
                 log.duration = Duration.between(log.startTime, log.endTime).toHours();
             }
@@ -217,6 +211,7 @@ public class Log extends SaharaItem implements Serializable {
             this.startTime = oldStartTime;
             this.endTime = oldEndTime;
             this.duration = oldDuration;
+            this.description = oldDescription;
         }
 
 
