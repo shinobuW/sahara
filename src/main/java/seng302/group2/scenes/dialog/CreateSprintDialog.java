@@ -17,6 +17,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
@@ -39,7 +40,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
     static Boolean correctShortName = Boolean.FALSE;
     static Boolean correctLongName = Boolean.FALSE;
 
-    ComboBox<Backlog> backlogComboBox;
+    ComboBox<Project> projectComboBox;
     ComboBox<Team> teamComboBox;
     ComboBox<Release> releaseComboBox;
     CustomDatePicker sprintStartDatePicker;
@@ -84,7 +85,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                         @Override
                         public void updateItem(LocalDate item, boolean empty) {
                             super.updateItem(item, empty);
-                            if (item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
+                            if (releaseSelected() && item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
                                 setDisable(true);
                                 setStyle("-fx-background-color: #ffc0cb;");
                             }
@@ -97,25 +98,22 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
 
         final Callback<DatePicker, DateCell> endDateCellFactory =
             new Callback<DatePicker, DateCell>() {
-            @Override
+                @Override
                 public DateCell call(final DatePicker datePicker) {
                     return new DateCell() {
                         @Override
                         public void updateItem(LocalDate item, boolean empty) {
                             super.updateItem(item, empty);
-                            if ((sprintStartDatePicker.getValue() != null)
-                                    && (item.isBefore(sprintStartDatePicker.getValue()))) {
+                            if (startDateSelected() && (item.isBefore(sprintStartDatePicker.getValue()))) {
                                 setDisable(true);
                                 setStyle("-fx-background-color: #ffc0cb;");
                             }
-                            if (item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
+                            if (releaseSelected() && item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
                                 setDisable(true);
                                 setStyle("-fx-background-color: #ffc0cb;");
                             }
-                            if (sprintStartDatePicker.getValue() != null) {
-                                long p = ChronoUnit.DAYS.between(
-                                        sprintStartDatePicker.getValue(), item
-                                );
+                            if (startDateSelected()) {
+                                long p = ChronoUnit.DAYS.between(sprintStartDatePicker.getValue(), item);
                                 setTooltip(new Tooltip(
                                                 "Sprint duration: " + p + " days.")
                                 );
@@ -124,14 +122,14 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                         }
                     };
                 }
-        };
+            };
         sprintEndDatePicker.getDatePicker().setDayCellFactory(endDateCellFactory);
 
 
         // Create backlog combo box.
-        ObservableList<Backlog> backlogOptions = observableArrayList();
-        backlogComboBox = new ComboBox<>(backlogOptions);
-        backlogComboBox.setStyle("-fx-pref-width: 175;");
+        ObservableList<Project> projectOptions = observableArrayList();
+        projectComboBox = new ComboBox<>(projectOptions);
+        projectComboBox.setStyle("-fx-pref-width: 175;");
         Label backlogComboLabel = new Label("Backlog:");
         HBox backlogComboHBox = new HBox(backlogComboLabel);
 
@@ -141,7 +139,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
 
         VBox backlogVBox = new VBox();
         HBox backlogCombo = new HBox();
-        backlogCombo.getChildren().addAll(backlogComboHBox, backlogComboBox);
+        backlogCombo.getChildren().addAll(backlogComboHBox, projectComboBox);
         HBox.setHgrow(backlogComboHBox, Priority.ALWAYS);
         backlogVBox.getChildren().add(backlogCombo);
 
@@ -187,13 +185,11 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
         sprintEndDatePicker.setDisable(true);
 
         for (Project project : Global.currentWorkspace.getProjects()) {
-            for (Backlog backlog : project.getBacklogs()) {
-                backlogOptions.add(backlog);
-            }
+            projectOptions.add(project);
         }
 
-        grid.getChildren().addAll(shortNameCustomField, longNameCustomField, backlogVBox, teamVBox,
-                releaseVBox, sprintStartDatePicker, sprintEndDatePicker, descriptionTextArea);
+        grid.getChildren().addAll(shortNameCustomField, longNameCustomField, backlogVBox,
+                releaseVBox, sprintStartDatePicker, sprintEndDatePicker, teamVBox, descriptionTextArea);
 
         //Add grid of controls to dialog
         this.getDialogPane().setContent(grid);
@@ -214,34 +210,26 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 toggleCreate();
             });
 
-        backlogComboBox.valueProperty().addListener(new ChangeListener<Backlog>() {
+        projectComboBox.valueProperty().addListener(new ChangeListener<Project>() {
                 @Override
-                public void changed(ObservableValue<? extends Backlog> observable,
-                                    Backlog oldValue, Backlog newValue) {
-                    sprintEndDatePicker.setDisable(true);
-                    sprintStartDatePicker.setDisable(true);
-                    teamComboBox.setValue(null);
-                    teamComboBox.setDisable(false);
-                    releaseComboBox.setValue(null);
-                    releaseComboBox.setDisable(false);
-                    createButton.setDisable(false);
-                    teamOptions.clear();
+                public void changed(ObservableValue<? extends Project> observable,
+                                    Project oldValue, Project newValue) {
 
-                    for (Team team : newValue.getProject().getCurrentTeams()) {
-                        teamOptions.add(team);
-                    }
+                    releaseComboBox.setDisable(false);
+                    releaseComboBox.setValue(null);
+                    sprintStartDatePicker.setDisable(true);
+                    sprintStartDatePicker.setValue(null);
+                    sprintEndDatePicker.setDisable(true);
+                    sprintEndDatePicker.setValue(null);
+                    teamComboBox.setDisable(true);
+                    teamComboBox.setValue(null);
+
                     releaseOptions.clear();
-                    for (Release release : newValue.getProject().getReleases()) {
+
+                    for (Release release : newValue.getReleases()) {
                         releaseOptions.add(release);
                     }
 
-                    toggleCreate();
-                }
-            });
-
-        teamComboBox.valueProperty().addListener(new ChangeListener<Team>() {
-                @Override
-                public void changed(ObservableValue<? extends Team> observable, Team oldValue, Team newValue) {
                     toggleCreate();
                 }
             });
@@ -254,8 +242,11 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                     if (newValue != null) {
                         sprintStartDatePicker.setDisable(false);
                         sprintStartDatePicker.setValue(null);
-                        sprintEndDatePicker.setValue(null);
                         sprintEndDatePicker.setDisable(true);
+                        sprintEndDatePicker.setValue(null);
+                        teamComboBox.setDisable(true);
+                        teamComboBox.setValue(null);
+
                         toggleCreate();
                     }
                 }
@@ -265,13 +256,27 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 @Override
                 public void changed(ObservableValue<? extends LocalDate> observable,
                                     LocalDate oldValue, LocalDate newValue) {
-                    if ((sprintEndDatePicker.getValue() != null) && (newValue != null)
+                    if (endDateSelected() && (newValue != null)
                             && newValue.isAfter(sprintEndDatePicker.getValue())) {
                         sprintEndDatePicker.setDisable(false);
                         sprintEndDatePicker.setValue(null);
                     }
                     else if (newValue != null) {
                         sprintEndDatePicker.setDisable(false);
+                    }
+
+                    if (endDateSelected() && startDateSelected()) {
+                        teamOptions.clear();
+                        outer: for (Team team : projectComboBox.getValue().getAllTeams()) {
+                            for (Allocation alloc : team.getProjectAllocations()) {
+                                if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
+                                        && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
+                                    teamOptions.add(team);
+                                    continue outer;
+                                }
+                            }
+
+                        }
                     }
                     toggleCreate();
                 }
@@ -282,62 +287,86 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 @Override
                 public void changed(ObservableValue<? extends LocalDate> observable,
                                     LocalDate oldValue, LocalDate newValue) {
+
                     if (newValue != null) {
+                        teamOptions.clear();
+                        outer: for (Team team : projectComboBox.getValue().getAllTeams()) {
+                            for (Allocation alloc : team.getProjectAllocations()) {
+
+                                if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
+                                        && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
+                                    teamOptions.add(team);
+                                    continue outer;
+
+                                }
+                            }
+
+                        }
+                        teamComboBox.setDisable(false);
+                        teamComboBox.setValue(null);
                         toggleCreate();
                     }
                 }
             });
 
-        /*this.setResultConverter(b -> {
+        teamComboBox.valueProperty().addListener(new ChangeListener<Team>() {
+                @Override
+                public void changed(ObservableValue<? extends Team> observable, Team oldValue, Team newValue) {
+                    toggleCreate();
+                }
+            });
+
+        this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
                     String goal = shortNameCustomField.getText();
                     String longName = longNameCustomField.getText();
                     String description = descriptionTextArea.getText();
                     LocalDate sprintStartDate = sprintStartDatePicker.getValue();
                     LocalDate sprintEndDate = sprintEndDatePicker.getValue();
-                    Backlog sprintBacklog = backlogComboBox.getValue();
+                    Project sprintProject = projectComboBox.getValue();
                     Team sprintTeam = teamComboBox.getValue();
                     Release sprintRelease = releaseComboBox.getValue();
 
                     Sprint sprint = new Sprint(goal, longName, description, sprintStartDate,
-                            sprintEndDate, sprintBacklog, sprintTeam, sprintRelease);
+                            sprintEndDate, sprintProject, sprintTeam, sprintRelease);
 
-                    sprintBacklog.getProject().add(sprint);
+                    sprintProject.add(sprint);
                     App.mainPane.selectItem(sprint);
+
                     this.close();
 
                 }
                 return null;
-            });*/
+            });
 
         this.setResizable(false);
         this.show();
 
     }
 
-    private Boolean backlogSelected() {
-        return !(backlogComboBox.getValue() == null);
+    private Boolean projectSelected() {
+        return (projectComboBox.getValue() != null);
     }
 
     private Boolean teamSelected() {
-        return !(teamComboBox.getValue() == null);
+        return (teamComboBox.getValue() != null);
     }
 
     private Boolean releaseSelected() {
-        return !(releaseComboBox.getValue() == null);
+        return (releaseComboBox.getValue() != null);
     }
 
     private Boolean startDateSelected() {
-        return !(sprintStartDatePicker.getValue() == null);
+        return (sprintStartDatePicker.getValue() != null);
     }
 
     private Boolean endDateSelected() {
-        return !(sprintEndDatePicker.getValue() == null);
+        return (sprintEndDatePicker.getValue() != null);
     }
 
     private void toggleCreate() {
         createButton.setDisable(!(correctShortName && correctLongName
-                && backlogSelected() && teamSelected() && releaseSelected()
+                && projectSelected() && teamSelected() && releaseSelected()
                 && startDateSelected() && endDateSelected()));
     }
 

@@ -254,10 +254,6 @@ public class TeamHistoryTab extends SearchableTab {
                             selectedProject = proj;
                         }
                     }
-                    System.out.println(selectedProject);
-                    System.out.println(currentTeam);
-                    System.out.println(startDate);
-                    System.out.println(endDate);
 
                     if (validateAllocation(selectedProject, currentTeam, startDate, endDate)
                             == ValidationStatus.VALID) {
