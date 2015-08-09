@@ -45,7 +45,6 @@ public class SprintEditTab extends SearchableTab {
 
     RequiredField goalCustomField;
     RequiredField longNameCustomField;
-    CustomComboBox<Backlog> backlogComboBox;
     CustomComboBox<Team> teamComboBox;
     CustomComboBox<Release> releaseComboBox;
 
@@ -78,7 +77,6 @@ public class SprintEditTab extends SearchableTab {
         longNameCustomField = new RequiredField("Long Name:", searchControls);
         CustomTextArea descriptionTextArea = new CustomTextArea("Sprint Description:", 300, searchControls);
 
-        backlogComboBox = new CustomComboBox<>("Backlog:", true, searchControls);
         teamComboBox = new CustomComboBox<>("Team:", true, searchControls);
         releaseComboBox = new CustomComboBox<>("Release:", true, searchControls);
 
@@ -89,7 +87,6 @@ public class SprintEditTab extends SearchableTab {
         goalCustomField.setMaxWidth(275);
         longNameCustomField.setMaxWidth(275);
         descriptionTextArea.setMaxWidth(275);
-        backlogComboBox.setMaxWidth(275);
         teamComboBox.setMaxWidth(275);
         releaseComboBox.setMaxWidth(275);
         sprintStartDatePicker.setMaxWidth(275);
@@ -98,11 +95,6 @@ public class SprintEditTab extends SearchableTab {
         goalCustomField.setText(currentSprint.getGoal());
         longNameCustomField.setText(currentSprint.getLongName());
         descriptionTextArea.setText(currentSprint.getDescription());
-
-        for (Backlog backlog : currentSprint.getProject().getBacklogs()) {
-            backlogComboBox.addToComboBox(backlog);
-        }
-        backlogComboBox.setValue(currentSprint.getBacklog());
 
         for (Team team : currentSprint.getProject().getCurrentTeams()) {
             teamComboBox.addToComboBox(team);
@@ -117,7 +109,7 @@ public class SprintEditTab extends SearchableTab {
         sprintStartDatePicker.setValue(currentSprint.getStartDate());
         sprintEndDatePicker.setValue(currentSprint.getEndDate());
 
-        editPane.getChildren().addAll(goalCustomField, longNameCustomField, descriptionTextArea, backlogComboBox,
+        editPane.getChildren().addAll(goalCustomField, longNameCustomField, descriptionTextArea,
                 teamComboBox, releaseComboBox, sprintStartDatePicker, sprintEndDatePicker, buttons);
 
         final Callback<DatePicker, DateCell> startDateCellFactory =
@@ -182,7 +174,7 @@ public class SprintEditTab extends SearchableTab {
                 toggleDone();
             });
 
-        backlogComboBox.getComboBox().valueProperty().addListener(new ChangeListener<Backlog>() {
+/*        backlogComboBox.getComboBox().valueProperty().addListener(new ChangeListener<Backlog>() {
             @Override
             public void changed(ObservableValue<? extends Backlog> observable,
                                 Backlog oldValue, Backlog newValue) {
@@ -205,7 +197,7 @@ public class SprintEditTab extends SearchableTab {
 
                 toggleDone();
             }
-        });
+        });*/
 
         teamComboBox.getComboBox().valueProperty().addListener(new ChangeListener<Team>() {
             @Override
@@ -218,6 +210,16 @@ public class SprintEditTab extends SearchableTab {
             @Override
             public void changed(ObservableValue<? extends Release> observable,
                                 Release oldValue, Release newValue) {
+                sprintEndDatePicker.setDisable(true);
+                sprintStartDatePicker.setDisable(true);
+                teamComboBox.setValue(null);
+                teamComboBox.setDisable(false);
+                btnSave.setDisable(false);
+                teamComboBox.clear();
+
+                for (Team team : newValue.getProject().getCurrentTeams()) {
+                    teamComboBox.addToComboBox(team);
+                }
 
                 if (newValue != null) {
                     sprintStartDatePicker.setDisable(false);
@@ -261,8 +263,6 @@ public class SprintEditTab extends SearchableTab {
                         currentSprint.getLongName());
                 boolean descriptionUnchanged = descriptionTextArea.getText().equals(
                         currentSprint.getDescription());
-                boolean backlogUnchanged = backlogComboBox.getValue().equals(
-                        currentSprint.getBacklog());
                 boolean teamUnchanged = teamComboBox.getValue().equals(
                         currentSprint.getTeam());
                 boolean releaseUnchanged = releaseComboBox.getValue().equals(
@@ -271,7 +271,7 @@ public class SprintEditTab extends SearchableTab {
                         currentSprint.getStartDate());
                 boolean endDateUnchanged = sprintEndDatePicker.getValue().equals(
                         currentSprint.getEndDate());
-                if (goalUnchanged && longNameUnchanged && descriptionUnchanged && backlogUnchanged
+                if (goalUnchanged && longNameUnchanged && descriptionUnchanged
                         && teamUnchanged && releaseUnchanged && startDateUnchanged && endDateUnchanged) {
                     // No fields have been changed
                     currentSprint.switchToInfoScene();
@@ -288,7 +288,6 @@ public class SprintEditTab extends SearchableTab {
                             descriptionTextArea.getText(),
                             sprintStartDatePicker.getValue(),
                             sprintEndDatePicker.getValue(),
-                            backlogComboBox.getValue(),
                             teamComboBox.getValue(),
                             releaseComboBox.getValue(),
                             currentSprint.getStories() //This line just a placeholder for now
@@ -306,10 +305,6 @@ public class SprintEditTab extends SearchableTab {
         btnCancel.setOnAction((event) -> {
                 currentSprint.switchToInfoScene();
             });
-    }
-
-    private Boolean backlogSelected() {
-        return !(backlogComboBox.getValue() == null);
     }
 
     private Boolean teamSelected() {
@@ -333,8 +328,7 @@ public class SprintEditTab extends SearchableTab {
         correctGoal = validateShortName(goalCustomField, null);
         correctLongName = validateName(longNameCustomField);
 
-        btnSave.setDisable(!(correctGoal && correctLongName
-                && backlogSelected() && teamSelected() && releaseSelected()
+        btnSave.setDisable(!(correctGoal && correctLongName && teamSelected() && releaseSelected()
                 && startDateSelected() && endDateSelected()));
     }
 

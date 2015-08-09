@@ -288,7 +288,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 }
             });
 
-        this.setResultConverter(b -> {
+        /*this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
                     String goal = shortNameCustomField.getText();
                     String longName = longNameCustomField.getText();
@@ -308,7 +308,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
 
                 }
                 return null;
-            });
+            });*/
 
         this.setResizable(false);
         this.show();

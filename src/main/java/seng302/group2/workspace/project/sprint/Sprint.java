@@ -26,7 +26,7 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public class Sprint extends SaharaItem {
 
-    private Backlog backlog = null;
+    private Project project = null;
     private Team team = null;
     private Release release = null;
     private transient ObservableList<Story> stories = observableArrayList();
@@ -61,19 +61,19 @@ public class Sprint extends SaharaItem {
      * @param description The description of the sprint
      * @param startDate The start date of the sprint
      * @param endDate The end date of the sprint
-     * @param backlog The backlog of the sprint
+     * @param project The project to which the sprint belongs
      * @param team The team working on the sprint
      * @param release The release to which the sprint is dedicated
      */
     public Sprint(String goal, String longName, String description, LocalDate startDate, LocalDate endDate,
-                  Backlog backlog, Team team, Release release) {
+                  Project project, Team team, Release release) {
 
         this.goal = goal;
         this.longName = longName;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.backlog = backlog;
+        this.project = project;
         this.team = team;
         this.release = release;
 
@@ -92,19 +92,11 @@ public class Sprint extends SaharaItem {
     }
 
     /**
-     * Gets the backlog allocated to the sprint
-     * @return The backlog allocated to the sprint
-     */
-    public Backlog getBacklog() {
-        return backlog;
-    }
-
-    /**
-     * Gets the project allocated to the sprint (implicitly via the backlog)
-     * @return The project allocated to the sprint
+     * Gets the project the sprint belongs to
+     * @return The project the sprint belongs to
      */
     public Project getProject() {
-        return backlog.getProject();
+        return project;
     }
 
     /**
@@ -324,9 +316,9 @@ public class Sprint extends SaharaItem {
         sprintEndDate.appendChild(ReportGenerator.doc.createTextNode(endDate.toString()));
         sprintElement.appendChild(sprintEndDate);
 
-        Element sprintBacklog = ReportGenerator.doc.createElement("backlog");
-        sprintBacklog.appendChild(ReportGenerator.doc.createTextNode(backlog.toString()));
-        sprintElement.appendChild(sprintBacklog);
+        Element sprintProject = ReportGenerator.doc.createElement("project");
+        sprintProject.appendChild(ReportGenerator.doc.createTextNode(project.toString()));
+        sprintElement.appendChild(sprintProject);
 
         Element sprintTeam = ReportGenerator.doc.createElement("team");
         sprintTeam.appendChild(ReportGenerator.doc.createTextNode(team.toString()));
@@ -365,16 +357,15 @@ public class Sprint extends SaharaItem {
      * @param newDescription  The new description
      * @param newStartDate    The new start date
      * @param newEndDate      The new end date
-     * @param newBacklog      The new backlog
      * @param newTeam         The new team
      * @param newRelease      The new release
      * @param newStories      The new stories in the backlog
      */
     public void edit(String newGoal, String newLongName, String newDescription, LocalDate newStartDate,
-                     LocalDate newEndDate, Backlog newBacklog, Team newTeam, Release newRelease,
+                     LocalDate newEndDate, Team newTeam, Release newRelease,
                      Collection<Story> newStories) {
         Command relEdit = new SprintEditCommand(this, newGoal, newLongName, newDescription, newStartDate, newEndDate,
-                newBacklog, newTeam, newRelease, newStories);
+                newTeam, newRelease, newStories);
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -397,7 +388,6 @@ public class Sprint extends SaharaItem {
         private String description;
         private LocalDate startDate;
         private LocalDate endDate;
-        private Backlog backlog;
         private Team team;
         private Release release;
         private Collection<Story> stories = new HashSet<>();
@@ -407,7 +397,6 @@ public class Sprint extends SaharaItem {
         private String oldDescription;
         private LocalDate oldStartDate;
         private LocalDate oldEndDate;
-        private Backlog oldBacklog;
         private Team oldTeam;
         private Release oldRelease;
         private Collection<Story> oldStories = new HashSet<>();
@@ -417,7 +406,7 @@ public class Sprint extends SaharaItem {
 
         private SprintEditCommand(Sprint sprint, String newGoal, String newLongName,
                                    String newDescription, LocalDate newStartDate, LocalDate newEndDate,
-                                   Backlog newBacklog, Team newTeam, Release newRelease, Collection<Story> newStories) {
+                                   Team newTeam, Release newRelease, Collection<Story> newStories) {
             this.sprint = sprint;
 
             this.goal = newGoal;
@@ -425,7 +414,6 @@ public class Sprint extends SaharaItem {
             this.description = newDescription;
             this.startDate = newStartDate;
             this.endDate = newEndDate;
-            this.backlog = newBacklog;
             this.team = newTeam;
             this.release = newRelease;
             this.stories.addAll(newStories);
@@ -435,7 +423,6 @@ public class Sprint extends SaharaItem {
             this.oldDescription = sprint.description;
             this.oldStartDate = sprint.startDate;
             this.oldEndDate = sprint.endDate;
-            this.oldBacklog = sprint.backlog;
             this.oldTeam = sprint.team;
             this.oldRelease = sprint.release;
             this.oldStories.addAll(sprint.stories);
@@ -455,7 +442,6 @@ public class Sprint extends SaharaItem {
             sprint.description = description;
             sprint.startDate = startDate;
             sprint.endDate = endDate;
-            sprint.backlog = backlog;
             sprint.team = team;
             sprint.release = release;
 
@@ -476,7 +462,6 @@ public class Sprint extends SaharaItem {
             sprint.description = oldDescription;
             sprint.startDate = oldStartDate;
             sprint.endDate = oldEndDate;
-            sprint.backlog = oldBacklog;
             sprint.team = oldTeam;
             sprint.release = oldRelease;
 
@@ -499,22 +484,6 @@ public class Sprint extends SaharaItem {
                 if (item.equivalentTo(sprint)) {
                     this.sprint = (Sprint) item;
                     mapped_sp = true;
-                }
-            }
-
-            boolean mapped_bl = false;
-            for (SaharaItem item : stateObjects) {
-                if (item.equivalentTo(backlog)) {
-                    this.backlog = (Backlog) item;
-                    mapped_bl = true;
-                }
-            }
-
-            boolean mapped_old_bl = false;
-            for (SaharaItem item : stateObjects) {
-                if (item.equivalentTo(oldBacklog)) {
-                    this.oldBacklog = (Backlog) item;
-                    mapped_old_bl = true;
                 }
             }
 
@@ -571,7 +540,7 @@ public class Sprint extends SaharaItem {
                 }
             }
 
-            return mapped_sp && mapped_bl && mapped_tm && mapped_rl & mapped_old_bl && mapped_old_tm && mapped_old_rl;
+            return mapped_sp &&  mapped_tm && mapped_rl && mapped_old_tm && mapped_old_rl;
         }
     }
 
@@ -588,7 +557,7 @@ public class Sprint extends SaharaItem {
          */
         DeleteSprintCommand(Sprint sprint) {
             this.sprint = sprint;
-            this.proj = sprint.getBacklog().getProject();
+            this.proj = sprint.getProject();
         }
 
         /**
@@ -668,7 +637,7 @@ public class Sprint extends SaharaItem {
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped_sp = false;
             for (SaharaItem item : stateObjects) {
-                if (item.equivalentTo(backlog)) {
+                if (item.equivalentTo(sprint)) {
                     this.sprint = (Sprint) item;
                     mapped_sp = true;
                 }

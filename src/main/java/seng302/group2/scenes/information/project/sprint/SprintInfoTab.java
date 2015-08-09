@@ -69,7 +69,6 @@ public class SprintInfoTab extends SearchableTab {
 
         basicInfoPane.getChildren().add(new SearchableText("Team: " + currentSprint.getTeam(), searchControls));
         basicInfoPane.getChildren().add(new SearchableText("Project: " + currentSprint.getProject(), searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Backlog: " + currentSprint.getBacklog(), searchControls));
         basicInfoPane.getChildren().add(new SearchableText("Release: " + currentSprint.getRelease(), searchControls));
 
         basicInfoPane.getChildren().add(new SearchableText("Stories: ", searchControls));
