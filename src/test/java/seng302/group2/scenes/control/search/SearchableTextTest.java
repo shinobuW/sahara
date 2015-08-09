@@ -1,7 +1,5 @@
 package seng302.group2.scenes.control.search;
 
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import org.junit.Assert;
 import org.junit.BeforeClass;
