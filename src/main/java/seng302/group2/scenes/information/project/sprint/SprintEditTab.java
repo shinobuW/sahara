@@ -3,6 +3,8 @@ package seng302.group2.scenes.information.project.sprint;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -11,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import seng302.group2.App;
+import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextArea;
@@ -21,6 +24,7 @@ import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
+import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
@@ -117,8 +121,45 @@ public class SprintEditTab extends SearchableTab {
         sprintStartDatePicker.setValue(currentSprint.getStartDate());
         sprintEndDatePicker.setValue(currentSprint.getEndDate());
 
+
+
+
+
+        // Setup stories selection
+        ObservableList<Story> storiesInSprint = FXCollections.observableArrayList();
+        ObservableList<Story> availableStories = FXCollections.observableArrayList();
+        ListView<Story> storiesInSprintView = new ListView<>();
+        ListView<Story> availableStoriesView = new ListView<>();
+        VBox inSprintVBox = new VBox();
+        VBox availableVBox = new VBox();
+        inSprintVBox.getChildren().add(storiesInSprintView);
+        availableVBox.getChildren().add(availableStoriesView);
+        HBox storyHBox = new HBox();
+        storyHBox.getChildren().addAll(inSprintVBox, availableVBox);
+
+        storiesInSprintView.setItems(storiesInSprint);
+        availableStoriesView.setItems(availableStories);
+
+        storiesInSprint.addAll(currentSprint.getStories());
+        availableStories.addAll(Global.currentWorkspace.getAllStories());
+        availableStories.removeAll(currentSprint.getStories());
+
+
+
+
+
+
+
+
         editPane.getChildren().addAll(goalCustomField, longNameCustomField, descriptionTextArea, backlogComboBox,
-                teamComboBox, releaseComboBox, sprintStartDatePicker, sprintEndDatePicker, buttons);
+                teamComboBox, releaseComboBox, sprintStartDatePicker, sprintEndDatePicker, storyHBox, buttons);
+
+
+
+
+
+
+        // Actions and events
 
         final Callback<DatePicker, DateCell> startDateCellFactory =
             new Callback<DatePicker, DateCell>() {
@@ -207,12 +248,9 @@ public class SprintEditTab extends SearchableTab {
             }
         });
 
-        teamComboBox.getComboBox().valueProperty().addListener(new ChangeListener<Team>() {
-            @Override
-            public void changed(ObservableValue<? extends Team> observable, Team oldValue, Team newValue) {
+        teamComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
                 toggleDone();
-            }
-        });
+            });
 
         releaseComboBox.getComboBox().valueProperty().addListener(new ChangeListener<Release>() {
             @Override
@@ -246,13 +284,15 @@ public class SprintEditTab extends SearchableTab {
         });
 
 
-        sprintEndDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
-            @Override
-            public void changed(ObservableValue<? extends LocalDate> observable,
-                                LocalDate oldValue, LocalDate newValue) {
+        sprintEndDatePicker.getDatePicker().valueProperty().addListener((observable, oldValue, newValue) -> {
                 toggleDone();
-            }
-        });
+            });
+
+
+
+
+
+
 
         btnSave.setOnAction((event) -> {
                 boolean goalUnchanged = goalCustomField.getText().equals(
