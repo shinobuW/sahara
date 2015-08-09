@@ -28,6 +28,7 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.*;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
@@ -406,6 +407,20 @@ public class Workspace extends SaharaItem implements Serializable {
             return SaveLoadResult.FILENOTFOUND;  // Was null, probably cancelled action?
         }
     }
+
+
+    /**
+     * Collects all of the stories from each of the projects inside of the workspace
+     * @return A collection of all stories inside the workspace
+     */
+    public Collection<Story> getAllStories() {
+        Set<Story> stories = new HashSet<>();
+        for (Project project : getProjects()) {
+            stories.addAll(project.getAllStories());
+        }
+        return stories;
+    }
+
 
     /**
      * Perform pre-serialization steps

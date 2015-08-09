@@ -24,28 +24,28 @@ public class SprintTest {
     @Test
     public void testSprintConstructors() {
         Sprint sprint = new Sprint();
-        Backlog backlog = new Backlog();
+        Project project = new Project();
         Team team = new Team();
         Release release = new Release();
 
         Assert.assertEquals("Untitled Sprint/Goal", sprint.getGoal());
         Assert.assertEquals("Untitled Sprint/Goal", sprint.getLongName());
         Assert.assertEquals("", sprint.getDescription());
-        Assert.assertEquals(null, sprint.getBacklog());
+        Assert.assertEquals(null, sprint.getProject());
         Assert.assertEquals(null, sprint.getTeam());
         Assert.assertEquals(null, sprint.getRelease());
         Assert.assertEquals(LocalDate.now(), sprint.getStartDate());
         Assert.assertEquals(LocalDate.now().plusWeeks(2), sprint.getEndDate());
 
         Sprint testSprint = new Sprint("Goal", "LongName", "Description", LocalDate.now(), LocalDate.now().plusDays(5),
-                backlog, team, release);
+                project, team, release);
 
         Assert.assertEquals("Goal", testSprint.getGoal());
         Assert.assertEquals("LongName", testSprint.getLongName());
         Assert.assertEquals("Description", testSprint.getDescription());
         Assert.assertEquals(LocalDate.now(), testSprint.getStartDate());
         Assert.assertEquals(LocalDate.now().plusDays(5), testSprint.getEndDate());
-        Assert.assertEquals(backlog, testSprint.getBacklog());
+        Assert.assertEquals(project, testSprint.getProject());
         Assert.assertEquals(team, testSprint.getTeam());
         Assert.assertEquals(release, testSprint.getRelease());
     }
@@ -96,7 +96,7 @@ public class SprintTest {
     @Test
     public void testGenerateXML() {
         new ReportGenerator();
-        Sprint sprint = new Sprint("goal", "longname", "description", LocalDate.now(), LocalDate.now().plusDays(5), new Backlog(), new Team(), new Release());
+        Sprint sprint = new Sprint("goal", "longname", "description", LocalDate.now(), LocalDate.now().plusDays(5), new Project(), new Team(), new Release());
 
         Element sprintElement = sprint.generateXML();
         Assert.assertEquals("[#text: goal]", sprintElement.getChildNodes().item(1).getChildNodes().item(0).toString());
@@ -104,7 +104,7 @@ public class SprintTest {
         Assert.assertEquals("[#text: description]", sprintElement.getChildNodes().item(3).getChildNodes().item(0).toString());
 
 
-        Assert.assertEquals("[#text: Untitled Backlog]", sprintElement.getChildNodes().item(6).getChildNodes().item(0).toString());
+        Assert.assertEquals("[#text: Untitled Project]", sprintElement.getChildNodes().item(6).getChildNodes().item(0).toString());
         Assert.assertEquals("[#text: Untitled Team]", sprintElement.getChildNodes().item(7).getChildNodes().item(0).toString());
         Assert.assertEquals("[#text: Untitled Release]", sprintElement.getChildNodes().item(8).getChildNodes().item(0).toString());
 
@@ -129,21 +129,20 @@ public class SprintTest {
         oldStories.add(oldStory);
         sprint.add(oldStory);
 
-        Backlog backlog = new Backlog();
+        Project project = new Project();
         Team team = new Team();
         Release release = new Release();
         Collection<Story> stories = new ArrayList<>();
         Story story = new Story();
         stories.add(story);
 
-        sprint.edit("goal", "long", "desc", LocalDate.now(), LocalDate.now().plusDays(1), backlog, team, release, stories);
+        sprint.edit("goal", "long", "desc", LocalDate.now(), LocalDate.now().plusDays(1), team, release, stories);
 
         Assert.assertEquals("goal", sprint.getGoal());
         Assert.assertEquals("long", sprint.getLongName());
         Assert.assertEquals("desc", sprint.getDescription());
         Assert.assertEquals(LocalDate.now(), sprint.getStartDate());
         Assert.assertEquals(LocalDate.now().plusDays(1), sprint.getEndDate());
-        Assert.assertEquals(backlog, sprint.getBacklog());
         Assert.assertEquals(team, sprint.getTeam());
         Assert.assertEquals(release, sprint.getRelease());
         Assert.assertEquals(stories, sprint.getStories());
@@ -155,7 +154,6 @@ public class SprintTest {
         Assert.assertEquals("", sprint.getDescription());
         Assert.assertEquals(LocalDate.now(), sprint.getStartDate());
         Assert.assertEquals(LocalDate.now().plusWeeks(2), sprint.getEndDate());
-        Assert.assertEquals(null, sprint.getBacklog());
         Assert.assertEquals(null, sprint.getTeam());
         Assert.assertEquals(null, sprint.getRelease());
         Assert.assertEquals(oldStories, sprint.getStories());
@@ -167,7 +165,6 @@ public class SprintTest {
         Assert.assertEquals("desc", sprint.getDescription());
         Assert.assertEquals(LocalDate.now(), sprint.getStartDate());
         Assert.assertEquals(LocalDate.now().plusDays(1), sprint.getEndDate());
-        Assert.assertEquals(backlog, sprint.getBacklog());
         Assert.assertEquals(team, sprint.getTeam());
         Assert.assertEquals(release, sprint.getRelease());
         Assert.assertEquals(stories, sprint.getStories());
@@ -175,10 +172,8 @@ public class SprintTest {
 
     @Test
     public void testDeleteSprint() {
-        Backlog backlog = new Backlog();
-        Sprint sprint = new Sprint("goal", "long", "desc", LocalDate.now(), LocalDate.now().plusDays(1), backlog, null, null);
         Project project = new Project();
-        project.add(backlog);
+        Sprint sprint = new Sprint("goal", "long", "desc", LocalDate.now(), LocalDate.now().plusDays(1), project, null, null);
         project.add(sprint);
         Global.currentWorkspace.add(project);
 
