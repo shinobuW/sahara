@@ -1,8 +1,10 @@
 package seng302.group2.scenes.information.project.story.task;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -12,6 +14,7 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Log;
@@ -20,6 +23,8 @@ import seng302.group2.workspace.project.story.tasks.Task;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * A class for displaying a tab used to edit people.
@@ -56,6 +61,16 @@ public class TaskEditTab extends SearchableTab {
         CustomTextArea descriptionTextArea = new CustomTextArea("Task Description:", 300);
         CustomTextArea impedimentsTextArea = new CustomTextArea("Task Impediments:", 300);
 
+        HBox taskHbox = new HBox();
+        SearchableText taskStateText = new SearchableText("Task State: ");
+        ObservableList<Task.TASKSTATE> taskstateObservableList = observableArrayList();
+        taskstateObservableList.addAll(Task.TASKSTATE.BLOCKED, Task.TASKSTATE.DEFERRED, Task.TASKSTATE.DONE,
+                Task.TASKSTATE.IN_PROGRESS, Task.TASKSTATE.NOT_STARTED, Task.TASKSTATE.PENDING, Task.TASKSTATE.READY);
+
+        ComboBox<Task.TASKSTATE> taskStateComboBox = new ComboBox<>(taskstateObservableList);
+        taskStateComboBox.setValue(currentTask.getState());
+        taskHbox.getChildren().addAll(taskStateText, taskStateComboBox);
+
         shortNameCustomField.setMaxWidth(275);
         descriptionTextArea.setMaxWidth(275);
         impedimentsTextArea.setMaxWidth(275);
@@ -67,6 +82,7 @@ public class TaskEditTab extends SearchableTab {
         editPane.getChildren().addAll(shortNameCustomField,
                 descriptionTextArea,
                 impedimentsTextArea,
+                taskHbox,
                 buttons);
 
         btnSave.setOnAction((event) -> {
@@ -79,10 +95,12 @@ public class TaskEditTab extends SearchableTab {
                 boolean impedimentsUnchanged = impedimentsTextArea.getText().equals(
                         currentTask.getImpediments());
 
+                boolean taskstateUnchanged = taskStateComboBox.getValue().equals(
+                        currentTask.getState());
 
 
                 if (shortNameUnchanged &&  descriptionUnchanged
-                        && impedimentsUnchanged) {
+                        && impedimentsUnchanged && taskstateUnchanged) {
                     // No changes
                     currentTask.switchToInfoScene();
                     return;
@@ -90,18 +108,19 @@ public class TaskEditTab extends SearchableTab {
 
                 boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
                         currentTask.getShortName());
-
+                System.out.println(taskStateComboBox.getValue());
 
                 if (correctShortName) {
     //                    Valid short name, make the edit
                     currentTask.edit(shortNameCustomField.getText(),
                             descriptionTextArea.getText(),
                             impedimentsTextArea.getText(),
-                            Task.TASKSTATE.NOT_STARTED,
+                            taskStateComboBox.getValue(),
                             new ArrayList<Person>(), new ArrayList<Log>());
 
                     currentTask.switchToInfoScene();
                     App.mainPane.refreshTree();
+                    System.out.println(currentTask.getState());
                 }
                 else {
                     event.consume();

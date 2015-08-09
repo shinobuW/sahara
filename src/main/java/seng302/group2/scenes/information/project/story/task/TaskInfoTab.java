@@ -55,9 +55,7 @@ public class TaskInfoTab extends SearchableTab {
         basicInfoPane.getChildren().add(new SearchableText("Impediments: "
                 + currentTask.getImpediments(), searchControls));
 
-        GeneralEnumStringConverter converter = new GeneralEnumStringConverter();
-        basicInfoPane.getChildren().add(new SearchableText("Task State: "
-                + converter.toString(currentTask.getState().toString()), searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Task State: " + currentTask.getState(), searchControls));
 
         ObservableList<Person> responsibilitiesList = FXCollections.observableArrayList();
         responsibilitiesList.addAll(currentTask.getResponsibilities());

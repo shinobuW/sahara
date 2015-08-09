@@ -278,14 +278,40 @@ public class Task extends SaharaItem implements Serializable {
         return taskElement;
     }
 
+    /**
+     * An enum for the states of the Task. Also includes a toString method for GUI application of TaskStates
+     */
     public enum TASKSTATE {
-        NOT_STARTED,
-        IN_PROGRESS,
-        BLOCKED,
-        DONE,
-        READY,
-        PENDING,
-        DEFERRED
+        NOT_STARTED("Not started"),
+        IN_PROGRESS("In Progress"),
+        BLOCKED("Blocked"),
+        DONE("Done"),
+        READY("Ready"),
+        PENDING("Pending"),
+        DEFERRED("Deferred");
+
+        private String value;
+
+        TASKSTATE(String value) {
+            this.value = value;
+        }
+
+        /**
+         * Gets the String value of the Enum.
+         * @return The String equivalent of the Enum
+         */
+        public String getValue() {
+            return value;
+        }
+
+        /**
+         * Overriding toString method
+         * @return The String equivalent of the Enum
+         */
+        @Override
+        public String toString() {
+            return this.getValue();
+        }
     }
  
 
@@ -319,6 +345,7 @@ public class Task extends SaharaItem implements Serializable {
         private String impediments;
         private Collection<Person> responsibilities;
         private Collection<Log> logs;
+        private TASKSTATE state;
 
 
         private String oldShortName;
@@ -326,6 +353,7 @@ public class Task extends SaharaItem implements Serializable {
         private String oldImpediments;
         private Collection<Person> oldResponsibilities;
         private Collection<Log> oldLogs;
+        private TASKSTATE oldState;
         
         /**
          * Constructor for the Task Edit command.
@@ -349,6 +377,7 @@ public class Task extends SaharaItem implements Serializable {
             this.responsibilities.addAll(newResponsibilities);
             this.logs = new HashSet<>();
             this.logs.addAll(newLogs);
+            this.state = newState;
 
             this.oldShortName = task.shortName;
             this.oldDescription = task.description;
@@ -357,6 +386,7 @@ public class Task extends SaharaItem implements Serializable {
             this.oldResponsibilities.addAll(task.responsibilities);
             this.oldLogs = new HashSet<>();
             this.oldLogs.addAll(task.logs);
+            this.oldState = task.state;
 
             
         }
@@ -368,6 +398,7 @@ public class Task extends SaharaItem implements Serializable {
             task.shortName = shortName;
             task.description = description;
             task.impediments = impediments;
+            task.state = state;
             
             task.responsibilities.clear();
             task.responsibilities.addAll(responsibilities);
@@ -383,7 +414,7 @@ public class Task extends SaharaItem implements Serializable {
             task.shortName = oldShortName;
             task.description = oldDescription;
             task.description = oldImpediments;
-           
+            task.state = oldState;
 
             task.responsibilities.clear();
             task.responsibilities.addAll(oldResponsibilities);
