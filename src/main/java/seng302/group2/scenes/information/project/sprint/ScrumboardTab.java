@@ -39,6 +39,9 @@ public class ScrumboardTab extends SearchableTab {
     Set<ListView<Task>> lanes = new HashSet<>();
 
 
+    Task interactiveTask = null;
+
+
     /**
      * Constructor for the Backlog Info tab
      *
@@ -47,10 +50,11 @@ public class ScrumboardTab extends SearchableTab {
     public ScrumboardTab(Sprint currentSprint) {
         lanes.add(laneOne);
         lanes.add(laneTwo);
+        Collections.addAll(lanes, laneOne,laneTwo);
         initializeListeners();
         laneOneStories.addAll(currentSprint.getAllTasks());
 
-        this.setText("TEST | Tasks");
+        this.setText("Scrumboard");
         Pane basicInfoPane = new VBox(10);
 
         basicInfoPane.setBorder(null);
@@ -96,25 +100,36 @@ public class ScrumboardTab extends SearchableTab {
                     return;
                 }
 
-                Dragboard dragBoard = laneOne.startDragAndDrop(TransferMode.MOVE);
+                /*Dragboard dragBoard = laneOne.startDragAndDrop(TransferMode.MOVE);
+
                 ClipboardContent content = new ClipboardContent();
                 content.putString(laneOne.getSelectionModel().getSelectedItem()
                         .getShortName());
-                dragBoard.setContent(content);
+                dragBoard.setContent(content);*/
+
+                interactiveTask = laneOne.getSelectionModel().getSelectedItem();
             });
 
         laneTwo.setOnDragOver(dragEvent -> dragEvent.acceptTransferModes(TransferMode.MOVE));
 
         laneTwo.setOnDragDropped(dragEvent -> {
-                String player = dragEvent.getDragboard().getString();
+                /*String player = dragEvent.getDragboard().getString();
 
                 Task task = getTaskByName(player);
                 if (!laneTwoStories.contains(task)) {
                     laneTwoStories.add(task);
                 }
                 laneOneStories.remove(task);
-                dragEvent.setDropCompleted(true);
+                dragEvent.setDropCompleted(true);*/
+                if (interactiveTask == null) {
+                    return;
+                }
+                for (ListView<Task> lane : lanes) {
+                    lane.getItems().remove(interactiveTask);
+                }
             });
+
+
         // drag from right to left
         laneTwo.setOnDragDetected(event -> {
                 Dragboard dragBoard = laneTwo.startDragAndDrop(TransferMode.MOVE);
