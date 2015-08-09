@@ -34,7 +34,7 @@ public class SearchableTextTest {
     public void testUpdateFlow() throws Exception {
         SearchableText sText = new SearchableText("some text");
         // Invalidate our use of the searchable text by adding new stuff that isn't searchable
-        sText.getChildren().addAll(new Label("stuff"), new Text("that shouldn't be here"), new Label());
+        //sText.getChildren().addAll(new Label("stuff"), new Text("that shouldn't be here"), new Label());
 
         sText.updateFlow();  // Update the text from the actual strings we use through the set
 
