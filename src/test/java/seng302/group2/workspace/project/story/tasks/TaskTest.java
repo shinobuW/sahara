@@ -13,7 +13,6 @@ import seng302.group2.workspace.project.story.Story;
 
 public class TaskTest {
     Task task = new Task();
-    Story story = new Story();
 
     /**
      * Test for the task constructors
@@ -59,7 +58,7 @@ public class TaskTest {
         Assert.assertTrue(0 < Task.TaskNameComparator.compare(task, defaultTask));
     }
 
-    /**
+
     @Test
     public void testDeleteTask() {
         Project project = new Project();
@@ -89,7 +88,7 @@ public class TaskTest {
         Assert.assertTrue(story.getTasks().contains(task));
         Assert.assertTrue(sprint.getUnallocatedTasks().contains(task2));
     }
-    */
+
 
     /**
      * Test Task state methods
