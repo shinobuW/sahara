@@ -20,6 +20,7 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.release.Release;
@@ -117,19 +118,27 @@ public class SprintEditTab extends SearchableTab {
 
 
 
+        // Story assignment buttons
+        Button btnAssign = new Button("<");
+        Button btnUnassign = new Button(">");
+        VBox assignmentButtons = new VBox();
+        assignmentButtons.spacingProperty().setValue(10);
+        assignmentButtons.getChildren().addAll(btnAssign, btnUnassign);
+        assignmentButtons.setAlignment(Pos.CENTER);
 
-
-        // Setup stories selection
+        // Story list view setup
         ObservableList<Story> storiesInSprint = FXCollections.observableArrayList();
         ObservableList<Story> availableStories = FXCollections.observableArrayList();
         ListView<Story> storiesInSprintView = new ListView<>();
         ListView<Story> availableStoriesView = new ListView<>();
         VBox inSprintVBox = new VBox();
         VBox availableVBox = new VBox();
-        inSprintVBox.getChildren().add(storiesInSprintView);
-        availableVBox.getChildren().add(availableStoriesView);
-        HBox storyHBox = new HBox();
-        storyHBox.getChildren().addAll(inSprintVBox, availableVBox);
+        inSprintVBox.getChildren().addAll(new SearchableText("Sprint Stories: ", searchControls), storiesInSprintView);
+        availableVBox.getChildren().addAll(new SearchableText("Available Stories: ", searchControls),
+                availableStoriesView);
+        HBox storyHBox = new HBox(10);
+        storyHBox.setPrefHeight(192);
+        storyHBox.getChildren().addAll(inSprintVBox, assignmentButtons, availableVBox);
 
         storiesInSprintView.setItems(storiesInSprint);
         availableStoriesView.setItems(availableStories);
@@ -140,7 +149,7 @@ public class SprintEditTab extends SearchableTab {
         
         
         editPane.getChildren().addAll(goalCustomField, longNameCustomField, descriptionTextArea,
-                releaseComboBox, sprintStartDatePicker, sprintEndDatePicker, teamComboBox, buttons);
+                releaseComboBox, sprintStartDatePicker, sprintEndDatePicker, teamComboBox, storyHBox, buttons);
 
 
 
