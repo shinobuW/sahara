@@ -7,7 +7,6 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 
 import java.io.Serializable;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +17,6 @@ import java.util.Set;
  */
 public class Log extends SaharaItem implements Serializable {
     private LocalDate startTime;
-    private LocalDate endTime;
     private long duration;
     private Person logger;
     private Task task;
@@ -26,30 +24,20 @@ public class Log extends SaharaItem implements Serializable {
 
 
     /**
-     *Basic constructor which takes in all the fields as parameters. Duration is calculated from the start time and end
-     * time if the duration is not given.
+     *Basic constructor
      * @param task the task the los is for
      * @param description description of the work accomplished
      * @param logger the person logging the time
-     * @param duration the duration the person worked on
+     * @param duration the duration the person worked for
      * @param startTime time the logger started working on the task
-     * @param endTime time the logger finished working on the task
      */
-    public Log(Task task, String description, Person logger, long duration, LocalDate startTime, LocalDate endTime) {
+    public Log(Task task, String description, Person logger, long duration, LocalDate startTime) {
         this.task = task;
         this.logger = logger;
         this.startTime = startTime;
         this.description = description;
         this.startTime = startTime;
-        this.endTime = endTime;
-
-
-        if (startTime == null || endTime == null) {
-            this.duration = duration;
-        }
-        else {
-            this.duration = Duration.between(this.startTime, this.endTime).toHours();
-        }
+        this.duration = duration;
     }
 
 
@@ -158,28 +146,24 @@ public class Log extends SaharaItem implements Serializable {
         private Log log;
         private Person logger;
         private LocalDate startTime;
-        private LocalDate endTime;
         private Long duration;
         private String description;
 
         private Person oldLogger;
         private LocalDate oldStartTime;
-        private LocalDate oldEndTime;
         private Long oldDuration;
         private String oldDescription;
 
-        protected LogEditCommand(Log log, Person newLogger, LocalDate newStartDate, LocalDate newEndDate,
+        protected LogEditCommand(Log log, Person newLogger, LocalDate newStartDate,
                                  Long newDuration, String newDescription) {
             this.log = log;
             this.logger = newLogger;
             this.startTime = newStartDate;
-            this.endTime = newEndDate;
             this.duration = newDuration;
             this.description = newDescription;
 
             this.oldLogger = log.logger;
             this.oldStartTime = log.startTime;
-            this.oldEndTime = log.endTime;
             this.oldDuration = log.duration;
             this.oldDescription = log.description;
         }
@@ -191,15 +175,9 @@ public class Log extends SaharaItem implements Serializable {
         public void execute() {
             log.logger = logger;
             log.startTime = startTime;
-            log.endTime = endTime;
             log.duration = duration;
             log.description = description;
-            if (startTime == null && endTime == null) {
-                log.duration = Duration.between(log.startTime, log.endTime).toHours();
-            }
-            else {
-                log.duration = duration;
-            }
+            log.duration = duration;
         }
 
 
@@ -209,7 +187,6 @@ public class Log extends SaharaItem implements Serializable {
         public void undo() {
             log.logger = oldLogger;
             this.startTime = oldStartTime;
-            this.endTime = oldEndTime;
             this.duration = oldDuration;
             this.description = oldDescription;
         }
