@@ -21,6 +21,7 @@ import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.util.validation.ShortNameValidator;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
@@ -139,7 +140,7 @@ public class SprintEditTab extends SearchableTab {
         
         
         editPane.getChildren().addAll(goalCustomField, longNameCustomField, descriptionTextArea,
-                teamComboBox, releaseComboBox, sprintStartDatePicker, sprintEndDatePicker, buttons);
+                releaseComboBox, sprintStartDatePicker, sprintEndDatePicker, teamComboBox, buttons);
 
 
 
@@ -246,13 +247,7 @@ public class SprintEditTab extends SearchableTab {
                 sprintEndDatePicker.setDisable(true);
                 sprintStartDatePicker.setDisable(true);
                 teamComboBox.setValue(null);
-                teamComboBox.setDisable(false);
-                btnSave.setDisable(false);
-                teamComboBox.clear();
-
-                for (Team team : newValue.getProject().getCurrentTeams()) {
-                    teamComboBox.addToComboBox(team);
-                }
+                teamComboBox.setDisable(true);
 
                 if (newValue != null) {
                     sprintStartDatePicker.setDisable(false);
@@ -272,18 +267,55 @@ public class SprintEditTab extends SearchableTab {
                         && newValue.isAfter(sprintEndDatePicker.getValue())) {
                     sprintEndDatePicker.setDisable(false);
                     sprintEndDatePicker.setValue(null);
+                    teamComboBox.setValue(null);
+                    teamComboBox.setDisable(true);
                 }
                 else if (newValue != null) {
                     sprintEndDatePicker.setDisable(false);
+                    teamComboBox.clear();
+                    outer: for (Team team : currentSprint.getProject().getAllTeams()) {
+                        for (Allocation alloc : team.getProjectAllocations()) {
+
+                            if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
+                                    && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
+                                teamComboBox.addToComboBox(team);
+                                continue outer;
+
+                            }
+                        }
+                    }
+                    teamComboBox.setDisable(false);
+                    teamComboBox.setValue(null);
                 }
                 toggleDone();
             }
         });
 
 
-        sprintEndDatePicker.getDatePicker().valueProperty().addListener((observable, oldValue, newValue) -> {
-                toggleDone();
-            });
+        sprintEndDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable,
+                    LocalDate oldValue, LocalDate newValue) {
+
+                if (newValue != null) {
+                    teamComboBox.clear();
+                    outer: for (Team team : currentSprint.getProject().getAllTeams()) {
+                        for (Allocation alloc : team.getProjectAllocations()) {
+
+                            if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
+                                    && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
+                                teamComboBox.addToComboBox(team);
+                                continue outer;
+
+                            }
+                        }
+                    }
+                    teamComboBox.setDisable(false);
+                    teamComboBox.setValue(null);
+                    toggleDone();
+                }
+            }
+        });
 
 
 
