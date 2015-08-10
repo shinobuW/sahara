@@ -83,7 +83,6 @@ public class Task extends SaharaItem implements Serializable {
         this.description = description;
         this.impediments = "";
         this.state = TASKSTATE.NOT_STARTED;
-        this.stringState = converter.toString(this.getState().toString());
         this.story = story;
         
         setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
@@ -313,7 +312,11 @@ public class Task extends SaharaItem implements Serializable {
             return this.getValue();
         }
     }
- 
+
+    public void deleteTask() {
+        Command command = new DeleteTaskCommand(this);
+        Global.commandManager.executeCommand(command);
+    }
 
     /**
      * Creates a Task edit command and executes it with the Global Command Manager, updating
