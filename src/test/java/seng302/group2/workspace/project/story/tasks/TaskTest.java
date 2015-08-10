@@ -71,6 +71,7 @@ public class TaskTest {
         Task task = new Task("short", "desc", story);
         Task task2 = new Task("short2", "desc",  null);
 
+        story.add(task);
         sprint.getUnallocatedTasks().add(task2);
 
         Assert.assertTrue(story.getTasks().contains(task));

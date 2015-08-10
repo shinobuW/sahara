@@ -42,6 +42,8 @@ public class TeamEditTab extends SearchableTab {
     private ObservableList<Role> roleList = observableArrayList();
     private ComboBox<Role> roleComboBox;
     private Role noneRole = new Role("(none)", Role.RoleType.NONE);
+    String poPlaceholder = "No Product Owner Assigned";
+    String smPlaceholder = "No Scrum Master Assigned";
 
     /**
      * Constructor for the Team Edit Tab class. This constructor creates a JavaFX ScrollPane
@@ -53,8 +55,25 @@ public class TeamEditTab extends SearchableTab {
         // Init
         this.baseTeam = baseTeam;
         allocatedDevelopers.addAll(baseTeam.getDevs());
-        allocatedProductOwner = baseTeam.getProductOwner();
-        allocatedScrumMaster = baseTeam.getScrumMaster();
+        SearchableText poText;
+        SearchableText smText;
+
+
+        if (baseTeam.getProductOwner() != null) {
+            allocatedProductOwner = baseTeam.getProductOwner();
+            poText = new SearchableText("Product Owner: " + allocatedProductOwner);
+        }
+        else {
+            poText = new SearchableText("Product Owner: " + poPlaceholder);
+        }
+
+        if (baseTeam.getScrumMaster() != null) {
+            allocatedScrumMaster = baseTeam.getScrumMaster();
+            smText = new SearchableText("Scrum Master: " + allocatedScrumMaster);
+        }
+        else {
+            smText = new SearchableText("Scrum Master: " + smPlaceholder);
+        }
 
 
         // Setup basic GUI
@@ -73,7 +92,6 @@ public class TeamEditTab extends SearchableTab {
         descriptionField = new CustomTextArea("Team Description:", 300, searchControls);
         descriptionField.setText(baseTeam.getDescription());
         descriptionField.setMaxWidth(275);
-
 
         // Team assignment buttons
         Button btnAssign = new Button("<");
@@ -158,6 +176,8 @@ public class TeamEditTab extends SearchableTab {
                 descriptionField,
                 memberListViews,
                 roleAssignmentBox,
+                poText,
+                smText,
                 sceneButtons
         );
 
@@ -181,6 +201,18 @@ public class TeamEditTab extends SearchableTab {
 
         // Button events
         btnAssign.setOnAction((event) -> {
+                Collection<Person> selectedPeople = new ArrayList<>();
+                selectedPeople.addAll(availablePeopleListView.getSelectionModel().
+                        getSelectedItems());
+                for (Person person : selectedPeople) {
+                    if (person.getRole() == Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER)) {
+                        person.setRole(Role.getRoleFromType(Role.RoleType.NONE));
+                    }
+                    if (person.getRole() == Role.getRoleFromType(Role.RoleType.SCRUM_MASTER)) {
+                        person.setRole(Role.getRoleFromType(Role.RoleType.NONE));
+                    }
+                }
+
                 teamMembersList.addAll(
                         availablePeopleListView.getSelectionModel().getSelectedItems());
                 availablePeopleList.removeAll(
@@ -216,11 +248,19 @@ public class TeamEditTab extends SearchableTab {
                 }
                 switch (selectedRole.getType()) {
                     case PRODUCT_OWNER:
+                        if (allocatedProductOwner != null) {
+                            allocatedProductOwner.setRole(Role.getRoleFromType(Role.RoleType.NONE));
+                        }
                         allocatedProductOwner = selectedPerson;
+                        poText.setText("Product Owner: " + allocatedProductOwner);
                         selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER));
                         break;
                     case SCRUM_MASTER:
+                        if (allocatedScrumMaster != null) {
+                            allocatedScrumMaster.setRole(Role.getRoleFromType(Role.RoleType.NONE));
+                        }
                         allocatedScrumMaster = selectedPerson;
+                        smText.setText("Scrum Master: " + allocatedScrumMaster);
                         selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.SCRUM_MASTER));
                         break;
                     case DEVELOPMENT_TEAM_MEMBER:

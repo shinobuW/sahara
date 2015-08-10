@@ -84,7 +84,7 @@ public class Task extends SaharaItem implements Serializable {
         this.impediments = "";
         this.state = TASKSTATE.NOT_STARTED;
         this.story = story;
-        
+
         setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
     }
 
