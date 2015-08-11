@@ -74,8 +74,8 @@ public class SprintInfoTab extends SearchableTab {
         priorityCol.prefWidthProperty().bind(storyTable.widthProperty()
                 .subtract(2).divide(100).multiply(20));*/
 
-        TableColumn readyCol = new TableColumn("Ready");
-        readyCol.setCellValueFactory(new PropertyValueFactory<Story, Boolean>("ready"));
+        TableColumn readyCol = new TableColumn("Status");
+        readyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("readyString"));
         readyCol.prefWidthProperty().bind(storyTable.widthProperty()
                 .subtract(2).divide(100).multiply(20));
         storyTable.setItems(rows);
