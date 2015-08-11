@@ -535,6 +535,10 @@ public class Story extends SaharaItem implements Serializable {
         for (AcceptanceCriteria ac : acceptanceCriteria) {
             this.serializableAcceptanceCriteria.add(ac);
         }
+        serializableTasks.clear();
+        for (Task task : tasks) {
+            this.serializableTasks.add(task);
+        }
     }
 
     /**
@@ -544,6 +548,10 @@ public class Story extends SaharaItem implements Serializable {
         acceptanceCriteria.clear();
         for (Object item : serializableAcceptanceCriteria) {
             this.acceptanceCriteria.add((AcceptanceCriteria) item);
+        }
+        tasks.clear();
+        for (Object item : serializableTasks) {
+            this.tasks.add((Task) item);
         }
     }
 
