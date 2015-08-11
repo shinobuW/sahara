@@ -219,7 +219,7 @@ public class ProjectHistoryTab extends SearchableTab {
         buttons.getChildren().addAll(addButton, deleteButton);
 
         HBox newAllocationFields = new HBox(35);
-        CustomComboBox teamComboBox = new CustomComboBox("Team", true);
+        CustomComboBox<Team> teamComboBox = new CustomComboBox("Team", true);
         CustomDatePicker startDatePicker = new CustomDatePicker("Start Date", true);
         CustomDatePicker endDatePicker = new CustomDatePicker("End Date", false);
 
@@ -256,7 +256,7 @@ public class ProjectHistoryTab extends SearchableTab {
                     Team selectedTeam = null;
 
                     for (Team team : Global.currentWorkspace.getTeams()) {
-                        if (team.toString().equals(teamComboBox.getValue())) {
+                        if (team.equals(teamComboBox.getValue())) {
                             selectedTeam = team;
                         }
                     }
