@@ -64,6 +64,8 @@ public class TaskEditTab extends SearchableTab {
         RequiredField shortNameCustomField = new RequiredField("Task Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Task Description:", 300);
         CustomTextArea impedimentsTextArea = new CustomTextArea("Task Impediments:", 300);
+        CustomTextArea effortLeftField = new CustomTextArea("Effort Left:", 300);
+
 
         HBox taskHbox = new HBox();
         SearchableText taskStateText = new SearchableText("Task State: ");
@@ -78,10 +80,13 @@ public class TaskEditTab extends SearchableTab {
         shortNameCustomField.setMaxWidth(275);
         descriptionTextArea.setMaxWidth(275);
         impedimentsTextArea.setMaxWidth(275);
+        effortLeftField.setMaxWidth(275);
 
         shortNameCustomField.setText(currentTask.getShortName());
         descriptionTextArea.setText(currentTask.getDescription());
         impedimentsTextArea.setText(currentTask.getImpediments());
+        effortLeftField.setText(currentTask.getEffortLeft().toString());
+
 
         ObservableList<Person> taskAssigneesList = observableArrayList();
         taskAssigneesList.addAll(currentTask.getResponsibilities());
@@ -127,6 +132,7 @@ public class TaskEditTab extends SearchableTab {
         editPane.getChildren().addAll(shortNameCustomField,
                 descriptionTextArea,
                 impedimentsTextArea,
+                effortLeftField,
                 taskHbox,
                 memberListViews,
                 buttons);
@@ -144,9 +150,12 @@ public class TaskEditTab extends SearchableTab {
                 boolean taskstateUnchanged = taskStateComboBox.getValue().equals(
                         currentTask.getState());
 
+                boolean effortLeftUnchanged = effortLeftField.getText().equals(
+                        currentTask.getEffortLeft().toString());
+
 
                 if (shortNameUnchanged &&  descriptionUnchanged
-                        && impedimentsUnchanged && taskstateUnchanged) {
+                        && impedimentsUnchanged && taskstateUnchanged && effortLeftUnchanged) {
                     // No changes
                     currentTask.switchToInfoScene();
                     return;
@@ -162,7 +171,8 @@ public class TaskEditTab extends SearchableTab {
                             descriptionTextArea.getText(),
                             impedimentsTextArea.getText(),
                             taskStateComboBox.getValue(),
-                            new ArrayList<Person>(), new ArrayList<Log>());
+                            new ArrayList<Person>(), new ArrayList<Log>(),
+                            new Integer(effortLeftField.getText()), currentTask.getEffortSpent());
 
                     currentTask.switchToInfoScene();
                     App.mainPane.refreshTree();

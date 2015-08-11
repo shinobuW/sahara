@@ -53,6 +53,10 @@ public class TaskInfoTab extends SearchableTab {
                 + currentTask.getDescription(), searchControls));
         basicInfoPane.getChildren().add(new SearchableText("Impediments: "
                 + currentTask.getImpediments(), searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Effort Left: "
+                + currentTask.getEffortLeft(), searchControls));
+        basicInfoPane.getChildren().add(new SearchableText("Effort Spent: "
+                + currentTask.getEffortSpent(), searchControls));
 
         basicInfoPane.getChildren().add(new SearchableText("Task State: " + currentTask.getState(), searchControls));
 

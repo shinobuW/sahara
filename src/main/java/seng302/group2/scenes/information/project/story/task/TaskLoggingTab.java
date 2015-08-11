@@ -19,10 +19,10 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomDatePicker;
+import seng302.group2.scenes.control.TimeTextField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
@@ -58,7 +58,7 @@ public class TaskLoggingTab extends SearchableTab {
 
         TableView<Log> taskTable = new TableView<>();
         taskTable.setEditable(false);
-        taskTable.setPrefWidth(730);
+        taskTable.setPrefWidth(700);
         taskTable.setPrefHeight(200);
         taskTable.setPlaceholder(new SearchableText("There are currently no logs in this task.", searchControls));
         taskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -115,11 +115,6 @@ public class TaskLoggingTab extends SearchableTab {
             }
         });
 
-        Button btnView = new Button("View");
-
-        btnView.setOnAction((event) -> {
-                App.mainPane.selectItem(taskTable.getSelectionModel().getSelectedItem());
-            });
 
         VBox addTaskBox = new VBox(10);
         
@@ -128,21 +123,35 @@ public class TaskLoggingTab extends SearchableTab {
         Button addButton = new Button("Add");
         Button deleteButton = new Button("Delete");
         buttons.getChildren().addAll(addButton, deleteButton);
-        
-        HBox newLogFields = new HBox(35);
+
+        VBox newLogFields = new VBox(10);
+        HBox newLogFieldFirstRow = new HBox(10);
         Label loggerLabel = new Label("Logger");
         final ComboBox<Person> personComboBox = new ComboBox<>(observableArrayList());
+        personComboBox.setStyle("-fx-pref-width: 200px;");
+
         CustomDatePicker startDatePicker = new CustomDatePicker("Start Date", true);
 
-        startDatePicker.getDatePicker().setStyle("-fx-pref-width: 200;");
-        personComboBox.setStyle("-fx-pref-width: 250;");
+        HBox startTimeHBox = new HBox(10);
+        Label startTimeLabel = new Label("Start Time");
+        TimeTextField timeTextField = new TimeTextField();
+        startTimeHBox.getChildren().addAll(startTimeLabel, timeTextField);
 
         personComboBox.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
         startDatePicker.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
-        newLogFields.getChildren().addAll(loggerLabel, personComboBox,
-                startDatePicker);
+        timeTextField.setStyle("-fx-pref-width: 70px;");
+        newLogFieldFirstRow.getChildren().addAll(loggerLabel, personComboBox,
+                startDatePicker, startTimeHBox);
+
+        HBox newLogFieldSecondRow = new HBox(10);
+        Label descriptionLabel = new Label("Description");
+        TextArea descriptionTextArea = new TextArea();
+
+        newLogFieldSecondRow.getChildren().addAll(descriptionLabel, descriptionTextArea);
+
+        newLogFields.getChildren().addAll(newLogFieldFirstRow, newLogFieldSecondRow);
 
         personComboBox.getItems().clear();
         Set<Team> teams = currentTask.getStory().getBacklog().getProject().getCurrentTeams();
@@ -163,9 +172,9 @@ public class TaskLoggingTab extends SearchableTab {
                 if (personComboBox.getValue() != null && startDatePicker.getValue() != null) {
                     LocalDate startDate = startDatePicker.getValue();
                     Person selectedPerson = personComboBox.getValue();
+                    int minutes = timeTextField.getHours() * 60 + timeTextField.getMinutes();
 
-
-                    Log newLog = new Log(currentTask, " ", selectedPerson, 90, startDate);
+                    Log newLog = new Log(currentTask, " ", selectedPerson, minutes, startDate);
                     currentTask.add(newLog);
                     App.refreshMainScene();
 
@@ -209,7 +218,6 @@ public class TaskLoggingTab extends SearchableTab {
             });
 
         basicInfoPane.getChildren().add(taskTable);
-        basicInfoPane.getChildren().add(btnView);
         basicInfoPane.getChildren().add(newLogFields);
         basicInfoPane.getChildren().add(buttons);
 

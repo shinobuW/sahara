@@ -38,7 +38,8 @@ public class Task extends SaharaItem implements Serializable {
     private transient ObservableList<Log> logs = observableArrayList();
     private List<Log> serializableLogs = new ArrayList<>();
     private String stringState;
-    // TODO Effort left and Spent for logging
+    private Integer effortLeft;
+    private Integer effortSpent;
 
     GeneralEnumStringConverter converter = new GeneralEnumStringConverter();
 
@@ -67,6 +68,9 @@ public class Task extends SaharaItem implements Serializable {
         this.story = null;
         this.state = TASKSTATE.NOT_STARTED;
         this.stringState = converter.toString(this.getState().toString());
+        this.effortLeft = 0;
+        this.effortSpent = 0;
+
 
         setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
     }
@@ -84,6 +88,8 @@ public class Task extends SaharaItem implements Serializable {
         this.impediments = "";
         this.state = TASKSTATE.NOT_STARTED;
         this.story = story;
+        this.effortLeft = 0;
+        this.effortSpent = 0;
 
         setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
     }
@@ -165,7 +171,7 @@ public class Task extends SaharaItem implements Serializable {
     /**
      * Gets the impediments of the current task
      *
-     * @return the impediments of the current tasks=
+     * @return the impediments of the current tasks
      */
     public String getImpediments() {
         return this.impediments;
@@ -178,6 +184,42 @@ public class Task extends SaharaItem implements Serializable {
      */
     public void setImpediments(String impediments) {
         this.impediments = impediments;
+    }
+
+    /**
+     * Gets the effortLeft of the current task
+     *
+     * @return the effortLeft of the current task
+     */
+    public Integer getEffortLeft() {
+        return this.effortLeft;
+    }
+
+    /**
+     * Sets the impediments of the current task
+     *
+     * @param effortLeft effortLeft of the current task
+     */
+    public void setEffortLeft(Integer effortLeft) {
+        this.effortLeft = effortLeft;
+    }
+
+    /**
+     * Gets the effortLeft of the current task
+     *
+     * @return the effortLeft of the current task
+     */
+    public Integer getEffortSpent() {
+        return this.effortSpent;
+    }
+
+    /**
+     * Sets the impediments of the current task
+     *
+     * @param effortSpent effortLeft of the current task
+     */
+    public void setEffortSpent(Integer effortSpent) {
+        this.effortSpent = effortSpent;
     }
 
     /**
@@ -330,9 +372,10 @@ public class Task extends SaharaItem implements Serializable {
      * @param newLogs The new Logs
      */
     public void edit(String newShortName, String newDescription, String newImpediments, TASKSTATE newState
-                     , List<Person> newResponsibilities,  List<Log> newLogs) {
+                     , List<Person> newResponsibilities,  List<Log> newLogs, Integer newEffortLeft
+            , Integer newEffortSpent) {
         Command relEdit = new TaskEditCommand(this, newShortName, newDescription, newImpediments,
-                newState, newResponsibilities, newLogs);
+                newState, newResponsibilities, newLogs, newEffortLeft, newEffortSpent);
 
         Global.commandManager.executeCommand(relEdit);
     }
@@ -349,6 +392,8 @@ public class Task extends SaharaItem implements Serializable {
         private Collection<Person> responsibilities;
         private Collection<Log> logs;
         private TASKSTATE state;
+        private Integer effortLeft;
+        private Integer effortSpent;
 
 
         private String oldShortName;
@@ -357,6 +402,8 @@ public class Task extends SaharaItem implements Serializable {
         private Collection<Person> oldResponsibilities;
         private Collection<Log> oldLogs;
         private TASKSTATE oldState;
+        private Integer oldEffortLeft;
+        private Integer oldEffortSpent;
         
         /**
          * Constructor for the Task Edit command.
@@ -370,7 +417,7 @@ public class Task extends SaharaItem implements Serializable {
          */
         private TaskEditCommand(Task task, String newShortName, String newDescription, 
                 String newImpediments, TASKSTATE newState,
-                List<Person> newResponsibilities,  List<Log> newLogs) {
+                List<Person> newResponsibilities,  List<Log> newLogs, Integer effortLeft, Integer effortSpent) {
             this.task = task;
 
             this.shortName = newShortName;
@@ -381,6 +428,8 @@ public class Task extends SaharaItem implements Serializable {
             this.logs = new HashSet<>();
             this.logs.addAll(newLogs);
             this.state = newState;
+            this.effortLeft = effortLeft;
+            this.effortSpent = effortSpent;
 
             this.oldShortName = task.shortName;
             this.oldDescription = task.description;
@@ -390,6 +439,8 @@ public class Task extends SaharaItem implements Serializable {
             this.oldLogs = new HashSet<>();
             this.oldLogs.addAll(task.logs);
             this.oldState = task.state;
+            this.oldEffortLeft = task.effortLeft;
+            this.oldEffortSpent = task.effortSpent;
 
             
         }
@@ -402,6 +453,8 @@ public class Task extends SaharaItem implements Serializable {
             task.description = description;
             task.impediments = impediments;
             task.state = state;
+            task.effortLeft = effortLeft;
+            task.effortSpent = effortSpent;
             
             task.responsibilities.clear();
             task.responsibilities.addAll(responsibilities);
@@ -418,6 +471,8 @@ public class Task extends SaharaItem implements Serializable {
             task.description = oldDescription;
             task.description = oldImpediments;
             task.state = oldState;
+            task.effortLeft = oldEffortLeft;
+            task.effortSpent = oldEffortSpent;
 
             task.responsibilities.clear();
             task.responsibilities.addAll(oldResponsibilities);
