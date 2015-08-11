@@ -200,7 +200,7 @@ public class Sprint extends SaharaItem {
         ObservableList<SaharaItem> children = observableArrayList();
 
         children.addAll(tasksCategory);
-        children.addAll(stories);
+        //children.addAll(stories);
 
         return children;
     }

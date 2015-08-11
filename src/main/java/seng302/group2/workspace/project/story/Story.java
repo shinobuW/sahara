@@ -243,6 +243,18 @@ public class Story extends SaharaItem implements Serializable {
     }
 
     /**
+     * Gets String representation of the stories ready state.
+     *
+     * @return the readyString
+     */
+    public String getReadyString() {
+        if (ready) {
+            return "Ready";
+        }
+        return "Not Ready";
+    }
+
+    /**
      * Gets the sprint this story belongs to.
      *
      * @return the project
@@ -780,6 +792,7 @@ public class Story extends SaharaItem implements Serializable {
             story.estimate = estimate;
             story.ready = ready;
 
+
             story.dependentOn.clear();
             story.dependentOn.addAll(dependentOn);
 
@@ -806,6 +819,7 @@ public class Story extends SaharaItem implements Serializable {
             story.project = oldProject;
             story.estimate = oldEstimate;
             story.ready = oldReady;
+
 
             story.dependentOn.clear();
             story.dependentOn.addAll(oldDependentOn);
