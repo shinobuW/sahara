@@ -150,7 +150,7 @@ public class SprintEditTab extends SearchableTab {
         //availableStories.addAll(Global.currentWorkspace.getAllStories());
         for (Story story : Global.currentWorkspace.getAllStories()) {
             if (story.getProject() == currentSprint.getProject()) {
-                if(story.getSprint() == null) {
+                if (story.getSprint() == null) {
                     availableStories.add(story);
                 }
             }

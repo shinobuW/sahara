@@ -3,6 +3,7 @@ package seng302.group2.scenes.information.project.sprint;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.search.SearchableControl;
@@ -44,12 +45,42 @@ public class SprintInfoTab extends SearchableTab {
 
         Button btnEdit = new Button("Edit");
 
-        //SUBJECT TO CHANGE BASED ON FUTURE STORIES
+        /*//SUBJECT TO CHANGE BASED ON FUTURE STORIES
         ObservableList<Story> data = observableArrayList();
         data.addAll(currentSprint.getStories());
         ListView sprintStoryBox = new ListView(data);
         sprintStoryBox.setPrefHeight(192);
-        sprintStoryBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        sprintStoryBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);*/
+
+
+        TableView<Story> storyTable = new TableView<>();
+        storyTable.setEditable(true);
+        storyTable.setPrefWidth(500);
+        storyTable.setPrefHeight(200);
+        storyTable.setPlaceholder(new SearchableText("There are currently no stories in this sprint.",
+                searchControls));
+        storyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        ObservableList<Story> rows = observableArrayList();
+        rows.addAll(currentSprint.getStories());
+
+        TableColumn storyCol = new TableColumn("Story");
+        storyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
+        storyCol.prefWidthProperty().bind(storyTable.widthProperty()
+                .subtract(2).divide(100).multiply(80));
+
+        /*TableColumn priorityCol = new TableColumn("Priority");
+        priorityCol.setCellValueFactory(new PropertyValueFactory<Story, Integer>("priority"));
+        priorityCol.prefWidthProperty().bind(storyTable.widthProperty()
+                .subtract(2).divide(100).multiply(20));*/
+
+        TableColumn readyCol = new TableColumn("Ready");
+        readyCol.setCellValueFactory(new PropertyValueFactory<Story, Boolean>("ready"));
+        readyCol.prefWidthProperty().bind(storyTable.widthProperty()
+                .subtract(2).divide(100).multiply(20));
+        storyTable.setItems(rows);
+        storyTable.getColumns().addAll(storyCol, readyCol);
+
 
         final Separator separator = new Separator();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -74,7 +105,7 @@ public class SprintInfoTab extends SearchableTab {
         basicInfoPane.getChildren().add(new SearchableText("Release: " + currentSprint.getRelease(), searchControls));
 
         basicInfoPane.getChildren().add(new SearchableText("Stories: ", searchControls));
-        basicInfoPane.getChildren().add(sprintStoryBox);
+        basicInfoPane.getChildren().add(storyTable);
 
         basicInfoPane.getChildren().add(btnEdit);
 
