@@ -85,17 +85,18 @@ public class HighlightRowFactory<T> implements
         final TableRow<T> row ;
         if (baseFactory == null) {
             row = new TableRow<>();
-        } else {
+        }
+        else {
             row = baseFactory.call(tableView);
         }
 
         row.indexProperty().addListener((obs, oldValue, newValue) -> {
-            updateStyleClass(row);
-        });
+                updateStyleClass(row);
+            });
 
         styledRowIndices.addListener((ListChangeListener<Integer>) change -> {
-            updateStyleClass(row);
-        });
+                updateStyleClass(row);
+            });
 
         return row;
     }
@@ -119,7 +120,8 @@ public class HighlightRowFactory<T> implements
             /*if (! rowStyleClasses.contains(styleClass)) {
                 rowStyleClasses.add(styleClass);
             }*/
-        } else {
+        }
+        else {
             // remove all occurrences of styleClass:
             /*rowStyleClasses.removeAll(Collections.singletonList(styleClass));*/
             row.setStyle("-fx-background-color: inherit;");
