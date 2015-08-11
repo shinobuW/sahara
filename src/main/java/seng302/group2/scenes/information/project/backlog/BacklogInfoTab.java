@@ -10,10 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import seng302.group2.App;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
 
@@ -88,7 +85,8 @@ public class BacklogInfoTab extends SearchableTab {
         Pane keyBox = new VBox(4);
         keyBox.getChildren().addAll(greenKeyHbox, orangeKeyHbox, redKeyHbox);
 
-        TableView<Story> storyTable = new TableView<>();
+        SearchableTable<Story> storyTable = new SearchableTable<>(currentBacklog.getStories());
+        searchControls.add(storyTable);
         storyTable.setEditable(true);
         storyTable.setPrefWidth(500);
         storyTable.setPrefHeight(200);
@@ -96,8 +94,8 @@ public class BacklogInfoTab extends SearchableTab {
                 searchControls));
         storyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        ObservableList<Story> data = observableArrayList();
-        data.addAll(currentBacklog.getStories());
+        /*ObservableList<Story> data = observableArrayList();
+        data.addAll(currentBacklog.getStories());*/
 
         TableColumn storyCol = new TableColumn("Story");
         storyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
@@ -113,7 +111,7 @@ public class BacklogInfoTab extends SearchableTab {
         readyCol.setCellValueFactory(new PropertyValueFactory<Story, Boolean>("ready"));
         readyCol.prefWidthProperty().bind(storyTable.widthProperty()
                 .subtract(2).divide(100).multiply(20));
-        storyTable.setItems(data);
+        //storyTable.setItems(data);
         storyTable.getColumns().addAll(priorityCol, storyCol, readyCol);
 
 

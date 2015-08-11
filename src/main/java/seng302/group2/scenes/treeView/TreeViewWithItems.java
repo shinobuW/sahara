@@ -215,46 +215,43 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
      */
     private ListChangeListener<T> getListChangeListener(
             final ObservableList<TreeItem<T>> treeItemChildren) {
-        return new ListChangeListener<T>() {
-            @Override
-            public void onChanged(final Change<? extends T> change) {
-                while (change.next()) {
-                    if (change.wasUpdated()) {
-                        // http://javafx-jira.kenai.com/browse/RT-23434
-                        continue;
+        return change -> {
+            while (change.next()) {
+                if (change.wasUpdated()) {
+                    // http://javafx-jira.kenai.com/browse/RT-23434
+                    continue;
+                }
+                if (change.wasRemoved()) {
+                    for (int i = change.getRemovedSize() - 1; i >= 0; i--) {
+                        removeRecursively(treeItemChildren.remove(change.getFrom() + i));
                     }
-                    if (change.wasRemoved()) {
-                        for (int i = change.getRemovedSize() - 1; i >= 0; i--) {
-                            removeRecursively(treeItemChildren.remove(change.getFrom() + i));
-                        }
+                }
+                // If items have been added
+                if (change.wasAdded()) {
+                    // Get the new items
+                    for (int i = change.getFrom(); i < change.getTo(); i++) {
+                        treeItemChildren.add(i, addRecursively(change.getList().get(i)));
                     }
-                    // If items have been added
-                    if (change.wasAdded()) {
-                        // Get the new items
-                        for (int i = change.getFrom(); i < change.getTo(); i++) {
-                            treeItemChildren.add(i, addRecursively(change.getList().get(i)));
-                        }
-                    }
-                    // If the list was sorted.
-                    if (change.wasPermutated()) {
-                        App.mainPane.refreshTree();
-                        /*// Store the new order.
-                        Map<Integer, TreeItem<T>> tempMap = new HashMap<Integer, TreeItem<T>>();
+                }
+                // If the list was sorted.
+                if (change.wasPermutated()) {
+                    App.mainPane.refreshTree();
+                    /*// Store the new order.
+                    Map<Integer, TreeItem<T>> tempMap = new HashMap<Integer, TreeItem<T>>();
 
-                        for (int i = change.getTo() - 1; i >= change.getFrom(); i--)
-                        {
-                            int a = change.getPermutation(i);
-                            tempMap.put(a, treeItemChildren.remove(i));
-                        }
-
-                        getSelectionModel().clearSelection();
-
-                        // Add the items in the new order.
-                        for (int i = change.getFrom(); i < change.getTo(); i++)
-                        {
-                            treeItemChildren.add(tempMap.remove(i));
-                        }*/
+                    for (int i = change.getTo() - 1; i >= change.getFrom(); i--)
+                    {
+                        int a = change.getPermutation(i);
+                        tempMap.put(a, treeItemChildren.remove(i));
                     }
+
+                    getSelectionModel().clearSelection();
+
+                    // Add the items in the new order.
+                    for (int i = change.getFrom(); i < change.getTo(); i++)
+                    {
+                        treeItemChildren.add(tempMap.remove(i));
+                    }*/
                 }
             }
         };

@@ -58,9 +58,6 @@ public class SkillCategoryTab extends SearchableTab {
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
         SearchableListView<Skill> skillBox = new SearchableListView<>(currentWorkspace.getSkills());
-        for (Skill i : currentWorkspace.getSkills()) {
-            skillBox.getItems().add(i);
-        }
 
         skillBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         skillBox.setMaxWidth(275);
@@ -71,7 +68,6 @@ public class SkillCategoryTab extends SearchableTab {
 
         searchControls.add(title);
         searchControls.add(skillBox);
-        System.out.println();
 
 
 
