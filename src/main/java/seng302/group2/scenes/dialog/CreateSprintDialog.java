@@ -129,18 +129,18 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
         ObservableList<Project> projectOptions = observableArrayList();
         projectComboBox = new ComboBox<>(projectOptions);
         projectComboBox.setStyle("-fx-pref-width: 175;");
-        Label backlogComboLabel = new Label("Backlog:");
-        HBox backlogComboHBox = new HBox(backlogComboLabel);
+        Label projectComboLabel = new Label("Project:");
+        HBox projectComboHBox = new HBox(projectComboLabel);
 
         Label aster1 = new Label(" * ");
         aster1.setTextFill(Color.web("#ff0000"));
-        backlogComboHBox.getChildren().add(aster1);
+        projectComboHBox.getChildren().add(aster1);
 
-        VBox backlogVBox = new VBox();
-        HBox backlogCombo = new HBox();
-        backlogCombo.getChildren().addAll(backlogComboHBox, projectComboBox);
-        HBox.setHgrow(backlogComboHBox, Priority.ALWAYS);
-        backlogVBox.getChildren().add(backlogCombo);
+        VBox projectVBox = new VBox();
+        HBox projectCombo = new HBox();
+        projectCombo.getChildren().addAll(projectComboHBox, projectComboBox);
+        HBox.setHgrow(projectComboHBox, Priority.ALWAYS);
+        projectVBox.getChildren().add(projectCombo);
 
         // Create team combo box.
         ObservableList<Team> teamOptions = observableArrayList();
@@ -187,7 +187,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
             projectOptions.add(project);
         }
 
-        grid.getChildren().addAll(shortNameCustomField, longNameCustomField, backlogVBox,
+        grid.getChildren().addAll(shortNameCustomField, longNameCustomField, projectVBox,
                 releaseVBox, sprintStartDatePicker, sprintEndDatePicker, teamVBox, descriptionTextArea);
 
         //Add grid of controls to dialog
@@ -259,6 +259,8 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                             && newValue.isAfter(sprintEndDatePicker.getValue())) {
                         sprintEndDatePicker.setDisable(false);
                         sprintEndDatePicker.setValue(null);
+                        teamComboBox.setValue(null);
+                        teamComboBox.setDisable(true);
                     }
                     else if (newValue != null) {
                         sprintEndDatePicker.setDisable(false);
@@ -268,6 +270,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                         teamOptions.clear();
                         outer: for (Team team : projectComboBox.getValue().getAllTeams()) {
                             for (Allocation alloc : team.getProjectAllocations()) {
+
                                 if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
                                         && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
                                     teamOptions.add(team);

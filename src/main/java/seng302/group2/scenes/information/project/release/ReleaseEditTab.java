@@ -63,10 +63,10 @@ public class ReleaseEditTab extends SearchableTab {
 
         CustomComboBox projectComboBox = new CustomComboBox("Project: ", true, searchControls);
 
-        shortNameCustomField.setMaxWidth(275);
-        descriptionTextArea.setMaxWidth(275);
-        releaseDatePicker.setMaxWidth(275);
-        projectComboBox.setMaxWidth(275);
+        shortNameCustomField.setMaxWidth(300);
+        descriptionTextArea.setMaxWidth(300);
+        releaseDatePicker.setMaxWidth(300);
+        projectComboBox.setMaxWidth(300);
 
         for (SaharaItem project : Global.currentWorkspace.getProjects()) {
             projectComboBox.addToComboBox(project.toString());

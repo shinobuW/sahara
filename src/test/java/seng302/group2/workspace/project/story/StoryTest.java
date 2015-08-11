@@ -203,7 +203,7 @@ public class StoryTest {
     }
 
     /**
-     * Tests for Roles' XML generator method.
+     * Tests for Story XML generator method.
      */
     @Test
     public void testGenerateXML() {

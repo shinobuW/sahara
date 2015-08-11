@@ -67,8 +67,8 @@ public class ScrumboardTab extends SearchableTab {
 
         basicInfoPane.getChildren().add(new SearchableText("Tasks: ", searchControls));
 
-        laneOne.setCellFactory(list -> new TestingCellFactory());
-        laneTwo.setCellFactory(List -> new TestingCellFactory());
+        laneOne.setCellFactory(list -> new ScrumBoardTaskCell());
+        laneTwo.setCellFactory(List -> new ScrumBoardTaskCell());
 
         HBox lists = new HBox();
         lists.getChildren().addAll(laneOne, laneTwo);

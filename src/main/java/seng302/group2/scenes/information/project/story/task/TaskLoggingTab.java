@@ -14,7 +14,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.search.SearchableControl;
@@ -76,18 +75,13 @@ public class TaskLoggingTab extends SearchableTab {
         startTimeCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
         
-        TableColumn endTimeCol = new TableColumn("End Time");
-        endTimeCol.setCellValueFactory(new PropertyValueFactory<Task, LocalDate>("endTime"));
-        endTimeCol.prefWidthProperty().bind(taskTable.widthProperty()
-                .subtract(2).divide(100).multiply(60));
-        
         TableColumn durationCol = new TableColumn("Duration");
         durationCol.setCellValueFactory(new PropertyValueFactory<Task, Long>("duration"));
         durationCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
         taskTable.setItems(data);
-        TableColumn[] columns = {loggerCol, startTimeCol, endTimeCol, durationCol};
+        TableColumn[] columns = {loggerCol, startTimeCol, durationCol};
         taskTable.getColumns().setAll(columns);
 
         // Listener to disable columns being movable
@@ -122,39 +116,16 @@ public class TaskLoggingTab extends SearchableTab {
         HBox newLogFields = new HBox(35);
         final ComboBox<Person> personComboBox = new ComboBox<>(observableArrayList());
         CustomDatePicker startDatePicker = new CustomDatePicker("Start Date", true);
-        CustomDatePicker endDatePicker = new CustomDatePicker("End Date", false);
-
-        final Callback<DatePicker, DateCell> endDateCellFactory =
-            new Callback<DatePicker, DateCell>() {
-                @Override
-                public DateCell call(final DatePicker datePicker) {
-                    return new DateCell() {
-                        @Override
-                        public void updateItem(LocalDate item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (item.isBefore(startDatePicker.getValue())) {
-                                setDisable(true);
-                                setStyle("-fx-background-color: #ffc0cb;");
-                            }
-                        }
-                    };
-                }
-            };
-
-        endDatePicker.getDatePicker().setDayCellFactory(endDateCellFactory);
 
         startDatePicker.getDatePicker().setStyle("-fx-pref-width: 200;");
-        endDatePicker.getDatePicker().setStyle("-fx-pref-width: 200;");
         personComboBox.setStyle("-fx-pref-width: 250;");
 
         personComboBox.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
         startDatePicker.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
-        endDatePicker.prefWidthProperty().bind(taskTable.widthProperty()
-                .subtract(3).divide(100).multiply(30));
         newLogFields.getChildren().addAll(personComboBox,
-                startDatePicker, endDatePicker);
+                startDatePicker);
 
         personComboBox.getItems().clear();
         Set<Team> teams = currentTask.getStory().getBacklog().getProject().getCurrentTeams();
@@ -173,7 +144,6 @@ public class TaskLoggingTab extends SearchableTab {
         addButton.setOnAction((event) -> {
                 startDatePicker.hideErrorField();
                 if (personComboBox.getValue() != null && startDatePicker.getValue() != null) {
-                    LocalDate endDate = endDatePicker.getValue();
                     LocalDate startDate = startDatePicker.getValue();
                     Person selectedPerson = personComboBox.getValue();
 

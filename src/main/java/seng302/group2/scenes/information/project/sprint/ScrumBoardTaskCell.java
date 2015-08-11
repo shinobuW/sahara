@@ -12,9 +12,10 @@ import javafx.scene.shape.Rectangle;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 /**
+ * A ListCell extension for the neat displaying of tasks on the scrum board view
  * Created by Jordane on 23/07/2015.
  */
-public class TestingCellFactory extends ListCell<Task> {
+public class ScrumBoardTaskCell extends ListCell<Task> {
     @Override
     public void updateItem(Task item, boolean empty) {
         super.updateItem(item, empty);
