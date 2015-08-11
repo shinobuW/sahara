@@ -46,6 +46,7 @@ public class Story extends SaharaItem implements Serializable {
     private STORYCOLOUR colour;
     private Integer priority;
     private Backlog backlog;
+    private Project project;
     private Sprint sprint;
     private String estimate = EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.DefaultValues.NONE);
     private boolean ready = false;
@@ -74,6 +75,7 @@ public class Story extends SaharaItem implements Serializable {
         this.description = "";
         this.creator = null;
         this.priority = 0;
+        this.project = null;
         this.colour = STORYCOLOUR.DEFAULT;
 
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
@@ -116,6 +118,7 @@ public class Story extends SaharaItem implements Serializable {
         this.description = description;
         this.creator = creator;
         this.priority = priority;
+        this.project = project;
         this.ready = false;
         this.colour = STORYCOLOUR.DEFAULT;
 
@@ -218,7 +221,16 @@ public class Story extends SaharaItem implements Serializable {
      * @return the project
      */
     public Project getProject() {
-        return this.backlog.getProject();
+        return this.project;
+    }
+
+    /**
+     * Sets the project of the story
+     *
+     * @param project the project
+     */
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     /**
@@ -730,6 +742,7 @@ public class Story extends SaharaItem implements Serializable {
             this.oldLongName = story.longName;
             this.oldDescription = story.description;
             this.oldPriority = story.priority;
+            this.oldProject = story.project;
             this.oldBacklog = story.backlog;
             this.oldEstimate = story.estimate;
             this.oldReady = story.ready;
@@ -755,6 +768,7 @@ public class Story extends SaharaItem implements Serializable {
             story.description = description;
             story.priority = priority;
             story.backlog = backlog;
+            story.project = project;
             story.estimate = estimate;
             story.ready = ready;
 
@@ -781,6 +795,7 @@ public class Story extends SaharaItem implements Serializable {
             story.description = oldDescription;
             story.priority = oldPriority;
             story.backlog = oldBacklog;
+            story.project = oldProject;
             story.estimate = oldEstimate;
             story.ready = oldReady;
 
