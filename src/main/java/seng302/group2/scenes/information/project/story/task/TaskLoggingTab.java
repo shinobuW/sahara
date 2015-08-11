@@ -53,7 +53,7 @@ public class TaskLoggingTab extends SearchableTab {
 
         TableView<Log> taskTable = new TableView<>();
         taskTable.setEditable(false);
-        taskTable.setPrefWidth(500);
+        taskTable.setPrefWidth(730);
         taskTable.setPrefHeight(200);
         taskTable.setPlaceholder(new SearchableText("There are currently no logs in this task.", searchControls));
         taskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -81,7 +81,7 @@ public class TaskLoggingTab extends SearchableTab {
                 .subtract(2).divide(100).multiply(60));
 
         taskTable.setItems(data);
-        TableColumn[] columns = {loggerCol, startTimeCol, durationCol};
+        TableColumn[] columns = {loggerCol, descriptionCol, startTimeCol, durationCol};
         taskTable.getColumns().setAll(columns);
 
         // Listener to disable columns being movable
@@ -114,6 +114,7 @@ public class TaskLoggingTab extends SearchableTab {
         buttons.getChildren().addAll(addButton, deleteButton);
         
         HBox newLogFields = new HBox(35);
+        Label loggerLabel = new Label("Logger");
         final ComboBox<Person> personComboBox = new ComboBox<>(observableArrayList());
         CustomDatePicker startDatePicker = new CustomDatePicker("Start Date", true);
 
@@ -124,7 +125,7 @@ public class TaskLoggingTab extends SearchableTab {
                 .subtract(3).divide(100).multiply(30));
         startDatePicker.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
-        newLogFields.getChildren().addAll(personComboBox,
+        newLogFields.getChildren().addAll(loggerLabel, personComboBox,
                 startDatePicker);
 
         personComboBox.getItems().clear();
