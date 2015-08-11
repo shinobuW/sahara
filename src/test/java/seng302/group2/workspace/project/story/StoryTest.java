@@ -94,8 +94,6 @@ public class StoryTest {
 
         Story story1 = new Story("short", "long", "desc", "creator", null, 5);
         Story story2 = new Story("short2", "long", "desc", "creator", null, 5);
-        story1.setProject(proj);
-        story2.setProject(proj);
         story2.setBacklog(back);
 
         proj.add(story1);

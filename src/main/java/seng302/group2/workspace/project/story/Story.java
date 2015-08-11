@@ -10,6 +10,7 @@ import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
+import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 import seng302.group2.workspace.project.story.tasks.Task;
@@ -43,9 +44,9 @@ public class Story extends SaharaItem implements Serializable {
     private String description;
     private String creator;
     private STORYCOLOUR colour;
-    private Project project;
     private Integer priority;
     private Backlog backlog;
+    private Sprint sprint;
     private String estimate = EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.DefaultValues.NONE);
     private boolean ready = false;
     private transient ObservableList<AcceptanceCriteria> acceptanceCriteria = observableArrayList();
@@ -72,7 +73,6 @@ public class Story extends SaharaItem implements Serializable {
         this.longName = "Untitled Story";
         this.description = "";
         this.creator = null;
-        this.project = null;
         this.priority = 0;
         this.colour = STORYCOLOUR.DEFAULT;
 
@@ -115,7 +115,6 @@ public class Story extends SaharaItem implements Serializable {
         this.longName = longName;
         this.description = description;
         this.creator = creator;
-        this.project = project;
         this.priority = priority;
         this.ready = false;
         this.colour = STORYCOLOUR.DEFAULT;
@@ -219,16 +218,7 @@ public class Story extends SaharaItem implements Serializable {
      * @return the project
      */
     public Project getProject() {
-        return this.project;
-    }
-
-    /**
-     * Sets the project the story belongs to
-     *
-     * @param project project to set to
-     */
-    public void setProject(Project project) {
-        this.project = project;
+        return this.backlog.getProject();
     }
 
     /**
@@ -238,6 +228,24 @@ public class Story extends SaharaItem implements Serializable {
      */
     public Backlog getBacklog() {
         return this.backlog;
+    }
+
+    /**
+     * Gets the sprint this story belongs to.
+     *
+     * @return the project
+     */
+    public Sprint getSprint() {
+        return this.sprint;
+    }
+
+    /**
+     * Sets the sprint the story belongs to
+     *
+     * @param sprint sprint to set to
+     */
+    public void setSprint(Sprint sprint) {
+        this.sprint = sprint;
     }
 
     /**
@@ -721,7 +729,6 @@ public class Story extends SaharaItem implements Serializable {
             this.oldShortName = story.shortName;
             this.oldLongName = story.longName;
             this.oldDescription = story.description;
-            this.oldProject = story.project;
             this.oldPriority = story.priority;
             this.oldBacklog = story.backlog;
             this.oldEstimate = story.estimate;
@@ -746,7 +753,6 @@ public class Story extends SaharaItem implements Serializable {
             story.shortName = shortName;
             story.longName = longName;
             story.description = description;
-            story.project = project;
             story.priority = priority;
             story.backlog = backlog;
             story.estimate = estimate;
@@ -773,7 +779,6 @@ public class Story extends SaharaItem implements Serializable {
             story.shortName = oldShortName;
             story.longName = oldLongName;
             story.description = oldDescription;
-            story.project = oldProject;
             story.priority = oldPriority;
             story.backlog = oldBacklog;
             story.estimate = oldEstimate;

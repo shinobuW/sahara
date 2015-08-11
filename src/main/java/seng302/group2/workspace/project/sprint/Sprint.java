@@ -618,6 +618,7 @@ public class Sprint extends SaharaItem {
          */
         public void execute() {
             sprint.stories.add(story);
+            story.setSprint(sprint);
         }
 
         /**
@@ -625,6 +626,7 @@ public class Sprint extends SaharaItem {
          */
         public void undo() {
             sprint.stories.remove(story);
+            story.setSprint(null);
         }
 
         /**

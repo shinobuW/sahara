@@ -472,7 +472,6 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
                     if (project != null) {
                         project.getUnallocatedStories().add(story);
                     }
-                    story.setProject(project);
                     story.setBacklog(null);
                 }
                 else {
@@ -480,7 +479,6 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
                     if (project != null) {
                         project.getUnallocatedStories().remove(story);
                     }
-                    story.setProject(project);
                     story.setBacklog(backlog);
                 }
             }
@@ -519,7 +517,6 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
                     if (oldProject != null) {
                         oldProject.getUnallocatedStories().add(story);
                     }
-                    story.setProject(oldProject);
                     story.setBacklog(null);
                 }
                 else {
@@ -527,7 +524,6 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
                     if (oldProject != null) {
                         oldProject.getUnallocatedStories().remove(story);
                     }
-                    story.setProject(oldProject);
                     story.setBacklog(backlog);
                 }
             }
