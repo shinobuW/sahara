@@ -17,7 +17,7 @@ import java.util.Set;
  */
 public class Log extends SaharaItem implements Serializable {
     private LocalDate startTime;
-    private long duration;
+    private int duration;
     private Person logger;
     private Task task;
     private String description;
@@ -31,7 +31,7 @@ public class Log extends SaharaItem implements Serializable {
      * @param duration the duration the person worked for
      * @param startTime time the logger started working on the task
      */
-    public Log(Task task, String description, Person logger, long duration, LocalDate startTime) {
+    public Log(Task task, String description, Person logger, int duration, LocalDate startTime) {
         this.task = task;
         this.logger = logger;
         this.startTime = startTime;
@@ -48,6 +48,14 @@ public class Log extends SaharaItem implements Serializable {
      */
     public long getDuration() {
         return this.duration;
+    }
+
+    /**
+     * Gets the startTime of the log
+     * @return duration in hours
+     */
+    public LocalDate getStartDate() {
+        return this.startTime;
     }
 
 
@@ -146,16 +154,16 @@ public class Log extends SaharaItem implements Serializable {
         private Log log;
         private Person logger;
         private LocalDate startTime;
-        private Long duration;
+        private int duration;
         private String description;
 
         private Person oldLogger;
         private LocalDate oldStartTime;
-        private Long oldDuration;
+        private int oldDuration;
         private String oldDescription;
 
         protected LogEditCommand(Log log, Person newLogger, LocalDate newStartDate,
-                                 Long newDuration, String newDescription) {
+                                 int newDuration, String newDescription) {
             this.log = log;
             this.logger = newLogger;
             this.startTime = newStartDate;

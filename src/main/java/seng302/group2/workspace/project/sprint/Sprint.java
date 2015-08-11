@@ -445,7 +445,14 @@ public class Sprint extends SaharaItem {
             sprint.release = release;
 
             sprint.stories.removeAll(oldStories);
-            sprint.stories.addAll(stories);
+            for (Story story : oldStories) {
+                story.setSprint(null);
+            }
+
+            for (Story story : stories) {
+                sprint.add(story);
+            }
+            //sprint.stories.addAll(stories);
 
 
             //Are stories sorted in sprint?
@@ -465,7 +472,13 @@ public class Sprint extends SaharaItem {
             sprint.release = oldRelease;
 
             sprint.stories.removeAll(stories);
-            sprint.stories.addAll(oldStories);
+            for (Story story : stories) {
+                story.setSprint(null);
+            }
+
+            for (Story story : oldStories) {
+                sprint.add(story);
+            }
 
             //Are stories sorted in sprint?
             //Collections.sort(sprint.stories, Story.StoryPriorityComparator);

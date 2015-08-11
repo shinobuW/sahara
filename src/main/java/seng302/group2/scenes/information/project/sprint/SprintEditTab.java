@@ -30,6 +30,7 @@ import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -131,6 +132,8 @@ public class SprintEditTab extends SearchableTab {
         ObservableList<Story> availableStories = FXCollections.observableArrayList();
         ListView<Story> storiesInSprintView = new ListView<>();
         ListView<Story> availableStoriesView = new ListView<>();
+        storiesInSprintView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        availableStoriesView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         VBox inSprintVBox = new VBox();
         VBox availableVBox = new VBox();
         inSprintVBox.getChildren().addAll(new SearchableText("Sprint Stories: ", searchControls), storiesInSprintView);
@@ -144,8 +147,16 @@ public class SprintEditTab extends SearchableTab {
         availableStoriesView.setItems(availableStories);
 
         storiesInSprint.addAll(currentSprint.getStories());
-        availableStories.addAll(Global.currentWorkspace.getAllStories());
+        //availableStories.addAll(Global.currentWorkspace.getAllStories());
+        for (Story story : Global.currentWorkspace.getAllStories()) {
+            if (story.getProject() == currentSprint.getProject()) {
+                if (story.getSprint() == null) {
+                    availableStories.add(story);
+                }
+            }
+        }
         availableStories.removeAll(currentSprint.getStories());
+
         
         
         editPane.getChildren().addAll(goalCustomField, longNameCustomField, descriptionTextArea,
@@ -219,31 +230,6 @@ public class SprintEditTab extends SearchableTab {
                 correctLongName = validateName(longNameCustomField);
                 toggleDone();
             });
-
-/*        backlogComboBox.getComboBox().valueProperty().addListener(new ChangeListener<Backlog>() {
-            @Override
-            public void changed(ObservableValue<? extends Backlog> observable,
-                                Backlog oldValue, Backlog newValue) {
-                sprintEndDatePicker.setDisable(true);
-                sprintStartDatePicker.setDisable(true);
-                teamComboBox.setValue(null);
-                teamComboBox.setDisable(false);
-                releaseComboBox.setValue(null);
-                releaseComboBox.setDisable(false);
-                btnSave.setDisable(false);
-                teamComboBox.clear();
-
-                for (Team team : newValue.getProject().getCurrentTeams()) {
-                    teamComboBox.addToComboBox(team);
-                }
-                releaseComboBox.clear();
-                for (Release release : newValue.getProject().getReleases()) {
-                    releaseComboBox.addToComboBox(release);
-                }
-
-                toggleDone();
-            }
-        });*/
 
         teamComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
                 toggleDone();
@@ -326,7 +312,25 @@ public class SprintEditTab extends SearchableTab {
             }
         });
 
+        // Button events
+        btnAssign.setOnAction((event) -> {
+                Collection<Story> selectedStories = new ArrayList<>();
+                selectedStories.addAll(availableStoriesView.getSelectionModel().
+                        getSelectedItems());
 
+                storiesInSprint.addAll(
+                        availableStoriesView.getSelectionModel().getSelectedItems());
+                availableStories.removeAll(
+                        availableStoriesView.getSelectionModel().getSelectedItems());
+            });
+
+        btnUnassign.setOnAction((event) -> {
+                Collection<Story> selectedPeople = new ArrayList<>();
+                selectedPeople.addAll(storiesInSprintView.getSelectionModel().
+                        getSelectedItems());
+                availableStories.addAll(selectedPeople);
+                storiesInSprint.removeAll(selectedPeople);
+            });
 
 
 
@@ -347,8 +351,10 @@ public class SprintEditTab extends SearchableTab {
                         currentSprint.getStartDate());
                 boolean endDateUnchanged = sprintEndDatePicker.getValue().equals(
                         currentSprint.getEndDate());
+                boolean storiesUnchanged = storiesInSprint.equals(currentSprint.getStories());
                 if (goalUnchanged && longNameUnchanged && descriptionUnchanged
-                        && teamUnchanged && releaseUnchanged && startDateUnchanged && endDateUnchanged) {
+                        && teamUnchanged && releaseUnchanged && startDateUnchanged && endDateUnchanged
+                        && storiesUnchanged) {
                     // No fields have been changed
                     currentSprint.switchToInfoScene();
                     return;
@@ -366,7 +372,7 @@ public class SprintEditTab extends SearchableTab {
                             sprintEndDatePicker.getValue(),
                             teamComboBox.getValue(),
                             releaseComboBox.getValue(),
-                            currentSprint.getStories() //This line just a placeholder for now
+                            storiesInSprint //This line just a placeholder for now
                     );
 
                     currentSprint.switchToInfoScene();
