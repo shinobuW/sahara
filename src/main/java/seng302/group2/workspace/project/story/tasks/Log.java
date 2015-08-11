@@ -50,6 +50,14 @@ public class Log extends SaharaItem implements Serializable {
         return this.duration;
     }
 
+    /**
+     * Gets the startTime of the log
+     * @return duration in hours
+     */
+    public LocalDate getStartDate() {
+        return this.startTime;
+    }
+
 
     /**
      * Gets the user logging time on the task
