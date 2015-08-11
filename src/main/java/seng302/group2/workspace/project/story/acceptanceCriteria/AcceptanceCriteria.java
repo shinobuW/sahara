@@ -354,15 +354,13 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
             return mapped;
         }
 
+
+
+
     }
 
-
-
-
-
-
-
-
-
-
+    @Override
+    public String toString() {
+        return this.description;
+    }
 }

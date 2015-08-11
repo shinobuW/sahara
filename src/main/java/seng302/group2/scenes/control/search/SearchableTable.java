@@ -2,18 +2,11 @@ package seng302.group2.scenes.control.search;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.paint.Color;
-import javafx.util.Callback;
-import jdk.nashorn.internal.codegen.CompilerConstants;
-import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.project.story.Story;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.Collection;
 
 /**
@@ -23,16 +16,21 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
 
 
     ObservableList<T> data = FXCollections.observableArrayList();
+    ObservableList<T> matchingItems = FXCollections.observableArrayList();
 
 
     public SearchableTable() {
         super();
+        updateRows();
     }
 
     public SearchableTable(Collection<T> data) {
         super();
+        updateRows();
         setData(data);
     }
+
+
 
 
     public void setData(Collection<T> data) {
@@ -46,57 +44,46 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
 
     @Override
     public boolean query(String query) {
-        if (query.isEmpty()) {
-            this.setItems(this.data);
-        }
+        //Set<T> tableItems = new HashSet<>();
+        matchingItems.clear();
+        if (!query.isEmpty()) {
+            ObservableList<TableColumn<T, ?>> cols = this.getColumns();
 
-        ObservableList<T> tableItems = FXCollections.observableArrayList();
-        ObservableList<TableColumn<T,?>> cols = this.getColumns();
-        //ObservableList<TableColumn<T, ?>> cols = this.getColumns();
-        for (T aData : data) {
-            for (TableColumn<T, ?> col : cols) {
-                String cellValue = col.getCellData(aData).toString();
-                cellValue = cellValue.toLowerCase();
-                if (cellValue.contains(query.trim().toLowerCase())) {
-                    tableItems.add(aData);
-                    System.out.println(aData);
+            for (T aData : data) {
+                for (TableColumn<T, ?> col : cols) {
+                    String cellValue = col.getCellData(aData).toString();
+                    cellValue = cellValue.toLowerCase();
+                    if (cellValue.contains(query.trim().toLowerCase())) {
+                        matchingItems.add(aData);
+                    }
                 }
             }
-
         }
 
+        updateRows();
+        return !matchingItems.isEmpty();
+    }
 
 
-        this.setRowFactory(new Callback<TableView<T>,TableRow<T>>() {
+
+    private void updateRows() {
+        setRowFactory(tv -> new TableRow<T>() {
             @Override
-            public TableRow<T> call(TableView<T> tableView) {
-                final TableRow<T> row = new TableRow<T>() {
-                    @Override
-                    protected void updateItem(T item, boolean empty) {
-                        super.updateItem(item, empty);
+            protected void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
 
-                        System.out.println(item.toString());
-
-                        if (tableItems.contains(item)) {
-                            setStyle("-fx-background-color: red;");
-                        }
-                        else {
-                            setStyle("-fx-background-color: inherit;");
-                        }
+                if (item != null) {
+                    System.out.println("item : " + item.toString());
+                    System.out.println("matching items : " + matchingItems);
+                    if (matchingItems.contains(item)) {
+                        setStyle("-fx-background-color: " + SearchableControl.highlightColour + "; ");
                     }
-                };
-                return row;
+                    else {
+                        setStyle(null);
+                        //setStyle("-fx-background-color: " + Color.TRANSPARENT + ";");
+                    }
+                }
             }
-
         });
-
-
-
-        //this.setItems(tableItems);
-
-
-
-
-        return false;
     }
 }

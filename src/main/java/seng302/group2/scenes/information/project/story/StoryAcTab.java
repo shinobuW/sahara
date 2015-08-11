@@ -18,10 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomTextArea;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcEnumStringConverter;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
@@ -53,7 +50,9 @@ public class StoryAcTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(acPane);
         this.setContent(wrapper);
 
-        TableView<AcceptanceCriteria> acTable = new TableView<>();
+        SearchableTable<AcceptanceCriteria> acTable = new SearchableTable<>(story.getAcceptanceCriteria());
+        searchControls.add(acTable);
+
         acTable.setEditable(true);
         acTable.fixedCellSizeProperty();
         acTable.setPrefWidth(700);
@@ -65,7 +64,7 @@ public class StoryAcTab extends SearchableTab {
 
 
         // A row factory snippet to allow item drag and drop re-ordering
-        acTable.setRowFactory(tv -> {
+        /*acTable.setRowFactory(tv -> {
                 TableRow<AcceptanceCriteria> row = new TableRow<>();
 
                 row.setOnDragDetected(event -> {
@@ -114,7 +113,7 @@ public class StoryAcTab extends SearchableTab {
                     });
 
                 return row ;
-            });
+            });*/
 
 
         HBox buttons = new HBox(10);
