@@ -5,6 +5,8 @@
  */
 package seng302.group2.scenes.information.project.story.task;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -14,17 +16,20 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -61,22 +66,33 @@ public class TaskLoggingTab extends SearchableTab {
         ObservableList<Log> data = currentTask.getLogs();
 
         TableColumn loggerCol = new TableColumn("Logger");
-        loggerCol.setCellValueFactory(new PropertyValueFactory<Task, Person>("logger"));
+        loggerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("logger"));
         loggerCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
         TableColumn descriptionCol = new TableColumn("Description");
-        descriptionCol.setCellValueFactory(new PropertyValueFactory<Task, String>("description"));
+        descriptionCol.setCellValueFactory(new PropertyValueFactory<Log, String>("description"));
         descriptionCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
         
         TableColumn startTimeCol = new TableColumn("Start Time");
-        startTimeCol.setCellValueFactory(new PropertyValueFactory<Task, LocalDate>("startTime"));
+        startTimeCol.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Log, String>,
+                        ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<Log,
+                            String> log) {
+                        SimpleStringProperty property = new SimpleStringProperty();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        property.setValue(log.getValue().getStartDate().format(formatter));
+                        return property;
+                    }
+                });
         startTimeCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
         
         TableColumn durationCol = new TableColumn("Duration");
-        durationCol.setCellValueFactory(new PropertyValueFactory<Task, Long>("duration"));
+        durationCol.setCellValueFactory(new PropertyValueFactory<Log, Long>("duration"));
         durationCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
@@ -149,8 +165,8 @@ public class TaskLoggingTab extends SearchableTab {
                     Person selectedPerson = personComboBox.getValue();
 
 
-//                    Log newLog = new Log(currentTask, " ", selectedPerson, 90, startDate, endDate);
-//                    currentTask.add(newLog);
+                    Log newLog = new Log(currentTask, " ", selectedPerson, 90, startDate);
+                    currentTask.add(newLog);
                     App.refreshMainScene();
 
                 }
