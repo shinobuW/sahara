@@ -6,17 +6,21 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
+import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.control.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 
@@ -79,10 +83,52 @@ public class TaskEditTab extends SearchableTab {
         descriptionTextArea.setText(currentTask.getDescription());
         impedimentsTextArea.setText(currentTask.getImpediments());
 
+        ObservableList<Person> taskAssigneesList = observableArrayList();
+        taskAssigneesList.addAll(currentTask.getResponsibilities());
+
+        ObservableList<Person> availablePeopleList = observableArrayList();
+        if (currentTask.getStory().getSprint() != null) {
+            availablePeopleList.addAll(currentTask.getStory().getSprint().getTeam().getPeople());
+        }
+
+        availablePeopleList.removeAll(taskAssigneesList);
+
+        //Assignees assign buttons
+        Button btnAssign = new Button("<");
+        Button btnUnassign = new Button(">");
+        VBox assignmentButtons = new VBox();
+        assignmentButtons.spacingProperty().setValue(10);
+        assignmentButtons.getChildren().addAll(btnAssign, btnUnassign);
+        assignmentButtons.setAlignment(Pos.CENTER);
+
+        // List views
+        SearchableListView<Person> taskAssigneesListView = new SearchableListView<>(taskAssigneesList, searchControls);
+        taskAssigneesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        taskAssigneesListView.getSelectionModel().select(0);
+
+        SearchableListView<Person> availablePeopleListView = new SearchableListView<>(availablePeopleList,
+                searchControls);
+        availablePeopleListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        availablePeopleListView.getSelectionModel().select(0);
+
+        VBox teamMembersBox = new VBox(10);
+        teamMembersBox.getChildren().add(new SearchableText("Team Members: ", searchControls));
+        teamMembersBox.getChildren().add(taskAssigneesListView);
+
+        VBox availablePeopleBox = new VBox(10);
+        availablePeopleBox.getChildren().add(new SearchableText("Available People: ", searchControls));
+        availablePeopleBox.getChildren().add(availablePeopleListView);
+
+        HBox memberListViews = new HBox(10);
+        memberListViews.getChildren().addAll(teamMembersBox, assignmentButtons, availablePeopleBox);
+        memberListViews.setPrefHeight(192);
+
+        //Adding to MainPane
         editPane.getChildren().addAll(shortNameCustomField,
                 descriptionTextArea,
                 impedimentsTextArea,
                 taskHbox,
+                memberListViews,
                 buttons);
 
         btnSave.setOnAction((event) -> {
