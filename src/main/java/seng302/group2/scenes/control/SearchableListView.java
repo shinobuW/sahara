@@ -1,9 +1,9 @@
 package seng302.group2.scenes.control;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.util.Callback;
 import seng302.group2.scenes.control.search.SearchableControl;
 
 import java.util.Collection;
@@ -13,6 +13,8 @@ import java.util.Collection;
  * Created by btm38 on 3/08/15.
  */
 public class SearchableListView<T> extends ListView<T> implements SearchableControl {
+    ObservableList<T> matchingItems = FXCollections.observableArrayList();
+
 
     /**
      * Basic constructor for a SearchableListView
@@ -53,6 +55,13 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
     public boolean query(String query) {
         boolean foundList = false;
 
+        for (T item : this.getItems()) {
+            if (item.toString().toLowerCase().contains(query.toLowerCase())) {
+                foundList = true;
+                matchingItems.add(item);
+            }
+        }
+
         this.setCellFactory(param -> new ListCell<T>() {
             @Override
             public void updateItem(T item, boolean empty) {
@@ -77,17 +86,10 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
             }
         });
 
-        for (T item : this.getItems()) {
-            if (item.toString().toLowerCase().contains(query.toLowerCase())) {
-                foundList = true;
-            }
-        }
-
         return foundList;
     }
 
-    public boolean queryCell(String query, String string) {
+    private boolean queryCell(String query, String string) {
         return !query.trim().isEmpty() && string.toLowerCase().contains(query.toLowerCase());
-
     }
 }

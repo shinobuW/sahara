@@ -2,11 +2,12 @@ package seng302.group2.scenes.information.team;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.scenes.control.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableControl;
@@ -15,7 +16,6 @@ import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.scenes.dialog.CreateTeamDialog;
 import seng302.group2.workspace.SaharaItem;
-import seng302.group2.workspace.team.Team;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
