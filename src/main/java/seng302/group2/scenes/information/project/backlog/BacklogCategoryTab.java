@@ -11,10 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreateBacklogDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
@@ -62,7 +59,7 @@ public class BacklogCategoryTab extends SearchableTab {
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
 
-        ListView backlogBox = new ListView(selectedCategory.getProject().getBacklogs());
+        SearchableListView backlogBox = new SearchableListView(selectedCategory.getProject().getBacklogs());
         backlogBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         backlogBox.setMaxWidth(450);
 
@@ -79,6 +76,8 @@ public class BacklogCategoryTab extends SearchableTab {
         categoryPane.getChildren().add(title);
         categoryPane.getChildren().add(backlogBox);
         categoryPane.getChildren().add(selectionButtons);
+
+        Collections.addAll(searchControls, title, backlogBox);
 
         btnView.setOnAction((event) -> {
                 if (backlogBox.getSelectionModel().getSelectedItem() != null) {
@@ -99,8 +98,6 @@ public class BacklogCategoryTab extends SearchableTab {
                 javafx.scene.control.Dialog creationDialog = new CreateBacklogDialog();
                 creationDialog.show();
             });
-
-        Collections.addAll(searchControls, title);
     }
 
     /**

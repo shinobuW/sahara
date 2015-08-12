@@ -4,10 +4,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.person.Person;
 
 import java.util.ArrayList;
@@ -23,6 +20,11 @@ import java.util.List;
 public class PersonInfoTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+
+    /**
+     * A tab to display information on a selected tasks.
+     * @param currentPerson The person to display the information about
+     */
     public PersonInfoTab(Person currentPerson) {
         this.setText("Basic Information");
 
@@ -33,12 +35,11 @@ public class PersonInfoTab extends SearchableTab {
         this.setContent(wrapper);
 
 
-        SearchableText title = new SearchableTitle(currentPerson.getFirstName() + " "
-                + currentPerson.getLastName());
+        SearchableText title = new SearchableTitle(currentPerson.getFirstName() + " " + currentPerson.getLastName());
 
         Button btnEdit = new Button("Edit");
 
-        ListView personSkillsBox = new ListView(currentPerson.getSkills());
+        SearchableListView personSkillsBox = new SearchableListView(currentPerson.getSkills());
         personSkillsBox.setPrefHeight(192);
 
         personSkillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -47,21 +48,17 @@ public class PersonInfoTab extends SearchableTab {
 
         SearchableText shortName = new SearchableText("Short Name: " + currentPerson.getShortName());
         SearchableText emailAddress = new SearchableText("Email Address: " + currentPerson.getEmail());
-        SearchableText birthDate = new SearchableText("Birth Date: "
-                + currentPerson.getDateString());
-        SearchableText desc = new SearchableText("Person Description: "
-                + currentPerson.getDescription());
+        SearchableText birthDate = new SearchableText("Birth Date: " + currentPerson.getDateString());
+        SearchableText desc = new SearchableText("Person Description: " + currentPerson.getDescription());
         SearchableText team = new SearchableText("Team: " + currentPerson.getTeamName());
-
-        String roleString = currentPerson.getRole() == null ? "" :
-                currentPerson.getRole().toString();
-
+        String roleString = currentPerson.getRole() == null ? "" : currentPerson.getRole().toString();
         SearchableText role = new SearchableText("Role: " + roleString);
         SearchableText skill  = new SearchableText("Skills: ");
         basicInfoPane.getChildren().addAll(title, shortName, emailAddress, birthDate, desc, team, role, separator,
                 skill, personSkillsBox, btnEdit);
 
-        Collections.addAll(searchControls, title, shortName, emailAddress, birthDate, desc, team, role, skill);
+        Collections.addAll(searchControls, title, shortName, emailAddress,
+                birthDate, desc, team, role, skill, personSkillsBox);
 
         btnEdit.setOnAction((event) -> {
                 currentPerson.switchToInfoScene(true);

@@ -98,7 +98,7 @@ public class PersonEditTab extends SearchableTab {
         skillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         skillsBox.setMaxWidth(275);
 
-        CustomComboBox teamBox = new CustomComboBox("Team: ", searchControls);
+        CustomComboBox teamBox = new CustomComboBox("Team: ");
 
 
         Team currentTeam = currentPerson.getTeam();
@@ -124,11 +124,8 @@ public class PersonEditTab extends SearchableTab {
         lastNameCustomField.setText(currentPerson.getLastName());
         shortNameCustomField.setText(currentPerson.getShortName());
         emailTextField.setText(currentPerson.getEmail());
-
         customBirthDate.setText(currentPerson.getDateString());
-
         descriptionTextArea.setText(currentPerson.getDescription());
-
 
         shortNameCustomField.setMaxWidth(275);
         firstNameCustomField.setMaxWidth(275);

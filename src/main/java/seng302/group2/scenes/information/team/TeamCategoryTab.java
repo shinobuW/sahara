@@ -20,6 +20,7 @@ import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -43,6 +44,8 @@ public class TeamCategoryTab extends SearchableTab {
         categoryPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(categoryPane);
         this.setContent(wrapper);
+
+
         SearchableText title = new SearchableTitle("Teams in " + currentWorkspace.getShortName());
 
         Button btnView = new Button("View");
@@ -65,8 +68,8 @@ public class TeamCategoryTab extends SearchableTab {
         categoryPane.getChildren().add(teamBox);
         categoryPane.getChildren().add(selectionButtons);
 
-        searchControls.add(title);
-        searchControls.add(teamBox);
+        Collections.addAll(searchControls, title, teamBox);
+
 
 
         btnView.setOnAction((event) -> {

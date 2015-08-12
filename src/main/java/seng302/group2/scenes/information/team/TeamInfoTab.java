@@ -6,10 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.team.Team;
@@ -67,7 +64,7 @@ public class TeamInfoTab extends SearchableTab {
 
         ObservableList<String> tempTeamString = personRoleToString(currentTeam.getPeople());
 
-        ListView teamsPeopleBox = new ListView(tempTeamString);
+        SearchableListView teamsPeopleBox = new SearchableListView(tempTeamString, searchControls);
         teamsPeopleBox.setPrefHeight(192);
         teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         teamsPeopleBox.setMaxWidth(275);

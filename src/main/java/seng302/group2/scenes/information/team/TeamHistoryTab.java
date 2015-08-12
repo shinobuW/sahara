@@ -18,10 +18,7 @@ import javafx.util.Callback;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.util.validation.ValidationStatus;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.Project;
@@ -59,17 +56,19 @@ public class TeamHistoryTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(historyPane);
         this.setContent(wrapper);
 
-        TableView<Allocation> historyTable = new TableView();
+        SearchableTable<Allocation> historyTable = new SearchableTable<>();
         historyTable.setEditable(true);
         historyTable.setPrefWidth(700);
         historyTable.setPrefHeight(400);
-        historyTable.setPlaceholder(new SearchableText("This team has no project allocations.", searchControls));
+        historyTable.setPlaceholder(new SearchableText("This team has no project allocations."));
         historyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         ObservableList<Allocation> data = currentTeam.getProjectAllocations();
 
         Callback<TableColumn, TableCell> cellFactory = col -> new EditingCell();
 
-        SearchableText title = new SearchableTitle(currentTeam.getShortName() + " Allocation History", searchControls);
+        SearchableText title = new SearchableTitle(currentTeam.getShortName() + " Allocation History");
+
+
 
         TableColumn teamCol = new TableColumn("Project");
         teamCol.setCellValueFactory(new PropertyValueFactory<Allocation, String>("Project"));
@@ -217,7 +216,7 @@ public class TeamHistoryTab extends SearchableTab {
         buttons.getChildren().addAll(addButton, deleteButton);
 
         HBox newAllocationFields = new HBox(35);
-        CustomComboBox<Project> projectComboBox = new CustomComboBox("Project", true);
+        CustomComboBox<Project> projectComboBox = new CustomComboBox<>("Project", true);
         CustomDatePicker startDatePicker = new CustomDatePicker("Start Date", true);
         CustomDatePicker endDatePicker = new CustomDatePicker("End Date", false);
         startDatePicker.getDatePicker().setStyle("-fx-pref-width: 200;");
@@ -321,6 +320,7 @@ public class TeamHistoryTab extends SearchableTab {
             }
         });
         historyPane.getChildren().addAll(title, historyTable, newAllocationFields, buttons);
+        Collections.addAll(searchControls, historyTable, title, projectComboBox);
     }
 
     /**
