@@ -325,8 +325,17 @@ public class TeamHistoryTab extends SearchableTab {
 
         // Add items to pane & search collection
 
-        historyPane.getChildren().addAll(title, historyTable, newAllocationFields, buttons);
-        Collections.addAll(searchControls, title, projectComboBox);
+        historyPane.getChildren().addAll(
+                title,
+                historyTable,
+                newAllocationFields,
+                buttons
+        );
+
+        Collections.addAll(searchControls,
+                title,
+                projectComboBox
+        );
     }
 
     /**

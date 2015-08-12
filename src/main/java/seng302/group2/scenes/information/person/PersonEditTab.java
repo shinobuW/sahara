@@ -14,6 +14,7 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.util.validation.NameValidator;
@@ -47,6 +48,7 @@ public class PersonEditTab extends SearchableTab {
      * @param currentPerson The person being edited
      */
     public PersonEditTab(Person currentPerson) {
+        // Tab settings
         this.setText("Edit Person");
         Pane editPane = new VBox(10);
         editPane.setBorder(null);
@@ -54,46 +56,28 @@ public class PersonEditTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(editPane);
         this.setContent(wrapper);
 
-        Button btnSave = new Button("Done");
-        Button btnCancel = new Button("Cancel");
-
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.TOP_LEFT);
-        buttons.getChildren().addAll(btnSave, btnCancel);
-
-        Button btnAdd = new Button("<-");
-        Button btnDelete = new Button("->");
-
-        VBox skillsButtons = new VBox();
-        skillsButtons.spacingProperty().setValue(10);
-        skillsButtons.getChildren().add(btnAdd);
-        skillsButtons.getChildren().add(btnDelete);
-        skillsButtons.setAlignment(Pos.CENTER);
+        // Create controls
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        RequiredField firstNameCustomField = new RequiredField("First Name:");
+        RequiredField lastNameCustomField = new RequiredField("Last Name:");
+        CustomTextField emailTextField = new CustomTextField("Email:");
+        CustomDateField customBirthDate = new CustomDateField("Birth Date:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Person Description:", 300);
 
         Person tempPerson = new Person();
         for (Skill skill : currentPerson.getSkills()) {
             tempPerson.getSkills().add(skill);
         }
 
-        ListView personSkillsBox = new ListView(tempPerson.getSkills());
+        SearchableListView personSkillsBox = new SearchableListView<>(tempPerson.getSkills());
         personSkillsBox.setPrefHeight(192);
         personSkillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         personSkillsBox.setMaxWidth(275);
 
-
         ObservableList<Skill> dialogSkills = observableArrayList();
         ObservableList<Skill> dialogSkillsCopy = observableArrayList();
 
-
-        for (SaharaItem projectSkill : currentWorkspace.getSkills()) {
-            if (!currentPerson.getSkills().contains(projectSkill)) {
-                dialogSkills.add((Skill) projectSkill);
-                dialogSkillsCopy.add((Skill) projectSkill);
-            }
-        }
-
-        ListView skillsBox = new ListView(dialogSkills);
+        SearchableListView skillsBox = new SearchableListView(dialogSkills);
         skillsBox.setPrefHeight(192);
         skillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         skillsBox.setMaxWidth(275);
@@ -101,8 +85,31 @@ public class PersonEditTab extends SearchableTab {
         CustomComboBox teamBox = new CustomComboBox("Team: ");
 
 
-        Team currentTeam = currentPerson.getTeam();
+        Button btnDone = new Button("Done");
+        Button btnCancel = new Button("Cancel");
 
+        HBox buttons = new HBox();
+        buttons.spacingProperty().setValue(10);
+        buttons.alignmentProperty().set(Pos.TOP_LEFT);
+        buttons.getChildren().addAll(btnDone, btnCancel);
+
+        Button btnAdd = new Button("<-");
+        Button btnDelete = new Button("->");
+
+        VBox skillsButtons = new VBox();
+        skillsButtons.spacingProperty().setValue(10);
+        skillsButtons.setAlignment(Pos.CENTER);
+        skillsButtons.getChildren().addAll(btnAdd, btnDelete);
+
+        // Set values
+        for (SaharaItem projectSkill : currentWorkspace.getSkills()) {
+            if (!currentPerson.getSkills().contains(projectSkill)) {
+                dialogSkills.add((Skill) projectSkill);
+                dialogSkillsCopy.add((Skill) projectSkill);
+            }
+        }
+
+        Team currentTeam = currentPerson.getTeam();
         for (Team team : Global.currentWorkspace.getTeams()) {
             teamBox.addToComboBox(team.toString());
         }
@@ -113,13 +120,6 @@ public class PersonEditTab extends SearchableTab {
             teamBox.setValue(currentTeam.toString());
         }
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name:", searchControls);
-        RequiredField firstNameCustomField = new RequiredField("First Name:", searchControls);
-        RequiredField lastNameCustomField = new RequiredField("Last Name:", searchControls);
-        CustomTextField emailTextField = new CustomTextField("Email:", searchControls);
-        CustomDateField customBirthDate = new CustomDateField("Birth Date:", searchControls);
-        CustomTextArea descriptionTextArea = new CustomTextArea("Person Description:", 300, searchControls);
-
         firstNameCustomField.setText(currentPerson.getFirstName());
         lastNameCustomField.setText(currentPerson.getLastName());
         shortNameCustomField.setText(currentPerson.getShortName());
@@ -127,34 +127,25 @@ public class PersonEditTab extends SearchableTab {
         customBirthDate.setText(currentPerson.getDateString());
         descriptionTextArea.setText(currentPerson.getDescription());
 
-        shortNameCustomField.setMaxWidth(275);
-        firstNameCustomField.setMaxWidth(275);
-        lastNameCustomField.setMaxWidth(275);
-        emailTextField.setMaxWidth(275);
-        customBirthDate.setMaxWidth(275);
-        descriptionTextArea.setMaxWidth(275);
-        teamBox.setMaxWidth(275);
-
-        editPane.getChildren().add(shortNameCustomField);
-        editPane.getChildren().add(firstNameCustomField);
-        editPane.getChildren().add(lastNameCustomField);
-        editPane.getChildren().add(emailTextField);
-        editPane.getChildren().add(customBirthDate);
-        editPane.getChildren().add(descriptionTextArea);
-        editPane.getChildren().add(teamBox);
+        shortNameCustomField.setPrefWidth(275);
+        firstNameCustomField.setPrefWidth(275);
+        lastNameCustomField.setPrefWidth(275);
+        emailTextField.setPrefWidth(275);
+        customBirthDate.setPrefWidth(275);
+        descriptionTextArea.setPrefWidth(275);
+        teamBox.setPrefWidth(275);
 
         VBox v1 = new VBox(10);
-        v1.getChildren().addAll(new SearchableText("Skills: ", searchControls), personSkillsBox);
+        SearchableText v1Label = new SearchableText("Skills: ");
+        v1.getChildren().addAll(v1Label, personSkillsBox);
         VBox v2 = new VBox(10);
-        v2.getChildren().addAll(new SearchableText("Available Skills: ", searchControls), skillsBox);
+        SearchableText v2Label = new SearchableText("Available Skills: ");
+        v2.getChildren().addAll(v2Label, skillsBox);
 
         HBox h1 = new HBox(10);
-
         h1.getChildren().addAll(v1, skillsButtons, v2);
-        editPane.getChildren().add(h1);
 
-        editPane.getChildren().add(buttons);
-
+        // Events
         btnAdd.setOnAction((event) -> {
                 ObservableList<Skill> selectedSkills =
                         skillsBox.getSelectionModel().getSelectedItems();
@@ -185,7 +176,7 @@ public class PersonEditTab extends SearchableTab {
                 }
             });
 
-        btnSave.setOnAction((event) -> {
+        btnDone.setOnAction((event) -> {
                 Team selectedTeam = new Team();
                 for (Team team : Global.currentWorkspace.getTeams()) {
                     if (team.toString().equals(teamBox.getValue())) {
@@ -256,7 +247,6 @@ public class PersonEditTab extends SearchableTab {
                     App.mainPane.refreshTree();
                 }
                 else {
-                    // One or more fields incorrectly validated, stay on the edit scene
                     event.consume();
                 }
             });
@@ -264,6 +254,33 @@ public class PersonEditTab extends SearchableTab {
         btnCancel.setOnAction((event) -> {
                 currentPerson.switchToInfoScene();
             });
+
+        editPane.getChildren().addAll(
+                shortNameCustomField,
+                firstNameCustomField,
+                lastNameCustomField,
+                emailTextField,
+                customBirthDate,
+                descriptionTextArea,
+                teamBox,
+                h1,
+                buttons
+        );
+
+        Collections.addAll(searchControls,
+                shortNameCustomField,
+                firstNameCustomField,
+                lastNameCustomField,
+                emailTextField,
+                customBirthDate,
+                descriptionTextArea,
+                teamBox,
+                v1Label,
+                personSkillsBox,
+                v2Label,
+                skillsBox
+        );
+
     }
 
     /**

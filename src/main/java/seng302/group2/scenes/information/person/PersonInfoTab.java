@@ -29,26 +29,19 @@ public class PersonInfoTab extends SearchableTab {
      * @param currentPerson The person to display the information about
      */
     public PersonInfoTab(Person currentPerson) {
+        // Tab settings
         this.setText("Basic Information");
-
-        Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
+        Pane basicInfoPane = new VBox(10);
         basicInfoPane.setBorder(null);
         basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-
+        // Create controls
         SearchableText title = new SearchableTitle(currentPerson.getFirstName() + " " + currentPerson.getLastName());
-
-        Button btnEdit = new Button("Edit");
-
-        SearchableListView personSkillsBox = new SearchableListView(currentPerson.getSkills());
+        SearchableListView personSkillsBox = new SearchableListView<>(currentPerson.getSkills());
         personSkillsBox.setPrefHeight(192);
-
         personSkillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-        final Separator separator = new Separator();
-
         SearchableText shortName = new SearchableText("Short Name: " + currentPerson.getShortName());
         SearchableText emailAddress = new SearchableText("Email Address: " + currentPerson.getEmail());
         SearchableText birthDate = new SearchableText("Birth Date: " + currentPerson.getDateString());
@@ -57,16 +50,40 @@ public class PersonInfoTab extends SearchableTab {
         String roleString = currentPerson.getRole() == null ? "" : currentPerson.getRole().toString();
         SearchableText role = new SearchableText("Role: " + roleString);
         SearchableText skill  = new SearchableText("Skills: ");
-        basicInfoPane.getChildren().addAll(title, shortName, emailAddress, birthDate, desc, team, role, separator,
-                skill, personSkillsBox, btnEdit);
+        Button btnEdit = new Button("Edit");
 
-        Collections.addAll(searchControls, title, shortName, emailAddress,
-                birthDate, desc, team, role, skill, personSkillsBox);
+        final Separator separator = new Separator();
 
+        // Events
         btnEdit.setOnAction((event) -> {
                 currentPerson.switchToInfoScene(true);
             });
 
+        // Add items to pane & search collection
+        basicInfoPane.getChildren().addAll(
+                title,
+                shortName,
+                emailAddress,
+                birthDate,
+                desc,
+                team,
+                role,
+                separator,
+                skill,
+                personSkillsBox,
+                btnEdit);
+
+        Collections.addAll(searchControls,
+                title,
+                shortName,
+                emailAddress,
+                birthDate,
+                desc,
+                team,
+                role,
+                skill,
+                personSkillsBox
+        );
     }
 
     /**

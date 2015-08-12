@@ -28,27 +28,39 @@ public class RoleInfoTab extends SearchableTab {
      * @param currentRole The currently selected Role. 
      */
     public RoleInfoTab(Role currentRole) {
+        // Tab settings
         this.setText("Basic Information");
-
         Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
         basicInfoPane.setBorder(null);
         basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-
+        // Create controls
         SearchableText title = new SearchableTitle(currentRole.getShortName());
-
-        SearchableListView skillsBox = new SearchableListView(currentRole.getRequiredSkills(), searchControls);
+        SearchableText desc = new SearchableText("Role Description: " + currentRole.getDescription());
+        SearchableText required = new SearchableText("Required Skills: ");
+        SearchableListView skillsBox = new SearchableListView(currentRole.getRequiredSkills());
         skillsBox.setPrefHeight(192);
         skillsBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         skillsBox.setMaxWidth(450);
 
-        SearchableText desc = new SearchableText("Role Description: "
-                + currentRole.getDescription());
-        SearchableText required = new SearchableText("Required Skills: ");
-        basicInfoPane.getChildren().addAll(title, desc, required, skillsBox);
-        Collections.addAll(searchControls, title, desc, required);
+
+
+        // Add items to pane & search collection
+        basicInfoPane.getChildren().addAll(
+                title,
+                desc,
+                required,
+                skillsBox
+        );
+
+        Collections.addAll(searchControls,
+                title,
+                desc,
+                required,
+                skillsBox
+        );
     }
 
     /**
