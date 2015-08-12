@@ -1,17 +1,16 @@
 package seng302.group2.scenes.information.project.story.task;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomTextArea;
+import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableControl;
@@ -36,6 +35,8 @@ public class TaskEditTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
 
+    Button btnSave;
+
     /**
      * Constructor for the PersonEditTab class. This constructor creates a JavaFX ScrollPane
      * which is populated with relevant controls then shown.
@@ -52,7 +53,7 @@ public class TaskEditTab extends SearchableTab {
 
 
         Button btnCancel = new Button("Cancel");
-        Button btnSave = new Button("Done");
+        btnSave = new Button("Done");
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
@@ -62,8 +63,9 @@ public class TaskEditTab extends SearchableTab {
         RequiredField shortNameCustomField = new RequiredField("Task Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Task Description:", 300);
         CustomTextArea impedimentsTextArea = new CustomTextArea("Task Impediments:", 300);
-        CustomTextArea effortLeftField = new CustomTextArea("Effort Left:", 300);
+        CustomTextField effortLeftField = new CustomTextField("Effort Left:");
 
+        effortLeftField.setPrefWidth(300);
 
         HBox taskHbox = new HBox();
         SearchableText taskStateText = new SearchableText("Task State: ");
@@ -86,16 +88,6 @@ public class TaskEditTab extends SearchableTab {
         effortLeftField.setText(currentTask.getEffortLeft().toString());
 
 
-        ObservableList<Person> taskAssigneesList = observableArrayList();
-        taskAssigneesList.addAll(currentTask.getResponsibilities());
-
-        ObservableList<Person> availablePeopleList = observableArrayList();
-        if (currentTask.getStory().getSprint() != null) {
-            availablePeopleList.addAll(currentTask.getStory().getSprint().getTeam().getPeople());
-        }
-
-        availablePeopleList.removeAll(taskAssigneesList);
-
         //Assignees assign buttons
         Button btnAssign = new Button("<");
         Button btnUnassign = new Button(">");
@@ -104,27 +96,33 @@ public class TaskEditTab extends SearchableTab {
         assignmentButtons.getChildren().addAll(btnAssign, btnUnassign);
         assignmentButtons.setAlignment(Pos.CENTER);
 
-        // List views
-        SearchableListView<Person> taskAssigneesListView = new SearchableListView<>(taskAssigneesList, searchControls);
+        // Story list view setup
+        ObservableList<Person> taskAssigneesList = FXCollections.observableArrayList();
+        ObservableList<Person> availablePeopleList = FXCollections.observableArrayList();
+        ListView<Person> taskAssigneesListView = new ListView<>();
+        ListView<Person> availablePeopleListView = new ListView<>();
         taskAssigneesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        taskAssigneesListView.getSelectionModel().select(0);
-
-        SearchableListView<Person> availablePeopleListView = new SearchableListView<>(availablePeopleList,
-                searchControls);
         availablePeopleListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        availablePeopleListView.getSelectionModel().select(0);
+        VBox inTaskVBox = new VBox();
+        VBox availableVBox = new VBox();
+        inTaskVBox.getChildren().addAll(new SearchableText("Sprint Stories: ", searchControls), taskAssigneesListView);
+        availableVBox.getChildren().addAll(new SearchableText("Available Stories: ", searchControls),
+                availablePeopleListView);
+        HBox peopleHBox = new HBox(10);
+        peopleHBox.setPrefHeight(192);
+        peopleHBox.getChildren().addAll(inTaskVBox, assignmentButtons, availableVBox);
 
-        VBox teamMembersBox = new VBox(10);
-        teamMembersBox.getChildren().add(new SearchableText("Team Members: ", searchControls));
-        teamMembersBox.getChildren().add(taskAssigneesListView);
+        taskAssigneesListView.setItems(taskAssigneesList);
+        availablePeopleListView.setItems(availablePeopleList);
 
-        VBox availablePeopleBox = new VBox(10);
-        availablePeopleBox.getChildren().add(new SearchableText("Available People: ", searchControls));
-        availablePeopleBox.getChildren().add(availablePeopleListView);
+        taskAssigneesList.addAll(currentTask.getResponsibilities());
 
-        HBox memberListViews = new HBox(10);
-        memberListViews.getChildren().addAll(teamMembersBox, assignmentButtons, availablePeopleBox);
-        memberListViews.setPrefHeight(192);
+        if (currentTask.getStory().getSprint() != null) {
+            availablePeopleList.addAll(currentTask.getStory().getSprint().getTeam().getPeople());
+        }
+
+        availablePeopleList.removeAll(taskAssigneesList);
+
 
         //Adding to MainPane
         editPane.getChildren().addAll(shortNameCustomField,
@@ -132,8 +130,25 @@ public class TaskEditTab extends SearchableTab {
                 impedimentsTextArea,
                 effortLeftField,
                 taskHbox,
-                memberListViews,
+                peopleHBox,
                 buttons);
+
+        // Button events
+        btnAssign.setOnAction((event) -> {
+                taskAssigneesList.addAll(
+                        availablePeopleListView.getSelectionModel().getSelectedItems());
+                availablePeopleList.removeAll(
+                        availablePeopleListView.getSelectionModel().getSelectedItems());
+                System.out.println(taskAssigneesList);
+            });
+
+        btnUnassign.setOnAction((event) -> {
+                Collection<Person> selectedPeople = new ArrayList<>();
+                selectedPeople.addAll(taskAssigneesListView.getSelectionModel().
+                        getSelectedItems());
+                availablePeopleList.addAll(selectedPeople);
+                taskAssigneesList.removeAll(selectedPeople);
+            });
 
         btnSave.setOnAction((event) -> {
                 boolean shortNameUnchanged = shortNameCustomField.getText().equals(
@@ -150,10 +165,11 @@ public class TaskEditTab extends SearchableTab {
 
                 boolean effortLeftUnchanged = effortLeftField.getText().equals(
                         currentTask.getEffortLeft().toString());
-
+                boolean assigneesUnchanged = taskAssigneesList.equals((currentTask.getResponsibilities()));
 
                 if (shortNameUnchanged &&  descriptionUnchanged
-                        && impedimentsUnchanged && taskstateUnchanged && effortLeftUnchanged) {
+                        && impedimentsUnchanged && taskstateUnchanged && effortLeftUnchanged
+                        && assigneesUnchanged) {
                     // No changes
                     currentTask.switchToInfoScene();
                     return;
@@ -161,15 +177,15 @@ public class TaskEditTab extends SearchableTab {
 
                 boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
                         currentTask.getShortName());
-                System.out.println(taskStateComboBox.getValue());
 
                 if (correctShortName) {
     //                    Valid short name, make the edit
+
                     currentTask.edit(shortNameCustomField.getText(),
                             descriptionTextArea.getText(),
                             impedimentsTextArea.getText(),
                             taskStateComboBox.getValue(),
-                            new ArrayList<Person>(), new ArrayList<Log>(),
+                            taskAssigneesList, currentTask.getLogs(),
                             new Integer(effortLeftField.getText()), currentTask.getEffortSpent());
 
                     currentTask.switchToInfoScene();
