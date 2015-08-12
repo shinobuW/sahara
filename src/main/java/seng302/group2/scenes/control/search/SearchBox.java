@@ -24,6 +24,8 @@ public class SearchBox extends TextField {
                         + "-fx-background-position: right 6px center; "
         );
 
+        this.setPrefWidth(200);
+
         // Adds some search functionality on the release of a key (so it includes what was entered)
         this.setOnKeyReleased(ke -> {
                 if (App.mainPane.getContent() instanceof SearchableScene) {

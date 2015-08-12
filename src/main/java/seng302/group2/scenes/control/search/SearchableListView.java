@@ -1,4 +1,4 @@
-package seng302.group2.scenes.control;
+package seng302.group2.scenes.control.search;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -17,21 +17,28 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
     ObservableList<T> data = FXCollections.observableArrayList();
     ObservableList<T> matchingItems = FXCollections.observableArrayList();
 
-
+    /**
+     * Basic constructor.
+     */
     public SearchableTable() {
         super();
         updateRows();
     }
 
+    /**
+     * Basic constructor. Sets the data of the table to that provided in the parameter.
+     * @param data the new data of the table
+     */
     public SearchableTable(Collection<T> data) {
         super();
         updateRows();
         setData(data);
     }
 
-
-
-
+    /**
+     * Clears any exsisting data of a SearchableTable, then sets a new set of data.
+     * @param data The data to be set to the table
+     */
     public void setData(Collection<T> data) {
         this.data.clear();
         this.data.addAll(data);
@@ -39,8 +46,11 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
     }
 
 
-
-
+    /**
+     * Checks all the elements in the table to see if they have a matching string.
+     * @param query the string to be queried
+     * @return whether or not a matching string was found
+     */
     @Override
     public boolean query(String query) {
         //Set<T> tableItems = new HashSet<>();
@@ -64,7 +74,10 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
     }
 
 
-
+    /**
+     * Highlights a row if a matching query is found within that row. If there is no matching query,
+     * the row's style is set to null (default).
+     */
     private void updateRows() {
         setRowFactory(tv -> new TableRow<T>() {
             @Override
