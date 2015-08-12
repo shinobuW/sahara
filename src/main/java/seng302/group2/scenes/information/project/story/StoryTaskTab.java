@@ -131,7 +131,7 @@ public class StoryTaskTab extends SearchableTab {
                 if (correctShortName) {
                     //get user input
                     String shortName = shortNameCustomField.getText();
-                    Task newTask = new Task(shortName, "", currentStory);
+                    Task newTask = new Task(shortName, "", currentStory, null);
                     currentStory.add(newTask);
                     App.refreshMainScene();
                 }
