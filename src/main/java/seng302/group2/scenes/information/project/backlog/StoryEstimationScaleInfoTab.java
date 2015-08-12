@@ -8,10 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -59,7 +56,7 @@ public class StoryEstimationScaleInfoTab extends SearchableTab {
         }
 
         ObservableList<String> scaleValues = observableArrayList();
-        ListView<String> scaleValuesList = new ListView<>(scaleValues);
+        SearchableListView<String> scaleValuesList = new SearchableListView<>(scaleValues);
         scaleValuesList.setPrefHeight(300);
 
         scaleComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -77,7 +74,7 @@ public class StoryEstimationScaleInfoTab extends SearchableTab {
         scaleInfoPane.getChildren().add(scaleComboBox);
         scaleInfoPane.getChildren().add(scaleValuesList);
 
-        Collections.addAll(searchControls, instructions, scaleComboBox, title);
+        Collections.addAll(searchControls, instructions, scaleComboBox, title, scaleValuesList);
     }
 
     /**

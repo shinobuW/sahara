@@ -41,13 +41,12 @@ public class WorkspaceInfoTab extends SearchableTab {
 
         SearchableText title = new SearchableTitle(currentWorkspace.getLongName());
         Button btnEdit = new Button("Edit");
-        SearchableText shortName = new SearchableText("Short Name: "
-                + currentWorkspace.getShortName());
-        SearchableText desc = new SearchableText("Workspace Description: "
-                + currentWorkspace.getDescription());
-        basicInfoPane.getChildren().addAll(title, shortName, desc);
+        SearchableText shortName = new SearchableText("Short Name: " + currentWorkspace.getShortName());
+        SearchableText desc = new SearchableText("Workspace Description: " + currentWorkspace.getDescription());
+
+        basicInfoPane.getChildren().addAll(title, shortName, desc, btnEdit);
         Collections.addAll(searchControls, title, shortName, desc);
-        basicInfoPane.getChildren().add(btnEdit);
+
 
         btnEdit.setOnAction((event) -> {
                 currentWorkspace.switchToInfoScene(true);

@@ -10,16 +10,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreatePersonDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -59,7 +57,7 @@ public class PersonCategoryTab extends SearchableTab {
         //createButton.getChildren().add(btnCreate);
         //createButton.setAlignment(Pos.CENTER_RIGHT);
 
-        ListView personBox = new ListView(currentWorkspace.getPeople());
+        SearchableListView personBox = new SearchableListView(currentWorkspace.getPeople());
         personBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         personBox.setMaxWidth(275);
 
@@ -67,7 +65,7 @@ public class PersonCategoryTab extends SearchableTab {
         categoryPane.getChildren().add(personBox);
         categoryPane.getChildren().add(selectionButtons);
 
-        //categoryPane.getChildren().add(createButton);
+        Collections.addAll(searchControls, title, personBox);
 
         btnView.setOnAction((event) -> {
                 if (personBox.getSelectionModel().getSelectedItem() != null) {

@@ -10,10 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
 
@@ -56,7 +53,7 @@ public class RoleCategoryTab extends SearchableTab {
         //createButton.getChildren().add(btnCreate);
         createButton.setAlignment(Pos.CENTER_RIGHT);
 
-        ListView roleBox = new ListView<>(currentWorkspace.getRoles());
+        SearchableListView roleBox = new SearchableListView<>(currentWorkspace.getRoles(), searchControls);
         roleBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         roleBox.setMaxWidth(450);
 
