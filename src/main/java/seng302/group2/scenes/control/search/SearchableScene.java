@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * A searchable scene that extends TabPane. Contains a set of SearchableTabs
+ * which can be iterated over to search through.
  * Created by jml168 on 31/07/15.
  */
 public abstract class SearchableScene extends TabPane {

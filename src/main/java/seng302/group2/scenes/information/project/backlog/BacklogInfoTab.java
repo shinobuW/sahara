@@ -1,6 +1,5 @@
 package seng302.group2.scenes.information.project.backlog;
 
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -18,8 +17,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * The information tab for a backlog
