@@ -16,6 +16,7 @@ import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,12 +34,18 @@ public class WorkspaceEditTab extends SearchableTab {
      * @param currentWorkspace The workspace being edited
      */
     public WorkspaceEditTab(Workspace currentWorkspace) {
+        // Tab settings
         this.setText("Edit Workspace");
         Pane editPane = new VBox(10);
         editPane.setBorder(null);
         editPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(editPane);
         this.setContent(wrapper);
+
+        // Create Controls
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        RequiredField longNameCustomField = new RequiredField("Long Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Workspace Description:", 300);
 
         Button btnCancel = new Button("Cancel");
         Button btnSave = new Button("Done");
@@ -48,56 +55,51 @@ public class WorkspaceEditTab extends SearchableTab {
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
         buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name:", searchControls);
-        RequiredField longNameCustomField = new RequiredField("Long Name:", searchControls);
-        CustomTextArea descriptionTextArea = new CustomTextArea("Workspace Description:", 300, searchControls);
-
+        // Set fields
         shortNameCustomField.setText(currentWorkspace.getShortName());
         longNameCustomField.setText(currentWorkspace.getLongName());
         descriptionTextArea.setText(currentWorkspace.getDescription());
 
-        editPane.getChildren().add(shortNameCustomField);
-        editPane.getChildren().add(longNameCustomField);
-        editPane.getChildren().add(descriptionTextArea);
-        editPane.getChildren().add(buttons);
+        editPane.getChildren().addAll(
+                shortNameCustomField,
+                longNameCustomField,
+                descriptionTextArea,
+                buttons
+        );
 
+        Collections.addAll(
+                searchControls,
+                shortNameCustomField,
+                longNameCustomField,
+                descriptionTextArea
+        );
 
-        btnCancel.setOnAction((event) -> {
-                currentWorkspace.switchToInfoScene();
-            });
+        // Events
+        btnCancel.setOnAction((event) -> currentWorkspace.switchToInfoScene());
 
         btnSave.setOnAction((event) -> {
-                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                        currentWorkspace.getShortName());
-                boolean longNameUnchanged = longNameCustomField.getText().equals(
-                        currentWorkspace.getLongName());
-                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                        currentWorkspace.getDescription());
+                boolean shortNameUnchanged = shortNameCustomField.getText().equals(currentWorkspace.getShortName());
+                boolean longNameUnchanged = longNameCustomField.getText().equals(currentWorkspace.getLongName());
+                boolean descriptionUnchanged = descriptionTextArea.getText().equals(currentWorkspace.getDescription());
 
                 if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
-                    // No fields have been changed
                     currentWorkspace.switchToInfoScene();
                     return;
                 }
-                // The short name is the same or valid
+
                 boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
                         currentWorkspace.getShortName());
                 boolean correctLongName = ShortNameValidator.validateShortName(longNameCustomField,
                         currentWorkspace.getLongName());
                 if (correctShortName && correctLongName) {
-                    currentWorkspace.edit(shortNameCustomField.getText(),
-                            longNameCustomField.getText(),
-                            descriptionTextArea.getText()
-                    );
-
+                    currentWorkspace.edit(shortNameCustomField.getText(), longNameCustomField.getText(),
+                            descriptionTextArea.getText());
                     currentWorkspace.switchToInfoScene();
                     App.mainPane.refreshTree();
                 }
                 else {
-                    // One or more fields incorrectly validated, stay on the edit scene
                     event.consume();
                 }
-
             });
     }
 

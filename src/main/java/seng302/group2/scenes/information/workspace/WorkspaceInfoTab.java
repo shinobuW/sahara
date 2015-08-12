@@ -31,23 +31,36 @@ public class WorkspaceInfoTab extends SearchableTab {
      * @param currentWorkspace The currently selected Workspace.
      */
     public WorkspaceInfoTab(Workspace currentWorkspace) {
+        // Tab settings
         this.setText("Basic Information");
 
-        Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
+        Pane basicInfoPane = new VBox(10);
         basicInfoPane.setBorder(null);
         basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
+        // Create Controls
         SearchableText title = new SearchableTitle(currentWorkspace.getLongName());
         Button btnEdit = new Button("Edit");
         SearchableText shortName = new SearchableText("Short Name: " + currentWorkspace.getShortName());
         SearchableText desc = new SearchableText("Workspace Description: " + currentWorkspace.getDescription());
 
-        basicInfoPane.getChildren().addAll(title, shortName, desc, btnEdit);
-        Collections.addAll(searchControls, title, shortName, desc);
+        basicInfoPane.getChildren().addAll(
+                title,
+                shortName,
+                desc,
+                btnEdit
+        );
 
+        Collections.addAll(
+                searchControls,
+                title,
+                shortName,
+                desc
+        );
 
+        // Events
         btnEdit.setOnAction((event) -> {
                 currentWorkspace.switchToInfoScene(true);
             });
