@@ -81,7 +81,7 @@ public class Task extends SaharaItem implements Serializable {
      * @param shortName The shortname of the Task
      * @param description The description of the task
      */
-    public Task(String shortName, String description, Story story) {
+    public Task(String shortName, String description, Story story, ObservableList<Person> responsibles) {
         super(shortName);
         this.shortName = shortName;
         this.description = description;
@@ -90,7 +90,7 @@ public class Task extends SaharaItem implements Serializable {
         this.story = story;
         this.effortLeft = 0;
         this.effortSpent = 0;
-
+        this.responsibilities = responsibles;
         setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
     }
 

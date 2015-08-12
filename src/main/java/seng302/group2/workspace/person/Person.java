@@ -3,6 +3,7 @@
  */
 package seng302.group2.workspace.person;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
@@ -37,7 +38,7 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
     private List<Skill> serializableSkills = new ArrayList<>();
     private Team team;
     private Role role;
-
+    private final SimpleBooleanProperty selected = new SimpleBooleanProperty(false);
 
     /**
      * Basic Person constructor
@@ -449,6 +450,20 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         Command persEdit = new PersonEditCommand(this, newShortName, newFirstName, newLastName,
                 newEmail, newBirthDate, newDescription, newTeam, newSkills);
         Global.commandManager.executeCommand(persEdit);
+    }
+
+
+    public boolean getSelected() {
+        return selected.get();
+    }
+
+
+    public void setSelected(boolean selected) {
+        this.selected.set(selected);
+    }
+
+    public SimpleBooleanProperty selectedProperty() {
+        return this.selected;
     }
 
     /**

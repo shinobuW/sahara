@@ -1,15 +1,17 @@
 package seng302.group2.workspace.project.story.tasks;
 
+import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
-
+import static javafx.collections.FXCollections.observableArrayList;
 
 public class TaskTest {
     Task task = new Task();
@@ -25,7 +27,7 @@ public class TaskTest {
         Assert.assertEquals("", task.getImpediments());
         Assert.assertEquals("Untitled Task", task.toString());
 
-        Task testTask = new Task("Test Task", "test description", story_);
+        Task testTask = new Task("Test Task", "test description", story_, null);
         Assert.assertEquals("Test Task", testTask.getShortName());
         Assert.assertEquals("test description", testTask.getDescription());
         Assert.assertEquals("", testTask.getImpediments());
@@ -68,8 +70,8 @@ public class TaskTest {
         project.add(backlog);
         backlog.add(story);
 
-        Task task = new Task("short", "desc", story);
-        Task task2 = new Task("short2", "desc",  null);
+        Task task = new Task("short", "desc", story, null);
+        Task task2 = new Task("short2", "desc",  null, null);
 
         story.add(task);
         sprint.getUnallocatedTasks().add(task2);
@@ -126,7 +128,8 @@ public class TaskTest {
     @Test
     public void testGenerateXML() {
         new ReportGenerator();
-        Task story = new Task("short", "desc", null);
+        ObservableList<Person> people = observableArrayList();
+        Task story = new Task("short", "desc", null, people);
 
         Element storyElement = story.generateXML();
         Assert.assertEquals("[#text: short]", storyElement.getChildNodes().item(1).getChildNodes().item(0).toString());

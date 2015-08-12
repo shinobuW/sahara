@@ -1,24 +1,34 @@
 package seng302.group2.scenes.dialog;
 
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
+import seng302.group2.workspace.team.Team;
 
 import java.util.Map;
 
+import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -35,8 +45,8 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
 
         // Initialise Dialog
         this.setTitle("New Task");
-        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 400px; -fx-pref-width: 600px; "
-                + "-fx-pref-height: 400px;");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 600px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 600px;");
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
@@ -99,6 +109,22 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
 
         backlogComboBox.setDisable(true);
         storyComboBox.setDisable(true);
+
+        SearchableText responsibles = new SearchableText("Responsibles:");
+        final ObservableList<Person> availablePeople = FXCollections.observableArrayList();
+        final ListView<Person> listView = new ListView<>(availablePeople);
+
+        Callback<Person, ObservableValue<Boolean>> getProperty = new Callback<Person, ObservableValue<Boolean>>() {
+            @Override
+            public BooleanProperty call(Person layer) {
+
+                return layer.selectedProperty();
+
+            }
+        };
+
+        Callback<ListView<Person>, ListCell<Person>> forListView = CheckBoxListCell.forListView(getProperty);
+        listView.setCellFactory(forListView);
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
 
         //String firstPItem = Global.currentWorkspace.getProjects().get(0).toString();
@@ -109,7 +135,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         }
 
         grid.getChildren().addAll(shortNameCustomField, projectVBox,
-                backlogVBox, storyVBox, descriptionTextArea);
+                backlogVBox, storyVBox, responsibles, listView, descriptionTextArea);
 
         this.getDialogPane().setContent(grid);
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
@@ -130,6 +156,12 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                 storyComboBox.getItems().clear();
                 for (Backlog backlog : newValue.getBacklogs()) {
                     backlogComboBox.getItems().add(backlog);
+                }
+
+                for (Team team : newValue.getCurrentTeams()) {
+                    for (Person person : team.getPeople()) {
+                        availablePeople.add(person);
+                    }
                 }
 
                 backlogComboBox.setDisable(false);
@@ -153,8 +185,16 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                         //get user input
                         String shortName = shortNameCustomField.getText();
                         String description = descriptionTextArea.getText();
+                        ObservableList<Person> selectedPeople = observableArrayList();
+                        for (Person person : availablePeople) {
+                            if (person.getSelected() == true) {
+                                selectedPeople.add(person);
+                                person.setSelected(false);
+                            }
+                        }
+
                         Task task = new Task(shortName, description, storyComboBox.
-                                getSelectionModel().getSelectedItem());
+                                getSelectionModel().getSelectedItem(), selectedPeople);
                         storyComboBox.getSelectionModel().getSelectedItem().add(task);
                         App.refreshMainScene();
                         App.mainPane.selectItem(task);
