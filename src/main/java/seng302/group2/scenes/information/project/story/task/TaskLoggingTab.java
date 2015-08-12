@@ -74,7 +74,7 @@ public class TaskLoggingTab extends SearchableTab {
         descriptionCol.setCellValueFactory(new PropertyValueFactory<Log, String>("description"));
         descriptionCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
-        
+
         TableColumn startTimeCol = new TableColumn("Start Time");
         startTimeCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Log, String>,
@@ -90,7 +90,7 @@ public class TaskLoggingTab extends SearchableTab {
                 });
         startTimeCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
-        
+
         TableColumn durationCol = new TableColumn("Duration");
         durationCol.setCellValueFactory(new PropertyValueFactory<Log, Long>("duration"));
         durationCol.prefWidthProperty().bind(taskTable.widthProperty()
@@ -117,7 +117,7 @@ public class TaskLoggingTab extends SearchableTab {
 
 
         VBox addTaskBox = new VBox(10);
-        
+
         HBox buttons = new HBox(10);
         buttons.setAlignment(Pos.BOTTOM_RIGHT);
         Button addButton = new Button("Add");

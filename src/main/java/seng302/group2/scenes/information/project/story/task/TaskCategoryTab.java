@@ -23,6 +23,7 @@ import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
@@ -53,8 +54,6 @@ public class TaskCategoryTab extends SearchableTab {
         this.setContent(wrapper);
 
         SearchableText title = new SearchableTitle("Tasks without a Story", searchControls);
-        basicInfoPane.getChildren().add(title);
-
 
         TableView<Task> taskTable = new TableView<>();
         taskTable.setEditable(false);
@@ -122,9 +121,6 @@ public class TaskCategoryTab extends SearchableTab {
 
         addTaskBox.getChildren().addAll(task, shortNameCustomField, btnAdd);
 
-        basicInfoPane.getChildren().add(taskTable);
-        basicInfoPane.getChildren().add(addTaskBox);
-
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctShortName = validateShortName(shortNameCustomField, null);
                 btnAdd.setDisable(!(correctShortName));
@@ -141,6 +137,18 @@ public class TaskCategoryTab extends SearchableTab {
                 }
             });
 
+        basicInfoPane.getChildren().addAll(
+                title,
+                taskTable,
+                addTaskBox
+        );
+
+        Collections.addAll(searchControls,
+                title,
+//                taskTable,
+                task,
+                shortNameCustomField
+        );
     }
 
     /**

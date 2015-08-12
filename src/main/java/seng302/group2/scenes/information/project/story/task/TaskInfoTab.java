@@ -14,6 +14,7 @@ import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,40 +41,56 @@ public class TaskInfoTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        SearchableText title = new SearchableTitle(currentTask.getShortName(), searchControls);
+        SearchableText title = new SearchableTitle(currentTask.getShortName());
 
         Button btnEdit = new Button("Edit");
 
-        basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new SearchableText("Task Description: "
-                + currentTask.getDescription(), searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Impediments: "
-                + currentTask.getImpediments(), searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Effort Left: "
-                + currentTask.getEffortLeft(), searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Effort Spent: "
-                + currentTask.getEffortSpent(), searchControls));
+        SearchableText description = new SearchableText("Task Description: " + currentTask.getDescription());
+        SearchableText impediments = new SearchableText("Impediments: " + currentTask.getImpediments());
+        SearchableText effortLeft = new SearchableText("Effort Left: " + currentTask.getEffortLeft());
+        SearchableText effortSpent = new SearchableText("Effort Spent: " + currentTask.getEffortSpent());
+        SearchableText taskState = new SearchableText("Task State: " + currentTask.getState());
 
-        basicInfoPane.getChildren().add(new SearchableText("Task State: " + currentTask.getState(), searchControls));
 
         ObservableList<Person> responsibilitiesList = FXCollections.observableArrayList();
         responsibilitiesList.addAll(currentTask.getResponsibilities());
 
-        SearchableListView<Person> responsibilitiesListView =
-                new SearchableListView<>(responsibilitiesList, searchControls);
+        SearchableListView<Person> responsibilitiesListView = new SearchableListView<>(responsibilitiesList);
         responsibilitiesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         responsibilitiesListView.getSelectionModel().select(0);
 
         VBox responsibilitiesBox = new VBox(10);
-        responsibilitiesBox.getChildren().add(new SearchableText("Responsibilities: "));
-        responsibilitiesBox.getChildren().add(responsibilitiesListView);
+        SearchableText responsibilitiesLabel = new SearchableText("Responsibilities :");
+        responsibilitiesBox.getChildren().addAll(responsibilitiesLabel, responsibilitiesListView);
         responsibilitiesBox.setPrefHeight(192);
 
-        basicInfoPane.getChildren().add(responsibilitiesBox);
-        basicInfoPane.getChildren().add(btnEdit);
+
         btnEdit.setOnAction((event) -> {
                 currentTask.switchToInfoScene(true);
             });
+
+        basicInfoPane.getChildren().addAll(
+                title,
+                description,
+                impediments,
+                effortLeft,
+                effortSpent,
+                taskState,
+                responsibilitiesBox,
+                btnEdit
+        );
+
+        Collections.addAll(searchControls,
+                title,
+                description,
+                impediments,
+                effortLeft,
+                effortSpent,
+                taskState,
+                responsibilitiesLabel,
+                responsibilitiesListView
+        );
+
 
     }
 

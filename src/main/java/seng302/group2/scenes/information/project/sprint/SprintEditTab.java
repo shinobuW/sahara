@@ -47,7 +47,7 @@ public class SprintEditTab extends SearchableTab {
     static Boolean correctGoal = Boolean.FALSE;
     static Boolean correctLongName = Boolean.FALSE;
 
-    Button btnSave;
+    Button btnDone;
 
     RequiredField goalCustomField;
     RequiredField longNameCustomField;
@@ -72,12 +72,12 @@ public class SprintEditTab extends SearchableTab {
         this.setContent(wrapper);
 
         Button btnCancel = new Button("Cancel");
-        btnSave = new Button("Done");
+        btnDone = new Button("Done");
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
         buttons.alignmentProperty().set(Pos.TOP_LEFT);
-        buttons.getChildren().addAll(btnSave, btnCancel);
+        buttons.getChildren().addAll(btnDone, btnCancel);
 
         goalCustomField = new RequiredField("Goal:", searchControls);
         longNameCustomField = new RequiredField("Long Name:", searchControls);
@@ -336,7 +336,7 @@ public class SprintEditTab extends SearchableTab {
 
 
 
-        btnSave.setOnAction((event) -> {
+        btnDone.setOnAction((event) -> {
                 boolean goalUnchanged = goalCustomField.getText().equals(
                         currentSprint.getGoal());
                 boolean longNameUnchanged = longNameCustomField.getText().equals(
@@ -410,7 +410,7 @@ public class SprintEditTab extends SearchableTab {
         correctGoal = validateShortName(goalCustomField, null);
         correctLongName = validateName(longNameCustomField);
 
-        btnSave.setDisable(!(correctGoal && correctLongName && teamSelected() && releaseSelected()
+        btnDone.setDisable(!(correctGoal && correctLongName && teamSelected() && releaseSelected()
                 && startDateSelected() && endDateSelected()));
     }
 

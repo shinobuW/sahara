@@ -176,24 +176,25 @@ public class BacklogEditTab extends SearchableTab {
             });
 
         btnDone.setOnAction((event) -> {
-            if (isValidState()) { // validation
-                // Edit Command.
-                baseBacklog.edit(shortNameField.getText(),
-                        longNameField.getText(),
-                        descriptionField.getText(),
-                        baseBacklog.getProductOwner(),
-                        baseBacklog.getProject(),
-                        scaleComboBox.getValue().toString(),
-                        backlogStoryList
-                );
+                if (isValidState()) { // validation
+                    // Edit Command.
+                    baseBacklog.edit(shortNameField.getText(),
+                            longNameField.getText(),
+                            descriptionField.getText(),
+                            baseBacklog.getProductOwner(),
+                            baseBacklog.getProject(),
+                            scaleComboBox.getValue().toString(),
+                            backlogStoryList
+                    );
 
-                Collections.sort(baseBacklog.getProject().getBacklogs());
-                baseBacklog.switchToInfoScene();
-                App.mainPane.refreshTree();
-            } else {
-                event.consume();
-            }
-        });
+                    Collections.sort(baseBacklog.getProject().getBacklogs());
+                    baseBacklog.switchToInfoScene();
+                    App.mainPane.refreshTree();
+                }
+                else {
+                    event.consume();
+                }
+            });
 
         editPane.getChildren().addAll(
                 shortNameField,

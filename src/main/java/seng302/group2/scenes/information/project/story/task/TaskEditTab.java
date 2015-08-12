@@ -33,7 +33,7 @@ public class TaskEditTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
 
-    Button btnSave;
+    Button btnDone;
 
     /**
      * Constructor for the PersonEditTab class. This constructor creates a JavaFX ScrollPane
@@ -51,12 +51,12 @@ public class TaskEditTab extends SearchableTab {
 
 
         Button btnCancel = new Button("Cancel");
-        btnSave = new Button("Done");
+        btnDone = new Button("Done");
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
         buttons.alignmentProperty().set(Pos.TOP_LEFT);
-        buttons.getChildren().addAll(btnSave, btnCancel);
+        buttons.getChildren().addAll(btnDone, btnCancel);
 
         RequiredField shortNameCustomField = new RequiredField("Task Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Task Description:", 300);
@@ -148,7 +148,7 @@ public class TaskEditTab extends SearchableTab {
                 taskAssigneesList.removeAll(selectedPeople);
             });
 
-        btnSave.setOnAction((event) -> {
+        btnDone.setOnAction((event) -> {
                 boolean shortNameUnchanged = shortNameCustomField.getText().equals(
                         currentTask.getShortName());
 
@@ -165,7 +165,7 @@ public class TaskEditTab extends SearchableTab {
                         currentTask.getEffortLeft().toString());
                 boolean assigneesUnchanged = taskAssigneesList.equals((currentTask.getResponsibilities()));
 
-                if (shortNameUnchanged &&  descriptionUnchanged
+                if (shortNameUnchanged && descriptionUnchanged
                         && impedimentsUnchanged && taskstateUnchanged && effortLeftUnchanged
                         && assigneesUnchanged) {
                     // No changes
@@ -177,7 +177,7 @@ public class TaskEditTab extends SearchableTab {
                         currentTask.getShortName());
 
                 if (correctShortName) {
-    //                    Valid short name, make the edit
+                    //                    Valid short name, make the edit
 
                     currentTask.edit(shortNameCustomField.getText(),
                             descriptionTextArea.getText(),
@@ -195,6 +195,7 @@ public class TaskEditTab extends SearchableTab {
                 }
 
             });
+
         btnCancel.setOnAction((event) -> {
                 currentTask.switchToInfoScene();
             });

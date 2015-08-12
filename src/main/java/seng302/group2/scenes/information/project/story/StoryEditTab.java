@@ -220,56 +220,56 @@ public class StoryEditTab extends SearchableTab {
             });
 
         btnDone.setOnAction((event) -> {
-            boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                    currentStory.getShortName());
-            boolean longNameUnchanged = longNameTextField.getText().equals(
-                    currentStory.getLongName());
-            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                    currentStory.getDescription());
-            boolean priorityUnchanged = priorityNumberField.getText().equals(
-                    currentStory.getPriority().toString());
-            boolean readyUnchanged = readyStateCheck.isSelected() == currentStory.getReady();
-            boolean estimateUnchanged = estimateComboBox.getValue().equals(currentStory.getEstimate());
+                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                        currentStory.getShortName());
+                boolean longNameUnchanged = longNameTextField.getText().equals(
+                        currentStory.getLongName());
+                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                        currentStory.getDescription());
+                boolean priorityUnchanged = priorityNumberField.getText().equals(
+                        currentStory.getPriority().toString());
+                boolean readyUnchanged = readyStateCheck.isSelected() == currentStory.getReady();
+                boolean estimateUnchanged = estimateComboBox.getValue().equals(currentStory.getEstimate());
 
-            boolean dependentChanged = true;
-            if (currentStory.getDependentOn().containsAll(dependentOnList)
-                    && dependentOnList.containsAll(currentStory.getDependentOn())) {
-                dependentChanged = false;
-            }
+                boolean dependentChanged = true;
+                if (currentStory.getDependentOn().containsAll(dependentOnList)
+                        && dependentOnList.containsAll(currentStory.getDependentOn())) {
+                    dependentChanged = false;
+                }
 
 
-            if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged
-                    && priorityUnchanged && readyUnchanged && estimateUnchanged && !dependentChanged) {
-                // No changes
-                currentStory.switchToInfoScene();
-                return;
-            }
+                if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged
+                        && priorityUnchanged && readyUnchanged && estimateUnchanged && !dependentChanged) {
+                    // No changes
+                    currentStory.switchToInfoScene();
+                    return;
+                }
 
-            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                    currentStory.getShortName());
-            boolean correctPriority = PriorityFieldValidator.validatePriorityField(priorityNumberField,
-                    currentStory.getBacklog(), currentStory.getPriority());
+                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                        currentStory.getShortName());
+                boolean correctPriority = PriorityFieldValidator.validatePriorityField(priorityNumberField,
+                        currentStory.getBacklog(), currentStory.getPriority());
 
-            if (correctShortName && correctPriority) {
-                // Valid short name, make the edit
-                currentStory.edit(shortNameCustomField.getText(),
-                        longNameTextField.getText(),
-                        descriptionTextArea.getText(),
-                        currentStory.getProject(),
-                        Integer.parseInt(priorityNumberField.getText()),
-                        currentStory.getBacklog(),
-                        estimateComboBox.getValue().toString(),
-                        readyStateCheck.selectedProperty().get(),
-                        dependentOnList
-                );
+                if (correctShortName && correctPriority) {
+                    // Valid short name, make the edit
+                    currentStory.edit(shortNameCustomField.getText(),
+                            longNameTextField.getText(),
+                            descriptionTextArea.getText(),
+                            currentStory.getProject(),
+                            Integer.parseInt(priorityNumberField.getText()),
+                            currentStory.getBacklog(),
+                            estimateComboBox.getValue().toString(),
+                            readyStateCheck.selectedProperty().get(),
+                            dependentOnList
+                    );
 
-                currentStory.switchToInfoScene();
-                App.mainPane.refreshTree();
-            } else {
-                event.consume();
-            }
-
-        });
+                    currentStory.switchToInfoScene();
+                    App.mainPane.refreshTree();
+                }
+                else {
+                    event.consume();
+                }
+            });
 
         // Add items to pane & search collection
         editPane.getChildren().addAll(
