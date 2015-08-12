@@ -13,9 +13,10 @@ import java.util.Collection;
  */
 public class SearchableTable<T> extends TableView<T> implements SearchableControl {
 
-
     ObservableList<T> data = FXCollections.observableArrayList();
     ObservableList<T> matchingItems = FXCollections.observableArrayList();
+    SearchableTableRow<T> tableRowType = new SearchableTableRow<>(this);
+
 
     /**
      * Basic constructor.
@@ -25,15 +26,57 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
         updateRows();
     }
 
+
     /**
      * Basic constructor. Sets the data of the table to that provided in the parameter.
      * @param data the new data of the table
      */
-    public SearchableTable(Collection<T> data) {
+    public SearchableTable(ObservableList<T> data) {
         super();
         updateRows();
         setData(data);
     }
+
+
+    /**
+     * Basic constructor. Sets the data of the table to that provided in the parameter.
+     * @param data the new data of the table
+     * @param rowFactory the table row factory that is used for the table. Default is SearchableTableRow
+     */
+    public SearchableTable(ObservableList<T> data, SearchableTableRow<T> rowFactory) {
+        super();
+        this.data = data;
+    }
+
+
+    /**
+     * Basic constructor. Sets the data of the table to that provided in the parameter.
+     * @param data the new data of the table
+     * @param searchableControls The collection of searchable controls to add this control to
+     */
+    public SearchableTable(Collection<T> data, Collection<SearchableControl> searchableControls) {
+        super();
+        searchableControls.add(this);
+        updateRows();
+        setData(data);
+    }
+
+
+    /**
+     * Basic constructor. Sets the data of the table to that provided in the parameter.
+     * @param data the new data of the table
+     * @param rowFactory the table row factory that is used for the table. Default is SearchableTableRow
+     * @param searchableControls The collection of searchable controls to add this control to
+     */
+    public SearchableTable(Collection<T> data, SearchableTableRow<T> rowFactory,
+                           Collection<SearchableControl> searchableControls) {
+        super();
+        searchableControls.add(this);
+        this.tableRowType = rowFactory;
+        updateRows();
+        setData(data);
+    }
+
 
     /**
      * Clears any exsisting data of a SearchableTable, then sets a new set of data.
@@ -79,23 +122,6 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
      * the row's style is set to null (default).
      */
     private void updateRows() {
-        setRowFactory(tv -> new TableRow<T>() {
-            @Override
-            protected void updateItem(T item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item != null) {
-                    System.out.println("item : " + item.toString());
-                    System.out.println("matching items : " + matchingItems);
-                    if (matchingItems.contains(item)) {
-                        setStyle("-fx-background-color: " + SearchableControl.highlightColour + "; ");
-                    }
-                    else {
-                        setStyle(null);
-                        //setStyle("-fx-background-color: " + Color.TRANSPARENT + ";");
-                    }
-                }
-            }
-        });
+        setRowFactory(tr -> tableRowType);
     }
 }

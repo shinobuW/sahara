@@ -56,13 +56,13 @@ public class TeamHistoryTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(historyPane);
         this.setContent(wrapper);
 
-        SearchableTable<Allocation> historyTable = new SearchableTable<>();
+        TableView<Allocation> historyTable = new TableView<>(currentTeam.getProjectAllocations());
         historyTable.setEditable(true);
         historyTable.setPrefWidth(700);
         historyTable.setPrefHeight(400);
         historyTable.setPlaceholder(new SearchableText("This team has no project allocations."));
         historyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        ObservableList<Allocation> data = currentTeam.getProjectAllocations();
+        //ObservableList<Allocation> data = currentTeam.getProjectAllocations();
 
         Callback<TableColumn, TableCell> cellFactory = col -> new EditingCell();
 
@@ -301,7 +301,7 @@ public class TeamHistoryTab extends SearchableTab {
                     }
                 }
             });
-        historyTable.setItems(data);
+        //historyTable.setItems(data);
         TableColumn[] columns = {teamCol, startDateCol, endDateCol};
         historyTable.getColumns().setAll(columns);
 
@@ -320,7 +320,7 @@ public class TeamHistoryTab extends SearchableTab {
             }
         });
         historyPane.getChildren().addAll(title, historyTable, newAllocationFields, buttons);
-        Collections.addAll(searchControls, historyTable, title, projectComboBox);
+        Collections.addAll(searchControls, title, projectComboBox);
     }
 
     /**
