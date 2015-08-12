@@ -97,7 +97,6 @@ public class ProjectEditTab extends SearchableTab {
                     App.mainPane.refreshTree();
                 }
                 else {
-                    // One or more fields incorrectly validated, stay on the edit scene
                     event.consume();
                 }
             });
