@@ -69,37 +69,38 @@ public class ProjectEditTab extends SearchableTab {
 
         // Events
         btnDone.setOnAction((event) -> {
-            boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                    currentProject.getShortName());
-            boolean longNameUnchanged = longNameCustomField.getText().equals(
-                    currentProject.getLongName());
-            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                    currentProject.getDescription());
+                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                        currentProject.getShortName());
+                boolean longNameUnchanged = longNameCustomField.getText().equals(
+                        currentProject.getLongName());
+                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                        currentProject.getDescription());
 
-            // If no fields have been changed
-            if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
-                currentProject.switchToInfoScene();
-                return;
-            }
+                // If no fields have been changed
+                if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
+                    currentProject.switchToInfoScene();
+                    return;
+                }
 
-            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                    currentProject.getShortName());
-            boolean correctLongName = NameValidator.validateName(longNameCustomField);
+                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                        currentProject.getShortName());
+                boolean correctLongName = NameValidator.validateName(longNameCustomField);
 
-            if (correctShortName && correctLongName) {
-                currentProject.edit(shortNameCustomField.getText(),
-                        longNameCustomField.getText(), descriptionTextArea.getText(),
-                        FXCollections.observableArrayList()
-                );
+                if (correctShortName && correctLongName) {
+                    currentProject.edit(shortNameCustomField.getText(),
+                            longNameCustomField.getText(), descriptionTextArea.getText(),
+                            FXCollections.observableArrayList()
+                    );
 
-                Collections.sort(Global.currentWorkspace.getProjects());
-                currentProject.switchToInfoScene();
-                App.mainPane.refreshTree();
-            } else {
-                // One or more fields incorrectly validated, stay on the edit scene
-                event.consume();
-            }
-        });
+                    Collections.sort(Global.currentWorkspace.getProjects());
+                    currentProject.switchToInfoScene();
+                    App.mainPane.refreshTree();
+                }
+                else {
+                    // One or more fields incorrectly validated, stay on the edit scene
+                    event.consume();
+                }
+            });
 
         btnCancel.setOnAction((event) -> {
                 currentProject.switchToInfoScene();

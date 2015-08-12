@@ -100,7 +100,8 @@ public class ReleaseEditTab extends SearchableTab {
 
                 if (releaseDatePicker.getValue() == null) {
                     releaseDate = null;
-                } else {
+                }
+                else {
                     if (!DateValidator.isFutureDate(releaseDate)) {
                         releaseDatePicker.showErrorField("Date must be a future date");
                     }
@@ -128,7 +129,8 @@ public class ReleaseEditTab extends SearchableTab {
                     Collections.sort(currentRelease.getProject().getReleases());
                     currentRelease.switchToInfoScene();
                     App.mainPane.refreshTree();
-                } else {
+                }
+                else {
                     // One or more fields incorrectly validated, stay on the edit scene
                     event.consume();
                 }
