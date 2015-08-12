@@ -27,9 +27,8 @@ public class BacklogScene extends TrackedTabPane {
 
         // Define and add the tabs
         SearchableTab informationTab = new BacklogInfoTab(currentBacklog);
-        SearchableTab scaleInfoTab = new StoryEstimationScaleInfoTab();
 
-        Collections.addAll(searchableTabs, informationTab, scaleInfoTab);
+        Collections.addAll(searchableTabs, informationTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 

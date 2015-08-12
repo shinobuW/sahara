@@ -15,6 +15,7 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.dialog.CustomDialog;
@@ -37,8 +38,6 @@ public class BacklogEditTab extends SearchableTab {
     List<SearchableControl> searchControls = new ArrayList<>();
     private Backlog baseBacklog;
     private RequiredField shortNameField;
-    private CustomTextField longNameField;
-    private CustomTextArea descriptionField;
     private CustomComboBox scaleComboBox;
 
     /**
@@ -60,18 +59,18 @@ public class BacklogEditTab extends SearchableTab {
         this.setContent(wrapper);
 
         // Basic information fields
-        shortNameField = new RequiredField("Short Name:", searchControls);
+        shortNameField = new RequiredField("Short Name:");
         shortNameField.setText(baseBacklog.getShortName());
         shortNameField.setMaxWidth(275);
-        longNameField = new CustomTextField("Long Name:", searchControls);
+        CustomTextField longNameField = new CustomTextField("Long Name:");
         longNameField.setText(baseBacklog.getLongName());
         longNameField.setMaxWidth(275);
-        descriptionField = new CustomTextArea("Backlog Description:", 300, searchControls);
+        CustomTextArea descriptionField = new CustomTextArea("Backlog Description:", 300);
         descriptionField.setText(baseBacklog.getDescription());
         descriptionField.setMaxWidth(275);
-        SearchableText errorField = new SearchableText("", searchControls);
+        SearchableText errorField = new SearchableText("");
 
-        scaleComboBox = new CustomComboBox("Estimation Scale:", true, searchControls);
+        scaleComboBox = new CustomComboBox("Estimation Scale:", true);
 
         for (String scaleName : Global.currentWorkspace.getEstimationScales().getEstimationScaleDict().keySet()) {
             scaleComboBox.addToComboBox(scaleName);
@@ -93,12 +92,12 @@ public class BacklogEditTab extends SearchableTab {
 
 
         // Buttons for the scene
-        Button btnSave = new Button("Done");
+        Button btnDone = new Button("Done");
         Button btnCancel = new Button("Cancel");
         HBox sceneButtons = new HBox();
         sceneButtons.spacingProperty().setValue(10);
         sceneButtons.alignmentProperty().set(Pos.TOP_LEFT);
-        sceneButtons.getChildren().addAll(btnSave, btnCancel);
+        sceneButtons.getChildren().addAll(btnDone, btnCancel);
 
         // Draft member and available people lists
         ObservableList<Story> backlogStoryList = observableArrayList();
@@ -114,40 +113,27 @@ public class BacklogEditTab extends SearchableTab {
 
 
         // List views
-        ListView<Story> backlogStoryListView = new ListView<>(backlogStoryList);
+        SearchableListView<Story> backlogStoryListView = new SearchableListView<>(backlogStoryList);
         backlogStoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         backlogStoryListView.getSelectionModel().select(0);
 
-        ListView<Story> availableStoryListView = new ListView<>(availableStoryList);
+        SearchableListView<Story> availableStoryListView = new SearchableListView<>(availableStoryList);
         availableStoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         availableStoryListView.getSelectionModel().select(0);
 
         VBox backlogStoryBox = new VBox(10);
-        backlogStoryBox.getChildren().add(new SearchableText("Backlog Stories: ", searchControls));
-        backlogStoryBox.getChildren().add(backlogStoryListView);
+        SearchableText backlogStoriesLabel = new SearchableText("Backlog Stories: ");
+        backlogStoryBox.getChildren().addAll(backlogStoriesLabel, backlogStoryListView);
 
         VBox availableStoryBox = new VBox(10);
-        availableStoryBox.getChildren().add(new SearchableText("Available Stories: ", searchControls));
-        availableStoryBox.getChildren().add(availableStoryListView);
+        SearchableText availableStoriesLabel = new SearchableText("Available Stories: ");
+        availableStoryBox.getChildren().addAll(availableStoriesLabel, availableStoryListView);
 
         HBox storyListViews = new HBox(10);
         storyListViews.getChildren().addAll(backlogStoryBox, assignmentButtons, availableStoryBox);
         storyListViews.setPrefHeight(192);
 
-        // Adding of gui elements to the container (VBox)
-        editPane.getChildren().addAll(
-                shortNameField,
-                longNameField,
-                descriptionField,
-                scaleHBox,
-                storyListViews,
-                errorField,
-                sceneButtons
-        );
-
-
-        // Button events
-
+        // Events
         btnAssign.setOnAction((event) -> {
                 boolean uniquePriority = true;
                 Story errorStory = null;
@@ -189,26 +175,48 @@ public class BacklogEditTab extends SearchableTab {
                 baseBacklog.switchToInfoScene();
             });
 
-        btnSave.setOnAction((event) -> {
-                if (isValidState()) { // validation
-                    // Edit Command.
-                    baseBacklog.edit(shortNameField.getText(),
-                            longNameField.getText(),
-                            descriptionField.getText(),
-                            baseBacklog.getProductOwner(),
-                            baseBacklog.getProject(),
-                            scaleComboBox.getValue().toString(),
-                            backlogStoryList
-                    );
+        btnDone.setOnAction((event) -> {
+            if (isValidState()) { // validation
+                // Edit Command.
+                baseBacklog.edit(shortNameField.getText(),
+                        longNameField.getText(),
+                        descriptionField.getText(),
+                        baseBacklog.getProductOwner(),
+                        baseBacklog.getProject(),
+                        scaleComboBox.getValue().toString(),
+                        backlogStoryList
+                );
 
-                    Collections.sort(baseBacklog.getProject().getBacklogs());
-                    baseBacklog.switchToInfoScene();
-                    App.mainPane.refreshTree();
-                }
-                else {
-                    event.consume();
-                }
-            });
+                Collections.sort(baseBacklog.getProject().getBacklogs());
+                baseBacklog.switchToInfoScene();
+                App.mainPane.refreshTree();
+            } else {
+                event.consume();
+            }
+        });
+
+        editPane.getChildren().addAll(
+                shortNameField,
+                longNameField,
+                descriptionField,
+                scaleHBox,
+                storyListViews,
+                errorField,
+                sceneButtons
+        );
+
+        // Add items to pane & search collection
+        Collections.addAll(searchControls,
+                shortNameField,
+                longNameField,
+                descriptionField,
+                scaleComboBox,
+                availableStoryListView,
+                availableStoriesLabel,
+                backlogStoryListView,
+                backlogStoriesLabel,
+                errorField
+        );
     }
 
 

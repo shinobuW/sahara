@@ -40,6 +40,7 @@ public class StoryAcTab extends SearchableTab {
      * @param story The currently selected Story
      */
     public StoryAcTab(Story story) {
+        // Tab settings
         this.setText("Acceptance Criteria");
         Pane acPane = new VBox(10);  // The pane that holds the basic info
         acPane.setBorder(null);
@@ -48,7 +49,6 @@ public class StoryAcTab extends SearchableTab {
         this.setContent(wrapper);
 
         SearchableTable<AcceptanceCriteria> acTable = new SearchableTable<>(story.getAcceptanceCriteria());
-        searchControls.add(acTable);
 
         acTable.setEditable(true);
         acTable.fixedCellSizeProperty();
@@ -118,6 +118,8 @@ public class StoryAcTab extends SearchableTab {
         Button addButton = new Button("Add");
         Button deleteButton = new Button("Delete");
         buttons.getChildren().addAll(addButton, deleteButton);
+        deleteButton.setDisable(true);
+        addButton.setDisable(true);
 
         SearchableText title = new SearchableTitle("Acceptance Criteria");
 
@@ -166,8 +168,6 @@ public class StoryAcTab extends SearchableTab {
         TableColumn[] columns = {descriptionCol, stateCol};
         acTable.getColumns().setAll(columns);
 
-
-        deleteButton.setDisable(true);
         acTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                 if (newSelection != null) {
                     deleteButton.setDisable(false);
@@ -180,6 +180,8 @@ public class StoryAcTab extends SearchableTab {
 
 
         CustomTextArea descriptionTextArea = new CustomTextArea("New Acceptance Criteria:");
+
+        // Events
         descriptionTextArea.getTextArea().textProperty().addListener((observable, oldValue, newValue) -> {
                 if (descriptionTextArea.getText().isEmpty()) {
                     addButton.setDisable(true);
@@ -190,7 +192,6 @@ public class StoryAcTab extends SearchableTab {
             });
 
 
-        addButton.setDisable(true);
         addButton.setOnAction((event) -> {
                 if (!descriptionTextArea.getText().isEmpty()) {
                     String description = descriptionTextArea.getText();
@@ -232,7 +233,7 @@ public class StoryAcTab extends SearchableTab {
             });
 
         acPane.getChildren().addAll(title, acTable, descriptionTextArea, buttons);
-        Collections.addAll(searchControls, title, noAcLabel);
+        Collections.addAll(searchControls, acTable, title, descriptionTextArea, noAcLabel);
     }
 
     /**

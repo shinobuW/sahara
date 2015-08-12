@@ -43,13 +43,12 @@ public class StoryDependenciesTab extends SearchableTab {
 
         SearchableText title = new SearchableTitle("Dependencies of " + currentStory.getShortName());
 
-        SearchableTable<Story> dependsTable = new SearchableTable<>();
-        searchControls.add(dependsTable);
+        TableView<Story> dependsTable = new TableView<>();
+        SearchableText tablePlaceholder = new SearchableText("This story is not currently dependant on another");
         dependsTable.setEditable(true);
         dependsTable.setPrefWidth(500);
         dependsTable.setPrefHeight(200);
-        SearchableText noDependants = new SearchableText("This story is not currently dependant on another");
-        dependsTable.setPlaceholder(noDependants);
+        dependsTable.setPlaceholder(tablePlaceholder);
         dependsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         ObservableList<Story> dataDependants = observableArrayList();
@@ -68,29 +67,24 @@ public class StoryDependenciesTab extends SearchableTab {
         dependsTable.setItems(dataDependants);
         dependsTable.getColumns().addAll(storyCol2, priorityCol2);
 
-
-
-        SearchableTable<Story> dependantsTable = new SearchableTable<>();
-        searchControls.add(dependantsTable);
+        TableView<Story> dependantsTable = new TableView<>();
+        SearchableText tablePlaceholder1 = new SearchableText("There are currently no stories dependant on this story");
         dependantsTable.setEditable(true);
         dependantsTable.setPrefWidth(500);
         dependantsTable.setPrefHeight(200);
-        SearchableText noDependents = new SearchableText("There are currently no stories dependant on this story");
-        dependantsTable.setPlaceholder(noDependants);
+        dependantsTable.setPlaceholder(tablePlaceholder1);
         dependantsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         ObservableList<Story> dataDependencies = observableArrayList();
         dataDependencies.addAll(currentStory.getDependentOnThis());
 
         TableColumn<Story, String> storyCol = new TableColumn<>("Dependant On This");
-        storyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
-        storyCol.prefWidthProperty().bind(dependantsTable.widthProperty()
-                .subtract(2).divide(100).multiply(60));
+        storyCol.setCellValueFactory(new PropertyValueFactory<>("shortName"));
+        storyCol.prefWidthProperty().bind(dependantsTable.widthProperty().subtract(2).divide(100).multiply(60));
 
         TableColumn<Story, Integer> priorityCol = new TableColumn<>("Priority");
-        priorityCol.setCellValueFactory(new PropertyValueFactory<Story, Integer>("priority"));
-        priorityCol.prefWidthProperty().bind(dependantsTable.widthProperty()
-                .subtract(2).divide(100).multiply(20));
+        priorityCol.setCellValueFactory(new PropertyValueFactory<>("priority"));
+        priorityCol.prefWidthProperty().bind(dependantsTable.widthProperty().subtract(2).divide(100).multiply(20));
 
         dependantsTable.setItems(dataDependencies);
         dependantsTable.getColumns().addAll(storyCol, priorityCol);
@@ -107,11 +101,18 @@ public class StoryDependenciesTab extends SearchableTab {
                 }
             });
 
-        dependenciesPane.getChildren().add(dependsTable);
-        dependenciesPane.getChildren().add(dependantsTable);
-        dependenciesPane.getChildren().add(btnView);
+        dependenciesPane.getChildren().addAll(
+                dependsTable,
+                dependantsTable,
+                btnView
+        );
 
-        Collections.addAll(searchControls, noDependants, noDependents, title);
+        // Add items to pane & search collection
+        Collections.addAll(searchControls,
+                title,
+                tablePlaceholder,
+                tablePlaceholder1
+        );
     }
 
     /**

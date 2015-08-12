@@ -53,7 +53,6 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
     public CreateSprintDialog() {
         correctShortName = Boolean.FALSE;
         correctLongName = Boolean.FALSE;
-        //TODO add date validation
         //TODO fix up sizing
 
         this.setTitle("New Sprint");

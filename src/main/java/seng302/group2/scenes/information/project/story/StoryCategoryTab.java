@@ -10,10 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreateStoryDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
@@ -38,6 +35,7 @@ public class StoryCategoryTab extends SearchableTab {
      * @param selectedCategory The current selected category
      */
     public StoryCategoryTab(StoryCategory selectedCategory) {
+        // Tab settings
         this.setText("Basic Information");
         Pane categoryPane = new VBox(10);
         categoryPane.setBorder(null);
@@ -52,20 +50,16 @@ public class StoryCategoryTab extends SearchableTab {
 
         HBox selectionButtons = new HBox();
         selectionButtons.spacingProperty().setValue(10);
-        selectionButtons.getChildren().add(btnView);
-        selectionButtons.getChildren().add(btnDelete);
-        selectionButtons.getChildren().add(btnCreate);
+        selectionButtons.getChildren().addAll(btnView, btnDelete, btnCreate);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
 
-        ListView storyBox = new ListView<>(selectedCategory.getProject().getUnallocatedStories());
+        SearchableListView storyBox = new SearchableListView<>(selectedCategory.getProject().getUnallocatedStories());
         storyBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         storyBox.setMaxWidth(275);
 
-        categoryPane.getChildren().add(title);
-        categoryPane.getChildren().add(storyBox);
-        categoryPane.getChildren().add(selectionButtons);
 
+        // Events
         btnView.setOnAction((event) -> {
                 if (storyBox.getSelectionModel().getSelectedItem() != null) {
                     App.mainPane.selectItem((SaharaItem)
@@ -85,7 +79,17 @@ public class StoryCategoryTab extends SearchableTab {
                 new CreateStoryDialog();
             });
 
-        Collections.addAll(searchControls, title);
+        // Add items to pane & search collection
+        categoryPane.getChildren().addAll(
+                title,
+                storyBox,
+                selectionButtons
+        );
+
+        Collections.addAll(searchControls,
+                title,
+                storyBox
+        );
     }
 
     /**

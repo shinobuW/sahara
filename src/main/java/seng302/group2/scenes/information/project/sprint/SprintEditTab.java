@@ -19,6 +19,7 @@ import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.util.validation.ShortNameValidator;
@@ -30,10 +31,7 @@ import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
@@ -130,8 +128,8 @@ public class SprintEditTab extends SearchableTab {
         // Story list view setup
         ObservableList<Story> storiesInSprint = FXCollections.observableArrayList();
         ObservableList<Story> availableStories = FXCollections.observableArrayList();
-        ListView<Story> storiesInSprintView = new ListView<>();
-        ListView<Story> availableStoriesView = new ListView<>();
+        SearchableListView<Story> storiesInSprintView = new SearchableListView<>();
+        SearchableListView<Story> availableStoriesView = new SearchableListView<>();
         storiesInSprintView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         availableStoriesView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         VBox inSprintVBox = new VBox();
@@ -161,6 +159,8 @@ public class SprintEditTab extends SearchableTab {
         
         editPane.getChildren().addAll(goalCustomField, longNameCustomField, descriptionTextArea,
                 releaseComboBox, sprintStartDatePicker, sprintEndDatePicker, teamComboBox, storyHBox, buttons);
+
+        Collections.addAll(searchControls, storiesInSprintView, availableStoriesView);
 
 
 

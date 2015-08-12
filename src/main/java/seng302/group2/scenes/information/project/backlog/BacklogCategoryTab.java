@@ -37,6 +37,7 @@ public class BacklogCategoryTab extends SearchableTab {
      * @param selectedCategory The current selected category
      */
     public BacklogCategoryTab(BacklogCategory selectedCategory) {
+        // Tab settings
         this.setText("Basic Information");
         Pane categoryPane = new VBox(10);
         categoryPane.setBorder(null);
@@ -44,6 +45,7 @@ public class BacklogCategoryTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(categoryPane);
         this.setContent(wrapper);
 
+        // Create controls
         SearchableText title = new SearchableTitle("Backlogs in " + selectedCategory.getProject().toString());
 
         Button btnView = new Button("View");
@@ -52,15 +54,13 @@ public class BacklogCategoryTab extends SearchableTab {
 
         HBox selectionButtons = new HBox();
         selectionButtons.spacingProperty().setValue(10);
-        selectionButtons.getChildren().add(btnView);
-        selectionButtons.getChildren().add(btnDelete);
-        selectionButtons.getChildren().add(btnCreate);
+        selectionButtons.getChildren().addAll(btnView, btnDelete, btnCreate);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
 
-        SearchableListView backlogBox = new SearchableListView(selectedCategory.getProject().getBacklogs());
-        backlogBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        backlogBox.setMaxWidth(450);
+        SearchableListView backlogListView = new SearchableListView<>(selectedCategory.getProject().getBacklogs());
+        backlogListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        backlogListView.setMaxWidth(450);
 
         boolean poExists = false;
         for (Person person : Global.currentWorkspace.getPeople()) {
@@ -72,23 +72,17 @@ public class BacklogCategoryTab extends SearchableTab {
         btnCreate.setDisable(!poExists);
 
 
-        categoryPane.getChildren().add(title);
-        categoryPane.getChildren().add(backlogBox);
-        categoryPane.getChildren().add(selectionButtons);
-
-        Collections.addAll(searchControls, title, backlogBox);
-
+        // Events
         btnView.setOnAction((event) -> {
-                if (backlogBox.getSelectionModel().getSelectedItem() != null) {
+                if (backlogListView.getSelectionModel().getSelectedItem() != null) {
                     App.mainPane.selectItem((SaharaItem)
-                            backlogBox.getSelectionModel().getSelectedItem());
+                            backlogListView.getSelectionModel().getSelectedItem());
                 }
             });
 
-
         btnDelete.setOnAction((event) -> {
-                if (backlogBox.getSelectionModel().getSelectedItem() != null) {
-                    showDeleteDialog((SaharaItem) backlogBox
+                if (backlogListView.getSelectionModel().getSelectedItem() != null) {
+                    showDeleteDialog((SaharaItem) backlogListView
                             .getSelectionModel().getSelectedItem());
                 }
             });
@@ -97,6 +91,11 @@ public class BacklogCategoryTab extends SearchableTab {
                 javafx.scene.control.Dialog creationDialog = new CreateBacklogDialog();
                 creationDialog.show();
             });
+
+        // Add items to pane & search collection
+        categoryPane.getChildren().addAll(title, backlogListView, selectionButtons);
+        Collections.addAll(searchControls, title, backlogListView);
+
     }
 
     /**

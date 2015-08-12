@@ -33,24 +33,70 @@ public class BacklogInfoTab extends SearchableTab {
      * @param currentBacklog The currently selected backlog
      */
     public BacklogInfoTab(Backlog currentBacklog) {
+        // Tab settings
         this.setText("Basic Information");
         Pane basicInfoPane = new VBox(10);
-
         basicInfoPane.setBorder(null);
         basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
+        // Create Table
+        TableView<Story> storyTable = new TableView<>(currentBacklog.getStories());
+        SearchableText tablePlaceholder = new SearchableText("There are currently no stories in this backlog.");
+        storyTable.setEditable(true);
+        storyTable.setPrefWidth(500);
+        storyTable.setPrefHeight(200);
+        storyTable.setPlaceholder(tablePlaceholder);
+        storyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        TableColumn storyCol = new TableColumn("Story");
+        storyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
+        storyCol.prefWidthProperty().bind(storyTable.widthProperty()
+                .subtract(2).divide(100).multiply(60));
+
+        TableColumn priorityCol = new TableColumn("Priority");
+        priorityCol.setCellValueFactory(new PropertyValueFactory<Story, Integer>("priority"));
+        priorityCol.prefWidthProperty().bind(storyTable.widthProperty()
+                .subtract(2).divide(100).multiply(20));
+
+        TableColumn readyCol = new TableColumn("Status");
+        readyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("readyString"));
+        readyCol.prefWidthProperty().bind(storyTable.widthProperty()
+                .subtract(2).divide(100).multiply(20));
+        storyTable.getColumns().addAll(priorityCol, storyCol, readyCol);
+
+        storyTable.setRowFactory(param -> new TableRow<Story>() {
+            /**
+             * An Overidden updateItem method to control the highlighting of cells in the backlog info tab.
+             * @param item The item to be updated
+             * @param empty Whether the cell is empty or not
+             */
+            @Override
+            protected void updateItem(Story item, boolean empty) {
+                if (item == null) {
+                    return;
+                }
+                super.updateItem(item, empty);
+                item.setHighlightColour();
+                if (highlightMode && item.getColour() != "transparent") {
+                    setStyle("-fx-background-color: " + item.getColour() + ";");
+                }
+                else {
+                    setStyle(null);
+                }
+            }
+        });
+
+        // Create controls
         SearchableText title = new SearchableTitle(currentBacklog.getLongName());
-
-        Button btnEdit = new Button("Edit");
-        Button btnView = new Button("View");
-        Button btnHighlight = new Button("Highlight");
-
-        HBox buttonHBox = new HBox();
-        buttonHBox.spacingProperty().setValue(10);
-        buttonHBox.alignmentProperty().set(Pos.TOP_LEFT);
-        buttonHBox.getChildren().addAll(btnView, btnHighlight);
+        SearchableText shortName = new SearchableText("Short Name: " + currentBacklog.getShortName());
+        SearchableText description = new SearchableText("Backlog Description: " + currentBacklog.getDescription());
+        SearchableText project = new SearchableText("Project: " + currentBacklog.getProject());
+        SearchableText storiesTableLabel = new SearchableText("Stories: ");
+        SearchableText estScale = new SearchableText("Estimation Scale: " + currentBacklog.getScale());
+        SearchableText po = new SearchableText("");
+        Separator separator = new Separator();
 
         HBox greenKeyHbox = new HBox(8);
         Rectangle green = new Rectangle(250,25,20,20);
@@ -82,63 +128,27 @@ public class BacklogInfoTab extends SearchableTab {
         Pane keyBox = new VBox(4);
         keyBox.getChildren().addAll(greenKeyHbox, orangeKeyHbox, redKeyHbox);
 
-        SearchableTable<Story> storyTable = new SearchableTable<>(currentBacklog.getStories());
-        searchControls.add(storyTable);
-        storyTable.setEditable(true);
-        storyTable.setPrefWidth(500);
-        storyTable.setPrefHeight(200);
-        storyTable.setPlaceholder(new SearchableText("There are currently no stories in this backlog.",
-                searchControls));
-        storyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        Button btnEdit = new Button("Edit");
+        Button btnView = new Button("View");
+        Button btnHighlight = new Button("Highlight");
 
-        /*ObservableList<Story> data = observableArrayList();
-        data.addAll(currentBacklog.getStories());*/
+        HBox buttonHBox = new HBox();
+        buttonHBox.spacingProperty().setValue(10);
+        buttonHBox.alignmentProperty().set(Pos.TOP_LEFT);
+        buttonHBox.getChildren().addAll(btnView, btnHighlight);
 
-        TableColumn storyCol = new TableColumn("Story");
-        storyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
-        storyCol.prefWidthProperty().bind(storyTable.widthProperty()
-                .subtract(2).divide(100).multiply(60));
-
-        TableColumn priorityCol = new TableColumn("Priority");
-        priorityCol.setCellValueFactory(new PropertyValueFactory<Story, Integer>("priority"));
-        priorityCol.prefWidthProperty().bind(storyTable.widthProperty()
-                .subtract(2).divide(100).multiply(20));
-
-        TableColumn readyCol = new TableColumn("Status");
-        readyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("readyString"));
-        readyCol.prefWidthProperty().bind(storyTable.widthProperty()
-                .subtract(2).divide(100).multiply(20));
-        //storyTable.setItems(data);
-        storyTable.getColumns().addAll(priorityCol, storyCol, readyCol);
-
-
-        SearchableText shortName = new SearchableText("Short Name: " + currentBacklog.getShortName());
-        SearchableText description = new SearchableText("Backlog Description: " + currentBacklog.getDescription());
-        SearchableText project = new SearchableText("Project: " + currentBacklog.getProject());
-        SearchableText po;
         if (currentBacklog.getProductOwner() == null) {
-            po = new SearchableText("Product Owner: (none)");
+            po.setText("Product Owner: (none)");
         }
         else {
-            po = new SearchableText("Product Owner: " + currentBacklog.getProductOwner());
+            po.setText("Product Owner: " + currentBacklog.getProductOwner());
         }
-        SearchableText estScale = new SearchableText("Estimation Scale: " + currentBacklog.getScale());
 
-        basicInfoPane.getChildren().addAll(title, shortName, description, project, po, estScale);
-
-
-        basicInfoPane.getChildren().add(new Separator());
-
-
-        SearchableText storiesTableLabel = new SearchableText("Stories: ");
-        basicInfoPane.getChildren().addAll(storiesTableLabel, storyTable);
-
-
-        basicInfoPane.getChildren().addAll(buttonHBox, btnEdit);
         if (highlightMode) {
             basicInfoPane.getChildren().add(keyBox);
         }
 
+        // Events
         btnEdit.setOnAction((event) -> {
                 currentBacklog.switchToInfoScene(true);
             });
@@ -148,29 +158,6 @@ public class BacklogInfoTab extends SearchableTab {
                     App.mainPane.selectItem(storyTable.getSelectionModel().getSelectedItem());
                 }
             });
-
-        storyTable.setRowFactory(param -> new TableRow<Story>() {
-            
-            /**
-             * An Overidden updateItem method to control the highlighting of cells in the backlog info tab.
-             * @param item The item to be updated
-             * @param empty Whether the cell is empty or not
-             */
-            @Override
-            protected void updateItem(Story item, boolean empty) {
-                if (item == null) {
-                    return;
-                }
-                super.updateItem(item, empty);
-                item.setHighlightColour();
-                if (highlightMode && item.getColour() != "transparent") {
-                    setStyle("-fx-background-color: " + item.getColour() + ";");
-                }
-                else {
-                    setStyle(null);
-                }
-            }
-        });
 
         btnHighlight.setOnAction((event) ->
             {
@@ -195,8 +182,35 @@ public class BacklogInfoTab extends SearchableTab {
                         .subtract(2).divide(100).multiply(20));
             });
 
-        Collections.addAll(searchControls, orangeKeyLabel, greenKeyLabel, redKeyLabel, shortName, description, project,
-                po, estScale, storiesTableLabel, title);
+        basicInfoPane.getChildren().addAll(
+                title,
+                shortName,
+                description,
+                project,
+                po,
+                estScale,
+                separator,
+                storiesTableLabel,
+                storyTable,
+                buttonHBox,
+                btnEdit
+        );
+
+        // Add items to pane & search collection
+        Collections.addAll(searchControls,
+                title,
+                shortName,
+                description,
+                project,
+                po,
+                estScale,
+                storiesTableLabel,
+                //storyTable,
+                orangeKeyLabel,
+                greenKeyLabel,
+                redKeyLabel,
+                tablePlaceholder
+        );
     }
 
     /**

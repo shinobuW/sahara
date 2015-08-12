@@ -45,29 +45,37 @@ public class StoryInfoTab extends SearchableTab {
 
         Button btnEdit = new Button("Edit");
 
-        basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new SearchableText("Story Description: " + currentStory.getDescription(),
-                searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Project: "
-                + currentStory.getProject().toString(), searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Priority: "
-                + currentStory.getPriority(), searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Estimate: "
-                + currentStory.getEstimate(), searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("State: "
-                + currentStory.getReadyState(), searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Story Creator: "
-                + currentStory.getCreator(), searchControls));
+        SearchableText description = new SearchableText("Story Description: " + currentStory.getDescription());
+        SearchableText project = new SearchableText("Project: " + currentStory.getProject().toString());
+        SearchableText priority = new SearchableText("Priority: " + currentStory.getPriority());
+        SearchableText estimate = new SearchableText("Estimate: " + currentStory.getEstimate());
+        SearchableText state = new SearchableText("State: " + currentStory.getReadyState());
+        SearchableText creator = new SearchableText("Story Creator: " + currentStory.getCreator());
 
-
-        basicInfoPane.getChildren().add(btnEdit);
-
-        
         btnEdit.setOnAction((event) -> {
                 currentStory.switchToInfoScene(true);
             });
 
-        Collections.addAll(searchControls, title);
+        basicInfoPane.getChildren().addAll(
+                title,
+                description,
+                project,
+                priority,
+                estimate,
+                state,
+                creator,
+                btnEdit
+        );
+
+        Collections.addAll(searchControls,
+                title,
+                description,
+                project,
+                priority,
+                estimate,
+                state,
+                creator
+        );
     }
 
     /**

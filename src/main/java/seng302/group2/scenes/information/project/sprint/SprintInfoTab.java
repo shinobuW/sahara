@@ -34,8 +34,7 @@ public class SprintInfoTab extends SearchableTab {
      */
     public SprintInfoTab(Sprint currentSprint) {
         this.setText("Basic Information");
-
-        Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
+        Pane basicInfoPane = new VBox(10);
         basicInfoPane.setBorder(null);
         basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
