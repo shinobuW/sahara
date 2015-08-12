@@ -36,6 +36,7 @@ public class SkillEditTab extends SearchableTab {
      * @param currentSkill The skill being edited
      */
     public SkillEditTab(Skill currentSkill) {
+        // Tab Settings
         this.setText("Edit Skill");
         Pane editPane = new VBox(10);
         editPane.setBorder(null);
@@ -43,35 +44,36 @@ public class SkillEditTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(editPane);
         this.setContent(wrapper);
 
-        Button btnCancel = new Button("Cancel");
-        Button btnSave = new Button("Done");
+        // Create Controls
 
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.TOP_LEFT);
-        buttons.getChildren().addAll(btnSave, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name:", searchControls);
-        CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description:", 300, searchControls);
-
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description:", 300);
         shortNameCustomField.setMaxWidth(275);
         descriptionTextArea.setMaxWidth(275);
 
         shortNameCustomField.setText(currentSkill.getShortName());
         descriptionTextArea.setText(currentSkill.getDescription());
 
-        editPane.getChildren().add(shortNameCustomField);
-        editPane.getChildren().add(descriptionTextArea);
-        editPane.getChildren().add(buttons);
+        Button btnCancel = new Button("Cancel");
+        Button btnDone = new Button("Done");
 
-        btnSave.setOnAction((event) -> {
+        HBox buttons = new HBox();
+        buttons.spacingProperty().setValue(10);
+        buttons.alignmentProperty().set(Pos.TOP_LEFT);
+        buttons.getChildren().addAll(btnDone, btnCancel);
+
+        editPane.getChildren().addAll(shortNameCustomField, descriptionTextArea, buttons);
+        Collections.addAll(searchControls, shortNameCustomField, descriptionTextArea);
+
+        // Events
+        btnDone.setOnAction((event) -> {
                 boolean shortNameUnchanged = shortNameCustomField.getText().equals(
                         currentSkill.getShortName());
                 boolean descriptionUnchanged = descriptionTextArea.getText().equals(
                         currentSkill.getDescription());
 
                 if (shortNameUnchanged && descriptionUnchanged) {
-                    // No changes
                     currentSkill.switchToInfoScene();
                     return;
                 }
@@ -80,7 +82,6 @@ public class SkillEditTab extends SearchableTab {
                         currentSkill.getShortName());
 
                 if (correctShortName) {
-                    // Valid short name, make the edit
                     currentSkill.edit(shortNameCustomField.getText(),
                             descriptionTextArea.getText()
                     );

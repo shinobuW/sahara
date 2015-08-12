@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import seng302.group2.scenes.control.search.SearchableControl;
 
 import java.util.Collection;
 

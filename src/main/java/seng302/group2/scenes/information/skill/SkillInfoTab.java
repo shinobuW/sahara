@@ -24,38 +24,35 @@ import java.util.List;
 public class SkillInfoTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+    Button btnEdit = new Button("Edit");
 
     /**
      * Constructor for the SkillInfoTab class.
      * @param currentSkill the current skill for which information will be displayed
      */
     public SkillInfoTab(Skill currentSkill) {
+        // Tab settings
         this.setText("Basic Information");
-
-        Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
+        Pane basicInfoPane = new VBox(10);
         basicInfoPane.setBorder(null);
         basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-
+        // Create controls
         SearchableText title = new SearchableTitle(currentSkill.getShortName());
         SearchableText desc = new SearchableText("Description: " + currentSkill.getDescription());
 
-        Button btnEdit = new Button("Edit");
-
-        basicInfoPane.getChildren().addAll(title, desc);
-
-        basicInfoPane.getChildren().add(btnEdit);
-
-        if (currentSkill.getShortName().equals("Product Owner")
-                || currentSkill.getShortName().equals("Scrum Master")) {
+        boolean skillIsProductOwner = currentSkill.getShortName().equals("Product Owner");
+        boolean skillIsScrumMaster = currentSkill.getShortName().equals("Scrum Master");
+        if (skillIsProductOwner || skillIsScrumMaster) {
             btnEdit.setDisable(true);
         }
 
-        btnEdit.setOnAction((event) -> currentSkill.switchToInfoScene(true));
-
+        basicInfoPane.getChildren().addAll(title, desc, btnEdit);
         Collections.addAll(searchControls, title, desc);
+
+        btnEdit.setOnAction((event) -> currentSkill.switchToInfoScene(true));
     }
 
     /**
@@ -66,4 +63,6 @@ public class SkillInfoTab extends SearchableTab {
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;
     }
+
+
 }

@@ -1,7 +1,6 @@
 package seng302.group2.scenes.information.role;
 
 import javafx.geometry.Insets;
-import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.Pane;
