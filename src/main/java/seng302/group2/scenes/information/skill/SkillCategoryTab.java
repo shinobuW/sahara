@@ -57,19 +57,6 @@ public class SkillCategoryTab extends SearchableTab {
         selectionButtons.getChildren().addAll(btnView, btnDelete, btnCreate);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
-        categoryPane.getChildren().addAll(
-                title,
-                skillBox,
-                selectionButtons
-        );
-
-        Collections.addAll(
-                searchControls,
-                title,
-                skillBox
-        );
-
-
         // Events
         btnView.setOnAction((event) -> {
                 if (skillBox.getSelectionModel().getSelectedItem() != null) {
@@ -87,6 +74,19 @@ public class SkillCategoryTab extends SearchableTab {
                 javafx.scene.control.Dialog creationDialog = new CreateSkillDialog();
                 creationDialog.show();
             });
+
+        // Add items to pane & search collection
+        categoryPane.getChildren().addAll(
+                title,
+                skillBox,
+                selectionButtons
+        );
+
+        Collections.addAll(
+                searchControls,
+                title,
+                skillBox
+        );
     }
 
     /**

@@ -63,8 +63,7 @@ public class SkillEditTab extends SearchableTab {
         buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnDone, btnCancel);
 
-        editPane.getChildren().addAll(shortNameCustomField, descriptionTextArea, buttons);
-        Collections.addAll(searchControls, shortNameCustomField, descriptionTextArea);
+
 
         // Events
         btnDone.setOnAction((event) -> {
@@ -99,6 +98,10 @@ public class SkillEditTab extends SearchableTab {
         btnCancel.setOnAction((event) -> {
                 currentSkill.switchToInfoScene();
             });
+
+        // Add items to pane & search collection
+        editPane.getChildren().addAll(shortNameCustomField, descriptionTextArea, buttons);
+        Collections.addAll(searchControls, shortNameCustomField, descriptionTextArea);
     }
 
     /**

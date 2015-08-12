@@ -49,10 +49,14 @@ public class SkillInfoTab extends SearchableTab {
             btnEdit.setDisable(true);
         }
 
+        // Events
+        btnEdit.setOnAction((event) -> currentSkill.switchToInfoScene(true));
+
+        // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(title, desc, btnEdit);
         Collections.addAll(searchControls, title, desc);
 
-        btnEdit.setOnAction((event) -> currentSkill.switchToInfoScene(true));
+
     }
 
     /**

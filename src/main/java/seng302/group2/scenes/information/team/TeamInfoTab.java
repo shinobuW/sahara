@@ -73,8 +73,7 @@ public class TeamInfoTab extends SearchableTab {
                 separator
         );
 
-        Collections.addAll(
-                searchControls,
+        Collections.addAll(searchControls,
                 title,
                 desc
         );
@@ -107,18 +106,8 @@ public class TeamInfoTab extends SearchableTab {
                 smLabel.setText("Scrum Master: ");
             }
 
-            basicInfoPane.getChildren().addAll(
-                    poLabel,
-                    smLabel,
-                    listViewLabel
-            );
-
-            Collections.addAll(
-                    searchControls,
-                    poLabel,
-                    smLabel,
-                    listViewLabel
-            );
+            basicInfoPane.getChildren().addAll(poLabel, smLabel);
+            Collections.addAll(searchControls, poLabel, smLabel);
 
             btnEdit.setOnAction((event) -> currentTeam.switchToInfoScene(true));
         }
@@ -126,11 +115,10 @@ public class TeamInfoTab extends SearchableTab {
         else {
             listViewLabel.setText("Unassigned People: ");
             basicInfoPane.getChildren().add(listViewLabel);
-            searchControls.add(listViewLabel);
         }
 
-        basicInfoPane.getChildren().addAll(teamsPeopleBox, btnEdit);
-        searchControls.add(teamsPeopleBox);
+        basicInfoPane.getChildren().addAll(listViewLabel, teamsPeopleBox, btnEdit);
+        Collections.addAll(searchControls,listViewLabel, teamsPeopleBox);
     }
 
 

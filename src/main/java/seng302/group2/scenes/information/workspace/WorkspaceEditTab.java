@@ -60,20 +60,6 @@ public class WorkspaceEditTab extends SearchableTab {
         longNameCustomField.setText(currentWorkspace.getLongName());
         descriptionTextArea.setText(currentWorkspace.getDescription());
 
-        editPane.getChildren().addAll(
-                shortNameCustomField,
-                longNameCustomField,
-                descriptionTextArea,
-                buttons
-        );
-
-        Collections.addAll(
-                searchControls,
-                shortNameCustomField,
-                longNameCustomField,
-                descriptionTextArea
-        );
-
         // Events
         btnCancel.setOnAction((event) -> currentWorkspace.switchToInfoScene());
 
@@ -101,6 +87,20 @@ public class WorkspaceEditTab extends SearchableTab {
                     event.consume();
                 }
             });
+
+        // Add items to pane & search collection
+        editPane.getChildren().addAll(
+                shortNameCustomField,
+                longNameCustomField,
+                descriptionTextArea,
+                buttons
+        );
+
+        Collections.addAll(searchControls,
+                shortNameCustomField,
+                longNameCustomField,
+                descriptionTextArea
+        );
     }
 
     /**

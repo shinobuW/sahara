@@ -59,19 +59,6 @@ public class TeamCategoryTab extends SearchableTab {
         selectionButtons.getChildren().addAll(btnView, btnDelete, btnCreate);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
-        categoryPane.getChildren().addAll(
-                title,
-                teamBox,
-                selectionButtons
-        );
-
-        Collections.addAll(
-                searchControls,
-                title,
-                teamBox
-        );
-
-
         // Events
         btnView.setOnAction((event) -> {
                 if (teamBox.getSelectionModel().getSelectedItem() != null) {
@@ -91,6 +78,18 @@ public class TeamCategoryTab extends SearchableTab {
                 javafx.scene.control.Dialog creationDialog = new CreateTeamDialog();
                 creationDialog.show();
             });
+
+        // Add items to pane & search collection
+        categoryPane.getChildren().addAll(
+                title,
+                teamBox,
+                selectionButtons
+        );
+
+        Collections.addAll(searchControls,
+                title,
+                teamBox
+        );
 
     }
 

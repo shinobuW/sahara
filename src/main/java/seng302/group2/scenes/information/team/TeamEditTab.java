@@ -173,32 +173,6 @@ public class TeamEditTab extends SearchableTab {
             btnRoleAssign.setDisable(true);
         }
 
-
-        // Adding of gui elements to the container (VBox)
-        editPane.getChildren().addAll(
-                shortNameField,
-                descriptionField,
-                memberListViews,
-                roleComboBox,
-                poText,
-                smText,
-                sceneButtons
-        );
-
-        Collections.addAll(
-                searchControls,
-                shortNameField,
-                descriptionField,
-                roleComboBox,
-                poText,
-                smText,
-                teamMembersListView,
-                availablePeopleListView,
-                teamMemberLabel,
-                availablePeopleLabel
-        );
-
-
         // Listeners
         // Update the roles combo when the selected person changes
         teamMembersListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
@@ -319,6 +293,29 @@ public class TeamEditTab extends SearchableTab {
                     event.consume();
                 }
             });
+
+        // Add items to pane & search collection
+        editPane.getChildren().addAll(
+                shortNameField,
+                descriptionField,
+                memberListViews,
+                roleComboBox,
+                poText,
+                smText,
+                sceneButtons
+        );
+
+        Collections.addAll(searchControls,
+                shortNameField,
+                descriptionField,
+                roleComboBox,
+                poText,
+                smText,
+                teamMembersListView,
+                availablePeopleListView,
+                teamMemberLabel,
+                availablePeopleLabel
+        );
     }
 
 

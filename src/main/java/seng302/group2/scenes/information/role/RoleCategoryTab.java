@@ -15,6 +15,7 @@ import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,43 +31,46 @@ public class RoleCategoryTab extends SearchableTab {
      * @param currentWorkspace The current workspace
      */
     public RoleCategoryTab(Workspace currentWorkspace) {
+        // Tab settings
         this.setText("Basic Information");
         Pane categoryPane = new VBox(10);
         categoryPane.setBorder(null);
         categoryPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(categoryPane);
         this.setContent(wrapper);
+
+        // Create controls
         SearchableText title = new SearchableTitle("Roles in " + currentWorkspace.getShortName(), searchControls);
-
-        Button btnView = new Button("View");
-        //Button btnDelete = new Button("Delete");
-        //Button btnCreate = new Button("Create New Role");
-
-        HBox selectionButtons = new HBox();
-        selectionButtons.spacingProperty().setValue(10);
-        selectionButtons.getChildren().add(btnView);
-        //selectionButtons.getChildren().add(btnDelete);
-        selectionButtons.setAlignment(Pos.TOP_LEFT);
-
-        HBox createButton = new HBox();
-        //createButton.getChildren().add(btnCreate);
-        createButton.setAlignment(Pos.CENTER_RIGHT);
-
         SearchableListView roleBox = new SearchableListView<>(currentWorkspace.getRoles(), searchControls);
         roleBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         roleBox.setMaxWidth(450);
 
-        categoryPane.getChildren().add(title);
-        categoryPane.getChildren().add(roleBox);
-        categoryPane.getChildren().add(selectionButtons);
-        categoryPane.getChildren().add(createButton);
+        Button btnView = new Button("View");
 
+        HBox selectionButtons = new HBox();
+        selectionButtons.spacingProperty().setValue(10);
+        selectionButtons.getChildren().addAll(btnView);
+        selectionButtons.setAlignment(Pos.TOP_LEFT);
+
+        // Events
         btnView.setOnAction((event) -> {
                 if (roleBox.getSelectionModel().getSelectedItem() != null) {
                     App.mainPane.selectItem((SaharaItem)
                             roleBox.getSelectionModel().getSelectedItem());
                 }
             });
+
+        // Add items to pane & search collection
+        categoryPane.getChildren().addAll(
+                title,
+                roleBox,
+                selectionButtons
+        );
+
+        Collections.addAll(searchControls,
+                title,
+                roleBox
+        );
     }
 
     /**
