@@ -60,7 +60,8 @@ public class TaskInfoTab extends SearchableTab {
         ObservableList<Person> responsibilitiesList = FXCollections.observableArrayList();
         responsibilitiesList.addAll(currentTask.getResponsibilities());
 
-        SearchableListView<Person> responsibilitiesListView = new SearchableListView<>(responsibilitiesList, searchControls);
+        SearchableListView<Person> responsibilitiesListView =
+                new SearchableListView<>(responsibilitiesList, searchControls);
         responsibilitiesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         responsibilitiesListView.getSelectionModel().select(0);
 
