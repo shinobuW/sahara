@@ -38,7 +38,9 @@ public class TeamCategoryTab extends SearchableTab {
      * @param currentWorkspace The current workspace
      */
     public TeamCategoryTab(Workspace currentWorkspace) {
+        // Tab Settings
         this.setText("Basic Information");
+
         Pane categoryPane = new VBox(10);
         categoryPane.setBorder(null);
         categoryPane.setPadding(new Insets(25, 25, 25, 25));
@@ -46,7 +48,11 @@ public class TeamCategoryTab extends SearchableTab {
         this.setContent(wrapper);
 
 
+        // Create Controls
         SearchableText title = new SearchableTitle("Teams in " + currentWorkspace.getShortName());
+        SearchableListView teamBox = new SearchableListView<>(currentWorkspace.getTeams());
+        teamBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        teamBox.setMaxWidth(275);
 
         Button btnView = new Button("View");
         Button btnDelete = new Button("Delete");
@@ -54,24 +60,23 @@ public class TeamCategoryTab extends SearchableTab {
 
         HBox selectionButtons = new HBox();
         selectionButtons.spacingProperty().setValue(10);
-        selectionButtons.getChildren().add(btnView);
-        selectionButtons.getChildren().add(btnDelete);
-        selectionButtons.getChildren().add(btnCreate);
+        selectionButtons.getChildren().addAll(btnView, btnDelete, btnCreate);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
+        categoryPane.getChildren().addAll(
+                title,
+                teamBox,
+                selectionButtons
+        );
 
-        SearchableListView teamBox = new SearchableListView(currentWorkspace.getTeams());
-        teamBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        teamBox.setMaxWidth(275);
-
-        categoryPane.getChildren().add(title);
-        categoryPane.getChildren().add(teamBox);
-        categoryPane.getChildren().add(selectionButtons);
-
-        Collections.addAll(searchControls, title, teamBox);
+        Collections.addAll(
+                searchControls,
+                title,
+                teamBox
+        );
 
 
-
+        // Events
         btnView.setOnAction((event) -> {
                 if (teamBox.getSelectionModel().getSelectedItem() != null) {
                     App.mainPane.selectItem((SaharaItem)

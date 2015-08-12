@@ -48,12 +48,12 @@ public class WorkspaceEditTab extends SearchableTab {
         CustomTextArea descriptionTextArea = new CustomTextArea("Workspace Description:", 300);
 
         Button btnCancel = new Button("Cancel");
-        Button btnSave = new Button("Done");
+        Button btnDone = new Button("Done");
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
         buttons.alignmentProperty().set(Pos.CENTER_RIGHT);
-        buttons.getChildren().addAll(btnSave, btnCancel);
+        buttons.getChildren().addAll(btnDone, btnCancel);
 
         // Set fields
         shortNameCustomField.setText(currentWorkspace.getShortName());
@@ -77,30 +77,29 @@ public class WorkspaceEditTab extends SearchableTab {
         // Events
         btnCancel.setOnAction((event) -> currentWorkspace.switchToInfoScene());
 
-        btnSave.setOnAction((event) -> {
-                boolean shortNameUnchanged = shortNameCustomField.getText().equals(currentWorkspace.getShortName());
-                boolean longNameUnchanged = longNameCustomField.getText().equals(currentWorkspace.getLongName());
-                boolean descriptionUnchanged = descriptionTextArea.getText().equals(currentWorkspace.getDescription());
+        btnDone.setOnAction((event) -> {
+            boolean shortNameUnchanged = shortNameCustomField.getText().equals(currentWorkspace.getShortName());
+            boolean longNameUnchanged = longNameCustomField.getText().equals(currentWorkspace.getLongName());
+            boolean descriptionUnchanged = descriptionTextArea.getText().equals(currentWorkspace.getDescription());
 
-                if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
-                    currentWorkspace.switchToInfoScene();
-                    return;
-                }
+            if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
+                currentWorkspace.switchToInfoScene();
+                return;
+            }
 
-                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                        currentWorkspace.getShortName());
-                boolean correctLongName = ShortNameValidator.validateShortName(longNameCustomField,
-                        currentWorkspace.getLongName());
-                if (correctShortName && correctLongName) {
-                    currentWorkspace.edit(shortNameCustomField.getText(), longNameCustomField.getText(),
-                            descriptionTextArea.getText());
-                    currentWorkspace.switchToInfoScene();
-                    App.mainPane.refreshTree();
-                }
-                else {
-                    event.consume();
-                }
-            });
+            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                    currentWorkspace.getShortName());
+            boolean correctLongName = ShortNameValidator.validateShortName(longNameCustomField,
+                    currentWorkspace.getLongName());
+            if (correctShortName && correctLongName) {
+                currentWorkspace.edit(shortNameCustomField.getText(), longNameCustomField.getText(),
+                        descriptionTextArea.getText());
+                currentWorkspace.switchToInfoScene();
+                App.mainPane.refreshTree();
+            } else {
+                event.consume();
+            }
+        });
     }
 
     /**

@@ -5,7 +5,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -49,20 +48,21 @@ public class TeamHistoryTab extends SearchableTab {
      * @param currentTeam currently selected team
      */
     public TeamHistoryTab(Team currentTeam) {
+        // Tab settings
         this.setText("Allocation History");
-        Pane historyPane = new VBox(10);  // The pane that holds the basic info
+        Pane historyPane = new VBox(10);
         historyPane.setBorder(null);
         historyPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(historyPane);
         this.setContent(wrapper);
 
+        // Create Table
         TableView<Allocation> historyTable = new TableView<>(currentTeam.getProjectAllocations());
         historyTable.setEditable(true);
         historyTable.setPrefWidth(700);
         historyTable.setPrefHeight(400);
         historyTable.setPlaceholder(new SearchableText("This team has no project allocations."));
         historyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        //ObservableList<Allocation> data = currentTeam.getProjectAllocations();
 
         Callback<TableColumn, TableCell> cellFactory = col -> new EditingCell();
 
@@ -70,7 +70,7 @@ public class TeamHistoryTab extends SearchableTab {
 
 
 
-        TableColumn teamCol = new TableColumn("Project");
+        TableColumn<Allocation, String> teamCol = new TableColumn<Allocation, String>("Project");
         teamCol.setCellValueFactory(new PropertyValueFactory<Allocation, String>("Project"));
         teamCol.prefWidthProperty().bind(historyTable.widthProperty()
                 .subtract(3).divide(100).multiply(40));

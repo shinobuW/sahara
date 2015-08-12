@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableListView;
@@ -40,7 +41,7 @@ public class TeamEditTab extends SearchableTab {
     private Person allocatedScrumMaster;
     private Set<Person> allocatedDevelopers = new HashSet<>();
     private ObservableList<Role> roleList = observableArrayList();
-    private ComboBox<Role> roleComboBox;
+    private CustomComboBox<Role> roleComboBox;
     private Role noneRole = new Role("(none)", Role.RoleType.NONE);
     String poPlaceholder = "No Product Owner Assigned";
     String smPlaceholder = "No Scrum Master Assigned";
@@ -52,12 +53,11 @@ public class TeamEditTab extends SearchableTab {
      * @param baseTeam The team being edited
      */
     public TeamEditTab(Team baseTeam) {
-        // Init
+        // Initialise Variables
         this.baseTeam = baseTeam;
         allocatedDevelopers.addAll(baseTeam.getDevs());
         SearchableText poText;
         SearchableText smText;
-
 
         if (baseTeam.getProductOwner() != null) {
             allocatedProductOwner = baseTeam.getProductOwner();
@@ -76,7 +76,7 @@ public class TeamEditTab extends SearchableTab {
         }
 
 
-        // Setup basic GUI
+        // Tab settings
         this.setText("Edit Team");
         Pane editPane = new VBox(10);
         editPane.setBorder(null);
@@ -86,10 +86,10 @@ public class TeamEditTab extends SearchableTab {
 
 
         // Basic information fields
-        shortNameField = new RequiredField("Short Name:", searchControls);
+        shortNameField = new RequiredField("Short Name:");
         shortNameField.setText(baseTeam.getShortName());
         shortNameField.setMaxWidth(275);
-        descriptionField = new CustomTextArea("Team Description:", 300, searchControls);
+        descriptionField = new CustomTextArea("Team Description:", 300);
         descriptionField.setText(baseTeam.getDescription());
         descriptionField.setMaxWidth(275);
 
@@ -103,23 +103,24 @@ public class TeamEditTab extends SearchableTab {
 
 
         // Buttons for the scene
-        Button btnSave = new Button("Done");
+        Button btnDone = new Button("Done");
         Button btnCancel = new Button("Cancel");
         HBox sceneButtons = new HBox();
         sceneButtons.spacingProperty().setValue(10);
         sceneButtons.alignmentProperty().set(Pos.TOP_LEFT);
-        sceneButtons.getChildren().addAll(btnSave, btnCancel);
+        sceneButtons.getChildren().addAll(btnDone, btnCancel);
 
 
         // Role assignment
         Button btnRoleAssign = new Button("Assign");
         btnRoleAssign.setDisable(true);
         roleList = observableArrayList();
-        roleComboBox = new ComboBox<>(roleList);
 
-        HBox roleAssignmentBox = new HBox(10);
-        roleAssignmentBox.getChildren().addAll(
-                new Label("Role:"), roleComboBox, btnRoleAssign);
+        roleComboBox = new CustomComboBox<>("Role:");
+        for (Role role : Global.currentWorkspace.getRoles()) {
+            roleComboBox.addToComboBox(role);
+        }
+
 
 
         // Draft member and available people lists
@@ -136,22 +137,22 @@ public class TeamEditTab extends SearchableTab {
 
 
         // List views
-        SearchableListView<Person> teamMembersListView = new SearchableListView<>(teamMembersList, searchControls);
+        SearchableListView<Person> teamMembersListView = new SearchableListView<>(teamMembersList);
         teamMembersListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         teamMembersListView.getSelectionModel().select(0);
 
-        SearchableListView<Person> availablePeopleListView = new SearchableListView<>(availablePeopleList,
-                searchControls);
+        SearchableListView<Person> availablePeopleListView = new SearchableListView<>(availablePeopleList);
         availablePeopleListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         availablePeopleListView.getSelectionModel().select(0);
 
         VBox teamMembersBox = new VBox(10);
-        teamMembersBox.getChildren().add(new SearchableText("Team Members: ", searchControls));
-        teamMembersBox.getChildren().add(teamMembersListView);
+        SearchableText teamMemberLabel = new SearchableText("Team Members: ");
+        teamMembersBox.getChildren().addAll(teamMemberLabel, teamMembersListView);
+
 
         VBox availablePeopleBox = new VBox(10);
-        availablePeopleBox.getChildren().add(new SearchableText("Available People: ", searchControls));
-        availablePeopleBox.getChildren().add(availablePeopleListView);
+        SearchableText availablePeopleLabel = new SearchableText("Available People: ");
+        availablePeopleBox.getChildren().addAll(availablePeopleLabel, availablePeopleListView);
 
         HBox memberListViews = new HBox(10);
         memberListViews.getChildren().addAll(teamMembersBox, assignmentButtons, availablePeopleBox);
@@ -175,10 +176,23 @@ public class TeamEditTab extends SearchableTab {
                 shortNameField,
                 descriptionField,
                 memberListViews,
-                roleAssignmentBox,
+                roleComboBox,
                 poText,
                 smText,
                 sceneButtons
+        );
+
+        Collections.addAll(
+                searchControls,
+                shortNameField,
+                descriptionField,
+                roleComboBox,
+                poText,
+                smText,
+                teamMembersListView,
+                availablePeopleListView,
+                teamMemberLabel,
+                availablePeopleLabel
         );
 
 
@@ -199,7 +213,7 @@ public class TeamEditTab extends SearchableTab {
             });
 
 
-        // Button events
+        // Events
         btnAssign.setOnAction((event) -> {
                 Collection<Person> selectedPeople = new ArrayList<>();
                 selectedPeople.addAll(availablePeopleListView.getSelectionModel().
@@ -242,7 +256,7 @@ public class TeamEditTab extends SearchableTab {
         btnRoleAssign.setOnAction((event) -> {
                 Person selectedPerson =
                         teamMembersListView.getSelectionModel().getSelectedItems().get(0);
-                Role selectedRole = roleComboBox.getSelectionModel().getSelectedItem();
+                Role selectedRole = roleComboBox.getComboBox().getSelectionModel().getSelectedItem();
                 if (selectedRole == null) {
                     System.out.println("No selected role");
                 }
@@ -282,30 +296,25 @@ public class TeamEditTab extends SearchableTab {
                 }
             });
 
-        btnCancel.setOnAction((event) -> {
+        btnCancel.setOnAction((event) -> baseTeam.switchToInfoScene());
+
+        btnDone.setOnAction((event) -> {
+            if (isValidState()) { // validation
+                baseTeam.edit(shortNameField.getText(),
+                        descriptionField.getText(),
+                        teamMembersList,
+                        allocatedProductOwner,
+                        allocatedScrumMaster,
+                        allocatedDevelopers
+                );
+
+                Collections.sort(Global.currentWorkspace.getTeams());
                 baseTeam.switchToInfoScene();
-            });
-
-        btnSave.setOnAction((event) -> {
-                if (isValidState()) { // validation
-                    // Edit Command.
-
-                    baseTeam.edit(shortNameField.getText(),
-                            descriptionField.getText(),
-                            teamMembersList,
-                            allocatedProductOwner,
-                            allocatedScrumMaster,
-                            allocatedDevelopers
-                    );
-
-                    Collections.sort(Global.currentWorkspace.getTeams());
-                    baseTeam.switchToInfoScene();
-                    App.mainPane.refreshTree();
-                }
-                else {
-                    event.consume();
-                }
-            });
+                App.mainPane.refreshTree();
+            } else {
+                event.consume();
+            }
+        });
     }
 
 

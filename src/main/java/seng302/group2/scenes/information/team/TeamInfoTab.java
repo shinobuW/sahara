@@ -33,16 +33,28 @@ public class TeamInfoTab extends SearchableTab {
      * @param currentTeam currently selected team
      */
     public TeamInfoTab(Team currentTeam) {
+        // Tab settings
         this.setText("Basic Information");
 
-        Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
+        Pane basicInfoPane = new VBox(10);
         basicInfoPane.setBorder(null);
         basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-
+        // Create Controls
         SearchableText title = new SearchableTitle(currentTeam.getShortName());
+        SearchableText desc = new SearchableText("Team Description: " + currentTeam.getDescription());
+        SearchableText listViewLabel = new SearchableText("");
+
+        ObservableList<String> tempTeamString = personRoleToString(currentTeam.getPeople());
+        SearchableListView teamsPeopleBox = new SearchableListView<>(tempTeamString, searchControls);
+        teamsPeopleBox.setPrefHeight(192);
+        teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        teamsPeopleBox.setMaxWidth(275);
+
+        Separator separator = new Separator();
+
 
         Button btnEdit = new Button("Edit");
         if (currentTeam.isUnassignedTeam()) {
@@ -52,6 +64,17 @@ public class TeamInfoTab extends SearchableTab {
             btnEdit.setVisible(true);
         }
 
+        basicInfoPane.getChildren().addAll(
+                title,
+                desc,
+                separator
+        );
+
+        Collections.addAll(
+                searchControls,
+                title,
+                desc
+        );
 
         if (currentTeam.isUnassignedTeam()) {
             for (SaharaItem person : Global.currentWorkspace.getPeople()) {
@@ -62,55 +85,53 @@ public class TeamInfoTab extends SearchableTab {
             }
         }
 
-        ObservableList<String> tempTeamString = personRoleToString(currentTeam.getPeople());
-
-        SearchableListView teamsPeopleBox = new SearchableListView(tempTeamString, searchControls);
-        teamsPeopleBox.setPrefHeight(192);
-        teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        teamsPeopleBox.setMaxWidth(275);
-
-        Separator separator = new Separator();
-        SearchableText desc = new SearchableText("Team Description: "
-                + currentTeam.getDescription());
-        basicInfoPane.getChildren().addAll(title, desc, separator);
-
-        Collections.addAll(searchControls, title, desc);
-
+        // Add a PO, SM,and Team Member label if the team is not the unassigned team.
         if (!currentTeam.isUnassignedTeam()) {
+            SearchableText poLabel = new SearchableText("");
+            SearchableText smLabel = new SearchableText("");
+            listViewLabel.setText("Team Members: ");
             if (currentTeam.getProductOwner() != null) {
-                basicInfoPane.getChildren().add(new SearchableText("Product Owner: "
-                        + currentTeam.getProductOwner().toString(), searchControls));
+                poLabel.setText("Product Owner: " + currentTeam.getProductOwner().toString());
             }
             else {
-                basicInfoPane.getChildren().add(new SearchableText("Product Owner: ", searchControls));
+                poLabel.setText("Product Owner: ");
             }
 
             if (currentTeam.getScrumMaster() != null) {
-                basicInfoPane.getChildren().add(new SearchableText("Scrum Master: "
-                        + currentTeam.getScrumMaster().toString(), searchControls));
+                smLabel.setText("Scrum Master: " + currentTeam.getScrumMaster().toString());
             }
             else {
-                basicInfoPane.getChildren().add(new SearchableText("Scrum Master: ", searchControls));
+                smLabel.setText("Scrum Master: ");
             }
 
-            basicInfoPane.getChildren().add(new SearchableText("Team Members: ", searchControls));
-            basicInfoPane.getChildren().add(teamsPeopleBox);
+            basicInfoPane.getChildren().addAll(
+                    poLabel,
+                    smLabel,
+                    listViewLabel
+            );
 
-            basicInfoPane.getChildren().add(btnEdit);
+            Collections.addAll(
+                    searchControls,
+                    poLabel,
+                    smLabel,
+                    listViewLabel
+            );
 
-            btnEdit.setOnAction((event) -> {
-                    currentTeam.switchToInfoScene(true);
-                });
+            btnEdit.setOnAction((event) -> currentTeam.switchToInfoScene(true));
         }
+
         else {
-            // Just add the members list
-            basicInfoPane.getChildren().add(new SearchableText("Unassigned People: ", searchControls));
-            basicInfoPane.getChildren().add(teamsPeopleBox);
+            listViewLabel.setText("Unassigned People: ");
+            basicInfoPane.getChildren().add(listViewLabel);
+            searchControls.add(listViewLabel);
         }
+
+        basicInfoPane.getChildren().addAll(teamsPeopleBox, btnEdit);
+        searchControls.add(teamsPeopleBox);
     }
 
 
-    /*
+    /**
     * @param currentTeam It is the team to be converted.
     * @return returns a List of the People converted to a List of their Shortnames
     */
@@ -138,7 +159,7 @@ public class TeamInfoTab extends SearchableTab {
     }
 
 
-    /*
+    /**
     * Sorts a list of people based on their roles on a team, PO first, SM second, Dev third
     * then lastly goes people without a role.
     * @param currentTeam The team to sort by.
@@ -167,8 +188,11 @@ public class TeamInfoTab extends SearchableTab {
         return teamList;
     }
 
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
     @Override
-    // TODO
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;
     }
