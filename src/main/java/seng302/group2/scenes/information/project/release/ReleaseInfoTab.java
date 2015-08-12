@@ -19,7 +19,7 @@ import java.util.List;
 
 
 /**
- * The workspace information tab
+ * The release information tab.
  * Created by jml168 on 11/05/15.
  */
 public class ReleaseInfoTab extends SearchableTab {
@@ -31,40 +31,48 @@ public class ReleaseInfoTab extends SearchableTab {
      * @param currentRelease The currently selected Release
      */
     public ReleaseInfoTab(Release currentRelease) {
+        // Tab settings
         this.setText("Basic Information");
-
-        Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
+        Pane basicInfoPane = new VBox(10);
         basicInfoPane.setBorder(null);
         basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-
+        // Create controls
         SearchableText title = new SearchableTitle(currentRelease.getShortName());
-
-        Button btnEdit = new Button("Edit");
+        SearchableText description = new SearchableText("Release Description: " + currentRelease.getDescription());
+        SearchableText projectLabel = new SearchableText("Project: " + currentRelease.getProject().toString());
 
         String releaseDateString = "";
-
         if (currentRelease.getEstimatedDate() != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             releaseDateString = currentRelease.getEstimatedDate().format(formatter);
         }
+        SearchableText releaseDate = new SearchableText("Estimated Release Date: " + releaseDateString);
 
-        basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new SearchableText("Release Description: "
-                + currentRelease.getDescription(), searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Estimated Release Date: "
-                + releaseDateString, searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Project: "
-                + currentRelease.getProject().toString(), searchControls));
-        basicInfoPane.getChildren().add(btnEdit);
+        Button btnEdit = new Button("Edit");
 
+        // Events
         btnEdit.setOnAction((event) -> {
                 currentRelease.switchToInfoScene(true);
             });
 
-        Collections.addAll(searchControls, title);
+        // Add items to pane & search collection
+        basicInfoPane.getChildren().addAll(
+                title,
+                description,
+                releaseDate,
+                projectLabel,
+                btnEdit
+        );
+
+        Collections.addAll(searchControls,
+                title,
+                description,
+                releaseDate,
+                projectLabel
+        );
     }
 
     /**

@@ -114,7 +114,6 @@ public class TeamInfoTab extends SearchableTab {
 
         else {
             listViewLabel.setText("Unassigned People: ");
-            basicInfoPane.getChildren().add(listViewLabel);
         }
 
         basicInfoPane.getChildren().addAll(listViewLabel, teamsPeopleBox, btnEdit);

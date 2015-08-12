@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * A class for displaying a tab showing data on all the projects in the workspace.
  * Created by btm38 on 30/07/15.
  */
 public class ProjectEditTab extends SearchableTab {
@@ -37,6 +38,7 @@ public class ProjectEditTab extends SearchableTab {
      * @return The Workspace Edit information scene
      */
     public ProjectEditTab(Project currentProject) {
+        // Tab settings
         this.setText("Edit Project");
         Pane editPane = new VBox(10);
         editPane.setBorder(null);
@@ -44,78 +46,78 @@ public class ProjectEditTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(editPane);
         this.setContent(wrapper);
 
-        Button btnCancel = new Button("Cancel");
-        Button btnSave = new Button("Done");
-
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.TOP_LEFT);
-        buttons.getChildren().addAll(btnSave, btnCancel);
-
-        RequiredField shortNameCustomField = new RequiredField("Short Name:", searchControls);
-        RequiredField longNameCustomField = new RequiredField("Long Name:", searchControls);
-        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description:", 300, searchControls);
+        // Create controls
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        RequiredField longNameCustomField = new RequiredField("Long Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description:", 300);
 
         shortNameCustomField.setMaxWidth(275);
         longNameCustomField.setMaxWidth(275);
         descriptionTextArea.setMaxWidth(275);
 
+        Button btnCancel = new Button("Cancel");
+        Button btnDone = new Button("Done");
+        HBox buttons = new HBox();
+        buttons.spacingProperty().setValue(10);
+        buttons.alignmentProperty().set(Pos.TOP_LEFT);
+        buttons.getChildren().addAll(btnDone, btnCancel);
+
+        // Set values
         shortNameCustomField.setText(currentProject.getShortName());
         longNameCustomField.setText(currentProject.getLongName());
         descriptionTextArea.setText(currentProject.getDescription());
 
-        Button btnAdd = new Button("<-");
-        Button btnDelete = new Button("->");
+        // Events
+        btnDone.setOnAction((event) -> {
+            boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                    currentProject.getShortName());
+            boolean longNameUnchanged = longNameCustomField.getText().equals(
+                    currentProject.getLongName());
+            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                    currentProject.getDescription());
 
-        VBox teamButtons = new VBox();
-        teamButtons.spacingProperty().setValue(10);
-        teamButtons.getChildren().add(btnAdd);
-        teamButtons.getChildren().add(btnDelete);
-        teamButtons.setAlignment(Pos.CENTER);
+            // If no fields have been changed
+            if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
+                currentProject.switchToInfoScene();
+                return;
+            }
 
-        editPane.getChildren().add(shortNameCustomField);
-        editPane.getChildren().add(longNameCustomField);
-        editPane.getChildren().add(descriptionTextArea);
+            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                    currentProject.getShortName());
+            boolean correctLongName = NameValidator.validateName(longNameCustomField);
 
-        editPane.getChildren().add(buttons);
+            if (correctShortName && correctLongName) {
+                currentProject.edit(shortNameCustomField.getText(),
+                        longNameCustomField.getText(), descriptionTextArea.getText(),
+                        FXCollections.observableArrayList()
+                );
 
-        btnSave.setOnAction((event) -> {
-                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                        currentProject.getShortName());
-                boolean longNameUnchanged = longNameCustomField.getText().equals(
-                        currentProject.getLongName());
-                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                        currentProject.getDescription());
-
-                // If no fields have been changed
-                if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
-                    currentProject.switchToInfoScene();
-                    return;
-                }
-
-                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                        currentProject.getShortName());
-                boolean correctLongName = NameValidator.validateName(longNameCustomField);
-
-                if (correctShortName && correctLongName) {
-                    currentProject.edit(shortNameCustomField.getText(),
-                            longNameCustomField.getText(), descriptionTextArea.getText(),
-                            FXCollections.observableArrayList()
-                    );
-
-                    Collections.sort(Global.currentWorkspace.getProjects());
-                    currentProject.switchToInfoScene();
-                    App.mainPane.refreshTree();
-                }
-                else {
-                    // One or more fields incorrectly validated, stay on the edit scene
-                    event.consume();
-                }
-            });
+                Collections.sort(Global.currentWorkspace.getProjects());
+                currentProject.switchToInfoScene();
+                App.mainPane.refreshTree();
+            } else {
+                // One or more fields incorrectly validated, stay on the edit scene
+                event.consume();
+            }
+        });
 
         btnCancel.setOnAction((event) -> {
                 currentProject.switchToInfoScene();
             });
+
+        // Add items to pane & search collection
+        editPane.getChildren().addAll(
+                shortNameCustomField,
+                longNameCustomField,
+                descriptionTextArea,
+                buttons
+        );
+
+        Collections.addAll(searchControls,
+                shortNameCustomField,
+                longNameCustomField,
+                descriptionTextArea
+        );
 
     }
 

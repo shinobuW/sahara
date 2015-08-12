@@ -41,6 +41,7 @@ public class ReleaseEditTab extends SearchableTab {
      * @param currentRelease the release being edited
      */
     public ReleaseEditTab(Release currentRelease) {
+        // Tab settings
         this.setText("Edit Release");
         Pane editPane = new VBox(10);
         editPane.setBorder(null);
@@ -48,26 +49,28 @@ public class ReleaseEditTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(editPane);
         this.setContent(wrapper);
 
+        // Create controls
+        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Release Description:", 300);
+        CustomDatePicker releaseDatePicker = new CustomDatePicker("Estimated Release Date:", false);
+        CustomComboBox projectComboBox = new CustomComboBox("Project: ", true);
+
+
+        shortNameCustomField.setPrefWidth(300);
+        descriptionTextArea.setPrefWidth(300);
+        releaseDatePicker.setPrefWidth(300);
+        projectComboBox.setPrefWidth(300);
+
         Button btnCancel = new Button("Cancel");
-        Button btnSave = new Button("Done");
+        Button btnDone = new Button("Done");
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
         buttons.alignmentProperty().set(Pos.TOP_LEFT);
-        buttons.getChildren().addAll(btnSave, btnCancel);
+        buttons.getChildren().addAll(btnDone, btnCancel);
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name:", searchControls);
-        CustomTextArea descriptionTextArea = new CustomTextArea("Release Description:", 300, searchControls);
-        CustomDatePicker releaseDatePicker = new CustomDatePicker("Estimated Release Date:",
-                false, searchControls);
 
-        CustomComboBox projectComboBox = new CustomComboBox("Project: ", true, searchControls);
-
-        shortNameCustomField.setMaxWidth(300);
-        descriptionTextArea.setMaxWidth(300);
-        releaseDatePicker.setMaxWidth(300);
-        projectComboBox.setMaxWidth(300);
-
+        // Set values
         for (SaharaItem project : Global.currentWorkspace.getProjects()) {
             projectComboBox.addToComboBox(project.toString());
         }
@@ -76,15 +79,11 @@ public class ReleaseEditTab extends SearchableTab {
         descriptionTextArea.setText(currentRelease.getDescription());
         releaseDatePicker.setValue(currentRelease.getEstimatedDate());
 
-        editPane.getChildren().addAll(shortNameCustomField, descriptionTextArea,
-                releaseDatePicker, buttons);
-        //informationPane.getChildren().add(projectComboBox);
-
         String defaultProject = currentRelease.getProject().getShortName();
         projectComboBox.setValue(defaultProject);
 
 
-        btnSave.setOnAction((event) -> {
+        btnDone.setOnAction((event) -> {
                 boolean shortNameUnchanged = shortNameCustomField.getText().equals(
                         currentRelease.getShortName());
                 boolean descriptionUnchanged = descriptionTextArea.getText().equals(
@@ -101,8 +100,7 @@ public class ReleaseEditTab extends SearchableTab {
 
                 if (releaseDatePicker.getValue() == null) {
                     releaseDate = null;
-                }
-                else {
+                } else {
                     if (!DateValidator.isFutureDate(releaseDate)) {
                         releaseDatePicker.showErrorField("Date must be a future date");
                     }
@@ -130,8 +128,7 @@ public class ReleaseEditTab extends SearchableTab {
                     Collections.sort(currentRelease.getProject().getReleases());
                     currentRelease.switchToInfoScene();
                     App.mainPane.refreshTree();
-                }
-                else {
+                } else {
                     // One or more fields incorrectly validated, stay on the edit scene
                     event.consume();
                 }
@@ -140,6 +137,22 @@ public class ReleaseEditTab extends SearchableTab {
         btnCancel.setOnAction((event) -> {
                 currentRelease.switchToInfoScene();
             });
+
+        // Add items to pane & search collection
+        editPane.getChildren().addAll(
+                shortNameCustomField,
+                descriptionTextArea,
+                projectComboBox,
+                releaseDatePicker,
+                buttons
+        );
+
+        Collections.addAll(searchControls,
+                shortNameCustomField,
+                descriptionTextArea,
+                releaseDatePicker,
+                projectComboBox
+        );
     }
 
     /**

@@ -10,22 +10,20 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreateProjectDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
- * A class for displaying a tab showing data on all the projects in the workspace.
+ * A class for displaying a tab used to edit projects.
  * Created by btm38 on 13/07/15.
  */
 public class ProjectCategoryTab extends SearchableTab {
@@ -37,13 +35,19 @@ public class ProjectCategoryTab extends SearchableTab {
      * @param currentWorkspace The current workspace
      */
     public ProjectCategoryTab(Workspace currentWorkspace) {
+        // Tab settings
         this.setText("Basic Information");
         Pane categoryPane = new VBox(10);
         categoryPane.setBorder(null);
         categoryPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(categoryPane);
         this.setContent(wrapper);
+
+        // Create controls
         SearchableText title = new SearchableTitle("Projects in " + currentWorkspace.getShortName(), searchControls);
+        SearchableListView projectBox = new SearchableListView<>(currentWorkspace.getProjects());
+        projectBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        projectBox.setMaxWidth(275);
 
         Button btnView = new Button("View");
         Button btnDelete = new Button("Delete");
@@ -51,21 +55,10 @@ public class ProjectCategoryTab extends SearchableTab {
 
         HBox createButton = new HBox();
         createButton.spacingProperty().setValue(10);
-
-        createButton.getChildren().add(btnView);
-        createButton.getChildren().add(btnDelete);
-        createButton.getChildren().add(btnCreate);
-
+        createButton.getChildren().addAll(btnView, btnDelete, btnCreate);
         createButton.setAlignment(Pos.TOP_LEFT);
 
-        ListView projectBox = new ListView(currentWorkspace.getProjects());
-        projectBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        projectBox.setMaxWidth(275);
-
-        categoryPane.getChildren().add(title);
-        categoryPane.getChildren().add(projectBox);
-        categoryPane.getChildren().add(createButton);
-
+        // Events
         btnView.setOnAction((event) -> {
                 if (projectBox.getSelectionModel().getSelectedItem() != null) {
                     App.mainPane.selectItem((SaharaItem)
@@ -84,6 +77,20 @@ public class ProjectCategoryTab extends SearchableTab {
                 javafx.scene.control.Dialog creationDialog = new CreateProjectDialog();
                 creationDialog.show();
             });
+
+        // Add items to pane & search collection
+        categoryPane.getChildren().addAll(
+                title,
+                projectBox,
+                createButton
+        );
+
+        Collections.addAll(searchControls,
+                title,
+                projectBox
+        );
+
+
     }
 
     /**

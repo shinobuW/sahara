@@ -120,9 +120,9 @@ public class PersonEditTab extends SearchableTab {
             teamBox.setValue(currentTeam.toString());
         }
 
+        shortNameCustomField.setText(currentPerson.getShortName());
         firstNameCustomField.setText(currentPerson.getFirstName());
         lastNameCustomField.setText(currentPerson.getLastName());
-        shortNameCustomField.setText(currentPerson.getShortName());
         emailTextField.setText(currentPerson.getEmail());
         customBirthDate.setText(currentPerson.getDateString());
         descriptionTextArea.setText(currentPerson.getDescription());
@@ -255,6 +255,7 @@ public class PersonEditTab extends SearchableTab {
                 currentPerson.switchToInfoScene();
             });
 
+        // Add items to pane & search collection
         editPane.getChildren().addAll(
                 shortNameCustomField,
                 firstNameCustomField,

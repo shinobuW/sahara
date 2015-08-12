@@ -6,21 +6,20 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
 
 /**
+ * The person information tab.
  * Created by swi67 on 10/05/15.
  */
 public class ProjectInfoTab extends SearchableTab {
@@ -34,17 +33,18 @@ public class ProjectInfoTab extends SearchableTab {
      * @param currentProject currently selected project
      */
     public ProjectInfoTab(Project currentProject) {
+        // Tab settings
         this.setText("Basic Information");
-
-        Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
+        Pane basicInfoPane = new VBox(10);
         basicInfoPane.setBorder(null);
         basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-
+        // Create controls
         SearchableText title = new SearchableTitle(currentProject.getLongName(), searchControls);
 
+        Separator separator = new Separator();
         Button btnEdit = new Button("Edit");
 
 
@@ -55,40 +55,53 @@ public class ProjectInfoTab extends SearchableTab {
                 }
             });
 
-        Separator separator = new Separator();
-
-        basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new SearchableText("Short Name: " + currentProject.getShortName(),
-                searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Project Description: "
-                + currentProject.getDescription(), searchControls));
-        basicInfoPane.getChildren().add(separator);
+        SearchableText shortNameField = new SearchableText("Short Name: " + currentProject.getShortName());
+        SearchableText description = new SearchableText("Project Description: " + currentProject.getDescription());
+        SearchableText currentTeamsLabel = new SearchableText("Current Teams:");
+        SearchableText releasesLabel = new SearchableText("Releases:");
 
 
-        ListView projectTeamsBox = new ListView(currentTeams);
+
+        SearchableListView projectTeamsBox = new SearchableListView<>(currentTeams);
         projectTeamsBox.setPrefHeight(192);
         projectTeamsBox.setMaxHeight(150);
         projectTeamsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        ListView projectReleaseBox = new ListView(currentProject.getReleases());
+        SearchableListView projectReleaseBox = new SearchableListView<>(currentProject.getReleases());
         projectReleaseBox.setPrefHeight(192);
         projectReleaseBox.setMaxHeight(150);
 
         HBox listBoxes = new HBox(12);
         VBox teamsBox = new VBox();
         VBox releaseBox = new VBox();
-        teamsBox.getChildren().addAll(new SearchableText("Current Teams:", searchControls), projectTeamsBox);
-        releaseBox.getChildren().addAll(new SearchableText("Releases:", searchControls), projectReleaseBox);
+        teamsBox.getChildren().addAll(currentTeamsLabel, projectTeamsBox);
+        releaseBox.getChildren().addAll(releasesLabel, projectReleaseBox);
         listBoxes.getChildren().addAll(teamsBox, releaseBox);
 
-        basicInfoPane.getChildren().add(listBoxes);
-
-
-        basicInfoPane.getChildren().add(btnEdit);
+        // Events
         btnEdit.setOnAction((event) -> {
                 currentProject.switchToInfoScene(true);
             });
 
+        // Add items to pane & search collection
+        basicInfoPane.getChildren().addAll(
+                title,
+                shortNameField,
+                description,
+                separator,
+                listBoxes,
+                btnEdit
+        );
+
+        Collections.addAll(searchControls,
+                title,
+                shortNameField,
+                description,
+                currentTeamsLabel,
+                projectTeamsBox,
+                releasesLabel,
+                projectReleaseBox
+        );
     }
 
     /**

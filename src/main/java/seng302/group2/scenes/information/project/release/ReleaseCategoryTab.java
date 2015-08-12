@@ -10,10 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreateReleaseDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
@@ -37,13 +34,19 @@ public class ReleaseCategoryTab extends SearchableTab {
      * @param selectedCategory The current selected category
      */
     public ReleaseCategoryTab(ReleaseCategory selectedCategory) {
+        // Tab settings
         this.setText("Basic Information");
         Pane categoryPane = new VBox(10);
         categoryPane.setBorder(null);
         categoryPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(categoryPane);
         this.setContent(wrapper);
+
+        // Create controls
         SearchableText title = new SearchableTitle("Releases in " + selectedCategory.getProject().toString());
+        SearchableListView releaseBox = new SearchableListView<>(selectedCategory.getProject().getReleases());
+        releaseBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        releaseBox.setMaxWidth(275);
 
         Button btnView = new Button("View");
         Button btnDelete = new Button("Delete");
@@ -51,20 +54,10 @@ public class ReleaseCategoryTab extends SearchableTab {
 
         HBox selectionButtons = new HBox();
         selectionButtons.spacingProperty().setValue(10);
-        selectionButtons.getChildren().add(btnView);
-        selectionButtons.getChildren().add(btnDelete);
-        selectionButtons.getChildren().add(btnCreate);
+        selectionButtons.getChildren().addAll(btnView, btnDelete, btnCreate);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
-
-        ListView releaseBox = new ListView(selectedCategory.getProject().getReleases());
-        releaseBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        releaseBox.setMaxWidth(275);
-
-        categoryPane.getChildren().add(title);
-        categoryPane.getChildren().add(releaseBox);
-        categoryPane.getChildren().add(selectionButtons);
-
+        // Events
         btnView.setOnAction((event) -> {
                 if (releaseBox.getSelectionModel().getSelectedItem() != null) {
                     App.mainPane.selectItem((SaharaItem)
@@ -85,7 +78,17 @@ public class ReleaseCategoryTab extends SearchableTab {
                 creationDialog.show();
             });
 
-        Collections.addAll(searchControls, title);
+        // Add items to pane & search collection
+        categoryPane.getChildren().addAll(
+                title,
+                releaseBox,
+                selectionButtons
+        );
+
+        Collections.addAll(searchControls,
+                title,
+                releaseBox
+        );
     }
 
     /**

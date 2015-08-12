@@ -61,17 +61,14 @@ public class TeamHistoryTab extends SearchableTab {
 
         // Create Table
         TableView<Allocation> historyTable = new TableView<>(currentTeam.getProjectAllocations());
+        SearchableText tablePlaceholder = new SearchableText("This team has no project allocations.");
         historyTable.setEditable(true);
         historyTable.setPrefWidth(700);
         historyTable.setPrefHeight(400);
-        historyTable.setPlaceholder(new SearchableText("This team has no project allocations."));
+        historyTable.setPlaceholder(tablePlaceholder);
         historyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         Callback<TableColumn, TableCell> cellFactory = col -> new EditingCell();
-
-        SearchableText title = new SearchableTitle(currentTeam.getShortName() + " Allocation History");
-
-
 
         TableColumn<Allocation, String> teamCol = new TableColumn<Allocation, String>("Project");
         teamCol.setCellValueFactory(new PropertyValueFactory<Allocation, String>("Project"));
@@ -212,6 +209,9 @@ public class TeamHistoryTab extends SearchableTab {
                     }
                 });
 
+        // Create controls
+        SearchableText title = new SearchableTitle(currentTeam.getShortName() + " Allocation History");
+
         HBox buttons = new HBox(10);
         buttons.setAlignment(Pos.BOTTOM_RIGHT);
         Button addButton = new Button("Add");
@@ -226,15 +226,12 @@ public class TeamHistoryTab extends SearchableTab {
         endDatePicker.getDatePicker().setStyle("-fx-pref-width: 200;");
         projectComboBox.getComboBox().setStyle("-fx-pref-width: 250;");
 
-        projectComboBox.prefWidthProperty().bind(historyTable.widthProperty()
-                .subtract(3).divide(100).multiply(30));
-        startDatePicker.prefWidthProperty().bind(historyTable.widthProperty()
-                .subtract(3).divide(100).multiply(30));
-        endDatePicker.prefWidthProperty().bind(historyTable.widthProperty()
-                .subtract(3).divide(100).multiply(30));
-        newAllocationFields.getChildren().addAll(projectComboBox,
-                startDatePicker, endDatePicker);
+        projectComboBox.prefWidthProperty().bind(historyTable.widthProperty().subtract(3).divide(100).multiply(30));
+        startDatePicker.prefWidthProperty().bind(historyTable.widthProperty().subtract(3).divide(100).multiply(30));
+        endDatePicker.prefWidthProperty().bind(historyTable.widthProperty().subtract(3).divide(100).multiply(30));
+        newAllocationFields.getChildren().addAll(projectComboBox, startDatePicker, endDatePicker);
 
+        // Events
         projectComboBox.getComboBox().setOnMouseClicked(event -> {
                 projectComboBox.getComboBox().getItems().clear();
                 for (Project proj : Global.currentWorkspace.getProjects()) {
@@ -304,7 +301,7 @@ public class TeamHistoryTab extends SearchableTab {
                     }
                 }
             });
-        //historyTable.setItems(data);
+
         TableColumn[] columns = {teamCol, startDateCol, endDateCol};
         historyTable.getColumns().setAll(columns);
 
@@ -324,7 +321,6 @@ public class TeamHistoryTab extends SearchableTab {
         });
 
         // Add items to pane & search collection
-
         historyPane.getChildren().addAll(
                 title,
                 historyTable,
@@ -334,7 +330,10 @@ public class TeamHistoryTab extends SearchableTab {
 
         Collections.addAll(searchControls,
                 title,
-                projectComboBox
+                tablePlaceholder,
+                projectComboBox,
+                startDatePicker,
+                endDatePicker
         );
     }
 

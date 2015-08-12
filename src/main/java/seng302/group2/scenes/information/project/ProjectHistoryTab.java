@@ -38,7 +38,7 @@ import static seng302.group2.util.validation.DateValidator.validateAllocation;
 
 /**
  * A class for history allocation tab to display a table of the selected project's allocation
- * history
+ * history.
  * Created by swi67 on 10/05/15.
  */
 public class ProjectHistoryTab extends SearchableTab {
@@ -53,6 +53,7 @@ public class ProjectHistoryTab extends SearchableTab {
      * @param currentProject currently selected project
      */
     public ProjectHistoryTab(Project currentProject) {
+        // Tab settings
         this.setText("Allocation History");
         Pane historyPane = new VBox(10);  // The pane that holds the basic info
         historyPane.setBorder(null);
@@ -60,18 +61,18 @@ public class ProjectHistoryTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(historyPane);
         this.setContent(wrapper);
 
+        // Create Table
         TableView<Allocation> historyTable = new TableView<>();
+        SearchableText tablePlaceholder = new SearchableText("This project has no team allocations.");
         historyTable.setEditable(true);
         historyTable.fixedCellSizeProperty();
         historyTable.setPrefWidth(700);
         historyTable.setPrefHeight(400);
-        historyTable.setPlaceholder(new SearchableText("This project has no team allocations.", searchControls));
+        historyTable.setPlaceholder(tablePlaceholder);
         historyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         ObservableList<Allocation> data = currentProject.getTeamAllocations();
 
         Callback<TableColumn, TableCell> cellFactory = col -> new EditingCell();
-
-        SearchableText title = new SearchableTitle("Allocation History", searchControls);
 
         TableColumn teamCol = new TableColumn("Team");
         teamCol.setCellValueFactory(new PropertyValueFactory<Allocation, String>("Team"));
@@ -212,6 +213,9 @@ public class ProjectHistoryTab extends SearchableTab {
                     }
                 });
 
+        // Create controls
+        SearchableText title = new SearchableTitle("Allocation History");
+
         HBox buttons = new HBox(10);
         buttons.setAlignment(Pos.BOTTOM_RIGHT);
         Button addButton = new Button("Add");
@@ -222,22 +226,16 @@ public class ProjectHistoryTab extends SearchableTab {
         CustomComboBox<Team> teamComboBox = new CustomComboBox("Team", true);
         CustomDatePicker startDatePicker = new CustomDatePicker("Start Date", true);
         CustomDatePicker endDatePicker = new CustomDatePicker("End Date", false);
-
-        Collections.addAll(searchControls, teamComboBox, startDatePicker, endDatePicker);
-
         startDatePicker.getDatePicker().setStyle("-fx-pref-width: 200;");
         endDatePicker.getDatePicker().setStyle("-fx-pref-width: 200;");
         teamComboBox.getComboBox().setStyle("-fx-pref-width: 250;");
 
-        teamComboBox.prefWidthProperty().bind(historyTable.widthProperty()
-                .subtract(3).divide(100).multiply(30));
-        startDatePicker.prefWidthProperty().bind(historyTable.widthProperty()
-                .subtract(3).divide(100).multiply(30));
-        endDatePicker.prefWidthProperty().bind(historyTable.widthProperty()
-                .subtract(3).divide(100).multiply(30));
-        newAllocationFields.getChildren().addAll(teamComboBox,
-                startDatePicker, endDatePicker);
+        teamComboBox.prefWidthProperty().bind(historyTable.widthProperty().subtract(3).divide(100).multiply(30));
+        startDatePicker.prefWidthProperty().bind(historyTable.widthProperty().subtract(3).divide(100).multiply(30));
+        endDatePicker.prefWidthProperty().bind(historyTable.widthProperty().subtract(3).divide(100).multiply(30));
+        newAllocationFields.getChildren().addAll(teamComboBox, startDatePicker, endDatePicker);
 
+        // Events
         teamComboBox.getComboBox().setOnMouseClicked(event -> {
                 teamComboBox.getComboBox().getItems().clear();
                 for (Team team : Global.currentWorkspace.getTeams()) {
@@ -329,7 +327,22 @@ public class ProjectHistoryTab extends SearchableTab {
                 }
             }
         });
-        historyPane.getChildren().addAll(title, historyTable, newAllocationFields, buttons);
+
+        // Add items to pane & search collection
+        historyPane.getChildren().addAll(
+                title,
+                historyTable,
+                newAllocationFields,
+                buttons
+        );
+
+        Collections.addAll(searchControls,
+                title,
+                tablePlaceholder,
+                teamComboBox,
+                startDatePicker,
+                endDatePicker);
+
     }
 
 
