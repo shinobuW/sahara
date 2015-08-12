@@ -78,28 +78,29 @@ public class WorkspaceEditTab extends SearchableTab {
         btnCancel.setOnAction((event) -> currentWorkspace.switchToInfoScene());
 
         btnDone.setOnAction((event) -> {
-            boolean shortNameUnchanged = shortNameCustomField.getText().equals(currentWorkspace.getShortName());
-            boolean longNameUnchanged = longNameCustomField.getText().equals(currentWorkspace.getLongName());
-            boolean descriptionUnchanged = descriptionTextArea.getText().equals(currentWorkspace.getDescription());
+                boolean shortNameUnchanged = shortNameCustomField.getText().equals(currentWorkspace.getShortName());
+                boolean longNameUnchanged = longNameCustomField.getText().equals(currentWorkspace.getLongName());
+                boolean descriptionUnchanged = descriptionTextArea.getText().equals(currentWorkspace.getDescription());
 
-            if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
-                currentWorkspace.switchToInfoScene();
-                return;
-            }
+                if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
+                    currentWorkspace.switchToInfoScene();
+                    return;
+                }
 
-            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                    currentWorkspace.getShortName());
-            boolean correctLongName = ShortNameValidator.validateShortName(longNameCustomField,
-                    currentWorkspace.getLongName());
-            if (correctShortName && correctLongName) {
-                currentWorkspace.edit(shortNameCustomField.getText(), longNameCustomField.getText(),
-                        descriptionTextArea.getText());
-                currentWorkspace.switchToInfoScene();
-                App.mainPane.refreshTree();
-            } else {
-                event.consume();
-            }
-        });
+                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                        currentWorkspace.getShortName());
+                boolean correctLongName = ShortNameValidator.validateShortName(longNameCustomField,
+                        currentWorkspace.getLongName());
+                if (correctShortName && correctLongName) {
+                    currentWorkspace.edit(shortNameCustomField.getText(), longNameCustomField.getText(),
+                            descriptionTextArea.getText());
+                    currentWorkspace.switchToInfoScene();
+                    App.mainPane.refreshTree();
+                }
+                else {
+                    event.consume();
+                }
+            });
     }
 
     /**

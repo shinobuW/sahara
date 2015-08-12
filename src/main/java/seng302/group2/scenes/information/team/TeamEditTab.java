@@ -299,22 +299,23 @@ public class TeamEditTab extends SearchableTab {
         btnCancel.setOnAction((event) -> baseTeam.switchToInfoScene());
 
         btnDone.setOnAction((event) -> {
-            if (isValidState()) { // validation
-                baseTeam.edit(shortNameField.getText(),
-                        descriptionField.getText(),
-                        teamMembersList,
-                        allocatedProductOwner,
-                        allocatedScrumMaster,
-                        allocatedDevelopers
-                );
+                if (isValidState()) { // validation
+                    baseTeam.edit(shortNameField.getText(),
+                            descriptionField.getText(),
+                            teamMembersList,
+                            allocatedProductOwner,
+                            allocatedScrumMaster,
+                            allocatedDevelopers
+                    );
 
-                Collections.sort(Global.currentWorkspace.getTeams());
-                baseTeam.switchToInfoScene();
-                App.mainPane.refreshTree();
-            } else {
-                event.consume();
-            }
-        });
+                    Collections.sort(Global.currentWorkspace.getTeams());
+                    baseTeam.switchToInfoScene();
+                    App.mainPane.refreshTree();
+                }
+                else {
+                    event.consume();
+                }
+            });
     }
 
 
