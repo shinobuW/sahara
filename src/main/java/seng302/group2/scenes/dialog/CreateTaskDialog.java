@@ -157,7 +157,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                 for (Backlog backlog : newValue.getBacklogs()) {
                     backlogComboBox.getItems().add(backlog);
                 }
-
+                availablePeople.clear();
                 for (Team team : newValue.getCurrentTeams()) {
                     for (Person person : team.getPeople()) {
                         availablePeople.add(person);
