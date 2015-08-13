@@ -43,9 +43,10 @@ public class GenerateReportDialog extends Dialog<Map<String, String>> {
         ButtonType btnTypeCreate = new ButtonType("Generate", ButtonBar.ButtonData.OK_DONE);
         this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
-        TreeItem<SaharaItem> root = new CheckBoxTreeItem<>(Global.currentWorkspace);
+        CheckBoxTreeItem<SaharaItem> root = new CheckBoxTreeItem<>(Global.currentWorkspace);
         addChildren(root);
         root.setExpanded(true);
+        root.setSelected(true);
 
         TreeView<SaharaItem> treeView = new TreeView<>(root);
         treeView.setCellFactory(CheckBoxTreeCell.<SaharaItem>forTreeView());

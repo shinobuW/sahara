@@ -299,7 +299,7 @@ public class Task extends SaharaItem implements Serializable {
         taskDescription.appendChild(ReportGenerator.doc.createTextNode(description));
         taskElement.appendChild(taskDescription);
 
-        Element taskState = ReportGenerator.doc.createElement("description");
+        Element taskState = ReportGenerator.doc.createElement("task-state");
         taskState.appendChild(ReportGenerator.doc.createTextNode(state.toString()));
         taskElement.appendChild(taskState);
 

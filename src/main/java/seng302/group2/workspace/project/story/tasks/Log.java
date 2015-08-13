@@ -110,7 +110,7 @@ public class Log extends SaharaItem implements Serializable {
         logElement.appendChild(descriptionElement);
         
         //TODO make sure the string is correct, this is placeholder and will probably be wrong
-        Element startTimeElement = ReportGenerator.doc.createElement("startTime");
+        Element startTimeElement = ReportGenerator.doc.createElement("start-time");
         startTimeElement.appendChild(ReportGenerator.doc.createTextNode(startTime.toString()));
         logElement.appendChild(startTimeElement);
         
