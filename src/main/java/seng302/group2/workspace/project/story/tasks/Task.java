@@ -237,7 +237,8 @@ public class Task extends SaharaItem implements Serializable {
      *  @param person The person to add
      */
     public void add(Person person) {
-        this.responsibilities.add(person);
+        Command command = new AddAssigneesCommand(this, person);
+        Global.commandManager.executeCommand(command);
     }
     
     /**
@@ -245,7 +246,8 @@ public class Task extends SaharaItem implements Serializable {
      *  @param log The log to add
      */
     public void add(Log log) {
-        this.logs.add(log);
+        Command command = new AddLogsCommand(this, log);
+        Global.commandManager.executeCommand(command);
     }
 
     /**
@@ -256,7 +258,7 @@ public class Task extends SaharaItem implements Serializable {
         for (Object item : responsibilities) {
             this.serializableResponsibilities.add((Person) item);
         }
-
+        
         serializableLogs.clear();
         for (Object item : logs) {
             this.serializableLogs.add((Log) item);
@@ -299,23 +301,31 @@ public class Task extends SaharaItem implements Serializable {
         taskDescription.appendChild(ReportGenerator.doc.createTextNode(description));
         taskElement.appendChild(taskDescription);
 
-        Element taskState = ReportGenerator.doc.createElement("task-state");
+        Element taskState = ReportGenerator.doc.createElement("state");
         taskState.appendChild(ReportGenerator.doc.createTextNode(state.toString()));
         taskElement.appendChild(taskState);
 
-        Element taskResponsibilities = ReportGenerator.doc.createElement("task-responsibilities");
+        Element taskResponsibilities = ReportGenerator.doc.createElement("responsibilities");
         for (Person person : this.responsibilities) {
             taskResponsibilities.appendChild(ReportGenerator.doc.createTextNode(person.getShortName()));
         }
         taskElement.appendChild(taskResponsibilities);
         
-        Element taskLogsElement = ReportGenerator.doc.createElement("task-responsibilities");
+        Element taskLogsElement = ReportGenerator.doc.createElement("logs");
         for (Log log : this.logs) {
             Element logElement = log.generateXML();
             taskLogsElement.appendChild(logElement);
         }
         taskElement.appendChild(taskLogsElement);
 
+        Element effortLeftElement = ReportGenerator.doc.createElement("effort-left");
+        effortLeftElement.appendChild(ReportGenerator.doc.createTextNode(effortLeft.toString()));
+        taskElement.appendChild(effortLeftElement);
+        
+        Element effortSpentElement = ReportGenerator.doc.createElement("effort-spent");
+        effortSpentElement.appendChild(ReportGenerator.doc.createTextNode(effortSpent.toString()));
+        taskElement.appendChild(effortSpentElement);
+        
         return taskElement;
     }
 
@@ -537,7 +547,7 @@ public class Task extends SaharaItem implements Serializable {
             }
             
         }
-
+        
         /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
@@ -565,5 +575,125 @@ public class Task extends SaharaItem implements Serializable {
         }
     }
 
+    /**
+     * Command to add and remove Logs
+     */
+    private class AddLogsCommand implements Command {
+        private Task task;
+        private Log log;
+        
+        private Integer oldEffort;
 
+        /**
+         * Constructor for the log addition command
+         * @param task The task to which the log is to be added
+         * @param log The log to be added
+         */
+        AddLogsCommand(Task task, Log log) {
+            this.task = task;
+            this.log = log;
+            this.oldEffort = task.getEffortSpent();
+        }
+
+        /**
+         * Executes the log addition command
+         */
+        public void execute() {
+            task.getLogs().add(log);
+            log.setTask(task);
+            Integer newEffortSpent = task.getEffortSpent() + log.getDuration();
+            task.setEffortSpent(newEffortSpent);
+        }
+
+        /**
+         * Undoes the log addition command
+         */
+        public void undo() {
+            task.getLogs().remove(log);
+            log.setTask(null);
+            task.setEffortSpent(oldEffort);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped_task = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equals(task)) {
+                    this.task = (Task) item;
+                    mapped_task = true;
+                }
+            }
+            boolean mapped_log = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equals(log)) {
+                    this.log = (Log) item;
+                    mapped_log = true;
+                }
+            }
+            return mapped_task && mapped_log;
+        }
+    }
+    
+    /**
+     * Command to add and remove People assigned to the Task
+     */
+    private class AddAssigneesCommand implements Command {
+        private Task task;
+        private Person person;
+
+        /**
+         * Constructor for the Assignees addition command
+         * @param task The task to which the person is to be added
+         * @param person The person to be added
+         */
+        AddAssigneesCommand(Task task, Person person) {
+            this.task = task;
+            this.person = person;
+        }
+
+        /**
+         * Executes the person addition command
+         */
+        public void execute() {
+            task.getResponsibilities().add(person);
+        }
+
+        /**
+         * Undoes the person addition command
+         */
+        public void undo() {
+            task.getResponsibilities().remove(person);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped_task = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equals(task)) {
+                    this.task = (Task) item;
+                    mapped_task = true;
+                }
+            }
+            boolean mapped_assignee = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equals(person)) {
+                    this.person = (Person) item;
+                    mapped_assignee = true;
+                }
+            }
+            return mapped_task && mapped_assignee;
+        }
+    }
+    
+    
 }

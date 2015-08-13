@@ -32,7 +32,7 @@ public class Log extends SaharaItem implements Serializable {
      * @param duration the duration the person worked for
      * @param startTime time the logger started working on the task
      */
-    public Log(Task task, String description, Person logger, int duration, LocalDate startTime) {
+    public Log(Task task, String description, Person logger, Integer duration, LocalDate startTime) {
         this.task = task;
         this.logger = logger;
         this.startTime = startTime;
@@ -47,7 +47,7 @@ public class Log extends SaharaItem implements Serializable {
      * Gets the duration of the log
      * @return duration in hours
      */
-    public long getDuration() {
+    public Integer getDuration() {
         return this.duration;
     }
 
@@ -67,8 +67,15 @@ public class Log extends SaharaItem implements Serializable {
     public Person getLogger() {
         return this.logger;
     }
-
-
+    
+    /**
+     * Setting the Log's task to be the new task. Method only needed for edit commands.
+     * @param task the new Task
+     */
+    public void setTask(Task task) {
+        this.task = task;
+    }
+    
     /**
      * Deletes the log from the task it belongs to
      */
