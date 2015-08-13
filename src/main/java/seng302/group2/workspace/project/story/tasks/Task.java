@@ -37,7 +37,6 @@ public class Task extends SaharaItem implements Serializable {
     private List<Person> serializableResponsibilities = new ArrayList<>();
     private transient ObservableList<Log> logs = observableArrayList();
     private List<Log> serializableLogs = new ArrayList<>();
-    private String stringState;
     private Integer effortLeft;
     private Integer effortSpent;
 
@@ -67,7 +66,6 @@ public class Task extends SaharaItem implements Serializable {
         this.impediments = "";
         this.story = null;
         this.state = TASKSTATE.NOT_STARTED;
-        this.stringState = converter.toString(this.getState().toString());
         this.effortLeft = 0;
         this.effortSpent = 0;
 
@@ -90,7 +88,12 @@ public class Task extends SaharaItem implements Serializable {
         this.story = story;
         this.effortLeft = 0;
         this.effortSpent = 0;
-        this.responsibilities = responsibles;
+        if (responsibles == null) {
+            this.responsibilities = observableArrayList();
+        }
+        else {
+            this.responsibilities = responsibles;
+        }
         setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
     }
 
@@ -139,14 +142,6 @@ public class Task extends SaharaItem implements Serializable {
         return this.state;
     }
 
-    /**
-     * Gets the state of the current task
-     *
-     * @return the state as one of the Enum values
-     */
-    public String getStringState() {
-        return this.stringState;
-    }
     
     /**
      * Gets the story of the current task
@@ -164,8 +159,6 @@ public class Task extends SaharaItem implements Serializable {
      */
     public void setState(TASKSTATE state) {
         this.state = state;
-        this.stringState = converter.toString(this.getState().toString());
-
     }
 
     /**
@@ -311,6 +304,7 @@ public class Task extends SaharaItem implements Serializable {
         taskElement.appendChild(taskState);
 
         Element taskResponsibilities = ReportGenerator.doc.createElement("task-responsibilities");
+        System.out.println(this.responsibilities);
         for (Person person : this.responsibilities) {
             taskResponsibilities.appendChild(ReportGenerator.doc.createTextNode(person.getShortName()));
         }
@@ -323,7 +317,7 @@ public class Task extends SaharaItem implements Serializable {
      * An enum for the states of the Task. Also includes a toString method for GUI application of TaskStates
      */
     public enum TASKSTATE {
-        NOT_STARTED("Not started"),
+        NOT_STARTED("Not Started"),
         IN_PROGRESS("In Progress"),
         BLOCKED("Blocked"),
         DONE("Done"),

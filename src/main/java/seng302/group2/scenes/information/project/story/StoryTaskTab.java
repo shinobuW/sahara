@@ -64,7 +64,7 @@ public class StoryTaskTab extends SearchableTab {
                 .subtract(2).divide(100).multiply(60));
 
         TableColumn stateCol = new TableColumn("State");
-        stateCol.setCellValueFactory(new PropertyValueFactory<Task, String>("stringState"));
+        stateCol.setCellValueFactory(new PropertyValueFactory<Task, String>("state"));
         stateCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
