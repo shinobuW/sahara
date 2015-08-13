@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import seng302.group2.util.reporting.ReportGenerator;
 
 /**
  * Represents a log for recording the effort spent on a task
@@ -17,7 +18,7 @@ import java.util.Set;
  */
 public class Log extends SaharaItem implements Serializable {
     private LocalDate startTime;
-    private int duration;
+    private Integer duration;
     private Person logger;
     private Task task;
     private String description;
@@ -93,8 +94,31 @@ public class Log extends SaharaItem implements Serializable {
      */
     @Override
     public Element generateXML() {
-        //TODO: implement
-        return null;
+        Element logElement = ReportGenerator.doc.createElement("log");
+
+        //WorkSpace Elements
+        Element logID = ReportGenerator.doc.createElement("ID");
+        logID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+        logElement.appendChild(logID);
+
+        Element loggerElement = ReportGenerator.doc.createElement("logger");
+        loggerElement.appendChild(ReportGenerator.doc.createTextNode(logger.toString()));
+        logElement.appendChild(loggerElement);
+
+        Element descriptionElement = ReportGenerator.doc.createElement("description");
+        descriptionElement.appendChild(ReportGenerator.doc.createTextNode(description));
+        logElement.appendChild(descriptionElement);
+        
+        //TODO make sure the string is correct, this is placeholder and will probably be wrong
+        Element startTimeElement = ReportGenerator.doc.createElement("startTime");
+        startTimeElement.appendChild(ReportGenerator.doc.createTextNode(startTime.toString()));
+        logElement.appendChild(startTimeElement);
+        
+        Element durationElement = ReportGenerator.doc.createElement("duration");
+        durationElement.appendChild(ReportGenerator.doc.createTextNode(duration.toString()));
+        logElement.appendChild(durationElement);
+
+        return logElement;
     }
 
 

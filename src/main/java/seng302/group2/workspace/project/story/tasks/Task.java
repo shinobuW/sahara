@@ -284,7 +284,7 @@ public class Task extends SaharaItem implements Serializable {
      */
     @Override
     public Element generateXML() {
-        Element taskElement = ReportGenerator.doc.createElement("skill");
+        Element taskElement = ReportGenerator.doc.createElement("task");
 
         //WorkSpace Elements
         Element taskID = ReportGenerator.doc.createElement("ID");
@@ -304,11 +304,17 @@ public class Task extends SaharaItem implements Serializable {
         taskElement.appendChild(taskState);
 
         Element taskResponsibilities = ReportGenerator.doc.createElement("task-responsibilities");
-        System.out.println(this.responsibilities);
         for (Person person : this.responsibilities) {
             taskResponsibilities.appendChild(ReportGenerator.doc.createTextNode(person.getShortName()));
         }
         taskElement.appendChild(taskResponsibilities);
+        
+        Element taskLogsElement = ReportGenerator.doc.createElement("task-responsibilities");
+        for (Log log : this.logs) {
+            Element logElement = log.generateXML();
+            taskLogsElement.appendChild(logElement);
+        }
+        taskElement.appendChild(taskLogsElement);
 
         return taskElement;
     }
