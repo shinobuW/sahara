@@ -33,6 +33,7 @@ import java.util.List;
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
+ * Classe for Displaying all Logs under each project based on a date range.
  * Created by crw73 on 14/08/15.
  */
 public class ProjectLoggingTab extends SearchableTab {
@@ -42,9 +43,9 @@ public class ProjectLoggingTab extends SearchableTab {
     ObservableList<Log> data = observableArrayList();
 
     /**
-     * Constructor for the Task Logging Tab
+     * Constructor for the Project Logging Tab
      *
-     * @param currentProject The currently selected Task
+     * @param currentProject The currently selected Project
      */
     public ProjectLoggingTab(Project currentProject) {
 

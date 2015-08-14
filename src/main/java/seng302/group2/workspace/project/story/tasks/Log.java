@@ -85,8 +85,8 @@ public class Log extends SaharaItem implements Serializable {
     }
 
     /**
-     * Gets the task the log is for
-     * @return the task
+     * Gets the Duration string representation for Hours and minutes of Duration
+     * @return the processed String value.
      */
     public String getDurationString() {
         Integer hours = duration / 60;
@@ -105,7 +105,7 @@ public class Log extends SaharaItem implements Serializable {
     /**
      * Deletes the log from the task it belongs to
      */
-    public void deleteProject() {
+    public void deleteLog() {
         Command command = new DeleteLogCommand(this);
         Global.commandManager.executeCommand(command);
     }
@@ -127,31 +127,33 @@ public class Log extends SaharaItem implements Serializable {
      */
     @Override
     public Element generateXML() {
-        Element logElement = ReportGenerator.doc.createElement("log");
+        //Logs not needed in XML reports, commenting out so it can be used for future generation of log reports
 
-        //WorkSpace Elements
-        Element logID = ReportGenerator.doc.createElement("ID");
-        logID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
-        logElement.appendChild(logID);
-
-        Element loggerElement = ReportGenerator.doc.createElement("logger");
-        loggerElement.appendChild(ReportGenerator.doc.createTextNode(logger.toString()));
-        logElement.appendChild(loggerElement);
-
-        Element descriptionElement = ReportGenerator.doc.createElement("description");
-        descriptionElement.appendChild(ReportGenerator.doc.createTextNode(description));
-        logElement.appendChild(descriptionElement);
-        
-        //TODO make sure the string is correct, this is placeholder and will probably be wrong
-        Element startTimeElement = ReportGenerator.doc.createElement("start-time");
-        startTimeElement.appendChild(ReportGenerator.doc.createTextNode(startTime.toString()));
-        logElement.appendChild(startTimeElement);
-        
-        Element durationElement = ReportGenerator.doc.createElement("duration");
-        durationElement.appendChild(ReportGenerator.doc.createTextNode(duration.toString()));
-        logElement.appendChild(durationElement);
-
-        return logElement;
+//        Element logElement = ReportGenerator.doc.createElement("log");
+//
+//        //WorkSpace Elements
+//        Element logID = ReportGenerator.doc.createElement("ID");
+//        logID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+//        logElement.appendChild(logID);
+//
+//        Element loggerElement = ReportGenerator.doc.createElement("logger");
+//        loggerElement.appendChild(ReportGenerator.doc.createTextNode(logger.toString()));
+//        logElement.appendChild(loggerElement);
+//
+//        Element descriptionElement = ReportGenerator.doc.createElement("description");
+//        descriptionElement.appendChild(ReportGenerator.doc.createTextNode(description));
+//        logElement.appendChild(descriptionElement);
+//
+//        Element startTimeElement = ReportGenerator.doc.createElement("start-time");
+//        startTimeElement.appendChild(ReportGenerator.doc.createTextNode(startTime.toString()));
+//        logElement.appendChild(startTimeElement);
+//
+//        Element durationElement = ReportGenerator.doc.createElement("duration");
+//        durationElement.appendChild(ReportGenerator.doc.createTextNode(duration.toString()));
+//        logElement.appendChild(durationElement);
+//
+//        return logElement;
+        return null;
     }
 
 

@@ -331,13 +331,6 @@ public class Task extends SaharaItem implements Serializable {
             taskResponsibilities.appendChild(ReportGenerator.doc.createTextNode(person.getShortName()));
         }
         taskElement.appendChild(taskResponsibilities);
-        
-        Element taskLogsElement = ReportGenerator.doc.createElement("logs");
-        for (Log log : this.logs) {
-            Element logElement = log.generateXML();
-            taskLogsElement.appendChild(logElement);
-        }
-        taskElement.appendChild(taskLogsElement);
 
         Element effortLeftElement = ReportGenerator.doc.createElement("effort-left");
         effortLeftElement.appendChild(ReportGenerator.doc.createTextNode(effortLeft.toString()));
