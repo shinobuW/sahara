@@ -22,6 +22,8 @@ import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCrite
 
 import java.util.*;
 
+import static javafx.collections.FXCollections.observableArrayList;
+
 
 /**
  * A tab to show detail of a story's acceptance criteria, that allows the addition, change, and removal of acceptance
@@ -48,7 +50,10 @@ public class StoryAcTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(acPane);
         this.setContent(wrapper);
 
-        SearchableTable<AcceptanceCriteria> acTable = new SearchableTable<>(story.getAcceptanceCriteria());
+        ObservableList<AcceptanceCriteria> data = observableArrayList();
+        data = story.getAcceptanceCriteria();
+
+        SearchableTable<AcceptanceCriteria> acTable = new SearchableTable<>(data);
 
         acTable.setEditable(true);
         acTable.fixedCellSizeProperty();
@@ -57,7 +62,6 @@ public class StoryAcTab extends SearchableTab {
         SearchableText noAcLabel = new SearchableText("This project has no acceptance criteria");
         acTable.setPlaceholder(noAcLabel);
         acTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        ObservableList<AcceptanceCriteria> data = story.getAcceptanceCriteria();
 
 
         // A row factory snippet to allow item drag and drop re-ordering
@@ -139,7 +143,7 @@ public class StoryAcTab extends SearchableTab {
         );
 
 
-        ObservableList<AcceptanceCriteria.AcState> acStates = FXCollections.observableArrayList();
+        ObservableList<AcceptanceCriteria.AcState> acStates = observableArrayList();
         for (AcceptanceCriteria.AcState state : AcceptanceCriteria.AcState.values()) {
             acStates.add(state);
         }

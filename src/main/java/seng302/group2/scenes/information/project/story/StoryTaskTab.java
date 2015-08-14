@@ -8,17 +8,23 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import seng302.group2.App;
+import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.project.story.tasks.Task;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -55,6 +61,24 @@ public class StoryTaskTab extends SearchableTab {
         taskTable.setPrefHeight(200);
         taskTable.setPlaceholder(new SearchableText("There are currently no tasks in this story.", searchControls));
         taskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+
+        VBox ACLabels = new VBox();
+        SearchableTitle acTitle = new SearchableTitle("Acceptance Criteria: ");
+
+        ACLabels.getChildren().add(acTitle);
+        ACLabels.getChildren().add(new Text(""));
+
+        for (AcceptanceCriteria ac : currentStory.getAcceptanceCriteria()) {
+            SearchableText acText = new SearchableText("\t\u2022" + ac.toString());
+            ACLabels.getChildren().addAll(acText);
+            Collections.addAll(searchControls, acText);
+        }
+        ACLabels.getChildren().add(new Text(""));
+        SearchableTitle tasksTitle = new SearchableTitle("Tasks Table: ");
+        ACLabels.getChildren().add(tasksTitle);
+
+
 
         ObservableList<Task> data = currentStory.getTasks();
 
@@ -137,6 +161,7 @@ public class StoryTaskTab extends SearchableTab {
             });
 
         basicInfoPane.getChildren().addAll(
+                ACLabels,
                 taskTable,
                 btnView,
                 addTaskBox
@@ -144,6 +169,8 @@ public class StoryTaskTab extends SearchableTab {
 
         Collections.addAll(searchControls,
                 task,
+                acTitle,
+                tasksTitle,
                 shortNameCustomField
         );
 
