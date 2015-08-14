@@ -117,18 +117,4 @@ public class TaskTest {
 
     }
 
-    /**
-     * Tests for Task XML generator method.
-     */
-    @Test
-    public void testGenerateXML() {
-        new ReportGenerator();
-        ObservableList<Person> people = observableArrayList();
-        Task story = new Task("short", "desc", null, people);
-
-        Element storyElement = story.generateXML();
-        Assert.assertEquals("[#text: short]", storyElement.getChildNodes().item(1).getChildNodes().item(0).toString());
-        Assert.assertEquals("[#text: desc]", storyElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-
-    }
 }

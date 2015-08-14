@@ -74,10 +74,10 @@ public class TaskCategoryTab extends SearchableTab {
         stateCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
-        TableColumn responsibilitiesCol = new TableColumn("Responsibilities");
-        responsibilitiesCol.setCellValueFactory(new PropertyValueFactory<Task,
+        TableColumn assigneesCol = new TableColumn("Responsibilities");
+        assigneesCol.setCellValueFactory(new PropertyValueFactory<Task,
                 ObservableList<Person>>("responsibilities"));
-        responsibilitiesCol.prefWidthProperty().bind(taskTable.widthProperty()
+        assigneesCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
         TableColumn leftCol = new TableColumn("Effort Left");
@@ -93,7 +93,7 @@ public class TaskCategoryTab extends SearchableTab {
                 .subtract(2).divide(100).multiply(60));
 
         taskTable.setItems(data);
-        TableColumn[] columns = {nameCol, stateCol, responsibilitiesCol, leftCol, spentCol};
+        TableColumn[] columns = {nameCol, stateCol, assigneesCol, leftCol, spentCol};
         taskTable.getColumns().setAll(columns);
 
         // Listener to disable columns being movable

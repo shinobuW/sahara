@@ -1,6 +1,5 @@
 package seng302.group2.scenes.information.project.story.task;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
+import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
@@ -86,40 +86,11 @@ public class TaskEditTab extends SearchableTab {
         effortLeftField.setText(currentTask.getEffortLeft().toString());
 
 
-        //Assignees assign buttons
-        Button btnAssign = new Button("<");
-        Button btnUnassign = new Button(">");
-        VBox assignmentButtons = new VBox();
-        assignmentButtons.spacingProperty().setValue(10);
-        assignmentButtons.getChildren().addAll(btnAssign, btnUnassign);
-        assignmentButtons.setAlignment(Pos.CENTER);
-
-        // Story list view setup
-        ObservableList<Person> taskAssigneesList = FXCollections.observableArrayList();
-        ObservableList<Person> availablePeopleList = FXCollections.observableArrayList();
-        ListView<Person> taskAssigneesListView = new ListView<>();
-        ListView<Person> availablePeopleListView = new ListView<>();
-        taskAssigneesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        availablePeopleListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        VBox inTaskVBox = new VBox();
-        VBox availableVBox = new VBox();
-        inTaskVBox.getChildren().addAll(new SearchableText("Sprint Stories: ", searchControls), taskAssigneesListView);
-        availableVBox.getChildren().addAll(new SearchableText("Available Stories: ", searchControls),
-                availablePeopleListView);
-        HBox peopleHBox = new HBox(10);
-        peopleHBox.setPrefHeight(192);
-        peopleHBox.getChildren().addAll(inTaskVBox, assignmentButtons, availableVBox);
-
-        taskAssigneesListView.setItems(taskAssigneesList);
-        availablePeopleListView.setItems(availablePeopleList);
-
-        taskAssigneesList.addAll(currentTask.getResponsibilities());
-
+        CustomComboBox<Person> taskAssigneesList = new CustomComboBox<Person>("Assignee: ");
         if (currentTask.getStory().getSprint() != null) {
-            availablePeopleList.addAll(currentTask.getStory().getSprint().getTeam().getPeople());
+            taskAssigneesList.getComboBox().setItems(currentTask.getStory().getSprint().getTeam().getPeople());
         }
 
-        availablePeopleList.removeAll(taskAssigneesList);
 
 
         //Adding to MainPane
@@ -128,25 +99,10 @@ public class TaskEditTab extends SearchableTab {
                 impedimentsTextArea,
                 effortLeftField,
                 taskHbox,
-                peopleHBox,
+                taskAssigneesList,
                 buttons);
 
-        // Button events
-        btnAssign.setOnAction((event) -> {
-                taskAssigneesList.addAll(
-                        availablePeopleListView.getSelectionModel().getSelectedItems());
-                availablePeopleList.removeAll(
-                        availablePeopleListView.getSelectionModel().getSelectedItems());
-                System.out.println(taskAssigneesList);
-            });
 
-        btnUnassign.setOnAction((event) -> {
-                Collection<Person> selectedPeople = new ArrayList<>();
-                selectedPeople.addAll(taskAssigneesListView.getSelectionModel().
-                        getSelectedItems());
-                availablePeopleList.addAll(selectedPeople);
-                taskAssigneesList.removeAll(selectedPeople);
-            });
 
         btnDone.setOnAction((event) -> {
                 boolean shortNameUnchanged = shortNameCustomField.getText().equals(
@@ -163,7 +119,7 @@ public class TaskEditTab extends SearchableTab {
 
                 boolean effortLeftUnchanged = effortLeftField.getText().equals(
                         currentTask.getEffortLeft().toString());
-                boolean assigneesUnchanged = taskAssigneesList.equals((currentTask.getResponsibilities()));
+                boolean assigneesUnchanged = taskAssigneesList.equals((currentTask.getAssignee()));
 
                 if (shortNameUnchanged && descriptionUnchanged
                         && impedimentsUnchanged && taskstateUnchanged && effortLeftUnchanged
@@ -183,7 +139,7 @@ public class TaskEditTab extends SearchableTab {
                             descriptionTextArea.getText(),
                             impedimentsTextArea.getText(),
                             taskStateComboBox.getValue(),
-                            taskAssigneesList, currentTask.getLogs(),
+                            taskAssigneesList.getValue(), currentTask.getLogs(),
                             new Integer(effortLeftField.getText()), currentTask.getEffortSpent());
 
                     currentTask.switchToInfoScene();

@@ -1,15 +1,11 @@
 package seng302.group2.scenes.information.project.story.task;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.search.*;
-import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.ArrayList;
@@ -50,19 +46,15 @@ public class TaskInfoTab extends SearchableTab {
         SearchableText effortLeft = new SearchableText("Effort Left: " + currentTask.getEffortLeftString());
         SearchableText effortSpent = new SearchableText("Effort Spent: " + currentTask.getEffortSpentString());
         SearchableText taskState = new SearchableText("Task State: " + currentTask.getState());
+        SearchableText assignedPerson;
+        if (currentTask.getAssignee() == null) {
+            assignedPerson = new SearchableText("Assigned Person: ");
+        }
+        else {
+            assignedPerson = new SearchableText("Assigned Person: " + currentTask.getAssignee());
+        }
 
 
-        ObservableList<Person> responsibilitiesList = FXCollections.observableArrayList();
-        responsibilitiesList.addAll(currentTask.getResponsibilities());
-
-        SearchableListView<Person> responsibilitiesListView = new SearchableListView<>(responsibilitiesList);
-        responsibilitiesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        responsibilitiesListView.getSelectionModel().select(0);
-
-        VBox responsibilitiesBox = new VBox(10);
-        SearchableText responsibilitiesLabel = new SearchableText("Responsibilities :");
-        responsibilitiesBox.getChildren().addAll(responsibilitiesLabel, responsibilitiesListView);
-        responsibilitiesBox.setPrefHeight(192);
 
 
         btnEdit.setOnAction((event) -> {
@@ -76,7 +68,7 @@ public class TaskInfoTab extends SearchableTab {
                 effortLeft,
                 effortSpent,
                 taskState,
-                responsibilitiesBox,
+                assignedPerson,
                 btnEdit
         );
 
@@ -87,8 +79,7 @@ public class TaskInfoTab extends SearchableTab {
                 effortLeft,
                 effortSpent,
                 taskState,
-                responsibilitiesLabel,
-                responsibilitiesListView
+                assignedPerson
         );
 
 

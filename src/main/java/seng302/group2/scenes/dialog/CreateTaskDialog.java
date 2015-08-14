@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
@@ -108,7 +109,6 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         storyCombo.getChildren().addAll(storyComboHBox, storyComboBox);
         HBox.setHgrow(storyComboHBox, Priority.ALWAYS);
         storyVBox.getChildren().add(storyCombo);
-        
 
         backlogComboBox.setDisable(true);
         storyComboBox.setDisable(true);
@@ -210,7 +210,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                         }
 
                         Task task = new Task(shortName, description,
-                                storyComboBox.getSelectionModel().getSelectedItem(), selectedPeople);
+                                storyComboBox.getSelectionModel().getSelectedItem(), null);
                         task.setEffortLeft(parsedInt);
                         storyComboBox.getSelectionModel().getSelectedItem().add(task);
                         App.refreshMainScene();

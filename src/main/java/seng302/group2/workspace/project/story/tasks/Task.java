@@ -34,8 +34,7 @@ public class Task extends SaharaItem implements Serializable {
     private String impediments;
     private TASKSTATE state;
     private Story story;
-    private transient ObservableList<Person> responsibilities = observableArrayList();
-    private List<Person> serializableResponsibilities = new ArrayList<>();
+    private Person assignee;
     private transient ObservableList<Log> logs = observableArrayList();
     private List<Log> serializableLogs = new ArrayList<>();
     private Integer effortLeft;
@@ -80,7 +79,7 @@ public class Task extends SaharaItem implements Serializable {
      * @param shortName The shortname of the Task
      * @param description The description of the task
      */
-    public Task(String shortName, String description, Story story, ObservableList<Person> responsibles) {
+    public Task(String shortName, String description, Story story, Person person) {
         super(shortName);
         this.shortName = shortName;
         this.description = description;
@@ -89,13 +88,17 @@ public class Task extends SaharaItem implements Serializable {
         this.story = story;
         this.effortLeft = 0;
         this.effortSpent = 0;
-        if (responsibles == null) {
-            this.responsibilities = observableArrayList();
-        }
-        else {
-            this.responsibilities = responsibles;
-        }
+        this.assignee = person;
+
         setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
+    }
+
+    /**
+     * Gets the Person assigned to the Task
+     * @return the Person assigned
+     */
+    public Person getPerson() {
+        return this.assignee;
     }
 
     /**
@@ -237,12 +240,12 @@ public class Task extends SaharaItem implements Serializable {
     }
 
     /**
-     * Gets the responsibilities of a Task
+     * Gets the responsible of a Task
      *
-     * @return The ObservableList of responsibilities as a list of People
+     * @return The Person responsible of the task
      */
-    public ObservableList<Person> getResponsibilities() {
-        return this.responsibilities;
+    public Person getAssignee() {
+        return this.assignee;
     }
 
     /**
@@ -254,14 +257,14 @@ public class Task extends SaharaItem implements Serializable {
     }
 
     /**
-     * Adds a Person to the Tasks responsibility list
-     *  @param person The person to add
+     * Sets the Person to be assigned to the task
+     * @param person the Person to be assigned
      */
-    public void add(Person person) {
-        Command command = new AddAssigneesCommand(this, person);
-        Global.commandManager.executeCommand(command);
+    public void setPerson(Person person) {
+        this.assignee = person;
     }
-    
+
+
     /**
      * Adds a log to the Tasks Logs list
      *  @param log The log to add
@@ -275,11 +278,6 @@ public class Task extends SaharaItem implements Serializable {
      * Prepares a Task to be serialized.
      */
     public void prepSerialization() {
-        serializableResponsibilities.clear();
-        for (Object item : responsibilities) {
-            this.serializableResponsibilities.add((Person) item);
-        }
-        
         serializableLogs.clear();
         for (Object item : logs) {
             this.serializableLogs.add((Log) item);
@@ -291,10 +289,6 @@ public class Task extends SaharaItem implements Serializable {
      * Deserialization post-processing.
      */
     public void postSerialization() {
-        responsibilities.clear();
-        for (Object item : serializableResponsibilities) {
-            this.responsibilities.add((Person) item);
-        }
         logs.clear();
         for (Object item : serializableLogs) {
             this.logs.add((Log) item);
@@ -326,11 +320,9 @@ public class Task extends SaharaItem implements Serializable {
         taskState.appendChild(ReportGenerator.doc.createTextNode(state.toString()));
         taskElement.appendChild(taskState);
 
-        Element taskResponsibilities = ReportGenerator.doc.createElement("responsibilities");
-        for (Person person : this.responsibilities) {
-            taskResponsibilities.appendChild(ReportGenerator.doc.createTextNode(person.getShortName()));
-        }
-        taskElement.appendChild(taskResponsibilities);
+        Element taskAssignee = ReportGenerator.doc.createElement("assignee");
+        taskAssignee.appendChild(ReportGenerator.doc.createTextNode(assignee.getShortName()));
+        taskElement.appendChild(taskAssignee);
 
         Element effortLeftElement = ReportGenerator.doc.createElement("effort-left");
         effortLeftElement.appendChild(ReportGenerator.doc.createTextNode(effortLeft.toString()));
@@ -390,14 +382,13 @@ public class Task extends SaharaItem implements Serializable {
      * @param newDescription The new description
      * @param newImpediments The new Impediments
      * @param newState    The new state
-     * @param newResponsibilities The new Responsibilities
+     * @param newAssignee The new Assignee
      * @param newLogs The new Logs
      */
-    public void edit(String newShortName, String newDescription, String newImpediments, TASKSTATE newState
-                     , List<Person> newResponsibilities,  List<Log> newLogs, Integer newEffortLeft
-            , Integer newEffortSpent) {
+    public void edit(String newShortName, String newDescription, String newImpediments, TASKSTATE newState,
+                     Person newAssignee,  List<Log> newLogs, Integer newEffortLeft, Integer newEffortSpent) {
         Command relEdit = new TaskEditCommand(this, newShortName, newDescription, newImpediments,
-                newState, newResponsibilities, newLogs, newEffortLeft, newEffortSpent);
+                newState, newAssignee, newLogs, newEffortLeft, newEffortSpent);
 
         Global.commandManager.executeCommand(relEdit);
     }
@@ -411,7 +402,7 @@ public class Task extends SaharaItem implements Serializable {
         private String shortName;
         private String description;
         private String impediments;
-        private Collection<Person> responsibilities;
+        private Person assignee;
         private Collection<Log> logs;
         private TASKSTATE state;
         private Integer effortLeft;
@@ -421,7 +412,7 @@ public class Task extends SaharaItem implements Serializable {
         private String oldShortName;
         private String oldDescription;
         private String oldImpediments;
-        private Collection<Person> oldResponsibilities;
+        private Person oldAssignee;
         private Collection<Log> oldLogs;
         private TASKSTATE oldState;
         private Integer oldEffortLeft;
@@ -434,19 +425,18 @@ public class Task extends SaharaItem implements Serializable {
          * @param newDescription The new description
          * @param newImpediments The new Impediments
          * @param newState    The new state
-         * @param newResponsibilities The new Responsibilities
+         * @param newAssignee The new Assignee
          * @param newLogs The new Logs
          */
         private TaskEditCommand(Task task, String newShortName, String newDescription, 
                 String newImpediments, TASKSTATE newState,
-                List<Person> newResponsibilities,  List<Log> newLogs, Integer effortLeft, Integer effortSpent) {
+                Person newAssignee,  List<Log> newLogs, Integer effortLeft, Integer effortSpent) {
             this.task = task;
 
             this.shortName = newShortName;
             this.description = newDescription;
             this.impediments = newImpediments;
-            this.responsibilities = new HashSet<>();
-            this.responsibilities.addAll(newResponsibilities);
+            this.assignee = newAssignee;
             this.logs = new HashSet<>();
             this.logs.addAll(newLogs);
             this.state = newState;
@@ -456,8 +446,7 @@ public class Task extends SaharaItem implements Serializable {
             this.oldShortName = task.shortName;
             this.oldDescription = task.description;
             this.oldImpediments = task.impediments;
-            this.oldResponsibilities = new HashSet<>();
-            this.oldResponsibilities.addAll(task.responsibilities);
+            this.oldAssignee = task.assignee;
             this.oldLogs = new HashSet<>();
             this.oldLogs.addAll(task.logs);
             this.oldState = task.state;
@@ -478,8 +467,7 @@ public class Task extends SaharaItem implements Serializable {
             task.effortLeft = effortLeft;
             task.effortSpent = effortSpent;
             
-            task.responsibilities.clear();
-            task.responsibilities.addAll(responsibilities);
+            task.assignee = assignee;
             
             task.logs.clear();
             task.logs.addAll(logs);
@@ -496,8 +484,7 @@ public class Task extends SaharaItem implements Serializable {
             task.effortLeft = oldEffortLeft;
             task.effortSpent = oldEffortSpent;
 
-            task.responsibilities.clear();
-            task.responsibilities.addAll(oldResponsibilities);
+            task.assignee = oldAssignee;
             
             task.logs.clear();
             task.logs.addAll(oldLogs);
@@ -654,62 +641,6 @@ public class Task extends SaharaItem implements Serializable {
             return mapped_task && mapped_log;
         }
     }
-    
-    /**
-     * Command to add and remove People assigned to the Task
-     */
-    private class AddAssigneesCommand implements Command {
-        private Task task;
-        private Person person;
 
-        /**
-         * Constructor for the Assignees addition command
-         * @param task The task to which the person is to be added
-         * @param person The person to be added
-         */
-        AddAssigneesCommand(Task task, Person person) {
-            this.task = task;
-            this.person = person;
-        }
-
-        /**
-         * Executes the person addition command
-         */
-        public void execute() {
-            task.getResponsibilities().add(person);
-        }
-
-        /**
-         * Undoes the person addition command
-         */
-        public void undo() {
-            task.getResponsibilities().remove(person);
-        }
-
-        /**
-         * Searches the stateObjects to find an equal model class to map to
-         * @param stateObjects A set of objects to search through
-         * @return If the item was successfully mapped
-         */
-        @Override
-        public boolean map(Set<SaharaItem> stateObjects) {
-            boolean mapped_task = false;
-            for (SaharaItem item : stateObjects) {
-                if (item.equals(task)) {
-                    this.task = (Task) item;
-                    mapped_task = true;
-                }
-            }
-            boolean mapped_assignee = false;
-            for (SaharaItem item : stateObjects) {
-                if (item.equals(person)) {
-                    this.person = (Person) item;
-                    mapped_assignee = true;
-                }
-            }
-            return mapped_task && mapped_assignee;
-        }
-    }
-    
     
 }
