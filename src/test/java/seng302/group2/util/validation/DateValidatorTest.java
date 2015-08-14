@@ -167,4 +167,22 @@ public class DateValidatorTest {
         LocalDate testDate = DateValidator.stringToDate("12/12/2015");
         Assert.assertEquals(LocalDate.parse("12/12/2015", Global.dateFormatter), testDate);
     }
+
+    /**
+     * Tests that the string is in the right duration format
+     */
+    @Test
+    public void testValidateDuration() {
+        String test = "1h30min";
+        String test2 = "1h30m";
+        String test3 = "30min";
+        String test4 = "2h";
+        String test5 = "99h99min";
+        Assert.assertTrue(DateValidator.validDuration(test));
+        Assert.assertTrue(DateValidator.validDuration(test2));
+        Assert.assertTrue(DateValidator.validDuration(test3));
+        Assert.assertTrue(DateValidator.validDuration(test4));
+        Assert.assertFalse(DateValidator.validDuration(test5));
+
+    }
 }
