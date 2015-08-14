@@ -52,6 +52,14 @@ public class Log extends SaharaItem implements Serializable {
     }
 
     /**
+     * Gets the description of the log
+     * @return description of the log
+     */
+    public String getDescription() {
+        return this.description;
+    }
+
+    /**
      * Gets the startTime of the log
      * @return duration in hours
      */

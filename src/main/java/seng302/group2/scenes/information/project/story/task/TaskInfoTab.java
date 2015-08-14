@@ -47,8 +47,8 @@ public class TaskInfoTab extends SearchableTab {
 
         SearchableText description = new SearchableText("Task Description: " + currentTask.getDescription());
         SearchableText impediments = new SearchableText("Impediments: " + currentTask.getImpediments());
-        SearchableText effortLeft = new SearchableText("Effort Left: " + currentTask.getEffortLeft());
-        SearchableText effortSpent = new SearchableText("Effort Spent: " + currentTask.getEffortSpent());
+        SearchableText effortLeft = new SearchableText("Effort Left: " + currentTask.getEffortLeftString());
+        SearchableText effortSpent = new SearchableText("Effort Spent: " + currentTask.getEffortSpentString());
         SearchableText taskState = new SearchableText("Task State: " + currentTask.getState());
 
 

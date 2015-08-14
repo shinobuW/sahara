@@ -17,6 +17,7 @@ import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
+import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.workspace.person.Person;
@@ -37,6 +38,7 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 public class CreateTaskDialog extends Dialog<Map<String, String>> {
     static Boolean correctShortName = Boolean.FALSE;
     static Boolean correctDescription = Boolean.FALSE;
+    static Boolean correctEffortLeft = Boolean.FALSE;
     // TODO Add effort left when its implemented
 
     public CreateTaskDialog() {
@@ -57,6 +59,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
 
         // Add elements to grid
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        CustomTextField effortLeftField = new CustomTextField("Effort Left:");
 
         //Create Project Combo box
         ComboBox<Project> projectComboBox = new ComboBox<>();
@@ -135,7 +138,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         }
 
         grid.getChildren().addAll(shortNameCustomField, projectVBox,
-                backlogVBox, storyVBox, responsibles, listView, descriptionTextArea);
+                backlogVBox, storyVBox, effortLeftField, responsibles, listView, descriptionTextArea);
 
         this.getDialogPane().setContent(grid);
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
@@ -145,6 +148,18 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctShortName = validateShortName(shortNameCustomField, null);
                 createButton.setDisable(!(correctShortName));
+            });
+
+        effortLeftField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                try {
+                    Integer parsedInt = Integer.parseInt(newValue);
+                    correctEffortLeft = true;
+                }
+                catch (NumberFormatException ex) {
+                    correctEffortLeft = false;
+                    effortLeftField.showErrorField("* You must enter integer values only");
+
+                }
             });
 
         projectComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -181,10 +196,11 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
 
-                    if (correctShortName) {
+                    if (correctShortName && correctEffortLeft) {
                         //get user input
                         String shortName = shortNameCustomField.getText();
                         String description = descriptionTextArea.getText();
+                        Integer parsedInt = Integer.parseInt(effortLeftField.getText());
                         ObservableList<Person> selectedPeople = observableArrayList();
                         for (Person person : availablePeople) {
                             if (person.getSelected() == true) {
@@ -193,8 +209,9 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                             }
                         }
 
-                        Task task = new Task(shortName, description, storyComboBox.
-                                getSelectionModel().getSelectedItem(), selectedPeople);
+                        Task task = new Task(shortName, description,
+                                storyComboBox.getSelectionModel().getSelectedItem(), selectedPeople);
+                        task.setEffortLeft(parsedInt);
                         storyComboBox.getSelectionModel().getSelectedItem().add(task);
                         App.refreshMainScene();
                         App.mainPane.selectItem(task);

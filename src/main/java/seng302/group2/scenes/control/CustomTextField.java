@@ -6,6 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableText;
 
@@ -36,6 +37,8 @@ public class CustomTextField extends VBox implements SearchableControl {
         labelBox.setPrefWidth(175);
         labelBox.spacingProperty().setValue(0);
         labelBox.setAlignment(Pos.CENTER_LEFT);
+
+        errorMessageText.setTextFill(Color.web("#ff0000"));
 
         labelBox.getChildren().addAll(new SearchableText(name, searchControls));
 
@@ -110,8 +113,17 @@ public class CustomTextField extends VBox implements SearchableControl {
      * @param errorMessage The error message to show
      */
     public void showErrorField(String errorMessage) {
+        inputText.setStyle("-fx-border-color: red;");
         this.errorMessageText.setText(errorMessage);
         showErrorField();
+    }
+
+    /**
+     * Gets the input text field
+     * @return textfield
+     */
+    public TextField getTextField() {
+        return inputText;
     }
 
 

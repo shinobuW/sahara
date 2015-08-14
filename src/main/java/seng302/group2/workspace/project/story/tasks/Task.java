@@ -198,6 +198,26 @@ public class Task extends SaharaItem implements Serializable {
     }
 
     /**
+     * gets the effortleft as a string in hours and minutes
+     * @return the effortLeft as a String
+     */
+    public String getEffortLeftString() {
+        Integer hours = effortLeft / 60;
+        Integer minutes = effortLeft % 60;
+        return hours + "h " + minutes + "min";
+    }
+
+    /**
+     * gets the effortSpent as a string in hours and minutes
+     * @return the effortSpent as a String
+     */
+    public String getEffortSpentString() {
+        Integer hours = effortSpent / 60;
+        Integer minutes = effortSpent % 60;
+        return hours + "h " + minutes + "min";
+    }
+
+    /**
      * Gets the effortLeft of the current task
      *
      * @return the effortLeft of the current task
