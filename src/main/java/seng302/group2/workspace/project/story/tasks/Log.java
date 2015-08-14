@@ -75,6 +75,24 @@ public class Log extends SaharaItem implements Serializable {
     public Person getLogger() {
         return this.logger;
     }
+
+    /**
+     * Gets the task the log is for
+     * @return the task
+     */
+    public Task getTask() {
+        return this.task;
+    }
+
+    /**
+     * Gets the task the log is for
+     * @return the task
+     */
+    public String getDurationString() {
+        Integer hours = duration / 60;
+        Integer minutes = duration % 60;
+        return hours + "h " + minutes + "min";
+    }
     
     /**
      * Setting the Log's task to be the new task. Method only needed for edit commands.

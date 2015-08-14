@@ -75,12 +75,12 @@ public class StoryTaskTab extends SearchableTab {
                 .subtract(2).divide(100).multiply(60));
 
         TableColumn leftCol = new TableColumn("Effort Left");
-        leftCol.setCellValueFactory(new PropertyValueFactory<Task, Integer>("effortLeft"));
+        leftCol.setCellValueFactory(new PropertyValueFactory<Task, String>("effortLeftString"));
         leftCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
         TableColumn spentCol = new TableColumn("Effort Spent");
-        spentCol.setCellValueFactory(new PropertyValueFactory<Task, Integer>("effortSpent"));
+        spentCol.setCellValueFactory(new PropertyValueFactory<Task, String>("effortSpentString"));
         spentCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 

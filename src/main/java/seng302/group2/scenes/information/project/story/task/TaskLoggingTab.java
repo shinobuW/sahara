@@ -90,15 +90,19 @@ public class TaskLoggingTab extends SearchableTab {
                 });
         startTimeCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
+        startTimeCol.setSortType(TableColumn.SortType.ASCENDING);
+
 
         TableColumn durationCol = new TableColumn("Duration");
-        durationCol.setCellValueFactory(new PropertyValueFactory<Log, Long>("duration"));
+        durationCol.setCellValueFactory(new PropertyValueFactory<Log, String>("durationString"));
         durationCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
         taskTable.setItems(data);
         TableColumn[] columns = {loggerCol, descriptionCol, startTimeCol, durationCol};
         taskTable.getColumns().setAll(columns);
+        taskTable.getSortOrder().add(startTimeCol);
+
 
         // Listener to disable columns being movable
         taskTable.getColumns().addListener(new ListChangeListener() {
