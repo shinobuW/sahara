@@ -112,12 +112,6 @@ public class TaskTest {
         task.setState(Task.TASKSTATE.DONE);
         Assert.assertEquals(Task.TASKSTATE.DONE, task.getState());
 
-        task.setState(Task.TASKSTATE.READY);
-        Assert.assertEquals(Task.TASKSTATE.READY, task.getState());
-
-        task.setState(Task.TASKSTATE.PENDING);
-        Assert.assertEquals(Task.TASKSTATE.PENDING, task.getState());
-
         task.setState(Task.TASKSTATE.DEFERRED);
         Assert.assertEquals(Task.TASKSTATE.DEFERRED, task.getState());
 

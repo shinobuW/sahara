@@ -17,6 +17,7 @@ import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
@@ -44,6 +45,8 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
     private List<Backlog> serializableBacklogs = new ArrayList<>();
     private transient ObservableList<Sprint> sprints = observableArrayList();
     private List<Sprint> serializableSprints = new ArrayList<>();
+    private transient ObservableList<Log> logs = observableArrayList();
+    private List<Log> serializableLogs = new ArrayList<>();
 
     private transient ReleaseCategory releasesCategory = new ReleaseCategory(this);
     private transient BacklogCategory backlogCategory = new BacklogCategory(this);
@@ -301,6 +304,15 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
     }
 
     /**
+     * Gets the Logs of the project
+     *
+     * @return list of Logs
+     */
+    public ObservableList<Log> getLogs() {
+        return this.logs;
+    }
+
+    /**
      * Gets the sprints of the project
      *
      * @return list of sprints
@@ -470,6 +482,26 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
 
 
     /**
+     * Adds a Log to the Project's list of logs. Does not create an Undo command.
+     *
+     * @param log The log to add
+     */
+    public void add(Log log) {
+        this.logs.add(log);
+    }
+
+
+    /**
+     * Removes a Log from the Project's list of logs. Does not create an Undo command.
+     *
+     * @param log The log to delete
+     */
+    public void delete(Log log) {
+        this.logs.remove(log);
+    }
+
+
+    /**
      * Prepares a project to be serialized.
      */
     public void prepSerialization() {
@@ -499,6 +531,11 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         for (Sprint sprint : sprints) {
             sprint.prepSerialization();
             this.serializableSprints.add(sprint);
+        }
+
+        serializableLogs.clear();
+        for (Log log : logs) {
+            this.serializableLogs.add(log);
         }
     }
 
@@ -539,6 +576,11 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         for (Sprint sprint : serializableSprints) {
             sprint.postDeserialization();
             this.sprints.add(sprint);
+        }
+
+        logs.clear();
+        for (Log log : serializableLogs) {
+            this.logs.add(log);
         }
     }
 

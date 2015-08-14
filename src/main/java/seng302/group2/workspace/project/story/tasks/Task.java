@@ -9,6 +9,7 @@ import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
 
 import java.io.Serializable;
@@ -266,7 +267,7 @@ public class Task extends SaharaItem implements Serializable {
      *  @param log The log to add
      */
     public void add(Log log) {
-        Command command = new AddLogsCommand(this, log);
+        Command command = new AddLogsCommand(this, log, this.getStory().getProject());
         Global.commandManager.executeCommand(command);
     }
 
@@ -357,8 +358,6 @@ public class Task extends SaharaItem implements Serializable {
         IN_PROGRESS("In Progress"),
         BLOCKED("Blocked"),
         DONE("Done"),
-        READY("Ready"),
-        PENDING("Pending"),
         DEFERRED("Deferred");
 
         private String value;
@@ -601,6 +600,7 @@ public class Task extends SaharaItem implements Serializable {
     private class AddLogsCommand implements Command {
         private Task task;
         private Log log;
+        private Project proj;
         
         private Integer oldEffort;
 
@@ -609,10 +609,11 @@ public class Task extends SaharaItem implements Serializable {
          * @param task The task to which the log is to be added
          * @param log The log to be added
          */
-        AddLogsCommand(Task task, Log log) {
+        AddLogsCommand(Task task, Log log, Project proj) {
             this.task = task;
             this.log = log;
             this.oldEffort = task.getEffortSpent();
+            this.proj = proj;
         }
 
         /**
@@ -623,6 +624,7 @@ public class Task extends SaharaItem implements Serializable {
             log.setTask(task);
             Integer newEffortSpent = task.getEffortSpent() + log.getDuration();
             task.setEffortSpent(newEffortSpent);
+            proj.add(log);
         }
 
         /**
@@ -632,6 +634,7 @@ public class Task extends SaharaItem implements Serializable {
             task.getLogs().remove(log);
             log.setTask(null);
             task.setEffortSpent(oldEffort);
+            proj.delete(log);
         }
 
         /**

@@ -28,7 +28,8 @@ public class ProjectScene extends TrackedTabPane {
         // Define and add the tabs
         SearchableTab informationTab = new ProjectInfoTab(currentProject);
         SearchableTab allocation = new ProjectHistoryTab(currentProject);
-        Collections.addAll(searchableTabs, informationTab, allocation);
+        SearchableTab projectLogs = new ProjectLoggingTab(currentProject);
+        Collections.addAll(searchableTabs, informationTab, allocation, projectLogs);
 
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }

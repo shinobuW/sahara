@@ -69,7 +69,7 @@ public class TaskEditTab extends SearchableTab {
         SearchableText taskStateText = new SearchableText("Task State: ");
         ObservableList<Task.TASKSTATE> taskstateObservableList = observableArrayList();
         taskstateObservableList.addAll(Task.TASKSTATE.BLOCKED, Task.TASKSTATE.DEFERRED, Task.TASKSTATE.DONE,
-                Task.TASKSTATE.IN_PROGRESS, Task.TASKSTATE.NOT_STARTED, Task.TASKSTATE.PENDING, Task.TASKSTATE.READY);
+                Task.TASKSTATE.IN_PROGRESS, Task.TASKSTATE.NOT_STARTED);
 
         ComboBox<Task.TASKSTATE> taskStateComboBox = new ComboBox<>(taskstateObservableList);
         taskStateComboBox.setValue(currentTask.getState());
