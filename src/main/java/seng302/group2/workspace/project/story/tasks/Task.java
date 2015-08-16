@@ -206,9 +206,7 @@ public class Task extends SaharaItem implements Serializable {
      * @return the effortLeft as a String
      */
     public String getEffortLeftString() {
-        Float hours = effortLeft / 60;
-        Float minutes = effortLeft % 60;
-        return hours + "h " + minutes + "min";
+        return (int) Math.floor(effortLeft / 60) + "h " + (int) Math.floor(effortLeft % 60) + "min";
     }
 
     /**
@@ -216,9 +214,7 @@ public class Task extends SaharaItem implements Serializable {
      * @return the effortSpent as a String
      */
     public String getEffortSpentString() {
-        Float hours = effortSpent / 60;
-        Float minutes = effortSpent % 60;
-        return hours + "h " + minutes + "min";
+        return (int) Math.floor(effortSpent / 60) + "h " + (int) Math.floor(effortSpent % 60) + "min";
     }
 
     /**
