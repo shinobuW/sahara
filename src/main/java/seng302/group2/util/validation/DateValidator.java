@@ -386,19 +386,16 @@ public class DateValidator {
         return releaseDate;
     }
 
+
     /**
-     * Validates a string to see if it of the format "00h00min" where both hours and minutes can be inputted on its own.
-     * "min" can also be replaced with "m""
-     * @param inputString string to validate
+     * Validates a string to see if it of the format "00h00min", where both hours and minutes can be inputted on its own.
+     * "min" can also be replaced with "m"
+     * @param inputString time string to validate
      * @return true if input string is in the right format
      */
     public static boolean validDuration(String inputString) {
-        String pattern = "((\\d*)h)?(([0-5][0-9])(min|m))?";
-        if (Pattern.matches(pattern, inputString)) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        String pattern = "( *)((\\d*)( *)(h|hour|hours|hrs|hr))?( *)"
+                + "((([0-5][0-9])|([0-9]))( *)(min|m|mins|minutes|minute))?( *)";
+        return Pattern.matches(pattern, inputString);
     }
 }
