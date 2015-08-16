@@ -33,6 +33,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.search.SearchableTextField;
+import seng302.group2.scenes.information.project.story.task.TaskScene;
 
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 import seng302.group2.workspace.team.Team;
@@ -135,7 +136,7 @@ public class StoryTaskTab extends SearchableTab {
         Button btnView = new Button("View");
 
         btnView.setOnAction((event) -> {
-                App.mainPane.selectItem(taskTable.getSelectionModel().getSelectedItem());
+                App.mainPane.setContent(new TaskScene(taskTable.getSelectionModel().getSelectedItem()));
             });
 
         VBox addTaskBox = new VBox(10);
