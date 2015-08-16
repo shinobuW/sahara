@@ -260,7 +260,7 @@ public class Task extends SaharaItem implements Serializable {
      * Sets the Person to be assigned to the task
      * @param person the Person to be assigned
      */
-    public void setPerson(Person person) {
+    public void setAssignee(Person person) {
         this.assignee = person;
     }
 
