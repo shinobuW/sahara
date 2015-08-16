@@ -135,6 +135,7 @@ public class App extends Application {
 
         // The title of the window
         primaryStage.setTitle("Sahara");
+        primaryStage.setMaximized(true);
 
         primaryStage.setWidth(1060);
         primaryStage.setHeight(640);
