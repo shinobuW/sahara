@@ -29,8 +29,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import static javafx.collections.FXCollections.observableArrayList;
+import seng302.group2.scenes.control.CustomComboBox;
+import seng302.group2.scenes.control.CustomTextArea;
+import seng302.group2.scenes.control.search.SearchableTextField;
+import seng302.group2.scenes.information.project.story.task.TaskScene;
 
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
+import seng302.group2.workspace.team.Team;
 
 /**
  * Created by cvs20 on 5/08/15.
@@ -92,9 +98,9 @@ public class StoryTaskTab extends SearchableTab {
         stateCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
-        TableColumn assigneesCol = new TableColumn("Responsibilities");
+        TableColumn assigneesCol = new TableColumn("Assignee");
         assigneesCol.setCellValueFactory(new PropertyValueFactory<Task,
-                ObservableList<Person>>("responsibilities"));
+                Person>("assignee"));
         assigneesCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
@@ -130,7 +136,7 @@ public class StoryTaskTab extends SearchableTab {
         Button btnView = new Button("View");
 
         btnView.setOnAction((event) -> {
-                App.mainPane.selectItem(taskTable.getSelectionModel().getSelectedItem());
+                App.mainPane.setContent(new TaskScene(taskTable.getSelectionModel().getSelectedItem()));
             });
 
         VBox addTaskBox = new VBox(10);
@@ -138,10 +144,25 @@ public class StoryTaskTab extends SearchableTab {
 
 
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        RequiredField shortNameCustomField = new RequiredField("Task Name:");
+        CustomTextField effortLeftField = new CustomTextField("Effort left: ");
+        CustomComboBox<Person> assigneeField = new CustomComboBox<Person>("Assignee: ");
+        CustomTextArea descriptionField = new CustomTextArea("Task Description: ");
+        
+        ObservableList<Person> personList = observableArrayList();
+        for (Team team : currentStory.getProject().getAllTeams()) {
+            personList.addAll(team.getPeople());
+        }
+        
+        Collections.sort(personList);
+        
+        assigneeField.getComboBox().setItems(personList);
+        
+        
         Button btnAdd = new Button("Add");
         btnAdd.setDisable(true);
-        addTaskBox.getChildren().addAll(task, shortNameCustomField, btnAdd);
+        addTaskBox.getChildren().addAll(task, shortNameCustomField, effortLeftField, assigneeField,
+                descriptionField, btnAdd);
 
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
@@ -154,7 +175,9 @@ public class StoryTaskTab extends SearchableTab {
                 if (correctShortName) {
                     //get user input
                     String shortName = shortNameCustomField.getText();
-                    Task newTask = new Task(shortName, "", currentStory, null);
+                    Task newTask = new Task(shortName, descriptionField.getText(), currentStory, null);
+                    newTask.setAssignee(assigneeField.getValue());
+                    newTask.setEffortLeft(new Integer(effortLeftField.getText()));
                     currentStory.add(newTask);
                     App.refreshMainScene();
                 }
