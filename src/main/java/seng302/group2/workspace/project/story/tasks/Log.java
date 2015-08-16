@@ -3,6 +3,7 @@ package seng302.group2.workspace.project.story.tasks;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.undoredo.Command;
+import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 
@@ -17,11 +18,14 @@ import seng302.group2.util.reporting.ReportGenerator;
  * Created by swi67 on 31/07/15.
  */
 public class Log extends SaharaItem implements Serializable {
-    private LocalDate startTime;
-    private Integer duration;
-    private Person logger;
-    private Task task;
-    private String description;
+    private LocalDate startTime = LocalDate.now();
+    private Float duration = (float) 0;
+    private Person logger = null;
+    private Task task = null;
+    private String description = "";
+
+    public Log() {
+    }
 
 
     /**
@@ -32,7 +36,7 @@ public class Log extends SaharaItem implements Serializable {
      * @param duration the duration the person worked for
      * @param startTime time the logger started working on the task
      */
-    public Log(Task task, String description, Person logger, Integer duration, LocalDate startTime) {
+    public Log(Task task, String description, Person logger, Float duration, LocalDate startTime) {
         this.task = task;
         this.logger = logger;
         this.startTime = startTime;
@@ -47,7 +51,16 @@ public class Log extends SaharaItem implements Serializable {
      * Gets the duration of the log
      * @return duration in hours
      */
-    public Integer getDuration() {
+    public Float getDurationInHours() {
+        return this.duration / 60;
+    }
+
+
+    /**
+     * Gets the duration of the log
+     * @return duration in minutes
+     */
+    public Float getDurationInMinutes() {
         return this.duration;
     }
 
@@ -89,9 +102,7 @@ public class Log extends SaharaItem implements Serializable {
      * @return the processed String value.
      */
     public String getDurationString() {
-        Integer hours = duration / 60;
-        Integer minutes = duration % 60;
-        return hours + "h " + minutes + "min";
+        return (int) Math.floor(duration / 60) + "h " + (int) Math.floor(duration % 60) + "min";
     }
     
     /**
@@ -206,6 +217,64 @@ public class Log extends SaharaItem implements Serializable {
         }
     }
 
+
+    public boolean setDuration(String inputDuration) {
+        this.duration = readDurationToMinutes(inputDuration);
+        return duration != null;
+    }
+
+
+    public static Float readDurationToMinutes(String inputDuration) {
+        if (!DateValidator.validDuration(inputDuration)) {
+            return null;
+        }
+
+        String[] hourKeys = {"h", "hour", "hours", "hrs", "hr"};
+        String[] minKeys = {"min", "mins", "m", "minutes", "minute"};
+
+        int hourPos = -1;
+        int minPos = -1;
+        String hourWord = "";
+
+        // Find the hour position
+        for (String hour : hourKeys) {
+            if (inputDuration.contains(hour)) {
+                hourPos = inputDuration.indexOf(hour);
+                hourWord = hour;
+            }
+        }
+
+        // Find the minute position
+        for (String min : minKeys) {
+            if (inputDuration.contains(min)) {
+                minPos = inputDuration.indexOf(min);
+            }
+        }
+
+        if (hourPos > 0 && minPos > 0) {
+            // Have both
+            String hourString = inputDuration.substring(0, hourPos);
+            String minString = inputDuration.substring(hourPos + hourWord.length(), minPos);
+            return Float.valueOf(hourString.trim()) * 60 + Float.valueOf(minString.trim());
+
+        }
+        else if (hourPos > 0) {
+            // Have just hours
+            String hourString = inputDuration.substring(0, hourPos);
+            return Float.valueOf(hourString.trim()) * 60;
+        }
+        else if (minPos > 0) {
+            // Have just mins
+            String minString = inputDuration.substring(0, minPos);
+            return Float.valueOf(minString.trim());
+        }
+        else {
+            // Have just a base number (hours default)
+            return Float.valueOf(inputDuration.trim()) * 60;
+        }
+    }
+
+
     /**
      * A command class that allows the executing and undoing of project edits
      */
@@ -213,16 +282,16 @@ public class Log extends SaharaItem implements Serializable {
         private Log log;
         private Person logger;
         private LocalDate startTime;
-        private int duration;
+        private Float duration;
         private String description;
 
         private Person oldLogger;
         private LocalDate oldStartTime;
-        private int oldDuration;
+        private Float oldDuration;
         private String oldDescription;
 
         protected LogEditCommand(Log log, Person newLogger, LocalDate newStartDate,
-                                 int newDuration, String newDescription) {
+                                 Float newDuration, String newDescription) {
             this.log = log;
             this.logger = newLogger;
             this.startTime = newStartDate;

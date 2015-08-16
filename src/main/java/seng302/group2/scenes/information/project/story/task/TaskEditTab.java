@@ -140,7 +140,7 @@ public class TaskEditTab extends SearchableTab {
                             impedimentsTextArea.getText(),
                             taskStateComboBox.getValue(),
                             taskAssigneesList.getValue(), currentTask.getLogs(),
-                            new Integer(effortLeftField.getText()), currentTask.getEffortSpent());
+                            Float.parseFloat(effortLeftField.getText()), currentTask.getEffortSpent());
 
                     currentTask.switchToInfoScene();
                     App.mainPane.refreshTree();
