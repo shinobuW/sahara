@@ -200,7 +200,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                         //get user input
                         String shortName = shortNameCustomField.getText();
                         String description = descriptionTextArea.getText();
-                        Integer parsedInt = Integer.parseInt(effortLeftField.getText());
+                        Float parsedInt = Float.parseFloat(effortLeftField.getText());
                         ObservableList<Person> selectedPeople = observableArrayList();
                         for (Person person : availablePeople) {
                             if (person.getSelected() == true) {

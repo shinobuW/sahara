@@ -177,7 +177,7 @@ public class TaskLoggingTab extends SearchableTab {
                 if (personComboBox.getValue() != null && startDatePicker.getValue() != null) {
                     LocalDate startDate = startDatePicker.getValue();
                     Person selectedPerson = personComboBox.getValue();
-                    int minutes = timeTextField.getHours() * 60 + timeTextField.getMinutes();
+                    float minutes = timeTextField.getHours() * 60 + timeTextField.getMinutes();
 
                     Log newLog = new Log(currentTask, descriptionTextArea.getText(),
                             selectedPerson, minutes, startDate);

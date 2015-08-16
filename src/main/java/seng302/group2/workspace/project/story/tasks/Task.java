@@ -37,8 +37,8 @@ public class Task extends SaharaItem implements Serializable {
     private Person assignee;
     private transient ObservableList<Log> logs = observableArrayList();
     private List<Log> serializableLogs = new ArrayList<>();
-    private Integer effortLeft;
-    private Integer effortSpent;
+    private Float effortLeft;
+    private Float effortSpent;
 
     GeneralEnumStringConverter converter = new GeneralEnumStringConverter();
 
@@ -66,8 +66,8 @@ public class Task extends SaharaItem implements Serializable {
         this.impediments = "";
         this.story = null;
         this.state = TASKSTATE.NOT_STARTED;
-        this.effortLeft = 0;
-        this.effortSpent = 0;
+        this.effortLeft = (float) 0;
+        this.effortSpent = (float) 0;
 
 
         setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
@@ -86,8 +86,8 @@ public class Task extends SaharaItem implements Serializable {
         this.impediments = "";
         this.state = TASKSTATE.NOT_STARTED;
         this.story = story;
-        this.effortLeft = 0;
-        this.effortSpent = 0;
+        this.effortLeft = (float) 0;
+        this.effortSpent = (float) 0;
         this.assignee = person;
 
         setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
@@ -188,7 +188,7 @@ public class Task extends SaharaItem implements Serializable {
      *
      * @return the effortLeft of the current task
      */
-    public Integer getEffortLeft() {
+    public Float getEffortLeft() {
         return this.effortLeft;
     }
 
@@ -197,7 +197,7 @@ public class Task extends SaharaItem implements Serializable {
      *
      * @param effortLeft effortLeft of the current task
      */
-    public void setEffortLeft(Integer effortLeft) {
+    public void setEffortLeft(Float effortLeft) {
         this.effortLeft = effortLeft;
     }
 
@@ -206,8 +206,8 @@ public class Task extends SaharaItem implements Serializable {
      * @return the effortLeft as a String
      */
     public String getEffortLeftString() {
-        Integer hours = effortLeft / 60;
-        Integer minutes = effortLeft % 60;
+        Float hours = effortLeft / 60;
+        Float minutes = effortLeft % 60;
         return hours + "h " + minutes + "min";
     }
 
@@ -216,8 +216,8 @@ public class Task extends SaharaItem implements Serializable {
      * @return the effortSpent as a String
      */
     public String getEffortSpentString() {
-        Integer hours = effortSpent / 60;
-        Integer minutes = effortSpent % 60;
+        Float hours = effortSpent / 60;
+        Float minutes = effortSpent % 60;
         return hours + "h " + minutes + "min";
     }
 
@@ -226,7 +226,7 @@ public class Task extends SaharaItem implements Serializable {
      *
      * @return the effortLeft of the current task
      */
-    public Integer getEffortSpent() {
+    public Float getEffortSpent() {
         return this.effortSpent;
     }
 
@@ -235,7 +235,7 @@ public class Task extends SaharaItem implements Serializable {
      *
      * @param effortSpent effortLeft of the current task
      */
-    public void setEffortSpent(Integer effortSpent) {
+    public void setEffortSpent(Float effortSpent) {
         this.effortSpent = effortSpent;
     }
 
@@ -386,7 +386,7 @@ public class Task extends SaharaItem implements Serializable {
      * @param newLogs The new Logs
      */
     public void edit(String newShortName, String newDescription, String newImpediments, TASKSTATE newState,
-                     Person newAssignee,  List<Log> newLogs, Integer newEffortLeft, Integer newEffortSpent) {
+                     Person newAssignee,  List<Log> newLogs, Float newEffortLeft, Float newEffortSpent) {
         Command relEdit = new TaskEditCommand(this, newShortName, newDescription, newImpediments,
                 newState, newAssignee, newLogs, newEffortLeft, newEffortSpent);
 
@@ -405,8 +405,8 @@ public class Task extends SaharaItem implements Serializable {
         private Person assignee;
         private Collection<Log> logs;
         private TASKSTATE state;
-        private Integer effortLeft;
-        private Integer effortSpent;
+        private Float effortLeft;
+        private Float effortSpent;
 
 
         private String oldShortName;
@@ -415,8 +415,8 @@ public class Task extends SaharaItem implements Serializable {
         private Person oldAssignee;
         private Collection<Log> oldLogs;
         private TASKSTATE oldState;
-        private Integer oldEffortLeft;
-        private Integer oldEffortSpent;
+        private Float oldEffortLeft;
+        private Float oldEffortSpent;
         
         /**
          * Constructor for the Task Edit command.
@@ -430,7 +430,7 @@ public class Task extends SaharaItem implements Serializable {
          */
         private TaskEditCommand(Task task, String newShortName, String newDescription, 
                 String newImpediments, TASKSTATE newState,
-                Person newAssignee,  List<Log> newLogs, Integer effortLeft, Integer effortSpent) {
+                Person newAssignee,  List<Log> newLogs, Float effortLeft, Float effortSpent) {
             this.task = task;
 
             this.shortName = newShortName;
@@ -582,7 +582,7 @@ public class Task extends SaharaItem implements Serializable {
         private Log log;
         private Project proj;
         
-        private Integer oldEffort;
+        private Float oldEffort;
 
         /**
          * Constructor for the log addition command
@@ -602,7 +602,7 @@ public class Task extends SaharaItem implements Serializable {
         public void execute() {
             task.getLogs().add(log);
             log.setTask(task);
-            Integer newEffortSpent = task.getEffortSpent() + log.getDuration();
+            Float newEffortSpent = task.getEffortSpent() + log.getDurationInHours();
             task.setEffortSpent(newEffortSpent);
             proj.add(log);
         }
