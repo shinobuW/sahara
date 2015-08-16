@@ -1,5 +1,6 @@
 package seng302.group2.scenes.information.project.sprint;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -12,6 +13,7 @@ import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -51,34 +53,37 @@ public class SprintInfoTab extends SearchableTab {
         sprintStoryBox.setPrefHeight(192);
         sprintStoryBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);*/
 
+        //Attempt at expandable list, basic edition
+        Pane expandableStoryPanes = createStoryTitlePanes(currentSprint);
 
-        TableView<Story> storyTable = new TableView<>();
-        storyTable.setEditable(true);
-        storyTable.setPrefWidth(500);
-        storyTable.setPrefHeight(200);
-        storyTable.setPlaceholder(new SearchableText("There are currently no stories in this sprint.",
-                searchControls));
-        storyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        ObservableList<Story> rows = observableArrayList();
-        rows.addAll(currentSprint.getStories());
-
-        TableColumn storyCol = new TableColumn("Story");
-        storyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
-        storyCol.prefWidthProperty().bind(storyTable.widthProperty()
-                .subtract(2).divide(100).multiply(80));
-
-        /*TableColumn priorityCol = new TableColumn("Priority");
-        priorityCol.setCellValueFactory(new PropertyValueFactory<Story, Integer>("priority"));
-        priorityCol.prefWidthProperty().bind(storyTable.widthProperty()
-                .subtract(2).divide(100).multiply(20));*/
-
-        TableColumn readyCol = new TableColumn("Status");
-        readyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("readyString"));
-        readyCol.prefWidthProperty().bind(storyTable.widthProperty()
-                .subtract(2).divide(100).multiply(20));
-        storyTable.setItems(rows);
-        storyTable.getColumns().addAll(storyCol, readyCol);
+//        TableView<Story> storyTable = new TableView<>();
+//        storyTable.setEditable(true);
+//        storyTable.setPrefWidth(500);
+//        storyTable.setPrefHeight(200);
+//        storyTable.setPlaceholder(new SearchableText("There are currently no stories in this sprint.",
+//                searchControls));
+//        storyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+//
+//        ObservableList<Story> rows = observableArrayList();
+//        rows.addAll(currentSprint.getStories());
+//
+//        TableColumn storyCol = new TableColumn("Story");
+//        storyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
+//        storyCol.prefWidthProperty().bind(storyTable.widthProperty()
+//                .subtract(2).divide(100).multiply(80));
+//
+//        /*TableColumn priorityCol = new TableColumn("Priority");
+//        priorityCol.setCellValueFactory(new PropertyValueFactory<Story, Integer>("priority"));
+//        priorityCol.prefWidthProperty().bind(storyTable.widthProperty()
+//                .subtract(2).divide(100).multiply(20));*/
+//
+//        TableColumn readyCol = new TableColumn("Status");
+//        readyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("readyString"));
+//        readyCol.prefWidthProperty().bind(storyTable.widthProperty()
+//                .subtract(2).divide(100).multiply(20));
+//        storyTable.setItems(rows);
+//        storyTable.getColumns().addAll(storyCol, readyCol);
 
 
         final Separator separator = new Separator();
@@ -104,7 +109,9 @@ public class SprintInfoTab extends SearchableTab {
         basicInfoPane.getChildren().add(new SearchableText("Release: " + currentSprint.getRelease(), searchControls));
 
         basicInfoPane.getChildren().add(new SearchableText("Stories: ", searchControls));
-        basicInfoPane.getChildren().add(storyTable);
+        //basicInfoPane.getChildren().add(storyTable);
+
+        basicInfoPane.getChildren().add(expandableStoryPanes);
 
         basicInfoPane.getChildren().add(btnEdit);
 
@@ -115,6 +122,35 @@ public class SprintInfoTab extends SearchableTab {
 
         Collections.addAll(searchControls, title);
     }
+
+    /**
+     * Creates a stacked series of TitledPanes to display each story in the sprint and its tasks
+     * @param currentSprint The current sprint
+     * @return A VBox containing the stacked TitledPanes
+     */
+    private VBox createStoryTitlePanes(Sprint currentSprint) {
+        final VBox stackedStoryTitlePanes = new VBox();
+        final int rowHeight = 24;
+        for (Story story : currentSprint.getStories().sorted(Story.StoryPriorityComparator)) {
+            VBox taskBox = new VBox();
+            ListView<Task> taskList = new ListView<>();
+            ObservableList<Task> taskOptions = FXCollections.observableArrayList();
+            for (Task task : story.getTasks().sorted(Task.TaskNameComparator)) {
+                taskOptions.add(task);
+            }
+            taskList.setItems(taskOptions);
+            taskList.setPrefHeight(taskOptions.size() * rowHeight + 2);
+            taskBox.getChildren().add(taskList);
+            TitledPane storyPane = new TitledPane("[" + story.getEstimate().toString() + "] "
+                    + story.getShortName() + " - " + story.getReadyString(), taskBox);
+            storyPane.setExpanded(false);
+            storyPane.setAnimated(false);
+            stackedStoryTitlePanes.getChildren().add(storyPane);
+        }
+
+        return stackedStoryTitlePanes;
+    }
+
 
     /**
      * Gets all the searchable controls on this tab.
