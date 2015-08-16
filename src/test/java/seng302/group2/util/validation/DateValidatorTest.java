@@ -178,11 +178,28 @@ public class DateValidatorTest {
         String test3 = "30min";
         String test4 = "2h";
         String test5 = "99h99min";
+        String test6 = "2h5min";
+        String test7 = "2hours 5min";
+        String test8 = "2 hours 10 mins";
+        String test9 = "     2 hour     5 m  ";
+        String test10 = "5";
+        String test11 = "1.1";
+        String test12 = "0";
+        String test13 = "1.25 hours";
+        String test14 = "1.25 hours 45min";
         Assert.assertTrue(DateValidator.validDuration(test));
         Assert.assertTrue(DateValidator.validDuration(test2));
         Assert.assertTrue(DateValidator.validDuration(test3));
         Assert.assertTrue(DateValidator.validDuration(test4));
         Assert.assertFalse(DateValidator.validDuration(test5));
-
+        Assert.assertTrue(DateValidator.validDuration(test6));
+        Assert.assertTrue(DateValidator.validDuration(test7));
+        Assert.assertTrue(DateValidator.validDuration(test8));
+        Assert.assertTrue(DateValidator.validDuration(test9));
+        Assert.assertTrue(DateValidator.validDuration(test10));
+        Assert.assertTrue(DateValidator.validDuration(test11));
+        Assert.assertTrue(DateValidator.validDuration(test12));
+        Assert.assertTrue(DateValidator.validDuration(test13));
+        Assert.assertFalse(DateValidator.validDuration(test14));
     }
 }
