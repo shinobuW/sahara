@@ -312,6 +312,21 @@ public class MainMenuBar extends MenuBar {
         return saveItem;
     }
 
+    private static MenuItem createAdvancedSearchItem() {
+        // Create 'Search' MenuItem
+        MenuItem newSearchItem = new MenuItem("Advanced Search");
+        newSearchItem.setOnAction((event) -> {
+                javafx.scene.control.Dialog creationDialog = new CreateSearchDialog();
+                creationDialog.show();
+            });
+        newSearchItem.setAccelerator(new KeyCodeCombination(KeyCode.F,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHIFT_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
+        return newSearchItem;
+
+    }
+
     static void saveAction() {
         Workspace.saveWorkspace(Global.currentWorkspace, false);
     }
@@ -564,6 +579,7 @@ public class MainMenuBar extends MenuBar {
 
         //Create MenuItems for Edit submenu
         MenuItem searchItem = createSearchItem();
+        MenuItem advancedSearchItem = createAdvancedSearchItem();
         MenuItem undoItem = createUndoItem();
         MenuItem redoItem = createRedoItem();
         MenuItem deleteTreeItem = createDeleteTreeItem();
@@ -589,7 +605,7 @@ public class MainMenuBar extends MenuBar {
                 saveItem, saveAsItem, revertItem, new SeparatorMenuItem(),
                 quitProgramItem);
 
-        editMenu.getItems().addAll(searchItem, undoItem, redoItem, deleteTreeItem);
+        editMenu.getItems().addAll(searchItem, advancedSearchItem, undoItem, redoItem, deleteTreeItem);
 
         fileMenu.setOnShowing((event) -> {
                 if (Global.currentWorkspace.getHasUnsavedChanges()) {

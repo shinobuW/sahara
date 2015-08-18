@@ -18,13 +18,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import seng302.group2.App;
+import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
+import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.TimeTextField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
@@ -32,8 +33,6 @@ import seng302.group2.workspace.team.Team;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-
-import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  *
@@ -131,34 +130,47 @@ public class TaskLoggingTab extends SearchableTab {
 
         VBox newLogFields = new VBox(10);
         HBox newLogFieldFirstRow = new HBox(10);
-        Label loggerLabel = new Label("Logger");
-        final ComboBox<Person> personComboBox = new ComboBox<>(observableArrayList());
-        personComboBox.setStyle("-fx-pref-width: 200px;");
+        final CustomComboBox<Person> personComboBox = new CustomComboBox<Person>("Logger:");
 
-        CustomDatePicker startDatePicker = new CustomDatePicker("Start Date", true);
+        CustomDatePicker startDatePicker = new CustomDatePicker("Start Date:", true);
 
         HBox startTimeHBox = new HBox(10);
-        Label startTimeLabel = new Label("Start Time");
+        Label startTimeLabel = new Label("Start Time:");
         TimeTextField timeTextField = new TimeTextField();
         startTimeHBox.getChildren().addAll(startTimeLabel, timeTextField);
+
+        CustomTextField durationTextField = new CustomTextField("Duration:");
+
 
         personComboBox.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
         startDatePicker.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
         timeTextField.setStyle("-fx-pref-width: 70px;");
-        newLogFieldFirstRow.getChildren().addAll(loggerLabel, personComboBox,
-                startDatePicker, startTimeHBox);
+        newLogFieldFirstRow.getChildren().addAll(personComboBox,
+                startDatePicker, startTimeHBox, durationTextField);
 
-        HBox newLogFieldSecondRow = new HBox(10);
+        VBox newLogFieldSecondRow = new VBox(10);
         Label descriptionLabel = new Label("Description");
         TextArea descriptionTextArea = new TextArea();
+        descriptionTextArea.setStyle("-fx-pref-height: 200px; -fx-max-height: 200px");
+
 
         newLogFieldSecondRow.getChildren().addAll(descriptionLabel, descriptionTextArea);
 
         newLogFields.getChildren().addAll(newLogFieldFirstRow, newLogFieldSecondRow);
 
-        personComboBox.getItems().clear();
+/*        durationTextField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+            if (Log.readDurationToMinutes(newValue) == null) {
+                durationTextField.getTextField().setTooltip(new Tooltip("Wrong format"));
+            }
+            else {
+                durationTextField.getTextField().setTooltip(null);
+            }
+        });*/
+
+
+        personComboBox.getComboBox().getItems().clear();
         Set<Team> teams = currentTask.getStory().getBacklog().getProject().getCurrentTeams();
         if (teams.isEmpty()) {
             personComboBox.setDisable(true);
@@ -167,7 +179,7 @@ public class TaskLoggingTab extends SearchableTab {
             personComboBox.setDisable(false);
             for (Team team : teams) {
                 for (Person person : team.getPeople()) {
-                    personComboBox.getItems().add(person);
+                    personComboBox.getComboBox().getItems().add(person);
                 }
             }
         }

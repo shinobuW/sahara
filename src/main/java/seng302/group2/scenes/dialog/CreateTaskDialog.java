@@ -1,26 +1,19 @@
 package seng302.group2.scenes.dialog;
 
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -30,7 +23,6 @@ import seng302.group2.workspace.team.Team;
 
 import java.util.Map;
 
-import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -113,32 +105,18 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         backlogComboBox.setDisable(true);
         storyComboBox.setDisable(true);
 
-        SearchableText responsibles = new SearchableText("Responsibles:");
-        final ObservableList<Person> availablePeople = FXCollections.observableArrayList();
-        final ListView<Person> listView = new ListView<>(availablePeople);
+        CustomComboBox<Person> assigneeComboBox = new CustomComboBox<Person>("Assignee");
+        assigneeComboBox.setDisable(true);
 
-        Callback<Person, ObservableValue<Boolean>> getProperty = new Callback<Person, ObservableValue<Boolean>>() {
-            @Override
-            public BooleanProperty call(Person layer) {
-
-                return layer.selectedProperty();
-
-            }
-        };
-
-        Callback<ListView<Person>, ListCell<Person>> forListView = CheckBoxListCell.forListView(getProperty);
-        listView.setCellFactory(forListView);
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
 
-        //String firstPItem = Global.currentWorkspace.getProjects().get(0).toString();
-        //projectComboBox.setValue(firstPItem);
 
         for (Project project : Global.currentWorkspace.getProjects()) {
             projectComboBox.getItems().add(project);
         }
 
         grid.getChildren().addAll(shortNameCustomField, projectVBox,
-                backlogVBox, storyVBox, effortLeftField, responsibles, listView, descriptionTextArea);
+                backlogVBox, storyVBox, assigneeComboBox, effortLeftField, descriptionTextArea);
 
         this.getDialogPane().setContent(grid);
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
@@ -153,6 +131,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         effortLeftField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 try {
                     Integer parsedInt = Integer.parseInt(newValue);
+                    effortLeftField.hideErrorField();
                     correctEffortLeft = true;
                 }
                 catch (NumberFormatException ex) {
@@ -172,10 +151,17 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                 for (Backlog backlog : newValue.getBacklogs()) {
                     backlogComboBox.getItems().add(backlog);
                 }
-                availablePeople.clear();
-                for (Team team : newValue.getCurrentTeams()) {
-                    for (Person person : team.getPeople()) {
-                        availablePeople.add(person);
+
+                assigneeComboBox.clear();
+                if (newValue.getCurrentTeams().size() == 0 ) {
+                    assigneeComboBox.setDisable(true);
+                }
+                else {
+                    assigneeComboBox.setDisable(false);
+                    for (Team team : newValue.getCurrentTeams()) {
+                        for (Person person : team.getPeople()) {
+                            assigneeComboBox.addToComboBox(person);
+                        }
                     }
                 }
 
@@ -201,16 +187,11 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                         String shortName = shortNameCustomField.getText();
                         String description = descriptionTextArea.getText();
                         Float parsedInt = Float.parseFloat(effortLeftField.getText());
-                        ObservableList<Person> selectedPeople = observableArrayList();
-                        for (Person person : availablePeople) {
-                            if (person.getSelected() == true) {
-                                selectedPeople.add(person);
-                                person.setSelected(false);
-                            }
-                        }
+
 
                         Task task = new Task(shortName, description,
-                                storyComboBox.getSelectionModel().getSelectedItem(), null);
+                                storyComboBox.getSelectionModel().getSelectedItem(), assigneeComboBox.getComboBox()
+                                .getSelectionModel().getSelectedItem());
                         task.setEffortLeft(parsedInt);
                         storyComboBox.getSelectionModel().getSelectedItem().add(task);
                         App.refreshMainScene();
