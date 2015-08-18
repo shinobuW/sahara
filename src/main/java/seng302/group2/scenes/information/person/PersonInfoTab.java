@@ -1,19 +1,22 @@
 package seng302.group2.scenes.information.person;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Separator;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.tasks.Task;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 
 /**
@@ -38,10 +41,36 @@ public class PersonInfoTab extends SearchableTab {
         this.setContent(wrapper);
 
         // Create controls
+        HBox listViewHBox = new HBox(10);
+
+
         SearchableText title = new SearchableTitle(currentPerson.getFirstName() + " " + currentPerson.getLastName());
+
+        VBox skillVBox = new VBox(10);
+        SearchableText skill  = new SearchableText("Skills: ");
         SearchableListView personSkillsBox = new SearchableListView<>(currentPerson.getSkills());
         personSkillsBox.setPrefHeight(192);
         personSkillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        skillVBox.getChildren().addAll(skill, personSkillsBox);
+
+        VBox taskVBox = new VBox(10);
+        SearchableText taskLabel = new SearchableText("Tasks: ");
+        Set<Story> storyList = currentPerson.getTeam().getCurrentAllocation().getProject().getAllStories();
+        ObservableList<Task> taskList = observableArrayList();
+        for (Story story : storyList) {
+            for (Task task : story.getTasks()) {
+                if (task.getAssignee() == currentPerson) {
+                    taskList.add(task);
+                }
+            }
+        }
+        SearchableListView taskBox = new SearchableListView<>(taskList);
+        taskBox.setPrefHeight(192);
+        taskBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        taskVBox.getChildren().addAll(taskLabel, taskBox);
+
+        listViewHBox.getChildren().addAll(skillVBox, taskVBox);
+
         SearchableText shortName = new SearchableText("Short Name: " + currentPerson.getShortName());
         SearchableText emailAddress = new SearchableText("Email Address: " + currentPerson.getEmail());
         SearchableText birthDate = new SearchableText("Birth Date: " + currentPerson.getDateString());
@@ -49,7 +78,7 @@ public class PersonInfoTab extends SearchableTab {
         SearchableText team = new SearchableText("Team: " + currentPerson.getTeamName());
         String roleString = currentPerson.getRole() == null ? "" : currentPerson.getRole().toString();
         SearchableText role = new SearchableText("Role: " + roleString);
-        SearchableText skill  = new SearchableText("Skills: ");
+
         Button btnEdit = new Button("Edit");
 
         final Separator separator = new Separator();
@@ -69,8 +98,7 @@ public class PersonInfoTab extends SearchableTab {
                 team,
                 role,
                 separator,
-                skill,
-                personSkillsBox,
+                listViewHBox,
                 btnEdit);
 
         Collections.addAll(searchControls,
@@ -82,7 +110,8 @@ public class PersonInfoTab extends SearchableTab {
                 team,
                 role,
                 skill,
-                personSkillsBox
+                personSkillsBox,
+                taskBox
         );
     }
 
