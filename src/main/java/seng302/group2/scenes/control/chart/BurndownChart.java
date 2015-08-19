@@ -4,6 +4,10 @@ import javafx.scene.chart.Axis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import seng302.group2.workspace.project.sprint.Sprint;
+import seng302.group2.workspace.project.story.tasks.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -11,17 +15,13 @@ import seng302.group2.workspace.project.sprint.Sprint;
  * Created by btm38 on 31/07/15.
 */
 public class BurndownChart extends LineChart {
-    //do i need these privateS?
-    // private NumberAxis xAxis = new NumberAxis();
-    // private NumberAxis yAxis = new NumberAxis();
-    // private LineChart<Number,Number> burndownChart = new LineChart<>(xAxis,yAxis);
+
 
     public BurndownChart(Axis axis, Axis axis2) {
         super(axis, axis2);
         try {
             String css = this.getClass().getResource("/styles/chart.css").toExternalForm();
             this.getStylesheets().add(css);
-            //this.getStylesheets().add("/main/java/seng302.group2/util/style/chart.css");
         }
         catch (Exception ex) {
             System.err.println("Cannot acquire stylesheet: " + ex.toString());
@@ -81,11 +81,21 @@ public class BurndownChart extends LineChart {
 
 
 
-        //referenceVelocity.nodeProperty().get().setStyle("-fx-stroke-width: 1px;");
         this.getData().add(series1);
         this.getData().add(series2);
         this.getData().add(referenceVelocity);
 
+    }
+
+    public Series<Number, Number> effortLeftSeries(Sprint currentSprint) {
+        List<Log> logList = new ArrayList<Log>();
+        logList = currentSprint.getAllLogs();
+        return new Series<>();
+
+    }
+
+    public Series<Number, Number> effortSpentSeries(Sprint currentSprint) {
+        return null;
     }
 }
 

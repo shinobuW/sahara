@@ -38,7 +38,6 @@ public class ElementTreeContextMenu extends ContextMenu {
 
         //"Edit" button event
         editItem.setOnAction(e -> {
-                //showEditScene(finalSelectedCategory);
                 selected.switchToInfoScene(true);
             });
 

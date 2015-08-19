@@ -12,6 +12,7 @@ import seng302.group2.workspace.categories.subCategory.project.task.TaskCategory
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
 
@@ -180,6 +181,22 @@ public class Sprint extends SaharaItem {
             tasks.addAll(story.getTasks());
         }
         return tasks;
+    }
+
+    /**
+     * Gets all the logs current within the sprint.
+     *
+     * @return A list of logs within the sprint
+     */
+    public List<Log> getAllLogs() {
+        List<Log> logList = new ArrayList<Log>();
+        for (Task task : this.getAllTasks()) {
+            for (Log log : task.getLogs()) {
+                logList.add(log);
+            }
+        }
+        System.out.println(logList);
+        return logList;
     }
 
     /**
