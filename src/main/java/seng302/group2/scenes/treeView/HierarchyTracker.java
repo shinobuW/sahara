@@ -1,4 +1,4 @@
-package seng302.group2.scenes.control;
+package seng302.group2.scenes.treeView;
 
 import javafx.scene.control.TreeItem;
 import seng302.group2.scenes.treeView.TreeViewWithItems;
@@ -11,6 +11,9 @@ import java.util.Map;
  * Created by Jordane on 21/07/2015.
  */
 public class HierarchyTracker {
+
+    private static Boolean collapsedDefault = Boolean.FALSE;
+
     /**
      * A map to keep track of if items are expanded or not. True if expanded.
      */
@@ -47,7 +50,7 @@ public class HierarchyTracker {
             return collapseMap.get(item);
         }
         else {
-            return Boolean.TRUE;
+            return collapsedDefault;
         }
     }
 

@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.HierarchyTracker;
+import seng302.group2.scenes.treeView.HierarchyTracker;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
 import seng302.group2.scenes.menu.MainMenuBar;
 import seng302.group2.scenes.menu.MainToolbar;
