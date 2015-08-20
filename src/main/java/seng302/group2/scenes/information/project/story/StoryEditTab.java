@@ -105,7 +105,8 @@ public class StoryEditTab extends SearchableTab {
         }
         else {
             readyStateCheck.getCheckBox().setDisable(false);
-            readyStateCheck.getCheckBox().setTooltip(new Tooltip("Stories cannot be estimated without belonging to a backlog"));
+            readyStateCheck.getCheckBox().setTooltip(
+                    new Tooltip("Stories cannot be estimated without belonging to a backlog"));
         }
 
         estimateComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {

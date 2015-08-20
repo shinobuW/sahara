@@ -1,7 +1,8 @@
 package seng302.group2.scenes.control.search;
 
 import com.sun.javafx.font.freetype.HBGlyphLayout;
-import javafx.geometry.Pos;
+import javafx.geometry.*;
+import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -23,9 +24,13 @@ public class SearchableCheckBox extends VBox implements SearchableControl {
      */
     public SearchableCheckBox(String label) {
         HBox labelBox = new HBox();
+        labelBox.setSpacing(15);
         labelBox.setPrefWidth(165);
         labelBox.setAlignment(Pos.CENTER_LEFT);
         labelBox.spacingProperty().setValue(0);
+
+
+        cbLabel.setPadding(new Insets(0, 400, 0, 0));
 
         cbLabel.setText(label);
         labelBox.getChildren().addAll(cbLabel, cb);
