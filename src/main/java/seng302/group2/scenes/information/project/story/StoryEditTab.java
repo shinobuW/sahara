@@ -16,10 +16,7 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableListView;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.util.validation.PriorityFieldValidator;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -67,7 +64,7 @@ public class StoryEditTab extends SearchableTab {
         RequiredField priorityNumberField = new RequiredField("Story Priority:");
         CustomComboBox estimateComboBox = new CustomComboBox("Estimate:", false);
 
-        CheckBox readyStateCheck = new CheckBox("Ready?");
+        SearchableCheckBox readyStateCheck = new SearchableCheckBox("Ready?");
 
         Button btnAssign = new Button("<");
         Button btnUnassign = new Button(">");
@@ -98,17 +95,17 @@ public class StoryEditTab extends SearchableTab {
 
         estimateComboBox.setValue(currentStory.getEstimate());
 
-        readyStateCheck.setSelected(currentStory.getReady());
+        readyStateCheck.getCheckBox().setSelected(currentStory.getReady());
         if (currentStory.getBacklog() == null
                 || currentStory.getEstimate().equals(EstimationScalesDictionary.getScaleValue(
                 EstimationScalesDictionary.DefaultValues.NONE))
                 || currentStory.getAcceptanceCriteria().isEmpty()) {
-            readyStateCheck.setSelected(false);
-            readyStateCheck.setDisable(true);
+            readyStateCheck.getCheckBox().setSelected(false);
+            readyStateCheck.getCheckBox().setDisable(true);
         }
         else {
-            readyStateCheck.setDisable(false);
-            readyStateCheck.setTooltip(new Tooltip("Stories cannot be estimated without belonging to a backlog"));
+            readyStateCheck.getCheckBox().setDisable(false);
+            readyStateCheck.getCheckBox().setTooltip(new Tooltip("Stories cannot be estimated without belonging to a backlog"));
         }
 
         estimateComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -116,11 +113,11 @@ public class StoryEditTab extends SearchableTab {
                         || (newValue != null && newValue.equals(EstimationScalesDictionary.getScaleValue(
                         EstimationScalesDictionary.DefaultValues.NONE)))
                         || currentStory.getAcceptanceCriteria().isEmpty()) {
-                    readyStateCheck.setSelected(false);
-                    readyStateCheck.setDisable(true);
+                    readyStateCheck.getCheckBox().setSelected(false);
+                    readyStateCheck.getCheckBox().setDisable(true);
                 }
                 else {
-                    readyStateCheck.setDisable(false);
+                    readyStateCheck.getCheckBox().setDisable(false);
                 }
             });
 
@@ -228,7 +225,7 @@ public class StoryEditTab extends SearchableTab {
                         currentStory.getDescription());
                 boolean priorityUnchanged = priorityNumberField.getText().equals(
                         currentStory.getPriority().toString());
-                boolean readyUnchanged = readyStateCheck.isSelected() == currentStory.getReady();
+                boolean readyUnchanged = readyStateCheck.getCheckBox().isSelected() == currentStory.getReady();
                 boolean estimateUnchanged = estimateComboBox.getValue().equals(currentStory.getEstimate());
 
                 boolean dependentChanged = true;
@@ -259,7 +256,7 @@ public class StoryEditTab extends SearchableTab {
                             Integer.parseInt(priorityNumberField.getText()),
                             currentStory.getBacklog(),
                             estimateComboBox.getValue().toString(),
-                            readyStateCheck.selectedProperty().get(),
+                            readyStateCheck.getCheckBox().selectedProperty().get(),
                             dependentOnList
                     );
 
@@ -288,7 +285,7 @@ public class StoryEditTab extends SearchableTab {
                 descriptionTextArea,
                 priorityNumberField,
                 estimateComboBox,
-                //readyStateCheck,
+                readyStateCheck,
                 dependantStoryLabel,
                 dependantStoriesListView,
                 availableStoryLabel,

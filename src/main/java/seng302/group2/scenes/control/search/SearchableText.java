@@ -118,6 +118,14 @@ public class SearchableText extends TextFlow implements SearchableControl {
         return stitched;
     }
 
+    /**
+     * Gets the text in this SearchableText.
+     * @return string of the text
+     */
+    public String getText() {
+        Text contentText = stitch();
+        return contentText.getText();
+    }
 
     /**
      * Performs a basic string query on the SearchableText element, highlighting any matches with a flashy styling.
