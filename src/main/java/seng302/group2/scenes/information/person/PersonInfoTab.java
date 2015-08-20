@@ -1,5 +1,7 @@
 package seng302.group2.scenes.information.person;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -9,6 +11,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
@@ -54,9 +57,20 @@ public class PersonInfoTab extends SearchableTab {
         skillVBox.getChildren().addAll(skill, personSkillsBox);
 
         VBox taskVBox = new VBox(10);
+        HBox titleAndCombo = new HBox(10);
         SearchableText taskLabel = new SearchableText("Tasks: ");
+        ObservableList<Task.TASKSTATE> taskStates = observableArrayList(Task.TASKSTATE.values());
+
+        CustomComboBox<Object> filterComboBox = new CustomComboBox<Object>("");
+        filterComboBox.addToComboBox("All");
+
+        for (Task.TASKSTATE state : taskStates) {
+            filterComboBox.addToComboBox(state);
+        }
+
         Set<Story> storyList = currentPerson.getTeam().getCurrentAllocation().getProject().getAllStories();
-        ObservableList<Task> taskList = observableArrayList();
+        ArrayList<Task> taskList = new ArrayList<Task>();
+        ObservableList<Task> filteredList = observableArrayList();
         for (Story story : storyList) {
             for (Task task : story.getTasks()) {
                 if (task.getAssignee() == currentPerson) {
@@ -64,11 +78,11 @@ public class PersonInfoTab extends SearchableTab {
                 }
             }
         }
-        SearchableListView taskBox = new SearchableListView<>(taskList);
+        SearchableListView taskBox = new SearchableListView<>(filteredList);
         taskBox.setPrefHeight(192);
         taskBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        taskVBox.getChildren().addAll(taskLabel, taskBox);
-
+        titleAndCombo.getChildren().addAll(taskLabel, filterComboBox);
+        taskVBox.getChildren().addAll(titleAndCombo, taskBox);
         listViewHBox.getChildren().addAll(skillVBox, taskVBox);
 
         SearchableText shortName = new SearchableText("Short Name: " + currentPerson.getShortName());
@@ -87,6 +101,28 @@ public class PersonInfoTab extends SearchableTab {
         btnEdit.setOnAction((event) -> {
                 currentPerson.switchToInfoScene(true);
             });
+
+        filterComboBox.getComboBox().valueProperty().addListener(new ChangeListener<Object>() {
+                @Override
+                public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
+                    filteredList.clear();
+                    if (newValue == "All") {
+                        for (Task task : taskList) {
+                            filteredList.add(task);
+                        }
+                    }
+                    else {
+                        for (Task task : taskList) {
+                            if (task.getState() == newValue) {
+                                filteredList.add(task);
+                            }
+                        }
+                    }
+                }
+            });
+
+        filterComboBox.getComboBox().setValue(filterComboBox.getComboBox().getItems().get(0));
+
 
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
@@ -111,7 +147,8 @@ public class PersonInfoTab extends SearchableTab {
                 role,
                 skill,
                 personSkillsBox,
-                taskBox
+                taskBox,
+                taskLabel
         );
     }
 

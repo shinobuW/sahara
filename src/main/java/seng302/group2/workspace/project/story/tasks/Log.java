@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import seng302.group2.util.reporting.ReportGenerator;
 
 /**
  * Represents a log for recording the effort spent on a task
