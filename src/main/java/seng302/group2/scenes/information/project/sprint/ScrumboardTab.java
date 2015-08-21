@@ -5,19 +5,18 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TitledPane;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.sprint.Sprint;
+import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.*;
@@ -36,7 +35,7 @@ public class ScrumboardTab extends SearchableTab {
     ListView<Task> laneOne = new ListView<>(laneOneStories);
     ListView<Task> laneTwo = new ListView<>(laneTwoStories);
 
-    Set<ListView<Task>> lanes = new HashSet<>();
+    List<ListView<Task>> lanes = new ArrayList<>();
 
 
     Task interactiveTask = null;
@@ -48,9 +47,8 @@ public class ScrumboardTab extends SearchableTab {
      * @param currentSprint The currently selected backlog
      */
     public ScrumboardTab(Sprint currentSprint) {
-        lanes.add(laneOne);
-        lanes.add(laneTwo);
         Collections.addAll(lanes, laneOne,laneTwo);
+
         initializeListeners();
         laneOneStories.addAll(currentSprint.getAllTasks());
 
@@ -64,17 +62,41 @@ public class ScrumboardTab extends SearchableTab {
 
         SearchableText title = new SearchableTitle(currentSprint.getLongName());
         basicInfoPane.getChildren().add(title);
-
         basicInfoPane.getChildren().add(new SearchableText("Tasks: ", searchControls));
 
-        laneOne.setCellFactory(list -> new ScrumBoardTaskCell());
+        /*laneOne.setCellFactory(list -> new ScrumBoardTaskCell());
         laneTwo.setCellFactory(List -> new ScrumBoardTaskCell());
 
         HBox lists = new HBox();
         lists.getChildren().addAll(laneOne, laneTwo);
 
-        basicInfoPane.getChildren().addAll(lists);
+        basicInfoPane.getChildren().addAll(lists);*/
 
+
+
+
+        // Create story title pane regions
+        for (Story story : currentSprint.getStories()) {
+
+            GridPane taskLanesGrid = new GridPane();
+
+            SearchableListView<Task> todoLane = new SearchableListView<>(story.todoTasks);
+            SearchableListView<Task> inProgressLane = new SearchableListView<>(story.inProgTasks);
+            SearchableListView<Task> verifyLane = new SearchableListView<>(story.verifyTasks);
+            SearchableListView<Task> completedLane = new SearchableListView<>(story.completedTasks);
+
+            TitledPane storyPane = new TitledPane("[" + story.getEstimate().toString() + "] "
+                    + story.getShortName(), taskLanesGrid);
+
+
+
+        }
+
+
+
+
+
+        // Add the searchable controls to the collection for searching
         Collections.addAll(searchControls, title);
     }
 
@@ -92,7 +114,6 @@ public class ScrumboardTab extends SearchableTab {
 
     private void initializeListeners() {
         // FROM: http://www.java2s.com/Tutorials/Java/JavaFX/0640__JavaFX_ListView.htm
-
 
         // drag from left to right
         laneOne.setOnDragDetected(event -> {

@@ -1,5 +1,6 @@
 package seng302.group2.workspace.project.story;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import org.w3c.dom.Element;
@@ -56,6 +57,13 @@ public class Story extends SaharaItem implements Serializable {
     private Set<Story> dependentOn = new HashSet<>();
     private transient ObservableList<Task> tasks = observableArrayList();
     private List<Task> serializableTasks = new ArrayList<>();
+
+
+    // Observable lists for use on the scrumboard
+    public ObservableList<Task> todoTasks = FXCollections.observableArrayList();
+    public ObservableList<Task> inProgTasks = FXCollections.observableArrayList();
+    public ObservableList<Task> verifyTasks = FXCollections.observableArrayList();
+    public ObservableList<Task> completedTasks = FXCollections.observableArrayList();
 
 
     public static String stateReady = "Ready";
