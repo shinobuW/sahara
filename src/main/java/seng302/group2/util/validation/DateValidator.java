@@ -5,7 +5,6 @@
  */
 package seng302.group2.util.validation;
 
-import org.apache.commons.lang.ArrayUtils;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomDateField;
 import seng302.group2.workspace.allocation.Allocation;
@@ -388,8 +387,8 @@ public class DateValidator {
 
 
     /**
-     * Validates a string to see if it of the format "00h00min", where both hours and minutes can be inputted on its
-     * own.
+     * Validates a string to see if the string is formatted correctly i.e 2h30min where h can be replaced with "hour,
+     * "h", "hrs", "hr", "hours" and "min" can be placed with "m", "minute", "minutes" or "mins"
      * "min" can also be replaced with "m"
      * @param inputString time string to validate
      * @return true if input string is in the right format

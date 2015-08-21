@@ -365,6 +365,9 @@ public class Task extends SaharaItem implements Serializable {
         }
     }
 
+    /**
+     * Deletes the task using the delete command
+     */
     public void deleteTask() {
         Command command = new DeleteTaskCommand(this);
         Global.commandManager.executeCommand(command);

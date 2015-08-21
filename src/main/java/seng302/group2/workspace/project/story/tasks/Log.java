@@ -216,13 +216,21 @@ public class Log extends SaharaItem implements Serializable {
         }
     }
 
-
+    /**
+     * Sets the duration
+     * @param inputDuration
+     * @return true if duration is not null
+     */
     public boolean setDuration(String inputDuration) {
         this.duration = readDurationToMinutes(inputDuration);
         return duration != null;
     }
 
-
+    /**
+     * Converts string formatted duration to duration in minutes
+     * @param inputDuration
+     * @return duration in minutes
+     */
     public static Float readDurationToMinutes(String inputDuration) {
         if (!DateValidator.validDuration(inputDuration)) {
             return null;
