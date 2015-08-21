@@ -1,8 +1,6 @@
 package seng302.group2.workspace;
 
 import javafx.collections.ObservableList;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Element;
 import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
@@ -27,8 +25,6 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
     private transient CategorySwitchStrategy categorySwitchStrategy;
     private transient InformationSwitchStrategy informationSwitchStrategy;
     private transient SubCategorySwitchStrategy subCategorySwitchStrategy;
-
-    private transient Logger logger = LoggerFactory.getLogger(SaharaItem.class);
 
     static final AtomicLong NEXT_ID = new AtomicLong(0);
     protected final long id = NEXT_ID.getAndIncrement();
@@ -167,12 +163,7 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
      * Switches the scene based on the TVItem's switching strategy
      */
     public void switchToCategoryScene() {
-        try {
-            categorySwitchStrategy.switchScene();
-        }
-        catch (NullPointerException ex) {
-            logger.info("Switch strategy not implemented for this item yet: " + this.getClass());
-        }
+        categorySwitchStrategy.switchScene();
     }
 
 
@@ -181,12 +172,7 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
      * @param subCategory the sub category to switch to
      */
     public void switchToCategoryScene(Category subCategory) {
-        try {
-            subCategorySwitchStrategy.switchScene(subCategory);
-        }
-        catch (NullPointerException ex) {
-            logger.info("Switch strategy not implemented for this item yet: " + this.getClass());
-        }
+        subCategorySwitchStrategy.switchScene(subCategory);
     }
 
 
@@ -194,12 +180,7 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
      * Switches the scene based on the TVItem's switching strategy
      */
     public void switchToInfoScene() {
-        try {
-            informationSwitchStrategy.switchScene(this);
-        }
-        catch (NullPointerException ex) {
-            logger.info("Switch strategy not implemented for this item yet: " + this.getClass());
-        }
+        informationSwitchStrategy.switchScene(this);
     }
 
 
@@ -208,12 +189,7 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
      * @param edit Whether or not to switch to the edit scene
      */
     public void switchToInfoScene(boolean edit) {
-        try {
-            informationSwitchStrategy.switchScene(this, edit);
-        }
-        catch (NullPointerException ex) {
-            System.out.println("Switch strategy not implemented for this item yet");
-        }
+        informationSwitchStrategy.switchScene(this, edit);
     }
 
 

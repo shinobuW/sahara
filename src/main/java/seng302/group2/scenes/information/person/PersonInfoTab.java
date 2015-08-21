@@ -68,7 +68,10 @@ public class PersonInfoTab extends SearchableTab {
             filterComboBox.addToComboBox(state);
         }
 
-        Set<Story> storyList = currentPerson.getTeam().getCurrentAllocation().getProject().getAllStories();
+        Set<Story> storyList = new HashSet<>();
+        if (currentPerson.getTeam() != null) {
+            storyList.addAll(currentPerson.getTeam().getCurrentAllocation().getProject().getAllStories());
+        }
         ArrayList<Task> taskList = new ArrayList<Task>();
         ObservableList<Task> filteredList = observableArrayList();
         for (Story story : storyList) {

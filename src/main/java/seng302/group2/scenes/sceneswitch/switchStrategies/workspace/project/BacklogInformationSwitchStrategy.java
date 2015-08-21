@@ -1,7 +1,5 @@
 package seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import seng302.group2.App;
 import seng302.group2.scenes.information.project.backlog.BacklogScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
@@ -13,7 +11,6 @@ import seng302.group2.workspace.project.backlog.Backlog;
  * Created by Jordane on 8/06/2015.
  */
 public class BacklogInformationSwitchStrategy implements InformationSwitchStrategy {
-    transient Logger logger = LoggerFactory.getLogger(BacklogInformationSwitchStrategy.class);
 
     /**
      * Sets the main pane to be an instance of the Backlog Scene. 
@@ -26,7 +23,6 @@ public class BacklogInformationSwitchStrategy implements InformationSwitchStrate
         }
         else {
             // Bad call
-            logger.warn("Tried changing to backlog scene with a non-backlog instance");
         }
     }
 
@@ -47,7 +43,6 @@ public class BacklogInformationSwitchStrategy implements InformationSwitchStrate
         }
         else {
             // Bad call
-            logger.warn("Tried changing to backlog scene with a non-backlog instance");
         }
     }
 }

@@ -9,8 +9,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.layout.VBox;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
@@ -26,7 +24,6 @@ import java.util.Map;
  */
 
 public class GenerateReportDialog extends Dialog<Map<String, String>> {
-    static transient Logger logger = LoggerFactory.getLogger(GenerateReportDialog.class);
     /**
      * Displays the Dialog box for creating a skill.
      */
@@ -60,7 +57,6 @@ public class GenerateReportDialog extends Dialog<Map<String, String>> {
                 if (b == btnTypeCreate) {
                     List<SaharaItem> checkedItems = getCheckedItems(root);
                     // TODO: Plug in custom generation method
-                    logger.info(checkedItems.toString());
                     if (!checkedItems.isEmpty()) {
                         ReportGenerator.generateReport(checkedItems);
                         this.close();

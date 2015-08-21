@@ -1,7 +1,5 @@
 package seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import seng302.group2.App;
 import seng302.group2.scenes.information.project.backlog.BacklogCategoryScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrategy;
@@ -13,7 +11,6 @@ import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
  * Created by Jordane on 8/06/2015.
  */
 public class BacklogCategorySwitchStrategy implements SubCategorySwitchStrategy {
-    transient Logger logger = LoggerFactory.getLogger(BacklogCategorySwitchStrategy.class);
 
     /**
      * Sets the Main Pane to be an instance of the BacklogCategoryScene.
@@ -24,9 +21,6 @@ public class BacklogCategorySwitchStrategy implements SubCategorySwitchStrategy 
     public void switchScene(Category backlogCategory) {
         if (backlogCategory instanceof BacklogCategory) {
             App.mainPane.setContent(new BacklogCategoryScene((BacklogCategory) backlogCategory));
-        }
-        else {
-            logger.warn("Tried changing to backlog cat scene with a non-backlog cat instance");
         }
     }
 }

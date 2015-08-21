@@ -2,8 +2,6 @@ package seng302.group2.scenes.contextmenu;
 
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import seng302.group2.Global;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.role.Role;
@@ -21,7 +19,6 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
  */
 @SuppressWarnings("deprecation")
 public class ElementTreeContextMenu extends ContextMenu {
-    transient Logger logger = LoggerFactory.getLogger(ElementTreeContextMenu.class);
 
     /**
      * Constructor. Sets the event for contextMenu buttons

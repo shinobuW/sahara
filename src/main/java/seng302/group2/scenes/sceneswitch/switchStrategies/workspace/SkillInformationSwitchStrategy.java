@@ -1,7 +1,5 @@
 package seng302.group2.scenes.sceneswitch.switchStrategies.workspace;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import seng302.group2.App;
 import seng302.group2.scenes.information.skill.SkillScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
@@ -13,7 +11,6 @@ import seng302.group2.workspace.skills.Skill;
  * Created by Jordane on 8/06/2015.
  */
 public class SkillInformationSwitchStrategy implements InformationSwitchStrategy {
-    transient Logger logger = LoggerFactory.getLogger(SkillInformationSwitchStrategy.class);
 
     /**
      * Sets the main pane to be an instance of the Skill Scene. 
@@ -26,7 +23,6 @@ public class SkillInformationSwitchStrategy implements InformationSwitchStrategy
         }
         else {
             // Bad call
-            logger.warn("Tried changing to skill scene with a non-skill instance");
         }
     }
 
@@ -47,7 +43,6 @@ public class SkillInformationSwitchStrategy implements InformationSwitchStrategy
         }
         else {
             // Bad call
-            logger.warn("Tried changing to skill scene with a non-skill instance");
         }
     }
 }

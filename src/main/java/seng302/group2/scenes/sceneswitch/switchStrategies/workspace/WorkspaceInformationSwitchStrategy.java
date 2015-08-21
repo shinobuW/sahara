@@ -1,7 +1,5 @@
 package seng302.group2.scenes.sceneswitch.switchStrategies.workspace;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import seng302.group2.App;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
@@ -13,7 +11,6 @@ import seng302.group2.workspace.workspace.Workspace;
  * Created by Jordane on 8/06/2015.
  */
 public class WorkspaceInformationSwitchStrategy implements InformationSwitchStrategy {
-    transient Logger logger = LoggerFactory.getLogger(WorkspaceInformationSwitchStrategy.class);
 
     /**
      * Sets the main pane to be an instance of the Workspace Scene. 
@@ -26,7 +23,6 @@ public class WorkspaceInformationSwitchStrategy implements InformationSwitchStra
         }
         else {
             // Bad call
-            logger.warn("Tried changing to ws scene with a non-ws instance");
         }
     }
 
@@ -47,7 +43,6 @@ public class WorkspaceInformationSwitchStrategy implements InformationSwitchStra
         }
         else {
             // Bad call
-            logger.warn("Tried changing to ws scene with a non-ws instance");
         }
     }
 }
