@@ -28,15 +28,17 @@ import java.util.Map;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
+ * Class to create a popup dialog for creating a release.
  * @author Shinobu
  */
 public class CreateReleaseDialog extends Dialog<Map<String, String>> {
-    /**
-     * Shows the release creation dialog
-     */
 
     Boolean correctShortName = Boolean.FALSE;
     Boolean correctDate = Boolean.FALSE;
+
+    /**
+     * Shows the release creation dialog
+     */
     public CreateReleaseDialog(Project defaultProject) {
         correctShortName = Boolean.FALSE;
         correctDate = Boolean.TRUE;
