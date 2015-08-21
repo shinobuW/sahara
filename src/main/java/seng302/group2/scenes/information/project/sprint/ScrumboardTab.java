@@ -77,19 +77,36 @@ public class ScrumboardTab extends SearchableTab {
 
         // Create story title pane regions
         for (Story story : currentSprint.getStories()) {
-
             GridPane taskLanesGrid = new GridPane();
+            taskLanesGrid.setPadding(new Insets(8));
 
             SearchableListView<Task> todoLane = new SearchableListView<>(story.todoTasks);
             SearchableListView<Task> inProgressLane = new SearchableListView<>(story.inProgTasks);
             SearchableListView<Task> verifyLane = new SearchableListView<>(story.verifyTasks);
             SearchableListView<Task> completedLane = new SearchableListView<>(story.completedTasks);
 
+            // Set cell factory
+            todoLane.setCellFactory(list -> new ScrumBoardTaskCell());
+            inProgressLane.setCellFactory(list -> new ScrumBoardTaskCell());
+            verifyLane.setCellFactory(list -> new ScrumBoardTaskCell());
+            completedLane.setCellFactory(list -> new ScrumBoardTaskCell());
+
+            // Add labels to grid
+            taskLanesGrid.add(new SearchableText("Todo", searchControls), 0, 0);
+            taskLanesGrid.add(new SearchableText("In Progress", searchControls), 1, 0);
+            taskLanesGrid.add(new SearchableText("Verify", searchControls), 2, 0);
+            taskLanesGrid.add(new SearchableText("Done", searchControls), 3, 0);
+
+            // Add task list views
+            taskLanesGrid.add(todoLane, 0, 1);
+            taskLanesGrid.add(inProgressLane, 1, 1);
+            taskLanesGrid.add(verifyLane, 2, 1);
+            taskLanesGrid.add(completedLane, 3, 1);
+
+
             TitledPane storyPane = new TitledPane("[" + story.getEstimate().toString() + "] "
                     + story.getShortName(), taskLanesGrid);
-
-
-
+            basicInfoPane.getChildren().add(storyPane);
         }
 
 

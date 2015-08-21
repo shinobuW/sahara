@@ -271,6 +271,32 @@ public class Story extends SaharaItem implements Serializable {
         return this.sprint;
     }
 
+
+    public void addTaskToLane(Task task) {
+        //System.out.println("added to lane " + task.getState());
+        todoTasks.remove(task);
+        inProgTasks.remove(task);
+        completedTasks.remove(task);
+        verifyTasks.remove(task);
+
+        switch (task.getState()) {
+            case NOT_STARTED:
+                todoTasks.add(task);
+                break;
+            case IN_PROGRESS:
+                inProgTasks.add(task);
+                break;
+            case VERIFY:
+                verifyTasks.add(task);
+                break;
+            case DONE:
+                verifyTasks.add(task);
+                break;
+            default:
+                break;
+        }
+    }
+
     /**
      * Sets the sprint the story belongs to
      *
@@ -1039,6 +1065,7 @@ public class Story extends SaharaItem implements Serializable {
         AddTaskCommand(Story story, Task task) {
             this.story = story;
             this.task = task;
+            story.addTaskToLane(task);
         }
 
         /**

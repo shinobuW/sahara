@@ -139,8 +139,16 @@ public class SprintInfoTab extends SearchableTab {
                         VBox taskInfo = new VBox();
                         SearchableText desc = new SearchableText("Description: " + task.getDescription(),
                                 searchControls);
-                        SearchableText assignee = new SearchableText("Assigned Team Member: "
-                                + task.getAssignee().toString(), searchControls);
+
+                        SearchableText assignee;
+                        if (task.getAssignee() == null) {
+                            assignee = new SearchableText("Assigned Team Member: (none)", searchControls);
+                        }
+                        else {
+                            assignee = new SearchableText("Assigned Team Member: "
+                                    + task.getAssignee().toString(), searchControls);
+                        }
+
                         SearchableText imps = new SearchableText("Impediments: " + task.getImpediments(),
                                 searchControls);
                         SearchableText state = new SearchableText("State: " + task.getState().toString(),
@@ -160,7 +168,7 @@ public class SprintInfoTab extends SearchableTab {
                 else {
                     taskBox.getChildren().add(new SearchableText("This story currently has no tasks.", searchControls));
                 }
-                TitledPane storyPane = new TitledPane("[" + story.getEstimate().toString() + "] "
+                TitledPane storyPane = new TitledPane("[" + story.getEstimate() + "] "
                         + story.getShortName() + " - " + story.getReadyString(), taskBox);
                 //TitledPane storyPane = new TitledPane(new SearchableText("[" + story.getEstimate().toString() + "] "
                 //        + story.getShortName() + " - " + story.getReadyString(), searchControls), taskBox);

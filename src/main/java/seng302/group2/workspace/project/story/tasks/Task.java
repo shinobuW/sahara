@@ -1,5 +1,6 @@
 package seng302.group2.workspace.project.story.tasks;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
@@ -15,8 +16,6 @@ import seng302.group2.workspace.project.story.Story;
 import java.io.Serializable;
 import java.util.*;
 
-import static javafx.collections.FXCollections.observableArrayList;
-
 /**
  * Created by cvs20 on 27/07/15.
  */
@@ -29,16 +28,17 @@ public class Task extends SaharaItem implements Serializable {
         return task1.getShortName().compareTo(task2.getShortName());
     };
 
-    private String shortName;
-    private String description;
-    private String impediments;
-    private TASKSTATE state;
-    private Story story;
-    private Person assignee;
-    private transient ObservableList<Log> logs = observableArrayList();
+    private String shortName = "New Task";
+    private String description = "";
+    private String impediments = "";
+    private TASKSTATE state = TASKSTATE.NOT_STARTED;
+    private TASKSTATE lane = TASKSTATE.NOT_STARTED;
+    private Story story = null;
+    private Person assignee = null;
+    private transient ObservableList<Log> logs = FXCollections.observableArrayList();
     private List<Log> serializableLogs = new ArrayList<>();
-    private Float effortLeft;
-    private Float effortSpent;
+    private Float effortLeft = (float) 0;
+    private Float effortSpent = (float) 0;
 
     GeneralEnumStringConverter converter = new GeneralEnumStringConverter();
 
@@ -163,6 +163,9 @@ public class Task extends SaharaItem implements Serializable {
      */
     public void setState(TASKSTATE state) {
         this.state = state;
+        if (getStory() != null && getLaneStates().contains(lane)) {
+            getStory().addTaskToLane(this);
+        }
     }
 
     /**
@@ -339,6 +342,7 @@ public class Task extends SaharaItem implements Serializable {
         IN_PROGRESS("In Progress"),
         BLOCKED("Blocked"),
         DONE("Done"),
+        VERIFY("Verify"),
         DEFERRED("Deferred");
 
         private String value;
@@ -365,6 +369,14 @@ public class Task extends SaharaItem implements Serializable {
         }
     }
 
+
+    private static Set<TASKSTATE> laneStates = new HashSet<>();
+    public static Collection<TASKSTATE> getLaneStates() {
+        Collections.addAll(laneStates, TASKSTATE.NOT_STARTED, TASKSTATE.IN_PROGRESS, TASKSTATE.VERIFY, TASKSTATE.DONE);
+        return laneStates;
+    }
+
+
     public void deleteTask() {
         Command command = new DeleteTaskCommand(this);
         Global.commandManager.executeCommand(command);
@@ -382,7 +394,8 @@ public class Task extends SaharaItem implements Serializable {
      * @param newLogs The new Logs
      */
     public void edit(String newShortName, String newDescription, String newImpediments, TASKSTATE newState,
-                     Person newAssignee,  List<Log> newLogs, Float newEffortLeft, Float newEffortSpent) {
+                     Person newAssignee,  List<Log> newLogs, Float newEffortLeft,
+                     Float newEffortSpent) {
         Command relEdit = new TaskEditCommand(this, newShortName, newDescription, newImpediments,
                 newState, newAssignee, newLogs, newEffortLeft, newEffortSpent);
 
@@ -401,6 +414,7 @@ public class Task extends SaharaItem implements Serializable {
         private Person assignee;
         private Collection<Log> logs;
         private TASKSTATE state;
+        private TASKSTATE lane;
         private Float effortLeft;
         private Float effortSpent;
 
@@ -411,6 +425,7 @@ public class Task extends SaharaItem implements Serializable {
         private Person oldAssignee;
         private Collection<Log> oldLogs;
         private TASKSTATE oldState;
+        private TASKSTATE oldLane;
         private Float oldEffortLeft;
         private Float oldEffortSpent;
         
@@ -438,6 +453,9 @@ public class Task extends SaharaItem implements Serializable {
             this.state = newState;
             this.effortLeft = effortLeft;
             this.effortSpent = effortSpent;
+            if (getLaneStates().contains(newState)) {
+                this.lane = newState;
+            }
 
             this.oldShortName = task.shortName;
             this.oldDescription = task.description;
@@ -448,8 +466,9 @@ public class Task extends SaharaItem implements Serializable {
             this.oldState = task.state;
             this.oldEffortLeft = task.effortLeft;
             this.oldEffortSpent = task.effortSpent;
-
-            
+            if (getLaneStates().contains(state)) {
+                this.oldLane = state;
+            }
         }
 
         /**
@@ -462,6 +481,11 @@ public class Task extends SaharaItem implements Serializable {
             task.state = state;
             task.effortLeft = effortLeft;
             task.effortSpent = effortSpent;
+            task.lane = lane;
+
+            if (task.getStory() != null && getLaneStates().contains(lane)) {
+                task.getStory().addTaskToLane(task);
+            }
             
             task.assignee = assignee;
             
@@ -479,6 +503,11 @@ public class Task extends SaharaItem implements Serializable {
             task.state = oldState;
             task.effortLeft = oldEffortLeft;
             task.effortSpent = oldEffortSpent;
+            task.lane = oldLane;
+
+            if (task.getStory() != null && getLaneStates().contains(lane)) {
+                task.getStory().addTaskToLane(task);
+            }
 
             task.assignee = oldAssignee;
             
@@ -513,6 +542,7 @@ public class Task extends SaharaItem implements Serializable {
         private Task task;
         private Story story;
         // TODO maybe needs sprint added in here as well for tasks without a story.
+        /* If Story == null, assume it's a task without a story as Story is required when creating a task otherwise */
         
         /**
          * Contructor for a task deletion command.
@@ -637,6 +667,4 @@ public class Task extends SaharaItem implements Serializable {
             return mapped_task && mapped_log;
         }
     }
-
-    
 }
