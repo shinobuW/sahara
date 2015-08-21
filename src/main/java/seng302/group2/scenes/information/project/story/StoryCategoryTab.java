@@ -3,7 +3,6 @@ package seng302.group2.scenes.information.project.story;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.HBox;
@@ -76,7 +75,7 @@ public class StoryCategoryTab extends SearchableTab {
             });
 
         btnCreate.setOnAction((event) -> {
-                new CreateStoryDialog();
+                new CreateStoryDialog(selectedCategory.getProject());
             });
 
         // Add items to pane & search collection

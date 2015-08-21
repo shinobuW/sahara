@@ -74,7 +74,7 @@ public class SprintCategory extends SubCategory {
      */
     @Override
     public void showCreationDialog() {
-        javafx.scene.control.Dialog creationDialog = new CreateSprintDialog();
+        javafx.scene.control.Dialog creationDialog = new CreateSprintDialog(getProject());
         creationDialog.show();
     }
 }

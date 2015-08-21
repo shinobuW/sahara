@@ -8,35 +8,32 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import seng302.group2.App;
+import seng302.group2.scenes.control.CustomComboBox;
+import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.information.project.story.task.TaskScene;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.project.story.tasks.Task;
+import seng302.group2.workspace.team.Team;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import static javafx.collections.FXCollections.observableArrayList;
-import seng302.group2.scenes.control.CustomComboBox;
-import seng302.group2.scenes.control.CustomTextArea;
-import seng302.group2.scenes.control.search.SearchableTextField;
-import seng302.group2.scenes.information.project.story.task.TaskScene;
 
+import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
-import seng302.group2.workspace.team.Team;
 
 /**
  * Created by cvs20 on 5/08/15.

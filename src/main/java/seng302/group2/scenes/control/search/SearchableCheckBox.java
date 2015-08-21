@@ -1,13 +1,11 @@
 package seng302.group2.scenes.control.search;
 
-import com.sun.javafx.font.freetype.HBGlyphLayout;
-import javafx.geometry.*;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.awt.*;
 import java.util.Collection;
 
 /**

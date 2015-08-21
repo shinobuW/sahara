@@ -83,7 +83,7 @@ public class SprintCategoryTab extends SearchableTab {
             });
 
         btnCreate.setOnAction((event) -> {
-                new CreateSprintDialog();
+                new CreateSprintDialog(selectedCategory.getProject());
             });
 
         Collections.addAll(searchControls, title);

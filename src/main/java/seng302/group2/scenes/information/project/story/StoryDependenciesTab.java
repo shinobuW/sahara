@@ -10,7 +10,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
-import seng302.group2.scenes.control.search.*;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.project.story.Story;
 
 import java.util.ArrayList;

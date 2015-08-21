@@ -70,22 +70,23 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
         }
 
         final Callback<DatePicker, DateCell> dayCellFactory =
-                new Callback<DatePicker, DateCell>() {
-                    @Override
-                    public DateCell call(final DatePicker datePicker) {
-                        return new DateCell() {
-                            @Override
-                            public void updateItem(LocalDate item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (item.isBefore(LocalDate.now())) {
-                                    setDisable(true);
-                                    setStyle("-fx-background-color: #ffc0cb;");
-                                }
-
+            new Callback<DatePicker, DateCell>() {
+                @Override
+                public DateCell call(final DatePicker datePicker) {
+                    return new DateCell() {
+                        @Override
+                        public void updateItem(LocalDate item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (item.isBefore(LocalDate.now())) {
+                                setDisable(true);
+                                setStyle("-fx-background-color: #ffc0cb;");
                             }
-                        };
-                    }
-                };
+
+                        }
+                    };
+                }
+            };
+
         releaseDatePicker.getDatePicker().setDayCellFactory(dayCellFactory);
 
         grid.getChildren().addAll(shortNameCustomField, releaseDatePicker, projectComboBox, descriptionTextArea);
@@ -100,69 +101,68 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
         createButton.setDisable(true);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-            correctShortName = validateShortName(shortNameCustomField, null);
-
-            createButton.setDisable(!(correctShortName && correctDate));
-        });
+                correctShortName = validateShortName(shortNameCustomField, null);
+                createButton.setDisable(!(correctShortName && correctDate));
+            });
 
         releaseDatePicker.getDatePicker().setOnAction(event -> {
-            LocalDate releaseDate = releaseDatePicker.getValue();
-            correctDate = DateValidator.isFutureDate(releaseDate);
-
-            if (correctDate) {
-                releaseDatePicker.hideErrorField();
-            }
-            else {
-                releaseDatePicker.showErrorField("Date must be a future date");
-            }
-
-            if ((DateValidator.isFutureDate(releaseDate) || releaseDate == null) && correctShortName) {
-                correctDate = true;
-                createButton.setDisable(!(correctShortName && correctDate));
-            }
-            else {
-                createButton.setDisable(true);
-            }
-        });
-
-        this.setResultConverter(b -> {
-            if (b == btnTypeCreate) {
-                String shortName = shortNameCustomField.getText();
-                String description = descriptionTextArea.getText();
                 LocalDate releaseDate = releaseDatePicker.getValue();
+                correctDate = DateValidator.isFutureDate(releaseDate);
 
-                Project project = new Project();
-                for (SaharaItem item : Global.currentWorkspace.getProjects()) {
-                    if (item.toString().equals(projectComboBox.getValue())) {
-                        project = (Project) item;
-                    }
-                }
-
-                if (releaseDate == null) {
-                    releaseDate = null;
-                    Release release = new Release(shortName, description, releaseDate, project);
-                    project.add(release);
-                    App.mainPane.selectItem(release);
-                    this.close();
+                if (correctDate) {
+                    releaseDatePicker.hideErrorField();
                 }
                 else {
-                    if (!DateValidator.isFutureDate(releaseDate)) {
-                        releaseDatePicker.showErrorField("Date must be a future date");
+                    releaseDatePicker.showErrorField("Date must be a future date");
+                }
+
+                if ((DateValidator.isFutureDate(releaseDate) || releaseDate == null) && correctShortName) {
+                    correctDate = true;
+                    createButton.setDisable(!(correctShortName && correctDate));
+                }
+                else {
+                    createButton.setDisable(true);
+                }
+            });
+
+        this.setResultConverter(b -> {
+                if (b == btnTypeCreate) {
+                    String shortName = shortNameCustomField.getText();
+                    String description = descriptionTextArea.getText();
+                    LocalDate releaseDate = releaseDatePicker.getValue();
+
+                    Project project = new Project();
+                    for (SaharaItem item : Global.currentWorkspace.getProjects()) {
+                        if (item.toString().equals(projectComboBox.getValue())) {
+                            project = (Project) item;
+                        }
                     }
-                    else {
-                        Release release = new Release(shortName, description, releaseDate,
-                                project);
+
+                    if (releaseDate == null) {
+                        releaseDate = null;
+                        Release release = new Release(shortName, description, releaseDate, project);
                         project.add(release);
                         App.mainPane.selectItem(release);
                         this.close();
                     }
+                    else {
+                        if (!DateValidator.isFutureDate(releaseDate)) {
+                            releaseDatePicker.showErrorField("Date must be a future date");
+                        }
+                        else {
+                            Release release = new Release(shortName, description, releaseDate,
+                                    project);
+                            project.add(release);
+                            App.mainPane.selectItem(release);
+                            this.close();
+                        }
+                    }
                 }
-            }
-            for (SaharaItem project : Global.currentWorkspace.getProjects()) {
-                projectComboBox.addToComboBox(project.toString());
-            }
-            return null;
-        });
+                for (SaharaItem project : Global.currentWorkspace.getProjects()) {
+                    projectComboBox.addToComboBox(project.toString());
+                }
+                return null;
+            });
         this.setResizable(false);
         this.show();
     }

@@ -15,8 +15,6 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.workspace.categories.ProjectCategory;
-import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -211,6 +209,7 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
         this.setResizable(false);
         this.show();
     }
+
 
     /**
      * Shows a backlog creation dialog.

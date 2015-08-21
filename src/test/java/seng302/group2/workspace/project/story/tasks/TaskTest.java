@@ -1,18 +1,12 @@
 package seng302.group2.workspace.project.story.tasks;
 
-import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.Test;
-import org.w3c.dom.Element;
 import seng302.group2.Global;
-import seng302.group2.util.reporting.ReportGenerator;
-import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
-
-import static javafx.collections.FXCollections.observableArrayList;
 
 public class TaskTest {
     Task task = new Task();
