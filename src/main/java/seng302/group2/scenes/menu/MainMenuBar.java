@@ -632,10 +632,12 @@ public class MainMenuBar extends MenuBar {
                 if (Global.currentWorkspace.getProjects().isEmpty()) {
                     newReleaseItem.setDisable(true);
                     newStoryItem.setDisable(true);
+                    newTaskItem.setDisable(true);
                 }
                 else {
                     newReleaseItem.setDisable(false);
                     newStoryItem.setDisable(false);
+                    newTaskItem.setDisable(false);
                 }
             });
 

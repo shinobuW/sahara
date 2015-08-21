@@ -148,8 +148,14 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
 
                 backlogComboBox.getItems().clear();
                 storyComboBox.getItems().clear();
-                for (Backlog backlog : newValue.getBacklogs()) {
-                    backlogComboBox.getItems().add(backlog);
+                if (newValue.getBacklogs().size() == 0) {
+                    backlogComboBox.setDisable(true);
+                }
+                else {
+                    backlogComboHBox.setDisable(false);
+                    for (Backlog backlog : newValue.getBacklogs()) {
+                        backlogComboBox.getItems().add(backlog);
+                    }
                 }
 
                 assigneeComboBox.clear();
@@ -164,8 +170,6 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                         }
                     }
                 }
-
-                backlogComboBox.setDisable(false);
             });
 
         backlogComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
