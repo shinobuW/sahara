@@ -88,7 +88,7 @@ public class BacklogCategoryTab extends SearchableTab {
             });
 
         btnCreate.setOnAction((event) -> {
-                javafx.scene.control.Dialog creationDialog = new CreateBacklogDialog();
+                javafx.scene.control.Dialog creationDialog = new CreateBacklogDialog(selectedCategory.getProject());
                 creationDialog.show();
             });
 

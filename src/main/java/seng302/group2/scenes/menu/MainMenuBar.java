@@ -162,7 +162,7 @@ public class MainMenuBar extends MenuBar {
 
         MenuItem newReleaseItem = new MenuItem("Release");
         newReleaseItem.setOnAction((event) -> {
-                javafx.scene.control.Dialog creationDialog = new CreateReleaseDialog(null);
+                javafx.scene.control.Dialog creationDialog = new CreateReleaseDialog();
                 creationDialog.show();
             });
         newReleaseItem.setAccelerator(new KeyCodeCombination(KeyCode.R,
