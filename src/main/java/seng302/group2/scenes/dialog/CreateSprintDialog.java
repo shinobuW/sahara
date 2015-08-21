@@ -17,7 +17,6 @@ import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
@@ -187,7 +186,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
         }
 
         grid.getChildren().addAll(shortNameCustomField, longNameCustomField, projectVBox,
-                releaseVBox, sprintStartDatePicker, sprintEndDatePicker, teamVBox, descriptionTextArea);
+                releaseVBox, teamVBox, sprintStartDatePicker, sprintEndDatePicker, descriptionTextArea);
 
         //Add grid of controls to dialog
         this.getDialogPane().setContent(grid);
@@ -215,17 +214,24 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
 
                     releaseComboBox.setDisable(false);
                     releaseComboBox.setValue(null);
+                    teamComboBox.setDisable(false);
+                    teamComboBox.setValue(null);
                     sprintStartDatePicker.setDisable(true);
                     sprintStartDatePicker.setValue(null);
                     sprintEndDatePicker.setDisable(true);
                     sprintEndDatePicker.setValue(null);
-                    teamComboBox.setDisable(true);
-                    teamComboBox.setValue(null);
+
 
                     releaseOptions.clear();
 
                     for (Release release : newValue.getReleases()) {
                         releaseOptions.add(release);
+                    }
+
+                    teamOptions.clear();
+
+                    for (Team team : newValue.getAllTeams()) {
+                        teamOptions.add(team);
                     }
 
                     toggleCreate();
@@ -242,8 +248,6 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                         sprintStartDatePicker.setValue(null);
                         sprintEndDatePicker.setDisable(true);
                         sprintEndDatePicker.setValue(null);
-                        teamComboBox.setDisable(true);
-                        teamComboBox.setValue(null);
 
                         toggleCreate();
                     }
@@ -264,21 +268,6 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                     else if (newValue != null) {
                         sprintEndDatePicker.setDisable(false);
                     }
-
-                    if (endDateSelected() && startDateSelected()) {
-                        teamOptions.clear();
-                        outer: for (Team team : projectComboBox.getValue().getAllTeams()) {
-                            for (Allocation alloc : team.getProjectAllocations()) {
-
-                                if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
-                                        && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
-                                    teamOptions.add(team);
-                                    continue outer;
-                                }
-                            }
-
-                        }
-                    }
                     toggleCreate();
                 }
             });
@@ -288,25 +277,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 @Override
                 public void changed(ObservableValue<? extends LocalDate> observable,
                                     LocalDate oldValue, LocalDate newValue) {
-
-                    if (newValue != null) {
-                        teamOptions.clear();
-                        outer: for (Team team : projectComboBox.getValue().getAllTeams()) {
-                            for (Allocation alloc : team.getProjectAllocations()) {
-
-                                if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
-                                        && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
-                                    teamOptions.add(team);
-                                    continue outer;
-
-                                }
-                            }
-
-                        }
-                        teamComboBox.setDisable(false);
-                        teamComboBox.setValue(null);
-                        toggleCreate();
-                    }
+                    toggleCreate();
                 }
             });
 
