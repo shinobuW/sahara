@@ -130,24 +130,49 @@ public class SprintInfoTab extends SearchableTab {
      */
     private VBox createStoryTitlePanes(Sprint currentSprint) {
         final VBox stackedStoryTitlePanes = new VBox();
-        final int rowHeight = 24;
-        for (Story story : currentSprint.getStories().sorted(Story.StoryPriorityComparator)) {
-            VBox taskBox = new VBox();
-            ListView<Task> taskList = new ListView<>();
-            ObservableList<Task> taskOptions = FXCollections.observableArrayList();
-            for (Task task : story.getTasks().sorted(Task.TaskNameComparator)) {
-                taskOptions.add(task);
+        if (currentSprint.getStories().size() != 0) {
+            for (Story story : currentSprint.getStories().sorted(Story.StoryPriorityComparator)) {
+                VBox taskBox = new VBox();
+                if (story.getTasks().size() != 0) {
+                    taskBox.getChildren().add(new SearchableText("Tasks:", searchControls));
+                    for (Task task : story.getTasks().sorted(Task.TaskNameComparator)) {
+                        VBox taskInfo = new VBox();
+                        SearchableText desc = new SearchableText("Description: " + task.getDescription(),
+                                searchControls);
+                        SearchableText assignee = new SearchableText("Assigned Team Member: "
+                                + task.getAssignee().toString(), searchControls);
+                        SearchableText imps = new SearchableText("Impediments: " + task.getImpediments(),
+                                searchControls);
+                        SearchableText state = new SearchableText("State: " + task.getState().toString(),
+                                searchControls);
+                        SearchableText effortLeft = new SearchableText("Effort Left: " + task.getEffortLeftString(),
+                                searchControls);
+                        SearchableText effortSpent = new SearchableText("Effort Spent: " + task.getEffortSpentString(),
+                                searchControls);
+                        taskInfo.getChildren().addAll(desc, assignee, imps, state, effortLeft, effortSpent);
+                        TitledPane taskPane = new TitledPane(task.getShortName(), taskInfo);
+                        taskPane.setPrefHeight(30);
+                        taskPane.setExpanded(false);
+                        taskPane.setAnimated(false);
+                        taskBox.getChildren().add(taskPane);
+                    }
+                }
+                else {
+                    taskBox.getChildren().add(new SearchableText("This story currently has no tasks.", searchControls));
+                }
+                TitledPane storyPane = new TitledPane("[" + story.getEstimate().toString() + "] "
+                        + story.getShortName() + " - " + story.getReadyString(), taskBox);
+                //TitledPane storyPane = new TitledPane(new SearchableText("[" + story.getEstimate().toString() + "] "
+                //        + story.getShortName() + " - " + story.getReadyString(), searchControls), taskBox);
+                storyPane.setPrefHeight(30);
+                storyPane.setExpanded(false);
+                storyPane.setAnimated(false);
+                stackedStoryTitlePanes.getChildren().add(storyPane);
             }
-            taskList.setItems(taskOptions);
-            taskList.setPrefHeight(taskOptions.size() * rowHeight + 2);
-            taskBox.getChildren().add(taskList);
-            TitledPane storyPane = new TitledPane("[" + story.getEstimate().toString() + "] "
-                    + story.getShortName() + " - " + story.getReadyString(), taskBox);
-            storyPane.setExpanded(false);
-            storyPane.setAnimated(false);
-            stackedStoryTitlePanes.getChildren().add(storyPane);
         }
-
+        else {
+            stackedStoryTitlePanes.getChildren().add(new SearchableText("This sprint currently has no stories."));
+        }
         return stackedStoryTitlePanes;
     }
 
