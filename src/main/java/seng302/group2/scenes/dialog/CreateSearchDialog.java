@@ -1,15 +1,11 @@
 package seng302.group2.scenes.dialog;
 
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
-import seng302.group2.scenes.control.CustomTextArea;
-import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTextField;
-
 
 import java.util.Map;
 

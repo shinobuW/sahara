@@ -72,7 +72,7 @@ public class BacklogCategory extends SubCategory {
      */
     @Override
     public void showCreationDialog() {
-        javafx.scene.control.Dialog creationDialog = new CreateBacklogDialog();
+        javafx.scene.control.Dialog creationDialog = new CreateBacklogDialog(getProject());
         creationDialog.show();
     }
 }

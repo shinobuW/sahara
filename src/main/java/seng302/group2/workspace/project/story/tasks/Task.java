@@ -375,8 +375,11 @@ public class Task extends SaharaItem implements Serializable {
         Collections.addAll(laneStates, TASKSTATE.NOT_STARTED, TASKSTATE.IN_PROGRESS, TASKSTATE.VERIFY, TASKSTATE.DONE);
         return laneStates;
     }
+    
 
-
+    /**
+     * Deletes the task using the delete command
+     */
     public void deleteTask() {
         Command command = new DeleteTaskCommand(this);
         Global.commandManager.executeCommand(command);

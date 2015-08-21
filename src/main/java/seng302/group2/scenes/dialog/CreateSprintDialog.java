@@ -17,7 +17,6 @@ import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
@@ -187,7 +186,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
         }
 
         grid.getChildren().addAll(shortNameCustomField, longNameCustomField, projectVBox,
-                releaseVBox, sprintStartDatePicker, sprintEndDatePicker, teamVBox, descriptionTextArea);
+                releaseVBox, teamVBox, sprintStartDatePicker, sprintEndDatePicker, descriptionTextArea);
 
         //Add grid of controls to dialog
         this.getDialogPane().setContent(grid);
@@ -215,17 +214,24 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
 
                     releaseComboBox.setDisable(false);
                     releaseComboBox.setValue(null);
+                    teamComboBox.setDisable(false);
+                    teamComboBox.setValue(null);
                     sprintStartDatePicker.setDisable(true);
                     sprintStartDatePicker.setValue(null);
                     sprintEndDatePicker.setDisable(true);
                     sprintEndDatePicker.setValue(null);
-                    teamComboBox.setDisable(true);
-                    teamComboBox.setValue(null);
+
 
                     releaseOptions.clear();
 
                     for (Release release : newValue.getReleases()) {
                         releaseOptions.add(release);
+                    }
+
+                    teamOptions.clear();
+
+                    for (Team team : newValue.getAllTeams()) {
+                        teamOptions.add(team);
                     }
 
                     toggleCreate();
@@ -242,8 +248,6 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                         sprintStartDatePicker.setValue(null);
                         sprintEndDatePicker.setDisable(true);
                         sprintEndDatePicker.setValue(null);
-                        teamComboBox.setDisable(true);
-                        teamComboBox.setValue(null);
 
                         toggleCreate();
                     }
@@ -264,20 +268,279 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                     else if (newValue != null) {
                         sprintEndDatePicker.setDisable(false);
                     }
+                    toggleCreate();
+                }
+            });
 
-                    if (endDateSelected() && startDateSelected()) {
-                        teamOptions.clear();
-                        outer: for (Team team : projectComboBox.getValue().getAllTeams()) {
-                            for (Allocation alloc : team.getProjectAllocations()) {
 
-                                if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
-                                        && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
-                                    teamOptions.add(team);
-                                    continue outer;
-                                }
+        sprintEndDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
+                @Override
+                public void changed(ObservableValue<? extends LocalDate> observable,
+                                    LocalDate oldValue, LocalDate newValue) {
+                    toggleCreate();
+                }
+            });
+
+        teamComboBox.valueProperty().addListener(new ChangeListener<Team>() {
+                @Override
+                public void changed(ObservableValue<? extends Team> observable, Team oldValue, Team newValue) {
+                    toggleCreate();
+                }
+            });
+
+        this.setResultConverter(b -> {
+                if (b == btnTypeCreate) {
+                    String goal = shortNameCustomField.getText();
+                    String longName = longNameCustomField.getText();
+                    String description = descriptionTextArea.getText();
+                    LocalDate sprintStartDate = sprintStartDatePicker.getValue();
+                    LocalDate sprintEndDate = sprintEndDatePicker.getValue();
+                    Project sprintProject = projectComboBox.getValue();
+                    Team sprintTeam = teamComboBox.getValue();
+                    Release sprintRelease = releaseComboBox.getValue();
+
+                    Sprint sprint = new Sprint(goal, longName, description, sprintStartDate,
+                            sprintEndDate, sprintProject, sprintTeam, sprintRelease);
+
+                    sprintProject.add(sprint);
+                    App.mainPane.selectItem(sprint);
+
+                    this.close();
+
+                }
+                return null;
+            });
+
+        this.setResizable(false);
+        this.show();
+
+    }
+
+
+    /**
+     * Constructor for the CreateSprintDialog. The dialog generated by this constructor
+     * is shown after construction.
+     * @param defaultProject The default selected project
+     */
+    public CreateSprintDialog(Project defaultProject) {
+        correctShortName = Boolean.FALSE;
+        correctLongName = Boolean.FALSE;
+        //TODO fix up sizing
+
+        this.setTitle("New Sprint");
+        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 500px; -fx-pref-width: 600px; "
+                + "-fx-pref-height: 500px;");
+
+        VBox grid = new VBox();
+        grid.spacingProperty().setValue(10);
+        Insets insets = new Insets(20, 20, 20, 20);
+        grid.setPadding(insets);
+
+        ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
+        this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
+
+        RequiredField shortNameCustomField = new RequiredField("Goal:");
+        RequiredField longNameCustomField = new RequiredField("Long Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
+
+        sprintStartDatePicker = new CustomDatePicker("Start Date:", true);
+        sprintEndDatePicker = new CustomDatePicker("End Date:", true);
+
+
+        final Callback<DatePicker, DateCell> startDateCellFactory =
+            new Callback<DatePicker, DateCell>() {
+                @Override
+                public DateCell call(final DatePicker datePicker) {
+                    return new DateCell() {
+                        @Override
+                        public void updateItem(LocalDate item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (releaseSelected() && item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
+                                setDisable(true);
+                                setStyle("-fx-background-color: #ffc0cb;");
+                            }
+                        }
+                    };
+                }
+            };
+
+        sprintStartDatePicker.getDatePicker().setDayCellFactory(startDateCellFactory);
+
+        final Callback<DatePicker, DateCell> endDateCellFactory =
+            new Callback<DatePicker, DateCell>() {
+                @Override
+                public DateCell call(final DatePicker datePicker) {
+                    return new DateCell() {
+                        @Override
+                        public void updateItem(LocalDate item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (startDateSelected() && (item.isBefore(sprintStartDatePicker.getValue()))) {
+                                setDisable(true);
+                                setStyle("-fx-background-color: #ffc0cb;");
+                            }
+                            if (releaseSelected() && item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
+                                setDisable(true);
+                                setStyle("-fx-background-color: #ffc0cb;");
+                            }
+                            if (startDateSelected()) {
+                                long p = ChronoUnit.DAYS.between(sprintStartDatePicker.getValue(), item);
+                                setTooltip(new Tooltip(
+                                                "Sprint duration: " + p + " days.")
+                                );
                             }
 
                         }
+                    };
+                }
+            };
+        sprintEndDatePicker.getDatePicker().setDayCellFactory(endDateCellFactory);
+
+
+        // Create backlog combo box.
+        ObservableList<Project> projectOptions = observableArrayList();
+        projectComboBox = new ComboBox<>(projectOptions);
+        projectComboBox.setStyle("-fx-pref-width: 175;");
+        Label projectComboLabel = new Label("Project:");
+        HBox projectComboHBox = new HBox(projectComboLabel);
+
+        Label aster1 = new Label(" * ");
+        aster1.setTextFill(Color.web("#ff0000"));
+        projectComboHBox.getChildren().add(aster1);
+
+        VBox projectVBox = new VBox();
+        HBox projectCombo = new HBox();
+        projectCombo.getChildren().addAll(projectComboHBox, projectComboBox);
+        HBox.setHgrow(projectComboHBox, Priority.ALWAYS);
+        projectVBox.getChildren().add(projectCombo);
+
+        // Create team combo box.
+        ObservableList<Team> teamOptions = observableArrayList();
+        teamComboBox = new ComboBox<>(teamOptions);
+        teamComboBox.setStyle("-fx-pref-width: 175;");
+        Label teamComboLabel = new Label("Team:");
+        HBox teamComboHBox = new HBox(teamComboLabel);
+
+        Label aster2 = new Label(" * ");
+        aster2.setTextFill(Color.web("#ff0000"));
+        teamComboHBox.getChildren().add(aster2);
+
+        VBox teamVBox = new VBox();
+        HBox teamCombo = new HBox();
+        teamCombo.getChildren().addAll(teamComboHBox, teamComboBox);
+        HBox.setHgrow(teamComboHBox, Priority.ALWAYS);
+        teamVBox.getChildren().add(teamCombo);
+
+        // Create release combo box.
+        ObservableList<Release> releaseOptions = observableArrayList();
+        releaseComboBox = new ComboBox<>(releaseOptions);
+        releaseComboBox.setStyle("-fx-pref-width: 175;");
+        Label releaseComboLabel = new Label("Release:");
+        HBox releaseComboHBox = new HBox(releaseComboLabel);
+
+        Label aster3 = new Label(" * ");
+        aster3.setTextFill(Color.web("#ff0000"));
+        releaseComboHBox.getChildren().add(aster3);
+
+        VBox releaseVBox = new VBox();
+        HBox releaseCombo = new HBox();
+        releaseCombo.getChildren().addAll(releaseComboHBox, releaseComboBox);
+        HBox.setHgrow(releaseComboHBox, Priority.ALWAYS);
+        releaseVBox.getChildren().add(releaseCombo);
+
+
+        // Initially disabled as no team selected
+        teamComboBox.setDisable(true);
+        releaseComboBox.setDisable(true);
+        sprintStartDatePicker.setDisable(true);
+        sprintEndDatePicker.setDisable(true);
+
+        for (Project project : Global.currentWorkspace.getProjects()) {
+            projectOptions.add(project);
+        }
+        projectComboBox.setValue(defaultProject);
+
+        grid.getChildren().addAll(shortNameCustomField, longNameCustomField, projectVBox,
+                releaseVBox, teamVBox, sprintStartDatePicker, sprintEndDatePicker, descriptionTextArea);
+
+        //Add grid of controls to dialog
+        this.getDialogPane().setContent(grid);
+
+        // Request focus on the username field by default.
+        Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
+
+        createButton = this.getDialogPane().lookupButton(btnTypeCreate);
+        createButton.setDisable(true);
+
+        shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctShortName = validateShortName(shortNameCustomField, null);
+                toggleCreate();
+            });
+
+        longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newvalue) -> {
+                correctLongName = validateName(longNameCustomField);
+                toggleCreate();
+            });
+
+        projectComboBox.valueProperty().addListener(new ChangeListener<Project>() {
+                @Override
+                public void changed(ObservableValue<? extends Project> observable,
+                                    Project oldValue, Project newValue) {
+
+                    releaseComboBox.setDisable(false);
+                    releaseComboBox.setValue(null);
+                    teamComboBox.setDisable(false);
+                    teamComboBox.setValue(null);
+                    sprintStartDatePicker.setDisable(true);
+                    sprintStartDatePicker.setValue(null);
+                    sprintEndDatePicker.setDisable(true);
+                    sprintEndDatePicker.setValue(null);
+
+
+                    releaseOptions.clear();
+
+                    for (Release release : newValue.getReleases()) {
+                        releaseOptions.add(release);
+                    }
+
+                    teamOptions.clear();
+
+                    for (Team team : newValue.getAllTeams()) {
+                        teamOptions.add(team);
+                    }
+
+                    toggleCreate();
+                }
+            });
+
+        releaseComboBox.valueProperty().addListener(new ChangeListener<Release>() {
+                @Override
+                public void changed(ObservableValue<? extends Release> observable,
+                                    Release oldValue, Release newValue) {
+
+                    if (newValue != null) {
+                        sprintStartDatePicker.setDisable(false);
+                        sprintStartDatePicker.setValue(null);
+                        sprintEndDatePicker.setDisable(true);
+                        sprintEndDatePicker.setValue(null);
+
+                        toggleCreate();
+                    }
+                }
+            });
+
+        sprintStartDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
+                @Override
+                public void changed(ObservableValue<? extends LocalDate> observable,
+                                    LocalDate oldValue, LocalDate newValue) {
+                    if (endDateSelected() && (newValue != null)
+                            && newValue.isAfter(sprintEndDatePicker.getValue())) {
+                        sprintEndDatePicker.setDisable(false);
+                        sprintEndDatePicker.setValue(null);
+                        teamComboBox.setValue(null);
+                        teamComboBox.setDisable(true);
+                    }
+                    else if (newValue != null) {
+                        sprintEndDatePicker.setDisable(false);
                     }
                     toggleCreate();
                 }
@@ -288,25 +551,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 @Override
                 public void changed(ObservableValue<? extends LocalDate> observable,
                                     LocalDate oldValue, LocalDate newValue) {
-
-                    if (newValue != null) {
-                        teamOptions.clear();
-                        outer: for (Team team : projectComboBox.getValue().getAllTeams()) {
-                            for (Allocation alloc : team.getProjectAllocations()) {
-
-                                if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
-                                        && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
-                                    teamOptions.add(team);
-                                    continue outer;
-
-                                }
-                            }
-
-                        }
-                        teamComboBox.setDisable(false);
-                        teamComboBox.setValue(null);
-                        toggleCreate();
-                    }
+                    toggleCreate();
                 }
             });
 

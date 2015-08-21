@@ -18,7 +18,10 @@ public class NameValidator {
      * @return An enum value showing whether the name is not null or an empty string
      */
     public static ValidationStatus validateName(String name) {
-        if (name != null && !name.equals("")) {
+        if (name.isEmpty()) {
+            return ValidationStatus.INVALID;
+        }
+        else if (name != null) {
             return ValidationStatus.VALID;
         }
         else {
