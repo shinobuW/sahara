@@ -30,7 +30,7 @@ public class Task extends SaharaItem implements Serializable {
         return task1.getShortName().compareTo(task2.getShortName());
     };
 
-    private String shortName = "New Task";
+    private String shortName = "Untitled Task";
     private String description = "";
     private String impediments = "";
     private TASKSTATE state = TASKSTATE.NOT_STARTED;
@@ -39,8 +39,8 @@ public class Task extends SaharaItem implements Serializable {
     private Person assignee = null;
     private transient ObservableList<Log> logs = FXCollections.observableArrayList();
     private List<Log> serializableLogs = new ArrayList<>();
-    private Float effortLeft = (float) 0;
-    private Float effortSpent = (float) 0;
+    private double effortLeft = 0;
+    private double effortSpent = 0;
 
     GeneralEnumStringConverter converter = new GeneralEnumStringConverter();
 
@@ -58,6 +58,7 @@ public class Task extends SaharaItem implements Serializable {
     }
 
 
+
     /**
      * Basic Task constructor
      */
@@ -68,9 +69,8 @@ public class Task extends SaharaItem implements Serializable {
         this.impediments = "";
         this.story = null;
         this.state = TASKSTATE.NOT_STARTED;
-        this.effortLeft = (float) 0;
-        this.effortSpent = (float) 0;
-
+        this.effortLeft = 0;
+        this.effortSpent = 0;
 
         setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
     }
@@ -193,7 +193,7 @@ public class Task extends SaharaItem implements Serializable {
      *
      * @return the effortLeft of the current task
      */
-    public Float getEffortLeft() {
+    public double getEffortLeft() {
         return this.effortLeft;
     }
 
@@ -202,7 +202,7 @@ public class Task extends SaharaItem implements Serializable {
      *
      * @param effortLeft effortLeft of the current task
      */
-    public void setEffortLeft(Float effortLeft) {
+    public void setEffortLeft(double effortLeft) {
         this.effortLeft = effortLeft;
     }
 
@@ -227,7 +227,7 @@ public class Task extends SaharaItem implements Serializable {
      *
      * @return the effortLeft of the current task
      */
-    public Float getEffortSpent() {
+    public double getEffortSpent() {
         return this.effortSpent;
     }
 
@@ -236,7 +236,7 @@ public class Task extends SaharaItem implements Serializable {
      *
      * @param effortSpent effortLeft of the current task
      */
-    public void setEffortSpent(Float effortSpent) {
+    public void setEffortSpent(double effortSpent) {
         this.effortSpent = effortSpent;
     }
 
@@ -326,11 +326,11 @@ public class Task extends SaharaItem implements Serializable {
         taskElement.appendChild(taskAssignee);
 
         Element effortLeftElement = ReportGenerator.doc.createElement("effort-left");
-        effortLeftElement.appendChild(ReportGenerator.doc.createTextNode(effortLeft.toString()));
+        effortLeftElement.appendChild(ReportGenerator.doc.createTextNode(Double.toString(effortLeft)));
         taskElement.appendChild(effortLeftElement);
         
         Element effortSpentElement = ReportGenerator.doc.createElement("effort-spent");
-        effortSpentElement.appendChild(ReportGenerator.doc.createTextNode(effortSpent.toString()));
+        effortSpentElement.appendChild(ReportGenerator.doc.createTextNode(Double.toString(effortSpent)));
         taskElement.appendChild(effortSpentElement);
         
         return taskElement;
@@ -410,8 +410,8 @@ public class Task extends SaharaItem implements Serializable {
      * @param newLogs The new Logs
      */
     public void edit(String newShortName, String newDescription, String newImpediments, TASKSTATE newState,
-                     Person newAssignee,  List<Log> newLogs, Float newEffortLeft,
-                     Float newEffortSpent) {
+                     Person newAssignee,  List<Log> newLogs, double newEffortLeft,
+                     double newEffortSpent) {
         Command relEdit = new TaskEditCommand(this, newShortName, newDescription, newImpediments,
                 newState, newAssignee, newLogs, newEffortLeft, newEffortSpent);
 
@@ -431,8 +431,8 @@ public class Task extends SaharaItem implements Serializable {
         private Collection<Log> logs;
         private TASKSTATE state;
         private TASKSTATE lane;
-        private Float effortLeft;
-        private Float effortSpent;
+        private double effortLeft;
+        private double effortSpent;
 
 
         private String oldShortName;
@@ -442,8 +442,8 @@ public class Task extends SaharaItem implements Serializable {
         private Collection<Log> oldLogs;
         private TASKSTATE oldState;
         private TASKSTATE oldLane;
-        private Float oldEffortLeft;
-        private Float oldEffortSpent;
+        private double oldEffortLeft;
+        private double oldEffortSpent;
         
         /**
          * Constructor for the Task Edit command.
@@ -457,7 +457,7 @@ public class Task extends SaharaItem implements Serializable {
          */
         private TaskEditCommand(Task task, String newShortName, String newDescription, 
                 String newImpediments, TASKSTATE newState,
-                Person newAssignee,  List<Log> newLogs, Float effortLeft, Float effortSpent) {
+                Person newAssignee,  List<Log> newLogs, double effortLeft, double effortSpent) {
             this.task = task;
 
             this.shortName = newShortName;
@@ -624,7 +624,7 @@ public class Task extends SaharaItem implements Serializable {
         private Log log;
         private Project proj;
         
-        private Float oldEffort;
+        private double oldEffort;
 
         /**
          * Constructor for the log addition command
@@ -644,7 +644,7 @@ public class Task extends SaharaItem implements Serializable {
         public void execute() {
             task.getLogs().add(log);
             log.setTask(task);
-            Float newEffortSpent = task.getEffortSpent() + log.getDurationInHours();
+            double newEffortSpent = task.getEffortSpent() + log.getDurationInHours();
             task.setEffortSpent(newEffortSpent);
             proj.add(log);
         }

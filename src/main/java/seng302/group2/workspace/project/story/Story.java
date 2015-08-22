@@ -61,10 +61,10 @@ public class Story extends SaharaItem implements Serializable {
 
 
     // Observable lists for use on the scrumboard
-    public ObservableList<Task> todoTasks = FXCollections.observableArrayList();
-    public ObservableList<Task> inProgTasks = FXCollections.observableArrayList();
-    public ObservableList<Task> verifyTasks = FXCollections.observableArrayList();
-    public ObservableList<Task> completedTasks = FXCollections.observableArrayList();
+    public transient ObservableList<Task> todoTasks = FXCollections.observableArrayList();
+    public transient ObservableList<Task> inProgTasks = FXCollections.observableArrayList();
+    public transient ObservableList<Task> verifyTasks = FXCollections.observableArrayList();
+    public transient ObservableList<Task> completedTasks = FXCollections.observableArrayList();
 
 
     public static String stateReady = "Ready";
@@ -588,6 +588,7 @@ public class Story extends SaharaItem implements Serializable {
         for (Task task : serializableTasks) {
             task.postSerialization();
             this.tasks.add(task);
+            addTaskToLane(task);
         }
     }
 

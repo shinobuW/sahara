@@ -85,7 +85,7 @@ public class TaskEditTab extends SearchableTab {
         shortNameCustomField.setText(currentTask.getShortName());
         descriptionTextArea.setText(currentTask.getDescription());
         impedimentsTextArea.setText(currentTask.getImpediments());
-        effortLeftField.setText(currentTask.getEffortLeft().toString());
+        effortLeftField.setText(Double.toString(currentTask.getEffortLeft()));
 
 
         CustomComboBox<Person> taskAssigneesList = new CustomComboBox<Person>("Assignee: ");
@@ -120,7 +120,7 @@ public class TaskEditTab extends SearchableTab {
                         currentTask.getState());
 
                 boolean effortLeftUnchanged = effortLeftField.getText().equals(
-                        currentTask.getEffortLeft().toString());
+                        Double.toString(currentTask.getEffortLeft()));
                 boolean assigneesUnchanged = taskAssigneesList.equals((currentTask.getAssignee()));
 
                 if (shortNameUnchanged && descriptionUnchanged
@@ -142,7 +142,7 @@ public class TaskEditTab extends SearchableTab {
                             impedimentsTextArea.getText(),
                             taskStateComboBox.getValue(),
                             taskAssigneesList.getValue(), currentTask.getLogs(),
-                            Float.parseFloat(effortLeftField.getText()), currentTask.getEffortSpent());
+                            Double.parseDouble(effortLeftField.getText()), currentTask.getEffortSpent());
 
                     currentTask.switchToInfoScene();
                     App.mainPane.refreshTree();

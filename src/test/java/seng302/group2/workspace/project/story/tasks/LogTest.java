@@ -9,14 +9,14 @@ public class LogTest {
     public void testGetDurationInHours() throws Exception {
         Log log = new Log();
         log.setDuration("2 hours 30 mins");
-        Assert.assertTrue(log.getDurationInHours().equals((float) 2.5));
+        Assert.assertTrue(log.getDurationInHours() == 2.5);
     }
 
     @Test
     public void testGetDurationInMinutes() throws Exception {
         Log log = new Log();
         log.setDuration("2 hours 30 mins");
-        Assert.assertEquals(Float.valueOf(150), log.getDurationInMinutes());
+        Assert.assertTrue(log.getDurationInMinutes() == 150);
     }
 
 
@@ -53,17 +53,17 @@ public class LogTest {
         String test12 = "0";
         String test13 = "1.25 hours";
 
-        Assert.assertEquals(Float.valueOf(90), Log.readDurationToMinutes(test));
-        Assert.assertEquals(Float.valueOf(90), Log.readDurationToMinutes(test2));
-        Assert.assertEquals(Float.valueOf(30), Log.readDurationToMinutes(test3));
-        Assert.assertEquals(Float.valueOf(120), Log.readDurationToMinutes(test4));
-        Assert.assertEquals(Float.valueOf(125), Log.readDurationToMinutes(test6));
-        Assert.assertEquals(Float.valueOf(125), Log.readDurationToMinutes(test7));
-        Assert.assertEquals(Float.valueOf(130), Log.readDurationToMinutes(test8));
-        Assert.assertEquals(Float.valueOf(125), Log.readDurationToMinutes(test9));
-        Assert.assertEquals(Float.valueOf(300), Log.readDurationToMinutes(test10));
-        Assert.assertEquals(Float.valueOf(66), Log.readDurationToMinutes(test11));
-        Assert.assertEquals(Float.valueOf(0), Log.readDurationToMinutes(test12));
-        Assert.assertEquals(Float.valueOf(75), Log.readDurationToMinutes(test13));
+        Assert.assertEquals((Double) 90.0, Log.readDurationToMinutes(test));
+        Assert.assertEquals((Double) 90.0, Log.readDurationToMinutes(test2));
+        Assert.assertEquals((Double) 30.0, Log.readDurationToMinutes(test3));
+        Assert.assertEquals((Double) 120.0, Log.readDurationToMinutes(test4));
+        Assert.assertEquals((Double) 125.0, Log.readDurationToMinutes(test6));
+        Assert.assertEquals((Double) 125.0, Log.readDurationToMinutes(test7));
+        Assert.assertEquals((Double) 130.0, Log.readDurationToMinutes(test8));
+        Assert.assertEquals((Double) 125.0, Log.readDurationToMinutes(test9));
+        Assert.assertEquals((Double) 300.0, Log.readDurationToMinutes(test10));
+        Assert.assertEquals((Double) 66.0, Log.readDurationToMinutes(test11));
+        Assert.assertEquals((Double) 0.0, Log.readDurationToMinutes(test12));
+        Assert.assertEquals((Double) 75.0, Log.readDurationToMinutes(test13));
     }
 }

@@ -14,6 +14,7 @@ import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
+import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
@@ -29,6 +30,7 @@ public class SerialBuilder {
     public static Gson getBuilder() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         new GraphAdapterBuilder()
+                // Model classes
                 .addType(SaharaItem.class)
                 .addType(ObservableList.class)
                 .addType(Workspace.class)
@@ -46,8 +48,10 @@ public class SerialBuilder {
                 .addType(AcceptanceCriteria.class)
                 .addType(Sprint.class)
                 .addType(Task.class)
+                .addType(Log.class)
 
-                // TODO REMINDER: Add any new classes. Do not delete.
+
+                // TODO REMINDER: Add any new classes. Do not delete this todo.
 
                 // Category classes
                 .addType(Category.class)

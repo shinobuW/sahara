@@ -18,12 +18,13 @@ import java.util.Set;
  */
 public class Log extends SaharaItem implements Serializable {
     private LocalDate startTime = LocalDate.now();
-    private Float duration = (float) 0;
+    private double duration = 0;
     private Person logger = null;
     private Task task = null;
     private String description = "";
 
     public Log() {
+        super("Untitled Log");
     }
 
 
@@ -36,6 +37,7 @@ public class Log extends SaharaItem implements Serializable {
      * @param startTime time the logger started working on the task
      */
     public Log(Task task, String description, Person logger, Float duration, LocalDate startTime) {
+        super("Untitled Log");
         this.task = task;
         this.logger = logger;
         this.startTime = startTime;
@@ -50,7 +52,7 @@ public class Log extends SaharaItem implements Serializable {
      * Gets the duration of the log
      * @return duration in hours
      */
-    public Float getDurationInHours() {
+    public double getDurationInHours() {
         return this.duration / 60;
     }
 
@@ -59,7 +61,7 @@ public class Log extends SaharaItem implements Serializable {
      * Gets the duration of the log
      * @return duration in minutes
      */
-    public Float getDurationInMinutes() {
+    public double getDurationInMinutes() {
         return this.duration;
     }
 
@@ -222,8 +224,12 @@ public class Log extends SaharaItem implements Serializable {
      * @return true if duration is not null
      */
     public boolean setDuration(String inputDuration) {
-        this.duration = readDurationToMinutes(inputDuration);
-        return duration != null;
+        Double newDuration = readDurationToMinutes(inputDuration);
+        if (newDuration != null) {
+            this.duration = newDuration;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -231,7 +237,7 @@ public class Log extends SaharaItem implements Serializable {
      * @param inputDuration
      * @return duration in minutes
      */
-    public static Float readDurationToMinutes(String inputDuration) {
+    public static Double readDurationToMinutes(String inputDuration) {
         if (!DateValidator.validDuration(inputDuration)) {
             return null;
         }
@@ -262,22 +268,22 @@ public class Log extends SaharaItem implements Serializable {
             // Have both
             String hourString = inputDuration.substring(0, hourPos);
             String minString = inputDuration.substring(hourPos + hourWord.length(), minPos);
-            return Float.valueOf(hourString.trim()) * 60 + Float.valueOf(minString.trim());
+            return Double.parseDouble(hourString.trim()) * 60 + Float.valueOf(minString.trim());
 
         }
         else if (hourPos > 0) {
             // Have just hours
             String hourString = inputDuration.substring(0, hourPos);
-            return Float.valueOf(hourString.trim()) * 60;
+            return Double.parseDouble(hourString.trim()) * 60;
         }
         else if (minPos > 0) {
             // Have just mins
             String minString = inputDuration.substring(0, minPos);
-            return Float.valueOf(minString.trim());
+            return Double.parseDouble(minString.trim());
         }
         else {
             // Have just a base number (hours default)
-            return Float.valueOf(inputDuration.trim()) * 60;
+            return Double.parseDouble(inputDuration.trim()) * 60;
         }
     }
 
@@ -289,16 +295,16 @@ public class Log extends SaharaItem implements Serializable {
         private Log log;
         private Person logger;
         private LocalDate startTime;
-        private Float duration;
+        private double duration;
         private String description;
 
         private Person oldLogger;
         private LocalDate oldStartTime;
-        private Float oldDuration;
+        private double oldDuration;
         private String oldDescription;
 
         protected LogEditCommand(Log log, Person newLogger, LocalDate newStartDate,
-                                 Float newDuration, String newDescription) {
+                                 double newDuration, String newDescription) {
             this.log = log;
             this.logger = newLogger;
             this.startTime = newStartDate;
