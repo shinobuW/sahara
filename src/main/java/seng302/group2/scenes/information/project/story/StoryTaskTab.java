@@ -147,7 +147,6 @@ public class StoryTaskTab extends SearchableTab {
         CustomTextArea descriptionField = new CustomTextArea("Task Description: ");
         
         ObservableList<Person> personList = observableArrayList();
-        System.out.println(currentStory.tasksWithoutStory);
         for (Team team : currentStory.getProject().getAllTeams()) {
             personList.addAll(team.getPeople());
         }

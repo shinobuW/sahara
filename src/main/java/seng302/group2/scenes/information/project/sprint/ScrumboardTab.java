@@ -113,7 +113,7 @@ public class ScrumboardTab extends SearchableTab {
 
                     Dragboard dragBoard = lane.startDragAndDrop(TransferMode.MOVE);
                     ClipboardContent content = new ClipboardContent();
-                    content.putString(interactiveTask.getShortName());
+                    content.putString("");
                     dragBoard.setContent(content);
                 });
 
@@ -134,7 +134,7 @@ public class ScrumboardTab extends SearchableTab {
                         return;
                     }
 
-                    interactiveTask.editState(laneStateDict.get(lane));
+                    interactiveTask.editLane(laneStateDict.get(lane));
                 });
         }
     }

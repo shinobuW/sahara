@@ -59,7 +59,6 @@ public class TaskInfoTab extends SearchableTab {
 
 
 
-
         btnEdit.setOnAction((event) -> {
                 currentTask.switchToInfoScene(true);
             });

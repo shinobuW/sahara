@@ -148,6 +148,15 @@ public class Task extends SaharaItem implements Serializable {
         return this.state;
     }
 
+    /**
+     * Gets the lane of the current task
+     *
+     * @return the lane as one of the state Enum values
+     */
+    public TASKSTATE getLane() {
+        return this.lane;
+    }
+
     
     /**
      * Gets the story of the current task
@@ -211,7 +220,7 @@ public class Task extends SaharaItem implements Serializable {
      * @return the effortLeft as a String
      */
     public String getEffortLeftString() {
-        return (int) Math.floor(effortLeft / 60) + "h " + (int) Math.floor(effortLeft % 60) + "min";
+        return (int) Math.floor(effortLeft / 60) + "h " + (int) Math.floor(effortLeft % 60) + "m";
     }
 
     /**
@@ -219,7 +228,7 @@ public class Task extends SaharaItem implements Serializable {
      * @return the effortSpent as a String
      */
     public String getEffortSpentString() {
-        return (int) Math.floor(effortSpent / 60) + "h " + (int) Math.floor(effortSpent % 60) + "min";
+        return (int) Math.floor(effortSpent / 60) + "h " + (int) Math.floor(effortSpent % 60) + "m";
     }
 
     /**
@@ -426,8 +435,8 @@ public class Task extends SaharaItem implements Serializable {
      *
      * @param newState    The new state
      */
-    public void editState(TASKSTATE newState) {
-        Command relEdit = new TaskEditStateCommand(this, newState);
+    public void editLane(TASKSTATE newState) {
+        Command relEdit = new TaskEditLaneCommand(this, newState);
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -568,31 +577,39 @@ public class Task extends SaharaItem implements Serializable {
     /**
      * A command class that allows the executing and undoing of task edits
      */
-    private class TaskEditStateCommand implements Command {
+    private class TaskEditLaneCommand implements Command {
 
         private Task task;
-        private TASKSTATE state;
+        private TASKSTATE lane;
+        private TASKSTATE oldLane;
         private TASKSTATE oldState;
+
 
         /**
          * Constructor for the Task Edit State command, used for changing lanes in the scrumboard
          * @param task The story to be edited
-         * @param newState    The new state
+         * @param newLane    The new state
          */
-        private TaskEditStateCommand(Task task, TASKSTATE newState) {
+        private TaskEditLaneCommand(Task task, TASKSTATE newLane) {
             this.task = task;
-            this.state = newState;
+            this.lane = newLane;
             this.oldState = task.state;
+            this.oldLane = task.lane;
         }
 
         /**
          * Executes/Redoes the changes of the task edit
          */
         public void execute() {
-            task.state = state;
+            if (Task.getLaneStates().contains(task.state)) {
+                task.state = lane;
+            }
+            task.lane = lane;
             if (task.getStory() != null) {
                 task.getStory().addTaskToLane(task);
             }
+
+            System.out.println("Task state: " + task.getState() + ", lane: " + task.getLane());
         }
 
         /**
@@ -600,6 +617,7 @@ public class Task extends SaharaItem implements Serializable {
          */
         public void undo() {
             task.state = oldState;
+            task.lane = oldLane;
             if (task.getStory() != null) {
                 task.getStory().addTaskToLane(task);
             }

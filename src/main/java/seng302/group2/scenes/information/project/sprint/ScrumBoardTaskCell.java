@@ -6,10 +6,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.OverrunStyle;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import seng302.group2.workspace.project.story.tasks.Task;
+
+import javax.swing.*;
 
 /**
  * A ListCell extension for the neat displaying of tasks on the scrum board view
@@ -20,18 +23,22 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
     public void updateItem(Task task, boolean empty) {
         super.updateItem(task, empty);
         if (task != null) {
+            // Setup the cell graphic (HBox)
             HBox content = new HBox();
-            content.setMaxWidth(148);
-            content.setMaxHeight(48);
+            //content.setPrefWidth(this.getMaxWidth());
+            content.setPrefHeight(48);
 
 
-            Rectangle rect = new Rectangle(4, 48);
+            // The cell's coloured rectangle
+            Rectangle rect = new Rectangle(5, 48);
             rect.setFill(Color.web(task.getState().getColourString())); //(Color.web(item.getColour()));
 
 
-            VBox info = new VBox();
-            info.setPadding(new Insets(2,2,2,6));
-            info.setAlignment(Pos.CENTER_LEFT);
+            // The text content of the cell
+            VBox textContent = new VBox();
+            textContent.setPadding(new Insets(2, 2, 2, 6));
+            textContent.setAlignment(Pos.CENTER_LEFT);
+
             Label titleLabel = new Label(task.getShortName());
             titleLabel.setStyle("-fx-font-weight: bold");
 
@@ -40,11 +47,39 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
             if (!task.getDescription().isEmpty()) {
                 descLabel.setText(task.getDescription());
             }
-            
-            info.getChildren().addAll(titleLabel, descLabel);
+            textContent.getChildren().addAll(titleLabel, descLabel);
 
-            
-            content.getChildren().addAll(rect, info);
+
+            // The cell's 'iconic' information
+            VBox rightContent = new VBox();
+            rightContent.setPrefHeight(48);
+
+            Label remainingTime = new Label(task.getEffortLeftString());
+            remainingTime.setStyle("-fx-font-size: 80%");
+            remainingTime.setAlignment(Pos.TOP_RIGHT);
+
+            Label assignee = new Label();
+            if (task.getAssignee() != null) {
+                assignee = new Label(task.getAssignee().getFirstName().substring(0, 1)
+                        + task.getAssignee().getLastName().substring(0, 1));
+            }
+            else {
+                assignee = new Label("-");
+            }
+            assignee.setStyle("-fx-font-size: 80%");
+            assignee.setAlignment(Pos.CENTER_RIGHT);
+
+
+            // TODO Impediments/Warning icon
+
+
+            rightContent.setAlignment(Pos.CENTER_RIGHT);
+            HBox.setHgrow(rightContent, Priority.ALWAYS);
+            rightContent.getChildren().addAll(remainingTime, assignee);
+
+
+            // Bring cell parts together
+            content.getChildren().addAll(rect, textContent, rightContent);
             setGraphic(content);
         }
         else {

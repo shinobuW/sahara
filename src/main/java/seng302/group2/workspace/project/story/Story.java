@@ -307,7 +307,7 @@ public class Story extends SaharaItem implements Serializable {
         completedTasks.remove(task);
         verifyTasks.remove(task);
 
-        switch (task.getState()) {
+        switch (task.getLane()) {
             case NOT_STARTED:
                 todoTasks.add(task);
                 break;
