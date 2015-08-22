@@ -5,6 +5,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.OverrunStyle;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -86,6 +89,14 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
             //System.out.println("Item is null");
             setGraphic(null);
         }
+
+        this.setOnDragDetected(event -> {
+                Dragboard dragBoard = this.startDragAndDrop(TransferMode.MOVE);
+                dragBoard.setDragView(this.snapshot(null, null));
+                ClipboardContent content = new ClipboardContent();
+                content.putString("");
+                dragBoard.setContent(content);
+            });
 
         setTextOverrun(OverrunStyle.CLIP);
     }

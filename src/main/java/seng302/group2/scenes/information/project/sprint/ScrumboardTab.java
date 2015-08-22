@@ -111,10 +111,12 @@ public class ScrumboardTab extends SearchableTab {
             lane.setOnDragDetected(event -> {
                     interactiveTask = lane.getSelectionModel().getSelectedItem();
 
-                    Dragboard dragBoard = lane.startDragAndDrop(TransferMode.MOVE);
+                    // Moved to ScrumBoardTaskCell
+                    /*Dragboard dragBoard = lane.startDragAndDrop(TransferMode.MOVE);
+                    //dragBoard.setDragView(lane.snapshot(null, null));
                     ClipboardContent content = new ClipboardContent();
                     content.putString("");
-                    dragBoard.setContent(content);
+                    dragBoard.setContent(content);*/
                 });
 
             lane.setOnDragOver(dragEvent -> {
