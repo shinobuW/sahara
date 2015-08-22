@@ -17,28 +17,28 @@ import seng302.group2.workspace.project.story.tasks.Task;
  */
 public class ScrumBoardTaskCell extends ListCell<Task> {
     @Override
-    public void updateItem(Task item, boolean empty) {
-        super.updateItem(item, empty);
-        if (item != null) {
+    public void updateItem(Task task, boolean empty) {
+        super.updateItem(task, empty);
+        if (task != null) {
             HBox content = new HBox();
             content.setMaxWidth(148);
             content.setMaxHeight(48);
 
 
             Rectangle rect = new Rectangle(4, 48);
-            rect.setFill(Color.ALICEBLUE); //(Color.web(item.getColour()));
+            rect.setFill(Color.web(task.getState().getColourString())); //(Color.web(item.getColour()));
 
 
             VBox info = new VBox();
             info.setPadding(new Insets(2,2,2,6));
             info.setAlignment(Pos.CENTER_LEFT);
-            Label titleLabel = new Label(item.getShortName());
+            Label titleLabel = new Label(task.getShortName());
             titleLabel.setStyle("-fx-font-weight: bold");
 
             Label descLabel = new Label("(No Description)");
             descLabel.setStyle("-fx-font-size: 85%");
-            if (!item.getDescription().isEmpty()) {
-                descLabel.setText(item.getDescription());
+            if (!task.getDescription().isEmpty()) {
+                descLabel.setText(task.getDescription());
             }
             
             info.getChildren().addAll(titleLabel, descLabel);

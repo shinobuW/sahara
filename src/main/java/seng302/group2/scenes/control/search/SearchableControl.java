@@ -1,14 +1,14 @@
 package seng302.group2.scenes.control.search;
 
 import javafx.scene.paint.Color;
-import seng302.group2.workspace.project.story.Story;
+import seng302.group2.util.conversion.ColorUtils;
 
 /**
  * A interface for all the searchable controls in the program.
  * Created by jml168 on 31/07/15.
  */
 public interface SearchableControl {
-    public static String highlightColour = Story.toRGBCode(Color.rgb(255, 255, 0, 0.5));
+    public static String highlightColour = ColorUtils.toRGBCode(Color.rgb(255, 255, 0, 0.5));
 
     /**
      * Abstract Method.

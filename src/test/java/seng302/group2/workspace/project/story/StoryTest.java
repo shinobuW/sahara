@@ -11,6 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.util.conversion.ColorUtils;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -242,18 +243,18 @@ public class StoryTest {
         story.setPriority(3);
         story.getAcceptanceCriteria().add(ac);
         story.setEstimate(EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.DefaultValues.NONE));
-        Assert.assertEquals(Story.toRGBCode(Story.orangeHighlight), story.getColour()); // orange
+        Assert.assertEquals(ColorUtils.toRGBCode(Story.orangeHighlight), story.getColour()); // orange
 
         story.setReady(true);
-        Assert.assertEquals(Story.toRGBCode(Story.greenHighlight), story.getColour()); //green
+        Assert.assertEquals(ColorUtils.toRGBCode(Story.greenHighlight), story.getColour()); //green
     }
 
     @Test
     public void testToRGBCode() {
-        Assert.assertEquals("#FF0000FF", Story.toRGBCode(Color.RED));
-        Assert.assertEquals("#008000FF", Story.toRGBCode(Color.GREEN));
-        Assert.assertEquals("#0000FFFF", Story.toRGBCode(Color.BLUE));
-        Assert.assertEquals("#80808080", Story.toRGBCode(Color.color(128/255.0, 128/255.0, 128/255.0, 128/255.0)));
+        Assert.assertEquals("#FF0000FF", ColorUtils.toRGBCode(Color.RED));
+        Assert.assertEquals("#008000FF", ColorUtils.toRGBCode(Color.GREEN));
+        Assert.assertEquals("#0000FFFF", ColorUtils.toRGBCode(Color.BLUE));
+        Assert.assertEquals("#80808080", ColorUtils.toRGBCode(Color.color(128 / 255.0, 128 / 255.0, 128 / 255.0, 128 / 255.0)));
     }
 
 

@@ -2,9 +2,11 @@ package seng302.group2.workspace.project.story.tasks;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.paint.Color;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.story.TaskInformationSwitchStrategy;
+import seng302.group2.util.conversion.ColorUtils;
 import seng302.group2.util.conversion.GeneralEnumStringConverter;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
@@ -338,17 +340,20 @@ public class Task extends SaharaItem implements Serializable {
      * An enum for the states of the Task. Also includes a toString method for GUI application of TaskStates
      */
     public enum TASKSTATE {
-        NOT_STARTED("Not Started"),
-        IN_PROGRESS("In Progress"),
-        BLOCKED("Blocked"),
-        DONE("Done"),
-        VERIFY("Verify"),
-        DEFERRED("Deferred");
+        // String value, RBGA colour
+        NOT_STARTED("Not Started", ColorUtils.toRGBCode(Color.color(0.4, 1, 0, 1))),
+        IN_PROGRESS("In Progress", ColorUtils.toRGBCode(Color.color(0.4, 1, 0, 1))),
+        BLOCKED("Blocked", ColorUtils.toRGBCode(Color.color(0.4, 1, 0, 1))),
+        DONE("Done", ColorUtils.toRGBCode(Color.color(0.4, 1, 0, 1))),
+        VERIFY("Verify", ColorUtils.toRGBCode(Color.color(0.4, 1, 0, 1))),
+        DEFERRED("Deferred", ColorUtils.toRGBCode(Color.color(0.4, 1, 0, 1)));
 
         private String value;
+        private String colour;
 
-        TASKSTATE(String value) {
+        TASKSTATE(String value, String colour) {
             this.value = value;
+            this.colour = colour;
         }
 
         /**
@@ -366,6 +371,14 @@ public class Task extends SaharaItem implements Serializable {
         @Override
         public String toString() {
             return this.getValue();
+        }
+
+        /**
+         * Gets the colour string of the status, used mainly on the scrumboard
+         * @return The statuses colour
+         */
+        public String getColourString() {
+            return this.colour;
         }
     }
 

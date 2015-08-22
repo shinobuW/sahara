@@ -45,6 +45,7 @@ public class SerialBuilder {
                 .addType(Backlog.class)
                 .addType(AcceptanceCriteria.class)
                 .addType(Sprint.class)
+                .addType(Task.class)
 
                 // TODO REMINDER: Add any new classes. Do not delete.
 

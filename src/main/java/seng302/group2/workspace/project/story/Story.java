@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.StoryInformationSwitchStrategy;
+import seng302.group2.util.conversion.ColorUtils;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
@@ -341,19 +342,6 @@ public class Story extends SaharaItem implements Serializable {
     }
 
     /**
-     * Converts a JavaFX colour into an html/web colour string (including opacity)
-     * @param color The colour to convert
-     * @return The web equivalent of the colour
-     */
-    public static String toRGBCode(Color color) {
-        return String.format("#%02X%02X%02X%02X",
-                (int)(color.getRed() * 255),
-                (int)(color.getGreen() * 255),
-                (int)(color.getBlue() * 255),
-                (int)(color.getOpacity() * 255));
-    }
-
-    /**
      * Gets the string form of the story colour t
      * @return the colour of the story in highlight mode
      */
@@ -361,11 +349,11 @@ public class Story extends SaharaItem implements Serializable {
         this.setHighlightColour();
         switch (colour) {
             case GREEN:
-                return toRGBCode(greenHighlight);//"#aaffaa";
+                return ColorUtils.toRGBCode(greenHighlight);//"#aaffaa";
             case ORANGE:
-                return toRGBCode(orangeHighlight);
+                return ColorUtils.toRGBCode(orangeHighlight);
             case RED:
-                return toRGBCode(redHighlight);//"#fd4949";
+                return ColorUtils.toRGBCode(redHighlight);//"#fd4949";
             case DEFAULT:
                 return "transparent";
             default:
