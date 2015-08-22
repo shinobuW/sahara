@@ -318,7 +318,7 @@ public class Story extends SaharaItem implements Serializable {
                 verifyTasks.add(task);
                 break;
             case DONE:
-                verifyTasks.add(task);
+                completedTasks.add(task);
                 break;
             default:
                 break;

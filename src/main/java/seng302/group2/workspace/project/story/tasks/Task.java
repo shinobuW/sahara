@@ -398,6 +398,7 @@ public class Task extends SaharaItem implements Serializable {
         Global.commandManager.executeCommand(command);
     }
 
+
     /**
      * Creates a Task edit command and executes it with the Global Command Manager, updating
      * the task with the new parameter values.
@@ -417,7 +418,20 @@ public class Task extends SaharaItem implements Serializable {
 
         Global.commandManager.executeCommand(relEdit);
     }
-    
+
+
+    /**
+     * Creates a Task edit state command and executes it with the Global Command Manager, updating
+     * the task with the new parameter values.
+     *
+     * @param newState    The new state
+     */
+    public void editState(TASKSTATE newState) {
+        Command relEdit = new TaskEditStateCommand(this, newState);
+        Global.commandManager.executeCommand(relEdit);
+    }
+
+
     /**
      * A command class that allows the executing and undoing of task edits
      */
@@ -529,6 +543,66 @@ public class Task extends SaharaItem implements Serializable {
             
             task.logs.clear();
             task.logs.addAll(oldLogs);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped_task = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(task)) {
+                    this.task = (Task) item;
+                    mapped_task = true;
+                }
+            }
+
+            return  mapped_task;
+        }
+    }
+
+
+    /**
+     * A command class that allows the executing and undoing of task edits
+     */
+    private class TaskEditStateCommand implements Command {
+
+        private Task task;
+        private TASKSTATE state;
+        private TASKSTATE oldState;
+
+        /**
+         * Constructor for the Task Edit State command, used for changing lanes in the scrumboard
+         * @param task The story to be edited
+         * @param newState    The new state
+         */
+        private TaskEditStateCommand(Task task, TASKSTATE newState) {
+            this.task = task;
+            this.state = newState;
+            this.oldState = task.state;
+        }
+
+        /**
+         * Executes/Redoes the changes of the task edit
+         */
+        public void execute() {
+            task.state = state;
+            if (task.getStory() != null) {
+                task.getStory().addTaskToLane(task);
+            }
+        }
+
+        /**
+         * Undoes the changes of the task edit
+         */
+        public void undo() {
+            task.state = oldState;
+            if (task.getStory() != null) {
+                task.getStory().addTaskToLane(task);
+            }
         }
 
         /**

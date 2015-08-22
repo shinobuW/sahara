@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
@@ -29,14 +30,15 @@ import java.util.*;
 public class ScrumboardTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+    Map<SearchableListView<Task>, Task.TASKSTATE> laneStateDict = new HashMap<>();
 
-    ObservableList<Task> laneOneStories = FXCollections.observableArrayList();
-    ObservableList<Task> laneTwoStories = FXCollections.observableArrayList();
+    //ObservableList<Task> laneOneStories = FXCollections.observableArrayList();
+    //ObservableList<Task> laneTwoStories = FXCollections.observableArrayList();
 
-    ListView<Task> laneOne = new ListView<>(laneOneStories);
-    ListView<Task> laneTwo = new ListView<>(laneTwoStories);
+    //ListView<Task> laneOne = new ListView<>(laneOneStories);
+    //ListView<Task> laneTwo = new ListView<>(laneTwoStories);
 
-    List<ListView<Task>> lanes = new ArrayList<>();
+    //List<ListView<Task>> lanes = new ArrayList<>();
 
 
     Task interactiveTask = null;
@@ -48,10 +50,10 @@ public class ScrumboardTab extends SearchableTab {
      * @param currentSprint The currently selected backlog
      */
     public ScrumboardTab(Sprint currentSprint) {
-        Collections.addAll(lanes, laneOne,laneTwo);
+        //Collections.addAll(lanes, laneOne,laneTwo);
 
-        initializeListeners();
-        laneOneStories.addAll(currentSprint.getAllTasks());
+        //initializeListeners();
+        //laneOneStories.addAll(currentSprint.getAllTasks());
 
         this.setText("Scrumboard");
         Pane basicInfoPane = new VBox(10);
@@ -101,6 +103,15 @@ public class ScrumboardTab extends SearchableTab {
         SearchableListView<Task> verifyLane = new SearchableListView<>(story.verifyTasks);
         SearchableListView<Task> completedLane = new SearchableListView<>(story.completedTasks);
 
+        laneStateDict.put(todoLane, Task.TASKSTATE.NOT_STARTED);
+        laneStateDict.put(inProgressLane, Task.TASKSTATE.IN_PROGRESS);
+        laneStateDict.put(verifyLane, Task.TASKSTATE.VERIFY);
+        laneStateDict.put(completedLane, Task.TASKSTATE.DONE);
+
+        Set<ListView<Task>> lanes = new HashSet<>();
+        Collections.addAll(lanes, todoLane, inProgressLane, verifyLane, completedLane);
+        initLaneListeners(lanes, story);
+
         // Set cell factory
         todoLane.setCellFactory(list -> new ScrumBoardTaskCell());
         inProgressLane.setCellFactory(list -> new ScrumBoardTaskCell());
@@ -120,7 +131,7 @@ public class ScrumboardTab extends SearchableTab {
         taskLanesGrid.add(completedLane, 3, 1);
 
 
-        return new TitledPane("[" + story.getEstimate().toString() + "] "
+        return new TitledPane("[" + story.getEstimate() + "] "
                 + story.getShortName(), taskLanesGrid);
     }
 
@@ -136,11 +147,48 @@ public class ScrumboardTab extends SearchableTab {
     }
 
 
+
+    private void initLaneListeners(Collection<ListView<Task>> lanes, Story story) {
+        for (ListView<Task> lane : lanes) {
+            lane.setOnDragDetected(event -> {
+                interactiveTask = lane.getSelectionModel().getSelectedItem();
+
+                Dragboard dragBoard = lane.startDragAndDrop(TransferMode.MOVE);
+                ClipboardContent content = new ClipboardContent();
+                content.putString(lane.getSelectionModel().getSelectedItem()
+                        .getShortName());
+                dragBoard.setContent(content);
+            });
+
+            lane.setOnDragOver(dragEvent -> {
+                dragEvent.acceptTransferModes(TransferMode.MOVE);
+            });
+
+            lane.setOnDragDropped(dragEvent -> {
+                if (interactiveTask == null) {
+                    return;
+                }
+                if (interactiveTask.getStory() != story) {
+                    Alert differentStoryAlert = new Alert(Alert.AlertType.WARNING);
+                    differentStoryAlert.setTitle("Unable to Move Task");
+                    differentStoryAlert.setHeaderText(null);
+                    differentStoryAlert.setContentText("Can't move a task between different stories");
+                    differentStoryAlert.showAndWait();
+                    return;
+                }
+
+                interactiveTask.editState(laneStateDict.get(lane));
+            });
+        }
+    }
+
+
+    @Deprecated
     private void initializeListeners() {
         // FROM: http://www.java2s.com/Tutorials/Java/JavaFX/0640__JavaFX_ListView.htm
 
         // drag from left to right
-        laneOne.setOnDragDetected(event -> {
+        /*laneOne.setOnDragDetected(event -> {
                 if (laneOne.getSelectionModel().getSelectedItem() == null) {
                     return;
                 }
@@ -152,7 +200,7 @@ public class ScrumboardTab extends SearchableTab {
                         .getShortName());
                 dragBoard.setContent(content);*/
 
-                interactiveTask = laneOne.getSelectionModel().getSelectedItem();
+                /*interactiveTask = laneOne.getSelectionModel().getSelectedItem();
             });
 
         laneTwo.setOnDragOver(dragEvent -> dragEvent.acceptTransferModes(TransferMode.MOVE));
@@ -166,7 +214,7 @@ public class ScrumboardTab extends SearchableTab {
                 }
                 laneOneStories.remove(task);
                 dragEvent.setDropCompleted(true);*/
-                if (interactiveTask == null) {
+                /*if (interactiveTask == null) {
                     return;
                 }
                 for (ListView<Task> lane : lanes) {
@@ -195,7 +243,7 @@ public class ScrumboardTab extends SearchableTab {
                 }
                 laneTwoStories.remove(task);
                 dragEvent.setDropCompleted(true);
-            });
+            });*/
     }
 
     /**
