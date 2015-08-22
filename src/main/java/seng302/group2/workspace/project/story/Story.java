@@ -325,6 +325,75 @@ public class Story extends SaharaItem implements Serializable {
         }
     }
 
+
+    public void addTaskToLane(Task task, int index) {
+        todoTasks.remove(task);
+        inProgTasks.remove(task);
+        completedTasks.remove(task);
+        verifyTasks.remove(task);
+
+        if (index == -1) {
+            index = 0;
+        }
+
+        switch (task.getLane()) {
+            case NOT_STARTED:
+                if (index <= todoTasks.size()-1) {
+                    todoTasks.add(index, task);
+                }
+                else {
+                    todoTasks.add(task);
+                }
+                break;
+            case IN_PROGRESS:
+                if (index <= inProgTasks.size()-1) {
+                    inProgTasks.add(index, task);
+                }
+                else {
+                    inProgTasks.add(task);
+                }
+                break;
+            case VERIFY:
+                if (index <= verifyTasks.size()-1) {
+                    verifyTasks.add(index, task);
+                }
+                else {
+                    verifyTasks.add(task);
+                }
+                break;
+            case DONE:
+                if (index <= completedTasks.size()-1) {
+                    completedTasks.add(index, task);
+                }
+                else {
+                    completedTasks.add(task);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    public int getTaskLaneIndex(Task task) {
+        int index = -1;
+
+        if (todoTasks.contains(task)) {
+            index = todoTasks.indexOf(task);
+        }
+        else if (inProgTasks.contains(task)) {
+            index = todoTasks.indexOf(task);
+        }
+        else if (verifyTasks.contains(task)) {
+            index = todoTasks.indexOf(task);
+        }
+        else if (completedTasks.contains(task)) {
+            index = todoTasks.indexOf(task);
+        }
+
+        return index;
+    }
+
     /**
      * Sets the sprint the story belongs to
      *

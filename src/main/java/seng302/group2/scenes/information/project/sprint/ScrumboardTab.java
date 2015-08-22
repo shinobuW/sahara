@@ -28,6 +28,7 @@ public class ScrumboardTab extends SearchableTab {
     List<SearchableControl> searchControls = new ArrayList<>();
     Map<SearchableListView<Task>, Task.TASKSTATE> laneStateDict = new HashMap<>();
     Task interactiveTask = null;
+    public int hoverIndex;
 
     /**
      * Constructor for the Backlog Info tab
@@ -84,10 +85,10 @@ public class ScrumboardTab extends SearchableTab {
         initLaneListeners(lanes, story);
 
         // Set cell factory
-        todoLane.setCellFactory(list -> new ScrumBoardTaskCell());
-        inProgressLane.setCellFactory(list -> new ScrumBoardTaskCell());
-        verifyLane.setCellFactory(list -> new ScrumBoardTaskCell());
-        completedLane.setCellFactory(list -> new ScrumBoardTaskCell());
+        todoLane.setCellFactory(list -> new ScrumBoardTaskCell(todoLane, this));
+        inProgressLane.setCellFactory(list -> new ScrumBoardTaskCell(inProgressLane, this));
+        verifyLane.setCellFactory(list -> new ScrumBoardTaskCell(verifyLane, this));
+        completedLane.setCellFactory(list -> new ScrumBoardTaskCell(completedLane, this));
 
         // Add labels to grid
         taskLanesGrid.add(new SearchableText("Todo", searchControls), 0, 0);
@@ -136,7 +137,8 @@ public class ScrumboardTab extends SearchableTab {
                         return;
                     }
 
-                    interactiveTask.editLane(laneStateDict.get(lane));
+                    interactiveTask.editLane(laneStateDict.get(lane), hoverIndex);
+
                 });
         }
     }

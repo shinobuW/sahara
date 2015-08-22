@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.OverrunStyle;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -22,6 +23,19 @@ import javax.swing.*;
  * Created by Jordane on 23/07/2015.
  */
 public class ScrumBoardTaskCell extends ListCell<Task> {
+
+    ListView<Task> parentTable = null;
+    Task interactiveTask = null;
+    ScrumboardTab tab = null;
+
+    public ScrumBoardTaskCell() {
+    }
+
+    public ScrumBoardTaskCell(ListView<Task> parentTable, ScrumboardTab tab) {
+        this.parentTable = parentTable;
+        this.tab = tab;
+    }
+
     @Override
     public void updateItem(Task task, boolean empty) {
         super.updateItem(task, empty);
@@ -61,7 +75,7 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
             remainingTime.setStyle("-fx-font-size: 80%");
             remainingTime.setAlignment(Pos.TOP_RIGHT);
 
-            Label assignee = new Label();
+            Label assignee;
             if (task.getAssignee() != null) {
                 assignee = new Label(task.getAssignee().getFirstName().substring(0, 1)
                         + task.getAssignee().getLastName().substring(0, 1));
@@ -91,12 +105,27 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
         }
 
         this.setOnDragDetected(event -> {
+                interactiveTask = this.getItem();
                 Dragboard dragBoard = this.startDragAndDrop(TransferMode.MOVE);
                 dragBoard.setDragView(this.snapshot(null, null));
                 ClipboardContent content = new ClipboardContent();
                 content.putString("");
                 dragBoard.setContent(content);
             });
+
+        this.setOnDragOver(event -> {
+            int dropIndex;
+
+            if (this.isEmpty()) {
+                dropIndex = this.parentTable.getItems().size()-1;
+            }
+            else {
+                dropIndex = this.getIndex();
+            }
+
+            //parentTable.getItems().add(dropIndex, interactiveTask);
+            tab.hoverIndex = dropIndex;
+        });
 
         setTextOverrun(OverrunStyle.CLIP);
     }

@@ -167,6 +167,7 @@ public class Task extends SaharaItem implements Serializable {
         return this.story;
     }
 
+
     /**
      * Sets the state of the current task
      *
@@ -434,9 +435,10 @@ public class Task extends SaharaItem implements Serializable {
      * the task with the new parameter values.
      *
      * @param newState    The new state
+     * @param index The index to add at
      */
-    public void editLane(TASKSTATE newState) {
-        Command relEdit = new TaskEditLaneCommand(this, newState);
+    public void editLane(TASKSTATE newState, int index) {
+        Command relEdit = new TaskEditLaneCommand(this, newState, index);
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -583,6 +585,8 @@ public class Task extends SaharaItem implements Serializable {
         private TASKSTATE lane;
         private TASKSTATE oldLane;
         private TASKSTATE oldState;
+        private int index = -1;
+        private int oldIndex = -1;
 
 
         /**
@@ -590,11 +594,14 @@ public class Task extends SaharaItem implements Serializable {
          * @param task The story to be edited
          * @param newLane    The new state
          */
-        private TaskEditLaneCommand(Task task, TASKSTATE newLane) {
+        private TaskEditLaneCommand(Task task, TASKSTATE newLane, int index) {
             this.task = task;
             this.lane = newLane;
             this.oldState = task.state;
             this.oldLane = task.lane;
+
+            this.index = index;
+            this.oldIndex = task.getStory().getTaskLaneIndex(task);
         }
 
         /**
@@ -606,10 +613,15 @@ public class Task extends SaharaItem implements Serializable {
             }
             task.lane = lane;
             if (task.getStory() != null) {
-                task.getStory().addTaskToLane(task);
+                if (index != -1) {
+                    task.getStory().addTaskToLane(task, index);
+                }
+                else {
+                    task.getStory().addTaskToLane(task);
+                }
             }
 
-            System.out.println("Task state: " + task.getState() + ", lane: " + task.getLane());
+            //System.out.println("Task state: " + task.getState() + ", lane: " + task.getLane());
         }
 
         /**
@@ -619,7 +631,7 @@ public class Task extends SaharaItem implements Serializable {
             task.state = oldState;
             task.lane = oldLane;
             if (task.getStory() != null) {
-                task.getStory().addTaskToLane(task);
+                task.getStory().addTaskToLane(task, oldIndex);
             }
         }
 
