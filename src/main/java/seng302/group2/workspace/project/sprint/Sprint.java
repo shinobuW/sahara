@@ -1,6 +1,5 @@
 package seng302.group2.workspace.project.sprint;
 
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
