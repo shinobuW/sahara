@@ -92,9 +92,8 @@ public class BacklogTest {
     @Test
     public void testGetChildren() {
         Sprint sprint = new Sprint();
-        List<Category> exp = observableArrayList();
-        TaskCategory taskCategory = new TaskCategory(sprint);
-        exp.add(taskCategory);
+        List<Story> exp = observableArrayList();
+        exp.add(sprint.getUnallocatedTasksStory());
         Assert.assertEquals(exp, sprint.getChildren());
     }
 

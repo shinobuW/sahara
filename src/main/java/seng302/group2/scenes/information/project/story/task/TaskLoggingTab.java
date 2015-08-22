@@ -171,17 +171,23 @@ public class TaskLoggingTab extends SearchableTab {
 
 
         personComboBox.getComboBox().getItems().clear();
-        Set<Team> teams = currentTask.getStory().getBacklog().getProject().getCurrentTeams();
-        if (teams.isEmpty()) {
-            personComboBox.setDisable(true);
-        }
-        else {
-            personComboBox.setDisable(false);
-            for (Team team : teams) {
-                for (Person person : team.getPeople()) {
-                    personComboBox.getComboBox().getItems().add(person);
+        try {
+            Set<Team> teams = currentTask.getStory().getBacklog().getProject().getCurrentTeams();
+            if (teams.isEmpty()) {
+                personComboBox.setDisable(true);
+            }
+            else {
+                personComboBox.setDisable(false);
+                for (Team team : teams) {
+                    for (Person person : team.getPeople()) {
+                        personComboBox.getComboBox().getItems().add(person);
+                    }
                 }
             }
+        }
+        catch (NullPointerException ex) {
+            // Somewhere getting to teams hit null
+            personComboBox.setDisable(true);
         }
 
         addButton.setOnAction((event) -> {

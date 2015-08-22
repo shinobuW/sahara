@@ -37,8 +37,10 @@ public class Sprint extends SaharaItem {
     private String description = "";
     LocalDate startDate = LocalDate.now();
     LocalDate endDate = LocalDate.now().plusWeeks(2);
-    private transient ObservableList<Task> unallocatedTasks = observableArrayList();
-    private List<Task> serializableTasks = new ArrayList<>();
+    //private transient ObservableList<Task> unallocatedTasks = observableArrayList();
+    //private List<Task> serializableTasks = new ArrayList<>();
+
+    private Story tasksWithoutStory;
 
     private transient TaskCategory tasksCategory = new TaskCategory(this);
 
@@ -48,8 +50,8 @@ public class Sprint extends SaharaItem {
      */
     public Sprint() {
         super("Untitled Sprint");
-        addListeners();
-
+        //addListeners();
+        tasksWithoutStory = new Story(this);
         setInformationSwitchStrategy(new SprintInformationSwitchStrategy());
     }
 
@@ -77,7 +79,8 @@ public class Sprint extends SaharaItem {
         this.team = team;
         this.release = release;
 
-        addListeners();
+        //addListeners();
+        tasksWithoutStory = new Story(this);
 
         setInformationSwitchStrategy(new SprintInformationSwitchStrategy());
     }
@@ -105,6 +108,14 @@ public class Sprint extends SaharaItem {
      */
     public Release getRelease() {
         return release;
+    }
+
+    /**
+     * Gets the story of tasks without a story
+     * @return The story of tasks without a story
+     */
+    public Story getUnallocatedTasksStory() {
+        return this.tasksWithoutStory;
     }
 
     /**
@@ -166,7 +177,8 @@ public class Sprint extends SaharaItem {
      * @return list of unallocatedTasks
      */
     public ObservableList<Task> getUnallocatedTasks() {
-        return this.unallocatedTasks;
+        return this.tasksWithoutStory.getTasks();
+        //return this.unallocatedTasks;
     }
 
     /**
@@ -176,7 +188,7 @@ public class Sprint extends SaharaItem {
      */
     public Set<Task> getAllTasks() {
         Set<Task> tasks = new HashSet<>();
-        tasks.addAll(unallocatedTasks);
+        tasks.addAll(getUnallocatedTasks());
         for (Story story : stories) {
             tasks.addAll(story.getTasks());
         }
@@ -216,8 +228,9 @@ public class Sprint extends SaharaItem {
     public ObservableList<SaharaItem> getChildren() {
         ObservableList<SaharaItem> children = observableArrayList();
 
-        children.addAll(tasksCategory);
-        //children.addAll(stories);
+        //children.addAll(tasksCategory);
+        children.addAll(stories);
+        children.add(tasksWithoutStory);
 
         return children;
     }
@@ -225,30 +238,31 @@ public class Sprint extends SaharaItem {
     /**
      * Adds listeners to the Sprint tasks for sorting
      */
-    public void addListeners() {
+    /*public void addListeners() {
         unallocatedTasks.addListener((ListChangeListener<Task>) change ->
             {
                 if (change.next() && !change.wasPermutated()) {
                     Collections.sort(unallocatedTasks, Task.TaskNameComparator);
                 }
             });
-    }
+    }*/
 
     /**
      * Prepares the backlog to be serialized.
      */
     public void prepSerialization() {
+        tasksWithoutStory.prepSerialization();
         serializableStories.clear();
         for (Story story : stories) {
             story.prepSerialization();
             this.serializableStories.add(story);
         }
 
-        serializableTasks.clear();
+        /*serializableTasks.clear();
         for (Task item : unallocatedTasks) {
             item.prepSerialization();
             this.serializableTasks.add(item);
-        }
+        }*/
     }
 
 
@@ -256,12 +270,13 @@ public class Sprint extends SaharaItem {
      * Deserialization post-processing.
      */
     public void postDeserialization() {
-        unallocatedTasks.clear();
+        /*unallocatedTasks.clear();
         for (Task task : serializableTasks) {
             task.postSerialization();
             this.unallocatedTasks.add(task);
-        }
+        }*/
 
+        tasksWithoutStory.postSerialization();
         stories.clear();
         for (Story story : serializableStories) {
             story.postSerialization();
@@ -280,10 +295,10 @@ public class Sprint extends SaharaItem {
     public Set<SaharaItem> getItemsSet() {
         Set<SaharaItem> items = new HashSet<>();
 
-        for (Task task : unallocatedTasks) {
+        /*for (Task task : getUnallocatedTasks()) {
             items.addAll(task.getItemsSet());
-        }
-        items.addAll(unallocatedTasks);
+        }*/
+        items.addAll(getUnallocatedTasks());
 
         return items;
     }

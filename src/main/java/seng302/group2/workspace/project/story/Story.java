@@ -74,6 +74,10 @@ public class Story extends SaharaItem implements Serializable {
     public static Color orangeHighlight = Color.color(1, 0.6, 0, 0.4);
     public static Color redHighlight = Color.color(1, 0, 0, 0.4);
 
+    // If the story is the story of a sprint representing tasks without a story
+    public boolean tasksWithoutStory = false;
+
+
     /**
      * Basic Story constructor
      */
@@ -90,23 +94,6 @@ public class Story extends SaharaItem implements Serializable {
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }
 
-    /**
-     * Gets the set of SaharaItems 'belonging' to the Story (It's Acceptance Criteria).
-     * @return A set of SaharaItems belonging to the story
-     */
-    @Override
-    public Set<SaharaItem> getItemsSet() {
-        Set<SaharaItem> items = new HashSet<>();
-        items.addAll(acceptanceCriteria);
-        for (AcceptanceCriteria ac : acceptanceCriteria) {
-            items.addAll(ac.getItemsSet());
-        }
-        items.addAll(tasks);
-        for (Task task : tasks) {
-            items.addAll(task.getItemsSet());
-        }
-        return items;
-    }
 
     /**
      * Story Constructor with all fields. Ready state set to false
@@ -133,6 +120,46 @@ public class Story extends SaharaItem implements Serializable {
 
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }
+
+
+    /**
+     * Story Constructor for a Sprints' Tasks without a Story, story
+     * @param sprint The sprint that this tasks without a story story belongs to
+     */
+    public Story(Sprint sprint) {
+        super("Tasks without a Story");
+        this.shortName = "Tasks without a Story";
+        this.longName = "Tasks without a Story";
+        this.description = "A collection of tasks that do not belong to a story";
+        this.creator = "";
+        this.priority = 0;
+        this.project = sprint.getProject();
+        this.ready = true;
+        this.colour = STORYCOLOUR.DEFAULT;
+        this.tasksWithoutStory = true;
+
+        setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
+    }
+
+
+    /**
+     * Gets the set of SaharaItems 'belonging' to the Story (It's Acceptance Criteria).
+     * @return A set of SaharaItems belonging to the story
+     */
+    @Override
+    public Set<SaharaItem> getItemsSet() {
+        Set<SaharaItem> items = new HashSet<>();
+        items.addAll(acceptanceCriteria);
+        for (AcceptanceCriteria ac : acceptanceCriteria) {
+            items.addAll(ac.getItemsSet());
+        }
+        items.addAll(tasks);
+        for (Task task : tasks) {
+            items.addAll(task.getItemsSet());
+        }
+        return items;
+    }
+
 
     /**
      * Gets the short name of the story

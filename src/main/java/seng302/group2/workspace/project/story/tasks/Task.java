@@ -341,12 +341,12 @@ public class Task extends SaharaItem implements Serializable {
      */
     public enum TASKSTATE {
         // String value, RBGA colour
-        NOT_STARTED("Not Started", ColorUtils.toRGBCode(Color.color(0.4, 1, 0, 1))),
-        IN_PROGRESS("In Progress", ColorUtils.toRGBCode(Color.color(0.4, 1, 0, 1))),
-        BLOCKED("Blocked", ColorUtils.toRGBCode(Color.color(0.4, 1, 0, 1))),
-        DONE("Done", ColorUtils.toRGBCode(Color.color(0.4, 1, 0, 1))),
-        VERIFY("Verify", ColorUtils.toRGBCode(Color.color(0.4, 1, 0, 1))),
-        DEFERRED("Deferred", ColorUtils.toRGBCode(Color.color(0.4, 1, 0, 1)));
+        NOT_STARTED("Not Started", ColorUtils.toRGBCode(Color.color(0.75, 0.75, 0.75, 1))),
+        IN_PROGRESS("In Progress", ColorUtils.toRGBCode(Color.color(0.75, 0.5, 0, 1))),
+        VERIFY("Verify", ColorUtils.toRGBCode(Color.color(0.2, 0.2, 0.75, 1))),
+        DONE("Done", ColorUtils.toRGBCode(Color.color(0.25, 0.8, 0, 1))),
+        BLOCKED("Blocked", ColorUtils.toRGBCode(Color.color(0.8, 0.0, 0, 1))),
+        DEFERRED("Deferred", ColorUtils.toRGBCode(Color.color(0.2, 0.2, 0.2, 1)));
 
         private String value;
         private String colour;

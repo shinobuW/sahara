@@ -70,8 +70,8 @@ public class TaskEditTab extends SearchableTab {
         HBox taskHbox = new HBox();
         SearchableText taskStateText = new SearchableText("Task State: ");
         ObservableList<Task.TASKSTATE> taskstateObservableList = observableArrayList();
-        taskstateObservableList.addAll(Task.TASKSTATE.BLOCKED, Task.TASKSTATE.DEFERRED, Task.TASKSTATE.DONE,
-                Task.TASKSTATE.IN_PROGRESS, Task.TASKSTATE.NOT_STARTED);
+        taskstateObservableList.addAll(Task.TASKSTATE.values());
+
 
         ComboBox<Task.TASKSTATE> taskStateComboBox = new ComboBox<>(taskstateObservableList);
         taskStateComboBox.setValue(currentTask.getState());
@@ -89,7 +89,7 @@ public class TaskEditTab extends SearchableTab {
 
 
         CustomComboBox<Person> taskAssigneesList = new CustomComboBox<Person>("Assignee: ");
-        if (currentTask.getStory().getSprint() != null) {
+        if (currentTask.getStory() != null && currentTask.getStory().getSprint() != null) {
             taskAssigneesList.getComboBox().setItems(currentTask.getStory().getSprint().getTeam().getPeople());
         }
 

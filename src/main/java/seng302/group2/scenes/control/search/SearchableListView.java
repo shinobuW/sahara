@@ -20,7 +20,7 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
      */
     public SearchableListView() {
         super();
-
+        this.setPrefHeight(240);
     }
 
 
@@ -30,6 +30,7 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
      */
     public SearchableListView(ObservableList<T> listItems) {
         super(listItems);
+        this.setPrefHeight(240);
     }
 
 
@@ -41,7 +42,7 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
     public SearchableListView(ObservableList<T> listItems, Collection<SearchableControl> searchableControls) {
         super(listItems);
         searchableControls.add(this);
-
+        this.setPrefHeight(240);
     }
 
 
