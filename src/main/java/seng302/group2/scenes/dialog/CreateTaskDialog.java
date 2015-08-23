@@ -15,6 +15,7 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -188,18 +189,17 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
             });
 
         effortLeftField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                try {
-                    Integer parsedInt = Integer.parseInt(newValue);
+                if (DateValidator.validDuration(newValue) && !newValue.isEmpty()) {
                     effortLeftField.hideErrorField();
                     correctEffortLeft = true;
                 }
-                catch (NumberFormatException ex) {
+                else {
                     correctEffortLeft = false;
                     if (newValue.isEmpty()) {
                         effortLeftField.showErrorField("* This field must be filled");
                     }
                     else {
-                        effortLeftField.showErrorField("* You must enter integer values only");
+                        effortLeftField.showErrorField("* Please input in valid format");
                     }
                 }
             });
