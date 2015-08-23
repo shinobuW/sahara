@@ -98,12 +98,12 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
      */
     public void addListeners() {
         stories.addListener((ListChangeListener<Story>) change -> {
-            if (change.next() && !change.wasPermutated()) {
-                if (stories.size() != 0) {
-                    Collections.sort(stories, Story.StoryPriorityComparator);
+                if (change.next() && !change.wasPermutated()) {
+                    if (stories.size() != 0) {
+                        Collections.sort(stories, Story.StoryPriorityComparator);
+                    }
                 }
-            }
-        });
+            });
 
     }
 
