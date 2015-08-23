@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
@@ -65,10 +66,38 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         projectComboHBox.getChildren().add(aster1);
 
         VBox projectVBox = new VBox();
-        HBox projectCombo = new HBox();
-        projectCombo.getChildren().addAll(projectComboHBox, projectComboBox);
+        HBox projectComboHbox = new HBox();
+        projectComboHbox.getChildren().addAll(projectComboHBox, projectComboBox);
         HBox.setHgrow(projectComboHBox, Priority.ALWAYS);
-        projectVBox.getChildren().add(projectCombo);
+        projectVBox.getChildren().add(projectComboHbox);
+
+        projectComboBox.setCellFactory(
+                new Callback<ListView<Project>, ListCell<Project>>() {
+                    @Override
+                    public ListCell<Project> call(ListView<Project> param) {
+                        final ListCell<Project> cell = new ListCell<Project>() {
+                            {
+                                super.setPrefWidth(100);
+                            }
+                            @Override
+                            public void updateItem(Project item,
+                                                   boolean empty) {
+                                super.updateItem(item, empty);
+                                if (item != null) {
+                                    setText(item.toString());
+                                    if (item.getBacklogs().size() == 0) {
+                                        setStyle("-fx-background-color: red;");
+                                        setDisable(true);
+                                    }
+                                }
+                                else {
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                });
 
         //Create Backlog Combo Box
         ComboBox<Backlog> backlogComboBox = new ComboBox<>();
@@ -152,7 +181,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                     backlogComboBox.setDisable(true);
                 }
                 else {
-                    backlogComboHBox.setDisable(false);
+                    backlogComboBox.setDisable(false);
                     for (Backlog backlog : newValue.getBacklogs()) {
                         backlogComboBox.getItems().add(backlog);
                     }
