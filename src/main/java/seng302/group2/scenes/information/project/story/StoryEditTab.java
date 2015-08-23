@@ -130,7 +130,8 @@ public class StoryEditTab extends SearchableTab {
             estimateComboBox.disable();
             estimateComboBox.setValue(EstimationScalesDictionary.getScaleValue(
                     EstimationScalesDictionary.DefaultValues.NONE));
-            Tooltip tool = new seng302.group2.scenes.control.Tooltip("A Story must be assigned to a backlog and have at least one Acceptance "
+            Tooltip tool = new seng302.group2.scenes.control.Tooltip(
+                    "A Story must be assigned to a backlog and have at least one Acceptance "
                     + "criteria before an estimate can be given.");
             Tooltip.install(estimateHBox, tool);
             estimateComboBox.setTooltip(tool);
