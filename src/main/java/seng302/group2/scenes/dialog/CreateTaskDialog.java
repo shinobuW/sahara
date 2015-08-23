@@ -20,6 +20,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
 
@@ -32,13 +33,17 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  */
 public class CreateTaskDialog extends Dialog<Map<String, String>> {
     static Boolean correctShortName = Boolean.FALSE;
-    static Boolean correctDescription = Boolean.FALSE;
     static Boolean correctEffortLeft = Boolean.FALSE;
-    // TODO Add effort left when its implemented
+    static Boolean projectSelected = Boolean.FALSE;
+    static Boolean backlogSelected = Boolean.FALSE;
+    static Boolean storySelected = Boolean.FALSE;
 
     public CreateTaskDialog() {
         correctShortName = false;
-        correctDescription = false;
+        correctEffortLeft = false;
+        projectSelected = false;
+        backlogSelected = false;
+        storySelected = false;
 
         // Initialise Dialog
         this.setTitle("New Task");
@@ -185,16 +190,16 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctShortName = validateShortName(shortNameCustomField, null);
-                createButton.setDisable(!(correctShortName));
+                createButton.setDisable(!(correctShortName && correctEffortLeft && projectSelected && backlogSelected
+                        && storySelected));
             });
 
         effortLeftField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                if (DateValidator.validDuration(newValue) && !newValue.isEmpty()) {
+                correctEffortLeft = DateValidator.validDuration(newValue) && !newValue.isEmpty();
+                if (correctEffortLeft) {
                     effortLeftField.hideErrorField();
-                    correctEffortLeft = true;
                 }
                 else {
-                    correctEffortLeft = false;
                     if (newValue.isEmpty()) {
                         effortLeftField.showErrorField("* This field must be filled");
                     }
@@ -202,13 +207,16 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                         effortLeftField.showErrorField("* Please input in valid format");
                     }
                 }
+                createButton.setDisable(!(correctShortName && correctEffortLeft && projectSelected && backlogSelected
+                        && storySelected));
             });
 
         projectComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue == null) {
+                    projectSelected = false;
                     return;
                 }
-
+                projectSelected = true;
                 backlogComboBox.getItems().clear();
                 storyComboBox.getItems().clear();
                 if (newValue.getBacklogs().size() == 0) {
@@ -233,10 +241,13 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                         }
                     }
                 }
+                createButton.setDisable(!(correctShortName && correctEffortLeft && projectSelected && backlogSelected
+                        && storySelected));
             });
 
         backlogComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue == null) {
+                    backlogSelected = false;
                     return;
                 }
                 storyComboBox.getItems().clear();
@@ -244,27 +255,33 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                     storyComboBox.getItems().add(story);
                 }
                 storyComboBox.setDisable(false);
+                backlogSelected = true;
+                createButton.setDisable(!(correctShortName && correctEffortLeft && projectSelected && backlogSelected
+                        && storySelected));
             });
+
+        storyComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+                storySelected = storyComboBox.getSelectionModel().getSelectedItem() == null ? false : true;
+                createButton.setDisable(!(correctShortName && correctEffortLeft && projectSelected
+                        && backlogSelected && storySelected));
+            }
+        );
 
         this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
+                    //get user input
+                    String shortName = shortNameCustomField.getText();
+                    String description = descriptionTextArea.getText();
+                    Double effortSpent = Log.readDurationToMinutes(effortLeftField.getText());
 
-                    if (correctShortName && correctEffortLeft) {
-                        //get user input
-                        String shortName = shortNameCustomField.getText();
-                        String description = descriptionTextArea.getText();
-                        Float parsedInt = Float.parseFloat(effortLeftField.getText());
-
-
-                        Task task = new Task(shortName, description,
-                                storyComboBox.getSelectionModel().getSelectedItem(), assigneeComboBox.getComboBox()
-                                .getSelectionModel().getSelectedItem());
-                        task.setEffortLeft(parsedInt);
-                        storyComboBox.getSelectionModel().getSelectedItem().add(task);
-                        App.refreshMainScene();
-                        App.mainPane.selectItem(task);
-                        this.close();
-                    }
+                    Task task = new Task(shortName, description,
+                            storyComboBox.getSelectionModel().getSelectedItem(), assigneeComboBox.getComboBox()
+                            .getSelectionModel().getSelectedItem());
+                    task.setEffortLeft(effortSpent);
+                    storyComboBox.getSelectionModel().getSelectedItem().add(task);
+                    App.refreshMainScene();
+                    App.mainPane.selectItem(task.getStory());
+                    this.close();
                 }
                 return null;
             });
