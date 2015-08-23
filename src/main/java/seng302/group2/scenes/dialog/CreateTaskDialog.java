@@ -42,7 +42,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         // Initialise Dialog
         this.setTitle("New Task");
         this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 600px; -fx-pref-width: 600px; "
-                + "-fx-pref-height: 600px;");
+                + "-fx-pref-height: 420px;");
         VBox grid = new VBox();
         grid.spacingProperty().setValue(10);
         Insets insets = new Insets(20, 20, 20, 20);
@@ -54,7 +54,6 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         // Add elements to grid
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         RequiredField effortLeftField = new RequiredField("Effort Left:");
-
 
         //Create Project Combo box
         ComboBox<Project> projectComboBox = new ComboBox<>();
@@ -165,6 +164,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         storyComboBox.setDisable(true);
 
         CustomComboBox<Person> assigneeComboBox = new CustomComboBox<Person>("Assignee");
+        assigneeComboBox.getComboBox().setPrefWidth(175);
         assigneeComboBox.setDisable(true);
 
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
@@ -195,8 +195,12 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                 }
                 catch (NumberFormatException ex) {
                     correctEffortLeft = false;
-                    effortLeftField.showErrorField("* You must enter integer values only");
-
+                    if (newValue.isEmpty()) {
+                        effortLeftField.showErrorField("* This field must be filled");
+                    }
+                    else {
+                        effortLeftField.showErrorField("* You must enter integer values only");
+                    }
                 }
             });
 
@@ -218,7 +222,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                 }
 
                 assigneeComboBox.clear();
-                if (newValue.getCurrentTeams().size() == 0 ) {
+                if (newValue.getCurrentTeams().size() == 0) {
                     assigneeComboBox.setDisable(true);
                 }
                 else {
