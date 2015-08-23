@@ -118,18 +118,18 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
             });
 
         this.setOnDragOver(event -> {
-            int dropIndex;
+                int dropIndex;
 
-            if (this.isEmpty()) {
-                dropIndex = this.parentTable.getItems().size()-1;
-            }
-            else {
-                dropIndex = this.getIndex();
-            }
+                if (this.isEmpty()) {
+                    dropIndex = this.parentTable.getItems().size() - 1;
+                }
+                else {
+                    dropIndex = this.getIndex();
+                }
 
-            //parentTable.getItems().add(dropIndex, interactiveTask);
-            tab.hoverIndex = dropIndex;
-        });
+                //parentTable.getItems().add(dropIndex, interactiveTask);
+                tab.hoverIndex = dropIndex;
+            });
 
         setTextOverrun(OverrunStyle.CLIP);
     }

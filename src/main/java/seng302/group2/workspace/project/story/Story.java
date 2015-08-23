@@ -300,6 +300,10 @@ public class Story extends SaharaItem implements Serializable {
     }
 
 
+    /**
+     * Adds a task to the story's lanes based on it's lane and status
+     * @param task The task to add to the lane
+     */
     public void addTaskToLane(Task task) {
         //System.out.println("added to lane " + task.getState());
         todoTasks.remove(task);
@@ -326,6 +330,11 @@ public class Story extends SaharaItem implements Serializable {
     }
 
 
+    /**
+     * Adds a task to the story's lanes based on it's lane and status
+     * @param task The task to add to the lane
+     * @param index The index at which the task should be added (used for reordering)
+     */
     public void addTaskToLane(Task task, int index) {
         todoTasks.remove(task);
         inProgTasks.remove(task);
@@ -338,7 +347,7 @@ public class Story extends SaharaItem implements Serializable {
 
         switch (task.getLane()) {
             case NOT_STARTED:
-                if (index <= todoTasks.size()-1) {
+                if (index <= todoTasks.size() - 1) {
                     todoTasks.add(index, task);
                 }
                 else {
@@ -346,7 +355,7 @@ public class Story extends SaharaItem implements Serializable {
                 }
                 break;
             case IN_PROGRESS:
-                if (index <= inProgTasks.size()-1) {
+                if (index <= inProgTasks.size() - 1) {
                     inProgTasks.add(index, task);
                 }
                 else {
@@ -354,7 +363,7 @@ public class Story extends SaharaItem implements Serializable {
                 }
                 break;
             case VERIFY:
-                if (index <= verifyTasks.size()-1) {
+                if (index <= verifyTasks.size() - 1) {
                     verifyTasks.add(index, task);
                 }
                 else {
@@ -362,7 +371,7 @@ public class Story extends SaharaItem implements Serializable {
                 }
                 break;
             case DONE:
-                if (index <= completedTasks.size()-1) {
+                if (index <= completedTasks.size() - 1) {
                     completedTasks.add(index, task);
                 }
                 else {
@@ -375,6 +384,11 @@ public class Story extends SaharaItem implements Serializable {
     }
 
 
+    /**
+     * Tries to finds a task in each of the stories' lanes, and then returns the index of which it sits inside the lane
+     * Returns -1 if not found
+     * @param task The task to find the index of
+     */
     public int getTaskLaneIndex(Task task) {
         int index = -1;
 

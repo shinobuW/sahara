@@ -16,7 +16,7 @@ public class Tooltip extends javafx.scene.control.Tooltip {
     /**
      * The default delay for custom Tooltips, much shorter than original JavaFX Tooltips
      */
-    private final int DEFAULT_DELAY = 200;
+    private final int defaultDelay = 200;
 
 
     /**
@@ -25,7 +25,7 @@ public class Tooltip extends javafx.scene.control.Tooltip {
      */
     public Tooltip(String tipText) {
         super(tipText);
-        setDelay(DEFAULT_DELAY);
+        setDelay(defaultDelay);
     }
 
 
@@ -47,7 +47,7 @@ public class Tooltip extends javafx.scene.control.Tooltip {
      */
     public Tooltip(String tipText, Node node) {
         super(tipText);
-        setDelay(DEFAULT_DELAY);
+        setDelay(defaultDelay);
         Tooltip.install(node, this);
     }
 
@@ -112,7 +112,8 @@ public class Tooltip extends javafx.scene.control.Tooltip {
 
             objTimer.getKeyFrames().clear();
             objTimer.getKeyFrames().add(new KeyFrame(new Duration(delay)));
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
