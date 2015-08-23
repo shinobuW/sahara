@@ -33,6 +33,7 @@ public class RequiredField extends VBox implements SearchableControl {
      */
     public RequiredField(String name) {
         this.errorMessageText.setText(errorMessage);
+        inputText.setPrefWidth(175);
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);
