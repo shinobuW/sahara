@@ -53,7 +53,8 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
 
         // Add elements to grid
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
-        CustomTextField effortLeftField = new CustomTextField("Effort Left:");
+        RequiredField effortLeftField = new RequiredField("Effort Left:");
+
 
         //Create Project Combo box
         ComboBox<Project> projectComboBox = new ComboBox<>();
@@ -110,10 +111,39 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         backlogComboHBox.getChildren().add(aster2);
 
         VBox backlogVBox = new VBox();
-        HBox backlogCombo = new HBox();
-        backlogCombo.getChildren().addAll(backlogComboHBox, backlogComboBox);
+        HBox backlogComboHbox = new HBox();
+        backlogComboHbox.getChildren().addAll(backlogComboHBox, backlogComboBox);
         HBox.setHgrow(backlogComboHBox, Priority.ALWAYS);
-        backlogVBox.getChildren().add(backlogCombo);
+        backlogVBox.getChildren().add(backlogComboHbox);
+
+        backlogComboBox.setCellFactory(
+                new Callback<ListView<Backlog>, ListCell<Backlog>>() {
+                    @Override
+                    public ListCell<Backlog> call(ListView<Backlog> param) {
+                        final ListCell<Backlog> cell = new ListCell<Backlog>() {
+                            {
+                                super.setPrefWidth(100);
+                            }
+
+                            @Override
+                            public void updateItem(Backlog item,
+                                                   boolean empty) {
+                                super.updateItem(item, empty);
+                                if (item != null) {
+                                    setText(item.toString());
+                                    if (item.getStories().size() == 0) {
+                                        setStyle("-fx-background-color: red;");
+                                        setDisable(true);
+                                    }
+                                }
+                                else {
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                });
 
         //Create Story Combo Box
         ComboBox<Story> storyComboBox = new ComboBox<>();
