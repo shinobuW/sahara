@@ -14,9 +14,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.workspace.project.story.tasks.Task;
-
-import javax.swing.*;
 
 /**
  * A ListCell extension for the neat displaying of tasks on the scrum board view
@@ -85,6 +84,11 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
             }
             assignee.setStyle("-fx-font-size: 80%");
             assignee.setAlignment(Pos.CENTER_RIGHT);
+
+            // Assignee tooltip on rectangle (for the moment)
+            if (task.getAssignee() != null) {
+                Tooltip.create(task.getAssignee().getShortName(), rect, 50);
+            }
 
 
             // TODO Impediments/Warning icon
