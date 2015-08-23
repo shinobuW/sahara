@@ -61,6 +61,7 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
         HBox.setHgrow(labelBox, Priority.ALWAYS);
 
         this.comboBox.setMinWidth(135);
+        this.comboBox.setPrefWidth(175);
         this.getChildren().add(entry);
     }
 
