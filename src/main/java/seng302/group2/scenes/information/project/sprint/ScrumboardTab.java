@@ -47,7 +47,7 @@ public class ScrumboardTab extends SearchableTab {
 
 
         // Create story title pane regions
-        for (Story story : currentSprint.getStories()) {
+        for (Story story : currentSprint.getStories().sorted(Story.StoryPriorityComparator)) {
             basicInfoPane.getChildren().add(getCollapsableStoryPane(story));
         }
         basicInfoPane.getChildren().add(getCollapsableStoryPane(currentSprint.getUnallocatedTasksStory()));

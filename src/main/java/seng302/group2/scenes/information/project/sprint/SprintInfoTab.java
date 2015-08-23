@@ -129,7 +129,12 @@ public class SprintInfoTab extends SearchableTab {
     private VBox createStoryTitlePanes(Sprint currentSprint) {
         final VBox stackedStoryTitlePanes = new VBox();
         if (currentSprint.getStories().size() != 0) {
-            for (Story story : currentSprint.getStories().sorted(Story.StoryPriorityComparator)) {
+
+            List<Story> stories = new ArrayList<>();
+            stories.addAll(currentSprint.getStories().sorted(Story.StoryPriorityComparator));
+            stories.add(currentSprint.getUnallocatedTasksStory());
+
+            for (Story story : stories) {
                 VBox taskBox = new VBox();
                 if (story.getTasks().size() != 0) {
                     taskBox.getChildren().add(new SearchableText("Tasks:", searchControls));
