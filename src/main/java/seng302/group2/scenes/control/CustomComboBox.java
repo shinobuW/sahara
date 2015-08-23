@@ -10,7 +10,6 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -198,7 +197,7 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
      * Sets the tooltip of the combobox.
      * @param tool The tooltip
      */
-    public void setTooltip(Tooltip tool) {
+    public void setTooltip(javafx.scene.control.Tooltip tool) {
         this.comboBox.setTooltip(tool);
     }
 

@@ -3,7 +3,6 @@ package seng302.group2.scenes.control;
 import javafx.geometry.Pos;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -110,7 +109,7 @@ public class CustomDatePicker extends VBox implements SearchableControl {
      * Sets the tooltip of the date picker.
      * @param tool The tooltip
      */
-    public void setTooltip(Tooltip tool) {
+    public void setTooltip(javafx.scene.control.Tooltip tool) {
         this.datePicker.setTooltip(tool);
     }
 

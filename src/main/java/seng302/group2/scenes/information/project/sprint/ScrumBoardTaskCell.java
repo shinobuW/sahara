@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.OverrunStyle;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -26,9 +27,6 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
     ListView<Task> parentTable = null;
     Task interactiveTask = null;
     ScrumboardTab tab = null;
-
-    public ScrumBoardTaskCell() {
-    }
 
     public ScrumBoardTaskCell(ListView<Task> parentTable, ScrumboardTab tab) {
         this.parentTable = parentTable;
@@ -67,36 +65,35 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
 
 
             // The cell's 'iconic' information
-            VBox rightContent = new VBox();
+            VBox rightContent = new VBox(1);
             rightContent.setPrefHeight(48);
 
             Label remainingTime = new Label(task.getEffortLeftString());
-            remainingTime.setStyle("-fx-font-size: 80%");
+            remainingTime.setStyle("-fx-font-size: 85%");
             remainingTime.setAlignment(Pos.TOP_RIGHT);
-
-            Label assignee;
-            if (task.getAssignee() != null) {
-                assignee = new Label(task.getAssignee().getFirstName().substring(0, 1)
-                        + task.getAssignee().getLastName().substring(0, 1));
-            }
-            else {
-                assignee = new Label("-");
-            }
-            assignee.setStyle("-fx-font-size: 80%");
-            assignee.setAlignment(Pos.CENTER_RIGHT);
-
-            // Assignee tooltip on rectangle (for the moment)
-            if (task.getAssignee() != null) {
-                Tooltip.create(task.getAssignee().getShortName(), rect, 50);
-            }
-
-
-            // TODO Impediments/Warning icon
-
 
             rightContent.setAlignment(Pos.CENTER_RIGHT);
             HBox.setHgrow(rightContent, Priority.ALWAYS);
-            rightContent.getChildren().addAll(remainingTime, assignee);
+            rightContent.getChildren().addAll(remainingTime);
+
+            // Assignee icon
+            if (task.getAssignee() != null) {
+                ImageView assigneeImage = new ImageView("icons/person.png");
+                Tooltip.create(task.getAssignee().getShortName(), assigneeImage, 50);
+                rightContent.getChildren().addAll(assigneeImage);
+            }
+
+            // Impediments icon
+            if (task.getState() == Task.TASKSTATE.BLOCKED || task.getState() == Task.TASKSTATE.DEFERRED) {
+                ImageView warningImage = new ImageView("icons/dialog-cancel.png");
+                if (task.getState() == Task.TASKSTATE.BLOCKED) {
+                    Tooltip.create("This task is currently blocked", warningImage, 50);
+                }
+                else {
+                    Tooltip.create("This task has been deferred", warningImage, 50);
+                }
+                rightContent.getChildren().addAll(warningImage);
+            }
 
 
             // Bring cell parts together

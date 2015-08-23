@@ -2,3 +2,4 @@ target
 config
 project-2.iml
 .idea
+*Thumbs.db

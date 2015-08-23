@@ -3,12 +3,12 @@ package seng302.group2.scenes.menu;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.control.ToolBar;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.scenes.control.search.SearchBox;
 
 
