@@ -16,15 +16,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.scene.text.TextFlow;
 import org.controlsfx.control.PopOver;
 import seng302.group2.scenes.control.Tooltip;
-import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
 
-import java.util.*;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * A ListCell extension for the neat displaying of tasks on the scrum board view

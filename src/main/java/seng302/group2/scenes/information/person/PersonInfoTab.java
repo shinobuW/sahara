@@ -1,6 +1,5 @@
 package seng302.group2.scenes.information.person;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -19,7 +18,10 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
