@@ -107,13 +107,14 @@ public class CreateStoryDialog extends Dialog<Map<String, String>> {
             });
 
         priorityNumberField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctPriority = validatePriorityField(priorityNumberField, null, null);
-                createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
-            });
+            correctPriority = validatePriorityField(priorityNumberField, null, null);
+            createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
+        });
 
         this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
                     if (correctShortName && correctLongName && correctCreator && correctPriority) {
+
                         //get user input
                         String shortName = shortNameCustomField.getText();
                         String longName = longNameCustomField.getText();
@@ -214,7 +215,9 @@ public class CreateStoryDialog extends Dialog<Map<String, String>> {
 
         this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
+
                     if (correctShortName && correctLongName && correctCreator && correctPriority) {
+
                         //get user input
                         String shortName = shortNameCustomField.getText();
                         String longName = longNameCustomField.getText();

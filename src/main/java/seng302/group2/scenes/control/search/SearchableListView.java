@@ -1,5 +1,7 @@
 package seng302.group2.scenes.control.search;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
@@ -31,6 +33,7 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
     public SearchableListView(ObservableList<T> listItems) {
         super(listItems);
         this.setPrefHeight(240);
+
     }
 
 
@@ -43,6 +46,8 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
         super(listItems);
         searchableControls.add(this);
         this.setPrefHeight(240);
+
+
     }
 
 
@@ -65,6 +70,7 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
         this.setCellFactory(param -> new ListCell<T>() {
             @Override
             public void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
                 if (empty) {
                     setGraphic(null);
                     setText(null);

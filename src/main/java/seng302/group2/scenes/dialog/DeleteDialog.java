@@ -74,6 +74,7 @@ public class DeleteDialog {
             else if (element.getClass() == Story.class) {
                 Story deletedStory = (Story) element;
                 deletedStory.deleteStory();
+                App.refreshMainScene();
             }
             else if (element.getClass() == Backlog.class) {
                 Backlog deletedBacklog = (Backlog) element;
