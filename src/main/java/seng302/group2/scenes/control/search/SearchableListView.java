@@ -48,7 +48,6 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
 
     }
 
-
     /**
      * Queries the contents of the list view, highlighting any contents that match
      * @param query The search string to query the list contents with
