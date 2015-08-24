@@ -70,6 +70,40 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
      * asterisk if the field is required.
      *
      * @param name     The node field
+     */
+    public CustomComboBox(ObservableList<T> items, String name) {
+        comboBox.setItems(items);
+        this.errorMessageText.setText(errorMessage);
+
+        HBox labelBox = new HBox();
+        labelBox.setPrefWidth(165);
+        labelBox.setAlignment(Pos.CENTER_LEFT);
+        labelBox.spacingProperty().setValue(0);
+
+        titleLabel.setText(name);
+        labelBox.getChildren().addAll(titleLabel);
+
+        if (required) {
+            Label aster = astrLabel;
+            aster.setTextFill(Color.web("#ff0000"));
+            labelBox.getChildren().add(aster);
+        }
+
+        HBox entry = new HBox();
+        entry.setPrefWidth(275);
+        entry.getChildren().addAll(labelBox, this.comboBox);
+        HBox.setHgrow(labelBox, Priority.ALWAYS);
+
+        this.comboBox.setMinWidth(135);
+        this.comboBox.setPrefWidth(175);
+        this.getChildren().add(entry);
+    }
+
+    /**
+     * Creates a required label HBox inside of the VBox containing a Label with an appended red
+     * asterisk if the field is required.
+     *
+     * @param name     The node field
      * @param required Whether or not the field is required
      */
     public CustomComboBox(String name, boolean required) {

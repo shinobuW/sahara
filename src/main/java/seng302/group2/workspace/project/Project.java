@@ -475,7 +475,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
             System.out.println("Called on wrong project, not happening");
             return;
         }
-
         Command addAlloc = new AddAllocationCommand(this, allocation.getTeam(), allocation);
         Global.commandManager.executeCommand(addAlloc);
     }
@@ -590,8 +589,8 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      *
      * @return all of the stories within the project (unassigned and assigned)
      */
-    public Set<Story> getAllStories() {
-        Set<Story> stories = new HashSet<>();
+    public ArrayList<Story> getAllStories() {
+        ArrayList<Story> stories = new ArrayList<>();
         stories.addAll(unallocatedStories);
         for (Backlog backlog : backlogs) {
             stories.addAll(backlog.getStories());

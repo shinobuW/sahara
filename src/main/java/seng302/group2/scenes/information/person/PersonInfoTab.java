@@ -1,5 +1,6 @@
 package seng302.group2.scenes.information.person;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -11,6 +12,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.person.Person;
@@ -68,10 +70,12 @@ public class PersonInfoTab extends SearchableTab {
             filterComboBox.addToComboBox(state);
         }
 
-        Set<Story> storyList = new HashSet<>();
-        if (currentPerson.getTeam() != null) {
-            storyList.addAll(currentPerson.getTeam().getCurrentAllocation().getProject().getAllStories());
+
+        ArrayList<Story> storyList = new ArrayList<>();
+        if (currentPerson.getTeam() != Global.getUnassignedTeam()) {
+            storyList.addAll(currentPerson.getTeam().getProject().getAllStories());
         }
+
         ArrayList<Task> taskList = new ArrayList<Task>();
         ObservableList<Task> filteredList = observableArrayList();
         for (Story story : storyList) {

@@ -45,7 +45,7 @@ public class TeamEditTab extends SearchableTab {
     private Set<Person> allocatedDevelopers = new HashSet<>();
     private ObservableList<Role> roleList = observableArrayList();
     private CustomComboBox<Role> roleComboBox;
-    private Role noneRole = new Role("(none)", Role.RoleType.NONE);
+    private Role noneRole = new Role("", Role.RoleType.NONE);
     String poPlaceholder = "No Product Owner Assigned";
     String smPlaceholder = "No Scrum Master Assigned";
 
@@ -118,8 +118,11 @@ public class TeamEditTab extends SearchableTab {
         Button btnRoleAssign = new Button("Assign");
         btnRoleAssign.setDisable(true);
         roleList = observableArrayList();
+        roleComboBox = new CustomComboBox<>(roleList, "Role:");
 
-        roleComboBox = new CustomComboBox<>("Role:");
+        HBox roleAssignmentBox = new HBox(10);
+
+        roleAssignmentBox.getChildren().addAll(roleComboBox, btnRoleAssign);
         for (Role role : Global.currentWorkspace.getRoles()) {
             roleComboBox.addToComboBox(role);
         }
@@ -299,7 +302,7 @@ public class TeamEditTab extends SearchableTab {
                 shortNameField,
                 descriptionField,
                 memberListViews,
-                roleComboBox,
+                roleAssignmentBox,
                 poText,
                 smText,
                 sceneButtons

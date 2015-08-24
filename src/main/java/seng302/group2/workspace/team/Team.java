@@ -39,7 +39,6 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
     private transient ObservableList<Allocation> projectAllocations = observableArrayList();
     private List<Allocation> serializableProjectAllocations = new ArrayList<>();
     private boolean unassigned = false;
-    private Project project;
 
 
     /**
@@ -49,7 +48,6 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         super("Untitled Team");
         this.shortName = "Untitled Team";
         this.description = "";
-        this.project = null;
 
         setInformationSwitchStrategy(new TeamInformationSwitchStrategy());
     }
@@ -81,7 +79,6 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         super(shortName);
         this.shortName = shortName;
         this.description = description;
-        this.project = null;
 
         setInformationSwitchStrategy(new TeamInformationSwitchStrategy());
     }
@@ -140,19 +137,10 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
     /**
      * Gets the project the Team is assigned to
      *
-     * @return The description of the team
+     * @return The teams project.
      */
     public Project getProject() {
-        return this.project;
-    }
-
-    /**
-     * Sets the team's project
-     *
-     * @param project the project the team has been added to
-     */
-    public void setProject(Project project) {
-        this.project = project;
+        return this.getCurrentAllocation().getProject();
     }
 
     /**
@@ -256,9 +244,8 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
     //</editor-fold>
 
     /**
-     * Gets the project the Team is assigned to
-     *
-     * @return The description of the team
+     * gets the current allocation of the team. Returns a type of Allocation (NOT project).
+     * @return the teams current allocation
      */
     public Allocation getCurrentAllocation() {
         Allocation currentAllocation = null;
