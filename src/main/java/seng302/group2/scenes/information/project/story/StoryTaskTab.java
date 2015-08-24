@@ -14,16 +14,17 @@ import javafx.scene.text.Text;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
-import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.scenes.information.project.story.task.TaskScene;
+import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
+import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
 
@@ -42,6 +43,7 @@ public class StoryTaskTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
     static Boolean correctShortName = Boolean.FALSE;
+    static Boolean correctEffortLeft = Boolean.FALSE;
 
     /**
      * Constructor for the Story Task Tab
@@ -51,6 +53,9 @@ public class StoryTaskTab extends SearchableTab {
     public StoryTaskTab(Story currentStory) {
 
         this.setText("Tasks");
+        correctShortName = false;
+        correctEffortLeft = false;
+
         Pane basicInfoPane = new VBox(10);
 
         basicInfoPane.setBorder(null);
@@ -80,8 +85,6 @@ public class StoryTaskTab extends SearchableTab {
         ACLabels.getChildren().add(new Text(""));
         SearchableTitle tasksTitle = new SearchableTitle("Tasks Table: ");
         ACLabels.getChildren().add(tasksTitle);
-
-
 
         ObservableList<Task> data = currentStory.getTasks();
 
@@ -147,15 +150,14 @@ public class StoryTaskTab extends SearchableTab {
         CustomTextArea descriptionField = new CustomTextArea("Task Description: ");
         
         ObservableList<Person> personList = observableArrayList();
+        Person blankPerson = new Person("", "", "", null, null, null);
+        personList.add(blankPerson);
         for (Team team : currentStory.getProject().getAllTeams()) {
             personList.addAll(team.getPeople());
         }
-        
         Collections.sort(personList);
-        
         assigneeField.getComboBox().setItems(personList);
-        
-        
+
         Button btnAdd = new Button("Add");
         btnAdd.setDisable(true);
         addTaskBox.getChildren().addAll(task, shortNameCustomField, effortLeftField, assigneeField,
@@ -164,25 +166,43 @@ public class StoryTaskTab extends SearchableTab {
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctShortName = validateShortName(shortNameCustomField, null);
-                btnAdd.setDisable(!(correctShortName));
+                btnAdd.setDisable(!(correctShortName && correctEffortLeft));
+            });
 
+        effortLeftField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctEffortLeft = DateValidator.validDuration(newValue) && !newValue.isEmpty();
+                if (correctEffortLeft) {
+                    effortLeftField.hideErrorField();
+                }
+                else {
+                    if (newValue.isEmpty()) {
+                        effortLeftField.showErrorField("* This field must be filled");
+                    }
+                    else {
+                        effortLeftField.showErrorField("* Please input valid format");
+                    }
+                }
+                btnAdd.setDisable(!(correctShortName && correctEffortLeft));
             });
 
         btnAdd.setOnAction((event) -> {
-                if (correctShortName) {
-                    //get user input
-                    String shortName = shortNameCustomField.getText();
-                    Task newTask = new Task(shortName, descriptionField.getText(), currentStory, null);
-                    newTask.setAssignee(assigneeField.getValue());
-                    if (effortLeftField.getText().isEmpty()) {
-                        newTask.setEffortLeft((float) 0);
-                    }
-                    else {
-                        newTask.setEffortLeft(Float.parseFloat(effortLeftField.getText()));
-                    }
-                    currentStory.add(newTask);
-                    App.refreshMainScene();
+                //get user input
+                String shortName = shortNameCustomField.getText();
+                Task newTask = new Task(shortName, descriptionField.getText(), currentStory, null);
+                Person assignee = null;
+                if (!assigneeField.getValue().equals(blankPerson)) {
+                    assignee = assigneeField.getValue();
                 }
+
+                newTask.setAssignee(assignee);
+                if (effortLeftField.getText().isEmpty()) {
+                    newTask.setEffortLeft((double) 0);
+                }
+                else {
+                    newTask.setEffortLeft(Log.readDurationToMinutes(effortLeftField.getText()));
+                }
+                currentStory.add(newTask);
+                App.refreshMainScene();
             });
 
         basicInfoPane.getChildren().addAll(
