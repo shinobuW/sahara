@@ -32,6 +32,7 @@ import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -133,6 +134,31 @@ public class TaskLoggingTab extends SearchableTab {
         final CustomComboBox<Person> personComboBox = new CustomComboBox<Person>("Logger:");
 
         CustomDatePicker startDatePicker = new CustomDatePicker("Start Date:", true);
+
+        final Callback<DatePicker, DateCell> endDateCellFactory =
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (item.isBefore(currentTask.getStory().getSprint().getStartDate())) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #ffc0cb;");
+                                }
+                                else {
+                                    long p = ChronoUnit.DAYS.between(LocalDate.now(), item);
+                                    setTooltip(new Tooltip(
+                                                    "Sprint duration: " + p + " days.")
+                                    );
+                                }
+
+                            }
+                        };
+                    }
+                };
+        startDatePicker.getDatePicker().setDayCellFactory(endDateCellFactory);
 
         HBox startTimeHBox = new HBox(10);
         Label startTimeLabel = new Label("Start Time:");
