@@ -228,7 +228,7 @@ public class StoryTest {
     }
 
     /**
-     * Tests the highlightColour and getColour methods
+     * Tests the highlightColourString and getColour methods
      */
     @Test
     public void testColourMethods() {

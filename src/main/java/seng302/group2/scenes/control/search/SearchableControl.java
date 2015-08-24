@@ -8,7 +8,9 @@ import seng302.group2.util.conversion.ColorUtils;
  * Created by jml168 on 31/07/15.
  */
 public interface SearchableControl {
-    public static String highlightColour = ColorUtils.toRGBCode(Color.rgb(255, 255, 0, 0.5));
+    public static String highlightColourString = ColorUtils.toRGBCode(Color.rgb(255, 255, 0, 0.5));
+
+    public static Color highlightColour = Color.rgb(255, 255, 0, 0.5);
 
     /**
      * Abstract Method.

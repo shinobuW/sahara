@@ -1,6 +1,7 @@
 package seng302.group2.scenes.control.search;
 
 import javafx.scene.control.TextField;
+import seng302.group2.scenes.validation.ValidationStyle;
 
 /**
  * This class provides functionality to create searchable text fields.
@@ -30,11 +31,11 @@ public class SearchableTextField extends TextField implements SearchableControl 
     @Override
     public boolean query(String query) {
         if (this.getText().contains(query)) {
-            setStyle("-fx-border-color: dodgerblue");
+            ValidationStyle.borderGlowSearch(this);
             return true;
         }
         else {
-            setStyle(null);
+            ValidationStyle.borderGlowNone(this);
             return false;
         }
     }

@@ -63,6 +63,6 @@ public class SearchableTitleTest extends TestCase {
         Assert.assertEquals("", ((Text) sTitle.texts.get(2).getChildren().get(0)).getText());
 
         Assert.assertTrue(sTitle.texts.get(1).getStyle().contains(
-                "-fx-background-color:" + SearchableControl.highlightColour));
+                "-fx-background-color:" + SearchableControl.highlightColourString));
     }
 }

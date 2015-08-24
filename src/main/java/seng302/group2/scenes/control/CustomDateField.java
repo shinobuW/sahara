@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.validation.ValidationStyle;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -105,7 +106,8 @@ public class CustomDateField extends VBox implements SearchableControl {
      * Shows the error field.
      */
     public void showErrorField() {
-        inputText.setStyle("-fx-border-color: red;");
+        errorMessageText.setStyle("-fx-border-color: red;");
+        ValidationStyle.borderGlowRed(inputText);
         this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
         this.getChildren().add(errorMessageText);
     }
@@ -117,7 +119,6 @@ public class CustomDateField extends VBox implements SearchableControl {
      * @param errorMessage The error message to show
      */
     public void showErrorField(String errorMessage) {
-        inputText.setStyle("-fx-border-color: red;");
         this.errorMessageText.setText(errorMessage);
         showErrorField();
     }
@@ -133,7 +134,7 @@ public class CustomDateField extends VBox implements SearchableControl {
      * Hides the error field.
      */
     public void hideErrorField() {
-        inputText.setStyle(null);
+        ValidationStyle.borderGlowRed(inputText);
         this.getChildren().remove(errorMessageText);
     }
 

@@ -79,7 +79,7 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
                     }
                     else if (queryCell(query, item.toString())) {
                         setText(item.toString());
-                        setStyle("-fx-background-color:" + SearchableControl.highlightColour + ";");
+                        setStyle("-fx-background-color:" + SearchableControl.highlightColourString + ";");
                     }
                     else {
                         setText(item.toString());
