@@ -28,7 +28,7 @@ import java.time.LocalDate;
  */
 public class SerialBuilder {
     public static Gson getBuilder() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
+        GsonBuilder gsonBuilder = new GsonBuilder().setPrettyPrinting();
         new GraphAdapterBuilder()
                 // Model classes
                 .addType(SaharaItem.class)
