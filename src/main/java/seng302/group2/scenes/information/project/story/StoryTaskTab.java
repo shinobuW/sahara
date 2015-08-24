@@ -72,7 +72,7 @@ public class StoryTaskTab extends SearchableTab {
 
         TableView<Task> taskTable = new TableView<>();
         taskTable.setEditable(true);
-        taskTable.setPrefWidth(500);
+        taskTable.setPrefWidth(700);
         taskTable.setPrefHeight(200);
         taskTable.setPlaceholder(new SearchableText("There are currently no tasks in this story.", searchControls));
         taskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -102,8 +102,50 @@ public class StoryTaskTab extends SearchableTab {
 
         TableColumn stateCol = new TableColumn("State");
         stateCol.setCellValueFactory(new PropertyValueFactory<Task, String>("state"));
+        stateCol.setEditable(true);
         stateCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
+
+        ObservableList<Task.TASKSTATE> states = observableArrayList();
+        states.addAll(Task.TASKSTATE.values());
+        Callback<TableColumn, TableCell> stateCellFactory = col -> new ComboBoxEditingCell(states);
+        stateCol.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Task, String>,
+                        ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<Task,
+                            String> task) {
+                        SimpleStringProperty property = new SimpleStringProperty();
+                        property.setValue(task.getValue().getState().toString());
+                        return property;
+                    }
+                });
+
+        stateCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Task, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Task, String> event) {
+                        if (!event.getNewValue().isEmpty()) {
+                            Task currentTask = event.getTableView().getItems()
+                                    .get(event.getTablePosition().getRow());
+                            Task.TASKSTATE newState = null;
+
+                            for (Object state : states) {
+                                if (state.toString() == event.getNewValue()) {
+                                    newState = (Task.TASKSTATE) state;
+                                }
+                            }
+                            if (newState.toString() != event.getOldValue()) {
+                                currentTask.edit(currentTask.getShortName(), currentTask.getDescription(),
+                                    currentTask.getDescription(), newState, currentTask.getAssignee(),
+                                    currentTask.getLogs(), currentTask.getEffortLeft(),
+                                    currentTask.getEffortSpent());
+                            }
+                        }
+                    }
+                });
+
+        stateCol.setCellFactory(stateCellFactory);
 
         TableColumn assigneesCol = new TableColumn("Assignee");
         assigneesCol.setCellValueFactory(new PropertyValueFactory<Task,
@@ -117,7 +159,7 @@ public class StoryTaskTab extends SearchableTab {
         }
         assigneesCol.setEditable(true);
 
-        Callback<TableColumn, TableCell> cellFactory = col -> new ComboBoxEditingCell(availablePeople);
+        Callback<TableColumn, TableCell> assigneeCellFactory = col -> new ComboBoxEditingCell(availablePeople);
         assigneesCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Task, String>,
                         ObservableValue<String>>() {
@@ -145,12 +187,14 @@ public class StoryTaskTab extends SearchableTab {
                                     newPerson = (Person)person;
                                 }
                             }
-                            currentTask.editAssignee(newPerson);
+                            if (newPerson.toString() != event.getOldValue()) {
+                                currentTask.editAssignee(newPerson);
+                            }
                         }
                     }
                 });
 
-        assigneesCol.setCellFactory(cellFactory);
+        assigneesCol.setCellFactory(assigneeCellFactory);
 
 
         TableColumn leftCol = new TableColumn("Effort Left");
@@ -285,8 +329,8 @@ public class StoryTaskTab extends SearchableTab {
      * *A subclass of TableCell to bind combo box to the cell
      * to allow for editing
      */
-    class ComboBoxEditingCell extends TableCell<SaharaItem, String> {
-        private ComboBox<SaharaItem> comboBox;
+    class ComboBoxEditingCell extends TableCell<Object, String> {
+        private ComboBox<Object> comboBox;
         private ObservableList items;
 
         /**
@@ -308,7 +352,7 @@ public class StoryTaskTab extends SearchableTab {
                 setGraphic(comboBox);
 
                 if (!getText().isEmpty()) {
-                    comboBox.setValue((SaharaItem)getType());
+                    comboBox.setValue(getType());
                 }
                 else {
                     comboBox.setValue(null);
@@ -345,7 +389,7 @@ public class StoryTaskTab extends SearchableTab {
             else {
                 if (isEditing()) {
                     if (comboBox != null) {
-                        comboBox.setValue((SaharaItem)getType());
+                        comboBox.setValue(getType());
                     }
                     setText(getItem());
                     setGraphic(comboBox);
@@ -375,7 +419,7 @@ public class StoryTaskTab extends SearchableTab {
          * Creates the combo box and populates it with the itemList. Updates the value in the cell.
          */
         private void createCombo() {
-            comboBox = new ComboBox<SaharaItem>(this.items);
+            comboBox = new ComboBox<Object>(this.items);
             comboBox.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
             comboBox.focusedProperty().addListener(new ChangeListener<Boolean>() {
                 @Override
@@ -395,8 +439,6 @@ public class StoryTaskTab extends SearchableTab {
                 }
             });
         }
-
-
     }
 
 
