@@ -87,10 +87,23 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
             if (task.getState() == Task.TASKSTATE.BLOCKED || task.getState() == Task.TASKSTATE.DEFERRED) {
                 ImageView warningImage = new ImageView("icons/dialog-cancel.png");
                 if (task.getState() == Task.TASKSTATE.BLOCKED) {
-                    Tooltip.create("This task is currently blocked", warningImage, 50);
+                    if (!task.getImpediments().equals("")) {
+                        Tooltip.create("This task is currently blocked, with the following impediments: \n"
+                                + task.getImpediments(), warningImage, 50);
+                    }
+                    else {
+                        Tooltip.create("This task is currently blocked", warningImage, 50);
+                    }
                 }
                 else {
-                    Tooltip.create("This task has been deferred", warningImage, 50);
+                    if (!task.getImpediments().equals("")) {
+                        System.out.println(task.getImpediments());
+                        Tooltip.create("This task has been deferred, and has the following impediments: \n"
+                                + task.getImpediments(), warningImage, 50);
+                    }
+                    else {
+                        Tooltip.create("This task has been deferred", warningImage, 50);
+                    }
                 }
                 rightContent.getChildren().addAll(warningImage);
             }

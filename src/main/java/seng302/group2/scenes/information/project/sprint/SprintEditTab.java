@@ -237,37 +237,47 @@ public class SprintEditTab extends SearchableTab {
             @Override
             public void changed(ObservableValue<? extends Release> observable,
                                 Release oldValue, Release newValue) {
-                sprintEndDatePicker.setDisable(true);
-                sprintStartDatePicker.setDisable(true);
-                teamComboBox.setValue(null);
-                teamComboBox.setDisable(true);
+                try {
+                    sprintEndDatePicker.setDisable(true);
+                    sprintStartDatePicker.setDisable(true);
+                    teamComboBox.setDisable(true);
 
-                if (newValue != null) {
-                    if (newValue.getEstimatedDate().isBefore(sprintStartDatePicker.getValue())) {
-                        sprintStartDatePicker.getDatePicker().setStyle("-fx-border-color: red;"
-                                + "-fx-pref-width: 135;");
-                        sprintStartDatePicker.setTooltip(new Tooltip("The start date of"
-                                + " the Sprint must be before the estimated release date of the Release!"));
-                        sprintStartDatePicker.setDisable(false);
+                    if (newValue != null) {
+                        if (newValue.getEstimatedDate().isBefore(sprintStartDatePicker.getValue())) {
+                            sprintStartDatePicker.getDatePicker().setStyle("-fx-border-color: red;"
+                                    + "-fx-pref-width: 135;");
+                            sprintStartDatePicker.setTooltip(new Tooltip("The start date of"
+                                    + " the Sprint must be before the estimated release date of the Release: "
+                                    + newValue.getEstimatedDate().toString()));
+                            sprintStartDatePicker.setDisable(false);
+                            teamComboBox.setDisable(true);
+                        }
+                        else {
+                            sprintStartDatePicker.setDefaultStyle();
+                            sprintStartDatePicker.removeTooltip();
+                            sprintStartDatePicker.setDisable(false);
+                            teamComboBox.setDisable(false);
+                        }
+                        if (newValue.getEstimatedDate().isBefore(sprintEndDatePicker.getValue())) {
+                            sprintEndDatePicker.getDatePicker().setStyle("-fx-border-color: red;"
+                                    + "-fx-pref-width: 135;");
+                            sprintEndDatePicker.setTooltip(new Tooltip("The end date of"
+                                    + " the Sprint must be before the estimated release date of the Release: "
+                                    + newValue.getEstimatedDate().toString()));
+                            sprintEndDatePicker.setDisable(false);
+                            teamComboBox.setDisable(true);
+                        }
+                        else {
+                            sprintEndDatePicker.setDefaultStyle();
+                            sprintEndDatePicker.removeTooltip();
+                            sprintEndDatePicker.setDisable(false);
+                            teamComboBox.setDisable(false);
+                        }
+                        toggleDone();
                     }
-                    else {
-                        sprintStartDatePicker.setDefaultStyle();
-                        sprintStartDatePicker.removeTooltip();
-                        sprintStartDatePicker.setDisable(false);
-                    }
-                    if (newValue.getEstimatedDate().isBefore(sprintEndDatePicker.getValue())) {
-                        sprintEndDatePicker.getDatePicker().setStyle("-fx-border-color: red;"
-                                + "-fx-pref-width: 135;");
-                        sprintEndDatePicker.setTooltip(new Tooltip("The end date of"
-                                + " the Sprint must be before the estimated release date of the Release!"));
-                        sprintEndDatePicker.setDisable(true);
-                    }
-                    else {
-                        sprintEndDatePicker.setDefaultStyle();
-                        sprintEndDatePicker.removeTooltip();
-                        sprintEndDatePicker.setDisable(false);
-                    }
-                    toggleDone();
+                }
+                catch (NullPointerException e) {
+
                 }
             }
         });
@@ -276,39 +286,75 @@ public class SprintEditTab extends SearchableTab {
             @Override
             public void changed(ObservableValue<? extends LocalDate> observable,
                                 LocalDate oldValue, LocalDate newValue) {
-                sprintStartDatePicker.setDefaultStyle();
-                sprintStartDatePicker.removeTooltip();
-                if ((sprintEndDatePicker.getValue() != null) && (newValue != null)
-                        && newValue.isAfter(sprintEndDatePicker.getValue())) {
-                    sprintEndDatePicker.setDisable(false);
-                    sprintEndDatePicker.getDatePicker().setStyle("-fx-border-color: red;"
-                            + "-fx-pref-width: 135;");
-                    sprintEndDatePicker.setTooltip(new Tooltip("The end date of the sprint must"
-                            + " be after the start date!"));
-                    //sprintEndDatePicker.setValue(null);
-                    teamComboBox.setValue(null);
-                    teamComboBox.setDisable(true);
-                }
-                else if (newValue != null) {
-                    sprintEndDatePicker.setDefaultStyle();
-                    sprintEndDatePicker.removeTooltip();
-                    sprintEndDatePicker.setDisable(false);
-                    teamComboBox.clear();
-                    outer: for (Team team : currentSprint.getProject().getAllTeams()) {
-                        for (Allocation alloc : team.getProjectAllocations()) {
 
-                            if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
-                                    && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
-                                teamComboBox.addToComboBox(team);
-                                continue outer;
+                try {
+                    Team prevTeam = teamComboBox.getValue();
 
+                    sprintStartDatePicker.setDefaultStyle();
+                    sprintStartDatePicker.removeTooltip();
+                    if ((sprintEndDatePicker.getValue() != null) && (newValue != null)
+                            && newValue.isAfter(sprintEndDatePicker.getValue())) {
+                        sprintEndDatePicker.setDisable(false);
+                        sprintEndDatePicker.getDatePicker().setStyle("-fx-border-color: red;"
+                                + "-fx-pref-width: 135;");
+                        sprintEndDatePicker.setTooltip(new Tooltip("The end date of the sprint must"
+                                + " be after the start date!"));
+                        //sprintEndDatePicker.setValue(null);
+                        teamComboBox.setValue(null);
+                        teamComboBox.setDisable(true);
+                    }
+                    else if (newValue != null) {
+
+                        if (releaseComboBox.getValue().getEstimatedDate().isBefore(sprintEndDatePicker.getValue())) {
+                            sprintEndDatePicker.getDatePicker().setStyle("-fx-border-color: red;"
+                                    + "-fx-pref-width: 135;");
+                            sprintEndDatePicker.setTooltip(new Tooltip("The end date of"
+                                    + " the Sprint must be before the estimated release date of the Release: "
+                                    + releaseComboBox.getValue().getEstimatedDate().toString()));
+                            sprintEndDatePicker.setDisable(false);
+                            teamComboBox.setDisable(true);
+                        }
+                        else {
+                            sprintEndDatePicker.setDefaultStyle();
+                            sprintEndDatePicker.removeTooltip();
+                            sprintEndDatePicker.setDisable(false);
+                            teamComboBox.clear();
+                            outer:
+                            for (Team team : currentSprint.getProject().getAllTeams()) {
+                                for (Allocation alloc : team.getProjectAllocations()) {
+
+                                    if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
+                                            && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
+                                        teamComboBox.addToComboBox(team);
+                                        continue outer;
+
+                                    }
+                                }
                             }
+                            teamComboBox.setDisable(false);
+                            teamComboBox.setValue(null);
                         }
                     }
-                    teamComboBox.setDisable(false);
-                    teamComboBox.setValue(null);
+                    if (teamComboBox.getComboBox().getItems().contains(prevTeam)) {
+                        teamComboBox.getComboBox().setStyle("-fx-pref-width: 135;");
+                        teamComboBox.removeTooltip();
+                        teamComboBox.setValue(prevTeam);
+                    }
+                    else if (teamComboBox.getComboBox().getItems().size() == 0) {
+                        teamComboBox.getComboBox().setStyle("-fx-border-color: red;"
+                                + "-fx-pref-width: 135;");
+                        teamComboBox.setTooltip(new Tooltip("There are no Teams allocated to this project at the"
+                                + " start date specified"));
+                    }
+                    else {
+                        teamComboBox.getComboBox().setStyle("-fx-pref-width: 135;");
+                        teamComboBox.removeTooltip();
+                    }
+                    toggleDone();
                 }
-                toggleDone();
+                catch (NullPointerException e) {
+
+                }
             }
         });
 
@@ -318,26 +364,50 @@ public class SprintEditTab extends SearchableTab {
             public void changed(ObservableValue<? extends LocalDate> observable,
                     LocalDate oldValue, LocalDate newValue) {
 
-                sprintEndDatePicker.setDefaultStyle();
-                sprintEndDatePicker.getDatePicker().setTooltip(null);
-                if (newValue != null) {
-                    sprintEndDatePicker.setStyle(null);
+                try {
+                    Team prevTeam = teamComboBox.getValue();
+
+                    sprintEndDatePicker.setDefaultStyle();
                     sprintEndDatePicker.getDatePicker().setTooltip(null);
-                    teamComboBox.clear();
-                    outer: for (Team team : currentSprint.getProject().getAllTeams()) {
-                        for (Allocation alloc : team.getProjectAllocations()) {
+                    if (newValue != null) {
+                        sprintEndDatePicker.setStyle(null);
+                        sprintEndDatePicker.getDatePicker().setTooltip(null);
+                        teamComboBox.clear();
+                        outer:
+                        for (Team team : currentSprint.getProject().getAllTeams()) {
+                            for (Allocation alloc : team.getProjectAllocations()) {
 
-                            if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
-                                    && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
-                                teamComboBox.addToComboBox(team);
-                                continue outer;
+                                if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
+                                        && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
+                                    teamComboBox.addToComboBox(team);
+                                    continue outer;
 
+                                }
                             }
                         }
+                        teamComboBox.setDisable(false);
+                        teamComboBox.setValue(null);
+
+                        if (teamComboBox.getComboBox().getItems().contains(prevTeam)) {
+                            teamComboBox.getComboBox().setStyle("-fx-pref-width: 135;");
+                            teamComboBox.removeTooltip();
+                            teamComboBox.setValue(prevTeam);
+                        }
+                        else if (teamComboBox.getComboBox().getItems().size() == 0) {
+                            teamComboBox.getComboBox().setStyle("-fx-border-color: red;"
+                                    + "-fx-pref-width: 135;");
+                            teamComboBox.setTooltip(new Tooltip("There are no Teams allocated to this project at the"
+                                    + " start date specified"));
+                        }
+                        else {
+                            teamComboBox.getComboBox().setStyle("-fx-pref-width: 135;");
+                            teamComboBox.removeTooltip();
+                        }
+                        toggleDone();
                     }
-                    teamComboBox.setDisable(false);
-                    teamComboBox.setValue(null);
-                    toggleDone();
+                }
+                catch (NullPointerException e) {
+
                 }
             }
         });
