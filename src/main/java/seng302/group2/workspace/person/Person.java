@@ -125,6 +125,15 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         return this.shortName;
     }
 
+
+    /**
+     * Gets the person's full name
+     * @return The person's first name and last name stringed together
+     */
+    public String getFullName() {
+        return this.firstName + " " + this.lastName;
+    }
+
     /**
      * Sets the person's short name
      *
