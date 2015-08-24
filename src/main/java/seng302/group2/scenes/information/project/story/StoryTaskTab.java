@@ -1,16 +1,21 @@
 package seng302.group2.scenes.information.project.story;
 
+import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxListCell;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
@@ -21,6 +26,7 @@ import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.scenes.information.project.story.task.TaskScene;
 import seng302.group2.util.validation.DateValidator;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
@@ -34,6 +40,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import static javafx.collections.FXCollections.observableList;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -64,7 +71,7 @@ public class StoryTaskTab extends SearchableTab {
         this.setContent(wrapper);
 
         TableView<Task> taskTable = new TableView<>();
-        taskTable.setEditable(false);
+        taskTable.setEditable(true);
         taskTable.setPrefWidth(500);
         taskTable.setPrefHeight(200);
         taskTable.setPlaceholder(new SearchableText("There are currently no tasks in this story.", searchControls));
@@ -103,6 +110,48 @@ public class StoryTaskTab extends SearchableTab {
                 Person>("assignee"));
         assigneesCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
+
+        ObservableList availablePeople = observableArrayList();
+        for (Team team : currentStory.getProject().getCurrentTeams()) {
+            availablePeople.addAll(team.getPeople());
+        }
+        assigneesCol.setEditable(true);
+
+        Callback<TableColumn, TableCell> cellFactory = col -> new ComboBoxEditingCell(availablePeople);
+        assigneesCol.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Task, String>,
+                        ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<Task,
+                            String> task) {
+                        SimpleStringProperty property = new SimpleStringProperty();
+                        property.setValue(task.getValue().getAssignee().toString());
+                        return property;
+                    }
+                });
+
+        assigneesCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Task, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Task, String> event) {
+
+                        if (!event.getNewValue().isEmpty()) {
+                            Task currentTask = event.getTableView().getItems()
+                                    .get(event.getTablePosition().getRow());
+                            Person newPerson = null;
+
+                            for (Object person: availablePeople) {
+                                if (person.toString() == event.getNewValue()) {
+                                    newPerson = (Person)person;
+                                }
+                            }
+                            currentTask.editAssignee(newPerson);
+                        }
+                    }
+                });
+
+        assigneesCol.setCellFactory(cellFactory);
+
 
         TableColumn leftCol = new TableColumn("Effort Left");
         leftCol.setCellValueFactory(new PropertyValueFactory<Task, String>("effortLeftString"));
@@ -148,7 +197,7 @@ public class StoryTaskTab extends SearchableTab {
         RequiredField effortLeftField = new RequiredField("Effort left: ");
         CustomComboBox<Person> assigneeField = new CustomComboBox<Person>("Assignee: ");
         CustomTextArea descriptionField = new CustomTextArea("Task Description: ");
-        
+
         ObservableList<Person> personList = observableArrayList();
         Person blankPerson = new Person("", "", "", null, null, null);
         personList.add(blankPerson);
@@ -231,5 +280,110 @@ public class StoryTaskTab extends SearchableTab {
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;
     }
+
+    class ComboBoxEditingCell extends TableCell<SaharaItem, String> {
+
+        private ComboBox<SaharaItem> comboBox;
+        private ObservableList items;
+
+        private ComboBoxEditingCell(ObservableList itemList) {
+            this.items = itemList;
+        }
+
+        @Override
+        public void startEdit() {
+            if (!isEmpty()) {
+                super.startEdit();
+                createCombo();
+                setGraphic(comboBox);
+
+                if (!getText().isEmpty()) {
+                    comboBox.setValue((SaharaItem)getType());
+                }
+                else {
+                    comboBox.setValue(null);
+                }
+                Platform.runLater(() -> {
+                        comboBox.requestFocus();
+                    });
+
+            }
+        }
+
+//        @Override
+//        public void startEdit() {
+//            if (!isEmpty()) {
+//                super.startEdit();
+//
+//                setText(null);
+//                setGraphic(comboBox);
+//            }
+//        }
+
+        @Override
+        public void cancelEdit() {
+            super.cancelEdit();
+            setGraphic(null);
+        }
+
+        @Override
+        public void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (empty) {
+                setText(null);
+                setGraphic(null);
+            }
+            else {
+                if (isEditing()) {
+                    if (comboBox != null) {
+                        comboBox.setValue((SaharaItem)getType());
+                    }
+                    setText(getItem());
+                    setGraphic(comboBox);
+                }
+                else {
+                    setText(getItem());
+                    setGraphic(null);
+                }
+            }
+        }
+
+        private Object getType() {
+            Object selected = null;
+            for (Object saharaItem : items) {
+                if (saharaItem.toString() == getItem()) {
+                    selected = saharaItem;
+                }
+            }
+            return selected;
+        }
+
+        private void createCombo() {
+            comboBox = new ComboBox<SaharaItem>(this.items);
+            comboBox.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+            comboBox.focusedProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> arg0,
+                                    Boolean arg1, Boolean arg2) {
+                    if (!arg2) {
+                        if (comboBox.getValue() != null) {
+                            commitEdit(comboBox.getValue().toString());
+                        }
+                        else {
+                            commitEdit("");
+                        }
+                    }
+                    else {
+                        updateItem(getItem(), false);
+                    }
+                }
+            });
+        }
+
+
+    }
+
+
 
 }
