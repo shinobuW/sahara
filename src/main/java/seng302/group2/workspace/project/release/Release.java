@@ -399,7 +399,6 @@ public class Release extends SaharaItem implements Comparable<Release> {
          * Executes the release deletion command.
          */
         public void execute() {
-            System.out.println("Exec Release Delete");
             proj.getReleases().remove(release);
             //release.setProject(null);
         }
@@ -408,7 +407,6 @@ public class Release extends SaharaItem implements Comparable<Release> {
          * Undoes the release deletion command.
          */
         public void undo() {
-            System.out.println("Undone Release Delete");
             proj.getReleases().add(release);
             //release.setProject(proj);
         }

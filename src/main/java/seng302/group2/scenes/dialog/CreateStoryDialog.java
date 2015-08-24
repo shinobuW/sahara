@@ -40,7 +40,7 @@ public class CreateStoryDialog extends Dialog<Map<String, String>> {
 
     /**
      * Constructor for the CreatestoryDialog class. Creates and displays a JavaFX
-     * dialog used to create new sprints.
+     * dialog used to create new sprints. A default project is selected in the project combo box.
      */
     public CreateStoryDialog() {
         correctCreator = false;
