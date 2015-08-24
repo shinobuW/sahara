@@ -17,15 +17,11 @@ public class LimitedTextField extends TextField {
      */
     public LimitedTextField(final int maxCharacters) {
         final TextField thisField = this;
-        this.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
+        this.textProperty().addListener((observable, oldValue, newValue) -> {
                 // Force correct length by deleting the last entered character if too long
                 if (newValue.length() > maxCharacters) {
                     thisField.deleteNextChar();
                 }
-            }
-        });
+            });
     }
 }

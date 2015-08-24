@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.validation.ValidationStyle;
 
 import java.util.Collection;
 
@@ -207,7 +208,8 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
      * Displays error Field
      */
     public void showErrorField() {
-        comboBox.setStyle("-fx-border-color: red;");
+        //comboBox.setStyle("-fx-border-color: red;");
+        ValidationStyle.borderGlowRed(comboBox);
         this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
         this.getChildren().add(errorMessageText);
     }
@@ -320,7 +322,8 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
     @Override
     public boolean query(String query) {
         if (query.trim().isEmpty()) {
-            comboBox.setStyle("-fx-border-color: inherit");
+            ValidationStyle.borderGlowNone(comboBox);
+            //comboBox.setStyle("-fx-border-color: inherit");
         }
         boolean foundCombo = false;
         for (T item : comboBox.getItems()) {
@@ -329,10 +332,12 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
             }
         }
         if (foundCombo) {
-            comboBox.setStyle("-fx-border-color: " + SearchableControl.highlightColour + ";");
+            ValidationStyle.borderGlowSearch(comboBox);
+            //comboBox.setStyle("-fx-border-color: " + SearchableControl.highlightColourString + ";");
         }
         else {
-            comboBox.setStyle("-fx-border-color: inherit");
+            ValidationStyle.borderGlowNone(comboBox);
+            //comboBox.setStyle("-fx-border-color: inherit");
         }
 
         boolean foundText = titleLabel.query(query);

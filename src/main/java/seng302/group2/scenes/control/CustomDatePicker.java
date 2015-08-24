@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.validation.ValidationStyle;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -124,7 +125,7 @@ public class CustomDatePicker extends VBox implements SearchableControl {
      * Displays error Field
      */
     public void showErrorField() {
-        datePicker.setStyle("-fx-border-color: red;");
+        ValidationStyle.borderGlowRed(datePicker);
         this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
         this.getChildren().add(errorMessageText);
     }
@@ -145,7 +146,7 @@ public class CustomDatePicker extends VBox implements SearchableControl {
      */
     public void hideErrorField() {
         this.getChildren().remove(errorMessageText);
-        this.datePicker.setStyle(null);
+        ValidationStyle.borderGlowNone(datePicker);
     }
 
     /**

@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.validation.ValidationStyle;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -278,7 +279,7 @@ public class CustomTextArea extends VBox implements SearchableControl {
         boolean found = false;
         
         if (query.isEmpty()) {
-            inputText.setStyle("-fx-border-color: inherit");
+            ValidationStyle.borderGlowNone(inputText);
         }
 
         for (SearchableControl control : searchControls) {
@@ -287,10 +288,10 @@ public class CustomTextArea extends VBox implements SearchableControl {
 
         if (inputText.getText().contains(query) && !query.trim().isEmpty()) {
             found = true;
-            inputText.setStyle("-fx-border-color: " + SearchableControl.highlightColour);
+            ValidationStyle.borderGlowSearch(inputText);
         }
         else {
-            inputText.setStyle("-fx-border-color: inherit");
+            ValidationStyle.borderGlowNone(this);
         }
 
         return found;

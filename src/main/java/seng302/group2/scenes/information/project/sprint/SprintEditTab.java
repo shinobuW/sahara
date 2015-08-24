@@ -244,8 +244,9 @@ public class SprintEditTab extends SearchableTab {
 
                 if (newValue != null) {
                     if (newValue.getEstimatedDate().isBefore(sprintStartDatePicker.getValue())) {
-                        sprintStartDatePicker.getDatePicker().setStyle("-fx-border-color: red;"
-                                + "-fx-pref-width: 135;");
+                        sprintStartDatePicker.showErrorField();
+                        /*sprintStartDatePicker.getDatePicker().setStyle("-fx-border-color: red;"
+                                + "-fx-pref-width: 135;");*/
                         sprintStartDatePicker.setTooltip(new Tooltip("The start date of"
                                 + " the Sprint must be before the estimated release date of the Release: "
                                 + newValue.getEstimatedDate().toString()));

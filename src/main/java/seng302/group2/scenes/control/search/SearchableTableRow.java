@@ -21,7 +21,7 @@ public class SearchableTableRow<T> extends TableRow<T> {
             System.out.println("item : " + item.toString());
             System.out.println("matching items : " + parentTable.matchingItems);
             if (parentTable.matchingItems.contains(item)) {
-                setStyle("-fx-background-color: " + SearchableControl.highlightColour + "; ");
+                setStyle("-fx-background-color: " + SearchableControl.highlightColourString + "; ");
             }
             else {
                 setStyle(null);

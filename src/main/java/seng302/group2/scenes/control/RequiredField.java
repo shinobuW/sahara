@@ -7,11 +7,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.validation.ValidationStyle;
 
-import java.awt.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -113,9 +112,9 @@ public class RequiredField extends VBox implements SearchableControl {
      * Shows the error field.
      */
     public void showErrorField() {
-        inputText.setStyle("-fx-border-color: red;");
+        ValidationStyle.borderGlowRed(inputText);
         this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
-        this.getChildren().add(errorMessageText);
+        //this.getChildren().add(errorMessageText);
     }
 
 
@@ -125,7 +124,7 @@ public class RequiredField extends VBox implements SearchableControl {
      * @param errorMessage The error message to show
      */
     public void showErrorField(String errorMessage) {
-        inputText.setStyle("-fx-border-color: red;");
+        this.errorMessageText.setTextFill(Color.web("FF0000"));
         this.errorMessageText.setText(errorMessage);
         showErrorField();
     }
@@ -153,7 +152,7 @@ public class RequiredField extends VBox implements SearchableControl {
     public boolean query(String query) {
         query = query.toLowerCase();
         if (query.isEmpty()) {
-            inputText.setStyle("-fx-border-color: inherit");
+            ValidationStyle.borderGlowNone(inputText);
         }
 
         boolean found = false;
@@ -163,10 +162,10 @@ public class RequiredField extends VBox implements SearchableControl {
 
         if (inputText.getText().toLowerCase().contains(query) && !query.trim().isEmpty()) {
             found = true;
-            inputText.setStyle("-fx-border-color: " + SearchableControl.highlightColour);
+            ValidationStyle.borderGlowSearch(inputText);
         }
         else {
-            inputText.setStyle("-fx-border-color: inherit");
+            ValidationStyle.borderGlowNone(inputText);
         }
 
         return found;

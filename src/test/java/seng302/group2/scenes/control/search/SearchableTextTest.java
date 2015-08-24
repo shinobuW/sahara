@@ -65,7 +65,7 @@ public class SearchableTextTest {
 
         // Check highlighting of matching element
         Assert.assertTrue(sText.texts.get(1).getStyle().contains(
-                "-fx-background-color:" + SearchableControl.highlightColour));
+                "-fx-background-color:" + SearchableControl.highlightColourString));
     }
 
 
@@ -84,8 +84,8 @@ public class SearchableTextTest {
 
         // Check highlighting of matching elements
         Assert.assertTrue(sText.texts.get(1).getStyle().contains(
-                "-fx-background-color:" + SearchableControl.highlightColour));
+                "-fx-background-color:" + SearchableControl.highlightColourString));
         Assert.assertTrue(sText.texts.get(3).getStyle().contains(
-                "-fx-background-color:" + SearchableControl.highlightColour));
+                "-fx-background-color:" + SearchableControl.highlightColourString));
     }
 }

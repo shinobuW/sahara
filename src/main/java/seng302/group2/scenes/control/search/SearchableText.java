@@ -16,7 +16,7 @@ public class SearchableText extends TextFlow implements SearchableControl {
     List<TextFlow> texts = new ArrayList<>();
     String styleDefault = "-fx-background-color: inherit;";
     String styleInject = "";
-    String styleHighlighted = "-fx-background-color:" + SearchableControl.highlightColour + ";";
+    String styleHighlighted = "-fx-background-color:" + SearchableControl.highlightColourString + ";";
 
 
     /**
