@@ -100,6 +100,7 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
 
             // TODO: Click event to edit assignee
             PopOver assignPopOver = new PopOver();
+            assignPopOver.setDetachedTitle(task.getShortName());
             SortedSet<Person> availableAssignees = new TreeSet<>();
             try {
                 for (Team team : task.getStory().getProject().getCurrentTeams()) {
