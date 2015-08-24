@@ -13,7 +13,6 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
-import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.person.Person;
@@ -235,6 +234,8 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                 }
                 else {
                     assigneeComboBox.setDisable(false);
+                    Person blankPerson = new Person("", "", "", null, null, null);
+                    assigneeComboBox.addToComboBox(blankPerson);
                     for (Team team : newValue.getCurrentTeams()) {
                         for (Person person : team.getPeople()) {
                             assigneeComboBox.addToComboBox(person);
@@ -273,10 +274,13 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                     String shortName = shortNameCustomField.getText();
                     String description = descriptionTextArea.getText();
                     Double effortSpent = Log.readDurationToMinutes(effortLeftField.getText());
+                    Story story =  storyComboBox.getSelectionModel().getSelectedItem();
+                    Person assignee = null;
+                    if (assigneeComboBox.getValue() != null && !assigneeComboBox.getValue().toString().isEmpty()) {
+                        assignee = assigneeComboBox.getValue();
+                    }
 
-                    Task task = new Task(shortName, description,
-                            storyComboBox.getSelectionModel().getSelectedItem(), assigneeComboBox.getComboBox()
-                            .getSelectionModel().getSelectedItem());
+                    Task task = new Task(shortName, description, story, assignee);
                     task.setEffortLeft(effortSpent);
                     storyComboBox.getSelectionModel().getSelectedItem().add(task);
                     App.refreshMainScene();
