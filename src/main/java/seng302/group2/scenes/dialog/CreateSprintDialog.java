@@ -262,8 +262,6 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                             && newValue.isAfter(sprintEndDatePicker.getValue())) {
                         sprintEndDatePicker.setDisable(false);
                         sprintEndDatePicker.setValue(null);
-                        teamComboBox.setValue(null);
-                        teamComboBox.setDisable(true);
                     }
                     else if (newValue != null) {
                         sprintEndDatePicker.setDisable(false);
