@@ -281,15 +281,25 @@ public class StoryTaskTab extends SearchableTab {
         return searchControls;
     }
 
+    /**
+     * *A subclass of TableCell to bind combo box to the cell
+     * to allow for editing
+     */
     class ComboBoxEditingCell extends TableCell<SaharaItem, String> {
-
         private ComboBox<SaharaItem> comboBox;
         private ObservableList items;
 
+        /**
+         * Constructor
+         * @param itemList items to populate the combo box with
+         */
         private ComboBoxEditingCell(ObservableList itemList) {
             this.items = itemList;
         }
 
+        /**
+         * Sets the cell to a combo box when focused on.
+         */
         @Override
         public void startEdit() {
             if (!isEmpty()) {
@@ -310,22 +320,20 @@ public class StoryTaskTab extends SearchableTab {
             }
         }
 
-//        @Override
-//        public void startEdit() {
-//            if (!isEmpty()) {
-//                super.startEdit();
-//
-//                setText(null);
-//                setGraphic(comboBox);
-//            }
-//        }
-
+        /**
+         * Resets the cell to a label on cancel
+         */
         @Override
         public void cancelEdit() {
             super.cancelEdit();
             setGraphic(null);
         }
 
+        /**
+         * Updates the item
+         * @param item the item to update to
+         * @param empty
+         */
         @Override
         public void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
@@ -349,6 +357,10 @@ public class StoryTaskTab extends SearchableTab {
             }
         }
 
+        /**
+         * Gets the selected item
+         * @return the selected item as a class instance
+         */
         private Object getType() {
             Object selected = null;
             for (Object saharaItem : items) {
@@ -359,6 +371,9 @@ public class StoryTaskTab extends SearchableTab {
             return selected;
         }
 
+        /**
+         * Creates the combo box and populates it with the itemList. Updates the value in the cell.
+         */
         private void createCombo() {
             comboBox = new ComboBox<SaharaItem>(this.items);
             comboBox.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
