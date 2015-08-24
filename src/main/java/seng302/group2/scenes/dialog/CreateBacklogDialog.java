@@ -212,7 +212,7 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
 
 
     /**
-     * Shows a backlog creation dialog.
+     * Shows a backlog creation dialog. A default project is selected in the project combo box.
      * @param defaultProject The project to be used as the default project.
      */
     public CreateBacklogDialog(Project defaultProject) {

@@ -142,7 +142,7 @@ public class StoryTaskTab extends SearchableTab {
 
 
         RequiredField shortNameCustomField = new RequiredField("Task Name:");
-        CustomTextField effortLeftField = new CustomTextField("Effort left: ");
+        RequiredField effortLeftField = new RequiredField("Effort left: ");
         CustomComboBox<Person> assigneeField = new CustomComboBox<Person>("Assignee: ");
         CustomTextArea descriptionField = new CustomTextArea("Task Description: ");
         
@@ -196,7 +196,10 @@ public class StoryTaskTab extends SearchableTab {
                 task,
                 acTitle,
                 tasksTitle,
-                shortNameCustomField
+                shortNameCustomField,
+                effortLeftField,
+                descriptionField,
+                assigneeField
         );
 
     }

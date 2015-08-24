@@ -168,7 +168,7 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
     }
 
     /**
-     * Shows a dialog used for creating a new release.
+     * Shows a dialog used for creating a new release. A default project is selected in the project combo box.
      * @param defaultProject The default project selection.
      */
     public CreateReleaseDialog(Project defaultProject) {
