@@ -40,11 +40,11 @@ public class ValidationStyle {
      * @param node The node to apply the glow effect to
      */
     public static void borderGlow(Node node, Color color) {
-        node.setStyle(node.getStyle() + " -fx-effect: dropshadow( three-pass-box , rgba(" +
-                color.getRed() * 255 + ", " +
-                color.getGreen() * 255 + ", " +
-                color.getBlue() * 255 + ", " +
-                color.getOpacity() +
-                ") , 5, 0.0 , 0 , 1 );");
+        node.setStyle(node.getStyle() + " -fx-effect: dropshadow( three-pass-box , rgba("
+                + color.getRed() * 255 + ", "
+                + color.getGreen() * 255 + ", "
+                + color.getBlue() * 255 + ", "
+                + color.getOpacity()
+                + ") , 5, 0.0 , 0 , 1 );");
     }
 }
