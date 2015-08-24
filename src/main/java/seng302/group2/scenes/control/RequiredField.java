@@ -7,9 +7,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableText;
 
+import java.awt.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,23 +31,21 @@ public class RequiredField extends VBox implements SearchableControl {
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
      * asterisk.
      *
-     * @param name The node field that is required
+     * @param label The label for the node required
      */
-    public RequiredField(String name) {
+    public RequiredField(String label) {
         this.errorMessageText.setText(errorMessage);
         inputText.setPrefWidth(175);
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);
-        labelBox.spacingProperty().setValue(0);
-        labelBox.setAlignment(Pos.CENTER_LEFT);
 
         Label aster = new Label(" * ");
         aster.setTextFill(Color.web("#ff0000"));
 
         errorMessageText.setTextFill(Color.web("#ff0000"));
 
-        labelBox.getChildren().addAll(new SearchableText(name, searchControls), aster);
+        labelBox.getChildren().addAll(new SearchableText(label.trim(), searchControls), aster);
 
         HBox entry = new HBox();
         entry.setPrefWidth(175);

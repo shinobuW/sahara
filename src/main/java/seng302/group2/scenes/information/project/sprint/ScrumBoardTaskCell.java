@@ -115,9 +115,7 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
             ComboBox<Person> assigneeCombo = new ComboBox<>();
             assigneeCombo.getItems().addAll(availableAssignees);
             assigneeCombo.getSelectionModel().select(task.getAssignee());
-            assigneeImage.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
+            assigneeImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     if (assignPopOver.isShowing()) {
                         assignPopOver.hide();
                     }
@@ -125,8 +123,7 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
                         assignPopOver.show(assigneeImage);
                     }
                     event.consume();
-                }
-            });
+                });
 
             Button assigneeSaveButton = new Button("Save Assignee");
             assigneeSaveButton.setAlignment(Pos.CENTER_RIGHT);
