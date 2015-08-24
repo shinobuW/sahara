@@ -1,22 +1,30 @@
 package seng302.group2.scenes.information.project.sprint;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.text.TextFlow;
+import org.controlsfx.control.PopOver;
 import seng302.group2.scenes.control.Tooltip;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Task;
+import seng302.group2.workspace.team.Team;
+
+import java.util.*;
 
 /**
  * A ListCell extension for the neat displaying of tasks on the scrum board view
@@ -69,6 +77,8 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
             rightContent.setPrefHeight(48);
 
             Label remainingTime = new Label(task.getEffortLeftString());
+            Tooltip.create("Spent Effort: " + task.getEffortSpentString() + "\n"
+                    + "Remaining Effort: " + task.getEffortLeftString(), remainingTime, 50);
             remainingTime.setStyle("-fx-font-size: 85%");
             remainingTime.setAlignment(Pos.TOP_RIGHT);
 
@@ -77,11 +87,77 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
             rightContent.getChildren().addAll(remainingTime);
 
             // Assignee icon
+            ImageView assigneeImage;
             if (task.getAssignee() != null) {
-                ImageView assigneeImage = new ImageView("icons/person.png");
-                Tooltip.create(task.getAssignee().getShortName(), assigneeImage, 50);
-                rightContent.getChildren().addAll(assigneeImage);
+                assigneeImage = new ImageView("icons/person.png");
+                Tooltip.create(task.getAssignee().getFullName(), assigneeImage, 50);
             }
+            else {
+                assigneeImage = new ImageView("icons/person_empty.png");
+                Tooltip.create("This task is unassigned", assigneeImage, 50);
+            }
+            rightContent.getChildren().addAll(assigneeImage);
+
+            // TODO: Click event to edit assignee
+            PopOver assignPopOver = new PopOver();
+            assignPopOver.setDetachedTitle(task.getShortName());
+            SortedSet<Person> availableAssignees = new TreeSet<>();
+            try {
+                for (Team team : task.getStory().getProject().getCurrentTeams()) {
+                    availableAssignees.addAll(team.getPeople());
+                }
+            }
+            catch (NullPointerException ex) {
+            }
+            Person nonePerson = new Person();
+            nonePerson.setShortName("(none)");
+            availableAssignees.add(nonePerson);
+
+            ComboBox<Person> assigneeCombo = new ComboBox<>();
+            assigneeCombo.getItems().addAll(availableAssignees);
+            assigneeCombo.getSelectionModel().select(task.getAssignee());
+            assigneeImage.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (assignPopOver.isShowing()) {
+                        assignPopOver.hide();
+                    }
+                    else {
+                        assignPopOver.show(assigneeImage);
+                    }
+                    event.consume();
+                }
+            });
+
+            Button assigneeSaveButton = new Button("Save Assignee");
+            assigneeSaveButton.setAlignment(Pos.CENTER_RIGHT);
+            assigneeSaveButton.setOnAction(event -> {
+                    Person selectedPerson = assigneeCombo.getSelectionModel().getSelectedItem();
+                    if (selectedPerson.equals(nonePerson)) {
+                        selectedPerson = null;
+                    }
+                    task.editAssignee(selectedPerson);
+                    assignPopOver.hide();
+                    this.updateItem(this.getItem(), this.isEmpty());
+                });
+
+            Text assigneeLabel = new Text("Assignee: ");
+            assigneeLabel.setTextAlignment(TextAlignment.LEFT);
+            HBox assigneeComboLabel = new HBox(8);
+            assigneeComboLabel.setAlignment(Pos.CENTER);
+            assigneeComboLabel.getChildren().addAll(
+                    assigneeLabel,
+                    assigneeCombo
+            );
+            VBox assigneeChangeNode = new VBox(8);
+            assigneeChangeNode.setPadding(new Insets(8,8,8,8));
+            assigneeChangeNode.getChildren().addAll(
+                    assigneeComboLabel,
+                    assigneeSaveButton
+            );
+            assignPopOver.setContentNode(assigneeChangeNode);
+
+
 
             // Impediments icon
             if (task.getState() == Task.TASKSTATE.BLOCKED || task.getState() == Task.TASKSTATE.DEFERRED) {

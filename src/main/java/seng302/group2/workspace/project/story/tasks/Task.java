@@ -444,6 +444,18 @@ public class Task extends SaharaItem implements Serializable {
 
 
     /**
+     * Creates a Task assignee edit command and executes it with the Global Command Manager, updating the task with the
+     * new assignee
+     *
+     * @param newAssignee The new assignee
+     */
+    public void editAssignee(Person newAssignee) {
+        Command relEdit = new TaskEditAssigneeCommand(this, newAssignee);
+        Global.commandManager.executeCommand(relEdit);
+    }
+
+
+    /**
      * A command class that allows the executing and undoing of task edits
      */
     private class TaskEditCommand implements Command {
@@ -578,6 +590,61 @@ public class Task extends SaharaItem implements Serializable {
 
     /**
      * A command class that allows the executing and undoing of task edits
+     */
+    private class TaskEditAssigneeCommand implements Command {
+
+        private Task task;
+        private Person assignee;
+        private Person oldAssignee;
+
+
+        /**
+         * Constructor for the Task Edit State command, used for changing lanes in the scrumboard
+         * @param task The story to be edited
+         * @param newAssignee The task's new assignee
+         */
+        private TaskEditAssigneeCommand(Task task, Person newAssignee) {
+            this.task = task;
+            this.assignee = newAssignee;
+            this.oldAssignee = task.assignee;
+        }
+
+        /**
+         * Executes/Redoes the changes of the task edit
+         */
+        public void execute() {
+            task.assignee = assignee;
+        }
+
+        /**
+         * Undoes the changes of the task edit
+         */
+        public void undo() {
+            task.assignee = oldAssignee;
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped_task = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(task)) {
+                    this.task = (Task) item;
+                    mapped_task = true;
+                }
+            }
+
+            return  mapped_task;
+        }
+    }
+
+
+    /**
+     * A command class that allows the executing and undoing of task lane edits
      */
     private class TaskEditLaneCommand implements Command {
 
