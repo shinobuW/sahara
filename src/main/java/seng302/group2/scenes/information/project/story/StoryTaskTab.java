@@ -20,10 +20,7 @@ import seng302.group2.App;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.information.project.story.task.TaskScene;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.SaharaItem;
@@ -99,6 +96,39 @@ public class StoryTaskTab extends SearchableTab {
         nameCol.setCellValueFactory(new PropertyValueFactory<Task, String>("shortName"));
         nameCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
+//
+//        TextFieldEditingCell nameEditingCell = new TextFieldEditingCell();
+//        Callback<TableColumn, TableCell> nameCellFactory = col -> nameEditingCell;
+//        nameCol.setCellValueFactory(
+//                new Callback<TableColumn.CellDataFeatures<Task, String>,
+//                        ObservableValue<String>>() {
+//                    @Override
+//                    public ObservableValue<String> call(TableColumn.CellDataFeatures<Task,
+//                            String> task) {
+//                        SimpleStringProperty property = new SimpleStringProperty();
+//                        property.setValue(task.getValue().getShortName());
+//                        return property;
+//                    }
+//                });
+//
+//        nameCol.setOnEditCommit(
+//                new EventHandler<TableColumn.CellEditEvent<Task, String>>() {
+//                    @Override
+//                    public void handle(TableColumn.CellEditEvent<Task, String> event) {
+//                        if (!event.getNewValue().isEmpty()) {
+//                            Task currentTask = event.getTableView().getItems()
+//                                    .get(event.getTablePosition().getRow());
+//                           String newName = null;
+//                            if (newName != event.getOldValue()) {
+//                                currentTask.edit(newName, currentTask.getDescription(), currentTask.getImpediments(),
+//                                        currentTask.getState(), currentTask.getAssignee(), currentTask.getLogs(),
+//                                        currentTask.getEffortLeft(), currentTask.getEffortSpent());
+//                            }
+//                        }
+//                    }
+//                });
+//
+//        nameCol.setCellFactory(nameCellFactory);
 
         TableColumn stateCol = new TableColumn("State");
         stateCol.setCellValueFactory(new PropertyValueFactory<Task, String>("state"));
@@ -360,7 +390,6 @@ public class StoryTaskTab extends SearchableTab {
                 Platform.runLater(() -> {
                         comboBox.requestFocus();
                     });
-
             }
         }
 
@@ -441,6 +470,103 @@ public class StoryTaskTab extends SearchableTab {
         }
     }
 
+    class TextFieldEditingCell extends TableCell<Object, String> {
+        public SearchableTextField textField;
 
+        /**
+         * Constructor
+         */
+        private TextFieldEditingCell() {
+        }
 
+        /**
+         * Sets the cell to a combo box when focused on.
+         */
+        @Override
+        public void startEdit() {
+            if (!isEmpty()) {
+                super.startEdit();
+                createTextField();
+                setGraphic(textField);
+
+                if (!getText().isEmpty()) {
+                    textField.setText(getItem());
+                }
+                else {
+                    textField.setText(null);
+                }
+                Platform.runLater(() -> {
+                        textField.requestFocus();
+                    });
+            }
+        }
+
+        /**
+         * Resets the cell to a label on cancel
+         */
+        @Override
+        public void cancelEdit() {
+            super.cancelEdit();
+            setGraphic(null);
+        }
+
+        /**
+         * Updates the item
+         *
+         * @param item  the item to update to
+         * @param empty
+         */
+        @Override
+        public void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (empty) {
+                setText(null);
+                setGraphic(null);
+            }
+            else {
+                if (isEditing()) {
+                    if (textField != null) {
+                        textField.setText(getItem());
+                    }
+                    setText(getItem());
+                    setGraphic(textField);
+                }
+                else {
+                    setText(getItem());
+                    setGraphic(null);
+                }
+            }
+        }
+
+        /**
+         * Creates the combo box and populates it with the itemList. Updates the value in the cell.
+         */
+        private void createTextField() {
+            textField = new SearchableTextField();
+            textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+            textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> arg0,
+                                    Boolean arg1, Boolean arg2) {
+                    if (!arg2) {
+                        if (textField.getText() != null) {
+                            commitEdit(textField.getText());
+                        }
+                        else {
+                            commitEdit("");
+                        }
+                    }
+                    else {
+                        updateItem(getItem(), false);
+                    }
+                }
+            });
+        }
+
+        public SearchableTextField getTextField() {
+            return this.textField;
+        }
+
+    }
 }
