@@ -794,6 +794,7 @@ public class Task extends SaharaItem implements Serializable {
         private Task task;
         private Log log;
         private Project proj;
+        private double effortLeft;
         
         private double oldEffortSpent;
         private double oldEffortLeft;
@@ -808,7 +809,8 @@ public class Task extends SaharaItem implements Serializable {
             this.task = task;
             this.log = log;
             this.oldEffortSpent = task.getEffortSpent();
-            this.oldEffortLeft = effortLeft;
+            this.oldEffortLeft = task.getEffortLeft();
+            this.effortLeft = effortLeft;
             this.proj = proj;
         }
 
@@ -820,7 +822,7 @@ public class Task extends SaharaItem implements Serializable {
             log.setTask(task);
             double newEffortSpent = task.getEffortSpent() + log.getDurationInMinutes();
             task.setEffortSpent(newEffortSpent);
-            task.setEffortLeft(task.getEffortLeft());
+            task.setEffortLeft(this.effortLeft);
             proj.add(log);
         }
 
