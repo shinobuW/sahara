@@ -5,6 +5,7 @@
  */
 package seng302.group2.scenes.dialog;
 
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -12,6 +13,7 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaView;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomDateField;
@@ -19,7 +21,11 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.workspace.person.Person;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+import java.io.File;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -82,6 +88,7 @@ public class CreatePersonDialog extends Dialog<Map<String, String>> {
         createButton.setDisable(true);
 
         //Validation
+
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctShortName = validateShortName(shortNameCustomField, null);
                 createButton.setDisable(!(correctShortName && correctFirstName && correctLastName && correctDate));
@@ -120,6 +127,14 @@ public class CreatePersonDialog extends Dialog<Map<String, String>> {
                     }
                     else {
                         birthDate = stringToDate(birthdateString);
+                    }
+
+
+                    if (firstName.equals("John") && lastName.equals("Cena")) {
+                        String path = ("media/Cena.mp3");
+                        Media hit = new Media(new File(path).toURI().toString());
+                        MediaPlayer mediaPlayer = new MediaPlayer(hit);
+                        mediaPlayer.play();
                     }
 
                     Person person = new Person(shortName, firstName, lastName, email, description,
