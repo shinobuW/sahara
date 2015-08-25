@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import org.controlsfx.control.PopOver;
 import seng302.group2.scenes.control.Tooltip;
+import seng302.group2.scenes.information.project.story.task.LoggingEffortPane;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
@@ -71,6 +72,12 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
             textContent.getChildren().addAll(titleLabel, descLabel);
 
 
+
+
+
+
+
+
             // The cell's 'iconic' information
             VBox rightContent = new VBox(1);
             rightContent.setPrefHeight(48);
@@ -81,9 +88,33 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
             remainingTime.setStyle("-fx-font-size: 85%");
             remainingTime.setAlignment(Pos.TOP_RIGHT);
 
+
+            // Remaining time PopOver
+            PopOver loggingEffortPopOver = new PopOver();
+            LoggingEffortPane loggingPane = new LoggingEffortPane(task, loggingEffortPopOver);
+            loggingEffortPopOver.setContentNode(loggingPane);
+            loggingEffortPopOver.setDetachedTitle(task.getShortName());
+
+            remainingTime.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    if (loggingEffortPopOver.isShowing()) {
+                        loggingEffortPopOver.hide();
+                    }
+                    else {
+                        loggingEffortPopOver.show(remainingTime);
+                    }
+                    event.consume();
+                });
+
+
+
             rightContent.setAlignment(Pos.CENTER_RIGHT);
             HBox.setHgrow(rightContent, Priority.ALWAYS);
             rightContent.getChildren().addAll(remainingTime);
+
+
+
+
+
 
             // Assignee icon
             ImageView assigneeImage;
@@ -97,7 +128,6 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
             }
             rightContent.getChildren().addAll(assigneeImage);
 
-            // TODO: Click event to edit assignee
             PopOver assignPopOver = new PopOver();
             assignPopOver.setDetachedTitle(task.getShortName());
             SortedSet<Person> availableAssignees = new TreeSet<>();

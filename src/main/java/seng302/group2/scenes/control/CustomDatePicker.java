@@ -40,8 +40,8 @@ public class CustomDatePicker extends VBox implements SearchableControl {
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(165);
-        labelBox.spacingProperty().setValue(0);
-        labelBox.setAlignment(Pos.CENTER_LEFT);
+        //labelBox.spacingProperty().setValue(0);
+        //labelBox.setAlignment(Pos.CENTER_LEFT);
 
         labelBox.getChildren().addAll(new SearchableText(name, this.searchControls));
 

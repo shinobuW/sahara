@@ -23,6 +23,7 @@ public class TimeTextField extends SearchableTextField {
     }
     public TimeTextField(String time) {
         super(time);
+        this.setPrefWidth(175);
         timePattern = Pattern.compile("\\d\\d:\\d\\d");
         if (! validate(time)) {
             throw new IllegalArgumentException("Invalid time: " + time);
