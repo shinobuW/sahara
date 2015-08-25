@@ -78,6 +78,8 @@ public class MainPane extends BorderPane {
 
         treeView.setItems(FXCollections.observableArrayList(Global.currentWorkspace));
 
+        HierarchyTracker.restoreMap(treeView);
+
         // Select the selected tree item in the tree
         if (selectedItem != null) {
             treeView.selectItem(selectedItem);
@@ -85,8 +87,6 @@ public class MainPane extends BorderPane {
         else if (Global.selectedTreeItem != null && Global.selectedTreeItem.getValue() != null) {
             treeView.selectItem((SaharaItem) Global.selectedTreeItem.getValue());
         }
-
-        HierarchyTracker.restoreMap(treeView);
     }
 
     /**
