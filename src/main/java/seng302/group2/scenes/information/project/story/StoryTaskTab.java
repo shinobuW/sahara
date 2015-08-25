@@ -40,6 +40,7 @@ import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static javafx.collections.FXCollections.observableList;
+import seng302.group2.scenes.information.project.story.task.LoggingEffortPane;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -276,11 +277,28 @@ public class StoryTaskTab extends SearchableTab {
                 }
             });
 
-        Button btnView = new Button("View");
+        Button btnView = new Button("Task View");
 
         btnView.setOnAction((event) -> {
-                App.mainPane.setContent(new TaskScene(taskTable.getSelectionModel().getSelectedItem()));
+                PopOver taskPopover = new PopOver();
+                taskPopover.setDetachedTitle(taskTable.getSelectionModel().getSelectedItem().toString());
+                VBox taskContent = new VBox();
+                taskContent.setPadding(new Insets(8, 8, 8, 8));
+                if (taskTable.getSelectionModel().getSelectedItem() == null) {
+                    SearchableText noTaskLabel = new SearchableText("No tasks selected.", searchControls);
+                    taskContent.getChildren().add(noTaskLabel);
+                }
+                else {
+                    ScrollPane taskWrapper = new ScrollPane();
+                    taskWrapper.setContent(new LoggingEffortPane(taskTable.getSelectionModel().getSelectedItem(),
+                            taskPopover));
+                    taskContent.getChildren().add(taskWrapper);
+                }
+
+                taskPopover.setContentNode(taskContent);
+                taskPopover.show(btnView);
             });
+      
 
         VBox addTaskBox = new VBox(10);
         SearchableText task = new SearchableText("Add Quick Tasks:", "-fx-font-weight: bold;");
