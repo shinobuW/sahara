@@ -20,6 +20,8 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.Category;
 import seng302.group2.workspace.categories.subCategory.SubCategory;
 
+import java.util.prefs.Preferences;
+
 import static seng302.group2.App.content;
 import static seng302.group2.App.refreshWindowTitle;
 
@@ -34,8 +36,10 @@ public class MainPane extends BorderPane {
     private Pane informationPane = new Pane();
     private ScrollPane contentPane;
     private boolean menuHidden = false;
-    private double[] dividerPositions;
+    private double dividerPositions;
     MainToolbar toolBar = null;
+
+    Preferences userPrefs = Preferences.userNodeForPackage(getClass());
 
     /**
      * The default constructor of the main pane that performs basic initialisation
@@ -49,14 +53,15 @@ public class MainPane extends BorderPane {
             contentPane = new ScrollPane();
         }
         content.getItems().clear();
+        menuHidden = userPrefs.getBoolean("tree.hidden", false);
         if (!menuHidden) {
             content.getItems().add(treeView);
         }
         content.getItems().add(contentPane);
         this.setCenter(content);
 
-        //content.setDividerPositions(0.20);
-        Platform.runLater(() -> content.setDividerPositions(0.225));
+        double split = userPrefs.getDouble("pane.split", 0.225);
+        Platform.runLater(() -> content.setDividerPositions(split));
     }
 
     /**
@@ -101,13 +106,15 @@ public class MainPane extends BorderPane {
      */
     public void toggleTree() {
         if (content.getItems().contains(treeView)) {
-            dividerPositions = content.getDividerPositions();
+            dividerPositions = content.getDividerPositions()[0];
             content.getItems().remove(treeView);
         }
         else {
             content.getItems().add(0, treeView);
             content.setDividerPositions(dividerPositions);
         }
+
+        userPrefs.putBoolean("tree.hidden", !content.getItems().contains(treeView));
     }
 
     /**
@@ -127,6 +134,7 @@ public class MainPane extends BorderPane {
      */
     public void refreshContent() {
         SaharaItem selected = null;
+
         try {
             selected = (SaharaItem) Global.selectedTreeItem.getValue();
             if (selected == null) {
@@ -136,7 +144,6 @@ public class MainPane extends BorderPane {
         catch (NullPointerException ex) {
             return;
         }
-
 
         // Refresh based on the selected item's type
         if (selected instanceof SubCategory) {
@@ -179,6 +186,10 @@ public class MainPane extends BorderPane {
 
         this.heightProperty().addListener((arg0, arg1, arg2) -> {
                 App.content.setPrefHeight(arg2.doubleValue());
+            });
+
+        treeView.widthProperty().addListener(event -> {
+                userPrefs.putDouble("pane.split", content.getDividerPositions()[0]);
             });
     }
 

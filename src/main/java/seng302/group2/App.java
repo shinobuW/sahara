@@ -19,11 +19,11 @@ import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.workspace.Workspace.SaveLoadResult;
 
 import java.util.Optional;
+import java.util.prefs.Preferences;
 
 /**
  * The executable class for Sahara.
  */
-@SuppressWarnings("deprecation")
 public class App extends Application {
     public static SplitPane content;
     public static MainPane mainPane;
@@ -67,8 +67,6 @@ public class App extends Application {
                         + Global.currentWorkspace.getLongName());
             }
         }
-
-
     }
 
     /**
@@ -129,18 +127,26 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         Global.currentWorkspace = new Workspace();
 
-
-
         //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
         // The title of the window
         primaryStage.setTitle("Sahara");
-        primaryStage.setMaximized(true);
-
-        primaryStage.setWidth(1060);
-        primaryStage.setHeight(640);
         primaryStage.setMinWidth(900);
         primaryStage.setMinHeight(500);
+
+        Preferences userPrefs = Preferences.userNodeForPackage(getClass());
+        // get window location from user preferences, second value is default
+        boolean maxed = userPrefs.getBoolean("stage.maximized", true);
+        double x = userPrefs.getDouble("stage.x", 100);
+        double y = userPrefs.getDouble("stage.y", 100);
+        double w = userPrefs.getDouble("stage.width", 1060);
+        double h = userPrefs.getDouble("stage.height", 640);
+
+        primaryStage.setMaximized(maxed);
+        primaryStage.setX(x);
+        primaryStage.setY(y);
+        primaryStage.setWidth(w);
+        primaryStage.setHeight(h);
 
         //primaryStage.setWidth(0.75 * screenSize.getWidth());
         //primaryStage.setHeight(0.75 * screenSize.getHeight());
@@ -162,6 +168,14 @@ public class App extends Application {
         // Exit button handling
         Platform.setImplicitExit(false);
         primaryStage.setOnCloseRequest(event -> {
+                // Set user preferences for window
+                userPrefs.putBoolean("stage.maximized", primaryStage.isMaximized());
+                userPrefs.putDouble("stage.x", primaryStage.getX());
+                userPrefs.putDouble("stage.y", primaryStage.getY());
+                userPrefs.putDouble("stage.width", primaryStage.getWidth());
+                userPrefs.putDouble("stage.height", primaryStage.getHeight());
+
+                // Perform shutdown of application
                 exitApp();
                 event.consume();
             });
