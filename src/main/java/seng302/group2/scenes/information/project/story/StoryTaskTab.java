@@ -297,10 +297,12 @@ public class StoryTaskTab extends SearchableTab {
                     this.setContent(wrapper);
 
                     SearchableText title = new SearchableTitle(currentTask.getShortName());
-                    SearchableText description = new SearchableText("Task Description: " + currentTask.getDescription());
+                    SearchableText description = new SearchableText("Task Description: " 
+                            + currentTask.getDescription());
                     SearchableText impediments = new SearchableText("Impediments: " + currentTask.getImpediments());
                     SearchableText effortLeft = new SearchableText("Effort Left: " + currentTask.getEffortLeftString());
-                    SearchableText effortSpent = new SearchableText("Effort Spent: " + currentTask.getEffortSpentString());
+                    SearchableText effortSpent = new SearchableText("Effort Spent: " 
+                            + currentTask.getEffortSpentString());
                     SearchableText taskState = new SearchableText("Task State: " + currentTask.getState());
                     SearchableText assignedPerson;
                     if (currentTask.getAssignee() == null) {
