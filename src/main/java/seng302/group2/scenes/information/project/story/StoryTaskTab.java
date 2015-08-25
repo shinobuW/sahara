@@ -281,7 +281,6 @@ public class StoryTaskTab extends SearchableTab {
 
         btnView.setOnAction((event) -> {
                 PopOver taskPopover = new PopOver();
-                taskPopover.setDetachedTitle(taskTable.getSelectionModel().getSelectedItem().toString());
                 VBox taskContent = new VBox();
                 taskContent.setPadding(new Insets(8, 8, 8, 8));
                 if (taskTable.getSelectionModel().getSelectedItem() == null) {
@@ -289,10 +288,51 @@ public class StoryTaskTab extends SearchableTab {
                     taskContent.getChildren().add(noTaskLabel);
                 }
                 else {
+                    Task currentTask = taskTable.getSelectionModel().getSelectedItem();
+                    taskPopover.setDetachedTitle(currentTask.toString());
+                    VBox taskInfo = new VBox();
+
+                    taskInfo.setBorder(null);
+                    taskInfo.setPadding(new Insets(25, 25, 25, 25));
+                    this.setContent(wrapper);
+
+                    SearchableText title = new SearchableTitle(currentTask.getShortName());
+                    SearchableText description = new SearchableText("Task Description: " + currentTask.getDescription());
+                    SearchableText impediments = new SearchableText("Impediments: " + currentTask.getImpediments());
+                    SearchableText effortLeft = new SearchableText("Effort Left: " + currentTask.getEffortLeftString());
+                    SearchableText effortSpent = new SearchableText("Effort Spent: " + currentTask.getEffortSpentString());
+                    SearchableText taskState = new SearchableText("Task State: " + currentTask.getState());
+                    SearchableText assignedPerson;
+                    if (currentTask.getAssignee() == null) {
+                        assignedPerson = new SearchableText("Assigned Person: ");
+                    }
+                    else {
+                        assignedPerson = new SearchableText("Assigned Person: " + currentTask.getAssignee());
+                    }
+
+                    taskInfo.getChildren().addAll(
+                            title,
+                            description,
+                            impediments,
+                            effortLeft,
+                            effortSpent,
+                            taskState,
+                            assignedPerson
+                    );
+
+                    Collections.addAll(searchControls,
+                            title,
+                            description,
+                            impediments,
+                            effortLeft,
+                            effortSpent,
+                            taskState,
+                            assignedPerson
+                    );
                     ScrollPane taskWrapper = new ScrollPane();
                     taskWrapper.setContent(new LoggingEffortPane(taskTable.getSelectionModel().getSelectedItem(),
                             taskPopover));
-                    taskContent.getChildren().add(taskWrapper);
+                    taskContent.getChildren().addAll(taskInfo, taskWrapper);
                 }
 
                 taskPopover.setContentNode(taskContent);
