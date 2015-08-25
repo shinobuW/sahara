@@ -329,10 +329,21 @@ public class StoryTaskTab extends SearchableTab {
                             taskState,
                             assignedPerson
                     );
+                    
                     ScrollPane taskWrapper = new ScrollPane();
                     taskWrapper.setContent(new LoggingEffortPane(taskTable.getSelectionModel().getSelectedItem(),
                             taskPopover));
-                    taskContent.getChildren().addAll(taskInfo, taskWrapper);
+                    
+                    TitledPane collapsableInfoPane = new TitledPane("Task Info", taskInfo);
+                    collapsableInfoPane.setPrefHeight(30);
+                    collapsableInfoPane.setExpanded(true);
+                    collapsableInfoPane.setAnimated(true);
+                    
+                    TitledPane collapsableLoggingPane = new TitledPane("Task Logging", taskWrapper);
+                    collapsableLoggingPane.setExpanded(true);
+                    collapsableLoggingPane.setAnimated(true);
+
+                    taskContent.getChildren().addAll(collapsableInfoPane, collapsableLoggingPane);
                 }
 
                 taskPopover.setContentNode(taskContent);

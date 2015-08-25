@@ -247,10 +247,9 @@ public class LoggingEffortPane extends Pane {
                     Log newLog = new Log(task, descriptionTextArea.getText(),
                             selectedPerson, minutes, startDate);
                     task.add(newLog);
-                    if (popOver != null) {
-                        popOver.hide();
-                    }
-                    App.refreshMainScene();
+//                    if (popOver != null) {
+//                        popOver.hide();
+//                    }
                 }
                 else {
                     if (personComboBox.getValue() == null) {
