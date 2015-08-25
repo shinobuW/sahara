@@ -9,6 +9,7 @@ import seng302.group2.workspace.person.Person;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ import java.util.Set;
  * Created by swi67 on 31/07/15.
  */
 public class Log extends SaharaItem implements Serializable {
-    private LocalDate startTime = LocalDate.now();
+    private LocalDateTime startTime = LocalDateTime.now();
     private double duration = 0;
     private Person logger = null;
     private Task task = null;
@@ -36,13 +37,12 @@ public class Log extends SaharaItem implements Serializable {
      * @param duration the duration the person worked for
      * @param startTime time the logger started working on the task
      */
-    public Log(Task task, String description, Person logger, double duration, LocalDate startTime) {
+    public Log(Task task, String description, Person logger, double duration, LocalDateTime startTime) {
         super("Untitled Log");
         this.task = task;
         this.logger = logger;
         this.startTime = startTime;
         this.description = description;
-        this.startTime = startTime;
         this.duration = duration;
     }
 
@@ -77,8 +77,16 @@ public class Log extends SaharaItem implements Serializable {
      * Gets the startTime of the log
      * @return duration in hours
      */
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return this.startTime;
+    }
+    
+    /**
+     * Gets the startTime of the log
+     * @return duration in hours
+     */
+    public LocalDate getLocalStartDate() {
+        return LocalDate.of(this.startTime.getYear(), this.startTime.getMonthValue(), this.startTime.getDayOfMonth());
     }
 
 
@@ -294,16 +302,16 @@ public class Log extends SaharaItem implements Serializable {
     private class LogEditCommand implements Command {
         private Log log;
         private Person logger;
-        private LocalDate startTime;
+        private LocalDateTime startTime;
         private double duration;
         private String description;
 
         private Person oldLogger;
-        private LocalDate oldStartTime;
+        private LocalDateTime oldStartTime;
         private double oldDuration;
         private String oldDescription;
 
-        protected LogEditCommand(Log log, Person newLogger, LocalDate newStartDate,
+        protected LogEditCommand(Log log, Person newLogger, LocalDateTime newStartDate,
                                  double newDuration, String newDescription) {
             this.log = log;
             this.logger = newLogger;

@@ -26,6 +26,7 @@ import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
@@ -98,7 +99,7 @@ public class LoggingEffortPane extends Pane {
                     public ObservableValue<String> call(TableColumn.CellDataFeatures<Log,
                             String> log) {
                         SimpleStringProperty property = new SimpleStringProperty();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
                         property.setValue(log.getValue().getStartDate().format(formatter));
                         return property;
                     }
@@ -296,9 +297,9 @@ public class LoggingEffortPane extends Pane {
                     Person selectedPerson = personComboBox.getValue();
                     double duration = Log.readDurationToMinutes(durationTextField.getText());
                     double effortLeft = Log.readDurationToMinutes(effortLeftField.getText());
-
+                    LocalDateTime dateTime = startDate.atTime(timeTextField.getHours(), timeTextField.getMinutes());
                     Log newLog = new Log(task, descriptionTextArea.getText(),
-                            selectedPerson, duration, startDate);
+                            selectedPerson, duration, dateTime);
                     task.add(newLog, effortLeft);
 //                    if (popOver != null) {
 //                        popOver.hide();
