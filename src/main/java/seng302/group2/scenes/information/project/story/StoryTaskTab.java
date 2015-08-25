@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -16,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
+import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
@@ -75,20 +77,33 @@ public class StoryTaskTab extends SearchableTab {
         taskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 
-        VBox ACLabels = new VBox();
-        SearchableTitle acTitle = new SearchableTitle("Acceptance Criteria: ");
-
-        ACLabels.getChildren().add(acTitle);
-        ACLabels.getChildren().add(new Text(""));
-
-        for (AcceptanceCriteria ac : currentStory.getAcceptanceCriteria()) {
-            SearchableText acText = new SearchableText("\t\u2022" + ac.toString());
-            ACLabels.getChildren().addAll(acText);
-            Collections.addAll(searchControls, acText);
+        PopOver acPopover = new PopOver();
+        acPopover.setDetachedTitle(currentStory.getShortName() + " - Acceptance Criteria");
+        VBox acContent = new VBox();
+        acContent.setPadding(new Insets(8, 8, 8, 8));
+        if (currentStory.getAcceptanceCriteria().size() == 0) {
+            SearchableText noAcLabel = new SearchableText("This story has no Acceptance Criteria.", searchControls);
+            acContent.getChildren().add(noAcLabel);
         }
-        ACLabels.getChildren().add(new Text(""));
+        else {
+            SearchableListView<AcceptanceCriteria> acListView =
+                    new SearchableListView<>(currentStory.getAcceptanceCriteria());
+            ScrollPane acWrapper = new ScrollPane();
+            acListView.setPrefSize(750, 250);
+            acWrapper.setContent(acListView);
+            acContent.getChildren().add(acWrapper);
+        }
+
+        acPopover.setContentNode(acContent);
+
+        Button acButton = new Button("View Acceptance Criteria");
+
+        acButton.setOnAction((event) -> {
+                acPopover.show(acButton);
+            });
+
+
         SearchableTitle tasksTitle = new SearchableTitle("Tasks Table: ");
-        ACLabels.getChildren().add(tasksTitle);
 
         ObservableList<Task> data = currentStory.getTasks();
 
@@ -197,7 +212,12 @@ public class StoryTaskTab extends SearchableTab {
                     public ObservableValue<String> call(TableColumn.CellDataFeatures<Task,
                             String> task) {
                         SimpleStringProperty property = new SimpleStringProperty();
-                        property.setValue(task.getValue().getAssignee().toString());
+                        if (task.getValue().getAssignee() != null) {
+                            property.setValue(task.getValue().getAssignee().toString());
+                        }
+                        else {
+                            property.setValue("Noone Assigned");
+                        }
                         return property;
                     }
                 });
@@ -243,18 +263,18 @@ public class StoryTaskTab extends SearchableTab {
 
         // Listener to disable columns being movable
         taskTable.getColumns().addListener(new ListChangeListener() {
-            public boolean suspended;
+                public boolean suspended;
 
-            @Override
-            public void onChanged(ListChangeListener.Change change) {
-                change.next();
-                if (change.wasReplaced() && !suspended) {
-                    this.suspended = true;
-                    taskTable.getColumns().setAll(columns);
-                    this.suspended = false;
+                @Override
+                public void onChanged(ListChangeListener.Change change) {
+                    change.next();
+                    if (change.wasReplaced() && !suspended) {
+                        this.suspended = true;
+                        taskTable.getColumns().setAll(columns);
+                        this.suspended = false;
+                    }
                 }
-            }
-        });
+            });
 
         Button btnView = new Button("View");
 
@@ -329,15 +349,15 @@ public class StoryTaskTab extends SearchableTab {
             });
 
         basicInfoPane.getChildren().addAll(
-                ACLabels,
+                tasksTitle,
                 taskTable,
                 btnView,
+                acButton,
                 addTaskBox
         );
 
         Collections.addAll(searchControls,
                 task,
-                acTitle,
                 tasksTitle,
                 shortNameCustomField,
                 effortLeftField,
