@@ -30,6 +30,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.Set;
+import seng302.group2.util.validation.DateValidator;
 
 /**
  * Created by jml168 on 25/08/15.
@@ -37,6 +38,9 @@ import java.util.Set;
 public class LoggingEffortPane extends Pane {
 
     PopOver popOver = null;
+    static Boolean correctEffortLeft = Boolean.FALSE;
+    static Boolean correctDuration = Boolean.FALSE;
+
 
     public LoggingEffortPane(Task task) {
         try {
@@ -175,6 +179,7 @@ public class LoggingEffortPane extends Pane {
                 }
             };
         startDatePicker.getDatePicker().setDayCellFactory(endDateCellFactory);
+        startDatePicker.getDatePicker().setValue(LocalDate.now());
 
         HBox startTimeHBox = new HBox(10);
         SearchableText startTimeLabel = new SearchableText("Time:");
@@ -186,13 +191,17 @@ public class LoggingEffortPane extends Pane {
         CustomTextField durationTextField = new CustomTextField("Duration:");
         durationTextField.getTextField().setPromptText("eg. 1h 20min");
         durationTextField.getTextField().setPrefWidth(175);
+        
+        CustomTextField effortLeftField = new CustomTextField("Task Effort Left:");
+        effortLeftField.getTextField().setText(task.getEffortLeftString());
+        effortLeftField.getTextField().setPrefWidth(175);
 
         personComboBox.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
         startDatePicker.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
         newLogFieldFirstRow.getChildren().addAll(personComboBox,
-                startDatePicker, startTimeHBox, durationTextField);
+                startDatePicker, startTimeHBox, durationTextField, effortLeftField);
 
         startDatePicker.getDatePicker().setMinWidth(175);
         timeTextField.setPrefWidth(175);
@@ -201,6 +210,49 @@ public class LoggingEffortPane extends Pane {
         SearchableText descriptionLabel = new SearchableText("Description");
         TextArea descriptionTextArea = new TextArea();
         descriptionTextArea.setPrefSize(300, 100);
+        
+        durationTextField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctDuration = DateValidator.validDuration(newValue) && !newValue.isEmpty();
+                correctEffortLeft = DateValidator.validDuration(effortLeftField.getText()) 
+                        && !effortLeftField.getText().isEmpty();
+                if (correctDuration) {
+                    durationTextField.hideErrorField();
+                    double effortLeft = task.getEffortLeft() - Log.readDurationToMinutes(durationTextField.getText());
+                    String effortLeftString = (int) Math.floor(effortLeft / 60) + "h " 
+                            + (int) Math.floor(effortLeft % 60) + "min";
+                    if (effortLeft <= 0) {
+                        effortLeftString = "0h 00min";
+                    }
+                    
+                    effortLeftField.setText(effortLeftString);
+                }
+                else {
+                    effortLeftField.setText(task.getEffortLeftString());
+                    if (newValue.isEmpty()) {
+                        durationTextField.showErrorField("* This field must be filled");
+                    }
+                    else {
+                        durationTextField.showErrorField("* Please input valid format");
+                    }
+                }
+                addButton.setDisable(!(correctDuration && correctEffortLeft));
+            });
+        
+        effortLeftField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctEffortLeft = DateValidator.validDuration(newValue) && !newValue.isEmpty();
+                if (correctEffortLeft) {
+                    effortLeftField.hideErrorField();
+                }
+                else {
+                    if (newValue.isEmpty()) {
+                        effortLeftField.showErrorField("* This field must be filled");
+                    }
+                    else {
+                        effortLeftField.showErrorField("* Please input valid format");
+                    }
+                }
+                addButton.setDisable(!(correctDuration && correctEffortLeft));
+            });
 
 
         newLogFieldSecondRow.getChildren().addAll(descriptionLabel, descriptionTextArea);
@@ -242,7 +294,7 @@ public class LoggingEffortPane extends Pane {
                 if (personComboBox.getValue() != null && startDatePicker.getValue() != null) {
                     LocalDate startDate = startDatePicker.getValue();
                     Person selectedPerson = personComboBox.getValue();
-                    float minutes = timeTextField.getHours() * 60 + timeTextField.getMinutes();
+                    double minutes = Log.readDurationToMinutes(durationTextField.getText());
 
                     Log newLog = new Log(task, descriptionTextArea.getText(),
                             selectedPerson, minutes, startDate);
