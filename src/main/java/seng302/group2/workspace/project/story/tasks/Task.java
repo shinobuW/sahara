@@ -280,8 +280,8 @@ public class Task extends SaharaItem implements Serializable {
      * Adds a log to the Tasks Logs list
      *  @param log The log to add
      */
-    public void add(Log log) {
-        Command command = new AddLogsCommand(this, log, this.getStory().getProject());
+    public void add(Log log, double effortLeft) {
+        Command command = new AddLogsCommand(this, log, this.getStory().getProject(), effortLeft);
         Global.commandManager.executeCommand(command);
     }
 
@@ -795,17 +795,20 @@ public class Task extends SaharaItem implements Serializable {
         private Log log;
         private Project proj;
         
-        private double oldEffort;
+        private double oldEffortSpent;
+        private double oldEffortLeft;
+        
 
         /**
          * Constructor for the log addition command
          * @param task The task to which the log is to be added
          * @param log The log to be added
          */
-        AddLogsCommand(Task task, Log log, Project proj) {
+        AddLogsCommand(Task task, Log log, Project proj, double effortLeft) {
             this.task = task;
             this.log = log;
-            this.oldEffort = task.getEffortSpent();
+            this.oldEffortSpent = task.getEffortSpent();
+            this.oldEffortLeft = effortLeft;
             this.proj = proj;
         }
 
@@ -817,6 +820,7 @@ public class Task extends SaharaItem implements Serializable {
             log.setTask(task);
             double newEffortSpent = task.getEffortSpent() + log.getDurationInMinutes();
             task.setEffortSpent(newEffortSpent);
+            task.setEffortLeft(task.getEffortLeft());
             proj.add(log);
         }
 
@@ -826,7 +830,8 @@ public class Task extends SaharaItem implements Serializable {
         public void undo() {
             task.getLogs().remove(log);
             log.setTask(null);
-            task.setEffortSpent(oldEffort);
+            task.setEffortSpent(oldEffortSpent);
+            task.setEffortLeft(oldEffortLeft);
             proj.delete(log);
         }
 

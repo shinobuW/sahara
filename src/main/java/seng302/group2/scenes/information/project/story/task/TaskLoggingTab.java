@@ -225,7 +225,7 @@ public class TaskLoggingTab extends SearchableTab {
 
                     Log newLog = new Log(currentTask, descriptionTextArea.getText(),
                             selectedPerson, minutes, startDate);
-                    currentTask.add(newLog);
+//                    currentTask.add(newLog);
                     App.refreshMainScene();
 
                 }

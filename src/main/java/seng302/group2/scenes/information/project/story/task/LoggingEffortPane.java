@@ -294,11 +294,12 @@ public class LoggingEffortPane extends Pane {
                 if (personComboBox.getValue() != null && startDatePicker.getValue() != null) {
                     LocalDate startDate = startDatePicker.getValue();
                     Person selectedPerson = personComboBox.getValue();
-                    double minutes = Log.readDurationToMinutes(durationTextField.getText());
+                    double duration = Log.readDurationToMinutes(durationTextField.getText());
+                    double effortLeft = Log.readDurationToMinutes(effortLeftField.getText());
 
                     Log newLog = new Log(task, descriptionTextArea.getText(),
-                            selectedPerson, minutes, startDate);
-                    task.add(newLog);
+                            selectedPerson, duration, startDate);
+                    task.add(newLog, effortLeft);
 //                    if (popOver != null) {
 //                        popOver.hide();
 //                    }
