@@ -394,9 +394,11 @@ public class DateValidator {
      * @return true if input string is in the right format
      */
     public static boolean validDuration(String inputString) {
-        String pattern = "(( *)((\\d*)( *)(h|hour|hours|hrs|hr))?( *)"  // normal hours
-                + "((([0-5][0-9])|([0-9]))( *)(min|m|mins|minutes|minute))?( *))"  // normal minutes
-                + "|(\\d*(.\\d*)?)( *)(h|hour|hours|hrs|hr)?( *)";  // or, base unit (default hours), eg. '2'.
+        String pattern = "(( *)((\\d*)( *)((h)|(hour)|(hours)|(hrs)|(hr)))?( *)"  // normal hours
+                + "((([0-5][0-9])|([0-9]))( *)((min)|(m)|(mins)|(minutes)|(minute)))?( *))"  // normal minutes
+                + "|((\\d*(\\.\\d*)?)( *)(h|hour|hours|hrs|hr)?( *))";  // or, base unit (default hours), eg. '2'.
+
+
         return Pattern.matches(pattern, inputString);
     }
 }
