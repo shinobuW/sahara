@@ -31,71 +31,12 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
     private Label astrLabel = new Label(" * ");
     private SearchableText titleLabel = new SearchableText();
 
-    public CustomComboBox() {
-        this.errorMessageText.setText(errorMessage);
-        titleLabel.setStyle("-fx-font-weight: bold");
-
-        HBox labelBox = new HBox();
-        labelBox.setPrefWidth(175);
-
-        labelBox.getChildren().addAll(titleLabel);
-
-        if (required) {
-            Label aster = astrLabel;
-            aster.setTextFill(Color.web("#ff0000"));
-            labelBox.getChildren().add(aster);
-        }
-
-        HBox entry = new HBox();
-        entry.setPrefWidth(275);
-        entry.getChildren().addAll(labelBox, this.comboBox);
-        HBox.setHgrow(labelBox, Priority.ALWAYS);
-
-        this.comboBox.setMinWidth(135);
-        this.comboBox.setPrefWidth(175);
-        this.getChildren().add(entry);
-    }
-
-
     /**
      * Creates a ComboBox and Label inside a single HBox.
      *
      * @param name The label of the combo box
      */
     public CustomComboBox(String name) {
-        this.errorMessageText.setText(errorMessage);
-        titleLabel.setStyle("-fx-font-weight: bold");
-
-        HBox labelBox = new HBox();
-        labelBox.setPrefWidth(175);
-
-        titleLabel.setText(name);
-        labelBox.getChildren().addAll(titleLabel);
-
-        if (required) {
-            Label aster = astrLabel;
-            aster.setTextFill(Color.web("#ff0000"));
-            labelBox.getChildren().add(aster);
-        }
-
-        HBox entry = new HBox();
-        entry.setPrefWidth(275);
-        entry.getChildren().addAll(labelBox, this.comboBox);
-        HBox.setHgrow(labelBox, Priority.ALWAYS);
-
-        this.comboBox.setMinWidth(135);
-        this.comboBox.setPrefWidth(175);
-        this.getChildren().add(entry);
-    }
-
-    /**
-     * Creates a ComboBox and Label inside a single HBox.
-     *
-     * @param items A list of items to add to the combo box
-     * @param name The label of the combo box
-     */
-    public CustomComboBox(ObservableList<T> items, String name) {
-        comboBox.setItems(items);
         this.errorMessageText.setText(errorMessage);
         titleLabel.setStyle("-fx-font-weight: bold");
 
@@ -232,8 +173,13 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
     /**
      * Disables the combobox.
      */
-    public void disable() {
-        this.comboBox.setDisable(true);
+    public void disable(boolean disable) {
+        if (disable) {
+            this.comboBox.setDisable(true);
+        }
+        else {
+            this.comboBox.setDisable(false);
+        }
     }
 
     /**

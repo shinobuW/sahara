@@ -181,6 +181,18 @@ public class CustomDatePicker extends VBox implements SearchableControl {
     }
 
     /**
+     * Disables the date picker. Does not disable the labels.
+     */
+    public void disable(boolean disable) {
+        if (disable) {
+            this.datePicker.setDisable(true);
+        }
+        else {
+            this.datePicker.setDisable(false);
+        }
+    }
+
+    /**
      * Sets the value of the date picker
      *
      * @param value value to set to

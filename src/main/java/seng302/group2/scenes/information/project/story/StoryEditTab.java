@@ -62,7 +62,7 @@ public class StoryEditTab extends SearchableTab {
         CustomTextField longNameTextField = new CustomTextField("Long Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Story Description:", 300);
         RequiredField priorityNumberField = new RequiredField("Story Priority:");
-        CustomComboBox estimateComboBox = new CustomComboBox("Estimate:");
+        CustomComboBox estimateComboBox = new CustomComboBox("Estimate:", false);
 
         SearchableCheckBox readyStateCheck = new SearchableCheckBox("Ready?");
 
@@ -80,7 +80,7 @@ public class StoryEditTab extends SearchableTab {
             unassigned = true;
         }
         if (unassigned) {
-            estimateComboBox.disable();
+            estimateComboBox.disable(true);
             Tooltip estimateTT = new Tooltip("Stories cannot be estimated without belonging to a backlog");
             Tooltip.install(estimateHBox, estimateTT);
         }
@@ -127,7 +127,7 @@ public class StoryEditTab extends SearchableTab {
         estimateHBox.getChildren().add(estimateComboBox);
 
         if (currentStory.getAcceptanceCriteria().isEmpty() || currentStory.getBacklog() == null) {
-            estimateComboBox.disable();
+            estimateComboBox.disable(true);
             estimateComboBox.setValue(EstimationScalesDictionary.getScaleValue(
                     EstimationScalesDictionary.DefaultValues.NONE));
             Tooltip tool = new seng302.group2.scenes.control.Tooltip(

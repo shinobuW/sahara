@@ -118,7 +118,8 @@ public class TeamEditTab extends SearchableTab {
         Button btnRoleAssign = new Button("Assign");
         btnRoleAssign.setDisable(true);
         roleList = observableArrayList();
-        roleComboBox = new CustomComboBox<>(roleList, "Role:");
+        roleComboBox = new CustomComboBox<>("Role:");
+        roleComboBox.getComboBox().setItems(roleList);
 
         HBox roleAssignmentBox = new HBox(10);
 
