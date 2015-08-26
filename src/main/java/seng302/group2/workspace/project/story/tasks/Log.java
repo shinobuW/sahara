@@ -141,6 +141,11 @@ public class Log extends SaharaItem implements Serializable {
         return new HashSet<>();
     }
 
+    @Override
+    public String toString() {
+        return "Log: " + this.startTime.toString() + ", " + this.duration + " - " + this.task.toString();
+    }
+
 
     /**
      * Method for creating an XML element for the Log within report generation
