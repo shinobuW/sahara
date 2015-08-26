@@ -42,7 +42,7 @@ public class TaskCategory extends SubCategory {
     public Element generateXML() {
         Element storyElements = ReportGenerator.doc.createElement("tasks-without-a-story");
         for (Object item : getChildren()) {
-            if (ReportGenerator.generatedItems.contains((SaharaItem) item)) {
+            if (ReportGenerator.generatedItems.contains(item)) {
                 Element xmlElement = ((SaharaItem) item).generateXML();
                 if (xmlElement != null) {
                     storyElements.appendChild(xmlElement);

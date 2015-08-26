@@ -2,10 +2,7 @@ package seng302.group2.scenes.information.project.sprint;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -129,7 +126,34 @@ public class ScrumboardTab extends SearchableTab {
                         return;
                     }
 
-                    interactiveTask.editLane(laneStateDict.get(lane), hoverIndex);
+
+
+                    if (laneStateDict.get(lane).equals(Task.TASKSTATE.DONE)
+                            && story.allTasksCompletedExcept(interactiveTask)) {
+                        Alert markStoryDone = new Alert(Alert.AlertType.INFORMATION);
+
+                        ButtonType yesButtonType = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+                        ButtonType noButtonType = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+                        markStoryDone.getDialogPane().getButtonTypes().clear();
+                        markStoryDone.getDialogPane().getButtonTypes().addAll(noButtonType, yesButtonType);
+
+                        markStoryDone.setTitle("Completed Story");
+                        markStoryDone.setHeaderText(null);
+                        markStoryDone.setContentText("All tasks in the story have been completed, mark the story as"
+                            + "completed too?");
+
+                        Optional<ButtonType> result = markStoryDone.showAndWait();
+                        if (result.get() == yesButtonType) {
+                            // User chose yes
+                            interactiveTask.editLane(laneStateDict.get(lane), hoverIndex, true);
+                        }
+                        else {
+                            interactiveTask.editLane(laneStateDict.get(lane), hoverIndex, false);
+                        }
+                    }
+                    else {
+                        interactiveTask.editLane(laneStateDict.get(lane), hoverIndex, story.isDone());
+                    }
                 });
         }
     }
