@@ -63,17 +63,18 @@ public class ShortNameValidator {
         switch (status) {
             case VALID:
                 ValidationStyle.borderGlowNone(shortNameField.getTextField());
-                //shortNameField.hideErrorField();
                 return true;
             case NON_UNIQUE:
                 ValidationStyle.borderGlowRed(shortNameField.getTextField());
                 ValidationStyle.showMessage("Short name must be unique", shortNameField.getTextField());
-                //shortNameField.showErrorField("* Short name must be unique");
+                return false;
+            case NULL:
+                ValidationStyle.borderGlowRed(shortNameField.getTextField());
+                ValidationStyle.showMessage("Short name required", shortNameField.getTextField());
                 return false;
             case INVALID:
                 ValidationStyle.borderGlowRed(shortNameField.getTextField());
                 ValidationStyle.showMessage("Not a valid short name", shortNameField.getTextField());
-                //shortNameField.showErrorField("* Not a valid short name");
                 return false;
             case OUT_OF_RANGE:
                 ValidationStyle.borderGlowRed(shortNameField.getTextField());
@@ -99,6 +100,9 @@ public class ShortNameValidator {
         //Test if the same
         if (shortName.equals(editedShortName)) {
             return ValidationStatus.VALID;
+        }
+        if (shortName.isEmpty()) {
+            return ValidationStatus.NULL;
         }
         // Test if valid name
         if (NameValidator.validateName(shortName) == ValidationStatus.INVALID) {

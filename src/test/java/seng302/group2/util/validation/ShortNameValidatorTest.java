@@ -71,7 +71,7 @@ public class ShortNameValidatorTest {
     @Test
     public void testValidateShortName() {
         // People
-        Assert.assertEquals(ValidationStatus.INVALID, ShortNameValidator.validateShortName("", null));
+        Assert.assertEquals(ValidationStatus.NULL, ShortNameValidator.validateShortName("", null));
         Assert.assertEquals(ValidationStatus.NON_UNIQUE,
                 ShortNameValidator.validateShortName("btm38", null));
         Assert.assertEquals(ValidationStatus.VALID, ShortNameValidator.validateShortName("new", null));

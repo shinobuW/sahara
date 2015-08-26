@@ -6,6 +6,7 @@
 package seng302.group2.util.validation;
 
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.validation.ValidationStyle;
 
 /**
  * A class for checking the validity of inputted Names.
@@ -19,7 +20,7 @@ public class NameValidator {
      */
     public static ValidationStatus validateName(String name) {
         if (name.isEmpty()) {
-            return ValidationStatus.INVALID;
+            return ValidationStatus.NULL;
         }
         else if (name != null) {
             return ValidationStatus.VALID;
@@ -39,12 +40,22 @@ public class NameValidator {
         switch (NameValidator.validateName(nameField.getText())) {
             case VALID:
                 nameField.hideErrorField();
+                ValidationStyle.borderGlowNone(nameField.getTextField());
                 return true;
             case INVALID:
-                nameField.showErrorField("* Please insert a name");
+                ValidationStyle.borderGlowRed(nameField.getTextField());
+                ValidationStyle.showMessage("Please insert a name",
+                        nameField.getTextField());
+                return false;
+            case NULL:
+                ValidationStyle.borderGlowRed(nameField.getTextField());
+                ValidationStyle.showMessage("Please insert a name",
+                        nameField.getTextField());
                 return false;
             default:
-                nameField.showErrorField("* Not a valid name");
+                ValidationStyle.borderGlowRed(nameField.getTextField());
+                ValidationStyle.showMessage("* Not a valid name",
+                        nameField.getTextField());
                 return false;
         }
     }
