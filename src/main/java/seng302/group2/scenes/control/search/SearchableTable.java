@@ -14,7 +14,7 @@ import java.util.Collection;
 public class SearchableTable<T> extends TableView<T> implements SearchableControl {
 
     ObservableList<T> data = FXCollections.observableArrayList();
-    ObservableList<T> matchingItems = FXCollections.observableArrayList();
+    public ObservableList<T> matchingItems = FXCollections.observableArrayList();
     SearchableTableRow<T> tableRowType = new SearchableTableRow<>(this);
 
 
