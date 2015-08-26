@@ -20,6 +20,7 @@ import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.TimeTextField;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.util.conversion.DurationConverter;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
@@ -218,7 +219,8 @@ public class LoggingEffortPane extends Pane {
                         && !effortLeftField.getText().isEmpty();
                 if (correctDuration) {
                     durationTextField.hideErrorField();
-                    double effortLeft = task.getEffortLeft() - Log.readDurationToMinutes(durationTextField.getText());
+                    double effortLeft = task.getEffortLeft()
+                            - DurationConverter.readDurationToMinutes(durationTextField.getText());
                     String effortLeftString = (int) Math.floor(effortLeft / 60) + "h " 
                             + (int) Math.floor(effortLeft % 60) + "min";
                     if (effortLeft <= 0) {
@@ -295,8 +297,8 @@ public class LoggingEffortPane extends Pane {
                 if (personComboBox.getValue() != null && startDatePicker.getValue() != null) {
                     LocalDate startDate = startDatePicker.getValue();
                     Person selectedPerson = personComboBox.getValue();
-                    double duration = Log.readDurationToMinutes(durationTextField.getText());
-                    double effortLeft = Log.readDurationToMinutes(effortLeftField.getText());
+                    double duration = DurationConverter.readDurationToMinutes(durationTextField.getText());
+                    double effortLeft = DurationConverter.readDurationToMinutes(effortLeftField.getText());
                     LocalDateTime dateTime = startDate.atTime(timeTextField.getHours(), timeTextField.getMinutes());
                     Log newLog = new Log(task, descriptionTextArea.getText(),
                             selectedPerson, duration, dateTime);
