@@ -243,27 +243,27 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
                 impedimentCombo.getSelectionModel().select(null);
             }
             warningImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                if (impedimentPopOver.isShowing()) {
-                    impedimentPopOver.hide();
-                }
-                else {
-                    impedimentPopOver.show(warningImage);
-                }
-                event.consume();
-            });
+                    if (impedimentPopOver.isShowing()) {
+                        impedimentPopOver.hide();
+                    }
+                    else {
+                        impedimentPopOver.show(warningImage);
+                    }
+                    event.consume();
+                });
 
             Button impedimentSaveButton = new Button("Save Status");
             impedimentSaveButton.setAlignment(Pos.CENTER_RIGHT);
             impedimentSaveButton.setOnAction(event -> {
-                Task.TASKSTATE selectedState = null;
-                Object selectedObject = impedimentCombo.getSelectionModel().getSelectedItem();
-                if (!selectedObject.toString().equals("(none)")) {
-                    selectedState = (Task.TASKSTATE) selectedObject;
-                }
-                task.editImpedimentState(selectedState);
-                impedimentPopOver.hide();
-                this.updateItem(this.getItem(), this.isEmpty());
-            });
+                    Task.TASKSTATE selectedState = null;
+                    Object selectedObject = impedimentCombo.getSelectionModel().getSelectedItem();
+                    if (!selectedObject.toString().equals("(none)")) {
+                        selectedState = (Task.TASKSTATE) selectedObject;
+                    }
+                    task.editImpedimentState(selectedState);
+                    impedimentPopOver.hide();
+                    this.updateItem(this.getItem(), this.isEmpty());
+                });
 
             SearchableText statusLabel = new SearchableText("Status: ");
             statusLabel.setTextAlignment(TextAlignment.LEFT);
