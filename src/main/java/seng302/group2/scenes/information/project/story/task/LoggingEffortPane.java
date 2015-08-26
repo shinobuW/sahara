@@ -2,7 +2,6 @@ package seng302.group2.scenes.information.project.story.task;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,14 +13,15 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
-import seng302.group2.App;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.TimeTextField;
 import seng302.group2.scenes.control.search.SearchableTable;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.conversion.DurationConverter;
+import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
@@ -33,7 +33,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.Set;
-import seng302.group2.util.validation.DateValidator;
 
 /**
  * Created by jml168 on 25/08/15.
@@ -43,6 +42,7 @@ public class LoggingEffortPane extends Pane {
     PopOver popOver = null;
     static Boolean correctEffortLeft = Boolean.FALSE;
     static Boolean correctDuration = Boolean.FALSE;
+    static Boolean loggerSelected = Boolean.FALSE;
     //TODO Make this a Searchable Pane
 
 
@@ -74,10 +74,6 @@ public class LoggingEffortPane extends Pane {
     void construct(Task task) {
         VBox content = new VBox(8);
         content.setPadding(new Insets(8));
-
-
-
-
 
         SearchableTable<Log> taskTable = new SearchableTable<>();
         taskTable.setEditable(false);
@@ -155,7 +151,23 @@ public class LoggingEffortPane extends Pane {
 
         HBox newLogFields = new HBox(10);
         VBox newLogFieldFirstRow = new VBox(10);
-        final CustomComboBox<Person> personComboBox = new CustomComboBox<>("Logger:");
+        final CustomComboBox<Person> personComboBox = new CustomComboBox<>("Logger:", true);
+
+        addButton.setDisable(true);
+
+        personComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue == null) {
+                    loggerSelected = false;
+                    ValidationStyle.borderGlowRed(personComboBox.getComboBox());
+                    ValidationStyle.showMessage("Logger required", personComboBox.getComboBox());
+                }
+                else {
+                    ValidationStyle.borderGlowNone(personComboBox.getComboBox());
+                    loggerSelected = true;
+                }
+                addButton.setDisable(!(loggerSelected && correctDuration && correctEffortLeft));
+            });
+
 
         CustomDatePicker startDatePicker = new CustomDatePicker("Date:", true);
 
@@ -214,6 +226,8 @@ public class LoggingEffortPane extends Pane {
         SearchableText descriptionLabel = new SearchableText("Description");
         TextArea descriptionTextArea = new TextArea();
         descriptionTextArea.setPrefSize(300, 100);
+
+
         
         durationTextField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctDuration = DateValidator.validDuration(newValue) && !newValue.isEmpty();
@@ -240,7 +254,7 @@ public class LoggingEffortPane extends Pane {
                         durationTextField.showErrorField("* Please input valid format");
                     }
                 }
-                addButton.setDisable(!(correctDuration && correctEffortLeft));
+                addButton.setDisable(!(loggerSelected && correctDuration && correctEffortLeft));
             });
         
         effortLeftField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
@@ -256,7 +270,7 @@ public class LoggingEffortPane extends Pane {
                         effortLeftField.showErrorField("* Please input valid format");
                     }
                 }
-                addButton.setDisable(!(correctDuration && correctEffortLeft));
+                addButton.setDisable(!(loggerSelected && correctDuration && correctEffortLeft));
             });
 
 
@@ -300,24 +314,21 @@ public class LoggingEffortPane extends Pane {
                     LocalDate startDate = startDatePicker.getValue();
                     Person selectedPerson = personComboBox.getValue();
                     double duration = DurationConverter.readDurationToMinutes(durationTextField.getText());
-                    double effortLeft = DurationConverter.readDurationToMinutes(effortLeftField.getText());
+                    double effortLeft = DurationConverter.readDurationToMinutes(effortLeftField.getText()) - duration;
                     LocalDateTime dateTime = startDate.atTime(timeTextField.getHours(), timeTextField.getMinutes());
                     Log newLog = new Log(task, descriptionTextArea.getText(),
                             selectedPerson, duration, dateTime);
                     task.add(newLog, effortLeft);
+                    String newEffortLeft2 = (int) Math.floor(task.getEffortLeft() / 60) + "h "
+                            + (int) Math.floor(task.getEffortLeft() % 60) + "min";
+
+                    effortLeftField.setText(newEffortLeft2);
 //                    if (popOver != null) {
 //                        popOver.hide();
 //                    }
                 }
                 else {
-                    if (personComboBox.getValue() == null) {
-                        //personComboBox.showErrorField("Please select a team");
-                        event.consume();
-                    }
-                    if (startDatePicker.getValue() == null) {
-                        startDatePicker.showErrorField("Please select a date");
-                        event.consume();
-                    }
+                    event.consume();
                 }
             });
 

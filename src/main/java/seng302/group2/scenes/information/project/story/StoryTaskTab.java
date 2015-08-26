@@ -4,18 +4,14 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.ComboBoxListCell;
-import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
@@ -23,14 +19,12 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.*;
-import seng302.group2.scenes.information.project.story.task.TaskScene;
+import seng302.group2.scenes.information.project.story.task.LoggingEffortPane;
 import seng302.group2.util.conversion.DurationConverter;
 import seng302.group2.util.validation.DateValidator;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
-import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
 
@@ -40,8 +34,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import static javafx.collections.FXCollections.observableList;
-import seng302.group2.scenes.information.project.story.task.LoggingEffortPane;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -218,7 +210,7 @@ public class StoryTaskTab extends SearchableTab {
                             property.setValue(task.getValue().getAssignee().toString());
                         }
                         else {
-                            property.setValue("Noone Assigned");
+                            property.setValue("No one Assigned");
                         }
                         return property;
                     }

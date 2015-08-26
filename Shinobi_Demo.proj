@@ -3,7 +3,7 @@
     "shortName": "Shinobi Demo",
     "longName": "Shinobi Demo",
     "description": "",
-    "lastSaveLocation": "C:\\Users\\Jordane\\Documents\\SENG302\\Group Project\\Shinobi_Demo.proj",
+    "lastSaveLocation": "/home/cosc/student/swi67/Documents/SENG302/Greoup Projeckt/Shinobi_Demo.proj",
     "estimationScales": {
       "estimationScaleDict": {
         "T-Shirt Sizes": [
@@ -724,7 +724,9 @@
       "0x42"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0x43"
+    ],
     "tasksWithoutStory": false,
     "itemName": "Research Framework",
     "id": 2213
@@ -741,8 +743,8 @@
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0x43",
-      "0x44"
+      "0x44",
+      "0x45"
     ],
     "dependentOn": [
       "0x34"
@@ -764,7 +766,7 @@
     "estimate": "XS",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0x45"
+      "0x46"
     ],
     "dependentOn": [
       "0x35"
@@ -786,7 +788,7 @@
     "estimate": "S",
     "ready": true,
     "serializableAcceptanceCriteria": [
-      "0x46"
+      "0x47"
     ],
     "dependentOn": [
       "0x35"
@@ -821,8 +823,8 @@
     "serializableAcceptanceCriteria": [],
     "dependentOn": [],
     "serializableTasks": [
-      "0x47",
-      "0x48"
+      "0x48",
+      "0x49"
     ],
     "tasksWithoutStory": false,
     "itemName": "I scream",
@@ -843,10 +845,10 @@
     "serializableAcceptanceCriteria": [],
     "dependentOn": [],
     "serializableTasks": [
-      "0x49",
       "0x4a",
       "0x4b",
-      "0x4c"
+      "0x4c",
+      "0x4d"
     ],
     "tasksWithoutStory": false,
     "itemName": "A Taskful Story",
@@ -875,8 +877,8 @@
     "serializableAcceptanceCriteria": [],
     "dependentOn": [],
     "serializableTasks": [
-      "0x4d",
-      "0x4e"
+      "0x4e",
+      "0x4f"
     ],
     "tasksWithoutStory": true,
     "itemName": "Tasks without a Story",
@@ -917,34 +919,49 @@
     "id": 2226
   },
   "0x43": {
+    "shortName": "hjgh",
+    "description": "",
+    "impediments": "",
+    "state": "NOT_STARTED",
+    "lane": "NOT_STARTED",
+    "story": "0x34",
+    "assignee": "0x5",
+    "serializableLogs": [],
+    "effortLeft": 6000.0,
+    "effortSpent": 0.0,
+    "converter": {},
+    "itemName": "hjgh",
+    "id": 2422
+  },
+  "0x44": {
     "description": "Application opens",
     "state": "UNACCEPTED",
     "story": "0x35",
     "itemName": "",
     "id": 2227
   },
-  "0x44": {
+  "0x45": {
     "description": "User is presented with some basic screen",
     "state": "UNACCEPTED",
     "story": "0x35",
     "itemName": "",
     "id": 2228
   },
-  "0x45": {
+  "0x46": {
     "description": "Application plays .WAV files",
     "state": "UNACCEPTED",
     "story": "0x36",
     "itemName": "",
     "id": 2229
   },
-  "0x46": {
+  "0x47": {
     "description": "Webserice set up to provide weather data",
     "state": "UNACCEPTED",
     "story": "0x37",
     "itemName": "",
     "id": 2242
   },
-  "0x47": {
+  "0x48": {
     "shortName": "Grab a kid",
     "description": "",
     "impediments": "",
@@ -958,7 +975,7 @@
     "itemName": "Grab a kid",
     "id": 2388
   },
-  "0x48": {
+  "0x49": {
     "shortName": "Make \u0027em scream",
     "description": "",
     "impediments": "",
@@ -973,7 +990,7 @@
     "itemName": "Make \u0027em scream",
     "id": 2389
   },
-  "0x49": {
+  "0x4a": {
     "shortName": "Verify Me!",
     "description": "",
     "impediments": "",
@@ -987,7 +1004,7 @@
     "itemName": "Verify Me!",
     "id": 2418
   },
-  "0x4a": {
+  "0x4b": {
     "shortName": "Mission Completion",
     "description": "",
     "impediments": "",
@@ -1002,7 +1019,7 @@
     "itemName": "Mission Completion",
     "id": 2419
   },
-  "0x4b": {
+  "0x4c": {
     "shortName": "Don\u0027t touch me",
     "description": "",
     "impediments": "",
@@ -1016,7 +1033,7 @@
     "itemName": "Don\u0027t touch me",
     "id": 2420
   },
-  "0x4c": {
+  "0x4d": {
     "shortName": "I\u0027m lost",
     "description": "",
     "impediments": "",
@@ -1031,7 +1048,7 @@
     "itemName": "I\u0027m lost",
     "id": 2421
   },
-  "0x4d": {
+  "0x4e": {
     "shortName": "Verify Me!",
     "description": "",
     "impediments": "",
@@ -1045,7 +1062,7 @@
     "itemName": "Verify Me!",
     "id": 2389
   },
-  "0x4e": {
+  "0x4f": {
     "shortName": "Mission Completion",
     "description": "",
     "impediments": "",
