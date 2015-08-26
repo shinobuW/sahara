@@ -70,7 +70,7 @@ public class StoryTaskTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        TableView<Task> taskTable = new TableView<>();
+        SearchableTable<Task> taskTable = new SearchableTable<>();
         taskTable.setEditable(true);
         taskTable.setPrefWidth(700);
         taskTable.setPrefHeight(200);
@@ -433,7 +433,8 @@ public class StoryTaskTab extends SearchableTab {
                 shortNameCustomField,
                 effortLeftField,
                 descriptionField,
-                assigneeField
+                assigneeField,
+                taskTable
         );
 
     }

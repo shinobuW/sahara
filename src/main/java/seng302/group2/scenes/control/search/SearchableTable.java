@@ -3,6 +3,7 @@ package seng302.group2.scenes.control.search;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 
 import java.util.Collection;
@@ -100,9 +101,11 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
         if (!query.isEmpty()) {
             ObservableList<TableColumn<T, ?>> cols = this.getColumns();
 
-            for (T aData : data) {
+            for (T aData : this.getItems()) {
+
                 for (TableColumn<T, ?> col : cols) {
                     String cellValue = col.getCellData(aData).toString();
+
                     cellValue = cellValue.toLowerCase();
                     if (cellValue.contains(query.trim().toLowerCase())) {
                         matchingItems.add(aData);
@@ -121,6 +124,21 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
      * the row's style is set to null (default).
      */
     private void updateRows() {
-        setRowFactory(tr -> tableRowType);
+        setRowFactory(tv -> new TableRow<T>() {
+            @Override
+            protected void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item != null) {
+                    if (matchingItems.contains(item)) {
+                        setStyle("-fx-background-color: " + SearchableControl.highlightColourString + "; ");
+                    }
+                    else {
+                        setStyle(null);
+                        //setStyle("-fx-background-color: " + Color.TRANSPARENT + ";");
+                    }
+                }
+            }
+        });
     }
 }

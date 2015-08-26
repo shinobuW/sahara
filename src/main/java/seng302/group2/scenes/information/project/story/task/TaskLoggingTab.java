@@ -24,6 +24,7 @@ import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.TimeTextField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableTable;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Log;
@@ -57,7 +58,7 @@ public class TaskLoggingTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        TableView<Log> taskTable = new TableView<>();
+        SearchableTable<Log> taskTable = new SearchableTable<>();
         taskTable.setEditable(false);
         taskTable.setPrefWidth(700);
         taskTable.setPrefHeight(200);

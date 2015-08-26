@@ -17,10 +17,7 @@ import javafx.util.Callback;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.util.validation.ValidationStatus;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.Project;
@@ -60,7 +57,7 @@ public class TeamHistoryTab extends SearchableTab {
         this.setContent(wrapper);
 
         // Create Table
-        TableView<Allocation> historyTable = new TableView<>(currentTeam.getProjectAllocations());
+        SearchableTable<Allocation> historyTable = new SearchableTable<>(currentTeam.getProjectAllocations());
         SearchableText tablePlaceholder = new SearchableText("This team has no project allocations.");
         historyTable.setEditable(true);
         historyTable.setPrefWidth(700);
