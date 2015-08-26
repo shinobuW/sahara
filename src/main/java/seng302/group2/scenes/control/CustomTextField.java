@@ -32,11 +32,11 @@ public class CustomTextField extends VBox implements SearchableControl {
      */
     public CustomTextField(String name) {
         this.errorMessageText.setText(errorMessage);
+        inputText.setPrefWidth(175);
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);
-        labelBox.spacingProperty().setValue(0);
-        labelBox.setAlignment(Pos.CENTER_LEFT);
+
 
         errorMessageText.setTextFill(Color.web("#ff0000"));
 
@@ -58,9 +58,10 @@ public class CustomTextField extends VBox implements SearchableControl {
      * @param controlCollection The search control collection to add this control to
      */
     public CustomTextField(String name, Collection<SearchableControl> controlCollection) {
-
         controlCollection.add(this);
         this.errorMessageText.setText(errorMessage);
+        this.inputText.setPrefWidth(175);
+
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);

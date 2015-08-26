@@ -7,19 +7,17 @@ package seng302.group2.scenes.dialog;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaView;
+import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.CustomDateField;
-import seng302.group2.scenes.control.CustomTextArea;
-import seng302.group2.scenes.control.CustomTextField;
-import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.control.*;
 import seng302.group2.workspace.person.Person;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -55,6 +53,7 @@ public class CreatePersonDialog extends Dialog<Map<String, String>> {
         correctFirstName = Boolean.FALSE;
         correctLastName = Boolean.FALSE;
 
+
         this.setTitle("New Person");
         this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 400px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 400px;");
@@ -72,11 +71,29 @@ public class CreatePersonDialog extends Dialog<Map<String, String>> {
         RequiredField firstNameCustomField = new RequiredField("First Name:");
         RequiredField lastNameCustomField = new RequiredField("Last Name:");
         CustomTextField emailTextField = new CustomTextField("Email:");
-        CustomDateField customBirthDate = new CustomDateField("Birth Date:");
+        CustomDatePicker birthDatePicker = new CustomDatePicker("Birth Date:", false);
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
 
+        final Callback<DatePicker, DateCell> startDateCellFactory =
+            new Callback<DatePicker, DateCell>() {
+                @Override
+                public DateCell call(final DatePicker datePicker) {
+                    return new DateCell() {
+                        @Override
+                        public void updateItem(LocalDate item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (item.isAfter(LocalDate.now())) {
+                                setDisable(true);
+                                setStyle("-fx-background-color: #ffc0cb;");
+                            }
+                        }
+                    };
+                }
+            };
+        birthDatePicker.getDatePicker().setDayCellFactory(startDateCellFactory);
+
         grid.getChildren().addAll(shortNameCustomField, firstNameCustomField, lastNameCustomField,
-                emailTextField, customBirthDate, descriptionTextArea);
+                emailTextField, birthDatePicker, descriptionTextArea);
 
         //Add grid of controls to dialog
         this.getDialogPane().setContent(grid);
@@ -88,27 +105,28 @@ public class CreatePersonDialog extends Dialog<Map<String, String>> {
         createButton.setDisable(true);
 
         //Validation
-
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctShortName = validateShortName(shortNameCustomField, null);
-                createButton.setDisable(!(correctShortName && correctFirstName && correctLastName && correctDate));
+                createButton.setDisable(!correctUserInput());
             });
 
         firstNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newvalue) -> {
                 correctFirstName = validateName(firstNameCustomField);
-                createButton.setDisable(!(correctShortName && correctFirstName && correctLastName && correctDate));
+                createButton.setDisable(!correctUserInput());
             });
 
         lastNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctLastName = validateName(lastNameCustomField);
-                createButton.setDisable(!(correctShortName && correctFirstName && correctLastName && correctDate));
+                createButton.setDisable(!correctUserInput());
             });
 
-        customBirthDate.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctDate = validateBirthDateField(customBirthDate);
-                createButton.setDisable(!(correctShortName && correctFirstName && correctLastName && correctDate));
+        birthDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
+                @Override
+                public void changed(ObservableValue<? extends LocalDate> observable,
+                                    LocalDate oldValue, LocalDate newValue) {
+                    createButton.setDisable(!correctUserInput());
+                }
             });
-
 
         this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
@@ -119,16 +137,7 @@ public class CreatePersonDialog extends Dialog<Map<String, String>> {
                     String email = emailTextField.getText();
                     String description = descriptionTextArea.getText();
 
-                    String birthdateString = customBirthDate.getText();
-
-                    LocalDate birthDate;
-                    if (birthdateString.isEmpty()) {
-                        birthDate = null;
-                    }
-                    else {
-                        birthDate = stringToDate(birthdateString);
-                    }
-
+                    LocalDate birthDate = birthDatePicker.getValue();
 
                     if (firstName.equals("John") && lastName.equals("Cena")) {
                         String path = ("media/Cena.mp3");
@@ -142,12 +151,15 @@ public class CreatePersonDialog extends Dialog<Map<String, String>> {
                     Global.currentWorkspace.add(person);
                     App.mainPane.selectItem(person);
                     this.close();
-
                 }
                 return null;
             });
 
         this.setResizable(false);
         this.show();
+    }
+
+    private boolean correctUserInput() {
+        return correctShortName && correctFirstName && correctLastName && correctDate;
     }
 }

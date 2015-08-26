@@ -361,7 +361,6 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                     };
                 }
             };
-
         sprintStartDatePicker.getDatePicker().setDayCellFactory(startDateCellFactory);
 
         final Callback<DatePicker, DateCell> endDateCellFactory =
