@@ -5,7 +5,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
-import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.story.TaskInformationSwitchStrategy;
 import seng302.group2.util.conversion.ColorUtils;
 import seng302.group2.util.conversion.GeneralEnumStringConverter;
 import seng302.group2.util.reporting.ReportGenerator;
@@ -72,7 +71,6 @@ public class Task extends SaharaItem implements Serializable {
         this.effortLeft = 0;
         this.effortSpent = 0;
 
-        setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
     }
 
 
@@ -92,7 +90,6 @@ public class Task extends SaharaItem implements Serializable {
         this.effortSpent = (float) 0;
         this.assignee = person;
 
-        setInformationSwitchStrategy(new TaskInformationSwitchStrategy());
     }
 
     /**
@@ -398,6 +395,13 @@ public class Task extends SaharaItem implements Serializable {
         Collections.addAll(laneStates, TASKSTATE.NOT_STARTED, TASKSTATE.IN_PROGRESS, TASKSTATE.VERIFY, TASKSTATE.DONE);
         return laneStates;
     }
+
+
+    private static Set<TASKSTATE> impedingStates = new HashSet<>();
+    public static Collection<TASKSTATE> getImpedingStates() {
+        Collections.addAll(impedingStates, TASKSTATE.BLOCKED, TASKSTATE.DEFERRED);
+        return impedingStates;
+    }
     
 
     /**
@@ -431,7 +435,7 @@ public class Task extends SaharaItem implements Serializable {
 
 
     /**
-     * Creates a Task edit state command and executes it with the Global Command Manager, updating
+     * Creates a Task edit lane state command and executes it with the Global Command Manager, updating
      * the task with the new parameter values.
      *
      * @param newState    The new state
@@ -439,6 +443,18 @@ public class Task extends SaharaItem implements Serializable {
      */
     public void editLane(TASKSTATE newState, int index) {
         Command relEdit = new TaskEditLaneCommand(this, newState, index);
+        Global.commandManager.executeCommand(relEdit);
+    }
+
+
+    /**
+     * Creates a Task edit impediment state command and executes it with the Global Command Manager, updating
+     * the task with the new parameter values.
+     *
+     * @param newState    The new state
+     */
+    public void editImpedimentState(TASKSTATE newState) {
+        Command relEdit = new TaskEditImpedimentStatusCommand(this, newState);
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -700,6 +716,65 @@ public class Task extends SaharaItem implements Serializable {
             if (task.getStory() != null) {
                 task.getStory().addTaskToLane(task, oldIndex);
             }
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped_task = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(task)) {
+                    this.task = (Task) item;
+                    mapped_task = true;
+                }
+            }
+
+            return  mapped_task;
+        }
+    }
+
+
+    /**
+     * A command class that allows the executing and undoing of task lane edits
+     */
+    private class TaskEditImpedimentStatusCommand implements Command {
+
+        private Task task;
+        private TASKSTATE state;
+        private TASKSTATE oldState;
+
+        /**
+         * Constructor for the Task Edit State command, used for changing lanes in the scrumboard
+         * @param task The story to be edited
+         * @param state    The new state
+         */
+        private TaskEditImpedimentStatusCommand(Task task, TASKSTATE state) {
+            this.task = task;
+            this.state = state;
+            this.oldState = task.state;
+        }
+
+        /**
+         * Executes/Redoes the changes of the task edit
+         */
+        public void execute() {
+            if (state == null) {
+                task.state = task.getLane();
+            }
+            else if (Task.getImpedingStates().contains(state)) {
+                task.state = state;
+            }
+        }
+
+        /**
+         * Undoes the changes of the task edit
+         */
+        public void undo() {
+            task.state = oldState;
         }
 
         /**

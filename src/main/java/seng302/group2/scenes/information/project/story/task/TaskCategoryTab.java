@@ -12,10 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.categories.subCategory.project.task.TaskCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.sprint.Sprint;
@@ -55,7 +52,7 @@ public class TaskCategoryTab extends SearchableTab {
 
         SearchableText title = new SearchableTitle("Tasks without a Story", searchControls);
 
-        TableView<Task> taskTable = new TableView<>();
+        SearchableTable<Task> taskTable = new SearchableTable<>();
         taskTable.setEditable(false);
         taskTable.setPrefWidth(500);
         taskTable.setPrefHeight(200);
@@ -145,7 +142,7 @@ public class TaskCategoryTab extends SearchableTab {
 
         Collections.addAll(searchControls,
                 title,
-//                taskTable,
+                taskTable,
                 task,
                 shortNameCustomField
         );

@@ -9,10 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import seng302.group2.App;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
 
@@ -45,7 +42,7 @@ public class BacklogInfoTab extends SearchableTab {
         this.setContent(wrapper);
 
         // Create Table
-        TableView<Story> storyTable = new TableView<>(currentBacklog.getStories());
+        SearchableTable<Story> storyTable = new SearchableTable<>(currentBacklog.getStories());
         SearchableText tablePlaceholder = new SearchableText("There are currently no stories in this backlog.");
         storyTable.setEditable(true);
         storyTable.setPrefWidth(500);
@@ -208,7 +205,7 @@ public class BacklogInfoTab extends SearchableTab {
                 po,
                 estScale,
                 storiesTableLabel,
-                //storyTable,
+                storyTable,
                 orangeKeyLabel,
                 greenKeyLabel,
                 redKeyLabel,

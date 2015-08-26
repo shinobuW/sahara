@@ -114,6 +114,9 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
             rightContent.getChildren().addAll(remainingTime);
 
 
+
+
+
             // Assignee icon
             ImageView assigneeImage;
             if (task.getAssignee() != null) {
@@ -127,7 +130,7 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
             rightContent.getChildren().addAll(assigneeImage);
 
             PopOver assignPopOver = new PopOver();
-            assignPopOver.setDetachedTitle(task.getShortName());
+            assignPopOver.setDetachedTitle(task.getShortName() + " Assignment");
             SortedSet<Person> availableAssignees = new TreeSet<>();
             try {
                 for (Team team : task.getStory().getProject().getCurrentTeams()) {
@@ -183,9 +186,13 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
 
 
 
+
+
+
             // Impediments icon
+            ImageView warningImage;
             if (task.getState() == Task.TASKSTATE.BLOCKED || task.getState() == Task.TASKSTATE.DEFERRED) {
-                ImageView warningImage = new ImageView("icons/dialog-cancel.png");
+                warningImage = new ImageView("icons/dialog-cancel.png");
                 if (task.getState() == Task.TASKSTATE.BLOCKED) {
                     if (!task.getImpediments().equals("")) {
                         Tooltip.create("This task is currently blocked, with the following impediments: \n"
@@ -205,8 +212,85 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
                         Tooltip.create("This task has been deferred", warningImage, 50);
                     }
                 }
-                rightContent.getChildren().addAll(warningImage);
             }
+            else {
+                warningImage = new ImageView("icons/dialog-cancel-empty.png");
+                Tooltip.create("This task has no impediments or blockages", warningImage, 50);
+            }
+            rightContent.getChildren().addAll(warningImage);
+
+
+            PopOver impedimentPopOver = new PopOver();
+            impedimentPopOver.setDetachedTitle(task.getShortName() + " Impediments");
+            SortedSet<Task.TASKSTATE> availableStatuses = new TreeSet<>();
+            try {
+                for (Task.TASKSTATE state : Task.getImpedingStates()) {
+                    availableStatuses.add(state);
+                }
+            }
+            catch (NullPointerException ex) {
+            }
+
+
+            ComboBox impedimentCombo = new ComboBox<>();
+            impedimentCombo.getItems().add("(none)");
+            impedimentCombo.getItems().addAll(availableStatuses);
+            // Make default selection
+            if (impedimentCombo.getItems().contains(task.getState())) {
+                impedimentCombo.getSelectionModel().select(task.getState());
+            }
+            else {
+                impedimentCombo.getSelectionModel().select(null);
+            }
+            warningImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    if (impedimentPopOver.isShowing()) {
+                        impedimentPopOver.hide();
+                    }
+                    else {
+                        impedimentPopOver.show(warningImage);
+                    }
+                    event.consume();
+                });
+
+            Button impedimentSaveButton = new Button("Save Status");
+            impedimentSaveButton.setAlignment(Pos.CENTER_RIGHT);
+            impedimentSaveButton.setOnAction(event -> {
+                    Task.TASKSTATE selectedState = null;
+                    Object selectedObject = impedimentCombo.getSelectionModel().getSelectedItem();
+                    if (!selectedObject.toString().equals("(none)")) {
+                        selectedState = (Task.TASKSTATE) selectedObject;
+                    }
+                    task.editImpedimentState(selectedState);
+                    impedimentPopOver.hide();
+                    this.updateItem(this.getItem(), this.isEmpty());
+                });
+
+            SearchableText statusLabel = new SearchableText("Status: ");
+            statusLabel.setTextAlignment(TextAlignment.LEFT);
+            HBox impedimentComboLabel = new HBox(8);
+            impedimentComboLabel.setAlignment(Pos.CENTER);
+            impedimentComboLabel.getChildren().addAll(
+                    statusLabel,
+                    impedimentCombo
+            );
+            VBox impedimentChangeNode = new VBox(8);
+            impedimentChangeNode.setPadding(new Insets(8,8,8,8));
+            impedimentChangeNode.getChildren().addAll(
+                    impedimentComboLabel,
+                    impedimentSaveButton
+            );
+            impedimentPopOver.setContentNode(impedimentChangeNode);
+
+
+
+
+
+
+
+
+
+
+
 
 
             // Bring cell parts together

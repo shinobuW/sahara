@@ -10,10 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.project.story.Story;
 
 import java.util.ArrayList;
@@ -46,7 +43,7 @@ public class StoryDependenciesTab extends SearchableTab {
 
         SearchableText title = new SearchableTitle("Dependencies of " + currentStory.getShortName());
 
-        TableView<Story> dependsTable = new TableView<>();
+        SearchableTable<Story> dependsTable = new SearchableTable<>();
         SearchableText tablePlaceholder = new SearchableText("This story is not currently dependant on another");
         dependsTable.setEditable(true);
         dependsTable.setPrefWidth(500);
@@ -114,7 +111,8 @@ public class StoryDependenciesTab extends SearchableTab {
         Collections.addAll(searchControls,
                 title,
                 tablePlaceholder,
-                tablePlaceholder1
+                tablePlaceholder1,
+                dependsTable
         );
     }
 

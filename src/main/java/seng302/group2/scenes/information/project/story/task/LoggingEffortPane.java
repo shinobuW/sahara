@@ -19,6 +19,7 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.TimeTextField;
+import seng302.group2.scenes.control.search.SearchableTable;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.util.conversion.DurationConverter;
 import seng302.group2.workspace.person.Person;
@@ -42,6 +43,7 @@ public class LoggingEffortPane extends Pane {
     PopOver popOver = null;
     static Boolean correctEffortLeft = Boolean.FALSE;
     static Boolean correctDuration = Boolean.FALSE;
+    //TODO Make this a Searchable Pane
 
 
     public LoggingEffortPane(Task task) {
@@ -77,7 +79,7 @@ public class LoggingEffortPane extends Pane {
 
 
 
-        TableView<Log> taskTable = new TableView<>();
+        SearchableTable<Log> taskTable = new SearchableTable<>();
         taskTable.setEditable(false);
         taskTable.setPrefWidth(400);
         taskTable.setPrefHeight(200);
