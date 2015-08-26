@@ -1,6 +1,9 @@
 package seng302.group2.scenes.control.search;
 
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 
 import java.util.ArrayList;
@@ -59,7 +62,9 @@ public class SearchableText extends TextFlow implements SearchableControl {
     public SearchableText(String content, String style) {
         this.styleInject = style;
         this.setStyle(styleInject);
-        texts.add(new TextFlow(new Text(content)));
+        TextFlow text = new TextFlow(new Text(content));
+        text.setStyle(styleInject);
+        texts.add(text);
         updateFlow();
     }
 
@@ -74,7 +79,9 @@ public class SearchableText extends TextFlow implements SearchableControl {
         collection.add(this);
         this.styleInject = style;
         this.setStyle(styleInject);
-        texts.add(new TextFlow(new Text(content)));
+        TextFlow text = new TextFlow(new Text(content));
+        text.setStyle(styleInject);
+        texts.add(text);
         updateFlow();
     }
 
@@ -85,7 +92,9 @@ public class SearchableText extends TextFlow implements SearchableControl {
      */
     public void setText(String content) {
         texts.clear();
-        texts.add(new TextFlow(new Text(content)));
+        TextFlow text = new TextFlow(new Text(content));
+        text.setStyle(styleInject);
+        texts.add(text);
         updateFlow();
     }
 
@@ -156,9 +165,13 @@ public class SearchableText extends TextFlow implements SearchableControl {
             Text matchText = new Text(content.substring(index, index + query.length()));
             TextFlow match = new TextFlow(matchText);
             match.setStyle(styleInject + styleHighlighted);
-            builtText.add(new TextFlow(new Text(content.substring(0, index))));  // Start
+            TextFlow startText = new TextFlow(new Text(content.substring(0, index)));  // Start
+            startText.setStyle(styleInject);
+            builtText.add(startText);  // Start
             builtText.add(match);  // Query match
-            builtText.add(new TextFlow(new Text(content.substring(index + query.length(), content.length()))));  // End
+            TextFlow endText = new TextFlow(new Text(content.substring(index + query.length(), content.length())));
+            endText.setStyle(styleInject);
+            builtText.add(endText);  // End
 
             content = content.substring(index + query.length());
             index = content.toLowerCase().indexOf(query);
@@ -173,5 +186,24 @@ public class SearchableText extends TextFlow implements SearchableControl {
         updateFlow();
 
         return true;
+    }
+
+
+    /**
+     * Injects the given style into the text
+     * @param style The style string to inject
+     */
+    public void injectStyle(String style) {
+        if (!styleInject.endsWith(";")) {
+            styleInject = styleInject + ";";
+        }
+        if (!style.endsWith(";")) {
+            style = style + ";";
+        }
+        styleInject = styleInject + style;
+
+        for (TextFlow text : texts) {
+            text.setStyle(styleInject);
+        }
     }
 }

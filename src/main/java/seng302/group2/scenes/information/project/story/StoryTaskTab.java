@@ -24,6 +24,7 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.information.project.story.task.TaskScene;
+import seng302.group2.util.conversion.DurationConverter;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
@@ -413,7 +414,7 @@ public class StoryTaskTab extends SearchableTab {
                     newTask.setEffortLeft((double) 0);
                 }
                 else {
-                    newTask.setEffortLeft(Log.readDurationToMinutes(effortLeftField.getText()));
+                    newTask.setEffortLeft(DurationConverter.readDurationToMinutes(effortLeftField.getText()));
                 }
                 currentStory.add(newTask);
                 App.refreshMainScene();

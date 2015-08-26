@@ -187,6 +187,8 @@ public class DateValidatorTest {
         String test12 = "0";
         String test13 = "1.25 hours";
         String test14 = "1.25 hours 45min";
+        String test15 = "1.25y";
+        String test16 = "1.6-";
         Assert.assertTrue(DateValidator.validDuration(test));
         Assert.assertTrue(DateValidator.validDuration(test2));
         Assert.assertTrue(DateValidator.validDuration(test3));
@@ -201,5 +203,7 @@ public class DateValidatorTest {
         Assert.assertTrue(DateValidator.validDuration(test12));
         Assert.assertTrue(DateValidator.validDuration(test13));
         Assert.assertFalse(DateValidator.validDuration(test14));
+        Assert.assertFalse(DateValidator.validDuration(test15));
+        Assert.assertFalse(DateValidator.validDuration(test16));
     }
 }

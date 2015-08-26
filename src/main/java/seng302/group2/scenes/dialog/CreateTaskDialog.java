@@ -14,6 +14,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.util.conversion.DurationConverter;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -273,7 +274,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                     //get user input
                     String shortName = shortNameCustomField.getText();
                     String description = descriptionTextArea.getText();
-                    Double effortSpent = Log.readDurationToMinutes(effortLeftField.getText());
+                    Double effortSpent = DurationConverter.readDurationToMinutes(effortLeftField.getText());
                     Story story =  storyComboBox.getSelectionModel().getSelectedItem();
                     Person assignee = null;
                     if (assigneeComboBox.getValue() != null && !assigneeComboBox.getValue().toString().isEmpty()) {
