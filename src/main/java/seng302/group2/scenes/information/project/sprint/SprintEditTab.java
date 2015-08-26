@@ -132,9 +132,12 @@ public class SprintEditTab extends SearchableTab {
         availableStoriesView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         VBox inSprintVBox = new VBox();
         VBox availableVBox = new VBox();
-        inSprintVBox.getChildren().addAll(new SearchableText("Sprint Stories: ", searchControls), storiesInSprintView);
-        availableVBox.getChildren().addAll(new SearchableText("Available Stories: ", searchControls),
-                availableStoriesView);
+        SearchableText sprintStoriesLabel = new SearchableText("Sprint Stories: ", searchControls);
+        sprintStoriesLabel.setStyle("-fx-font-weight: bold");
+        SearchableText availableStoriesLabel = new SearchableText("Available Stories: ", searchControls);
+        availableStoriesLabel.setStyle("-fx-font-weight: bold");
+        inSprintVBox.getChildren().addAll(sprintStoriesLabel, storiesInSprintView);
+        availableVBox.getChildren().addAll(availableStoriesLabel, availableStoriesView);
         HBox storyHBox = new HBox(10);
         storyHBox.setPrefHeight(192);
         storyHBox.getChildren().addAll(inSprintVBox, assignmentButtons, availableVBox);

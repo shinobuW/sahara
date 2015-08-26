@@ -21,19 +21,20 @@ public class SearchableCheckBox extends VBox implements SearchableControl {
      * @param label Late
      */
     public SearchableCheckBox(String label) {
-        HBox labelBox = new HBox();
-        labelBox.setSpacing(15);
-        labelBox.setPrefWidth(165);
-        labelBox.setAlignment(Pos.CENTER_LEFT);
-        labelBox.spacingProperty().setValue(0);
+        HBox box = new HBox();
+        box.setSpacing(15);
+        box.setPrefWidth(165);
+        box.setAlignment(Pos.CENTER_LEFT);
+        box.spacingProperty().setValue(0);
 
 
         cbLabel.setPadding(new Insets(0, 400, 0, 0));
-
         cbLabel.setText(label);
-        labelBox.getChildren().addAll(cbLabel, cb);
+        cbLabel.setStyle("-fx-font-weight: bold");
 
-        this.getChildren().add(labelBox);
+        box.getChildren().addAll(cbLabel, cb);
+
+        this.getChildren().add(box);
 
     }
 
@@ -42,15 +43,16 @@ public class SearchableCheckBox extends VBox implements SearchableControl {
      * @param searchableControls A collection of searchable controls to add this control to
      */
     public SearchableCheckBox(String label, Collection<SearchableControl> searchableControls) {
-        HBox labelBox = new HBox();
-        labelBox.setPrefWidth(165);
-        labelBox.setAlignment(Pos.CENTER_LEFT);
-        labelBox.spacingProperty().setValue(0);
+        HBox box = new HBox();
+        box.setPrefWidth(165);
+        box.setAlignment(Pos.CENTER_LEFT);
+        box.spacingProperty().setValue(0);
 
         cbLabel.setText(label);
-        labelBox.getChildren().addAll(cbLabel, cb);
+        cbLabel.setStyle("-fx-font-weight: bold");
+        box.getChildren().addAll(cbLabel, cb);
 
-        this.getChildren().add(labelBox);
+        this.getChildren().add(box);
         searchableControls.add(this);
     }
 

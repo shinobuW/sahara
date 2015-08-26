@@ -126,10 +126,12 @@ public class BacklogEditTab extends SearchableTab {
 
         VBox backlogStoryBox = new VBox(10);
         SearchableText backlogStoriesLabel = new SearchableText("Backlog Stories: ");
+        backlogStoriesLabel.setStyle("-fx-font-weight: bold");
         backlogStoryBox.getChildren().addAll(backlogStoriesLabel, backlogStoryListView);
 
         VBox availableStoryBox = new VBox(10);
         SearchableText availableStoriesLabel = new SearchableText("Available Stories: ");
+        availableStoriesLabel.setStyle("-fx-font-weight: bold");
         availableStoryBox.getChildren().addAll(availableStoriesLabel, availableStoryListView);
 
         HBox storyListViews = new HBox(10);

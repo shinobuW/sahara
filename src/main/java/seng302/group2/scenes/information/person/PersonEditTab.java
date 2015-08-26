@@ -136,9 +136,12 @@ public class PersonEditTab extends SearchableTab {
 
         VBox v1 = new VBox(10);
         SearchableText v1Label = new SearchableText("Skills: ");
+        v1Label.setStyle("-fx-font-weight: bold");
         v1.getChildren().addAll(v1Label, personSkillsBox);
+
         VBox v2 = new VBox(10);
         SearchableText v2Label = new SearchableText("Available Skills: ");
+        v2Label.setStyle("-fx-font-weight: bold");
         v2.getChildren().addAll(v2Label, skillsBox);
 
         HBox h1 = new HBox(10);

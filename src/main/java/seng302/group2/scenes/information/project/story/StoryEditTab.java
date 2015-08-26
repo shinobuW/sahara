@@ -43,6 +43,7 @@ public class StoryEditTab extends SearchableTab {
      * @param currentStory The story being edited
      */
     public StoryEditTab(Story currentStory) {
+        // Tab settings
         this.setText("Edit Story");
         Pane editPane = new VBox(10);
         editPane.setBorder(null);
@@ -50,13 +51,6 @@ public class StoryEditTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(editPane);
         this.setContent(wrapper);
 
-        Button btnCancel = new Button("Cancel");
-        Button btnDone = new Button("Done");
-
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.TOP_LEFT);
-        buttons.getChildren().addAll(btnDone, btnCancel);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         CustomTextField longNameTextField = new CustomTextField("Long Name:");
@@ -74,6 +68,15 @@ public class StoryEditTab extends SearchableTab {
         assignmentButtons.setAlignment(Pos.CENTER);
 
         HBox estimateHBox = new HBox();
+
+        Button btnCancel = new Button("Cancel");
+        Button btnDone = new Button("Done");
+
+        HBox buttons = new HBox();
+        buttons.spacingProperty().setValue(10);
+        buttons.alignmentProperty().set(Pos.TOP_LEFT);
+        buttons.getChildren().addAll(btnDone, btnCancel);
+
 
         boolean unassigned = false;
         if (currentStory.getBacklog() == null) {
@@ -170,9 +173,11 @@ public class StoryEditTab extends SearchableTab {
         HBox storyListViews = new HBox(10);
 
         SearchableText dependantStoryLabel = new SearchableText("Dependant On: ");
+        dependantStoryLabel.setStyle("-fx-font-weight: bold");
         backlogStoryBox.getChildren().addAll(dependantStoryLabel, dependantStoriesListView);
 
         SearchableText availableStoryLabel = new SearchableText("Available Stories: ");
+        availableStoryLabel.setStyle("-fx-font-weight: bold");
         availableStoryBox.getChildren().addAll(availableStoryLabel, availableStoryListView);
 
 

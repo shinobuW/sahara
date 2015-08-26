@@ -104,6 +104,7 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
     public CustomComboBox(String name, Collection<SearchableControl> searchableControls) {
         searchableControls.add(this);
         this.errorMessageText.setText(errorMessage);
+        titleLabel.setStyle("-fx-font-weight: bold");
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);
@@ -138,6 +139,7 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
         searchableControls.add(this);
         this.required = required;
         this.errorMessageText.setText(errorMessage);
+        titleLabel.setStyle("-fx-font-weight: bold");
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);

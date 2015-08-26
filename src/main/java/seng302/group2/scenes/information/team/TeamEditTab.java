@@ -154,11 +154,13 @@ public class TeamEditTab extends SearchableTab {
 
         VBox teamMembersBox = new VBox(10);
         SearchableText teamMemberLabel = new SearchableText("Team Members: ");
+        teamMemberLabel.setStyle("-fx-font-weight: bold");
         teamMembersBox.getChildren().addAll(teamMemberLabel, teamMembersListView);
 
 
         VBox availablePeopleBox = new VBox(10);
         SearchableText availablePeopleLabel = new SearchableText("Available People: ");
+        availablePeopleLabel.setStyle("-fx-font-weight: bold");
         availablePeopleBox.getChildren().addAll(availablePeopleLabel, availablePeopleListView);
 
         HBox memberListViews = new HBox(10);
