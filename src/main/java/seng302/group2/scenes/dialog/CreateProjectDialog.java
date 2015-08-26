@@ -11,12 +11,12 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.util.validation.NameValidator;
+import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.Project;
 
 import java.util.Map;
 
-import static seng302.group2.util.validation.NameValidator.validateName;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * Class to create a pop up dialog for creating a workspace.
@@ -64,12 +64,12 @@ public class CreateProjectDialog extends Dialog<Map<String, String>> {
         createButton.setDisable(true);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctShortName = validateShortName(shortNameCustomField, null);
+                correctShortName = ShortNameValidator.validateShortName(shortNameCustomField, null);
                 createButton.setDisable(!(correctShortName && correctLongName));
             });
 
         longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctLongName = validateName(longNameCustomField);
+                correctLongName = NameValidator.validateName(longNameCustomField);
                 createButton.setDisable(!(correctShortName && correctLongName));
             });
 

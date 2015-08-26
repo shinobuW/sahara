@@ -7,6 +7,7 @@ package seng302.group2.util.validation;
 
 import seng302.group2.Global;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
@@ -61,19 +62,27 @@ public class ShortNameValidator {
 
         switch (status) {
             case VALID:
-                shortNameField.hideErrorField();
+                ValidationStyle.borderGlowNone(shortNameField.getTextField());
+                //shortNameField.hideErrorField();
                 return true;
             case NON_UNIQUE:
-                shortNameField.showErrorField("* Short name must be unique");
+                ValidationStyle.borderGlowRed(shortNameField.getTextField());
+                ValidationStyle.showMessage("Short name must be unique", shortNameField.getTextField());
+                //shortNameField.showErrorField("* Short name must be unique");
                 return false;
             case INVALID:
-                shortNameField.showErrorField("* Not a valid short name");
+                ValidationStyle.borderGlowRed(shortNameField.getTextField());
+                ValidationStyle.showMessage("Not a valid short name", shortNameField.getTextField());
+                //shortNameField.showErrorField("* Not a valid short name");
                 return false;
             case OUT_OF_RANGE:
-                shortNameField.showErrorField("* Short names must be less than 20 characters long");
+                ValidationStyle.borderGlowRed(shortNameField.getTextField());
+                ValidationStyle.showMessage("Short name must be less than 20 characters",
+                        shortNameField.getTextField());
                 return false;
             default:
-                shortNameField.showErrorField("* Not a valid short name");
+                ValidationStyle.borderGlowRed(shortNameField.getTextField());
+                ValidationStyle.showMessage("Not a valid short name", shortNameField.getTextField());
                 return false;
         }
     }
