@@ -200,13 +200,19 @@ public class Sprint extends SaharaItem {
      * @return A list of logs within the sprint
      */
     public List<Log> getAllLogs() {
-        List<Log> logList = new ArrayList<Log>();
+        List<Log> logList = new ArrayList<>();
         for (Task task : this.getAllTasks()) {
             for (Log log : task.getLogs()) {
                 logList.add(log);
             }
         }
-        System.out.println(logList);
+
+        Collections.sort(logList, new Comparator<Log>() {
+            @Override
+            public int compare(Log o1, Log o2) {
+                return o1.getStartDate().compareTo(o2.getStartDate());
+            }
+        });
         return logList;
     }
 

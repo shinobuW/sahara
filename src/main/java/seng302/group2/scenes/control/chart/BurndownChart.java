@@ -6,8 +6,11 @@ import javafx.scene.chart.XYChart;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.tasks.Log;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -35,6 +38,41 @@ public class BurndownChart extends LineChart {
      * @param currentSprint the sprint the chart is displaying.
      */
     public void populateGraph(Sprint currentSprint) {
+        List<Log> logList;
+        logList = currentSprint.getAllLogs();
+
+        double maxEffortLeft = 0;
+
+        /* Map which stores a (key, value) pair of (date: hours), where hours is the total n
+        umber of hours logged on the date.
+         */
+        Map<LocalDate, Double> dailyEffortMap = new HashMap<>();
+
+        for (Log log : logList) {
+            if  (dailyEffortMap.containsKey(log.getStartDate().toLocalDate())) {
+                Double sum = dailyEffortMap.get(log.getStartDate().toLocalDate());
+                dailyEffortMap.put(log.getStartDate().toLocalDate(), sum + log.getDurationInHours());
+            }
+            else {
+                dailyEffortMap.put(log.getStartDate().toLocalDate(), log.getDurationInHours());
+            }
+
+            maxEffortLeft += log.getDurationInHours();
+        }
+
+        for (LocalDate d : dailyEffortMap.keySet()) {
+            System.out.println(d + ": " + dailyEffortMap.get(d));
+        }
+        System.out.println(maxEffortLeft);
+
+
+
+
+
+
+
+
+
 
 
         this.setTitle(currentSprint.getGoal() + " burndown");
