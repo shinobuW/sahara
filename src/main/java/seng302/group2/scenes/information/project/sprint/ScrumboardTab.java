@@ -23,7 +23,7 @@ import java.util.*;
  */
 public class ScrumboardTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
+    public List<SearchableControl> searchControls = new ArrayList<>();
     Map<SearchableListView<Task>, Task.TASKSTATE> laneStateDict = new HashMap<>();
     Task interactiveTask = null;
     public int hoverIndex;
@@ -79,7 +79,8 @@ public class ScrumboardTab extends SearchableTab {
 
         Set<SearchableListView<Task>> lanes = new HashSet<>();
         Collections.addAll(lanes, todoLane, inProgressLane, verifyLane, completedLane);
-        searchControls.addAll(lanes);
+        //searchControls.addAll(lanes);  // The cells are added directly through the tab, the list views don't need to
+        // be searched.
         initLaneListeners(lanes, story);
 
         // Set cell factory
@@ -109,13 +110,6 @@ public class ScrumboardTab extends SearchableTab {
         for (ListView<Task> lane : lanes) {
             lane.setOnDragDetected(event -> {
                     interactiveTask = lane.getSelectionModel().getSelectedItem();
-
-                    // Moved to ScrumBoardTaskCell
-                    /*Dragboard dragBoard = lane.startDragAndDrop(TransferMode.MOVE);
-                    //dragBoard.setDragView(lane.snapshot(null, null));
-                    ClipboardContent content = new ClipboardContent();
-                    content.putString("");
-                    dragBoard.setContent(content);*/
                 });
 
             lane.setOnDragOver(dragEvent -> {
@@ -136,7 +130,6 @@ public class ScrumboardTab extends SearchableTab {
                     }
 
                     interactiveTask.editLane(laneStateDict.get(lane), hoverIndex);
-
                 });
         }
     }

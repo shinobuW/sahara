@@ -18,11 +18,16 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import org.controlsfx.control.PopOver;
 import seng302.group2.scenes.control.Tooltip;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTableRow;
+import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.information.project.story.task.LoggingEffortPane;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -30,15 +35,18 @@ import java.util.TreeSet;
  * A ListCell extension for the neat displaying of tasks on the scrum board view
  * Created by Jordane on 23/07/2015.
  */
-public class ScrumBoardTaskCell extends ListCell<Task> {
+public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableControl {
 
     ListView<Task> parentTable = null;
     Task interactiveTask = null;
     ScrumboardTab tab = null;
 
+    Set<SearchableControl> searchControls = new HashSet<>();
+
     public ScrumBoardTaskCell(ListView<Task> parentTable, ScrumboardTab tab) {
         this.parentTable = parentTable;
         this.tab = tab;
+        tab.searchControls.add(this);
     }
 
     @Override
@@ -61,11 +69,11 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
             textContent.setPadding(new Insets(2, 2, 2, 6));
             textContent.setAlignment(Pos.CENTER_LEFT);
 
-            Label titleLabel = new Label(task.getShortName());
-            titleLabel.setStyle("-fx-font-weight: bold");
+            SearchableText titleLabel = new SearchableText(task.getShortName(), searchControls);
+            titleLabel.injectStyle("-fx-font-weight: bold");
 
-            Label descLabel = new Label("(No Description)");
-            descLabel.setStyle("-fx-font-size: 85%");
+            SearchableText descLabel = new SearchableText("(No Description)", searchControls);
+            descLabel.injectStyle("-fx-font-size: 85%");
             if (!task.getDescription().isEmpty()) {
                 descLabel.setText(task.getDescription());
             }
@@ -74,19 +82,15 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
 
 
 
-
-
-
-
             // The cell's 'iconic' information
             VBox rightContent = new VBox(1);
             rightContent.setPrefHeight(48);
 
-            Label remainingTime = new Label(task.getEffortLeftString());
+            SearchableText remainingTime = new SearchableText(task.getEffortLeftString(), searchControls);
             Tooltip.create("Spent Effort: " + task.getEffortSpentString() + "\n"
                     + "Remaining Effort: " + task.getEffortLeftString(), remainingTime, 50);
-            remainingTime.setStyle("-fx-font-size: 85%");
-            remainingTime.setAlignment(Pos.TOP_RIGHT);
+            remainingTime.injectStyle("-fx-font-size: 85%;");
+            remainingTime.setTextAlignment(TextAlignment.RIGHT);
 
 
             // Remaining time PopOver
@@ -105,15 +109,9 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
                     event.consume();
                 });
 
-
-
             rightContent.setAlignment(Pos.CENTER_RIGHT);
             HBox.setHgrow(rightContent, Priority.ALWAYS);
             rightContent.getChildren().addAll(remainingTime);
-
-
-
-
 
 
             // Assignee icon
@@ -167,7 +165,7 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
                     this.updateItem(this.getItem(), this.isEmpty());
                 });
 
-            Text assigneeLabel = new Text("Assignee: ");
+            SearchableText assigneeLabel = new SearchableText("Assignee: ");
             assigneeLabel.setTextAlignment(TextAlignment.LEFT);
             HBox assigneeComboLabel = new HBox(8);
             assigneeComboLabel.setAlignment(Pos.CENTER);
@@ -244,5 +242,16 @@ public class ScrumBoardTaskCell extends ListCell<Task> {
             });
 
         setTextOverrun(OverrunStyle.CLIP);
+    }
+
+    @Override
+    public boolean query(String query) {
+        boolean result = false;
+        for (SearchableControl control : searchControls) {
+            if (control.query(query)) {
+                result = true;
+            }
+        }
+        return result;
     }
 }
