@@ -7,16 +7,13 @@ import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.tasks.Log;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
  * A class for displaying a burndown chart.
  * Created by btm38 on 31/07/15.
-*/
+ */
 public class BurndownChart extends LineChart {
 
 
@@ -42,11 +39,12 @@ public class BurndownChart extends LineChart {
         logList = currentSprint.getAllLogs();
 
         double maxEffortLeft = 0;
+        double effortSpent = 0;
 
         /* Map which stores a (key, value) pair of (date: hours), where hours is the total n
         umber of hours logged on the date.
          */
-        Map<LocalDate, Double> dailyEffortMap = new HashMap<>();
+        Map<LocalDate, Double> dailyEffortMap = new LinkedHashMap<>();
 
         for (Log log : logList) {
             if  (dailyEffortMap.containsKey(log.getStartDate().toLocalDate())) {
@@ -66,62 +64,48 @@ public class BurndownChart extends LineChart {
         System.out.println(maxEffortLeft);
 
 
+        this.setTitle(currentSprint.getGoal() + " Burndown");
+
+//        //define series
+//        Series<LocalDate, Number> effortLeftSeries = new Series();
+        XYChart.Series series = new XYChart.Series();
+        series.setName("My portfolio");
+
+        series.getData().add(new XYChart.Data("Jan", 23));
+        series.getData().add(new XYChart.Data("Feb", 14));
+        series.getData().add(new XYChart.Data("Mar", 15));
+        series.getData().add(new XYChart.Data("Apr", 24));
+        series.getData().add(new XYChart.Data("May", 34));
+        series.getData().add(new XYChart.Data("Jun", 36));
+        series.getData().add(new XYChart.Data("Jul", 22));
+        series.getData().add(new XYChart.Data("Aug", 45));
+        series.getData().add(new XYChart.Data("Sep", 43));
+        series.getData().add(new XYChart.Data("Oct", 17));
+        series.getData().add(new XYChart.Data("Nov", 29));
+        series.getData().add(new XYChart.Data("Dec", 25));
 
 
+        this.getData().add(series);
 
-
-
-
-
-
-
-        this.setTitle(currentSprint.getGoal() + " burndown");
-        //define series
-        Series<Number, Number> series1 = new Series();
-        series1.setName("Test Series 1");
-
-        Series<Number, Number> series2 = new Series();
-        series2.setName("Test Series 2");
-
-        Series<Number, Number> referenceVelocity = new Series();
-        referenceVelocity.setName("Reference Velocity");
-
-        //populate series with mock data
-        series1.getData().add(new XYChart.Data(0, 0));
-        series1.getData().add(new XYChart.Data(1, 10));
-        series1.getData().add(new XYChart.Data(2, 11));
-        series1.getData().add(new XYChart.Data(3, 13));
-        series1.getData().add(new XYChart.Data(4, 13));
-        series1.getData().add(new XYChart.Data(5, 13));
-        series1.getData().add(new XYChart.Data(6, 15));
-        series1.getData().add(new XYChart.Data(7, 19));
-        series1.getData().add(new XYChart.Data(8, 22));
-        series1.getData().add(new XYChart.Data(9, 25));
-        series1.getData().add(new XYChart.Data(10, 28));
-        series1.getData().add(new XYChart.Data(11, 35));
-
-        series2.getData().add(new XYChart.Data(0, 35));
-        series2.getData().add(new XYChart.Data(1, 25));
-        series2.getData().add(new XYChart.Data(2, 24));
-        series2.getData().add(new XYChart.Data(3, 22));
-        series2.getData().add(new XYChart.Data(4, 22));
-        series2.getData().add(new XYChart.Data(5, 22));
-        series2.getData().add(new XYChart.Data(6, 20));
-        series2.getData().add(new XYChart.Data(7, 16));
-        series2.getData().add(new XYChart.Data(8, 13));
-        series2.getData().add(new XYChart.Data(9, 10));
-        series2.getData().add(new XYChart.Data(10, 7));
-        series2.getData().add(new XYChart.Data(11, 0));
-
-        referenceVelocity.getData().add(new XYChart.Data(0, 35));
-        referenceVelocity.getData().add(new XYChart.Data(11, 0));
-
-
-
-
-        this.getData().add(series1);
-        this.getData().add(series2);
-        this.getData().add(referenceVelocity);
+//
+//        effortLeftSeries.setName("Effort Left");
+//
+//        Series<LocalDate, Number> effortSpentSeries = new Series();
+//        effortSpentSeries.setName("Test Series 2");
+//
+//        Series<Number, Number> referenceVelocity = new Series();
+//        referenceVelocity.setName("Reference Velocity");
+//
+//
+//        referenceVelocity.getData().add(new XYChart.Data(0, 35));
+//        referenceVelocity.getData().add(new XYChart.Data(11, 0));
+//
+//
+//
+//
+//        this.getData().add(effortLeftSeries);
+//        this.getData().add(effortSpentSeries);
+//        this.getData().add(referenceVelocity);
 
     }
 

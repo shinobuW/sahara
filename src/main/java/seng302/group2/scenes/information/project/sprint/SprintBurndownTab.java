@@ -1,6 +1,7 @@
 package seng302.group2.scenes.information.project.sprint;
 
 import javafx.geometry.Insets;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
@@ -25,7 +26,7 @@ import java.util.List;
 public class SprintBurndownTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
-    private NumberAxis xAxis = new NumberAxis();
+    private CategoryAxis xAxis = new CategoryAxis();
     private NumberAxis yAxis = new NumberAxis();
 
     /**
