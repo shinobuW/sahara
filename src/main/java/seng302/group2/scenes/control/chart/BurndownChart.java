@@ -48,7 +48,7 @@ public class BurndownChart extends LineChart {
          */
         Map<LocalDate, Double> dailyEffortMap = new HashMap<>();
 
-        for (Log log : logList){
+        for (Log log : logList) {
             if  (dailyEffortMap.containsKey(log.getStartDate().toLocalDate())) {
                 Double sum = dailyEffortMap.get(log.getStartDate().toLocalDate());
                 dailyEffortMap.put(log.getStartDate().toLocalDate(), sum + log.getDurationInHours());
