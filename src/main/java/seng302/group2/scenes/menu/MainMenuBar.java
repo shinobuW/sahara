@@ -226,7 +226,7 @@ public class MainMenuBar extends MenuBar {
 
         MenuItem newBacklogItem = new MenuItem("Backlog");
         newBacklogItem.setOnAction((event) -> {
-                javafx.scene.control.Dialog creationDialog = new CreateBacklogDialog();
+                javafx.scene.control.Dialog creationDialog = new CreateBacklogDialog(null);
                 creationDialog.show();
             });
         return newBacklogItem;

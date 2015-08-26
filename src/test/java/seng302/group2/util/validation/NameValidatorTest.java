@@ -19,7 +19,7 @@ public class NameValidatorTest {
      */
     @Test
     public void testValidateName() {
-        Assert.assertEquals(ValidationStatus.INVALID, NameValidator.validateName(""));
+        Assert.assertEquals(ValidationStatus.NULL, NameValidator.validateName(""));
         Assert.assertEquals(ValidationStatus.VALID, NameValidator.validateName("Greg"));
     }
 
