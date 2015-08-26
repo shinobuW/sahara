@@ -43,13 +43,16 @@ public class Story extends SaharaItem implements Serializable {
 
     private String shortName;
     private String longName;
-    private String description;
-    private String creator;
-    private STORYCOLOUR colour;
-    private Integer priority;
-    private Backlog backlog;
-    private Project project;
-    private Sprint sprint;
+    private String description = "";
+    private String creator = "";
+    private STORYCOLOUR colour = STORYCOLOUR.DEFAULT;
+    private Integer priority = null;
+    private Backlog backlog = null;
+    private Project project = null;
+    private Sprint sprint = null;
+
+    private boolean done = false;
+
     private String estimate = EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.DefaultValues.NONE);
     private boolean ready = false;
     private transient ObservableList<AcceptanceCriteria> acceptanceCriteria = observableArrayList();
@@ -242,6 +245,25 @@ public class Story extends SaharaItem implements Serializable {
         return this.priority;
     }
 
+
+    /**
+     * Returns whether or not the story has been marked as done
+     * @return Whether or not the story has been marked as done
+     */
+    public boolean isDone() {
+        return done;
+    }
+
+
+    /**
+     * Sets the story's completed state
+     * @param done Whether or not the story should be marked as done
+     */
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+
     /**
      * Sets the priority of the story
      *
@@ -297,6 +319,34 @@ public class Story extends SaharaItem implements Serializable {
      */
     public Sprint getSprint() {
         return this.sprint;
+    }
+
+
+    /**
+     * Returns whether or not all tasks in the story have been marked as being completed
+     * @return True if all tasks have been marked as being completed, false otherwise
+     */
+    public boolean allTasksCompleted() {
+        for (Task task : tasks) {
+            if (!task.completed()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * Returns whether or not all tasks in the story have been marked as being completed
+     * @return True if all tasks have been marked as being completed, false otherwise
+     */
+    public boolean allTasksCompletedExcept(Task task) {
+        for (Task task_ : tasks) {
+            if (!task_.completed() && !task_.equals(task)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
