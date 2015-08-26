@@ -17,6 +17,7 @@ import javafx.util.Callback;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableTable;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -71,7 +72,7 @@ public class ProjectLoggingTab extends SearchableTab {
 
         datePickers.getChildren().addAll(startDatePicker, endDatePicker);
 
-        TableView<Log> taskTable = new TableView<>();
+        SearchableTable<Log> taskTable = new SearchableTable<>();
         taskTable.setEditable(false);
         taskTable.setPrefWidth(700);
         taskTable.setPrefHeight(200);
@@ -166,7 +167,10 @@ public class ProjectLoggingTab extends SearchableTab {
 
 
         Collections.addAll(searchControls,
-                startDatePicker, endDatePicker);
+                startDatePicker,
+                endDatePicker,
+                taskTable
+        );
 
     }
 
