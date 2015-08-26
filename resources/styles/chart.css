@@ -14,8 +14,6 @@
     /*-fx-effect: null;*/
 /*}*/
 
-.default-color0.chart-series-line { -fx-stroke: #e9967a; }
-.default-color1.chart-series-line { -fx-stroke: #f0e68c; }
-.default-color2.chart-series-line {  -fx-stroke: #ff0000;}
+.default-color0.chart-series-line { -fx-stroke: #ffffff; }
 
 
