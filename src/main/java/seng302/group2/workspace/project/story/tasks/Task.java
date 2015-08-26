@@ -453,8 +453,8 @@ public class Task extends SaharaItem implements Serializable {
      *
      * @param newState    The new state
      */
-    public void editImpedimentState(TASKSTATE newState) {
-        Command relEdit = new TaskEditImpedimentStatusCommand(this, newState);
+    public void editImpedimentState(TASKSTATE newState, String impediments) {
+        Command relEdit = new TaskEditImpedimentStatusCommand(this, newState, impediments);
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -744,18 +744,27 @@ public class Task extends SaharaItem implements Serializable {
     private class TaskEditImpedimentStatusCommand implements Command {
 
         private Task task;
+
         private TASKSTATE state;
+        private String impediments;
+
         private TASKSTATE oldState;
+        private String oldImpediments;
 
         /**
          * Constructor for the Task Edit State command, used for changing lanes in the scrumboard
          * @param task The story to be edited
          * @param state    The new state
+         * @param impediments The new impediments
          */
-        private TaskEditImpedimentStatusCommand(Task task, TASKSTATE state) {
+        private TaskEditImpedimentStatusCommand(Task task, TASKSTATE state, String impediments) {
             this.task = task;
+
             this.state = state;
+            this.impediments = impediments;
+
             this.oldState = task.state;
+            this.oldImpediments = task.impediments;
         }
 
         /**
@@ -768,6 +777,7 @@ public class Task extends SaharaItem implements Serializable {
             else if (Task.getImpedingStates().contains(state)) {
                 task.state = state;
             }
+            task.impediments = impediments;
         }
 
         /**
@@ -775,6 +785,7 @@ public class Task extends SaharaItem implements Serializable {
          */
         public void undo() {
             task.state = oldState;
+            task.impediments = oldImpediments;
         }
 
         /**

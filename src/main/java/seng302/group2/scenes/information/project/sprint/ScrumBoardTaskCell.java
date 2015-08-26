@@ -3,6 +3,7 @@ package seng302.group2.scenes.information.project.sprint;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -99,6 +100,13 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
             loggingEffortPopOver.setContentNode(loggingPane);
             loggingEffortPopOver.setDetachedTitle(task.getShortName());
 
+            remainingTime.setOnMouseEntered(me -> {
+                    this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+                });
+            remainingTime.setOnMouseExited(me -> {
+                    this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+                });
+
             remainingTime.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     if (loggingEffortPopOver.isShowing()) {
                         loggingEffortPopOver.hide();
@@ -128,6 +136,12 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
                 Tooltip.create("This task is unassigned", assigneeImage, 50);
             }
             rightContent.getChildren().addAll(assigneeImage);
+            assigneeImage.setOnMouseEntered(me -> {
+                    this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+                });
+            assigneeImage.setOnMouseExited(me -> {
+                    this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+                });
 
             PopOver assignPopOver = new PopOver();
             assignPopOver.setDetachedTitle(task.getShortName() + " Assignment");
@@ -171,12 +185,13 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
             SearchableText assigneeLabel = new SearchableText("Assignee: ");
             assigneeLabel.setTextAlignment(TextAlignment.LEFT);
             HBox assigneeComboLabel = new HBox(8);
-            assigneeComboLabel.setAlignment(Pos.CENTER);
+            assigneeComboLabel.setAlignment(Pos.CENTER_RIGHT);
             assigneeComboLabel.getChildren().addAll(
                     assigneeLabel,
                     assigneeCombo
             );
             VBox assigneeChangeNode = new VBox(8);
+            assigneeChangeNode.setAlignment(Pos.CENTER_RIGHT);
             assigneeChangeNode.setPadding(new Insets(8,8,8,8));
             assigneeChangeNode.getChildren().addAll(
                     assigneeComboLabel,
@@ -191,26 +206,30 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
 
             // Impediments icon
             ImageView warningImage;
-            if (task.getState() == Task.TASKSTATE.BLOCKED || task.getState() == Task.TASKSTATE.DEFERRED) {
+            if (Task.getImpedingStates().contains(task.getState()) || !task.getImpediments().isEmpty()) {
                 warningImage = new ImageView("icons/dialog-cancel.png");
                 if (task.getState() == Task.TASKSTATE.BLOCKED) {
-                    if (!task.getImpediments().equals("")) {
-                        Tooltip.create("This task is currently blocked, with the following impediments: \n"
+                    if (!task.getImpediments().isEmpty()) {
+                        Tooltip.create("This task is currently blocked, with the following impediments:\n"
                                 + task.getImpediments(), warningImage, 50);
                     }
                     else {
                         Tooltip.create("This task is currently blocked", warningImage, 50);
                     }
                 }
-                else {
-                    if (!task.getImpediments().equals("")) {
-                        System.out.println(task.getImpediments());
-                        Tooltip.create("This task has been deferred, and has the following impediments: \n"
+                else if (task.getState() == Task.TASKSTATE.DEFERRED) {
+                    if (!task.getImpediments().isEmpty()) {
+                        //System.out.println(task.getImpediments());
+                        Tooltip.create("This task has been deferred, and has the following impediments:\n"
                                 + task.getImpediments(), warningImage, 50);
                     }
                     else {
                         Tooltip.create("This task has been deferred", warningImage, 50);
                     }
+                }
+                else {
+                    Tooltip.create("This task has the following impediments:\n" + task.getImpediments(),
+                            warningImage, 50);
                 }
             }
             else {
@@ -218,10 +237,16 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
                 Tooltip.create("This task has no impediments or blockages", warningImage, 50);
             }
             rightContent.getChildren().addAll(warningImage);
+            warningImage.setOnMouseEntered(me -> {
+                    this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+                });
+            warningImage.setOnMouseExited(me -> {
+                    this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+                });
 
 
             PopOver impedimentPopOver = new PopOver();
-            impedimentPopOver.setDetachedTitle(task.getShortName() + " Impediments");
+            impedimentPopOver.setDetachedTitle(task.getShortName() + "'s Impediments");
             SortedSet<Task.TASKSTATE> availableStatuses = new TreeSet<>();
             try {
                 for (Task.TASKSTATE state : Task.getImpedingStates()) {
@@ -240,7 +265,7 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
                 impedimentCombo.getSelectionModel().select(task.getState());
             }
             else {
-                impedimentCombo.getSelectionModel().select(null);
+                impedimentCombo.getSelectionModel().select("(none)");
             }
             warningImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
                     if (impedimentPopOver.isShowing()) {
@@ -252,15 +277,21 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
                     event.consume();
                 });
 
-            Button impedimentSaveButton = new Button("Save Status");
+            VBox impedimentsVBox = new VBox(4);
+            SearchableText impedimentsLabel = new SearchableText("Impediments: ");
+            TextArea impedimentsTextArea = new TextArea(task.getImpediments());
+            impedimentsTextArea.setPrefSize(240, 80);
+            impedimentsVBox.getChildren().addAll(impedimentsLabel, impedimentsTextArea);
+
+            Button impedimentSaveButton = new Button("Save Impediments");
             impedimentSaveButton.setAlignment(Pos.CENTER_RIGHT);
             impedimentSaveButton.setOnAction(event -> {
                     Task.TASKSTATE selectedState = null;
                     Object selectedObject = impedimentCombo.getSelectionModel().getSelectedItem();
-                    if (!selectedObject.toString().equals("(none)")) {
+                    if (selectedObject == null || !selectedObject.toString().equals("(none)")) {
                         selectedState = (Task.TASKSTATE) selectedObject;
                     }
-                    task.editImpedimentState(selectedState);
+                    task.editImpedimentState(selectedState, impedimentsTextArea.getText());
                     impedimentPopOver.hide();
                     this.updateItem(this.getItem(), this.isEmpty());
                 });
@@ -268,23 +299,22 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
             SearchableText statusLabel = new SearchableText("Status: ");
             statusLabel.setTextAlignment(TextAlignment.LEFT);
             HBox impedimentComboLabel = new HBox(8);
-            impedimentComboLabel.setAlignment(Pos.CENTER);
+            impedimentComboLabel.setAlignment(Pos.CENTER_RIGHT);
             impedimentComboLabel.getChildren().addAll(
                     statusLabel,
                     impedimentCombo
             );
+
+
             VBox impedimentChangeNode = new VBox(8);
+            impedimentChangeNode.setAlignment(Pos.CENTER_RIGHT);
             impedimentChangeNode.setPadding(new Insets(8,8,8,8));
             impedimentChangeNode.getChildren().addAll(
                     impedimentComboLabel,
+                    impedimentsVBox,
                     impedimentSaveButton
             );
             impedimentPopOver.setContentNode(impedimentChangeNode);
-
-
-
-
-
 
 
 
