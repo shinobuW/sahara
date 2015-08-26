@@ -40,7 +40,9 @@ public class CustomTextField extends VBox implements SearchableControl {
 
         errorMessageText.setTextFill(Color.web("#ff0000"));
 
-        labelBox.getChildren().addAll(new SearchableText(name, searchControls));
+        SearchableText label = new SearchableText(name.trim(), searchControls);
+        label.setStyle("-fx-font-weight: bold");
+        labelBox.getChildren().addAll(label);
 
         HBox entry = new HBox();
         entry.setPrefWidth(175);
@@ -68,7 +70,9 @@ public class CustomTextField extends VBox implements SearchableControl {
         labelBox.spacingProperty().setValue(0);
         labelBox.setAlignment(Pos.CENTER_LEFT);
 
-        labelBox.getChildren().addAll(new SearchableText(name, searchControls));
+        SearchableText label = new SearchableText(name.trim(), searchControls);
+        label.setStyle("-fx-font-weight: bold");
+        labelBox.getChildren().addAll(label);
 
         HBox entry = new HBox();
         entry.setPrefWidth(175);

@@ -62,7 +62,7 @@ public class StoryEditTab extends SearchableTab {
         CustomTextField longNameTextField = new CustomTextField("Long Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Story Description:", 300);
         RequiredField priorityNumberField = new RequiredField("Story Priority:");
-        CustomComboBox estimateComboBox = new CustomComboBox("Estimate:", false);
+        CustomComboBox estimateComboBox = new CustomComboBox("Estimate:");
 
         SearchableCheckBox readyStateCheck = new SearchableCheckBox("Ready?");
 

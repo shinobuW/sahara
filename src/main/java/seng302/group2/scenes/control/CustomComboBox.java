@@ -31,18 +31,43 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
     private Label astrLabel = new Label(" * ");
     private SearchableText titleLabel = new SearchableText();
 
+    public CustomComboBox() {
+        this.errorMessageText.setText(errorMessage);
+        titleLabel.setStyle("-fx-font-weight: bold");
+
+        HBox labelBox = new HBox();
+        labelBox.setPrefWidth(175);
+
+        labelBox.getChildren().addAll(titleLabel);
+
+        if (required) {
+            Label aster = astrLabel;
+            aster.setTextFill(Color.web("#ff0000"));
+            labelBox.getChildren().add(aster);
+        }
+
+        HBox entry = new HBox();
+        entry.setPrefWidth(275);
+        entry.getChildren().addAll(labelBox, this.comboBox);
+        HBox.setHgrow(labelBox, Priority.ALWAYS);
+
+        this.comboBox.setMinWidth(135);
+        this.comboBox.setPrefWidth(175);
+        this.getChildren().add(entry);
+    }
+
 
     /**
-     * Creates a required label HBox inside of the VBox containing a Label with an appended red
-     * asterisk if the field is required.
+     * Creates a ComboBox and Label inside a single HBox.
      *
-     * @param name     The node field
+     * @param name The label of the combo box
      */
     public CustomComboBox(String name) {
         this.errorMessageText.setText(errorMessage);
+        titleLabel.setStyle("-fx-font-weight: bold");
 
         HBox labelBox = new HBox();
-        labelBox.setPrefWidth(165);
+        labelBox.setPrefWidth(175);
 
         titleLabel.setText(name);
         labelBox.getChildren().addAll(titleLabel);
@@ -64,17 +89,18 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
     }
 
     /**
-     * Creates a required label HBox inside of the VBox containing a Label with an appended red
-     * asterisk if the field is required.
+     * Creates a ComboBox and Label inside a single HBox.
      *
-     * @param name     The node field
+     * @param items A list of items to add to the combo box
+     * @param name The label of the combo box
      */
     public CustomComboBox(ObservableList<T> items, String name) {
         comboBox.setItems(items);
         this.errorMessageText.setText(errorMessage);
+        titleLabel.setStyle("-fx-font-weight: bold");
 
         HBox labelBox = new HBox();
-        labelBox.setPrefWidth(165);
+        labelBox.setPrefWidth(175);
 
         titleLabel.setText(name);
         labelBox.getChildren().addAll(titleLabel);
@@ -96,18 +122,18 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
     }
 
     /**
-     * Creates a required label HBox inside of the VBox containing a Label with an appended red
-     * asterisk if the field is required.
+     * Creates a ComboBox and Label inside a single HBox.
      *
-     * @param name     The node field
+     * @param name The label of the combo box
      * @param required Whether or not the field is required
      */
     public CustomComboBox(String name, boolean required) {
         this.required = required;
         this.errorMessageText.setText(errorMessage);
+        titleLabel.setStyle("-fx-font-weight: bold");
 
         HBox labelBox = new HBox();
-        labelBox.setPrefWidth(165);
+        labelBox.setPrefWidth(175);
 
         titleLabel.setText(name);
         labelBox.getChildren().addAll(titleLabel);
@@ -129,10 +155,9 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
     }
 
     /**
-     * Creates a required label HBox inside of the VBox containing a Label with an appended red
-     * asterisk if the field is required.
+     * Creates a ComboBox and Label inside a single HBox.
      *
-     * @param name     The node field
+     * @param name The label of the combo box
      * @param searchableControls The collection of searchable controls to add this to
      */
     public CustomComboBox(String name, Collection<SearchableControl> searchableControls) {
@@ -140,7 +165,7 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
         this.errorMessageText.setText(errorMessage);
 
         HBox labelBox = new HBox();
-        labelBox.setPrefWidth(165);
+        labelBox.setPrefWidth(175);
 
         titleLabel.setText(name);
         labelBox.getChildren().addAll(titleLabel);
@@ -162,10 +187,9 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
     }
 
     /**
-     * Creates a required label HBox inside of the VBox containing a Label with an appended red
-     * asterisk if the field is required.
+     * Creates a ComboBox and Label inside a single HBox.
      *
-     * @param name     The node field
+     * @param name The label of the combo box
      * @param required Whether or not the field is required
      * @param searchableControls The collection of searchable controls to add this to
      */
@@ -175,7 +199,7 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
         this.errorMessageText.setText(errorMessage);
 
         HBox labelBox = new HBox();
-        labelBox.setPrefWidth(165);
+        labelBox.setPrefWidth(175);
 
         titleLabel.setText(name);
         labelBox.getChildren().addAll(titleLabel);
@@ -209,8 +233,6 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
      * Disables the combobox.
      */
     public void disable() {
-        titleLabel.setDisable(true);
-        astrLabel.setDisable(true);
         this.comboBox.setDisable(true);
     }
 

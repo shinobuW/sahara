@@ -178,8 +178,8 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
         // Initially disabled as no team selected
         teamComboBox.setDisable(true);
         releaseComboBox.setDisable(true);
-        sprintStartDatePicker.setDisable(true);
-        sprintEndDatePicker.setDisable(true);
+        sprintStartDatePicker.getDatePicker().setDisable(true);
+        sprintEndDatePicker.getDatePicker().setDisable(true);
 
         for (Project project : Global.currentWorkspace.getProjects()) {
             projectOptions.add(project);
@@ -216,9 +216,9 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                     releaseComboBox.setValue(null);
                     teamComboBox.setDisable(false);
                     teamComboBox.setValue(null);
-                    sprintStartDatePicker.setDisable(true);
+                    sprintStartDatePicker.getDatePicker().setDisable(true);
                     sprintStartDatePicker.setValue(null);
-                    sprintEndDatePicker.setDisable(true);
+                    sprintEndDatePicker.getDatePicker().setDisable(true);
                     sprintEndDatePicker.setValue(null);
 
 
@@ -244,9 +244,9 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                                     Release oldValue, Release newValue) {
 
                     if (newValue != null) {
-                        sprintStartDatePicker.setDisable(false);
+                        sprintStartDatePicker.getDatePicker().setDisable(false);
                         sprintStartDatePicker.setValue(null);
-                        sprintEndDatePicker.setDisable(true);
+                        sprintEndDatePicker.getDatePicker().setDisable(true);
                         sprintEndDatePicker.setValue(null);
 
                         toggleCreate();
@@ -260,11 +260,11 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                                     LocalDate oldValue, LocalDate newValue) {
                     if (endDateSelected() && (newValue != null)
                             && newValue.isAfter(sprintEndDatePicker.getValue())) {
-                        sprintEndDatePicker.setDisable(false);
+                        sprintEndDatePicker.getDatePicker().setDisable(false);
                         sprintEndDatePicker.setValue(null);
                     }
                     else if (newValue != null) {
-                        sprintEndDatePicker.setDisable(false);
+                        sprintEndDatePicker.getDatePicker().setDisable(false);
                     }
                     toggleCreate();
                 }
@@ -448,8 +448,8 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
         // Initially disabled as no team selected
         teamComboBox.setDisable(true);
         releaseComboBox.setDisable(true);
-        sprintStartDatePicker.setDisable(true);
-        sprintEndDatePicker.setDisable(true);
+        sprintStartDatePicker.getDatePicker().setDisable(true);
+        sprintEndDatePicker.getDatePicker().setDisable(true);
 
         for (Project project : Global.currentWorkspace.getProjects()) {
             projectOptions.add(project);
@@ -486,9 +486,9 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                     releaseComboBox.setValue(null);
                     teamComboBox.setDisable(false);
                     teamComboBox.setValue(null);
-                    sprintStartDatePicker.setDisable(true);
+                    sprintStartDatePicker.getDatePicker().setDisable(true);
                     sprintStartDatePicker.setValue(null);
-                    sprintEndDatePicker.setDisable(true);
+                    sprintEndDatePicker.getDatePicker().setDisable(true);
                     sprintEndDatePicker.setValue(null);
 
 
@@ -514,9 +514,9 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                                     Release oldValue, Release newValue) {
 
                     if (newValue != null) {
-                        sprintStartDatePicker.setDisable(false);
+                        sprintStartDatePicker.getDatePicker().setDisable(false);
                         sprintStartDatePicker.setValue(null);
-                        sprintEndDatePicker.setDisable(true);
+                        sprintEndDatePicker.getDatePicker().setDisable(true);
                         sprintEndDatePicker.setValue(null);
 
                         toggleCreate();
@@ -530,13 +530,13 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                                     LocalDate oldValue, LocalDate newValue) {
                     if (endDateSelected() && (newValue != null)
                             && newValue.isAfter(sprintEndDatePicker.getValue())) {
-                        sprintEndDatePicker.setDisable(false);
+                        sprintEndDatePicker.getDatePicker().setDisable(false);
                         sprintEndDatePicker.setValue(null);
                         teamComboBox.setValue(null);
                         teamComboBox.setDisable(true);
                     }
                     else if (newValue != null) {
-                        sprintEndDatePicker.setDisable(false);
+                        sprintEndDatePicker.getDatePicker().setDisable(false);
                     }
                     toggleCreate();
                 }

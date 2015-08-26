@@ -42,12 +42,12 @@ public class CustomDatePicker extends VBox implements SearchableControl {
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);
-//        labelBox.spacingProperty().setValue(0);
-//        labelBox.setAlignment(Pos.CENTER_LEFT);
 
         errorMessageText.setTextFill(Color.web("#ff0000"));
 
-        labelBox.getChildren().addAll(new SearchableText(name, this.searchControls));
+        SearchableText label = new SearchableText(name.trim(), searchControls);
+        label.setStyle("-fx-font-weight: bold");
+        labelBox.getChildren().addAll(label);
 
         if (required) {
             Label aster = new Label(" * ");
@@ -60,7 +60,6 @@ public class CustomDatePicker extends VBox implements SearchableControl {
         entry.getChildren().addAll(labelBox, datePicker);
         HBox.setHgrow(labelBox, Priority.ALWAYS);
 
-        //this.datePicker.setStyle("-fx-pref-width: 135;");
 
         this.getChildren().add(entry);
     }
@@ -83,7 +82,9 @@ public class CustomDatePicker extends VBox implements SearchableControl {
         labelBox.spacingProperty().setValue(0);
         labelBox.setAlignment(Pos.CENTER_LEFT);
 
-        labelBox.getChildren().addAll(new SearchableText(name, this.searchControls));
+        SearchableText label = new SearchableText(name.trim(), searchControls);
+        label.setStyle("-fx-font-weight: bold");
+        labelBox.getChildren().addAll(label);
 
         if (required) {
             Label aster = new Label(" * ");

@@ -40,7 +40,7 @@ public class StoryEstimationScaleInfoTab extends SearchableTab {
         SearchableText instructions = new SearchableText("Please select an estimation scale to view its values.");
 
         ObservableList<String> scaleOptions = observableArrayList();
-        CustomComboBox<String> scaleComboBox = new CustomComboBox<>("Estimation Scales", false);
+        CustomComboBox<String> scaleComboBox = new CustomComboBox<>("Estimation Scales:");
         scaleComboBox.getComboBox().setItems(scaleOptions);
 
         scaleComboBox.setStyle("-fx-pref-width: 135;");

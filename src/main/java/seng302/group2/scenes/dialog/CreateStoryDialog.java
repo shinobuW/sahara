@@ -68,7 +68,6 @@ public class CreateStoryDialog extends Dialog<Map<String, String>> {
         RequiredField creatorCustomField = new RequiredField("Creator:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
         CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
-        projectComboBox.getComboBox().setPrefWidth(180);
         RequiredField priorityNumberField = new RequiredField("Priority:");
 
         String firstItem = Global.currentWorkspace.getProjects().get(0).toString();

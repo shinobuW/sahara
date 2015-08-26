@@ -30,9 +30,9 @@ public class RequiredField extends VBox implements SearchableControl {
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
      * asterisk.
      *
-     * @param label The label for the node required
+     * @param name The label for the node required
      */
-    public RequiredField(String label) {
+    public RequiredField(String name) {
         this.errorMessageText.setText(errorMessage);
         inputText.setPrefWidth(175);
 
@@ -43,7 +43,9 @@ public class RequiredField extends VBox implements SearchableControl {
 
         errorMessageText.setTextFill(Color.web("#ff0000"));
 
-        labelBox.getChildren().addAll(new SearchableText(label.trim(), searchControls), aster);
+        SearchableText label = new SearchableText(name.trim(), searchControls);
+        label.setStyle("-fx-font-weight: bold");
+        labelBox.getChildren().addAll(label, aster);
 
         HBox entry = new HBox();
         entry.setPrefWidth(175);
@@ -76,7 +78,9 @@ public class RequiredField extends VBox implements SearchableControl {
 
         errorMessageText.setTextFill(Color.web("#ff0000"));
 
-        labelBox.getChildren().addAll(new SearchableText(name, searchControls), aster);
+        SearchableText label = new SearchableText(name.trim(), searchControls);
+        label.setStyle("-fx-font-weight: bold");
+        labelBox.getChildren().addAll(label, aster);
 
         HBox entry = new HBox();
         entry.setPrefWidth(175);
@@ -113,7 +117,6 @@ public class RequiredField extends VBox implements SearchableControl {
     public void showErrorField() {
         ValidationStyle.borderGlowRed(inputText);
         this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
-        //this.getChildren().add(errorMessageText);
     }
 
 

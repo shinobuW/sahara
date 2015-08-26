@@ -45,7 +45,9 @@ public class CustomTextArea extends VBox implements SearchableControl {
         labelBox.spacingProperty().setValue(0);
         labelBox.setAlignment(Pos.CENTER_LEFT);
 
-        labelBox.getChildren().addAll(new SearchableText(name, searchControls));
+        SearchableText label = new SearchableText(name.trim(), searchControls);
+        label.setStyle("-fx-font-weight: bold");
+        labelBox.getChildren().addAll(label);
 
         Insets insets = new Insets(0, 0, 5, 0);
         labelBox.setPadding(insets);
@@ -93,7 +95,9 @@ public class CustomTextArea extends VBox implements SearchableControl {
         labelBox.spacingProperty().setValue(0);
         labelBox.setAlignment(Pos.CENTER_LEFT);
 
-        labelBox.getChildren().addAll(new SearchableText(name, searchControls));
+        SearchableText label = new SearchableText(name.trim(), searchControls);
+        label.setStyle("-fx-font-weight: bold");
+        labelBox.getChildren().addAll(label);
 
         Insets insets = new Insets(0, 0, 5, 0);
         labelBox.setPadding(insets);
@@ -139,7 +143,9 @@ public class CustomTextArea extends VBox implements SearchableControl {
         labelBox.setPrefWidth(175);
         labelBox.spacingProperty().setValue(0);
 
-        labelBox.getChildren().addAll(new SearchableText(name, searchControls));
+        SearchableText label = new SearchableText(name.trim(), searchControls);
+        label.setStyle("-fx-font-weight: bold");
+        labelBox.getChildren().addAll(label);
 
         Insets insets = new Insets(0, 0, 5, 0);
         labelBox.setPadding(insets);
@@ -183,12 +189,13 @@ public class CustomTextArea extends VBox implements SearchableControl {
         inputText.setWrapText(true);
         inputText.setPrefRowCount(5);
 
-
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);
         labelBox.spacingProperty().setValue(0);
 
-        labelBox.getChildren().addAll(new SearchableText(name, searchControls));
+        SearchableText label = new SearchableText(name.trim(), searchControls);
+        label.setStyle("-fx-font-weight: bold");
+        labelBox.getChildren().addAll(label);
 
         Insets insets = new Insets(0, 0, 5, 0);
         labelBox.setPadding(insets);

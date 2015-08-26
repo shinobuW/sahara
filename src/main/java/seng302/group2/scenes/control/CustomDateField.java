@@ -38,7 +38,10 @@ public class CustomDateField extends VBox implements SearchableControl {
         labelBox.spacingProperty().setValue(0);
         labelBox.setAlignment(Pos.CENTER_LEFT);
 
-        labelBox.getChildren().addAll(new SearchableText(name, searchControls));
+        SearchableText label = new SearchableText(name.trim(), searchControls);
+        label.setStyle("-fx-font-weight: bold");
+        labelBox.getChildren().addAll(label);
+
         errorMessageText.setTextFill(Color.web("#ff0000"));
         HBox entry = new HBox();
         entry.setPrefWidth(175);
@@ -63,7 +66,10 @@ public class CustomDateField extends VBox implements SearchableControl {
         labelBox.spacingProperty().setValue(0);
         labelBox.setAlignment(Pos.CENTER_LEFT);
 
-        labelBox.getChildren().addAll(new SearchableText(name, searchControls));
+        SearchableText label = new SearchableText(name.trim(), searchControls);
+        label.setStyle("-fx-font-weight: bold");
+        labelBox.getChildren().addAll(label);
+
         errorMessageText.setTextFill(Color.web("#ff0000"));
         HBox entry = new HBox();
         entry.setPrefWidth(175);
