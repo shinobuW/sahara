@@ -7,7 +7,6 @@ package seng302.group2.scenes.control;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -44,8 +43,6 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(165);
-        labelBox.setAlignment(Pos.CENTER_LEFT);
-        labelBox.spacingProperty().setValue(0);
 
         titleLabel.setText(name);
         labelBox.getChildren().addAll(titleLabel);
@@ -78,8 +75,6 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(165);
-        labelBox.setAlignment(Pos.CENTER_LEFT);
-        labelBox.spacingProperty().setValue(0);
 
         titleLabel.setText(name);
         labelBox.getChildren().addAll(titleLabel);
@@ -113,8 +108,6 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(165);
-        labelBox.setAlignment(Pos.CENTER_LEFT);
-        labelBox.spacingProperty().setValue(0);
 
         titleLabel.setText(name);
         labelBox.getChildren().addAll(titleLabel);
@@ -131,6 +124,7 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
         HBox.setHgrow(labelBox, Priority.ALWAYS);
 
         this.comboBox.setMinWidth(135);
+        this.comboBox.setPrefWidth(175);
         this.getChildren().add(entry);
     }
 
@@ -147,8 +141,6 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(165);
-        labelBox.setAlignment(Pos.CENTER_LEFT);
-        labelBox.spacingProperty().setValue(0);
 
         titleLabel.setText(name);
         labelBox.getChildren().addAll(titleLabel);
@@ -165,6 +157,7 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
         HBox.setHgrow(labelBox, Priority.ALWAYS);
 
         this.comboBox.setMinWidth(135);
+        this.comboBox.setPrefWidth(175);
         this.getChildren().add(entry);
     }
 
@@ -183,8 +176,6 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(165);
-        labelBox.setAlignment(Pos.CENTER_LEFT);
-        labelBox.spacingProperty().setValue(0);
 
         titleLabel.setText(name);
         labelBox.getChildren().addAll(titleLabel);
@@ -201,6 +192,7 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
         HBox.setHgrow(labelBox, Priority.ALWAYS);
 
         this.comboBox.setMinWidth(135);
+        this.comboBox.setPrefWidth(175);
         this.getChildren().add(entry);
     }
 
@@ -208,7 +200,6 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
      * Displays error Field
      */
     public void showErrorField() {
-        //comboBox.setStyle("-fx-border-color: red;");
         ValidationStyle.borderGlowRed(comboBox);
         this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
         this.getChildren().add(errorMessageText);
