@@ -3,7 +3,7 @@
     "shortName": "Shinobi Demo",
     "longName": "Shinobi Demo",
     "description": "",
-    "lastSaveLocation": "/home/cosc/student/swi67/Documents/SENG302/Greoup Projeckt/Shinobi_Demo.proj",
+    "lastSaveLocation": "/home/cosc/student/cvs20/SENG302/Sahara/Shinobi_Demo.proj",
     "estimationScales": {
       "estimationScaleDict": {
         "T-Shirt Sizes": [
@@ -458,7 +458,11 @@
       "0x28",
       "0x29"
     ],
-    "serializableLogs": [],
+    "serializableLogs": [
+      "0x2a",
+      "0x2b",
+      "0x2c"
+    ],
     "serializableTeams": [],
     "itemName": "soft.serve()",
     "id": 75
@@ -495,24 +499,24 @@
     "id": 5
   },
   "0x1c": {
-    "startDate": "0x2a",
-    "endDate": "0x2b",
+    "startDate": "0x2d",
+    "endDate": "0x2e",
     "project": "0x17",
     "team": "0x2",
     "itemName": "",
     "id": 2321
   },
   "0x1d": {
-    "startDate": "0x2c",
-    "endDate": "0x2d",
+    "startDate": "0x2f",
+    "endDate": "0x30",
     "project": "0x17",
     "team": "0x2",
     "itemName": "",
     "id": 2377
   },
   "0x1e": {
-    "startDate": "0x2e",
-    "endDate": "0x2f",
+    "startDate": "0x31",
+    "endDate": "0x32",
     "project": "0x18",
     "team": "0x3",
     "itemName": "",
@@ -521,7 +525,7 @@
   "0x1f": {
     "shortName": "Version 1.1.3",
     "description": "This version adds some new functionality while also breaking the program.",
-    "estimatedDate": "0x30",
+    "estimatedDate": "0x33",
     "project": "0x17",
     "itemName": "",
     "id": 1978
@@ -529,7 +533,7 @@
   "0x20": {
     "shortName": "Version 1.1.4",
     "description": "",
-    "estimatedDate": "0x31",
+    "estimatedDate": "0x34",
     "project": "0x17",
     "itemName": "",
     "id": 2388
@@ -542,11 +546,12 @@
     "colour": "DEFAULT",
     "priority": 940,
     "project": "0x17",
+    "done": false,
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0x32",
-      "0x33"
+      "0x35",
+      "0x36"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -560,9 +565,9 @@
     "description": "",
     "productOwner": "0x9",
     "serializableStories": [
-      "0x34",
-      "0x35",
-      "0x36"
+      "0x37",
+      "0x38",
+      "0x39"
     ],
     "project": "0x17",
     "scale": "T-Shirt Sizes",
@@ -575,7 +580,7 @@
     "description": "",
     "productOwner": "0x9",
     "serializableStories": [
-      "0x37"
+      "0x3a"
     ],
     "project": "0x17",
     "scale": "T-Shirt Sizes",
@@ -585,7 +590,7 @@
   "0x24": {
     "shortName": "Version 2.1.4",
     "description": "This version adds some new functionality without breaking the program.",
-    "estimatedDate": "0x38",
+    "estimatedDate": "0x3b",
     "project": "0x18",
     "itemName": "",
     "id": 1866
@@ -593,7 +598,7 @@
   "0x25": {
     "shortName": "Version 2.1.5",
     "description": "",
-    "estimatedDate": "0x39",
+    "estimatedDate": "0x3c",
     "project": "0x18",
     "itemName": "",
     "id": 2327
@@ -604,7 +609,7 @@
     "description": "",
     "productOwner": "0x9",
     "serializableStories": [
-      "0x3a"
+      "0x3d"
     ],
     "project": "0x18",
     "scale": "Dog Breeds",
@@ -617,7 +622,7 @@
     "description": "",
     "productOwner": "0x9",
     "serializableStories": [
-      "0x3b"
+      "0x3e"
     ],
     "project": "0x18",
     "scale": "Dog Breeds",
@@ -629,15 +634,15 @@
     "team": "0x3",
     "release": "0x24",
     "serializableStories": [
-      "0x3b",
-      "0x3a"
+      "0x3e",
+      "0x3d"
     ],
     "goal": "Ice Cream Makin\u0027",
     "longName": "The Construction of the perfect Cone",
     "description": "",
-    "startDate": "0x3c",
-    "endDate": "0x3d",
-    "tasksWithoutStory": "0x3e",
+    "startDate": "0x3f",
+    "endDate": "0x40",
+    "tasksWithoutStory": "0x41",
     "itemName": "",
     "id": 2328
   },
@@ -649,67 +654,121 @@
     "goal": "Create Sprints",
     "longName": "Create Sprints",
     "description": "",
-    "startDate": "0x3f",
-    "endDate": "0x40",
-    "tasksWithoutStory": "0x41",
+    "startDate": "0x42",
+    "endDate": "0x43",
+    "tasksWithoutStory": "0x44",
     "itemName": "",
     "id": 2389
   },
   "0x2a": {
+    "startTime": {
+      "date": "0x45",
+      "time": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "duration": 120.0,
+    "effortLeft": 30.0,
+    "logger": "0x11",
+    "task": "0x46",
+    "description": "",
+    "itemName": "Untitled Log",
+    "id": 2422
+  },
+  "0x2b": {
+    "startTime": {
+      "date": "0x47",
+      "time": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "duration": 90.0,
+    "effortLeft": 30.0,
+    "logger": "0x9",
+    "task": "0x48",
+    "description": "",
+    "itemName": "Untitled Log",
+    "id": 2423
+  },
+  "0x2c": {
+    "startTime": {
+      "date": "0x49",
+      "time": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "duration": 180.0,
+    "effortLeft": 45.0,
+    "logger": "0xf",
+    "task": "0x4a",
+    "description": "",
+    "itemName": "Untitled Log",
+    "id": 2472
+  },
+  "0x2d": {
     "year": 2015,
     "month": 6,
     "day": 29
   },
-  "0x2b": {
+  "0x2e": {
     "year": 2015,
     "month": 8,
     "day": 1
   },
-  "0x2c": {
+  "0x2f": {
     "year": 2015,
     "month": 8,
     "day": 2
   },
-  "0x2d": {
+  "0x30": {
     "year": 2015,
     "month": 10,
     "day": 14
   },
-  "0x2e": {
+  "0x31": {
     "year": 2013,
     "month": 7,
     "day": 4
   },
-  "0x2f": {
+  "0x32": {
     "year": 2016,
     "month": 7,
     "day": 23
   },
-  "0x30": {
+  "0x33": {
     "year": 2015,
     "month": 12,
     "day": 4
   },
-  "0x31": {
+  "0x34": {
     "year": 2015,
     "month": 12,
     "day": 31
   },
-  "0x32": {
+  "0x35": {
     "description": "Pies must be delicious",
     "state": "UNACCEPTED",
     "story": "0x21",
     "itemName": "",
     "id": 2201
   },
-  "0x33": {
+  "0x36": {
     "description": "All pies must contain meat. No vegetarians here!",
     "state": "ACCEPTED",
     "story": "0x21",
     "itemName": "",
     "id": 2202
   },
-  "0x34": {
+  "0x37": {
     "shortName": "Research Framework",
     "longName": "Research Framework",
     "description": "As a team we need to decide what we will build our application on.",
@@ -718,20 +777,21 @@
     "priority": 10,
     "backlog": "0x22",
     "project": "0x17",
+    "done": false,
     "estimate": "2XL",
     "ready": true,
     "serializableAcceptanceCriteria": [
-      "0x42"
+      "0x4b"
     ],
     "dependentOn": [],
     "serializableTasks": [
-      "0x43"
+      "0x4c"
     ],
     "tasksWithoutStory": false,
     "itemName": "Research Framework",
     "id": 2213
   },
-  "0x35": {
+  "0x38": {
     "shortName": "Basic App",
     "longName": "Basic App",
     "description": "",
@@ -740,21 +800,22 @@
     "priority": 7,
     "backlog": "0x22",
     "project": "0x17",
+    "done": false,
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0x44",
-      "0x45"
+      "0x4d",
+      "0x4e"
     ],
     "dependentOn": [
-      "0x34"
+      "0x37"
     ],
     "serializableTasks": [],
     "tasksWithoutStory": false,
     "itemName": "Basic App",
     "id": 2219
   },
-  "0x36": {
+  "0x39": {
     "shortName": ".WAV Player",
     "longName": ".WAV Player",
     "description": "Implement .WAV files.",
@@ -763,20 +824,21 @@
     "priority": 5,
     "backlog": "0x22",
     "project": "0x17",
+    "done": false,
     "estimate": "XS",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0x46"
+      "0x4f"
     ],
     "dependentOn": [
-      "0x35"
+      "0x38"
     ],
     "serializableTasks": [],
     "tasksWithoutStory": false,
     "itemName": ".WAV Player",
     "id": 2225
   },
-  "0x37": {
+  "0x3a": {
     "shortName": "Weather Webservice",
     "longName": "Weather Webservice",
     "description": "",
@@ -785,30 +847,31 @@
     "priority": 12,
     "backlog": "0x23",
     "project": "0x17",
+    "done": false,
     "estimate": "S",
     "ready": true,
     "serializableAcceptanceCriteria": [
-      "0x47"
+      "0x50"
     ],
     "dependentOn": [
-      "0x35"
+      "0x38"
     ],
     "serializableTasks": [],
     "tasksWithoutStory": false,
     "itemName": "Weather Webservice",
     "id": 2241
   },
-  "0x38": {
+  "0x3b": {
     "year": 2015,
     "month": 10,
     "day": 15
   },
-  "0x39": {
+  "0x3c": {
     "year": 2015,
     "month": 8,
     "day": 29
   },
-  "0x3a": {
+  "0x3d": {
     "shortName": "I scream",
     "longName": "we all scream",
     "description": "",
@@ -818,19 +881,20 @@
     "backlog": "0x26",
     "project": "0x18",
     "sprint": "0x28",
+    "done": false,
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [],
     "dependentOn": [],
     "serializableTasks": [
-      "0x48",
-      "0x49"
+      "0x51",
+      "0x52"
     ],
     "tasksWithoutStory": false,
     "itemName": "I scream",
     "id": 2319
   },
-  "0x3b": {
+  "0x3e": {
     "shortName": "A Taskful Story",
     "longName": "A Taskful Story",
     "description": "",
@@ -840,49 +904,20 @@
     "backlog": "0x27",
     "project": "0x18",
     "sprint": "0x28",
+    "done": false,
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [],
     "dependentOn": [],
     "serializableTasks": [
-      "0x4a",
-      "0x4b",
-      "0x4c",
-      "0x4d"
+      "0x46",
+      "0x48",
+      "0x53",
+      "0x4a"
     ],
     "tasksWithoutStory": false,
     "itemName": "A Taskful Story",
     "id": 2417
-  },
-  "0x3c": {
-    "year": 2015,
-    "month": 8,
-    "day": 3
-  },
-  "0x3d": {
-    "year": 2015,
-    "month": 8,
-    "day": 20
-  },
-  "0x3e": {
-    "shortName": "Tasks without a Story",
-    "longName": "Tasks without a Story",
-    "description": "A collection of tasks that do not belong to a story",
-    "creator": "",
-    "colour": "DEFAULT",
-    "priority": 0,
-    "project": "0x18",
-    "estimate": "-",
-    "ready": false,
-    "serializableAcceptanceCriteria": [],
-    "dependentOn": [],
-    "serializableTasks": [
-      "0x4e",
-      "0x4f"
-    ],
-    "tasksWithoutStory": true,
-    "itemName": "Tasks without a Story",
-    "id": 71
   },
   "0x3f": {
     "year": 2015,
@@ -892,7 +927,7 @@
   "0x40": {
     "year": 2015,
     "month": 8,
-    "day": 19
+    "day": 20
   },
   "0x41": {
     "shortName": "Tasks without a Story",
@@ -902,6 +937,38 @@
     "colour": "DEFAULT",
     "priority": 0,
     "project": "0x18",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [
+      "0x54",
+      "0x55"
+    ],
+    "tasksWithoutStory": true,
+    "itemName": "Tasks without a Story",
+    "id": 71
+  },
+  "0x42": {
+    "year": 2015,
+    "month": 8,
+    "day": 3
+  },
+  "0x43": {
+    "year": 2015,
+    "month": 8,
+    "day": 19
+  },
+  "0x44": {
+    "shortName": "Tasks without a Story",
+    "longName": "Tasks without a Story",
+    "description": "A collection of tasks that do not belong to a story",
+    "creator": "",
+    "colour": "DEFAULT",
+    "priority": 0,
+    "project": "0x18",
+    "done": false,
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [],
@@ -911,20 +978,85 @@
     "itemName": "Tasks without a Story",
     "id": 77
   },
-  "0x42": {
+  "0x45": {
+    "year": 2015,
+    "month": 8,
+    "day": 27
+  },
+  "0x46": {
+    "shortName": "Verify Me!",
+    "description": "",
+    "impediments": "",
+    "state": "IN_PROGRESS",
+    "lane": "IN_PROGRESS",
+    "story": "0x3e",
+    "serializableLogs": [
+      "0x2a"
+    ],
+    "effortLeft": 30.0,
+    "effortSpent": 120.0,
+    "converter": {},
+    "itemName": "Verify Me!",
+    "id": 2418
+  },
+  "0x47": {
+    "year": 2015,
+    "month": 8,
+    "day": 27
+  },
+  "0x48": {
+    "shortName": "Mission Completion",
+    "description": "",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0x3e",
+    "assignee": "0xc",
+    "serializableLogs": [
+      "0x2b"
+    ],
+    "effortLeft": 30.0,
+    "effortSpent": 90.0,
+    "converter": {},
+    "itemName": "Mission Completion",
+    "id": 2419
+  },
+  "0x49": {
+    "year": 2015,
+    "month": 8,
+    "day": 27
+  },
+  "0x4a": {
+    "shortName": "I\u0027m lost",
+    "description": "",
+    "impediments": "",
+    "state": "IN_PROGRESS",
+    "lane": "IN_PROGRESS",
+    "story": "0x3e",
+    "assignee": "0xa",
+    "serializableLogs": [
+      "0x2c"
+    ],
+    "effortLeft": 45.0,
+    "effortSpent": 180.0,
+    "converter": {},
+    "itemName": "I\u0027m lost",
+    "id": 2421
+  },
+  "0x4b": {
     "description": "A suitable framework is chosen",
     "state": "UNACCEPTED",
-    "story": "0x34",
+    "story": "0x37",
     "itemName": "",
     "id": 2226
   },
-  "0x43": {
+  "0x4c": {
     "shortName": "hjgh",
     "description": "",
     "impediments": "",
     "state": "NOT_STARTED",
     "lane": "NOT_STARTED",
-    "story": "0x34",
+    "story": "0x37",
     "assignee": "0x5",
     "serializableLogs": [],
     "effortLeft": 6000.0,
@@ -933,41 +1065,41 @@
     "itemName": "hjgh",
     "id": 2422
   },
-  "0x44": {
+  "0x4d": {
     "description": "Application opens",
     "state": "UNACCEPTED",
-    "story": "0x35",
+    "story": "0x38",
     "itemName": "",
     "id": 2227
   },
-  "0x45": {
+  "0x4e": {
     "description": "User is presented with some basic screen",
     "state": "UNACCEPTED",
-    "story": "0x35",
+    "story": "0x38",
     "itemName": "",
     "id": 2228
   },
-  "0x46": {
+  "0x4f": {
     "description": "Application plays .WAV files",
     "state": "UNACCEPTED",
-    "story": "0x36",
+    "story": "0x39",
     "itemName": "",
     "id": 2229
   },
-  "0x47": {
+  "0x50": {
     "description": "Webserice set up to provide weather data",
     "state": "UNACCEPTED",
-    "story": "0x37",
+    "story": "0x3a",
     "itemName": "",
     "id": 2242
   },
-  "0x48": {
+  "0x51": {
     "shortName": "Grab a kid",
     "description": "",
     "impediments": "",
     "state": "BLOCKED",
     "lane": "NOT_STARTED",
-    "story": "0x3a",
+    "story": "0x3d",
     "serializableLogs": [],
     "effortLeft": 5.0,
     "effortSpent": 0.0,
@@ -975,13 +1107,13 @@
     "itemName": "Grab a kid",
     "id": 2388
   },
-  "0x49": {
+  "0x52": {
     "shortName": "Make \u0027em scream",
     "description": "",
     "impediments": "",
     "state": "VERIFY",
     "lane": "VERIFY",
-    "story": "0x3a",
+    "story": "0x3d",
     "assignee": "0x11",
     "serializableLogs": [],
     "effortLeft": 3.0,
@@ -990,42 +1122,13 @@
     "itemName": "Make \u0027em scream",
     "id": 2389
   },
-  "0x4a": {
-    "shortName": "Verify Me!",
-    "description": "",
-    "impediments": "",
-    "state": "VERIFY",
-    "lane": "VERIFY",
-    "story": "0x3b",
-    "serializableLogs": [],
-    "effortLeft": 30.0,
-    "effortSpent": 0.0,
-    "converter": {},
-    "itemName": "Verify Me!",
-    "id": 2418
-  },
-  "0x4b": {
-    "shortName": "Mission Completion",
-    "description": "",
-    "impediments": "",
-    "state": "DONE",
-    "lane": "DONE",
-    "story": "0x3b",
-    "assignee": "0xc",
-    "serializableLogs": [],
-    "effortLeft": 120.0,
-    "effortSpent": 0.0,
-    "converter": {},
-    "itemName": "Mission Completion",
-    "id": 2419
-  },
-  "0x4c": {
+  "0x53": {
     "shortName": "Don\u0027t touch me",
     "description": "",
     "impediments": "",
     "state": "NOT_STARTED",
     "lane": "NOT_STARTED",
-    "story": "0x3b",
+    "story": "0x3e",
     "serializableLogs": [],
     "effortLeft": 30.0,
     "effortSpent": 0.0,
@@ -1033,28 +1136,13 @@
     "itemName": "Don\u0027t touch me",
     "id": 2420
   },
-  "0x4d": {
-    "shortName": "I\u0027m lost",
-    "description": "",
-    "impediments": "",
-    "state": "DEFERRED",
-    "lane": "VERIFY",
-    "story": "0x3b",
-    "assignee": "0xa",
-    "serializableLogs": [],
-    "effortLeft": 15.0,
-    "effortSpent": 0.0,
-    "converter": {},
-    "itemName": "I\u0027m lost",
-    "id": 2421
-  },
-  "0x4e": {
+  "0x54": {
     "shortName": "Verify Me!",
     "description": "",
     "impediments": "",
     "state": "VERIFY",
     "lane": "VERIFY",
-    "story": "0x3e",
+    "story": "0x41",
     "serializableLogs": [],
     "effortLeft": 0.0,
     "effortSpent": 0.0,
@@ -1062,13 +1150,13 @@
     "itemName": "Verify Me!",
     "id": 2389
   },
-  "0x4f": {
+  "0x55": {
     "shortName": "Mission Completion",
     "description": "",
     "impediments": "",
     "state": "DONE",
     "lane": "DONE",
-    "story": "0x3e",
+    "story": "0x41",
     "serializableLogs": [],
     "effortLeft": 0.0,
     "effortSpent": 0.0,

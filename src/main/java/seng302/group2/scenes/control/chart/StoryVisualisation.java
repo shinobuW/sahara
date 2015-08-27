@@ -12,13 +12,15 @@ import seng302.group2.scenes.control.PopOverTip;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by cvs20 on 27/08/15.
  */
 public class StoryVisualisation extends Pane {
 
     public StoryVisualisation(Story story) {
-
+        final int decimalPoint = 0;
         ObservableList<Task> tasks =  story.getTasks();
 
         ObservableList<Task> done = FXCollections.observableArrayList();
@@ -37,18 +39,16 @@ public class StoryVisualisation extends Pane {
             }
         }
 
+
         double lengthGreen = getEffortSpent(done);
-        double lengthBlue = getEffortSpent(inProgress);
+        double lengthBlue = getEffortSpent(inProgress) + getEffortSpent(done);
         double lengthRed = getEffortLeft(inProgress) + getEffortLeft(rest);
 
         double overallLength = lengthBlue + lengthGreen + lengthRed;
 
         double percentageGreen = (lengthGreen / overallLength);
-        System.out.println("Percent Green " + percentageGreen);
         double percentageBlue = (lengthBlue / overallLength);
-        System.out.println("Percent Blue " + percentageBlue);
         double percentageRed = (lengthRed / overallLength);
-        System.out.println("Percent Red " + percentageRed);
 
 
         double maxWidth = 330;
@@ -56,6 +56,8 @@ public class StoryVisualisation extends Pane {
         double maxBlue = maxWidth * percentageBlue;
 
         //Creates visualisation bar
+        DecimalFormat df = new DecimalFormat("##");
+
         GridPane visualGrid = new GridPane();
 
         Rectangle red = new Rectangle();
@@ -66,23 +68,24 @@ public class StoryVisualisation extends Pane {
         green.setHeight(25);
         green.setArcWidth(15);
         green.setArcHeight(15);
-        PopOverTip greenPO = new PopOverTip(green, new Text("Percentage of Story Done: "
-                + (percentageGreen * 100) + "%"));
+        PopOverTip greenPO = new PopOverTip(green, new Text(" Percentage of Story Done: "
+                + (df.format(percentageGreen * 100)) + "% "));
         greenPO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
         blue.setWidth(maxBlue);
         blue.setHeight(25);
         blue.setArcWidth(15);
         blue.setArcHeight(15);
-        PopOverTip bluePO = new PopOverTip(blue, new Text("Percentage of Story In Progress: "
-                + (percentageBlue * 100) + "%"));
+        PopOverTip bluePO = new PopOverTip(blue, new Text(" Percentage of Story In Progress: "
+                + (df.format(percentageBlue * 100)) + "% "));
         bluePO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
         red.setWidth(maxWidth);
         red.setHeight(25);
         red.setArcWidth(15);
         red.setArcHeight(15);
-        PopOverTip redPO = new PopOverTip(red, new Text("Remaining work to do: " + (percentageRed * 100) + "%"));
+        PopOverTip redPO = new PopOverTip(red, new Text(" Remaining work to do: "
+                + (df.format(percentageRed * 100)) + "%" ));
         redPO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
         red.setFill(Color.RED);
