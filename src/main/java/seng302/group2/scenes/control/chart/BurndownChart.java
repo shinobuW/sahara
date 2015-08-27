@@ -16,7 +16,6 @@ import java.util.*;
  */
 public class BurndownChart extends LineChart {
 
-
     public BurndownChart(Axis axis, Axis axis2) {
         super(axis, axis2);
         try {
@@ -77,7 +76,6 @@ public class BurndownChart extends LineChart {
         }
 
         this.getData().add(effortSpentSeries);
-
     }
 
     public XYChart.Series effortLeftSeries(Sprint currentSprint) {
