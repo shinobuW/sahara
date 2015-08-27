@@ -26,6 +26,7 @@ import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableTable;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
@@ -236,7 +237,9 @@ public class TaskLoggingTab extends SearchableTab {
                         event.consume();
                     }
                     if (startDatePicker.getValue() == null) {
-                        startDatePicker.showErrorField("Please select a date");
+                        ValidationStyle.borderGlowRed( startDatePicker);
+                        ValidationStyle.showMessage("Please select a date",
+                                startDatePicker);
                         event.consume();
                     }
                 }
