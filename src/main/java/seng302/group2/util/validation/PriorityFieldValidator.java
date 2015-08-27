@@ -1,6 +1,7 @@
 package seng302.group2.util.validation;
 
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
 
@@ -59,19 +60,24 @@ public class PriorityFieldValidator {
     public static boolean validatePriorityField(RequiredField numberField, Backlog backlog, Integer currentPriority) {
         switch (PriorityFieldValidator.validatePriorityField(numberField.getText(), backlog, currentPriority)) {
             case VALID:
-                numberField.hideErrorField();
+                ValidationStyle.borderGlowNone(numberField.getTextField());
                 return true;
             case INVALID:
-                numberField.showErrorField("* You must enter integer values only");
+                ValidationStyle.borderGlowRed(numberField.getTextField());
+                ValidationStyle.showMessage("You must enter integer values only", numberField.getTextField());
                 return false;
             case NULL:
-                numberField.showErrorField("* You must enter an integer priority for this story");
+                ValidationStyle.borderGlowRed(numberField.getTextField());
+                ValidationStyle.showMessage("You must enter an integer priority for this story",
+                        numberField.getTextField());
                 return false;
             case NON_UNIQUE:
-                numberField.showErrorField("* Priorities must be unique within a backlog");
+                ValidationStyle.borderGlowRed(numberField.getTextField());
+                ValidationStyle.showMessage("Priorities must be unique within a backlog", numberField.getTextField());
                 return false;
             default:
-                numberField.showErrorField("* Not a valid number");
+                ValidationStyle.borderGlowRed(numberField.getTextField());
+                ValidationStyle.showMessage("Not a valid number", numberField.getTextField());
                 return false;
         }
     }

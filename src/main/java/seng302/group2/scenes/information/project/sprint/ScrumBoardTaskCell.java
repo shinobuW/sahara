@@ -44,12 +44,23 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
 
     Set<SearchableControl> searchControls = new HashSet<>();
 
+    /**
+     * Creates a scrumboard task cell for the given parent table for sharing drag events, and the tab to make the fields
+     * searchable.
+     * @param parentTable The table that the cell belongs to
+     * @param tab The scrumboard tab containing the table and cell
+     */
     public ScrumBoardTaskCell(ListView<Task> parentTable, ScrumboardTab tab) {
         this.parentTable = parentTable;
         this.tab = tab;
         tab.searchControls.add(this);
     }
 
+    /**
+     * Updates the item, resetting it's graphic node, and reinitialising it's listeners for dragging and dropping
+     * @param task The cell's task
+     * @param empty Whether the cell is empty of not
+     */
     @Override
     public void updateItem(Task task, boolean empty) {
         super.updateItem(task, empty);
