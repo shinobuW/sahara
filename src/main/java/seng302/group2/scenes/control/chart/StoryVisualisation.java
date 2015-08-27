@@ -1,5 +1,7 @@
 package seng302.group2.scenes.control.chart;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -8,6 +10,7 @@ import javafx.scene.text.Text;
 import org.controlsfx.control.PopOver;
 import seng302.group2.scenes.control.PopOverTip;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.tasks.Task;
 
 /**
  * Created by cvs20 on 27/08/15.
@@ -16,6 +19,42 @@ public class StoryVisualisation extends Pane {
 
     public StoryVisualisation(Story story) {
 
+        ObservableList<Task> tasks =  story.getTasks();
+
+        ObservableList<Task> done = FXCollections.observableArrayList();
+        ObservableList<Task> inProgress = FXCollections.observableArrayList();
+        ObservableList<Task> rest = FXCollections.observableArrayList();
+
+        for (Task task : tasks) {
+            if (task.getState() == Task.TASKSTATE.DONE) {
+                done.add(task);
+            }
+            else if (task.getState() == Task.TASKSTATE.IN_PROGRESS) {
+                inProgress.add(task);
+            }
+            else {
+                rest.add(task);
+            }
+        }
+
+        double lengthGreen = getEffortSpent(done);
+        double lengthBlue = getEffortSpent(inProgress);
+        double lengthRed = getEffortLeft(inProgress) + getEffortLeft(rest);
+
+        double overallLength = lengthBlue + lengthGreen + lengthRed;
+
+        double percentageGreen = (lengthGreen / overallLength);
+        System.out.println("Percent Green " + percentageGreen);
+        double percentageBlue = (lengthBlue / overallLength);
+        System.out.println("Percent Blue " + percentageBlue);
+        double percentageRed = (lengthRed / overallLength);
+        System.out.println("Percent Red " + percentageRed);
+
+
+        double maxWidth = 330;
+        double maxGreen = maxWidth * percentageGreen;
+        double maxBlue = maxWidth * percentageBlue;
+
         //Creates visualisation bar
         GridPane visualGrid = new GridPane();
 
@@ -23,25 +62,27 @@ public class StoryVisualisation extends Pane {
         Rectangle green = new Rectangle();
         Rectangle blue = new Rectangle();
 
-        green.setWidth(120);
+        green.setWidth(maxGreen);
         green.setHeight(25);
         green.setArcWidth(15);
         green.setArcHeight(15);
-        PopOverTip greenPO = new PopOverTip(green, new Text("Green"));
+        PopOverTip greenPO = new PopOverTip(green, new Text("Percentage of Story Done: "
+                + (percentageGreen * 100) + "%"));
         greenPO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
-        blue.setWidth(170);
+        blue.setWidth(maxBlue);
         blue.setHeight(25);
         blue.setArcWidth(15);
         blue.setArcHeight(15);
-        PopOverTip bluePO = new PopOverTip(blue, new Text("Blue"));
+        PopOverTip bluePO = new PopOverTip(blue, new Text("Percentage of Story In Progress: "
+                + (percentageBlue * 100) + "%"));
         bluePO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
-        red.setWidth(230);
+        red.setWidth(maxWidth);
         red.setHeight(25);
         red.setArcWidth(15);
         red.setArcHeight(15);
-        PopOverTip redPO = new PopOverTip(red, new Text("Red"));
+        PopOverTip redPO = new PopOverTip(red, new Text("Remaining work to do: " + (percentageRed * 100) + "%"));
         redPO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
         red.setFill(Color.RED);
@@ -52,8 +93,24 @@ public class StoryVisualisation extends Pane {
         visualGrid.add(blue, 0, 0, 1, 2);
         visualGrid.add(green, 0, 0, 1, 1);
 
-
-
         this.getChildren().add(visualGrid);
+
     }
+
+    public double getEffortSpent(ObservableList<Task> taskList) {
+        double totalEffortSpent = 0;
+        for (Task task : taskList) {
+            totalEffortSpent += task.getEffortSpent();
+        }
+        return totalEffortSpent;
+    }
+
+    public double getEffortLeft(ObservableList<Task> taskList) {
+        double totalEffortLeft = 0;
+        for (Task task : taskList) {
+            totalEffortLeft += task.getEffortLeft();
+        }
+        return totalEffortLeft;
+    }
+
 }
