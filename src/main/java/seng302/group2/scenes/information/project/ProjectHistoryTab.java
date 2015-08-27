@@ -244,7 +244,7 @@ public class ProjectHistoryTab extends SearchableTab {
             });
 
         addButton.setOnAction((event) -> {
-                teamComboBox.hideErrorField();
+                ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
                 startDatePicker.hideErrorField();
                 if (teamComboBox.getValue() != null && startDatePicker.getValue() != null) {
                     LocalDate endDate = endDatePicker.getValue();

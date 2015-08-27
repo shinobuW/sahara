@@ -206,16 +206,6 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
         this.comboBox.setTooltip(null);
     }
 
-    /**
-     * Shows the error field with the with the given text.
-     *
-     * @param errorMessage The error message to show
-     */
-    public void showErrorField(String errorMessage) {
-        this.errorMessageText.setTextFill(Color.web("FF0000"));
-        this.errorMessageText.setText(errorMessage);
-        showErrorField();
-    }
 
     /**
      * Add option item to Combo Box
@@ -266,13 +256,6 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
         this.comboBox.setValue(value);
     }
 
-    /**
-     * Hides the error field.
-     */
-    public void hideErrorField() {
-        this.getChildren().remove(errorMessageText);
-        this.comboBox.setStyle(null);
-    }
 
     /**
      * Queries the combo box to find any elements containing the given query string. If found inside the combo box, the

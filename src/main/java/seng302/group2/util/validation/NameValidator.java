@@ -39,7 +39,6 @@ public class NameValidator {
     public static boolean validateName(RequiredField nameField) {
         switch (NameValidator.validateName(nameField.getText())) {
             case VALID:
-                nameField.hideErrorField();
                 ValidationStyle.borderGlowNone(nameField.getTextField());
                 return true;
             case INVALID:

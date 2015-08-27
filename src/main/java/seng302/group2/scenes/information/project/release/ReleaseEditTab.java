@@ -15,6 +15,7 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.SaharaItem;
@@ -103,7 +104,8 @@ public class ReleaseEditTab extends SearchableTab {
                 }
                 else {
                     if (!DateValidator.isFutureDate(releaseDate)) {
-                        releaseDatePicker.showErrorField("Date must be a future date");
+                        ValidationStyle.borderGlowRed(releaseDatePicker.getDatePicker());
+                        ValidationStyle.showMessage("Date must be a future date", releaseDatePicker.getDatePicker());
                     }
                 }
 

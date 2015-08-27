@@ -14,6 +14,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.conversion.DurationConverter;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.person.Person;
@@ -197,14 +198,16 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         effortLeftField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctEffortLeft = DateValidator.validDuration(newValue) && !newValue.isEmpty();
                 if (correctEffortLeft) {
-                    effortLeftField.hideErrorField();
+                    ValidationStyle.borderGlowNone(effortLeftField.getTextField());
                 }
                 else {
                     if (newValue.isEmpty()) {
-                        effortLeftField.showErrorField("* This field must be filled");
+                        ValidationStyle.borderGlowRed(effortLeftField.getTextField());
+                        ValidationStyle.showMessage("This field must be filled", effortLeftField.getTextField());
                     }
                     else {
-                        effortLeftField.showErrorField("* Please input in valid format");
+                        ValidationStyle.borderGlowRed(effortLeftField.getTextField());
+                        ValidationStyle.showMessage("Please input in valid format", effortLeftField.getTextField());
                     }
                 }
                 createButton.setDisable(!(correctShortName && correctEffortLeft && projectSelected && backlogSelected

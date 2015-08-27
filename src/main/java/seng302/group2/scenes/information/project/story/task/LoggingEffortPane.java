@@ -234,7 +234,7 @@ public class LoggingEffortPane extends Pane {
                 correctEffortLeft = DateValidator.validDuration(effortLeftField.getText()) 
                         && !effortLeftField.getText().isEmpty();
                 if (correctDuration) {
-                    durationTextField.hideErrorField();
+                    ValidationStyle.borderGlowNone(durationTextField.getTextField());
                     double effortLeft = task.getEffortLeft()
                             - DurationConverter.readDurationToMinutes(durationTextField.getText());
                     String effortLeftString = (int) Math.floor(effortLeft / 60) + "h " 
@@ -248,10 +248,12 @@ public class LoggingEffortPane extends Pane {
                 else {
                     effortLeftField.setText(task.getEffortLeftString());
                     if (newValue.isEmpty()) {
-                        durationTextField.showErrorField("* This field must be filled");
+                        ValidationStyle.borderGlowRed(durationTextField.getTextField());
+                        ValidationStyle.showMessage("This field must be filled", durationTextField.getTextField());
                     }
                     else {
-                        durationTextField.showErrorField("* Please input valid format");
+                        ValidationStyle.borderGlowRed(durationTextField.getTextField());
+                        ValidationStyle.showMessage("Please input in valid format", durationTextField.getTextField());
                     }
                 }
                 addButton.setDisable(!(loggerSelected && correctDuration && correctEffortLeft));
@@ -260,14 +262,16 @@ public class LoggingEffortPane extends Pane {
         effortLeftField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctEffortLeft = DateValidator.validDuration(newValue) && !newValue.isEmpty();
                 if (correctEffortLeft) {
-                    effortLeftField.hideErrorField();
+                    ValidationStyle.borderGlowNone(effortLeftField.getTextField());
                 }
                 else {
                     if (newValue.isEmpty()) {
-                        effortLeftField.showErrorField("* This field must be filled");
+                        ValidationStyle.borderGlowRed(effortLeftField.getTextField());
+                        ValidationStyle.showMessage("This field must be filled", effortLeftField.getTextField());
                     }
                     else {
-                        effortLeftField.showErrorField("* Please input valid format");
+                        ValidationStyle.borderGlowRed(effortLeftField.getTextField());
+                        ValidationStyle.showMessage("Please input in valid format", effortLeftField.getTextField());
                     }
                 }
                 addButton.setDisable(!(loggerSelected && correctDuration && correctEffortLeft));
@@ -309,7 +313,7 @@ public class LoggingEffortPane extends Pane {
         }
 
         addButton.setOnAction((event) -> {
-                startDatePicker.hideErrorField();
+                ValidationStyle.borderGlowNone(startDatePicker.getDatePicker());
                 if (personComboBox.getValue() != null && startDatePicker.getValue() != null) {
                     LocalDate startDate = startDatePicker.getValue();
                     Person selectedPerson = personComboBox.getValue();
