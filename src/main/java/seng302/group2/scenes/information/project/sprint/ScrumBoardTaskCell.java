@@ -55,7 +55,7 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
         super.updateItem(task, empty);
         if (task != null) {
             // Setup the cell graphic (HBox)
-            setGraphic(new ScrumBoardTaskCellNode(task, this));
+            setGraphic(new ScrumBoardTaskCellNode(task));
         }
         else {
             //System.out.println("Item is null");

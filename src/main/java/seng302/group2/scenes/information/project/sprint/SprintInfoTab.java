@@ -113,10 +113,7 @@ public class SprintInfoTab extends SearchableTab {
 
         basicInfoPane.getChildren().add(btnEdit);
 
-        btnEdit.setOnAction((event) -> {
-                currentSprint.switchToInfoScene(true);
-            });
-
+        btnEdit.setOnAction((event) -> currentSprint.switchToInfoScene(true));
 
         Collections.addAll(searchControls, title);
     }
@@ -135,37 +132,12 @@ public class SprintInfoTab extends SearchableTab {
             stories.add(currentSprint.getUnallocatedTasksStory());
 
             for (Story story : stories) {
-                VBox taskBox = new VBox();
+
+                VBox taskBox = new VBox(4);
                 if (story.getTasks().size() != 0) {
-                    taskBox.getChildren().add(new SearchableText("Tasks:", searchControls));
+
                     for (Task task : story.getTasks().sorted(Task.TaskNameComparator)) {
-                        VBox taskInfo = new VBox();
-                        SearchableText desc = new SearchableText("Description: " + task.getDescription(),
-                                searchControls);
-
-                        SearchableText assignee;
-                        if (task.getAssignee() == null) {
-                            assignee = new SearchableText("Assigned Team Member: (none)", searchControls);
-                        }
-                        else {
-                            assignee = new SearchableText("Assigned Team Member: "
-                                    + task.getAssignee().toString(), searchControls);
-                        }
-
-                        SearchableText imps = new SearchableText("Impediments: " + task.getImpediments(),
-                                searchControls);
-                        SearchableText state = new SearchableText("State: " + task.getState().toString(),
-                                searchControls);
-                        SearchableText effortLeft = new SearchableText("Effort Left: " + task.getEffortLeftString(),
-                                searchControls);
-                        SearchableText effortSpent = new SearchableText("Effort Spent: " + task.getEffortSpentString(),
-                                searchControls);
-                        taskInfo.getChildren().addAll(desc, assignee, imps, state, effortLeft, effortSpent);
-                        TitledPane taskPane = new TitledPane(task.getShortName(), taskInfo);
-                        taskPane.setPrefHeight(30);
-                        taskPane.setExpanded(false);
-                        taskPane.setAnimated(true);
-                        taskBox.getChildren().add(taskPane);
+                        taskBox.getChildren().add(new ScrumBoardTaskCellNode(task));
                     }
                 }
                 else {
@@ -173,8 +145,7 @@ public class SprintInfoTab extends SearchableTab {
                 }
                 TitledPane storyPane = new TitledPane("[" + story.getEstimate() + "] "
                         + story.getShortName() + " - " + story.getReadyString(), taskBox);
-                //TitledPane storyPane = new TitledPane(new SearchableText("[" + story.getEstimate().toString() + "] "
-                //        + story.getShortName() + " - " + story.getReadyString(), searchControls), taskBox);
+
                 storyPane.setPrefHeight(30);
                 storyPane.setExpanded(false);
                 storyPane.setAnimated(true);
