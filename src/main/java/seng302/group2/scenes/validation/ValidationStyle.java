@@ -76,8 +76,8 @@ public class ValidationStyle {
         po.show(node);
 
         node.onMouseClickedProperty().addListener((observable, oldValue, newValue) -> {
-            po.hide();
-        });
+                po.hide();
+            });
 
         timeoutHide(po);
     }
@@ -100,12 +100,12 @@ public class ValidationStyle {
         po.show(node);
 
         node.onMouseClickedProperty().addListener((observable, oldValue, newValue) -> {
-            po.hide();
-        });
+                po.hide();
+            });
 
         node.textProperty().addListener((observable, oldValue, newValue) -> {
-            po.hide();
-        });
+                po.hide();
+            });
 
         timeoutHide(po);
     }

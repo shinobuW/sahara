@@ -68,7 +68,8 @@ public class PriorityFieldValidator {
                 return false;
             case NULL:
                 ValidationStyle.borderGlowRed(numberField.getTextField());
-                ValidationStyle.showMessage("You must enter an integer priority for this story", numberField.getTextField());
+                ValidationStyle.showMessage("You must enter an integer priority for this story",
+                        numberField.getTextField());
                 return false;
             case NON_UNIQUE:
                 ValidationStyle.borderGlowRed(numberField.getTextField());
