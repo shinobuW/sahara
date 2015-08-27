@@ -40,7 +40,8 @@ public class Log extends SaharaItem implements Serializable {
      * @param duration the duration the person worked for
      * @param startTime time the logger started working on the task
      */
-    public Log(Task task, String description, Person logger, double duration, LocalDateTime startTime, double effortLeft) {
+    public Log(Task task, String description, Person logger, double duration,
+               LocalDateTime startTime, double effortLeft) {
         super("Untitled Log");
         this.task = task;
         this.logger = logger;
