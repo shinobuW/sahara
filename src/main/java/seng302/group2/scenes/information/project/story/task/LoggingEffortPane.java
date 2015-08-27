@@ -40,9 +40,9 @@ import java.util.Set;
 public class LoggingEffortPane extends Pane {
 
     PopOver popOver = null;
-    static Boolean correctEffortLeft = Boolean.FALSE;
-    static Boolean correctDuration = Boolean.FALSE;
-    static Boolean loggerSelected = Boolean.FALSE;
+    Boolean correctEffortLeft = Boolean.FALSE;
+    Boolean correctDuration = Boolean.FALSE;
+    Boolean loggerSelected = Boolean.FALSE;
     //TODO Make this a Searchable Pane
 
 
@@ -274,7 +274,7 @@ public class LoggingEffortPane extends Pane {
                         ValidationStyle.showMessage("Please input in valid format", effortLeftField.getTextField());
                     }
                 }
-                addButton.setDisable(!(loggerSelected && correctDuration && correctEffortLeft));
+                //addButton.setDisable(!(loggerSelected && correctDuration && correctEffortLeft));
             });
 
 
@@ -318,18 +318,31 @@ public class LoggingEffortPane extends Pane {
                     LocalDate startDate = startDatePicker.getValue();
                     Person selectedPerson = personComboBox.getValue();
                     double duration = DurationConverter.readDurationToMinutes(durationTextField.getText());
-                    double effortLeft = DurationConverter.readDurationToMinutes(effortLeftField.getText()) - duration;
+                    double effortLeft = 0;
+                    if (DurationConverter.readDurationToMinutes(effortLeftField.getText()) != 0) {
+                        effortLeft = DurationConverter.readDurationToMinutes(effortLeftField.getText());
+                    }
+
                     LocalDateTime dateTime = startDate.atTime(timeTextField.getHours(), timeTextField.getMinutes());
                     Log newLog = new Log(task, descriptionTextArea.getText(),
                             selectedPerson, duration, dateTime, effortLeft);
                     task.add(newLog, effortLeft);
-                    String newEffortLeft2 = (int) Math.floor(task.getEffortLeft() / 60) + "h "
-                            + (int) Math.floor(task.getEffortLeft() % 60) + "min";
 
-                    effortLeftField.setText(newEffortLeft2);
-//                    if (popOver != null) {
-//                        popOver.hide();
-//                    }
+                    String effortLeftString = "";
+                    if (task.getEffortLeft() == 0
+                            || task.getEffortLeft() -
+                            DurationConverter.readDurationToMinutes(durationTextField.getText()) <= 0) {
+                        effortLeftString = "0h 0min";
+                    }
+                    else {
+                        double newEffortLeft = task.getEffortLeft()
+                                - DurationConverter.readDurationToMinutes(durationTextField.getText());
+                        effortLeftString = (int) Math.floor(newEffortLeft / 60) + "h "
+                                + (int) Math.floor(newEffortLeft % 60) + "min";
+                    }
+
+                    effortLeftField.getTextField().setText(effortLeftString);
+
                 }
                 else {
                     event.consume();
