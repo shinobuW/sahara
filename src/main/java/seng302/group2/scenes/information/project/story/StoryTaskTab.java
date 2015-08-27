@@ -353,23 +353,10 @@ public class StoryTaskTab extends SearchableTab {
 
         RequiredField shortNameCustomField = new RequiredField("Task Name:");
         RequiredField effortLeftField = new RequiredField("Effort left: ");
-        CustomComboBox<Person> assigneeField = new CustomComboBox<Person>("Assignee: ");
-        CustomTextArea descriptionField = new CustomTextArea("Task Description: ");
-
-        ObservableList<Person> personList = observableArrayList();
-        Person blankPerson = new Person("", "", "", null, null, null);
-        personList.add(blankPerson);
-        for (Team team : currentStory.getProject().getAllTeams()) {
-            personList.addAll(team.getPeople());
-        }
-        Collections.sort(personList);
-        assigneeField.getComboBox().setItems(personList);
 
         Button btnAdd = new Button("Add");
         btnAdd.setDisable(true);
-        addTaskBox.getChildren().addAll(task, shortNameCustomField, effortLeftField, assigneeField,
-                descriptionField, btnAdd);
-
+        addTaskBox.getChildren().addAll(task, shortNameCustomField, effortLeftField, btnAdd);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctShortName = validateShortName(shortNameCustomField, null);
@@ -395,12 +382,8 @@ public class StoryTaskTab extends SearchableTab {
         btnAdd.setOnAction((event) -> {
                 //get user input
                 String shortName = shortNameCustomField.getText();
-                Task newTask = new Task(shortName, descriptionField.getText(), currentStory, null);
+                Task newTask = new Task(shortName, " ", currentStory, null);
                 Person assignee = null;
-                if (!assigneeField.getValue().equals(blankPerson)) {
-                    assignee = assigneeField.getValue();
-                }
-
                 newTask.setAssignee(assignee);
                 if (effortLeftField.getText().isEmpty()) {
                     newTask.setEffortLeft((double) 0);
@@ -425,8 +408,6 @@ public class StoryTaskTab extends SearchableTab {
                 tasksTitle,
                 shortNameCustomField,
                 effortLeftField,
-                descriptionField,
-                assigneeField,
                 taskTable
         );
 

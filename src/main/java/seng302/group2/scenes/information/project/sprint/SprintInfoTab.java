@@ -164,7 +164,7 @@ public class SprintInfoTab extends SearchableTab {
                         TitledPane taskPane = new TitledPane(task.getShortName(), taskInfo);
                         taskPane.setPrefHeight(30);
                         taskPane.setExpanded(false);
-                        taskPane.setAnimated(false);
+                        taskPane.setAnimated(true);
                         taskBox.getChildren().add(taskPane);
                     }
                 }
@@ -177,7 +177,7 @@ public class SprintInfoTab extends SearchableTab {
                 //        + story.getShortName() + " - " + story.getReadyString(), searchControls), taskBox);
                 storyPane.setPrefHeight(30);
                 storyPane.setExpanded(false);
-                storyPane.setAnimated(false);
+                storyPane.setAnimated(true);
                 stackedStoryTitlePanes.getChildren().add(storyPane);
             }
         }
