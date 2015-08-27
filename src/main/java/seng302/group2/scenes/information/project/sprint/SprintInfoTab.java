@@ -147,9 +147,8 @@ public class SprintInfoTab extends SearchableTab {
             for (Story story : stories) {
                 VBox VtaskBox = new VBox(30);
                 VBox taskBox = new VBox(4);
-                VtaskBox.getChildren().add(new StoryVisualisation(story));
                 if (story.getTasks().size() != 0) {
-
+                    VtaskBox.getChildren().add(new StoryVisualisation(story));
                     for (Task task : story.getTasks().sorted(Task.TaskNameComparator)) {
                         taskBox.getChildren().add(new ScrumBoardTaskCellNode(task));
                     }
