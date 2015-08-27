@@ -3,7 +3,9 @@ package seng302.group2.scenes.validation;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -57,7 +59,11 @@ public class ValidationStyle {
     }
 
 
-
+    /**
+     * Shows a PopOver message containing the given message on the given node
+     * @param message The message to display
+     * @param node The node to show the PopOver on
+     */
     public static void showMessage(String message, Node node) {
         PopOver po = new PopOver();
         VBox box = new VBox(8);
@@ -69,9 +75,50 @@ public class ValidationStyle {
         po.setAutoHide(true);
         po.show(node);
 
+        node.onMouseClickedProperty().addListener((observable, oldValue, newValue) -> {
+            po.hide();
+        });
+
+        timeoutHide(po);
+    }
+
+
+    /**
+     * Shows a PopOver message containing the given message on the given text field
+     * @param message The message to display
+     * @param node The text field to show the PopOver on
+     */
+    public static void showMessage(String message, TextField node) {
+        PopOver po = new PopOver();
+        VBox box = new VBox(8);
+        box.setAlignment(Pos.CENTER);
+        box.setPadding(new Insets(8));
+        box.getChildren().add(new Text(message));
+        po.setContentNode(box);
+        po.setDetachable(false);
+        po.setAutoHide(true);
+        po.show(node);
+
+        node.onMouseClickedProperty().addListener((observable, oldValue, newValue) -> {
+            po.hide();
+        });
+
+        node.textProperty().addListener((observable, oldValue, newValue) -> {
+            po.hide();
+        });
+
+        timeoutHide(po);
+    }
+
+
+    /**
+     * Hides the PopOver after a timeout of 4000ms, handled by starting and sleeping a new thread
+     * @param po The PopOver to hide
+     */
+    private static void timeoutHide(PopOver po) {
         Runnable hide = () -> {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(4000);
             }
             catch (InterruptedException ex) {
                 po.hide();
@@ -80,6 +127,5 @@ public class ValidationStyle {
         };
         Thread hideThread = new Thread(hide);
         hideThread.start();
-
     }
 }
