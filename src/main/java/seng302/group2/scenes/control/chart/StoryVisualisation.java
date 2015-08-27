@@ -20,7 +20,6 @@ import java.text.DecimalFormat;
 public class StoryVisualisation extends Pane {
 
     public StoryVisualisation(Story story) {
-        final int decimalPoint = 0;
         ObservableList<Task> tasks =  story.getTasks();
 
         ObservableList<Task> done = FXCollections.observableArrayList();
@@ -46,10 +45,15 @@ public class StoryVisualisation extends Pane {
 
         double overallLength = lengthBlue + lengthGreen + lengthRed;
 
-        double percentageGreen = (lengthGreen / overallLength);
-        double percentageBlue = (lengthBlue / overallLength);
-        double percentageRed = (lengthRed / overallLength);
+        double percentageGreen = 0;
+        double percentageBlue = 0;
+        double percentageRed = 1;
 
+        if (overallLength != 0.0) {
+            percentageGreen = (lengthGreen / overallLength);
+            percentageBlue = (lengthBlue / overallLength);
+            percentageRed = (lengthRed / overallLength);
+        }
 
         double maxWidth = 340;
         double maxGreen = maxWidth * percentageGreen;
