@@ -17,6 +17,7 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
@@ -110,10 +111,11 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
                 correctDate = DateValidator.isFutureDate(releaseDate);
 
                 if (correctDate) {
-                    releaseDatePicker.hideErrorField();
+                    ValidationStyle.borderGlowNone(releaseDatePicker.getDatePicker());
                 }
                 else {
-                    releaseDatePicker.showErrorField("Date must be a future date");
+                    ValidationStyle.borderGlowRed(releaseDatePicker.getDatePicker());
+                    ValidationStyle.showMessage("Date must be a future date", releaseDatePicker.getDatePicker());
                 }
 
                 if ((DateValidator.isFutureDate(releaseDate) || releaseDate == null) && correctShortName) {
@@ -147,7 +149,9 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
                     }
                     else {
                         if (!DateValidator.isFutureDate(releaseDate)) {
-                            releaseDatePicker.showErrorField("Date must be a future date");
+                            ValidationStyle.borderGlowRed(releaseDatePicker.getDatePicker());
+                            ValidationStyle.showMessage("Date must be a future date",
+                                    releaseDatePicker.getDatePicker());
                         }
                         else {
                             Release release = new Release(shortName, description, releaseDate,
@@ -250,10 +254,11 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
                 correctDate = DateValidator.isFutureDate(releaseDate);
 
                 if (correctDate) {
-                    releaseDatePicker.hideErrorField();
+                    ValidationStyle.borderGlowNone(releaseDatePicker.getDatePicker());
                 }
                 else {
-                    releaseDatePicker.showErrorField("Date must be a future date");
+                    ValidationStyle.borderGlowRed(releaseDatePicker.getDatePicker());
+                    ValidationStyle.showMessage("Date must be a future date", releaseDatePicker.getDatePicker());
                 }
 
                 if ((DateValidator.isFutureDate(releaseDate) || releaseDate == null) && correctShortName) {
@@ -287,7 +292,9 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
                     }
                     else {
                         if (!DateValidator.isFutureDate(releaseDate)) {
-                            releaseDatePicker.showErrorField("Date must be a future date");
+                            ValidationStyle.borderGlowRed(releaseDatePicker.getDatePicker());
+                            ValidationStyle.showMessage("Date must be a future date",
+                                    releaseDatePicker.getDatePicker());
                         }
                         else {
                             Release release = new Release(shortName, description, releaseDate,

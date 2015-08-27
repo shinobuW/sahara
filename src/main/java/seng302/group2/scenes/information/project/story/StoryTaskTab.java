@@ -20,6 +20,7 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.information.project.story.task.LoggingEffortPane;
+import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.conversion.DurationConverter;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.person.Person;
@@ -366,14 +367,16 @@ public class StoryTaskTab extends SearchableTab {
         effortLeftField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctEffortLeft = DateValidator.validDuration(newValue) && !newValue.isEmpty();
                 if (correctEffortLeft) {
-                    effortLeftField.hideErrorField();
+                    ValidationStyle.borderGlowNone(effortLeftField.getTextField());
                 }
                 else {
                     if (newValue.isEmpty()) {
-                        effortLeftField.showErrorField("* This field must be filled");
+                        ValidationStyle.borderGlowRed(effortLeftField.getTextField());
+                        ValidationStyle.showMessage("This field must be filled", effortLeftField.getTextField());
                     }
                     else {
-                        effortLeftField.showErrorField("* Please input valid format");
+                        ValidationStyle.borderGlowRed(effortLeftField.getTextField());
+                        ValidationStyle.showMessage("Please input in valid format", effortLeftField.getTextField());
                     }
                 }
                 btnAdd.setDisable(!(correctShortName && correctEffortLeft));

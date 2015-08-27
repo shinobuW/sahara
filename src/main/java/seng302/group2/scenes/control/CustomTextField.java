@@ -103,41 +103,11 @@ public class CustomTextField extends VBox implements SearchableControl {
 
 
     /**
-     * Shows the error field.
-     */
-    public void showErrorField() {
-        inputText.setStyle("-fx-border-color: red;");
-        this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
-        this.getChildren().add(errorMessageText);
-    }
-
-
-    /**
-     * Shows the error field with the with the given text.
-     *
-     * @param errorMessage The error message to show
-     */
-    public void showErrorField(String errorMessage) {
-        inputText.setStyle("-fx-border-color: red;");
-        this.errorMessageText.setText(errorMessage);
-        showErrorField();
-    }
-
-    /**
      * Gets the input text field
      * @return textfield
      */
     public TextField getTextField() {
         return inputText;
-    }
-
-
-    /**
-     * Hides the error field.
-     */
-    public void hideErrorField() {
-        inputText.setStyle(null);
-        this.getChildren().remove(errorMessageText);
     }
 
     @Override

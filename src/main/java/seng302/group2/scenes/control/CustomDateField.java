@@ -109,40 +109,12 @@ public class CustomDateField extends VBox implements SearchableControl {
     }
 
     /**
-     * Shows the error field.
-     */
-    public void showErrorField() {
-        errorMessageText.setStyle("-fx-border-color: red;");
-        ValidationStyle.borderGlowRed(inputText);
-        this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
-        this.getChildren().add(errorMessageText);
-    }
-
-
-    /**
-     * Shows the error field with the with the given text
-     *
-     * @param errorMessage The error message to show
-     */
-    public void showErrorField(String errorMessage) {
-        this.errorMessageText.setText(errorMessage);
-        showErrorField();
-    }
-
-    /**
      * Gets the input text field
      */
     public TextField getTextField() {
         return this.inputText;
     }
 
-    /**
-     * Hides the error field.
-     */
-    public void hideErrorField() {
-        ValidationStyle.borderGlowRed(inputText);
-        this.getChildren().remove(errorMessageText);
-    }
 
     @Override
     public boolean query(String query) {

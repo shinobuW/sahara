@@ -243,26 +243,6 @@ public class CustomTextArea extends VBox implements SearchableControl {
         this.inputText.setText(text);
     }
 
-    /**
-     * Shows the error field.
-     */
-    public void showErrorField() {
-        inputText.setStyle("-fx-border-color: red;");
-        this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
-        this.getChildren().add(errorMessageText);
-    }
-
-
-    /**
-     * Shows the error field with the with the given text.
-     *
-     * @param errorMessage The error message to show
-     */
-    public void showErrorField(String errorMessage) {
-        this.errorMessageText.setText(errorMessage);
-        showErrorField();
-    }
-
 
     /**
      * Returns the inner text area
@@ -272,14 +252,6 @@ public class CustomTextArea extends VBox implements SearchableControl {
         return this.inputText;
     }
 
-
-    /**
-     * Hides the error field.
-     */
-    public void hideErrorField() {
-        inputText.setStyle(null);
-        this.getChildren().remove(errorMessageText);
-    }
 
     @Override
     public boolean query(String query) {

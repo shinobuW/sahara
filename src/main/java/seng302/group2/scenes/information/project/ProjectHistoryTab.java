@@ -19,6 +19,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.search.*;
+import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.validation.ValidationStatus;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.Project;
@@ -243,7 +244,7 @@ public class ProjectHistoryTab extends SearchableTab {
             });
 
         addButton.setOnAction((event) -> {
-                teamComboBox.hideErrorField();
+                ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
                 startDatePicker.hideErrorField();
                 if (teamComboBox.getValue() != null && startDatePicker.getValue() != null) {
                     LocalDate endDate = endDatePicker.getValue();
@@ -270,11 +271,13 @@ public class ProjectHistoryTab extends SearchableTab {
                 }
                 else {
                     if (teamComboBox.getValue() == null) {
-                        teamComboBox.showErrorField("Please select a team");
+                        ValidationStyle.borderGlowRed(teamComboBox.getComboBox());
+                        ValidationStyle.showMessage("Please select a team", teamComboBox.getComboBox());
                         event.consume();
                     }
                     if (startDatePicker.getValue() == null) {
-                        startDatePicker.showErrorField("Please select a date");
+                        ValidationStyle.borderGlowRed(startDatePicker.getDatePicker());
+                        ValidationStyle.showMessage("Please select a date", startDatePicker.getDatePicker());
                         event.consume();
                     }
                 }

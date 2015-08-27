@@ -18,6 +18,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.search.*;
+import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.validation.ValidationStatus;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.Project;
@@ -237,8 +238,8 @@ public class TeamHistoryTab extends SearchableTab {
             });
 
         addButton.setOnAction((event) -> {
-                projectComboBox.hideErrorField();
-                startDatePicker.hideErrorField();
+                ValidationStyle.borderGlowNone(projectComboBox.getComboBox());
+                ValidationStyle.borderGlowNone(startDatePicker.getDatePicker());
                 if (projectComboBox.getValue() != null && startDatePicker.getValue() != null) {
                     LocalDate endDate = endDatePicker.getValue();
                     LocalDate startDate = startDatePicker.getValue();
@@ -264,11 +265,13 @@ public class TeamHistoryTab extends SearchableTab {
                 }
                 else {
                     if (projectComboBox.getValue() == null) {
-                        projectComboBox.showErrorField("Please select a project");
+                        ValidationStyle.borderGlowRed(projectComboBox.getComboBox());
+                        ValidationStyle.showMessage("Please select a project", projectComboBox.getComboBox());
                         event.consume();
                     }
                     if (startDatePicker.getValue() == null) {
-                        startDatePicker.showErrorField("Please select a date");
+                        ValidationStyle.borderGlowRed(startDatePicker.getDatePicker());
+                        ValidationStyle.showMessage("Please select a date", startDatePicker.getDatePicker());
                         event.consume();
                     }
                 }
