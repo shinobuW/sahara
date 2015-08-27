@@ -16,7 +16,6 @@ import java.util.*;
  */
 public class BurndownChart extends LineChart {
 
-
     public BurndownChart(Axis axis, Axis axis2) {
         super(axis, axis2);
         try {
@@ -73,11 +72,10 @@ public class BurndownChart extends LineChart {
         for (LocalDate d : dailyEffortMap.keySet()) {
             effortLeft -= dailyEffortMap.get(d);
             String monthStr = d.getMonth().toString().substring(0, 3);
-            effortSpentSeries.getData().add(new XYChart.Data(monthStr + " " + d.getDayOfMonth(), maxEffortLeft));
+            effortSpentSeries.getData().add(new XYChart.Data(monthStr + " " + d.getDayOfMonth(), effortLeft));
         }
 
         this.getData().add(effortSpentSeries);
-
     }
 
     public XYChart.Series effortLeftSeries(Sprint currentSprint) {

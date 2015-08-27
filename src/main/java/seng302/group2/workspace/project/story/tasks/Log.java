@@ -3,6 +3,7 @@ package seng302.group2.workspace.project.story.tasks;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.conversion.DurationConverter;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.SaharaItem;
@@ -21,6 +22,7 @@ import java.util.Set;
 public class Log extends SaharaItem implements Serializable {
     private LocalDateTime startTime = LocalDateTime.now();
     private double duration = 0;
+    private double effortLeft = 0;
     private Person logger = null;
     private Task task = null;
     private String description = "";
@@ -38,13 +40,15 @@ public class Log extends SaharaItem implements Serializable {
      * @param duration the duration the person worked for
      * @param startTime time the logger started working on the task
      */
-    public Log(Task task, String description, Person logger, double duration, LocalDateTime startTime) {
+    public Log(Task task, String description, Person logger, double duration,
+               LocalDateTime startTime, double effortLeft) {
         super("Untitled Log");
         this.task = task;
         this.logger = logger;
         this.startTime = startTime;
         this.description = description;
         this.duration = duration;
+        this.effortLeft = effortLeft;
     }
 
 
@@ -76,7 +80,7 @@ public class Log extends SaharaItem implements Serializable {
 
     /**
      * Gets the startTime of the log
-     * @return duration in hours
+     * @return get the start dat ein LocalDateTime format.
      */
     public LocalDateTime getStartDate() {
         return this.startTime;
@@ -84,10 +88,26 @@ public class Log extends SaharaItem implements Serializable {
     
     /**
      * Gets the startTime of the log
-     * @return duration in hours
+     * @return the startdate in LocalDate format.
      */
     public LocalDate getLocalStartDate() {
         return LocalDate.of(this.startTime.getYear(), this.startTime.getMonthValue(), this.startTime.getDayOfMonth());
+    }
+
+    /**
+     * Gets the effort left set in this log.
+     * @return effort left in hours
+     */
+    public double getEffortLeftInHours() {
+        return this.effortLeft / 60;
+    }
+
+    /**
+     * Gets the effort left set in this log.
+     * @return effort left in minutes
+     */
+    public double getEffortLeftInMinutes() {
+        return this.effortLeft;
     }
 
 
@@ -178,6 +198,10 @@ public class Log extends SaharaItem implements Serializable {
 //        durationElement.appendChild(ReportGenerator.doc.createTextNode(duration.toString()));
 //        logElement.appendChild(durationElement);
 //
+//        Element effortLeftElement = ReportGenerator.doc.createElement("effort-left");
+//        effortLeftElement.appendChild(ReportGenerator.doc.createTextNode(effortLeft.toString()));
+//        logElement.appendChild(effortLeftElement);
+//
 //        return logElement;
         return null;
     }
@@ -257,24 +281,28 @@ public class Log extends SaharaItem implements Serializable {
         private LocalDateTime startTime;
         private double duration;
         private String description;
+        private double effortLeft;
 
         private Person oldLogger;
         private LocalDateTime oldStartTime;
         private double oldDuration;
         private String oldDescription;
+        private double oldEffortLeft;
 
         protected LogEditCommand(Log log, Person newLogger, LocalDateTime newStartDate,
-                                 double newDuration, String newDescription) {
+                                 double newDuration, String newDescription, double newEffortLeft) {
             this.log = log;
             this.logger = newLogger;
             this.startTime = newStartDate;
             this.duration = newDuration;
             this.description = newDescription;
+            this.effortLeft = newEffortLeft;
 
             this.oldLogger = log.logger;
             this.oldStartTime = log.startTime;
             this.oldDuration = log.duration;
             this.oldDescription = log.description;
+            this.oldEffortLeft = log.effortLeft;
         }
 
 
@@ -287,6 +315,7 @@ public class Log extends SaharaItem implements Serializable {
             log.duration = duration;
             log.description = description;
             log.duration = duration;
+            log.effortLeft = effortLeft;
         }
 
 
@@ -298,6 +327,7 @@ public class Log extends SaharaItem implements Serializable {
             this.startTime = oldStartTime;
             this.duration = oldDuration;
             this.description = oldDescription;
+            this.effortLeft = oldEffortLeft;
         }
 
 
