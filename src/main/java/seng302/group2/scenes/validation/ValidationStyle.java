@@ -68,5 +68,18 @@ public class ValidationStyle {
         po.setDetachable(false);
         po.setAutoHide(true);
         po.show(node);
+
+        Runnable hide = () -> {
+            try {
+                Thread.sleep(5000);
+            }
+            catch (InterruptedException ex) {
+                po.hide();
+            }
+            po.hide();
+        };
+        Thread hideThread = new Thread(hide);
+        hideThread.start();
+
     }
 }
