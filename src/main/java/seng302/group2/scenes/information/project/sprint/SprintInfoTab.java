@@ -123,9 +123,9 @@ public class SprintInfoTab extends SearchableTab {
 
         btnEdit.setOnAction((event) -> currentSprint.switchToInfoScene(true));
 
-        for (Story story : currentSprint.getStories()) {
-            basicInfoPane.getChildren().add(new StoryVisualisation(story));
-        }
+//        for (Story story : currentSprint.getStories()) {
+//            basicInfoPane.getChildren().add(new StoryVisualisation(story));
+//        }
         Collections.addAll(searchControls, title);
     }
 
@@ -145,8 +145,9 @@ public class SprintInfoTab extends SearchableTab {
             stories.add(currentSprint.getUnallocatedTasksStory());
 
             for (Story story : stories) {
-
+                VBox VtaskBox = new VBox(30);
                 VBox taskBox = new VBox(4);
+                VtaskBox.getChildren().add(new StoryVisualisation(story));
                 if (story.getTasks().size() != 0) {
 
                     for (Task task : story.getTasks().sorted(Task.TaskNameComparator)) {
@@ -156,13 +157,15 @@ public class SprintInfoTab extends SearchableTab {
                 else {
                     taskBox.getChildren().add(new SearchableText("This story currently has no tasks.", searchControls));
                 }
+                VtaskBox.getChildren().add(taskBox);
                 TitledPane storyPane = new TitledPane("[" + story.getEstimate() + "] "
-                        + story.getShortName() + " - " + story.getReadyString(), taskBox);
+                        + story.getShortName() + " - " + story.getReadyString(), VtaskBox);
 
                 storyPane.setPrefHeight(30);
                 storyPane.setExpanded(false);
                 storyPane.setAnimated(true);
                 stackedStoryTitlePanes.getChildren().add(storyPane);
+
             }
         }
         else {

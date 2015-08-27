@@ -41,8 +41,8 @@ public class StoryVisualisation extends Pane {
 
 
         double lengthGreen = getEffortSpent(done);
-        double lengthBlue = getEffortSpent(inProgress) + getEffortSpent(done);
-        double lengthRed = getEffortLeft(inProgress) + getEffortLeft(rest);
+        double lengthBlue = getEffortSpent(inProgress);
+        double lengthRed = getEffortLeft(inProgress) + getEffortLeft(inProgress);
 
         double overallLength = lengthBlue + lengthGreen + lengthRed;
 
@@ -51,9 +51,9 @@ public class StoryVisualisation extends Pane {
         double percentageRed = (lengthRed / overallLength);
 
 
-        double maxWidth = 330;
+        double maxWidth = 340;
         double maxGreen = maxWidth * percentageGreen;
-        double maxBlue = maxWidth * percentageBlue;
+        double maxBlue = (maxWidth * percentageBlue) + maxGreen;
 
         //Creates visualisation bar
         DecimalFormat df = new DecimalFormat("##");
