@@ -7,6 +7,7 @@ package seng302.group2.util.validation;
 
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomDateField;
+import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
@@ -117,65 +118,6 @@ public class DateValidator {
                                                       LocalDate startDate, LocalDate endDate) {
         return validateAllocation(project, team, startDate, endDate, null);
     }
-
-//    /**
-//    * Determines the Validation status of a new allocation, checking if there are any illegal
-//    * overlaps with the start or end dates of the team's allocations.
-//    * @param alloc The new allocation to check
-//    * @param proj The project within which to check the allocations
-//    * @return The validation status of the new allocation
-//    */
-//    public static ValidationStatus validAllocation(Allocation alloc, Project proj)
-//    {
-//        LocalDate allocStart = alloc.getStartDate();
-//        LocalDate allocEnd = alloc.getEndDate();
-//
-//        if (allocEnd != null)
-//        {
-//            if (dateAfter(allocStart, allocEnd))
-//            {
-//                return ValidationStatus.ALLOCATION_DATES_WRONG_ORDER;
-//            }
-//        }
-//
-//        for (Allocation projAlloc : proj.getTeamAllocations())
-//        {
-//            if (projAlloc != alloc)
-//            {
-//                if (projAlloc.getTeam() == alloc.getTeam())
-//                {
-//                    // Check for date overlaps within a single Teams total allocations
-//                    for (Allocation teamAlloc : projAlloc.getTeam().getProjectAllocations())
-//                    {
-//                        LocalDate teamStart = teamAlloc.getStartDate();
-//                        LocalDate teamEnd = teamAlloc.getEndDate();
-//                        //Validate with other teams
-//                        ValidationStatus teamComparison = validateAllocationDate(teamStart,
-// teamEnd,
-//                                allocStart, allocEnd);
-//                        if (teamComparison != ValidationStatus.VALID)
-//                        {
-//                            return teamComparison;
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//
-//        Allocation currentAlloc = alloc.getTeam().getCurrentAllocation();
-//        ValidationStatus projectComparison = ValidationStatus.VALID;
-//        if (currentAlloc != null)
-//        {
-//            //Check that the team's currently allocated project doesn't overlap with
-//            // the new allocation
-//            LocalDate currentAllocStartDate = currentAlloc.getStartDate();
-//            LocalDate currentAllocEndDate = currentAlloc.getEndDate();
-//            projectComparison = validateAllocationDate(currentAllocStartDate, currentAllocEndDate,
-//                    allocStart, allocEnd);
-//        }
-//        return projectComparison;
-//    }
-
 
     /**
      * Determines the Validation status of a new allocation, checking if there are any illegal
@@ -305,41 +247,6 @@ public class DateValidator {
         }
     }
 
-    /**
-     * Checks that the text in the given CustomDateField is in the "dd/mm/yyyy" format
-     * Displays appropriate errors if wrong format
-     *
-     * @param dateField The CustomDateField to check
-     * @return true if correct format
-     */
-    public static boolean isCorrectDateFormat(CustomDateField dateField) {
-        String dateString = dateField.getText();
-        if (dateString.isEmpty()) {
-            return true;
-        }
-        else {
-            //Global.datePattern.setLenient(false);
-            try {
-                String[] date = dateString.split("/"); //returns an array with the day, month and yr
-                String year = date[date.length - 1];
-                if (year.length() != 4) {
-                    dateField.showErrorField("* Format must be dd/MM/yyyy");
-                    return false;
-                }
-                LocalDate parsedLocalDate = LocalDate.parse(dateString, Global.dateFormatter);
-
-                dateField.hideErrorField();
-                return true;
-
-            }
-            catch (Exception ex) {
-                dateField.showErrorField("* Format must be dd/MM/yyyy");
-                return false;
-
-            }
-        }
-    }
-
 
     /**
      * Checks whether the birth date format is correct
@@ -351,16 +258,18 @@ public class DateValidator {
     public static boolean validateBirthDateField(CustomDateField customBirthDate) {
         switch (DateValidator.isValidBirthdate(customBirthDate.getText())) {
             case VALID:
-                customBirthDate.hideErrorField();
+                ValidationStyle.borderGlowNone(customBirthDate.getTextField());
                 return true;
             case NULL:
-                customBirthDate.hideErrorField();
+                ValidationStyle.borderGlowNone(customBirthDate.getTextField());
                 return true;
             case OUT_OF_RANGE:
-                customBirthDate.showErrorField("* This is not a valid birth date");
+                ValidationStyle.borderGlowRed(customBirthDate.getTextField());
+                ValidationStyle.showMessage("This is not a valid birth date", customBirthDate.getTextField());
                 return false;
             case PATTERN_MISMATCH:
-                customBirthDate.showErrorField("* Format must be dd/MM/yyyy");
+                ValidationStyle.borderGlowRed(customBirthDate.getTextField());
+                ValidationStyle.showMessage("Format must be dd/MM/yyyy", customBirthDate.getTextField());
                 return false;
             default:
                 return true;
