@@ -3,12 +3,11 @@ package seng302.group2.scenes.information.person;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.*;
@@ -60,7 +59,25 @@ public class PersonEditTab extends SearchableTab {
         RequiredField firstNameCustomField = new RequiredField("First Name:");
         RequiredField lastNameCustomField = new RequiredField("Last Name:");
         CustomTextField emailTextField = new CustomTextField("Email:");
-        CustomDateField customBirthDate = new CustomDateField("Birth Date:");
+        CustomDatePicker birthDatePicker = new CustomDatePicker("Birth Date:", false);
+        final Callback<DatePicker, DateCell> birthDateCellFactory =
+            new Callback<DatePicker, DateCell>() {
+                @Override
+                public DateCell call(final DatePicker datePicker) {
+                    return new DateCell() {
+                        @Override
+                        public void updateItem(LocalDate item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (item.isAfter(LocalDate.now())) {
+                                setDisable(true);
+                                setStyle("-fx-background-color: #ffc0cb;");
+                            }
+                        }
+                    };
+                }
+            };
+        birthDatePicker.getDatePicker().setDayCellFactory(birthDateCellFactory);
+
         CustomTextArea descriptionTextArea = new CustomTextArea("Person Description:", 300);
 
         Person tempPerson = new Person();
@@ -81,7 +98,9 @@ public class PersonEditTab extends SearchableTab {
         skillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         skillsBox.setMaxWidth(275);
 
-        CustomComboBox teamBox = new CustomComboBox("Team: ");
+        CustomComboBox<Team> teamBox = new CustomComboBox("Team: ");
+        teamBox.getComboBox().setItems(Global.currentWorkspace.getTeams());
+        teamBox.setValue(currentPerson.getTeam());
 
 
         Button btnDone = new Button("Done");
@@ -108,29 +127,18 @@ public class PersonEditTab extends SearchableTab {
             }
         }
 
-        Team currentTeam = currentPerson.getTeam();
-        for (Team team : Global.currentWorkspace.getTeams()) {
-            teamBox.addToComboBox(team.toString());
-        }
-        if (currentTeam == Global.getUnassignedTeam()) {
-            teamBox.setValue(Global.getUnassignedTeam().toString());
-        }
-        else {
-            teamBox.setValue(currentTeam.toString());
-        }
-
         shortNameCustomField.setText(currentPerson.getShortName());
         firstNameCustomField.setText(currentPerson.getFirstName());
         lastNameCustomField.setText(currentPerson.getLastName());
         emailTextField.setText(currentPerson.getEmail());
-        customBirthDate.setText(currentPerson.getDateString());
+        birthDatePicker.setValue(currentPerson.getBirthDate());
         descriptionTextArea.setText(currentPerson.getDescription());
 
         shortNameCustomField.setPrefWidth(275);
         firstNameCustomField.setPrefWidth(275);
         lastNameCustomField.setPrefWidth(275);
         emailTextField.setPrefWidth(275);
-        customBirthDate.setPrefWidth(275);
+        birthDatePicker.setPrefWidth(275);
         descriptionTextArea.setPrefWidth(275);
         teamBox.setPrefWidth(275);
 
@@ -179,13 +187,7 @@ public class PersonEditTab extends SearchableTab {
             });
 
         btnDone.setOnAction((event) -> {
-                Team selectedTeam = new Team();
-                for (Team team : Global.currentWorkspace.getTeams()) {
-                    if (team.toString().equals(teamBox.getValue())) {
-                        selectedTeam = team;
-                        break;
-                    }
-                }
+                Team selectedTeam = teamBox.getValue();
 
                 boolean shortNameUnchanged = shortNameCustomField.getText().equals(
                         currentPerson.getShortName());
@@ -195,8 +197,7 @@ public class PersonEditTab extends SearchableTab {
                         currentPerson.getLastName());
                 boolean descriptionUnchanged = descriptionTextArea.getText().equals(
                         currentPerson.getDescription());
-                boolean birthdayUnchanged = customBirthDate.getText().equals(
-                        currentPerson.getDateString());
+                boolean birthdayUnchanged = birthDatePicker.getValue() == currentPerson.getBirthDate();
                 boolean emailUnchanged = emailTextField.getText().equals(
                         currentPerson.getEmail());
                 boolean teamUnchanged = selectedTeam.getShortName().equals(
@@ -221,18 +222,11 @@ public class PersonEditTab extends SearchableTab {
                         currentPerson.getShortName());
                 boolean firstNameValidated = NameValidator.validateName(firstNameCustomField);
                 boolean lastNameValidated = NameValidator.validateName(lastNameCustomField);
-                boolean correctDate = validateBirthDateField(customBirthDate);
 
                 // The short name is the same or valid
-                if (correctShortName && firstNameValidated && lastNameValidated && correctDate) {
-                    LocalDate birthDate;
-                    if (customBirthDate.getText().equals("")) {
-                        birthDate = null;
-                    }
-                    else {
-                        birthDate = LocalDate.parse(customBirthDate.getText(),
-                                Global.dateFormatter);
-                    }
+                if (correctShortName && firstNameValidated && lastNameValidated) {
+                    LocalDate birthDate = birthDatePicker.getValue();
+
 
                     currentPerson.edit(shortNameCustomField.getText(),
                             firstNameCustomField.getText(),
@@ -263,7 +257,7 @@ public class PersonEditTab extends SearchableTab {
                 firstNameCustomField,
                 lastNameCustomField,
                 emailTextField,
-                customBirthDate,
+                birthDatePicker,
                 descriptionTextArea,
                 teamBox,
                 h1,
@@ -275,7 +269,7 @@ public class PersonEditTab extends SearchableTab {
                 firstNameCustomField,
                 lastNameCustomField,
                 emailTextField,
-                customBirthDate,
+                birthDatePicker,
                 descriptionTextArea,
                 teamBox,
                 v1Label,

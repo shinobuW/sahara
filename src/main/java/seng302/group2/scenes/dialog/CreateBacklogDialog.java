@@ -35,7 +35,7 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
     Boolean correctLongName = Boolean.FALSE;
     Boolean required = true;
     CustomComboBox<Project> projComboBox = new CustomComboBox<Project>("Project: ", required);
-    CustomComboBox<Person> productOwnerComboBox = new CustomComboBox<Person>("Person: ",required);
+    CustomComboBox<Person> productOwnerComboBox = new CustomComboBox<Person>("Product Owner: ",required);
     CustomComboBox<String> scaleComboBox = new CustomComboBox<String>("Scale: ", required);
 
     /**
