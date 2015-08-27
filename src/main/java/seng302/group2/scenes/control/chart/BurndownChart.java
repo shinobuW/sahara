@@ -73,7 +73,7 @@ public class BurndownChart extends LineChart {
         for (LocalDate d : dailyEffortMap.keySet()) {
             effortLeft -= dailyEffortMap.get(d);
             String monthStr = d.getMonth().toString().substring(0, 3);
-            effortSpentSeries.getData().add(new XYChart.Data(monthStr + " " + d.getDayOfMonth(), maxEffortLeft));
+            effortSpentSeries.getData().add(new XYChart.Data(monthStr + " " + d.getDayOfMonth(), effortLeft));
         }
 
         this.getData().add(effortSpentSeries);
