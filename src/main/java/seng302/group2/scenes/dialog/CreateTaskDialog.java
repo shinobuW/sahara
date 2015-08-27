@@ -30,6 +30,7 @@ import java.util.Map;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
+ * A class used for task creation.
  * Created by cvs20 on 29/07/15.
  */
 public class CreateTaskDialog extends Dialog<Map<String, String>> {
@@ -38,7 +39,12 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
     static Boolean projectSelected = Boolean.FALSE;
     static Boolean backlogSelected = Boolean.FALSE;
     static Boolean storySelected = Boolean.FALSE;
+    Node createButton;
 
+
+    /**
+     * Used to create a task. This dialog is only accessible from the File -> New menu.
+     */
     public CreateTaskDialog() {
         correctShortName = false;
         correctEffortLeft = false;
@@ -63,22 +69,10 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         RequiredField effortLeftField = new RequiredField("Effort Left:");
 
         //Create Project Combo box
-        ComboBox<Project> projectComboBox = new ComboBox<>();
-        projectComboBox.setStyle("-fx-pref-width: 175;");
-        Label projectComboLabel = new Label("Project:");
-        HBox projectComboHBox = new HBox(projectComboLabel);
+        CustomComboBox<Project> projectComboBox = new CustomComboBox<>("Project:", true);
+        projectComboBox.getComboBox().setItems(Global.currentWorkspace.getProjects());
 
-        Label aster1 = new Label(" * ");
-        aster1.setTextFill(Color.web("#ff0000"));
-        projectComboHBox.getChildren().add(aster1);
-
-        VBox projectVBox = new VBox();
-        HBox projectComboHbox = new HBox();
-        projectComboHbox.getChildren().addAll(projectComboHBox, projectComboBox);
-        HBox.setHgrow(projectComboHBox, Priority.ALWAYS);
-        projectVBox.getChildren().add(projectComboHbox);
-
-        projectComboBox.setCellFactory(
+        projectComboBox.getComboBox().setCellFactory(
                 new Callback<ListView<Project>, ListCell<Project>>() {
                     @Override
                     public ListCell<Project> call(ListView<Project> param) {
@@ -107,22 +101,9 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                 });
 
         //Create Backlog Combo Box
-        ComboBox<Backlog> backlogComboBox = new ComboBox<>();
-        backlogComboBox.setStyle("-fx-pref-width: 175;");
-        Label backlogComboLabel = new Label("Backlog:");
-        HBox backlogComboHBox = new HBox(backlogComboLabel);
+        CustomComboBox<Backlog> backlogComboBox = new CustomComboBox<>("Backlog:", true);
 
-        Label aster2 = new Label(" * ");
-        aster2.setTextFill(Color.web("#ff0000"));
-        backlogComboHBox.getChildren().add(aster2);
-
-        VBox backlogVBox = new VBox();
-        HBox backlogComboHbox = new HBox();
-        backlogComboHbox.getChildren().addAll(backlogComboHBox, backlogComboBox);
-        HBox.setHgrow(backlogComboHBox, Priority.ALWAYS);
-        backlogVBox.getChildren().add(backlogComboHbox);
-
-        backlogComboBox.setCellFactory(
+        backlogComboBox.getComboBox().setCellFactory(
                 new Callback<ListView<Backlog>, ListCell<Backlog>>() {
                     @Override
                     public ListCell<Backlog> call(ListView<Backlog> param) {
@@ -152,47 +133,29 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                 });
 
         //Create Story Combo Box
-        ComboBox<Story> storyComboBox = new ComboBox<>();
-        storyComboBox.setStyle("-fx-pref-width: 175;");
-        Label storyComboLabel = new Label("Story:");
-        HBox storyComboHBox = new HBox(storyComboLabel);
+        CustomComboBox<Story> storyComboBox = new CustomComboBox<>("Story:", true);
 
-        Label aster3 = new Label(" * ");
-        aster3.setTextFill(Color.web("#ff0000"));
-        storyComboHBox.getChildren().add(aster3);
 
-        VBox storyVBox = new VBox();
-        HBox storyCombo = new HBox();
-        storyCombo.getChildren().addAll(storyComboHBox, storyComboBox);
-        HBox.setHgrow(storyComboHBox, Priority.ALWAYS);
-        storyVBox.getChildren().add(storyCombo);
-
-        backlogComboBox.setDisable(true);
-        storyComboBox.setDisable(true);
+        backlogComboBox.disable(true);
+        storyComboBox.disable(true);
 
         CustomComboBox<Person> assigneeComboBox = new CustomComboBox<Person>("Assignee");
         assigneeComboBox.getComboBox().setPrefWidth(175);
-        assigneeComboBox.setDisable(true);
+        assigneeComboBox.disable(true);
 
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
 
-
-        for (Project project : Global.currentWorkspace.getProjects()) {
-            projectComboBox.getItems().add(project);
-        }
-
-        grid.getChildren().addAll(shortNameCustomField, projectVBox,
-                backlogVBox, storyVBox, assigneeComboBox, effortLeftField, descriptionTextArea);
+        grid.getChildren().addAll(shortNameCustomField, projectComboBox,
+                backlogComboBox, storyComboBox, assigneeComboBox, effortLeftField, descriptionTextArea);
 
         this.getDialogPane().setContent(grid);
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
-        Node createButton = this.getDialogPane().lookupButton(btnTypeCreate);
+        createButton = this.getDialogPane().lookupButton(btnTypeCreate);
         createButton.setDisable(true);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctShortName = validateShortName(shortNameCustomField, null);
-                createButton.setDisable(!(correctShortName && correctEffortLeft && projectSelected && backlogSelected
-                        && storySelected));
+                toggleCreateBtn();
             });
 
         effortLeftField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
@@ -210,34 +173,33 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                         ValidationStyle.showMessage("Please input in valid format", effortLeftField.getTextField());
                     }
                 }
-                createButton.setDisable(!(correctShortName && correctEffortLeft && projectSelected && backlogSelected
-                        && storySelected));
+                toggleCreateBtn();
             });
 
-        projectComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+        projectComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue == null) {
                     projectSelected = false;
                     return;
                 }
                 projectSelected = true;
-                backlogComboBox.getItems().clear();
-                storyComboBox.getItems().clear();
+                backlogComboBox.getComboBox().getItems().clear();
+                storyComboBox.getComboBox().getItems().clear();
                 if (newValue.getBacklogs().size() == 0) {
-                    backlogComboBox.setDisable(true);
+                    backlogComboBox.disable(true);
                 }
                 else {
-                    backlogComboBox.setDisable(false);
+                    backlogComboBox.disable(false);
                     for (Backlog backlog : newValue.getBacklogs()) {
-                        backlogComboBox.getItems().add(backlog);
+                        backlogComboBox.getComboBox().getItems().add(backlog);
                     }
                 }
 
                 assigneeComboBox.clear();
                 if (newValue.getCurrentTeams().size() == 0) {
-                    assigneeComboBox.setDisable(true);
+                    assigneeComboBox.disable(true);
                 }
                 else {
-                    assigneeComboBox.setDisable(false);
+                    assigneeComboBox.disable(false);
                     Person blankPerson = new Person("", "", "", null, null, null);
                     assigneeComboBox.addToComboBox(blankPerson);
                     for (Team team : newValue.getCurrentTeams()) {
@@ -246,29 +208,26 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                         }
                     }
                 }
-                createButton.setDisable(!(correctShortName && correctEffortLeft && projectSelected && backlogSelected
-                        && storySelected));
+                toggleCreateBtn();
             });
 
-        backlogComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+        backlogComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue == null) {
                     backlogSelected = false;
                     return;
                 }
-                storyComboBox.getItems().clear();
+                storyComboBox.getComboBox().getItems().clear();
                 for (Story story : newValue.getStories()) {
-                    storyComboBox.getItems().add(story);
+                    storyComboBox.getComboBox().getItems().add(story);
                 }
-                storyComboBox.setDisable(false);
+                storyComboBox.disable(false);
                 backlogSelected = true;
-                createButton.setDisable(!(correctShortName && correctEffortLeft && projectSelected && backlogSelected
-                        && storySelected));
+                toggleCreateBtn();
             });
 
-        storyComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
-                storySelected = storyComboBox.getSelectionModel().getSelectedItem() == null ? false : true;
-                createButton.setDisable(!(correctShortName && correctEffortLeft && projectSelected
-                        && backlogSelected && storySelected));
+        storyComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
+                storySelected = storyComboBox.getValue() == null ? false : true;
+                toggleCreateBtn();
             }
         );
 
@@ -278,7 +237,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                     String shortName = shortNameCustomField.getText();
                     String description = descriptionTextArea.getText();
                     Double effortSpent = DurationConverter.readDurationToMinutes(effortLeftField.getText());
-                    Story story =  storyComboBox.getSelectionModel().getSelectedItem();
+                    Story story =  storyComboBox.getValue();
                     Person assignee = null;
                     if (assigneeComboBox.getValue() != null && !assigneeComboBox.getValue().toString().isEmpty()) {
                         assignee = assigneeComboBox.getValue();
@@ -286,7 +245,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
 
                     Task task = new Task(shortName, description, story, assignee);
                     task.setEffortLeft(effortSpent);
-                    storyComboBox.getSelectionModel().getSelectedItem().add(task);
+                    story.add(task);
                     App.refreshMainScene();
                     App.mainPane.selectItem(task.getStory());
                     this.close();
@@ -295,5 +254,10 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
             });
         this.setResizable(false);
         this.show();
+    }
+
+    private void toggleCreateBtn() {
+        createButton.setDisable(!(correctShortName && correctEffortLeft && projectSelected
+                && backlogSelected && storySelected));
     }
 }
