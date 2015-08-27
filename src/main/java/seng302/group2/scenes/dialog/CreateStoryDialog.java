@@ -39,111 +39,10 @@ public class CreateStoryDialog extends Dialog<Map<String, String>> {
     static Boolean correctPriority = Boolean.FALSE;
 
     /**
-     * Constructor for the CreatestoryDialog class. Creates and displays a JavaFX
+     * Constructor for the CreateStoryDialog class. Creates and displays a JavaFX
      * dialog used to create new sprints. A default project is selected in the project combo box.
-     */
-    public CreateStoryDialog() {
-        correctCreator = false;
-        correctLongName = false;
-        correctShortName = false;
-        correctPriority = false;
-
-        // Initialise Dialog
-        this.setTitle("New Story");
-        this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 400px; -fx-pref-width: 600px; "
-                + "-fx-pref-height: 400px;");
-
-        VBox grid = new VBox();
-        grid.spacingProperty().setValue(10);
-        Insets insets = new Insets(20, 20, 20, 20);
-        grid.setPadding(insets);
-
-        ButtonType btnTypeCreate = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
-        this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
-
-
-        // Add elements to grid
-        RequiredField shortNameCustomField = new RequiredField("Short Name:");
-        RequiredField longNameCustomField = new RequiredField("Long Name:");
-        RequiredField creatorCustomField = new RequiredField("Creator:");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
-        CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
-        RequiredField priorityNumberField = new RequiredField("Priority:");
-
-        String firstItem = Global.currentWorkspace.getProjects().get(0).toString();
-        projectComboBox.setValue(firstItem);
-
-        for (SaharaItem project : Global.currentWorkspace.getProjects()) {
-            projectComboBox.addToComboBox(project.toString());
-        }
-
-        grid.getChildren().addAll(shortNameCustomField, longNameCustomField, creatorCustomField,
-                priorityNumberField, projectComboBox, descriptionTextArea);
-
-        //Add grid of controls to dialog
-        this.getDialogPane().setContent(grid);
-
-        // Request focus on the username field by default.
-        Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
-
-        Node createButton = this.getDialogPane().lookupButton(btnTypeCreate);
-        createButton.setDisable(true);
-
-        //Validation
-        shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctShortName = validateShortName(shortNameCustomField, null);
-                createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
-            });
-
-        creatorCustomField.getTextField().textProperty().addListener((observable, oldValue, newvalue) -> {
-                correctCreator = validateName(creatorCustomField);
-                createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
-            });
-
-        longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctLongName = validateName(longNameCustomField);
-                createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
-            });
-
-        priorityNumberField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctPriority = validatePriorityField(priorityNumberField, null, null);
-                createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
-            });
-
-        this.setResultConverter(b -> {
-                if (b == btnTypeCreate) {
-                    if (correctShortName && correctLongName && correctCreator && correctPriority) {
-
-                        //get user input
-                        String shortName = shortNameCustomField.getText();
-                        String longName = longNameCustomField.getText();
-                        String creator = creatorCustomField.getText();
-                        String description = descriptionTextArea.getText();
-                        Integer priority = Integer.parseInt(priorityNumberField.getText());
-
-                        Project project = new Project();
-                        for (SaharaItem item : Global.currentWorkspace.getProjects()) {
-                            if (item.toString().equals(projectComboBox.getValue())) {
-                                project = (Project) item;
-                            }
-                        }
-                        Story story = new Story(shortName, longName, description, creator, project,
-                                priority);
-                        project.add(story);
-                        App.mainPane.selectItem(story);
-                        this.close();
-                    }
-                }
-                return null;
-            });
-        this.setResizable(false);
-        this.show();
-    }
-
-
-    /**
-     * Constructor for the CreatestoryDialog class. Creates and displays a JavaFX
-     * dialog used to create new sprints.
+     * @param defaultProject the selected project combobox option. set to null for no default option.
+     *
      */
     public CreateStoryDialog(Project defaultProject) {
         correctCreator = false;
@@ -170,13 +69,16 @@ public class CreateStoryDialog extends Dialog<Map<String, String>> {
         RequiredField longNameCustomField = new RequiredField("Long Name:");
         RequiredField creatorCustomField = new RequiredField("Creator:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
-        CustomComboBox projectComboBox = new CustomComboBox("Project:", true);
-        RequiredField priorityNumberField = new RequiredField("Priority:");
-
-        for (SaharaItem project : Global.currentWorkspace.getProjects()) {
-            projectComboBox.addToComboBox(project.toString());
+        CustomComboBox<Project> projectComboBox = new CustomComboBox("Project:", true);
+        projectComboBox.getComboBox().setItems(Global.currentWorkspace.getProjects());
+        if (defaultProject == null) {
+            projectComboBox.getComboBox().setValue(Global.currentWorkspace.getProjects().get(0));
         }
-        projectComboBox.setValue(defaultProject);
+        else {
+            projectComboBox.setValue(defaultProject);
+
+        }
+        RequiredField priorityNumberField = new RequiredField("Priority:");
 
         grid.getChildren().addAll(shortNameCustomField, longNameCustomField, creatorCustomField,
                 priorityNumberField, projectComboBox, descriptionTextArea);
@@ -223,12 +125,7 @@ public class CreateStoryDialog extends Dialog<Map<String, String>> {
                         String description = descriptionTextArea.getText();
                         Integer priority = Integer.parseInt(priorityNumberField.getText());
 
-                        Project project = new Project();
-                        for (SaharaItem item : Global.currentWorkspace.getProjects()) {
-                            if (item.toString().equals(projectComboBox.getValue())) {
-                                project = (Project) item;
-                            }
-                        }
+                        Project project = projectComboBox.getValue();
                         Story story = new Story(shortName, longName, description, creator, project,
                                 priority);
                         project.add(story);

@@ -162,7 +162,7 @@ public class MainMenuBar extends MenuBar {
 
         MenuItem newReleaseItem = new MenuItem("Release");
         newReleaseItem.setOnAction((event) -> {
-                javafx.scene.control.Dialog creationDialog = new CreateReleaseDialog();
+                javafx.scene.control.Dialog creationDialog = new CreateReleaseDialog(null);
                 creationDialog.show();
             });
         newReleaseItem.setAccelerator(new KeyCodeCombination(KeyCode.R,
@@ -180,7 +180,7 @@ public class MainMenuBar extends MenuBar {
 
         MenuItem newSprintItem = new MenuItem("Sprint");
         newSprintItem.setOnAction((event) -> {
-                javafx.scene.control.Dialog creationDialog = new CreateSprintDialog();
+                javafx.scene.control.Dialog creationDialog = new CreateSprintDialog(null);
                 creationDialog.show();
             });
 
@@ -196,7 +196,7 @@ public class MainMenuBar extends MenuBar {
 
         MenuItem newStoryItem = new MenuItem("Story");
         newStoryItem.setOnAction((event) -> {
-                javafx.scene.control.Dialog creationDialog = new CreateStoryDialog();
+                javafx.scene.control.Dialog creationDialog = new CreateStoryDialog(null);
                 //creationDialog.show();
             });
         return newStoryItem;

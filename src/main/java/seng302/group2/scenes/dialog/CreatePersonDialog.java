@@ -74,7 +74,7 @@ public class CreatePersonDialog extends Dialog<Map<String, String>> {
         CustomDatePicker birthDatePicker = new CustomDatePicker("Birth Date:", false);
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
 
-        final Callback<DatePicker, DateCell> startDateCellFactory =
+        final Callback<DatePicker, DateCell> birthDateCellFactory =
             new Callback<DatePicker, DateCell>() {
                 @Override
                 public DateCell call(final DatePicker datePicker) {
@@ -90,7 +90,7 @@ public class CreatePersonDialog extends Dialog<Map<String, String>> {
                     };
                 }
             };
-        birthDatePicker.getDatePicker().setDayCellFactory(startDateCellFactory);
+        birthDatePicker.getDatePicker().setDayCellFactory(birthDateCellFactory);
 
         grid.getChildren().addAll(shortNameCustomField, firstNameCustomField, lastNameCustomField,
                 emailTextField, birthDatePicker, descriptionTextArea);
