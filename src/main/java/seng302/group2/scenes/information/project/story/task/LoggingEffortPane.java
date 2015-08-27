@@ -330,8 +330,8 @@ public class LoggingEffortPane extends Pane {
 
                     String effortLeftString = "";
                     if (task.getEffortLeft() == 0
-                            || task.getEffortLeft() -
-                            DurationConverter.readDurationToMinutes(durationTextField.getText()) <= 0) {
+                            || task.getEffortLeft()
+                            - DurationConverter.readDurationToMinutes(durationTextField.getText()) <= 0) {
                         effortLeftString = "0h 0min";
                     }
                     else {
