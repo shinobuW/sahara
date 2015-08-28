@@ -38,7 +38,7 @@ public class BurndownChart extends LineChart {
         double effortLeft = 0;
         double effortSpent = 0;
         List<Log> logList;
-        logList = currentSprint.getAllLogs();
+        logList = currentSprint.getAllLogsWithIntialLogs();
 
         LocalDate startDate = currentSprint.getStartDate();
 

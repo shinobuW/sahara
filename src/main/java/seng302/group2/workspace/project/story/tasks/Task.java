@@ -41,7 +41,7 @@ public class Task extends SaharaItem implements Serializable {
     private List<Log> serializableLogs = new ArrayList<>();
     private double effortLeft = 0;
     private double effortSpent = 0;
-    public Log initialLog = null;
+    private Log initialLog = null;
 
     GeneralEnumStringConverter converter = new GeneralEnumStringConverter();
 
@@ -72,6 +72,7 @@ public class Task extends SaharaItem implements Serializable {
         this.state = TASKSTATE.NOT_STARTED;
         this.effortLeft = 0;
         this.effortSpent = 0;
+        this.initialLog = null;
     }
 
 
@@ -154,6 +155,15 @@ public class Task extends SaharaItem implements Serializable {
      */
     public TASKSTATE getState() {
         return this.state;
+    }
+
+    /**
+     * Gets the initial log of the task.
+     *
+     * @return the initial log as a Log
+     */
+    public Log getInitialLog() {
+        return this.getInitialLog();
     }
 
     /**
