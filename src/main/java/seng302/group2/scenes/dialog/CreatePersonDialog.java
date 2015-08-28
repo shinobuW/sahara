@@ -5,7 +5,6 @@
  */
 package seng302.group2.scenes.dialog;
 
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -13,7 +12,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.MediaView;
 import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -23,12 +21,9 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.Map;
 
-import static seng302.group2.util.validation.DateValidator.stringToDate;
-import static seng302.group2.util.validation.DateValidator.validateBirthDateField;
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 

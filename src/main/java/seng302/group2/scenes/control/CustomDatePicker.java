@@ -9,7 +9,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.validation.ValidationStyle;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -22,8 +21,6 @@ import java.util.Set;
  */
 public class CustomDatePicker extends VBox implements SearchableControl {
     private boolean required = false;
-    private String errorMessage = "";
-    private Label errorMessageText = new Label();
     private DatePicker datePicker = new DatePicker();
     private Set<SearchableControl> searchControls = new HashSet<>();
 
@@ -36,14 +33,11 @@ public class CustomDatePicker extends VBox implements SearchableControl {
      */
     public CustomDatePicker(String name, boolean required) {
         this.required = required;
-        this.errorMessageText.setText(errorMessage);
         datePicker.setPrefWidth(175);
 
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);
-
-        errorMessageText.setTextFill(Color.web("#ff0000"));
 
         SearchableText label = new SearchableText(name.trim(), searchControls);
         label.setStyle("-fx-font-weight: bold");
@@ -64,7 +58,6 @@ public class CustomDatePicker extends VBox implements SearchableControl {
         this.getChildren().add(entry);
     }
 
-
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
      * asterisk if the field is required.
@@ -75,7 +68,6 @@ public class CustomDatePicker extends VBox implements SearchableControl {
     public CustomDatePicker(String name, boolean required, Collection<SearchableControl> searchableControls) {
         searchableControls.add(this);
         this.required = required;
-        this.errorMessageText.setText(errorMessage);
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(165);
@@ -103,12 +95,6 @@ public class CustomDatePicker extends VBox implements SearchableControl {
         this.getChildren().add(entry);
     }
 
-    /**
-     * Sets the style of the date picker component to the default.
-     */
-    public void setDefaultStyle() {
-        datePicker.setStyle("-fx-pref-width: 135;");
-    }
 
     /**
      * Sets the tooltip of the date picker.
@@ -123,34 +109,6 @@ public class CustomDatePicker extends VBox implements SearchableControl {
      */
     public void removeTooltip() {
         this.datePicker.setTooltip(null);
-    }
-
-    /**
-     * Displays error Field
-     */
-    public void showErrorField() {
-        ValidationStyle.borderGlowRed(datePicker);
-        this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
-        this.getChildren().add(errorMessageText);
-    }
-
-    /**
-     * Shows the error field with the with the given text.
-     *
-     * @param errorMessage The error message to show
-     */
-    public void showErrorField(String errorMessage) {
-        this.errorMessageText.setText(errorMessage);
-        this.errorMessageText.setTextFill(Color.web("FF0000"));
-        showErrorField();
-    }
-
-    /**
-     * Hides the error field.
-     */
-    public void hideErrorField() {
-        this.getChildren().remove(errorMessageText);
-        ValidationStyle.borderGlowNone(datePicker);
     }
 
     /**
@@ -174,10 +132,6 @@ public class CustomDatePicker extends VBox implements SearchableControl {
         else {
             return null;
         }
-    }
-
-    public void setDateRestrictions() {
-
     }
 
     /**

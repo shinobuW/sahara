@@ -29,7 +29,6 @@ import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.Global.currentWorkspace;
-import static seng302.group2.util.validation.DateValidator.validateBirthDateField;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**

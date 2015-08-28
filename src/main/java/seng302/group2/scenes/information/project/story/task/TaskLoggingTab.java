@@ -219,7 +219,7 @@ public class TaskLoggingTab extends SearchableTab {
         }
 
         addButton.setOnAction((event) -> {
-                startDatePicker.hideErrorField();
+                ValidationStyle.borderGlowNone(startDatePicker.getDatePicker());
                 if (personComboBox.getValue() != null && startDatePicker.getValue() != null) {
                     LocalDate startDate = startDatePicker.getValue();
                     Person selectedPerson = personComboBox.getValue();
