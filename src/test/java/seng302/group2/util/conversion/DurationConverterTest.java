@@ -2,7 +2,6 @@ package seng302.group2.util.conversion;
 
 import org.junit.Assert;
 import org.junit.Test;
-import seng302.group2.workspace.project.story.tasks.Log;
 
 /**
  * Created by Shinobu on 26/08/2015.

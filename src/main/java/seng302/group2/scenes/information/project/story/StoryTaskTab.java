@@ -15,8 +15,6 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
-import seng302.group2.scenes.control.CustomComboBox;
-import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.information.project.story.task.LoggingEffortPane;

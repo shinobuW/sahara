@@ -1,9 +1,6 @@
 package seng302.group2.scenes.control.search;
 
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 
 import java.util.ArrayList;

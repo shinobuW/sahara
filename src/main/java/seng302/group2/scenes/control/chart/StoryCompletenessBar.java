@@ -2,8 +2,6 @@ package seng302.group2.scenes.control.chart;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -82,7 +80,7 @@ public class StoryCompletenessBar extends Pane {
                 + (df.format(percentageGreen * 100)) + "% "));
         greenPO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
-        Rectangle blue = new Rectangle(maxBlue-maxGreen, 25);
+        Rectangle blue = new Rectangle(maxBlue - maxGreen, 25);
         PopOverTip bluePO = new PopOverTip(blue, new Text(" Percentage of Story In Progress: "
                 + (df.format(percentageBlue * 100)) + "% "));
         bluePO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);

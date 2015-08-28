@@ -1,9 +1,9 @@
 package seng302.group2.scenes.control.search;
 
+import javafx.scene.text.Text;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import javafx.scene.text.Text;
 import org.junit.Test;
 import seng302.group2.scenes.JavaFxTestApp;
 

@@ -14,7 +14,6 @@ import seng302.group2.scenes.information.project.story.task.LoggingEffortPane;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.Collection;
-import java.util.Collections;
 
 /**
  * Created by crw73 on 26/08/15.
