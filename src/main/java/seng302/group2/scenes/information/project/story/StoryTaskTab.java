@@ -22,6 +22,7 @@ import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.scenes.control.*;
+import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.information.project.story.task.LoggingEffortPane;
 import seng302.group2.scenes.validation.ValidationStyle;
@@ -107,39 +108,6 @@ public class StoryTaskTab extends SearchableTab {
         nameCol.setCellValueFactory(new PropertyValueFactory<Task, String>("shortName"));
         nameCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
-//
-//        TextFieldEditingCell nameEditingCell = new TextFieldEditingCell();
-//        Callback<TableColumn, TableCell> nameCellFactory = col -> nameEditingCell;
-//        nameCol.setCellValueFactory(
-//                new Callback<TableColumn.CellDataFeatures<Task, String>,
-//                        ObservableValue<String>>() {
-//                    @Override
-//                    public ObservableValue<String> call(TableColumn.CellDataFeatures<Task,
-//                            String> task) {
-//                        SimpleStringProperty property = new SimpleStringProperty();
-//                        property.setValue(task.getValue().getShortName());
-//                        return property;
-//                    }
-//                });
-//
-//        nameCol.setOnEditCommit(
-//                new EventHandler<TableColumn.CellEditEvent<Task, String>>() {
-//                    @Override
-//                    public void handle(TableColumn.CellEditEvent<Task, String> event) {
-//                        if (!event.getNewValue().isEmpty()) {
-//                            Task currentTask = event.getTableView().getItems()
-//                                    .get(event.getTablePosition().getRow());
-//                           String newName = null;
-//                            if (newName != event.getOldValue()) {
-//                                currentTask.edit(newName, currentTask.getDescription(), currentTask.getImpediments(),
-//                                        currentTask.getState(), currentTask.getAssignee(), currentTask.getLogs(),
-//                                        currentTask.getEffortLeft(), currentTask.getEffortSpent());
-//                            }
-//                        }
-//                    }
-//                });
-//
-//        nameCol.setCellFactory(nameCellFactory);
 
         TableColumn stateCol = new TableColumn("State");
         stateCol.setCellValueFactory(new PropertyValueFactory<Task, String>("state"));
@@ -194,56 +162,32 @@ public class StoryTaskTab extends SearchableTab {
         assigneesCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
-
-
         assigneesCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Task, String>,
                 ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Task, String> task) {
-                // p.getValue() returns the Person instance for a particular TableView row
                 SimpleStringProperty prop = new SimpleStringProperty();
                 prop.set(task.getValue().getShortName());
                 return prop;
             }
         });
-//        assigneesCol.setCellValueFactory(
-//                new Callback<TableColumn.CellDataFeatures<Object, Task>,
-//                        ObservableValue<Task>>() {
-//
-//                    @Override
-//                    public ObservableValue<Task> call(TableColumn.CellDataFeatures<Object,
-//                            Task> task) {
-//                        SimpleObjectProperty property = new SimpleObjectProperty();
-//                        property.setValue(task);
-//
-//                        return property;
-//                    }
-//                });
 
-//
-//        assigneesCol.setOnEditCommit(
-//                new EventHandler<TableColumn.CellEditEvent<Task, String>>() {
-//                    @Override
-//                    public void handle(TableColumn.CellEditEvent<Task, String> event) {
-//
-//                        if (!event.getNewValue().isEmpty()) {
-//                            Task currentTask = event.getTableView().getItems()
-//                                    .get(event.getTablePosition().getRow());
-//                            Person newPerson = null;
-//
-//                            for (Object person: availablePeople) {
-//                                if (person.toString() == event.getNewValue()) {
-//                                    newPerson = (Person)person;
-//                                }
-//                            }
-//                            if (newPerson.toString() != event.getOldValue()) {
-//                                currentTask.editAssignee(newPerson);
-//                            }
-//                        }
-//                    }
-//                });
-        Callback<TableColumn, TableCell> assigneeCellFactory = col -> new AssigneeCell(currentStory);
+        Callback<TableColumn, TableCell> assigneeCellFactory = col -> new IconCell(currentStory);
         assigneesCol.setCellFactory(assigneeCellFactory);
 
+        TableColumn impedimentsCol = new TableColumn("Impediments");
+        impedimentsCol.prefWidthProperty().bind(taskTable.widthProperty()
+                .subtract(2).divide(100).multiply(60));
+
+        impedimentsCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Task, String>,
+                ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Task, String> task) {
+                SimpleStringProperty prop = new SimpleStringProperty();
+                prop.set(task.getValue().getShortName());
+                return prop;
+            }
+        });
+        Callback<TableColumn, TableCell> impedimentsCellFactory = col -> new ImpedimentsCell(currentStory);
+        impedimentsCol.setCellFactory(impedimentsCellFactory);
 
         TableColumn leftCol = new TableColumn("Effort Left");
         leftCol.setCellValueFactory(new PropertyValueFactory<Task, String>("effortLeftString"));
@@ -256,7 +200,7 @@ public class StoryTaskTab extends SearchableTab {
                 .subtract(2).divide(100).multiply(60));
 
         taskTable.setItems(data);
-        TableColumn[] columns = {nameCol, stateCol, assigneesCol, leftCol, spentCol};
+        TableColumn[] columns = {nameCol, stateCol, assigneesCol, impedimentsCol, leftCol, spentCol};
         taskTable.getColumns().setAll(columns);
 
         // Listener to disable columns being movable
@@ -541,17 +485,15 @@ public class StoryTaskTab extends SearchableTab {
         }
     }
 
-    class AssigneeCell extends TableCell<Object, String> {
+    class IconCell extends TableCell<Object, String> {
         public Node popUp;
         public Story story;
-
         /**
          * Constructor
          */
-        private AssigneeCell(Story story) {
+        private IconCell(Story story) {
             this.story = story;
         }
-
 
         /**
          * Updates the item
@@ -562,13 +504,12 @@ public class StoryTaskTab extends SearchableTab {
         @Override
         public void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
-            System.out.println(item);
             if (empty || item == null) {
                 setText(null);
                 setGraphic(null);
             }
             else {
-                popUp = createAssigneeNode(getTask());
+                this.popUp = createAssigneeNode(getTask());
                 setGraphic(popUp);
             }
         }
@@ -583,14 +524,166 @@ public class StoryTaskTab extends SearchableTab {
             return result;
         }
 
+    }
 
+    class ImpedimentsCell extends TableCell<Object, String> {
+        public Node popUp;
+        public Story story;
 
         /**
-         * Creates the combo box and populates it with the itemList. Updates the value in the cell.
+         * Constructor
          */
+        private ImpedimentsCell(Story story) {
+            this.story = story;
+        }
+
+        /**
+         * Updates the item
+         *
+         * @param item  the item to update to
+         * @param empty
+         */
+        @Override
+        public void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty || item == null) {
+                setText(null);
+                setGraphic(null);
+            }
+            else {
+                this.popUp = createImpedimentsNode(getTask());
+                setGraphic(popUp);
+            }
+        }
+
+        public Task getTask() {
+            Task result = null;
+            for (Task task : this.story.getTasks()) {
+                if (task.getShortName() == getItem()) {
+                    result = task;
+                }
+            }
+            return result;
+        }
+    }
 
 
+    private Node createImpedimentsNode(Task task) {
+        // Impediments icon
+        ImageView warningImage;
+        if (Task.getImpedingStates().contains(task.getState()) || !task.getImpediments().isEmpty()) {
+            warningImage = new ImageView("icons/dialog-cancel.png");
+            if (task.getState() == Task.TASKSTATE.BLOCKED) {
+                if (!task.getImpediments().isEmpty()) {
+                    Tooltip.create("This task is currently blocked, with the following impediments:\n"
+                            + task.getImpediments(), warningImage, 50);
+                }
+                else {
+                    Tooltip.create("This task is currently blocked", warningImage, 50);
+                }
+            }
+            else if (task.getState() == Task.TASKSTATE.DEFERRED) {
+                if (!task.getImpediments().isEmpty()) {
+                    //System.out.println(task.getImpediments());
+                    Tooltip.create("This task has been deferred, and has the following impediments:\n"
+                            + task.getImpediments(), warningImage, 50);
+                }
+                else {
+                    Tooltip.create("This task has been deferred", warningImage, 50);
+                }
+            }
+            else {
+                Tooltip.create("This task has the following impediments:\n" + task.getImpediments(),
+                        warningImage, 50);
+            }
+        }
+        else {
+            warningImage = new ImageView("icons/dialog-cancel-empty.png");
+            Tooltip.create("This task has no impediments or blockages", warningImage, 50);
+        }
 
+//        warningImage.setOnMouseEntered(me -> {
+//            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+//        });
+//        warningImage.setOnMouseExited(me -> {
+//            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+//        });
+
+
+        PopOver impedimentPopOver = new PopOver();
+        impedimentPopOver.setDetachedTitle(task.getShortName() + "'s Impediments");
+        SortedSet<Task.TASKSTATE> availableStatuses = new TreeSet<>();
+        try {
+            for (Task.TASKSTATE state : Task.getImpedingStates()) {
+                availableStatuses.add(state);
+            }
+        }
+        catch (NullPointerException ex) {
+        }
+
+        // Leave the combobox without a type so we can add a blank '(none)' without having to create a new task state
+        ComboBox impedimentCombo = new ComboBox<>();
+        impedimentCombo.getItems().add("(none)");
+        impedimentCombo.getItems().addAll(availableStatuses);
+        // Make default selection
+        if (impedimentCombo.getItems().contains(task.getState())) {
+            impedimentCombo.getSelectionModel().select(task.getState());
+        }
+        else {
+            impedimentCombo.getSelectionModel().select("(none)");
+        }
+        warningImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (impedimentPopOver.isShowing()) {
+                    impedimentPopOver.hide();
+                }
+                else {
+                    impedimentPopOver.show(warningImage);
+                }
+                event.consume();
+            });
+
+        VBox impedimentsVBox = new VBox(4);
+        SearchableText impedimentsLabel = new SearchableText("Impediments: ");
+        TextArea impedimentsTextArea = new TextArea(task.getImpediments());
+        impedimentsTextArea.setPrefSize(240, 80);
+        impedimentsVBox.getChildren().addAll(impedimentsLabel, impedimentsTextArea);
+
+        Button impedimentSaveButton = new Button("Save Impediments");
+        impedimentSaveButton.setAlignment(Pos.CENTER_RIGHT);
+        impedimentSaveButton.setOnAction(event -> {
+                Task.TASKSTATE selectedState = null;
+                Object selectedObject = impedimentCombo.getSelectionModel().getSelectedItem();
+                if (selectedObject == null || !selectedObject.toString().equals("(none)")) {
+                    selectedState = (Task.TASKSTATE) selectedObject;
+                }
+                task.editImpedimentState(selectedState, impedimentsTextArea.getText());
+                impedimentPopOver.hide();
+
+        //            this.getChildren().clear();
+        //            this.getChildren().add(construct());
+            });
+
+        SearchableText statusLabel = new SearchableText("Status: ");
+        statusLabel.setTextAlignment(TextAlignment.LEFT);
+        HBox impedimentComboLabel = new HBox(8);
+        impedimentComboLabel.setAlignment(Pos.CENTER_RIGHT);
+        impedimentComboLabel.getChildren().addAll(
+                statusLabel,
+                impedimentCombo
+        );
+
+
+        VBox impedimentChangeNode = new VBox(8);
+        impedimentChangeNode.setAlignment(Pos.CENTER_RIGHT);
+        impedimentChangeNode.setPadding(new Insets(8, 8, 8, 8));
+        impedimentChangeNode.getChildren().addAll(
+                impedimentComboLabel,
+                impedimentsVBox,
+                impedimentSaveButton
+        );
+        impedimentPopOver.setContentNode(impedimentChangeNode);
+
+        return warningImage;
     }
 
     private Node createAssigneeNode(Task task) {
@@ -650,8 +743,8 @@ public class StoryTaskTab extends SearchableTab {
                 task.editAssignee(selectedPerson);
                 assignPopOver.hide();
 
-    //            this.getChildren().clear();
-    //            this.getChildren().add(construct());
+                //            this.getChildren().clear();
+                //            this.getChildren().add(construct());
             });
 
         SearchableText assigneeLabel = new SearchableText("Assignee: ");
@@ -664,7 +757,7 @@ public class StoryTaskTab extends SearchableTab {
         );
         VBox assigneeChangeNode = new VBox(8);
         assigneeChangeNode.setAlignment(Pos.CENTER_RIGHT);
-        assigneeChangeNode.setPadding(new Insets(8,8,8,8));
+        assigneeChangeNode.setPadding(new Insets(8, 8, 8, 8));
         assigneeChangeNode.getChildren().addAll(
                 assigneeComboLabel,
                 assigneeSaveButton
@@ -673,4 +766,5 @@ public class StoryTaskTab extends SearchableTab {
 
         return assigneeImage;
     }
+
 }
