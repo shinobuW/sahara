@@ -237,15 +237,14 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                     //get user input
                     String shortName = shortNameCustomField.getText();
                     String description = descriptionTextArea.getText();
-                    Double effortSpent = DurationConverter.readDurationToMinutes(effortLeftField.getText());
+                    Double effortLeft = DurationConverter.readDurationToMinutes(effortLeftField.getText());
                     Story story =  storyComboBox.getValue();
                     Person assignee = null;
                     if (assigneeComboBox.getValue() != null && !assigneeComboBox.getValue().toString().isEmpty()) {
                         assignee = assigneeComboBox.getValue();
                     }
 
-                    Task task = new Task(shortName, description, story, assignee);
-                    task.setEffortLeft(effortSpent);
+                    Task task = new Task(shortName, description, story, assignee, effortLeft);
                     story.add(task);
                     App.refreshMainScene();
                     App.mainPane.selectItem(task.getStory());

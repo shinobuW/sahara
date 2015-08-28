@@ -15,6 +15,7 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -40,6 +41,7 @@ public class Task extends SaharaItem implements Serializable {
     private List<Log> serializableLogs = new ArrayList<>();
     private double effortLeft = 0;
     private double effortSpent = 0;
+    public Log initialLog = null;
 
     GeneralEnumStringConverter converter = new GeneralEnumStringConverter();
 
@@ -70,7 +72,6 @@ public class Task extends SaharaItem implements Serializable {
         this.state = TASKSTATE.NOT_STARTED;
         this.effortLeft = 0;
         this.effortSpent = 0;
-
     }
 
 
@@ -88,16 +89,17 @@ public class Task extends SaharaItem implements Serializable {
      * @param shortName The shortname of the Task
      * @param description The description of the task
      */
-    public Task(String shortName, String description, Story story, Person person) {
+    public Task(String shortName, String description, Story story, Person person, double effortLeft) {
         super(shortName);
         this.shortName = shortName;
         this.description = description;
         this.impediments = "";
         this.state = TASKSTATE.NOT_STARTED;
         this.story = story;
-        this.effortLeft = (float) 0;
+        this.effortLeft = effortLeft;
         this.effortSpent = (float) 0;
         this.assignee = person;
+        this.initialLog = new Log(this, "initial log (this should be hidden", null, 0, LocalDateTime.now(), effortLeft);
 
     }
 

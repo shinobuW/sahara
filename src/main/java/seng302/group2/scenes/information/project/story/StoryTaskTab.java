@@ -385,14 +385,13 @@ public class StoryTaskTab extends SearchableTab {
         btnAdd.setOnAction((event) -> {
                 //get user input
                 String shortName = shortNameCustomField.getText();
-                Task newTask = new Task(shortName, " ", currentStory, null);
-                Person assignee = null;
-                newTask.setAssignee(assignee);
+                Task newTask;
                 if (effortLeftField.getText().isEmpty()) {
-                    newTask.setEffortLeft((double) 0);
+                    newTask = new Task(shortName, " ", currentStory, null, 0);
                 }
                 else {
-                    newTask.setEffortLeft(DurationConverter.readDurationToMinutes(effortLeftField.getText()));
+                    newTask = new Task(shortName, " ", currentStory, null,
+                            DurationConverter.readDurationToMinutes(effortLeftField.getText()));
                 }
                 currentStory.add(newTask);
                 App.refreshMainScene();

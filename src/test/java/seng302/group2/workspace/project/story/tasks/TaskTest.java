@@ -26,7 +26,7 @@ public class TaskTest {
         Assert.assertEquals("", task.getImpediments());
         Assert.assertEquals("Untitled Task", task.toString());
 
-        Task testTask = new Task("Test Task", "test description", story_, null);
+        Task testTask = new Task("Test Task", "test description", story_, null, 0);
         Assert.assertEquals("Test Task", testTask.getShortName());
         Assert.assertEquals("test description", testTask.getDescription());
         Assert.assertEquals("", testTask.getImpediments());
@@ -69,8 +69,8 @@ public class TaskTest {
         project.add(backlog);
         backlog.add(story);
 
-        Task task = new Task("short", "desc", story, null);
-        Task task2 = new Task("short2", "desc",  null, null);
+        Task task = new Task("short", "desc", story, null, 0);
+        Task task2 = new Task("short2", "desc",  null, null, 0);
 
         story.add(task);
         sprint.getUnallocatedTasks().add(task2);
@@ -124,7 +124,7 @@ public class TaskTest {
         Person person = new Person();
         Story story = new Story();
 
-        Task task = new Task("test task", "a task for testing", story, person);
+        Task task = new Task("test task", "a task for testing", story, person, 0);
         Assert.assertEquals(Task.TASKSTATE.NOT_STARTED, task.getState());
         Assert.assertEquals(Task.TASKSTATE.NOT_STARTED, task.getLane());
 
@@ -160,7 +160,7 @@ public class TaskTest {
         Person person = new Person();
         Story story = new Story();
 
-        Task task = new Task("test task", "a task for testing", story, person);
+        Task task = new Task("test task", "a task for testing", story, person, 0);
         Assert.assertEquals(Task.TASKSTATE.NOT_STARTED, task.getState());
         Assert.assertEquals("", task.getImpediments());
 
@@ -195,7 +195,7 @@ public class TaskTest {
         Person person = new Person();
         Story story = new Story();
 
-        Task task = new Task("test task", "a task for testing", story, person);
+        Task task = new Task("test task", "a task for testing", story, person, 0);
         Assert.assertEquals(person, task.getAssignee());
 
         task.editAssignee(null);

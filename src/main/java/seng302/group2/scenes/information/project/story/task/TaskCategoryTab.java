@@ -128,7 +128,7 @@ public class TaskCategoryTab extends SearchableTab {
                 if (correctShortName) {
                     //get user input
                     String shortName = shortNameCustomField.getText();
-                    Task newTask = new Task(shortName, "", null, null);
+                    Task newTask = new Task(shortName, "", null, null, 0);
                     currentSprint.getUnallocatedTasks().add(newTask);
                     App.refreshMainScene();
                 }

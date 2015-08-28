@@ -197,11 +197,35 @@ public class Sprint extends SaharaItem {
     /**
      * Gets all the logs current within the sprint.
      *
-     * @return A list of logs within the sprint
+     * @return A list of logs of the tasks within a sprint.
      */
     public List<Log> getAllLogs() {
         List<Log> logList = new ArrayList<>();
         for (Task task : this.getAllTasks()) {
+            for (Log log : task.getLogs()) {
+                logList.add(log);
+            }
+        }
+
+        Collections.sort(logList, new Comparator<Log>() {
+            @Override
+            public int compare(Log o1, Log o2) {
+                return o1.getStartDate().compareTo(o2.getStartDate());
+            }
+        });
+        return logList;
+    }
+
+    /**
+     * Gets all the logs current within the sprint. The log list includes the initial logs
+     * created when a new task is made.
+     *
+     * @return A list of logs of the tasks within a sprint.
+     */
+    public List<Log> getAllLogsWithIntialLogs() {
+        List<Log> logList = new ArrayList<>();
+        for (Task task : this.getAllTasks()) {
+            logList.add(task.initialLog);
             for (Log log : task.getLogs()) {
                 logList.add(log);
             }
