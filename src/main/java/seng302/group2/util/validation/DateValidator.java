@@ -6,8 +6,6 @@
 package seng302.group2.util.validation;
 
 import seng302.group2.Global;
-import seng302.group2.scenes.control.CustomDateField;
-import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
@@ -246,36 +244,6 @@ public class DateValidator {
             return false;
         }
     }
-
-
-    /**
-     * Checks whether the birth date format is correct
-     * Shows error message and red borders if incorrect
-     *
-     * @param customBirthDate the birth date error GUI label
-     * @return true if correct format
-     */
-    public static boolean validateBirthDateField(CustomDateField customBirthDate) {
-        switch (DateValidator.isValidBirthdate(customBirthDate.getText())) {
-            case VALID:
-                ValidationStyle.borderGlowNone(customBirthDate.getTextField());
-                return true;
-            case NULL:
-                ValidationStyle.borderGlowNone(customBirthDate.getTextField());
-                return true;
-            case OUT_OF_RANGE:
-                ValidationStyle.borderGlowRed(customBirthDate.getTextField());
-                ValidationStyle.showMessage("This is not a valid birth date", customBirthDate.getTextField());
-                return false;
-            case PATTERN_MISMATCH:
-                ValidationStyle.borderGlowRed(customBirthDate.getTextField());
-                ValidationStyle.showMessage("Format must be dd/MM/yyyy", customBirthDate.getTextField());
-                return false;
-            default:
-                return true;
-        }
-    }
-
 
     /**
      * Converts string to date

@@ -24,8 +24,6 @@ import java.util.Collection;
  */
 public class CustomComboBox<T> extends VBox implements SearchableControl {
     private boolean required = false;
-    private String errorMessage = "";
-    private Label errorMessageText = new Label();
     private ObservableList<T> options = FXCollections.observableArrayList();
     private ComboBox<T> comboBox = new ComboBox<>(options);
     private Label astrLabel = new Label(" * ");
@@ -37,7 +35,6 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
      * @param name The label of the combo box
      */
     public CustomComboBox(String name) {
-        this.errorMessageText.setText(errorMessage);
         titleLabel.setStyle("-fx-font-weight: bold");
 
         HBox labelBox = new HBox();
@@ -70,7 +67,6 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
      */
     public CustomComboBox(String name, boolean required) {
         this.required = required;
-        this.errorMessageText.setText(errorMessage);
         titleLabel.setStyle("-fx-font-weight: bold");
 
         HBox labelBox = new HBox();
@@ -103,7 +99,6 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
      */
     public CustomComboBox(String name, Collection<SearchableControl> searchableControls) {
         searchableControls.add(this);
-        this.errorMessageText.setText(errorMessage);
         titleLabel.setStyle("-fx-font-weight: bold");
 
         HBox labelBox = new HBox();
@@ -138,7 +133,6 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
     public CustomComboBox(String name, boolean required, Collection<SearchableControl> searchableControls) {
         searchableControls.add(this);
         this.required = required;
-        this.errorMessageText.setText(errorMessage);
         titleLabel.setStyle("-fx-font-weight: bold");
 
         HBox labelBox = new HBox();
@@ -163,14 +157,6 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
         this.getChildren().add(entry);
     }
 
-    /**
-     * Displays error Field
-     */
-    public void showErrorField() {
-        ValidationStyle.borderGlowRed(comboBox);
-        this.getChildren().remove(errorMessageText);    // Ensure that it is not shown already
-        this.getChildren().add(errorMessageText);
-    }
 
     /**
      * Disables the combobox.
@@ -182,13 +168,6 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
         else {
             this.comboBox.setDisable(false);
         }
-    }
-
-    /**
-     * Enables the combobox.
-     */
-    public void enable() {
-        this.comboBox.setDisable(false);
     }
 
     /**

@@ -21,9 +21,7 @@ import java.util.Set;
  * Created by Jordane on 24/03/2015.
  */
 public class RequiredField extends VBox implements SearchableControl {
-    String errorMessage = "";
     TextField inputText = new TextField();
-    Label errorMessageText = new Label();
     Set<SearchableControl> searchControls = new HashSet<>();
 
     /**
@@ -33,15 +31,12 @@ public class RequiredField extends VBox implements SearchableControl {
      * @param name The label for the node required
      */
     public RequiredField(String name) {
-        this.errorMessageText.setText(errorMessage);
         inputText.setPrefWidth(175);
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);
         Label aster = new Label(" * ");
         aster.setTextFill(Color.web("#ff0000"));
-
-        errorMessageText.setTextFill(Color.web("#ff0000"));
 
         SearchableText label = new SearchableText(name.trim(), searchControls);
         label.setStyle("-fx-font-weight: bold");
@@ -66,7 +61,6 @@ public class RequiredField extends VBox implements SearchableControl {
     public RequiredField(String name, Collection<SearchableControl> controlCollection) {
 
         controlCollection.add(this);
-        this.errorMessageText.setText(errorMessage);
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);
@@ -75,8 +69,6 @@ public class RequiredField extends VBox implements SearchableControl {
 
         Label aster = new Label(" * ");
         aster.setTextFill(Color.web("#ff0000"));
-
-        errorMessageText.setTextFill(Color.web("#ff0000"));
 
         SearchableText label = new SearchableText(name.trim(), searchControls);
         label.setStyle("-fx-font-weight: bold");
@@ -118,16 +110,6 @@ public class RequiredField extends VBox implements SearchableControl {
     public TextField getTextField() {
         return inputText;
     }
-
-
-    /**
-     * Hides the error field.
-     */
-    public void hideErrorField() {
-        inputText.setStyle(null);
-        this.getChildren().remove(errorMessageText);
-    }
-
 
     @Override
     public boolean query(String query) {

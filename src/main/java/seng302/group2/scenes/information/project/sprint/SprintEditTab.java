@@ -20,6 +20,7 @@ import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.release.Release;
@@ -247,9 +248,10 @@ public class SprintEditTab extends SearchableTab {
 
                 if (newValue != null) {
                     if (newValue.getEstimatedDate().isBefore(sprintStartDatePicker.getValue())) {
-                        sprintStartDatePicker.showErrorField();
-                        /*sprintStartDatePicker.getDatePicker().setStyle("-fx-border-color: red;"
-                                + "-fx-pref-width: 135;");*/
+                        ValidationStyle.borderGlowRed(sprintStartDatePicker.getDatePicker());
+                        ValidationStyle.showMessage("The start date of the Sprint must be before the estimated"
+                                + " release date of the Release: " + newValue.getEstimatedDate().toString(),
+                                sprintStartDatePicker.getDatePicker());
                         sprintStartDatePicker.setTooltip(new Tooltip("The start date of"
                                 + " the Sprint must be before the estimated release date of the Release: "
                                 + newValue.getEstimatedDate().toString()));
@@ -257,14 +259,16 @@ public class SprintEditTab extends SearchableTab {
                         teamComboBox.setDisable(true);
                     }
                     else {
-                        sprintStartDatePicker.setDefaultStyle();
+                        ValidationStyle.borderGlowNone(sprintStartDatePicker.getDatePicker());
                         sprintStartDatePicker.removeTooltip();
                         sprintStartDatePicker.setDisable(false);
                         teamComboBox.setDisable(false);
                     }
                     if (newValue.getEstimatedDate().isBefore(sprintEndDatePicker.getValue())) {
-                        sprintEndDatePicker.getDatePicker().setStyle("-fx-border-color: red;"
-                                + "-fx-pref-width: 135;");
+                        ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
+                        ValidationStyle.showMessage("The end date of the Sprint must be before the estimated"
+                                        + " release date of the Release: " + newValue.getEstimatedDate().toString(),
+                                sprintEndDatePicker.getDatePicker());
                         sprintEndDatePicker.setTooltip(new Tooltip("The end date of"
                                 + " the Sprint must be before the estimated release date of the Release: "
                                 + newValue.getEstimatedDate().toString()));
@@ -272,7 +276,7 @@ public class SprintEditTab extends SearchableTab {
                         teamComboBox.setDisable(true);
                     }
                     else {
-                        sprintEndDatePicker.setDefaultStyle();
+                        ValidationStyle.borderGlowNone(sprintEndDatePicker.getDatePicker());
                         sprintEndDatePicker.removeTooltip();
                         sprintEndDatePicker.setDisable(false);
                         teamComboBox.setDisable(false);
@@ -291,15 +295,16 @@ public class SprintEditTab extends SearchableTab {
 
                 Team prevTeam = teamComboBox.getValue();
 
-                sprintStartDatePicker.setDefaultStyle();
+                ValidationStyle.borderGlowNone(sprintStartDatePicker.getDatePicker());
                 sprintStartDatePicker.removeTooltip();
                 if ((sprintEndDatePicker.getValue() != null) && (newValue != null)
                         && newValue.isAfter(sprintEndDatePicker.getValue())) {
                     sprintEndDatePicker.setDisable(false);
-                    sprintEndDatePicker.getDatePicker().setStyle("-fx-border-color: red;"
-                            + "-fx-pref-width: 135;");
-                    sprintEndDatePicker.setTooltip(new Tooltip("The end date of the sprint must"
-                            + " be after the start date!"));
+                    ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
+                    ValidationStyle.showMessage("The end date of the Sprint must be after the start date",
+                            sprintEndDatePicker.getDatePicker());
+                    sprintEndDatePicker.setTooltip(new Tooltip("The end date of the Sprint must"
+                            + " be after the start date"));
                     //sprintEndDatePicker.setValue(null);
                     teamComboBox.setValue(null);
                     teamComboBox.setDisable(true);
@@ -307,8 +312,11 @@ public class SprintEditTab extends SearchableTab {
                 else if (newValue != null) {
 
                     if (releaseComboBox.getValue().getEstimatedDate().isBefore(sprintEndDatePicker.getValue())) {
-                        sprintEndDatePicker.getDatePicker().setStyle("-fx-border-color: red;"
-                                + "-fx-pref-width: 135;");
+                        ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
+                        ValidationStyle.showMessage("The end date of the Sprint must be before the estimated"
+                                + " release date of the Release: "
+                                + releaseComboBox.getValue().getEstimatedDate().toString(),
+                                sprintEndDatePicker.getDatePicker());
                         sprintEndDatePicker.setTooltip(new Tooltip("The end date of"
                                 + " the Sprint must be before the estimated release date of the Release: "
                                 + releaseComboBox.getValue().getEstimatedDate().toString()));
@@ -316,7 +324,7 @@ public class SprintEditTab extends SearchableTab {
                         teamComboBox.setDisable(true);
                     }
                     else {
-                        sprintEndDatePicker.setDefaultStyle();
+                        ValidationStyle.borderGlowNone(sprintEndDatePicker.getDatePicker());
                         sprintEndDatePicker.removeTooltip();
                         sprintEndDatePicker.setDisable(false);
                         teamComboBox.clear();
@@ -337,18 +345,19 @@ public class SprintEditTab extends SearchableTab {
                     }
                 }
                 if (teamComboBox.getComboBox().getItems().contains(prevTeam)) {
-                    teamComboBox.getComboBox().setStyle("-fx-pref-width: 135;");
+                    ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
                     teamComboBox.removeTooltip();
                     teamComboBox.setValue(prevTeam);
                 }
                 else if (teamComboBox.getComboBox().getItems().size() == 0) {
-                    teamComboBox.getComboBox().setStyle("-fx-border-color: red;"
-                            + "-fx-pref-width: 135;");
+                    ValidationStyle.borderGlowRed(teamComboBox.getComboBox());
+                    ValidationStyle.showMessage("There are no Teams allocated to this project at the start date"
+                            + " specified", teamComboBox.getComboBox());
                     teamComboBox.setTooltip(new Tooltip("There are no Teams allocated to this project at the"
                             + " start date specified"));
                 }
                 else {
-                    teamComboBox.getComboBox().setStyle("-fx-pref-width: 135;");
+                    ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
                     teamComboBox.removeTooltip();
                 }
                 toggleDone();
@@ -365,7 +374,7 @@ public class SprintEditTab extends SearchableTab {
 
                 Team prevTeam = teamComboBox.getValue();
 
-                sprintEndDatePicker.setDefaultStyle();
+                ValidationStyle.borderGlowNone(sprintEndDatePicker.getDatePicker());
                 sprintEndDatePicker.getDatePicker().setTooltip(null);
                 if (newValue != null) {
                     sprintEndDatePicker.setStyle(null);
@@ -387,18 +396,19 @@ public class SprintEditTab extends SearchableTab {
                     teamComboBox.setValue(null);
 
                     if (teamComboBox.getComboBox().getItems().contains(prevTeam)) {
-                        teamComboBox.getComboBox().setStyle("-fx-pref-width: 135;");
+                        ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
                         teamComboBox.removeTooltip();
                         teamComboBox.setValue(prevTeam);
                     }
                     else if (teamComboBox.getComboBox().getItems().size() == 0) {
-                        teamComboBox.getComboBox().setStyle("-fx-border-color: red;"
-                                + "-fx-pref-width: 135;");
+                        ValidationStyle.borderGlowRed(teamComboBox.getComboBox());
+                        ValidationStyle.showMessage("There are no Teams allocated to this project at the start"
+                                + " date specified", teamComboBox.getComboBox());
                         teamComboBox.setTooltip(new Tooltip("There are no Teams allocated to this project at the"
                                 + " start date specified"));
                     }
                     else {
-                        teamComboBox.getComboBox().setStyle("-fx-pref-width: 135;");
+                        ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
                         teamComboBox.removeTooltip();
                     }
                     toggleDone();

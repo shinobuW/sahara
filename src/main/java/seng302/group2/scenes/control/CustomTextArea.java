@@ -23,9 +23,7 @@ import java.util.Set;
  * Created by Codie on 02/04/2015
  */
 public class CustomTextArea extends VBox implements SearchableControl {
-    private String errorMessage = "";
     private TextArea inputText = new TextArea();
-    private Label errorMessageText = new Label();
     private Set<SearchableControl> searchControls = new HashSet<>();
 
     /**
@@ -35,7 +33,6 @@ public class CustomTextArea extends VBox implements SearchableControl {
      * @param name The node field that is required
      */
     public CustomTextArea(String name) {
-        this.errorMessageText.setText(errorMessage);
         inputText.setWrapText(true);
         inputText.setPrefRowCount(5);
 
@@ -85,7 +82,6 @@ public class CustomTextArea extends VBox implements SearchableControl {
      */
     public CustomTextArea(String name, Collection<SearchableControl> searchableControls) {
         searchableControls.add(this);
-        this.errorMessageText.setText(errorMessage);
         inputText.setWrapText(true);
         inputText.setPrefRowCount(5);
 
@@ -134,10 +130,8 @@ public class CustomTextArea extends VBox implements SearchableControl {
      * @param width The width of the area
      */
     public CustomTextArea(String name, int width) {
-        this.errorMessageText.setText(errorMessage);
         inputText.setWrapText(true);
         inputText.setPrefRowCount(5);
-
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);
@@ -185,7 +179,6 @@ public class CustomTextArea extends VBox implements SearchableControl {
      */
     public CustomTextArea(String name, int width, Collection<SearchableControl> searchableControls) {
         searchableControls.add(this);
-        this.errorMessageText.setText(errorMessage);
         inputText.setWrapText(true);
         inputText.setPrefRowCount(5);
 

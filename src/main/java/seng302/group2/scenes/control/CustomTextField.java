@@ -19,9 +19,7 @@ import java.util.Set;
  * Created by Codie on 02/04/2015
  */
 public class CustomTextField extends VBox implements SearchableControl {
-    private String errorMessage = "";
     private TextField inputText = new TextField();
-    private Label errorMessageText = new Label();
     private Set<SearchableControl> searchControls = new HashSet<>();
 
     /**
@@ -31,14 +29,10 @@ public class CustomTextField extends VBox implements SearchableControl {
      * @param name The node field that is required
      */
     public CustomTextField(String name) {
-        this.errorMessageText.setText(errorMessage);
         inputText.setPrefWidth(175);
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);
-
-
-        errorMessageText.setTextFill(Color.web("#ff0000"));
 
         SearchableText label = new SearchableText(name.trim(), searchControls);
         label.setStyle("-fx-font-weight: bold");
@@ -61,9 +55,7 @@ public class CustomTextField extends VBox implements SearchableControl {
      */
     public CustomTextField(String name, Collection<SearchableControl> controlCollection) {
         controlCollection.add(this);
-        this.errorMessageText.setText(errorMessage);
         this.inputText.setPrefWidth(175);
-
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);
