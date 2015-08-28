@@ -143,10 +143,10 @@ public class PopOverTable<T> extends SearchableTable<T> {
                         
                         
                         taskContent.getChildren().addAll(collapsableInfoPane, collapsableLoggingPane);
-                        taskInfo.setStyle(" -fx-background: -fx-control-inner-background ;\n" +
-                            "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n");
-                        taskWrapper.setStyle(" -fx-background: -fx-control-inner-background ;\n" +
-                            "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n" );
+                        taskInfo.setStyle(" -fx-background: -fx-control-inner-background ;\n" 
+                                + "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n");
+                        taskWrapper.setStyle(" -fx-background: -fx-control-inner-background ;\n" 
+                                + "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n" );
                     }
 
                     taskPopover.setContentNode(taskContent);
