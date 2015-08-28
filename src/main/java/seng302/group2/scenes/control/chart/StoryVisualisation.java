@@ -2,7 +2,10 @@ package seng302.group2.scenes.control.chart;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -64,28 +67,28 @@ public class StoryVisualisation extends Pane {
 
         GridPane visualGrid = new GridPane();
 
-        Rectangle red = new Rectangle();
-        Rectangle green = new Rectangle();
-        Rectangle blue = new Rectangle();
 
-        green.setWidth(maxGreen);
-        green.setHeight(25);
+        Rectangle green = new Rectangle(maxGreen, 25);
+        Rectangle greenOff = new Rectangle(15, 25);
+        greenOff.setFill(Color.TRANSPARENT);
+        Rectangle greenSquare = new Rectangle(maxGreen - 15, 25);
+        HBox greenBg = new HBox();
+        greenBg.getChildren().addAll(greenOff, greenSquare);
+
+
         green.setArcWidth(15);
         green.setArcHeight(15);
         PopOverTip greenPO = new PopOverTip(green, new Text(" Percentage of Story Done: "
                 + (df.format(percentageGreen * 100)) + "% "));
         greenPO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
-        blue.setWidth(maxBlue);
-        blue.setHeight(25);
-        blue.setArcWidth(15);
-        blue.setArcHeight(15);
+        Rectangle blue = new Rectangle(maxBlue-maxGreen, 25);
         PopOverTip bluePO = new PopOverTip(blue, new Text(" Percentage of Story In Progress: "
                 + (df.format(percentageBlue * 100)) + "% "));
         bluePO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
-        red.setWidth(maxWidth);
-        red.setHeight(25);
+        Rectangle red = new Rectangle(maxWidth - maxBlue, 25);
+        Rectangle redSquare = new Rectangle(maxWidth - maxBlue - 15, 25);
         red.setArcWidth(15);
         red.setArcHeight(15);
         PopOverTip redPO = new PopOverTip(red, new Text(" Remaining work to do: "
@@ -93,12 +96,16 @@ public class StoryVisualisation extends Pane {
         redPO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
         red.setFill(Color.RED);
+        redSquare.setFill(Color.RED);
         green.setFill(Color.GREEN);
+        greenSquare.setFill(Color.GREEN);
         blue.setFill(Color.BLUE);
 
-        visualGrid.add(red, 0, 0, 1, 3);
-        visualGrid.add(blue, 0, 0, 1, 2);
-        visualGrid.add(green, 0, 0, 1, 1);
+        visualGrid.add(greenBg, 0, 0);
+        visualGrid.add(green, 0, 0);
+        visualGrid.add(blue, 1, 0);
+        visualGrid.add(redSquare, 2, 0);
+        visualGrid.add(red, 2, 0);
 
         this.getChildren().add(visualGrid);
 

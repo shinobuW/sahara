@@ -1,7 +1,11 @@
 package seng302.group2.scenes.control;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.PopOver;
 
@@ -21,7 +25,7 @@ public class PopOverTip extends PopOver {
     public PopOverTip(Node parentNode) {
         super();
         init(parentNode);
-        setContentNode(new VBox(8));
+        setContentNode(wrapContent(new Label("No Content")));
     }
 
     /**
@@ -32,7 +36,7 @@ public class PopOverTip extends PopOver {
     public PopOverTip(Node parentNode, Node contentNode) {
         super(contentNode);
         init(parentNode);
-        setContentNode(contentNode);
+        setContentNode(wrapContent(contentNode));
     }
 
     /**
@@ -43,6 +47,19 @@ public class PopOverTip extends PopOver {
         this.parent = parentNode;
         setDetachable(false);  // We don't want to detach ToolTip/information PopOverTips, use a PopOver instead
         setupHover();
+    }
+
+    /**
+     * Creates a wrapper of a node with some added padding
+     * @param node The node to wrap
+     * @return The node wrapped in an HBox with a default padding
+     */
+    private HBox wrapContent(Node node) {
+        HBox wrapper = new HBox();
+        wrapper.setAlignment(Pos.CENTER);
+        wrapper.setPadding(new Insets(8));
+        wrapper.getChildren().add(node);
+        return wrapper;
     }
 
     /**
