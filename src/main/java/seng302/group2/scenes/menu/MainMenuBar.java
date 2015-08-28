@@ -203,21 +203,6 @@ public class MainMenuBar extends MenuBar {
     }
 
     /**
-     * Create a menu item "Task" and sets the action event if "Task" is clicked.
-     *
-     * @return MenuItem Task
-     */
-    private static MenuItem createTaskItem() {
-
-        MenuItem newTaskItem = new MenuItem("Task");
-        newTaskItem.setOnAction((event) -> {
-                javafx.scene.control.Dialog creationDialog = new CreateTaskDialog();
-                //creationDialog.show();
-            });
-        return newTaskItem;
-    }
-
-    /**
      * Create a menu item "Backlog" and sets the action event if "Backlog" is clicked.
      *
      * @return MenuItem Backlog
@@ -547,7 +532,6 @@ public class MainMenuBar extends MenuBar {
         MenuItem newReleaseItem = createReleaseItem();
         MenuItem newBacklogItem = createBacklogItem();
         MenuItem newStoryItem = createStoryItem();
-        MenuItem newTaskItem = createTaskItem();
         MenuItem newSprintItem = createSprintItem();
         MenuItem newTeamItem = createTeamItem();
         MenuItem newPersonItem = createPersonItem();
@@ -565,7 +549,6 @@ public class MainMenuBar extends MenuBar {
         newBranch.getItems().add(newReleaseItem);
         newBranch.getItems().add(newBacklogItem);
         newBranch.getItems().add(newStoryItem);
-        newBranch.getItems().add(newTaskItem);
         newBranch.getItems().add(newSprintItem);
         newBranch.getItems().add(newTeamItem);
         newBranch.getItems().add(newPersonItem);
@@ -632,12 +615,10 @@ public class MainMenuBar extends MenuBar {
                 if (Global.currentWorkspace.getProjects().isEmpty()) {
                     newReleaseItem.setDisable(true);
                     newStoryItem.setDisable(true);
-                    newTaskItem.setDisable(true);
                 }
                 else {
                     newReleaseItem.setDisable(false);
                     newStoryItem.setDisable(false);
-                    newTaskItem.setDisable(false);
                 }
             });
 

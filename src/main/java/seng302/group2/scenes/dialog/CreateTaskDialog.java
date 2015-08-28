@@ -33,6 +33,7 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  * A class used for task creation.
  * Created by cvs20 on 29/07/15.
  */
+@Deprecated
 public class CreateTaskDialog extends Dialog<Map<String, String>> {
     static Boolean correctShortName = Boolean.FALSE;
     static Boolean correctEffortLeft = Boolean.FALSE;
