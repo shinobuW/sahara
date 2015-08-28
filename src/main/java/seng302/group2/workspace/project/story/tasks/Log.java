@@ -163,7 +163,7 @@ public class Log extends SaharaItem implements Serializable {
 
     @Override
     public String toString() {
-        return "Log: " + this.startTime.toString() + ", " + this.duration + " - " + this.task.toString();
+        return "Log: " + this.startTime.toString() + ", " + this.duration + ", Task:" + this.task.toString();
     }
 
 
