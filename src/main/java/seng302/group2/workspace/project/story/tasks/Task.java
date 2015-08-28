@@ -721,7 +721,10 @@ public class Task extends SaharaItem implements Serializable {
          */
         public void execute() {
             if (Task.getLaneStates().contains(lane)) {
-                task.state = lane;
+                if (!Task.getImpedingStates().contains(task.state)) {
+                    // Update the state if it was not an impediment state previously
+                    task.state = lane;
+                }
                 task.lane = lane;
                 if (task.getStory() != null) {
                     if (index != -1) {
