@@ -41,7 +41,7 @@ public class Task extends SaharaItem implements Serializable {
     private List<Log> serializableLogs = new ArrayList<>();
     private double effortLeft = 0;
     private double effortSpent = 0;
-    private Log initialLog = null;
+    final private Log initialLog;
 
     GeneralEnumStringConverter converter = new GeneralEnumStringConverter();
 
