@@ -20,9 +20,9 @@ import java.text.DecimalFormat;
 /**
  * Created by cvs20 on 27/08/15.
  */
-public class StoryVisualisation extends Pane {
+public class StoryCompletenessBar extends Pane {
 
-    public StoryVisualisation(Story story) {
+    public StoryCompletenessBar(Story story) {
         ObservableList<Task> tasks =  story.getTasks();
 
         ObservableList<Task> done = FXCollections.observableArrayList();

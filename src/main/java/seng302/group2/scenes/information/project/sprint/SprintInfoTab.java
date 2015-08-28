@@ -5,16 +5,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
-import org.controlsfx.control.PopOver;
-import seng302.group2.scenes.control.PopOverTip;
-import seng302.group2.scenes.control.chart.StoryVisualisation;
+import seng302.group2.scenes.control.chart.StoryCompletenessBar;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
@@ -148,7 +141,7 @@ public class SprintInfoTab extends SearchableTab {
                 VBox VtaskBox = new VBox(30);
                 VBox taskBox = new VBox(4);
                 if (story.getTasks().size() != 0) {
-                    VtaskBox.getChildren().add(new StoryVisualisation(story));
+                    VtaskBox.getChildren().add(new StoryCompletenessBar(story));
                     for (Task task : story.getTasks().sorted(Task.TaskNameComparator)) {
                         taskBox.getChildren().add(new ScrumBoardTaskCellNode(task));
                     }
