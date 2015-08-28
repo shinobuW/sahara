@@ -8,14 +8,20 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
-import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.information.project.story.task.LoggingEffortPane;
 import seng302.group2.scenes.validation.ValidationStyle;
@@ -27,10 +33,7 @@ import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCrite
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
@@ -186,57 +189,59 @@ public class StoryTaskTab extends SearchableTab {
         stateCol.setCellFactory(stateCellFactory);
 
         TableColumn assigneesCol = new TableColumn("Assignee");
-        assigneesCol.setCellValueFactory(new PropertyValueFactory<Task,
-                Person>("assignee"));
+//        assigneesCol.setCellValueFactory(new PropertyValueFactory<Task,
+//                Person>("assignee"));
         assigneesCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
-        ObservableList availablePeople = observableArrayList();
-        for (Team team : currentStory.getProject().getCurrentTeams()) {
-            availablePeople.addAll(team.getPeople());
-        }
-        assigneesCol.setEditable(true);
 
-        Callback<TableColumn, TableCell> assigneeCellFactory = col -> new ComboBoxEditingCell(availablePeople);
-        assigneesCol.setCellValueFactory(
-                new Callback<TableColumn.CellDataFeatures<Task, String>,
-                        ObservableValue<String>>() {
-                    @Override
-                    public ObservableValue<String> call(TableColumn.CellDataFeatures<Task,
-                            String> task) {
-                        SimpleStringProperty property = new SimpleStringProperty();
-                        if (task.getValue().getAssignee() != null) {
-                            property.setValue(task.getValue().getAssignee().toString());
-                        }
-                        else {
-                            property.setValue("No one Assigned");
-                        }
-                        return property;
-                    }
-                });
 
-        assigneesCol.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<Task, String>>() {
-                    @Override
-                    public void handle(TableColumn.CellEditEvent<Task, String> event) {
+        assigneesCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Task, String>,
+                ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Task, String> task) {
+                // p.getValue() returns the Person instance for a particular TableView row
+                SimpleStringProperty prop = new SimpleStringProperty();
+                prop.set(task.getValue().getShortName());
+                return prop;
+            }
+        });
+//        assigneesCol.setCellValueFactory(
+//                new Callback<TableColumn.CellDataFeatures<Object, Task>,
+//                        ObservableValue<Task>>() {
+//
+//                    @Override
+//                    public ObservableValue<Task> call(TableColumn.CellDataFeatures<Object,
+//                            Task> task) {
+//                        SimpleObjectProperty property = new SimpleObjectProperty();
+//                        property.setValue(task);
+//
+//                        return property;
+//                    }
+//                });
 
-                        if (!event.getNewValue().isEmpty()) {
-                            Task currentTask = event.getTableView().getItems()
-                                    .get(event.getTablePosition().getRow());
-                            Person newPerson = null;
-
-                            for (Object person: availablePeople) {
-                                if (person.toString() == event.getNewValue()) {
-                                    newPerson = (Person)person;
-                                }
-                            }
-                            if (newPerson.toString() != event.getOldValue()) {
-                                currentTask.editAssignee(newPerson);
-                            }
-                        }
-                    }
-                });
-
+//
+//        assigneesCol.setOnEditCommit(
+//                new EventHandler<TableColumn.CellEditEvent<Task, String>>() {
+//                    @Override
+//                    public void handle(TableColumn.CellEditEvent<Task, String> event) {
+//
+//                        if (!event.getNewValue().isEmpty()) {
+//                            Task currentTask = event.getTableView().getItems()
+//                                    .get(event.getTablePosition().getRow());
+//                            Person newPerson = null;
+//
+//                            for (Object person: availablePeople) {
+//                                if (person.toString() == event.getNewValue()) {
+//                                    newPerson = (Person)person;
+//                                }
+//                            }
+//                            if (newPerson.toString() != event.getOldValue()) {
+//                                currentTask.editAssignee(newPerson);
+//                            }
+//                        }
+//                    }
+//                });
+        Callback<TableColumn, TableCell> assigneeCellFactory = col -> new AssigneeCell(currentStory);
         assigneesCol.setCellFactory(assigneeCellFactory);
 
 
@@ -256,18 +261,18 @@ public class StoryTaskTab extends SearchableTab {
 
         // Listener to disable columns being movable
         taskTable.getColumns().addListener(new ListChangeListener() {
-                public boolean suspended;
+            public boolean suspended;
 
-                @Override
-                public void onChanged(ListChangeListener.Change change) {
-                    change.next();
-                    if (change.wasReplaced() && !suspended) {
-                        this.suspended = true;
-                        taskTable.getColumns().setAll(columns);
-                        this.suspended = false;
-                    }
+            @Override
+            public void onChanged(ListChangeListener.Change change) {
+                change.next();
+                if (change.wasReplaced() && !suspended) {
+                    this.suspended = true;
+                    taskTable.getColumns().setAll(columns);
+                    this.suspended = false;
                 }
-            });
+            }
+        });
 
         Button btnView = new Button("Task View");
 
@@ -536,45 +541,17 @@ public class StoryTaskTab extends SearchableTab {
         }
     }
 
-    class TextFieldEditingCell extends TableCell<Object, String> {
-        public SearchableTextField textField;
+    class AssigneeCell extends TableCell<Object, String> {
+        public Node popUp;
+        public Story story;
 
         /**
          * Constructor
          */
-        private TextFieldEditingCell() {
+        private AssigneeCell(Story story) {
+            this.story = story;
         }
 
-        /**
-         * Sets the cell to a combo box when focused on.
-         */
-        @Override
-        public void startEdit() {
-            if (!isEmpty()) {
-                super.startEdit();
-                createTextField();
-                setGraphic(textField);
-
-                if (!getText().isEmpty()) {
-                    textField.setText(getItem());
-                }
-                else {
-                    textField.setText(null);
-                }
-                Platform.runLater(() -> {
-                        textField.requestFocus();
-                    });
-            }
-        }
-
-        /**
-         * Resets the cell to a label on cancel
-         */
-        @Override
-        public void cancelEdit() {
-            super.cancelEdit();
-            setGraphic(null);
-        }
 
         /**
          * Updates the item
@@ -585,54 +562,115 @@ public class StoryTaskTab extends SearchableTab {
         @Override
         public void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
-
-            if (empty) {
+            System.out.println(item);
+            if (empty || item == null) {
                 setText(null);
                 setGraphic(null);
             }
             else {
-                if (isEditing()) {
-                    if (textField != null) {
-                        textField.setText(getItem());
-                    }
-                    setText(getItem());
-                    setGraphic(textField);
-                }
-                else {
-                    setText(getItem());
-                    setGraphic(null);
-                }
+                popUp = createAssigneeNode(getTask());
+                setGraphic(popUp);
             }
         }
+
+        public Task getTask() {
+            Task result = null;
+            for (Task task : this.story.getTasks()) {
+                if (task.getShortName() == getItem()) {
+                    result = task;
+                }
+            }
+            return result;
+        }
+
+
 
         /**
          * Creates the combo box and populates it with the itemList. Updates the value in the cell.
          */
-        private void createTextField() {
-            textField = new SearchableTextField();
-            textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
-            textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
-                @Override
-                public void changed(ObservableValue<? extends Boolean> arg0,
-                                    Boolean arg1, Boolean arg2) {
-                    if (!arg2) {
-                        if (textField.getText() != null) {
-                            commitEdit(textField.getText());
-                        }
-                        else {
-                            commitEdit("");
-                        }
-                    }
-                    else {
-                        updateItem(getItem(), false);
-                    }
+
+
+
+    }
+
+    private Node createAssigneeNode(Task task) {
+        // Assignee icon
+        ImageView assigneeImage;
+        System.out.println("in");
+        if (task.getAssignee() != null) {
+            assigneeImage = new ImageView("icons/person.png");
+            seng302.group2.scenes.control.Tooltip.create(task.getAssignee().getFullName(), assigneeImage, 50);
+        }
+        else {
+            assigneeImage = new ImageView("icons/person_empty.png");
+            seng302.group2.scenes.control.Tooltip.create("This task is unassigned", assigneeImage, 50);
+        }
+
+//        assigneeImage.setOnMouseEntered(me -> {
+//            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+//        });
+//        assigneeImage.setOnMouseExited(me -> {
+//            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+//        });
+
+        PopOver assignPopOver = new PopOver();
+        assignPopOver.setDetachedTitle(task.getShortName() + " Assignment");
+        SortedSet<Person> availableAssignees = new TreeSet<>();
+        try {
+            for (Team team : task.getStory().getProject().getCurrentTeams()) {
+                availableAssignees.addAll(team.getPeople());
+            }
+        }
+        catch (NullPointerException ex) {
+        }
+        Person nonePerson = new Person();
+        nonePerson.setShortName("(none)");
+        availableAssignees.add(nonePerson);
+
+        ComboBox<Person> assigneeCombo = new ComboBox<>();
+        assigneeCombo.getItems().addAll(availableAssignees);
+        assigneeCombo.getSelectionModel().select(task.getAssignee());
+        assigneeImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                if (assignPopOver.isShowing()) {
+                    assignPopOver.hide();
                 }
+                else {
+                    assignPopOver.show(assigneeImage);
+                }
+                event.consume();
             });
-        }
 
-        public SearchableTextField getTextField() {
-            return this.textField;
-        }
+        Button assigneeSaveButton = new Button("Save Assignee");
+        assigneeSaveButton.setAlignment(Pos.CENTER_RIGHT);
+        assigneeSaveButton.setOnAction(event -> {
+                Person selectedPerson = assigneeCombo.getSelectionModel().getSelectedItem();
+                if (selectedPerson.equals(nonePerson)) {
+                    selectedPerson = null;
+                }
+                task.editAssignee(selectedPerson);
+                assignPopOver.hide();
 
+    //            this.getChildren().clear();
+    //            this.getChildren().add(construct());
+            });
+
+        SearchableText assigneeLabel = new SearchableText("Assignee: ");
+        assigneeLabel.setTextAlignment(TextAlignment.LEFT);
+        HBox assigneeComboLabel = new HBox(8);
+        assigneeComboLabel.setAlignment(Pos.CENTER_RIGHT);
+        assigneeComboLabel.getChildren().addAll(
+                assigneeLabel,
+                assigneeCombo
+        );
+        VBox assigneeChangeNode = new VBox(8);
+        assigneeChangeNode.setAlignment(Pos.CENTER_RIGHT);
+        assigneeChangeNode.setPadding(new Insets(8,8,8,8));
+        assigneeChangeNode.getChildren().addAll(
+                assigneeComboLabel,
+                assigneeSaveButton
+        );
+        assignPopOver.setContentNode(assigneeChangeNode);
+
+        return assigneeImage;
     }
 }
