@@ -70,24 +70,25 @@ public class PopOverTable<T> extends SearchableTable<T> {
         setRowFactory(tv -> new TableRow<T>() {
             @Override
             protected void updateItem(T item, boolean empty) {
+                
                 super.updateItem(item, empty);
                 HBox content = new HBox();
                 PopOver taskPopover = new PopOver();
 
-
-
                 VBox taskContent = new VBox();
                 taskContent.setPadding(new Insets(8, 8, 8, 8));
                 if (item != null) {
-
+                    
                     if (item == null) {
                         SearchableText noTaskLabel = new SearchableText("No tasks selected.");
                         taskContent.getChildren().add(noTaskLabel);
                     }
                     else {
                         Task currentTask = (Task) item;
+
                         taskPopover.setDetachedTitle(currentTask.toString());
                         VBox taskInfo = new VBox();
+                        
 
                         taskInfo.setBorder(null);
                         taskInfo.setPadding(new Insets(25, 25, 25, 25));
@@ -118,12 +119,17 @@ public class PopOverTable<T> extends SearchableTable<T> {
                                 taskState,
                                 assignedPerson
                         );
+                        taskInfo.setStyle(null);
+                        
 
 
 
                         ScrollPane taskWrapper = new ScrollPane();
-                        taskWrapper.setContent(new LoggingEffortPane((Task) item,
-                                taskPopover));
+                        LoggingEffortPane loggingPane = new LoggingEffortPane((Task) item,
+                                taskPopover);
+                        loggingPane.setStyle(null);
+
+                        taskWrapper.setContent(loggingPane);
 
                         TitledPane collapsableInfoPane = new TitledPane("Task Info", taskInfo);
                         collapsableInfoPane.setPrefHeight(30);
@@ -134,7 +140,13 @@ public class PopOverTable<T> extends SearchableTable<T> {
                         collapsableLoggingPane.setExpanded(true);
                         collapsableLoggingPane.setAnimated(true);
 
+                        
+                        
                         taskContent.getChildren().addAll(collapsableInfoPane, collapsableLoggingPane);
+                        taskInfo.setStyle(" -fx-background: -fx-control-inner-background ;\n" +
+                            "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n");
+                        taskWrapper.setStyle(" -fx-background: -fx-control-inner-background ;\n" +
+                            "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n" );
                     }
 
                     taskPopover.setContentNode(taskContent);
@@ -145,19 +157,22 @@ public class PopOverTable<T> extends SearchableTable<T> {
                         setStyle(null);
                         //setStyle("-fx-background-color: " + Color.TRANSPARENT + ";");
                     }
-                    content.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                    this.setOnMouseClicked(event -> {
+
                             System.out.println("Is clicked");
                             if (taskPopover.isShowing()) {
                                 taskPopover.hide();
                             }
                             else {
-                                taskPopover.show(content);
+                                if (event.getClickCount() == 2) {
+                                    taskPopover.show(this);
+                                }
                             }
                             event.consume();
                         });
                 }
 
-                setGraphic(content);
+                this.getChildren().add(content);
             }
         });
     }
