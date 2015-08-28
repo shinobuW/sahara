@@ -5,7 +5,7 @@
  */
 package seng302.group2.util.validation;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**

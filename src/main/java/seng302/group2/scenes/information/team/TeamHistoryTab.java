@@ -453,9 +453,7 @@ public class TeamHistoryTab extends SearchableTab {
                 else {
                     datePicker.setValue(null);
                 }
-                Platform.runLater(() -> {
-                        datePicker.requestFocus();
-                    });
+                Platform.runLater(datePicker::requestFocus);
 
             }
         }

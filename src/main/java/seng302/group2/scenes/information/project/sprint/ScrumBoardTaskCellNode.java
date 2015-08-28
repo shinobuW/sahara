@@ -138,11 +138,11 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
         }
 
         warningImage.setOnMouseEntered(me -> {
-            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
-        });
+                this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+            });
         warningImage.setOnMouseExited(me -> {
-            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
-        });
+                this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+            });
 
 
         PopOver impedimentPopOver = new PopOver();
@@ -168,14 +168,14 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
             impedimentCombo.getSelectionModel().select("(none)");
         }
         warningImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (impedimentPopOver.isShowing()) {
-                impedimentPopOver.hide();
-            }
-            else {
-                impedimentPopOver.show(warningImage);
-            }
-            event.consume();
-        });
+                if (impedimentPopOver.isShowing()) {
+                    impedimentPopOver.hide();
+                }
+                else {
+                    impedimentPopOver.show(warningImage);
+                }
+                event.consume();
+            });
 
         VBox impedimentsVBox = new VBox(4);
         SearchableText impedimentsLabel = new SearchableText("Impediments: ");
@@ -186,17 +186,17 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
         Button impedimentSaveButton = new Button("Save Impediments");
         impedimentSaveButton.setAlignment(Pos.CENTER_RIGHT);
         impedimentSaveButton.setOnAction(event -> {
-            Task.TASKSTATE selectedState = null;
-            Object selectedObject = impedimentCombo.getSelectionModel().getSelectedItem();
-            if (selectedObject == null || !selectedObject.toString().equals("(none)")) {
-                selectedState = (Task.TASKSTATE) selectedObject;
-            }
-            task.editImpedimentState(selectedState, impedimentsTextArea.getText());
-            impedimentPopOver.hide();
+                Task.TASKSTATE selectedState = null;
+                Object selectedObject = impedimentCombo.getSelectionModel().getSelectedItem();
+                if (selectedObject == null || !selectedObject.toString().equals("(none)")) {
+                    selectedState = (Task.TASKSTATE) selectedObject;
+                }
+                task.editImpedimentState(selectedState, impedimentsTextArea.getText());
+                impedimentPopOver.hide();
 
-            this.getChildren().clear();
-            this.getChildren().add(construct());
-        });
+                this.getChildren().clear();
+                this.getChildren().add(construct());
+            });
 
         SearchableText statusLabel = new SearchableText("Status: ");
         statusLabel.setTextAlignment(TextAlignment.LEFT);
@@ -235,11 +235,11 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
         }
 
         assigneeImage.setOnMouseEntered(me -> {
-            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
-        });
+                this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+            });
         assigneeImage.setOnMouseExited(me -> {
-            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
-        });
+                this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+            });
 
         PopOver assignPopOver = new PopOver();
         assignPopOver.setDetachedTitle(task.getShortName() + " Assignment");
@@ -259,28 +259,28 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
         assigneeCombo.getItems().addAll(availableAssignees);
         assigneeCombo.getSelectionModel().select(task.getAssignee());
         assigneeImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (assignPopOver.isShowing()) {
-                assignPopOver.hide();
-            }
-            else {
-                assignPopOver.show(assigneeImage);
-            }
-            event.consume();
-        });
+                if (assignPopOver.isShowing()) {
+                    assignPopOver.hide();
+                }
+                else {
+                    assignPopOver.show(assigneeImage);
+                }
+                event.consume();
+            });
 
         Button assigneeSaveButton = new Button("Save Assignee");
         assigneeSaveButton.setAlignment(Pos.CENTER_RIGHT);
         assigneeSaveButton.setOnAction(event -> {
-            Person selectedPerson = assigneeCombo.getSelectionModel().getSelectedItem();
-            if (selectedPerson.equals(nonePerson)) {
-                selectedPerson = null;
-            }
-            task.editAssignee(selectedPerson);
-            assignPopOver.hide();
+                Person selectedPerson = assigneeCombo.getSelectionModel().getSelectedItem();
+                if (selectedPerson.equals(nonePerson)) {
+                    selectedPerson = null;
+                }
+                task.editAssignee(selectedPerson);
+                assignPopOver.hide();
 
-            this.getChildren().clear();
-            this.getChildren().add(construct());
-        });
+                this.getChildren().clear();
+                this.getChildren().add(construct());
+            });
 
         SearchableText assigneeLabel = new SearchableText("Assignee: ");
         assigneeLabel.setTextAlignment(TextAlignment.LEFT);
@@ -316,21 +316,21 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
         loggingEffortPopOver.setDetachedTitle(task.getShortName());
 
         remainingTime.setOnMouseEntered(me -> {
-            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
-        });
+                this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+            });
         remainingTime.setOnMouseExited(me -> {
-            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
-        });
+                this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+            });
 
         remainingTime.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if (loggingEffortPopOver.isShowing()) {
-                loggingEffortPopOver.hide();
-            }
-            else {
-                loggingEffortPopOver.show(remainingTime);
-            }
-            event.consume();
-        });
+                if (loggingEffortPopOver.isShowing()) {
+                    loggingEffortPopOver.hide();
+                }
+                else {
+                    loggingEffortPopOver.show(remainingTime);
+                }
+                event.consume();
+            });
 
         return remainingTime;
     }
