@@ -3,6 +3,7 @@ package seng302.group2.scenes.information.project.sprint;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
@@ -38,6 +39,10 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
     private Task task = null;
     private Set<SearchableControl> searchControls = new HashSet<>();
 
+    /**
+     * The constructor that creates a scrumboard task cell for the given task
+     * @param task The task the cell should reflect the information of
+     */
     public ScrumBoardTaskCellNode(Task task) {
 
         this.task = task;
@@ -49,6 +54,10 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
     }
 
 
+    /**
+     * Construct the content of the task cell with information from the task.
+     * @return A cellular representation of the task with a visual representation of the task's information
+     */
     private HBox construct() {
         HBox content = new HBox();
         content.setPrefHeight(48);
@@ -74,128 +83,27 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
         textContent.getChildren().addAll(titleLabel, descLabel);
 
 
-
-
         // The cell's 'iconic' information
         VBox rightContent = new VBox(1);
         rightContent.setPrefHeight(48);
 
-        SearchableText remainingTime = new SearchableText(task.getEffortLeftString(), searchControls);
-        Tooltip.create("Spent Effort: " + task.getEffortSpentString() + "\n"
-                + "Remaining Effort: " + task.getEffortLeftString(), remainingTime, 50);
-        remainingTime.injectStyle("-fx-font-size: 85%;");
-        remainingTime.setTextAlignment(TextAlignment.RIGHT);
-
-
-        // Remaining time PopOver
-        PopOver loggingEffortPopOver = new PopOver();
-        LoggingEffortPane loggingPane = new LoggingEffortPane(task, loggingEffortPopOver);
-        loggingEffortPopOver.setContentNode(loggingPane);
-        loggingEffortPopOver.setDetachedTitle(task.getShortName());
-
-        remainingTime.setOnMouseEntered(me -> {
-                this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
-            });
-        remainingTime.setOnMouseExited(me -> {
-                this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
-            });
-
-        remainingTime.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                if (loggingEffortPopOver.isShowing()) {
-                    loggingEffortPopOver.hide();
-                }
-                else {
-                    loggingEffortPopOver.show(remainingTime);
-                }
-                event.consume();
-            });
-
         rightContent.setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(rightContent, Priority.ALWAYS);
-        rightContent.getChildren().addAll(remainingTime);
+
+        // Create the right sides content's information nodes
+        Node remainingTime = createRemainingTime();
+        Node assigneeNode = createAssigneeNode();
+        Node impedimentsNode = createImpedimentsNode();
+        rightContent.getChildren().addAll(remainingTime, assigneeNode, impedimentsNode);
+
+        // Bring cell parts together
+        content.getChildren().addAll(rect, textContent, rightContent);
+
+        return content;
+    }
 
 
-
-
-
-        // Assignee icon
-        ImageView assigneeImage;
-        if (task.getAssignee() != null) {
-            assigneeImage = new ImageView("icons/person.png");
-            Tooltip.create(task.getAssignee().getFullName(), assigneeImage, 50);
-        }
-        else {
-            assigneeImage = new ImageView("icons/person_empty.png");
-            Tooltip.create("This task is unassigned", assigneeImage, 50);
-        }
-        rightContent.getChildren().addAll(assigneeImage);
-        assigneeImage.setOnMouseEntered(me -> {
-                this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
-            });
-        assigneeImage.setOnMouseExited(me -> {
-                this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
-            });
-
-        PopOver assignPopOver = new PopOver();
-        assignPopOver.setDetachedTitle(task.getShortName() + " Assignment");
-        SortedSet<Person> availableAssignees = new TreeSet<>();
-        try {
-            for (Team team : task.getStory().getProject().getCurrentTeams()) {
-                availableAssignees.addAll(team.getPeople());
-            }
-        }
-        catch (NullPointerException ex) {
-        }
-        Person nonePerson = new Person();
-        nonePerson.setShortName("(none)");
-        availableAssignees.add(nonePerson);
-
-        ComboBox<Person> assigneeCombo = new ComboBox<>();
-        assigneeCombo.getItems().addAll(availableAssignees);
-        assigneeCombo.getSelectionModel().select(task.getAssignee());
-        assigneeImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                if (assignPopOver.isShowing()) {
-                    assignPopOver.hide();
-                }
-                else {
-                    assignPopOver.show(assigneeImage);
-                }
-                event.consume();
-            });
-
-        Button assigneeSaveButton = new Button("Save Assignee");
-        assigneeSaveButton.setAlignment(Pos.CENTER_RIGHT);
-        assigneeSaveButton.setOnAction(event -> {
-                Person selectedPerson = assigneeCombo.getSelectionModel().getSelectedItem();
-                if (selectedPerson.equals(nonePerson)) {
-                    selectedPerson = null;
-                }
-                task.editAssignee(selectedPerson);
-                assignPopOver.hide();
-
-                this.getChildren().clear();
-                this.getChildren().add(construct());
-            });
-
-        SearchableText assigneeLabel = new SearchableText("Assignee: ");
-        assigneeLabel.setTextAlignment(TextAlignment.LEFT);
-        HBox assigneeComboLabel = new HBox(8);
-        assigneeComboLabel.setAlignment(Pos.CENTER_RIGHT);
-        assigneeComboLabel.getChildren().addAll(
-                assigneeLabel,
-                assigneeCombo
-        );
-        VBox assigneeChangeNode = new VBox(8);
-        assigneeChangeNode.setAlignment(Pos.CENTER_RIGHT);
-        assigneeChangeNode.setPadding(new Insets(8,8,8,8));
-        assigneeChangeNode.getChildren().addAll(
-                assigneeComboLabel,
-                assigneeSaveButton
-        );
-        assignPopOver.setContentNode(assigneeChangeNode);
-
-
-
+    private Node createImpedimentsNode() {
         // Impediments icon
         ImageView warningImage;
         if (Task.getImpedingStates().contains(task.getState()) || !task.getImpediments().isEmpty()) {
@@ -228,13 +136,13 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
             warningImage = new ImageView("icons/dialog-cancel-empty.png");
             Tooltip.create("This task has no impediments or blockages", warningImage, 50);
         }
-        rightContent.getChildren().addAll(warningImage);
+
         warningImage.setOnMouseEntered(me -> {
-                this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
-            });
+            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+        });
         warningImage.setOnMouseExited(me -> {
-                this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
-            });
+            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+        });
 
 
         PopOver impedimentPopOver = new PopOver();
@@ -248,7 +156,7 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
         catch (NullPointerException ex) {
         }
 
-
+        // Leave the combobox without a type so we can add a blank '(none)' without having to create a new task state
         ComboBox impedimentCombo = new ComboBox<>();
         impedimentCombo.getItems().add("(none)");
         impedimentCombo.getItems().addAll(availableStatuses);
@@ -260,14 +168,14 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
             impedimentCombo.getSelectionModel().select("(none)");
         }
         warningImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                if (impedimentPopOver.isShowing()) {
-                    impedimentPopOver.hide();
-                }
-                else {
-                    impedimentPopOver.show(warningImage);
-                }
-                event.consume();
-            });
+            if (impedimentPopOver.isShowing()) {
+                impedimentPopOver.hide();
+            }
+            else {
+                impedimentPopOver.show(warningImage);
+            }
+            event.consume();
+        });
 
         VBox impedimentsVBox = new VBox(4);
         SearchableText impedimentsLabel = new SearchableText("Impediments: ");
@@ -278,17 +186,17 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
         Button impedimentSaveButton = new Button("Save Impediments");
         impedimentSaveButton.setAlignment(Pos.CENTER_RIGHT);
         impedimentSaveButton.setOnAction(event -> {
-                Task.TASKSTATE selectedState = null;
-                Object selectedObject = impedimentCombo.getSelectionModel().getSelectedItem();
-                if (selectedObject == null || !selectedObject.toString().equals("(none)")) {
-                    selectedState = (Task.TASKSTATE) selectedObject;
-                }
-                task.editImpedimentState(selectedState, impedimentsTextArea.getText());
-                impedimentPopOver.hide();
+            Task.TASKSTATE selectedState = null;
+            Object selectedObject = impedimentCombo.getSelectionModel().getSelectedItem();
+            if (selectedObject == null || !selectedObject.toString().equals("(none)")) {
+                selectedState = (Task.TASKSTATE) selectedObject;
+            }
+            task.editImpedimentState(selectedState, impedimentsTextArea.getText());
+            impedimentPopOver.hide();
 
-                this.getChildren().clear();
-                this.getChildren().add(construct());
-            });
+            this.getChildren().clear();
+            this.getChildren().add(construct());
+        });
 
         SearchableText statusLabel = new SearchableText("Status: ");
         statusLabel.setTextAlignment(TextAlignment.LEFT);
@@ -310,14 +218,129 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
         );
         impedimentPopOver.setContentNode(impedimentChangeNode);
 
-
-
-        // Bring cell parts together
-        content.getChildren().addAll(rect, textContent, rightContent);
-
-        return content;
+        return warningImage;
     }
 
+
+    private Node createAssigneeNode() {
+        // Assignee icon
+        ImageView assigneeImage;
+        if (task.getAssignee() != null) {
+            assigneeImage = new ImageView("icons/person.png");
+            Tooltip.create(task.getAssignee().getFullName(), assigneeImage, 50);
+        }
+        else {
+            assigneeImage = new ImageView("icons/person_empty.png");
+            Tooltip.create("This task is unassigned", assigneeImage, 50);
+        }
+
+        assigneeImage.setOnMouseEntered(me -> {
+            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+        });
+        assigneeImage.setOnMouseExited(me -> {
+            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+        });
+
+        PopOver assignPopOver = new PopOver();
+        assignPopOver.setDetachedTitle(task.getShortName() + " Assignment");
+        SortedSet<Person> availableAssignees = new TreeSet<>();
+        try {
+            for (Team team : task.getStory().getProject().getCurrentTeams()) {
+                availableAssignees.addAll(team.getPeople());
+            }
+        }
+        catch (NullPointerException ex) {
+        }
+        Person nonePerson = new Person();
+        nonePerson.setShortName("(none)");
+        availableAssignees.add(nonePerson);
+
+        ComboBox<Person> assigneeCombo = new ComboBox<>();
+        assigneeCombo.getItems().addAll(availableAssignees);
+        assigneeCombo.getSelectionModel().select(task.getAssignee());
+        assigneeImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (assignPopOver.isShowing()) {
+                assignPopOver.hide();
+            }
+            else {
+                assignPopOver.show(assigneeImage);
+            }
+            event.consume();
+        });
+
+        Button assigneeSaveButton = new Button("Save Assignee");
+        assigneeSaveButton.setAlignment(Pos.CENTER_RIGHT);
+        assigneeSaveButton.setOnAction(event -> {
+            Person selectedPerson = assigneeCombo.getSelectionModel().getSelectedItem();
+            if (selectedPerson.equals(nonePerson)) {
+                selectedPerson = null;
+            }
+            task.editAssignee(selectedPerson);
+            assignPopOver.hide();
+
+            this.getChildren().clear();
+            this.getChildren().add(construct());
+        });
+
+        SearchableText assigneeLabel = new SearchableText("Assignee: ");
+        assigneeLabel.setTextAlignment(TextAlignment.LEFT);
+        HBox assigneeComboLabel = new HBox(8);
+        assigneeComboLabel.setAlignment(Pos.CENTER_RIGHT);
+        assigneeComboLabel.getChildren().addAll(
+                assigneeLabel,
+                assigneeCombo
+        );
+        VBox assigneeChangeNode = new VBox(8);
+        assigneeChangeNode.setAlignment(Pos.CENTER_RIGHT);
+        assigneeChangeNode.setPadding(new Insets(8,8,8,8));
+        assigneeChangeNode.getChildren().addAll(
+                assigneeComboLabel,
+                assigneeSaveButton
+        );
+        assignPopOver.setContentNode(assigneeChangeNode);
+
+        return assigneeImage;
+    }
+
+    private Node createRemainingTime() {
+        SearchableText remainingTime = new SearchableText(task.getEffortLeftString(), searchControls);
+        Tooltip.create("Spent Effort: " + task.getEffortSpentString() + "\n"
+                + "Remaining Effort: " + task.getEffortLeftString(), remainingTime, 50);
+        remainingTime.injectStyle("-fx-font-size: 85%;");
+        remainingTime.setTextAlignment(TextAlignment.RIGHT);
+
+        // Remaining time PopOver
+        PopOver loggingEffortPopOver = new PopOver();
+        LoggingEffortPane loggingPane = new LoggingEffortPane(task, loggingEffortPopOver);
+        loggingEffortPopOver.setContentNode(loggingPane);
+        loggingEffortPopOver.setDetachedTitle(task.getShortName());
+
+        remainingTime.setOnMouseEntered(me -> {
+            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+        });
+        remainingTime.setOnMouseExited(me -> {
+            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+        });
+
+        remainingTime.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (loggingEffortPopOver.isShowing()) {
+                loggingEffortPopOver.hide();
+            }
+            else {
+                loggingEffortPopOver.show(remainingTime);
+            }
+            event.consume();
+        });
+
+        return remainingTime;
+    }
+
+
+    /**
+     * Queries the cell for the given query string and returns whether or not the cell contains a match for the query
+     * @param query the string to be queried
+     * @return Whether or not the cell contains a match for the query
+     */
     @Override
     public boolean query(String query) {
         boolean result = false;

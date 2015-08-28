@@ -577,7 +577,7 @@ public class Task extends SaharaItem implements Serializable {
         public void undo() {
             task.shortName = oldShortName;
             task.description = oldDescription;
-            task.description = oldImpediments;
+            task.impediments = oldImpediments;
             task.state = oldState;
             task.effortLeft = oldEffortLeft;
             task.effortSpent = oldEffortSpent;
@@ -705,20 +705,22 @@ public class Task extends SaharaItem implements Serializable {
          * Executes/Redoes the changes of the task edit
          */
         public void execute() {
-            if (Task.getLaneStates().contains(task.state)) {
+            if (Task.getLaneStates().contains(lane)) {
                 task.state = lane;
-            }
-            task.lane = lane;
-            if (task.getStory() != null) {
-                if (index != -1) {
-                    task.getStory().addTaskToLane(task, index);
-                }
-                else {
-                    task.getStory().addTaskToLane(task);
+                task.lane = lane;
+                if (task.getStory() != null) {
+                    if (index != -1) {
+                        task.getStory().addTaskToLane(task, index);
+                    }
+                    else {
+                        task.getStory().addTaskToLane(task);
+                    }
                 }
             }
 
-            task.getStory().setDone(storyDone);
+            if (lane.equals(TASKSTATE.DONE)) {
+                task.getStory().setDone(storyDone);
+            }
 
             //System.out.println("Task state: " + task.getState() + ", lane: " + task.getLane());
         }
