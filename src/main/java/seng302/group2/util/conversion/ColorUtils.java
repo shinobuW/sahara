@@ -18,4 +18,13 @@ public class ColorUtils {
                 (int)(color.getBlue() * 255),
                 (int)(color.getOpacity() * 255));
     }
+
+    /**
+     * Converts a web colour string into a JavaFX colour (including opacity)
+     * @param colorString The web colour string to convert
+     * @return The colour equivalent of the web colour string
+     */
+    public static Color toColor(String colorString) {
+        return Color.web(colorString);
+    }
 }

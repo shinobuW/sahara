@@ -10,6 +10,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import org.controlsfx.control.PopOver;
 import seng302.group2.scenes.control.PopOverTip;
+import seng302.group2.util.conversion.ColorUtils;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
 
@@ -93,16 +94,22 @@ public class StoryCompletenessBar extends Pane {
                 + (df.format(percentageRed * 100)) + "%" ));
         redPO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
-        red.setFill(Color.RED);
-        redSquare.setFill(Color.RED);
-        green.setFill(Color.GREEN);
-        greenSquare.setFill(Color.GREEN);
-        blue.setFill(Color.BLUE);
+        red.setFill(ColorUtils.toColor(Task.TASKSTATE.BLOCKED.getColourString()));  // Red
+        redSquare.setFill(ColorUtils.toColor(Task.TASKSTATE.BLOCKED.getColourString()));
+        green.setFill(ColorUtils.toColor(Task.TASKSTATE.DONE.getColourString()));  // Green
+        greenSquare.setFill(ColorUtils.toColor(Task.TASKSTATE.DONE.getColourString()));
+        blue.setFill(ColorUtils.toColor(Task.TASKSTATE.VERIFY.getColourString()));  // Blue
 
-        visualGrid.add(greenBg, 0, 0);
+
+        if (maxGreen > 15 && maxGreen < maxWidth - 15) {
+            visualGrid.add(greenBg, 0, 0);
+        }
+
+        if (maxGreen + maxBlue > 15) {
+            visualGrid.add(redSquare, 2, 0);
+        }
         visualGrid.add(green, 0, 0);
         visualGrid.add(blue, 1, 0);
-        visualGrid.add(redSquare, 2, 0);
         visualGrid.add(red, 2, 0);
 
         this.getChildren().add(visualGrid);
