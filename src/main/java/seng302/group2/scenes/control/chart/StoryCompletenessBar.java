@@ -119,7 +119,7 @@ public class StoryCompletenessBar extends Pane {
                     blueSquare.setFill(blue.getFill());
                     blue.setArcWidth(15);
                     blue.setArcHeight(15);
-                    Rectangle transRec = new Rectangle(blue.getWidth()/2.0, blue.getHeight());
+                    Rectangle transRec = new Rectangle(blue.getWidth() / 2.0, blue.getHeight());
                     transRec.setFill(Color.TRANSPARENT);
                     blueBox.getChildren().add(transRec);
                     blueBox.getChildren().add(blueSquare);
