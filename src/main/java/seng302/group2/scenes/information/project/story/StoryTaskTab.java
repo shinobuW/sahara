@@ -78,21 +78,19 @@ public class StoryTaskTab extends SearchableTab {
         PopOver acPopover = new PopOver();
         acPopover.setDetachedTitle(currentStory.getShortName() + " - Acceptance Criteria");
         VBox acContent = new VBox();
+        acContent.setAlignment(Pos.CENTER);
         acContent.setPadding(new Insets(8, 8, 8, 8));
-        if (currentStory.getAcceptanceCriteria().size() == 0) {
-            SearchableText noAcLabel = new SearchableText("This story has no Acceptance Criteria.", searchControls);
-            acContent.getChildren().add(noAcLabel);
-        }
-        else {
-            SearchableListView<AcceptanceCriteria> acListView =
-                    new SearchableListView<>(currentStory.getAcceptanceCriteria());
-            ScrollPane acWrapper = new ScrollPane();
-            acListView.setPrefSize(750, 250);
-            acWrapper.setContent(acListView);
-            acContent.getChildren().add(acWrapper);
-        }
+
+        SearchableListView<AcceptanceCriteria> acListView = new SearchableListView<>(
+                currentStory.getAcceptanceCriteria());
+        ScrollPane acWrapper = new ScrollPane();
+        acListView.setPrefSize(640, 250);
+        acListView.setPlaceholder(new SearchableText("No Acceptance Criteria", searchControls));
+        acWrapper.setContent(acListView);
+        acContent.getChildren().add(acWrapper);
 
         acPopover.setContentNode(acContent);
+
 
         Button acButton = new Button("View Acceptance Criteria");
 

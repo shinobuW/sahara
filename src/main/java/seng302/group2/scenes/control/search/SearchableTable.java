@@ -107,6 +107,10 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
     }
 
 
+    /**
+     * Sets a consistent, well-placed placeholder with the given text
+     * @param placeholderText The text of the placeholder
+     */
     public void setPlaceholder(String placeholderText) {
         HBox box = new HBox();
         SearchableText searchableText = new SearchableText(placeholderText);
@@ -117,6 +121,10 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
         setPlaceholder(box);
     }
 
+    /**
+     * Sets a consistent, well-placed placeholder with the given searchable text
+     * @param placeholderText The searchable text of the placeholder
+     */
     public void setPlaceholder(SearchableText placeholderText) {
         HBox box = new HBox();
         box.setFillHeight(true);

@@ -2,8 +2,11 @@ package seng302.group2.scenes.control.search;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.TextAlignment;
 
 import java.util.Collection;
 
@@ -14,7 +17,6 @@ import java.util.Collection;
 public class SearchableListView<T> extends ListView<T> implements SearchableControl {
     ObservableList<T> matchingItems = FXCollections.observableArrayList();
 
-
     /**
      * Basic constructor for a SearchableListView
      */
@@ -22,7 +24,6 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
         super();
         this.setPrefHeight(240);
     }
-
 
     /**
      * Constructor for a SearchableListView that takes an initial set of items
@@ -87,6 +88,34 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
         });
 
         return foundList;
+    }
+
+
+    /**
+     * Sets a consistent, well-placed placeholder with the given text
+     * @param placeholderText The text of the placeholder
+     */
+    public void setPlaceholder(String placeholderText) {
+        HBox box = new HBox();
+        SearchableText searchableText = new SearchableText(placeholderText);
+        box.setFillHeight(true);
+        box.setAlignment(Pos.CENTER);
+        searchableText.setTextAlignment(TextAlignment.CENTER);
+        box.getChildren().add(searchableText);
+        setPlaceholder(box);
+    }
+
+    /**
+     * Sets a consistent, well-placed placeholder with the given searchable text
+     * @param placeholderText The searchable text of the placeholder
+     */
+    public void setPlaceholder(SearchableText placeholderText) {
+        HBox box = new HBox();
+        box.setFillHeight(true);
+        box.setAlignment(Pos.CENTER);
+        placeholderText.setTextAlignment(TextAlignment.CENTER);
+        box.getChildren().add(placeholderText);
+        setPlaceholder(box);
     }
 
     private boolean queryCell(String query, String string) {
