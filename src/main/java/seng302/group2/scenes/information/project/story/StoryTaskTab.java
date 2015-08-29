@@ -219,6 +219,7 @@ public class StoryTaskTab extends SearchableTab {
         TableColumn[] columns = {nameCol, stateCol, assigneesCol, leftCol, spentCol, impedimentsCol, descriptionCol};
         taskTable.getColumns().setAll(columns);
 
+
         // Listener to disable columns being movable
         taskTable.getColumns().addListener(new ListChangeListener() {
             public boolean suspended;
