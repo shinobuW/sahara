@@ -52,7 +52,7 @@ public class StoryAcTab extends SearchableTab {
         ObservableList<AcceptanceCriteria> data = observableArrayList();
         data = story.getAcceptanceCriteria();
 
-        SearchableTable<AcceptanceCriteria> acTable = new SearchableTable<>(data);
+        ReorderableTable<AcceptanceCriteria> acTable = new ReorderableTable<>(story.getAcceptanceCriteria());
 
         acTable.setEditable(true);
         acTable.fixedCellSizeProperty();

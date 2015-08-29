@@ -151,9 +151,6 @@ public class StoryCompletenessBar extends Pane {
         visualGrid.add(red, 2, 0);
 
         this.getChildren().add(visualGrid);
-
-        System.out.println(visualGrid.getChildren());
-
     }
 
     public double getEffortSpent(ObservableList<Task> taskList) {

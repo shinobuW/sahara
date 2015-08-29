@@ -2,9 +2,11 @@ package seng302.group2.scenes.control.search;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.TextAlignment;
 
 import java.util.Collection;
 
@@ -13,17 +15,14 @@ import java.util.Collection;
  */
 public class SearchableTable<T> extends TableView<T> implements SearchableControl {
 
-    ObservableList<T> data = FXCollections.observableArrayList();
     public ObservableList<T> matchingItems = FXCollections.observableArrayList();
-    SearchableTableRow<T> tableRowType = new SearchableTableRow<>(this);
-
 
     /**
      * Basic constructor.
      */
     public SearchableTable() {
         super();
-        updateRows();
+        setFactory();
     }
 
 
@@ -33,8 +32,8 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
      */
     public SearchableTable(ObservableList<T> data) {
         super();
-        updateRows();
-        setData(data);
+        setFactory();
+        setItems(data);
     }
 
 
@@ -45,7 +44,8 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
      */
     public SearchableTable(ObservableList<T> data, SearchableTableRow<T> rowFactory) {
         super();
-        this.data = data;
+        setFactory();
+        setItems(data);
     }
 
 
@@ -54,11 +54,11 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
      * @param data the new data of the table
      * @param searchableControls The collection of searchable controls to add this control to
      */
-    public SearchableTable(Collection<T> data, Collection<SearchableControl> searchableControls) {
+    public SearchableTable(ObservableList<T> data, Collection<SearchableControl> searchableControls) {
         super();
         searchableControls.add(this);
-        updateRows();
-        setData(data);
+        setFactory();
+        setItems(data);
     }
 
 
@@ -68,24 +68,12 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
      * @param rowFactory the table row factory that is used for the table. Default is SearchableTableRow
      * @param searchableControls The collection of searchable controls to add this control to
      */
-    public SearchableTable(Collection<T> data, SearchableTableRow<T> rowFactory,
+    public SearchableTable(ObservableList<T> data, SearchableTableRow<T> rowFactory,
                            Collection<SearchableControl> searchableControls) {
         super();
         searchableControls.add(this);
-        this.tableRowType = rowFactory;
-        updateRows();
-        setData(data);
-    }
-
-
-    /**
-     * Clears any exsisting data of a SearchableTable, then sets a new set of data.
-     * @param data The data to be set to the table
-     */
-    public void setData(Collection<T> data) {
-        this.data.clear();
-        this.data.addAll(data);
-        setItems(this.data);
+        setFactory();
+        setItems(data);
     }
 
 
@@ -114,8 +102,28 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
             }
         }
 
-        updateRows();
+        setFactory();
         return !matchingItems.isEmpty();
+    }
+
+
+    public void setPlaceholder(String placeholderText) {
+        HBox box = new HBox();
+        SearchableText searchableText = new SearchableText(placeholderText);
+        box.setFillHeight(true);
+        box.setAlignment(Pos.CENTER);
+        searchableText.setTextAlignment(TextAlignment.CENTER);
+        box.getChildren().add(searchableText);
+        setPlaceholder(box);
+    }
+
+    public void setPlaceholder(SearchableText placeholderText) {
+        HBox box = new HBox();
+        box.setFillHeight(true);
+        box.setAlignment(Pos.CENTER);
+        placeholderText.setTextAlignment(TextAlignment.CENTER);
+        box.getChildren().add(placeholderText);
+        setPlaceholder(box);
     }
 
 
@@ -123,22 +131,7 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
      * Highlights a row if a matching query is found within that row. If there is no matching query,
      * the row's style is set to null (default).
      */
-    private void updateRows() {
-        setRowFactory(tv -> new TableRow<T>() {
-            @Override
-            protected void updateItem(T item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item != null) {
-                    if (matchingItems.contains(item)) {
-                        setStyle("-fx-background-color: " + SearchableControl.highlightColourString + "; ");
-                    }
-                    else {
-                        setStyle(null);
-                        //setStyle("-fx-background-color: " + Color.TRANSPARENT + ";");
-                    }
-                }
-            }
-        });
+    void setFactory() {
+        this.setRowFactory(tv -> new SearchableTableRow<>(this));
     }
 }

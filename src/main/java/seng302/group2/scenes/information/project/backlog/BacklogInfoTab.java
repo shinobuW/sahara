@@ -42,7 +42,7 @@ public class BacklogInfoTab extends SearchableTab {
         this.setContent(wrapper);
 
         // Create Table
-        SearchableTable<Story> storyTable = new SearchableTable<>(currentBacklog.getStories());
+        SearchableTable<Story> storyTable = new SearchableTable<>(currentBacklog.getStories(), searchControls);
         SearchableText tablePlaceholder = new SearchableText("There are currently no stories in this backlog.");
         storyTable.setEditable(true);
         storyTable.setPrefWidth(500);
@@ -50,43 +50,48 @@ public class BacklogInfoTab extends SearchableTab {
         storyTable.setPlaceholder(tablePlaceholder);
         storyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        TableColumn storyCol = new TableColumn("Story");
-        storyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
+        TableColumn<Story, String> storyCol = new TableColumn<>("Story");
+        storyCol.setCellValueFactory(new PropertyValueFactory<>("shortName"));
         storyCol.prefWidthProperty().bind(storyTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
-        TableColumn priorityCol = new TableColumn("Priority");
-        priorityCol.setCellValueFactory(new PropertyValueFactory<Story, Integer>("priority"));
+        TableColumn<Story, Integer> priorityCol = new TableColumn<>("Priority");
+        priorityCol.setCellValueFactory(new PropertyValueFactory<>("priority"));
         priorityCol.prefWidthProperty().bind(storyTable.widthProperty()
                 .subtract(2).divide(100).multiply(20));
 
-        TableColumn readyCol = new TableColumn("Status");
-        readyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("readyString"));
+        TableColumn<Story, String> readyCol = new TableColumn<>("Status");
+        readyCol.setCellValueFactory(new PropertyValueFactory<>("readyString"));
         readyCol.prefWidthProperty().bind(storyTable.widthProperty()
                 .subtract(2).divide(100).multiply(20));
         storyTable.getColumns().addAll(priorityCol, storyCol, readyCol);
 
-        storyTable.setRowFactory(param -> new TableRow<Story>() {
-            /**
-             * An Overidden updateItem method to control the highlighting of cells in the backlog info tab.
-             * @param item The item to be updated
-             * @param empty Whether the cell is empty or not
-             */
-            @Override
-            protected void updateItem(Story item, boolean empty) {
-                if (item == null) {
-                    return;
+        storyTable.setRowFactory(tr -> new SearchableTableRow<Story>(storyTable) {
+                /**
+                 * An Overidden updateItem method to control the highlighting of cells in the backlog info tab.
+                 *
+                 * @param item  The item to be updated
+                 * @param empty Whether the cell is empty or not
+                 */
+                @Override
+                protected void updateItem(Story item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (item == null) {
+                        return;
+                    }
+                    item.setHighlightColour();
+                    if (parentTable.matchingItems.contains(item)) {
+                        setStyle("-fx-background-color: " + SearchableControl.highlightColourString + "; ");
+                    }
+                    else if (highlightMode && item.getColour() != "transparent") {
+                        setStyle("-fx-background-color: " + item.getColour() + ";");
+                    }
+                    else {
+                        setStyle(null);
+                    }
                 }
-                super.updateItem(item, empty);
-                item.setHighlightColour();
-                if (highlightMode && item.getColour() != "transparent") {
-                    setStyle("-fx-background-color: " + item.getColour() + ";");
-                }
-                else {
-                    setStyle(null);
-                }
-            }
-        });
+
+            });
 
         // Create controls
         SearchableText title = new SearchableTitle(currentBacklog.getLongName());

@@ -58,7 +58,8 @@ public class TeamHistoryTab extends SearchableTab {
         this.setContent(wrapper);
 
         // Create Table
-        SearchableTable<Allocation> historyTable = new SearchableTable<>(currentTeam.getProjectAllocations());
+        SearchableTable<Allocation> historyTable = new SearchableTable<>(currentTeam.getProjectAllocations(),
+                searchControls);
         SearchableText tablePlaceholder = new SearchableText("This team has no project allocations.");
         historyTable.setEditable(true);
         historyTable.setPrefWidth(700);

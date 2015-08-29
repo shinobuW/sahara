@@ -7,7 +7,7 @@ import javafx.scene.control.TableRow;
  */
 public class SearchableTableRow<T> extends TableRow<T> {
 
-    SearchableTable<T> parentTable;
+    public SearchableTable<T> parentTable;
 
     public SearchableTableRow(SearchableTable<T> table) {
         parentTable = table;
@@ -18,8 +18,6 @@ public class SearchableTableRow<T> extends TableRow<T> {
         super.updateItem(item, empty);
 
         if (item != null) {
-            System.out.println("item : " + item.toString());
-            System.out.println("matching items : " + parentTable.matchingItems);
             if (parentTable.matchingItems.contains(item)) {
                 setStyle("-fx-background-color: " + SearchableControl.highlightColourString + "; ");
             }

@@ -19,48 +19,6 @@ import java.util.Collection;
  * Created by crw73 on 26/08/15.
  */
 public class PopOverTable<T> extends SearchableTable<T> {
-    /**
-     * Basic constructor.
-     */
-    public PopOverTable() {
-        super();
-        updateRows();
-    }
-
-
-    /**
-     * Basic constructor. Sets the data of the table to that provided in the parameter.
-     * @param data the new data of the table
-     */
-    public PopOverTable(ObservableList<T> data) {
-        super();
-        updateRows();
-        setData(data);
-    }
-
-
-    /**
-     * Basic constructor. Sets the data of the table to that provided in the parameter.
-     * @param data the new data of the table
-     * @param rowFactory the table row factory that is used for the table. Default is SearchableTableRow
-     */
-    public PopOverTable(ObservableList<T> data, SearchableTableRow<T> rowFactory) {
-        super();
-        setData(data);
-    }
-
-
-    /**
-     * Basic constructor. Sets the data of the table to that provided in the parameter.
-     * @param data the new data of the table
-     * @param searchableControls The collection of searchable controls to add this control to
-     */
-    public PopOverTable(Collection<T> data, Collection<SearchableControl> searchableControls) {
-        super();
-        searchableControls.add(this);
-        updateRows();
-        setData(data);
-    }
 
     /**
      * Highlights a row if a matching query is found within that row. If there is no matching query,
@@ -78,76 +36,67 @@ public class PopOverTable<T> extends SearchableTable<T> {
                 VBox taskContent = new VBox();
                 taskContent.setPadding(new Insets(8, 8, 8, 8));
                 if (item != null) {
-                    
-                    if (item == null) {
-                        SearchableText noTaskLabel = new SearchableText("No tasks selected.");
-                        taskContent.getChildren().add(noTaskLabel);
+
+                    Task currentTask = (Task) item;
+
+                    taskPopover.setDetachedTitle(currentTask.toString());
+                    VBox taskInfo = new VBox();
+
+
+                    taskInfo.setBorder(null);
+                    taskInfo.setPadding(new Insets(25, 25, 25, 25));
+
+                    SearchableText title = new SearchableTitle(currentTask.getShortName());
+                    SearchableText description = new SearchableText("Task Description: "
+                            + currentTask.getDescription());
+                    SearchableText impediments = new SearchableText("Impediments: " + currentTask.getImpediments());
+                    SearchableText effortLeft = new SearchableText("Effort Left: "
+                            + currentTask.getEffortLeftString());
+                    SearchableText effortSpent = new SearchableText("Effort Spent: "
+                            + currentTask.getEffortSpentString());
+                    SearchableText taskState = new SearchableText("Task State: " + currentTask.getState());
+                    SearchableText assignedPerson;
+                    if (currentTask.getAssignee() == null) {
+                        assignedPerson = new SearchableText("Assigned Person: ");
                     }
                     else {
-                        Task currentTask = (Task) item;
-
-                        taskPopover.setDetachedTitle(currentTask.toString());
-                        VBox taskInfo = new VBox();
-                        
-
-                        taskInfo.setBorder(null);
-                        taskInfo.setPadding(new Insets(25, 25, 25, 25));
-
-                        SearchableText title = new SearchableTitle(currentTask.getShortName());
-                        SearchableText description = new SearchableText("Task Description: "
-                                + currentTask.getDescription());
-                        SearchableText impediments = new SearchableText("Impediments: " + currentTask.getImpediments());
-                        SearchableText effortLeft = new SearchableText("Effort Left: "
-                                + currentTask.getEffortLeftString());
-                        SearchableText effortSpent = new SearchableText("Effort Spent: "
-                                + currentTask.getEffortSpentString());
-                        SearchableText taskState = new SearchableText("Task State: " + currentTask.getState());
-                        SearchableText assignedPerson;
-                        if (currentTask.getAssignee() == null) {
-                            assignedPerson = new SearchableText("Assigned Person: ");
-                        }
-                        else {
-                            assignedPerson = new SearchableText("Assigned Person: " + currentTask.getAssignee());
-                        }
-
-                        taskInfo.getChildren().addAll(
-                                title,
-                                description,
-                                impediments,
-                                effortLeft,
-                                effortSpent,
-                                taskState,
-                                assignedPerson
-                        );
-                        taskInfo.setStyle(null);
-                        
-
-
-
-                        ScrollPane taskWrapper = new ScrollPane();
-                        LoggingEffortPane loggingPane = new LoggingEffortPane((Task) item,
-                                taskPopover);
-                        loggingPane.setStyle(null);
-
-                        taskWrapper.setContent(loggingPane);
-
-                        TitledPane collapsableInfoPane = new TitledPane("Task Info", taskInfo);
-                        collapsableInfoPane.setPrefHeight(30);
-                        collapsableInfoPane.setExpanded(true);
-                        collapsableInfoPane.setAnimated(true);
-
-                        TitledPane collapsableLoggingPane = new TitledPane("Task Logging", taskWrapper);
-                        collapsableLoggingPane.setExpanded(true);
-                        collapsableLoggingPane.setAnimated(true);
-
-                        
-                        
-                        taskContent.getChildren().addAll(collapsableInfoPane, collapsableLoggingPane);
-                        taskInfo.setStyle(" -fx-background: -fx-control-inner-background ;\n" 
-                                + "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n");
-                        taskWrapper.setStyle(" -fx-background: -fx-control-inner-background ;\n" 
-                                + "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n" );
+                        assignedPerson = new SearchableText("Assigned Person: " + currentTask.getAssignee());
                     }
+
+                    taskInfo.getChildren().addAll(
+                            title,
+                            description,
+                            impediments,
+                            effortLeft,
+                            effortSpent,
+                            taskState,
+                            assignedPerson
+                    );
+                    taskInfo.setStyle(null);
+
+
+                    ScrollPane taskWrapper = new ScrollPane();
+                    LoggingEffortPane loggingPane = new LoggingEffortPane((Task) item,
+                            taskPopover);
+                    loggingPane.setStyle(null);
+
+                    taskWrapper.setContent(loggingPane);
+
+                    TitledPane collapsableInfoPane = new TitledPane("Task Info", taskInfo);
+                    collapsableInfoPane.setPrefHeight(30);
+                    collapsableInfoPane.setExpanded(true);
+                    collapsableInfoPane.setAnimated(true);
+
+                    TitledPane collapsableLoggingPane = new TitledPane("Task Logging", taskWrapper);
+                    collapsableLoggingPane.setExpanded(true);
+                    collapsableLoggingPane.setAnimated(true);
+
+
+                    taskContent.getChildren().addAll(collapsableInfoPane, collapsableLoggingPane);
+                    taskInfo.setStyle(" -fx-background: -fx-control-inner-background ;\n"
+                            + "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n");
+                    taskWrapper.setStyle(" -fx-background: -fx-control-inner-background ;\n"
+                            + "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n" );
 
                     taskPopover.setContentNode(taskContent);
                     if (matchingItems.contains(item)) {

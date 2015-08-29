@@ -3,7 +3,7 @@
     "shortName": "Shinobi Demo",
     "longName": "Shinobi Demo",
     "description": "",
-    "lastSaveLocation": "/home/cosc/student/btm38/IdeaProjects/project-2/Shinobi_Demo.proj",
+    "lastSaveLocation": "C:\\Users\\Jordane\\Documents\\SENG302\\Group Project\\Shinobi_Demo.proj",
     "estimationScales": {
       "estimationScaleDict": {
         "T-Shirt Sizes": [
@@ -950,18 +950,18 @@
     "id": 2422
   },
   "0x45": {
-    "description": "Application opens",
-    "state": "UNACCEPTED",
-    "story": "0x36",
-    "itemName": "",
-    "id": 2227
-  },
-  "0x46": {
     "description": "User is presented with some basic screen",
     "state": "UNACCEPTED",
     "story": "0x36",
     "itemName": "",
     "id": 2228
+  },
+  "0x46": {
+    "description": "Application opens",
+    "state": "UNACCEPTED",
+    "story": "0x36",
+    "itemName": "",
+    "id": 2227
   },
   "0x47": {
     "description": "Application plays .WAV files",
