@@ -58,12 +58,21 @@ public class CommandManager {
         if (undos.isEmpty()) {
             available = false;
         }
-        else if (undos.size() == 1 && undos.peek() == lastSaveCommand) {
+        else if (undosAreSaveCommands()) {
             Global.setCurrentWorkspaceUnchanged();
             available = false;
         }
 
         return available;
+    }
+
+    private boolean undosAreSaveCommands() {
+        for (Command command : undos) {
+            if (!(command instanceof SaveTrackerCommand)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
