@@ -49,7 +49,6 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
 
         this.getChildren().clear();
         HBox content = construct();
-        HBox.setHgrow(content, Priority.ALWAYS);
         this.getChildren().add(content);
     }
 
@@ -98,6 +97,8 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
 
         // Bring cell parts together
         content.getChildren().addAll(rect, textContent, rightContent);
+
+        HBox.setHgrow(content, Priority.ALWAYS);
 
         return content;
     }
