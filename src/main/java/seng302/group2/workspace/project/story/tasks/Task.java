@@ -458,6 +458,11 @@ public class Task extends SaharaItem implements Serializable {
     }
 
 
+    public void editDescription(String newDescription) {
+        Command desEdit = new TaskEditDescriptionCommand(this, newDescription);
+        Global.commandManager.executeCommand(desEdit);
+    }
+
     /**
      * Creates a Task edit lane state command and executes it with the Global Command Manager, updating
      * the task with the new parameter values.
@@ -681,6 +686,63 @@ public class Task extends SaharaItem implements Serializable {
             return  mapped_task;
         }
     }
+
+    /**
+     * A command class that allows the executing and undoing of task description edits
+     */
+    private class TaskEditDescriptionCommand implements Command {
+        private Task task;
+
+        private String description;
+
+        private String oldDescription;
+
+        /**
+         * Constructor for the TaskEditDescriptionCommand.
+         * @param task The task to be edited
+         * @param description The new description
+         */
+        private TaskEditDescriptionCommand(Task task, String description) {
+            this.task = task;
+
+            this.description = description;
+
+            this.oldDescription = task.description;
+        }
+
+        /**
+         * Executes / Redos the changes of task description edit
+         */
+        public void execute() {
+            task.description = description;
+        }
+
+        /**
+         * Undoes the changes of the task description edit
+         */
+        public void undo() {
+            task.description = oldDescription;
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped_task = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(task)) {
+                    this.task = (Task) item;
+                    mapped_task = true;
+                }
+            }
+
+            return  mapped_task;
+        }
+    }
+
 
 
     /**
