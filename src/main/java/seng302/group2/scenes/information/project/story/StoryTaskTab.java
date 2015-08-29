@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -171,8 +172,18 @@ public class StoryTaskTab extends SearchableTab {
             }
         });
 
-        Callback<TableColumn, TableCell> assigneeCellFactory = col -> new IconCell(currentStory);
+        Callback<TableColumn, TableCell> assigneeCellFactory = col -> new AssigneeCell(currentStory);
         assigneesCol.setCellFactory(assigneeCellFactory);
+
+        TableColumn leftCol = new TableColumn("Effort Left");
+        leftCol.setCellValueFactory(new PropertyValueFactory<Task, String>("effortLeftString"));
+        leftCol.prefWidthProperty().bind(taskTable.widthProperty()
+                .subtract(2).divide(100).multiply(60));
+
+        TableColumn spentCol = new TableColumn("Effort Spent");
+        spentCol.setCellValueFactory(new PropertyValueFactory<Task, String>("effortSpentString"));
+        spentCol.prefWidthProperty().bind(taskTable.widthProperty()
+                .subtract(2).divide(100).multiply(60));
 
         TableColumn impedimentsCol = new TableColumn("Impediments");
         impedimentsCol.prefWidthProperty().bind(taskTable.widthProperty()
@@ -189,19 +200,25 @@ public class StoryTaskTab extends SearchableTab {
         Callback<TableColumn, TableCell> impedimentsCellFactory = col -> new ImpedimentsCell(currentStory);
         impedimentsCol.setCellFactory(impedimentsCellFactory);
 
-        TableColumn leftCol = new TableColumn("Effort Left");
-        leftCol.setCellValueFactory(new PropertyValueFactory<Task, String>("effortLeftString"));
-        leftCol.prefWidthProperty().bind(taskTable.widthProperty()
-                .subtract(2).divide(100).multiply(60));
-
-        TableColumn spentCol = new TableColumn("Effort Spent");
-        spentCol.setCellValueFactory(new PropertyValueFactory<Task, String>("effortSpentString"));
-        spentCol.prefWidthProperty().bind(taskTable.widthProperty()
-                .subtract(2).divide(100).multiply(60));
+        TableColumn descriptionCol = new TableColumn("Description");
+        descriptionCol.setEditable(true);
+        descriptionCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        descriptionCol.setCellValueFactory(new PropertyValueFactory<Task, String>("description"));
+        descriptionCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Task, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Task, String> event) {
+                        (event.getTableView().getItems().get(
+                                event.getTablePosition().getRow())
+                        ).editDescription(event.getNewValue());
+                    }
+                }
+        );
 
         taskTable.setItems(data);
-        TableColumn[] columns = {nameCol, stateCol, assigneesCol, impedimentsCol, leftCol, spentCol};
+        TableColumn[] columns = {nameCol, stateCol, assigneesCol, leftCol, spentCol, impedimentsCol, descriptionCol};
         taskTable.getColumns().setAll(columns);
+
 
         // Listener to disable columns being movable
         taskTable.getColumns().addListener(new ListChangeListener() {
@@ -485,13 +502,13 @@ public class StoryTaskTab extends SearchableTab {
         }
     }
 
-    class IconCell extends TableCell<Object, String> {
+    class AssigneeCell extends TableCell<Object, String> {
         public Node popUp;
         public Story story;
         /**
          * Constructor
          */
-        private IconCell(Story story) {
+        private AssigneeCell(Story story) {
             this.story = story;
         }
 
