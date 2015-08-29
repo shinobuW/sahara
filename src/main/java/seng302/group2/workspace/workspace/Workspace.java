@@ -54,7 +54,7 @@ public class Workspace extends SaharaItem implements Serializable {
     private String description;
     private String lastSaveLocation = null;
     private EstimationScalesDictionary estimationScales;
-    private transient boolean hasUnsavedChanges = true;
+    private transient boolean hasUnsavedChanges = false;
 
     // Workspace elements
     private transient ObservableList<Team> teams = observableArrayList();

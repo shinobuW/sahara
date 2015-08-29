@@ -85,6 +85,7 @@ public class CreateWorkspaceDialog extends Dialog<Map<String, String>> {
                     Global.currentWorkspace = workspace;
                     App.mainPane.selectItem(Global.currentWorkspace);
                     App.mainPane.refreshAll();
+                    Global.setCurrentWorkspaceChanged();
                     this.close();
                 }
                 return null;
@@ -92,6 +93,5 @@ public class CreateWorkspaceDialog extends Dialog<Map<String, String>> {
 
         this.setResizable(false);
         this.show();
-
     }
 }
