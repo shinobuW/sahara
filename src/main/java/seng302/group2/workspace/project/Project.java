@@ -148,7 +148,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         for (Backlog bl : backlogs) {
             bl.addListeners();
         }
-
     }
 
 

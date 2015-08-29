@@ -6,6 +6,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -60,7 +61,7 @@ public class ProjectHistoryTab extends SearchableTab {
         this.setContent(wrapper);
 
         // Create Table
-        SearchableTable<Allocation> historyTable = new SearchableTable<>();
+        SearchableTable<Allocation> historyTable = new SearchableTable<>(currentProject.getTeamAllocations());
         SearchableText tablePlaceholder = new SearchableText("This project has no team allocations.");
         historyTable.setEditable(true);
         historyTable.fixedCellSizeProperty();
@@ -68,7 +69,6 @@ public class ProjectHistoryTab extends SearchableTab {
         historyTable.setPrefHeight(400);
         historyTable.setPlaceholder(tablePlaceholder);
         historyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        ObservableList<Allocation> data = currentProject.getTeamAllocations();
 
         Callback<TableColumn, TableCell> cellFactory = col -> new EditingCell();
 
@@ -79,22 +79,6 @@ public class ProjectHistoryTab extends SearchableTab {
         //teamCol.setResizable(false);
 
         TableColumn startDateCol = new TableColumn<Allocation, String>("Start Date");
-        // Sorting comparator.
-        startDateCol.setComparator(new Comparator<String>() {
-            @Override
-            public int compare(String dateString1, String dateString2) {
-                try {
-                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
-                    Date date1 = format.parse(dateString1);
-                    Date date2 = format.parse(dateString2);
-                    return Long.compare(date1.getTime(), date2.getTime());
-                }
-                catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                return -1;
-            }
-        });
 
         startDateCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Allocation, String>,
@@ -142,22 +126,6 @@ public class ProjectHistoryTab extends SearchableTab {
                 .subtract(3).divide(100).multiply(30));
 
         TableColumn endDateCol = new TableColumn("End Date");
-        // Sorting comparator.
-        endDateCol.setComparator(new Comparator<String>() {
-            @Override
-            public int compare(String dateString1, String dateString2) {
-                try {
-                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/YYYY");
-                    Date date1 = format.parse(dateString1);
-                    Date date2 = format.parse(dateString2);
-                    return Long.compare(date1.getTime(), date2.getTime());
-                }
-                catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                return -1;
-            }
-        });
 
         endDateCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Allocation, String>,
@@ -221,7 +189,7 @@ public class ProjectHistoryTab extends SearchableTab {
         buttons.getChildren().addAll(addButton, deleteButton);
 
         HBox newAllocationFields = new HBox(35);
-        CustomComboBox<Team> teamComboBox = new CustomComboBox("Team", true);
+        CustomComboBox<Team> teamComboBox = new CustomComboBox<>("Team", true);
         CustomDatePicker startDatePicker = new CustomDatePicker("Start Date", true);
         CustomDatePicker endDatePicker = new CustomDatePicker("End Date", false);
         startDatePicker.getDatePicker().setStyle("-fx-pref-width: 200;");
@@ -235,13 +203,13 @@ public class ProjectHistoryTab extends SearchableTab {
 
         // Events
         teamComboBox.getComboBox().setOnMouseClicked(event -> {
-                teamComboBox.getComboBox().getItems().clear();
-                for (Team team : Global.currentWorkspace.getTeams()) {
-                    teamComboBox.getComboBox().getItems().add(team);
-                }
-                // Remove the unassigned team
-                teamComboBox.getComboBox().getItems().remove(Global.getUnassignedTeam());
-            });
+            teamComboBox.getComboBox().getItems().clear();
+            for (Team team : Global.currentWorkspace.getTeams()) {
+                teamComboBox.getComboBox().getItems().add(team);
+            }
+            // Remove the unassigned team
+            teamComboBox.getComboBox().getItems().remove(Global.getUnassignedTeam());
+        });
 
         addButton.setOnAction((event) -> {
                 ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
@@ -283,37 +251,36 @@ public class ProjectHistoryTab extends SearchableTab {
             });
 
         deleteButton.setOnAction((event) -> {
-                Allocation selectedAlloc = historyTable.getSelectionModel().getSelectedItem();
-                if (selectedAlloc != null) {
+            Allocation selectedAlloc = historyTable.getSelectionModel().getSelectedItem();
+            if (selectedAlloc != null) {
 
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Delete");
-                    alert.setHeaderText("Delete Allocation?");
-                    alert.setContentText("Do you really want to delete this allocation?");
-                    alert.getDialogPane().setStyle(" -fx-max-width:450; -fx-max-height: 100px; -fx-pref-width: 450px; "
-                            + "-fx-pref-height: 100px;");
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Delete");
+                alert.setHeaderText("Delete Allocation?");
+                alert.setContentText("Do you really want to delete this allocation?");
+                alert.getDialogPane().setStyle(" -fx-max-width:450; -fx-max-height: 100px; -fx-pref-width: 450px; "
+                        + "-fx-pref-height: 100px;");
 
-                    ButtonType buttonTypeYes = new ButtonType("Yes");
-                    ButtonType buttonTypeNo = new ButtonType("No");
+                ButtonType buttonTypeYes = new ButtonType("Yes");
+                ButtonType buttonTypeNo = new ButtonType("No");
 
-                    alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
-                    Optional<ButtonType> result  = alert.showAndWait();
+                alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+                Optional<ButtonType> result = alert.showAndWait();
 
-                    if (result.get() == buttonTypeYes) {
-                        selectedAlloc.delete();
-                    }
-                    else if (result.get() == buttonTypeNo) {
-                        event.consume();
-                    }
+                if (result.get() == buttonTypeYes) {
+                    selectedAlloc.delete();
                 }
-            });
+                else if (result.get() == buttonTypeNo) {
+                    event.consume();
+                }
+            }
+        });
 
-        historyTable.setItems(data);
         TableColumn[] columns = {teamCol, startDateCol, endDateCol};
         historyTable.getColumns().setAll(columns);
 
         // Listener to disable columns being movable
-        historyTable.getColumns().addListener(new ListChangeListener() {
+        /*historyTable.getColumns().addListener(new ListChangeListener() {
             public boolean suspended;
 
             @Override
@@ -325,7 +292,7 @@ public class ProjectHistoryTab extends SearchableTab {
                     this.suspended = false;
                 }
             }
-        });
+        });*/
 
         // Add items to pane & search collection
         historyPane.getChildren().addAll(
