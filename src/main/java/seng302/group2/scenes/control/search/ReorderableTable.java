@@ -48,68 +48,68 @@ public class ReorderableTable<T> extends SearchableTable<T> {
     @Override
     void setFactory() {
         setRowFactory(tr -> {
-            TableRow<T> row = new TableRow<T>() {
-                @Override
-                protected void updateItem(T item, boolean empty) {
-                    super.updateItem(item, empty);
+                TableRow<T> row = new TableRow<T>() {
+                    @Override
+                    protected void updateItem(T item, boolean empty) {
+                        super.updateItem(item, empty);
 
-                    if (item != null) {
-                        if (matchingItems.contains(item)) {
-                            setStyle("-fx-background-color: " + SearchableControl.highlightColourString + "; ");
+                        if (item != null) {
+                            if (matchingItems.contains(item)) {
+                                setStyle("-fx-background-color: " + SearchableControl.highlightColourString + "; ");
+                            }
+                            else {
+                                setStyle(null);
+                            }
                         }
-                        else {
-                            setStyle(null);
+                    }
+                };
+
+                row.setOnDragDetected(event -> {
+                        if (!row.isEmpty()) {
+                            Integer index = row.getIndex();
+                            Dragboard db = row.startDragAndDrop(TransferMode.MOVE);
+                            db.setDragView(row.snapshot(null, null));
+                            ClipboardContent cc = new ClipboardContent();
+                            cc.put(DataFormat.PLAIN_TEXT, index);
+                            db.setContent(cc);
+                            event.consume();
                         }
-                    }
-                }
-            };
+                    });
 
-            row.setOnDragDetected(event -> {
-                if (!row.isEmpty()) {
-                    Integer index = row.getIndex();
-                    Dragboard db = row.startDragAndDrop(TransferMode.MOVE);
-                    db.setDragView(row.snapshot(null, null));
-                    ClipboardContent cc = new ClipboardContent();
-                    cc.put(DataFormat.PLAIN_TEXT, index);
-                    db.setContent(cc);
-                    event.consume();
-                }
+                row.setOnDragOver(event -> {
+                        Dragboard db = event.getDragboard();
+                        if (db.hasContent(DataFormat.PLAIN_TEXT)) {
+                            if (row.getIndex() != (Integer) db.getContent(DataFormat.PLAIN_TEXT)) {
+                                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                                event.consume();
+                            }
+                        }
+                    });
+
+                row.setOnDragDropped(event -> {
+                        Dragboard db = event.getDragboard();
+                        if (db.hasContent(DataFormat.PLAIN_TEXT)) {
+                            int draggedIndex = (Integer) db.getContent(DataFormat.PLAIN_TEXT);
+                            T draggedItem = table.getItems().remove(draggedIndex);
+
+                            int dropIndex;
+
+                            if (row.isEmpty()) {
+                                dropIndex = table.getItems().size();
+                            }
+                            else {
+                                dropIndex = row.getIndex();
+                            }
+
+                            table.getItems().add(dropIndex, draggedItem);
+
+                            event.setDropCompleted(true);
+                            table.getSelectionModel().select(dropIndex);
+                            event.consume();
+                        }
+                    });
+
+                return row;
             });
-
-            row.setOnDragOver(event -> {
-                Dragboard db = event.getDragboard();
-                if (db.hasContent(DataFormat.PLAIN_TEXT)) {
-                    if (row.getIndex() != (Integer) db.getContent(DataFormat.PLAIN_TEXT)) {
-                        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-                        event.consume();
-                    }
-                }
-            });
-
-            row.setOnDragDropped(event -> {
-                Dragboard db = event.getDragboard();
-                if (db.hasContent(DataFormat.PLAIN_TEXT)) {
-                    int draggedIndex = (Integer) db.getContent(DataFormat.PLAIN_TEXT);
-                    T draggedItem = table.getItems().remove(draggedIndex);
-
-                    int dropIndex;
-
-                    if (row.isEmpty()) {
-                        dropIndex = table.getItems().size();
-                    }
-                    else {
-                        dropIndex = row.getIndex();
-                    }
-
-                    table.getItems().add(dropIndex, draggedItem);
-
-                    event.setDropCompleted(true);
-                    table.getSelectionModel().select(dropIndex);
-                    event.consume();
-                }
-            });
-
-            return row;
-        });
     }
 }
