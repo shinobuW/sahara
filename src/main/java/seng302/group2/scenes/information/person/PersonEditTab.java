@@ -1,5 +1,7 @@
 package seng302.group2.scenes.information.person;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,6 +17,7 @@ import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.validation.NameValidator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
@@ -153,6 +156,23 @@ public class PersonEditTab extends SearchableTab {
 
         HBox h1 = new HBox(10);
         h1.getChildren().addAll(v1, skillsButtons, v2);
+
+        birthDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
+                @Override
+                public void changed(ObservableValue<? extends LocalDate> observable,
+                                    LocalDate oldValue, LocalDate newValue) {
+                    if (newValue != null && newValue.isAfter(LocalDate.now())) {
+                        ValidationStyle.borderGlowRed(birthDatePicker.getDatePicker());
+                        ValidationStyle.showMessage("A Persons birth date must be in the past",
+                                birthDatePicker.getDatePicker());
+                        btnDone.setDisable(true);
+                    }
+                    else {
+                        ValidationStyle.borderGlowNone(birthDatePicker.getDatePicker());
+                        btnDone.setDisable(false);
+                    }
+                }
+            });
 
         // Events
         btnAdd.setOnAction((event) -> {

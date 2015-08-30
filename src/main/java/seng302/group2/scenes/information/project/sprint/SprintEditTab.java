@@ -297,6 +297,20 @@ public class SprintEditTab extends SearchableTab {
 
                 ValidationStyle.borderGlowNone(sprintStartDatePicker.getDatePicker());
                 sprintStartDatePicker.removeTooltip();
+
+
+                if (newValue != null && releaseComboBox.getValue().getEstimatedDate().isBefore(newValue)) {
+                    ValidationStyle.borderGlowRed(sprintStartDatePicker.getDatePicker());
+                    ValidationStyle.showMessage("The start date of the Sprint must be before the estimated"
+                                    + " release date of the Release: "
+                                    + releaseComboBox.getValue().getEstimatedDate().toString(),
+                            sprintStartDatePicker.getDatePicker());
+                    sprintStartDatePicker.setTooltip(new Tooltip("The start date of"
+                            + " the Sprint must be before the estimated release date of the Release: "
+                            + releaseComboBox.getValue().getEstimatedDate().toString()));
+                    sprintStartDatePicker.setDisable(false);
+                    teamComboBox.setDisable(true);
+                }
                 if ((sprintEndDatePicker.getValue() != null) && (newValue != null)
                         && newValue.isAfter(sprintEndDatePicker.getValue())) {
                     sprintEndDatePicker.setDisable(false);
@@ -379,37 +393,61 @@ public class SprintEditTab extends SearchableTab {
                 if (newValue != null) {
                     sprintEndDatePicker.setStyle(null);
                     sprintEndDatePicker.getDatePicker().setTooltip(null);
-                    teamComboBox.clear();
-                    outer:
-                    for (Team team : currentSprint.getProject().getAllTeams()) {
-                        for (Allocation alloc : team.getProjectAllocations()) {
 
-                            if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
-                                    && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
-                                teamComboBox.addToComboBox(team);
-                                continue outer;
-
-                            }
-                        }
+                    if (releaseComboBox.getValue().getEstimatedDate().isBefore(sprintEndDatePicker.getValue())) {
+                        ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
+                        ValidationStyle.showMessage("The end date of the Sprint must be before the estimated"
+                                        + " release date of the Release: "
+                                        + releaseComboBox.getValue().getEstimatedDate().toString(),
+                                sprintEndDatePicker.getDatePicker());
+                        sprintEndDatePicker.setTooltip(new Tooltip("The end date of"
+                                + " the Sprint must be before the estimated release date of the Release: "
+                                + releaseComboBox.getValue().getEstimatedDate().toString()));
+                        sprintEndDatePicker.setDisable(false);
+                        teamComboBox.setDisable(true);
                     }
-                    teamComboBox.setDisable(false);
-                    teamComboBox.setValue(null);
-
-                    if (teamComboBox.getComboBox().getItems().contains(prevTeam)) {
-                        ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
-                        teamComboBox.removeTooltip();
-                        teamComboBox.setValue(prevTeam);
-                    }
-                    else if (teamComboBox.getComboBox().getItems().size() == 0) {
-                        ValidationStyle.borderGlowRed(teamComboBox.getComboBox());
-                        ValidationStyle.showMessage("There are no Teams allocated to this project at the start"
-                                + " date specified", teamComboBox.getComboBox());
-                        teamComboBox.setTooltip(new Tooltip("There are no Teams allocated to this project at the"
-                                + " start date specified"));
+                    else if (newValue.isBefore(sprintStartDatePicker.getValue())) {
+                        ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
+                        ValidationStyle.showMessage("The end date of the Sprint must be after the start date",
+                                sprintEndDatePicker.getDatePicker());
+                        sprintEndDatePicker.setTooltip(new Tooltip("The end date of the Sprint must be after"
+                                + " the start date"));
+                        sprintEndDatePicker.setDisable(false);
+                        teamComboBox.setDisable(true);
                     }
                     else {
-                        ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
-                        teamComboBox.removeTooltip();
+                        teamComboBox.clear();
+                        outer:
+                        for (Team team : currentSprint.getProject().getAllTeams()) {
+                            for (Allocation alloc : team.getProjectAllocations()) {
+
+                                if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
+                                        && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
+                                    teamComboBox.addToComboBox(team);
+                                    continue outer;
+
+                                }
+                            }
+                        }
+                        teamComboBox.setDisable(false);
+                        teamComboBox.setValue(null);
+
+                        if (teamComboBox.getComboBox().getItems().contains(prevTeam)) {
+                            ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
+                            teamComboBox.removeTooltip();
+                            teamComboBox.setValue(prevTeam);
+                        }
+                        else if (teamComboBox.getComboBox().getItems().size() == 0) {
+                            ValidationStyle.borderGlowRed(teamComboBox.getComboBox());
+                            ValidationStyle.showMessage("There are no Teams allocated to this project at the start"
+                                    + " date specified", teamComboBox.getComboBox());
+                            teamComboBox.setTooltip(new Tooltip("There are no Teams allocated to this project at the"
+                                    + " start date specified"));
+                        }
+                        else {
+                            ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
+                            teamComboBox.removeTooltip();
+                        }
                     }
                     toggleDone();
                 }

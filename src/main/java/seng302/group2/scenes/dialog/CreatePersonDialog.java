@@ -21,6 +21,7 @@ import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.workspace.person.Person;
 
 import java.io.File;
@@ -122,6 +123,14 @@ public class CreatePersonDialog extends Dialog<Map<String, String>> {
                 @Override
                 public void changed(ObservableValue<? extends LocalDate> observable,
                                     LocalDate oldValue, LocalDate newValue) {
+                    if (newValue != null && newValue.isAfter(LocalDate.now())) {
+                        ValidationStyle.borderGlowRed(birthDatePicker.getDatePicker());
+                        ValidationStyle.showMessage("A Persons birth date must be in the past",
+                                birthDatePicker.getDatePicker());
+                    }
+                    else {
+                        ValidationStyle.borderGlowNone(birthDatePicker.getDatePicker());
+                    }
                     createButton.setDisable(!correctUserInput());
                 }
             });
