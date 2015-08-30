@@ -21,9 +21,28 @@ import java.text.DecimalFormat;
  */
 public class StoryCompletenessBar extends Pane {
 
+    Story story = null;
+    ObservableList<Task> tasks = FXCollections.observableArrayList();
+    
+    double width = 340;
+    double height = 25;
+    
     public StoryCompletenessBar(Story story) {
-        ObservableList<Task> tasks =  story.getTasks();
+        this.story = story;
+        this.tasks =  story.getTasks();
+        construct();
+    }
 
+    public StoryCompletenessBar(Story story, double width, double height) {
+        this.story = story;
+        this.tasks =  story.getTasks();
+        this.width = width;
+        this.height = height;
+        construct();
+    }
+    
+    
+    void construct() {
         ObservableList<Task> done = FXCollections.observableArrayList();
         ObservableList<Task> inProgress = FXCollections.observableArrayList();
         ObservableList<Task> rest = FXCollections.observableArrayList();
@@ -57,7 +76,7 @@ public class StoryCompletenessBar extends Pane {
             percentageRed = (lengthRed / overallLength);
         }
 
-        double maxWidth = 340;
+        double maxWidth = this.width;
         double maxGreen = maxWidth * percentageGreen;
         double maxBlue = (maxWidth * percentageBlue) + maxGreen;
 
@@ -67,10 +86,10 @@ public class StoryCompletenessBar extends Pane {
         GridPane visualGrid = new GridPane();
 
 
-        Rectangle green = new Rectangle(maxGreen, 25);
-        Rectangle greenOff = new Rectangle(15, 25);
+        Rectangle green = new Rectangle(maxGreen, this.height);
+        Rectangle greenOff = new Rectangle(15, this.height);
         greenOff.setFill(Color.TRANSPARENT);
-        Rectangle greenSquare = new Rectangle(maxGreen - 15, 25);
+        Rectangle greenSquare = new Rectangle(maxGreen - 15, this.height);
         HBox greenBg = new HBox();
         greenBg.getChildren().addAll(greenOff, greenSquare);
 
@@ -81,13 +100,13 @@ public class StoryCompletenessBar extends Pane {
                 + (df.format(percentageGreen * 100)) + "% "));
         greenPO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
-        Rectangle blue = new Rectangle(maxBlue - maxGreen, 25);
+        Rectangle blue = new Rectangle(maxBlue - maxGreen + 0.5, this.height);
         PopOverTip bluePO = new PopOverTip(blue, new Text(" Percentage of Story In Progress: "
                 + (df.format(percentageBlue * 100)) + "% "));
         bluePO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
-        Rectangle red = new Rectangle(maxWidth - maxBlue, 25);
-        Rectangle redSquare = new Rectangle(maxWidth - maxBlue - 15, 25);
+        Rectangle red = new Rectangle(maxWidth - maxBlue, this.height);
+        Rectangle redSquare = new Rectangle(maxWidth - maxBlue - 15, this.height);
         red.setArcWidth(15);
         red.setArcHeight(15);
         PopOverTip redPO = new PopOverTip(red, new Text(" Remaining work to do: "

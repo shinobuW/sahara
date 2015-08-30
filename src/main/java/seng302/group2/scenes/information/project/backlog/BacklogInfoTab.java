@@ -51,7 +51,7 @@ public class BacklogInfoTab extends SearchableTab {
         SearchableTable<Story> storyTable = new SearchableTable<>(currentBacklog.getStories(), searchControls);
         SearchableText tablePlaceholder = new SearchableText("There are currently no stories in this backlog.");
         storyTable.setEditable(true);
-        storyTable.setPrefWidth(500);
+        storyTable.setPrefWidth(600);
         storyTable.setPrefHeight(200);
         storyTable.setPlaceholder(tablePlaceholder);
         storyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -59,21 +59,21 @@ public class BacklogInfoTab extends SearchableTab {
         TableColumn<Story, String> storyCol = new TableColumn<>("Story");
         storyCol.setCellValueFactory(new PropertyValueFactory<>("shortName"));
         storyCol.prefWidthProperty().bind(storyTable.widthProperty()
-                .subtract(2).divide(100).multiply(60));
+                .subtract(2).divide(100).multiply(33));
 
         TableColumn<Story, Integer> priorityCol = new TableColumn<>("Priority");
         priorityCol.setCellValueFactory(new PropertyValueFactory<>("priority"));
         priorityCol.prefWidthProperty().bind(storyTable.widthProperty()
-                .subtract(2).divide(100).multiply(20));
+                .subtract(2).divide(100).multiply(13));
 
         TableColumn<Story, String> readyCol = new TableColumn<>("Status");
         readyCol.setCellValueFactory(new PropertyValueFactory<>("readyString"));
         readyCol.prefWidthProperty().bind(storyTable.widthProperty()
-                .subtract(2).divide(100).multiply(20));
+                .subtract(2).divide(100).multiply(16));
 
         TableColumn progressCol = new TableColumn("Progress");
         progressCol.prefWidthProperty().bind(storyTable.widthProperty()
-                .subtract(2).divide(100).multiply(20));
+                .subtract(2).divide(100).multiply(38));
 
         progressCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Story, String>,
                 ObservableValue<String>>() {
@@ -268,7 +268,7 @@ public class BacklogInfoTab extends SearchableTab {
                 setGraphic(null);
             }
             else {
-                this.popUp = new StoryCompletenessBar(getStory());
+                this.popUp = new StoryCompletenessBar(getStory(), 220, 18);
                 setGraphic(popUp);
             }
         }
