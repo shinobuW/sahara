@@ -17,8 +17,8 @@ public class SearchableCheckBox extends VBox implements SearchableControl {
     private CheckBox cb = new CheckBox();
 
     /**
-     *
-     * @param label Late
+     * Constructor for a SearchableCheckBox that takes a label (as a String).
+     * @param label string used for the checkbox label
      */
     public SearchableCheckBox(String label) {
         HBox box = new HBox();
@@ -39,7 +39,8 @@ public class SearchableCheckBox extends VBox implements SearchableControl {
     }
 
     /**
-     * Constructor for a SearchableCheckBox that takes an initial set of items and
+     * Constructor for a SearchableCheckBox that takes a label (as a String) and the searchableControls.
+     * @param label string used for the checkbox label
      * @param searchableControls A collection of searchable controls to add this control to
      */
     public SearchableCheckBox(String label, Collection<SearchableControl> searchableControls) {

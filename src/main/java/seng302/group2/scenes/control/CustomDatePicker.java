@@ -64,6 +64,7 @@ public class CustomDatePicker extends VBox implements SearchableControl {
      *
      * @param name     The node field
      * @param required Whether or not the field is required
+     * @param searchableControls A collection of searchable controls to add this control to
      */
     public CustomDatePicker(String name, boolean required, Collection<SearchableControl> searchableControls) {
         searchableControls.add(this);
@@ -135,7 +136,8 @@ public class CustomDatePicker extends VBox implements SearchableControl {
     }
 
     /**
-     * Disables the date picker. Does not disable the labels.
+     * Disables and enables the date picker. Does not effort the labels.
+     * @param disable boolean which either disables or enables depending on its value
      */
     public void disable(boolean disable) {
         if (disable) {

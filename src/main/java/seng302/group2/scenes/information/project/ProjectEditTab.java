@@ -35,7 +35,6 @@ public class ProjectEditTab extends SearchableTab {
      * Gets the workspace edit information scene.
      *
      * @param currentProject The project to display the editable information of
-     * @return The Workspace Edit information scene
      */
     public ProjectEditTab(Project currentProject) {
         // Tab settings

@@ -20,7 +20,6 @@ public class SearchableTitle extends SearchableText {
     /**
      * Creates a SearchableTitle element sets the provided strings font size to 150%.
      * @param content The string text for the SearchableText to adopt
-     * @param content
      */
     public SearchableTitle(String content) {
         super(content, "-fx-font-size: 150%;");

@@ -70,6 +70,7 @@ public abstract class TrackedTabPane extends SearchableScene {
      * Constructor that takes the content scene type to use for storing tracking information
      *
      * @param scene The scene of the tracked tab pane
+     * @param item The item that the tabs track to
      */
     public TrackedTabPane(ContentScene scene, SaharaItem item) {
         this.item = item;

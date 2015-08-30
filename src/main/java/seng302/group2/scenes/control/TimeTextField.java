@@ -130,7 +130,7 @@ public class TimeTextField extends SearchableTextField {
 
     /**
      * Removes a range of characters from the content.
-     * @param range
+     * @param range The range of text to be removed
      */
     @Override
     public void deleteText(IndexRange range) {
@@ -183,7 +183,7 @@ public class TimeTextField extends SearchableTextField {
      * simply inserted at the current caret position. If there was a selection, then the selection is cleared and the
      * given replacement text inserted.Colons are fixed in place and cannot be replaced. Texts are inserted around the
      * colon.
-     * @param replacement
+     * @param replacement the String to replace the selection with
      */
     @Override
     public void replaceSelection(String replacement) {
@@ -212,7 +212,7 @@ public class TimeTextField extends SearchableTextField {
      * Replaces a range of characters with the given text. String must b 22222
      * @param begin The starting index in the range, inclusive. This must be >= 0 and < the end.
      * @param end The ending index in the range, exclusive. This is one-past the last character to delete (consistent
-     *            with the String manipulation methods). This must be > the start, and <= the length of the text.
+    with the String manipulation methods). This must be > the start, and <= the length of the text.
      * @param text The text that is to replace the range. This must not be null.
      */
     @Override
@@ -239,11 +239,11 @@ public class TimeTextField extends SearchableTextField {
     /**
      * Validates the given string to ensure that invalid time cannot be inputted.
      * @param time the string being validated
-     * @return
+     * @return return if the string passed the validation
      */
     private boolean validate(String time) {
         if (! timePattern.matcher(time).matches()) {
-            return false ;
+            return false;
         }
         String[] tokens = time.split(":");
         assert tokens.length == 3 ;
@@ -252,18 +252,18 @@ public class TimeTextField extends SearchableTextField {
             int mins = Integer.parseInt(tokens[1]);
 
             if (hours < 0 || hours > 23) {
-                return false ;
+                return false;
             }
             if (mins < 0 || mins > 59) {
-                return false ;
+                return false;
             }
 
-            return true ;
+            return true;
         }
         catch (NumberFormatException nfe) {
             // regex matching should assure we never reach this catch block
-            assert false ;
-            return false ;
+            assert false;
+            return false;
         }
     }
 

@@ -37,6 +37,7 @@ public class Log extends SaharaItem implements Serializable {
      * @param logger the person logging the time
      * @param duration the duration the person worked for
      * @param startTime time the logger started working on the task
+     * @param effortLeft The effort left in minutes
      */
     public Log(Task task, String description, Person logger, double duration,
                LocalDateTime startTime, double effortLeft) {
@@ -256,7 +257,7 @@ public class Log extends SaharaItem implements Serializable {
 
     /**
      * Sets the duration
-     * @param inputDuration
+     * @param inputDuration the new duration the log
      * @return true if duration is not null
      */
     public boolean setDuration(String inputDuration) {

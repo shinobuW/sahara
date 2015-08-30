@@ -338,6 +338,7 @@ public class Story extends SaharaItem implements Serializable {
 
     /**
      * Returns whether or not all tasks in the story have been marked as being completed
+     * @param task The task to be checked
      * @return True if all tasks have been marked as being completed, false otherwise
      */
     public boolean allTasksCompletedExcept(Task task) {
@@ -438,6 +439,7 @@ public class Story extends SaharaItem implements Serializable {
      * Tries to finds a task in each of the stories' lanes, and then returns the index of which it sits inside the lane
      * Returns -1 if not found
      * @param task The task to find the index of
+     * @return the lane of the task
      */
     public int getTaskLaneIndex(Task task) {
         int index = -1;

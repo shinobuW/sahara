@@ -34,6 +34,7 @@ public class ReorderableTable<T> extends SearchableTable<T> {
     /**
      * The constructor for a reorderable table that adds itself to a collection of searchable controls
      * @param itemList The list of items to populate the table with and reorder
+     * @param searchableControls A collection of searchable controls to add this control to
      */
     public ReorderableTable(ObservableList<T> itemList, Collection<SearchableControl> searchableControls) {
         setItems(itemList);

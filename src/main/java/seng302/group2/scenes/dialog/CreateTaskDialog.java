@@ -40,7 +40,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
 
 
     /**
-     * Used to create a task. This dialog is only accessible from the File -> New menu.
+     * Used to create a task. This dialog is only accessible from the File -&gt; New menu.
      */
     public CreateTaskDialog() {
         correctShortName = false;

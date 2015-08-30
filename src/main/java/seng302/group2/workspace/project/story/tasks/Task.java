@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 /**
+ * The task class.
  * Created by cvs20 on 27/07/15.
  */
 public class Task extends SaharaItem implements Serializable {
@@ -90,6 +91,9 @@ public class Task extends SaharaItem implements Serializable {
      * Basic Task constructor
      * @param shortName The shortname of the Task
      * @param description The description of the task
+     * @param story The story of the task
+     * @param person The person assigned to the task
+     * @param effortLeft The base effort left on the task
      */
     public Task(String shortName, String description, Story story, Person person, double effortLeft) {
         super(shortName);
@@ -300,6 +304,7 @@ public class Task extends SaharaItem implements Serializable {
     /**
      * Adds a log to the Tasks Logs list
      *  @param log The log to add
+     *  @param effortLeft The new effort left for this task
      */
     public void add(Log log, double effortLeft) {
         Command command = new AddLogsCommand(this, log, this.getStory().getProject(), effortLeft);
@@ -444,9 +449,10 @@ public class Task extends SaharaItem implements Serializable {
      * @param newShortName   The new short name
      * @param newDescription The new description
      * @param newImpediments The new Impediments
-     * @param newState    The new state
-     * @param newAssignee The new Assignee
-     * @param newLogs The new Logs
+     * @param newState       The new state
+     * @param newAssignee    The new Assignee
+     * @param newLogs        The new Logs
+     * @param newEffortLeft  The new effort left
      */
     public void edit(String newShortName, String newDescription, String newImpediments, TASKSTATE newState,
                      Person newAssignee,  List<Log> newLogs, double newEffortLeft,
@@ -469,6 +475,7 @@ public class Task extends SaharaItem implements Serializable {
      *
      * @param newState    The new state
      * @param index The index to add at
+     * @param markStoryDone Wether to mark the story done or not
      */
     public void editLane(TASKSTATE newState, int index, boolean markStoryDone) {
         Command relEdit = new TaskEditLaneCommand(this, newState, index, markStoryDone);
@@ -481,6 +488,7 @@ public class Task extends SaharaItem implements Serializable {
      * the task with the new parameter values.
      *
      * @param newState    The new state
+     * @param impediments The new impediments
      */
     public void editImpedimentState(TASKSTATE newState, String impediments) {
         Command relEdit = new TaskEditImpedimentStatusCommand(this, newState, impediments);
@@ -536,10 +544,12 @@ public class Task extends SaharaItem implements Serializable {
          * @param newState    The new state
          * @param newAssignee The new Assignee
          * @param newLogs The new Logs
+         * @param effortLeft The new effort left
+         * @param effortSpent The new effort spent
          */
         private TaskEditCommand(Task task, String newShortName, String newDescription, 
-                String newImpediments, TASKSTATE newState,
-                Person newAssignee,  List<Log> newLogs, double effortLeft, double effortSpent) {
+                String newImpediments, TASKSTATE newState, Person newAssignee,  List<Log> newLogs,
+                double effortLeft, double effortSpent) {
             this.task = task;
 
             this.shortName = newShortName;
@@ -763,7 +773,9 @@ public class Task extends SaharaItem implements Serializable {
         /**
          * Constructor for the Task Edit State command, used for changing lanes in the scrumboard
          * @param task The story to be edited
-         * @param newLane    The new state
+         * @param newLane The new state
+         * @param index The index of the lane
+         * @param markStoryDone Whether or not the story is to be marked done
          */
         private TaskEditLaneCommand(Task task, TASKSTATE newLane, int index, boolean markStoryDone) {
             this.task = task;
@@ -989,6 +1001,8 @@ public class Task extends SaharaItem implements Serializable {
          * Constructor for the log addition command
          * @param task The task to which the log is to be added
          * @param log The log to be added
+         * @param proj The project of the task
+         * @param effortLeft The new effort left
          */
         AddLogsCommand(Task task, Log log, Project proj, double effortLeft) {
             this.task = task;

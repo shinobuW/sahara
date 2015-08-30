@@ -159,7 +159,8 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
 
 
     /**
-     * Disables the combobox.
+     * Disables and enables the combobox. Does not affect the labels.
+     * @param disable boolean which either disables or enables depending on its value
      */
     public void disable(boolean disable) {
         if (disable) {

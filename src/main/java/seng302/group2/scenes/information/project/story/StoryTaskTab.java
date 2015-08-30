@@ -42,6 +42,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
+ * A tab on the story scene which shows the all the stories tasks and their status.
  * Created by cvs20 on 5/08/15.
  */
 public class StoryTaskTab extends SearchableTab {
@@ -462,11 +463,16 @@ public class StoryTaskTab extends SearchableTab {
         }
     }
 
+    /**
+     * A cell used to show the Assignee status.
+     */
     class AssigneeCell extends TableCell<Object, String> {
         public Node popUp;
         public Story story;
+
         /**
          * Constructor
+         * @param story The currently selected story
          */
         private AssigneeCell(Story story) {
             this.story = story;
@@ -476,7 +482,7 @@ public class StoryTaskTab extends SearchableTab {
          * Updates the item
          *
          * @param item  the item to update to
-         * @param empty
+         * @param empty if the cell is empty
          */
         @Override
         public void updateItem(String item, boolean empty) {
@@ -503,12 +509,16 @@ public class StoryTaskTab extends SearchableTab {
 
     }
 
+    /**
+     * A cell used to show the Impediments status.
+     */
     class ImpedimentsCell extends TableCell<Object, String> {
         public Node popUp;
         public Story story;
 
         /**
          * Constructor
+         * @param story The currently selected story
          */
         private ImpedimentsCell(Story story) {
             this.story = story;
@@ -518,7 +528,7 @@ public class StoryTaskTab extends SearchableTab {
          * Updates the item
          *
          * @param item  the item to update to
-         * @param empty
+         * @param empty if the cell is empty
          */
         @Override
         public void updateItem(String item, boolean empty) {

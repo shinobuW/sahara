@@ -34,8 +34,9 @@ public class SprintScene extends TrackedTabPane {
     }
 
     /**
-     * Constructor for the SprintScene. This sohuld only be used to display an edit tab.
+     * Constructor for the SprintScene. This should only be used to display an edit tab.
      * @param currentSprint the sprint for which information will be displayed.
+     * @param editScene a boolean - if the scene is an edit scene
      */
     public SprintScene(Sprint currentSprint, boolean editScene) {
         super(ContentScene.SPRINT_EDIT, currentSprint);

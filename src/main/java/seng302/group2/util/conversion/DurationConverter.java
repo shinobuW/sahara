@@ -8,7 +8,7 @@ import seng302.group2.util.validation.DateValidator;
 public class DurationConverter {
     /**
      * Converts string formatted duration to duration in minutes
-     * @param inputDuration
+     * @param inputDuration the string duration to be converted
      * @return duration in minutes
      */
     public static Double readDurationToMinutes(String inputDuration) {

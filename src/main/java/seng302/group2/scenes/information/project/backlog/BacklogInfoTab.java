@@ -244,11 +244,16 @@ public class BacklogInfoTab extends SearchableTab {
         );
     }
 
+    /**
+     * A class used to show the progress of a story.
+     */
     class ProgressCell extends TableCell<Object, String> {
         public Node popUp;
         public Backlog backlog;
+
         /**
          * Constructor
+         * @param backlog The backlog of the story.
          */
         private ProgressCell(Backlog backlog) {
             this.backlog = backlog;
@@ -257,8 +262,8 @@ public class BacklogInfoTab extends SearchableTab {
         /**
          * Updates the item
          *
-         * @param item  the item to update to
-         * @param empty
+         * @param item the item to update to
+         * @param empty if the cell is empty
          */
         @Override
         public void updateItem(String item, boolean empty) {

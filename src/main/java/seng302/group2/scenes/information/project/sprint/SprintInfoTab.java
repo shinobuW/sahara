@@ -32,6 +32,7 @@ public class SprintInfoTab extends SearchableTab {
 
     /**
      * Constructor for the sprint information tab.
+     * @param currentSprint the currently selected sprint
      */
     public SprintInfoTab(Sprint currentSprint) {
         this.setText("Basic Information");

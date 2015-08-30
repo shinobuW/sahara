@@ -44,6 +44,7 @@ public class ValidationStyle {
      * Adds a custom coloured glow effect on the node with the given Color. Red, Green, Blue, and Alpha channels of the
      * Color are used
      * @param node The node to apply the glow effect to
+     * @param color The color of the glow effect
      */
     public static void borderGlow(Node node, Color color) {
         node.setStyle(node.getStyle() + " -fx-effect: dropshadow( three-pass-box , rgba("
