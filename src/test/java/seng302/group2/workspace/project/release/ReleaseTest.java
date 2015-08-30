@@ -87,13 +87,12 @@ public class ReleaseTest {
         Project testProject = new Project();
         release.setProject(testProject);
 
-        Project testProject2 = new Project();
-        release.edit("newShortName", "newDescription", LocalDate.now(), testProject2);
+        release.edit("newShortName", "newDescription", LocalDate.now());
 
         Assert.assertEquals("newShortName", release.getShortName());
         Assert.assertEquals("newDescription", release.getDescription());
         Assert.assertEquals(LocalDate.now(), release.getEstimatedDate());
-        Assert.assertEquals(testProject2, release.getProject());
+        Assert.assertEquals("Untitled Project", release.getProject().getShortName());
 
         Global.commandManager.undo();
 
