@@ -124,6 +124,7 @@ public class ProjectLoggingTab extends SearchableTab {
         durationCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
+
         taskTable.setItems(data);
         TableColumn[] columns = {loggerCol, taskCol, descriptionCol, startTimeCol, durationCol};
         taskTable.getColumns().setAll(columns);

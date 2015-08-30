@@ -29,6 +29,7 @@ import seng302.group2.scenes.information.project.story.task.LoggingEffortPane;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.conversion.DurationConverter;
 import seng302.group2.util.validation.DateValidator;
+import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
@@ -48,6 +49,7 @@ public class StoryTaskTab extends SearchableTab {
     List<SearchableControl> searchControls = new ArrayList<>();
     static Boolean correctShortName = Boolean.FALSE;
     static Boolean correctEffortLeft = Boolean.FALSE;
+    private VBox taskInfo;
 
     /**
      * Constructor for the Story Task Tab
@@ -246,47 +248,7 @@ public class StoryTaskTab extends SearchableTab {
                 else {
                     Task currentTask = taskTable.getSelectionModel().getSelectedItem();
                     taskPopover.setDetachedTitle(currentTask.toString());
-                    VBox taskInfo = new VBox();
-
-                    taskInfo.setBorder(null);
-                    taskInfo.setPadding(new Insets(25, 25, 25, 25));
-                    this.setContent(wrapper);
-
-                    SearchableText title = new SearchableTitle(currentTask.getShortName());
-                    SearchableText description = new SearchableText("Task Description: " 
-                            + currentTask.getDescription());
-                    SearchableText impediments = new SearchableText("Impediments: " + currentTask.getImpediments());
-                    SearchableText effortLeft = new SearchableText("Effort Left: " + currentTask.getEffortLeftString());
-                    SearchableText effortSpent = new SearchableText("Effort Spent: " 
-                            + currentTask.getEffortSpentString());
-                    SearchableText taskState = new SearchableText("Task State: " + currentTask.getState());
-                    SearchableText assignedPerson;
-                    if (currentTask.getAssignee() == null) {
-                        assignedPerson = new SearchableText("Assigned Person: ");
-                    }
-                    else {
-                        assignedPerson = new SearchableText("Assigned Person: " + currentTask.getAssignee());
-                    }
-
-                    taskInfo.getChildren().addAll(
-                            title,
-                            description,
-                            impediments,
-                            effortLeft,
-                            effortSpent,
-                            taskState,
-                            assignedPerson
-                    );
-
-                    Collections.addAll(searchControls,
-                            title,
-                            description,
-                            impediments,
-                            effortLeft,
-                            effortSpent,
-                            taskState,
-                            assignedPerson
-                    );
+                    taskInfoPane(currentTask);
                     
                     ScrollPane taskWrapper = new ScrollPane();
                     taskWrapper.setContent(new LoggingEffortPane(taskTable.getSelectionModel().getSelectedItem(),
@@ -780,6 +742,170 @@ public class StoryTaskTab extends SearchableTab {
         assignPopOver.setContentNode(assigneeChangeNode);
 
         return assigneeImage;
+    }
+
+    private void taskInfoPane(Task currentTask) {
+        taskInfo = new VBox();
+
+        taskInfo.setBorder(null);
+        taskInfo.setPadding(new Insets(25, 25, 25, 25));
+
+        SearchableText title = new SearchableTitle(currentTask.getShortName());
+        SearchableText description = new SearchableText("Task Description: "
+                + currentTask.getDescription());
+        SearchableText impediments = new SearchableText("Impediments: " + currentTask.getImpediments());
+        SearchableText effortLeft = new SearchableText("Effort Left: " + currentTask.getEffortLeftString());
+        SearchableText effortSpent = new SearchableText("Effort Spent: "
+                + currentTask.getEffortSpentString());
+        SearchableText taskState = new SearchableText("Task State: " + currentTask.getState());
+        SearchableText assignedPerson;
+        if (currentTask.getAssignee() == null) {
+            assignedPerson = new SearchableText("Assigned Person: ");
+        }
+        else {
+            assignedPerson = new SearchableText("Assigned Person: " + currentTask.getAssignee());
+        }
+
+        Button btnEdit = new Button("Edit");
+
+
+
+        taskInfo.getChildren().addAll(
+                title,
+                description,
+                impediments,
+                effortLeft,
+                effortSpent,
+                taskState,
+                assignedPerson,
+                btnEdit
+        );
+
+        Collections.addAll(searchControls,
+                title,
+                description,
+                impediments,
+                effortLeft,
+                effortSpent,
+                taskState,
+                assignedPerson
+        );
+
+        btnEdit.setOnAction((event) -> {
+                taskEditPane(currentTask);
+            });
+
+    }
+
+    private void taskEditPane(Task currentTask) {
+        taskInfo = new VBox(10);
+        taskInfo.setBorder(null);
+        taskInfo.setPadding(new Insets(25, 25, 25, 25));
+
+
+        Button btnCancel = new Button("Cancel");
+        Button btnDone = new Button("Done");
+
+        HBox buttons = new HBox();
+        buttons.spacingProperty().setValue(10);
+        buttons.alignmentProperty().set(Pos.TOP_LEFT);
+        buttons.getChildren().addAll(btnDone, btnCancel);
+
+        RequiredField shortNameCustomField = new RequiredField("Task Name:");
+        CustomTextArea descriptionTextArea = new CustomTextArea("Task Description:", 300);
+        CustomTextArea impedimentsTextArea = new CustomTextArea("Task Impediments:", 300);
+        CustomTextField effortLeftField = new CustomTextField("Effort Left:");
+
+        effortLeftField.setPrefWidth(300);
+
+        HBox taskHbox = new HBox();
+        SearchableText taskStateText = new SearchableText("Task State: ");
+        ObservableList<Task.TASKSTATE> taskstateObservableList = observableArrayList();
+        taskstateObservableList.addAll(Task.TASKSTATE.values());
+
+
+        ComboBox<Task.TASKSTATE> taskStateComboBox = new ComboBox<>(taskstateObservableList);
+        taskStateComboBox.setValue(currentTask.getState());
+        taskHbox.getChildren().addAll(taskStateText, taskStateComboBox);
+
+        shortNameCustomField.setMaxWidth(275);
+        descriptionTextArea.setMaxWidth(275);
+        impedimentsTextArea.setMaxWidth(275);
+        effortLeftField.setMaxWidth(275);
+
+        shortNameCustomField.setText(currentTask.getShortName());
+        descriptionTextArea.setText(currentTask.getDescription());
+        impedimentsTextArea.setText(currentTask.getImpediments());
+        effortLeftField.setText(Double.toString(currentTask.getEffortLeft()));
+
+
+        CustomComboBox<Person> taskAssigneesList = new CustomComboBox<Person>("Assignee: ");
+        if (currentTask.getStory() != null && currentTask.getStory().getSprint() != null) {
+            taskAssigneesList.getComboBox().setItems(currentTask.getStory().getSprint().getTeam().getPeople());
+        }
+
+        //Adding to MainPane
+        taskInfo.getChildren().addAll(shortNameCustomField,
+                descriptionTextArea,
+                impedimentsTextArea,
+                effortLeftField,
+                taskHbox,
+                taskAssigneesList,
+                buttons);
+
+
+
+        btnDone.setOnAction((event) -> {
+                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                        currentTask.getShortName());
+
+                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                        currentTask.getDescription());
+
+                boolean impedimentsUnchanged = impedimentsTextArea.getText().equals(
+                        currentTask.getImpediments());
+
+                boolean taskstateUnchanged = taskStateComboBox.getValue().equals(
+                        currentTask.getState());
+
+                boolean effortLeftUnchanged = effortLeftField.getText().equals(
+                        Double.toString(currentTask.getEffortLeft()));
+                boolean assigneesUnchanged = taskAssigneesList.equals((currentTask.getAssignee()));
+
+                if (shortNameUnchanged && descriptionUnchanged
+                        && impedimentsUnchanged && taskstateUnchanged && effortLeftUnchanged
+                        && assigneesUnchanged) {
+                    // No changes
+                    currentTask.switchToInfoScene();
+                    return;
+                }
+
+                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                        currentTask.getShortName());
+
+                if (correctShortName) {
+                    //                    Valid short name, make the edit
+
+                    currentTask.edit(shortNameCustomField.getText(),
+                            descriptionTextArea.getText(),
+                            impedimentsTextArea.getText(),
+                            taskStateComboBox.getValue(),
+                            taskAssigneesList.getValue(), currentTask.getLogs(),
+                            Double.parseDouble(effortLeftField.getText()), currentTask.getEffortSpent());
+
+                    currentTask.switchToInfoScene();
+                    App.mainPane.refreshTree();
+                    System.out.println(currentTask.getState());
+                }
+                else {
+                    event.consume();
+                }
+
+            });
+
+        btnCancel.setOnAction((event) -> {
+                currentTask.switchToInfoScene();
+            });
     }
 
 }
