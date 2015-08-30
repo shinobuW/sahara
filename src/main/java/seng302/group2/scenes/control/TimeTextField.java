@@ -210,9 +210,9 @@ public class TimeTextField extends SearchableTextField {
 
     /**
      * Replaces a range of characters with the given text. String must b 22222
-     * @param begin The starting index in the range, inclusive. This must be >= 0 and < the end.
+     * @param begin The starting index in the range, inclusive. This must be &gt;= 0 and &lt; the end.
      * @param end The ending index in the range, exclusive. This is one-past the last character to delete (consistent
-    with the String manipulation methods). This must be > the start, and <= the length of the text.
+     * with the String manipulation methods). This must be &gt; the start, and &lt;= the length of the text.
      * @param text The text that is to replace the range. This must not be null.
      */
     @Override

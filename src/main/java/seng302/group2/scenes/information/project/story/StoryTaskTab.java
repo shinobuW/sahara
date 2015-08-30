@@ -398,7 +398,7 @@ public class StoryTaskTab extends SearchableTab {
         /**
          * Updates the item
          * @param item the item to update to
-         * @param empty
+         * @param empty if the cell is empty
          */
         @Override
         public void updateItem(String item, boolean empty) {
