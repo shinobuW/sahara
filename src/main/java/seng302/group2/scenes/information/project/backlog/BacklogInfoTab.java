@@ -1,17 +1,23 @@
 package seng302.group2.scenes.information.project.backlog;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Callback;
 import seng302.group2.App;
+import seng302.group2.scenes.control.chart.StoryCompletenessBar;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -64,7 +70,27 @@ public class BacklogInfoTab extends SearchableTab {
         readyCol.setCellValueFactory(new PropertyValueFactory<>("readyString"));
         readyCol.prefWidthProperty().bind(storyTable.widthProperty()
                 .subtract(2).divide(100).multiply(20));
-        storyTable.getColumns().addAll(priorityCol, storyCol, readyCol);
+
+        TableColumn progressCol = new TableColumn("Progress");
+        progressCol.prefWidthProperty().bind(storyTable.widthProperty()
+                .subtract(2).divide(100).multiply(20));
+
+        progressCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Story, String>,
+                ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Story, String> story) {
+                SimpleStringProperty prop = new SimpleStringProperty();
+                prop.set(story.getValue().getShortName());
+                return prop;
+            }
+        });
+
+        Callback<TableColumn, TableCell> progressCellFactory = col -> new ProgressCell(currentBacklog);
+        progressCol.setCellFactory(progressCellFactory);
+
+
+
+
+        storyTable.getColumns().addAll(priorityCol, storyCol, readyCol, progressCol);
 
         storyTable.setRowFactory(tr -> new SearchableTableRow<Story>(storyTable) {
                 /**
@@ -216,6 +242,47 @@ public class BacklogInfoTab extends SearchableTab {
                 redKeyLabel,
                 tablePlaceholder
         );
+    }
+
+    class ProgressCell extends TableCell<Object, String> {
+        public Node popUp;
+        public Backlog backlog;
+        /**
+         * Constructor
+         */
+        private ProgressCell(Backlog backlog) {
+            this.backlog = backlog;
+        }
+
+        /**
+         * Updates the item
+         *
+         * @param item  the item to update to
+         * @param empty
+         */
+        @Override
+        public void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty || item == null) {
+                setText(null);
+                setGraphic(null);
+            }
+            else {
+                this.popUp = new StoryCompletenessBar(getStory());
+                setGraphic(popUp);
+            }
+        }
+
+        public Story getStory() {
+            Story result = null;
+            for (Story story : this.backlog.getStories()) {
+                if (story.getShortName() == getItem()) {
+                    result = story;
+                }
+            }
+            return result;
+        }
+
     }
 
     /**
