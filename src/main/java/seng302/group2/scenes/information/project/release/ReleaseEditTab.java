@@ -1,12 +1,17 @@
 package seng302.group2.scenes.information.project.release;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
@@ -21,6 +26,7 @@ import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
+import seng302.group2.workspace.project.sprint.Sprint;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -54,13 +60,11 @@ public class ReleaseEditTab extends SearchableTab {
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Release Description:", 300);
         CustomDatePicker releaseDatePicker = new CustomDatePicker("Estimated Release Date:", false);
-        CustomComboBox projectComboBox = new CustomComboBox("Project: ", true);
 
 
         shortNameCustomField.setPrefWidth(300);
         descriptionTextArea.setPrefWidth(300);
         releaseDatePicker.setPrefWidth(300);
-        projectComboBox.setPrefWidth(300);
 
         Button btnCancel = new Button("Cancel");
         Button btnDone = new Button("Done");
@@ -70,18 +74,57 @@ public class ReleaseEditTab extends SearchableTab {
         buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnDone, btnCancel);
 
-
-        // Set values
-        for (SaharaItem project : Global.currentWorkspace.getProjects()) {
-            projectComboBox.addToComboBox(project.toString());
-        }
-
         shortNameCustomField.setText(currentRelease.getShortName());
         descriptionTextArea.setText(currentRelease.getDescription());
         releaseDatePicker.setValue(currentRelease.getEstimatedDate());
 
-        String defaultProject = currentRelease.getProject().getShortName();
-        projectComboBox.setValue(defaultProject);
+        final Callback<DatePicker, DateCell> releaseDateCellFactory =
+            new Callback<DatePicker, DateCell>() {
+                @Override
+                public DateCell call(final DatePicker datePicker) {
+                    return new DateCell() {
+                        @Override
+                        public void updateItem(LocalDate item, boolean empty) {
+                            super.updateItem(item, empty);
+                            LocalDate lastSprintEnd = LocalDate.now();
+                            for (Sprint sprint : currentRelease.getProject().getSprints()) {
+                                if (sprint.getRelease() == currentRelease
+                                        && sprint.getEndDate().isAfter(lastSprintEnd)) {
+                                    lastSprintEnd = sprint.getEndDate();
+                                }
+                            }
+                            if (item.isBefore(lastSprintEnd)) {
+                                setDisable(true);
+                                setStyle("-fx-background-color: #ffc0cb;");
+                            }
+                        }
+                    };
+                }
+            };
+        releaseDatePicker.getDatePicker().setDayCellFactory(releaseDateCellFactory);
+
+        releaseDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable,
+                                LocalDate oldValue, LocalDate newValue) {
+                LocalDate lastSprintEnd = LocalDate.now();
+                for (Sprint sprint : currentRelease.getProject().getSprints()) {
+                    if (sprint.getRelease() == currentRelease && sprint.getEndDate().isAfter(lastSprintEnd)) {
+                        lastSprintEnd = sprint.getEndDate();
+                    }
+                }
+                if (newValue.isBefore(lastSprintEnd)) {
+                    ValidationStyle.borderGlowRed(releaseDatePicker.getDatePicker());
+                    ValidationStyle.showMessage("The estimated date of release cannot be in the past, or before the end"
+                            + " date of any sprint that exists for this release", releaseDatePicker.getDatePicker());
+                    btnDone.setDisable(true);
+                }
+                else {
+                    ValidationStyle.borderGlowNone(releaseDatePicker.getDatePicker());
+                    btnDone.setDisable(false);
+                }
+            }
+        });
 
 
         btnDone.setOnAction((event) -> {
@@ -89,9 +132,7 @@ public class ReleaseEditTab extends SearchableTab {
                         currentRelease.getShortName());
                 boolean descriptionUnchanged = descriptionTextArea.getText().equals(
                         currentRelease.getDescription());
-                boolean projectUnchanged = projectComboBox.getValue().equals(
-                        currentRelease.getProject());
-                if (shortNameUnchanged && descriptionUnchanged && projectUnchanged) {
+                if (shortNameUnchanged && descriptionUnchanged) {
                     // No fields have been changed
                     currentRelease.switchToInfoScene();
                     return;
@@ -113,19 +154,10 @@ public class ReleaseEditTab extends SearchableTab {
                         currentRelease.getShortName());
                 // The short name is the same or valid
                 if (correctShortName) {
-                    Project project = new Project();
-
-                    for (Project proj : Global.currentWorkspace.getProjects()) {
-                        if (proj.getShortName().equals(projectComboBox.getValue())) {
-                            project = proj;
-                            break;
-                        }
-                    }
 
                     currentRelease.edit(shortNameCustomField.getText(),
                             descriptionTextArea.getText(),
-                            releaseDate,
-                            project
+                            releaseDate
                     );
 
                     Collections.sort(currentRelease.getProject().getReleases());
@@ -146,7 +178,6 @@ public class ReleaseEditTab extends SearchableTab {
         editPane.getChildren().addAll(
                 shortNameCustomField,
                 descriptionTextArea,
-                projectComboBox,
                 releaseDatePicker,
                 buttons
         );
@@ -154,8 +185,7 @@ public class ReleaseEditTab extends SearchableTab {
         Collections.addAll(searchControls,
                 shortNameCustomField,
                 descriptionTextArea,
-                releaseDatePicker,
-                projectComboBox
+                releaseDatePicker
         );
     }
 

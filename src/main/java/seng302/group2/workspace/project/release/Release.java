@@ -277,12 +277,10 @@ public class Release extends SaharaItem implements Comparable<Release> {
      * @param newShortName     The new short name
      * @param newDescription   The new description
      * @param newEstimatedDate The new estimated date
-     * @param newProject       The new project
      */
-    public void edit(String newShortName, String newDescription, LocalDate newEstimatedDate,
-                     Project newProject) {
+    public void edit(String newShortName, String newDescription, LocalDate newEstimatedDate) {
         Command relEdit = new ReleaseEditCommand(this, newShortName, newDescription,
-                newEstimatedDate, newProject);
+                newEstimatedDate);
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -296,12 +294,12 @@ public class Release extends SaharaItem implements Comparable<Release> {
         private String shortName;
         private String description;
         private LocalDate estimatedDate;
+
         private Project project;
 
         private String oldShortName;
         private String oldDescription;
         private LocalDate oldEstimatedDate;
-        private Project oldProject;
         
         /**
          * Constructor for the Release Edit command
@@ -309,19 +307,19 @@ public class Release extends SaharaItem implements Comparable<Release> {
          * @param newShortName The new short name for the release
          * @param newDescription The new description for the release
          * @param newEstimatedDate The new estimated date for the release
-         * @param newProject The new project to which the release is assigned
          */
         private ReleaseEditCommand(Release release, String newShortName, String newDescription,
-                                   LocalDate newEstimatedDate, Project newProject) {
+                                   LocalDate newEstimatedDate) {
             this.release = release;
             this.shortName = newShortName;
             this.description = newDescription;
             this.estimatedDate = newEstimatedDate;
-            this.project = newProject;
+
+            this.project = release.project;
+
             this.oldShortName = release.shortName;
             this.oldDescription = release.description;
             this.oldEstimatedDate = release.estimatedDate;
-            this.oldProject = release.project;
         }
 
         /**
@@ -331,7 +329,6 @@ public class Release extends SaharaItem implements Comparable<Release> {
             release.shortName = shortName;
             release.description = description;
             release.estimatedDate = estimatedDate;
-            release.project = project;
             Collections.sort(project.getReleases());
 
         }
@@ -343,7 +340,6 @@ public class Release extends SaharaItem implements Comparable<Release> {
             release.shortName = oldShortName;
             release.description = oldDescription;
             release.estimatedDate = oldEstimatedDate;
-            release.project = oldProject;
             Collections.sort(project.getReleases());
         }
 
@@ -368,14 +364,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
                     mapped_project = true;
                 }
             }
-            boolean mapped_old_project = false;
-            for (SaharaItem item : stateObjects) {
-                if (item.equivalentTo(oldProject)) {
-                    this.oldProject = (Project) item;
-                    mapped_old_project = true;
-                }
-            }
-            return mapped_rl && mapped_project && mapped_old_project;
+            return mapped_rl && mapped_project;
         }
     }
 
