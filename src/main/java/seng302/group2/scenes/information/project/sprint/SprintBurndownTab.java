@@ -1,5 +1,7 @@
 package seng302.group2.scenes.information.project.sprint;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -13,6 +15,7 @@ import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.project.sprint.Sprint;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -26,8 +29,9 @@ import java.util.List;
 public class SprintBurndownTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
-    private CategoryAxis xAxis = new CategoryAxis();
-    private NumberAxis yAxis = new NumberAxis();
+    private Sprint currentSprint;
+    private CategoryAxis xAxis;
+    private NumberAxis yAxis;
 
     /**
      * Constructor for SprintBurndownTab.
@@ -35,6 +39,8 @@ public class SprintBurndownTab extends SearchableTab {
      * @param currentSprint the corresponding sprint
      */
     public SprintBurndownTab(Sprint currentSprint) {
+        this.currentSprint = currentSprint;
+
         this.setText("Burndown Chart");
         Pane burndownPane = new VBox(10);
         burndownPane.setBorder(null);
@@ -61,8 +67,27 @@ public class SprintBurndownTab extends SearchableTab {
      * Sets the axis configuration.
      */
     private void configureAxis() {
+        ObservableList<String> xLabels = FXCollections.observableArrayList();
+
+
+        boolean sprintEndReached = false;
+        LocalDate startDate = this.currentSprint.getStartDate();
+        while (!sprintEndReached) {
+            xLabels.add(startDate.getMonth().toString().substring(0, 3) + " " + startDate.getDayOfMonth());
+            startDate = startDate.plusDays(1);
+            if (startDate.isAfter(currentSprint.getEndDate())) {
+                sprintEndReached = true;
+            }
+        }
+        xAxis = new CategoryAxis();
+        yAxis = new NumberAxis();
+
+        xAxis.setAutoRanging(false);
+        xAxis.setCategories(xLabels);
+        xAxis.invalidateRange(xLabels);
         xAxis.setLabel("Date");
         yAxis.setLabel("Hours");
+
     }
 
     /**
