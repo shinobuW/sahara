@@ -325,8 +325,9 @@ public class LoggingEffortPane extends Pane {
                     }
 
                     LocalDateTime dateTime = startDate.atTime(timeTextField.getHours(), timeTextField.getMinutes());
+                    double effortLeftDifference = task.getEffortLeft() - effortLeft;
                     Log newLog = new Log(task, descriptionTextArea.getText(),
-                            selectedPerson, duration, dateTime, effortLeft);
+                            selectedPerson, duration, dateTime, effortLeftDifference);
                     task.add(newLog, effortLeft);
 
                     String effortLeftString = "";

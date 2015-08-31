@@ -4,6 +4,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
 /**
+ * Used to show a standard JavaFX dialog.
  * Created by Jordane on 20/05/2015.
  */
 public class CustomDialog {

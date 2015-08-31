@@ -3,6 +3,7 @@ package seng302.group2.util.conversion;
 import seng302.group2.util.validation.DateValidator;
 
 /**
+ *
  * Created by Shinobu on 26/08/2015.
  */
 public class DurationConverter {

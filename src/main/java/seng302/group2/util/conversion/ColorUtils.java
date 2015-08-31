@@ -3,6 +3,7 @@ package seng302.group2.util.conversion;
 import javafx.scene.paint.Color;
 
 /**
+ * A class used to convert JavaFX colours into an html/web colour string and vice versa.
  * Created by Jordane on 22/08/2015.
  */
 public class ColorUtils {

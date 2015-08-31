@@ -38,13 +38,13 @@ public class BurndownChart extends LineChart {
      */
     public void populateGraph(Sprint currentSprint) {
         this.setTitle(currentSprint.getGoal() + " Burndown");
-        double effortLeft = 0;
         double effortSpent = 0;
         List<Log> logList;
-        logList = currentSprint.getAllLogsWithIntialLogs();
+        logList = currentSprint.getAllLogs();
         LocalDate startDate = currentSprint.getStartDate();
         LocalDate endDate = currentSprint.getEndDate();
-        System.out.println(startDate);
+        double initialEffortLeft = currentSprint.getTotalInitialLeftInHours();
+        System.out.println(initialEffortLeft);
 
         /* Map which stores a (key, value) pair of (date: hours), where hours is the total n
         umber of hours logged on the date.
@@ -85,8 +85,7 @@ public class BurndownChart extends LineChart {
             }
             if (dailyEffortLeftMap.containsKey(log.getStartDate().toLocalDate())) {
                 Double sum = dailyEffortLeftMap.get(log.getStartDate().toLocalDate());
-                dailyEffortLeftMap.put(log.getStartDate().toLocalDate(), sum + log.getEffortLeftInHours());
-                effortLeft += log.getEffortLeftInHours();
+                dailyEffortLeftMap.put(log.getStartDate().toLocalDate(), sum + log.getEffortLeftDifferenceInHours());
             }
         }
         System.out.println(dailyEffortLeftMap);
@@ -95,9 +94,8 @@ public class BurndownChart extends LineChart {
         referenceVelocitySeries.setName("Reference Velocity");
 
         String firstDayStr = startDate.getMonth().toString().substring(0, 3) + " " + startDate.getDayOfMonth();
-        System.out.println(firstDayStr);
         String lastDayStr = endDate.getMonth().toString().substring(0, 3) + " " + endDate.getDayOfMonth();
-        referenceVelocitySeries.getData().add(new XYChart.Data<>(firstDayStr, effortLeft));
+        referenceVelocitySeries.getData().add(new XYChart.Data<>(firstDayStr, initialEffortLeft));
         referenceVelocitySeries.getData().add(new XYChart.Data<>(lastDayStr, 0));
 
         XYChart.Series effortSpentSeries = new XYChart.Series();
@@ -112,13 +110,13 @@ public class BurndownChart extends LineChart {
         XYChart.Series effortLeftSeries = new XYChart.Series();
         effortLeftSeries.setName("Effort Left");
 
-        Double currentEffortLeft = 0.0;
         for (LocalDate d : dailyEffortLeftMap.keySet()) {
-            currentEffortLeft += dailyEffortLeftMap.get(d);
+            initialEffortLeft -= dailyEffortLeftMap.get(d);
             String monthStr = d.getMonth().toString().substring(0, 3);
-            effortLeftSeries.getData().add(new XYChart.Data<>(monthStr + " " + d.getDayOfMonth(), currentEffortLeft));
+            effortLeftSeries.getData().add(new XYChart.Data<>(monthStr + " " + d.getDayOfMonth(), initialEffortLeft));
         }
 
+        System.out.println(dailyEffortLeftMap);
 
         this.getData().add(referenceVelocitySeries);
         this.getData().add(effortSpentSeries);

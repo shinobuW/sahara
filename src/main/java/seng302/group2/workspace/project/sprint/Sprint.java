@@ -216,28 +216,52 @@ public class Sprint extends SaharaItem {
         return logList;
     }
 
-    /**
-     * Gets all the logs current within the sprint. The log list includes the initial logs
-     * created when a new task is made.
-     *
-     * @return A list of logs of the tasks within a sprint.
-     */
-    public List<Log> getAllLogsWithIntialLogs() {
-        List<Log> logList = new ArrayList<>();
-        for (Task task : this.getAllTasks()) {
-            logList.add(task.getInitialLog());
-            for (Log log : task.getLogs()) {
-                logList.add(log);
-            }
-        }
+//    /**
+//     * Gets all the logs current within the sprint. The log list includes the initial logs
+//     * created when a new task is made.
+//     *
+//     * @return A list of logs of the tasks within a sprint.
+//     */
+//    public List<Log> getAllLogsWithIntialLogs() {
+//        List<Log> logList = new ArrayList<>();
+//        for (Task task : this.getAllTasks()) {
+//            logList.add(task.getInitialLog());
+//            for (Log log : task.getLogs()) {
+//                logList.add(log);
+//            }
+//        }
+//
+//        Collections.sort(logList, new Comparator<Log>() {
+//            @Override
+//            public int compare(Log o1, Log o2) {
+//                return o1.getStartDate().compareTo(o2.getStartDate());
+//            }
+//        });
+//        return logList;
+//    }
 
-        Collections.sort(logList, new Comparator<Log>() {
-            @Override
-            public int compare(Log o1, Log o2) {
-                return o1.getStartDate().compareTo(o2.getStartDate());
-            }
-        });
-        return logList;
+    /**
+     * Gets the total initial left across all tasks in this sprint
+     * @return total initial left in minutes
+     */
+    public double getTotalInitialLeft() {
+        double total = 0;
+        for (Task t : this.getAllTasks()) {
+            total += t.getInitialEffortLeft();
+        }
+        return total;
+    }
+
+    /**
+     * Gets the total initial left across all tasks in this sprint
+     * @return total initial left in hours
+     */
+    public double getTotalInitialLeftInHours() {
+        double total = 0;
+        for (Task t : this.getAllTasks()) {
+            total += t.getInitialEffortLeft();
+        }
+        return total / 60;
     }
 
     /**

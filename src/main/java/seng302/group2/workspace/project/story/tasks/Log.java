@@ -20,7 +20,7 @@ import java.util.Set;
 public class Log extends SaharaItem implements Serializable {
     private LocalDateTime startTime = LocalDateTime.now();
     private double duration = 0;
-    private double effortLeft = 0;
+    private double effortLeftDifference = 0;
     private Person logger = null;
     private Task task = null;
     private String description = "";
@@ -37,17 +37,17 @@ public class Log extends SaharaItem implements Serializable {
      * @param logger the person logging the time
      * @param duration the duration the person worked for
      * @param startTime time the logger started working on the task
-     * @param effortLeft The effort left in minutes
+     * @param effortLeftDifference The effort left in minutes
      */
     public Log(Task task, String description, Person logger, double duration,
-               LocalDateTime startTime, double effortLeft) {
+               LocalDateTime startTime, double effortLeftDifference) {
         super("Untitled Log");
         this.task = task;
         this.logger = logger;
         this.startTime = startTime;
         this.description = description;
         this.duration = duration;
-        this.effortLeft = effortLeft;
+        this.effortLeftDifference = effortLeftDifference;
     }
 
 
@@ -97,16 +97,16 @@ public class Log extends SaharaItem implements Serializable {
      * Gets the effort left set in this log.
      * @return effort left in hours
      */
-    public double getEffortLeftInHours() {
-        return this.effortLeft / 60;
+    public double getEffortLeftDifferenceInHours() {
+        return this.effortLeftDifference / 60;
     }
 
     /**
      * Gets the effort left set in this log.
      * @return effort left in minutes
      */
-    public double getEffortLeftInMinutes() {
-        return this.effortLeft;
+    public double getEffortLeftDifferenceInMinutes() {
+        return this.effortLeftDifference;
     }
 
 
@@ -285,28 +285,28 @@ public class Log extends SaharaItem implements Serializable {
         private LocalDateTime startTime;
         private double duration;
         private String description;
-        private double effortLeft;
+        private double effortLeftDifference;
 
         private Person oldLogger;
         private LocalDateTime oldStartTime;
         private double oldDuration;
         private String oldDescription;
-        private double oldEffortLeft;
+        private double oldEffortLeftDifference;
 
         protected LogEditCommand(Log log, Person newLogger, LocalDateTime newStartDate,
-                                 double newDuration, String newDescription, double newEffortLeft) {
+                                 double newDuration, String newDescription, double newEffortLeftDifference) {
             this.log = log;
             this.logger = newLogger;
             this.startTime = newStartDate;
             this.duration = newDuration;
             this.description = newDescription;
-            this.effortLeft = newEffortLeft;
+            this.effortLeftDifference = newEffortLeftDifference;
 
             this.oldLogger = log.logger;
             this.oldStartTime = log.startTime;
             this.oldDuration = log.duration;
             this.oldDescription = log.description;
-            this.oldEffortLeft = log.effortLeft;
+            this.oldEffortLeftDifference = log.effortLeftDifference;
         }
 
 
@@ -319,7 +319,7 @@ public class Log extends SaharaItem implements Serializable {
             log.duration = duration;
             log.description = description;
             log.duration = duration;
-            log.effortLeft = effortLeft;
+            log.effortLeftDifference = effortLeftDifference;
         }
 
 
@@ -331,7 +331,7 @@ public class Log extends SaharaItem implements Serializable {
             this.startTime = oldStartTime;
             this.duration = oldDuration;
             this.description = oldDescription;
-            this.effortLeft = oldEffortLeft;
+            this.effortLeftDifference = oldEffortLeftDifference;
         }
 
 

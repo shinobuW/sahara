@@ -5,6 +5,7 @@ import org.junit.Assert;
 import seng302.group2.Global;
 
 /**
+ * A class to test the configuration
  * Created by Jordane on 16/04/2015.
  */
 public class ConfigurationTest extends TestCase {
