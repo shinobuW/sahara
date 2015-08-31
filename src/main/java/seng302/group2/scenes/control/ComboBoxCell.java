@@ -8,13 +8,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableCell;
 
 /**
+ * Custom TableCell which binds combo boxes to the cell for edits.
  * Created by swi67 on 31/08/15.
  */
 public class ComboBoxCell extends TableCell<Object, String> {
-    /**
-     * *A subclass of TableCell to bind combo box to the cell
-     * to allow for editing
-     */
     private ComboBox<Object> comboBox;
     private ObservableList items;
 
