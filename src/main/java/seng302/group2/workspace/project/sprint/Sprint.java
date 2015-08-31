@@ -216,53 +216,61 @@ public class Sprint extends SaharaItem {
         return logList;
     }
 
+    /**
+     * Gets all the logs current within the sprint. The log list includes the initial logs
+     * created when a new task is made.
+     *
+     * @return A list of logs of the tasks within a sprint.
+     */
+    public List<Log> getAllLogsWithInitialLogs() {
+        List<Log> logList = new ArrayList<>();
+        for (Task task : this.getAllTasks()) {
+            logList.add(task.getInitialLog());
+            for (Log log : task.getLogs()) {
+                logList.add(log);
+            }
+        }
+
+        Collections.sort(logList, new Comparator<Log>() {
+            @Override
+            public int compare(Log o1, Log o2) {
+                return o1.getStartDate().compareTo(o2.getStartDate());
+            }
+        });
+        return logList;
+    }
+
+    public double totalEffortLeft() {
+        double totalEffort = 0;
+        for (Task task : this.getAllTasks()) {
+            totalEffort += Math.abs(task.getInitialLog().getEffortLeftDifferenceInMinutes())                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ;
+        }
+        return totalEffort;
+    }
+
 //    /**
-//     * Gets all the logs current within the sprint. The log list includes the initial logs
-//     * created when a new task is made.
-//     *
-//     * @return A list of logs of the tasks within a sprint.
+//     * Gets the total initial left across all tasks in this sprint
+//     * @return total initial left in minutes
 //     */
-//    public List<Log> getAllLogsWithIntialLogs() {
-//        List<Log> logList = new ArrayList<>();
-//        for (Task task : this.getAllTasks()) {
-//            logList.add(task.getInitialLog());
-//            for (Log log : task.getLogs()) {
-//                logList.add(log);
-//            }
+//    public double getTotalInitialLeft() {
+//        double total = 0;
+//        for (Task t : this.getAllTasks()) {
+//            total += t.getInitialEffortLeft();
 //        }
-//
-//        Collections.sort(logList, new Comparator<Log>() {
-//            @Override
-//            public int compare(Log o1, Log o2) {
-//                return o1.getStartDate().compareTo(o2.getStartDate());
-//            }
-//        });
-//        return logList;
+//        return total;
 //    }
-
-    /**
-     * Gets the total initial left across all tasks in this sprint
-     * @return total initial left in minutes
-     */
-    public double getTotalInitialLeft() {
-        double total = 0;
-        for (Task t : this.getAllTasks()) {
-            total += t.getInitialEffortLeft();
-        }
-        return total;
-    }
-
-    /**
-     * Gets the total initial left across all tasks in this sprint
-     * @return total initial left in hours
-     */
-    public double getTotalInitialLeftInHours() {
-        double total = 0;
-        for (Task t : this.getAllTasks()) {
-            total += t.getInitialEffortLeft();
-        }
-        return total / 60;
-    }
+//
+//    /**
+//     * Gets the total initial left across all tasks in this sprint
+//     * @return total initial left in hours
+//     */
+//    public double getTotalInitialLeftInHours() {
+//        double total = 0;
+//        for (Task t : this.getAllTasks()) {
+//            total += t.getInitialEffortLeft();
+//        }
+//        return total / 60;
+//    }
 
     /**
      * Gets the serializable stories belonging to the sprint

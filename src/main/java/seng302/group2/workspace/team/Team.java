@@ -140,7 +140,10 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      * @return The teams project.
      */
     public Project getProject() {
-        return this.getCurrentAllocation().getProject();
+        if (this.getCurrentAllocation() != null) {
+            return this.getCurrentAllocation().getProject();
+        }
+        return null;
     }
 
     /**

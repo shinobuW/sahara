@@ -74,7 +74,7 @@ public class PersonInfoTab extends SearchableTab {
 
 
         ArrayList<Story> storyList = new ArrayList<>();
-        if (currentPerson.getTeam() != Global.getUnassignedTeam()) {
+        if (currentPerson.getTeam() != Global.getUnassignedTeam() && currentPerson.getTeam().getProject() != null) {
             storyList.addAll(currentPerson.getTeam().getProject().getAllStories());
         }
 
