@@ -11,10 +11,10 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.CustomComboBox;
-import seng302.group2.scenes.control.CustomDatePicker;
-import seng302.group2.scenes.control.CustomTextArea;
-import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.control.*;
+import seng302.group2.scenes.control.Tooltip;
+import seng302.group2.scenes.validation.ValidationStyle;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
@@ -136,17 +136,17 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
         teamComboBox.getComboBox().setItems(teamOptions);
 
         // Initially disabled as no team selected
-        teamComboBox.disable(true);
-        releaseComboBox.disable(true);
-        sprintStartDatePicker.disable(true);
-        sprintEndDatePicker.disable(true);
+        //teamComboBox.disable(true);
+        //releaseComboBox.disable(true);
+        //sprintStartDatePicker.disable(true);
+        //sprintEndDatePicker.disable(true);
 
         for (Project project : Global.currentWorkspace.getProjects()) {
             projectOptions.add(project);
         }
 
         grid.getChildren().addAll(shortNameCustomField, longNameCustomField, projectComboBox,
-                releaseComboBox, teamComboBox, sprintStartDatePicker, sprintEndDatePicker, descriptionTextArea);
+                releaseComboBox, sprintStartDatePicker, sprintEndDatePicker, teamComboBox, descriptionTextArea);
 
         //Add grid of controls to dialog
         this.getDialogPane().setContent(grid);
@@ -176,9 +176,9 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                     releaseComboBox.setValue(null);
                     teamComboBox.disable(false);
                     teamComboBox.setValue(null);
-                    sprintStartDatePicker.disable(true);
+                    //sprintStartDatePicker.disable(true);
                     sprintStartDatePicker.setValue(null);
-                    sprintEndDatePicker.disable(true);
+                    //sprintEndDatePicker.disable(true);
                     sprintEndDatePicker.setValue(null);
 
 
@@ -186,6 +186,19 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
 
                     for (Release release : newValue.getReleases()) {
                         releaseOptions.add(release);
+                    }
+
+                    if (releaseOptions.size() == 0) {
+                        ValidationStyle.borderGlowRed(releaseComboBox.getComboBox());
+                        ValidationStyle.showMessage("No releases currently exist for this project - you will need"
+                                + " to create one in order to create a sprint for this project",
+                                releaseComboBox.getComboBox());
+                        releaseComboBox.setTooltip(new Tooltip("No releases currently exist for this project - "
+                                + "you will need to create one in order to create a sprint for this project"));
+                    }
+                    else {
+                        ValidationStyle.borderGlowNone(releaseComboBox.getComboBox());
+                        releaseComboBox.removeTooltip();
                     }
 
                     teamOptions.clear();
@@ -204,11 +217,42 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                                     Release oldValue, Release newValue) {
 
                     if (newValue != null) {
-                        sprintStartDatePicker.disable(false);
-                        sprintStartDatePicker.setValue(null);
-                        sprintEndDatePicker.disable(true);
-                        sprintEndDatePicker.setValue(null);
-
+                        if (sprintStartDatePicker.getValue() != null
+                                && newValue.getEstimatedDate().isBefore(sprintStartDatePicker.getValue())) {
+                            ValidationStyle.borderGlowRed(sprintStartDatePicker.getDatePicker());
+                            ValidationStyle.showMessage("The start date of the Sprint must be before the estimated"
+                                            + " release date of the Release: " + newValue.getEstimatedDate().toString(),
+                                    sprintStartDatePicker.getDatePicker());
+                            sprintStartDatePicker.setTooltip(new seng302.group2.scenes.control.Tooltip("The start date"
+                                    + " of the Sprint must be before the estimated release date of the Release: "
+                                    + newValue.getEstimatedDate().toString()));
+                            sprintStartDatePicker.setDisable(false);
+                            teamComboBox.setDisable(true);
+                        }
+                        else {
+                            ValidationStyle.borderGlowNone(sprintStartDatePicker.getDatePicker());
+                            sprintStartDatePicker.removeTooltip();
+                            sprintStartDatePicker.setDisable(false);
+                            teamComboBox.setDisable(false);
+                        }
+                        if (sprintEndDatePicker.getValue() != null
+                                && newValue.getEstimatedDate().isBefore(sprintEndDatePicker.getValue())) {
+                            ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
+                            ValidationStyle.showMessage("The end date of the Sprint must be before the estimated"
+                                            + " release date of the Release: " + newValue.getEstimatedDate().toString(),
+                                    sprintEndDatePicker.getDatePicker());
+                            sprintEndDatePicker.setTooltip(new seng302.group2.scenes.control.Tooltip("The end date of"
+                                    + " the Sprint must be before the estimated release date of the Release: "
+                                    + newValue.getEstimatedDate().toString()));
+                            sprintEndDatePicker.setDisable(false);
+                            teamComboBox.setDisable(true);
+                        }
+                        else {
+                            ValidationStyle.borderGlowNone(sprintEndDatePicker.getDatePicker());
+                            sprintEndDatePicker.removeTooltip();
+                            sprintEndDatePicker.setDisable(false);
+                            teamComboBox.setDisable(false);
+                        }
                         toggleCreate();
                     }
                 }
@@ -218,15 +262,94 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 @Override
                 public void changed(ObservableValue<? extends LocalDate> observable,
                                     LocalDate oldValue, LocalDate newValue) {
-                    if (endDateSelected() && (newValue != null)
+                    Team prevTeam = teamComboBox.getValue();
+
+                    ValidationStyle.borderGlowNone(sprintStartDatePicker.getDatePicker());
+                    sprintStartDatePicker.removeTooltip();
+
+
+                    if (newValue != null && releaseComboBox.getValue() != null
+                            && releaseComboBox.getValue().getEstimatedDate().isBefore(newValue)) {
+                        ValidationStyle.borderGlowRed(sprintStartDatePicker.getDatePicker());
+                        ValidationStyle.showMessage("The start date of the Sprint must be before the estimated"
+                                        + " release date of the Release: "
+                                        + releaseComboBox.getValue().getEstimatedDate().toString(),
+                                sprintStartDatePicker.getDatePicker());
+                        sprintStartDatePicker.setTooltip(new seng302.group2.scenes.control.Tooltip("The start date of"
+                                + " the Sprint must be before the estimated release date of the Release: "
+                                + releaseComboBox.getValue().getEstimatedDate().toString()));
+                        sprintStartDatePicker.setDisable(false);
+                        teamComboBox.setDisable(true);
+                    }
+                    if ((sprintEndDatePicker.getValue() != null) && (newValue != null)
                             && newValue.isAfter(sprintEndDatePicker.getValue())) {
-                        sprintEndDatePicker.disable(false);
-                        sprintEndDatePicker.setValue(null);
+                        sprintEndDatePicker.setDisable(false);
+                        ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
+                        ValidationStyle.showMessage("The end date of the Sprint must be after the start date",
+                                sprintEndDatePicker.getDatePicker());
+                        sprintEndDatePicker.setTooltip(new seng302.group2.scenes.control.Tooltip("The end date of the"
+                                + " Sprint must be after the start date"));
+                        //sprintEndDatePicker.setValue(null);
                         teamComboBox.setValue(null);
-                        teamComboBox.disable(true);
+                        teamComboBox.setDisable(true);
                     }
                     else if (newValue != null) {
-                        sprintEndDatePicker.disable(false);
+
+                        if (releaseComboBox.getValue() != null && sprintEndDatePicker.getValue() != null
+                                && releaseComboBox.getValue().getEstimatedDate().
+                                        isBefore(sprintEndDatePicker.getValue())) {
+                            ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
+                            ValidationStyle.showMessage("The end date of the Sprint must be before the estimated"
+                                            + " release date of the Release: "
+                                            + releaseComboBox.getValue().getEstimatedDate().toString(),
+                                    sprintEndDatePicker.getDatePicker());
+                            sprintEndDatePicker.setTooltip(new seng302.group2.scenes.control.Tooltip("The end date of"
+                                    + " the Sprint must be before the estimated release date of the Release: "
+                                    + releaseComboBox.getValue().getEstimatedDate().toString()));
+                            sprintEndDatePicker.setDisable(false);
+                            teamComboBox.setDisable(true);
+                        }
+                        else {
+                            ValidationStyle.borderGlowNone(sprintEndDatePicker.getDatePicker());
+                            sprintEndDatePicker.removeTooltip();
+                            sprintEndDatePicker.setDisable(false);
+                            teamOptions.clear();
+                            if (projectComboBox.getValue() != null && sprintStartDatePicker.getValue() != null
+                                    && sprintEndDatePicker.getValue() != null) {
+                                outer:
+                                for (Team team : projectComboBox.getValue().getAllTeams()) {
+                                    for (Allocation alloc : team.getProjectAllocations()) {
+
+                                        if (alloc.getStartDate().
+                                                isBefore((sprintStartDatePicker.getValue().plusDays(1)))
+                                                && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
+                                            teamOptions.add(team);
+                                            continue outer;
+
+                                        }
+                                    }
+                                }
+                            }
+                            teamComboBox.setDisable(false);
+                            teamComboBox.setValue(null);
+                        }
+                    }
+                    if (prevTeam != null && teamComboBox.getComboBox().getItems().contains(prevTeam)) {
+                        ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
+                        teamComboBox.removeTooltip();
+                        teamComboBox.setValue(prevTeam);
+                    }
+                    else if (sprintStartDatePicker.getValue() != null && sprintEndDatePicker.getValue() != null
+                            && teamComboBox.getComboBox().getItems().size() == 0) {
+                        ValidationStyle.borderGlowRed(teamComboBox.getComboBox());
+                        ValidationStyle.showMessage("There are no Teams allocated to this project at the start date"
+                                + " specified", teamComboBox.getComboBox());
+                        teamComboBox.setTooltip(new seng302.group2.scenes.control.Tooltip("There are no Teams allocated"
+                                + " to this project at the start date specified"));
+                    }
+                    else {
+                        ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
+                        teamComboBox.removeTooltip();
                     }
                     toggleCreate();
                 }
@@ -237,7 +360,82 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 @Override
                 public void changed(ObservableValue<? extends LocalDate> observable,
                                     LocalDate oldValue, LocalDate newValue) {
-                    toggleCreate();
+
+
+                    Team prevTeam = teamComboBox.getValue();
+
+                    ValidationStyle.borderGlowNone(sprintEndDatePicker.getDatePicker());
+                    sprintEndDatePicker.getDatePicker().setTooltip(null);
+                    if (newValue != null) {
+                        sprintEndDatePicker.setStyle(null);
+                        sprintEndDatePicker.getDatePicker().setTooltip(null);
+
+                        if (releaseComboBox.getValue() != null
+                                && releaseComboBox.getValue().getEstimatedDate().
+                                isBefore(sprintEndDatePicker.getValue())) {
+                            ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
+                            ValidationStyle.showMessage("The end date of the Sprint must be before the estimated"
+                                            + " release date of the Release: "
+                                            + releaseComboBox.getValue().getEstimatedDate().toString(),
+                                    sprintEndDatePicker.getDatePicker());
+                            sprintEndDatePicker.setTooltip(new seng302.group2.scenes.control.Tooltip("The end date of"
+                                    + " the Sprint must be before the estimated release date of the Release: "
+                                    + releaseComboBox.getValue().getEstimatedDate().toString()));
+                            sprintEndDatePicker.setDisable(false);
+                            teamComboBox.setDisable(true);
+                        }
+                        else if (sprintStartDatePicker.getValue() != null
+                                && newValue.isBefore(sprintStartDatePicker.getValue())) {
+                            ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
+                            ValidationStyle.showMessage("The end date of the Sprint must be after the start date",
+                                    sprintEndDatePicker.getDatePicker());
+                            sprintEndDatePicker.setTooltip(new seng302.group2.scenes.control.Tooltip("The end date of"
+                                    + " the Sprint must be after the start date"));
+                            sprintEndDatePicker.setDisable(false);
+                            teamComboBox.setDisable(true);
+                        }
+                        else {
+                            teamOptions.clear();
+
+                            if (projectComboBox.getValue() != null && sprintStartDatePicker.getValue() != null
+                                    && sprintEndDatePicker.getValue() != null) {
+                                outer:
+                                for (Team team : projectComboBox.getValue().getAllTeams()) {
+                                    for (Allocation alloc : team.getProjectAllocations()) {
+
+                                        if (alloc.getStartDate().
+                                                isBefore((sprintStartDatePicker.getValue().plusDays(1)))
+                                                && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
+                                            teamOptions.add(team);
+                                            continue outer;
+
+                                        }
+                                    }
+                                }
+                            }
+                            teamComboBox.setDisable(false);
+                            teamComboBox.setValue(null);
+
+                            if (prevTeam != null && teamComboBox.getComboBox().getItems().contains(prevTeam)) {
+                                ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
+                                teamComboBox.removeTooltip();
+                                teamComboBox.setValue(prevTeam);
+                            }
+                            else if (sprintStartDatePicker.getValue() != null && sprintEndDatePicker.getValue() != null
+                                    && teamComboBox.getComboBox().getItems().size() == 0) {
+                                ValidationStyle.borderGlowRed(teamComboBox.getComboBox());
+                                ValidationStyle.showMessage("There are no Teams allocated to this project at the start"
+                                        + " date specified", teamComboBox.getComboBox());
+                                teamComboBox.setTooltip(new seng302.group2.scenes.control.Tooltip("There are no Teams "
+                                        + "allocated to this project at the start date specified"));
+                            }
+                            else {
+                                ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
+                                teamComboBox.removeTooltip();
+                            }
+                        }
+                        toggleCreate();
+                    }
                 }
             });
 
