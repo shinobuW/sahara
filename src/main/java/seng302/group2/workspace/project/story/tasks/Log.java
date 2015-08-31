@@ -211,6 +211,8 @@ public class Log extends SaharaItem implements Serializable {
      */
     private class DeleteLogCommand implements Command {
         private Log log;
+        
+        private double oldEffortSpent;
 
         /**
          * Constructor for the log deletion command.
@@ -218,6 +220,7 @@ public class Log extends SaharaItem implements Serializable {
          */
         DeleteLogCommand(Log log) {
             this.log = log;
+            this.oldEffortSpent = log.getTask().getEffortSpent();
         }
 
 
@@ -226,6 +229,7 @@ public class Log extends SaharaItem implements Serializable {
          */
         public void execute() {
             this.log.task.getLogs().remove(this.log);
+            this.log.task.setEffortSpent((this.oldEffortSpent - this.log.duration));
         }
 
 
@@ -234,6 +238,7 @@ public class Log extends SaharaItem implements Serializable {
          */
         public void undo() {
             this.log.task.getLogs().add(this.log);
+            this.log.task.setEffortSpent(this.oldEffortSpent);
         }
 
 

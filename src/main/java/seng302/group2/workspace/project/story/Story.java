@@ -1075,6 +1075,7 @@ public class Story extends SaharaItem implements Serializable {
         private Story story;
         private Project proj;
         private Backlog backlog;
+        private Sprint sprint;
 
         /**
          * Contructor for a story deletion command.
@@ -1085,6 +1086,7 @@ public class Story extends SaharaItem implements Serializable {
             this.story = story;
             this.proj = story.getProject();
             this.backlog = story.getBacklog();
+            this.sprint = story.getSprint();
         }
 
         /**
@@ -1097,6 +1099,9 @@ public class Story extends SaharaItem implements Serializable {
             else if (proj != null) {
                 proj.getUnallocatedStories().remove(story);
             }
+            if (sprint != null) {
+                sprint.getStories().remove(story);
+            }
         }
 
         /**
@@ -1108,6 +1113,9 @@ public class Story extends SaharaItem implements Serializable {
             }
             else if (proj != null) {
                 proj.getUnallocatedStories().add(story);
+            }
+            if (sprint != null) {
+                sprint.getStories().add(story);
             }
         }
 
@@ -1139,7 +1147,15 @@ public class Story extends SaharaItem implements Serializable {
                     mapped_backlog = true;
                 }
             }
-            return mapped_backlog && mapped_project && mapped_story;
+            
+            boolean mapped_sprint = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equals(sprint)) {
+                    this.sprint = (Sprint) item;
+                    mapped_sprint = true;
+                }
+            }
+            return mapped_backlog && mapped_project && mapped_story && mapped_sprint;
         }
     }
 

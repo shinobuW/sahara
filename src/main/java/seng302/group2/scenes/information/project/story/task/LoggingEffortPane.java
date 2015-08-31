@@ -33,6 +33,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.Set;
+import seng302.group2.App;
 
 /**
  * Created by jml168 on 25/08/15.
@@ -75,18 +76,18 @@ public class LoggingEffortPane extends Pane {
         VBox content = new VBox(8);
         content.setPadding(new Insets(8));
 
-        SearchableTable<Log> taskTable = new SearchableTable<>();
-        taskTable.setEditable(false);
-        taskTable.setPrefWidth(400);
-        taskTable.setPrefHeight(200);
-        taskTable.setPlaceholder(new SearchableText("There are currently no logs in this task."));
-        taskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        SearchableTable<Log> logTable = new SearchableTable<>();
+        logTable.setEditable(false);
+        logTable.setPrefWidth(400);
+        logTable.setPrefHeight(200);
+        logTable.setPlaceholder(new SearchableText("There are currently no logs in this task."));
+        logTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         ObservableList<Log> data = task.getLogs();
 
         TableColumn loggerCol = new TableColumn("Logger");
         loggerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("logger"));
-        loggerCol.prefWidthProperty().bind(taskTable.widthProperty()
+        loggerCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
 
@@ -103,27 +104,27 @@ public class LoggingEffortPane extends Pane {
                         return property;
                     }
                 });
-        startTimeCol.prefWidthProperty().bind(taskTable.widthProperty()
+        startTimeCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
         startTimeCol.setSortType(TableColumn.SortType.ASCENDING);
 
 
         TableColumn descriptionCol = new TableColumn("Description");
         descriptionCol.setCellValueFactory(new PropertyValueFactory<Log, String>("description"));
-        descriptionCol.prefWidthProperty().bind(taskTable.widthProperty()
+        descriptionCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
 
         TableColumn durationCol = new TableColumn("Duration");
         durationCol.setCellValueFactory(new PropertyValueFactory<Log, String>("durationString"));
-        durationCol.prefWidthProperty().bind(taskTable.widthProperty()
+        durationCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
 
-        taskTable.setItems(data);
+        logTable.setItems(data);
         TableColumn[] columns = {loggerCol, startTimeCol, durationCol, descriptionCol};
-        taskTable.getColumns().setAll(columns);
-        taskTable.getSortOrder().add(startTimeCol);
+        logTable.getColumns().setAll(columns);
+        logTable.getSortOrder().add(startTimeCol);
 
 
         // Listener to disable columns being movable
@@ -212,9 +213,9 @@ public class LoggingEffortPane extends Pane {
         effortLeftField.getTextField().setText(task.getEffortLeftString());
         effortLeftField.getTextField().setPrefWidth(175);
 
-        personComboBox.prefWidthProperty().bind(taskTable.widthProperty()
+        personComboBox.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
-        startDatePicker.prefWidthProperty().bind(taskTable.widthProperty()
+        startDatePicker.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
         newLogFieldFirstRow.getChildren().addAll(personComboBox,
                 startDatePicker, startTimeHBox, durationTextField, effortLeftField);
@@ -342,6 +343,9 @@ public class LoggingEffortPane extends Pane {
                     }
 
                     effortLeftField.getTextField().setText(effortLeftString);
+                    //TODO bug with refreshing
+                    App.refreshMainScene();
+
 
                 }
                 else {
@@ -350,7 +354,7 @@ public class LoggingEffortPane extends Pane {
             });
 
         deleteButton.setOnAction((event) -> {
-                Log selectedLog = taskTable.getSelectionModel().getSelectedItem();
+                Log selectedLog = logTable.getSelectionModel().getSelectedItem();
                 if (selectedLog != null) {
 
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -365,7 +369,8 @@ public class LoggingEffortPane extends Pane {
                     Optional<ButtonType> result  = alert.showAndWait();
 
                     if (result.get() == buttonTypeYes) {
-                        //TODO: selectedLog.delete();
+                        logTable.getSelectionModel().getSelectedItem().deleteLog();
+                        App.refreshMainScene();
                     }
                     else if (result.get() == buttonTypeNo) {
                         event.consume();
@@ -373,7 +378,7 @@ public class LoggingEffortPane extends Pane {
                 }
             });
 
-        content.getChildren().add(taskTable);
+        content.getChildren().add(logTable);
         content.getChildren().add(newLogFields);
         content.getChildren().add(buttons);
 
