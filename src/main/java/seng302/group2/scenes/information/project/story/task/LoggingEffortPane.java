@@ -33,6 +33,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.Set;
+import seng302.group2.App;
 
 /**
  * Created by jml168 on 25/08/15.
@@ -342,6 +343,9 @@ public class LoggingEffortPane extends Pane {
                     }
 
                     effortLeftField.getTextField().setText(effortLeftString);
+                    //TODO bug with refreshing
+                    App.refreshMainScene();
+
 
                 }
                 else {
@@ -366,6 +370,7 @@ public class LoggingEffortPane extends Pane {
 
                     if (result.get() == buttonTypeYes) {
                         logTable.getSelectionModel().getSelectedItem().deleteLog();
+                        App.refreshMainScene();
                     }
                     else if (result.get() == buttonTypeNo) {
                         event.consume();
