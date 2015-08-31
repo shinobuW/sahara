@@ -1,8 +1,6 @@
 package seng302.group2.scenes.information.project.story;
 
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -119,7 +117,7 @@ public class StoryTaskTab extends SearchableTab {
 
         ObservableList<Task.TASKSTATE> states = observableArrayList();
         states.addAll(Task.TASKSTATE.values());
-        Callback<TableColumn, TableCell> stateCellFactory = col -> new ComboBoxEditingCell(states);
+        Callback<TableColumn, TableCell> stateCellFactory = col -> new ComboBoxCell(states);
         stateCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Task, String>,
                         ObservableValue<String>>() {
@@ -348,120 +346,7 @@ public class StoryTaskTab extends SearchableTab {
         return searchControls;
     }
 
-    /**
-     * *A subclass of TableCell to bind combo box to the cell
-     * to allow for editing
-     */
-    class ComboBoxEditingCell extends TableCell<Object, String> {
-        private ComboBox<Object> comboBox;
-        private ObservableList items;
 
-        /**
-         * Constructor
-         * @param itemList items to populate the combo box with
-         */
-        private ComboBoxEditingCell(ObservableList itemList) {
-            this.items = itemList;
-        }
-
-        /**
-         * Sets the cell to a combo box when focused on.
-         */
-        @Override
-        public void startEdit() {
-            if (!isEmpty()) {
-                super.startEdit();
-                createCombo();
-                setGraphic(comboBox);
-
-                if (!getText().isEmpty()) {
-                    comboBox.setValue(getType());
-                }
-                else {
-                    comboBox.setValue(null);
-                }
-                Platform.runLater(() -> {
-                        comboBox.requestFocus();
-                    });
-            }
-        }
-
-        /**
-         * Resets the cell to a label on cancel
-         */
-        @Override
-        public void cancelEdit() {
-            super.cancelEdit();
-            setGraphic(null);
-        }
-
-        /**
-         * Updates the item
-         * @param item the item to update to
-         * @param empty if the cell is empty
-         */
-        @Override
-        public void updateItem(String item, boolean empty) {
-            super.updateItem(item, empty);
-
-            if (empty) {
-                setText(null);
-                setGraphic(null);
-            }
-            else {
-                if (isEditing()) {
-                    if (comboBox != null) {
-                        comboBox.setValue(getType());
-                    }
-                    setText(getItem());
-                    setGraphic(comboBox);
-                }
-                else {
-                    setText(getItem());
-                    setGraphic(null);
-                }
-            }
-        }
-
-        /**
-         * Gets the selected item
-         * @return the selected item as a class instance
-         */
-        private Object getType() {
-            Object selected = null;
-            for (Object saharaItem : items) {
-                if (saharaItem.toString() == getItem()) {
-                    selected = saharaItem;
-                }
-            }
-            return selected;
-        }
-
-        /**
-         * Creates the combo box and populates it with the itemList. Updates the value in the cell.
-         */
-        private void createCombo() {
-            comboBox = new ComboBox<Object>(this.items);
-            comboBox.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
-            comboBox.focusedProperty().addListener(new ChangeListener<Boolean>() {
-                @Override
-                public void changed(ObservableValue<? extends Boolean> arg0,
-                                    Boolean arg1, Boolean arg2) {
-                    if (!arg2) {
-                        if (comboBox.getValue() != null) {
-                            commitEdit(comboBox.getValue().toString());
-                        }
-                        else {
-                            commitEdit("");
-                        }
-                    }
-                    else {
-                        updateItem(getItem(), false);
-                    }
-                }
-            });
-        }
-    }
 
     /**
      * A cell used to show the Assignee status.
@@ -676,7 +561,6 @@ public class StoryTaskTab extends SearchableTab {
     private Node createAssigneeNode(Task task) {
         // Assignee icon
         ImageView assigneeImage;
-        System.out.println("in");
         if (task.getAssignee() != null) {
             assigneeImage = new ImageView("icons/person.png");
             seng302.group2.scenes.control.Tooltip.create(task.getAssignee().getFullName(), assigneeImage, 50);
@@ -711,6 +595,7 @@ public class StoryTaskTab extends SearchableTab {
         assigneeCombo.getItems().addAll(availableAssignees);
         assigneeCombo.getSelectionModel().select(task.getAssignee());
         assigneeImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                System.out.println("weeeew");
                 if (assignPopOver.isShowing()) {
                     assignPopOver.hide();
                 }
