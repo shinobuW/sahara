@@ -274,6 +274,12 @@ public class Log extends SaharaItem implements Serializable {
         return false;
     }
 
+    public void edit(Person newLogger, LocalDateTime newStartDate,
+                     double newDuration, String newDescription, double newEffortLeft) {
+        LogEditCommand logEditCommand = new LogEditCommand(this, newLogger, newStartDate, newDuration, newDescription,
+                newEffortLeft);
+        Global.commandManager.executeCommand(logEditCommand);
+    }
 
 
     /**
@@ -311,7 +317,7 @@ public class Log extends SaharaItem implements Serializable {
 
 
         /**
-         * Executes/Redoes the changes of the person edit
+         * Executes/Redoes the changes of the log edit
          */
         public void execute() {
             log.logger = logger;
@@ -324,14 +330,14 @@ public class Log extends SaharaItem implements Serializable {
 
 
         /**
-         * Undoes the changes of the person edit
+         * Undoes the changes of the log edit
          */
         public void undo() {
             log.logger = oldLogger;
-            this.startTime = oldStartTime;
-            this.duration = oldDuration;
-            this.description = oldDescription;
-            this.effortLeft = oldEffortLeft;
+            log.startTime = oldStartTime;
+            log.duration = oldDuration;
+            log.description = oldDescription;
+            log.effortLeft = oldEffortLeft;
         }
 
 
