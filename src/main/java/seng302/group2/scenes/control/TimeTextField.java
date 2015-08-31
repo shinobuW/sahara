@@ -8,8 +8,8 @@ import seng302.group2.scenes.control.search.SearchableTextField;
 import java.util.regex.Pattern;
 
 /**
+ * spCustomised text field for time input
  * Created by swi67 on 11/08/15.
- * Customised text field for time input
  */
 public class TimeTextField extends SearchableTextField {
 

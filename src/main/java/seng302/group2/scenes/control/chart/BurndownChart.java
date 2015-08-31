@@ -1,6 +1,9 @@
 package seng302.group2.scenes.control.chart;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.chart.Axis;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import seng302.group2.workspace.project.sprint.Sprint;
@@ -58,12 +61,15 @@ public class BurndownChart extends LineChart {
 
         boolean sprintEndReached = false;
         while (!sprintEndReached) {
-            dailyEffortSpentMap.put(startDate, 0.0);
-            dailyEffortLeftMap.put(startDate, 0.0);
-            startDate = startDate.plusDays(1);
-            if (startDate.isAfter(currentSprint.getEndDate())) {
+            if (startDate.isAfter(currentSprint.getEndDate()) || startDate.isAfter(LocalDate.now())) {
                 sprintEndReached = true;
             }
+            else {
+                dailyEffortSpentMap.put(startDate, 0.0);
+                dailyEffortLeftMap.put(startDate, 0.0);
+                startDate = startDate.plusDays(1);
+            }
+
         }
 
         for (Log log : logList) {
@@ -90,14 +96,16 @@ public class BurndownChart extends LineChart {
         XYChart.Series effortLeftSeries = new XYChart.Series();
         effortLeftSeries.setName("Effort Left");
 
+        System.out.println(dailyEffortLeftMap);
+
         for (LocalDate d : dailyEffortLeftMap.keySet()) {
+            System.out.println(dailyEffortLeftMap.get(d));
             effortLeft -= dailyEffortLeftMap.get(d);
             String monthStr = d.getMonth().toString().substring(0, 3);
             effortLeftSeries.getData().add(new XYChart.Data<>(monthStr + " " + d.getDayOfMonth(), effortLeft));
-
-
         }
 
+        System.out.println(effortLeftSeries.getData());
 
         this.getData().add(effortSpentSeries);
         this.getData().add(effortLeftSeries);
