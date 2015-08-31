@@ -95,12 +95,12 @@ public class PersonEditTab extends SearchableTab {
         ObservableList<Skill> dialogSkills = observableArrayList();
         ObservableList<Skill> dialogSkillsCopy = observableArrayList();
 
-        SearchableListView skillsBox = new SearchableListView(dialogSkills);
+        SearchableListView skillsBox = new SearchableListView<>(dialogSkills);
         skillsBox.setPrefHeight(192);
         skillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         skillsBox.setMaxWidth(275);
 
-        CustomComboBox<Team> teamBox = new CustomComboBox("Team: ");
+        CustomComboBox<Team> teamBox = new CustomComboBox<>("Team: ");
         teamBox.getComboBox().setItems(Global.currentWorkspace.getTeams());
         teamBox.setValue(currentPerson.getTeam());
 
@@ -113,8 +113,8 @@ public class PersonEditTab extends SearchableTab {
         buttons.alignmentProperty().set(Pos.TOP_LEFT);
         buttons.getChildren().addAll(btnDone, btnCancel);
 
-        Button btnAdd = new Button("<-");
-        Button btnDelete = new Button("->");
+        Button btnAdd = new Button("<");
+        Button btnDelete = new Button(">");
 
         VBox skillsButtons = new VBox();
         skillsButtons.spacingProperty().setValue(10);

@@ -59,7 +59,7 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
         CustomDatePicker releaseDatePicker = new CustomDatePicker("Estimated Release Date:", false);
-        CustomComboBox<Project> projectComboBox = new CustomComboBox("Project:", true);
+        CustomComboBox<Project> projectComboBox = new CustomComboBox<>("Project:", true);
         projectComboBox.getComboBox().setItems(Global.currentWorkspace.getProjects());
         if (defaultProject == null) {
             projectComboBox.setValue(Global.currentWorkspace.getProjects().get(0));

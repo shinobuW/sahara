@@ -50,8 +50,8 @@ public class TeamInfoTab extends SearchableTab {
         SearchableText desc = new SearchableText("Team Description: " + currentTeam.getDescription());
         SearchableText listViewLabel = new SearchableText("");
 
-        ObservableList<String> tempTeamString = personRoleToString(currentTeam.getPeople());
-        SearchableListView teamsPeopleBox = new SearchableListView<>(tempTeamString, searchControls);
+        ObservableList<Person> personList = currentTeam.getPeople();
+        SearchableListView<Person> teamsPeopleBox = new SearchableListView<>(personList, searchControls);
         teamsPeopleBox.setPrefHeight(192);
         teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         teamsPeopleBox.setMaxWidth(275);

@@ -41,7 +41,7 @@ public class BacklogEditTab extends SearchableTab {
     List<SearchableControl> searchControls = new ArrayList<>();
     private Backlog baseBacklog;
     private RequiredField shortNameField;
-    private CustomComboBox scaleComboBox;
+    private CustomComboBox<String> scaleComboBox;
 
     /**
      * Constructor for the BacklogEditTab class. This constructor creates a JavaFX ScrollPane
@@ -73,7 +73,7 @@ public class BacklogEditTab extends SearchableTab {
         descriptionField.setMaxWidth(275);
         SearchableText errorField = new SearchableText("");
 
-        scaleComboBox = new CustomComboBox("Estimation Scale:", true);
+        scaleComboBox = new CustomComboBox<String>("Estimation Scale:", true);
 
         for (String scaleName : Global.currentWorkspace.getEstimationScales().getEstimationScaleDict().keySet()) {
             scaleComboBox.addToComboBox(scaleName);
