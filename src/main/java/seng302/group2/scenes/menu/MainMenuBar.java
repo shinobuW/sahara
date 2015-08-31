@@ -615,10 +615,12 @@ public class MainMenuBar extends MenuBar {
                 if (Global.currentWorkspace.getProjects().isEmpty()) {
                     newReleaseItem.setDisable(true);
                     newStoryItem.setDisable(true);
+                    newSprintItem.setDisable(true);
                 }
                 else {
                     newReleaseItem.setDisable(false);
                     newStoryItem.setDisable(false);
+                    newSprintItem.setDisable(false);
                 }
             });
 
