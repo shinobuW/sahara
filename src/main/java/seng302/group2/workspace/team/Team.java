@@ -140,7 +140,10 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      * @return The teams project.
      */
     public Project getProject() {
-        return this.getCurrentAllocation().getProject();
+        if (this.getCurrentAllocation() != null) {
+            return this.getCurrentAllocation().getProject();
+        }
+        return null;
     }
 
     /**
@@ -291,10 +294,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      * @return if the team is the unassigned team
      */
     public boolean isUnassignedTeam() {
-        if (this.unassigned) {
-            return true;
-        }
-        return false;
+        return this.unassigned;
     }
 
 

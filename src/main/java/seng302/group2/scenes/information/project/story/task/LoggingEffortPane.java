@@ -17,6 +17,11 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
+import seng302.group2.scenes.control.CustomComboBox;
+import seng302.group2.scenes.control.CustomDatePicker;
+import seng302.group2.scenes.control.CustomTextField;
+import seng302.group2.scenes.control.TimeTextField;
+import seng302.group2.App;
 import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.control.search.SearchableTable;
 import seng302.group2.scenes.control.search.SearchableText;
@@ -34,6 +39,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.Set;
+import seng302.group2.App;
 
 /**
  * Created by jml168 on 25/08/15.
@@ -372,8 +378,9 @@ public class LoggingEffortPane extends Pane {
                     }
 
                     LocalDateTime dateTime = startDate.atTime(timeTextField.getHours(), timeTextField.getMinutes());
+                    double effortLeftDifference = task.getEffortLeft() - effortLeft;
                     Log newLog = new Log(task, descriptionTextArea.getText(),
-                            selectedPerson, duration, dateTime, effortLeft);
+                            selectedPerson, duration, dateTime, effortLeftDifference);
                     task.add(newLog, effortLeft);
 
                     String effortLeftString = "";

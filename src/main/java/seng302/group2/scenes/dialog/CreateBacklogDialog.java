@@ -34,9 +34,9 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
     Boolean correctShortName = Boolean.FALSE;
     Boolean correctLongName = Boolean.FALSE;
     Boolean required = true;
-    CustomComboBox<Project> projComboBox = new CustomComboBox<Project>("Project: ", required);
-    CustomComboBox<Person> productOwnerComboBox = new CustomComboBox<Person>("Product Owner: ",required);
-    CustomComboBox<String> scaleComboBox = new CustomComboBox<String>("Scale: ", required);
+    CustomComboBox<Project> projComboBox = new CustomComboBox<>("Project: ", required);
+    CustomComboBox<Person> productOwnerComboBox = new CustomComboBox<>("Product Owner: ",required);
+    CustomComboBox<String> scaleComboBox = new CustomComboBox<>("Scale: ", required);
 
     /**
      * Shows a backlog creation dialog. A default project is selected in the project combo box.

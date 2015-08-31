@@ -237,12 +237,7 @@ public class DateValidator {
      * @return A boolean showing if the date is in the future (true) or not (false).
      */
     public static boolean isFutureDate(LocalDate date) {
-        if (date.isAfter(LocalDate.now())) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return date.isAfter(LocalDate.now());
     }
 
     /**

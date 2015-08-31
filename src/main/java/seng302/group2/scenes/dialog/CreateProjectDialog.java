@@ -28,8 +28,8 @@ public class CreateProjectDialog extends Dialog<Map<String, String>> {
     /**
      * Displays the Dialog box for creating a workspace.
      */
-    Boolean correctShortName = Boolean.FALSE;
-    Boolean correctLongName = Boolean.FALSE;
+    private Boolean correctShortName = Boolean.FALSE;
+    private Boolean correctLongName = Boolean.FALSE;
 
     public CreateProjectDialog() {
         correctShortName = false;

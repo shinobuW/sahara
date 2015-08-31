@@ -222,7 +222,7 @@ public class Sprint extends SaharaItem {
      *
      * @return A list of logs of the tasks within a sprint.
      */
-    public List<Log> getAllLogsWithIntialLogs() {
+    public List<Log> getAllLogsWithInitialLogs() {
         List<Log> logList = new ArrayList<>();
         for (Task task : this.getAllTasks()) {
             logList.add(task.getInitialLog());
@@ -239,6 +239,38 @@ public class Sprint extends SaharaItem {
         });
         return logList;
     }
+
+    public double totalEffortLeft() {
+        double totalEffort = 0;
+        for (Task task : this.getAllTasks()) {
+            totalEffort += Math.abs(task.getInitialLog().getEffortLeftDifferenceInMinutes())                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ;
+        }
+        return totalEffort;
+    }
+
+//    /**
+//     * Gets the total initial left across all tasks in this sprint
+//     * @return total initial left in minutes
+//     */
+//    public double getTotalInitialLeft() {
+//        double total = 0;
+//        for (Task t : this.getAllTasks()) {
+//            total += t.getInitialEffortLeft();
+//        }
+//        return total;
+//    }
+//
+//    /**
+//     * Gets the total initial left across all tasks in this sprint
+//     * @return total initial left in hours
+//     */
+//    public double getTotalInitialLeftInHours() {
+//        double total = 0;
+//        for (Task t : this.getAllTasks()) {
+//            total += t.getInitialEffortLeft();
+//        }
+//        return total / 60;
+//    }
 
     /**
      * Gets the serializable stories belonging to the sprint

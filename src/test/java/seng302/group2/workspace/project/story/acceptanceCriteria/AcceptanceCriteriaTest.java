@@ -10,8 +10,8 @@ import seng302.group2.workspace.project.story.Story;
  * Created by swi67 on 31/05/15.
  */
 public class AcceptanceCriteriaTest {
-    Story testStory = new Story();
-    AcceptanceCriteria ac = new AcceptanceCriteria("This is a Demo Text", testStory);
+    private Story testStory = new Story();
+    private AcceptanceCriteria ac = new AcceptanceCriteria("This is a Demo Text", testStory);
 
     /**
      * Tests the validity of the constructor

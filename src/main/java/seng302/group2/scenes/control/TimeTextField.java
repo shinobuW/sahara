@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  */
 public class TimeTextField extends SearchableTextField {
 
-    enum Unit { HOURS, MINUTES };
+    enum Unit { HOURS, MINUTES }
     private final Pattern timePattern ;
     private final ReadOnlyIntegerWrapper hours ;
     private final ReadOnlyIntegerWrapper minutes ;

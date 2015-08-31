@@ -4,7 +4,7 @@ import org.junit.Test;
 
 public class AcEnumStringConverterTest {
 
-    AcEnumStringConverter converter = new AcEnumStringConverter();
+    private AcEnumStringConverter converter = new AcEnumStringConverter();
 
     @Test
     public void testFromString() throws Exception {

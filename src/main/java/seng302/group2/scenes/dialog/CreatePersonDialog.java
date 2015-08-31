@@ -39,10 +39,10 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  */
 public class CreatePersonDialog extends Dialog<Map<String, String>> {
 
-    Boolean correctDate = Boolean.TRUE;
-    Boolean correctShortName = Boolean.FALSE;
-    Boolean correctFirstName = Boolean.FALSE;
-    Boolean correctLastName = Boolean.FALSE;
+    private Boolean correctDate = Boolean.TRUE;
+    private Boolean correctShortName = Boolean.FALSE;
+    private Boolean correctFirstName = Boolean.FALSE;
+    private Boolean correctLastName = Boolean.FALSE;
     /**
      * Displays the Dialog box for creating a person.
      */
