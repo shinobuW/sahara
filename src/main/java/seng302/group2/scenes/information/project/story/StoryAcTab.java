@@ -143,9 +143,7 @@ public class StoryAcTab extends SearchableTab {
 
 
         ObservableList<AcceptanceCriteria.AcState> acStates = observableArrayList();
-        for (AcceptanceCriteria.AcState state : AcceptanceCriteria.AcState.values()) {
-            acStates.add(state);
-        }
+        Collections.addAll(acStates, AcceptanceCriteria.AcState.values());
 
 
         AcEnumStringConverter converter = new AcEnumStringConverter();

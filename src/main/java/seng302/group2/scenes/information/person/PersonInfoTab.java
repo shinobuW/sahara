@@ -65,7 +65,7 @@ public class PersonInfoTab extends SearchableTab {
         SearchableText taskLabel = new SearchableText("Tasks: ");
         ObservableList<Task.TASKSTATE> taskStates = observableArrayList(Task.TASKSTATE.values());
 
-        CustomComboBox<Object> filterComboBox = new CustomComboBox<Object>("");
+        CustomComboBox<Object> filterComboBox = new CustomComboBox<>("");
         filterComboBox.addToComboBox("All");
 
         for (Task.TASKSTATE state : taskStates) {
@@ -78,7 +78,7 @@ public class PersonInfoTab extends SearchableTab {
             storyList.addAll(currentPerson.getTeam().getProject().getAllStories());
         }
 
-        ArrayList<Task> taskList = new ArrayList<Task>();
+        ArrayList<Task> taskList = new ArrayList<>();
         ObservableList<Task> filteredList = observableArrayList();
         for (Story story : storyList) {
             for (Task task : story.getTasks()) {

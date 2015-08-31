@@ -34,14 +34,10 @@ public class ElementTreeContextMenu extends ContextMenu {
         SaharaItem selected = (SaharaItem) Global.selectedTreeItem.getValue();
 
         //"Edit" button event
-        editItem.setOnAction(e -> {
-                selected.switchToInfoScene(true);
-            });
+        editItem.setOnAction(e -> selected.switchToInfoScene(true));
 
         //"Delete" button event
-        deleteItem.setOnAction(e -> {
-                showDeleteDialog(selected);
-            });
+        deleteItem.setOnAction(e -> showDeleteDialog(selected));
 
         this.getItems().addAll(editItem, deleteItem);
 

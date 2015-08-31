@@ -67,8 +67,8 @@ public class TeamHistoryTab extends SearchableTab {
 
         Callback<TableColumn, TableCell> cellFactory = col -> new EditingCell();
 
-        TableColumn<Allocation, String> teamCol = new TableColumn<Allocation, String>("Project");
-        teamCol.setCellValueFactory(new PropertyValueFactory<Allocation, String>("Project"));
+        TableColumn<Allocation, String> teamCol = new TableColumn<>("Project");
+        teamCol.setCellValueFactory(new PropertyValueFactory<>("Project"));
         teamCol.prefWidthProperty().bind(historyTable.widthProperty()
                 .subtract(3).divide(100).multiply(40));
         teamCol.setResizable(false);

@@ -32,10 +32,10 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  * @author swi67
  */
 public class CreateStoryDialog extends Dialog<Map<String, String>> {
-    static Boolean correctShortName = Boolean.FALSE;
-    static Boolean correctCreator = Boolean.FALSE;
-    static Boolean correctLongName = Boolean.FALSE;
-    static Boolean correctPriority = Boolean.FALSE;
+    private static Boolean correctShortName = Boolean.FALSE;
+    private static Boolean correctCreator = Boolean.FALSE;
+    private static Boolean correctLongName = Boolean.FALSE;
+    private static Boolean correctPriority = Boolean.FALSE;
 
     /**
      * Constructor for the CreateStoryDialog class. Creates and displays a JavaFX

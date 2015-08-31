@@ -179,9 +179,7 @@ public class BacklogInfoTab extends SearchableTab {
         }
 
         // Events
-        btnEdit.setOnAction((event) -> {
-                currentBacklog.switchToInfoScene(true);
-            });
+        btnEdit.setOnAction((event) -> currentBacklog.switchToInfoScene(true));
 
         btnView.setOnAction((event) -> {
                 if (storyTable.getSelectionModel().getSelectedItem() != null) {
@@ -280,7 +278,7 @@ public class BacklogInfoTab extends SearchableTab {
         public Story getStory() {
             Story result = null;
             for (Story story : this.backlog.getStories()) {
-                if (story.getShortName() == getItem()) {
+                if (story.getShortName().equals(getItem())) {
                     result = story;
                 }
             }

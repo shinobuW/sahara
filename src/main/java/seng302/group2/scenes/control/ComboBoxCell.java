@@ -89,7 +89,7 @@ public class ComboBoxCell extends TableCell<Object, String> {
     private Object getType() {
         Object selected = null;
         for (Object saharaItem : items) {
-            if (saharaItem.toString() == getItem()) {
+            if (saharaItem.toString().equals(getItem())) {
                 selected = saharaItem;
             }
         }
@@ -100,7 +100,7 @@ public class ComboBoxCell extends TableCell<Object, String> {
      * Creates the combo box and populates it with the itemList. Updates the value in the cell.
      */
     private void createCombo() {
-        comboBox = new ComboBox<Object>(this.items);
+        comboBox = new ComboBox<>(this.items);
         comboBox.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
         comboBox.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override

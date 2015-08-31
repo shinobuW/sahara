@@ -126,7 +126,7 @@ public class BurndownChart extends LineChart {
     }
 
     public XYChart.Series effortLeftSeries(Sprint currentSprint) {
-        List<Log> logList = new ArrayList<Log>();
+        List<Log> logList = new ArrayList<>();
         logList = currentSprint.getAllLogs();
         return new Series<>();
 

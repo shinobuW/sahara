@@ -176,9 +176,7 @@ public class BacklogEditTab extends SearchableTab {
             });
 
 
-        btnCancel.setOnAction((event) -> {
-                baseBacklog.switchToInfoScene();
-            });
+        btnCancel.setOnAction((event) -> baseBacklog.switchToInfoScene());
 
         btnDone.setOnAction((event) -> {
                 if (isValidState()) { // validation

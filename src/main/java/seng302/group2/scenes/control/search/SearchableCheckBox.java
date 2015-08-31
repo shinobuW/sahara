@@ -73,13 +73,7 @@ public class SearchableCheckBox extends VBox implements SearchableControl {
      */
     @Override
     public boolean query(String query) {
-        if (cbLabel.query(query)) {
-            return true;
-        }
-        else {
-            return false;
-
-        }
+        return cbLabel.query(query);
     }
 
 }

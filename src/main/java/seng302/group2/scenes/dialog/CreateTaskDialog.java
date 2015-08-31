@@ -136,7 +136,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         backlogComboBox.disable(true);
         storyComboBox.disable(true);
 
-        CustomComboBox<Person> assigneeComboBox = new CustomComboBox<Person>("Assignee");
+        CustomComboBox<Person> assigneeComboBox = new CustomComboBox<>("Assignee");
         assigneeComboBox.getComboBox().setPrefWidth(175);
         assigneeComboBox.disable(true);
 

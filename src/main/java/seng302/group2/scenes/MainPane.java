@@ -70,7 +70,7 @@ public class MainPane extends BorderPane {
     public void refreshTree() {
         if (treeView == null) {
             // Create the tree view
-            treeView = new TreeViewWithItems<SaharaItem>(new TreeItem<>());
+            treeView = new TreeViewWithItems<>(new TreeItem<>());
             treeView.setShowRoot(false);
         }
 

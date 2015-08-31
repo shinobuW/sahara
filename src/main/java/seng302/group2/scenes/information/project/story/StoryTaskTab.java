@@ -140,7 +140,7 @@ public class StoryTaskTab extends SearchableTab {
                             Task.TASKSTATE newState = null;
 
                             for (Object state : states) {
-                                if (state.toString() == event.getNewValue()) {
+                                if (state.toString().equals(event.getNewValue())) {
                                     newState = (Task.TASKSTATE) state;
                                 }
                             }
@@ -385,7 +385,7 @@ public class StoryTaskTab extends SearchableTab {
         public Task getTask() {
             Task result = null;
             for (Task task : this.story.getTasks()) {
-                if (task.getShortName() == getItem()) {
+                if (task.getShortName().equals(getItem())) {
                     result = task;
                 }
             }
@@ -431,7 +431,7 @@ public class StoryTaskTab extends SearchableTab {
         public Task getTask() {
             Task result = null;
             for (Task task : this.story.getTasks()) {
-                if (task.getShortName() == getItem()) {
+                if (task.getShortName().equals(getItem())) {
                     result = task;
                 }
             }
@@ -734,7 +734,7 @@ public class StoryTaskTab extends SearchableTab {
         effortLeftField.setText(Double.toString(currentTask.getEffortLeft()));
 
 
-        CustomComboBox<Person> taskAssigneesList = new CustomComboBox<Person>("Assignee: ");
+        CustomComboBox<Person> taskAssigneesList = new CustomComboBox<>("Assignee: ");
         if (currentTask.getStory() != null && currentTask.getStory().getSprint() != null) {
             taskAssigneesList.getComboBox().setItems(currentTask.getStory().getSprint().getTeam().getPeople());
         }

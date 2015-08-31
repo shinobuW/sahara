@@ -291,10 +291,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      * @return if the team is the unassigned team
      */
     public boolean isUnassignedTeam() {
-        if (this.unassigned) {
-            return true;
-        }
-        return false;
+        return this.unassigned;
     }
 
 

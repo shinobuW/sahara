@@ -33,8 +33,8 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  */
 public class CreateReleaseDialog extends Dialog<Map<String, String>> {
 
-    Boolean correctShortName = Boolean.FALSE;
-    Boolean correctDate = Boolean.FALSE;
+    private Boolean correctShortName = Boolean.FALSE;
+    private Boolean correctDate = Boolean.FALSE;
 
     /**
      * Shows a dialog used for creating a new release. A default project is selected in the project combo box.
