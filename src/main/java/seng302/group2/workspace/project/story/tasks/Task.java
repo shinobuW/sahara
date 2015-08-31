@@ -42,8 +42,7 @@ public class Task extends SaharaItem implements Serializable {
     private List<Log> serializableLogs = new ArrayList<>();
     private double effortLeft = 0;
     private double effortSpent = 0;
-    private Log initialLog = new Log(this, "initial log (this should be hidden)", null, 0,
-            LocalDateTime.now(), effortLeft);
+    private Log initialLog;
 
     GeneralEnumStringConverter converter = new GeneralEnumStringConverter();
 
@@ -105,6 +104,8 @@ public class Task extends SaharaItem implements Serializable {
         this.effortLeft = effortLeft;
         this.effortSpent = (float) 0;
         this.assignee = person;
+        this.initialLog = new Log(this, "initial log (this should be hidden)", null, 0,
+                LocalDateTime.now(), effortLeft);
     }
 
     /**

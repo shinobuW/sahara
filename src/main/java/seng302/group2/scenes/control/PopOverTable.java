@@ -4,20 +4,17 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.PopOver;
-import seng302.group2.App;
-import seng302.group2.scenes.control.search.*;
+import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTable;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.scenes.information.project.story.task.LoggingEffortPane;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Task;
-
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Collections;
 
 import static javafx.collections.FXCollections.observableArrayList;
 

@@ -1,19 +1,19 @@
-.chart {
-    -fx-padding: 10px;
-}
+/*.chart {*/
+    /*-fx-padding: 10px;*/
+/*}*/
 
-.chart-content {
-    -fx-padding: 30px;
-}
+/*.chart-content {*/
+    /*-fx-padding: 30px;*/
+/*}*/
 
-.chart-legend {
-    -fx-background-color: transparent;
-}
+/*.chart-legend {*/
+    /*-fx-background-color: transparent;*/
+/*}*/
 /*.chart-series-line {*/
     /*-fx-stroke-width: 2px;*/
     /*-fx-effect: null;*/
 /*}*/
 
-.default-color0.chart-series-line { -fx-stroke: #ffffff; }
+/*.default-color0.chart-series-line { -fx-stroke: #ffffff; }*/
 
 

@@ -17,7 +17,6 @@ import seng302.group2.scenes.control.chart.StoryCompletenessBar;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
-import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,9 +1,6 @@
 package seng302.group2.scenes.control.chart;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.chart.Axis;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import seng302.group2.workspace.project.sprint.Sprint;
@@ -45,8 +42,9 @@ public class BurndownChart extends LineChart {
         double effortSpent = 0;
         List<Log> logList;
         logList = currentSprint.getAllLogsWithIntialLogs();
-
         LocalDate startDate = currentSprint.getStartDate();
+        LocalDate endDate = currentSprint.getEndDate();
+        System.out.println(startDate);
 
         /* Map which stores a (key, value) pair of (date: hours), where hours is the total n
         umber of hours logged on the date.
@@ -60,17 +58,25 @@ public class BurndownChart extends LineChart {
 
 
         boolean sprintEndReached = false;
+        LocalDate currDate = currentSprint.getStartDate();
         while (!sprintEndReached) {
-            if (startDate.isAfter(currentSprint.getEndDate()) || startDate.isAfter(LocalDate.now())) {
+            if (currDate.isAfter(currentSprint.getEndDate()) || currDate.isAfter(LocalDate.now())) {
                 sprintEndReached = true;
             }
             else {
-                dailyEffortSpentMap.put(startDate, 0.0);
-                dailyEffortLeftMap.put(startDate, 0.0);
-                startDate = startDate.plusDays(1);
+                dailyEffortSpentMap.put(currDate, 0.0);
+                dailyEffortLeftMap.put(currDate, 0.0);
+                currDate = currDate.plusDays(1);
             }
-
         }
+
+//        for (LocalDate currDate = currentSprint.getStartDate();
+//             currentSprint.getEndDate().isAfter(currDate) || LocalDate.now().isAfter(currDate);
+//             currDate = currDate.plusDays(1)) {
+//            dailyEffortSpentMap.put(startDate, 0.0);
+//            dailyEffortLeftMap.put(startDate, 0.0);
+//        }
+
 
         for (Log log : logList) {
             if (dailyEffortSpentMap.containsKey(log.getStartDate().toLocalDate())) {
@@ -83,6 +89,16 @@ public class BurndownChart extends LineChart {
                 effortLeft += log.getEffortLeftInHours();
             }
         }
+        System.out.println(dailyEffortLeftMap);
+
+        XYChart.Series referenceVelocitySeries = new XYChart.Series();
+        referenceVelocitySeries.setName("Reference Velocity");
+
+        String firstDayStr = startDate.getMonth().toString().substring(0, 3) + " " + startDate.getDayOfMonth();
+        System.out.println(firstDayStr);
+        String lastDayStr = endDate.getMonth().toString().substring(0, 3) + " " + endDate.getDayOfMonth();
+        referenceVelocitySeries.getData().add(new XYChart.Data<>(firstDayStr, effortLeft));
+        referenceVelocitySeries.getData().add(new XYChart.Data<>(lastDayStr, 0));
 
         XYChart.Series effortSpentSeries = new XYChart.Series();
         effortSpentSeries.setName("Effort Spent");
@@ -96,17 +112,15 @@ public class BurndownChart extends LineChart {
         XYChart.Series effortLeftSeries = new XYChart.Series();
         effortLeftSeries.setName("Effort Left");
 
-        System.out.println(dailyEffortLeftMap);
-
+        Double currentEffortLeft = 0.0;
         for (LocalDate d : dailyEffortLeftMap.keySet()) {
-            System.out.println(dailyEffortLeftMap.get(d));
-            effortLeft -= dailyEffortLeftMap.get(d);
+            currentEffortLeft += dailyEffortLeftMap.get(d);
             String monthStr = d.getMonth().toString().substring(0, 3);
-            effortLeftSeries.getData().add(new XYChart.Data<>(monthStr + " " + d.getDayOfMonth(), effortLeft));
+            effortLeftSeries.getData().add(new XYChart.Data<>(monthStr + " " + d.getDayOfMonth(), currentEffortLeft));
         }
 
-        System.out.println(effortLeftSeries.getData());
 
+        this.getData().add(referenceVelocitySeries);
         this.getData().add(effortSpentSeries);
         this.getData().add(effortLeftSeries);
     }

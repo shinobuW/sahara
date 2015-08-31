@@ -4,8 +4,6 @@ import javafx.scene.paint.Color;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class ColorUtilsTest {
 
     @Test

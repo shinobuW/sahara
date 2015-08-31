@@ -13,8 +13,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import seng302.group2.App;
-import seng302.group2.Global;
-import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
@@ -23,8 +21,6 @@ import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.util.validation.ShortNameValidator;
-import seng302.group2.workspace.SaharaItem;
-import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
 
