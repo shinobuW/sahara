@@ -70,7 +70,7 @@ public class StoryTaskTab extends SearchableTab {
 
         PopOverTable<Task> taskTable = new PopOverTable<>();
         taskTable.setEditable(true);
-        taskTable.setPrefWidth(700);
+        taskTable.setPrefWidth(1200);
         taskTable.setPrefHeight(200);
         taskTable.setPlaceholder(new SearchableText("There are currently no tasks in this story.", searchControls));
         taskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -203,6 +203,8 @@ public class StoryTaskTab extends SearchableTab {
         descriptionCol.setEditable(true);
         descriptionCol.setCellFactory(TextFieldTableCell.forTableColumn());
         descriptionCol.setCellValueFactory(new PropertyValueFactory<Task, String>("description"));
+        descriptionCol.setPrefWidth(250);
+
         descriptionCol.setOnEditCommit(
                 new EventHandler<TableColumn.CellEditEvent<Task, String>>() {
                     @Override
@@ -595,7 +597,6 @@ public class StoryTaskTab extends SearchableTab {
         assigneeCombo.getItems().addAll(availableAssignees);
         assigneeCombo.getSelectionModel().select(task.getAssignee());
         assigneeImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                System.out.println("weeeew");
                 if (assignPopOver.isShowing()) {
                     assignPopOver.hide();
                 }

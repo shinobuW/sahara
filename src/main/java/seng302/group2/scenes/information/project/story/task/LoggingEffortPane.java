@@ -2,10 +2,13 @@ package seng302.group2.scenes.information.project.story.task;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -14,10 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
-import seng302.group2.scenes.control.CustomComboBox;
-import seng302.group2.scenes.control.CustomDatePicker;
-import seng302.group2.scenes.control.CustomTextField;
-import seng302.group2.scenes.control.TimeTextField;
+import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.control.search.SearchableTable;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.validation.ValidationStyle;
@@ -77,7 +77,7 @@ public class LoggingEffortPane extends Pane {
         content.setPadding(new Insets(8));
 
         SearchableTable<Log> logTable = new SearchableTable<>();
-        logTable.setEditable(false);
+        logTable.setEditable(true);
         logTable.setPrefWidth(400);
         logTable.setPrefHeight(200);
         logTable.setPlaceholder(new SearchableText("There are currently no logs in this task."));
@@ -87,8 +87,55 @@ public class LoggingEffortPane extends Pane {
 
         TableColumn loggerCol = new TableColumn("Logger");
         loggerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("logger"));
+        loggerCol.setEditable(true);
         loggerCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
+
+        ObservableList<Person> availablePeople = FXCollections.observableArrayList();
+        Set<Team> availableTeams = task.getStory().getBacklog().getProject().getCurrentTeams();
+        for (Team team : availableTeams) {
+            availablePeople.addAll(team.getPeople());
+        }
+
+
+        Callback<TableColumn, TableCell> loggerColFactory = col -> new ComboBoxCell(availablePeople);
+        loggerCol.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Log, String>,
+                        ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<Log,
+                            String> log) {
+                        SimpleStringProperty property = new SimpleStringProperty();
+                        property.setValue(log.getValue().getLogger().toString());
+                        return property;
+                    }
+                });
+
+        loggerCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Log, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Log, String> event) {
+                        if (!event.getNewValue().isEmpty()) {
+                            Log currentLog = event.getTableView().getItems()
+                                    .get(event.getTablePosition().getRow());
+
+                            Person newLogger = null;
+
+                            for (Object person : availablePeople) {
+                                if (person.toString() == event.getNewValue()) {
+                                    newLogger = (Person) person;
+                                }
+                            }
+                            if (newLogger.toString() != event.getOldValue()) {
+                                currentLog.edit(newLogger, currentLog.getStartDate(), currentLog.getDurationInMinutes(),
+                                        currentLog.getDescription(),
+                                        currentLog.getEffortLeftDifferenceInMinutes());
+                            }
+                        }
+                    }
+                });
+
+        loggerCol.setCellFactory(loggerColFactory);
 
 
         TableColumn startTimeCol = new TableColumn("Date");

@@ -274,6 +274,20 @@ public class Log extends SaharaItem implements Serializable {
         return false;
     }
 
+    /**
+     * Edits the log using the commands to allow for undo-redo
+     * @param newLogger the logger to edit to 
+     * @param newStartDate the new start date to set
+     * @param newDuration the new duration to set
+     * @param newDescription the new description to set
+     * @param newEffortLeft the new effort left to set 
+     */
+    public void edit(Person newLogger, LocalDateTime newStartDate,
+                     double newDuration, String newDescription, double newEffortLeft) {
+        LogEditCommand logEditCommand = new LogEditCommand(this, newLogger, newStartDate, newDuration, newDescription,
+                newEffortLeft);
+        Global.commandManager.executeCommand(logEditCommand);
+    }
 
 
     /**
@@ -328,10 +342,10 @@ public class Log extends SaharaItem implements Serializable {
          */
         public void undo() {
             log.logger = oldLogger;
-            this.startTime = oldStartTime;
-            this.duration = oldDuration;
-            this.description = oldDescription;
-            this.effortLeftDifference = oldEffortLeftDifference;
+            log.startTime = oldStartTime;
+            log.duration = oldDuration;
+            log.description = oldDescription;
+            log.effortLeftDifference = oldEffortLeftDifference;
         }
 
 
