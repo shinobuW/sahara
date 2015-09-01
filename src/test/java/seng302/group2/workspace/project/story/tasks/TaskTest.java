@@ -65,6 +65,7 @@ public class TaskTest {
         Project project = new Project();
         Backlog backlog = new Backlog();
         Sprint sprint = new Sprint();
+        sprint.createTasksWithoutAStory();
         Story story = new Story();
         project.add(backlog);
         backlog.add(story);

@@ -55,6 +55,7 @@ public class SprintTest {
     @Test
     public void testPrepSerialization() {
         Sprint sprint = new Sprint();
+        sprint.createTasksWithoutAStory();
 
         Story story = new Story();
         sprint.getStories().add(story);
@@ -69,6 +70,7 @@ public class SprintTest {
     @Test
     public void testPostDeserialization() {
         Sprint sprint  = new Sprint();
+        sprint.createTasksWithoutAStory();
 
         Story story = new Story();
         sprint.getSerializableStories().add(story);
