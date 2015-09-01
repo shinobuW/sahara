@@ -469,14 +469,16 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                 return null;
             });
 
-        if (defaultProject == null) {
-            projectComboBox.setValue(Global.currentWorkspace.getProjects().get(0));
-        }
-        else {
-            projectComboBox.setValue(defaultProject);
-        }
         this.setResizable(false);
         this.show();
+
+        //TODO Find a way to set project default while still allowing the releaseCombo popover to appear upon creation
+//        if (defaultProject == null) {
+//            projectComboBox.setValue(Global.currentWorkspace.getProjects().get(0));
+//        }
+//        else {
+//            projectComboBox.setValue(defaultProject);
+//        }
 
     }
 
