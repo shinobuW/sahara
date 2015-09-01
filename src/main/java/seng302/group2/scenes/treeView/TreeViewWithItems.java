@@ -18,7 +18,10 @@ import seng302.group2.workspace.categories.Category;
 import seng302.group2.workspace.categories.RolesCategory;
 import seng302.group2.workspace.categories.subCategory.SubCategory;
 import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
+import seng302.group2.workspace.categories.subCategory.project.SprintCategory;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.role.Role;
 
 import java.util.HashMap;
@@ -152,6 +155,12 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
                             }
                         }
                         setContextMenu(new CategoryTreeContextMenu(PoExists));
+                    }
+                    if (selected instanceof SprintCategory) {
+                        boolean releasesExists = ((((Project) Global.selectedTreeItem.getParent().getValue())
+                                .getReleases().isEmpty()) ? false : true);
+
+                        setContextMenu(new CategoryTreeContextMenu(releasesExists));
                     }
                 }
                 else if (selected instanceof Category) {
