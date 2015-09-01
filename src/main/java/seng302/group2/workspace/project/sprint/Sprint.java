@@ -49,7 +49,7 @@ public class Sprint extends SaharaItem {
     public Sprint() {
         super("Untitled Sprint");
         //addListeners();
-        tasksWithoutStory = new Story(this);
+        //tasksWithoutStory = new Story(this);
         setInformationSwitchStrategy(new SprintInformationSwitchStrategy());
     }
 
@@ -78,9 +78,18 @@ public class Sprint extends SaharaItem {
         this.release = release;
 
         //addListeners();
-        tasksWithoutStory = new Story(this);
+//
+//        // TODO Fix this following statement. new Story(this); returns null.
+//        System.out.println(this);
+//        System.out.println("-------------");
+//        tasksWithoutStory = new Story(this);
 
         setInformationSwitchStrategy(new SprintInformationSwitchStrategy());
+    }
+
+    public void createTasksWithoutAStory(Sprint sprint) {
+        sprint.tasksWithoutStory = new Story(sprint);
+
     }
 
 

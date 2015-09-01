@@ -232,17 +232,11 @@ public class LoggingEffortPane extends Pane {
                         @Override
                         public void updateItem(LocalDate item, boolean empty) {
                             super.updateItem(item, empty);
+                            System.out.println(task.getStory().getSprint());
                             if (item.isBefore(task.getStory().getSprint().getStartDate())) {
                                 setDisable(true);
                                 setStyle("-fx-background-color: #ffc0cb;");
                             }
-                            else {
-                                long p = ChronoUnit.DAYS.between(LocalDate.now(), item);
-                                setTooltip(new Tooltip(
-                                                "Sprint duration: " + p + " days.")
-                                );
-                            }
-
                         }
                     };
                 }

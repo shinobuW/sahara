@@ -141,6 +141,7 @@ public class Story extends SaharaItem implements Serializable {
         this.ready = true;
         this.colour = STORYCOLOUR.DEFAULT;
         this.tasksWithoutStory = true;
+        //System.out.println("story " + this);
 
         setInformationSwitchStrategy(new StoryInformationSwitchStrategy());
     }
