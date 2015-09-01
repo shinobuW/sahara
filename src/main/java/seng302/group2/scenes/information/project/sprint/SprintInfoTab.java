@@ -131,39 +131,32 @@ public class SprintInfoTab extends SearchableTab {
     private VBox createStoryTitlePanes(Sprint currentSprint) {
         final VBox stackedStoryTitlePanes = new VBox();
 
+        List<Story> stories = new ArrayList<>();
+        stories.addAll(currentSprint.getStories().sorted(Story.StoryPriorityComparator));
+        stories.add(currentSprint.getUnallocatedTasksStory());
 
-        if (currentSprint.getStories().size() != 0) {
-
-            List<Story> stories = new ArrayList<>();
-            stories.addAll(currentSprint.getStories().sorted(Story.StoryPriorityComparator));
-            stories.add(currentSprint.getUnallocatedTasksStory());
-
-            for (Story story : stories) {
-                VBox VtaskBox = new VBox(30);
-                VBox taskBox = new VBox(4);
-                if (story.getTasks().size() != 0) {
-                    VtaskBox.getChildren().add(new StoryCompletenessBar(story));
-                    for (Task task : story.getTasks().sorted(Task.TaskNameComparator)) {
-                        taskBox.getChildren().add(new ScrumBoardTaskCellNode(task));
-                    }
+        for (Story story : stories) {
+            VBox VtaskBox = new VBox(30);
+            VBox taskBox = new VBox(4);
+            if (story.getTasks().size() != 0) {
+                VtaskBox.getChildren().add(new StoryCompletenessBar(story));
+                for (Task task : story.getTasks().sorted(Task.TaskNameComparator)) {
+                    taskBox.getChildren().add(new ScrumBoardTaskCellNode(task));
                 }
-                else {
-                    taskBox.getChildren().add(new SearchableText("This story currently has no tasks.", searchControls));
-                }
-                VtaskBox.getChildren().add(taskBox);
-                TitledPane storyPane = new TitledPane("[" + story.getEstimate() + "] "
-                        + story.getShortName() + " - " + story.getReadyString(), VtaskBox);
-
-                storyPane.setPrefHeight(30);
-                storyPane.setExpanded(false);
-                storyPane.setAnimated(true);
-                stackedStoryTitlePanes.getChildren().add(storyPane);
-
             }
+            else {
+                taskBox.getChildren().add(new SearchableText("This story currently has no tasks.", searchControls));
+            }
+            VtaskBox.getChildren().add(taskBox);
+            TitledPane storyPane = new TitledPane("[" + story.getEstimate() + "] "
+                    + story.getShortName() + " - " + story.getReadyString(), VtaskBox);
+
+            storyPane.setPrefHeight(30);
+            storyPane.setExpanded(false);
+            storyPane.setAnimated(true);
+            stackedStoryTitlePanes.getChildren().add(storyPane);
         }
-        else {
-            stackedStoryTitlePanes.getChildren().add(new SearchableText("This sprint currently has no stories."));
-        }
+
         return stackedStoryTitlePanes;
     }
 
