@@ -380,7 +380,7 @@ public class StoryTaskTab extends SearchableTab {
                 setGraphic(null);
             }
             else {
-                this.popUp = createAssigneeNode(getTask());
+                this.popUp = createAssigneeNode(getTask(), this);
                 setGraphic(popUp);
             }
         }
@@ -521,8 +521,9 @@ public class StoryTaskTab extends SearchableTab {
         return warningImage;
     }
 
-    private Node createAssigneeNode(Task task) {
+    private Node createAssigneeNode(Task task, TableCell tableCell) {
         // Assignee icon
+        HBox assigneeHBox = new HBox(10);
         ImageView assigneeImage;
         if (task.getAssignee() != null) {
             assigneeImage = new ImageView("icons/person.png");
@@ -533,12 +534,12 @@ public class StoryTaskTab extends SearchableTab {
             seng302.group2.scenes.control.Tooltip.create("This task is unassigned", assigneeImage, 50);
         }
 
-//        assigneeImage.setOnMouseEntered(me -> {
-//            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
-//        });
-//        assigneeImage.setOnMouseExited(me -> {
-//            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
-//        });
+        tableCell.setOnMouseEntered(me -> {
+                tableCell.setCursor(Cursor.HAND); //Change cursor to hand
+            });
+        tableCell.setOnMouseExited(me -> {
+                tableCell.setCursor(Cursor.DEFAULT); //Change cursor to hand
+            });
 
         PopOver assignPopOver = new PopOver();
         assignPopOver.setDetachedTitle(task.getShortName() + " Assignment");
@@ -597,8 +598,11 @@ public class StoryTaskTab extends SearchableTab {
                 assigneeSaveButton
         );
         assignPopOver.setContentNode(assigneeChangeNode);
-
-        return assigneeImage;
+        assigneeHBox.getChildren().addAll(assigneeImage);
+        if (task.getAssignee() != null) {
+            assigneeHBox.getChildren().add(new Label(task.getAssignee().toString()));
+        }
+        return assigneeHBox;
     }
 
     private void taskInfoPane(Task currentTask) {
