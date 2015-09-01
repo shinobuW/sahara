@@ -41,7 +41,6 @@ public class Sprint extends SaharaItem {
 
     private Story tasksWithoutStory;
 
-    private transient TaskCategory tasksCategory = new TaskCategory(this);
 
 
     /**

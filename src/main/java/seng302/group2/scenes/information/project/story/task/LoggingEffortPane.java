@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
+import seng302.group2.Global;
 import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.control.search.SearchableTable;
 import seng302.group2.scenes.control.search.SearchableText;
@@ -24,6 +25,7 @@ import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.conversion.DurationConverter;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
@@ -32,6 +34,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -92,7 +95,9 @@ public class LoggingEffortPane extends Pane {
                 .subtract(2).divide(100).multiply(60));
 
         ObservableList<Person> availablePeople = FXCollections.observableArrayList();
-        Set<Team> availableTeams = task.getStory().getBacklog().getProject().getCurrentTeams();
+        Set<Team> availableTeams = ((task.getStory().getBacklog() == null) ?
+                new HashSet<Team>() :
+                task.getStory().getBacklog().getProject().getCurrentTeams());
         for (Team team : availableTeams) {
             availablePeople.addAll(team.getPeople());
         }
@@ -339,10 +344,11 @@ public class LoggingEffortPane extends Pane {
             }
         });*/
 
-
         personComboBox.getComboBox().getItems().clear();
         try {
-            Set<Team> teams = task.getStory().getBacklog().getProject().getCurrentTeams();
+            Set<Team> teams = ((task.getStory().getBacklog() == null) ?
+                    task.getStory().getProject().getCurrentTeams() :
+                    task.getStory().getBacklog().getProject().getCurrentTeams());
             if (teams.isEmpty()) {
                 personComboBox.setDisable(true);
             }

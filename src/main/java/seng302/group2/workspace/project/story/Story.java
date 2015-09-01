@@ -137,6 +137,7 @@ public class Story extends SaharaItem implements Serializable {
         this.creator = "";
         this.priority = 0;
         this.project = sprint.getProject();
+        this.sprint = sprint;
         this.ready = true;
         this.colour = STORYCOLOUR.DEFAULT;
         this.tasksWithoutStory = true;
