@@ -179,6 +179,23 @@ public class StoryTaskTab extends SearchableTab {
         leftCol.setCellValueFactory(new PropertyValueFactory<Task, String>("effortLeftString"));
         leftCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
+        leftCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        leftCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Task, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Task, String> event) {
+                        Task selectedTask = event.getTableView().getItems().get(
+                                event.getTablePosition().getRow());
+                        if (!event.getNewValue().isEmpty() && event.getNewValue() != null) {
+                            selectedTask.edit(selectedTask.getShortName(), selectedTask.getDescription(),
+                                    selectedTask.getImpediments(), selectedTask.getState(), selectedTask.getAssignee(),
+                                    selectedTask.getLogs(),
+                                    DurationConverter.readDurationToMinutes(event.getNewValue()),
+                                    selectedTask.getEffortSpent());
+                        }
+                    }
+                }
+        );
 
         TableColumn spentCol = new TableColumn("Effort Spent");
         spentCol.setCellValueFactory(new PropertyValueFactory<Task, String>("effortSpentString"));
