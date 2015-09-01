@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
+import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
@@ -54,7 +55,7 @@ public class PersonInfoTab extends SearchableTab {
         SearchableText title = new SearchableTitle(currentPerson.getFirstName() + " " + currentPerson.getLastName());
 
         VBox skillVBox = new VBox(10);
-        SearchableText skill  = new SearchableText("Skills: ");
+        CustomInfoLabel skill  = new CustomInfoLabel("Skills: ", "");
         SearchableListView personSkillsBox = new SearchableListView<>(currentPerson.getSkills());
         personSkillsBox.setPrefHeight(192);
         personSkillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -62,7 +63,7 @@ public class PersonInfoTab extends SearchableTab {
 
         VBox taskVBox = new VBox(10);
         HBox titleAndCombo = new HBox(10);
-        SearchableText taskLabel = new SearchableText("Tasks: ");
+        CustomInfoLabel taskLabel = new CustomInfoLabel("Tasks: ", "");
         ObservableList<Task.TASKSTATE> taskStates = observableArrayList(Task.TASKSTATE.values());
 
         CustomComboBox<Object> filterComboBox = new CustomComboBox<>("");
@@ -94,13 +95,13 @@ public class PersonInfoTab extends SearchableTab {
         taskVBox.getChildren().addAll(titleAndCombo, taskBox);
         listViewHBox.getChildren().addAll(skillVBox, taskVBox);
 
-        SearchableText shortName = new SearchableText("Short Name: " + currentPerson.getShortName());
-        SearchableText emailAddress = new SearchableText("Email Address: " + currentPerson.getEmail());
-        SearchableText birthDate = new SearchableText("Birth Date: " + currentPerson.getDateString());
-        SearchableText desc = new SearchableText("Person Description: " + currentPerson.getDescription());
-        SearchableText team = new SearchableText("Team: " + currentPerson.getTeamName());
+        CustomInfoLabel shortName = new CustomInfoLabel("Short Name: ", currentPerson.getShortName());
+        CustomInfoLabel emailAddress = new CustomInfoLabel("Email Address: ", currentPerson.getEmail());
+        CustomInfoLabel birthDate = new CustomInfoLabel("Birth Date: ", currentPerson.getDateString());
+        CustomInfoLabel desc = new CustomInfoLabel("Person Description: ", currentPerson.getDescription());
+        CustomInfoLabel team = new CustomInfoLabel("Team: ", currentPerson.getTeamName());
         String roleString = currentPerson.getRole() == null ? "" : currentPerson.getRole().toString();
-        SearchableText role = new SearchableText("Role: " + roleString);
+        CustomInfoLabel role = new CustomInfoLabel("Role: ", roleString);
 
         Button btnEdit = new Button("Edit");
 

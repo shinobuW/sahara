@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Callback;
 import seng302.group2.App;
+import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.chart.StoryCompletenessBar;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -120,12 +121,12 @@ public class BacklogInfoTab extends SearchableTab {
 
         // Create controls
         SearchableText title = new SearchableTitle(currentBacklog.getLongName());
-        SearchableText shortName = new SearchableText("Short Name: " + currentBacklog.getShortName());
-        SearchableText description = new SearchableText("Backlog Description: " + currentBacklog.getDescription());
-        SearchableText project = new SearchableText("Project: " + currentBacklog.getProject());
-        SearchableText storiesTableLabel = new SearchableText("Stories: ");
-        SearchableText estScale = new SearchableText("Estimation Scale: " + currentBacklog.getScale());
-        SearchableText po = new SearchableText("");
+        CustomInfoLabel shortName = new CustomInfoLabel("Short Name: ", currentBacklog.getShortName());
+        CustomInfoLabel description = new CustomInfoLabel("Backlog Description: ", currentBacklog.getDescription());
+        CustomInfoLabel project = new CustomInfoLabel("Project: ", currentBacklog.getProject().toString());
+        CustomInfoLabel storiesTableLabel = new CustomInfoLabel("Stories: ", "");
+        CustomInfoLabel estScale = new CustomInfoLabel("Estimation Scale: ", currentBacklog.getScale());
+        CustomInfoLabel po = new CustomInfoLabel("Product Owner: ", currentBacklog.getProductOwner().toString());
         Separator separator = new Separator();
 
         HBox greenKeyHbox = new HBox(8);
@@ -166,13 +167,6 @@ public class BacklogInfoTab extends SearchableTab {
         buttonHBox.spacingProperty().setValue(10);
         buttonHBox.alignmentProperty().set(Pos.TOP_LEFT);
         buttonHBox.getChildren().addAll(btnView, btnHighlight);
-
-        if (currentBacklog.getProductOwner() == null) {
-            po.setText("Product Owner: (none)");
-        }
-        else {
-            po.setText("Product Owner: " + currentBacklog.getProductOwner());
-        }
 
         if (highlightMode) {
             basicInfoPane.getChildren().add(keyBox);

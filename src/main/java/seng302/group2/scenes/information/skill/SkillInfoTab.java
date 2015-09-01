@@ -1,13 +1,16 @@
 package seng302.group2.scenes.information.skill;
 
+import com.sun.javafx.font.freetype.HBGlyphLayout;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
@@ -40,10 +43,12 @@ public class SkillInfoTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
+
+        CustomInfoLabel desc = new CustomInfoLabel("Description: ", currentSkill.getDescription());
         // Create controls
         SearchableText title = new SearchableTitle(currentSkill.getShortName());
-        SearchableText desc = new SearchableText("Description: " + currentSkill.getDescription());
-        SearchableText listViewLabel = new SearchableText("People who have this skill:");
+        //SearchableText desc = new SearchableText("Description: " + currentSkill.getDescription());
+        CustomInfoLabel listViewLabel = new CustomInfoLabel("People who have this skill:", "");
         ObservableList<Person> peopleWithSkill = FXCollections.observableArrayList();
         for (Person p : Global.currentWorkspace.getPeople()) {
             if (p.getSkills().contains(currentSkill)) {

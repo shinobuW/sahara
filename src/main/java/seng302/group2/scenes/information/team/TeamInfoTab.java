@@ -9,6 +9,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
@@ -46,9 +47,9 @@ public class TeamInfoTab extends SearchableTab {
         this.setContent(wrapper);
 
         // Create Controls
-        SearchableText title = new SearchableTitle(currentTeam.getShortName());
-        SearchableText desc = new SearchableText("Team Description: " + currentTeam.getDescription());
-        SearchableText listViewLabel = new SearchableText("");
+        SearchableTitle title = new SearchableTitle(currentTeam.getShortName());
+        CustomInfoLabel desc = new CustomInfoLabel("Team Description: ", currentTeam.getDescription());
+        CustomInfoLabel listViewLabel = new CustomInfoLabel("", "");
 
         ObservableList<Person> personList = currentTeam.getPeople();
         SearchableListView<Person> teamsPeopleBox = new SearchableListView<>(personList, searchControls);
@@ -89,21 +90,16 @@ public class TeamInfoTab extends SearchableTab {
 
         // Add a PO, SM,and Team Member label if the team is not the unassigned team.
         if (!currentTeam.isUnassignedTeam()) {
-            SearchableText poLabel = new SearchableText("");
-            SearchableText smLabel = new SearchableText("");
-            listViewLabel.setText("Team Members: ");
+            CustomInfoLabel poLabel = new CustomInfoLabel("Product Owner: ", "");
+            CustomInfoLabel smLabel = new CustomInfoLabel("Scrum Master: ", "");
+            listViewLabel.setLabel("Team Members: ");
+
             if (currentTeam.getProductOwner() != null) {
-                poLabel.setText("Product Owner: " + currentTeam.getProductOwner().toString());
-            }
-            else {
-                poLabel.setText("Product Owner: ");
+                poLabel.setValue(currentTeam.getProductOwner().toString());
             }
 
             if (currentTeam.getScrumMaster() != null) {
-                smLabel.setText("Scrum Master: " + currentTeam.getScrumMaster().toString());
-            }
-            else {
-                smLabel.setText("Scrum Master: ");
+                smLabel.setValue(currentTeam.getScrumMaster().toString());
             }
 
             basicInfoPane.getChildren().addAll(poLabel, smLabel);
@@ -113,7 +109,7 @@ public class TeamInfoTab extends SearchableTab {
         }
 
         else {
-            listViewLabel.setText("Unassigned People: ");
+            listViewLabel.setLabel("Unassigned People: ");
         }
 
         basicInfoPane.getChildren().addAll(listViewLabel, teamsPeopleBox, btnEdit);

@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
@@ -40,16 +41,16 @@ public class ReleaseInfoTab extends SearchableTab {
         this.setContent(wrapper);
 
         // Create controls
-        SearchableText title = new SearchableTitle(currentRelease.getShortName());
-        SearchableText description = new SearchableText("Release Description: " + currentRelease.getDescription());
-        SearchableText projectLabel = new SearchableText("Project: " + currentRelease.getProject().toString());
-
+        SearchableTitle title = new SearchableTitle(currentRelease.getShortName());
+        CustomInfoLabel description = new CustomInfoLabel("Release Description: ", currentRelease.getDescription());
         String releaseDateString = "";
         if (currentRelease.getEstimatedDate() != null) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             releaseDateString = currentRelease.getEstimatedDate().format(formatter);
         }
-        SearchableText releaseDate = new SearchableText("Estimated Release Date: " + releaseDateString);
+        CustomInfoLabel releaseDate = new CustomInfoLabel("Estimated Release Date: ", releaseDateString);
+        CustomInfoLabel projectLabel = new CustomInfoLabel("Project: ", currentRelease.getProject().toString());
+
 
         Button btnEdit = new Button("Edit");
 

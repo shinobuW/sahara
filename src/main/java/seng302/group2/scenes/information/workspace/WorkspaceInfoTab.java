@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
@@ -43,8 +44,8 @@ public class WorkspaceInfoTab extends SearchableTab {
         // Create Controls
         SearchableText title = new SearchableTitle(currentWorkspace.getLongName());
         Button btnEdit = new Button("Edit");
-        SearchableText shortName = new SearchableText("Short Name: " + currentWorkspace.getShortName());
-        SearchableText desc = new SearchableText("Workspace Description: " + currentWorkspace.getDescription());
+        CustomInfoLabel shortName = new CustomInfoLabel("Short Name: ", currentWorkspace.getShortName());
+        CustomInfoLabel desc = new CustomInfoLabel("Workspace Description: ", currentWorkspace.getDescription());
 
         // Events
         btnEdit.setOnAction((event) -> {

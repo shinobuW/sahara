@@ -7,6 +7,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.chart.StoryCompletenessBar;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
@@ -88,39 +89,49 @@ public class SprintInfoTab extends SearchableTab {
 
         final Separator separator = new Separator();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        basicInfoPane.getChildren().add(title);
-        basicInfoPane.getChildren().add(new SearchableText("Sprint Name: " + currentSprint.getLongName(),
-                searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Sprint Goal: " + currentSprint.getGoal(),
-                searchControls));
+
+        CustomInfoLabel sprintName = new CustomInfoLabel("Sprint Name: ", currentSprint.getLongName());
+        CustomInfoLabel sprintGoal = new CustomInfoLabel("Sprint Goal: ", currentSprint.getGoal());
         String startDateString = currentSprint.getStartDate().format(formatter);
-        basicInfoPane.getChildren().add(new SearchableText("Start Date: " + startDateString,
-                searchControls));
+        CustomInfoLabel sprintStart = new CustomInfoLabel("Start Date: ", startDateString);
         String endDateString = currentSprint.getEndDate().format(formatter);
-        basicInfoPane.getChildren().add(new SearchableText("End Date: " + endDateString,
-                searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Description: " + currentSprint.getDescription(),
-                searchControls));
-
-        basicInfoPane.getChildren().add(separator);
-
-        basicInfoPane.getChildren().add(new SearchableText("Team: " + currentSprint.getTeam(), searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Project: " + currentSprint.getProject(), searchControls));
-        basicInfoPane.getChildren().add(new SearchableText("Release: " + currentSprint.getRelease(), searchControls));
-
-        basicInfoPane.getChildren().add(new SearchableText("Stories: ", searchControls));
-        //basicInfoPane.getChildren().add(storyTable);
-
-        basicInfoPane.getChildren().add(expandableStoryPanes);
-
-        basicInfoPane.getChildren().add(btnEdit);
+        CustomInfoLabel sprintEnd = new CustomInfoLabel("End Date: ", endDateString);
+        CustomInfoLabel desc = new CustomInfoLabel("Description: ", currentSprint.getDescription());
+        CustomInfoLabel team = new CustomInfoLabel("Team: ", currentSprint.getTeam().toString());
+        CustomInfoLabel project = new CustomInfoLabel("Project: ", currentSprint.getProject().toString());
+        CustomInfoLabel release = new CustomInfoLabel("Release: ", currentSprint.getRelease().toString());
+        CustomInfoLabel stories = new CustomInfoLabel("Stories: ", "");
 
         btnEdit.setOnAction((event) -> currentSprint.switchToInfoScene(true));
 
-//        for (Story story : currentSprint.getStories()) {
-//            basicInfoPane.getChildren().add(new StoryVisualisation(story));
-//        }
-        Collections.addAll(searchControls, title);
+        basicInfoPane.getChildren().addAll(
+                title,
+                sprintName,
+                sprintGoal,
+                sprintStart,
+                sprintEnd,
+                desc,
+                separator,
+                team,
+                project,
+                release,
+                stories,
+                expandableStoryPanes,
+                btnEdit
+        );
+
+        Collections.addAll(searchControls,
+                title,
+                sprintName,
+                sprintGoal,
+                sprintStart,
+                sprintEnd,
+                desc,
+                team,
+                project,
+                release,
+                stories
+        );
     }
 
     /**

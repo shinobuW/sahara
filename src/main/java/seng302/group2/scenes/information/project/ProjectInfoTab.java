@@ -9,6 +9,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.team.Team;
@@ -58,10 +59,10 @@ public class ProjectInfoTab extends SearchableTab {
                 }
             });
 
-        SearchableText shortNameField = new SearchableText("Short Name: " + currentProject.getShortName());
-        SearchableText description = new SearchableText("Project Description: " + currentProject.getDescription());
-        SearchableText currentTeamsLabel = new SearchableText("Current Teams:");
-        SearchableText releasesLabel = new SearchableText("Releases:");
+        CustomInfoLabel shortNameField = new CustomInfoLabel("Short Name: ", currentProject.getShortName());
+        CustomInfoLabel description = new CustomInfoLabel("Project Description: ", currentProject.getDescription());
+        CustomInfoLabel currentTeamsLabel = new CustomInfoLabel("Current Teams:", "");
+        CustomInfoLabel releasesLabel = new CustomInfoLabel("Releases:", "");
 
 
 

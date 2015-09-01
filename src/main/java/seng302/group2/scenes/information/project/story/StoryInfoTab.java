@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
@@ -45,12 +46,12 @@ public class StoryInfoTab extends SearchableTab {
 
         Button btnEdit = new Button("Edit");
 
-        SearchableText description = new SearchableText("Story Description: " + currentStory.getDescription());
-        SearchableText project = new SearchableText("Project: " + currentStory.getProject().toString());
-        SearchableText priority = new SearchableText("Priority: " + currentStory.getPriority());
-        SearchableText estimate = new SearchableText("Estimate: " + currentStory.getEstimate());
-        SearchableText state = new SearchableText("State: " + currentStory.getReadyState());
-        SearchableText creator = new SearchableText("Story Creator: " + currentStory.getCreator());
+        CustomInfoLabel description = new CustomInfoLabel("Story Description: ", currentStory.getDescription());
+        CustomInfoLabel project = new CustomInfoLabel("Project: ", currentStory.getProject().toString());
+        CustomInfoLabel priority = new CustomInfoLabel("Priority: ", currentStory.getPriority().toString());
+        CustomInfoLabel estimate = new CustomInfoLabel("Estimate: ", currentStory.getEstimate());
+        CustomInfoLabel state = new CustomInfoLabel("State: ", currentStory.getReadyState());
+        CustomInfoLabel creator = new CustomInfoLabel("Story Creator: ", currentStory.getCreator());
 
         btnEdit.setOnAction((event) -> {
                 currentStory.switchToInfoScene(true);
