@@ -351,11 +351,20 @@ public class LoggingEffortPane extends Pane {
                 personComboBox.setDisable(true);
             }
             else {
-                personComboBox.setDisable(false);
+                boolean teamPopulated = false;
                 for (Team team : teams) {
-                    for (Person person : team.getPeople()) {
-                        personComboBox.getComboBox().getItems().add(person);
+                    teamPopulated = teamPopulated || !team.getPeople().isEmpty();
+                }
+                if (teamPopulated) {
+                    personComboBox.setDisable(false);
+                    for (Team team : teams) {
+                        for (Person person : team.getPeople()) {
+                            personComboBox.getComboBox().getItems().add(person);
+                        }
                     }
+                }
+                else {
+                    personComboBox.setDisable(true);
                 }
             }
         }
