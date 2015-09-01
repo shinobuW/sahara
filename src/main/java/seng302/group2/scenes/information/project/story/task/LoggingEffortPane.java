@@ -95,8 +95,8 @@ public class LoggingEffortPane extends Pane {
                 .subtract(2).divide(100).multiply(60));
 
         ObservableList<Person> availablePeople = FXCollections.observableArrayList();
-        Set<Team> availableTeams = ((task.getStory().getBacklog() == null) ?
-                new HashSet<Team>() :
+        Set<Team> availableTeams = ((task.getStory().getBacklog() == null)
+                ? new HashSet<Team>() :
                 task.getStory().getBacklog().getProject().getCurrentTeams());
         for (Team team : availableTeams) {
             availablePeople.addAll(team.getPeople());
@@ -346,8 +346,8 @@ public class LoggingEffortPane extends Pane {
 
         personComboBox.getComboBox().getItems().clear();
         try {
-            Set<Team> teams = ((task.getStory().getBacklog() == null) ?
-                    task.getStory().getProject().getCurrentTeams() :
+            Set<Team> teams = ((task.getStory().getBacklog() == null)
+                    ? task.getStory().getProject().getCurrentTeams() :
                     task.getStory().getBacklog().getProject().getCurrentTeams());
             if (teams.isEmpty()) {
                 personComboBox.setDisable(true);
