@@ -37,6 +37,15 @@ public class DeleteDialog {
      * @return if the user confirms for the element to be deleted
      */
     public static boolean showDeleteDialog(SaharaItem element) {
+        if (element.getClass() == Release.class) {
+            for (Sprint sprint : ((Release)element).getProject().getSprints()) {
+                if (sprint.getRelease() == element) {
+                    CustomDialog.showDialog("Cannot Delete Release", "The chosen release cannot be deleted"
+                            + " as it has one or more associated Sprints!", Alert.AlertType.WARNING);
+                    return false;
+                }
+            }
+        }
         ArrayList<String> dialogText;
         dialogText = getDeleteDialogText(element);
 

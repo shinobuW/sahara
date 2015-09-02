@@ -320,8 +320,8 @@ public class ProjectHistoryTab extends SearchableTab {
                 break;
             case ALLOCATION_DATES_WRONG_ORDER:
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.getDialogPane().setStyle(" -fx-max-width:450px; -fx-max-height: 70px; -fx-pref-width: 450px; "
-                        + "-fx-pref-height: 70px;");
+                alert.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; -fx-pref-width: 550px; "
+                        + "-fx-pref-height: 100px;");
                 alert.setTitle("Error");
                 alert.setHeaderText("Allocation Date Error");
                 alert.setContentText("The end date of your new allocation cannot be before the start"
@@ -330,11 +330,11 @@ public class ProjectHistoryTab extends SearchableTab {
                 break;
             case ALLOCATION_DATES_EQUAL:
                 Alert alertDatesEquals = new Alert(Alert.AlertType.ERROR);
-                alertDatesEquals.getDialogPane().setStyle(" -fx-max-width:500px; -fx-max-height: 100px; "
-                        + "-fx-pref-width: 500px; -fx-pref-height: 100px;");
+                alertDatesEquals.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; "
+                        + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
                 alertDatesEquals.setTitle("Error");
                 alertDatesEquals.setHeaderText("Allocation Date Error");
-                alertDatesEquals.setContentText("An allocation for that team with those start and end dates"
+                alertDatesEquals.setContentText("An allocation for that team with those start and end dates\n"
                         + " already exists!");
                 alertDatesEquals.showAndWait();
                 break;
