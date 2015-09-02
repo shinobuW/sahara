@@ -313,8 +313,6 @@ public class TaskTest {
      */
     @Test
     public void testAddLogsCommand() {
-
-
         Person aPerson = new Person();
 
         Project proj = new Project("A new Project", "Proj", "Proj");
