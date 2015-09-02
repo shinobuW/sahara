@@ -364,10 +364,8 @@ public class StoryTest {
     @Test
     public void testAddTask() {
         Person aPerson = new Person();
-
         Project proj = new Project("A new Project", "Proj", "Proj");
         Story story = new Story();
-
 
         proj.add(story);
         story.setProject(proj);
@@ -375,7 +373,6 @@ public class StoryTest {
         Task task1 = new Task("test task", "", story, aPerson, 0);
         Task task2 = new Task("test task", "", story, aPerson, 0);
         Task task3 = new Task("test task", "", story, aPerson, 0);
-
 
         story.add(task1);
         Assert.assertEquals(1, story.getTasks().size());
