@@ -80,7 +80,8 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                         @Override
                         public void updateItem(LocalDate item, boolean empty) {
                             super.updateItem(item, empty);
-                            if (releaseSelected() && item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
+                            if (releaseSelected() && releaseComboBox.getValue().getEstimatedDate() != null
+                                    && item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
                                 setDisable(true);
                                 setStyle("-fx-background-color: #ffc0cb;");
                             }
@@ -102,7 +103,8 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                                 setDisable(true);
                                 setStyle("-fx-background-color: #ffc0cb;");
                             }
-                            if (releaseSelected() && item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
+                            if (releaseSelected() && releaseComboBox.getValue().getEstimatedDate() != null
+                                    && item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
                                 setDisable(true);
                                 setStyle("-fx-background-color: #ffc0cb;");
                             }
@@ -131,9 +133,9 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
         releaseComboBox.getComboBox().setItems(releaseOptions);
 
         // Create team combo box.
-        ObservableList<Team> teamOptions = observableArrayList();
+        //ObservableList<Team> teamOptions = observableArrayList();
         teamComboBox = new CustomComboBox<>("Team:", true);
-        teamComboBox.getComboBox().setItems(teamOptions);
+        //teamComboBox.getComboBox().setItems(teamOptions);
 
         // Initially disabled as no team selected
         //teamComboBox.disable(true);
@@ -201,10 +203,10 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                         releaseComboBox.removeTooltip();
                     }
 
-                    teamOptions.clear();
+                    teamComboBox.clear();
 
                     for (Team team : newValue.getAllTeams()) {
-                        teamOptions.add(team);
+                        teamComboBox.addToComboBox(team);
                     }
 
                     toggleCreate();
@@ -217,7 +219,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                                     Release oldValue, Release newValue) {
 
                     if (newValue != null) {
-                        if (sprintStartDatePicker.getValue() != null
+                        if (sprintStartDatePicker.getValue() != null && newValue.getEstimatedDate() != null
                                 && newValue.getEstimatedDate().isBefore(sprintStartDatePicker.getValue())) {
                             ValidationStyle.borderGlowRed(sprintStartDatePicker.getDatePicker());
                             ValidationStyle.showMessage("The start date of the Sprint must be before the estimated"
@@ -235,7 +237,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                             sprintStartDatePicker.setDisable(false);
                             teamComboBox.setDisable(false);
                         }
-                        if (sprintEndDatePicker.getValue() != null
+                        if (sprintEndDatePicker.getValue() != null && newValue.getEstimatedDate() != null
                                 && newValue.getEstimatedDate().isBefore(sprintEndDatePicker.getValue())) {
                             ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
                             ValidationStyle.showMessage("The end date of the Sprint must be before the estimated"
@@ -269,6 +271,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
 
 
                     if (newValue != null && releaseComboBox.getValue() != null
+                            && releaseComboBox.getValue().getEstimatedDate() != null
                             && releaseComboBox.getValue().getEstimatedDate().isBefore(newValue)) {
                         ValidationStyle.borderGlowRed(sprintStartDatePicker.getDatePicker());
                         ValidationStyle.showMessage("The start date of the Sprint must be before the estimated"
@@ -296,6 +299,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                     else if (newValue != null) {
 
                         if (releaseComboBox.getValue() != null && sprintEndDatePicker.getValue() != null
+                                && releaseComboBox.getValue().getEstimatedDate() != null
                                 && releaseComboBox.getValue().getEstimatedDate().
                                         isBefore(sprintEndDatePicker.getValue())) {
                             ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
@@ -313,17 +317,16 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                             ValidationStyle.borderGlowNone(sprintEndDatePicker.getDatePicker());
                             sprintEndDatePicker.removeTooltip();
                             sprintEndDatePicker.setDisable(false);
-                            teamOptions.clear();
-                            if (projectComboBox.getValue() != null && sprintStartDatePicker.getValue() != null
-                                    && sprintEndDatePicker.getValue() != null) {
+                            teamComboBox.clear();
+                            if (projectComboBox.getValue() != null && sprintStartDatePicker.getValue() != null) {
                                 outer:
                                 for (Team team : projectComboBox.getValue().getAllTeams()) {
                                     for (Allocation alloc : team.getProjectAllocations()) {
 
                                         if (alloc.getStartDate().
                                                 isBefore((sprintStartDatePicker.getValue().plusDays(1)))
-                                                && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
-                                            teamOptions.add(team);
+                                                && alloc.getEndDate().isAfter(sprintStartDatePicker.getValue())) {
+                                            teamComboBox.addToComboBox(team);
                                             continue outer;
 
                                         }
@@ -339,7 +342,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                         teamComboBox.removeTooltip();
                         teamComboBox.setValue(prevTeam);
                     }
-                    else if (sprintStartDatePicker.getValue() != null && sprintEndDatePicker.getValue() != null
+                    else if (sprintStartDatePicker.getValue() != null
                             && teamComboBox.getComboBox().getItems().size() == 0) {
                         ValidationStyle.borderGlowRed(teamComboBox.getComboBox());
                         ValidationStyle.showMessage("There are no Teams allocated to this project at the start date"
@@ -370,7 +373,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                         sprintEndDatePicker.setStyle(null);
                         sprintEndDatePicker.getDatePicker().setTooltip(null);
 
-                        if (releaseComboBox.getValue() != null
+                        if (releaseComboBox.getValue() != null && releaseComboBox.getValue().getEstimatedDate() != null
                                 && releaseComboBox.getValue().getEstimatedDate().
                                 isBefore(sprintEndDatePicker.getValue())) {
                             ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
@@ -395,18 +398,17 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                             teamComboBox.setDisable(true);
                         }
                         else {
-                            teamOptions.clear();
+                            teamComboBox.clear();
 
-                            if (projectComboBox.getValue() != null && sprintStartDatePicker.getValue() != null
-                                    && sprintEndDatePicker.getValue() != null) {
+                            if (projectComboBox.getValue() != null && sprintStartDatePicker.getValue() != null) {
                                 outer:
                                 for (Team team : projectComboBox.getValue().getAllTeams()) {
                                     for (Allocation alloc : team.getProjectAllocations()) {
 
                                         if (alloc.getStartDate().
                                                 isBefore((sprintStartDatePicker.getValue().plusDays(1)))
-                                                && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
-                                            teamOptions.add(team);
+                                                && alloc.getEndDate().isAfter(sprintStartDatePicker.getValue())) {
+                                            teamComboBox.addToComboBox(team);
                                             continue outer;
 
                                         }
@@ -421,7 +423,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                                 teamComboBox.removeTooltip();
                                 teamComboBox.setValue(prevTeam);
                             }
-                            else if (sprintStartDatePicker.getValue() != null && sprintEndDatePicker.getValue() != null
+                            else if (sprintStartDatePicker.getValue() != null
                                     && teamComboBox.getComboBox().getItems().size() == 0) {
                                 ValidationStyle.borderGlowRed(teamComboBox.getComboBox());
                                 ValidationStyle.showMessage("There are no Teams allocated to this project at the start"

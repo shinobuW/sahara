@@ -13,11 +13,15 @@ import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.conversion.ColorUtils;
 import seng302.group2.util.reporting.ReportGenerator;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
+import seng302.group2.workspace.project.story.tasks.Log;
+import seng302.group2.workspace.project.story.tasks.Task;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -155,7 +159,7 @@ public class StoryTest {
      * Test undo/redo for adding Acceptance Criteria
      */
     @Test
-    public void testAdd() {
+    public void testAddACs() {
         story.add(ac);
         Assert.assertTrue(story.getAcceptanceCriteria().contains(ac));
         Global.commandManager.undo();
@@ -352,5 +356,36 @@ public class StoryTest {
         Assert.assertTrue(storyB.hasDependencyCycle());
         Assert.assertFalse(storyC.hasDependencyCycle());
         Assert.assertFalse(storyD.hasDependencyCycle());
+    }
+
+    /**
+     * Testing Adding Tasks to a Story.
+     */
+    @Test
+    public void testAddTask() {
+        Person aPerson = new Person();
+        Project proj = new Project("A new Project", "Proj", "Proj");
+        Story story = new Story();
+
+        proj.add(story);
+        story.setProject(proj);
+
+        Task task1 = new Task("test task", "", story, aPerson, 0);
+        Task task2 = new Task("test task", "", story, aPerson, 0);
+        Task task3 = new Task("test task", "", story, aPerson, 0);
+
+        story.add(task1);
+        Assert.assertEquals(1, story.getTasks().size());
+        Global.commandManager.undo();
+        Assert.assertEquals(0, story.getTasks().size());
+        Global.commandManager.redo();
+        Assert.assertEquals(1, story.getTasks().size());
+
+        story.add(task2);
+        Assert.assertEquals(2, story.getTasks().size());
+        Global.commandManager.undo();
+
+        story.add(task3);
+        Assert.assertEquals(2, story.getTasks().size());
     }
 }
