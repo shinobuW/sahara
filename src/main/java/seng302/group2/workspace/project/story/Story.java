@@ -818,12 +818,12 @@ public class Story extends SaharaItem implements Serializable {
         }
         storyElement.appendChild(dependenciesElement);
 
-        Element tasksElement = ReportGenerator.doc.createElement("tasks");
-        for (Task task : this.tasks) {
-            Element taskElement = task.generateXML();
-            tasksElement.appendChild(taskElement);
-        }
-        storyElement.appendChild(tasksElement);
+//        Element tasksElement = ReportGenerator.doc.createElement("tasks");
+//        for (Task task : this.tasks) {
+//            Element taskElement = task.generateXML();
+//            tasksElement.appendChild(taskElement);
+//        }
+//        storyElement.appendChild(tasksElement);
 
         return storyElement;
     }
