@@ -39,7 +39,6 @@ import seng302.group2.workspace.team.Team;
 import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * A tab on the story scene which shows the all the stories tasks and their status.
@@ -333,7 +332,13 @@ public class StoryTaskTab extends SearchableTab {
         addTaskBox.getChildren().addAll(task, shortNameCustomField, effortLeftField, assigneeComboBox, btnAdd);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctShortName = validateShortName(shortNameCustomField, null);
+                ValidationStyle.borderGlowNone(shortNameCustomField.getTextField());
+                correctShortName = !shortNameCustomField.getText().isEmpty();
+                if (!correctShortName) {
+                    ValidationStyle.borderGlowRed(shortNameCustomField.getTextField());
+                    ValidationStyle.showMessage("Short Name required",
+                            shortNameCustomField.getTextField());
+                }
                 btnAdd.setDisable(!(correctShortName && correctEffortLeft));
             });
 
