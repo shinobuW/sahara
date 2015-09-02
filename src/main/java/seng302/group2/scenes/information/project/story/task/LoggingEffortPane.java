@@ -8,7 +8,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -17,7 +17,10 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
-import seng302.group2.scenes.control.*;
+import seng302.group2.scenes.control.CustomComboBox;
+import seng302.group2.scenes.control.CustomDatePicker;
+import seng302.group2.scenes.control.CustomTextField;
+import seng302.group2.scenes.control.TimeTextField;
 import seng302.group2.scenes.control.search.SearchableTable;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.validation.ValidationStyle;
@@ -31,7 +34,6 @@ import seng302.group2.workspace.team.Team;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -101,7 +103,10 @@ public class LoggingEffortPane extends Pane {
         }
 
 
-        Callback<TableColumn, TableCell> loggerColFactory = col -> new ComboBoxCell(availablePeople);
+        //Callback<TableColumn, TableCell> loggerColFactory = col -> new ComboBoxCell(availablePeople);
+        loggerCol.setCellFactory(ComboBoxTableCell.forTableColumn(
+                availablePeople
+        ));
         loggerCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Log, String>,
                         ObservableValue<String>>() {
@@ -114,31 +119,20 @@ public class LoggingEffortPane extends Pane {
                     }
                 });
 
+
         loggerCol.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<Log, String>>() {
+                new EventHandler<TableColumn.CellEditEvent<Log, Person>>() {
                     @Override
-                    public void handle(TableColumn.CellEditEvent<Log, String> event) {
-                        if (!event.getNewValue().isEmpty()) {
-                            Log currentLog = event.getTableView().getItems()
-                                    .get(event.getTablePosition().getRow());
-
-                            Person newLogger = null;
-
-                            for (Object person : availablePeople) {
-                                if (person.toString() == event.getNewValue()) {
-                                    newLogger = (Person) person;
-                                }
-                            }
-                            if (newLogger.toString() != event.getOldValue()) {
-                                currentLog.edit(newLogger, currentLog.getStartDate(), currentLog.getDurationInMinutes(),
-                                        currentLog.getDescription(),
-                                        currentLog.getEffortLeftDifferenceInMinutes());
-                            }
-                        }
+                    public void handle(TableColumn.CellEditEvent<Log,
+                            Person> event) {
+                        Log currentLog = event.getTableView().getItems().get(
+                                event.getTablePosition().getRow());
+                        currentLog.edit(event.getNewValue(), currentLog.getStartDate(),
+                                currentLog.getDurationInMinutes(), currentLog.getDescription(),
+                                currentLog.getEffortLeftDifferenceInMinutes());
                     }
-                });
-
-        loggerCol.setCellFactory(loggerColFactory);
+                }
+        );
 
 
         TableColumn startTimeCol = new TableColumn("Date");

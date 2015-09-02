@@ -1,6 +1,8 @@
 package seng302.group2.scenes.information.project.story;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -11,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
@@ -110,6 +113,23 @@ public class StoryTaskTab extends SearchableTab {
         nameCol.setCellValueFactory(new PropertyValueFactory<Task, String>("shortName"));
         nameCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
+        nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Task, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Task, String> event) {
+                        Task selectedTask = event.getTableView().getItems().get(
+                                event.getTablePosition().getRow());
+                        if (!event.getNewValue().isEmpty() && event.getNewValue() != null) {
+                            selectedTask.edit(event.getNewValue(), selectedTask.getDescription(),
+                                    selectedTask.getImpediments(), selectedTask.getState(), selectedTask.getAssignee(),
+                                    selectedTask.getLogs(),
+                                    selectedTask.getEffortLeft(),
+                                    selectedTask.getEffortSpent());
+                        }
+                    }
+                }
+        );
 
         TableColumn stateCol = new TableColumn("State");
         stateCol.setCellValueFactory(new PropertyValueFactory<Task, String>("state"));
@@ -119,50 +139,32 @@ public class StoryTaskTab extends SearchableTab {
 
         ObservableList<Task.TASKSTATE> states = observableArrayList();
         states.addAll(Task.TASKSTATE.values());
-        Callback<TableColumn, TableCell> stateCellFactory = col -> new ComboBoxCell(states);
-        stateCol.setCellValueFactory(
-                new Callback<TableColumn.CellDataFeatures<Task, String>,
-                        ObservableValue<String>>() {
-                    @Override
-                    public ObservableValue<String> call(TableColumn.CellDataFeatures<Task,
-                            String> task) {
-                        SimpleStringProperty property = new SimpleStringProperty();
-                        property.setValue(task.getValue().getState().toString());
-                        return property;
-                    }
-                });
+        stateCol.setCellFactory(ComboBoxTableCell.forTableColumn(
+                states
+        ));
 
         stateCol.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<Task, String>>() {
+                new EventHandler<TableColumn.CellEditEvent<Task, Task.TASKSTATE>>() {
                     @Override
-                    public void handle(TableColumn.CellEditEvent<Task, String> event) {
-                        if (!event.getNewValue().isEmpty()) {
-                            Task currentTask = event.getTableView().getItems()
-                                    .get(event.getTablePosition().getRow());
-                            Task.TASKSTATE newState = null;
-
-                            for (Object state : states) {
-                                if (state.toString().equals(event.getNewValue())) {
-                                    newState = (Task.TASKSTATE) state;
-                                }
-                            }
-                            if (newState.toString() != event.getOldValue()) {
-                                currentTask.edit(currentTask.getShortName(), currentTask.getDescription(),
-                                    currentTask.getDescription(), newState, currentTask.getAssignee(),
-                                    currentTask.getLogs(), currentTask.getEffortLeft(),
-                                    currentTask.getEffortSpent());
-                            }
-                        }
+                    public void handle(TableColumn.CellEditEvent<Task,
+                            Task.TASKSTATE> event) {
+                        Task currentTask = event.getTableView().getItems().get(
+                                event.getTablePosition().getRow());
+                        currentTask.editImpedimentState(event.getNewValue(), currentTask.getImpediments());
                     }
-                });
+                }
+        );
 
-        stateCol.setCellFactory(stateCellFactory);
 
         TableColumn assigneesCol = new TableColumn("Assignee");
-//        assigneesCol.setCellValueFactory(new PropertyValueFactory<Task,
-//                Person>("assignee"));
         assigneesCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
+
+        ObservableList<Person> availablePeople = FXCollections.observableArrayList();
+        Set<Team> availableTeam = currentStory.getProject().getCurrentTeams();
+        for (Team team : availableTeam) {
+            availablePeople.addAll(team.getPeople());
+        }
 
         assigneesCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Task, String>,
                 ObservableValue<String>>() {
@@ -173,7 +175,28 @@ public class StoryTaskTab extends SearchableTab {
             }
         });
 
-        Callback<TableColumn, TableCell> assigneeCellFactory = col -> new AssigneeCell(currentStory);
+        assigneesCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Task, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Task, String> event) {
+                        Task selectedTask = event.getTableView().getItems().get(
+                             event.getTablePosition().getRow());
+                        Person selectedPerson = null;
+
+                        for (Person person : availablePeople) {
+                            if (event.getNewValue() == person.getShortName()) {
+                                selectedPerson = person;
+                            }
+                        }
+                        if (event.getNewValue() != null && event.getNewValue() != null) {
+                            selectedTask.editAssignee(selectedPerson);
+                        }
+                    }
+                });
+
+
+
+        Callback<TableColumn, TableCell> assigneeCellFactory = col -> new AssigneeCell(currentStory, availablePeople);
         assigneesCol.setCellFactory(assigneeCellFactory);
 
         TableColumn leftCol = new TableColumn("Effort Left");
@@ -301,12 +324,12 @@ public class StoryTaskTab extends SearchableTab {
         assigneeComboBox.setDisable(true);
 
         if (currentStory.getProject().getCurrentTeams() != null) {
-            Set<Team> currentTeams = currentStory.getProject().getCurrentTeams();
-            ObservableList<Person> availablePeople = FXCollections.observableArrayList();
-
-            for (Team team : currentTeams) {
-                availablePeople.addAll(team.getPeople());
-            }
+//            Set<Team> currentTeams = currentStory.getProject().getCurrentTeams();
+//            ObservableList<Person> availablePeople = FXCollections.observableArrayList();
+//
+//            for (Team team : currentTeams) {
+//                availablePeople.addAll(team.getPeople());
+//            }
 
             if (availablePeople.size() != 0) {
                 assigneeComboBox.getComboBox().getItems().addAll(availablePeople);
@@ -408,15 +431,18 @@ public class StoryTaskTab extends SearchableTab {
      * A cell used to show the Assignee status.
      */
     class AssigneeCell extends TableCell<Object, String> {
-        public Node popUp;
+        public Node assigneeHBox;
         public Story story;
+        private ComboBox<Object> comboBox;
+        private ObservableList items;
 
         /**
          * Constructor
          * @param story The currently selected story
          */
-        private AssigneeCell(Story story) {
+        private AssigneeCell(Story story, ObservableList itemList) {
             this.story = story;
+            this.items = itemList;
         }
 
         /**
@@ -425,16 +451,48 @@ public class StoryTaskTab extends SearchableTab {
          * @param item  the item to update to
          * @param empty if the cell is empty
          */
+//        @Override
+//        public void updateItem(String item, boolean empty) {
+//            super.updateItem(item, empty);
+//            if (empty || item == null) {
+//                setText(null);
+//                setGraphic(null);
+//            }
+//            else {
+//                this.popUp = createAssigneeNode(getTask(), this);
+//                setGraphic(popUp);
+//            }
+//        }
+
         @Override
         public void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
+
             if (empty || item == null) {
-                setText(null);
+
                 setGraphic(null);
             }
             else {
-                this.popUp = createAssigneeNode(getTask(), this);
-                setGraphic(popUp);
+                if (isEditing()) {
+                    System.out.println("is editing");
+                    if (comboBox != null) {
+                        comboBox.setValue(getType());
+                    }
+                    setGraphic(comboBox);
+                }
+                else {
+//                    setGraphic(this.assigneeHBox);
+                    if (getTask() != null) {
+                        this.assigneeHBox = createAssigneeNode(getTask(), this);
+                    }
+                    else if ((Task) getTableView().getSelectionModel().getSelectedItem() != null) {
+                        this.assigneeHBox =
+                                createAssigneeNode((Task) getTableView().getSelectionModel().getSelectedItem(), this);
+
+                    }
+                    setGraphic(assigneeHBox);
+
+                }
             }
         }
 
@@ -446,6 +504,66 @@ public class StoryTaskTab extends SearchableTab {
                 }
             }
             return result;
+        }
+
+        @Override
+        public void startEdit() {
+            if (!isEmpty()) {
+                super.startEdit();
+                createCombo();
+
+                if (getTask().getAssignee() != null) {
+                    System.out.println("this is meow");
+                    System.out.println(getTask().getAssignee());
+                    comboBox.setValue(getTask().getAssignee());
+                }
+                setGraphic(comboBox);
+                Platform.runLater(() -> {
+                        comboBox.requestFocus();
+                    });
+            }
+        }
+
+        @Override
+        public void cancelEdit() {
+            super.cancelEdit();
+            setGraphic(this.assigneeHBox);
+        }
+
+        private void createCombo() {
+            comboBox = new ComboBox<>(this.items);
+            comboBox.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+            comboBox.focusedProperty().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> arg0,
+                                    Boolean arg1, Boolean arg2) {
+                    if (!arg2) {
+                        if (comboBox.getValue() != null) {
+                            commitEdit(comboBox.getValue().toString());
+                        }
+                        else {
+                            commitEdit("");
+                        }
+                    }
+                    else {
+                        updateItem(getItem(), false);
+                    }
+                }
+            });
+        }
+
+        /**
+         * Gets the selected item
+         * @return the selected item as a class instance
+         */
+        private Object getType() {
+            Object selected = null;
+            for (Object saharaItem : items) {
+                if (saharaItem.toString().equals(getItem())) {
+                    selected = saharaItem;
+                }
+            }
+            return selected;
         }
 
     }
@@ -474,7 +592,7 @@ public class StoryTaskTab extends SearchableTab {
         @Override
         public void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
-            if (empty || item == null) {
+            if (empty || item == null || getTask() == null) {
                 setText(null);
                 setGraphic(null);
             }
@@ -574,10 +692,16 @@ public class StoryTaskTab extends SearchableTab {
         return warningImage;
     }
 
+    /**
+     * Creates a
+     * @param task currently selected task
+     * @param tableCell the cell the assignee node is set on
+     * @return
+     */
     private Node createAssigneeNode(Task task, TableCell tableCell) {
-        // Assignee icon
         HBox assigneeHBox = new HBox(10);
         ImageView assigneeImage;
+        System.out.println(task);
         if (task.getAssignee() != null) {
             assigneeImage = new ImageView("icons/person.png");
             seng302.group2.scenes.control.Tooltip.create(task.getAssignee().getFullName(), assigneeImage, 50);
