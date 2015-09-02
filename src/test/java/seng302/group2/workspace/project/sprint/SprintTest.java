@@ -50,6 +50,18 @@ public class SprintTest {
     }
 
     /**
+     * Testing Creating tasks without a Story.
+     */
+    @Test
+    public void testCreateTasksWithoutStory() {
+        Sprint sprint = new Sprint();
+        Assert.assertTrue(sprint.getUnallocatedTasksStory() == null);
+
+        sprint.createTasksWithoutAStory();
+        Assert.assertTrue(sprint.getUnallocatedTasksStory() != null);
+    }
+
+    /**
      * Tests the prepSerialization method of sprint
      */
     @Test
