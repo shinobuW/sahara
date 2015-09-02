@@ -286,16 +286,7 @@ public class Task extends SaharaItem implements Serializable {
         return this.logs;
     }
 
-    /**
-     * Sets the Person to be assigned to the task
-     * @param person the Person to be assigned
-     */
-    public void setAssignee(Person person) {
-        this.assignee = person;
-    }
-
-
-    /**
+   /**
      * Adds a log to the Tasks Logs list
      *  @param log The log to add
      *  @param effortLeft The new effort left for this task
@@ -332,38 +323,41 @@ public class Task extends SaharaItem implements Serializable {
      */
     @Override
     public Element generateXML() {
-        Element taskElement = ReportGenerator.doc.createElement("task");
-
-        //WorkSpace Elements
-        Element taskID = ReportGenerator.doc.createElement("ID");
-        taskID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
-        taskElement.appendChild(taskID);
-
-        Element taskShortName = ReportGenerator.doc.createElement("shortname");
-        taskShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
-        taskElement.appendChild(taskShortName);
-
-        Element taskDescription = ReportGenerator.doc.createElement("description");
-        taskDescription.appendChild(ReportGenerator.doc.createTextNode(description));
-        taskElement.appendChild(taskDescription);
-
-        Element taskState = ReportGenerator.doc.createElement("state");
-        taskState.appendChild(ReportGenerator.doc.createTextNode(state.toString()));
-        taskElement.appendChild(taskState);
-
-        Element taskAssignee = ReportGenerator.doc.createElement("assignee");
-        taskAssignee.appendChild(ReportGenerator.doc.createTextNode(assignee.getShortName()));
-        taskElement.appendChild(taskAssignee);
-
-        Element effortLeftElement = ReportGenerator.doc.createElement("effort-left");
-        effortLeftElement.appendChild(ReportGenerator.doc.createTextNode(Double.toString(effortLeft)));
-        taskElement.appendChild(effortLeftElement);
-        
-        Element effortSpentElement = ReportGenerator.doc.createElement("effort-spent");
-        effortSpentElement.appendChild(ReportGenerator.doc.createTextNode(Double.toString(effortSpent)));
-        taskElement.appendChild(effortSpentElement);
-        
-        return taskElement;
+//        Element taskElement = ReportGenerator.doc.createElement("task");
+//
+//        //WorkSpace Elements
+//        Element taskID = ReportGenerator.doc.createElement("ID");
+//        taskID.appendChild(ReportGenerator.doc.createTextNode(String.valueOf(id)));
+//        taskElement.appendChild(taskID);
+//
+//        Element taskShortName = ReportGenerator.doc.createElement("shortname");
+//        taskShortName.appendChild(ReportGenerator.doc.createTextNode(shortName));
+//        taskElement.appendChild(taskShortName);
+//
+//        Element taskDescription = ReportGenerator.doc.createElement("description");
+//        taskDescription.appendChild(ReportGenerator.doc.createTextNode(description));
+//        taskElement.appendChild(taskDescription);
+//
+//        Element taskState = ReportGenerator.doc.createElement("state");
+//        taskState.appendChild(ReportGenerator.doc.createTextNode(state.toString()));
+//        taskElement.appendChild(taskState);
+//
+//        Element taskAssignee = ReportGenerator.doc.createElement("assignee");
+//        if (assignee != null) {
+//            taskAssignee.appendChild(ReportGenerator.doc.createTextNode(assignee.toString()));
+//        }
+//        taskElement.appendChild(taskAssignee);
+//
+//        Element effortLeftElement = ReportGenerator.doc.createElement("effort-left");
+//        effortLeftElement.appendChild(ReportGenerator.doc.createTextNode(Double.toString(effortLeft)));
+//        taskElement.appendChild(effortLeftElement);
+//
+//        Element effortSpentElement = ReportGenerator.doc.createElement("effort-spent");
+//        effortSpentElement.appendChild(ReportGenerator.doc.createTextNode(Double.toString(effortSpent)));
+//        taskElement.appendChild(effortSpentElement);
+//
+//        return taskElement;
+        return null;
     }
 
     /**
