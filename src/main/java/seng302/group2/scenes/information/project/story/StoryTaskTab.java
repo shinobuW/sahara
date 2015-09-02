@@ -2,6 +2,7 @@ package seng302.group2.scenes.information.project.story;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -38,7 +39,6 @@ import seng302.group2.workspace.team.Team;
 import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  * A tab on the story scene which shows the all the stories tasks and their status.
@@ -49,6 +49,7 @@ public class StoryTaskTab extends SearchableTab {
     List<SearchableControl> searchControls = new ArrayList<>();
     static Boolean correctShortName = Boolean.FALSE;
     static Boolean correctEffortLeft = Boolean.FALSE;
+    static Boolean assigneeSelected = Boolean.FALSE;
     private VBox taskInfo;
 
     /**
@@ -293,17 +294,51 @@ public class StoryTaskTab extends SearchableTab {
         VBox addTaskBox = new VBox(10);
         SearchableText task = new SearchableText("Add Quick Tasks:", "-fx-font-weight: bold;");
 
-
-
         RequiredField shortNameCustomField = new RequiredField("Task Name:");
         RequiredField effortLeftField = new RequiredField("Effort left: ");
+        CustomComboBox<Person> assigneeComboBox = new CustomComboBox<Person>("Assignee", false);
+
+        assigneeComboBox.setDisable(true);
+
+        if (currentStory.getProject().getCurrentTeams() != null) {
+            Set<Team> currentTeams = currentStory.getProject().getCurrentTeams();
+            ObservableList<Person> availablePeople = FXCollections.observableArrayList();
+
+            for (Team team : currentTeams) {
+                availablePeople.addAll(team.getPeople());
+            }
+
+            if (availablePeople.size() != 0) {
+                assigneeComboBox.getComboBox().getItems().addAll(availablePeople);
+                assigneeComboBox.setDisable(false);
+            }
+            else {
+                System.out.println("size is zero");
+                ValidationStyle.showMessage("There are no team members in the currently allocated teams",
+                        assigneeComboBox.getComboBox());
+                assigneeComboBox.setDisable(true);
+            }
+
+        }
+        else {
+            System.out.println("current teams null");
+            assigneeComboBox.setDisable(true);
+            ValidationStyle.showMessage("There are currently no allocated teams on this project",
+                    assigneeComboBox.getComboBox());
+        }
 
         Button btnAdd = new Button("Add");
         btnAdd.setDisable(true);
-        addTaskBox.getChildren().addAll(task, shortNameCustomField, effortLeftField, btnAdd);
+        addTaskBox.getChildren().addAll(task, shortNameCustomField, effortLeftField, assigneeComboBox, btnAdd);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctShortName = validateShortName(shortNameCustomField, null);
+                ValidationStyle.borderGlowNone(shortNameCustomField.getTextField());
+                correctShortName = !shortNameCustomField.getText().isEmpty();
+                if (!correctShortName) {
+                    ValidationStyle.borderGlowRed(shortNameCustomField.getTextField());
+                    ValidationStyle.showMessage("Short Name required",
+                            shortNameCustomField.getTextField());
+                }
                 btnAdd.setDisable(!(correctShortName && correctEffortLeft));
             });
 
@@ -353,6 +388,7 @@ public class StoryTaskTab extends SearchableTab {
                 tasksTitle,
                 shortNameCustomField,
                 effortLeftField,
+                assigneeComboBox,
                 taskTable
         );
 
