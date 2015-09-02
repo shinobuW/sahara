@@ -320,22 +320,21 @@ public class ProjectHistoryTab extends SearchableTab {
                 break;
             case ALLOCATION_DATES_WRONG_ORDER:
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.getDialogPane().setStyle(" -fx-max-width:450px; -fx-max-height: 70px; -fx-pref-width: 450px; "
-                        + "-fx-pref-height: 70px;");
+                alert.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; -fx-pref-width: 550px; "
+                        + "-fx-pref-height: 100px;");
                 alert.setTitle("Error");
                 alert.setHeaderText("Allocation Date Error");
-                alert.setContentText("The end date of your new allocation cannot be before the start"
-                        + " date!");
+                alert.setContentText("The end date of your new allocation cannot be before the start date.");
+
                 alert.showAndWait();
                 break;
             case ALLOCATION_DATES_EQUAL:
                 Alert alertDatesEquals = new Alert(Alert.AlertType.ERROR);
-                alertDatesEquals.getDialogPane().setStyle(" -fx-max-width:500px; -fx-max-height: 100px; "
-                        + "-fx-pref-width: 500px; -fx-pref-height: 100px;");
+                alertDatesEquals.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; "
+                        + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
                 alertDatesEquals.setTitle("Error");
                 alertDatesEquals.setHeaderText("Allocation Date Error");
-                alertDatesEquals.setContentText("An allocation for that team with those start and end dates"
-                        + " already exists!");
+                alertDatesEquals.setContentText("An allocation with those start and end dates already exists.");
                 alertDatesEquals.showAndWait();
                 break;
             case START_OVERLAP:
@@ -344,8 +343,7 @@ public class ProjectHistoryTab extends SearchableTab {
                         + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
                 alertOverlap.setTitle("Error");
                 alertOverlap.setHeaderText("Allocation Date Error");
-                alertOverlap.setContentText("The start date of your new allocation overlaps with an already"
-                        + " existing allocation for that team.");
+                alertOverlap.setContentText("Start date overlaps with an already existing allocation for that team.");
                 alertOverlap.showAndWait();
 
                 break;
@@ -355,8 +353,7 @@ public class ProjectHistoryTab extends SearchableTab {
                         + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
                 alertEndOverlap.setTitle("Error");
                 alertEndOverlap.setHeaderText("Allocation Date Error");
-                alertEndOverlap.setContentText("The end date of your new allocation overlaps with an already"
-                        + " existing allocation for that team.");
+                alertEndOverlap.setContentText("End date overlaps with an already existing allocation for that team.");
                 alertEndOverlap.showAndWait();
                 break;
             case SUPER_OVERLAP:
@@ -365,8 +362,7 @@ public class ProjectHistoryTab extends SearchableTab {
                         + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
                 alertSuperOverlap.setTitle("Error");
                 alertSuperOverlap.setHeaderText("Allocation Date Error");
-                alertSuperOverlap.setContentText("The start and end dates of your new allocation encompass an"
-                        + " existing allocation for that team.");
+                alertSuperOverlap.setContentText("Start and end dates encompass an existing allocation for that team.");
                 alertSuperOverlap.showAndWait();
                 break;
             case SUB_OVERLAP:
@@ -375,8 +371,8 @@ public class ProjectHistoryTab extends SearchableTab {
                         + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
                 alertSubOverlap.setTitle("Error");
                 alertSubOverlap.setHeaderText("Allocation Date Error");
-                alertSubOverlap.setContentText("The start and end dates of your new allocation are encompassed"
-                        + " by an existing allocation for that team.");
+                alertSubOverlap.setContentText("Start and end dates are encompassed by an existing allocation"
+                        + " for that team.");
                 alertSubOverlap.showAndWait();
                 break;
             default:
