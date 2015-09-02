@@ -179,7 +179,8 @@ public class SprintEditTab extends SearchableTab {
                         @Override
                         public void updateItem(LocalDate item, boolean empty) {
                             super.updateItem(item, empty);
-                            if (item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
+                            if (releaseComboBox.getValue().getEstimatedDate() != null
+                                    && item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
                                 setDisable(true);
                                 setStyle("-fx-background-color: #ffc0cb;");
                             }
@@ -203,7 +204,8 @@ public class SprintEditTab extends SearchableTab {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #ffc0cb;");
                                 }
-                                if (item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
+                                if (releaseComboBox.getValue().getEstimatedDate() != null
+                                        && item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #ffc0cb;");
                                 }
@@ -247,7 +249,8 @@ public class SprintEditTab extends SearchableTab {
                 teamComboBox.setDisable(true);
 
                 if (newValue != null) {
-                    if (newValue.getEstimatedDate().isBefore(sprintStartDatePicker.getValue())) {
+                    if (newValue.getEstimatedDate() != null
+                            && newValue.getEstimatedDate().isBefore(sprintStartDatePicker.getValue())) {
                         ValidationStyle.borderGlowRed(sprintStartDatePicker.getDatePicker());
                         ValidationStyle.showMessage("The start date of the Sprint must be before the estimated"
                                 + " release date of the Release: " + newValue.getEstimatedDate().toString(),
@@ -264,7 +267,8 @@ public class SprintEditTab extends SearchableTab {
                         sprintStartDatePicker.setDisable(false);
                         teamComboBox.setDisable(false);
                     }
-                    if (newValue.getEstimatedDate().isBefore(sprintEndDatePicker.getValue())) {
+                    if (newValue.getEstimatedDate() != null
+                            && newValue.getEstimatedDate().isBefore(sprintEndDatePicker.getValue())) {
                         ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
                         ValidationStyle.showMessage("The end date of the Sprint must be before the estimated"
                                         + " release date of the Release: " + newValue.getEstimatedDate().toString(),
@@ -299,7 +303,8 @@ public class SprintEditTab extends SearchableTab {
                 sprintStartDatePicker.removeTooltip();
 
 
-                if (newValue != null && releaseComboBox.getValue().getEstimatedDate().isBefore(newValue)) {
+                if (newValue != null && releaseComboBox.getValue().getEstimatedDate() != null
+                        && releaseComboBox.getValue().getEstimatedDate().isBefore(newValue)) {
                     ValidationStyle.borderGlowRed(sprintStartDatePicker.getDatePicker());
                     ValidationStyle.showMessage("The start date of the Sprint must be before the estimated"
                                     + " release date of the Release: "
@@ -325,7 +330,8 @@ public class SprintEditTab extends SearchableTab {
                 }
                 else if (newValue != null) {
 
-                    if (releaseComboBox.getValue().getEstimatedDate().isBefore(sprintEndDatePicker.getValue())) {
+                    if (releaseComboBox.getValue().getEstimatedDate() != null
+                            && releaseComboBox.getValue().getEstimatedDate().isBefore(sprintEndDatePicker.getValue())) {
                         ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
                         ValidationStyle.showMessage("The end date of the Sprint must be before the estimated"
                                 + " release date of the Release: "
@@ -347,7 +353,7 @@ public class SprintEditTab extends SearchableTab {
                             for (Allocation alloc : team.getProjectAllocations()) {
 
                                 if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
-                                        && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
+                                        && alloc.getEndDate().isAfter(sprintStartDatePicker.getValue())) {
                                     teamComboBox.addToComboBox(team);
                                     continue outer;
 
@@ -394,7 +400,8 @@ public class SprintEditTab extends SearchableTab {
                     sprintEndDatePicker.setStyle(null);
                     sprintEndDatePicker.getDatePicker().setTooltip(null);
 
-                    if (releaseComboBox.getValue().getEstimatedDate().isBefore(sprintEndDatePicker.getValue())) {
+                    if (releaseComboBox.getValue().getEstimatedDate() != null
+                            && releaseComboBox.getValue().getEstimatedDate().isBefore(sprintEndDatePicker.getValue())) {
                         ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
                         ValidationStyle.showMessage("The end date of the Sprint must be before the estimated"
                                         + " release date of the Release: "
@@ -422,7 +429,7 @@ public class SprintEditTab extends SearchableTab {
                             for (Allocation alloc : team.getProjectAllocations()) {
 
                                 if (alloc.getStartDate().isBefore((sprintStartDatePicker.getValue().plusDays(1)))
-                                        && alloc.getEndDate().isAfter(sprintEndDatePicker.getValue())) {
+                                        && alloc.getEndDate().isAfter(sprintStartDatePicker.getValue())) {
                                     teamComboBox.addToComboBox(team);
                                     continue outer;
 
@@ -541,13 +548,15 @@ public class SprintEditTab extends SearchableTab {
 
     private Boolean startDateSelected() {
         return !(sprintStartDatePicker.getValue() == null)
-                && (sprintStartDatePicker.getValue().isBefore(releaseComboBox.getValue().getEstimatedDate()));
+                && (releaseComboBox.getValue().getEstimatedDate() == null
+                || sprintStartDatePicker.getValue().isBefore(releaseComboBox.getValue().getEstimatedDate()));
     }
 
     private Boolean endDateSelected() {
         return !(sprintEndDatePicker.getValue() == null)
                 && (sprintEndDatePicker.getValue().isAfter(sprintStartDatePicker.getValue()))
-                && sprintEndDatePicker.getValue().isBefore(releaseComboBox.getValue().getEstimatedDate());
+                && (releaseComboBox.getValue().getEstimatedDate() == null
+                || sprintEndDatePicker.getValue().isBefore(releaseComboBox.getValue().getEstimatedDate()));
     }
 
     private void toggleDone() {

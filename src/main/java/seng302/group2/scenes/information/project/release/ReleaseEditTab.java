@@ -74,44 +74,22 @@ public class ReleaseEditTab extends SearchableTab {
         descriptionTextArea.setText(currentRelease.getDescription());
         releaseDatePicker.setValue(currentRelease.getEstimatedDate());
 
-        final Callback<DatePicker, DateCell> releaseDateCellFactory =
-            new Callback<DatePicker, DateCell>() {
-                @Override
-                public DateCell call(final DatePicker datePicker) {
-                    return new DateCell() {
-                        @Override
-                        public void updateItem(LocalDate item, boolean empty) {
-                            super.updateItem(item, empty);
-                            LocalDate lastSprintEnd = LocalDate.now();
-                            for (Sprint sprint : currentRelease.getProject().getSprints()) {
-                                if (sprint.getRelease() == currentRelease
-                                        && sprint.getEndDate().isAfter(lastSprintEnd)) {
-                                    lastSprintEnd = sprint.getEndDate();
-                                }
-                            }
-                            if (item.isBefore(lastSprintEnd)) {
-                                setDisable(true);
-                                setStyle("-fx-background-color: #ffc0cb;");
-                            }
-                        }
-                    };
-                }
-            };
-        releaseDatePicker.getDatePicker().setDayCellFactory(releaseDateCellFactory);
-
         releaseDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
             @Override
             public void changed(ObservableValue<? extends LocalDate> observable,
                                 LocalDate oldValue, LocalDate newValue) {
-                LocalDate lastSprintEnd = LocalDate.now();
+                LocalDate lastSprintEnd = null;
                 for (Sprint sprint : currentRelease.getProject().getSprints()) {
-                    if (sprint.getRelease() == currentRelease && sprint.getEndDate().isAfter(lastSprintEnd)) {
+                    if (sprint.getRelease() == currentRelease && lastSprintEnd == null) {
+                        lastSprintEnd = sprint.getEndDate();
+                    }
+                    else if (sprint.getRelease() == currentRelease && sprint.getEndDate().isAfter(lastSprintEnd)) {
                         lastSprintEnd = sprint.getEndDate();
                     }
                 }
-                if (newValue.isBefore(lastSprintEnd)) {
+                if (newValue != null && lastSprintEnd != null && newValue.isBefore(lastSprintEnd)) {
                     ValidationStyle.borderGlowRed(releaseDatePicker.getDatePicker());
-                    ValidationStyle.showMessage("The estimated date of release cannot be in the past, or before the end"
+                    ValidationStyle.showMessage("The estimated date of release cannot be before the end"
                             + " date of any sprint that exists for this release", releaseDatePicker.getDatePicker());
                     btnDone.setDisable(true);
                 }
@@ -122,29 +100,19 @@ public class ReleaseEditTab extends SearchableTab {
             }
         });
 
-
         btnDone.setOnAction((event) -> {
                 boolean shortNameUnchanged = shortNameCustomField.getText().equals(
                         currentRelease.getShortName());
                 boolean descriptionUnchanged = descriptionTextArea.getText().equals(
                         currentRelease.getDescription());
-                if (shortNameUnchanged && descriptionUnchanged) {
+                boolean dateUnchanged = releaseDatePicker.getValue() == currentRelease.getEstimatedDate();
+                if (shortNameUnchanged && descriptionUnchanged && dateUnchanged) {
                     // No fields have been changed
                     currentRelease.switchToInfoScene();
                     return;
                 }
 
                 LocalDate releaseDate = releaseDatePicker.getValue();
-
-                if (releaseDatePicker.getValue() == null) {
-                    releaseDate = null;
-                }
-                else {
-                    if (!DateValidator.isFutureDate(releaseDate)) {
-                        ValidationStyle.borderGlowRed(releaseDatePicker.getDatePicker());
-                        ValidationStyle.showMessage("Date must be a future date", releaseDatePicker.getDatePicker());
-                    }
-                }
 
                 boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
                         currentRelease.getShortName());
