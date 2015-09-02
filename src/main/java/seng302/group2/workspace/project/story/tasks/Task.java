@@ -71,7 +71,8 @@ public class Task extends SaharaItem implements Serializable {
         this.state = TASKSTATE.NOT_STARTED;
         this.effortLeft = 0;
         this.effortSpent = 0;
-        this.initialLog = null;
+        this.initialLog = new Log(this, "initial log (this should be hidden)", null, 0,
+                LocalDateTime.now(), 0 - effortLeft);
     }
 
 
