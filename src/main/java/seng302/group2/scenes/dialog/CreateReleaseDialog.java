@@ -68,26 +68,6 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
             projectComboBox.setValue(defaultProject);
         }
 
-
-        final Callback<DatePicker, DateCell> dayCellFactory =
-            new Callback<DatePicker, DateCell>() {
-                @Override
-                public DateCell call(final DatePicker datePicker) {
-                    return new DateCell() {
-                        @Override
-                        public void updateItem(LocalDate item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (item.isBefore(LocalDate.now())) {
-                                setDisable(true);
-                                setStyle("-fx-background-color: #ffc0cb;");
-                            }
-
-                        }
-                    };
-                }
-            };
-        releaseDatePicker.getDatePicker().setDayCellFactory(dayCellFactory);
-
         grid.getChildren().addAll(shortNameCustomField, releaseDatePicker, projectComboBox, descriptionTextArea);
 
         //Add grid of controls to dialog
@@ -105,27 +85,6 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
                 createButton.setDisable(!(correctShortName && correctDate));
             });
 
-        releaseDatePicker.getDatePicker().setOnAction(event -> {
-                LocalDate releaseDate = releaseDatePicker.getValue();
-                correctDate = DateValidator.isFutureDate(releaseDate);
-
-                if (correctDate) {
-                    ValidationStyle.borderGlowNone(releaseDatePicker.getDatePicker());
-                }
-                else {
-                    ValidationStyle.borderGlowRed(releaseDatePicker.getDatePicker());
-                    ValidationStyle.showMessage("Date must be a future date", releaseDatePicker.getDatePicker());
-                }
-
-                if ((DateValidator.isFutureDate(releaseDate) || releaseDate == null) && correctShortName) {
-                    correctDate = true;
-                    createButton.setDisable(!(correctShortName && correctDate));
-                }
-                else {
-                    createButton.setDisable(true);
-                }
-            });
-
         this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
                     String shortName = shortNameCustomField.getText();
@@ -134,27 +93,10 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
 
                     Project project = projectComboBox.getValue();
 
-                    if (releaseDate == null) {
-                        releaseDate = null;
-                        Release release = new Release(shortName, description, releaseDate, project);
-                        project.add(release);
-                        App.mainPane.selectItem(release);
-                        this.close();
-                    }
-                    else {
-                        if (!DateValidator.isFutureDate(releaseDate)) {
-                            ValidationStyle.borderGlowRed(releaseDatePicker.getDatePicker());
-                            ValidationStyle.showMessage("Date must be a future date",
-                                    releaseDatePicker.getDatePicker());
-                        }
-                        else {
-                            Release release = new Release(shortName, description, releaseDate,
-                                    project);
-                            project.add(release);
-                            App.mainPane.selectItem(release);
-                            this.close();
-                        }
-                    }
+                    Release release = new Release(shortName, description, releaseDate, project);
+                    project.add(release);
+                    App.mainPane.selectItem(release);
+                    this.close();
                 }
                 return null;
             });
