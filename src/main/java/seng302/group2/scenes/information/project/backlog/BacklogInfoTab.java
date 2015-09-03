@@ -197,11 +197,13 @@ public class BacklogInfoTab extends SearchableTab {
                     ((TableColumn)(storyTable.getColumns().get(i))).setVisible(true);
                 }
                 storyCol.prefWidthProperty().bind(storyTable.widthProperty()
-                        .subtract(2).divide(100).multiply(60));
+                        .subtract(2).divide(100).multiply(33));
                 priorityCol.prefWidthProperty().bind(storyTable.widthProperty()
-                        .subtract(2).divide(100).multiply(20));
+                        .subtract(2).divide(100).multiply(13));
                 readyCol.prefWidthProperty().bind(storyTable.widthProperty()
-                        .subtract(2).divide(100).multiply(20));
+                        .subtract(2).divide(100).multiply(16));
+                progressCol.prefWidthProperty().bind(storyTable.widthProperty()
+                        .subtract(2).divide(100).multiply(38));
             });
 
         basicInfoPane.getChildren().addAll(
