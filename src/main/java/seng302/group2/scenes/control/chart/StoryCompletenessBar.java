@@ -2,9 +2,11 @@ package seng302.group2.scenes.control.chart;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -17,6 +19,7 @@ import seng302.group2.workspace.project.story.tasks.Task;
 import java.text.DecimalFormat;
 
 /**
+ * A class for creating and controlling the Story completeness bar.
  * Created by cvs20 on 27/08/15.
  */
 public class StoryCompletenessBar extends Pane {
@@ -96,21 +99,109 @@ public class StoryCompletenessBar extends Pane {
 
         green.setArcWidth(15);
         green.setArcHeight(15);
-        PopOverTip greenPO = new PopOverTip(green, new Text(" Percentage of Story Done: "
-                + (df.format(percentageGreen * 100)) + "% "));
+        VBox greenVBox = new VBox();
+        Text greenPercentText = new Text(" Percentage of \"" + this.story.toString() + "\" done: "
+                + (df.format(percentageGreen * 100)) + "% ");
+        Text greenTaskNum = new Text(done.size() + " Tasks completed ");
+        int greenHours = (int)lengthGreen / 60;
+        int greenMinutes = (int)lengthGreen % 60;
+        Text greenTimeSpent;
+        if (greenHours == 0 && greenMinutes == 0) {
+            greenTimeSpent = new Text(" No time spent on completed tasks ");
+        }
+        else if (greenHours == 0 ) {
+            greenTimeSpent = new Text(" Spent " + greenMinutes + " minutes on completed tasks ");
+        }
+        else if (greenMinutes == 0) {
+            greenTimeSpent = new Text(" Spent " + greenHours + " hours on completed tasks ");
+        }
+        else {
+            greenTimeSpent = new Text(" Spent " + greenHours + " hours and " + greenMinutes
+                    + " minutes on completed tasks ");
+        }
+        greenVBox.setAlignment(Pos.CENTER);
+        greenVBox.setSpacing(5);
+        greenVBox.getChildren().addAll(greenPercentText, greenTaskNum, greenTimeSpent);
+        PopOverTip greenPO = new PopOverTip(green, greenVBox);
+        //PopOverTip greenPO = new PopOverTip(green, new Text(" Percentage of Story Done: "
+        //        + (df.format(percentageGreen * 100)) + "% "));
         greenPO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
         Rectangle blue = new Rectangle(maxBlue - maxGreen + 0.5, this.height);
-        PopOverTip bluePO = new PopOverTip(blue, new Text(" Percentage of Story In Progress: "
-                + (df.format(percentageBlue * 100)) + "% "));
+        VBox blueVBox = new VBox();
+        Text bluePercentText = new Text(" Percentage of \"" + this.story.toString() + "\" in progress: "
+                + (df.format(percentageBlue * 100)) + "% ");
+        Text blueTaskNum = new Text(inProgress.size() + " Tasks in progress ");
+        int blueHoursSpent = (int)lengthBlue / 60;
+        int blueMinutesSpent = (int)lengthBlue % 60;
+        Text blueTimeSpent;
+        if (blueHoursSpent == 0 && blueMinutesSpent == 0) {
+            blueTimeSpent = new Text(" No time spent on in progress tasks ");
+        }
+        else if (blueHoursSpent == 0) {
+            blueTimeSpent = new Text(blueMinutesSpent + " minutes spent on in progress tasks ");
+        }
+        else if (blueMinutesSpent == 0) {
+            blueTimeSpent = new Text(" Spent " + blueHoursSpent + " hours on in progress tasks ");
+        }
+        else {
+            blueTimeSpent = new Text(" Spent " + blueHoursSpent + " hours and " + blueMinutesSpent
+                    + " minutes on in progress tasks");
+        }
+        int blueHoursLeft = (int)getEffortLeft(inProgress) / 60;
+        int blueMinutesLeft = (int)getEffortLeft(inProgress) % 60;
+        Text blueTimeLeft;
+        if (blueHoursLeft == 0 && blueMinutesLeft == 0) {
+            blueTimeLeft = new Text(" No time left on in progress tasks ");
+        }
+        else if (blueHoursLeft == 0) {
+            blueTimeLeft = new Text(blueMinutesLeft + " minutes left on in progress tasks ");
+        }
+        else if (blueMinutesLeft == 0) {
+            blueTimeLeft = new Text(blueHoursLeft + " hours left on in progress tasks ");
+        }
+        else {
+            blueTimeLeft = new Text(blueHoursLeft + " hours and " + blueMinutesLeft
+                    + " minutes left on in progress tasks");
+        }
+        blueVBox.setAlignment(Pos.CENTER);
+        blueVBox.setSpacing(5);
+        blueVBox.getChildren().addAll(bluePercentText, blueTaskNum, blueTimeSpent, blueTimeLeft);
+        PopOverTip bluePO = new PopOverTip(blue, blueVBox);
+        //PopOverTip bluePO = new PopOverTip(blue, new Text(" Percentage of Story In Progress: "
+        //        + (df.format(percentageBlue * 100)) + "% "));
         bluePO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
         Rectangle red = new Rectangle(maxWidth - maxBlue, this.height);
         Rectangle redSquare = new Rectangle(maxWidth - maxBlue - 15, this.height);
         red.setArcWidth(15);
         red.setArcHeight(15);
-        PopOverTip redPO = new PopOverTip(red, new Text(" Remaining work to do: "
-                + (df.format(percentageRed * 100)) + "%" ));
+        VBox redVBox = new VBox();
+        Text redPercentage = new Text(" Remaining Work to do on \"" + this.story.toString() + "\": "
+                + (df.format(percentageRed * 100)) + "% ");
+        Text redTaskNum = new Text(rest.size() + " Tasks not yet started ");
+        int redHoursLeft = (int)getEffortLeft(rest) / 60;
+        int redMinutesLeft = (int)getEffortLeft(rest) % 60;
+        Text redTimeLeft;
+        if (redHoursLeft == 0 && redMinutesLeft == 0) {
+            redTimeLeft = new Text(" No time left on tasks not yet started ");
+        }
+        else if (redHoursLeft == 0) {
+            redTimeLeft = new Text(redMinutesLeft + " minutes left on tasks not yet started ");
+        }
+        else if (redMinutesLeft == 0) {
+            redTimeLeft = new Text(redHoursLeft + " hours left on tasks not yet started ");
+        }
+        else {
+            redTimeLeft = new Text(redHoursLeft + " hours and " + redMinutesLeft
+                    + " minutes left on tasks not yet started");
+        }
+        redVBox.setAlignment(Pos.CENTER);
+        redVBox.setSpacing(5);
+        redVBox.getChildren().addAll(redPercentage, redTaskNum, redTimeLeft);
+        PopOverTip redPO = new PopOverTip(red, redVBox);
+        //PopOverTip redPO = new PopOverTip(red, new Text(" Remaining work to do: "
+        //        + (df.format(percentageRed * 100)) + "% "));
         redPO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
         red.setFill(ColorUtils.toColor(Task.TASKSTATE.BLOCKED.getColourString()));  // Red
