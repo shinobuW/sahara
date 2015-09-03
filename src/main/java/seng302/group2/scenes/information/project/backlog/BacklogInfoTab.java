@@ -168,8 +168,11 @@ public class BacklogInfoTab extends SearchableTab {
         buttonHBox.alignmentProperty().set(Pos.TOP_LEFT);
         buttonHBox.getChildren().addAll(btnView, btnHighlight);
 
+        HBox tableKey = new HBox(10);
+        tableKey.getChildren().add(storyTable);
+
         if (highlightMode) {
-            basicInfoPane.getChildren().add(keyBox);
+            tableKey.getChildren().add(keyBox);
         }
 
         // Events
@@ -184,10 +187,12 @@ public class BacklogInfoTab extends SearchableTab {
         btnHighlight.setOnAction((event) ->
             {
                 if (highlightMode) {
-                    basicInfoPane.getChildren().remove(keyBox);
+                    //basicInfoPane.getChildren().remove(keyBox);
+                    tableKey.getChildren().remove(keyBox);
                 }
                 else {
-                    basicInfoPane.getChildren().add(keyBox);
+                    //basicInfoPane.getChildren().add(keyBox);
+                    tableKey.getChildren().add(keyBox);
                 }
 
                 highlightMode = !highlightMode;
@@ -206,6 +211,8 @@ public class BacklogInfoTab extends SearchableTab {
                         .subtract(2).divide(100).multiply(38));
             });
 
+
+
         basicInfoPane.getChildren().addAll(
                 title,
                 shortName,
@@ -215,7 +222,8 @@ public class BacklogInfoTab extends SearchableTab {
                 estScale,
                 separator,
                 storiesTableLabel,
-                storyTable,
+                //storyTable,
+                tableKey,
                 buttonHBox,
                 btnEdit
         );
