@@ -3,9 +3,11 @@ package seng302.group2.scenes.information.project.story;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.CustomInfoLabel;
+import seng302.group2.scenes.control.chart.StoryCompletenessBar;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
@@ -52,6 +54,10 @@ public class StoryInfoTab extends SearchableTab {
         CustomInfoLabel estimate = new CustomInfoLabel("Estimate: ", currentStory.getEstimate());
         CustomInfoLabel state = new CustomInfoLabel("State: ", currentStory.getReadyState());
         CustomInfoLabel creator = new CustomInfoLabel("Story Creator: ", currentStory.getCreator());
+        HBox progressBox = new HBox();
+        CustomInfoLabel progressLabel = new CustomInfoLabel("Progress:  ", "");
+        StoryCompletenessBar progressBar = new StoryCompletenessBar(currentStory);
+        progressBox.getChildren().addAll(progressLabel, progressBar);
 
         btnEdit.setOnAction((event) -> {
                 currentStory.switchToInfoScene(true);
@@ -65,6 +71,7 @@ public class StoryInfoTab extends SearchableTab {
                 estimate,
                 state,
                 creator,
+                progressBox,
                 btnEdit
         );
 
