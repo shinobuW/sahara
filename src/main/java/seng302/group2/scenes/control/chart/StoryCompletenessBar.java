@@ -82,7 +82,6 @@ public class StoryCompletenessBar extends Pane {
         double maxWidth = this.width;
         double maxGreen = maxWidth * percentageGreen;
         double maxBlue = (maxWidth * percentageBlue) + maxGreen;
-
         //Creates visualisation bar
         DecimalFormat df = new DecimalFormat("##");
 
