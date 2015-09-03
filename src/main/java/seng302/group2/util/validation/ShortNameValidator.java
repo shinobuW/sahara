@@ -10,7 +10,9 @@ import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
+import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
@@ -127,6 +129,16 @@ public class ShortNameValidator {
             }
             for (Story story : proj.getUnallocatedStories()) {
                 if (story.getShortName().equals(shortName)) {
+                    return ValidationStatus.NON_UNIQUE;
+                }
+            }
+            for (Backlog backlog :proj.getBacklogs()) {
+                if (backlog.getShortName().equals(shortName)) {
+                    return ValidationStatus.NON_UNIQUE;
+                }
+            }
+            for (Sprint sprint :proj.getSprints()) {
+                if (sprint.getGoal().equals(shortName)) {
                     return ValidationStatus.NON_UNIQUE;
                 }
             }

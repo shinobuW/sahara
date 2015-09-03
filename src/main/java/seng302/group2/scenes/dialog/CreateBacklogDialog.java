@@ -103,7 +103,7 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
                         && projectSelected() & poSelected() & scaleSelected()));
             });
 
-        longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newvalue) -> {
+        longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctLongName = validateName(longNameCustomField);
                 createButton.setDisable(!(correctShortName && correctLongName
                         && projectSelected() & poSelected() & scaleSelected()));
