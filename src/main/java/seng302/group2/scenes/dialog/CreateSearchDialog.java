@@ -1,7 +1,5 @@
 package seng302.group2.scenes.dialog;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -11,12 +9,12 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTextField;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -51,41 +49,87 @@ public class CreateSearchDialog extends javafx.scene.control.Dialog<Map<String, 
         checkBoxPane.setHgap(10);
         checkBoxPane.setVgap(10);
 
+        Collection<CheckBox> modelCheckBoxes = new ArrayList<>();
+
         CheckBox projectSearchCheck = new CheckBox("Projects");
         checkBoxPane.add(projectSearchCheck, 0, 0);
+        modelCheckBoxes.add(projectSearchCheck);
 
         CheckBox releaseSearchCheck = new CheckBox("Releases");
         checkBoxPane.add(releaseSearchCheck, 1, 0);
+        modelCheckBoxes.add(releaseSearchCheck);
 
         CheckBox backlogSearchCheck = new CheckBox("Backlogs");
         checkBoxPane.add(backlogSearchCheck, 2, 0);
+        modelCheckBoxes.add(backlogSearchCheck);
 
         CheckBox storySearchCheck = new CheckBox("Stories");
         checkBoxPane.add(storySearchCheck, 0, 1);
+        modelCheckBoxes.add(storySearchCheck);
 
         CheckBox taskSearchCheck = new CheckBox("Tasks");
         checkBoxPane.add(taskSearchCheck, 1, 1);
+        modelCheckBoxes.add(taskSearchCheck);
 
         CheckBox sprintSearchCheck = new CheckBox("Sprints");
         checkBoxPane.add(sprintSearchCheck, 2, 1);
+        modelCheckBoxes.add(sprintSearchCheck);
 
         CheckBox teamSearchCheck = new CheckBox("Teams");
         checkBoxPane.add(teamSearchCheck, 0, 2);
+        modelCheckBoxes.add(teamSearchCheck);
 
         CheckBox personSearchCheck = new CheckBox("People");
         checkBoxPane.add(personSearchCheck, 1, 2);
+        modelCheckBoxes.add(personSearchCheck);
 
         CheckBox roleSearchCheck = new CheckBox("Roles");
         checkBoxPane.add(roleSearchCheck, 2, 2);
+        modelCheckBoxes.add(roleSearchCheck);
 
         CheckBox skillSearchCheck = new CheckBox("Skills");
         checkBoxPane.add(skillSearchCheck, 0, 3);
+        modelCheckBoxes.add(skillSearchCheck);
 
         grid.getChildren().addAll(searchField, workspaceSearchCheck,
                 new Separator(), onlySearchLabel, checkBoxPane);
 
         //Add grid of controls to dialog
         this.getDialogPane().setContent(grid);
+
+        EventHandler eh = new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (event.getSource() instanceof CheckBox) {
+                    CheckBox chk = (CheckBox) event.getSource();
+                    if ("Search entire workspace".equals(chk.getText())
+                            && chk.isSelected()) {
+                        for (CheckBox box : modelCheckBoxes) {
+                            box.setSelected(false);
+                        }
+                    }
+                    else if (chk.isSelected()) {
+                        workspaceSearchCheck.setSelected(false);
+                    }
+                    else if (!chk.isSelected()) {
+                        boolean anyTicked = false;
+                        for (CheckBox box : modelCheckBoxes) {
+                            if (box.isSelected()) {
+                                anyTicked = true;
+                            }
+                        }
+                        if (!anyTicked) {
+                            workspaceSearchCheck.setSelected(true);
+                        }
+                    }
+                }
+            }
+        };
+
+        workspaceSearchCheck.setOnAction(eh);
+        for (CheckBox box : modelCheckBoxes) {
+            box.setOnAction(eh);
+        }
 
         // Request focus on the username field by default.
         //Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
