@@ -141,7 +141,10 @@ public class StoryEditTab extends SearchableTab {
         }
 
         shortNameCustomField.setMaxWidth(275);
+        longNameTextField.setMaxWidth(275);
         descriptionTextArea.setMaxWidth(275);
+        priorityNumberField.setMaxWidth(275);
+        readyStateCheck.setMaxWidth(165);
 
         shortNameCustomField.setText(currentStory.getShortName());
         longNameTextField.setText(currentStory.getLongName());

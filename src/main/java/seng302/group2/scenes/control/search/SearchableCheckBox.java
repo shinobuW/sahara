@@ -22,15 +22,15 @@ public class SearchableCheckBox extends VBox implements SearchableControl {
      */
     public SearchableCheckBox(String label) {
         HBox box = new HBox();
-        box.setSpacing(15);
+        box.setSpacing(2);
         box.setPrefWidth(165);
         box.setAlignment(Pos.CENTER_LEFT);
         box.spacingProperty().setValue(0);
 
-
-        cbLabel.setPadding(new Insets(0, 400, 0, 0));
+        cbLabel.setPadding(new Insets(0, 85, 0, 0));
         cbLabel.setText(label);
         cbLabel.setStyle("-fx-font-weight: bold");
+
 
         box.getChildren().addAll(cbLabel, cb);
 
