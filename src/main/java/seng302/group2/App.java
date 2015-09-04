@@ -11,8 +11,10 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import seng302.group2.scenes.MainPane;
+import seng302.group2.scenes.SearchResultPane;
 import seng302.group2.scenes.menu.MainToolbar;
 import seng302.group2.util.config.ConfigLoader;
 import seng302.group2.workspace.workspace.Workspace;
@@ -45,7 +47,6 @@ public class App extends Application {
 
         MainToolbar.undoRedoToggle();
     }
-
 
     /**
      * Refreshes the title of the window to show the name of the current workspace, if any.
@@ -117,6 +118,24 @@ public class App extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    /**
+     * Shows a stage with the results of an advanced search,
+     * @param resultPane The SearchResultPane to show.
+     */
+    public static void showSearchResults(SearchResultPane resultPane) {
+        Stage resultStage = new Stage();
+
+        resultStage.setTitle("Search Results");
+        resultStage.setMinWidth(500);
+        resultStage.setMinHeight(500);
+
+        Scene resultScene = new Scene(resultPane);
+        resultStage.setScene(resultScene);
+        resultStage.initModality(Modality.NONE);
+        resultStage.show();
+    }
+
 
     /**
      * The GUI setup and launch of the workspace.

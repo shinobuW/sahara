@@ -1,5 +1,7 @@
 package seng302.group2.scenes.dialog;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -10,11 +12,14 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import seng302.group2.App;
+import seng302.group2.scenes.SearchResultPane;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.search.SearchableText;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,7 +54,7 @@ public class CreateSearchDialog extends javafx.scene.control.Dialog<Map<String, 
         checkBoxPane.setHgap(10);
         checkBoxPane.setVgap(10);
 
-        Collection<CheckBox> modelCheckBoxes = new ArrayList<>();
+        List<CheckBox> modelCheckBoxes = new ArrayList<>();
 
         CheckBox projectSearchCheck = new CheckBox("Projects");
         checkBoxPane.add(projectSearchCheck, 0, 0);
@@ -91,6 +96,18 @@ public class CreateSearchDialog extends javafx.scene.control.Dialog<Map<String, 
         checkBoxPane.add(skillSearchCheck, 0, 3);
         modelCheckBoxes.add(skillSearchCheck);
 
+        CheckBox allocationSearchCheck = new CheckBox("Allocations");
+        checkBoxPane.add(allocationSearchCheck, 1, 3);
+        modelCheckBoxes.add(allocationSearchCheck);
+
+        CheckBox acceptanceCriteriaSearchCheck = new CheckBox("Acceptance Criteria");
+        checkBoxPane.add(acceptanceCriteriaSearchCheck, 2, 3);
+        modelCheckBoxes.add(acceptanceCriteriaSearchCheck);
+
+        CheckBox logSearchCheck = new CheckBox("Logs");
+        checkBoxPane.add(logSearchCheck, 0, 4);
+        modelCheckBoxes.add(logSearchCheck);
+
         grid.getChildren().addAll(searchField, workspaceSearchCheck,
                 new Separator(), onlySearchLabel, checkBoxPane);
 
@@ -131,20 +148,63 @@ public class CreateSearchDialog extends javafx.scene.control.Dialog<Map<String, 
             box.setOnAction(eh);
         }
 
-        // Request focus on the username field by default.
-        //Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
 
-        Node createButton = this.getDialogPane().lookupButton(btnTypeSearch);
-        createButton.setDisable(true);
+        Node searchButton = this.getDialogPane().lookupButton(btnTypeSearch);
+        searchButton.setDisable(true);
 
+        searchField.getTextField().textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue.equals("")) {
+                    searchButton.setDisable(true);
+                }
+                else {
+                    searchButton.setDisable(false);
+                }
+            }
+        });
 
         this.setResultConverter(b -> {
                 if (b == btnTypeSearch) {
-                    System.out.println("test");
+                    String searchText = searchField.getText();
+                    List<String> checkedItems = getCheckedItems(workspaceSearchCheck,
+                            modelCheckBoxes);
+                    SearchResultPane resultPane = new SearchResultPane(checkedItems, searchText);
+                    App.showSearchResults(resultPane);
+                    this.close();
                 }
                 return null;
             });
         this.setResizable(false);
         this.show();
+    }
+
+    protected static List<String> getCheckedItems(CheckBox workspaceSearchCheck,
+                                                  List<CheckBox> modelCheckBoxes) {
+        List<String> checkedItems = new ArrayList<>();
+
+        if (workspaceSearchCheck.isSelected()) {
+            checkedItems.add("Projects");
+            checkedItems.add("Releases");
+            checkedItems.add("Backlogs");
+            checkedItems.add("Stories");
+            checkedItems.add("Tasks");
+            checkedItems.add("Sprints");
+            checkedItems.add("Teams");
+            checkedItems.add("People");
+            checkedItems.add("Roles");
+            checkedItems.add("Skills");
+            checkedItems.add("Allocations");
+            checkedItems.add("Acceptance Criteria");
+            checkedItems.add("Logs");
+        }
+        else {
+            for (CheckBox checkBox : modelCheckBoxes) {
+                if (checkBox.isSelected()) {
+                    checkedItems.add(checkBox.getText());
+                }
+            }
+        }
+        return checkedItems;
     }
 }

@@ -2,6 +2,7 @@ package seng302.group2.workspace;
 
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
+import seng302.group2.scenes.control.search.SearchResultCellNode;
 import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrategy;
@@ -209,6 +210,18 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
                 && ((SaharaItem) object).getId() == this.getId();
     }
 
+    /**
+     * Abstract search method for Sahara item, should be overidden in all concrete classes.
+     * @param searchText The string to search for
+     * @return A SearchResultCellNode containing info on any matches
+     */
+    public SearchResultCellNode search(String searchText) {
+        searchText = searchText.toLowerCase();
+        if (this.itemName.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            return new SearchResultCellNode(this, itemName, "", "");
+        }
+        return null;
+    }
 
     /**
      * Checks whether or not <i>this</i> is <b>equivalent</b> to the passed object based only on the

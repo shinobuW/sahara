@@ -4,6 +4,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.search.SearchResultCellNode;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.ProjectInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
@@ -660,6 +661,32 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         }
 
         return projectElement;
+    }
+
+    /**
+     * Overidden search method for Project.
+     * @param searchText The string to search for among the projects attributes.
+     * @return A SearchResultCellNode containing info on any matches.
+     */
+    @Override
+    public SearchResultCellNode search(String searchText) {
+        searchText = searchText.toLowerCase();
+        List<String> matches = new ArrayList<>();
+        if (this.shortName.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("Short Name: " + shortName);
+        }
+        if (this.longName.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("Long Name: " + longName);
+        }
+        else if (this.description.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("Description: " + description);
+        }
+
+        if (matches.size() > 0) {
+            String matchText = "Found " + matches.size() + " matches, first match is " + matches.get(0);
+            return new SearchResultCellNode(this, "Project: " + this.shortName, matchText, "");
+        }
+        return null;
     }
 
     /**
