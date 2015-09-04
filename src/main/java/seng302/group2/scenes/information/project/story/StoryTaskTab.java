@@ -1,5 +1,6 @@
 package seng302.group2.scenes.information.project.story;
 
+import com.sun.javafx.font.freetype.HBGlyphLayout;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -70,7 +71,7 @@ public class StoryTaskTab extends SearchableTab {
 
         PopOverTable<Task> taskTable = new PopOverTable<>();
         taskTable.setEditable(true);
-        taskTable.setPrefWidth(1200);
+        taskTable.setPrefWidth(800);
         taskTable.setPrefHeight(200);
         taskTable.setPlaceholder(new SearchableText("There are currently no tasks in this story.", searchControls));
         taskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -95,12 +96,10 @@ public class StoryTaskTab extends SearchableTab {
 
         Button acButton = new Button("View Acceptance Criteria");
 
-        acButton.setOnAction((event) -> {
-                acPopover.show(acButton);
-            });
+        acButton.setOnAction((event) -> acPopover.show(acButton));
 
 
-        SearchableTitle tasksTitle = new SearchableTitle("Tasks Table: ");
+        SearchableTitle tasksTitle = new SearchableTitle("Tasks Table");
 
         ObservableList<Task> data = currentStory.getTasks();
 
@@ -175,11 +174,11 @@ public class StoryTaskTab extends SearchableTab {
                     @Override
                     public void handle(TableColumn.CellEditEvent<Task, String> event) {
                         Task selectedTask = event.getTableView().getItems().get(
-                             event.getTablePosition().getRow());
+                                event.getTablePosition().getRow());
                         Person selectedPerson = null;
 
                         for (Person person : availablePeople) {
-                            if (event.getNewValue() == person.getShortName()) {
+                            if (event.getNewValue().equals(person.getShortName())) {
                                 selectedPerson = person;
                             }
                         }
@@ -189,7 +188,7 @@ public class StoryTaskTab extends SearchableTab {
                     }
                 });
 
-
+        Separator seperator = new Separator();
 
         Callback<TableColumn, TableCell> assigneeCellFactory = col -> new AssigneeTableCell(currentStory,
                 availablePeople);
@@ -288,6 +287,12 @@ public class StoryTaskTab extends SearchableTab {
         });
 
         Button btnView = new Button("Task View");
+        Button btnDelete = new Button("Delete Task");
+
+        HBox buttons = new HBox();
+        buttons.spacingProperty().setValue(10);
+        buttons.getChildren().addAll(btnView, btnDelete);
+        buttons.setAlignment(Pos.TOP_LEFT);
 
         btnView.setOnAction((event) -> {
                 PopOver taskPopover = new PopOver();
@@ -321,14 +326,21 @@ public class StoryTaskTab extends SearchableTab {
                 taskPopover.setContentNode(taskContent);
                 taskPopover.show(btnView);
             });
+
+        btnDelete.setOnAction((event) -> {
+                if (taskTable.getSelectionModel().getSelectedItem() != null) {
+                    Task currentTask = taskTable.getSelectionModel().getSelectedItem();
+                    currentTask.deleteTask();
+                }
+            });
       
 
         VBox addTaskBox = new VBox(10);
         SearchableText task = new SearchableText("Add Quick Tasks:", "-fx-font-weight: bold;");
 
         RequiredField shortNameCustomField = new RequiredField("Task Name:");
-        RequiredField effortLeftField = new RequiredField("Effort left: ");
-        CustomComboBox<Person> assigneeComboBox = new CustomComboBox<Person>("Assignee", false);
+        RequiredField effortLeftField = new RequiredField("Effort left:");
+        CustomComboBox<Person> assigneeComboBox = new CustomComboBox<>("Assignee:", false);
 
         assigneeComboBox.setDisable(true);
 
@@ -410,8 +422,9 @@ public class StoryTaskTab extends SearchableTab {
         basicInfoPane.getChildren().addAll(
                 tasksTitle,
                 taskTable,
-                btnView,
+                buttons,
                 acButton,
+                seperator,
                 addTaskBox
         );
 
@@ -485,9 +498,7 @@ public class StoryTaskTab extends SearchableTab {
                 assignedPerson
         );
 
-        btnEdit.setOnAction((event) -> {
-                taskEditPane(currentTask);
-            });
+        btnEdit.setOnAction((event) -> taskEditPane(currentTask));
 
     }
 
@@ -597,9 +608,7 @@ public class StoryTaskTab extends SearchableTab {
 
             });
 
-        btnCancel.setOnAction((event) -> {
-                currentTask.switchToInfoScene();
-            });
+        btnCancel.setOnAction((event) -> currentTask.switchToInfoScene());
     }
 
 }

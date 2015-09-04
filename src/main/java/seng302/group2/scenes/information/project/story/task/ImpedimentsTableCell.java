@@ -99,7 +99,6 @@ public class ImpedimentsTableCell extends TableCell<Object, String> {
         impedimentCombo.getItems().addAll(availableStatuses);
         // Make default selection
         if (impedimentCombo.getItems().contains(task.getState())) {
-            System.out.println("hello");
             impedimentCombo.getSelectionModel().select(task.getState());
         }
         else {
