@@ -821,7 +821,7 @@ public class Workspace extends SaharaItem implements Serializable {
         ObservableList<SaharaItem> root = observableArrayList();
 
         // Add the categories
-        root.addAll(projectCategory, teamsCategory, peopleCategory, rolesCategory, skillCategory);
+        root.addAll(projectCategory, teamsCategory, peopleCategory, skillCategory, rolesCategory);
 
         return root;
     }

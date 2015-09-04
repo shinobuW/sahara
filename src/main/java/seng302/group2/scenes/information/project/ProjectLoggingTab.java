@@ -34,7 +34,7 @@ import java.util.List;
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
- * Classe for Displaying all Logs under each project based on a date range.
+ * Class for Displaying all Logs under each project based on a date range.
  * Created by crw73 on 14/08/15.
  */
 public class ProjectLoggingTab extends SearchableTab {
@@ -179,7 +179,8 @@ public class ProjectLoggingTab extends SearchableTab {
     private void updateFilteredLogs(Project currentProject) {
         data.clear();
         for (Log log : currentProject.getLogs()) {
-            if (log.getLocalStartDate().isAfter(startDate.minusDays(1)) && log.getLocalStartDate().isBefore(endDate.plusDays(1))) {
+            if (log.getLocalStartDate().isAfter(startDate.minusDays(1))
+                    && log.getLocalStartDate().isBefore(endDate.plusDays(1))) {
                 data.add(log);
             }
         }

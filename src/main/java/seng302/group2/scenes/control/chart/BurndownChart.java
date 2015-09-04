@@ -43,7 +43,6 @@ public class BurndownChart extends LineChart {
         LocalDate startDate = currentSprint.getStartDate();
         LocalDate endDate = currentSprint.getEndDate();
         double initialEffortLeft = currentSprint.totalEffortLeft() / 60;
-        System.out.println(logList);
 
         /* Map which stores a (key, value) pair of (date: hours), where hours is the total n
         umber of hours logged on the date.
@@ -115,7 +114,7 @@ public class BurndownChart extends LineChart {
             effortLeftSeries.getData().add(new XYChart.Data<>(monthStr + " " + d.getDayOfMonth(), currentEffortLeft));
         }
 
-        if (!logList.isEmpty()){
+        if (!logList.isEmpty()) {
             this.getData().add(referenceVelocitySeries);
             this.getData().add(effortSpentSeries);
             this.getData().add(effortLeftSeries);

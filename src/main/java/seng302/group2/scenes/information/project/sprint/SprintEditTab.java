@@ -52,6 +52,7 @@ public class SprintEditTab extends SearchableTab {
     RequiredField longNameCustomField;
     CustomComboBox<Team> teamComboBox;
     CustomComboBox<Release> releaseComboBox;
+    String currentGoal;
 
     CustomDatePicker sprintStartDatePicker;
     CustomDatePicker sprintEndDatePicker;
@@ -63,6 +64,7 @@ public class SprintEditTab extends SearchableTab {
      * @param currentSprint the sprint being edited
      */
     public SprintEditTab(Sprint currentSprint) {
+        this.currentGoal = currentSprint.getGoal();
         this.setText("Edit Sprint");
         Pane editPane = new VBox(10);
         editPane.setBorder(null);
@@ -192,15 +194,14 @@ public class SprintEditTab extends SearchableTab {
         sprintStartDatePicker.getDatePicker().setDayCellFactory(startDateCellFactory);
 
         final Callback<DatePicker, DateCell> endDateCellFactory =
-            new Callback<DatePicker, DateCell>() {
-                @Override
-                public DateCell call(final DatePicker datePicker) {
-                    return new DateCell() {
-                        @Override
-                        public void updateItem(LocalDate item, boolean empty) {
-                            super.updateItem(item, empty);
-                            try {
-                                if (item.isBefore(sprintStartDatePicker.getValue().plusDays(1))) {
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (item.isBefore(sprintStartDatePicker.getValue())) {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #ffc0cb;");
                                 }
@@ -209,20 +210,12 @@ public class SprintEditTab extends SearchableTab {
                                     setDisable(true);
                                     setStyle("-fx-background-color: #ffc0cb;");
                                 }
-                                long p = ChronoUnit.DAYS.between(
-                                        sprintStartDatePicker.getValue(), item
-                                );
-                                setTooltip(new Tooltip(
-                                                "Sprint duration: " + p + " days.")
-                                );
+                                long p = ChronoUnit.DAYS.between(sprintStartDatePicker.getValue(), item) + 1;
+                                setTooltip(new Tooltip("Sprint duration: " + p + " days."));
                             }
-                            catch (NullPointerException e) {
-
-                            }
-                        }
-                    };
-                }
-            };
+                        };
+                    }
+                };
         sprintEndDatePicker.getDatePicker().setDayCellFactory(endDateCellFactory);
 
         goalCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
@@ -561,7 +554,7 @@ public class SprintEditTab extends SearchableTab {
 
     private void toggleDone() {
 
-        correctGoal = validateShortName(goalCustomField, null);
+        correctGoal = validateShortName(goalCustomField, currentGoal);
         correctLongName = validateName(longNameCustomField);
 
         btnDone.setDisable(!(correctGoal && correctLongName && teamSelected() && releaseSelected()

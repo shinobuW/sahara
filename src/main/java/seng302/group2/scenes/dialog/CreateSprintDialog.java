@@ -110,9 +110,7 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
                             }
                             if (startDateSelected()) {
                                 long p = ChronoUnit.DAYS.between(sprintStartDatePicker.getValue(), item);
-                                setTooltip(new Tooltip(
-                                                "Sprint duration: " + p + " days.")
-                                );
+                                setTooltip(new Tooltip(getTooltipStr(p)));
                             }
 
                         }
@@ -481,6 +479,44 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
             projectComboBox.setValue(defaultProject);
         }
 
+    }
+
+    private String getTooltipStr(long p) {
+        String returnStr;
+        if (Math.floorDiv(p, 7) == 0) {
+            if (p == 0) {
+                returnStr = "Sprint duration: less than a day.";
+            }
+            else if (p % 7 == 1){
+                returnStr = "Sprint duration: 1 day.";
+            }
+            else {
+                returnStr = "Sprint duration: " + (p % 7) + " days.";
+            }
+        }
+        else if (p % 7 == 0) {
+            if (Math.floorDiv(p, 7 ) == 1 && (p % 7) == 0) {
+                returnStr = "Sprint duration: 1 week.";
+            }
+            else {
+                returnStr = "Sprint duration: " + Math.floorDiv(p, 7) + " weeks.";
+            }
+        }
+        else {
+            if (Math.floorDiv(p, 7) == 1 && (p % 7) == 1) {
+                returnStr = "Sprint duration: 1 week and 1 day.";
+            }
+            else if (Math.floorDiv(p, 7) == 1) {
+                returnStr = "Sprint duration: 1 week and " + (p % 7) + " days.";
+            }
+            else if (p % 7 == 1){
+                returnStr = "Sprint duration: " + Math.floorDiv(p, 7) + " weeks and 1 day.";
+            }
+            else {
+                returnStr = "Sprint duration: " + Math.floorDiv(p, 7) + " weeks and " + (p % 7) + " days.";
+            }
+        }
+        return returnStr;
     }
 
     private Boolean projectSelected() {
