@@ -179,7 +179,7 @@ public class ProjectLoggingTab extends SearchableTab {
     private void updateFilteredLogs(Project currentProject) {
         data.clear();
         for (Log log : currentProject.getLogs()) {
-            if (log.getLocalStartDate().isAfter(startDate) && log.getLocalStartDate().isBefore(endDate)) {
+            if (log.getLocalStartDate().isAfter(startDate.minusDays(1)) && log.getLocalStartDate().isBefore(endDate.plusDays(1))) {
                 data.add(log);
             }
         }

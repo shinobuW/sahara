@@ -575,6 +575,7 @@ public class StoryTaskTab extends SearchableTab {
 
                 boolean effortLeftUnchanged = effortLeftField.getText().equals(
                         Double.toString(currentTask.getEffortLeft()));
+                // TODO This boolean statement compares a CustomComboBox and a Person?? (It will always be false?)
                 boolean assigneesUnchanged = taskAssigneesList.equals((currentTask.getAssignee()));
 
                 if (shortNameUnchanged && descriptionUnchanged
