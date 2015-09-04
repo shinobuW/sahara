@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.search.SearchResultCellNode;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.PersonInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
@@ -461,19 +462,46 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         Global.commandManager.executeCommand(persEdit);
     }
 
+    /**
+     * Overidden search method for Project.
+     * @param searchText The string to search for
+     * @return
+     */
+    @Override
+    public SearchResultCellNode search(String searchText) {
+        searchText = searchText.toLowerCase();
+        List<String> matches = new ArrayList<>();
+        if (this.shortName.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("Short Name: " + shortName);
+        }
+        if (this.firstName.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("First Name" + firstName);
+        }
+        if (this.lastName.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("Last Name: " + lastName);
+        }
+        if (this.description.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("Description: " + description);
+        }
+        if (this.birthDate.toString().toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("Birth Date: " + this.lastName);
+        }
+        if (this.email.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("Email: " + email);
+        }
 
-    public boolean getSelected() {
-        return selected.get();
+        if (matches.size() > 0) {
+            String matchText = "Found " + matches.size() + " matches, first match is " + matches.get(0);
+            String assocText = "";
+            if (!this.getTeam().isUnassignedTeam() && this.getTeam() != null) {
+                assocText = "Belongs to Team: " + this.team.toString();
+            }
+            return new SearchResultCellNode(this, "Release: " + this.shortName, matchText, assocText);
+        }
+        return null;
     }
 
 
-    public void setSelected(boolean selected) {
-        this.selected.set(selected);
-    }
-
-    public SimpleBooleanProperty selectedProperty() {
-        return this.selected;
-    }
 
     /**
      * An overridden version for the String representation of a Person
