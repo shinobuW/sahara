@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableCell;
 
@@ -14,6 +15,7 @@ import javafx.scene.control.TableCell;
 public class ComboBoxCell extends TableCell<Object, String> {
     private ComboBox<Object> comboBox;
     private ObservableList items;
+    private Node defaultGraphic;
 
     /**
      * Constructor
@@ -21,6 +23,7 @@ public class ComboBoxCell extends TableCell<Object, String> {
      */
     public ComboBoxCell(ObservableList itemList) {
         this.items = itemList;
+//        this.defaultGraphic = defaultNode;
     }
 
     /**
@@ -51,7 +54,7 @@ public class ComboBoxCell extends TableCell<Object, String> {
     @Override
     public void cancelEdit() {
         super.cancelEdit();
-        setGraphic(null);
+        setGraphic(this.defaultGraphic);
     }
 
     /**
@@ -65,7 +68,7 @@ public class ComboBoxCell extends TableCell<Object, String> {
 
         if (empty) {
             setText(null);
-            setGraphic(null);
+            setGraphic(this.defaultGraphic);
         }
         else {
             if (isEditing()) {
