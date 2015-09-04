@@ -8,6 +8,7 @@ package seng302.group2.workspace.project.release;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.search.SearchResultCellNode;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.ReleaseInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
@@ -15,9 +16,7 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A release is a sub-member of project and contains information about a release of a project
@@ -250,6 +249,33 @@ public class Release extends SaharaItem implements Comparable<Release> {
         releaseElement.appendChild(releaseDate);
 
         return releaseElement;
+    }
+
+    /**
+     * Overidden search method for Release.
+     * @param searchText The string to search for among the releases attributes.
+     * @return A SearchResultCellNode containing info on any matches.
+     */
+    @Override
+    public SearchResultCellNode search(String searchText) {
+        searchText = searchText.toLowerCase();
+        List<String> matches = new ArrayList<>();
+        if (this.shortName.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("Short Name: " + shortName);
+        }
+        else if (this.description.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("Description: " + description);
+        }
+        else if (this.estimatedDate.toString().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("Estimated Date: " + estimatedDate.toString());
+        }
+
+        if (matches.size() > 0) {
+            String matchText = "Found " + matches.size() + " matches, first match is " + matches.get(0);
+            String assocText = "Belongs to Project: " + this.project.toString();
+            return new SearchResultCellNode(this, "Release: " + this.shortName, matchText, assocText);
+        }
+        return null;
     }
 
     /**
