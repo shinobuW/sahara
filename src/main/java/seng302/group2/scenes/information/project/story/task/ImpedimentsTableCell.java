@@ -8,18 +8,23 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableCell;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import org.controlsfx.control.PopOver;
 import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
+
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * A cell used to show the Impediments status.
@@ -68,6 +73,90 @@ public class ImpedimentsTableCell extends TableCell<Object, String> {
 
     private Node createImpedimentsNode(Task task, TableCell tableCell) {
         // Impediments icon
+        final ImageView warningImage = defineWarningImage(task);
+
+        tableCell.setOnMouseEntered(me -> {
+                tableCell.setCursor(Cursor.HAND); //Change cursor to hand
+            });
+        tableCell.setOnMouseExited(me -> {
+                tableCell.setCursor(Cursor.DEFAULT); //Change cursor to hand
+            });
+
+        PopOver impedimentPopOver = new PopOver();
+        impedimentPopOver.setDetachedTitle(task.getShortName() + "'s Impediments");
+        SortedSet<Task.TASKSTATE> availableStatuses = new TreeSet<>();
+        try {
+            for (Task.TASKSTATE state : Task.getImpedingStates()) {
+                availableStatuses.add(state);
+            }
+        }
+        catch (NullPointerException ex) {
+        }
+
+        // Leave the combobox without a type so we can add a blank '(none)' without having to create a new task state
+        ComboBox impedimentCombo = new ComboBox<>();
+        impedimentCombo.getItems().add("(none)");
+        impedimentCombo.getItems().addAll(availableStatuses);
+        // Make default selection
+        if (impedimentCombo.getItems().contains(task.getState())) {
+            System.out.println("hello");
+            impedimentCombo.getSelectionModel().select(task.getState());
+        }
+        else {
+            impedimentCombo.getSelectionModel().select("(none)");
+        }
+
+
+        VBox impedimentsVBox = new VBox(4);
+        SearchableText impedimentsLabel = new SearchableText("Impediments: ");
+        TextArea impedimentsTextArea = new TextArea(task.getImpediments());
+        impedimentsTextArea.setPrefSize(240, 80);
+        impedimentsTextArea.setWrapText(true);
+        impedimentsVBox.getChildren().addAll(impedimentsLabel, impedimentsTextArea);
+
+        Button impedimentSaveButton = new Button("Save Impediments");
+        impedimentSaveButton.setAlignment(Pos.CENTER_RIGHT);
+        impedimentSaveButton.setOnAction(event -> {
+                Task.TASKSTATE selectedState = null;
+                Object selectedObject = impedimentCombo.getSelectionModel().getSelectedItem();
+                if (selectedObject == null || !selectedObject.toString().equals("(none)")) {
+                    selectedState = (Task.TASKSTATE) selectedObject;
+                }
+                task.editImpedimentState(selectedState, impedimentsTextArea.getText());
+                 //updatedWarningImage = defineWarningImage(task);
+                impedimentPopOver.hide();
+            });
+
+
+        SearchableText statusLabel = new SearchableText("Status: ");
+        statusLabel.setTextAlignment(TextAlignment.LEFT);
+        HBox impedimentComboLabel = new HBox(8);
+        impedimentComboLabel.setAlignment(Pos.CENTER_RIGHT);
+        impedimentComboLabel.getChildren().addAll(
+                statusLabel,
+                impedimentCombo
+        );
+
+
+        VBox impedimentChangeNode = new VBox(8);
+        impedimentChangeNode.setAlignment(Pos.CENTER_RIGHT);
+        impedimentChangeNode.setPadding(new Insets(8,8,8,8));
+        impedimentChangeNode.getChildren().addAll(
+                impedimentComboLabel,
+                impedimentsVBox,
+                impedimentSaveButton
+        );
+        impedimentPopOver.setContentNode(impedimentChangeNode);
+
+        tableCell.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                impedimentPopOver.show(tableCell);
+                event.consume();
+            });
+
+        return warningImage;
+    }
+
+    private ImageView defineWarningImage(Task task) {
         ImageView warningImage;
         if (Task.getImpedingStates().contains(task.getState()) || !task.getImpediments().isEmpty()) {
             warningImage = new ImageView("icons/dialog-cancel.png");
@@ -99,49 +188,8 @@ public class ImpedimentsTableCell extends TableCell<Object, String> {
             warningImage = new ImageView("icons/dialog-cancel-empty.png");
             Tooltip.create("This task has no impediments or blockages", warningImage, 50);
         }
-
-        tableCell.setOnMouseEntered(me -> {
-                tableCell.setCursor(Cursor.HAND); //Change cursor to hand
-            });
-        tableCell.setOnMouseExited(me -> {
-                tableCell.setCursor(Cursor.DEFAULT); //Change cursor to hand
-            });
-
-
-        PopOver impedimentPopOver = new PopOver();
-        impedimentPopOver.setDetachedTitle(task.getShortName() + "'s Impediments");
-        tableCell.setOnMouseClicked(me -> {
-                impedimentPopOver.show(tableCell);
-            });
-
-        VBox impedimentsVBox = new VBox();
-        impedimentsVBox.setPadding(new Insets(8, 8, 8, 8));
-        Label impediments = new Label();
-        impediments.setTextFill(Color.BLACK);
-        Label impedimentsLabel = new Label("There are no impediments");
-        impedimentsLabel.setTextFill(Color.BLACK);
-        impedimentsVBox.getChildren().add(impedimentsLabel);
-
-        if (!task.getImpediments().isEmpty()) {
-            impedimentsLabel.setText("Impediments: ");
-            impedimentsLabel.setStyle("-fx-font-weight: bold");
-            impediments.setText(task.getImpediments());
-            impediments.setMaxWidth(220);
-            impediments.setWrapText(true);
-            impedimentsVBox.getChildren().addAll(impediments);
-        }
-
-        SearchableText statusLabel = new SearchableText("Status: ");
-        statusLabel.setTextAlignment(TextAlignment.LEFT);
-        HBox impedimentComboLabel = new HBox(2);
-        impedimentComboLabel.setAlignment(Pos.CENTER_RIGHT);
-        impedimentComboLabel.getChildren().addAll(
-                statusLabel
-        );
-
-        impedimentPopOver.setContentNode(impedimentsVBox);
-
         return warningImage;
     }
+
 }
 
