@@ -3,7 +3,7 @@
     "shortName": "Shinobi Demo",
     "longName": "Shinobi Demo",
     "description": "",
-    "lastSaveLocation": "/home/cosc/student/btm38/IdeaProjects/project-2/Shinobi_Demo.proj",
+    "lastSaveLocation": "/home/cosc/student/swi67/Documents/SENG302/Greoup Projeckt/Shinobi_Demo.proj",
     "estimationScales": {
       "estimationScaleDict": {
         "T-Shirt Sizes": [
@@ -945,6 +945,7 @@
     "serializableLogs": [],
     "effortLeft": 6000.0,
     "effortSpent": 0.0,
+    "initialLog": "0x51",
     "converter": {},
     "itemName": "hjgh",
     "id": 2422
@@ -987,6 +988,7 @@
     "serializableLogs": [],
     "effortLeft": 5.0,
     "effortSpent": 0.0,
+    "initialLog": "0x52",
     "converter": {},
     "itemName": "Grab a kid",
     "id": 2388
@@ -1002,6 +1004,7 @@
     "serializableLogs": [],
     "effortLeft": 3.0,
     "effortSpent": 0.0,
+    "initialLog": "0x53",
     "converter": {},
     "itemName": "Make \u0027em scream",
     "id": 2389
@@ -1016,6 +1019,7 @@
     "serializableLogs": [],
     "effortLeft": 30.0,
     "effortSpent": 120.0,
+    "initialLog": "0x54",
     "converter": {},
     "itemName": "Verify Me!",
     "id": 2418
@@ -1031,6 +1035,7 @@
     "serializableLogs": [],
     "effortLeft": 30.0,
     "effortSpent": 90.0,
+    "initialLog": "0x55",
     "converter": {},
     "itemName": "Mission Completion",
     "id": 2419
@@ -1038,13 +1043,14 @@
   "0x4d": {
     "shortName": "Don\u0027t touch me",
     "description": "",
-    "impediments": "",
+    "impediments": "This is a really long impediment This is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impediment",
     "state": "NOT_STARTED",
     "lane": "NOT_STARTED",
     "story": "0x3c",
     "serializableLogs": [],
     "effortLeft": 30.0,
     "effortSpent": 0.0,
+    "initialLog": "0x56",
     "converter": {},
     "itemName": "Don\u0027t touch me",
     "id": 2420
@@ -1060,6 +1066,7 @@
     "serializableLogs": [],
     "effortLeft": 45.0,
     "effortSpent": 180.0,
+    "initialLog": "0x57",
     "converter": {},
     "itemName": "I\u0027m lost",
     "id": 2421
@@ -1074,6 +1081,7 @@
     "serializableLogs": [],
     "effortLeft": 0.0,
     "effortSpent": 0.0,
+    "initialLog": "0x58",
     "converter": {},
     "itemName": "Verify Me!",
     "id": 2389
@@ -1088,8 +1096,207 @@
     "serializableLogs": [],
     "effortLeft": 0.0,
     "effortSpent": 0.0,
+    "initialLog": "0x59",
     "converter": {},
     "itemName": "Mission Completion",
     "id": 2412
+  },
+  "0x51": {
+    "startTime": {
+      "date": "0x5a",
+      "time": {
+        "hour": 13,
+        "minute": 23,
+        "second": 39,
+        "nano": 526000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0x44",
+    "description": "initial log (this should be hidden)",
+    "itemName": "Untitled Log",
+    "id": 95
+  },
+  "0x52": {
+    "startTime": {
+      "date": "0x5b",
+      "time": {
+        "hour": 13,
+        "minute": 23,
+        "second": 39,
+        "nano": 525000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0x49",
+    "description": "initial log (this should be hidden)",
+    "itemName": "Untitled Log",
+    "id": 87
+  },
+  "0x53": {
+    "startTime": {
+      "date": "0x5c",
+      "time": {
+        "hour": 13,
+        "minute": 23,
+        "second": 39,
+        "nano": 525000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0x4a",
+    "description": "initial log (this should be hidden)",
+    "itemName": "Untitled Log",
+    "id": 89
+  },
+  "0x54": {
+    "startTime": {
+      "date": "0x5d",
+      "time": {
+        "hour": 13,
+        "minute": 23,
+        "second": 39,
+        "nano": 523000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0x4b",
+    "description": "initial log (this should be hidden)",
+    "itemName": "Untitled Log",
+    "id": 74
+  },
+  "0x55": {
+    "startTime": {
+      "date": "0x5e",
+      "time": {
+        "hour": 13,
+        "minute": 23,
+        "second": 39,
+        "nano": 523000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0x4c",
+    "description": "initial log (this should be hidden)",
+    "itemName": "Untitled Log",
+    "id": 76
+  },
+  "0x56": {
+    "startTime": {
+      "date": "0x5f",
+      "time": {
+        "hour": 13,
+        "minute": 23,
+        "second": 39,
+        "nano": 524000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0x4d",
+    "description": "initial log (this should be hidden)",
+    "itemName": "Untitled Log",
+    "id": 78
+  },
+  "0x57": {
+    "startTime": {
+      "date": "0x60",
+      "time": {
+        "hour": 13,
+        "minute": 23,
+        "second": 39,
+        "nano": 524000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0x4e",
+    "description": "initial log (this should be hidden)",
+    "itemName": "Untitled Log",
+    "id": 80
+  },
+  "0x58": {
+    "startTime": {
+      "date": "0x61",
+      "time": {
+        "hour": 13,
+        "minute": 23,
+        "second": 39,
+        "nano": 524000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0x4f",
+    "description": "initial log (this should be hidden)",
+    "itemName": "Untitled Log",
+    "id": 83
+  },
+  "0x59": {
+    "startTime": {
+      "date": "0x62",
+      "time": {
+        "hour": 13,
+        "minute": 23,
+        "second": 39,
+        "nano": 525000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0x50",
+    "description": "initial log (this should be hidden)",
+    "itemName": "Untitled Log",
+    "id": 85
+  },
+  "0x5a": {
+    "year": 2015,
+    "month": 9,
+    "day": 4
+  },
+  "0x5b": {
+    "year": 2015,
+    "month": 9,
+    "day": 4
+  },
+  "0x5c": {
+    "year": 2015,
+    "month": 9,
+    "day": 4
+  },
+  "0x5d": {
+    "year": 2015,
+    "month": 9,
+    "day": 4
+  },
+  "0x5e": {
+    "year": 2015,
+    "month": 9,
+    "day": 4
+  },
+  "0x5f": {
+    "year": 2015,
+    "month": 9,
+    "day": 4
+  },
+  "0x60": {
+    "year": 2015,
+    "month": 9,
+    "day": 4
+  },
+  "0x61": {
+    "year": 2015,
+    "month": 9,
+    "day": 4
+  },
+  "0x62": {
+    "year": 2015,
+    "month": 9,
+    "day": 4
   }
 }
