@@ -4,28 +4,15 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
-import org.controlsfx.control.PopOver;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
-import seng302.group2.workspace.team.Team;
-
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  * A Table cell which displays a person icon and the assignee's name. Combo box is displayed on edit.
@@ -62,12 +49,10 @@ public class AssigneeTableCell extends TableCell<Object, String> {
         super.updateItem(item, empty);
 
         if (empty || item == null) {
-
             setGraphic(null);
         }
         else {
             if (isEditing()) {
-                System.out.println("is editing");
                 if (comboBox != null) {
                     comboBox.setValue(getType());
                 }
@@ -105,8 +90,6 @@ public class AssigneeTableCell extends TableCell<Object, String> {
             createCombo();
 
             if (getTask().getAssignee() != null) {
-                System.out.println("this is meow");
-                System.out.println(getTask().getAssignee());
                 comboBox.setValue(getTask().getAssignee());
             }
             setGraphic(comboBox);
@@ -167,7 +150,6 @@ public class AssigneeTableCell extends TableCell<Object, String> {
     private Node createAssigneeNode(Task task, TableCell tableCell) {
         HBox assigneeHBox = new HBox(10);
         ImageView assigneeImage;
-        System.out.println(task);
         if (task.getAssignee() != null) {
             assigneeImage = new ImageView("icons/person.png");
             seng302.group2.scenes.control.Tooltip.create(task.getAssignee().getFullName(), assigneeImage, 50);
@@ -184,60 +166,6 @@ public class AssigneeTableCell extends TableCell<Object, String> {
                 tableCell.setCursor(Cursor.DEFAULT); //Change cursor to hand
             });
 
-        PopOver assignPopOver = new PopOver();
-        assignPopOver.setDetachedTitle(task.getShortName() + " Assignment");
-        SortedSet<Person> availableAssignees = new TreeSet<>();
-        try {
-            for (Team team : task.getStory().getProject().getCurrentTeams()) {
-                availableAssignees.addAll(team.getPeople());
-            }
-        }
-        catch (NullPointerException ex) {
-        }
-        Person nonePerson = new Person();
-        nonePerson.setShortName("(none)");
-        availableAssignees.add(nonePerson);
-
-        ComboBox<Person> assigneeCombo = new ComboBox<>();
-        assigneeCombo.getItems().addAll(availableAssignees);
-        assigneeCombo.getSelectionModel().select(task.getAssignee());
-        assigneeImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                if (assignPopOver.isShowing()) {
-                    assignPopOver.hide();
-                }
-                else {
-                    assignPopOver.show(assigneeImage);
-                }
-                event.consume();
-            });
-
-        Button assigneeSaveButton = new Button("Save Assignee");
-        assigneeSaveButton.setAlignment(Pos.CENTER_RIGHT);
-        assigneeSaveButton.setOnAction(event -> {
-                Person selectedPerson = assigneeCombo.getSelectionModel().getSelectedItem();
-                if (selectedPerson.equals(nonePerson)) {
-                    selectedPerson = null;
-                }
-                task.editAssignee(selectedPerson);
-                assignPopOver.hide();
-            });
-
-        SearchableText assigneeLabel = new SearchableText("Assignee: ");
-        assigneeLabel.setTextAlignment(TextAlignment.LEFT);
-        HBox assigneeComboLabel = new HBox(8);
-        assigneeComboLabel.setAlignment(Pos.CENTER_RIGHT);
-        assigneeComboLabel.getChildren().addAll(
-                assigneeLabel,
-                assigneeCombo
-        );
-        VBox assigneeChangeNode = new VBox(8);
-        assigneeChangeNode.setAlignment(Pos.CENTER_RIGHT);
-        assigneeChangeNode.setPadding(new Insets(8, 8, 8, 8));
-        assigneeChangeNode.getChildren().addAll(
-                assigneeComboLabel,
-                assigneeSaveButton
-        );
-        assignPopOver.setContentNode(assigneeChangeNode);
         assigneeHBox.getChildren().addAll(assigneeImage);
         if (task.getAssignee() != null) {
             assigneeHBox.getChildren().add(new Label(task.getAssignee().toString()));
