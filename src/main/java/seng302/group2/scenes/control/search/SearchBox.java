@@ -31,7 +31,7 @@ public class SearchBox extends TextField {
                 if (App.mainPane.getContent() instanceof SearchableScene) {
                     //System.out.println("Querying: " + this.getText());
                     Collection<SearchableTab> tabs =
-                            ((SearchableScene) App.mainPane.getContent()).query(this.getText());
+                            ((SearchableScene) App.mainPane.getContent()).query(this.getText(), false);
                 }
             });
     }

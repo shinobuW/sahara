@@ -352,4 +352,10 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
         }
         return result;
     }
+
+    //TODO Advanced search query for this class.
+    @Override
+    public boolean advancedQuery(String query) {
+        return false;
+    }
 }

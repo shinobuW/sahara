@@ -39,4 +39,10 @@ public class SearchableTextField extends TextField implements SearchableControl 
             return false;
         }
     }
+
+    //TODO Advanced search query for this class.
+    @Override
+    public boolean advancedQuery(String query) {
+        return false;
+    }
 }

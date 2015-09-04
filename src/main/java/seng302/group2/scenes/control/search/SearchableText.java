@@ -203,4 +203,10 @@ public class SearchableText extends TextFlow implements SearchableControl {
             text.setStyle(styleInject);
         }
     }
+
+    //TODO Advanced search query for this class.
+    @Override
+    public boolean advancedQuery(String query) {
+        return false;
+    }
 }

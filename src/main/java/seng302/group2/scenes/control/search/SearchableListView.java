@@ -121,4 +121,10 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
     private boolean queryCell(String query, String string) {
         return !query.trim().isEmpty() && string.toLowerCase().contains(query.toLowerCase());
     }
+
+    //TODO Advanced search query for this class.
+    @Override
+    public boolean advancedQuery(String query) {
+        return false;
+    }
 }

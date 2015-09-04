@@ -22,13 +22,33 @@ public abstract class SearchableTab extends Tab {
      * @param query The string to be matched within the tab.
      * @return if the query was found
      */
-    public boolean query(String query) {
+    public boolean query(String query, boolean isAdvanced) {
         boolean found = false;
-        for (SearchableControl control : getSearchableControls()) {
-            if (control.query(query)) {
-                found = true;
+        if (!isAdvanced) {
+            for (SearchableControl control : getSearchableControls()) {
+                if (control.query(query)) {
+                    found = true;
+                }
             }
         }
+        else {
+            for (SearchableControl control : getSearchableControls()) {
+                if (control.advancedQuery(query)) {
+                    found = true;
+                }
+            }
+        }
+        return found;
+    }
+
+    /**
+     * Checks to see if the query matches any string in the searchable controls on this tab.
+     * @param query The string to be matched within the tab.
+     * @return if the query was found
+     */
+    public boolean advancedQuery(String query) {
+        boolean found = false;
+
         return found;
     }
 }

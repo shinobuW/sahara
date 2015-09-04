@@ -81,4 +81,20 @@ public class CustomInfoLabel extends HBox implements SearchableControl {
         return  found;
     }
 
+    @Override
+    /**
+     * Queries the HBox to find any elements containing the given query string. If found inside
+     * the HBox, the matching text will be highlighted.
+     * @param query The query string to search
+     * @return Whether any elements inside the HBox were found to contain the query string
+     */
+    public boolean advancedQuery(String query) {
+        boolean found = false;
+
+        if (this.value.query(query)) {
+            found = true;
+        }
+        return  found;
+    }
+
 }

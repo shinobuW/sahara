@@ -5,7 +5,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.search.SearchResultCellNode;
+import seng302.group2.scenes.control.search.SearchableScene;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.information.project.ProjectScene;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -51,7 +53,9 @@ public class SearchResultPane extends BorderPane {
         for (String item : checkedItems) {
             if (item.equals("Projects")) {
                 for (Project proj : Global.currentWorkspace.getProjects()) {
-                    SearchResultCellNode searchResult = proj.search(searchText);
+
+                    SearchResultCellNode searchResult = new SearchResultCellNode(proj, proj.toString(),
+                            ((SearchableScene) new ProjectScene(proj)).query(searchText, true).toString(), "");
                     if (!(searchResult == null)) {
                         results.add(searchResult);
                     }

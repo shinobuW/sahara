@@ -89,4 +89,11 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
         }
         return result;
     }
+
+    //TODO Advanced search query for this class.
+    @Override
+    public boolean advancedQuery(String query) {
+        return false;
+    }
+
 }

@@ -19,4 +19,6 @@ public interface SearchableControl {
      * @return whether or not a matching string was found
      */
     boolean query(String query);
+
+    boolean advancedQuery(String query);
 }

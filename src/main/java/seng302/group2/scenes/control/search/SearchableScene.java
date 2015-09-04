@@ -20,15 +20,16 @@ public abstract class SearchableScene extends TabPane {
      * @param query the query string
      * @return a collection of tabs with items found on them
      */
-    public Set<SearchableTab> query(String query) {
+    public Set<SearchableTab> query(String query, Boolean isAdvanced) {
         Set<SearchableTab> matches = new HashSet<>();
-
         for (SearchableTab tab : getSearchableTabs()) {
-            if (tab.query(query)) {
+            if (tab.query(query, isAdvanced)) {
                 matches.add(tab);
             }
         }
 
         return matches;
     }
+
+
 }
