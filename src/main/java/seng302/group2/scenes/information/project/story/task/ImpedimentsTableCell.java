@@ -112,6 +112,7 @@ public class ImpedimentsTableCell extends TableCell<Object, String> {
         TextArea impedimentsTextArea = new TextArea(task.getImpediments());
         impedimentsTextArea.setPrefSize(240, 80);
         impedimentsTextArea.setWrapText(true);
+        impedimentsTextArea.setEditable(true);
         impedimentsVBox.getChildren().addAll(impedimentsLabel, impedimentsTextArea);
 
         Button impedimentSaveButton = new Button("Save Impediments");

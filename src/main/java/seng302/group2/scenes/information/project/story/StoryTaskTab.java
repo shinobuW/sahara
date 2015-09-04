@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -220,6 +221,19 @@ public class StoryTaskTab extends SearchableTab {
         spentCol.setCellValueFactory(new PropertyValueFactory<Task, String>("effortSpentString"));
         spentCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
+
+        spentCol.setCellFactory(
+            column -> {
+                return new TableCell<Task, String>()
+                {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setText(item);
+                        setTooltip(new Tooltip("Effort spent is not editable"));
+                    }
+                };
+            });
 
         TableColumn impedimentsCol = new TableColumn("Impediments");
         impedimentsCol.prefWidthProperty().bind(taskTable.widthProperty()
