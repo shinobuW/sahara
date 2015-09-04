@@ -1,14 +1,13 @@
 package seng302.group2.workspace.project.story.tasks;
 
-import java.time.LocalDateTime;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.project.backlog.Backlog;
-import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
+
+import java.time.LocalDateTime;
 
 public class LogTest {
     Log log = new Log();
@@ -33,7 +32,7 @@ public class LogTest {
         Assert.assertEquals("A new Log", log1.getDescription());
         Assert.assertEquals(122, log1.getDurationInMinutes(), 0);
         Assert.assertEquals(2, log1.getDurationInHours(), 0.5);
-        Assert.assertEquals(LocalDateTime.now(), log1.getStartDate());
+        Assert.assertEquals(LocalDateTime.now().toLocalDate(), log1.getStartDate().toLocalDate());
         Assert.assertEquals(task, log1.getTask());
     }
     
