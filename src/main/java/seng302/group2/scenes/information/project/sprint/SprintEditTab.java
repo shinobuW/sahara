@@ -194,28 +194,28 @@ public class SprintEditTab extends SearchableTab {
         sprintStartDatePicker.getDatePicker().setDayCellFactory(startDateCellFactory);
 
         final Callback<DatePicker, DateCell> endDateCellFactory =
-                new Callback<DatePicker, DateCell>() {
-                    @Override
-                    public DateCell call(final DatePicker datePicker) {
-                        return new DateCell() {
-                            @Override
-                            public void updateItem(LocalDate item, boolean empty) {
-                                super.updateItem(item, empty);
-                                if (item.isBefore(sprintStartDatePicker.getValue())) {
-                                    setDisable(true);
-                                    setStyle("-fx-background-color: #ffc0cb;");
-                                }
-                                if (releaseComboBox.getValue().getEstimatedDate() != null
-                                        && item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
-                                    setDisable(true);
-                                    setStyle("-fx-background-color: #ffc0cb;");
-                                }
-                                long p = ChronoUnit.DAYS.between(sprintStartDatePicker.getValue(), item) + 1;
-                                setTooltip(new Tooltip("Sprint duration: " + p + " days."));
+            new Callback<DatePicker, DateCell>() {
+                @Override
+                public DateCell call(final DatePicker datePicker) {
+                    return new DateCell() {
+                        @Override
+                        public void updateItem(LocalDate item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (item.isBefore(sprintStartDatePicker.getValue())) {
+                                setDisable(true);
+                                setStyle("-fx-background-color: #ffc0cb;");
                             }
-                        };
-                    }
-                };
+                            if (releaseComboBox.getValue().getEstimatedDate() != null
+                                    && item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
+                                setDisable(true);
+                                setStyle("-fx-background-color: #ffc0cb;");
+                            }
+                            long p = ChronoUnit.DAYS.between(sprintStartDatePicker.getValue(), item);
+                            setTooltip(new Tooltip(getTooltipStr(p)));
+                        }
+                    };
+                }
+            };
         sprintEndDatePicker.getDatePicker().setDayCellFactory(endDateCellFactory);
 
         goalCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
@@ -529,6 +529,44 @@ public class SprintEditTab extends SearchableTab {
         btnCancel.setOnAction((event) -> {
                 currentSprint.switchToInfoScene();
             });
+    }
+
+    private String getTooltipStr(long dur) {
+        String returnStr;
+        if (Math.floorDiv(dur, 7) == 0) {
+            if (dur == 0) {
+                returnStr = "Sprint duration: less than a day.";
+            }
+            else if (dur % 7 == 1) {
+                returnStr = "Sprint duration: 1 day.";
+            }
+            else {
+                returnStr = "Sprint duration: " + (dur % 7) + " days.";
+            }
+        }
+        else if (dur % 7 == 0) {
+            if (Math.floorDiv(dur, 7 ) == 1 && (dur % 7) == 0) {
+                returnStr = "Sprint duration: 1 week.";
+            }
+            else {
+                returnStr = "Sprint duration: " + Math.floorDiv(dur, 7) + " weeks.";
+            }
+        }
+        else {
+            if (Math.floorDiv(dur, 7) == 1 && (dur % 7) == 1) {
+                returnStr = "Sprint duration: 1 week and 1 day.";
+            }
+            else if (Math.floorDiv(dur, 7) == 1) {
+                returnStr = "Sprint duration: 1 week and " + (dur % 7) + " days.";
+            }
+            else if (dur % 7 == 1) {
+                returnStr = "Sprint duration: " + Math.floorDiv(dur, 7) + " weeks and 1 day.";
+            }
+            else {
+                returnStr = "Sprint duration: " + Math.floorDiv(dur, 7) + " weeks and " + (dur % 7) + " days.";
+            }
+        }
+        return returnStr;
     }
 
     private Boolean teamSelected() {

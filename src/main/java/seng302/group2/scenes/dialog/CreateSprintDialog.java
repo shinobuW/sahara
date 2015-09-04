@@ -481,39 +481,39 @@ public class CreateSprintDialog extends Dialog<Map<String, String>> {
 
     }
 
-    private String getTooltipStr(long p) {
+    private String getTooltipStr(long dur) {
         String returnStr;
-        if (Math.floorDiv(p, 7) == 0) {
-            if (p == 0) {
+        if (Math.floorDiv(dur, 7) == 0) {
+            if (dur == 0) {
                 returnStr = "Sprint duration: less than a day.";
             }
-            else if (p % 7 == 1){
+            else if (dur % 7 == 1) {
                 returnStr = "Sprint duration: 1 day.";
             }
             else {
-                returnStr = "Sprint duration: " + (p % 7) + " days.";
+                returnStr = "Sprint duration: " + (dur % 7) + " days.";
             }
         }
-        else if (p % 7 == 0) {
-            if (Math.floorDiv(p, 7 ) == 1 && (p % 7) == 0) {
+        else if (dur % 7 == 0) {
+            if (Math.floorDiv(dur, 7 ) == 1 && (dur % 7) == 0) {
                 returnStr = "Sprint duration: 1 week.";
             }
             else {
-                returnStr = "Sprint duration: " + Math.floorDiv(p, 7) + " weeks.";
+                returnStr = "Sprint duration: " + Math.floorDiv(dur, 7) + " weeks.";
             }
         }
         else {
-            if (Math.floorDiv(p, 7) == 1 && (p % 7) == 1) {
+            if (Math.floorDiv(dur, 7) == 1 && (dur % 7) == 1) {
                 returnStr = "Sprint duration: 1 week and 1 day.";
             }
-            else if (Math.floorDiv(p, 7) == 1) {
-                returnStr = "Sprint duration: 1 week and " + (p % 7) + " days.";
+            else if (Math.floorDiv(dur, 7) == 1) {
+                returnStr = "Sprint duration: 1 week and " + (dur % 7) + " days.";
             }
-            else if (p % 7 == 1){
-                returnStr = "Sprint duration: " + Math.floorDiv(p, 7) + " weeks and 1 day.";
+            else if (dur % 7 == 1) {
+                returnStr = "Sprint duration: " + Math.floorDiv(dur, 7) + " weeks and 1 day.";
             }
             else {
-                returnStr = "Sprint duration: " + Math.floorDiv(p, 7) + " weeks and " + (p % 7) + " days.";
+                returnStr = "Sprint duration: " + Math.floorDiv(dur, 7) + " weeks and " + (dur % 7) + " days.";
             }
         }
         return returnStr;

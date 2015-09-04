@@ -208,9 +208,10 @@ public class WorkspaceTest {
         Assert.assertEquals(1, wsElement.getChildNodes().item(5).getChildNodes().getLength());
         //<unassigned-people>
         Assert.assertEquals(2, wsElement.getChildNodes().item(6).getChildNodes().getLength());
-        //<Roles>
-        Assert.assertEquals(3, wsElement.getChildNodes().item(7).getChildNodes().getLength());
         //<unassigned-skills>
-        Assert.assertEquals(1, wsElement.getChildNodes().item(8).getChildNodes().getLength());
+        Assert.assertEquals(1, wsElement.getChildNodes().item(7).getChildNodes().getLength());
+        //<Roles>
+        Assert.assertEquals(3, wsElement.getChildNodes().item(8).getChildNodes().getLength());
+
     }
 }
