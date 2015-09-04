@@ -13,7 +13,6 @@ public class LogTest {
     Log log = new Log();
     /**
      * Test Log constructors
-     * @throws Exception 
      */
     @Test
     public void testLogConstructors() {

@@ -6,6 +6,7 @@ import seng302.group2.workspace.team.Team;
 import seng302.group2.workspace.workspace.Workspace;
 
 /**
+ * A class for testing the GlobalClass.
  * Created by Jordane on 27/04/2015.
  */
 public class GlobalTest {

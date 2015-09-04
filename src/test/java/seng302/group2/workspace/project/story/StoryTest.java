@@ -264,7 +264,7 @@ public class StoryTest {
 
     /**
      * Checks whether cyclic dependency check returns true if a story depends on itself
-     * A -> A
+     * A -&gt; A
      */
     @Test
     public void testHasCyclicDependencies_Single() {
@@ -277,7 +277,7 @@ public class StoryTest {
 
     /**
      * Checks whether cyclic dependency check returns false for a simple story scenario without cycles
-     * A -> B
+     * A -&gt; B
      */
     @Test
     public void testHasCyclicDependencies_None_Simple() {
@@ -293,9 +293,9 @@ public class StoryTest {
 
     /**
      * Checks whether cyclic dependency check returns false for a story scenario without cycles
-     * A -> B -> C -> D
-     * A -> C
-     * B -> D
+     * A -&gt; B -&gt; C -&gt; D
+     * A -&gt; C
+     * B -&gt; D
      */
     @Test
     public void testHasCyclicDependencies_None_Adv() {
@@ -319,8 +319,8 @@ public class StoryTest {
 
     /**
      * Checks whether cyclic dependency check returns expected values for a simple story scenario with cycles
-     * A -> B
-     * B -> A
+     * A -&gt; B
+     * B -&gt; A
      */
     @Test
     public void testHasCyclicDependencies_Simple() {
@@ -337,8 +337,8 @@ public class StoryTest {
 
     /**
      * Checks whether cyclic dependency check returns expected values for a story scenario with cycles
-     * A -> B -> C -> D
-     * B -> A
+     * A -&gt; B -&gt; C -&gt; D
+     * B -&gt; A
      */
     @Test
     public void testHasCyclicDependencies_Adv() {
