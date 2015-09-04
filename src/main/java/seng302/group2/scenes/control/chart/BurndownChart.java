@@ -39,12 +39,11 @@ public class BurndownChart extends LineChart {
     public void populateGraph(Sprint currentSprint) {
         this.setTitle(currentSprint.getGoal() + " Burndown");
         double effortSpent = 0;
-        List<Log> logList;
-        logList = currentSprint.getAllLogsWithInitialLogs();
+        List<Log> logList = currentSprint.getAllLogsWithInitialLogs();
         LocalDate startDate = currentSprint.getStartDate();
         LocalDate endDate = currentSprint.getEndDate();
         double initialEffortLeft = currentSprint.totalEffortLeft() / 60;
-//        System.out.println(initialEffortLeft);
+        System.out.println(logList);
 
         /* Map which stores a (key, value) pair of (date: hours), where hours is the total n
         umber of hours logged on the date.
@@ -88,7 +87,6 @@ public class BurndownChart extends LineChart {
                 dailyEffortLeftMap.put(log.getStartDate().toLocalDate(), sum + log.getEffortLeftDifferenceInHours());
             }
         }
-        System.out.println(dailyEffortLeftMap);
 
         XYChart.Series referenceVelocitySeries = new XYChart.Series();
         referenceVelocitySeries.setName("Reference Velocity");
@@ -117,23 +115,31 @@ public class BurndownChart extends LineChart {
             effortLeftSeries.getData().add(new XYChart.Data<>(monthStr + " " + d.getDayOfMonth(), currentEffortLeft));
         }
 
-        System.out.println(dailyEffortLeftMap);
+        if (!logList.isEmpty()){
+            this.getData().add(referenceVelocitySeries);
+            this.getData().add(effortSpentSeries);
+            this.getData().add(effortLeftSeries);
+        }
 
-        this.getData().add(referenceVelocitySeries);
-        this.getData().add(effortSpentSeries);
-        this.getData().add(effortLeftSeries);
-    }
-
-    public XYChart.Series effortLeftSeries(Sprint currentSprint) {
-        List<Log> logList = new ArrayList<>();
-        logList = currentSprint.getAllLogs();
-        return new Series<>();
 
     }
 
-    public XYChart.Series effortSpentSeries(Sprint currentSprint) {
-        return null;
-    }
+//    public XYChart.Series effortLeftSeries(Sprint currentSprint) {
+//        List<Log> logList = new ArrayList<>();
+//        logList = currentSprint.getAllLogs();
+//        return new Series<>();
+//
+//    }
+//
+//    public XYChart.Series effortSpentSeries() {
+//        XYChart.Series effortSpentSeries = new XYChart.Series();
+//
+//        return effortSpentSeries();
+//    }
+//
+//    public XYChart.Series effortSpentSeries(Sprint currentSprint) {
+//        return null;
+//    }
 }
 
 
