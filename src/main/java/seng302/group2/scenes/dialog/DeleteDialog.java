@@ -37,13 +37,28 @@ public class DeleteDialog {
      * @return if the user confirms for the element to be deleted
      */
     public static boolean showDeleteDialog(SaharaItem element) {
-        if (element.getClass() == Release.class) {
+        if (element instanceof Release) {
             for (Sprint sprint : ((Release)element).getProject().getSprints()) {
                 if (sprint.getRelease() == element) {
                     CustomDialog.showDialog("Cannot Delete Release", "The chosen release cannot be deleted"
                             + " as it has one or more associated Sprints!", Alert.AlertType.WARNING);
                     return false;
                 }
+            }
+        }
+        if (element instanceof Person) {
+            Person person = (Person) element;
+            if (person.getRole().toString().equals("Product Owner")) {
+                CustomDialog.showDialog("Cannot Delete Person", "This person is the Product Owner of a team"
+                                + " and cannot be deleted!",
+                        Alert.AlertType.WARNING);
+                return false;
+            }
+            else if (person.getRole().toString().equals("Scrum Master")) {
+                CustomDialog.showDialog("Cannot Delete Person", "This person is the Scrum Master of a team"
+                                + " and cannot be deleted!",
+                        Alert.AlertType.WARNING);
+                return false;
             }
         }
         ArrayList<String> dialogText;

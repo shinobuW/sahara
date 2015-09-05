@@ -483,10 +483,12 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         if (this.description.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
             matches.add("Description: " + description);
         }
-        if (this.birthDate.toString().toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+        if (this.birthDate != null
+                && this.birthDate.toString().toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
             matches.add("Birth Date: " + this.lastName);
         }
-        if (this.email.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+        if (this.email != null
+                && this.email.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
             matches.add("Email: " + email);
         }
 
@@ -571,6 +573,8 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             person.birthDate = birthDate;
             person.description = description;
             person.team = team;
+            team.addPerson(person);
+            oldTeam.removePerson(person);
             person.skills = skills;
             Collections.sort(Global.currentWorkspace.getPeople());
         }
@@ -586,6 +590,8 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             person.birthDate = oldBirthDate;
             person.description = oldDescription;
             person.team = oldTeam;
+            oldTeam.addPerson(person);
+            team.removePerson(person);
             person.skills = oldSkills;
             Collections.sort(Global.currentWorkspace.getPeople());
         }
