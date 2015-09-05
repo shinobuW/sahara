@@ -16,7 +16,7 @@ public class LogTest {
      * Test Log constructors
      */
     @Test
-    public void testLogConstructors() {
+    public void testLogConstructors() throws Exception {
         Story story = new Story();
         Person aPerson = new Person();
         Task task = new Task("test task", "", story, aPerson, 0);
@@ -70,7 +70,7 @@ public class LogTest {
      * Tests the Edit logs command of the Log class.
      */
     @Test
-    public void testEditLog() {
+    public void testEditLog() throws Exception {
         Person aPerson = new Person();
 
         Project proj = new Project("A new Project", "Proj", "Proj");
