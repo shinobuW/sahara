@@ -309,22 +309,20 @@ public class StoryTaskTab extends SearchableTab {
                 else {
                     Task currentTask = taskTable.getSelectionModel().getSelectedItem();
                     taskPopover.setDetachedTitle(currentTask.toString());
-                    taskInfoPane(currentTask);
-                    
+                    taskInfoPane(currentTask, taskContent);
+
                     ScrollPane taskWrapper = new ScrollPane();
-                    taskWrapper.setContent(new LoggingEffortPane(taskTable.getSelectionModel().getSelectedItem(),
-                            taskPopover));
-                    
-                    TitledPane collapsableInfoPane = new TitledPane("Task Info", taskInfo);
-                    collapsableInfoPane.setPrefHeight(30);
-                    collapsableInfoPane.setExpanded(true);
-                    collapsableInfoPane.setAnimated(true);
+                    LoggingEffortPane loggingPane = new LoggingEffortPane(currentTask,
+                            taskPopover);
+                    loggingPane.setStyle(null);
+
+                    taskWrapper.setContent(loggingPane);
                     
                     TitledPane collapsableLoggingPane = new TitledPane("Task Logging", taskWrapper);
                     collapsableLoggingPane.setExpanded(true);
                     collapsableLoggingPane.setAnimated(true);
 
-                    taskContent.getChildren().addAll(collapsableInfoPane, collapsableLoggingPane);
+                    taskContent.getChildren().addAll(collapsableLoggingPane);
                 }
 
                 taskPopover.setContentNode(taskContent);
@@ -451,12 +449,11 @@ public class StoryTaskTab extends SearchableTab {
         return searchControls;
     }
 
-
-
-
-
-    private void taskInfoPane(Task currentTask) {
-        taskInfo = new VBox();
+    private void taskInfoPane(Task currentTask, VBox taskContent) {
+        if (!taskContent.getChildren().isEmpty()) {
+            taskContent.getChildren().remove(0);
+        }
+        VBox taskInfo = new VBox();
 
         taskInfo.setBorder(null);
         taskInfo.setPadding(new Insets(25, 25, 25, 25));
@@ -492,22 +489,27 @@ public class StoryTaskTab extends SearchableTab {
                 btnEdit
         );
 
-        Collections.addAll(searchControls,
-                title,
-                description,
-                impediments,
-                effortLeft,
-                effortSpent,
-                taskState,
-                assignedPerson
-        );
+        taskInfo.setStyle(" -fx-background: -fx-control-inner-background ;\n"
+                + "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n");
 
-        btnEdit.setOnAction((event) -> taskEditPane(currentTask));
 
+
+        TitledPane collapsableInfoPane = new TitledPane("Task Info", taskInfo);
+        collapsableInfoPane.setPrefHeight(30);
+        collapsableInfoPane.setExpanded(true);
+        collapsableInfoPane.setAnimated(true);
+
+
+        taskContent.getChildren().add(0, collapsableInfoPane);
+        btnEdit.setOnAction((event) -> {
+            taskEditPane(currentTask, taskContent);
+        });
     }
 
-    private void taskEditPane(Task currentTask) {
-        taskInfo = new VBox(10);
+    private void taskEditPane(Task currentTask, VBox taskContent) {
+        taskContent.getChildren().remove(0);
+
+        VBox taskInfo = new VBox();
         taskInfo.setBorder(null);
         taskInfo.setPadding(new Insets(25, 25, 25, 25));
 
@@ -548,10 +550,12 @@ public class StoryTaskTab extends SearchableTab {
         effortLeftField.setText(Double.toString(currentTask.getEffortLeft()));
 
 
-        CustomComboBox<Person> taskAssigneesList = new CustomComboBox<>("Assignee: ");
+        CustomComboBox<Person> taskAssigneesList = new CustomComboBox<Person>("Assignee: ");
+        taskAssigneesList.addToComboBox(null);
         if (currentTask.getStory() != null && currentTask.getStory().getSprint() != null) {
             taskAssigneesList.getComboBox().setItems(currentTask.getStory().getSprint().getTeam().getPeople());
         }
+        taskAssigneesList.setValue(currentTask.getAssignee());
 
         //Adding to MainPane
         taskInfo.getChildren().addAll(shortNameCustomField,
@@ -560,60 +564,69 @@ public class StoryTaskTab extends SearchableTab {
                 effortLeftField,
                 taskHbox,
                 taskAssigneesList,
-                buttons);
+                buttons
+        );
 
 
 
         btnDone.setOnAction((event) -> {
-                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                        currentTask.getShortName());
+            boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                    currentTask.getShortName());
 
-                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                        currentTask.getDescription());
+            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                    currentTask.getDescription());
 
-                boolean impedimentsUnchanged = impedimentsTextArea.getText().equals(
-                        currentTask.getImpediments());
+            boolean impedimentsUnchanged = impedimentsTextArea.getText().equals(
+                    currentTask.getImpediments());
 
-                boolean taskstateUnchanged = taskStateComboBox.getValue().equals(
-                        currentTask.getState());
+            boolean taskstateUnchanged = taskStateComboBox.getValue().equals(
+                    currentTask.getState());
 
-                boolean effortLeftUnchanged = effortLeftField.getText().equals(
-                        Double.toString(currentTask.getEffortLeft()));
-                // TODO This boolean statement compares a CustomComboBox and a Person?? (It will always be false?)
-                boolean assigneesUnchanged = taskAssigneesList.equals((currentTask.getAssignee()));
+            boolean effortLeftUnchanged = effortLeftField.getText().equals(
+                    Double.toString(currentTask.getEffortLeft()));
+            //TODO deal with null assignment in the combobox
+//                boolean assigneesUnchanged = taskAssigneesList.getValue().equals((currentTask.getAssignee()));
 
-                if (shortNameUnchanged && descriptionUnchanged
-                        && impedimentsUnchanged && taskstateUnchanged && effortLeftUnchanged
-                        && assigneesUnchanged) {
-                    // No changes
-                    currentTask.switchToInfoScene();
-                    return;
-                }
 
-                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                        currentTask.getShortName());
+            if (shortNameUnchanged && descriptionUnchanged
+                    && impedimentsUnchanged && taskstateUnchanged && effortLeftUnchanged) {
+                // No changes
+                taskInfoPane(currentTask, taskContent);
+                return;
+            }
+            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                    currentTask.getShortName());
 
-                if (correctShortName) {
-                    //                    Valid short name, make the edit
+            if (correctShortName) {
+                //                    Valid short name, make the edit
 
-                    currentTask.edit(shortNameCustomField.getText(),
-                            descriptionTextArea.getText(),
-                            impedimentsTextArea.getText(),
-                            taskStateComboBox.getValue(),
-                            taskAssigneesList.getValue(), currentTask.getLogs(),
-                            Double.parseDouble(effortLeftField.getText()), currentTask.getEffortSpent());
+                currentTask.edit(shortNameCustomField.getText(),
+                        descriptionTextArea.getText(),
+                        impedimentsTextArea.getText(),
+                        taskStateComboBox.getValue(),
+                        taskAssigneesList.getValue(), currentTask.getLogs(),
+                        Double.parseDouble(effortLeftField.getText()), currentTask.getEffortSpent());
 
-                    currentTask.switchToInfoScene();
-                    App.mainPane.refreshTree();
-                    System.out.println(currentTask.getState());
-                }
-                else {
-                    event.consume();
-                }
 
-            });
+            }
+            else {
+                event.consume();
+            }
 
-        btnCancel.setOnAction((event) -> currentTask.switchToInfoScene());
+        });
+
+        taskInfo.setStyle(" -fx-background: -fx-control-inner-background ;\n"
+                + "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n");
+
+        btnCancel.setOnAction((event) -> {
+            taskInfoPane(currentTask, taskContent);
+        });
+
+        TitledPane collapsableInfoPane = new TitledPane("Task Info", taskInfo);
+        collapsableInfoPane.setPrefHeight(30);
+        collapsableInfoPane.setExpanded(true);
+        collapsableInfoPane.setAnimated(true);
+
+        taskContent.getChildren().add(0, collapsableInfoPane);
     }
-
 }
