@@ -1,13 +1,26 @@
 package seng302.group2.scenes;
 
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchResultCellNode;
 import seng302.group2.scenes.control.search.SearchableScene;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.information.person.PersonScene;
 import seng302.group2.scenes.information.project.ProjectScene;
+import seng302.group2.scenes.information.project.backlog.BacklogScene;
+import seng302.group2.scenes.information.project.release.ReleaseScene;
+import seng302.group2.scenes.information.project.sprint.SprintScene;
+import seng302.group2.scenes.information.project.story.StoryScene;
+import seng302.group2.scenes.information.role.RoleScene;
+import seng302.group2.scenes.information.skill.SkillScene;
+import seng302.group2.scenes.information.team.TeamScene;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -24,6 +37,7 @@ import seng302.group2.workspace.team.Team;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A window for displaying the results of a search.
@@ -42,6 +56,17 @@ public class SearchResultPane extends BorderPane {
         for (SearchResultCellNode result : results) {
             resultView.getItems().add(result);
         }
+
+        resultView.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2) {
+                    ((SaharaItem) resultView.getSelectionModel().getSelectedItem().getItem()).switchToInfoScene();
+                    Tab selectedTab = (SearchableTab) resultView.getSelectionModel().getSelectedItem().getTab();
+                    ((TrackedTabPane) resultView.getSelectionModel().getSelectedItem().getSearchableScene())
+                            .select(selectedTab);
+                }
+                event.consume();
+            });
+
         resultPane.getChildren().addAll(searchResultTitle, resultView);
         this.setCenter(resultPane);
     }
@@ -53,20 +78,28 @@ public class SearchResultPane extends BorderPane {
         for (String item : checkedItems) {
             if (item.equals("Projects")) {
                 for (Project proj : Global.currentWorkspace.getProjects()) {
-
-                    SearchResultCellNode searchResult = new SearchResultCellNode(proj, proj.toString(),
-                            ((SearchableScene) new ProjectScene(proj)).query(searchText, true).toString(), "");
-                    if (!(searchResult == null)) {
-                        results.add(searchResult);
+                    TrackedTabPane scene =  new ProjectScene(proj);
+                    Set<SearchableTab> searchResults = scene.query(searchText, true);
+                    for (SearchableTab tab : searchResults) {
+                        SearchResultCellNode searchResult = new SearchResultCellNode(proj, proj.toString(), tab, "",
+                                scene);
+                        if (!(searchResult == null)) {
+                            results.add(searchResult);
+                        }
                     }
                 }
             }
             else if (item.equals("Releases")) {
                 for (Project proj : Global.currentWorkspace.getProjects()) {
                     for (Release release : proj.getReleases()) {
-                        SearchResultCellNode searchResult = release.search(searchText);
-                        if (!(searchResult == null)) {
-                            results.add(searchResult);
+                        TrackedTabPane scene = new ReleaseScene(release);
+                        Set<SearchableTab> searchResults = scene.query(searchText, true);
+                        for (SearchableTab tab : searchResults) {
+                            SearchResultCellNode searchResult = new SearchResultCellNode(release, release.toString(),
+                                    tab, "", scene);
+                            if (!(searchResult == null)) {
+                                results.add(searchResult);
+                            }
                         }
                     }
                 }
@@ -74,30 +107,30 @@ public class SearchResultPane extends BorderPane {
             else if (item.equals("Backlogs")) {
                 for (Project proj : Global.currentWorkspace.getProjects()) {
                     for (Backlog backlog : proj.getBacklogs()) {
-                        SearchResultCellNode searchResult = backlog.search(searchText);
-                        if (!(searchResult == null)) {
-                            results.add(searchResult);
+                        TrackedTabPane scene = new BacklogScene(backlog);
+                        Set<SearchableTab> searchResults = scene.query(searchText, true);
+                        for (SearchableTab tab : searchResults) {
+                            SearchResultCellNode searchResult = new SearchResultCellNode(backlog, backlog.toString(),
+                                    tab, "", scene);
+                            if (!(searchResult == null)) {
+                                results.add(searchResult);
+                            }
                         }
                     }
                 }
             }
             else if (item.equals("Stories")) {
                 for (Project proj : Global.currentWorkspace.getProjects()) {
-                    for (Story story : proj.getAllStories()) {
-                        SearchResultCellNode searchResult = story.search(searchText);
-                        if (!(searchResult == null)) {
-                            results.add(searchResult);
-                        }
-                    }
-                }
-            }
-            else if (item.equals("Tasks")) {
-                for (Project proj : Global.currentWorkspace.getProjects()) {
-                    for (Story story : proj.getAllStories()) {
-                        for (Task task : story.getTasks()) {
-                            SearchResultCellNode searchResult = task.search(searchText);
-                            if (!(searchResult == null)) {
-                                results.add(searchResult);
+                    for (Backlog backlog : proj.getBacklogs()) {
+                        for (Story story : backlog.getStories()) {
+                            TrackedTabPane scene = new StoryScene(story);
+                            Set<SearchableTab> searchResults = scene.query(searchText, true);
+                            for (SearchableTab tab : searchResults) {
+                                SearchResultCellNode searchResult = new SearchResultCellNode(story, story.toString(),
+                                        tab, "", scene);
+                                if (!(searchResult == null)) {
+                                    results.add(searchResult);
+                                }
                             }
                         }
                     }
@@ -106,60 +139,11 @@ public class SearchResultPane extends BorderPane {
             else if (item.equals("Sprints")) {
                 for (Project proj : Global.currentWorkspace.getProjects()) {
                     for (Sprint sprint : proj.getSprints()) {
-                        SearchResultCellNode searchResult = sprint.search(searchText);
-                        if (!(searchResult == null)) {
-                            results.add(searchResult);
-                        }
-                    }
-                }
-            }
-            else if (item.equals("Teams")) {
-                for (Team team : Global.currentWorkspace.getTeams()) {
-                    SearchResultCellNode searchResult = team.search(searchText);
-                    if (!(searchResult == null)) {
-                        results.add(searchResult);
-                    }
-                }
-            }
-            else if (item.equals("People")) {
-                for (Person person : Global.currentWorkspace.getPeople()) {
-                    SearchResultCellNode searchResult = person.search(searchText);
-                    if (!(searchResult == null)) {
-                        results.add(searchResult);
-                    }
-                }
-            }
-            else if (item.equals("Roles")) {
-                for (Role role : Global.currentWorkspace.getRoles()) {
-                    SearchResultCellNode searchResult = role.search(searchText);
-                    if (!(searchResult == null)) {
-                        results.add(searchResult);
-                    }
-                }
-            }
-            else if (item.equals("Skills")) {
-                for (Skill skill : Global.currentWorkspace.getSkills()) {
-                    SearchResultCellNode searchResult = skill.search(searchText);
-                    if (!(searchResult == null)) {
-                        results.add(searchResult);
-                    }
-                }
-            }
-            else if (item.equals("Allocations")) {
-                for (Project proj : Global.currentWorkspace.getProjects()) {
-                    for (Allocation allocation : proj.getTeamAllocations()) {
-                        SearchResultCellNode searchResult = allocation.search(searchText);
-                        if (!(searchResult == null)) {
-                            results.add(searchResult);
-                        }
-                    }
-                }
-            }
-            else if (item.equals("Acceptance Criteria")) {
-                for (Project proj : Global.currentWorkspace.getProjects()) {
-                    for (Story story : proj.getAllStories()) {
-                        for (AcceptanceCriteria ac : story.getAcceptanceCriteria()) {
-                            SearchResultCellNode searchResult = ac.search(searchText);
+                        TrackedTabPane scene = new SprintScene(sprint);
+                        Set<SearchableTab> searchResults = scene.query(searchText, true);
+                        for (SearchableTab tab : searchResults) {
+                            SearchResultCellNode searchResult = new SearchResultCellNode(sprint, sprint.toString(),
+                                    tab, "", scene);
                             if (!(searchResult == null)) {
                                 results.add(searchResult);
                             }
@@ -167,16 +151,54 @@ public class SearchResultPane extends BorderPane {
                     }
                 }
             }
-            else if (item.equals("Logs")) {
-                for (Project proj : Global.currentWorkspace.getProjects()) {
-                    for (Story story : proj.getAllStories()) {
-                        for (Task task : story.getTasks()) {
-                            for (Log log : task.getLogs()) {
-                                SearchResultCellNode searchResult = log.search(searchText);
-                                if (!(searchResult == null)) {
-                                    results.add(searchResult);
-                                }
-                            }
+            else if (item.equals("Teams")) {
+                for (Team team : Global.currentWorkspace.getTeams()) {
+                    TrackedTabPane scene = new TeamScene(team);
+                    Set<SearchableTab> searchResults = scene.query(searchText, true);
+                    for (SearchableTab tab : searchResults) {
+                        SearchResultCellNode searchResult = new SearchResultCellNode(team, team.toString(), tab,
+                                "", scene);
+                        if (!(searchResult == null)) {
+                            results.add(searchResult);
+                        }
+                    }
+                }
+            }
+            else if (item.equals("People")) {
+                for (Person person : Global.currentWorkspace.getPeople()) {
+                    TrackedTabPane scene = new PersonScene(person);
+                    Set<SearchableTab> searchResults = scene.query(searchText, true);
+                    for (SearchableTab tab : searchResults) {
+                        SearchResultCellNode searchResult = new SearchResultCellNode(person, person.toString(),
+                                tab, "", scene);
+                        if (!(searchResult == null)) {
+                            results.add(searchResult);
+                        }
+                    }
+                }
+            }
+            else if (item.equals("Roles")) {
+                for (Role role : Global.currentWorkspace.getRoles()) {
+                    TrackedTabPane scene = new RoleScene(role);
+                    Set<SearchableTab> searchResults = scene.query(searchText, true);
+                    for (SearchableTab tab : searchResults) {
+                        SearchResultCellNode searchResult = new SearchResultCellNode(role, role.toString(),
+                                tab, "", scene);
+                        if (!(searchResult == null)) {
+                            results.add(searchResult);
+                        }
+                    }
+                }
+            }
+            else if (item.equals("Skills")) {
+                for (Skill skill : Global.currentWorkspace.getSkills()) {
+                    TrackedTabPane scene = new SkillScene(skill);
+                    Set<SearchableTab> searchResults = scene.query(searchText, true);
+                    for (SearchableTab tab : searchResults) {
+                        SearchResultCellNode searchResult = new SearchResultCellNode(skill, skill.toString(),
+                                tab, "", scene);
+                        if (!(searchResult == null)) {
+                            results.add(searchResult);
                         }
                     }
                 }

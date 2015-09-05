@@ -122,9 +122,8 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
         return !query.trim().isEmpty() && string.toLowerCase().contains(query.toLowerCase());
     }
 
-    //TODO Advanced search query for this class.
     @Override
     public boolean advancedQuery(String query) {
-        return false;
+        return query(query);
     }
 }

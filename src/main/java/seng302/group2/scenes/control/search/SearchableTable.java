@@ -152,9 +152,8 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
         this.setRowFactory(tv -> new SearchableTableRow<>(this));
     }
 
-    //TODO Advanced search query for this class.
     @Override
     public boolean advancedQuery(String query) {
-        return false;
+        return query(query);
     }
 }

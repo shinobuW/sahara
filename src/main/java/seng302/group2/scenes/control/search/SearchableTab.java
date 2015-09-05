@@ -51,4 +51,30 @@ public abstract class SearchableTab extends Tab {
 
         return found;
     }
+
+
+    /**
+     * Selects the Tab based on the tab index
+     * @param index The index of the tab
+     * @return
+     */
+    public boolean select(int index) {
+        try {
+            getTabPane().getSelectionModel().select(index);
+            return true;
+        }
+        catch (IndexOutOfBoundsException ex) {
+            return false;
+        }
+    }
+
+
+    /**
+     * Selects a tab based on a tab
+     * @return
+     */
+    public boolean select() {
+        getTabPane().getSelectionModel().select(this);
+        return true;
+    }
 }

@@ -1,5 +1,6 @@
 package seng302.group2.scenes.control;
 
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import seng302.group2.scenes.control.search.SearchableScene;
 import seng302.group2.scenes.control.search.SearchableTab;
@@ -106,5 +107,12 @@ public abstract class TrackedTabPane extends SearchableScene {
      */
     public static void clearHistory() {
         contentTabs.clear();
+    }
+
+    public void select(Tab tab) {
+        System.out.println(this.getSelectionModel().getSelectedItem());
+        this.getSelectionModel().select(tab);
+        System.out.println(this.getSelectionModel().getSelectedItem());
+//        App.refreshMainScene();
     }
 }
