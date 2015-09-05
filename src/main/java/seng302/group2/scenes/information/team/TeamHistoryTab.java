@@ -516,4 +516,13 @@ public class TeamHistoryTab extends SearchableTab {
             }
         }
     }
+
+    /**
+     * Gets the string representation of the current Tab
+     * @return The String value
+     */
+    @Override
+    public String toString() {
+        return "Team History Tab";
+    }
 }

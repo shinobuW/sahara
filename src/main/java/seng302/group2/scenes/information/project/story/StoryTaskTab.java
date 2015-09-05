@@ -411,10 +411,10 @@ public class StoryTaskTab extends SearchableTab {
                 String shortName = shortNameCustomField.getText();
                 Task newTask;
                 if (effortLeftField.getText().isEmpty()) {
-                    newTask = new Task(shortName, " ", currentStory, null, 0);
+                    newTask = new Task(shortName, " ", currentStory, assigneeComboBox.getValue(), 0);
                 }
                 else {
-                    newTask = new Task(shortName, " ", currentStory, null,
+                    newTask = new Task(shortName, " ", currentStory, assigneeComboBox.getValue(),
                             DurationConverter.readDurationToMinutes(effortLeftField.getText()));
                 }
                 currentStory.add(newTask);
@@ -628,5 +628,14 @@ public class StoryTaskTab extends SearchableTab {
         collapsableInfoPane.setAnimated(true);
 
         taskContent.getChildren().add(0, collapsableInfoPane);
+    }
+
+    /**
+     * Gets the string representation of the current Tab
+     * @return The String value
+     */
+    @Override
+    public String toString() {
+        return "Task Tab";
     }
 }

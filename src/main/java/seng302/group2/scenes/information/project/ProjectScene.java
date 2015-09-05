@@ -56,4 +56,6 @@ public class ProjectScene extends TrackedTabPane {
     public Collection<SearchableTab> getSearchableTabs() {
         return searchableTabs;
     }
+
+
 }
