@@ -502,8 +502,8 @@ public class StoryTaskTab extends SearchableTab {
 
         taskContent.getChildren().add(0, collapsableInfoPane);
         btnEdit.setOnAction((event) -> {
-            taskEditPane(currentTask, taskContent);
-        });
+                taskEditPane(currentTask, taskContent);
+            });
     }
 
     private void taskEditPane(Task currentTask, VBox taskContent) {
@@ -570,57 +570,57 @@ public class StoryTaskTab extends SearchableTab {
 
 
         btnDone.setOnAction((event) -> {
-            boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                    currentTask.getShortName());
+                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                        currentTask.getShortName());
 
-            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                    currentTask.getDescription());
+                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                        currentTask.getDescription());
 
-            boolean impedimentsUnchanged = impedimentsTextArea.getText().equals(
-                    currentTask.getImpediments());
+                boolean impedimentsUnchanged = impedimentsTextArea.getText().equals(
+                        currentTask.getImpediments());
 
-            boolean taskstateUnchanged = taskStateComboBox.getValue().equals(
-                    currentTask.getState());
+                boolean taskstateUnchanged = taskStateComboBox.getValue().equals(
+                        currentTask.getState());
 
-            boolean effortLeftUnchanged = effortLeftField.getText().equals(
-                    Double.toString(currentTask.getEffortLeft()));
-            //TODO deal with null assignment in the combobox
-//                boolean assigneesUnchanged = taskAssigneesList.getValue().equals((currentTask.getAssignee()));
-
-
-            if (shortNameUnchanged && descriptionUnchanged
-                    && impedimentsUnchanged && taskstateUnchanged && effortLeftUnchanged) {
-                // No changes
-                taskInfoPane(currentTask, taskContent);
-                return;
-            }
-            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                    currentTask.getShortName());
-
-            if (correctShortName) {
-                //                    Valid short name, make the edit
-
-                currentTask.edit(shortNameCustomField.getText(),
-                        descriptionTextArea.getText(),
-                        impedimentsTextArea.getText(),
-                        taskStateComboBox.getValue(),
-                        taskAssigneesList.getValue(), currentTask.getLogs(),
-                        Double.parseDouble(effortLeftField.getText()), currentTask.getEffortSpent());
+                boolean effortLeftUnchanged = effortLeftField.getText().equals(
+                        Double.toString(currentTask.getEffortLeft()));
+                //TODO deal with null assignment in the combobox
+    //                boolean assigneesUnchanged = taskAssigneesList.getValue().equals((currentTask.getAssignee()));
 
 
-            }
-            else {
-                event.consume();
-            }
+                if (shortNameUnchanged && descriptionUnchanged
+                        && impedimentsUnchanged && taskstateUnchanged && effortLeftUnchanged) {
+                    // No changes
+                    taskInfoPane(currentTask, taskContent);
+                    return;
+                }
+                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                        currentTask.getShortName());
 
-        });
+                if (correctShortName) {
+                    //                    Valid short name, make the edit
+
+                    currentTask.edit(shortNameCustomField.getText(),
+                            descriptionTextArea.getText(),
+                            impedimentsTextArea.getText(),
+                            taskStateComboBox.getValue(),
+                            taskAssigneesList.getValue(), currentTask.getLogs(),
+                            Double.parseDouble(effortLeftField.getText()), currentTask.getEffortSpent());
+
+
+                }
+                else {
+                    event.consume();
+                }
+
+            });
 
         taskInfo.setStyle(" -fx-background: -fx-control-inner-background ;\n"
                 + "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n");
 
         btnCancel.setOnAction((event) -> {
-            taskInfoPane(currentTask, taskContent);
-        });
+                taskInfoPane(currentTask, taskContent);
+            });
 
         TitledPane collapsableInfoPane = new TitledPane("Task Info", taskInfo);
         collapsableInfoPane.setPrefHeight(30);
