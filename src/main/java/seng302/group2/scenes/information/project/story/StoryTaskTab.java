@@ -211,11 +211,7 @@ public class StoryTaskTab extends SearchableTab {
                         Task selectedTask = event.getTableView().getItems().get(
                                 event.getTablePosition().getRow());
                         if (!event.getNewValue().isEmpty() && event.getNewValue() != null) {
-                            selectedTask.edit(selectedTask.getShortName(), selectedTask.getDescription(),
-                                    selectedTask.getImpediments(), selectedTask.getState(), selectedTask.getAssignee(),
-                                    selectedTask.getLogs(),
-                                    DurationConverter.readDurationToMinutes(event.getNewValue()),
-                                    selectedTask.getEffortSpent());
+                            selectedTask.editEffortLeft(DurationConverter.readDurationToMinutes(event.getNewValue()));
                             taskTable.refresh(taskTable, taskTable.getItems());
                         }
                     }
