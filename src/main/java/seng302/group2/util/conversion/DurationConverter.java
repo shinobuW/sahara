@@ -62,4 +62,13 @@ public class DurationConverter {
         }
     }
 
+    /**
+     * Converts string formatted duration to duration in hour
+     * @param inputDuration the string duration to be converted
+     * @return duration in hours
+     */
+    public static Double readDurationToHours(String inputDuration) {
+        return readDurationToMinutes(inputDuration) / 60;
+    }
+
 }

@@ -286,6 +286,22 @@ public class Task extends SaharaItem implements Serializable {
         return this.logs;
     }
 
+    /**
+     * Gets a list of logs without ghost logs. Ghost logs are logs that
+     * are created when the effort left field of a task is manually adjusted.
+     * Use this function when displaying logs, the ghost logs should not be visible.
+     * @return list of logs without ghostlogs
+     */
+    public ObservableList<Log> getLogsWithoutGhostLogs() {
+        ObservableList<Log> logs = FXCollections.observableArrayList();
+        for (Log log : this.logs) {
+            if (!log.getDescription().equals("Manual Edit")) {
+                logs.add(log);
+            }
+        }
+        return logs;
+    }
+
    /**
      * Adds a log to the Tasks Logs list
      *  @param log The log to add
@@ -445,13 +461,24 @@ public class Task extends SaharaItem implements Serializable {
      */
     public void edit(String newShortName, String newDescription, String newImpediments, TASKSTATE newState,
                      Person newAssignee,  List<Log> newLogs, double newEffortLeft, double newEffortSpent) {
-        Command relEdit = new TaskEditCommand(this, newShortName, newDescription, newImpediments,
+        Command taskEdit = new TaskEditCommand(this, newShortName, newDescription, newImpediments,
                 newState, newAssignee, newLogs, newEffortLeft, newEffortSpent);
 
-        Global.commandManager.executeCommand(relEdit);
+        Global.commandManager.executeCommand(taskEdit);
     }
 
 
+    public void editEffortLeft(double newEffortLeft) {
+        Log manualEffortLeftLog = new Log(this, "Manual Edit", null, 0,
+                LocalDateTime.now(), this.getEffortLeft() - newEffortLeft);
+        Command effortLeftEdit = new TaskEditEffortLeftCommand(this, newEffortLeft, manualEffortLeftLog);
+        Global.commandManager.executeCommand(effortLeftEdit);
+    }
+    /**
+     * Creates a TaskEditDescription command and executes it with the globa command manager, updating the task
+     * with the new parameter values.
+     * @param newDescription The new description
+     */
     public void editDescription(String newDescription) {
         Command desEdit = new TaskEditDescriptionCommand(this, newDescription);
         Global.commandManager.executeCommand(desEdit);
@@ -755,6 +782,49 @@ public class Task extends SaharaItem implements Serializable {
         }
     }
 
+
+    private class TaskEditEffortLeftCommand implements Command {
+        private Task task;
+
+        private Log effortLeftLog;
+
+        private double effortLeft;
+
+        private double oldEffortLeft;
+
+        private TaskEditEffortLeftCommand(Task task, double effortLeft, Log effortLeftLog) {
+            this.task = task;
+
+            this.effortLeftLog = effortLeftLog;
+
+            this.effortLeft = effortLeft;
+
+            this.oldEffortLeft = task.effortLeft;
+        }
+
+        public void execute() {
+            task.effortLeft = effortLeft;
+            task.getLogs().add(effortLeftLog);
+        }
+
+        public void undo(){
+            task.effortLeft = oldEffortLeft;
+            task.getLogs().remove(effortLeftLog);
+        }
+
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped_task = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(task)) {
+                    this.task = (Task) item;
+                    mapped_task = true;
+                }
+            }
+
+            return  mapped_task;
+        }
+    }
 
     /**
      * A command class that allows the executing and undoing of task description edits

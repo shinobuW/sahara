@@ -85,7 +85,7 @@ public class LoggingEffortPane extends Pane {
         logTable.setPlaceholder(new SearchableText("There are currently no logs in this task."));
         logTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        ObservableList<Log> data = task.getLogs();
+        ObservableList<Log> data = task.getLogsWithoutGhostLogs();
 
         TableColumn loggerCol = new TableColumn("Logger");
         loggerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("logger"));

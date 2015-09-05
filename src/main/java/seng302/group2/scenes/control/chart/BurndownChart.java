@@ -43,7 +43,7 @@ public class BurndownChart extends LineChart {
         XYChart.Series effortLeftSeries = createLEffortLeftSeries(currentSprint);
         XYChart.Series referenceVelocitySeries = createReferenceVelocity(currentSprint);
 
-        if (currentSprint.getAllLogsWithInitialLogs().isEmpty()) {
+        if (!currentSprint.getAllLogsWithInitialLogs().isEmpty()) {
             this.getData().add(referenceVelocitySeries);
             this.getData().add(effortSpentSeries);
             this.getData().add(effortLeftSeries);
@@ -61,7 +61,7 @@ public class BurndownChart extends LineChart {
         double effortSpent = 0;
 
         List<Log> logList;
-        logList = currentSprint.getAllLogs();
+        logList = currentSprint.getAllLogsWithInitialLogs();
 
         /* Map which stores a (key, value) pair of (date: hours), where hours is the total n
         umber of hours logged on the date.
@@ -122,7 +122,7 @@ public class BurndownChart extends LineChart {
     }
 
     /**
-     * Create effort left series
+     * Create effort left series.
      * @param currentSprint the sprint to generate the series from
      * @return an XYChart.Series representing an effort left series.
      */
