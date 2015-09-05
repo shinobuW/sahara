@@ -142,16 +142,6 @@ public class PopOverTable<T> extends SearchableTable<T> {
             btnEdit
         );
 
-//        Collections.addAll(searchControls,
-//                title,
-//                description,
-//                impediments,
-//                effortLeft,
-//                effortSpent,
-//                taskState,
-//                assignedPerson
-//        );
-
         taskInfo.setStyle(" -fx-background: -fx-control-inner-background ;\n"
                 + "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n");
 
