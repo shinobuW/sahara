@@ -57,7 +57,7 @@ public class PopOverTable<T> extends SearchableTable<T> {
                         Task currentTask = (Task) item;
 
                         taskPopover.setDetachedTitle(currentTask.toString());
-                        taskInfoPane(currentTask, taskContent);
+                        //taskInfoPane(currentTask, taskContent);
 
                         ScrollPane taskWrapper = new ScrollPane();
                         LoggingEffortPane loggingPane = new LoggingEffortPane((Task) item,
@@ -102,6 +102,7 @@ public class PopOverTable<T> extends SearchableTable<T> {
         });
     }
 
+    @Deprecated
     private void taskInfoPane(Task currentTask, VBox taskContent) {
         if (!taskContent.getChildren().isEmpty()) {
             taskContent.getChildren().remove(0);
@@ -241,12 +242,12 @@ public class PopOverTable<T> extends SearchableTable<T> {
 //                boolean assigneesUnchanged = taskAssigneesList.getValue().equals((currentTask.getAssignee()));
 
 
-                if (shortNameUnchanged && descriptionUnchanged
-                        && impedimentsUnchanged && taskstateUnchanged && effortLeftUnchanged) {
-                    // No changes
-                    taskInfoPane(currentTask, taskContent);
-                    return;
-                }
+//                if (shortNameUnchanged && descriptionUnchanged
+//                        && impedimentsUnchanged && taskstateUnchanged && effortLeftUnchanged) {
+//                    // No changes
+//                    taskInfoPane(currentTask, taskContent);
+//                    return;
+//                }
                 boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
                         currentTask.getShortName());
 
@@ -271,9 +272,9 @@ public class PopOverTable<T> extends SearchableTable<T> {
         taskInfo.setStyle(" -fx-background: -fx-control-inner-background ;\n"
                 + "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n");
 
-        btnCancel.setOnAction((event) -> {
-                taskInfoPane(currentTask, taskContent);
-            });
+//        btnCancel.setOnAction((event) -> {
+//                taskInfoPane(currentTask, taskContent);
+//            });
 
         TitledPane collapsableInfoPane = new TitledPane("Task Info", taskInfo);
         collapsableInfoPane.setPrefHeight(30);

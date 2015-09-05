@@ -375,6 +375,7 @@ public class LoggingEffortPane extends Pane {
                     Log newLog = new Log(task, descriptionTextArea.getText(),
                             selectedPerson, duration, dateTime, effortLeftDifference);
                     task.add(newLog, effortLeft);
+                    logTable.refresh(logTable, logTable.getItems());
 
                     String effortLeftString = "";
                     if (task.getEffortLeft() == 0
