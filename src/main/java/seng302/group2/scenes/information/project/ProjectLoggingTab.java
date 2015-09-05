@@ -6,19 +6,19 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import seng302.group2.scenes.control.CustomDatePicker;
+import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableTable;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.tasks.Log;
@@ -26,6 +26,7 @@ import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -129,6 +130,24 @@ public class ProjectLoggingTab extends SearchableTab {
         TableColumn[] columns = {loggerCol, taskCol, descriptionCol, startTimeCol, durationCol};
         taskTable.getColumns().setAll(columns);
 
+        final Callback<DatePicker, DateCell> endDateCellFactory =
+            new Callback<DatePicker, DateCell>() {
+                @Override
+                public DateCell call(final DatePicker datePicker) {
+                    return new DateCell() {
+                        @Override
+                        public void updateItem(LocalDate item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (startDatePicker.getValue() != null && (item.isBefore(startDatePicker.getValue()))) {
+                                setDisable(true);
+                                setStyle("-fx-background-color: #ffc0cb;");
+                            }
+                        }
+                    };
+                }
+            };
+        endDatePicker.getDatePicker().setDayCellFactory(endDateCellFactory);
+
         // Listener to disable columns being movable
         taskTable.getColumns().addListener(new ListChangeListener() {
             public boolean suspended;
@@ -149,6 +168,16 @@ public class ProjectLoggingTab extends SearchableTab {
             @Override
             public void changed(ObservableValue<? extends LocalDate> observable,
                                 LocalDate oldValue, LocalDate newValue) {
+
+                if (newValue != null && endDatePicker.getValue() != null
+                        && newValue.isAfter(endDatePicker.getValue())) {
+                    ValidationStyle.borderGlowRed(endDatePicker.getDatePicker());
+                    ValidationStyle.showMessage("The end date cannot be before the start date!",
+                            endDatePicker.getDatePicker());
+                    endDatePicker.setTooltip(new Tooltip("The end date cannot be before the start date!"));
+                }
+
+                //TODO Actually restrict date usage
                 startDate = newValue;
                 updateFilteredLogs(currentProject);
             }
@@ -158,6 +187,19 @@ public class ProjectLoggingTab extends SearchableTab {
             @Override
             public void changed(ObservableValue<? extends LocalDate> observable,
                                 LocalDate oldValue, LocalDate newValue) {
+
+                ValidationStyle.borderGlowNone(endDatePicker.getDatePicker());
+                endDatePicker.removeTooltip();
+
+                if (newValue != null && startDatePicker.getValue() != null
+                        && newValue.isBefore(startDatePicker.getValue())) {
+                    ValidationStyle.borderGlowRed(endDatePicker.getDatePicker());
+                    ValidationStyle.showMessage("The end date cannot be before the start date!",
+                            endDatePicker.getDatePicker());
+                    endDatePicker.setTooltip(new Tooltip("The end date cannot be before the start date!"));
+                }
+
+                //TODO Actually restrict date usage
                 endDate = newValue;
                 updateFilteredLogs(currentProject);
             }
