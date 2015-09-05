@@ -461,7 +461,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      */
     public void add(Sprint sprint) {
         sprint.createTasksWithoutAStory();
-        System.out.println(sprint.getUnallocatedTasksStory());
         Command command = new AddSprintCommand(this, sprint);
         Global.commandManager.executeCommand(command);
     }
@@ -474,7 +473,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      */
     public void add(Allocation allocation) {
         if (!this.equals(allocation.getProject())) {
-            System.out.println("Called on wrong project, not happening");
             return;
         }
         Command addAlloc = new AddAllocationCommand(this, allocation.getTeam(), allocation);

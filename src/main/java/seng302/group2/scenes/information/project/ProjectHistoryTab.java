@@ -376,7 +376,6 @@ public class ProjectHistoryTab extends SearchableTab {
                 alertSubOverlap.showAndWait();
                 break;
             default:
-                System.out.println("Error: Cannot recognise validation status");
                 break;
         }
     }
