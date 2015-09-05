@@ -2,7 +2,6 @@ package seng302.group2.scenes.control.search;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -16,17 +15,17 @@ import seng302.group2.workspace.SaharaItem;
 public class SearchResultCellNode extends VBox {
 
     private SaharaItem item = null;
-    private String itemName = "";
-    private String relationshipString = "";
+    private String searchedString = "";
+    private int noOfResults = 0;
     private String matchingString = "";
     private SearchableTab searchResult = null;
     private TrackedTabPane searchableScene = null;
 
-    public SearchResultCellNode(SaharaItem item, String itemName, SearchableTab searchResult,
-                                String relationshipString, TrackedTabPane scene) {
+    public SearchResultCellNode(SaharaItem item, String searchString, SearchableTab searchResult,
+                                int noOfResults, TrackedTabPane scene) {
         this.item = item;
-        this.itemName = itemName;
-        this.relationshipString = relationshipString;
+        this.searchedString = searchString;
+        this.noOfResults = noOfResults;
         this.matchingString = searchResult.toString();
         this.searchResult = searchResult;
         this.searchableScene = scene;
@@ -54,20 +53,23 @@ public class SearchResultCellNode extends VBox {
         content.setPadding(new Insets(2, 2, 2, 6));
         content.setAlignment(Pos.CENTER_LEFT);
 
-        SearchableText titleLabel = new SearchableText(itemName);
+        SearchableText titleLabel = new SearchableText(item.toString());
         titleLabel.injectStyle("-fx-font-weight: bold");
 
-        SearchableText relationshipLabel = new SearchableText(relationshipString);
-
-        SearchableText matchLabel = new SearchableText(matchingString);
-        matchLabel.injectStyle("-fx-font-size: 85%");
-
-        if (!relationshipString.equals("")) {
-            content.getChildren().addAll(titleLabel, relationshipLabel, matchLabel);
+        SearchableText matchLabel;
+        if (noOfResults > 1) {
+            matchLabel = new SearchableText("Found \"" + noOfResults + "\" instances of " + searchedString
+                    + " in the " + matchingString);
         }
         else {
-            content.getChildren().addAll(titleLabel, matchLabel);
+            matchLabel = new SearchableText("Found \"" + noOfResults + "\" instance of " + searchedString
+                    + " in the " + matchingString);
         }
+
+        matchLabel.injectStyle("-fx-font-size: 85%");
+
+        content.getChildren().addAll(titleLabel, matchLabel);
+
         HBox.setHgrow(content, Priority.ALWAYS);
 
         return content;

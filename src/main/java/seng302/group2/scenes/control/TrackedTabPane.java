@@ -6,9 +6,7 @@ import seng302.group2.scenes.control.search.SearchableScene;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.SaharaItem;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A Tab Pane extension that keeps a tracked record of the last open tabs for each of its extending
@@ -110,9 +108,16 @@ public abstract class TrackedTabPane extends SearchableScene {
     }
 
     public void select(Tab tab) {
-        System.out.println(this.getSelectionModel().getSelectedItem());
-        this.getSelectionModel().select(tab);
-        System.out.println(this.getSelectionModel().getSelectedItem());
+        for (int i = 0; i < this.getSearchableTabs().size() ; i++) {
+            if (((ArrayList) this.getSearchableTabs()).get(i) == tab) {
+                contentTabs.put(item, new LinkedHashMap<>());
+                Map<ContentScene, Integer> itemMap = contentTabs.get(item);
+                itemMap.put(scene, i);
+            }
+        }
+
 //        App.refreshMainScene();
     }
+
+
 }

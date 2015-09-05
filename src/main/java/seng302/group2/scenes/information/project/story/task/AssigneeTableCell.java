@@ -1,8 +1,6 @@
 package seng302.group2.scenes.information.project.story.task;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -11,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
 
@@ -18,22 +17,20 @@ import seng302.group2.workspace.project.story.tasks.Task;
  * A Table cell which displays a person icon and the assignee's name. Combo box is displayed on edit.
  * Created by swi67 on 4/09/15.
  */
-public class AssigneeTableCell extends TableCell<Object, String> {
-    /**
-     * A cell used to show the Assignee status.
-     */
+public class AssigneeTableCell extends TableCell<Task, String> {
 
     public Node assigneeHBox;
     public Story story;
-    private ComboBox<Object> comboBox;
-    private ObservableList items;
+    private ComboBox<Person> comboBox;
+    private ObservableList<Person> items;
+    private HBox cell = new HBox();
 
     /**
      * Constructor
      * @param story The currently selected story
-     * @param itemList The list of items for the table cell
+     * @param itemList A list of the available assignees for selection in the editing assignee combo
      */
-    public AssigneeTableCell(Story story, ObservableList itemList) {
+    public AssigneeTableCell(Story story, ObservableList<Person> itemList) {
         this.story = story;
         this.items = itemList;
     }
@@ -44,7 +41,6 @@ public class AssigneeTableCell extends TableCell<Object, String> {
      * @param item  the item to update to
      * @param empty if the cell is empty
      */
-
     @Override
     public void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
@@ -53,27 +49,32 @@ public class AssigneeTableCell extends TableCell<Object, String> {
             setGraphic(null);
         }
         else {
+            cell.getChildren().clear();
             if (isEditing()) {
                 if (comboBox != null) {
-                    comboBox.setValue(getType());
+                    comboBox.setValue(getTask().getAssignee());
                 }
-                setGraphic(comboBox);
+                cell.getChildren().add(comboBox);
             }
             else {
                 if (getTask() != null) {
                     this.assigneeHBox = createAssigneeNode(getTask(), this);
                 }
-                else if ((Task) getTableView().getSelectionModel().getSelectedItem() != null) {
+                else if (getTableView().getSelectionModel().getSelectedItem() != null) {
                     this.assigneeHBox =
-                            createAssigneeNode((Task) getTableView().getSelectionModel().getSelectedItem(), this);
+                            createAssigneeNode(getTableView().getSelectionModel().getSelectedItem(), this);
 
                 }
-                setGraphic(assigneeHBox);
-
+                cell.getChildren().add(assigneeHBox);
             }
+            setGraphic(cell);
         }
     }
 
+    /**
+     * Gets the task of the current cell by checking the short name against each of the tasks in the story
+     * @return The task whose name matches the cell item
+     */
     public Task getTask() {
         Task result = null;
         for (Task task : this.story.getTasks()) {
@@ -93,26 +94,25 @@ public class AssigneeTableCell extends TableCell<Object, String> {
             if (getTask().getAssignee() != null) {
                 comboBox.setValue(getTask().getAssignee());
             }
-            setGraphic(comboBox);
-            Platform.runLater(() -> {
-                    comboBox.requestFocus();
-                });
+            cell.getChildren().clear();
+            cell.getChildren().add(comboBox);
+            setGraphic(cell);
+            Platform.runLater(comboBox::requestFocus);
         }
     }
 
     @Override
     public void cancelEdit() {
         super.cancelEdit();
-        setGraphic(this.assigneeHBox);
+        cell.getChildren().clear();
+        cell.getChildren().add(assigneeHBox);
+        setGraphic(cell);
     }
 
     private void createCombo() {
         comboBox = new ComboBox<>(this.items);
         comboBox.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
-        comboBox.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> arg0,
-                                Boolean arg1, Boolean arg2) {
+        comboBox.focusedProperty().addListener((arg0, arg1, arg2) -> {
                 if (!arg2) {
                     if (comboBox.getValue() != null) {
                         commitEdit(comboBox.getValue().toString());
@@ -124,23 +124,9 @@ public class AssigneeTableCell extends TableCell<Object, String> {
                 else {
                     updateItem(getItem(), false);
                 }
-            }
-        });
-    }
-
-    /**
-     * Gets the selected item
-     * @return the selected item as a class instance
-     */
-    private Object getType() {
-        Object selected = null;
-        for (Object saharaItem : items) {
-            if (saharaItem.toString().equals(getItem())) {
-                selected = saharaItem;
-            }
+            });
         }
-        return selected;
-    }
+
 
     /**
      * Creates a
@@ -173,5 +159,4 @@ public class AssigneeTableCell extends TableCell<Object, String> {
         }
         return assigneeHBox;
     }
-
 }
