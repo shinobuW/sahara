@@ -359,7 +359,7 @@ public class StoryTaskTab extends SearchableTab {
                 assigneeComboBox.setDisable(false);
             }
             else {
-                System.out.println("size is zero");
+                //System.out.println("size is zero");
                 ValidationStyle.showMessage("There are no team members in the currently allocated teams",
                         assigneeComboBox.getComboBox());
                 assigneeComboBox.setDisable(true);
@@ -367,7 +367,7 @@ public class StoryTaskTab extends SearchableTab {
 
         }
         else {
-            System.out.println("current teams null");
+            //System.out.println("current teams null");
             assigneeComboBox.setDisable(true);
             ValidationStyle.showMessage("There are currently no allocated teams on this project",
                     assigneeComboBox.getComboBox());

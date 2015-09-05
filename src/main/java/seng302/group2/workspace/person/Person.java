@@ -462,6 +462,48 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         Global.commandManager.executeCommand(persEdit);
     }
 
+    /**
+     * Overidden search method for Project.
+     * @param searchText The string to search for
+     * @return A search result node for displaying a search match for people
+     */
+    @Override
+    public SearchResultCellNode search(String searchText) {
+        searchText = searchText.toLowerCase();
+        List<String> matches = new ArrayList<>();
+        if (this.shortName.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("Short Name: " + shortName);
+        }
+        if (this.firstName.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("First Name" + firstName);
+        }
+        if (this.lastName.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("Last Name: " + lastName);
+        }
+        if (this.description.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("Description: " + description);
+        }
+        if (this.birthDate != null
+                && this.birthDate.toString().toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("Birth Date: " + this.lastName);
+        }
+        if (this.email != null
+                && this.email.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
+            matches.add("Email: " + email);
+        }
+
+        if (matches.size() > 0) {
+            String matchText = "Found " + matches.size() + " matches, first match is " + matches.get(0);
+            String assocText = "";
+            if (!this.getTeam().isUnassignedTeam() && this.getTeam() != null) {
+                assocText = "Belongs to Team: " + this.team.toString();
+            }
+            return new SearchResultCellNode(this, "Release: " + this.shortName, matchText, assocText);
+        }
+        return null;
+    }
+
+
 
     /**
      * An overridden version for the String representation of a Person

@@ -31,6 +31,7 @@ public class AssigneeTableCell extends TableCell<Object, String> {
     /**
      * Constructor
      * @param story The currently selected story
+     * @param itemList The list of items for the table cell
      */
     public AssigneeTableCell(Story story, ObservableList itemList) {
         this.story = story;
@@ -145,7 +146,7 @@ public class AssigneeTableCell extends TableCell<Object, String> {
      * Creates a
      * @param task currently selected task
      * @param tableCell the cell the assignee node is set on
-     * @return
+     * @return A node containing the UI for displaying and setting the assignee of a task
      */
     private Node createAssigneeNode(Task task, TableCell tableCell) {
         HBox assigneeHBox = new HBox(10);

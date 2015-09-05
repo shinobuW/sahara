@@ -241,7 +241,7 @@ public class TeamEditTab extends SearchableTab {
                         teamMembersListView.getSelectionModel().getSelectedItems().get(0);
                 Role selectedRole = roleComboBox.getComboBox().getSelectionModel().getSelectedItem();
                 if (selectedRole == null) {
-                    System.out.println("No selected role");
+                    return;
                 }
                 switch (selectedRole.getType()) {
                     case PRODUCT_OWNER:

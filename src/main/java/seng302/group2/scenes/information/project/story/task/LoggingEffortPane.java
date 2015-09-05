@@ -16,7 +16,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
-import seng302.group2.App;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.CustomTextField;
@@ -224,7 +223,6 @@ public class LoggingEffortPane extends Pane {
                         @Override
                         public void updateItem(LocalDate item, boolean empty) {
                             super.updateItem(item, empty);
-                            System.out.println(task.getStory().getSprint());
                             if (item.isBefore(task.getStory().getSprint().getStartDate())) {
                                 setDisable(true);
                                 setStyle("-fx-background-color: #ffc0cb;");

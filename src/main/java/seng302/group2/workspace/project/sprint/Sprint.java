@@ -7,7 +7,6 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.Spri
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
-import seng302.group2.workspace.categories.subCategory.project.task.TaskCategory;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.story.Story;
@@ -228,7 +227,7 @@ public class Sprint extends SaharaItem {
     public List<Log> getAllLogsWithInitialLogs() {
         List<Log> logList = new ArrayList<>();
         for (Task task : this.getAllTasks()) {
-            System.out.println(task + " " + task.getInitialLog());
+            //System.out.println(task + " " + task.getInitialLog());
             logList.add(task.getInitialLog());
             for (Log log : task.getLogs()) {
                 logList.add(log);

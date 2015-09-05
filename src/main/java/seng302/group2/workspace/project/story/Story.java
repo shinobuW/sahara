@@ -637,7 +637,7 @@ public class Story extends SaharaItem implements Serializable {
     private boolean cycleCheckTraverse(Set<Story> traversedItems) {
         if (!traversedItems.add(this)) {
             // Item wasn't added to set (duplicate)
-            System.out.println("Can't add " + this + " to " + traversedItems);
+            //System.out.println("Can't add " + this + " to " + traversedItems);
             return true;  // There was a cycle
         }
         for (Story dependent : getDependentOn()) {
