@@ -4,9 +4,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import seng302.group2.App;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A searchable scene that extends TabPane. Contains a set of SearchableTabs
@@ -20,13 +18,12 @@ public abstract class SearchableScene extends TabPane {
     /**
      * Searches each tab of the scene to try and find a match
      * @param query the query string
-     * @param isAdvanced If the search is an advanced search
      * @return a collection of tabs with items found on them
      */
-    public Set<SearchableTab> query(String query, Boolean isAdvanced) {
+    public Set<SearchableTab> query(String query) {
         Set<SearchableTab> matches = new HashSet<>();
         for (SearchableTab tab : getSearchableTabs()) {
-            if (tab.query(query, isAdvanced)) {
+            if (tab.query(query)) {
                 matches.add(tab);
             }
         }
@@ -34,6 +31,22 @@ public abstract class SearchableScene extends TabPane {
         return matches;
     }
 
+    /**
+     * Searches each tab of the scene to try and find a match
+     * @param query the query string
+     * @return a collection of tabs with items found on them
+     */
+    public Map advancedQuery(String query) {
+        Map<SearchableTab, Integer> matches = new LinkedHashMap<>();
+
+        for (SearchableTab tab : getSearchableTabs()) {
+            int result = tab.advancedQuery(query);
+            if (result != 0) {
+                matches.put(tab, result);
+            }
+        }
+        return matches;
+    }
 
 
 

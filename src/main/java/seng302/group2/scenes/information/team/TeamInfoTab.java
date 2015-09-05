@@ -185,4 +185,13 @@ public class TeamInfoTab extends SearchableTab {
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;
     }
+
+    /**
+     * Gets the string representation of the current Tab
+     * @return The String value
+     */
+    @Override
+    public String toString() {
+        return "Team Info Tab";
+    }
 }

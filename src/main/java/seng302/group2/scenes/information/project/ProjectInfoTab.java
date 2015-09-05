@@ -116,4 +116,9 @@ public class ProjectInfoTab extends SearchableTab {
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;
     }
+
+    @Override
+    public String toString() {
+        return "Project Info Tab";
+    }
 }

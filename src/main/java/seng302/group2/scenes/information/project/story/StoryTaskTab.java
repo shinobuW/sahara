@@ -629,4 +629,13 @@ public class StoryTaskTab extends SearchableTab {
 
         taskContent.getChildren().add(0, collapsableInfoPane);
     }
+
+    /**
+     * Gets the string representation of the current Tab
+     * @return The String value
+     */
+    @Override
+    public String toString() {
+        return "Task Tab";
+    }
 }

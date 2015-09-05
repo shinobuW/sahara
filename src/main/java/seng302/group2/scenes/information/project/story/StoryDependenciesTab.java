@@ -129,4 +129,13 @@ public class StoryDependenciesTab extends SearchableTab {
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;
     }
+
+    /**
+     * Gets the string representation of the current Tab
+     * @return The String value
+     */
+    @Override
+    public String toString() {
+        return "Story Dependencies Tab";
+    }
 }
