@@ -21,6 +21,14 @@ public class SearchResultCellNode extends VBox {
     private SearchableTab searchResult = null;
     private TrackedTabPane searchableScene = null;
 
+    /**
+     * Constructor
+     * @param item The item the search string was found in
+     * @param searchString the string being searched for
+     * @param searchResult the tab the search string was found in
+     * @param noOfResults the number of instances the search string is present in a tab
+     * @param scene
+     */
     public SearchResultCellNode(SaharaItem item, String searchString, SearchableTab searchResult,
                                 int noOfResults, TrackedTabPane scene) {
         this.item = item;
@@ -34,18 +42,35 @@ public class SearchResultCellNode extends VBox {
         this.getChildren().add(content);
     }
 
+    /**
+     * Gets the SaharaItem the search string was found in
+     * @return
+     */
     public SaharaItem getItem() {
         return item;
     }
 
+
+    /**
+     * Gets the tab that should be displayed when the cell is double clicked
+     * @return the tab
+     */
     public SearchableTab getTab() {
         return searchResult;
     }
 
+    /**
+     * Gets the scene the tab belongs to
+     * @return
+     */
     public TrackedTabPane getSearchableScene() {
         return searchableScene;
     }
 
+    /**
+     * Constructs a VBox with the result information
+     * @return
+     */
     private VBox construct() {
         VBox content = new VBox();
         content.setPrefHeight(48);
@@ -58,11 +83,11 @@ public class SearchResultCellNode extends VBox {
 
         SearchableText matchLabel;
         if (noOfResults > 1) {
-            matchLabel = new SearchableText("Found \"" + noOfResults + "\" instances of " + searchedString
+            matchLabel = new SearchableText("Found " + noOfResults + " instances of " + searchedString
                     + " in the " + matchingString);
         }
         else {
-            matchLabel = new SearchableText("Found \"" + noOfResults + "\" instance of " + searchedString
+            matchLabel = new SearchableText("Found " + noOfResults + " instance of " + searchedString
                     + " in the " + matchingString);
         }
 
