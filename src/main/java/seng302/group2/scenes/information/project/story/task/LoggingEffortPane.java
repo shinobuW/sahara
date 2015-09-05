@@ -392,10 +392,6 @@ public class LoggingEffortPane extends Pane {
                     }
 
                     effortLeftField.getTextField().setText(effortLeftString);
-                    //TODO bug with refreshing
-                    App.refreshMainScene();
-
-
                 }
                 else {
                     event.consume();
@@ -419,7 +415,6 @@ public class LoggingEffortPane extends Pane {
 
                     if (result.get() == buttonTypeYes) {
                         logTable.getSelectionModel().getSelectedItem().deleteLog();
-                        App.refreshMainScene();
                     }
                     else if (result.get() == buttonTypeNo) {
                         event.consume();
