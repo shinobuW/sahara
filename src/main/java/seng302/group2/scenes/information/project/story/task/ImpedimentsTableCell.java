@@ -1,6 +1,7 @@
 package seng302.group2.scenes.information.project.story.task;
 
 /**
+ * Table Cell for task impediments
  * Created by swi67 on 4/09/15.
  */
 
@@ -30,7 +31,6 @@ import java.util.TreeSet;
  * A cell used to show the Impediments status.
  */
 public class ImpedimentsTableCell extends TableCell<Object, String> {
-    public Node popUp;
     public Story story;
     private ImageView warningImage = new ImageView();
     private HBox box = new HBox();
@@ -73,7 +73,10 @@ public class ImpedimentsTableCell extends TableCell<Object, String> {
         return result;
     }
 
-
+    /**
+     * Defines appropriate warning image and set the pop over
+     * @return the warning image
+     */
     public Node createImpedimentsNode() {
         // Impediments icon
 
@@ -82,30 +85,30 @@ public class ImpedimentsTableCell extends TableCell<Object, String> {
             if (getTask().getState() == Task.TASKSTATE.BLOCKED) {
                 if (!getTask().getImpediments().isEmpty()) {
                     Tooltip.create("This task is currently blocked, with the following impediments:\n"
-                            + getTask().getImpediments(), warningImage, 50);
+                            + getTask().getImpediments(), this, 50);
                 }
                 else {
-                    Tooltip.create("This task is currently blocked", warningImage, 50);
+                    Tooltip.create("This task is currently blocked", this, 50);
                 }
             }
             else if (getTask().getState() == Task.TASKSTATE.DEFERRED) {
                 if (!getTask().getImpediments().isEmpty()) {
                     //System.out.println(task.getImpediments());
                     Tooltip.create("This task has been deferred, and has the following impediments:\n"
-                            + getTask().getImpediments(), warningImage, 50);
+                            + getTask().getImpediments(), this, 50);
                 }
                 else {
-                    Tooltip.create("This task has been deferred", warningImage, 50);
+                    Tooltip.create("This task has been deferred", this, 50);
                 }
             }
             else {
                 Tooltip.create("This task has the following impediments:\n" + getTask().getImpediments(),
-                        warningImage, 50);
+                        this, 50);
             }
         }
         else {
             warningImage = new ImageView("icons/dialog-cancel-empty.png");
-            Tooltip.create("This task has no impediments or blockages", warningImage, 50);
+            Tooltip.create("This task has no impediments or blockages", this, 50);
         }
 
         warningImage.setOnMouseEntered(me -> {
