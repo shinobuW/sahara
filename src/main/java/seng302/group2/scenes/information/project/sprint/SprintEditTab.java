@@ -28,6 +28,7 @@ import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.team.Team;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -580,14 +581,15 @@ public class SprintEditTab extends SearchableTab {
     private Boolean startDateSelected() {
         return !(sprintStartDatePicker.getValue() == null)
                 && (releaseComboBox.getValue().getEstimatedDate() == null
-                || sprintStartDatePicker.getValue().isBefore(releaseComboBox.getValue().getEstimatedDate()));
+                || sprintStartDatePicker.getValue().isBefore(releaseComboBox.getValue().
+                getEstimatedDate().plusDays(1)));
     }
 
     private Boolean endDateSelected() {
         return !(sprintEndDatePicker.getValue() == null)
-                && (sprintEndDatePicker.getValue().isAfter(sprintStartDatePicker.getValue()))
+                && (sprintEndDatePicker.getValue().isAfter(sprintStartDatePicker.getValue().minusDays(1)))
                 && (releaseComboBox.getValue().getEstimatedDate() == null
-                || sprintEndDatePicker.getValue().isBefore(releaseComboBox.getValue().getEstimatedDate()));
+                || sprintEndDatePicker.getValue().isBefore(releaseComboBox.getValue().getEstimatedDate().plusDays(1)));
     }
 
     private void toggleDone() {
