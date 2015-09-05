@@ -411,10 +411,10 @@ public class StoryTaskTab extends SearchableTab {
                 String shortName = shortNameCustomField.getText();
                 Task newTask;
                 if (effortLeftField.getText().isEmpty()) {
-                    newTask = new Task(shortName, " ", currentStory, null, 0);
+                    newTask = new Task(shortName, " ", currentStory, assigneeComboBox.getValue(), 0);
                 }
                 else {
-                    newTask = new Task(shortName, " ", currentStory, null,
+                    newTask = new Task(shortName, " ", currentStory, assigneeComboBox.getValue(),
                             DurationConverter.readDurationToMinutes(effortLeftField.getText()));
                 }
                 currentStory.add(newTask);
