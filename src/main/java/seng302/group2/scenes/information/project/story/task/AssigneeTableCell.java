@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
 
@@ -18,15 +19,16 @@ import seng302.group2.workspace.project.story.tasks.Task;
  * A Table cell which displays a person icon and the assignee's name. Combo box is displayed on edit.
  * Created by swi67 on 4/09/15.
  */
-public class AssigneeTableCell extends TableCell<Object, String> {
+public class AssigneeTableCell extends TableCell<Task, String> {
     /**
      * A cell used to show the Assignee status.
      */
 
     public Node assigneeHBox;
     public Story story;
-    private ComboBox<Object> comboBox;
+    private ComboBox<Person> comboBox;
     private ObservableList items;
+    private HBox cell = new HBox();
 
     /**
      * Constructor
@@ -53,24 +55,28 @@ public class AssigneeTableCell extends TableCell<Object, String> {
             setGraphic(null);
         }
         else {
+            cell.getChildren().clear();
             if (isEditing()) {
                 if (comboBox != null) {
-                    comboBox.setValue(getType());
+                    comboBox.setValue(getTask().getAssignee());
                 }
-                setGraphic(comboBox);
+                cell.getChildren().add(comboBox);
+                //setGraphic(comboBox);
             }
             else {
                 if (getTask() != null) {
                     this.assigneeHBox = createAssigneeNode(getTask(), this);
                 }
-                else if ((Task) getTableView().getSelectionModel().getSelectedItem() != null) {
+                else if (getTableView().getSelectionModel().getSelectedItem() != null) {
                     this.assigneeHBox =
                             createAssigneeNode((Task) getTableView().getSelectionModel().getSelectedItem(), this);
 
                 }
-                setGraphic(assigneeHBox);
+                cell.getChildren().add(assigneeHBox);
+                //setGraphic(assigneeHBox);
 
             }
+            setGraphic(cell);
         }
     }
 
@@ -107,12 +113,9 @@ public class AssigneeTableCell extends TableCell<Object, String> {
     }
 
     private void createCombo() {
-        comboBox = new ComboBox<>(this.items);
+        comboBox = new ComboBox(this.items);
         comboBox.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
-        comboBox.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> arg0,
-                                Boolean arg1, Boolean arg2) {
+        comboBox.focusedProperty().addListener((arg0, arg1, arg2) -> {
                 if (!arg2) {
                     if (comboBox.getValue() != null) {
                         commitEdit(comboBox.getValue().toString());
@@ -124,23 +127,9 @@ public class AssigneeTableCell extends TableCell<Object, String> {
                 else {
                     updateItem(getItem(), false);
                 }
-            }
-        });
+            });
     }
 
-    /**
-     * Gets the selected item
-     * @return the selected item as a class instance
-     */
-    private Object getType() {
-        Object selected = null;
-        for (Object saharaItem : items) {
-            if (saharaItem.toString().equals(getItem())) {
-                selected = saharaItem;
-            }
-        }
-        return selected;
-    }
 
     /**
      * Creates a
