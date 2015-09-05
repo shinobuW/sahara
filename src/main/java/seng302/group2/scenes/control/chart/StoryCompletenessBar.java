@@ -252,6 +252,16 @@ public class StoryCompletenessBar extends Pane {
             }
         }
 
+        if (maxBlue - maxGreen == 0) {
+            HBox greenBox = new HBox();
+            greenSquare.setWidth(green.getWidth() - 7.5);
+            Rectangle transRec = new Rectangle(7.5, green.getHeight());
+            transRec.setFill(Color.TRANSPARENT);
+            greenBox.getChildren().add(transRec);
+            greenBox.getChildren().add(greenSquare);
+            visualGrid.add(greenBox, 0, 0);
+        }
+
         if (maxGreen + maxBlue > 7 && !visualGrid.getChildren().contains(redSquare)) {
             visualGrid.add(redSquare, 2, 0);
         }
