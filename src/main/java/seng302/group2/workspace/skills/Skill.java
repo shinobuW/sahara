@@ -206,7 +206,7 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
     /**
      * Overidden search method for Skill.
      * @param searchText The string to search for
-     * @return
+     * @return A search result node for displaying a search match for skills
      */
     @Override
     public SearchResultCellNode search(String searchText) {

@@ -465,7 +465,7 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
     /**
      * Overidden search method for Project.
      * @param searchText The string to search for
-     * @return
+     * @return A search result node for displaying a search match for people
      */
     @Override
     public SearchResultCellNode search(String searchText) {
