@@ -139,13 +139,7 @@ public class ImpedimentsTableCell extends TableCell<Object, String> {
             impedimentCombo.getSelectionModel().select("(none)");
         }
         warningImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                if (impedimentPopOver.isShowing()) {
-                    impedimentPopOver.hide();
-                }
-                else {
-                    impedimentPopOver.show(warningImage);
-                }
-                event.consume();
+                impedimentPopOver.show(warningImage);
             });
 
         VBox impedimentsVBox = new VBox(4);
