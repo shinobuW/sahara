@@ -42,6 +42,11 @@ public class SearchResultPane extends BorderPane {
 
     private Pane resultPane = new Pane();
 
+    /**
+     * Constructor
+     * @param checkedItems List of items that are ticked in the advanced search window
+     * @param searchText The text being searched for
+     */
     public SearchResultPane(List<String> checkedItems, String searchText) {
         SearchableText searchResultTitle = new SearchableText("Search Results");
         List<SearchResultCellNode> results = runSearch(checkedItems, searchText);
@@ -70,6 +75,13 @@ public class SearchResultPane extends BorderPane {
         this.setCenter(resultPane);
     }
 
+    /**
+     * Runs the search through the checked items and constructs the SearchResultCellNode to be added to the search
+     * result pane
+     * @param checkedItems items that are being searched through
+     * @param searchText the text to be searched
+     * @return a list of SearchResultCellNode
+     */
     public List<SearchResultCellNode> runSearch(List<String> checkedItems, String searchText) {
 
         List<SearchResultCellNode> results = new ArrayList<>();

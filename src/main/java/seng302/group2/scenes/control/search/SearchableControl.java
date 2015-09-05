@@ -20,5 +20,10 @@ public interface SearchableControl {
      */
     boolean query(String query);
 
+    /**
+     * Query to be used for advanced search, only searches through values (not GUI elements)
+     * @param query the string to be searched
+     * @return whether the query string was found
+     */
     boolean advancedQuery(String query);
 }

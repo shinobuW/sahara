@@ -178,6 +178,13 @@ public class CreateSearchDialog extends javafx.scene.control.Dialog<Map<String, 
         this.show();
     }
 
+
+    /**
+     * Gets the checked item.
+     * @param workspaceSearchCheck The check box for searching through the whole workspace
+     * @param modelCheckBoxes List of check boxes in the search dialog
+     * @returna list of checked items
+     */
     protected static List<String> getCheckedItems(CheckBox workspaceSearchCheck,
                                                   List<CheckBox> modelCheckBoxes) {
         List<String> checkedItems = new ArrayList<>();

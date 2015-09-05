@@ -297,6 +297,11 @@ public class MainMenuBar extends MenuBar {
         return saveItem;
     }
 
+
+    /**
+     * Creates a menu item for advanced search item with short cut key (ctrl-shift-F) bound to it.
+     * @return the advanced search menu item
+     */
     private static MenuItem createAdvancedSearchItem() {
         // Create 'Search' MenuItem
         MenuItem newSearchItem = new MenuItem("Advanced Search");
@@ -334,6 +339,11 @@ public class MainMenuBar extends MenuBar {
         return saveAsItem;
     }
 
+
+    /**
+     * Creates menu item for basic search with short cut (ctrl-F) bound to it
+     * @return
+     */
     private static MenuItem createSearchItem() {
         MenuItem findItem = new MenuItem("Find");
         findItem.setOnAction((event) -> App.mainPane.focusSearch());
