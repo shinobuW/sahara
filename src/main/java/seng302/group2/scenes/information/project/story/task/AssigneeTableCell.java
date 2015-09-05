@@ -125,7 +125,7 @@ public class AssigneeTableCell extends TableCell<Task, String> {
                     updateItem(getItem(), false);
                 }
             });
-        }
+    }
 
 
     /**
