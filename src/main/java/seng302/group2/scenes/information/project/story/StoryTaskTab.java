@@ -188,6 +188,7 @@ public class StoryTaskTab extends SearchableTab {
                         }
                         if (event.getNewValue() != null && event.getNewValue() != null) {
                             selectedTask.editAssignee(selectedPerson);
+                            taskTable.refresh(taskTable, taskTable.getItems());
                         }
                     }
                 });
@@ -215,6 +216,7 @@ public class StoryTaskTab extends SearchableTab {
                                     selectedTask.getLogs(),
                                     DurationConverter.readDurationToMinutes(event.getNewValue()),
                                     selectedTask.getEffortSpent());
+                            taskTable.refresh(taskTable, taskTable.getItems());
                         }
                     }
                 }
@@ -266,6 +268,7 @@ public class StoryTaskTab extends SearchableTab {
                         (event.getTableView().getItems().get(
                                 event.getTablePosition().getRow())
                         ).editDescription(event.getNewValue());
+                        taskTable.refresh(taskTable, taskTable.getItems());
                     }
                 }
         );

@@ -4,6 +4,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchResultCellNode;
@@ -18,7 +19,6 @@ import seng302.group2.scenes.information.project.story.StoryScene;
 import seng302.group2.scenes.information.role.RoleScene;
 import seng302.group2.scenes.information.skill.SkillScene;
 import seng302.group2.scenes.information.team.TeamScene;
-import seng302.group2.scenes.treeView.TreeViewWithItems;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -33,7 +33,6 @@ import seng302.group2.workspace.team.Team;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * A window for displaying the results of a search.
