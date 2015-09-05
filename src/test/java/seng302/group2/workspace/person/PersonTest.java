@@ -269,8 +269,9 @@ public class PersonTest {
     public void testEdit() {
         Person person = new Person("btm38", "Bronson", "McNaughton", "btm38@gmail.com",
                 "A really cool dude", testDate2);
+        Team team = new Team();
         person.edit("shortName", "firstName",
-                "lastName", "email", LocalDate.now(), "Desc", null, null);
+                "lastName", "email", LocalDate.now(), "Desc", team, null);
 
         Assert.assertEquals("shortName", person.getShortName());
         Assert.assertEquals("firstName", person.getFirstName());

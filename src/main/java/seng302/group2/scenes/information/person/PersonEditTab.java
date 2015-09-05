@@ -13,6 +13,7 @@ import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.*;
+import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableTab;
@@ -156,6 +157,42 @@ public class PersonEditTab extends SearchableTab {
 
         HBox h1 = new HBox(10);
         h1.getChildren().addAll(v1, skillsButtons, v2);
+
+        teamBox.getComboBox().valueProperty().addListener(new ChangeListener<Team>() {
+            @Override
+            public void changed(ObservableValue<? extends Team> observable, Team oldValue, Team newValue) {
+                ValidationStyle.borderGlowNone(teamBox.getComboBox());
+                teamBox.removeTooltip();
+
+                if (newValue != currentPerson.getTeam() && currentPerson.getRole() != null
+                        && currentPerson.getRole().toString().equals("Product Owner")) {
+                    ValidationStyle.borderGlowRed(teamBox.getComboBox());
+                    ValidationStyle.showMessage("This person is currently the Product Owner of the team "
+                            + currentPerson.getTeamName() + "! \n"
+                            + "You must put someone else into the role before you can change this persons team.",
+                            teamBox.getComboBox());
+                    teamBox.setTooltip(new Tooltip("This person is currently the Product Owner of the team "
+                            + currentPerson.getTeamName() + "! \n"
+                            + "You must put someone else into the role before you can change this persons team."));
+                    btnDone.setDisable(true);
+                }
+                else if (newValue != currentPerson.getTeam() && currentPerson.getRole() != null
+                        && currentPerson.getRole().toString().equals("Scrum Master")) {
+                    ValidationStyle.borderGlowRed(teamBox.getComboBox());
+                    ValidationStyle.showMessage("This person is currently the Scrum Master of the team "
+                            + currentPerson.getTeamName() + "! \n"
+                            + "You must put someone else into the role before you can change this persons team.",
+                            teamBox.getComboBox());
+                    teamBox.setTooltip(new Tooltip("This person is currently the Scrum Master of the team "
+                            + currentPerson.getTeamName() + "! \n"
+                            + "You must put someone else into the role before you can change this persons team."));
+                    btnDone.setDisable(true);
+                }
+                else {
+                    btnDone.setDisable(false);
+                }
+            }
+        });
 
         birthDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
                 @Override

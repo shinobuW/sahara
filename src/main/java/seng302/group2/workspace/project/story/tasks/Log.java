@@ -300,6 +300,7 @@ public class Log extends SaharaItem implements Serializable {
         private double duration;
         private String description;
         private double effortLeftDifference;
+        private Task task;
 
         private Person oldLogger;
         private LocalDateTime oldStartTime;
@@ -321,6 +322,8 @@ public class Log extends SaharaItem implements Serializable {
             this.oldDuration = log.duration;
             this.oldDescription = log.description;
             this.oldEffortLeftDifference = log.effortLeftDifference;
+
+            this.task = log.task;
         }
 
 
@@ -328,12 +331,15 @@ public class Log extends SaharaItem implements Serializable {
          * Executes/Redoes the changes of the person edit
          */
         public void execute() {
+            task.setEffortSpent(task.getEffortSpent() - log.getDurationInMinutes() + duration);
             log.logger = logger;
             log.startTime = startTime;
             log.duration = duration;
             log.description = description;
             log.duration = duration;
             log.effortLeftDifference = effortLeftDifference;
+
+
         }
 
 
@@ -346,6 +352,8 @@ public class Log extends SaharaItem implements Serializable {
             log.duration = oldDuration;
             log.description = oldDescription;
             log.effortLeftDifference = oldEffortLeftDifference;
+            task.setEffortSpent(task.getEffortSpent() + log.getDurationInMinutes() - duration);
+
         }
 
 

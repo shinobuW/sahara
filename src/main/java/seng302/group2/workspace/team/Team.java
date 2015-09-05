@@ -509,6 +509,23 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         Global.commandManager.executeCommand(teamCasDelete);
     }
 
+    /**
+     * Adds a person to the team.
+     * @param person The person to be added.
+     */
+    public void addPerson(Person person) {
+        Command addPersonCommand = new AddPersonCommand(this, person);
+        Global.commandManager.executeCommand(addPersonCommand);
+    }
+
+    /**
+     * Removes a person from the team.
+     * @param person The person to be removed.
+     */
+    public void removePerson(Person person) {
+        Command removePersonCommand = new RemovePersonCommand(this, person);
+        Global.commandManager.executeCommand(removePersonCommand);
+    }
 
     /**
      * An overridden version for the String representation of a Team
@@ -933,7 +950,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
          */
         public void execute() {
             team.getPeople().add(person);
-            person.setTeam(team);
+            //person.setTeam(team);
         }
 
         /**
@@ -941,7 +958,65 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
          */
         public void undo() {
             team.getPeople().remove(person);
-            person.setTeam(team);
+            //person.setTeam(team);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped_team = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(team)) {
+                    this.team = (Team) item;
+                    mapped_team = true;
+                }
+            }
+            boolean mapped_person = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(person)) {
+                    this.person = (Person) item;
+                    mapped_person = true;
+                }
+            }
+            return mapped_team && mapped_person;
+        }
+    }
+
+    /**
+     * A command class for allowing the removal of People from Teams
+     */
+    private class RemovePersonCommand implements Command {
+        private Person person;
+        private Team team;
+
+        /**
+         * Constructor for the person removal command
+         * @param team The team from which the person is removed
+         * @param person The person to be removed
+         */
+        RemovePersonCommand(Team team, Person person) {
+            this.person = person;
+            this.team = team;
+        }
+
+        /**
+         * Executes the person removed command
+         */
+        public void execute() {
+            team.getPeople().remove(person);
+            //person.setTeam(team);
+        }
+
+        /**
+         * Undoes the person removal command
+         */
+        public void undo() {
+            team.getPeople().add(person);
+            //person.setTeam(team);
         }
 
         /**
