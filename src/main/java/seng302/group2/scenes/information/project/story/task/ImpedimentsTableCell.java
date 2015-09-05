@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import org.controlsfx.control.PopOver;
 import seng302.group2.scenes.control.Tooltip;
+import seng302.group2.scenes.control.search.SearchableTable;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
@@ -164,6 +165,7 @@ public class ImpedimentsTableCell extends TableCell<Object, String> {
 
                 this.box.getChildren().clear();
                 this.box.getChildren().add(createImpedimentsNode());//createImpedimentsNode(getTask(), this);
+                ((SearchableTable)getTableView()).refresh(getTableView(), getTableView().getItems());
             });
 
         SearchableText statusLabel = new SearchableText("Status: ");
