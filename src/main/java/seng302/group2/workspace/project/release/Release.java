@@ -251,32 +251,6 @@ public class Release extends SaharaItem implements Comparable<Release> {
         return releaseElement;
     }
 
-    /**
-     * Overidden search method for Release.
-     * @param searchText The string to search for among the releases attributes.
-     * @return A SearchResultCellNode containing info on any matches.
-     */
-    @Override
-    public SearchResultCellNode search(String searchText) {
-        searchText = searchText.toLowerCase();
-        List<String> matches = new ArrayList<>();
-        if (this.shortName.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
-            matches.add("Short Name: " + shortName);
-        }
-        else if (this.description.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
-            matches.add("Description: " + description);
-        }
-        else if (this.estimatedDate.toString().matches("(.|\n)*" + searchText + "(.|\n)*")) {
-            matches.add("Estimated Date: " + estimatedDate.toString());
-        }
-
-        if (matches.size() > 0) {
-            String matchText = "Found " + matches.size() + " matches, first match is " + matches.get(0);
-            String assocText = "Belongs to Project: " + this.project.toString();
-            return new SearchResultCellNode(this, "Release: " + this.shortName, matchText, assocText);
-        }
-        return null;
-    }
 
     /**
      * Returns a list of the children of the release class

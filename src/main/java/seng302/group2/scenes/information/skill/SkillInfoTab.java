@@ -1,12 +1,10 @@
 package seng302.group2.scenes.information.skill;
 
-import com.sun.javafx.font.freetype.HBGlyphLayout;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;

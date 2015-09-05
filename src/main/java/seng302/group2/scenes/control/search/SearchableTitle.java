@@ -42,4 +42,14 @@ public class SearchableTitle extends SearchableText {
     public SearchableTitle(String content, String style) {
         super(content, "-fx-font-size: 150%;" + style);
     }
+
+
+    @Override
+    public boolean advancedQuery(String query) {
+        boolean found = false;
+        if (this.query(query)) {
+            found = true;
+        }
+        return found;
+    }
 }
