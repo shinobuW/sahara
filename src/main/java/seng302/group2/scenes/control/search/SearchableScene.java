@@ -1,8 +1,6 @@
 package seng302.group2.scenes.control.search;
 
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import seng302.group2.App;
 
 import java.util.Collection;
 import java.util.HashSet;

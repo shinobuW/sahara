@@ -1,8 +1,6 @@
 package seng302.group2.scenes.information.project.story.task;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -20,22 +18,19 @@ import seng302.group2.workspace.project.story.tasks.Task;
  * Created by swi67 on 4/09/15.
  */
 public class AssigneeTableCell extends TableCell<Task, String> {
-    /**
-     * A cell used to show the Assignee status.
-     */
 
     public Node assigneeHBox;
     public Story story;
     private ComboBox<Person> comboBox;
-    private ObservableList items;
+    private ObservableList<Person> items;
     private HBox cell = new HBox();
 
     /**
      * Constructor
      * @param story The currently selected story
-     * @param itemList The list of items for the table cell
+     * @param itemList A list of the available assignees for selection in the editing assignee combo
      */
-    public AssigneeTableCell(Story story, ObservableList itemList) {
+    public AssigneeTableCell(Story story, ObservableList<Person> itemList) {
         this.story = story;
         this.items = itemList;
     }
@@ -46,7 +41,6 @@ public class AssigneeTableCell extends TableCell<Task, String> {
      * @param item  the item to update to
      * @param empty if the cell is empty
      */
-
     @Override
     public void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
@@ -61,7 +55,6 @@ public class AssigneeTableCell extends TableCell<Task, String> {
                     comboBox.setValue(getTask().getAssignee());
                 }
                 cell.getChildren().add(comboBox);
-                //setGraphic(comboBox);
             }
             else {
                 if (getTask() != null) {
@@ -69,17 +62,19 @@ public class AssigneeTableCell extends TableCell<Task, String> {
                 }
                 else if (getTableView().getSelectionModel().getSelectedItem() != null) {
                     this.assigneeHBox =
-                            createAssigneeNode((Task) getTableView().getSelectionModel().getSelectedItem(), this);
+                            createAssigneeNode(getTableView().getSelectionModel().getSelectedItem(), this);
 
                 }
                 cell.getChildren().add(assigneeHBox);
-                //setGraphic(assigneeHBox);
-
             }
             setGraphic(cell);
         }
     }
 
+    /**
+     * Gets the task of the current cell by checking the short name against each of the tasks in the story
+     * @return The task whose name matches the cell item
+     */
     public Task getTask() {
         Task result = null;
         for (Task task : this.story.getTasks()) {
@@ -99,21 +94,23 @@ public class AssigneeTableCell extends TableCell<Task, String> {
             if (getTask().getAssignee() != null) {
                 comboBox.setValue(getTask().getAssignee());
             }
-            setGraphic(comboBox);
-            Platform.runLater(() -> {
-                    comboBox.requestFocus();
-                });
+            cell.getChildren().clear();
+            cell.getChildren().add(comboBox);
+            setGraphic(cell);
+            Platform.runLater(comboBox::requestFocus);
         }
     }
 
     @Override
     public void cancelEdit() {
         super.cancelEdit();
-        setGraphic(this.assigneeHBox);
+        cell.getChildren().clear();
+        cell.getChildren().add(assigneeHBox);
+        setGraphic(cell);
     }
 
     private void createCombo() {
-        comboBox = new ComboBox(this.items);
+        comboBox = new ComboBox<>(this.items);
         comboBox.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
         comboBox.focusedProperty().addListener((arg0, arg1, arg2) -> {
                 if (!arg2) {
@@ -128,7 +125,7 @@ public class AssigneeTableCell extends TableCell<Task, String> {
                     updateItem(getItem(), false);
                 }
             });
-    }
+        }
 
 
     /**
@@ -162,5 +159,4 @@ public class AssigneeTableCell extends TableCell<Task, String> {
         }
         return assigneeHBox;
     }
-
 }

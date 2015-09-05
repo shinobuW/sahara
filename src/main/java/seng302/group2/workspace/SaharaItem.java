@@ -2,7 +2,6 @@ package seng302.group2.workspace;
 
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
-import seng302.group2.scenes.control.search.SearchResultCellNode;
 import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrategy;

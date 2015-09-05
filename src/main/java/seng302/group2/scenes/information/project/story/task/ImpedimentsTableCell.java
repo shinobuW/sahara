@@ -30,7 +30,6 @@ import java.util.TreeSet;
  * A cell used to show the Impediments status.
  */
 public class ImpedimentsTableCell extends TableCell<Object, String> {
-    public Node popUp;
     public Story story;
     private ImageView warningImage = new ImageView();
     private HBox box = new HBox();

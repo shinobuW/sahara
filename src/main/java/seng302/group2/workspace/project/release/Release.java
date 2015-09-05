@@ -8,7 +8,6 @@ package seng302.group2.workspace.project.release;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.search.SearchResultCellNode;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project.ReleaseInformationSwitchStrategy;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
@@ -16,7 +15,9 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A release is a sub-member of project and contains information about a release of a project
