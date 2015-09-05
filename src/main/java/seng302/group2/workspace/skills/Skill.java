@@ -203,30 +203,7 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
         return this.shortName;
     }
 
-    /**
-     * Overidden search method for Skill.
-     * @param searchText The string to search for
-     * @return A search result node for displaying a search match for skills
-     */
-    @Override
-    public SearchResultCellNode search(String searchText) {
-        searchText = searchText.toLowerCase();
-        List<String> matches = new ArrayList<>();
-        if (this.shortName.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
-            matches.add("Short Name: " + shortName);
-        }
-        if (this.description.toLowerCase().matches("(.|\n)*" + searchText + "(.|\n)*")) {
-            matches.add("Description" + description);
-        }
 
-
-        if (matches.size() > 0) {
-            String matchText = "Found " + matches.size() + " matches, first match is " + matches.get(0);
-            String assocText = "";
-            return new SearchResultCellNode(this, "Skill: " + this.shortName, matchText, assocText);
-        }
-        return null;
-    }
 
     /**
      * A command class that allows the executing and undoing of skill edits
