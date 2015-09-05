@@ -726,7 +726,7 @@ public class Task extends SaharaItem implements Serializable {
 
 
     /**
-     * A command class that allows the executing and undoing of task edits
+     * A command class that allows the executing and undoing of task state edits
      */
     private class TaskEditStateCommand implements Command {
 
@@ -782,7 +782,9 @@ public class Task extends SaharaItem implements Serializable {
         }
     }
 
-
+    /**
+     * A command class that allows the executing and undoing of task effort left edits
+     */
     private class TaskEditEffortLeftCommand implements Command {
         private Task task;
 
@@ -792,6 +794,12 @@ public class Task extends SaharaItem implements Serializable {
 
         private double oldEffortLeft;
 
+        /**
+         * Constructor for the task edit effort left command, used when manually editing the effort left
+         * @param task The task being edited
+         * @param effortLeft the new effort left
+         * @param effortLeftLog The new effort left log (ghost log)
+         */
         private TaskEditEffortLeftCommand(Task task, double effortLeft, Log effortLeftLog) {
             this.task = task;
 
@@ -802,16 +810,27 @@ public class Task extends SaharaItem implements Serializable {
             this.oldEffortLeft = task.effortLeft;
         }
 
+        /**
+         * Executes/Redoes the changes of the task edit
+         */
         public void execute() {
             task.effortLeft = effortLeft;
             task.getLogs().add(effortLeftLog);
         }
 
-        public void undo(){
+        /**
+         * Undoes the changes of the task edit
+         */
+        public void undo() {
             task.effortLeft = oldEffortLeft;
             task.getLogs().remove(effortLeftLog);
         }
 
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped_task = false;
