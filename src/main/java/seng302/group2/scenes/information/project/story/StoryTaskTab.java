@@ -312,7 +312,6 @@ public class StoryTaskTab extends SearchableTab {
                 else {
                     Task currentTask = taskTable.getSelectionModel().getSelectedItem();
                     taskPopover.setDetachedTitle(currentTask.toString());
-                    taskInfoPane(currentTask, taskContent);
 
                     ScrollPane taskWrapper = new ScrollPane();
                     LoggingEffortPane loggingPane = new LoggingEffortPane(currentTask,
@@ -320,7 +319,7 @@ public class StoryTaskTab extends SearchableTab {
                     loggingPane.setStyle(null);
 
                     taskWrapper.setContent(loggingPane);
-                    
+
                     TitledPane collapsableLoggingPane = new TitledPane("Task Logging", taskWrapper);
                     collapsableLoggingPane.setExpanded(true);
                     collapsableLoggingPane.setAnimated(true);
