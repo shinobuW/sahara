@@ -486,6 +486,18 @@ public class Task extends SaharaItem implements Serializable {
 
 
     /**
+     * Creates a Task edit state (lane and impeding state) command and executes it with the Global Command Manager,
+     * updating the task with the new parameter values.
+     *
+     * @param newState    The new state
+     */
+    public void editState(TASKSTATE newState) {
+        Command relEdit = new TaskEditStateCommand(this, newState);
+        Global.commandManager.executeCommand(relEdit);
+    }
+
+
+    /**
      * Creates a Task assignee edit command and executes it with the Global Command Manager, updating the task with the
      * new assignee
      *
@@ -685,6 +697,65 @@ public class Task extends SaharaItem implements Serializable {
             return  mapped_task;
         }
     }
+
+
+    /**
+     * A command class that allows the executing and undoing of task edits
+     */
+    private class TaskEditStateCommand implements Command {
+
+        private Task task;
+        private TASKSTATE state;
+        private TASKSTATE oldState;
+        private TASKSTATE oldLane;
+
+        /**
+         * Constructor for the Task Edit State command, used for changing lanes in the scrumboard
+         * @param task The story to be edited
+         * @param newState The task's new assignee
+         */
+        private TaskEditStateCommand(Task task, TASKSTATE newState) {
+            this.task = task;
+            this.state = newState;
+            this.oldState = task.state;
+            this.oldLane = task.lane;
+        }
+
+        /**
+         * Executes/Redoes the changes of the task edit
+         */
+        public void execute() {
+            task.lane = this.state;
+            task.state = this.state;
+        }
+
+        /**
+         * Undoes the changes of the task edit
+         */
+        public void undo() {
+            task.lane = this.oldLane;
+            task.state = this.oldState;
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped_task = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(task)) {
+                    this.task = (Task) item;
+                    mapped_task = true;
+                }
+            }
+
+            return  mapped_task;
+        }
+    }
+
 
     /**
      * A command class that allows the executing and undoing of task description edits

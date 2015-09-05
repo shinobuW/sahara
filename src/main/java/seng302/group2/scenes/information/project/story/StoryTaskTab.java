@@ -1,6 +1,5 @@
 package seng302.group2.scenes.information.project.story;
 
-import com.sun.javafx.font.freetype.HBGlyphLayout;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -144,7 +143,12 @@ public class StoryTaskTab extends SearchableTab {
                             Task.TASKSTATE> event) {
                         Task currentTask = event.getTableView().getItems().get(
                                 event.getTablePosition().getRow());
-                        currentTask.editImpedimentState(event.getNewValue(), currentTask.getImpediments());
+                        currentTask.editState(event.getNewValue());
+
+                        SearchableTable.refresh(taskTable, taskTable.getItems());
+
+                        /*event.getTablePosition().getTableColumn().setVisible(false);
+                        event.getTablePosition().getTableColumn().setVisible(true);*/
                     }
                 }
         );

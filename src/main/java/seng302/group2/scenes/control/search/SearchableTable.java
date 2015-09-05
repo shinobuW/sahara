@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.TextAlignment;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by jml168 on 11/08/15.
@@ -104,6 +105,14 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
 
         setFactory();
         return !matchingItems.isEmpty();
+    }
+
+
+    public static <T> void refresh(final TableView<T> table, final List<T> tableList) {
+        //Wierd JavaFX bug
+        table.setItems(null);
+        table.layout();
+        table.setItems(FXCollections.observableList(tableList));
     }
 
 

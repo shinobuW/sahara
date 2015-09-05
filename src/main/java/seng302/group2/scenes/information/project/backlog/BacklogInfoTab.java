@@ -7,11 +7,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Callback;
+import org.controlsfx.control.spreadsheet.Grid;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.chart.StoryCompletenessBar;
@@ -249,7 +251,7 @@ public class BacklogInfoTab extends SearchableTab {
      * A class used to show the progress of a story.
      */
     class ProgressCell extends TableCell<Object, String> {
-        public Node popUp;
+        public Node node;
         public Backlog backlog;
 
         /**
@@ -274,8 +276,10 @@ public class BacklogInfoTab extends SearchableTab {
                 setGraphic(null);
             }
             else {
-                this.popUp = new StoryCompletenessBar(getStory(), 220, 18);
-                setGraphic(popUp);
+                this.node = new HBox();
+                ((HBox) this.node).setPrefSize(220,18);
+                ((HBox) this.node).getChildren().add(new StoryCompletenessBar(getStory(), 220, 18));
+                setGraphic(node);
             }
         }
 

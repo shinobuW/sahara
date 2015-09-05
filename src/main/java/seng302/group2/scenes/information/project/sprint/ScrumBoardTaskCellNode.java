@@ -104,7 +104,7 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
     }
 
 
-    private Node createImpedimentsNode() {
+    public Node createImpedimentsNode() {
         // Impediments icon
         ImageView warningImage;
         if (Task.getImpedingStates().contains(task.getState()) || !task.getImpediments().isEmpty()) {

@@ -12,14 +12,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import org.controlsfx.control.PopOver;
+import seng302.group2.App;
 import seng302.group2.scenes.control.Tooltip;
+import seng302.group2.scenes.control.search.SearchableTable;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.information.project.sprint.ScrumBoardTaskCellNode;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
 
@@ -32,6 +36,8 @@ import java.util.TreeSet;
 public class ImpedimentsTableCell extends TableCell<Object, String> {
     public Node popUp;
     public Story story;
+    private ImageView warningImage = new ImageView();
+    private HBox box = new HBox();
 
     /**
      * Constructor
@@ -55,8 +61,9 @@ public class ImpedimentsTableCell extends TableCell<Object, String> {
             setGraphic(null);
         }
         else {
-            this.popUp = createImpedimentsNode(getTask(), this);
-            setGraphic(popUp);
+            this.box.getChildren().clear();
+            this.box.getChildren().add(createImpedimentsNode());//createImpedimentsNode(getTask(), this);
+            setGraphic(box);
         }
     }
 
@@ -71,19 +78,50 @@ public class ImpedimentsTableCell extends TableCell<Object, String> {
     }
 
 
-    private Node createImpedimentsNode(Task task, TableCell tableCell) {
+    public Node createImpedimentsNode() {
         // Impediments icon
-        final ImageView warningImage = defineWarningImage(task);
 
-        tableCell.setOnMouseEntered(me -> {
-                tableCell.setCursor(Cursor.HAND); //Change cursor to hand
-            });
-        tableCell.setOnMouseExited(me -> {
-                tableCell.setCursor(Cursor.DEFAULT); //Change cursor to hand
-            });
+        if (Task.getImpedingStates().contains(getTask().getState()) || !getTask().getImpediments().isEmpty()) {
+            warningImage = new ImageView("icons/dialog-cancel.png");
+            if (getTask().getState() == Task.TASKSTATE.BLOCKED) {
+                if (!getTask().getImpediments().isEmpty()) {
+                    Tooltip.create("This task is currently blocked, with the following impediments:\n"
+                            + getTask().getImpediments(), warningImage, 50);
+                }
+                else {
+                    Tooltip.create("This task is currently blocked", warningImage, 50);
+                }
+            }
+            else if (getTask().getState() == Task.TASKSTATE.DEFERRED) {
+                if (!getTask().getImpediments().isEmpty()) {
+                    //System.out.println(task.getImpediments());
+                    Tooltip.create("This task has been deferred, and has the following impediments:\n"
+                            + getTask().getImpediments(), warningImage, 50);
+                }
+                else {
+                    Tooltip.create("This task has been deferred", warningImage, 50);
+                }
+            }
+            else {
+                Tooltip.create("This task has the following impediments:\n" + getTask().getImpediments(),
+                        warningImage, 50);
+            }
+        }
+        else {
+            warningImage = new ImageView("icons/dialog-cancel-empty.png");
+            Tooltip.create("This task has no impediments or blockages", warningImage, 50);
+        }
+
+        warningImage.setOnMouseEntered(me -> {
+            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+        });
+        warningImage.setOnMouseExited(me -> {
+            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+        });
+
 
         PopOver impedimentPopOver = new PopOver();
-        impedimentPopOver.setDetachedTitle(task.getShortName() + "'s Impediments");
+        impedimentPopOver.setDetachedTitle(getTask().getShortName() + "'s Impediments");
         SortedSet<Task.TASKSTATE> availableStatuses = new TreeSet<>();
         try {
             for (Task.TASKSTATE state : Task.getImpedingStates()) {
@@ -98,35 +136,42 @@ public class ImpedimentsTableCell extends TableCell<Object, String> {
         impedimentCombo.getItems().add("(none)");
         impedimentCombo.getItems().addAll(availableStatuses);
         // Make default selection
-        if (impedimentCombo.getItems().contains(task.getState())) {
-            impedimentCombo.getSelectionModel().select(task.getState());
+        if (impedimentCombo.getItems().contains(getTask().getState())) {
+            impedimentCombo.getSelectionModel().select(getTask().getState());
         }
         else {
             impedimentCombo.getSelectionModel().select("(none)");
         }
-
+        warningImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (impedimentPopOver.isShowing()) {
+                impedimentPopOver.hide();
+            }
+            else {
+                impedimentPopOver.show(warningImage);
+            }
+            event.consume();
+        });
 
         VBox impedimentsVBox = new VBox(4);
         SearchableText impedimentsLabel = new SearchableText("Impediments: ");
-        TextArea impedimentsTextArea = new TextArea(task.getImpediments());
+        TextArea impedimentsTextArea = new TextArea(getTask().getImpediments());
         impedimentsTextArea.setPrefSize(240, 80);
-        impedimentsTextArea.setWrapText(true);
-        impedimentsTextArea.setEditable(true);
         impedimentsVBox.getChildren().addAll(impedimentsLabel, impedimentsTextArea);
 
         Button impedimentSaveButton = new Button("Save Impediments");
         impedimentSaveButton.setAlignment(Pos.CENTER_RIGHT);
         impedimentSaveButton.setOnAction(event -> {
-                Task.TASKSTATE selectedState = null;
-                Object selectedObject = impedimentCombo.getSelectionModel().getSelectedItem();
-                if (selectedObject == null || !selectedObject.toString().equals("(none)")) {
-                    selectedState = (Task.TASKSTATE) selectedObject;
-                }
-                task.editImpedimentState(selectedState, impedimentsTextArea.getText());
-                 //updatedWarningImage = defineWarningImage(task);
-                impedimentPopOver.hide();
-            });
+            Task.TASKSTATE selectedState = null;
+            Object selectedObject = impedimentCombo.getSelectionModel().getSelectedItem();
+            if (selectedObject == null || !selectedObject.toString().equals("(none)")) {
+                selectedState = (Task.TASKSTATE) selectedObject;
+            }
+            getTask().editImpedimentState(selectedState, impedimentsTextArea.getText());
+            impedimentPopOver.hide();
 
+            this.box.getChildren().clear();
+            this.box.getChildren().add(createImpedimentsNode());//createImpedimentsNode(getTask(), this);
+        });
 
         SearchableText statusLabel = new SearchableText("Status: ");
         statusLabel.setTextAlignment(TextAlignment.LEFT);
@@ -148,13 +193,72 @@ public class ImpedimentsTableCell extends TableCell<Object, String> {
         );
         impedimentPopOver.setContentNode(impedimentChangeNode);
 
-        tableCell.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-                impedimentPopOver.show(tableCell);
-                event.consume();
-            });
-
         return warningImage;
     }
+
+    /*private Node createImpedimentsNode(Task task, TableCell tableCell) {
+        // Impediments icon
+        ImageView warningImage = defineWarningImage(task);
+
+        tableCell.setOnMouseEntered(me -> {
+            tableCell.setCursor(Cursor.HAND); //Change cursor to hand
+        });
+        tableCell.setOnMouseExited(me -> {
+            tableCell.setCursor(Cursor.DEFAULT); //Change cursor to hand
+        });
+
+        PopOver impedimentPopOver = new PopOver();
+        impedimentPopOver.setDetachedTitle(task.getShortName() + "'s Impediments");
+        SortedSet<Task.TASKSTATE> availableStatuses = new TreeSet<>();
+        try {
+            for (Task.TASKSTATE state : Task.getImpedingStates()) {
+                availableStatuses.add(state);
+            }
+        }
+        catch (NullPointerException ex) {
+        }
+
+        VBox impedimentsVBox = new VBox(4);
+        SearchableText impedimentsLabel = new SearchableText("Impediments: ");
+        TextArea impedimentsTextArea = new TextArea(task.getImpediments());
+        impedimentsTextArea.setPrefSize(240, 80);
+        impedimentsTextArea.setWrapText(true);
+        impedimentsTextArea.setEditable(true);
+        impedimentsVBox.getChildren().addAll(impedimentsLabel, impedimentsTextArea);
+
+        Button impedimentSaveButton = new Button("Save Impediments");
+        impedimentSaveButton.setAlignment(Pos.CENTER_RIGHT);
+        impedimentSaveButton.setOnAction(event -> {
+            task.editImpedimentState(task.getState(), impedimentsTextArea.getText());
+            if (!Task.getImpedingStates().contains(task.getState()) || task.getImpediments().isEmpty()) {
+                App.refreshMainScene();
+            }
+            impedimentPopOver.hide();
+        });
+
+
+        VBox impedimentChangeNode = new VBox(8);
+        impedimentChangeNode.setAlignment(Pos.CENTER_RIGHT);
+        impedimentChangeNode.setPadding(new Insets(10,10,10,10));
+        impedimentChangeNode.getChildren().addAll(
+                impedimentsVBox,
+                impedimentSaveButton
+        );
+        impedimentPopOver.setContentNode(impedimentChangeNode);
+
+        tableCell.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (impedimentPopOver.isShowing()) {
+                impedimentPopOver.hide();
+            }
+            else {
+                impedimentPopOver.show(tableCell);
+                event.consume();
+            }
+        });
+
+        return warningImage;
+    }*/
+
 
     private ImageView defineWarningImage(Task task) {
         ImageView warningImage;
