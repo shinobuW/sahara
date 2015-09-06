@@ -3,7 +3,7 @@
     "shortName": "WWE",
     "longName": "WWE",
     "description": "",
-    "lastSaveLocation": "C:\\Users\\Shinobu\\Desktop\\WWE.proj",
+    "lastSaveLocation": "C:\\Users\\Shinobu\\Documents\\uni\\302\\group-2\\WWE.proj",
     "estimationScales": {
       "estimationScaleDict": {
         "T-Shirt Sizes": [
@@ -581,15 +581,13 @@
       "0x27"
     ],
     "serializableStories": [
-      "0x34",
-      "0x35",
-      "0x36"
+      "0x34"
     ],
     "serializableBacklogs": [
-      "0x37"
+      "0x35"
     ],
     "serializableSprints": [
-      "0x38"
+      "0x36"
     ],
     "serializableLogs": [],
     "serializableTeams": [],
@@ -601,15 +599,15 @@
     "longName": "soft.serve()",
     "description": "",
     "serializableReleases": [
-      "0x39"
+      "0x37"
     ],
     "serializableTeamAllocations": [],
     "serializableStories": [
-      "0x3a",
-      "0x3b"
+      "0x38",
+      "0x39"
     ],
     "serializableBacklogs": [
-      "0x3c"
+      "0x3a"
     ],
     "serializableSprints": [],
     "serializableLogs": [],
@@ -649,16 +647,16 @@
     "id": 5
   },
   "0x27": {
-    "startDate": "0x3d",
-    "endDate": "0x3e",
+    "startDate": "0x3b",
+    "endDate": "0x3c",
     "project": "0x22",
     "team": "0x2",
     "itemName": "",
     "id": 2455
   },
   "0x28": {
-    "startDate": "0x3f",
-    "endDate": "0x40",
+    "startDate": "0x3d",
+    "endDate": "0x3e",
     "project": "0x21",
     "team": "0x4",
     "itemName": "",
@@ -677,7 +675,7 @@
   "0x2b": {
     "shortName": "Release 1.1.2",
     "description": "",
-    "estimatedDate": "0x41",
+    "estimatedDate": "0x3f",
     "project": "0x21",
     "itemName": "",
     "id": 61
@@ -685,7 +683,7 @@
   "0x2c": {
     "shortName": "Release 1.1.3",
     "description": "",
-    "estimatedDate": "0x42",
+    "estimatedDate": "0x40",
     "project": "0x21",
     "itemName": "",
     "id": 62
@@ -704,8 +702,8 @@
     "serializableAcceptanceCriteria": [],
     "dependentOn": [],
     "serializableTasks": [
-      "0x43",
-      "0x44"
+      "0x41",
+      "0x42"
     ],
     "tasksWithoutStory": false,
     "itemName": "Buy Team 2 drinks",
@@ -725,9 +723,9 @@
     "serializableAcceptanceCriteria": [],
     "dependentOn": [],
     "serializableTasks": [
-      "0x45",
-      "0x46",
-      "0x47"
+      "0x43",
+      "0x44",
+      "0x45"
     ],
     "tasksWithoutStory": false,
     "itemName": "Drink some water",
@@ -747,9 +745,9 @@
     "serializableAcceptanceCriteria": [],
     "dependentOn": [],
     "serializableTasks": [
-      "0x48",
-      "0x49",
-      "0x4a"
+      "0x46",
+      "0x47",
+      "0x48"
     ],
     "tasksWithoutStory": false,
     "itemName": "Fix Team 2\u0027s proj",
@@ -780,7 +778,7 @@
   "0x32": {
     "shortName": "I\u0027m thirsty",
     "description": "",
-    "estimatedDate": "0x4b",
+    "estimatedDate": "0x49",
     "project": "0x22",
     "itemName": "",
     "id": 64
@@ -788,30 +786,12 @@
   "0x33": {
     "shortName": "It\u0027s dry out here",
     "description": "",
-    "estimatedDate": "0x4c",
+    "estimatedDate": "0x4a",
     "project": "0x22",
     "itemName": "",
     "id": 63
   },
   "0x34": {
-    "shortName": "Colouful GUI",
-    "longName": "Add some color 2 GUI",
-    "description": "",
-    "creator": "Codie",
-    "colour": "DEFAULT",
-    "priority": 9999,
-    "project": "0x22",
-    "done": false,
-    "estimate": "-",
-    "ready": false,
-    "serializableAcceptanceCriteria": [],
-    "dependentOn": [],
-    "serializableTasks": [],
-    "tasksWithoutStory": false,
-    "itemName": "Colouful GUI",
-    "id": 2448
-  },
-  "0x35": {
     "shortName": "Get mortal",
     "longName": "Get mortal",
     "description": "",
@@ -822,43 +802,30 @@
     "done": false,
     "estimate": "-",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0x4b"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
     "itemName": "Get mortal",
     "id": 2452
   },
-  "0x36": {
-    "shortName": "Impress Moffat",
-    "longName": "Impress Moffat",
-    "description": "",
-    "creator": "Bronson",
-    "colour": "DEFAULT",
-    "priority": 999999999,
-    "project": "0x22",
-    "done": false,
-    "estimate": "-",
-    "ready": false,
-    "serializableAcceptanceCriteria": [],
-    "dependentOn": [],
-    "serializableTasks": [],
-    "tasksWithoutStory": false,
-    "itemName": "Impress Moffat",
-    "id": 2447
-  },
-  "0x37": {
+  "0x35": {
     "shortName": "It\u0027s too long",
     "longName": "It\u0027s harder than I thought",
     "description": "",
     "productOwner": "0xc",
-    "serializableStories": [],
+    "serializableStories": [
+      "0x4c",
+      "0x4d"
+    ],
     "project": "0x22",
-    "scale": "Fibonacci",
+    "scale": "T-Shirt Sizes",
     "itemName": "Backlog 1",
     "id": 2438
   },
-  "0x38": {
+  "0x36": {
     "project": "0x22",
     "team": "0x2",
     "release": "0x33",
@@ -866,21 +833,21 @@
     "goal": "Make \u0027em wet",
     "longName": "Make \u0027em wet",
     "description": "",
-    "startDate": "0x4d",
-    "endDate": "0x4e",
-    "tasksWithoutStory": "0x4f",
+    "startDate": "0x4e",
+    "endDate": "0x4f",
+    "tasksWithoutStory": "0x50",
     "itemName": "",
     "id": 2483
   },
-  "0x39": {
+  "0x37": {
     "shortName": "A Big Mouthful",
     "description": "",
-    "estimatedDate": "0x50",
+    "estimatedDate": "0x51",
     "project": "0x23",
     "itemName": "",
     "id": 65
   },
-  "0x3a": {
+  "0x38": {
     "shortName": "Drippin\u0027",
     "longName": "Drippin\u0027",
     "description": "",
@@ -898,7 +865,7 @@
     "itemName": "Drippin\u0027",
     "id": 2487
   },
-  "0x3b": {
+  "0x39": {
     "shortName": "Slurp",
     "longName": "Slurpy slurp",
     "description": "",
@@ -916,7 +883,7 @@
     "itemName": "Slurp",
     "id": 2486
   },
-  "0x3c": {
+  "0x3a": {
     "shortName": "Peaches and Cream",
     "longName": "Peaches and Cream",
     "description": "",
@@ -927,37 +894,37 @@
     "itemName": "Sprint2: Normal Cone",
     "id": 2445
   },
-  "0x3d": {
+  "0x3b": {
     "year": 2015,
     "month": 8,
     "day": 30
   },
-  "0x3e": {
+  "0x3c": {
     "year": 2016,
     "month": 10,
     "day": 8
   },
-  "0x3f": {
+  "0x3d": {
     "year": 2015,
     "month": 2,
     "day": 2
   },
-  "0x40": {
+  "0x3e": {
     "year": 2015,
     "month": 10,
     "day": 29
   },
-  "0x41": {
+  "0x3f": {
     "year": 2015,
     "month": 10,
     "day": 10
   },
-  "0x42": {
+  "0x40": {
     "year": 2015,
     "month": 9,
     "day": 6
   },
-  "0x43": {
+  "0x41": {
     "shortName": "Make invitation",
     "description": " ",
     "impediments": "",
@@ -968,12 +935,12 @@
     "serializableLogs": [],
     "effortLeft": 60.0,
     "effortSpent": 0.0,
-    "initialLog": "0x51",
+    "initialLog": "0x52",
     "converter": {},
     "itemName": "Make invitation",
     "id": 2466
   },
-  "0x44": {
+  "0x42": {
     "shortName": "Buy corsage for everyone",
     "description": " ",
     "impediments": "",
@@ -984,12 +951,12 @@
     "serializableLogs": [],
     "effortLeft": 1800.0,
     "effortSpent": 0.0,
-    "initialLog": "0x52",
+    "initialLog": "0x53",
     "converter": {},
     "itemName": "Buy corsage for everyone",
     "id": 2468
   },
-  "0x45": {
+  "0x43": {
     "shortName": "Get a glass",
     "description": " ",
     "impediments": "",
@@ -1000,12 +967,12 @@
     "serializableLogs": [],
     "effortLeft": 630.0,
     "effortSpent": 0.0,
-    "initialLog": "0x53",
+    "initialLog": "0x54",
     "converter": {},
     "itemName": "Get a glass",
     "id": 2470
   },
-  "0x46": {
+  "0x44": {
     "shortName": "Turn tap",
     "description": " ",
     "impediments": "",
@@ -1016,12 +983,12 @@
     "serializableLogs": [],
     "effortLeft": 2420.0,
     "effortSpent": 0.0,
-    "initialLog": "0x54",
+    "initialLog": "0x55",
     "converter": {},
     "itemName": "Turn tap",
     "id": 2472
   },
-  "0x47": {
+  "0x45": {
     "shortName": "Drink",
     "description": " ",
     "impediments": "",
@@ -1032,12 +999,12 @@
     "serializableLogs": [],
     "effortLeft": 3247.0,
     "effortSpent": 0.0,
-    "initialLog": "0x55",
+    "initialLog": "0x56",
     "converter": {},
     "itemName": "Drink",
     "id": 2474
   },
-  "0x48": {
+  "0x46": {
     "shortName": "Make a task for a task",
     "description": " ",
     "impediments": "",
@@ -1048,12 +1015,12 @@
     "serializableLogs": [],
     "effortLeft": 3600.0,
     "effortSpent": 0.0,
-    "initialLog": "0x56",
+    "initialLog": "0x57",
     "converter": {},
     "itemName": "Make a task for a task",
     "id": 2480
   },
-  "0x49": {
+  "0x47": {
     "shortName": "List all the bugs",
     "description": " ",
     "impediments": "",
@@ -1064,12 +1031,12 @@
     "serializableLogs": [],
     "effortLeft": 3000.0,
     "effortSpent": 0.0,
-    "initialLog": "0x57",
+    "initialLog": "0x58",
     "converter": {},
     "itemName": "List all the bugs",
     "id": 2476
   },
-  "0x4a": {
+  "0x48": {
     "shortName": "Analyze time spent",
     "description": " ",
     "impediments": "",
@@ -1080,32 +1047,85 @@
     "serializableLogs": [],
     "effortLeft": 240.0,
     "effortSpent": 0.0,
-    "initialLog": "0x58",
+    "initialLog": "0x59",
     "converter": {},
     "itemName": "Analyze time spent",
     "id": 2478
   },
-  "0x4b": {
+  "0x49": {
     "year": 2015,
     "month": 10,
     "day": 2
   },
-  "0x4c": {
+  "0x4a": {
     "year": 2016,
     "month": 10,
     "day": 8
   },
+  "0x4b": {
+    "description": "Must be a bangin\u0027 night ",
+    "state": "UNACCEPTED",
+    "story": "0x34",
+    "itemName": "",
+    "id": 2490
+  },
+  "0x4c": {
+    "shortName": "Impress Moffat",
+    "longName": "Impress Moffat",
+    "description": "",
+    "creator": "Bronson",
+    "colour": "RED",
+    "priority": 999999999,
+    "backlog": "0x35",
+    "project": "0x22",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [
+      "0x5a",
+      "0x5b"
+    ],
+    "dependentOn": [
+      "0x34",
+      "0x4d"
+    ],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "itemName": "Impress Moffat",
+    "id": 2447
+  },
   "0x4d": {
+    "shortName": "Colouful GUI",
+    "longName": "Add some color 2 GUI",
+    "description": "",
+    "creator": "Codie",
+    "colour": "DEFAULT",
+    "priority": 9999,
+    "backlog": "0x35",
+    "project": "0x22",
+    "done": false,
+    "estimate": "3XL",
+    "ready": false,
+    "serializableAcceptanceCriteria": [
+      "0x5c"
+    ],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "itemName": "Colouful GUI",
+    "id": 2448
+  },
+  "0x4e": {
     "year": 2015,
     "month": 8,
     "day": 30
   },
-  "0x4e": {
+  "0x4f": {
     "year": 2015,
     "month": 10,
     "day": 10
   },
-  "0x4f": {
+  "0x50": {
     "shortName": "Tasks without a Story",
     "longName": "Tasks without a Story",
     "description": "A collection of tasks that do not belong to a story",
@@ -1113,7 +1133,7 @@
     "colour": "DEFAULT",
     "priority": 0,
     "project": "0x22",
-    "sprint": "0x38",
+    "sprint": "0x36",
     "done": false,
     "estimate": "-",
     "ready": true,
@@ -1124,14 +1144,14 @@
     "itemName": "Tasks without a Story",
     "id": 2485
   },
-  "0x50": {
+  "0x51": {
     "year": 2015,
     "month": 9,
     "day": 6
   },
-  "0x51": {
+  "0x52": {
     "startTime": {
-      "date": "0x59",
+      "date": "0x5d",
       "time": {
         "hour": 18,
         "minute": 34,
@@ -1141,14 +1161,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": -60.0,
-    "task": "0x43",
+    "task": "0x41",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 2467
   },
-  "0x52": {
+  "0x53": {
     "startTime": {
-      "date": "0x5a",
+      "date": "0x5e",
       "time": {
         "hour": 18,
         "minute": 35,
@@ -1158,14 +1178,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": -1800.0,
-    "task": "0x44",
+    "task": "0x42",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 2469
   },
-  "0x53": {
+  "0x54": {
     "startTime": {
-      "date": "0x5b",
+      "date": "0x5f",
       "time": {
         "hour": 18,
         "minute": 35,
@@ -1175,14 +1195,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": -630.0,
-    "task": "0x45",
+    "task": "0x43",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 2471
   },
-  "0x54": {
+  "0x55": {
     "startTime": {
-      "date": "0x5c",
+      "date": "0x60",
       "time": {
         "hour": 18,
         "minute": 36,
@@ -1192,14 +1212,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": -2420.0,
-    "task": "0x46",
+    "task": "0x44",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 2473
   },
-  "0x55": {
+  "0x56": {
     "startTime": {
-      "date": "0x5d",
+      "date": "0x61",
       "time": {
         "hour": 18,
         "minute": 36,
@@ -1209,14 +1229,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": -3247.0,
-    "task": "0x47",
+    "task": "0x45",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 2475
   },
-  "0x56": {
+  "0x57": {
     "startTime": {
-      "date": "0x5e",
+      "date": "0x62",
       "time": {
         "hour": 19,
         "minute": 43,
@@ -1226,14 +1246,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": -3600.0,
-    "task": "0x48",
+    "task": "0x46",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 2481
   },
-  "0x57": {
+  "0x58": {
     "startTime": {
-      "date": "0x5f",
+      "date": "0x63",
       "time": {
         "hour": 18,
         "minute": 37,
@@ -1243,14 +1263,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": -3000.0,
-    "task": "0x49",
+    "task": "0x47",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 2477
   },
-  "0x58": {
+  "0x59": {
     "startTime": {
-      "date": "0x60",
+      "date": "0x64",
       "time": {
         "hour": 18,
         "minute": 37,
@@ -1260,30 +1280,31 @@
     },
     "duration": 0.0,
     "effortLeftDifference": -240.0,
-    "task": "0x4a",
+    "task": "0x48",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 2479
   },
-  "0x59": {
-    "year": 2015,
-    "month": 9,
-    "day": 6
-  },
   "0x5a": {
-    "year": 2015,
-    "month": 9,
-    "day": 6
+    "description": "PO must smile",
+    "state": "ACCEPTED",
+    "story": "0x4c",
+    "itemName": "",
+    "id": 2491
   },
   "0x5b": {
-    "year": 2015,
-    "month": 9,
-    "day": 6
+    "description": "Must laugh at no fewer than 3 jokes",
+    "state": "ACCEPTED",
+    "story": "0x4c",
+    "itemName": "",
+    "id": 2492
   },
   "0x5c": {
-    "year": 2015,
-    "month": 9,
-    "day": 6
+    "description": "Has to have pink stripes",
+    "state": "ACCEPTED",
+    "story": "0x4d",
+    "itemName": "",
+    "id": 2488
   },
   "0x5d": {
     "year": 2015,
@@ -1301,6 +1322,26 @@
     "day": 6
   },
   "0x60": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
+  },
+  "0x61": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
+  },
+  "0x62": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
+  },
+  "0x63": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
+  },
+  "0x64": {
     "year": 2015,
     "month": 9,
     "day": 6
