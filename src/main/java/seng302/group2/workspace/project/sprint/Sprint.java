@@ -227,7 +227,6 @@ public class Sprint extends SaharaItem {
     public List<Log> getAllLogsWithInitialLogs() {
         List<Log> logList = new ArrayList<>();
         for (Task task : this.getAllTasks()) {
-            //System.out.println(task + " " + task.getInitialLog());
             logList.add(task.getInitialLog());
             for (Log log : task.getLogs()) {
                 logList.add(log);

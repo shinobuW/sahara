@@ -16,4 +16,8 @@
 
 /*.default-color0.chart-series-line { -fx-stroke: #ffffff; }*/
 
+.onHover{
+    -fx-background-color: black;
+}
+
 
