@@ -1,6 +1,7 @@
 package seng302.group2.workspace.project.story.tasks;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import org.w3c.dom.Element;
@@ -38,6 +39,7 @@ public class Task extends SaharaItem implements Serializable {
     private Story story = null;
     private Person assignee = null;
     private transient ObservableList<Log> logs = FXCollections.observableArrayList();
+    private transient ObservableList<Log> logsWithoutGhosts = FXCollections.observableArrayList();
     private List<Log> serializableLogs = new ArrayList<>();
     private double effortLeft = 0;
     private double effortSpent = 0;
@@ -72,6 +74,7 @@ public class Task extends SaharaItem implements Serializable {
         this.effortSpent = 0;
         this.initialLog = new Log(this, "initial log (this should be hidden)", null, 0,
                 LocalDateTime.now(), 0 - effortLeft);
+        initListeners();
     }
 
 
@@ -104,6 +107,22 @@ public class Task extends SaharaItem implements Serializable {
         this.assignee = person;
         this.initialLog = new Log(this, "initial log (this should be hidden)", null, 0,
                 LocalDateTime.now(), 0 - effortLeft);
+        initListeners();
+    }
+
+
+    void initListeners() {
+        logs.addListener((ListChangeListener<Log>) c -> {
+                logsWithoutGhosts.clear();
+                logsWithoutGhosts.addAll(logs);
+                Set<Log> logsToRemove = new HashSet<>();
+                for (Log log : logsWithoutGhosts) {
+                    if (log.getDescription().equals("Manual Edit")) {
+                        logsToRemove.add(log);
+                    }
+                }
+                logsWithoutGhosts.removeAll(logsToRemove);
+            });
     }
 
     /**
@@ -293,13 +312,7 @@ public class Task extends SaharaItem implements Serializable {
      * @return list of logs without ghostlogs
      */
     public ObservableList<Log> getLogsWithoutGhostLogs() {
-        ObservableList<Log> logs = FXCollections.observableArrayList();
-        for (Log log : this.logs) {
-            if (!log.getDescription().equals("Manual Edit")) {
-                logs.add(log);
-            }
-        }
-        return logs;
+        return logsWithoutGhosts;
     }
 
    /**
@@ -328,9 +341,8 @@ public class Task extends SaharaItem implements Serializable {
      */
     public void postSerialization() {
         logs.clear();
-        for (Object item : serializableLogs) {
-            this.logs.add((Log) item);
-        }
+        logs.addAll(serializableLogs);
+        initListeners();
     }
 
     /**

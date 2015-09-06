@@ -46,6 +46,7 @@ public class LoggingEffortPane extends Pane {
     Boolean correctEffortLeft = Boolean.FALSE;
     Boolean correctDuration = Boolean.FALSE;
     Boolean loggerSelected = Boolean.FALSE;
+    TableView table = null;
     //TODO Make this a Searchable Pane
 
 
@@ -73,19 +74,32 @@ public class LoggingEffortPane extends Pane {
         construct(task);
     }
 
+    public LoggingEffortPane(Task task, PopOver popOver, TableView table) {
+        this.popOver = popOver;
+        this.table = table;
+        try {
+            String css = this.getClass().getResource("/styles/tableHeader.css").toExternalForm();
+            this.getStylesheets().add(css);
+        }
+        catch (Exception ex) {
+            System.err.println("Cannot acquire stylesheet: " + ex.toString());
+        }
+        construct(task);
+    }
+
 
     void construct(Task task) {
         VBox content = new VBox(8);
         content.setPadding(new Insets(8));
 
-        SearchableTable<Log> logTable = new SearchableTable<>();
+        SearchableTable<Log> logTable = new SearchableTable<>(task.getLogsWithoutGhostLogs());
         logTable.setEditable(true);
         logTable.setPrefWidth(400);
         logTable.setPrefHeight(200);
         logTable.setPlaceholder(new SearchableText("There are currently no logs in this task."));
         logTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        ObservableList<Log> data = task.getLogsWithoutGhostLogs();
+        //ObservableList<Log> data = task.getLogsWithoutGhostLogs();
 
         TableColumn loggerCol = new TableColumn("Logger");
         loggerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("logger"));
@@ -164,7 +178,7 @@ public class LoggingEffortPane extends Pane {
                 .subtract(2).divide(100).multiply(60));
 
 
-        logTable.setItems(data);
+        //logTable.setItems(data);
         TableColumn[] columns = {loggerCol, startTimeCol, durationCol, descriptionCol};
         logTable.getColumns().setAll(columns);
         logTable.getSortOrder().add(startTimeCol);
@@ -375,7 +389,6 @@ public class LoggingEffortPane extends Pane {
                     Log newLog = new Log(task, descriptionTextArea.getText(),
                             selectedPerson, duration, dateTime, effortLeftDifference);
                     task.add(newLog, effortLeft);
-                    logTable.refresh(logTable, logTable.getItems());
 
                     String effortLeftString = "";
                     if (task.getEffortLeft() == 0
@@ -391,6 +404,13 @@ public class LoggingEffortPane extends Pane {
                     }
 
                     effortLeftField.getTextField().setText(effortLeftString);
+
+                    // Refresh the table if used, so that the logged effort updates after adding
+                    if (table != null) {
+                        SearchableTable.refresh(table, table.getItems());
+                    }
+
+                    event.consume();
                 }
                 else {
                     event.consume();
