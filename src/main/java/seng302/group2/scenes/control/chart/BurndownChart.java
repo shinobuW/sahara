@@ -1,12 +1,19 @@
 package seng302.group2.scenes.control.chart;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.chart.Axis;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.tasks.Log;
+import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,7 +100,9 @@ public class BurndownChart extends LineChart {
         for (LocalDate d : dailyEffortSpentMap.keySet()) {
             effortSpent += dailyEffortSpentMap.get(d);
             String monthStr = d.getMonth().toString().substring(0, 3);
-            effortSpentSeries.getData().add(new XYChart.Data<>(monthStr + " " + d.getDayOfMonth(), effortSpent));
+            XYChart.Data chartData = new XYChart.Data<>(monthStr + " " + d.getDayOfMonth(), effortSpent);
+            Tooltip.install(chartData.getNode(), new Tooltip(String.valueOf(effortSpent)));
+            effortSpentSeries.getData().add(chartData);
         }
 
         return effortSpentSeries;
@@ -127,7 +136,20 @@ public class BurndownChart extends LineChart {
      * @return an XYChart.Series representing an effort left series.
      */
     public XYChart.Series createLEffortLeftSeries(Sprint currentSprint) {
-        List<Log> logList = currentSprint.getAllLogsWithInitialLogs();
+        List<Log> logList = currentSprint.getAllLogs();
+        for (Task t : currentSprint.getAllTasks()) {
+            System.out.println(t.getInitialLog().getStartDate());
+            if (t.getInitialLog().getStartDate().toLocalDate().isBefore(currentSprint.getStartDate())) {
+                LocalDate date = currentSprint.getStartDate();
+                System.out.println(t.getInitialLog().getStartDate());
+                int hourInt = t.getInitialLog().getStartDate().getHour();
+                int minuteInt = t.getInitialLog().getStartDate().getMinute();
+                LocalDateTime dateTime = date.atTime(hourInt, minuteInt);
+
+                logList.add(new Log(t, "initial log (this should be hidden)", null, 0,
+                        dateTime, t.getInitialLog().getEffortLeftDifferenceInMinutes()));
+            }
+        }
 
         /* Map which stores a (key, value) pair of (date: hours), where hours is the total effort left
         for that date.
