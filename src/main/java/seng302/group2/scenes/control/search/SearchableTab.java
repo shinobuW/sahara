@@ -2,7 +2,9 @@ package seng302.group2.scenes.control.search;
 
 import javafx.scene.control.Tab;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * An abstract class for searchableTabs. Includes a base implementation of the query method.
@@ -40,16 +42,50 @@ public abstract class SearchableTab extends Tab {
      */
     public int advancedQuery(String query, SearchType searchType) {
         int count = 0;
-        for (SearchableControl control : getSearchableControls()) {
-            if (control.advancedQuery(query, searchType) > 0) {
-                if (count < control.advancedQuery(query, searchType)) {
-                    count = control.advancedQuery(query, searchType);
+
+        if (searchType == SearchType.COMPLEX) {
+            Integer orCount = null;
+            String and = "\\&\\&";
+            String or = "\\|\\|";
+            String[] orList = query.split(or);
+            for (String item : orList) {
+                Integer andCount = null;
+                String[] andList = item.split(and);
+                for (String element : andList) {
+                    for (SearchableControl control : getSearchableControls()) {
+                        int elementCount = control.advancedQuery(element.trim(), SearchType.NORMAL);
+                        if (andCount == null) {
+                            andCount = elementCount;
+                        } else if (elementCount > 0 && andCount > 0) {
+                            if (elementCount > andCount) {
+                                andCount = elementCount;
+                            }
+                        }
+                    }
                 }
-//                else {
-//                    count++;
-//                }
+                if (orCount == null) {
+                    orCount = andCount;
+                }
+                else if (orCount > 0 || andCount > 0) {
+                    if (andCount > orCount) {
+                        orCount = andCount;
+                    }
+                }
+            }
+            if (orCount != null) {
+                count = orCount;
             }
         }
+        else {
+            for (SearchableControl control : getSearchableControls()) {
+                if (control.advancedQuery(query, searchType) > 0) {
+                    if (count < control.advancedQuery(query, searchType)) {
+                        count = control.advancedQuery(query, searchType);
+                    }
+                }
+            }
+        }
+
         return count;
     }
 
