@@ -346,7 +346,7 @@ public class MainMenuBar extends MenuBar {
 
     /**
      * Creates menu item for basic search with short cut (ctrl-F) bound to it
-     * @return
+     * @return a MenuItem used to create a search item
      */
     private static MenuItem createSearchItem() {
         MenuItem findItem = new MenuItem("Find");

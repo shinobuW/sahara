@@ -35,6 +35,7 @@ public abstract class SearchableTab extends Tab {
     /**
      * Checks to see if the query matches any string in the searchable controls on this tab.
      * @param query The string to be matched within the tab.
+     * @param searchType The type of search
      * @return if the query was found
      */
     public int advancedQuery(String query, SearchType searchType) {
@@ -51,7 +52,7 @@ public abstract class SearchableTab extends Tab {
     /**
      * Selects the Tab based on the tab index
      * @param index The index of the tab
-     * @return
+     * @return whether the index is selected
      */
     public boolean select(int index) {
         try {
@@ -66,7 +67,7 @@ public abstract class SearchableTab extends Tab {
 
     /**
      * Selects a tab based on a tab
-     * @return
+     * @return did cameron write this???
      */
     public boolean select() {
         getTabPane().getSelectionModel().select(this);

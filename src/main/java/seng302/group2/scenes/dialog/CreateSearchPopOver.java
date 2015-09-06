@@ -249,7 +249,7 @@ public class CreateSearchPopOver extends PopOver {
      * Gets the checked item.
      * @param workspaceSearchCheck The check box for searching through the whole workspace
      * @param modelCheckBoxes List of check boxes in the search dialog
-     * @returna list of checked items
+     * @return a list of checked items
      */
     protected static List<String> getCheckedItems(CheckBox workspaceSearchCheck,
                                                   List<CheckBox> modelCheckBoxes) {
@@ -285,6 +285,7 @@ public class CreateSearchPopOver extends PopOver {
      * result pane
      * @param checkedItems items that are being searched through
      * @param searchText the text to be searched
+     * @param searchType the type of the search
      * @return a list of SearchResultCellNode
      */
     public List<SearchResultCellNode> runSearch(List<String> checkedItems, String searchText, SearchType searchType) {

@@ -33,6 +33,7 @@ public abstract class SearchableScene extends TabPane {
     /**
      * Searches each tab of the scene to try and find a match
      * @param query the query string
+     * @param searchType the search type
      * @return a collection of tabs with items found on them
      */
     public Map advancedQuery(String query, SearchType searchType) {
