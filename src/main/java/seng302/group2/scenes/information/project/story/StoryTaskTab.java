@@ -47,8 +47,6 @@ public class StoryTaskTab extends SearchableTab {
     List<SearchableControl> searchControls = new ArrayList<>();
     static Boolean correctShortName = Boolean.FALSE;
     static Boolean correctEffortLeft = Boolean.FALSE;
-    static Boolean assigneeSelected = Boolean.FALSE;
-    private VBox taskInfo;
 
     /**
      * Constructor for the Story Task Tab
@@ -68,7 +66,7 @@ public class StoryTaskTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        PopOverTable<Task> taskTable = new PopOverTable<>();
+        PopOverTable<Task> taskTable = new PopOverTable<>(currentStory.getTasks());
         taskTable.setEditable(true);
         taskTable.setPrefWidth(800);
         taskTable.setPrefHeight(200);
@@ -99,8 +97,6 @@ public class StoryTaskTab extends SearchableTab {
 
 
         SearchableTitle tasksTitle = new SearchableTitle("Tasks Table");
-
-        ObservableList<Task> data = currentStory.getTasks();
 
         TableColumn nameCol = new TableColumn("Name");
         nameCol.setCellValueFactory(new PropertyValueFactory<Task, String>("shortName"));
@@ -269,7 +265,7 @@ public class StoryTaskTab extends SearchableTab {
                 }
         );
 
-        taskTable.setItems(data);
+
         TableColumn[] columns = {nameCol, stateCol, assigneesCol, leftCol, spentCol, impedimentsCol, descriptionCol};
         taskTable.getColumns().setAll(columns);
 
@@ -311,7 +307,7 @@ public class StoryTaskTab extends SearchableTab {
 
                     ScrollPane taskWrapper = new ScrollPane();
                     LoggingEffortPane loggingPane = new LoggingEffortPane(currentTask,
-                            taskPopover);
+                            taskPopover, taskTable);
                     loggingPane.setStyle(null);
 
                     taskWrapper.setContent(loggingPane);
