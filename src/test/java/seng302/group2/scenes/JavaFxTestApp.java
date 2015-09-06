@@ -24,7 +24,12 @@ public class JavaFxTestApp extends Application {
     public static void initJFX() {
         Thread t = new Thread("JavaFX Init Thread") {
             public void run() {
-                Application.launch(JavaFxTestApp.class, new String[0]);
+                try {
+                    Application.launch(JavaFxTestApp.class);
+                }
+                catch (IllegalStateException ex) {
+                    // Application called more than once (more than one test)
+                }
             }
         };
         t.setDaemon(true);
