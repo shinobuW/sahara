@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.TextAlignment;
 
 import java.util.Collection;
+import java.util.regex.Pattern;
 
 /**
  * A custom searchable list view that highlights matching items when queried
@@ -54,7 +55,6 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
     @Override
     public boolean query(String query) {
         boolean foundList = false;
-
         for (T item : this.getItems()) {
             if (item.toString().toLowerCase().contains(query.toLowerCase())) {
                 foundList = true;
@@ -123,7 +123,52 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
     }
 
     @Override
-    public boolean advancedQuery(String query) {
-        return query(query);
+    public boolean advancedQuery(String query, SearchType searchType) {
+        boolean foundList = false;
+        if (searchType == SearchType.NORMAL) {
+            for (T item : this.getItems()) {
+                if (item.toString().toLowerCase().contains(query.toLowerCase())) {
+                    foundList = true;
+                    matchingItems.add(item);
+                }
+            }
+        }
+        else if (searchType == SearchType.REGEX) {
+            for (T item : this.getItems()) {
+                if (Pattern.matches(query, item.toString().toLowerCase())) {
+                    foundList = true;
+                    matchingItems.add(item);
+                }
+            }
+
+        }
+
+
+        this.setCellFactory(param -> new ListCell<T>() {
+            @Override
+            public void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                    setText(null);
+                }
+                else {
+                    if (query.trim().isEmpty()) {
+                        setText(item.toString());
+                        setStyle("-fx-background-color: inherit");
+                    }
+                    else if (queryCell(query, item.toString())) {
+                        setText(item.toString());
+                        setStyle("-fx-background-color:" + SearchableControl.highlightColourString + ";");
+                    }
+                    else {
+                        setText(item.toString());
+                        setStyle("-fx-background-color: inherit");
+                    }
+                }
+            }
+        });
+
+        return foundList;
     }
 }

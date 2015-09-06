@@ -37,10 +37,10 @@ public abstract class SearchableTab extends Tab {
      * @param query The string to be matched within the tab.
      * @return if the query was found
      */
-    public int advancedQuery(String query) {
+    public int advancedQuery(String query, SearchType searchType) {
         int count = 0;
         for (SearchableControl control : getSearchableControls()) {
-            if (control.advancedQuery(query)) {
+            if (control.advancedQuery(query, searchType)) {
                 count++;
             }
         }

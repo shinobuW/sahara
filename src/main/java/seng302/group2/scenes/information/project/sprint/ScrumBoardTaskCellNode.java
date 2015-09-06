@@ -17,6 +17,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 import org.controlsfx.control.PopOver;
 import seng302.group2.scenes.control.Tooltip;
+import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.information.project.story.task.LoggingEffortPane;
@@ -355,7 +356,7 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
 
     //TODO Advanced search query for this class.
     @Override
-    public boolean advancedQuery(String query) {
+    public boolean advancedQuery(String query, SearchType searchType) {
         return false;
     }
 }

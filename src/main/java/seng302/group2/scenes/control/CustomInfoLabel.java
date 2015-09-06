@@ -1,12 +1,14 @@
 package seng302.group2.scenes.control;
 
 import javafx.scene.layout.HBox;
+import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableText;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Class to provide basic functionality so that a label is bolded.
@@ -88,12 +90,21 @@ public class CustomInfoLabel extends HBox implements SearchableControl {
      * @param query The query string to search
      * @return Whether any elements inside the HBox were found to contain the query string
      */
-    public boolean advancedQuery(String query) {
+    public boolean advancedQuery(String query, SearchType searchType) {
         boolean found = false;
-
-        if (this.value.query(query)) {
-            found = true;
+        if (searchType == SearchType.NORMAL) {
+            if (this.value.query(query)) {
+                found = true;
+            }
         }
+        else if (searchType == SearchType.REGEX) {
+            if (Pattern.matches(query, value.getText())) {
+                found = true;
+            }
+        }
+//        else if (searchType == SearchType.WILDCARD) {
+//
+//        }
         return  found;
     }
 

@@ -10,6 +10,7 @@ import javafx.scene.text.TextAlignment;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by jml168 on 11/08/15.
@@ -153,7 +154,32 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
     }
 
     @Override
-    public boolean advancedQuery(String query) {
-        return query(query);
+    public boolean advancedQuery(String query, SearchType searchType) {
+        matchingItems.clear();
+        if (!query.isEmpty()) {
+            ObservableList<TableColumn<T, ?>> cols = this.getColumns();
+
+            for (T aData : this.getItems()) {
+
+                for (TableColumn<T, ?> col : cols) {
+                    String cellValue = col.getCellData(aData).toString();
+
+                    cellValue = cellValue.toLowerCase();
+                    if (searchType == SearchType.NORMAL) {
+                        if (cellValue.contains(query.trim().toLowerCase())) {
+                            matchingItems.add(aData);
+                        }
+                    }
+                    else if (searchType == SearchType.REGEX) {
+                        if (Pattern.matches(query, cellValue)) {
+                            matchingItems.add(aData);
+                        }
+                    }
+                }
+            }
+        }
+
+        setFactory();
+        return !matchingItems.isEmpty();
     }
 }

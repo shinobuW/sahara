@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableText;
 
@@ -177,7 +178,7 @@ public class CustomDatePicker extends VBox implements SearchableControl {
 
     //TODO Advanced search query for this class.
     @Override
-    public boolean advancedQuery(String query) {
+    public boolean advancedQuery(String query, SearchType searchType) {
         return false;
     }
 }

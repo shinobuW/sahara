@@ -14,6 +14,7 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchResultCellNode;
+import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.dialog.CreateSearchPopOver;
@@ -51,17 +52,16 @@ public class SearchResultPane extends PopOver {
 
     /**
      * Constructor
-     * @param checkedItems List of items that are ticked in the advanced search window
+     * @param results The list of Search Results.
      * @param searchText The text being searched for
      */
-    public SearchResultPane(List<String> checkedItems, String searchText) {
+    public SearchResultPane(List<SearchResultCellNode> results, String searchText, SearchType searchType) {
         Global.advancedSearchExists = true;
         this.setDetachedTitle("Search Results");
         this.setMinWidth(500);
         this.setMinHeight(500);
         VBox content = new VBox();
 
-        List<SearchResultCellNode> results = runSearch(checkedItems, searchText);
         SearchableText resultsFound;
         if (results.size() != 1) {
             resultsFound = new SearchableText("Found " + results.size() + " Occurrences of " + searchText);
@@ -81,13 +81,16 @@ public class SearchResultPane extends PopOver {
 
         resultView.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2) {
+
                     SaharaItem selectedItem = (SaharaItem) resultView.getSelectionModel().getSelectedItem().getItem();
                     App.mainPane.selectItem(selectedItem);
                     Tab selectedTab = (SearchableTab) resultView.getSelectionModel().getSelectedItem().getTab();
                     ((TrackedTabPane) resultView.getSelectionModel().getSelectedItem().getSearchableScene())
                             .select(selectedTab);
                     selectedItem.switchToInfoScene();
-                    MainPane.getToolBar().search(searchText);
+                    if (searchType != SearchType.REGEX) {
+                        MainPane.getToolBar().search(searchText);
+                    }
                 }
                 event.consume();
             });
@@ -124,146 +127,5 @@ public class SearchResultPane extends PopOver {
 
     }
 
-    /**
-     * Runs the search through the checked items and constructs the SearchResultCellNode to be added to the search
-     * result pane
-     * @param checkedItems items that are being searched through
-     * @param searchText the text to be searched
-     * @return a list of SearchResultCellNode
-     */
-    public List<SearchResultCellNode> runSearch(List<String> checkedItems, String searchText) {
 
-        List<SearchResultCellNode> results = new ArrayList<>();
-
-        for (String item : checkedItems) {
-            if (item.equals("Projects")) {
-                for (Project proj : Global.currentWorkspace.getProjects()) {
-                    TrackedTabPane scene =  new ProjectScene(proj);
-                    Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText);
-                    for (SearchableTab tab : searchResults.keySet()) {
-                        SearchResultCellNode searchResult = new SearchResultCellNode(proj, searchText, tab,
-                                searchResults.get(tab), scene);
-                        if (!(searchResult == null)) {
-                            results.add(searchResult);
-                        }
-                    }
-                }
-            }
-            else if (item.equals("Releases")) {
-                for (Project proj : Global.currentWorkspace.getProjects()) {
-                    for (Release release : proj.getReleases()) {
-                        TrackedTabPane scene = new ReleaseScene(release);
-                        Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText);
-                        for (SearchableTab tab : searchResults.keySet()) {
-                            SearchResultCellNode searchResult = new SearchResultCellNode(release, searchText,
-                                    tab, searchResults.get(tab), scene);
-                            if (!(searchResult == null)) {
-                                results.add(searchResult);
-                            }
-                        }
-                    }
-                }
-            }
-            else if (item.equals("Backlogs")) {
-                for (Project proj : Global.currentWorkspace.getProjects()) {
-                    for (Backlog backlog : proj.getBacklogs()) {
-                        TrackedTabPane scene = new BacklogScene(backlog);
-                        Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText);
-                        for (SearchableTab tab : searchResults.keySet()) {
-                            SearchResultCellNode searchResult = new SearchResultCellNode(backlog, searchText,
-                                    tab, searchResults.get(tab), scene);
-                            if (!(searchResult == null)) {
-                                results.add(searchResult);
-                            }
-                        }
-                    }
-                }
-            }
-            else if (item.equals("Stories")) {
-                for (Project proj : Global.currentWorkspace.getProjects()) {
-                    for (Backlog backlog : proj.getBacklogs()) {
-                        for (Story story : backlog.getStories()) {
-                            TrackedTabPane scene = new StoryScene(story);
-                            Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText);
-                            for (SearchableTab tab : searchResults.keySet()) {
-                                SearchResultCellNode searchResult = new SearchResultCellNode(story, searchText,
-                                        tab, searchResults.get(tab), scene);
-                                if (!(searchResult == null)) {
-                                    results.add(searchResult);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            else if (item.equals("Sprints")) {
-                for (Project proj : Global.currentWorkspace.getProjects()) {
-                    for (Sprint sprint : proj.getSprints()) {
-                        TrackedTabPane scene = new SprintScene(sprint);
-                        Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText);
-                        for (SearchableTab tab : searchResults.keySet()) {
-                            SearchResultCellNode searchResult = new SearchResultCellNode(sprint, searchText,
-                                    tab, searchResults.get(tab), scene);
-                            if (!(searchResult == null)) {
-                                results.add(searchResult);
-                            }
-                        }
-                    }
-                }
-            }
-            else if (item.equals("Teams")) {
-                for (Team team : Global.currentWorkspace.getTeams()) {
-                    TrackedTabPane scene = new TeamScene(team);
-                    Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText);
-                    for (SearchableTab tab : searchResults.keySet()) {
-                        SearchResultCellNode searchResult = new SearchResultCellNode(team, searchText, tab,
-                                searchResults.get(tab), scene);
-                        if (!(searchResult == null)) {
-                            results.add(searchResult);
-                        }
-                    }
-                }
-            }
-            else if (item.equals("People")) {
-                for (Person person : Global.currentWorkspace.getPeople()) {
-                    TrackedTabPane scene = new PersonScene(person);
-                    Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText);
-                    for (SearchableTab tab : searchResults.keySet()) {
-                        SearchResultCellNode searchResult = new SearchResultCellNode(person, searchText,
-                                tab, searchResults.get(tab), scene);
-                        if (!(searchResult == null)) {
-                            results.add(searchResult);
-                        }
-                    }
-                }
-            }
-            else if (item.equals("Roles")) {
-                for (Role role : Global.currentWorkspace.getRoles()) {
-                    TrackedTabPane scene = new RoleScene(role);
-                    Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText);
-                    for (SearchableTab tab : searchResults.keySet()) {
-                        SearchResultCellNode searchResult = new SearchResultCellNode(role, searchText,
-                                tab, searchResults.get(tab), scene);
-                        if (!(searchResult == null)) {
-                            results.add(searchResult);
-                        }
-                    }
-                }
-            }
-            else if (item.equals("Skills")) {
-                for (Skill skill : Global.currentWorkspace.getSkills()) {
-                    TrackedTabPane scene = new SkillScene(skill);
-                    Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText);
-                    for (SearchableTab tab : searchResults.keySet()) {
-                        SearchResultCellNode searchResult = new SearchResultCellNode(skill, searchText,
-                                tab, searchResults.get(tab), scene);
-                        if (!(searchResult == null)) {
-                            results.add(searchResult);
-                        }
-                    }
-                }
-            }
-        }
-        return results;
-    }
 }

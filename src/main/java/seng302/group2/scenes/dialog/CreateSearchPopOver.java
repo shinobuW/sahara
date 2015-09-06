@@ -17,12 +17,35 @@ import seng302.group2.Global;
 import seng302.group2.scenes.MainPane;
 import seng302.group2.scenes.SearchResultPane;
 import seng302.group2.scenes.control.CustomTextField;
+import seng302.group2.scenes.control.TrackedTabPane;
+import seng302.group2.scenes.control.search.SearchResultCellNode;
+import seng302.group2.scenes.control.search.SearchType;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.information.person.PersonScene;
+import seng302.group2.scenes.information.project.ProjectScene;
+import seng302.group2.scenes.information.project.backlog.BacklogScene;
+import seng302.group2.scenes.information.project.release.ReleaseScene;
+import seng302.group2.scenes.information.project.sprint.SprintScene;
+import seng302.group2.scenes.information.project.story.StoryScene;
+import seng302.group2.scenes.information.role.RoleScene;
+import seng302.group2.scenes.information.skill.SkillScene;
+import seng302.group2.scenes.information.team.TeamScene;
+import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.backlog.Backlog;
+import seng302.group2.workspace.project.release.Release;
+import seng302.group2.workspace.project.sprint.Sprint;
+import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.role.Role;
+import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.team.Team;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 
 /**
  * Class to create a popup dialog for advanced search
@@ -49,6 +72,18 @@ public class CreateSearchPopOver extends PopOver {
         buttons.setPadding(insets);
         buttons.getChildren().addAll(btnCancel, btnSearch);
         btnSearch.setDisable(true);
+
+        HBox radioBox = new HBox();
+        ToggleGroup group = new ToggleGroup();
+        RadioButton normalBtn = new RadioButton("Normal");
+        normalBtn.setToggleGroup(group);
+        normalBtn.setSelected(true);
+        RadioButton regexBtn = new RadioButton("Regular Expression");
+        regexBtn.setToggleGroup(group);
+        RadioButton wildcardBtn = new RadioButton("Wildcard");
+        wildcardBtn.setToggleGroup(group);
+
+        radioBox.getChildren().addAll(normalBtn, regexBtn, wildcardBtn);
 
         VBox grid = new VBox();
         Insets insets1 = new Insets(20, 20, 20, 20);
@@ -119,8 +154,8 @@ public class CreateSearchPopOver extends PopOver {
         checkBoxPane.add(logSearchCheck, 0, 4);
         modelCheckBoxes.add(logSearchCheck);
 
-        grid.getChildren().addAll(searchField, workspaceSearchCheck,
-                new Separator(), onlySearchLabel, checkBoxPane, buttons);
+        grid.getChildren().addAll(searchField, radioBox, new Separator(), workspaceSearchCheck, onlySearchLabel,
+                checkBoxPane, buttons);
 
         //Add grid of controls to dialog
         this.setContentNode(grid);
@@ -173,13 +208,29 @@ public class CreateSearchPopOver extends PopOver {
             });
 
         btnSearch.setOnAction(event -> {
-                this.hide();
-                String searchText = searchField.getText();
-                List<String> checkedItems = getCheckedItems(workspaceSearchCheck,
-                        modelCheckBoxes);
-                PopOver resultsPopOver = new SearchResultPane(checkedItems, searchText);
+                if (normalBtn.isSelected()) {
+                    this.hide();
+                    String searchText = searchField.getText();
+                    List<String> checkedItems = getCheckedItems(workspaceSearchCheck,
+                            modelCheckBoxes);
+                    PopOver resultsPopOver = new SearchResultPane(runSearch(checkedItems, searchText,
+                            SearchType.NORMAL), searchText, SearchType.NORMAL);
 
-                resultsPopOver.show(App.mainStage);
+                    resultsPopOver.show(App.mainStage);
+                }
+                else if (regexBtn.isSelected()) {
+                    this.hide();
+                    String searchText = searchField.getText();
+                    List<String> checkedItems = getCheckedItems(workspaceSearchCheck,
+                            modelCheckBoxes);
+                    PopOver resultsPopOver = new SearchResultPane(runSearch(checkedItems, searchText,
+                            SearchType.REGEX), searchText, SearchType.REGEX);
+
+                    resultsPopOver.show(App.mainStage);
+
+                }
+
+
 
             });
 
@@ -228,4 +279,148 @@ public class CreateSearchPopOver extends PopOver {
         }
         return checkedItems;
     }
+
+    /**
+     * Runs the search through the checked items and constructs the SearchResultCellNode to be added to the search
+     * result pane
+     * @param checkedItems items that are being searched through
+     * @param searchText the text to be searched
+     * @return a list of SearchResultCellNode
+     */
+    public List<SearchResultCellNode> runSearch(List<String> checkedItems, String searchText, SearchType searchType) {
+
+        List<SearchResultCellNode> results = new ArrayList<>();
+
+        for (String item : checkedItems) {
+            if (item.equals("Projects")) {
+                for (Project proj : Global.currentWorkspace.getProjects()) {
+                    TrackedTabPane scene =  new ProjectScene(proj);
+                    Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText, searchType);
+                    for (SearchableTab tab : searchResults.keySet()) {
+                        SearchResultCellNode searchResult = new SearchResultCellNode(proj, searchText, tab,
+                                searchResults.get(tab), scene);
+                        if (!(searchResult == null)) {
+                            results.add(searchResult);
+                        }
+                    }
+                }
+            }
+            else if (item.equals("Releases")) {
+                for (Project proj : Global.currentWorkspace.getProjects()) {
+                    for (Release release : proj.getReleases()) {
+                        TrackedTabPane scene = new ReleaseScene(release);
+                        Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText, searchType);
+                        for (SearchableTab tab : searchResults.keySet()) {
+                            SearchResultCellNode searchResult = new SearchResultCellNode(release, searchText,
+                                    tab, searchResults.get(tab), scene);
+                            if (!(searchResult == null)) {
+                                results.add(searchResult);
+                            }
+                        }
+                    }
+                }
+            }
+            else if (item.equals("Backlogs")) {
+                for (Project proj : Global.currentWorkspace.getProjects()) {
+                    for (Backlog backlog : proj.getBacklogs()) {
+                        TrackedTabPane scene = new BacklogScene(backlog);
+                        Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText, searchType);
+                        for (SearchableTab tab : searchResults.keySet()) {
+                            SearchResultCellNode searchResult = new SearchResultCellNode(backlog, searchText,
+                                    tab, searchResults.get(tab), scene);
+                            if (!(searchResult == null)) {
+                                results.add(searchResult);
+                            }
+                        }
+                    }
+                }
+            }
+            else if (item.equals("Stories")) {
+                for (Project proj : Global.currentWorkspace.getProjects()) {
+                    for (Backlog backlog : proj.getBacklogs()) {
+                        for (Story story : backlog.getStories()) {
+                            TrackedTabPane scene = new StoryScene(story);
+                            Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText, searchType);
+                            for (SearchableTab tab : searchResults.keySet()) {
+                                SearchResultCellNode searchResult = new SearchResultCellNode(story, searchText,
+                                        tab, searchResults.get(tab), scene);
+                                if (!(searchResult == null)) {
+                                    results.add(searchResult);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else if (item.equals("Sprints")) {
+                for (Project proj : Global.currentWorkspace.getProjects()) {
+                    for (Sprint sprint : proj.getSprints()) {
+                        TrackedTabPane scene = new SprintScene(sprint);
+                        Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText, searchType);
+                        for (SearchableTab tab : searchResults.keySet()) {
+                            SearchResultCellNode searchResult = new SearchResultCellNode(sprint, searchText,
+                                    tab, searchResults.get(tab), scene);
+                            if (!(searchResult == null)) {
+                                results.add(searchResult);
+                            }
+                        }
+                    }
+                }
+            }
+            else if (item.equals("Teams")) {
+                for (Team team : Global.currentWorkspace.getTeams()) {
+                    TrackedTabPane scene = new TeamScene(team);
+                    Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText, searchType);
+                    for (SearchableTab tab : searchResults.keySet()) {
+                        SearchResultCellNode searchResult = new SearchResultCellNode(team, searchText, tab,
+                                searchResults.get(tab), scene);
+                        if (!(searchResult == null)) {
+                            results.add(searchResult);
+                        }
+                    }
+                }
+            }
+            else if (item.equals("People")) {
+                for (Person person : Global.currentWorkspace.getPeople()) {
+                    TrackedTabPane scene = new PersonScene(person);
+                    Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText, searchType);
+                    for (SearchableTab tab : searchResults.keySet()) {
+                        SearchResultCellNode searchResult = new SearchResultCellNode(person, searchText,
+                                tab, searchResults.get(tab), scene);
+                        if (!(searchResult == null)) {
+                            results.add(searchResult);
+                        }
+                    }
+                }
+            }
+            else if (item.equals("Roles")) {
+                for (Role role : Global.currentWorkspace.getRoles()) {
+                    TrackedTabPane scene = new RoleScene(role);
+                    Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText, searchType);
+                    for (SearchableTab tab : searchResults.keySet()) {
+                        SearchResultCellNode searchResult = new SearchResultCellNode(role, searchText,
+                                tab, searchResults.get(tab), scene);
+                        if (!(searchResult == null)) {
+                            results.add(searchResult);
+                        }
+                    }
+                }
+            }
+            else if (item.equals("Skills")) {
+                for (Skill skill : Global.currentWorkspace.getSkills()) {
+                    TrackedTabPane scene = new SkillScene(skill);
+                    Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText, searchType);
+                    for (SearchableTab tab : searchResults.keySet()) {
+                        SearchResultCellNode searchResult = new SearchResultCellNode(skill, searchText,
+                                tab, searchResults.get(tab), scene);
+                        if (!(searchResult == null)) {
+                            results.add(searchResult);
+                        }
+                    }
+                }
+            }
+        }
+        return results;
+    }
+
 }

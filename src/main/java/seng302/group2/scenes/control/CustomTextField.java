@@ -5,6 +5,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableText;
 
@@ -125,7 +126,7 @@ public class CustomTextField extends VBox implements SearchableControl {
 
     //TODO Advanced search query for this class.
     @Override
-    public boolean advancedQuery(String query) {
+    public boolean advancedQuery(String query, SearchType searchType) {
         return false;
     }
 }

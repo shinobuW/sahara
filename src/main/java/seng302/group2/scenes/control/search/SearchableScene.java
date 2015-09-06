@@ -1,6 +1,7 @@
 package seng302.group2.scenes.control.search;
 
 import javafx.scene.control.TabPane;
+import seng302.group2.scenes.dialog.CreateSearchPopOver;
 
 import java.util.*;
 
@@ -34,11 +35,11 @@ public abstract class SearchableScene extends TabPane {
      * @param query the query string
      * @return a collection of tabs with items found on them
      */
-    public Map advancedQuery(String query) {
+    public Map advancedQuery(String query, SearchType searchType) {
         Map<SearchableTab, Integer> matches = new LinkedHashMap<>();
 
         for (SearchableTab tab : getSearchableTabs()) {
-            int result = tab.advancedQuery(query);
+            int result = tab.advancedQuery(query, searchType);
             if (result != 0) {
                 matches.put(tab, result);
             }

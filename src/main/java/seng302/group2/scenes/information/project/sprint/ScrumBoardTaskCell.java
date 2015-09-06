@@ -6,6 +6,7 @@ import javafx.scene.control.OverrunStyle;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.workspace.project.story.tasks.Task;
 
@@ -92,7 +93,7 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
 
     //TODO Advanced search query for this class.
     @Override
-    public boolean advancedQuery(String query) {
+    public boolean advancedQuery(String query, SearchType searchType) {
         return false;
     }
 

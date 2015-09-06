@@ -1,6 +1,7 @@
 package seng302.group2.scenes.control.search;
 
 import java.util.Collection;
+import java.util.regex.Pattern;
 
 /**
  * A class that provides functionality for titles to be searched. Inherits from SearchableText
@@ -45,11 +46,21 @@ public class SearchableTitle extends SearchableText {
 
 
     @Override
-    public boolean advancedQuery(String query) {
+    public boolean advancedQuery(String query, SearchType searchType) {
         boolean found = false;
-        if (this.query(query)) {
-            found = true;
+        if (searchType == SearchType.NORMAL) {
+            if (this.query(query)) {
+                found = true;
+            }
         }
+        else if (searchType == SearchType.REGEX) {
+            if (Pattern.matches(query, this.getText())) {
+                found = true;
+            }
+        }
+//        else if (searchType == SearchType.WILDCARD) {
+//
+//        }
         return found;
     }
 }
