@@ -145,7 +145,7 @@ public class ScrumboardTab extends SearchableTab {
 
                         markStoryDone.setTitle("Completed Story");
                         markStoryDone.setHeaderText(null);
-                        markStoryDone.setContentText("All tasks in the story have been completed, mark the story as"
+                        markStoryDone.setContentText("All tasks in the story have been completed, mark the story as "
                             + "completed too?");
 
                         Optional<ButtonType> result = markStoryDone.showAndWait();
