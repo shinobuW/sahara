@@ -28,8 +28,9 @@ public class SprintScene extends TrackedTabPane {
         SearchableTab informationTab = new SprintInfoTab(currentSprint);
         SearchableTab burndownTab = new SprintBurndownTab(currentSprint);
         SearchableTab scrumboardTab = new ScrumboardTab(currentSprint);
+        SearchableTab taskStatusTab = new SprintTaskStatusTab(currentSprint);
 
-        Collections.addAll(searchableTabs, informationTab, scrumboardTab, burndownTab);
+        Collections.addAll(searchableTabs, informationTab, scrumboardTab, burndownTab, taskStatusTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 
