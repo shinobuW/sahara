@@ -56,6 +56,38 @@ public class BurndownChart extends LineChart {
             this.getData().add(effortLeftSeries);
         }
 
+        /**
+         * Browsing through the Data and applying ToolTip
+         * as well as the class on hover
+         */
+        for (Object s : this.getData()) {
+            XYChart.Series series = (XYChart.Series) s;
+            for (Object obj : series.getData()) {
+                XYChart.Data d = (XYChart.Data)obj;
+                Tooltip.install(d.getNode(), new Tooltip(
+                        d.getXValue().toString() + "\n" +
+                                "Number Of Events : " + d.getYValue()));
+
+                //Adding class on hover
+                d.getNode().setOnMouseEntered(new EventHandler<Event>() {
+
+                    @Override
+                    public void handle(Event event) {
+                        d.getNode().getStyleClass().add("onHover");
+                    }
+                });
+
+                //Removing class on exit
+                d.getNode().setOnMouseExited(new EventHandler<Event>() {
+
+                    @Override
+                    public void handle(Event event) {
+                        d.getNode().getStyleClass().remove("onHover");
+                    }
+                });
+            }
+        }
+
 
     }
 
@@ -104,6 +136,8 @@ public class BurndownChart extends LineChart {
             Tooltip.install(chartData.getNode(), new Tooltip(String.valueOf(effortSpent)));
             effortSpentSeries.getData().add(chartData);
         }
+
+
 
         return effortSpentSeries;
     }
