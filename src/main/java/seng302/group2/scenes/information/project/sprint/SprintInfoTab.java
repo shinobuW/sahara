@@ -1,5 +1,6 @@
 package seng302.group2.scenes.information.project.sprint;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -43,95 +44,70 @@ public class SprintInfoTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        SearchableText title = new SearchableTitle(currentSprint.getLongName());
+        Platform.runLater(() -> {
+                SearchableText title = new SearchableTitle(currentSprint.getLongName());
 
-        Button btnEdit = new Button("Edit");
+                Button btnEdit = new Button("Edit");
 
-        /*//SUBJECT TO CHANGE BASED ON FUTURE STORIES
-        ObservableList<Story> data = observableArrayList();
-        data.addAll(currentSprint.getStories());
-        ListView sprintStoryBox = new ListView(data);
-        sprintStoryBox.setPrefHeight(192);
-        sprintStoryBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);*/
-
-        //Attempt at expandable list, basic edition
-        Pane expandableStoryPanes = createStoryTitlePanes(currentSprint);
+            /*//SUBJECT TO CHANGE BASED ON FUTURE STORIES
+            ObservableList<Story> data = observableArrayList();
+            data.addAll(currentSprint.getStories());
+            ListView sprintStoryBox = new ListView(data);
+            sprintStoryBox.setPrefHeight(192);
+            sprintStoryBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);*/
 
 
-//        TableView<Story> storyTable = new TableView<>();
-//        storyTable.setEditable(true);
-//        storyTable.setPrefWidth(500);
-//        storyTable.setPrefHeight(200);
-//        storyTable.setPlaceholder(new SearchableText("There are currently no stories in this sprint.",
-//                searchControls));
-//        storyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-//
-//        ObservableList<Story> rows = observableArrayList();
-//        rows.addAll(currentSprint.getStories());
-//
-//        TableColumn storyCol = new TableColumn("Story");
-//        storyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("shortName"));
-//        storyCol.prefWidthProperty().bind(storyTable.widthProperty()
-//                .subtract(2).divide(100).multiply(80));
-//
-//        /*TableColumn priorityCol = new TableColumn("Priority");
-//        priorityCol.setCellValueFactory(new PropertyValueFactory<Story, Integer>("priority"));
-//        priorityCol.prefWidthProperty().bind(storyTable.widthProperty()
-//                .subtract(2).divide(100).multiply(20));*/
-//
-//        TableColumn readyCol = new TableColumn("Status");
-//        readyCol.setCellValueFactory(new PropertyValueFactory<Story, String>("readyString"));
-//        readyCol.prefWidthProperty().bind(storyTable.widthProperty()
-//                .subtract(2).divide(100).multiply(20));
-//        storyTable.setItems(rows);
-//        storyTable.getColumns().addAll(storyCol, readyCol);
+
+                final Separator separator = new Separator();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+                CustomInfoLabel sprintName = new CustomInfoLabel("Sprint Name: ", currentSprint.getLongName());
+                CustomInfoLabel sprintGoal = new CustomInfoLabel("Sprint Goal: ", currentSprint.getGoal());
+                String startDateString = currentSprint.getStartDate().format(formatter);
+                CustomInfoLabel sprintStart = new CustomInfoLabel("Start Date: ", startDateString);
+                String endDateString = currentSprint.getEndDate().format(formatter);
+                CustomInfoLabel sprintEnd = new CustomInfoLabel("End Date: ", endDateString);
+                CustomInfoLabel desc = new CustomInfoLabel("Description: ", currentSprint.getDescription());
+                CustomInfoLabel team = new CustomInfoLabel("Team: ", currentSprint.getTeam().toString());
+                CustomInfoLabel project = new CustomInfoLabel("Project: ", currentSprint.getProject().toString());
+                CustomInfoLabel release = new CustomInfoLabel("Release: ", currentSprint.getRelease().toString());
+                CustomInfoLabel stories = new CustomInfoLabel("Stories: ", "");
+
+                btnEdit.setOnAction((event) -> currentSprint.switchToInfoScene(true));
+
+                basicInfoPane.getChildren().addAll(
+                        title,
+                        sprintName,
+                        sprintGoal,
+                        sprintStart,
+                        sprintEnd,
+                        desc,
+                        separator,
+                        team,
+                        project,
+                        release,
+                        stories
+
+                );
+
+                Collections.addAll(searchControls,
+                        title,
+                        sprintName,
+                        sprintGoal,
+                        sprintStart,
+                        sprintEnd,
+                        desc,
+                        team,
+                        project,
+                        release,
+                        stories
+                );
 
 
-        final Separator separator = new Separator();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                basicInfoPane.getChildren().addAll(btnEdit, createStoryTitlePanes(currentSprint));
+            });
 
-        CustomInfoLabel sprintName = new CustomInfoLabel("Sprint Name: ", currentSprint.getLongName());
-        CustomInfoLabel sprintGoal = new CustomInfoLabel("Sprint Goal: ", currentSprint.getGoal());
-        String startDateString = currentSprint.getStartDate().format(formatter);
-        CustomInfoLabel sprintStart = new CustomInfoLabel("Start Date: ", startDateString);
-        String endDateString = currentSprint.getEndDate().format(formatter);
-        CustomInfoLabel sprintEnd = new CustomInfoLabel("End Date: ", endDateString);
-        CustomInfoLabel desc = new CustomInfoLabel("Description: ", currentSprint.getDescription());
-        CustomInfoLabel team = new CustomInfoLabel("Team: ", currentSprint.getTeam().toString());
-        CustomInfoLabel project = new CustomInfoLabel("Project: ", currentSprint.getProject().toString());
-        CustomInfoLabel release = new CustomInfoLabel("Release: ", currentSprint.getRelease().toString());
-        CustomInfoLabel stories = new CustomInfoLabel("Stories: ", "");
 
-        btnEdit.setOnAction((event) -> currentSprint.switchToInfoScene(true));
-
-        basicInfoPane.getChildren().addAll(
-                title,
-                sprintName,
-                sprintGoal,
-                sprintStart,
-                sprintEnd,
-                desc,
-                separator,
-                team,
-                project,
-                release,
-                stories,
-                expandableStoryPanes,
-                btnEdit
-        );
-
-        Collections.addAll(searchControls,
-                title,
-                sprintName,
-                sprintGoal,
-                sprintStart,
-                sprintEnd,
-                desc,
-                team,
-                project,
-                release,
-                stories
-        );
     }
 
     /**

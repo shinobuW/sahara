@@ -2,10 +2,13 @@ package seng302.group2.scenes.control;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
 import java.lang.reflect.Field;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * A custom class that allows the setting of custom durations on standard JavaFX Tooltips using reflection techniques.
@@ -17,6 +20,7 @@ public class Tooltip extends javafx.scene.control.Tooltip {
      * The default delay for custom Tooltips, much shorter than original JavaFX Tooltips
      */
     private final int defaultDelay = 200;
+    static Lock staticLock = new ReentrantLock();
 
 
     /**
@@ -101,6 +105,7 @@ public class Tooltip extends javafx.scene.control.Tooltip {
      * @param delay The delay in milliseconds
      */
     private static void setDelay(javafx.scene.control.Tooltip tooltip, int delay) {
+        staticLock.lock();
         try {
             Field fieldBehavior = tooltip.getClass().getSuperclass().getDeclaredField("BEHAVIOR");
             fieldBehavior.setAccessible(true);
@@ -116,5 +121,6 @@ public class Tooltip extends javafx.scene.control.Tooltip {
         catch (Exception e) {
             e.printStackTrace();
         }
+        staticLock.unlock();
     }
 }

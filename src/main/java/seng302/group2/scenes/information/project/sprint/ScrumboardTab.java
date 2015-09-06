@@ -1,5 +1,6 @@
 package seng302.group2.scenes.information.project.sprint;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -39,19 +40,24 @@ public class ScrumboardTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        SearchableText title = new SearchableTitle(currentSprint.getLongName());
-        basicInfoPane.getChildren().add(title);
+        Platform.runLater(() -> {
+                SearchableText title = new SearchableTitle(currentSprint.getLongName());
+                basicInfoPane.getChildren().add(title);
 
 
-        // Create story title pane regions
-        for (Story story : currentSprint.getStories().sorted(Story.StoryPriorityComparator)) {
-            basicInfoPane.getChildren().add(getCollapsableStoryPane(story));
-        }
-        basicInfoPane.getChildren().add(getCollapsableStoryPane(currentSprint.getUnallocatedTasksStory()));
+                // Create story title pane regions
+
+                for (Story story : currentSprint.getStories().sorted(Story.StoryPriorityComparator)) {
+                    basicInfoPane.getChildren().add(getCollapsableStoryPane(story));
+                }
+                basicInfoPane.getChildren().add(getCollapsableStoryPane(currentSprint.getUnallocatedTasksStory()));
 
 
-        // Add the searchable controls to the collection for searching
-        Collections.addAll(searchControls, title);
+                // Add the searchable controls to the collection for searching
+                Collections.addAll(searchControls, title);
+            });
+
+
     }
 
 

@@ -271,6 +271,18 @@ public class StoryCompletenessBar extends Pane {
         }
 
         visualGrid.add(green, 0, 0);
+
+        if (maxBlue == 0 && maxGreen == 0) {
+            Boolean allDone = true;
+            for (Task task : story.getTasks()) {
+                if (!(task.getState() == Task.TASKSTATE.DONE)) {
+                    allDone = false;
+                }
+            }
+            if (allDone) {
+                red.setFill(ColorUtils.toColor(Task.TASKSTATE.DONE.getColourString()));
+            }
+        }
         visualGrid.add(red, 2, 0);
 
         this.getChildren().add(visualGrid);

@@ -62,6 +62,7 @@ public class SprintTaskStatusTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
+
         SearchableText title = new SearchableTitle("Task Visualisation", searchControls);
         SearchableText groupBy = new SearchableText("Group By: ", searchControls);
         groupBy.setStyle("-fx-font-weight: bold");
@@ -89,27 +90,26 @@ public class SprintTaskStatusTab extends SearchableTab {
 
         filterBox.setValue(unassignedFilter);
 
-        basicInfoPane.getChildren().addAll(
-                title,
-                buttonBox,
-                filterBox
-        );
-
-        createVisualisation();
 
 
-        /*setOnMouseEntered(event -> {
-            createVisualisation();
-            event.consume();
-        });*/
+        Platform.runLater(() -> {
+                basicInfoPane.getChildren().addAll(
+                        title,
+                        buttonBox,
+                        filterBox
+                );
+
+                createVisualisation();
+
+                Collections.addAll(searchControls,
+                        title,
+                        statusToggle,
+                        storyToggle,
+                        filterBox
+                );
+            });
 
 
-        Collections.addAll(searchControls,
-                title,
-                statusToggle,
-                storyToggle,
-                filterBox
-        );
     }
 
 
