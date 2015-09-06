@@ -246,7 +246,8 @@ public class Task extends SaharaItem implements Serializable {
     }
 
     /**
-     * Sets the impediments of the current task
+     * Sets the impediments of the current task. This should not be used by the user, as it will not effect the graph.
+     * Use the TaskEditCommand instead.
      *
      * @param effortLeft effortLeft of the current task
      */

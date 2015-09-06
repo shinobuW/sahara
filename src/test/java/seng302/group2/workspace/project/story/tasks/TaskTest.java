@@ -159,6 +159,35 @@ public class TaskTest {
         Assert.assertEquals(Task.TASKSTATE.NOT_STARTED, task.getLane());
     }
 
+    /**
+     * Tests the effort left edit method of tasks
+     */
+    @Test
+    public void testEditEffortLeft() {
+        Person person = new Person();
+        Story story = new Story();
+
+        Task task = new Task("test task", "a task for testing", story, person, 600);
+        Assert.assertEquals(600, task.getEffortLeft(), 0);
+        Assert.assertEquals(0, task.getLogs().size());
+        Assert.assertEquals(0, task.getLogsWithoutGhostLogs().size());
+
+        task.editEffortLeft(540);
+        Assert.assertEquals(540, task.getEffortLeft(), 0);
+        Assert.assertEquals(1, task.getLogs().size());
+        Assert.assertEquals(0, task.getLogsWithoutGhostLogs().size());
+
+        Global.commandManager.undo();
+        Assert.assertEquals(600, task.getEffortLeft(), 0);
+        Assert.assertEquals(0, task.getLogs().size());
+        Assert.assertEquals(0, task.getLogsWithoutGhostLogs().size());
+
+        Global.commandManager.redo();
+        Assert.assertEquals(540, task.getEffortLeft(), 0);
+        Assert.assertEquals(1, task.getLogs().size());
+        Assert.assertEquals(0, task.getLogsWithoutGhostLogs().size());
+
+    }
 
     /**
      * Test the impediment state edit method of tasks
