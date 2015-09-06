@@ -135,7 +135,7 @@ public class SprintInfoTab extends SearchableTab {
     }
 
     /**
-     * Creates a stacked series of TitledPanes to display each story in the sprint and its tasks
+     * Creates a stacked series of TitledPanes to display each storyToggle in the sprint and its tasks
      * @param currentSprint The current sprint
      * @return A VBox containing the stacked TitledPanes
      */

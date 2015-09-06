@@ -43,7 +43,7 @@ public class ScrumboardTab extends SearchableTab {
         basicInfoPane.getChildren().add(title);
 
 
-        // Create story title pane regions
+        // Create storyToggle title pane regions
         for (Story story : currentSprint.getStories().sorted(Story.StoryPriorityComparator)) {
             basicInfoPane.getChildren().add(getCollapsableStoryPane(story));
         }
@@ -57,8 +57,8 @@ public class ScrumboardTab extends SearchableTab {
 
     /**
      * Creates a collapsable title pane to display the scrumboard information of stories
-     * @param story The story to generate the pane for
-     * @return A pane showing the information of tasks in the given story
+     * @param story The storyToggle to generate the pane for
+     * @return A pane showing the information of tasks in the given storyToggle
      */
     private Node getCollapsableStoryPane(Story story) {
         GridPane taskLanesGrid = new GridPane();
@@ -139,7 +139,7 @@ public class ScrumboardTab extends SearchableTab {
 
                         markStoryDone.setTitle("Completed Story");
                         markStoryDone.setHeaderText(null);
-                        markStoryDone.setContentText("All tasks in the story have been completed, mark the story as"
+                        markStoryDone.setContentText("All tasks in the storyToggle have been completed, mark the storyToggle as"
                             + "completed too?");
 
                         Optional<ButtonType> result = markStoryDone.showAndWait();
