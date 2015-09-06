@@ -37,6 +37,7 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
         tab.searchControls.add(this);
     }
 
+
     /**
      * Updates the item, resetting it's graphic node, and reinitialising it's listeners for dragging and dropping
      * @param task The cell's task

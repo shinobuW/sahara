@@ -97,7 +97,12 @@ public class SprintTaskStatusTab extends SearchableTab {
 
         createVisualisation();
 
-        this.getContent().setOnMouseEntered(event -> Platform.runLater(this::createVisualisation));
+
+        /*setOnMouseEntered(event -> {
+            createVisualisation();
+            event.consume();
+        });*/
+
 
         Collections.addAll(searchControls,
                 title,
@@ -108,7 +113,7 @@ public class SprintTaskStatusTab extends SearchableTab {
     }
 
 
-    void createVisualisation() {
+    public void createVisualisation() {
         // Remove what's already in the box
         listWrapper.getChildren().clear();
 
@@ -131,7 +136,7 @@ public class SprintTaskStatusTab extends SearchableTab {
     }
 
 
-    List<Task> collectTasks() {
+    public List<Task> collectTasks() {
         // Collect all the tasks in the sprint
         List<Task> tasks = new ArrayList<>();
         tasks.addAll(sprint.getAllTasks());
@@ -181,7 +186,7 @@ public class SprintTaskStatusTab extends SearchableTab {
             if (story.getTasks().size() != 0) {
                 for (Task task : story.getTasks().sorted(Task.TaskNameComparator)) {
                     if (tasks.contains(task)) {  // only add it if it is contained in the filtered collection of tasks
-                        Node cellNode = new ScrumBoardTaskCellNode(task);
+                        Node cellNode = new ScrumBoardTaskCellNode(task, this);
                         taskBox.getChildren().add(cellNode);
                     }
                 }
@@ -217,7 +222,7 @@ public class SprintTaskStatusTab extends SearchableTab {
             tasks.sort(Task.TaskNameComparator);
             for (Task task : tasks) {
                 if (task.getState() == state) {  // only add it if it is contained in the filtered collection of tasks
-                    taskBox.getChildren().add(new ScrumBoardTaskCellNode(task));
+                    taskBox.getChildren().add(new ScrumBoardTaskCellNode(task, this));
                 }
             }
             if (taskBox.getChildren().isEmpty()) {
