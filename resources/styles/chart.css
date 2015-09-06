@@ -6,14 +6,19 @@
     /*-fx-padding: 30px;*/
 /*}*/
 
-/*.chart-legend {*/
-    /*-fx-background-color: transparent;*/
-/*}*/
+.chart-legend {
+    -fx-background-color: transparent;
+    -fx-alignment: center-right;
+}
 /*.chart-series-line {*/
     /*-fx-stroke-width: 2px;*/
     /*-fx-effect: null;*/
 /*}*/
 
 /*.default-color0.chart-series-line { -fx-stroke: #ffffff; }*/
+
+.onHover{
+    -fx-background-color: black;
+}
 
 

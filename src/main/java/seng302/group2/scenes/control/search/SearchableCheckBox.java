@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import java.util.Collection;
 
 /**
- * A class to display a searchable text box.
+ * A class to display a searchable check box.
  * Created by btm38 on 19/08/15.
  */
 public class SearchableCheckBox extends VBox implements SearchableControl {

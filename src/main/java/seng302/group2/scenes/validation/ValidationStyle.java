@@ -1,5 +1,6 @@
 package seng302.group2.scenes.validation;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -70,7 +71,8 @@ public class ValidationStyle {
         po.setContentNode(box);
         po.setDetachable(false);
         po.setAutoHide(true);
-        po.show(node);
+
+        Platform.runLater(() -> po.show(node));
 
         node.onMouseClickedProperty().addListener((observable, oldValue, newValue) -> {
                 po.hide();

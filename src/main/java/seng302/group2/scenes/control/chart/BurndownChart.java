@@ -1,12 +1,19 @@
 package seng302.group2.scenes.control.chart;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.chart.Axis;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
+import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.tasks.Log;
+import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +54,36 @@ public class BurndownChart extends LineChart {
             this.getData().add(referenceVelocitySeries);
             this.getData().add(effortSpentSeries);
             this.getData().add(effortLeftSeries);
+        }
+
+        /**
+         * Browsing through the Data and applying ToolTip
+         * as well as the class on hover
+         */
+        for (Object s : this.getData()) {
+            XYChart.Series series = (XYChart.Series) s;
+            for (Object obj : series.getData()) {
+                XYChart.Data d = (XYChart.Data)obj;
+                Tooltip.install(d.getNode(), new Tooltip(d.getYValue().toString() + " hours."));
+
+                //Adding class on hover
+                d.getNode().setOnMouseEntered(new EventHandler<Event>() {
+
+                    @Override
+                    public void handle(Event event) {
+                        d.getNode().getStyleClass().add("onHover");
+                    }
+                });
+
+                //Removing class on exit
+                d.getNode().setOnMouseExited(new EventHandler<Event>() {
+
+                    @Override
+                    public void handle(Event event) {
+                        d.getNode().getStyleClass().remove("onHover");
+                    }
+                });
+            }
         }
 
 
@@ -93,8 +130,12 @@ public class BurndownChart extends LineChart {
         for (LocalDate d : dailyEffortSpentMap.keySet()) {
             effortSpent += dailyEffortSpentMap.get(d);
             String monthStr = d.getMonth().toString().substring(0, 3);
-            effortSpentSeries.getData().add(new XYChart.Data<>(monthStr + " " + d.getDayOfMonth(), effortSpent));
+            XYChart.Data chartData = new XYChart.Data<>(monthStr + " " + d.getDayOfMonth(), effortSpent);
+            Tooltip.install(chartData.getNode(), new Tooltip(String.valueOf(effortSpent)));
+            effortSpentSeries.getData().add(chartData);
         }
+
+
 
         return effortSpentSeries;
     }
@@ -127,7 +168,21 @@ public class BurndownChart extends LineChart {
      * @return an XYChart.Series representing an effort left series.
      */
     public XYChart.Series createLEffortLeftSeries(Sprint currentSprint) {
-        List<Log> logList = currentSprint.getAllLogsWithInitialLogs();
+        List<Log> logList = currentSprint.getAllLogs();
+        for (Task t : currentSprint.getAllTasks()) {
+            if (t.getInitialLog().getStartDate().toLocalDate().isBefore(currentSprint.getStartDate())) {
+                LocalDate date = currentSprint.getStartDate();
+                int hourInt = t.getInitialLog().getStartDate().getHour();
+                int minuteInt = t.getInitialLog().getStartDate().getMinute();
+                LocalDateTime dateTime = date.atTime(hourInt, minuteInt);
+
+                logList.add(new Log(t, "initial log (this should be hidden)", null, 0,
+                        dateTime, t.getInitialLog().getEffortLeftDifferenceInMinutes()));
+            }
+            else {
+                logList.add(t.getInitialLog());
+            }
+        }
 
         /* Map which stores a (key, value) pair of (date: hours), where hours is the total effort left
         for that date.
