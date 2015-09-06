@@ -1,10 +1,15 @@
 package seng302.group2.scenes.information.project.sprint;
 
+import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -84,15 +89,15 @@ public class SprintTaskStatusTab extends SearchableTab {
 
         filterBox.setValue(unassignedFilter);
 
-
-        createVisualisation();
-
-
         basicInfoPane.getChildren().addAll(
                 title,
                 buttonBox,
                 filterBox
         );
+
+        createVisualisation();
+
+        this.getContent().setOnMouseEntered(event -> Platform.runLater(this::createVisualisation));
 
         Collections.addAll(searchControls,
                 title,
@@ -112,14 +117,10 @@ public class SprintTaskStatusTab extends SearchableTab {
 
         // Create lists based on grouping radio
         if (statusToggle.getRadioButton().isSelected()) {
-
-            // TODO: Create list views for statuses
-            listWrapper.getChildren().add(new Label("status"));
-
+            listWrapper.getChildren().add(createStatusTitlePanes(tasks));
         }
         else if (storyToggle.getRadioButton().isSelected()) {
             listWrapper.getChildren().add(createStoryTitlePanes(tasks));
-            listWrapper.getChildren().add(new Label("story"));
         }
         // No other case (at the moment)
 
@@ -180,7 +181,8 @@ public class SprintTaskStatusTab extends SearchableTab {
             if (story.getTasks().size() != 0) {
                 for (Task task : story.getTasks().sorted(Task.TaskNameComparator)) {
                     if (tasks.contains(task)) {  // only add it if it is contained in the filtered collection of tasks
-                        taskBox.getChildren().add(new ScrumBoardTaskCellNode(task));
+                        Node cellNode = new ScrumBoardTaskCellNode(task);
+                        taskBox.getChildren().add(cellNode);
                     }
                 }
             }
@@ -190,6 +192,40 @@ public class SprintTaskStatusTab extends SearchableTab {
             VtaskBox.getChildren().add(taskBox);
             TitledPane storyPane = new TitledPane("[" + story.getEstimate() + "] "
                     + story.getShortName() + " - " + story.getReadyString(), VtaskBox);
+
+            storyPane.setPrefHeight(30);
+            storyPane.setExpanded(true);
+            storyPane.setAnimated(true);
+            stackedStoryTitlePanes.getChildren().add(storyPane);
+        }
+        return stackedStoryTitlePanes;
+    }
+
+
+    // Modified from SprintInfoTab
+    VBox createStatusTitlePanes(List<Task> tasks) {
+        final VBox stackedStoryTitlePanes = new VBox();
+
+        List<Story> stories = new ArrayList<>();
+        stories.addAll(sprint.getStories().sorted(Story.StoryPriorityComparator));
+        stories.add(sprint.getUnallocatedTasksStory());
+
+        for (Task.TASKSTATE state : Task.TASKSTATE.values()) {
+            VBox VtaskBox = new VBox(30);
+            VBox taskBox = new VBox(4);
+
+            tasks.sort(Task.TaskNameComparator);
+            for (Task task : tasks) {
+                if (task.getState() == state) {  // only add it if it is contained in the filtered collection of tasks
+                    taskBox.getChildren().add(new ScrumBoardTaskCellNode(task));
+                }
+            }
+            if (taskBox.getChildren().isEmpty()) {
+                taskBox.getChildren().add(new SearchableText("There are currently no tasks with this status.",
+                        searchControls));
+            }
+            VtaskBox.getChildren().add(taskBox);
+            TitledPane storyPane = new TitledPane(state.toString(), VtaskBox);
 
             storyPane.setPrefHeight(30);
             storyPane.setExpanded(true);
