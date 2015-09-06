@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.dialog.*;
@@ -306,8 +307,11 @@ public class MainMenuBar extends MenuBar {
         // Create 'Search' MenuItem
         MenuItem newSearchItem = new MenuItem("Advanced Search");
         newSearchItem.setOnAction((event) -> {
-                javafx.scene.control.Dialog creationDialog = new CreateSearchDialog();
-                creationDialog.show();
+                PopOver searchPopOver = new CreateSearchPopOver();
+                if (!Global.advancedSearchExists) {
+                    Global.advancedSearchExists = true;
+                    searchPopOver.show(App.mainStage);
+                }
             });
         newSearchItem.setAccelerator(new KeyCodeCombination(KeyCode.F,
                 KeyCombination.CONTROL_DOWN,

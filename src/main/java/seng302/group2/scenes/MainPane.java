@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.Node;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ToolBar;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -37,7 +38,7 @@ public class MainPane extends BorderPane {
     private ScrollPane contentPane;
     private boolean menuHidden = false;
     private double dividerPositions;
-    MainToolbar toolBar = null;
+    private static MainToolbar toolBar = null;
 
     Preferences userPrefs = Preferences.userNodeForPackage(getClass());
 
@@ -125,6 +126,18 @@ public class MainPane extends BorderPane {
         contentPane.setContent(node);
     }
 
+    /**
+     * Gets the Toolbar of the App
+     * @return The toolbar object of the app.
+     */
+    public static MainToolbar getToolBar() {
+        return toolBar;
+    }
+
+    /**
+     * Gets the main content within the scene
+     * @return The information panes.
+     */
     public Node getContent() {
         return contentPane.getContent();
     }

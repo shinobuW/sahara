@@ -338,38 +338,32 @@ public class StoryTaskTab extends SearchableTab {
         RequiredField effortLeftField = new RequiredField("Effort left:");
         CustomComboBox<Person> assigneeComboBox = new CustomComboBox<>("Assignee:", false);
 
-        assigneeComboBox.setDisable(true);
+        //assigneeComboBox.setDisable(false);
 
-        if (currentStory.getProject().getCurrentTeams() != null) {
-//            Set<Team> currentTeams = currentStory.getProject().getCurrentTeams();
-//            ObservableList<Person> availablePeople = FXCollections.observableArrayList();
-//
-//            for (Team team : currentTeams) {
-//                availablePeople.addAll(team.getPeople());
-//            }
+        if (currentStory.getProject().getCurrentTeams() != null
+                && !currentStory.getProject().getCurrentTeams().isEmpty()) {
 
             if (availablePeople.size() != 0) {
                 assigneeComboBox.getComboBox().getItems().addAll(availablePeople);
                 assigneeComboBox.setDisable(false);
             }
             else {
-                //System.out.println("size is zero");
-                ValidationStyle.showMessage("There are no team members in the currently allocated teams",
-                        assigneeComboBox.getComboBox());
-                assigneeComboBox.setDisable(true);
+                PopOverTip pot = new PopOverTip(assigneeComboBox,
+                        "There are no team members in the currently allocated teams");
+                assigneeComboBox.getComboBox().setDisable(true);
             }
-
         }
         else {
-            //System.out.println("current teams null");
-            assigneeComboBox.setDisable(true);
-            ValidationStyle.showMessage("There are currently no allocated teams on this project",
-                    assigneeComboBox.getComboBox());
+            PopOverTip pot = new PopOverTip(assigneeComboBox,
+                    "There are currently no teams allocated on this project");
+            assigneeComboBox.getComboBox().setDisable(true);
         }
+
 
         Button btnAdd = new Button("Add");
         btnAdd.setDisable(true);
         addTaskBox.getChildren().addAll(task, shortNameCustomField, effortLeftField, assigneeComboBox, btnAdd);
+
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 ValidationStyle.borderGlowNone(shortNameCustomField.getTextField());
@@ -432,6 +426,8 @@ public class StoryTaskTab extends SearchableTab {
                 assigneeComboBox,
                 taskTable
         );
+
+
 
     }
     /**

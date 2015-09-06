@@ -38,6 +38,13 @@ public class PopOverTip extends PopOver {
         setContentNode(wrapContent(contentNode));
     }
 
+
+    public PopOverTip(Node parentNode, String message) {
+        super();
+        init(parentNode);
+        setContentNode(wrapContent(new Label(message)));
+    }
+
     /**
      * Performs basic initialisation of the PopOverTip
      * @param parentNode The parent of the PopOverTip
