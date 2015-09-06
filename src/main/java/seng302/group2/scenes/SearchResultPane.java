@@ -1,15 +1,22 @@
 package seng302.group2.scenes;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchResultCellNode;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.dialog.CreateSearchPopOver;
 import seng302.group2.scenes.information.person.PersonScene;
 import seng302.group2.scenes.information.project.ProjectScene;
 import seng302.group2.scenes.information.project.backlog.BacklogScene;
@@ -38,9 +45,8 @@ import java.util.Map;
  * A window for displaying the results of a search.
  * Created by drm127 on 4/09/15.
  */
-public class SearchResultPane extends BorderPane {
+public class SearchResultPane extends PopOver {
 
-    private Pane resultPane = new Pane();
 
     /**
      * Constructor
@@ -48,7 +54,11 @@ public class SearchResultPane extends BorderPane {
      * @param searchText The text being searched for
      */
     public SearchResultPane(List<String> checkedItems, String searchText) {
-        SearchableText searchResultTitle = new SearchableText("Search Results");
+        Global.advancedSearchExists = true;
+        this.setDetachedTitle("Search Results");
+        this.setMinWidth(500);
+        this.setMinHeight(500);
+        VBox content = new VBox();
         List<SearchResultCellNode> results = runSearch(checkedItems, searchText);
         ListView<SearchResultCellNode> resultView = new ListView<>();
         resultView.setPrefHeight(490);
@@ -65,14 +75,45 @@ public class SearchResultPane extends BorderPane {
                     ((TrackedTabPane) resultView.getSelectionModel().getSelectedItem().getSearchableScene())
                             .select(selectedTab);
                     selectedItem.switchToInfoScene();
-
-
+                    MainPane.getToolBar().search(searchText);
                 }
                 event.consume();
             });
 
-        resultPane.getChildren().addAll(searchResultTitle, resultView);
-        this.setCenter(resultPane);
+        HBox buttons = new HBox();
+        Button btnClose = new Button("Close");
+        Button btnBack = new Button("Back");
+        buttons.setAlignment(Pos.CENTER_RIGHT);
+        buttons.spacingProperty().setValue(10);
+        Insets insets = new Insets(10, 20, 10, 20);
+        buttons.setPadding(insets);
+        buttons.getChildren().addAll(btnBack, btnClose);
+
+        content.getChildren().addAll(resultView, buttons);
+
+        btnClose.setOnAction(event -> {
+                this.hide();
+                Global.advancedSearchExists = false;
+            });
+
+        btnBack.setOnAction(event -> {
+                this.hide();
+                PopOver searchPopOver = new CreateSearchPopOver();
+                if (!Global.advancedSearchExists) {
+                    Global.advancedSearchExists = true;
+                    searchPopOver.show(App.mainStage);
+                }
+            });
+
+        this.setOnHiding(event -> {
+                MainPane.getToolBar().search("");
+                Global.advancedSearchExists = false;
+
+            });
+
+        this.setContentNode(content);
+        this.setDetached(true);
+
     }
 
     /**

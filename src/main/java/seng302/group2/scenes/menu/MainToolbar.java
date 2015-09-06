@@ -109,4 +109,9 @@ public class MainToolbar extends ToolBar {
         MainToolbar.undoButton.setDisable(!Global.commandManager.isUndoAvailable());
         MainToolbar.redoButton.setDisable(!Global.commandManager.isRedoAvailable());
     }
+
+    public void search(String query) {
+        searchBox.setText(query);
+        searchBox.search(query);
+    }
 }
