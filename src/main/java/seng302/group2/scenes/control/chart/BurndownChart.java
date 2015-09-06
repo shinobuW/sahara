@@ -64,9 +64,7 @@ public class BurndownChart extends LineChart {
             XYChart.Series series = (XYChart.Series) s;
             for (Object obj : series.getData()) {
                 XYChart.Data d = (XYChart.Data)obj;
-                Tooltip.install(d.getNode(), new Tooltip(
-                        d.getXValue().toString() + "\n" +
-                                "Number Of Events : " + d.getYValue()));
+                Tooltip.install(d.getNode(), new Tooltip(d.getYValue().toString() + " hours."));
 
                 //Adding class on hover
                 d.getNode().setOnMouseEntered(new EventHandler<Event>() {
@@ -172,16 +170,17 @@ public class BurndownChart extends LineChart {
     public XYChart.Series createLEffortLeftSeries(Sprint currentSprint) {
         List<Log> logList = currentSprint.getAllLogs();
         for (Task t : currentSprint.getAllTasks()) {
-            System.out.println(t.getInitialLog().getStartDate());
             if (t.getInitialLog().getStartDate().toLocalDate().isBefore(currentSprint.getStartDate())) {
                 LocalDate date = currentSprint.getStartDate();
-                System.out.println(t.getInitialLog().getStartDate());
                 int hourInt = t.getInitialLog().getStartDate().getHour();
                 int minuteInt = t.getInitialLog().getStartDate().getMinute();
                 LocalDateTime dateTime = date.atTime(hourInt, minuteInt);
 
                 logList.add(new Log(t, "initial log (this should be hidden)", null, 0,
                         dateTime, t.getInitialLog().getEffortLeftDifferenceInMinutes()));
+            }
+            else {
+                logList.add(t.getInitialLog());
             }
         }
 
