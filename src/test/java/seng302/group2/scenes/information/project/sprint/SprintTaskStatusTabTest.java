@@ -1,6 +1,6 @@
 package seng302.group2.scenes.information.project.sprint;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import seng302.group2.scenes.JavaFxTestApp;
@@ -13,11 +13,8 @@ import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import static org.junit.Assert.*;
 
 public class SprintTaskStatusTabTest {
 
