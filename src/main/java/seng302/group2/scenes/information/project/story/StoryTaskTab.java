@@ -66,7 +66,7 @@ public class StoryTaskTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        PopOverTable<Task> taskTable = new PopOverTable<>(currentStory.getTasks());
+        SearchableTable<Task> taskTable = new SearchableTable<>(currentStory.getTasks());
         taskTable.setEditable(true);
         taskTable.setPrefWidth(800);
         taskTable.setPrefHeight(200);

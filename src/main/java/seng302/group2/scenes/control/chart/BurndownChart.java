@@ -62,7 +62,9 @@ public class BurndownChart extends LineChart {
             XYChart.Series series = (XYChart.Series) s;
             for (Object obj : series.getData()) {
                 XYChart.Data d = (XYChart.Data)obj;
-                Tooltip.install(d.getNode(), new Tooltip(d.getYValue().toString() + " hours."));
+                String hoursStr = d.getYValue().toString();
+                double hoursVal = Double.parseDouble(hoursStr);
+                Tooltip.install(d.getNode(), new Tooltip(Math.round(hoursVal) + " hours."));
 
                 //Adding class on hover
                 d.getNode().setOnMouseEntered(new EventHandler<Event>() {
