@@ -459,7 +459,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      * @param sprint The sprint to add
      */
     public void add(Sprint sprint) {
-        sprint.createTasksWithoutAStory();
         Command command = new AddSprintCommand(this, sprint);
         Global.commandManager.executeCommand(command);
     }

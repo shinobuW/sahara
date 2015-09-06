@@ -38,7 +38,7 @@ public class Sprint extends SaharaItem {
     //private transient ObservableList<Task> unallocatedTasks = observableArrayList();
     //private List<Task> serializableTasks = new ArrayList<>();
 
-    private Story tasksWithoutStory;
+    private Story tasksWithoutStory = new Story(this);
 
 
 
@@ -47,9 +47,8 @@ public class Sprint extends SaharaItem {
      */
     public Sprint() {
         super("Untitled Sprint");
-        //addListeners();
-        //tasksWithoutStory = new Story(this);
         setInformationSwitchStrategy(new SprintInformationSwitchStrategy());
+        tasksWithoutStory = new Story(this);
     }
 
     /**
@@ -75,15 +74,9 @@ public class Sprint extends SaharaItem {
         this.project = project;
         this.team = team;
         this.release = release;
-
-        //addListeners();
+        tasksWithoutStory = new Story(this);
 
         setInformationSwitchStrategy(new SprintInformationSwitchStrategy());
-    }
-
-    public void createTasksWithoutAStory() {
-        this.tasksWithoutStory = new Story(this);
-
     }
 
 
