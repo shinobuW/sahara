@@ -48,6 +48,7 @@ public class CreateSearchPopOver extends PopOver {
         Insets insets = new Insets(0, 20, 0, 20);
         buttons.setPadding(insets);
         buttons.getChildren().addAll(btnCancel, btnSearch);
+        btnSearch.setDisable(true);
 
         VBox grid = new VBox();
         Insets insets1 = new Insets(20, 20, 20, 20);

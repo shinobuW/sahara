@@ -37,6 +37,7 @@ import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +60,18 @@ public class SearchResultPane extends PopOver {
         this.setMinWidth(500);
         this.setMinHeight(500);
         VBox content = new VBox();
+
         List<SearchResultCellNode> results = runSearch(checkedItems, searchText);
+        SearchableText resultsFound;
+        if (results.size() != 1) {
+            resultsFound = new SearchableText("Found " + results.size() + " Occurrences of " + searchText);
+        }
+        else {
+            resultsFound = new SearchableText("Found " + results.size() + " Occurrence of " + searchText);
+        }
+
+        Insets insets = new Insets(10, 20, 10, 20);
+        resultsFound.setPadding(insets);
         ListView<SearchResultCellNode> resultView = new ListView<>();
         resultView.setPrefHeight(490);
         resultView.setPrefWidth(490);
@@ -85,11 +97,10 @@ public class SearchResultPane extends PopOver {
         Button btnBack = new Button("Back");
         buttons.setAlignment(Pos.CENTER_RIGHT);
         buttons.spacingProperty().setValue(10);
-        Insets insets = new Insets(10, 20, 10, 20);
         buttons.setPadding(insets);
         buttons.getChildren().addAll(btnBack, btnClose);
 
-        content.getChildren().addAll(resultView, buttons);
+        content.getChildren().addAll(resultsFound ,resultView, buttons);
 
         btnClose.setOnAction(event -> {
                 this.hide();
@@ -99,10 +110,7 @@ public class SearchResultPane extends PopOver {
         btnBack.setOnAction(event -> {
                 this.hide();
                 PopOver searchPopOver = new CreateSearchPopOver();
-                if (!Global.advancedSearchExists) {
-                    Global.advancedSearchExists = true;
-                    searchPopOver.show(App.mainStage);
-                }
+                searchPopOver.show(App.mainStage);
             });
 
         this.setOnHiding(event -> {
