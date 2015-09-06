@@ -6,5 +6,5 @@ package seng302.group2.scenes.control.search;
 public enum SearchType {
     NORMAL,
     REGEX,
-    WILDCARD
+    COMPLEX
 }

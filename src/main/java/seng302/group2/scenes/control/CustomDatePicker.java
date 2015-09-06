@@ -176,7 +176,6 @@ public class CustomDatePicker extends VBox implements SearchableControl {
         return found;
     }
 
-    //TODO Advanced search query for this class.
     @Override
     public int advancedQuery(String query, SearchType searchType) {
         return 0;

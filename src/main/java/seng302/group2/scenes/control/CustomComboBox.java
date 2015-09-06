@@ -270,7 +270,6 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
         return foundCombo || foundText;
     }
 
-    //TODO Advanced search query for this class.
     @Override
     public int advancedQuery(String query, SearchType searchType) {
         return 0;
