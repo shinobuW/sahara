@@ -229,23 +229,23 @@ public class LoggingEffortPane extends Pane {
 
         CustomDatePicker startDatePicker = new CustomDatePicker("Date:", true);
 
-        final Callback<DatePicker, DateCell> endDateCellFactory =
-            new Callback<DatePicker, DateCell>() {
-                @Override
-                public DateCell call(final DatePicker datePicker) {
-                    return new DateCell() {
-                        @Override
-                        public void updateItem(LocalDate item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (item.isBefore(task.getStory().getSprint().getStartDate())) {
-                                setDisable(true);
-                                setStyle("-fx-background-color: #ffc0cb;");
-                            }
-                        }
-                    };
-                }
-            };
-        startDatePicker.getDatePicker().setDayCellFactory(endDateCellFactory);
+//        final Callback<DatePicker, DateCell> endDateCellFactory =
+//            new Callback<DatePicker, DateCell>() {
+//                @Override
+//                public DateCell call(final DatePicker datePicker) {
+//                    return new DateCell() {
+//                        @Override
+//                        public void updateItem(LocalDate item, boolean empty) {
+//                            super.updateItem(item, empty);
+//                            if (item.isBefore(task.getStory().getSprint().getStartDate())) {
+//                                setDisable(true);
+//                                setStyle("-fx-background-color: #ffc0cb;");
+//                            }
+//                        }
+//                    };
+//                }
+//            };
+//        startDatePicker.getDatePicker().setDayCellFactory(endDateCellFactory);
         startDatePicker.getDatePicker().setValue(LocalDate.now());
 
         HBox startTimeHBox = new HBox(10);
