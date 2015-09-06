@@ -197,6 +197,14 @@ public class TeamHistoryTab extends SearchableTab {
         endDatePicker.prefWidthProperty().bind(historyTable.widthProperty().subtract(3).divide(100).multiply(30));
         newAllocationFields.getChildren().addAll(projectComboBox, startDatePicker, endDatePicker);
 
+        startDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue,
+                                LocalDate newValue) {
+                ValidationStyle.borderGlowNone(startDatePicker.getDatePicker());
+            }
+        });
+
         // Events
         projectComboBox.getComboBox().setOnMouseClicked(event -> {
                 projectComboBox.getComboBox().getItems().clear();

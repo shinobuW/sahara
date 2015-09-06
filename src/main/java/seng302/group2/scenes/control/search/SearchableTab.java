@@ -41,8 +41,13 @@ public abstract class SearchableTab extends Tab {
     public int advancedQuery(String query, SearchType searchType) {
         int count = 0;
         for (SearchableControl control : getSearchableControls()) {
-            if (control.advancedQuery(query, searchType)) {
-                count++;
+            if (control.advancedQuery(query, searchType) > 0) {
+                if (count < control.advancedQuery(query, searchType)) {
+                    count = control.advancedQuery(query, searchType);
+                }
+//                else {
+//                    count++;
+//                }
             }
         }
         return count;
