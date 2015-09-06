@@ -49,8 +49,11 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
     public ScrumBoardTaskCellNode(Task task) {
         this.task = task;
         this.getChildren().clear();
-        HBox content = construct();
-        this.getChildren().add(content);
+        Platform.runLater(() -> {
+                HBox content = construct();
+                this.getChildren().add(content);
+            });
+
     }
 
     /**
@@ -61,8 +64,10 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
         this.statusTab = statusTab;
         this.task = task;
         this.getChildren().clear();
-        HBox content = construct();
-        this.getChildren().add(content);
+        Platform.runLater(() -> {
+                HBox content = construct();
+                this.getChildren().add(content);
+            });
     }
 
 
@@ -244,11 +249,15 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
         ImageView assigneeImage;
         if (task.getAssignee() != null) {
             assigneeImage = new ImageView("icons/person.png");
-            Tooltip.create(task.getAssignee().getFullName(), assigneeImage, 50);
+            Platform.runLater(() -> {
+                    Tooltip.create(task.getAssignee().getFullName(), assigneeImage, 50);
+                });
         }
         else {
             assigneeImage = new ImageView("icons/person_empty.png");
-            Tooltip.create("This task is unassigned", assigneeImage, 50);
+            Platform.runLater(() -> {
+                    Tooltip.create("This task is unassigned", assigneeImage, 50);
+                });
         }
 
         assigneeImage.setOnMouseEntered(me -> {

@@ -62,54 +62,56 @@ public class SprintTaskStatusTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        SearchableText title = new SearchableTitle("Task Visualisation", searchControls);
-        SearchableText groupBy = new SearchableText("Group By: ", searchControls);
-        groupBy.setStyle("-fx-font-weight: bold");
+        Platform.runLater(() -> {
+                SearchableText title = new SearchableTitle("Task Visualisation", searchControls);
+                SearchableText groupBy = new SearchableText("Group By: ", searchControls);
+                groupBy.setStyle("-fx-font-weight: bold");
 
-        statusToggle.getRadioButton().setToggleGroup(group);
-        statusToggle.getRadioButton().setSelected(true);
-        storyToggle.getRadioButton().setToggleGroup(group);
+                statusToggle.getRadioButton().setToggleGroup(group);
+                statusToggle.getRadioButton().setSelected(true);
+                storyToggle.getRadioButton().setToggleGroup(group);
 
-        group.selectedToggleProperty().addListener(event -> {
+                group.selectedToggleProperty().addListener(event -> {
+                        createVisualisation();
+                    });
+
+                HBox buttonBox = new HBox(10);
+                buttonBox.getChildren().addAll(groupBy, statusToggle, storyToggle);
+
+                filterBox = new CustomComboBox<>("Filter by: ", searchControls);
+                filterBox.getComboBox().getSelectionModel().selectedItemProperty().addListener(event -> {
+                        createVisualisation();
+                    });
+
+
+                filterBox.addToComboBox(unassignedFilter);
+                filterBox.addToComboBox(uncompletedFilter);
+                filterBox.addToComboBox(allFilter);
+
+                filterBox.setValue(unassignedFilter);
+
+                basicInfoPane.getChildren().addAll(
+                        title,
+                        buttonBox,
+                        filterBox
+                );
+
+
+
                 createVisualisation();
+
+
+
+
+                Collections.addAll(searchControls,
+                        title,
+                        statusToggle,
+                        storyToggle,
+                        filterBox
+                );
             });
 
-        HBox buttonBox = new HBox(10);
-        buttonBox.getChildren().addAll(groupBy, statusToggle, storyToggle);
 
-        filterBox = new CustomComboBox<>("Filter by: ", searchControls);
-        filterBox.getComboBox().getSelectionModel().selectedItemProperty().addListener(event -> {
-                createVisualisation();
-            });
-
-
-        filterBox.addToComboBox(unassignedFilter);
-        filterBox.addToComboBox(uncompletedFilter);
-        filterBox.addToComboBox(allFilter);
-
-        filterBox.setValue(unassignedFilter);
-
-        basicInfoPane.getChildren().addAll(
-                title,
-                buttonBox,
-                filterBox
-        );
-
-        createVisualisation();
-
-
-        /*setOnMouseEntered(event -> {
-            createVisualisation();
-            event.consume();
-        });*/
-
-
-        Collections.addAll(searchControls,
-                title,
-                statusToggle,
-                storyToggle,
-                filterBox
-        );
     }
 
 

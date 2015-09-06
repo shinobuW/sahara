@@ -3,7 +3,7 @@
     "shortName": "Shinobi Demo",
     "longName": "Shinobi Demo",
     "description": "A demo Workspace",
-    "lastSaveLocation": "C:\\Users\\jorda\\Documents\\SENG302\\Group Project\\Demo Workspace.proj",
+    "lastSaveLocation": "/home/cosc/student/drm127/Documents/project-2/Demo Workspace.proj",
     "estimationScales": {
       "estimationScaleDict": {
         "T-Shirt Sizes": [
@@ -467,16 +467,16 @@
       "0x1d"
     ],
     "serializableStories": [
-      "0x29"
-    ],
-    "serializableBacklogs": [
+      "0x29",
       "0x2a"
     ],
-    "serializableSprints": [
+    "serializableBacklogs": [
       "0x2b"
     ],
+    "serializableSprints": [
+      "0x2c"
+    ],
     "serializableLogs": [
-      "0x2c",
       "0x2d",
       "0x2e",
       "0x2f",
@@ -487,7 +487,9 @@
       "0x34",
       "0x35",
       "0x36",
-      "0x37"
+      "0x37",
+      "0x38",
+      "0x39"
     ],
     "serializableTeams": [],
     "itemName": "Sahara",
@@ -525,30 +527,22 @@
     "id": 46
   },
   "0x1d": {
-    "startDate": "0x38",
-    "endDate": "0x39",
+    "startDate": "0x3a",
+    "endDate": "0x3b",
     "project": "0x19",
     "team": "0x2",
     "itemName": "",
     "id": 0
   },
   "0x1e": {
-    "startDate": "0x3a",
-    "endDate": "0x3b",
+    "startDate": "0x3c",
+    "endDate": "0x3d",
     "project": "0x18",
     "team": "0x2",
     "itemName": "",
     "id": 0
   },
   "0x1f": {
-    "startDate": "0x3c",
-    "endDate": "0x3d",
-    "project": "0x18",
-    "team": "0x3",
-    "itemName": "",
-    "id": 0
-  },
-  "0x20": {
     "startDate": "0x3e",
     "endDate": "0x3f",
     "project": "0x18",
@@ -556,7 +550,7 @@
     "itemName": "",
     "id": 0
   },
-  "0x21": {
+  "0x20": {
     "startDate": "0x40",
     "endDate": "0x41",
     "project": "0x18",
@@ -564,17 +558,25 @@
     "itemName": "",
     "id": 0
   },
+  "0x21": {
+    "startDate": "0x42",
+    "endDate": "0x43",
+    "project": "0x18",
+    "team": "0x3",
+    "itemName": "",
+    "id": 0
+  },
   "0x22": {
-    "startDate": "0x3a",
-    "endDate": "0x3b",
+    "startDate": "0x3c",
+    "endDate": "0x3d",
     "project": "0x18",
     "team": "0x3",
     "itemName": "",
     "id": 0
   },
   "0x23": {
-    "startDate": "0x42",
-    "endDate": "0x43",
+    "startDate": "0x44",
+    "endDate": "0x45",
     "project": "0x18",
     "team": "0x5",
     "itemName": "",
@@ -588,7 +590,7 @@
   "0x25": {
     "shortName": "Sprint 3.",
     "description": "",
-    "estimatedDate": "0x44",
+    "estimatedDate": "0x46",
     "project": "0x18",
     "itemName": "",
     "id": 30
@@ -599,9 +601,9 @@
     "description": "",
     "productOwner": "0x9",
     "serializableStories": [
-      "0x45",
-      "0x46",
-      "0x47"
+      "0x47",
+      "0x48",
+      "0x49"
     ],
     "project": "0x18",
     "scale": "Fibonacci",
@@ -622,7 +624,7 @@
   "0x28": {
     "shortName": "Sprint 3",
     "description": "",
-    "estimatedDate": "0x48",
+    "estimatedDate": "0x4a",
     "project": "0x19",
     "itemName": "",
     "id": 21
@@ -635,59 +637,82 @@
     "colour": "DEFAULT",
     "priority": 9,
     "project": "0x19",
-    "sprint": "0x2b",
+    "sprint": "0x2c",
     "done": false,
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [],
     "dependentOn": [],
     "serializableTasks": [
-      "0x49",
-      "0x4a"
+      "0x4b",
+      "0x4c"
     ],
     "tasksWithoutStory": false,
     "itemName": "",
     "id": 23
   },
   "0x2a": {
+    "shortName": "Little Bo Peep",
+    "longName": "Little Bo Peep",
+    "description": "",
+    "creator": "Big Bad Wolf",
+    "colour": "DEFAULT",
+    "priority": 3,
+    "project": "0x19",
+    "sprint": "0x2c",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [
+      "0x4d",
+      "0x4e"
+    ],
+    "tasksWithoutStory": false,
+    "itemName": "Little Bo Peep",
+    "id": 3519
+  },
+  "0x2b": {
     "shortName": "Sprint 3: Sahara",
     "longName": "Current Sprint",
     "description": "",
     "productOwner": "0x8",
     "serializableStories": [
-      "0x4b",
-      "0x4c",
-      "0x4d",
-      "0x4e"
+      "0x4f",
+      "0x50",
+      "0x51",
+      "0x52"
     ],
     "project": "0x19",
     "scale": "Fibonacci",
     "itemName": "",
     "id": 24
   },
-  "0x2b": {
+  "0x2c": {
     "project": "0x19",
     "team": "0x2",
     "release": "0x28",
     "serializableStories": [
-      "0x4b",
-      "0x4c",
-      "0x4d",
-      "0x4e",
-      "0x29"
+      "0x29",
+      "0x50",
+      "0x51",
+      "0x4f",
+      "0x52",
+      "0x2a"
     ],
     "goal": "A hefty sprint",
     "longName": "A hefty sprint",
     "description": "",
-    "startDate": "0x4f",
-    "endDate": "0x50",
-    "tasksWithoutStory": "0x51",
+    "startDate": "0x53",
+    "endDate": "0x54",
+    "tasksWithoutStory": "0x55",
     "itemName": "",
     "id": 2404
   },
-  "0x2c": {
+  "0x2d": {
     "startTime": {
-      "date": "0x52",
+      "date": "0x56",
       "time": {
         "hour": 0,
         "minute": 0,
@@ -698,14 +723,14 @@
     "duration": 5.0,
     "effortLeftDifference": 0.0,
     "logger": "0xe",
-    "task": "0x53",
+    "task": "0x57",
     "description": "",
     "itemName": "Untitled Log",
     "id": 2724
   },
-  "0x2d": {
+  "0x2e": {
     "startTime": {
-      "date": "0x54",
+      "date": "0x58",
       "time": {
         "hour": 0,
         "minute": 0,
@@ -716,14 +741,14 @@
     "duration": 1800.0,
     "effortLeftDifference": 1800.0,
     "logger": "0xe",
-    "task": "0x55",
+    "task": "0x59",
     "description": "",
     "itemName": "Untitled Log",
     "id": 2847
   },
-  "0x2e": {
+  "0x2f": {
     "startTime": {
-      "date": "0x56",
+      "date": "0x5a",
       "time": {
         "hour": 0,
         "minute": 0,
@@ -734,14 +759,14 @@
     "duration": 120.0,
     "effortLeftDifference": 120.0,
     "logger": "0x12",
-    "task": "0x57",
+    "task": "0x5b",
     "description": "",
     "itemName": "Untitled Log",
     "id": 2849
   },
-  "0x2f": {
+  "0x30": {
     "startTime": {
-      "date": "0x58",
+      "date": "0x5c",
       "time": {
         "hour": 0,
         "minute": 0,
@@ -752,14 +777,14 @@
     "duration": 4800.0,
     "effortLeftDifference": 300.0,
     "logger": "0x12",
-    "task": "0x59",
+    "task": "0x5d",
     "description": "",
     "itemName": "Untitled Log",
     "id": 3007
   },
-  "0x30": {
+  "0x31": {
     "startTime": {
-      "date": "0x5a",
+      "date": "0x5e",
       "time": {
         "hour": 0,
         "minute": 0,
@@ -770,14 +795,14 @@
     "duration": 720.0,
     "effortLeftDifference": 720.0,
     "logger": "0xe",
-    "task": "0x5b",
+    "task": "0x5f",
     "description": "",
     "itemName": "Untitled Log",
     "id": 3231
   },
-  "0x31": {
+  "0x32": {
     "startTime": {
-      "date": "0x5c",
+      "date": "0x60",
       "time": {
         "hour": 0,
         "minute": 0,
@@ -788,14 +813,14 @@
     "duration": 1800.0,
     "effortLeftDifference": 1800.0,
     "logger": "0xf",
-    "task": "0x5d",
+    "task": "0x61",
     "description": "",
     "itemName": "Untitled Log",
     "id": 3232
   },
-  "0x32": {
+  "0x33": {
     "startTime": {
-      "date": "0x5e",
+      "date": "0x62",
       "time": {
         "hour": 0,
         "minute": 0,
@@ -806,14 +831,14 @@
     "duration": 480.0,
     "effortLeftDifference": 360.0,
     "logger": "0xf",
-    "task": "0x5f",
+    "task": "0x63",
     "description": "",
     "itemName": "Untitled Log",
     "id": 3233
   },
-  "0x33": {
+  "0x34": {
     "startTime": {
-      "date": "0x60",
+      "date": "0x64",
       "time": {
         "hour": 0,
         "minute": 0,
@@ -824,48 +849,12 @@
     "duration": 240.0,
     "effortLeftDifference": 240.0,
     "logger": "0xe",
-    "task": "0x49",
+    "task": "0x4b",
     "description": "",
     "itemName": "Untitled Log",
     "id": 3375
   },
-  "0x34": {
-    "startTime": {
-      "date": "0x61",
-      "time": {
-        "hour": 0,
-        "minute": 0,
-        "second": 0,
-        "nano": 0
-      }
-    },
-    "duration": 120.0,
-    "effortLeftDifference": 0.0,
-    "logger": "0x6",
-    "task": "0x62",
-    "description": "",
-    "itemName": "Untitled Log",
-    "id": 3446
-  },
   "0x35": {
-    "startTime": {
-      "date": "0x63",
-      "time": {
-        "hour": 0,
-        "minute": 0,
-        "second": 0,
-        "nano": 0
-      }
-    },
-    "duration": 120.0,
-    "effortLeftDifference": 0.0,
-    "logger": "0x12",
-    "task": "0x64",
-    "description": "",
-    "itemName": "Untitled Log",
-    "id": 3447
-  },
-  "0x36": {
     "startTime": {
       "date": "0x65",
       "time": {
@@ -876,16 +865,52 @@
       }
     },
     "duration": 120.0,
+    "effortLeftDifference": 0.0,
+    "logger": "0x6",
+    "task": "0x66",
+    "description": "",
+    "itemName": "Untitled Log",
+    "id": 3446
+  },
+  "0x36": {
+    "startTime": {
+      "date": "0x67",
+      "time": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "duration": 120.0,
+    "effortLeftDifference": 0.0,
+    "logger": "0x12",
+    "task": "0x68",
+    "description": "",
+    "itemName": "Untitled Log",
+    "id": 3447
+  },
+  "0x37": {
+    "startTime": {
+      "date": "0x69",
+      "time": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "duration": 120.0,
     "effortLeftDifference": -120.0,
     "logger": "0xe",
-    "task": "0x66",
+    "task": "0x6a",
     "description": "",
     "itemName": "Untitled Log",
     "id": 3448
   },
-  "0x37": {
+  "0x38": {
     "startTime": {
-      "date": "0x67",
+      "date": "0x6b",
       "time": {
         "hour": 0,
         "minute": 0,
@@ -896,77 +921,95 @@
     "duration": 360.0,
     "effortLeftDifference": 0.0,
     "logger": "0xf",
-    "task": "0x68",
+    "task": "0x6c",
     "description": "",
     "itemName": "Untitled Log",
     "id": 3449
   },
-  "0x38": {
+  "0x39": {
+    "startTime": {
+      "date": "0x6d",
+      "time": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 0
+      }
+    },
+    "duration": 240.0,
+    "effortLeftDifference": 240.0,
+    "logger": "0x12",
+    "task": "0x4d",
+    "description": "",
+    "itemName": "Untitled Log",
+    "id": 3522
+  },
+  "0x3a": {
     "year": 2015,
     "month": 1,
     "day": 5
   },
-  "0x39": {
+  "0x3b": {
     "year": 2015,
     "month": 11,
     "day": 18
   },
-  "0x3a": {
+  "0x3c": {
     "year": 2017,
     "month": 5,
     "day": 6
   },
-  "0x3b": {
-    "year": 2017,
-    "month": 5,
-    "day": 20
-  },
-  "0x3c": {
-    "year": 2015,
-    "month": 5,
-    "day": 12
-  },
   "0x3d": {
-    "year": 2015,
+    "year": 2017,
     "month": 5,
     "day": 20
   },
   "0x3e": {
     "year": 2015,
     "month": 5,
-    "day": 23
+    "day": 12
   },
   "0x3f": {
     "year": 2015,
     "month": 5,
-    "day": 30
+    "day": 20
   },
   "0x40": {
+    "year": 2015,
+    "month": 5,
+    "day": 23
+  },
+  "0x41": {
+    "year": 2015,
+    "month": 5,
+    "day": 30
+  },
+  "0x42": {
     "year": 2016,
     "month": 5,
     "day": 14
   },
-  "0x41": {
+  "0x43": {
     "year": 2016,
     "month": 5,
     "day": 28
   },
-  "0x42": {
+  "0x44": {
     "year": 2015,
     "month": 4,
     "day": 27
   },
-  "0x43": {
+  "0x45": {
     "year": 2015,
     "month": 5,
     "day": 20
   },
-  "0x44": {
+  "0x46": {
     "year": 2015,
     "month": 5,
     "day": 31
   },
-  "0x45": {
+  "0x47": {
     "shortName": "Highlighting",
     "longName": "Highlighting Story State",
     "description": "Make table highlightable and show some nice colours on stuff in the table",
@@ -979,7 +1022,7 @@
     "estimate": "3",
     "ready": true,
     "serializableAcceptanceCriteria": [
-      "0x69"
+      "0x6e"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -987,7 +1030,7 @@
     "itemName": "",
     "id": 810
   },
-  "0x46": {
+  "0x48": {
     "shortName": "UX Design",
     "longName": "UX Design",
     "description": "Do some GUI stuff",
@@ -1000,18 +1043,18 @@
     "estimate": "3",
     "ready": true,
     "serializableAcceptanceCriteria": [
-      "0x6a"
+      "0x6f"
     ],
     "dependentOn": [
-      "0x45",
-      "0x47"
+      "0x47",
+      "0x49"
     ],
     "serializableTasks": [],
     "tasksWithoutStory": false,
     "itemName": "",
     "id": 38
   },
-  "0x47": {
+  "0x49": {
     "shortName": "Basic Story",
     "longName": "Basic Story Maintenance",
     "description": "",
@@ -1024,7 +1067,7 @@
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0x6b"
+      "0x70"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -1032,12 +1075,12 @@
     "itemName": "",
     "id": 39
   },
-  "0x48": {
+  "0x4a": {
     "year": 2015,
     "month": 5,
     "day": 25
   },
-  "0x49": {
+  "0x4b": {
     "shortName": "Give backlogs a priority",
     "description": " ",
     "impediments": "",
@@ -1045,16 +1088,16 @@
     "lane": "VERIFY",
     "story": "0x29",
     "serializableLogs": [
-      "0x33"
+      "0x34"
     ],
     "effortLeft": 0.0,
     "effortSpent": 240.0,
-    "initialLog": "0x6c",
+    "initialLog": "0x71",
     "converter": {},
     "itemName": "Give backlogs a priority",
     "id": 3130
   },
-  "0x4a": {
+  "0x4c": {
     "shortName": "Ensure the priority is set",
     "description": " ",
     "impediments": "",
@@ -1064,122 +1107,155 @@
     "serializableLogs": [],
     "effortLeft": 120.0,
     "effortSpent": 0.0,
-    "initialLog": "0x6d",
+    "initialLog": "0x72",
     "converter": {},
     "itemName": "Ensure the priority is set",
     "id": 3132
   },
-  "0x4b": {
+  "0x4d": {
+    "shortName": "Lose Sheep",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0x2a",
+    "assignee": "0xe",
+    "serializableLogs": [
+      "0x39"
+    ],
+    "effortLeft": 0.0,
+    "effortSpent": 240.0,
+    "initialLog": "0x73",
+    "converter": {},
+    "itemName": "Lose Sheep",
+    "id": 3520
+  },
+  "0x4e": {
+    "shortName": "Find Sheep",
+    "description": " ",
+    "impediments": "",
+    "state": "NOT_STARTED",
+    "lane": "NOT_STARTED",
+    "story": "0x2a",
+    "serializableLogs": [],
+    "effortLeft": 240.0,
+    "effortSpent": 0.0,
+    "initialLog": "0x74",
+    "converter": {},
+    "itemName": "Find Sheep",
+    "id": 3523
+  },
+  "0x4f": {
     "shortName": "Project Allocation",
     "longName": "Project Allocation Maintenance",
     "description": "",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 18,
-    "backlog": "0x2a",
+    "backlog": "0x2b",
     "project": "0x19",
-    "sprint": "0x2b",
+    "sprint": "0x2c",
     "done": false,
     "estimate": "5",
     "ready": true,
     "serializableAcceptanceCriteria": [
-      "0x6e"
+      "0x75"
     ],
     "dependentOn": [],
     "serializableTasks": [
-      "0x6f",
-      "0x70"
+      "0x76",
+      "0x77"
     ],
     "tasksWithoutStory": false,
     "itemName": "",
     "id": 25
   },
-  "0x4c": {
+  "0x50": {
     "shortName": "Status Reports",
     "longName": "Status Reports",
     "description": "",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 12,
-    "backlog": "0x2a",
+    "backlog": "0x2b",
     "project": "0x19",
-    "sprint": "0x2b",
+    "sprint": "0x2c",
     "done": false,
     "estimate": "20",
     "ready": true,
     "serializableAcceptanceCriteria": [
-      "0x71",
-      "0x72"
+      "0x78",
+      "0x79"
     ],
     "dependentOn": [
       "0x29"
     ],
     "serializableTasks": [
-      "0x53"
+      "0x57"
     ],
     "tasksWithoutStory": false,
     "itemName": "",
     "id": 26
   },
-  "0x4d": {
+  "0x51": {
     "shortName": "UX I",
     "longName": "UX I",
     "description": "",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 11,
-    "backlog": "0x2a",
+    "backlog": "0x2b",
     "project": "0x19",
-    "sprint": "0x2b",
+    "sprint": "0x2c",
     "done": false,
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [],
     "dependentOn": [],
     "serializableTasks": [
-      "0x59",
-      "0x57",
-      "0x55"
+      "0x5d",
+      "0x5b",
+      "0x59"
     ],
     "tasksWithoutStory": false,
     "itemName": "",
     "id": 27
   },
-  "0x4e": {
+  "0x52": {
     "shortName": "Revert",
     "longName": "Revert",
     "description": "",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 10,
-    "backlog": "0x2a",
+    "backlog": "0x2b",
     "project": "0x19",
-    "sprint": "0x2b",
+    "sprint": "0x2c",
     "done": false,
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [],
     "dependentOn": [],
     "serializableTasks": [
-      "0x5b",
       "0x5f",
-      "0x5d"
+      "0x63",
+      "0x61"
     ],
     "tasksWithoutStory": false,
     "itemName": "",
     "id": 28
   },
-  "0x4f": {
+  "0x53": {
     "year": 2015,
     "month": 3,
     "day": 9
   },
-  "0x50": {
+  "0x54": {
     "year": 2015,
     "month": 5,
     "day": 25
   },
-  "0x51": {
+  "0x55": {
     "shortName": "Tasks without a Story",
     "longName": "Tasks without a Story",
     "description": "A collection of tasks that do not belong to a story",
@@ -1193,61 +1269,14 @@
     "serializableAcceptanceCriteria": [],
     "dependentOn": [],
     "serializableTasks": [
-      "0x64",
-      "0x66",
       "0x68",
-      "0x62"
+      "0x6a",
+      "0x6c",
+      "0x66"
     ],
     "tasksWithoutStory": true,
     "itemName": "Tasks without a Story",
     "id": 2406
-  },
-  "0x52": {
-    "year": 2015,
-    "month": 9,
-    "day": 6
-  },
-  "0x53": {
-    "shortName": "Done",
-    "description": "",
-    "impediments": "",
-    "state": "DONE",
-    "lane": "DONE",
-    "story": "0x4c",
-    "serializableLogs": [
-      "0x2c"
-    ],
-    "effortLeft": 0.0,
-    "effortSpent": 5.0,
-    "initialLog": "0x73",
-    "converter": {},
-    "itemName": "Almost done",
-    "id": 2421
-  },
-  "0x54": {
-    "year": 2015,
-    "month": 9,
-    "day": 6
-  },
-  "0x55": {
-    "shortName": "Add some functionality",
-    "description": " ",
-    "impediments": "",
-    "state": "VERIFY",
-    "lane": "VERIFY",
-    "story": "0x4d",
-    "assignee": "0x6",
-    "serializableLogs": [
-      "0x74",
-      "0x2d",
-      "0x75"
-    ],
-    "effortLeft": 0.0,
-    "effortSpent": 1800.0,
-    "initialLog": "0x76",
-    "converter": {},
-    "itemName": "Add some functionality",
-    "id": 2593
   },
   "0x56": {
     "year": 2015,
@@ -1255,22 +1284,21 @@
     "day": 6
   },
   "0x57": {
-    "shortName": "Make it even prettier",
-    "description": " ",
+    "shortName": "Done",
+    "description": "",
     "impediments": "",
-    "state": "VERIFY",
-    "lane": "VERIFY",
-    "story": "0x4d",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0x50",
     "serializableLogs": [
-      "0x2e",
-      "0x77"
+      "0x2d"
     ],
     "effortLeft": 0.0,
-    "effortSpent": 120.0,
-    "initialLog": "0x78",
+    "effortSpent": 5.0,
+    "initialLog": "0x7a",
     "converter": {},
-    "itemName": "Make it even prettier",
-    "id": 2591
+    "itemName": "Almost done",
+    "id": 2421
   },
   "0x58": {
     "year": 2015,
@@ -1278,21 +1306,24 @@
     "day": 6
   },
   "0x59": {
-    "shortName": "Build something pretty",
+    "shortName": "Add some functionality",
     "description": " ",
     "impediments": "",
-    "state": "DONE",
-    "lane": "DONE",
-    "story": "0x4d",
+    "state": "VERIFY",
+    "lane": "VERIFY",
+    "story": "0x51",
+    "assignee": "0x6",
     "serializableLogs": [
-      "0x2f"
+      "0x7b",
+      "0x2e",
+      "0x7c"
     ],
     "effortLeft": 0.0,
-    "effortSpent": 4800.0,
-    "initialLog": "0x79",
+    "effortSpent": 1800.0,
+    "initialLog": "0x7d",
     "converter": {},
-    "itemName": "Build something pretty",
-    "id": 2589
+    "itemName": "Add some functionality",
+    "id": 2593
   },
   "0x5a": {
     "year": 2015,
@@ -1300,21 +1331,22 @@
     "day": 6
   },
   "0x5b": {
-    "shortName": "Create a Revert State",
+    "shortName": "Make it even prettier",
     "description": " ",
     "impediments": "",
     "state": "VERIFY",
     "lane": "VERIFY",
-    "story": "0x4e",
+    "story": "0x51",
     "serializableLogs": [
-      "0x30"
+      "0x2f",
+      "0x7e"
     ],
     "effortLeft": 0.0,
-    "effortSpent": 720.0,
-    "initialLog": "0x7a",
+    "effortSpent": 120.0,
+    "initialLog": "0x7f",
     "converter": {},
-    "itemName": "Create a Revert State",
-    "id": 2596
+    "itemName": "Make it even prettier",
+    "id": 2591
   },
   "0x5c": {
     "year": 2015,
@@ -1322,21 +1354,21 @@
     "day": 6
   },
   "0x5d": {
-    "shortName": "Time Travel",
+    "shortName": "Build something pretty",
     "description": " ",
     "impediments": "",
-    "state": "VERIFY",
-    "lane": "VERIFY",
-    "story": "0x4e",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0x51",
     "serializableLogs": [
-      "0x31"
+      "0x30"
     ],
     "effortLeft": 0.0,
-    "effortSpent": 1800.0,
-    "initialLog": "0x7b",
+    "effortSpent": 4800.0,
+    "initialLog": "0x80",
     "converter": {},
-    "itemName": "Time Travel",
-    "id": 2600
+    "itemName": "Build something pretty",
+    "id": 2589
   },
   "0x5e": {
     "year": 2015,
@@ -1344,21 +1376,21 @@
     "day": 6
   },
   "0x5f": {
-    "shortName": "Revert Back",
+    "shortName": "Create a Revert State",
     "description": " ",
     "impediments": "",
     "state": "VERIFY",
     "lane": "VERIFY",
-    "story": "0x4e",
+    "story": "0x52",
     "serializableLogs": [
-      "0x32"
+      "0x31"
     ],
     "effortLeft": 0.0,
-    "effortSpent": 480.0,
-    "initialLog": "0x7c",
+    "effortSpent": 720.0,
+    "initialLog": "0x81",
     "converter": {},
-    "itemName": "Revert Back",
-    "id": 2598
+    "itemName": "Create a Revert State",
+    "id": 2596
   },
   "0x60": {
     "year": 2015,
@@ -1366,48 +1398,48 @@
     "day": 6
   },
   "0x61": {
-    "year": 2015,
-    "month": 9,
-    "day": 6
+    "shortName": "Time Travel",
+    "description": " ",
+    "impediments": "",
+    "state": "VERIFY",
+    "lane": "VERIFY",
+    "story": "0x52",
+    "serializableLogs": [
+      "0x32"
+    ],
+    "effortLeft": 0.0,
+    "effortSpent": 1800.0,
+    "initialLog": "0x82",
+    "converter": {},
+    "itemName": "Time Travel",
+    "id": 2600
   },
   "0x62": {
-    "shortName": "Mission completion",
-    "description": "",
-    "impediments": "",
-    "state": "DONE",
-    "lane": "DONE",
-    "story": "0x51",
-    "serializableLogs": [
-      "0x34"
-    ],
-    "effortLeft": 0.0,
-    "effortSpent": 120.0,
-    "initialLog": "0x7d",
-    "converter": {},
-    "itemName": "Mission completion",
-    "id": 2415
-  },
-  "0x63": {
     "year": 2015,
     "month": 9,
     "day": 6
   },
-  "0x64": {
-    "shortName": "Do some work!",
-    "description": "",
+  "0x63": {
+    "shortName": "Revert Back",
+    "description": " ",
     "impediments": "",
-    "state": "NOT_STARTED",
-    "lane": "NOT_STARTED",
-    "story": "0x51",
+    "state": "VERIFY",
+    "lane": "VERIFY",
+    "story": "0x52",
     "serializableLogs": [
-      "0x35"
+      "0x33"
     ],
     "effortLeft": 0.0,
-    "effortSpent": 120.0,
-    "initialLog": "0x7e",
+    "effortSpent": 480.0,
+    "initialLog": "0x83",
     "converter": {},
-    "itemName": "Do some work!",
-    "id": 2407
+    "itemName": "Revert Back",
+    "id": 2598
+  },
+  "0x64": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
   },
   "0x65": {
     "year": 2015,
@@ -1415,21 +1447,21 @@
     "day": 6
   },
   "0x66": {
-    "shortName": "Half baked",
+    "shortName": "Mission completion",
     "description": "",
     "impediments": "",
-    "state": "IN_PROGRESS",
-    "lane": "IN_PROGRESS",
-    "story": "0x51",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0x55",
     "serializableLogs": [
-      "0x36"
+      "0x35"
     ],
-    "effortLeft": 120.0,
+    "effortLeft": 0.0,
     "effortSpent": 120.0,
-    "initialLog": "0x7f",
+    "initialLog": "0x84",
     "converter": {},
-    "itemName": "Half baked",
-    "id": 2408
+    "itemName": "Mission completion",
+    "id": 2415
   },
   "0x67": {
     "year": 2015,
@@ -1437,46 +1469,95 @@
     "day": 6
   },
   "0x68": {
+    "shortName": "Do some work!",
+    "description": "",
+    "impediments": "",
+    "state": "NOT_STARTED",
+    "lane": "NOT_STARTED",
+    "story": "0x55",
+    "serializableLogs": [
+      "0x36"
+    ],
+    "effortLeft": 0.0,
+    "effortSpent": 120.0,
+    "initialLog": "0x85",
+    "converter": {},
+    "itemName": "Do some work!",
+    "id": 2407
+  },
+  "0x69": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
+  },
+  "0x6a": {
+    "shortName": "Half baked",
+    "description": "",
+    "impediments": "",
+    "state": "IN_PROGRESS",
+    "lane": "IN_PROGRESS",
+    "story": "0x55",
+    "serializableLogs": [
+      "0x37"
+    ],
+    "effortLeft": 120.0,
+    "effortSpent": 120.0,
+    "initialLog": "0x86",
+    "converter": {},
+    "itemName": "Half baked",
+    "id": 2408
+  },
+  "0x6b": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
+  },
+  "0x6c": {
     "shortName": "Verify me!",
     "description": "",
     "impediments": "",
     "state": "VERIFY",
     "lane": "VERIFY",
-    "story": "0x51",
+    "story": "0x55",
     "serializableLogs": [
-      "0x37"
+      "0x38"
     ],
     "effortLeft": 0.0,
     "effortSpent": 360.0,
-    "initialLog": "0x80",
+    "initialLog": "0x87",
     "converter": {},
     "itemName": "Verify me!",
     "id": 2414
   },
-  "0x69": {
+  "0x6d": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
+  },
+  "0x6e": {
     "description": "Control to toggle highlighting\n",
-    "state": "UNACCEPTED",
-    "story": "0x45",
-    "itemName": "",
-    "id": 1251
-  },
-  "0x6a": {
-    "description": "An ac",
-    "state": "UNACCEPTED",
-    "story": "0x46",
-    "itemName": "",
-    "id": 0
-  },
-  "0x6b": {
-    "description": "Class",
     "state": "UNACCEPTED",
     "story": "0x47",
     "itemName": "",
+    "id": 1251
+  },
+  "0x6f": {
+    "description": "An ac",
+    "state": "UNACCEPTED",
+    "story": "0x48",
+    "itemName": "",
+    "id": 0
+  },
+  "0x70": {
+    "description": "Class",
+    "state": "UNACCEPTED",
+    "story": "0x49",
+    "itemName": "",
     "id": 532
   },
-  "0x6c": {
+  "0x71": {
     "startTime": {
-      "date": "0x81",
+      "date": "0x88",
       "time": {
         "hour": 17,
         "minute": 10,
@@ -1486,14 +1567,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": -240.0,
-    "task": "0x49",
+    "task": "0x4b",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 3131
   },
-  "0x6d": {
+  "0x72": {
     "startTime": {
-      "date": "0x82",
+      "date": "0x89",
       "time": {
         "hour": 17,
         "minute": 10,
@@ -1503,65 +1584,99 @@
     },
     "duration": 0.0,
     "effortLeftDifference": -120.0,
-    "task": "0x4a",
+    "task": "0x4c",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 3133
   },
-  "0x6e": {
+  "0x73": {
+    "startTime": {
+      "date": "0x8a",
+      "time": {
+        "hour": 17,
+        "minute": 46,
+        "second": 31,
+        "nano": 416000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": -240.0,
+    "task": "0x4d",
+    "description": "initial log (this should be hidden)",
+    "itemName": "Untitled Log",
+    "id": 3521
+  },
+  "0x74": {
+    "startTime": {
+      "date": "0x8b",
+      "time": {
+        "hour": 17,
+        "minute": 46,
+        "second": 57,
+        "nano": 590000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": -240.0,
+    "task": "0x4e",
+    "description": "initial log (this should be hidden)",
+    "itemName": "Untitled Log",
+    "id": 3524
+  },
+  "0x75": {
     "description": "We have projects that can be allocated",
     "state": "UNACCEPTED",
-    "story": "0x4b",
+    "story": "0x4f",
     "itemName": "",
     "id": 2418
   },
-  "0x6f": {
+  "0x76": {
     "shortName": "Make a project",
     "description": "",
     "impediments": "",
     "state": "IN_PROGRESS",
     "lane": "IN_PROGRESS",
-    "story": "0x4b",
+    "story": "0x4f",
     "serializableLogs": [],
     "effortLeft": 0.0,
     "effortSpent": 0.0,
-    "initialLog": "0x83",
+    "initialLog": "0x8c",
     "converter": {},
     "itemName": "Make a project",
     "id": 2416
   },
-  "0x70": {
+  "0x77": {
     "shortName": "Do some allocating!",
     "description": "",
     "impediments": "",
     "state": "NOT_STARTED",
     "lane": "NOT_STARTED",
-    "story": "0x4b",
+    "story": "0x4f",
     "serializableLogs": [],
     "effortLeft": 0.0,
     "effortSpent": 0.0,
-    "initialLog": "0x84",
+    "initialLog": "0x8d",
     "converter": {},
     "itemName": "Do some allocating!",
     "id": 2417
   },
-  "0x71": {
+  "0x78": {
     "description": "An easy way to access status of a project",
     "state": "UNACCEPTED",
-    "story": "0x4c",
+    "story": "0x50",
     "itemName": "",
     "id": 2419
   },
-  "0x72": {
+  "0x79": {
     "description": "Includes lots of technical stuff",
     "state": "UNACCEPTED",
-    "story": "0x4c",
+    "story": "0x50",
     "itemName": "",
     "id": 2420
   },
-  "0x73": {
+  "0x7a": {
     "startTime": {
-      "date": "0x85",
+      "date": "0x8e",
       "time": {
         "hour": 16,
         "minute": 50,
@@ -1571,14 +1686,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": 0.0,
-    "task": "0x53",
+    "task": "0x57",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 40
   },
-  "0x74": {
+  "0x7b": {
     "startTime": {
-      "date": "0x86",
+      "date": "0x8f",
       "time": {
         "hour": 16,
         "minute": 53,
@@ -1588,14 +1703,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": 594000.0,
-    "task": "0x55",
+    "task": "0x59",
     "description": "Manual Edit",
     "itemName": "Untitled Log",
     "id": 2595
   },
-  "0x75": {
+  "0x7c": {
     "startTime": {
-      "date": "0x87",
+      "date": "0x90",
       "time": {
         "hour": 17,
         "minute": 8,
@@ -1605,14 +1720,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": 4140.0,
-    "task": "0x55",
+    "task": "0x59",
     "description": "Manual Edit",
     "itemName": "Untitled Log",
     "id": 3008
   },
-  "0x76": {
+  "0x7d": {
     "startTime": {
-      "date": "0x88",
+      "date": "0x91",
       "time": {
         "hour": 16,
         "minute": 53,
@@ -1622,14 +1737,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": -599940.0,
-    "task": "0x55",
+    "task": "0x59",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 2594
   },
-  "0x77": {
+  "0x7e": {
     "startTime": {
-      "date": "0x89",
+      "date": "0x92",
       "time": {
         "hour": 17,
         "minute": 8,
@@ -1639,14 +1754,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": 360.0,
-    "task": "0x57",
+    "task": "0x5b",
     "description": "Manual Edit",
     "itemName": "Untitled Log",
     "id": 3009
   },
-  "0x78": {
+  "0x7f": {
     "startTime": {
-      "date": "0x8a",
+      "date": "0x93",
       "time": {
         "hour": 16,
         "minute": 53,
@@ -1656,14 +1771,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": -480.0,
-    "task": "0x57",
+    "task": "0x5b",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 2592
   },
-  "0x79": {
+  "0x80": {
     "startTime": {
-      "date": "0x8b",
+      "date": "0x94",
       "time": {
         "hour": 16,
         "minute": 52,
@@ -1673,14 +1788,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": -300.0,
-    "task": "0x59",
+    "task": "0x5d",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 2590
   },
-  "0x7a": {
+  "0x81": {
     "startTime": {
-      "date": "0x8c",
+      "date": "0x95",
       "time": {
         "hour": 16,
         "minute": 53,
@@ -1690,14 +1805,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": -720.0,
-    "task": "0x5b",
+    "task": "0x5f",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 2597
   },
-  "0x7b": {
+  "0x82": {
     "startTime": {
-      "date": "0x8d",
+      "date": "0x96",
       "time": {
         "hour": 16,
         "minute": 54,
@@ -1707,14 +1822,14 @@
     },
     "duration": 0.0,
     "effortLeftDifference": -1800.0,
-    "task": "0x5d",
+    "task": "0x61",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 2601
   },
-  "0x7c": {
+  "0x83": {
     "startTime": {
-      "date": "0x8e",
+      "date": "0x97",
       "time": {
         "hour": 16,
         "minute": 54,
@@ -1724,53 +1839,19 @@
     },
     "duration": 0.0,
     "effortLeftDifference": -360.0,
-    "task": "0x5f",
+    "task": "0x63",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 2599
   },
-  "0x7d": {
+  "0x84": {
     "startTime": {
-      "date": "0x8f",
+      "date": "0x98",
       "time": {
         "hour": 16,
         "minute": 50,
         "second": 55,
         "nano": 794000000
-      }
-    },
-    "duration": 0.0,
-    "effortLeftDifference": 0.0,
-    "task": "0x62",
-    "description": "initial log (this should be hidden)",
-    "itemName": "Untitled Log",
-    "id": 49
-  },
-  "0x7e": {
-    "startTime": {
-      "date": "0x90",
-      "time": {
-        "hour": 16,
-        "minute": 50,
-        "second": 55,
-        "nano": 793000000
-      }
-    },
-    "duration": 0.0,
-    "effortLeftDifference": 0.0,
-    "task": "0x64",
-    "description": "initial log (this should be hidden)",
-    "itemName": "Untitled Log",
-    "id": 43
-  },
-  "0x7f": {
-    "startTime": {
-      "date": "0x91",
-      "time": {
-        "hour": 16,
-        "minute": 50,
-        "second": 55,
-        "nano": 793000000
       }
     },
     "duration": 0.0,
@@ -1778,11 +1859,45 @@
     "task": "0x66",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
+    "id": 49
+  },
+  "0x85": {
+    "startTime": {
+      "date": "0x99",
+      "time": {
+        "hour": 16,
+        "minute": 50,
+        "second": 55,
+        "nano": 793000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0x68",
+    "description": "initial log (this should be hidden)",
+    "itemName": "Untitled Log",
+    "id": 43
+  },
+  "0x86": {
+    "startTime": {
+      "date": "0x9a",
+      "time": {
+        "hour": 16,
+        "minute": 50,
+        "second": 55,
+        "nano": 793000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0x6a",
+    "description": "initial log (this should be hidden)",
+    "itemName": "Untitled Log",
     "id": 45
   },
-  "0x80": {
+  "0x87": {
     "startTime": {
-      "date": "0x92",
+      "date": "0x9b",
       "time": {
         "hour": 16,
         "minute": 50,
@@ -1792,69 +1907,10 @@
     },
     "duration": 0.0,
     "effortLeftDifference": 0.0,
-    "task": "0x68",
+    "task": "0x6c",
     "description": "initial log (this should be hidden)",
     "itemName": "Untitled Log",
     "id": 47
-  },
-  "0x81": {
-    "year": 2015,
-    "month": 9,
-    "day": 6
-  },
-  "0x82": {
-    "year": 2015,
-    "month": 9,
-    "day": 6
-  },
-  "0x83": {
-    "startTime": {
-      "date": "0x93",
-      "time": {
-        "hour": 16,
-        "minute": 50,
-        "second": 55,
-        "nano": 795000000
-      }
-    },
-    "duration": 0.0,
-    "effortLeftDifference": 0.0,
-    "task": "0x6f",
-    "description": "initial log (this should be hidden)",
-    "itemName": "Untitled Log",
-    "id": 52
-  },
-  "0x84": {
-    "startTime": {
-      "date": "0x94",
-      "time": {
-        "hour": 16,
-        "minute": 50,
-        "second": 55,
-        "nano": 797000000
-      }
-    },
-    "duration": 0.0,
-    "effortLeftDifference": 0.0,
-    "task": "0x70",
-    "description": "initial log (this should be hidden)",
-    "itemName": "Untitled Log",
-    "id": 54
-  },
-  "0x85": {
-    "year": 2015,
-    "month": 9,
-    "day": 6
-  },
-  "0x86": {
-    "year": 2015,
-    "month": 9,
-    "day": 6
-  },
-  "0x87": {
-    "year": 2015,
-    "month": 9,
-    "day": 6
   },
   "0x88": {
     "year": 2015,
@@ -1877,14 +1933,38 @@
     "day": 6
   },
   "0x8c": {
-    "year": 2015,
-    "month": 9,
-    "day": 6
+    "startTime": {
+      "date": "0x9c",
+      "time": {
+        "hour": 16,
+        "minute": 50,
+        "second": 55,
+        "nano": 795000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0x76",
+    "description": "initial log (this should be hidden)",
+    "itemName": "Untitled Log",
+    "id": 52
   },
   "0x8d": {
-    "year": 2015,
-    "month": 9,
-    "day": 6
+    "startTime": {
+      "date": "0x9d",
+      "time": {
+        "hour": 16,
+        "minute": 50,
+        "second": 55,
+        "nano": 797000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0x77",
+    "description": "initial log (this should be hidden)",
+    "itemName": "Untitled Log",
+    "id": 54
   },
   "0x8e": {
     "year": 2015,
@@ -1917,6 +1997,51 @@
     "day": 6
   },
   "0x94": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
+  },
+  "0x95": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
+  },
+  "0x96": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
+  },
+  "0x97": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
+  },
+  "0x98": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
+  },
+  "0x99": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
+  },
+  "0x9a": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
+  },
+  "0x9b": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
+  },
+  "0x9c": {
+    "year": 2015,
+    "month": 9,
+    "day": 6
+  },
+  "0x9d": {
     "year": 2015,
     "month": 9,
     "day": 6
