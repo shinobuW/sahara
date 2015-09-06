@@ -3,7 +3,6 @@ package seng302.group2.scenes.control.chart;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.chart.Axis;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import seng302.group2.scenes.control.Tooltip;
@@ -13,7 +12,6 @@ import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;

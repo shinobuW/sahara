@@ -34,7 +34,6 @@ public class PopOverTable<T> extends SearchableTable<T> {
 
     /**
      * Basic constructor with original table data.
-     * @return a new PopOverTable
      */
     public PopOverTable(ObservableList<T> tableData) {
         super(tableData);
