@@ -33,6 +33,14 @@ public class PopOverTable<T> extends SearchableTable<T> {
     }
 
     /**
+     * Basic constructor with original table data.
+     */
+    public PopOverTable(ObservableList<T> tableData) {
+        super(tableData);
+        updateRows();
+    }
+
+    /**
      * Highlights a row if a matching query is found within that row. If there is no matching query,
      * the row's style is set to null (default).
      */
@@ -61,7 +69,7 @@ public class PopOverTable<T> extends SearchableTable<T> {
 
                         ScrollPane taskWrapper = new ScrollPane();
                         LoggingEffortPane loggingPane = new LoggingEffortPane((Task) item,
-                                taskPopover);
+                                taskPopover, this.getTableView());
                         loggingPane.setStyle(null);
 
                         taskWrapper.setContent(loggingPane);
