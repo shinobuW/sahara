@@ -226,7 +226,7 @@ public class StoryCompletenessBar extends Pane {
                 else {
                     // round left, square right
                     HBox blueBox = new HBox();
-                    Rectangle blueSquare = new Rectangle(maxBlue - 7.3, blue.getHeight());
+                    Rectangle blueSquare = new Rectangle(maxBlue - 7.5, blue.getHeight());
                     blueSquare.setFill(blue.getFill());
                     blue.setArcWidth(15);
                     blue.setArcHeight(15);
@@ -242,7 +242,13 @@ public class StoryCompletenessBar extends Pane {
             }
             else if (maxGreen + maxBlue > maxWidth - 0.01) {
                 // round right
-                Rectangle blueSquare = new Rectangle(maxBlue - 7.5, blue.getHeight());
+                Rectangle blueSquare;
+                if ((maxBlue + maxGreen) - maxWidth == 0) {
+                    blueSquare = new Rectangle(maxBlue - maxGreen, blue.getHeight());
+                }
+                else {
+                    blueSquare = new Rectangle(maxBlue - maxGreen - 7.5, blue.getHeight());
+                }
                 blueSquare.setFill(blue.getFill());
                 blue.setArcWidth(15);
                 blue.setArcHeight(15);
@@ -256,7 +262,7 @@ public class StoryCompletenessBar extends Pane {
         }
 
         // There is no blue, but there is green
-        if (maxBlue - maxGreen == 0 && maxGreen != 0) {
+        if (maxBlue - maxGreen == 0 && maxGreen != 0 && maxWidth - maxGreen != 0) {
             HBox greenBox = new HBox();
             greenSquare.setWidth(green.getWidth() - 7.5);
             Rectangle transRec = new Rectangle(7.5, green.getHeight());
@@ -271,6 +277,18 @@ public class StoryCompletenessBar extends Pane {
         }
 
         visualGrid.add(green, 0, 0);
+
+        if (maxBlue == 0 && maxGreen == 0) {
+            Boolean allDone = true;
+            for (Task task : story.getTasks()) {
+                if (!(task.getState() == Task.TASKSTATE.DONE)) {
+                    allDone = false;
+                }
+            }
+            if (allDone) {
+                red.setFill(ColorUtils.toColor(Task.TASKSTATE.DONE.getColourString()));
+            }
+        }
         visualGrid.add(red, 2, 0);
 
         this.getChildren().add(visualGrid);

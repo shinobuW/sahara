@@ -137,7 +137,7 @@ public class CustomDatePicker extends VBox implements SearchableControl {
     }
 
     /**
-     * Disables and enables the date picker. Does not effort the labels.
+     * Disables and enables the date picker. Does not effect the labels.
      * @param disable boolean which either disables or enables depending on its value
      */
     public void disable(boolean disable) {
@@ -178,7 +178,7 @@ public class CustomDatePicker extends VBox implements SearchableControl {
 
     //TODO Advanced search query for this class.
     @Override
-    public boolean advancedQuery(String query, SearchType searchType) {
-        return false;
+    public int advancedQuery(String query, SearchType searchType) {
+        return 0;
     }
 }

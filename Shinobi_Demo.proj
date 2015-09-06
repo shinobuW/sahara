@@ -3,7 +3,7 @@
     "shortName": "Shinobi Demo",
     "longName": "Shinobi Demo",
     "description": "",
-    "lastSaveLocation": "C:\\Users\\Bronson Laptop\\IdeaProjects\\project-2\\Shinobi_Demo.proj",
+    "lastSaveLocation": "/home/cosc/student/cvs20/SENG302/Sahara/Shinobi_Demo.proj",
     "estimationScales": {
       "estimationScaleDict": {
         "T-Shirt Sizes": [
@@ -1134,7 +1134,7 @@
   "0x54": {
     "shortName": "Don\u0027t touch me",
     "description": "",
-    "impediments": "This is a really long impediment This is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impedimentThis is a really long impediment",
+    "impediments": "This is a really long impediment\nThis is a really long impediment\nThis is a really long impediment\nThis is a really long impediment",
     "state": "NOT_STARTED",
     "lane": "NOT_STARTED",
     "story": "0x41",

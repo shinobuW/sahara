@@ -1,5 +1,6 @@
 package seng302.group2.scenes.information.project.sprint;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -39,18 +40,34 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
 
     private Task task = null;
     private Set<SearchableControl> searchControls = new HashSet<>();
+    private SprintTaskStatusTab statusTab = null;
 
     /**
      * The constructor that creates a scrumboard task cell for the given task
      * @param task The task the cell should reflect the information of
      */
     public ScrumBoardTaskCellNode(Task task) {
-
         this.task = task;
-
         this.getChildren().clear();
-        HBox content = construct();
-        this.getChildren().add(content);
+        Platform.runLater(() -> {
+                HBox content = construct();
+                this.getChildren().add(content);
+            });
+
+    }
+
+    /**
+     * The constructor that creates a scrumboard task cell for the given task
+     * @param task The task the cell should reflect the information of
+     */
+    public ScrumBoardTaskCellNode(Task task, SprintTaskStatusTab statusTab) {
+        this.statusTab = statusTab;
+        this.task = task;
+        this.getChildren().clear();
+        Platform.runLater(() -> {
+                HBox content = construct();
+                this.getChildren().add(content);
+            });
     }
 
 
@@ -198,6 +215,9 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
 
                 this.getChildren().clear();
                 this.getChildren().add(construct());
+                if (statusTab != null) {
+                    Platform.runLater(statusTab::createVisualisation);
+                }
             });
 
         SearchableText statusLabel = new SearchableText("Status: ");
@@ -229,11 +249,15 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
         ImageView assigneeImage;
         if (task.getAssignee() != null) {
             assigneeImage = new ImageView("icons/person.png");
-            Tooltip.create(task.getAssignee().getFullName(), assigneeImage, 50);
+            Platform.runLater(() -> {
+                    Tooltip.create(task.getAssignee().getFullName(), assigneeImage, 50);
+                });
         }
         else {
             assigneeImage = new ImageView("icons/person_empty.png");
-            Tooltip.create("This task is unassigned", assigneeImage, 50);
+            Platform.runLater(() -> {
+                    Tooltip.create("This task is unassigned", assigneeImage, 50);
+                });
         }
 
         assigneeImage.setOnMouseEntered(me -> {
@@ -282,6 +306,9 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
 
                 this.getChildren().clear();
                 this.getChildren().add(construct());
+                if (statusTab != null) {
+                    Platform.runLater(statusTab::createVisualisation);
+                }
             });
 
         SearchableText assigneeLabel = new SearchableText("Assignee: ");
@@ -356,7 +383,7 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
 
     //TODO Advanced search query for this class.
     @Override
-    public boolean advancedQuery(String query, SearchType searchType) {
-        return false;
+    public int advancedQuery(String query, SearchType searchType) {
+        return 0;
     }
 }

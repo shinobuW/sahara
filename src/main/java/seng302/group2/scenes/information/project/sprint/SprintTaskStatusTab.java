@@ -34,10 +34,10 @@ public class SprintTaskStatusTab extends SearchableTab {
     Pane basicInfoPane = new VBox();
     VBox listWrapper = new VBox();
 
-    ToggleGroup group = new ToggleGroup();
-    CustomComboBox<String> filterBox;
-    SearchableRadioButton statusToggle = new SearchableRadioButton("Status", searchControls);
-    SearchableRadioButton storyToggle = new SearchableRadioButton("Story", searchControls);
+    public ToggleGroup group = new ToggleGroup();
+    public CustomComboBox<String> filterBox;
+    public SearchableRadioButton statusToggle = new SearchableRadioButton("Status", searchControls);
+    public SearchableRadioButton storyToggle = new SearchableRadioButton("Story", searchControls);
 
     String unassignedFilter = "Unassigned";
     String uncompletedFilter = "Uncompleted";
@@ -61,6 +61,7 @@ public class SprintTaskStatusTab extends SearchableTab {
         basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
+
 
         SearchableText title = new SearchableTitle("Task Visualisation", searchControls);
         SearchableText groupBy = new SearchableText("Group By: ", searchControls);
@@ -89,26 +90,30 @@ public class SprintTaskStatusTab extends SearchableTab {
 
         filterBox.setValue(unassignedFilter);
 
-        basicInfoPane.getChildren().addAll(
-                title,
-                buttonBox,
-                filterBox
-        );
 
-        createVisualisation();
 
-        this.getContent().setOnMouseEntered(event -> Platform.runLater(this::createVisualisation));
+        Platform.runLater(() -> {
+                basicInfoPane.getChildren().addAll(
+                        title,
+                        buttonBox,
+                        filterBox
+                );
 
-        Collections.addAll(searchControls,
-                title,
-                statusToggle,
-                storyToggle,
-                filterBox
-        );
+                createVisualisation();
+
+                Collections.addAll(searchControls,
+                        title,
+                        statusToggle,
+                        storyToggle,
+                        filterBox
+                );
+            });
+
+
     }
 
 
-    void createVisualisation() {
+    public void createVisualisation() {
         // Remove what's already in the box
         listWrapper.getChildren().clear();
 
@@ -131,7 +136,7 @@ public class SprintTaskStatusTab extends SearchableTab {
     }
 
 
-    List<Task> collectTasks() {
+    public List<Task> collectTasks() {
         // Collect all the tasks in the sprint
         List<Task> tasks = new ArrayList<>();
         tasks.addAll(sprint.getAllTasks());
@@ -181,7 +186,7 @@ public class SprintTaskStatusTab extends SearchableTab {
             if (story.getTasks().size() != 0) {
                 for (Task task : story.getTasks().sorted(Task.TaskNameComparator)) {
                     if (tasks.contains(task)) {  // only add it if it is contained in the filtered collection of tasks
-                        Node cellNode = new ScrumBoardTaskCellNode(task);
+                        Node cellNode = new ScrumBoardTaskCellNode(task, this);
                         taskBox.getChildren().add(cellNode);
                     }
                 }
@@ -217,7 +222,7 @@ public class SprintTaskStatusTab extends SearchableTab {
             tasks.sort(Task.TaskNameComparator);
             for (Task task : tasks) {
                 if (task.getState() == state) {  // only add it if it is contained in the filtered collection of tasks
-                    taskBox.getChildren().add(new ScrumBoardTaskCellNode(task));
+                    taskBox.getChildren().add(new ScrumBoardTaskCellNode(task, this));
                 }
             }
             if (taskBox.getChildren().isEmpty()) {

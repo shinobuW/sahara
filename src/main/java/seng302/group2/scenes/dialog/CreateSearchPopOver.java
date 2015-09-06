@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.apache.commons.collections.map.LinkedMap;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -42,9 +43,7 @@ import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 
 /**
@@ -73,17 +72,27 @@ public class CreateSearchPopOver extends PopOver {
         buttons.getChildren().addAll(btnCancel, btnSearch);
         btnSearch.setDisable(true);
 
-        HBox radioBox = new HBox();
-        ToggleGroup group = new ToggleGroup();
+        HBox searchByBox = new HBox();
+        ToggleGroup searchGroup = new ToggleGroup();
         RadioButton normalBtn = new RadioButton("Normal");
-        normalBtn.setToggleGroup(group);
+        normalBtn.setToggleGroup(searchGroup);
         normalBtn.setSelected(true);
         RadioButton regexBtn = new RadioButton("Regular Expression");
-        regexBtn.setToggleGroup(group);
-        RadioButton wildcardBtn = new RadioButton("Wildcard");
-        wildcardBtn.setToggleGroup(group);
+        regexBtn.setToggleGroup(searchGroup);
 
-        radioBox.getChildren().addAll(normalBtn, regexBtn, wildcardBtn);
+
+        searchByBox.getChildren().addAll(normalBtn, regexBtn);
+
+        HBox sortByBox = new HBox();
+        SearchableText sortByString = new SearchableText("Sort By: ");
+        ToggleGroup sortGroup = new ToggleGroup();
+        RadioButton treeViewButton = new RadioButton("TreeView");
+        treeViewButton.setToggleGroup(sortGroup);
+        treeViewButton.setSelected(true);
+        RadioButton relevanceBtn = new RadioButton("Relevance");
+        relevanceBtn.setToggleGroup(sortGroup);
+
+        sortByBox.getChildren().addAll(treeViewButton, relevanceBtn);
 
         VBox grid = new VBox();
         Insets insets1 = new Insets(20, 20, 20, 20);
@@ -118,44 +127,28 @@ public class CreateSearchPopOver extends PopOver {
         checkBoxPane.add(storySearchCheck, 0, 1);
         modelCheckBoxes.add(storySearchCheck);
 
-        CheckBox taskSearchCheck = new CheckBox("Tasks");
-        checkBoxPane.add(taskSearchCheck, 1, 1);
-        modelCheckBoxes.add(taskSearchCheck);
-
         CheckBox sprintSearchCheck = new CheckBox("Sprints");
-        checkBoxPane.add(sprintSearchCheck, 2, 1);
+        checkBoxPane.add(sprintSearchCheck, 1, 1);
         modelCheckBoxes.add(sprintSearchCheck);
 
         CheckBox teamSearchCheck = new CheckBox("Teams");
-        checkBoxPane.add(teamSearchCheck, 0, 2);
+        checkBoxPane.add(teamSearchCheck, 2, 1);
         modelCheckBoxes.add(teamSearchCheck);
 
         CheckBox personSearchCheck = new CheckBox("People");
-        checkBoxPane.add(personSearchCheck, 1, 2);
+        checkBoxPane.add(personSearchCheck, 0, 2);
         modelCheckBoxes.add(personSearchCheck);
 
         CheckBox roleSearchCheck = new CheckBox("Roles");
-        checkBoxPane.add(roleSearchCheck, 2, 2);
+        checkBoxPane.add(roleSearchCheck, 1, 2);
         modelCheckBoxes.add(roleSearchCheck);
 
         CheckBox skillSearchCheck = new CheckBox("Skills");
-        checkBoxPane.add(skillSearchCheck, 0, 3);
+        checkBoxPane.add(skillSearchCheck, 2, 2);
         modelCheckBoxes.add(skillSearchCheck);
 
-        CheckBox allocationSearchCheck = new CheckBox("Allocations");
-        checkBoxPane.add(allocationSearchCheck, 1, 3);
-        modelCheckBoxes.add(allocationSearchCheck);
-
-        CheckBox acceptanceCriteriaSearchCheck = new CheckBox("Acceptance Criteria");
-        checkBoxPane.add(acceptanceCriteriaSearchCheck, 2, 3);
-        modelCheckBoxes.add(acceptanceCriteriaSearchCheck);
-
-        CheckBox logSearchCheck = new CheckBox("Logs");
-        checkBoxPane.add(logSearchCheck, 0, 4);
-        modelCheckBoxes.add(logSearchCheck);
-
-        grid.getChildren().addAll(searchField, radioBox, new Separator(), workspaceSearchCheck, onlySearchLabel,
-                checkBoxPane, buttons);
+        grid.getChildren().addAll(searchField, searchByBox, new Separator(), workspaceSearchCheck, onlySearchLabel,
+                checkBoxPane, new Separator(), sortByString, sortByBox, buttons);
 
         //Add grid of controls to dialog
         this.setContentNode(grid);
@@ -214,7 +207,7 @@ public class CreateSearchPopOver extends PopOver {
                     List<String> checkedItems = getCheckedItems(workspaceSearchCheck,
                             modelCheckBoxes);
                     PopOver resultsPopOver = new SearchResultPane(runSearch(checkedItems, searchText,
-                            SearchType.NORMAL), searchText, SearchType.NORMAL);
+                            SearchType.NORMAL, treeViewButton.isSelected()), searchText, SearchType.NORMAL);
 
                     resultsPopOver.show(App.mainStage);
                 }
@@ -224,14 +217,9 @@ public class CreateSearchPopOver extends PopOver {
                     List<String> checkedItems = getCheckedItems(workspaceSearchCheck,
                             modelCheckBoxes);
                     PopOver resultsPopOver = new SearchResultPane(runSearch(checkedItems, searchText,
-                            SearchType.REGEX), searchText, SearchType.REGEX);
-
+                            SearchType.REGEX, treeViewButton.isSelected()), searchText, SearchType.REGEX);
                     resultsPopOver.show(App.mainStage);
-
                 }
-
-
-
             });
 
         btnCancel.setOnAction(event -> {
@@ -239,6 +227,11 @@ public class CreateSearchPopOver extends PopOver {
                 this.hide();
             });
 
+        this.setOnHiding(event -> {
+            MainPane.getToolBar().search("");
+            Global.advancedSearchExists = false;
+
+        });
 
 
 
@@ -260,15 +253,12 @@ public class CreateSearchPopOver extends PopOver {
             checkedItems.add("Releases");
             checkedItems.add("Backlogs");
             checkedItems.add("Stories");
-            checkedItems.add("Tasks");
             checkedItems.add("Sprints");
             checkedItems.add("Teams");
             checkedItems.add("People");
             checkedItems.add("Roles");
             checkedItems.add("Skills");
-            checkedItems.add("Allocations");
-            checkedItems.add("Acceptance Criteria");
-            checkedItems.add("Logs");
+
         }
         else {
             for (CheckBox checkBox : modelCheckBoxes) {
@@ -288,20 +278,22 @@ public class CreateSearchPopOver extends PopOver {
      * @param searchType the type of the search
      * @return a list of SearchResultCellNode
      */
-    public List<SearchResultCellNode> runSearch(List<String> checkedItems, String searchText, SearchType searchType) {
+    public List<SearchResultCellNode> runSearch(List<String> checkedItems, String searchText, SearchType searchType,
+                                                boolean sortByTree) {
 
-        List<SearchResultCellNode> results = new ArrayList<>();
+        Map<SearchResultCellNode, Integer> results = new LinkedMap();
 
         for (String item : checkedItems) {
             if (item.equals("Projects")) {
                 for (Project proj : Global.currentWorkspace.getProjects()) {
                     TrackedTabPane scene =  new ProjectScene(proj);
-                    Map<SearchableTab, Integer> searchResults = scene.advancedQuery(searchText, searchType);
-                    for (SearchableTab tab : searchResults.keySet()) {
+                    Map<SearchableTab, Integer> map = scene.advancedQuery(searchText, searchType);
+
+                    for (SearchableTab tab : map.keySet()) {
                         SearchResultCellNode searchResult = new SearchResultCellNode(proj, searchText, tab,
-                                searchResults.get(tab), scene);
+                                map.get(tab), scene);
                         if (!(searchResult == null)) {
-                            results.add(searchResult);
+                            results.put(searchResult, map.get(tab));
                         }
                     }
                 }
@@ -315,7 +307,7 @@ public class CreateSearchPopOver extends PopOver {
                             SearchResultCellNode searchResult = new SearchResultCellNode(release, searchText,
                                     tab, searchResults.get(tab), scene);
                             if (!(searchResult == null)) {
-                                results.add(searchResult);
+                                results.put(searchResult, searchResults.get(tab));
                             }
                         }
                     }
@@ -330,7 +322,7 @@ public class CreateSearchPopOver extends PopOver {
                             SearchResultCellNode searchResult = new SearchResultCellNode(backlog, searchText,
                                     tab, searchResults.get(tab), scene);
                             if (!(searchResult == null)) {
-                                results.add(searchResult);
+                                results.put(searchResult, searchResults.get(tab));
                             }
                         }
                     }
@@ -346,7 +338,7 @@ public class CreateSearchPopOver extends PopOver {
                                 SearchResultCellNode searchResult = new SearchResultCellNode(story, searchText,
                                         tab, searchResults.get(tab), scene);
                                 if (!(searchResult == null)) {
-                                    results.add(searchResult);
+                                    results.put(searchResult, searchResults.get(tab));
                                 }
                             }
                         }
@@ -362,7 +354,7 @@ public class CreateSearchPopOver extends PopOver {
                             SearchResultCellNode searchResult = new SearchResultCellNode(sprint, searchText,
                                     tab, searchResults.get(tab), scene);
                             if (!(searchResult == null)) {
-                                results.add(searchResult);
+                                results.put(searchResult, searchResults.get(tab));
                             }
                         }
                     }
@@ -376,7 +368,7 @@ public class CreateSearchPopOver extends PopOver {
                         SearchResultCellNode searchResult = new SearchResultCellNode(team, searchText, tab,
                                 searchResults.get(tab), scene);
                         if (!(searchResult == null)) {
-                            results.add(searchResult);
+                            results.put(searchResult, searchResults.get(tab));
                         }
                     }
                 }
@@ -389,7 +381,7 @@ public class CreateSearchPopOver extends PopOver {
                         SearchResultCellNode searchResult = new SearchResultCellNode(person, searchText,
                                 tab, searchResults.get(tab), scene);
                         if (!(searchResult == null)) {
-                            results.add(searchResult);
+                            results.put(searchResult, searchResults.get(tab));
                         }
                     }
                 }
@@ -402,7 +394,7 @@ public class CreateSearchPopOver extends PopOver {
                         SearchResultCellNode searchResult = new SearchResultCellNode(role, searchText,
                                 tab, searchResults.get(tab), scene);
                         if (!(searchResult == null)) {
-                            results.add(searchResult);
+                            results.put(searchResult, searchResults.get(tab));
                         }
                     }
                 }
@@ -415,13 +407,46 @@ public class CreateSearchPopOver extends PopOver {
                         SearchResultCellNode searchResult = new SearchResultCellNode(skill, searchText,
                                 tab, searchResults.get(tab), scene);
                         if (!(searchResult == null)) {
-                            results.add(searchResult);
+                            results.put(searchResult, searchResults.get(tab));
                         }
                     }
                 }
             }
         }
-        return results;
+
+        System.out.println("Before" + results);
+        List<SearchResultCellNode> returnedList;
+        if (sortByTree) {
+            returnedList = new ArrayList<>();
+            returnedList.addAll(results.keySet());
+
+        }
+        else {
+            Map<SearchResultCellNode, Integer> searchResults = sortByValue(results);
+            returnedList = new ArrayList<>();
+            returnedList.addAll(searchResults.keySet());
+
+        }
+        System.out.println("After " + returnedList);
+
+        return returnedList;
+    }
+
+    private static Map sortByValue(Map map) {
+        List list = new LinkedList(map.entrySet());
+        Collections.sort(list, new Comparator() {
+            public int compare(Object o1, Object o2) {
+                return ((Comparable) ((Map.Entry) (o2)).getValue())
+                        .compareTo(((Map.Entry) (o1)).getValue());
+            }
+        });
+
+        Map result = new LinkedHashMap();
+        for (Iterator it = list.iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry)it.next();
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
     }
 
 }

@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import javafx.util.converter.LocalDateStringConverter;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
@@ -191,6 +192,14 @@ public class ProjectHistoryTab extends SearchableTab {
         endDatePicker.getDatePicker().setStyle("-fx-pref-width: 200;");
         teamComboBox.getComboBox().setStyle("-fx-pref-width: 250;");
 
+        startDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue,
+                                LocalDate newValue) {
+                ValidationStyle.borderGlowNone(startDatePicker.getDatePicker());
+            }
+        });
+
         teamComboBox.prefWidthProperty().bind(historyTable.widthProperty().subtract(3).divide(100).multiply(30));
         startDatePicker.prefWidthProperty().bind(historyTable.widthProperty().subtract(3).divide(100).multiply(30));
         endDatePicker.prefWidthProperty().bind(historyTable.widthProperty().subtract(3).divide(100).multiply(30));
@@ -224,6 +233,10 @@ public class ProjectHistoryTab extends SearchableTab {
                         Allocation alloc = new Allocation(currentProject, selectedTeam,
                                 startDate, endDate);
                         currentProject.add(alloc);
+                        teamComboBox.getComboBox().getSelectionModel().select(null);
+                        startDatePicker.getDatePicker().setValue(null);
+                        endDatePicker.getDatePicker().setValue(null);
+
                     }
                     else {
                         showErrorDialog(validateAllocation(currentProject,

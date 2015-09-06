@@ -326,10 +326,28 @@ public class StoryTaskTab extends SearchableTab {
         btnDelete.setOnAction((event) -> {
                 if (taskTable.getSelectionModel().getSelectedItem() != null) {
                     Task currentTask = taskTable.getSelectionModel().getSelectedItem();
-                    currentTask.deleteTask();
+                    if (currentTask != null) {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Delete");
+                        alert.setHeaderText("Delete Task?");
+                        alert.setContentText("Do you really want to delete this Task?");
+
+                        ButtonType buttonTypeYes = new ButtonType("Yes");
+                        ButtonType buttonTypeNo = new ButtonType("No");
+
+                        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+                        Optional<ButtonType> result = alert.showAndWait();
+
+                        if (result.get() == buttonTypeYes) {
+                            currentTask.deleteTask();
+                        }
+                        else if (result.get() == buttonTypeNo) {
+                            event.consume();
+                        }
+                    }
                 }
+
             });
-      
 
         VBox addTaskBox = new VBox(10);
         SearchableText task = new SearchableText("Add Quick Tasks:", "-fx-font-weight: bold;");

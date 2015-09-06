@@ -46,21 +46,24 @@ public class SearchableTitle extends SearchableText {
 
 
     @Override
-    public boolean advancedQuery(String query, SearchType searchType) {
-        boolean found = false;
+    public int advancedQuery(String query, SearchType searchType) {
+        int count = 0;
         if (searchType == SearchType.NORMAL) {
-            if (this.query(query)) {
-                found = true;
+            if (this.getText().equals(query)) {
+                count = 5;
+            }
+            else if (this.query(query)) {
+                count = 4;
             }
         }
         else if (searchType == SearchType.REGEX) {
             if (Pattern.matches(query, this.getText())) {
-                found = true;
+                count = 1;
             }
         }
 //        else if (searchType == SearchType.WILDCARD) {
 //
 //        }
-        return found;
+        return count;
     }
 }

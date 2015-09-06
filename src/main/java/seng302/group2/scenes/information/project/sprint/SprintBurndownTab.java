@@ -1,5 +1,6 @@
 package seng302.group2.scenes.information.project.sprint;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -56,6 +57,8 @@ public class SprintBurndownTab extends SearchableTab {
         burndownPane.getChildren().add(title);
 
         //defining the axes
+
+
         configureAxis();
         BurndownChart burndown = new BurndownChart(xAxis, yAxis);
         burndown.setPrefSize(800, 600);
@@ -63,6 +66,9 @@ public class SprintBurndownTab extends SearchableTab {
         burndown.populateGraph(currentSprint);
 
         burndownPane.getChildren().add(burndown);
+
+
+
 
         // Add all our searchable controls on the page to the collection of searchable items
         Collections.addAll(searchControls, title);
