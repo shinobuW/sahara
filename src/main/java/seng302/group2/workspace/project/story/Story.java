@@ -314,6 +314,7 @@ public class Story extends SaharaItem implements Serializable {
         return "Not Ready";
     }
 
+    
     /**
      * Gets the sprint this story belongs to.
      *
@@ -322,7 +323,6 @@ public class Story extends SaharaItem implements Serializable {
     public Sprint getSprint() {
         return this.sprint;
     }
-
 
     /**
      * Returns whether or not all tasks in the story have been marked as being completed
