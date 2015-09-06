@@ -239,12 +239,10 @@ public class CreateSearchPopOver extends PopOver {
                 this.hide();
             });
 
-//        this.setOnHiding(event -> {
-//            MainPane.getToolBar().search("");
-//            Global.advancedSearchExists = false;
-//
-//        });
-
+        this.setOnHiding(event -> {
+                MainPane.getToolBar().search("");
+                Global.advancedSearchExists = false;
+            });
 
 
     }
@@ -426,6 +424,7 @@ public class CreateSearchPopOver extends PopOver {
             }
         }
 
+        System.out.println("Before" + results);
         List<SearchResultCellNode> returnedList;
         if (sortByTree) {
             returnedList = new ArrayList<>();
@@ -438,6 +437,7 @@ public class CreateSearchPopOver extends PopOver {
             returnedList.addAll(searchResults.keySet());
 
         }
+        System.out.println("After " + returnedList);
 
         return returnedList;
     }
