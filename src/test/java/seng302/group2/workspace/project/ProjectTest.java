@@ -338,7 +338,6 @@ public class ProjectTest extends TestCase {
         Release testRelease = new Release();
         Backlog testBacklog = new Backlog();
         Sprint testSprint = new Sprint();
-        testSprint.createTasksWithoutAStory();
         Story testStory = new Story();
         Allocation testAllocation = new Allocation(proj, new Team(), LocalDate.now(),
                 LocalDate.now());

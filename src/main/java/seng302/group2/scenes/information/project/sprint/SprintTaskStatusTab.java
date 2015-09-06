@@ -34,10 +34,10 @@ public class SprintTaskStatusTab extends SearchableTab {
     Pane basicInfoPane = new VBox();
     VBox listWrapper = new VBox();
 
-    ToggleGroup group = new ToggleGroup();
-    CustomComboBox<String> filterBox;
-    SearchableRadioButton statusToggle = new SearchableRadioButton("Status", searchControls);
-    SearchableRadioButton storyToggle = new SearchableRadioButton("Story", searchControls);
+    public ToggleGroup group = new ToggleGroup();
+    public CustomComboBox<String> filterBox;
+    public SearchableRadioButton statusToggle = new SearchableRadioButton("Status", searchControls);
+    public SearchableRadioButton storyToggle = new SearchableRadioButton("Story", searchControls);
 
     String unassignedFilter = "Unassigned";
     String uncompletedFilter = "Uncompleted";

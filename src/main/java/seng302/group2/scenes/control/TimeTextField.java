@@ -246,7 +246,6 @@ public class TimeTextField extends SearchableTextField {
             return false;
         }
         String[] tokens = time.split(":");
-        assert tokens.length == 3 ;
         try {
             int hours = Integer.parseInt(tokens[0]);
             int mins = Integer.parseInt(tokens[1]);

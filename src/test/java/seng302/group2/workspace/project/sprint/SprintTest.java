@@ -55,9 +55,6 @@ public class SprintTest {
     @Test
     public void testCreateTasksWithoutStory() {
         Sprint sprint = new Sprint();
-        Assert.assertTrue(sprint.getUnallocatedTasksStory() == null);
-
-        sprint.createTasksWithoutAStory();
         Assert.assertTrue(sprint.getUnallocatedTasksStory() != null);
     }
 
@@ -67,7 +64,6 @@ public class SprintTest {
     @Test
     public void testPrepSerialization() {
         Sprint sprint = new Sprint();
-        sprint.createTasksWithoutAStory();
 
         Story story = new Story();
         sprint.getStories().add(story);
@@ -82,7 +78,6 @@ public class SprintTest {
     @Test
     public void testPostDeserialization() {
         Sprint sprint  = new Sprint();
-        sprint.createTasksWithoutAStory();
 
         Story story = new Story();
         sprint.getSerializableStories().add(story);
