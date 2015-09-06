@@ -228,10 +228,9 @@ public class CreateSearchPopOver extends PopOver {
             });
 
         this.setOnHiding(event -> {
-            MainPane.getToolBar().search("");
-            Global.advancedSearchExists = false;
-
-        });
+                MainPane.getToolBar().search("");
+                Global.advancedSearchExists = false;
+            });
 
 
 
