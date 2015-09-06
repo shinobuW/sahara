@@ -271,8 +271,8 @@ public class CustomTextArea extends VBox implements SearchableControl {
 
     //TODO Advanced search query for this class.
     @Override
-    public boolean advancedQuery(String query, SearchType searchType) {
-        return false;
+    public int advancedQuery(String query, SearchType searchType) {
+        return 0;
     }
 }
 

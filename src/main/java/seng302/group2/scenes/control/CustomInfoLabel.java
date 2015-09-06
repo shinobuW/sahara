@@ -90,22 +90,38 @@ public class CustomInfoLabel extends HBox implements SearchableControl {
      * @param query The query string to search
      * @return Whether any elements inside the HBox were found to contain the query string
      */
-    public boolean advancedQuery(String query, SearchType searchType) {
-        boolean found = false;
+    public int advancedQuery(String query, SearchType searchType) {
+        int count = 0;
         if (searchType == SearchType.NORMAL) {
             if (this.value.query(query)) {
-                found = true;
+                if (this.label.getText().contains("Short")) {
+                    if (this.value.getText().equals(query)) {
+                        count = 4;
+                    }
+                    else {
+                        count = 2;
+                    }
+                }
+                else {
+                    if (this.value.getText().equals(query)) {
+                        count = 2;
+                    }
+                    else {
+                        count = 1;
+                    }
+                }
+
             }
         }
         else if (searchType == SearchType.REGEX) {
             if (Pattern.matches(query, value.getText())) {
-                found = true;
+                count = 1;
             }
         }
 //        else if (searchType == SearchType.WILDCARD) {
 //
 //        }
-        return  found;
+        return count;
     }
 
 }

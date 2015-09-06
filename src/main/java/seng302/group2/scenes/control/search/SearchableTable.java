@@ -154,8 +154,9 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
     }
 
     @Override
-    public boolean advancedQuery(String query, SearchType searchType) {
+    public int advancedQuery(String query, SearchType searchType) {
         matchingItems.clear();
+        int count = 0;
         if (!query.isEmpty()) {
             ObservableList<TableColumn<T, ?>> cols = this.getColumns();
 
@@ -166,8 +167,13 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
 
                     cellValue = cellValue.toLowerCase();
                     if (searchType == SearchType.NORMAL) {
+                        if (cellValue.equals(query.trim().toLowerCase())) {
+                            matchingItems.add(aData);
+                            count = 2;
+                        }
                         if (cellValue.contains(query.trim().toLowerCase())) {
                             matchingItems.add(aData);
+                            count = 1;
                         }
                     }
                     else if (searchType == SearchType.REGEX) {
@@ -180,6 +186,6 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
         }
 
         setFactory();
-        return !matchingItems.isEmpty();
+        return count;
     }
 }

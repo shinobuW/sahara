@@ -123,12 +123,16 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
     }
 
     @Override
-    public boolean advancedQuery(String query, SearchType searchType) {
-        boolean foundList = false;
+    public int advancedQuery(String query, SearchType searchType) {
+        int count = 0;
         if (searchType == SearchType.NORMAL) {
             for (T item : this.getItems()) {
-                if (item.toString().toLowerCase().contains(query.toLowerCase())) {
-                    foundList = true;
+                if (item.toString().toLowerCase().equals(query.toLowerCase())) {
+                    count = 3;
+                    matchingItems.add(item);
+                }
+                else if (item.toString().toLowerCase().contains(query.toLowerCase())) {
+                    count = 1;
                     matchingItems.add(item);
                 }
             }
@@ -136,7 +140,7 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
         else if (searchType == SearchType.REGEX) {
             for (T item : this.getItems()) {
                 if (Pattern.matches(query, item.toString().toLowerCase())) {
-                    foundList = true;
+                    count = 1;
                     matchingItems.add(item);
                 }
             }
@@ -169,6 +173,6 @@ public class SearchableListView<T> extends ListView<T> implements SearchableCont
             }
         });
 
-        return foundList;
+        return count;
     }
 }
