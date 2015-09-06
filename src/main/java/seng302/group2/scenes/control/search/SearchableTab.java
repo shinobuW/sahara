@@ -56,7 +56,8 @@ public abstract class SearchableTab extends Tab {
                         int elementCount = control.advancedQuery(element.trim(), SearchType.NORMAL);
                         if (andCount == null) {
                             andCount = elementCount;
-                        } else if (elementCount > 0 && andCount > 0) {
+                        }
+                        else if (elementCount > 0 && andCount > 0) {
                             if (elementCount > andCount) {
                                 andCount = elementCount;
                             }
