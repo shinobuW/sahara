@@ -35,4 +35,9 @@ public class SearchBox extends TextField {
                 }
             });
     }
+
+    public void search(String query) {
+        Collection<SearchableTab> tabs =
+                ((SearchableScene) App.mainPane.getContent()).query(this.getText());
+    }
 }

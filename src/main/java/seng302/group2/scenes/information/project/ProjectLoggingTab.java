@@ -7,6 +7,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -14,16 +15,14 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.Tooltip;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableTable;
-import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -58,6 +57,8 @@ public class ProjectLoggingTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
+        SearchableText title = new SearchableTitle("Logging Effort", searchControls);
+
         HBox datePickers = new HBox();
 
         endDate = LocalDate.now();
@@ -65,7 +66,6 @@ public class ProjectLoggingTab extends SearchableTab {
 
         CustomDatePicker startDatePicker = new CustomDatePicker("Start Date", true);
         CustomDatePicker endDatePicker = new CustomDatePicker("End Date", true);
-
 
         startDatePicker.setValue(startDate);
         endDatePicker.setValue(endDate);
@@ -204,11 +204,13 @@ public class ProjectLoggingTab extends SearchableTab {
             }
         });
 
+        basicInfoPane.getChildren().add(title);
         basicInfoPane.getChildren().add(datePickers);
         basicInfoPane.getChildren().add(taskTable);
 
 
         Collections.addAll(searchControls,
+                title,
                 startDatePicker,
                 endDatePicker,
                 taskTable

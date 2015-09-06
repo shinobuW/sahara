@@ -5,18 +5,21 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Separator;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.controlsfx.control.PopOver;
 import seng302.group2.App;
+import seng302.group2.Global;
+import seng302.group2.scenes.MainPane;
 import seng302.group2.scenes.SearchResultPane;
 import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.search.SearchableText;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,23 +28,32 @@ import java.util.Map;
  * Class to create a popup dialog for advanced search
  * Created by btm38 on 17/08/15.
  */
-public class CreateSearchDialog extends javafx.scene.control.Dialog<Map<String, String>> {
+public class CreateSearchPopOver extends PopOver {
+
 
     /**
      * Displays the dialog box for advanced search
      */
-    public CreateSearchDialog() {
-        this.setTitle("Search Workspace");
-        this.getDialogPane().setStyle(" -fx-max-width:400px; -fx-max-height: 250px; -fx-pref-width: 400px; "
-                + "-fx-pref-height: 250px;");
+    public CreateSearchPopOver() {
+        this.setDetachedTitle("Search Workspace");
+        this.setMinWidth(400);
+        this.setMinHeight(250);
+        this.setDetached(true);
 
-        ButtonType btnTypeSearch = new ButtonType("Search", ButtonBar.ButtonData.OK_DONE);
-        this.getDialogPane().getButtonTypes().addAll(btnTypeSearch, ButtonType.CANCEL);
+        HBox buttons = new HBox();
+        buttons.setAlignment(Pos.CENTER_RIGHT);
+        Button btnSearch = new Button("Search");
+        Button btnCancel = new Button("Cancel");
+        buttons.spacingProperty().setValue(10);
+        Insets insets = new Insets(0, 20, 0, 20);
+        buttons.setPadding(insets);
+        buttons.getChildren().addAll(btnCancel, btnSearch);
+        btnSearch.setDisable(true);
 
         VBox grid = new VBox();
+        Insets insets1 = new Insets(20, 20, 20, 20);
         grid.spacingProperty().setValue(10);
-        Insets insets = new Insets(20, 20, 20, 20);
-        grid.setPadding(insets);
+        grid.setPadding(insets1);
 
         CustomTextField searchField = new CustomTextField("Search for:");
 
@@ -108,10 +120,10 @@ public class CreateSearchDialog extends javafx.scene.control.Dialog<Map<String, 
         modelCheckBoxes.add(logSearchCheck);
 
         grid.getChildren().addAll(searchField, workspaceSearchCheck,
-                new Separator(), onlySearchLabel, checkBoxPane);
+                new Separator(), onlySearchLabel, checkBoxPane, buttons);
 
         //Add grid of controls to dialog
-        this.getDialogPane().setContent(grid);
+        this.setContentNode(grid);
 
         EventHandler eh = new EventHandler<ActionEvent>() {
             @Override
@@ -148,34 +160,37 @@ public class CreateSearchDialog extends javafx.scene.control.Dialog<Map<String, 
         }
 
 
-        Node searchButton = this.getDialogPane().lookupButton(btnTypeSearch);
-        searchButton.setDisable(true);
-
         searchField.getTextField().textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (newValue.equals("")) {
-                    searchButton.setDisable(true);
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    if (newValue.equals("")) {
+                        btnSearch.setDisable(true);
+                    }
+                    else {
+                        btnSearch.setDisable(false);
+                    }
                 }
-                else {
-                    searchButton.setDisable(false);
-                }
-            }
-        });
-
-        this.setResultConverter(b -> {
-                if (b == btnTypeSearch) {
-                    String searchText = searchField.getText();
-                    List<String> checkedItems = getCheckedItems(workspaceSearchCheck,
-                            modelCheckBoxes);
-                    SearchResultPane resultPane = new SearchResultPane(checkedItems, searchText);
-                    App.showSearchResults(resultPane);
-                    this.close();
-                }
-                return null;
             });
-        this.setResizable(false);
-        this.show();
+
+        btnSearch.setOnAction(event -> {
+                this.hide();
+                String searchText = searchField.getText();
+                List<String> checkedItems = getCheckedItems(workspaceSearchCheck,
+                        modelCheckBoxes);
+                PopOver resultsPopOver = new SearchResultPane(checkedItems, searchText);
+
+                resultsPopOver.show(App.mainStage);
+
+            });
+
+        btnCancel.setOnAction(event -> {
+                Global.advancedSearchExists = false;
+                this.hide();
+            });
+
+
+
+
     }
 
 

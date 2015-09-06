@@ -19,6 +19,7 @@ public final class Global {
     public static String lastSaveLocation = "/";
     public static DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     public static CommandManager commandManager = new CommandManager();
+    public static boolean advancedSearchExists = false;
 
 
     /**

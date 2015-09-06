@@ -67,6 +67,8 @@ public class SearchResultCellNode extends VBox {
         return searchableScene;
     }
 
+
+
     /**
      * Constructs a VBox with the result information
      * @return
@@ -78,19 +80,20 @@ public class SearchResultCellNode extends VBox {
         content.setPadding(new Insets(2, 2, 2, 6));
         content.setAlignment(Pos.CENTER_LEFT);
 
-        SearchableText titleLabel = new SearchableText(item.toString());
+        SearchableText titleLabel = new SearchableText(item.toString() + " - " + item.getClass().getSimpleName());
         titleLabel.injectStyle("-fx-font-weight: bold");
 
         SearchableText matchLabel;
-        if (noOfResults > 1) {
-            matchLabel = new SearchableText("Found " + noOfResults + " instances of " + searchedString
-                    + " in the " + matchingString);
-        }
-        else {
-            matchLabel = new SearchableText("Found " + noOfResults + " instance of " + searchedString
-                    + " in the " + matchingString);
-        }
+//        if (noOfResults > 1) {
+//            matchLabel = new SearchableText("Found " + noOfResults + " instances of " + searchedString
+//                    + " in the " + matchingString);
+//        }
+//        else {
+//            matchLabel = new SearchableText("Found " + noOfResults + " instance of " + searchedString
+//                    + " in the " + matchingString);
+//        }
 
+        matchLabel = new SearchableText(matchingString);
         matchLabel.injectStyle("-fx-font-size: 85%");
 
         content.getChildren().addAll(titleLabel, matchLabel);

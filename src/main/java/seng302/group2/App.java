@@ -13,6 +13,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.controlsfx.control.PopOver;
 import seng302.group2.scenes.MainPane;
 import seng302.group2.scenes.SearchResultPane;
 import seng302.group2.scenes.menu.MainToolbar;
@@ -30,7 +31,7 @@ public class App extends Application {
     public static SplitPane content;
     public static MainPane mainPane;
     public static double version = 0.4;
-    private static Stage mainStage;
+    public static Stage mainStage;
     private static Scene mainScene;
 
     /**
@@ -118,24 +119,6 @@ public class App extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-    /**
-     * Shows a stage with the results of an advanced search,
-     * @param resultPane The SearchResultPane to show.
-     */
-    public static void showSearchResults(SearchResultPane resultPane) {
-        Stage resultStage = new Stage();
-
-        resultStage.setTitle("Search Results");
-        resultStage.setMinWidth(500);
-        resultStage.setMinHeight(500);
-
-        Scene resultScene = new Scene(resultPane);
-        resultStage.setScene(resultScene);
-        resultStage.initModality(Modality.NONE);
-        resultStage.show();
-    }
-
 
     /**
      * The GUI setup and launch of the workspace.
