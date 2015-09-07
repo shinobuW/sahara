@@ -48,18 +48,21 @@ public class DeleteDialog {
         }
         if (element instanceof Person) {
             Person person = (Person) element;
-            if (person.getRole().toString().equals("Product Owner")) {
-                CustomDialog.showDialog("Cannot Delete Person", "This person is the Product Owner of a team"
-                                + " and cannot be deleted!",
-                        Alert.AlertType.WARNING);
-                return false;
+            if (person.getRole() != null) {
+                if (person.getRole().toString().equals("Product Owner")) {
+                    CustomDialog.showDialog("Cannot Delete Person", "This person is the Product Owner of a team"
+                                    + " and cannot be deleted!",
+                            Alert.AlertType.WARNING);
+                    return false;
+                }
+                else if (person.getRole().toString().equals("Scrum Master")) {
+                    CustomDialog.showDialog("Cannot Delete Person", "This person is the Scrum Master of a team"
+                                    + " and cannot be deleted!",
+                            Alert.AlertType.WARNING);
+                    return false;
+                }
             }
-            else if (person.getRole().toString().equals("Scrum Master")) {
-                CustomDialog.showDialog("Cannot Delete Person", "This person is the Scrum Master of a team"
-                                + " and cannot be deleted!",
-                        Alert.AlertType.WARNING);
-                return false;
-            }
+
         }
         ArrayList<String> dialogText;
         dialogText = getDeleteDialogText(element);
