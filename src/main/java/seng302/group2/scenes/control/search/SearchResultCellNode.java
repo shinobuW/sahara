@@ -27,7 +27,7 @@ public class SearchResultCellNode extends VBox {
      * @param searchString the string being searched for
      * @param searchResult the tab the search string was found in
      * @param noOfResults the number of instances the search string is present in a tab
-     * @param scene
+     * @param scene The tracked tab pane to navigate to when clicked
      */
     public SearchResultCellNode(SaharaItem item, String searchString, SearchableTab searchResult,
                                 int noOfResults, TrackedTabPane scene) {
@@ -44,7 +44,7 @@ public class SearchResultCellNode extends VBox {
 
     /**
      * Gets the SaharaItem the search string was found in
-     * @return
+     * @return The SaharaItemt the query was found in
      */
     public SaharaItem getItem() {
         return item;
@@ -61,7 +61,7 @@ public class SearchResultCellNode extends VBox {
 
     /**
      * Gets the scene the tab belongs to
-     * @return
+     * @return The scene the tab belongs to
      */
     public TrackedTabPane getSearchableScene() {
         return searchableScene;
@@ -71,7 +71,7 @@ public class SearchResultCellNode extends VBox {
 
     /**
      * Constructs a VBox with the result information
-     * @return
+     * @return returns a VBox containing the information
      */
     private VBox construct() {
         VBox content = new VBox();

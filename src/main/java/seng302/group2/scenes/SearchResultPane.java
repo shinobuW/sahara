@@ -54,6 +54,7 @@ public class SearchResultPane extends PopOver {
      * Constructor
      * @param results The list of Search Results.
      * @param searchText The text being searched for
+     * @param searchType The type of the search
      */
     public SearchResultPane(List<SearchResultCellNode> results, String searchText, SearchType searchType) {
         Global.advancedSearchExists = true;
