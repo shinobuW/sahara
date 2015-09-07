@@ -314,7 +314,6 @@ public class Story extends SaharaItem implements Serializable {
         return "Not Ready";
     }
 
-    
     /**
      * Gets the sprint this story belongs to.
      *
