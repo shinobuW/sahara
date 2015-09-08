@@ -82,6 +82,8 @@ public class StoryCompletenessBar extends Pane {
         double maxWidth = this.width;
         double maxGreen = maxWidth * percentageGreen;
         double maxBlue = (maxWidth * percentageBlue) + maxGreen;
+
+
         //Creates visualisation bar
         DecimalFormat df = new DecimalFormat("##");
 
@@ -89,9 +91,9 @@ public class StoryCompletenessBar extends Pane {
 
 
         Rectangle green = new Rectangle(maxGreen, this.height);
-        Rectangle greenOff = new Rectangle(15, this.height);
+        Rectangle greenOff = new Rectangle(7.5, this.height);
         greenOff.setFill(Color.TRANSPARENT);
-        Rectangle greenSquare = new Rectangle(maxGreen - 15, this.height);
+        Rectangle greenSquare = new Rectangle(maxGreen - 7.5, this.height);
         HBox greenBg = new HBox();
         greenBg.getChildren().addAll(greenOff, greenSquare);
 
@@ -172,7 +174,7 @@ public class StoryCompletenessBar extends Pane {
         bluePO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
         Rectangle red = new Rectangle(maxWidth - maxBlue, this.height);
-        Rectangle redSquare = new Rectangle(maxWidth - maxBlue - 15, this.height);
+        Rectangle redSquare = new Rectangle(maxWidth - maxBlue - 7.5, this.height);
         red.setArcWidth(15);
         red.setArcHeight(15);
         VBox redVBox = new VBox();
@@ -211,7 +213,7 @@ public class StoryCompletenessBar extends Pane {
 
 
         if (maxBlue - maxGreen > 0.01) {
-            if (maxGreen > 15 && maxGreen < maxWidth - 15) {
+            if (maxGreen > 7.5 && maxGreen < maxWidth - 7.5) {
                 visualGrid.add(greenBg, 0, 0);
             }
             if (maxGreen < 0.1) {
@@ -222,19 +224,20 @@ public class StoryCompletenessBar extends Pane {
                     visualGrid.add(blue, 1, 0);
                 }
                 else {
-                    // round left
+                    // round left, square right
                     HBox blueBox = new HBox();
-                    Rectangle blueSquare = new Rectangle(maxBlue - maxGreen, blue.getHeight());
+                    Rectangle blueSquare = new Rectangle(maxBlue - 7.3, blue.getHeight());
                     blueSquare.setFill(blue.getFill());
                     blue.setArcWidth(15);
                     blue.setArcHeight(15);
-                    Rectangle transRec = new Rectangle(blue.getWidth() / 2.0, blue.getHeight());
+                    Rectangle transRec = new Rectangle(7.5, blue.getHeight());
                     transRec.setFill(Color.TRANSPARENT);
                     blueBox.getChildren().add(transRec);
                     blueBox.getChildren().add(blueSquare);
+
                     visualGrid.add(blueBox, 1, 0);
-                    visualGrid.add(redSquare, 2, 0);
                     visualGrid.add(blue, 1, 0);
+                    visualGrid.add(redSquare, 2, 0);
                 }
             }
             else if (maxGreen + maxBlue > maxWidth - 0.01) {
@@ -252,7 +255,8 @@ public class StoryCompletenessBar extends Pane {
             }
         }
 
-        if (maxBlue - maxGreen == 0) {
+        // There is no blue, but there is green
+        if (maxBlue - maxGreen == 0 && maxGreen != 0) {
             HBox greenBox = new HBox();
             greenSquare.setWidth(green.getWidth() - 7.5);
             Rectangle transRec = new Rectangle(7.5, green.getHeight());
@@ -265,12 +269,13 @@ public class StoryCompletenessBar extends Pane {
         if (maxGreen + maxBlue > 7 && !visualGrid.getChildren().contains(redSquare)) {
             visualGrid.add(redSquare, 2, 0);
         }
-        visualGrid.add(green, 0, 0);
 
+        visualGrid.add(green, 0, 0);
         visualGrid.add(red, 2, 0);
 
         this.getChildren().add(visualGrid);
     }
+
 
     public double getEffortSpent(ObservableList<Task> taskList) {
         double totalEffortSpent = 0;
@@ -287,5 +292,4 @@ public class StoryCompletenessBar extends Pane {
         }
         return totalEffortLeft;
     }
-
 }
