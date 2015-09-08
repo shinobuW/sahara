@@ -7,7 +7,6 @@ import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.conversion.ColorUtils;
 import seng302.group2.util.conversion.GeneralEnumStringConverter;
-import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;

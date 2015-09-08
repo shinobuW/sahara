@@ -7,7 +7,6 @@ import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.tasks.Log;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,48 +37,13 @@ public class BurndownChart extends LineChart {
      */
     public void populateGraph(Sprint currentSprint) {
         this.setTitle(currentSprint.getGoal() + " Burndown");
-        List<Log> logList = currentSprint.getAllLogsWithInitialLogs();
 
-        /* Map which stores a (key, value) pair of (date: hours), where hours is the total effort left
-        for that date.
-         */
-        Map<LocalDate, Double> dailyEffortLeftMap = new LinkedHashMap<>();
-
-
-        boolean sprintEndReached = false;
-        LocalDate currDate = currentSprint.getStartDate();
-        while (!sprintEndReached) {
-            if (currDate.isAfter(currentSprint.getEndDate()) || currDate.isAfter(LocalDate.now())) {
-                sprintEndReached = true;
-            }
-            else {
-                dailyEffortLeftMap.put(currDate, 0.0);
-                currDate = currDate.plusDays(1);
-            }
-        }
-
-        for (Log log : logList) {
-            if (dailyEffortLeftMap.containsKey(log.getStartDate().toLocalDate())) {
-                Double sum = dailyEffortLeftMap.get(log.getStartDate().toLocalDate());
-                dailyEffortLeftMap.put(log.getStartDate().toLocalDate(), sum + log.getEffortLeftDifferenceInHours());
-            }
-        }
-
-
-        XYChart.Series effortLeftSeries = new XYChart.Series();
-        effortLeftSeries.setName("Effort Left");
-
-        double currentEffortLeft = 0;
-        for (LocalDate d : dailyEffortLeftMap.keySet()) {
-            currentEffortLeft -= dailyEffortLeftMap.get(d);
-            String monthStr = d.getMonth().toString().substring(0, 3);
-            effortLeftSeries.getData().add(new XYChart.Data<>(monthStr + " " + d.getDayOfMonth(), currentEffortLeft));
-        }
 
         XYChart.Series effortSpentSeries = createEffortSpentSeries(currentSprint);
+        XYChart.Series effortLeftSeries = createLEffortLeftSeries(currentSprint);
         XYChart.Series referenceVelocitySeries = createReferenceVelocity(currentSprint);
 
-        if (!logList.isEmpty()) {
+        if (currentSprint.getAllLogsWithInitialLogs().isEmpty()) {
             this.getData().add(referenceVelocitySeries);
             this.getData().add(effortSpentSeries);
             this.getData().add(effortLeftSeries);
@@ -136,9 +100,9 @@ public class BurndownChart extends LineChart {
     }
 
     /**
-     * creates a reference velocity
-     * @param currentSprint
-     * @return
+     * Creates a reference velocity series
+     * @param currentSprint The current sprint
+     * @return an XYChart.Series representing a reference velocity series
      */
     public XYChart.Series createReferenceVelocity(Sprint currentSprint) {
         LocalDate startDate = currentSprint.getStartDate();
@@ -156,16 +120,53 @@ public class BurndownChart extends LineChart {
         return referenceVelocitySeries;
 
     }
-//
-//    public XYChart.Series effortSpentSeries() {
-//        XYChart.Series effortSpentSeries = new XYChart.Series();
-//
-//        return effortSpentSeries();
-//    }
-//
-//    public XYChart.Series effortSpentSeries(Sprint currentSprint) {
-//        return null;
-//    }
+
+    /**
+     * Create effort left series
+     * @param currentSprint the sprint to generate the series from
+     * @return an XYChart.Series representing an effort left series.
+     */
+    public XYChart.Series createLEffortLeftSeries(Sprint currentSprint) {
+        List<Log> logList = currentSprint.getAllLogsWithInitialLogs();
+
+        /* Map which stores a (key, value) pair of (date: hours), where hours is the total effort left
+        for that date.
+         */
+        Map<LocalDate, Double> dailyEffortLeftMap = new LinkedHashMap<>();
+
+
+        boolean sprintEndReached = false;
+        LocalDate currDate = currentSprint.getStartDate();
+        while (!sprintEndReached) {
+            if (currDate.isAfter(currentSprint.getEndDate()) || currDate.isAfter(LocalDate.now())) {
+                sprintEndReached = true;
+            }
+            else {
+                dailyEffortLeftMap.put(currDate, 0.0);
+                currDate = currDate.plusDays(1);
+            }
+        }
+
+        for (Log log : logList) {
+            if (dailyEffortLeftMap.containsKey(log.getStartDate().toLocalDate())) {
+                Double sum = dailyEffortLeftMap.get(log.getStartDate().toLocalDate());
+                dailyEffortLeftMap.put(log.getStartDate().toLocalDate(), sum + log.getEffortLeftDifferenceInHours());
+            }
+        }
+
+
+        XYChart.Series effortLeftSeries = new XYChart.Series();
+        effortLeftSeries.setName("Effort Left");
+
+        double currentEffortLeft = 0;
+        for (LocalDate d : dailyEffortLeftMap.keySet()) {
+            currentEffortLeft -= dailyEffortLeftMap.get(d);
+            String monthStr = d.getMonth().toString().substring(0, 3);
+            effortLeftSeries.getData().add(new XYChart.Data<>(monthStr + " " + d.getDayOfMonth(), currentEffortLeft));
+        }
+
+        return effortLeftSeries;
+    }
 }
 
 

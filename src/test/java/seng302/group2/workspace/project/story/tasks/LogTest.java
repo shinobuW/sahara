@@ -7,7 +7,6 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class LogTest {

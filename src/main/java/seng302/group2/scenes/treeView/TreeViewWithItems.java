@@ -21,7 +21,6 @@ import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
 import seng302.group2.workspace.categories.subCategory.project.SprintCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.role.Role;
 
 import java.util.HashMap;

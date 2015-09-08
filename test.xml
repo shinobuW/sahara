@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<status-report>
+    <header>
+        <report-title>Shinobi Demo</report-title>
+        <report-creation-date>03/09/2015</report-creation-date>
+    </header>
+    <workspace>
+        <ID>71</ID>
+        <identifier>Shinobi Demo</identifier>
+        <long-name>Shinobi Demo</long-name>
+        <description/>
+        <projects>
+            <project>
+                <ID>31</ID>
+                <identifier>Kiqo</identifier>
+                <long-name>Kiqo</long-name>
+                <description/>
+                <current-teams>
+                    <team>
+                        <ID>134</ID>
+                        <identifier>Kiqo Team</identifier>
+                        <description>Kiqo, founded in 2015, love great GUI design and have a wierd fascination with goats.</description>
+                        <current-allocation>
+                            <allocation>
+                                <ID>2377</ID>
+                                <team-name>Kiqo Team</team-name>
+                                <project-name>Kiqo</project-name>
+                                <allocation-start-date>02/08/2015</allocation-start-date>
+                                <allocation-end-date>14/10/2015</allocation-end-date>
+                            </allocation>
+                        </current-allocation>
+                        <previous-allocations>
+                            <allocation>
+                                <ID>2321</ID>
+                                <team-name>Kiqo Team</team-name>
+                                <project-name>Kiqo</project-name>
+                                <allocation-start-date>29/06/2015</allocation-start-date>
+                                <allocation-end-date>01/08/2015</allocation-end-date>
+                            </allocation>
+                        </previous-allocations>
+                        <future-allocations/>
+                        <product-owner>
+                            <person>
+                                <ID>581</ID>
+                                <identifier>Amy</identifier>
+                                <first-name>Amy</first-name>
+                                <last-name>Martin</last-name>
+                                <email/>
+                                <birth-date/>
+                                <description/>
+                                <skills>
+                                    <skill>
+                                        <ID>1</ID>
+                                        <shortname>Product Owner</shortname>
+                                        <description>Knows how to work as a Teams Product Owner</description>
+                                    </skill>
+                                </skills>
+                            </person>
+                        </product-owner>
+                        <scrum-master/>
+                        <devs/>
+                        <others>
+                            <person>
+                                <ID>413</ID>
+                                <identifier>Carina</identifier>
+                                <first-name>Carina</first-name>
+                                <last-name>Blair</last-name>
+                                <email/>
+                                <birth-date/>
+                                <description/>
+                                <skills/>
+                            </person>
+                            <person>
+                                <ID>469</ID>
+                                <identifier>Sam</identifier>
+                                <first-name>Sam</first-name>
+                                <last-name>Schofield</last-name>
+                                <email/>
+                                <birth-date/>
+                                <description/>
+                                <skills>
+                                    <skill>
+                                        <ID>2257</ID>
+                                        <shortname>Java</shortname>
+                                        <description>"This was alot easier in 201" - Me</description>
+                                    </skill>
+                                    <skill>
+                                        <ID>2259</ID>
+                                        <shortname>Lisp</shortname>
+                                        <description>Anybody who has this skill is required to be paid atleast 125k p.a.</description>
+                                    </skill>
+                                </skills>
+                            </person>
+                            <person>
+                                <ID>357</ID>
+                                <identifier>Brad</identifier>
+                                <first-name>Brad</first-name>
+                                <last-name>Kirwan</last-name>
+                                <email/>
+                                <birth-date/>
+                                <description/>
+                                <skills>
+                                    <skill>
+                                        <ID>2258</ID>
+                                        <shortname>C#</shortname>
+                                        <description>I love microsoft.</description>
+                                    </skill>
+                                    <skill>
+                                        <ID>2257</ID>
+                                        <shortname>Java</shortname>
+                                        <description>"This was alot easier in 201" - Me</description>
+                                    </skill>
+                                </skills>
+                            </person>
+                            <person>
+                                <ID>637</ID>
+                                <identifier>Leroy</identifier>
+                                <first-name>Leroy</first-name>
+                                <last-name>Hopson</last-name>
+                                <email/>
+                                <birth-date/>
+                                <description/>
+                                <skills/>
+                            </person>
+                        </others>
+                    </team>
+                </current-teams>
+                <previous-allocations>
+                    <allocation>
+                        <ID>2321</ID>
+                        <team-name>Kiqo Team</team-name>
+                        <project-name>Kiqo</project-name>
+                        <allocation-start-date>29/06/2015</allocation-start-date>
+                        <allocation-end-date>01/08/2015</allocation-end-date>
+                    </allocation>
+                </previous-allocations>
+                <future-allocations/>
+                <releases>
+                    <release>
+                        <ID>1978</ID>
+                        <identifier>Version 1.1.3</identifier>
+                        <description>This version adds some new functionality while also breaking the program.</description>
+                        <release-date>04/12/2015</release-date>
+                    </release>
+                    <release>
+                        <ID>2388</ID>
+                        <identifier>Version 1.1.4</identifier>
+                        <description/>
+                        <release-date>31/12/2015</release-date>
+                    </release>
+                </releases>
+                <backlogs>
+                    <backlog>
+                        <ID>2207</ID>
+                        <identifier>ThirstyGoat Music</identifier>
+                        <long-name>ThirstyGoat Music</long-name>
+                        <description/>
+                        <product-owner>Dan</product-owner>
+                        <estimation-scale>T-Shirt Sizes</estimation-scale>
+                        <stories>
+                            <story>
+                                <ID>2213</ID>
+                                <identifier>Research Framework</identifier>
+                                <long-name>Research Framework</long-name>
+                                <description>As a team we need to decide what we will build our application on.</description>
+                                <creator>Dan</creator>
+                                <priority>10</priority>
+                                <estimate>2XL</estimate>
+                                <ready_state>Ready</ready_state>
+                                <story-acceptance-criteria>
+                                    <acceptance-criteria>
+                                        <ID>2226</ID>
+                                        <description>A suitable framework is chosen</description>
+                                        <state>Unaccepted</state>
+                                    </acceptance-criteria>
+                                </story-acceptance-criteria>
+                                <story-dependencies/>
+                            </story>
+                            <story>
+                                <ID>2219</ID>
+                                <identifier>Basic App</identifier>
+                                <long-name>Basic App</long-name>
+                                <description/>
+                                <creator>Dan</creator>
+                                <priority>7</priority>
+                                <estimate>-</estimate>
+                                <ready_state>Not Ready</ready_state>
+                                <story-acceptance-criteria>
+                                    <acceptance-criteria>
+                                        <ID>2227</ID>
+                                        <description>Application opens</description>
+                                        <state>Unaccepted</state>
+                                    </acceptance-criteria>
+                                    <acceptance-criteria>
+                                        <ID>2228</ID>
+                                        <description>User is presented with some basic screen</description>
+                                        <state>Unaccepted</state>
+                                    </acceptance-criteria>
+                                </story-acceptance-criteria>
+                                <story-dependencies>
+                                    <dependency>Research Framework</dependency>
+                                </story-dependencies>
+                            </story>
+                            <story>
+                                <ID>2225</ID>
+                                <identifier>.WAV Player</identifier>
+                                <long-name>.WAV Player</long-name>
+                                <description>Implement .WAV files.</description>
+                                <creator>Dan</creator>
+                                <priority>5</priority>
+                                <estimate>XS</estimate>
+                                <ready_state>Not Ready</ready_state>
+                                <story-acceptance-criteria>
+                                    <acceptance-criteria>
+                                        <ID>2229</ID>
+                                        <description>Application plays .WAV files</description>
+                                        <state>Unaccepted</state>
+                                    </acceptance-criteria>
+                                </story-acceptance-criteria>
+                                <story-dependencies>
+                                    <dependency>Basic App</dependency>
+                                </story-dependencies>
+                            </story>
+                        </stories>
+                    </backlog>
+                    <backlog>
+                        <ID>2235</ID>
+                        <identifier>ThirstyGoat Weather</identifier>
+                        <long-name>ThirstyGoat Weather</long-name>
+                        <description/>
+                        <product-owner>Dan</product-owner>
+                        <estimation-scale>T-Shirt Sizes</estimation-scale>
+                        <stories>
+                            <story>
+                                <ID>2241</ID>
+                                <identifier>Weather Webservice</identifier>
+                                <long-name>Weather Webservice</long-name>
+                                <description/>
+                                <creator>Dan</creator>
+                                <priority>12</priority>
+                                <estimate>S</estimate>
+                                <ready_state>Ready</ready_state>
+                                <story-acceptance-criteria>
+                                    <acceptance-criteria>
+                                        <ID>2242</ID>
+                                        <description>Webserice set up to provide weather data</description>
+                                        <state>Unaccepted</state>
+                                    </acceptance-criteria>
+                                </story-acceptance-criteria>
+                                <story-dependencies>
+                                    <dependency>Basic App</dependency>
+                                </story-dependencies>
+                            </story>
+                        </stories>
+                    </backlog>
+                </backlogs>
+                <unassigned-stories>
+                    <story>
+                        <ID>2090</ID>
+                        <identifier>Bake pies for team 2</identifier>
+                        <long-name>Bake Cookies for Team 2</long-name>
+                        <description/>
+                        <creator>Dan</creator>
+                        <priority>940</priority>
+                        <estimate>-</estimate>
+                        <ready_state>Not Ready</ready_state>
+                        <story-acceptance-criteria>
+                            <acceptance-criteria>
+                                <ID>2201</ID>
+                                <description>Pies must be delicious</description>
+                                <state>Unaccepted</state>
+                            </acceptance-criteria>
+                            <acceptance-criteria>
+                                <ID>2202</ID>
+                                <description>All pies must contain meat. No vegetarians here!</description>
+                                <state>Accepted</state>
+                            </acceptance-criteria>
+                        </story-acceptance-criteria>
+                        <story-dependencies/>
+                    </story>
+                </unassigned-stories>
+                <sprints/>
+            </project>
+            <project>
+                <ID>75</ID>
+                <identifier>soft.serve()</identifier>
+                <long-name>soft.serve()</long-name>
+                <description/>
+                <current-teams>
+                    <team>
+                        <ID>190</ID>
+                        <identifier>SS Team</identifier>
+                        <description>We like icecream.</description>
+                        <current-allocation>
+                            <allocation>
+                                <ID>2322</ID>
+                                <team-name>SS Team</team-name>
+                                <project-name>soft.serve()</project-name>
+                                <allocation-start-date>04/07/2013</allocation-start-date>
+                                <allocation-end-date>23/07/2016</allocation-end-date>
+                            </allocation>
+                        </current-allocation>
+                        <previous-allocations/>
+                        <future-allocations/>
+                        <product-owner>
+                            <person>
+                                <ID>916</ID>
+                                <identifier>Dan</identifier>
+                                <first-name>Dan</first-name>
+                                <last-name>Tapp</last-name>
+                                <email/>
+                                <birth-date/>
+                                <description/>
+                                <skills>
+                                    <skill>
+                                        <ID>1</ID>
+                                        <shortname>Product Owner</shortname>
+                                        <description>Knows how to work as a Teams Product Owner</description>
+                                    </skill>
+                                    <skill>
+                                        <ID>2257</ID>
+                                        <shortname>Java</shortname>
+                                        <description>"This was alot easier in 201" - Me</description>
+                                    </skill>
+                                    <skill>
+                                        <ID>2259</ID>
+                                        <shortname>Lisp</shortname>
+                                        <description>Anybody who has this skill is required to be paid atleast 125k p.a.</description>
+                                    </skill>
+                                </skills>
+                            </person>
+                        </product-owner>
+                        <scrum-master>
+                            <person>
+                                <ID>804</ID>
+                                <identifier>Jaln</identifier>
+                                <first-name>Jaln</first-name>
+                                <last-name>Rodger</last-name>
+                                <email/>
+                                <birth-date/>
+                                <description/>
+                                <skills>
+                                    <skill>
+                                        <ID>2</ID>
+                                        <shortname>Scrum Master</shortname>
+                                        <description>Can be Scrum Master for a Team</description>
+                                    </skill>
+                                </skills>
+                            </person>
+                        </scrum-master>
+                        <devs/>
+                        <others>
+                            <person>
+                                <ID>860</ID>
+                                <identifier>Josh</identifier>
+                                <first-name>Josh</first-name>
+                                <last-name>Norton</last-name>
+                                <email/>
+                                <birth-date/>
+                                <description/>
+                                <skills>
+                                    <skill>
+                                        <ID>2257</ID>
+                                        <shortname>Java</shortname>
+                                        <description>"This was alot easier in 201" - Me</description>
+                                    </skill>
+                                </skills>
+                            </person>
+                            <person>
+                                <ID>972</ID>
+                                <identifier>Simon</identifier>
+                                <first-name>Simon </first-name>
+                                <last-name>Crequer</last-name>
+                                <email/>
+                                <birth-date/>
+                                <description/>
+                                <skills/>
+                            </person>
+                            <person>
+                                <ID>1028</ID>
+                                <identifier>Mike S</identifier>
+                                <first-name>Mike</first-name>
+                                <last-name>Stewart</last-name>
+                                <email/>
+                                <birth-date/>
+                                <description/>
+                                <skills>
+                                    <skill>
+                                        <ID>2258</ID>
+                                        <shortname>C#</shortname>
+                                        <description>I love microsoft.</description>
+                                    </skill>
+                                    <skill>
+                                        <ID>2259</ID>
+                                        <shortname>Lisp</shortname>
+                                        <description>Anybody who has this skill is required to be paid atleast 125k p.a.</description>
+                                    </skill>
+                                </skills>
+                            </person>
+                            <person>
+                                <ID>1084</ID>
+                                <identifier>Mike W</identifier>
+                                <first-name>Mike</first-name>
+                                <last-name>Wheeler</last-name>
+                                <email/>
+                                <birth-date/>
+                                <description/>
+                                <skills>
+                                    <skill>
+                                        <ID>2259</ID>
+                                        <shortname>Lisp</shortname>
+                                        <description>Anybody who has this skill is required to be paid atleast 125k p.a.</description>
+                                    </skill>
+                                </skills>
+                            </person>
+                        </others>
+                    </team>
+                </current-teams>
+                <previous-allocations/>
+                <future-allocations/>
+                <releases>
+                    <release>
+                        <ID>1866</ID>
+                        <identifier>Version 2.1.4</identifier>
+                        <description>This version adds some new functionality without breaking the program.</description>
+                        <release-date>15/10/2015</release-date>
+                    </release>
+                    <release>
+                        <ID>2327</ID>
+                        <identifier>Version 2.1.5</identifier>
+                        <description/>
+                        <release-date>29/08/2015</release-date>
+                    </release>
+                </releases>
+                <backlogs>
+                    <backlog>
+                        <ID>2313</ID>
+                        <identifier>Ice Cream Delivery</identifier>
+                        <long-name>Ice Cream Delivery</long-name>
+                        <description/>
+                        <product-owner>Dan</product-owner>
+                        <estimation-scale>Dog Breeds</estimation-scale>
+                        <stories>
+                            <story>
+                                <ID>2319</ID>
+                                <identifier>I scream</identifier>
+                                <long-name>we all scream</long-name>
+                                <description/>
+                                <creator>for ice cream</creator>
+                                <priority>1</priority>
+                                <estimate>-</estimate>
+                                <ready_state>Not Ready</ready_state>
+                                <story-acceptance-criteria/>
+                                <story-dependencies/>
+                            </story>
+                        </stories>
+                    </backlog>
+                    <backlog>
+                        <ID>2365</ID>
+                        <identifier>Ingredients</identifier>
+                        <long-name>Ice Cream Ingredient Gather &amp; Prep</long-name>
+                        <description/>
+                        <product-owner>Dan</product-owner>
+                        <estimation-scale>Dog Breeds</estimation-scale>
+                        <stories>
+                            <story>
+                                <ID>2417</ID>
+                                <identifier>A Taskful Story</identifier>
+                                <long-name>A Taskful Story</long-name>
+                                <description/>
+                                <creator>Taskmaster</creator>
+                                <priority>5</priority>
+                                <estimate>-</estimate>
+                                <ready_state>Not Ready</ready_state>
+                                <story-acceptance-criteria/>
+                                <story-dependencies/>
+                            </story>
+                        </stories>
+                    </backlog>
+                </backlogs>
+                <unassigned-stories/>
+                <sprints>
+                    <sprint>
+                        <ID>2328</ID>
+                        <goal>Ice Cream Makin'</goal>
+                        <long-name>The Construction of the perfect Cone</long-name>
+                        <description/>
+                        <start-date>2015-08-03</start-date>
+                        <end-date>2015-08-20</end-date>
+                        <project>soft.serve()</project>
+                        <team>SS Team</team>
+                        <release>Version 2.1.4</release>
+                        <stories>
+                            <story>
+                                <ID>2417</ID>
+                                <identifier>A Taskful Story</identifier>
+                                <long-name>A Taskful Story</long-name>
+                                <description/>
+                                <creator>Taskmaster</creator>
+                                <priority>5</priority>
+                                <estimate>-</estimate>
+                                <ready_state>Not Ready</ready_state>
+                                <story-acceptance-criteria/>
+                                <story-dependencies/>
+                            </story>
+                            <story>
+                                <ID>2319</ID>
+                                <identifier>I scream</identifier>
+                                <long-name>we all scream</long-name>
+                                <description/>
+                                <creator>for ice cream</creator>
+                                <priority>1</priority>
+                                <estimate>-</estimate>
+                                <ready_state>Not Ready</ready_state>
+                                <story-acceptance-criteria/>
+                                <story-dependencies/>
+                            </story>
+                        </stories>
+                    </sprint>
+                    <sprint>
+                        <ID>2389</ID>
+                        <goal>Create Sprints</goal>
+                        <long-name>Create Sprints</long-name>
+                        <description/>
+                        <start-date>2015-08-03</start-date>
+                        <end-date>2015-08-19</end-date>
+                        <project>soft.serve()</project>
+                        <team>SS Team</team>
+                        <release>Version 2.1.5</release>
+                        <stories/>
+                    </sprint>
+                </sprints>
+            </project>
+        </projects>
+        <unassigned-teams/>
+        <unassigned-people>
+            <person>
+                <ID>581</ID>
+                <identifier>Amy</identifier>
+                <first-name>Amy</first-name>
+                <last-name>Martin</last-name>
+                <email/>
+                <birth-date/>
+                <description/>
+                <skills>
+                    <skill>
+                        <ID>1</ID>
+                        <shortname>Product Owner</shortname>
+                        <description>Knows how to work as a Teams Product Owner</description>
+                    </skill>
+                </skills>
+            </person>
+            <person>
+                <ID>2248</ID>
+                <identifier>Angus</identifier>
+                <first-name>Angus</first-name>
+                <last-name>McGurkinshaw</last-name>
+                <email/>
+                <birth-date/>
+                <description/>
+                <skills>
+                    <skill>
+                        <ID>2259</ID>
+                        <shortname>Lisp</shortname>
+                        <description>Anybody who has this skill is required to be paid atleast 125k p.a.</description>
+                    </skill>
+                    <skill>
+                        <ID>2</ID>
+                        <shortname>Scrum Master</shortname>
+                        <description>Can be Scrum Master for a Team</description>
+                    </skill>
+                </skills>
+            </person>
+            <person>
+                <ID>357</ID>
+                <identifier>Brad</identifier>
+                <first-name>Brad</first-name>
+                <last-name>Kirwan</last-name>
+                <email/>
+                <birth-date/>
+                <description/>
+                <skills>
+                    <skill>
+                        <ID>2258</ID>
+                        <shortname>C#</shortname>
+                        <description>I love microsoft.</description>
+                    </skill>
+                    <skill>
+                        <ID>2257</ID>
+                        <shortname>Java</shortname>
+                        <description>"This was alot easier in 201" - Me</description>
+                    </skill>
+                </skills>
+            </person>
+            <person>
+                <ID>413</ID>
+                <identifier>Carina</identifier>
+                <first-name>Carina</first-name>
+                <last-name>Blair</last-name>
+                <email/>
+                <birth-date/>
+                <description/>
+                <skills/>
+            </person>
+            <person>
+                <ID>916</ID>
+                <identifier>Dan</identifier>
+                <first-name>Dan</first-name>
+                <last-name>Tapp</last-name>
+                <email/>
+                <birth-date/>
+                <description/>
+                <skills>
+                    <skill>
+                        <ID>1</ID>
+                        <shortname>Product Owner</shortname>
+                        <description>Knows how to work as a Teams Product Owner</description>
+                    </skill>
+                    <skill>
+                        <ID>2257</ID>
+                        <shortname>Java</shortname>
+                        <description>"This was alot easier in 201" - Me</description>
+                    </skill>
+                    <skill>
+                        <ID>2259</ID>
+                        <shortname>Lisp</shortname>
+                        <description>Anybody who has this skill is required to be paid atleast 125k p.a.</description>
+                    </skill>
+                </skills>
+            </person>
+            <person>
+                <ID>804</ID>
+                <identifier>Jaln</identifier>
+                <first-name>Jaln</first-name>
+                <last-name>Rodger</last-name>
+                <email/>
+                <birth-date/>
+                <description/>
+                <skills>
+                    <skill>
+                        <ID>2</ID>
+                        <shortname>Scrum Master</shortname>
+                        <description>Can be Scrum Master for a Team</description>
+                    </skill>
+                </skills>
+            </person>
+            <person>
+                <ID>525</ID>
+                <identifier>James</identifier>
+                <first-name>James</first-name>
+                <last-name>Harrison</last-name>
+                <email/>
+                <birth-date/>
+                <description/>
+                <skills/>
+            </person>
+            <person>
+                <ID>860</ID>
+                <identifier>Josh</identifier>
+                <first-name>Josh</first-name>
+                <last-name>Norton</last-name>
+                <email/>
+                <birth-date/>
+                <description/>
+                <skills>
+                    <skill>
+                        <ID>2257</ID>
+                        <shortname>Java</shortname>
+                        <description>"This was alot easier in 201" - Me</description>
+                    </skill>
+                </skills>
+            </person>
+            <person>
+                <ID>637</ID>
+                <identifier>Leroy</identifier>
+                <first-name>Leroy</first-name>
+                <last-name>Hopson</last-name>
+                <email/>
+                <birth-date/>
+                <description/>
+                <skills/>
+            </person>
+            <person>
+                <ID>1028</ID>
+                <identifier>Mike S</identifier>
+                <first-name>Mike</first-name>
+                <last-name>Stewart</last-name>
+                <email/>
+                <birth-date/>
+                <description/>
+                <skills>
+                    <skill>
+                        <ID>2258</ID>
+                        <shortname>C#</shortname>
+                        <description>I love microsoft.</description>
+                    </skill>
+                    <skill>
+                        <ID>2259</ID>
+                        <shortname>Lisp</shortname>
+                        <description>Anybody who has this skill is required to be paid atleast 125k p.a.</description>
+                    </skill>
+                </skills>
+            </person>
+            <person>
+                <ID>1084</ID>
+                <identifier>Mike W</identifier>
+                <first-name>Mike</first-name>
+                <last-name>Wheeler</last-name>
+                <email/>
+                <birth-date/>
+                <description/>
+                <skills>
+                    <skill>
+                        <ID>2259</ID>
+                        <shortname>Lisp</shortname>
+                        <description>Anybody who has this skill is required to be paid atleast 125k p.a.</description>
+                    </skill>
+                </skills>
+            </person>
+            <person>
+                <ID>469</ID>
+                <identifier>Sam</identifier>
+                <first-name>Sam</first-name>
+                <last-name>Schofield</last-name>
+                <email/>
+                <birth-date/>
+                <description/>
+                <skills>
+                    <skill>
+                        <ID>2257</ID>
+                        <shortname>Java</shortname>
+                        <description>"This was alot easier in 201" - Me</description>
+                    </skill>
+                    <skill>
+                        <ID>2259</ID>
+                        <shortname>Lisp</shortname>
+                        <description>Anybody who has this skill is required to be paid atleast 125k p.a.</description>
+                    </skill>
+                </skills>
+            </person>
+            <person>
+                <ID>972</ID>
+                <identifier>Simon</identifier>
+                <first-name>Simon </first-name>
+                <last-name>Crequer</last-name>
+                <email/>
+                <birth-date/>
+                <description/>
+                <skills/>
+            </person>
+        </unassigned-people>
+        <roles>
+            <role>
+                <ID>3</ID>
+                <identifier>Scrum Master</identifier>
+                <description>The Scrum Master for a Team</description>
+                <required-skills>
+                    <skill>
+                        <ID>2</ID>
+                        <shortname>Scrum Master</shortname>
+                        <description>Can be Scrum Master for a Team</description>
+                    </skill>
+                </required-skills>
+            </role>
+            <role>
+                <ID>4</ID>
+                <identifier>Product Owner</identifier>
+                <description>The Product Owner for a Team</description>
+                <required-skills>
+                    <skill>
+                        <ID>1</ID>
+                        <shortname>Product Owner</shortname>
+                        <description>Knows how to work as a Teams Product Owner</description>
+                    </skill>
+                </required-skills>
+            </role>
+            <role>
+                <ID>5</ID>
+                <identifier>Developer</identifier>
+                <description>A member of the Dev Team</description>
+                <required-skills/>
+            </role>
+        </roles>
+        <unassigned-skills>
+            <skill>
+                <ID>2430</ID>
+                <shortname>F#</shortname>
+                <description/>
+            </skill>
+        </unassigned-skills>
+    </workspace>
+</status-report>

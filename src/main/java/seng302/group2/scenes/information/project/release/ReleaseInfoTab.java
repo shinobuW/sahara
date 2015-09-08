@@ -8,7 +8,6 @@ import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.workspace.project.release.Release;
 
