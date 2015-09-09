@@ -103,8 +103,7 @@ public class SprintInfoTab extends SearchableTab {
                         stories
                 );
 
-
-                basicInfoPane.getChildren().addAll(btnEdit, createStoryTitlePanes(currentSprint));
+                basicInfoPane.getChildren().addAll(createStoryTitlePanes(currentSprint), btnEdit);
             });
 
 

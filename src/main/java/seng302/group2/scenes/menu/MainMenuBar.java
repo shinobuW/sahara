@@ -487,7 +487,6 @@ public class MainMenuBar extends MenuBar {
     static void redoAction() {
         Global.commandManager.redo();
         MainToolbar.undoRedoToggle();
-
     }
 
     /**
@@ -526,6 +525,20 @@ public class MainMenuBar extends MenuBar {
                 KeyCombination.SHORTCUT_DOWN));
         return toggleItem;
     }
+
+
+    /**
+     * Creates a menu item "Refresh" that refreshes the main scene when it is selected, or when F5 is pressed.
+     *
+     * @return A refresh menu item
+     */
+    private static MenuItem createRefreshItem() {
+        MenuItem refreshItem = new MenuItem("Refresh");
+        refreshItem.setOnAction((event) -> App.refreshMainScene());
+        refreshItem.setAccelerator(new KeyCodeCombination(KeyCode.F5));
+        return refreshItem;
+    }
+
 
     /**
      * Constructor for the Menu Bar
@@ -587,7 +600,8 @@ public class MainMenuBar extends MenuBar {
         this.getMenus().add(displayMenu);
         // Create MenuItems for Display submenu
         MenuItem toggleTree = createToggleTreeItem();
-        displayMenu.getItems().addAll(toggleTree);
+        MenuItem refreshItem = createRefreshItem();
+        displayMenu.getItems().addAll(toggleTree, refreshItem);
 
 
         // Create 'Generate >' menu

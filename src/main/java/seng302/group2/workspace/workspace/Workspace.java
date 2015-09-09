@@ -704,6 +704,18 @@ public class Workspace extends SaharaItem implements Serializable {
         return this.teams;
     }
 
+    /**
+     * Gets the worksppace's list of teams, minus the unassigned team.
+     *
+     * @return The teams associated with a workspace minus the unassigned teams
+     */
+    public ObservableList<Team> getTeamsWithoutUnassigned() {
+        ObservableList<Team> teamList = observableArrayList();
+        teamList = this.teams;
+        teamList.remove(Global.getUnassignedTeam());
+        return  teamList;
+    }
+
     //</editor-fold>
 
     /**
