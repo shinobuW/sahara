@@ -249,7 +249,9 @@ public class LoggingEffortPane extends Pane {
         startDatePicker.getDatePicker().setValue(LocalDate.now());
 
         HBox startTimeHBox = new HBox(10);
-        SearchableText startTimeLabel = new SearchableText("Time:");
+        SearchableText startTimeLabel = new SearchableText("Start Time:");
+        startTimeLabel.setStyle("-fx-font-weight: bold");
+
         startTimeLabel.setPrefWidth(150);
         TimeTextField timeTextField = new TimeTextField();
         HBox.setHgrow(timeTextField, Priority.ALWAYS);
