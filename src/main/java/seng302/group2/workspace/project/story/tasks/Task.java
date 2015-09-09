@@ -1179,6 +1179,7 @@ public class Task extends SaharaItem implements Serializable {
          */
         public void execute() {
             task.getLogs().add(log);
+            log.getLogger().getLogs().add(log);
             log.setTask(task);
             double newEffortSpent = task.getEffortSpent() + log.getDurationInMinutes();
             task.setEffortSpent(newEffortSpent);
@@ -1191,6 +1192,7 @@ public class Task extends SaharaItem implements Serializable {
          */
         public void undo() {
             task.getLogs().remove(log);
+            log.getLogger().getLogs().remove(log);
             log.setTask(null);
             task.setEffortSpent(oldEffortSpent);
             task.setEffortLeft(oldEffortLeft);

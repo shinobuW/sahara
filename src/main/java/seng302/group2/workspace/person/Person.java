@@ -12,6 +12,8 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.PersonInform
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.project.story.tasks.Log;
+import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
@@ -36,6 +38,8 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
     private LocalDate birthDate = null;
     private transient ObservableList<Skill> skills = observableArrayList();
     private List<Skill> serializableSkills = new ArrayList<>();
+    private transient ObservableList<Log> logs = observableArrayList();
+    private List<Log> serializableLogs = new ArrayList<>();
     private Team team;
     private Role role;
     private final SimpleBooleanProperty selected = new SimpleBooleanProperty(false);
@@ -224,6 +228,15 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         return this.birthDate;
     }
 
+    /**
+     * Gets a list of the Persons Logs
+     *
+     * @return The list of logs
+     */
+    public ObservableList<Log> getLogs() {
+        return this.logs;
+    }
+
     //</editor-fold>
 
 
@@ -323,6 +336,13 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         }
         for (Object item : skills) {
             this.serializableSkills.add((Skill) item);
+        }
+        serializableLogs.clear();
+        if (logs == null) {
+            logs = FXCollections.observableArrayList();
+        }
+        for (Object item : logs) {
+            this.serializableLogs.add((Log) item);
         }
     }
 

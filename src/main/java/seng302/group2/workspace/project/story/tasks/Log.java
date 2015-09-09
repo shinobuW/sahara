@@ -230,6 +230,8 @@ public class Log extends SaharaItem implements Serializable {
         public void execute() {
             this.log.task.getLogs().remove(this.log);
             this.log.task.setEffortSpent((this.oldEffortSpent - this.log.duration));
+            this.log.logger.getLogs().remove(this.log);
+            System.out.println(this.log.logger + " " + this.log);
         }
 
 
@@ -239,6 +241,7 @@ public class Log extends SaharaItem implements Serializable {
         public void undo() {
             this.log.task.getLogs().add(this.log);
             this.log.task.setEffortSpent(this.oldEffortSpent);
+            this.log.logger.getLogs().add(this.log);
         }
 
 

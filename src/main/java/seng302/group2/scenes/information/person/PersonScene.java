@@ -26,7 +26,8 @@ public class PersonScene extends TrackedTabPane {
 
         // Define and add the tabs
         SearchableTab informationTab = new PersonInfoTab(currentPerson);
-        Collections.addAll(searchableTabs, informationTab);
+        SearchableTab loggingTab = new PersonLoggingTab(currentPerson);
+        Collections.addAll(searchableTabs, informationTab, loggingTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 
