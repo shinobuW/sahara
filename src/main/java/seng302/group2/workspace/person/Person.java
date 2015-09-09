@@ -93,7 +93,6 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
                 break; // Only one unassigned team
             }
         }
-
         setInformationSwitchStrategy(new PersonInformationSwitchStrategy());
     }
 

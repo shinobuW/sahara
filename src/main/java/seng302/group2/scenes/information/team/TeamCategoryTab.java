@@ -1,5 +1,7 @@
 package seng302.group2.scenes.information.team;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -9,9 +11,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
+import seng302.group2.Global;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreateTeamDialog;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.team.Team;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
@@ -46,7 +50,7 @@ public class TeamCategoryTab extends SearchableTab {
 
         // Create Controls
         SearchableText title = new SearchableTitle("Teams in " + currentWorkspace.getShortName());
-        SearchableListView teamBox = new SearchableListView<>(currentWorkspace.getTeams());
+        SearchableListView<Team> teamBox = new SearchableListView<>(currentWorkspace.getTeams());
         teamBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         teamBox.setMaxWidth(275);
 
@@ -60,10 +64,22 @@ public class TeamCategoryTab extends SearchableTab {
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
         // Events
+        teamBox.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Team>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Team> observable, Team oldValue, Team newValue) {
+                        if (newValue == Global.getUnassignedTeam()) {
+                            btnDelete.setDisable(true);
+                        }
+                        else {
+                            btnDelete.setDisable(false);
+                        }
+                    }
+                }
+        );
         btnView.setOnAction((event) -> {
                 if (teamBox.getSelectionModel().getSelectedItem() != null) {
-                    App.mainPane.selectItem((SaharaItem)
-                            teamBox.getSelectionModel().getSelectedItem());
+                    App.mainPane.selectItem(teamBox.getSelectionModel().getSelectedItem());
                 }
             });
 
