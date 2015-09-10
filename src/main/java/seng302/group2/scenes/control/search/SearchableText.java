@@ -130,7 +130,7 @@ public class SearchableText extends TextFlow implements SearchableControl {
      */
     public String getText() {
         Text contentText = stitch();
-        return contentText.getText();
+        return contentText.getText().trim();
     }
 
     /**
