@@ -147,7 +147,7 @@ public class CreatePersonDialog extends Dialog<Map<String, String>> {
                     LocalDate birthDate = birthDatePicker.getValue();
 
                     if (firstName.equals("John") && lastName.equals("Cena")) {
-                        String path = ("media/Cena.mp3");
+                        String path = ("resources/Cena.mp3");
                         Media hit = new Media(new File(path).toURI().toString());
                         MediaPlayer mediaPlayer = new MediaPlayer(hit);
                         mediaPlayer.play();
