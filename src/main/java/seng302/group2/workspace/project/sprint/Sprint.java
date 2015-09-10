@@ -243,30 +243,6 @@ public class Sprint extends SaharaItem {
         return totalEffort;
     }
 
-//    /**
-//     * Gets the total initial left across all tasks in this sprint
-//     * @return total initial left in minutes
-//     */
-//    public double getTotalInitialLeft() {
-//        double total = 0;
-//        for (Task t : this.getAllTasks()) {
-//            total += t.getInitialEffortLeft();
-//        }
-//        return total;
-//    }
-//
-//    /**
-//     * Gets the total initial left across all tasks in this sprint
-//     * @return total initial left in hours
-//     */
-//    public double getTotalInitialLeftInHours() {
-//        double total = 0;
-//        for (Task t : this.getAllTasks()) {
-//            total += t.getInitialEffortLeft();
-//        }
-//        return total / 60;
-//    }
-
     /**
      * Gets the serializable stories belonging to the sprint
      * @return A List of Stories

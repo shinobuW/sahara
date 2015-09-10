@@ -117,7 +117,7 @@ public class Task extends SaharaItem implements Serializable {
                 logsWithoutGhosts.addAll(logs);
                 Set<Log> logsToRemove = new HashSet<>();
                 for (Log log : logsWithoutGhosts) {
-                    if (log.getDescription().equals("Manual Edit")) {
+                    if (log.isGhostLog()) {
                         logsToRemove.add(log);
                     }
                 }
@@ -482,8 +482,9 @@ public class Task extends SaharaItem implements Serializable {
 
 
     public void editEffortLeft(double newEffortLeft) {
-        Log manualEffortLeftLog = new Log(this, "Manual Edit", null, 0,
+        Log manualEffortLeftLog = new Log(this, "Manual Edit Log", null, 0,
                 LocalDateTime.now(), this.getEffortLeft() - newEffortLeft);
+        manualEffortLeftLog.setGhostLog();
         Command effortLeftEdit = new TaskEditEffortLeftCommand(this, newEffortLeft, manualEffortLeftLog);
         Global.commandManager.executeCommand(effortLeftEdit);
     }

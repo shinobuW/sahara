@@ -90,7 +90,7 @@ public class RequiredField extends VBox implements SearchableControl {
      * @return The text of the text field
      */
     public String getText() {
-        return this.inputText.getText();
+        return this.inputText.getText().trim();
     }
 
 
