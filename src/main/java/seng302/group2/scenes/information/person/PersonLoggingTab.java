@@ -7,17 +7,15 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
-import seng302.group2.scenes.control.*;
+import seng302.group2.scenes.control.CustomDatePicker;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 
