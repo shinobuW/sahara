@@ -24,6 +24,7 @@ public class Log extends SaharaItem implements Serializable {
     private Person logger = null;
     private Task task = null;
     private String description = "";
+    private boolean ghostLog = false;
 
     public Log() {
         super("Untitled Log");
@@ -107,6 +108,21 @@ public class Log extends SaharaItem implements Serializable {
      */
     public double getEffortLeftDifferenceInMinutes() {
         return this.effortLeftDifference;
+    }
+
+    /**
+     * Sets the log to be a ghost log. Ghost logs are used when manually editing the effort left.
+     */
+    public void setGhostLog() {
+        this.ghostLog = true;
+    }
+
+    /**
+     * Returns if the current log is a ghost log or not.
+     * @return if ghost log.
+     */
+    public boolean isGhostLog() {
+        return this.ghostLog;
     }
 
 
