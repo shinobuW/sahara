@@ -18,12 +18,12 @@ import java.util.Set;
  * Created by swi67 on 31/07/15.
  */
 public class Log extends SaharaItem implements Serializable {
-    private LocalDateTime startTime = LocalDateTime.now();
-    private double duration = 0;
-    private double effortLeftDifference = 0;
-    private Person logger = null;
-    private Task task = null;
-    private String description = "";
+    protected LocalDateTime startTime = LocalDateTime.now();
+    protected double duration = 0;
+    protected double effortLeftDifference = 0;
+    protected Person logger = null;
+    protected Task task = null;
+    protected String description = "";
 
     public Log() {
         super("Untitled Log");
@@ -331,7 +331,7 @@ public class Log extends SaharaItem implements Serializable {
 
 
         /**
-         * Executes/Redoes the changes of the person edit
+         * Executes/Redoes the changes of the log edit
          */
         public void execute() {
             task.setEffortSpent(task.getEffortSpent() - log.getDurationInMinutes() + duration);
@@ -347,7 +347,7 @@ public class Log extends SaharaItem implements Serializable {
 
 
         /**
-         * Undoes the changes of the person edit
+         * Undoes the changes of the log edit
          */
         public void undo() {
             log.logger = oldLogger;
