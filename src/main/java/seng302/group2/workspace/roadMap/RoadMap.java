@@ -8,15 +8,32 @@ import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import static javafx.collections.FXCollections.observableArrayList;
+import seng302.group2.Global;
+import seng302.group2.util.undoredo.Command;
+import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.release.Release;
+import seng302.group2.workspace.project.sprint.Sprint;
 
 /**
+ * RoadMap Model class.
+ * 
  * Created by cvs20 on 11/09/15.
  */
 public class RoadMap extends SaharaItem implements Serializable, Comparable<RoadMap> {
     private String shortName;
     private String longName;
+    private transient ObservableList<Release> releases = observableArrayList();
+    private List<Release> serializableReleases = new ArrayList<>();
+
+    
+    
 
     /**
      * Basic RoadMap constructor
@@ -25,6 +42,17 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
         super("Untitled RoadMap");
         this.shortName = "Untitled RoadMap";
         this.longName = "Untitled Long RoadMap";
+
+        setInformationSwitchStrategy(new RoadMapInformationSwitchStrategy());
+    }
+    
+    /**
+     * Basic RoadMap constructor
+     */
+    public RoadMap(String shortName, String longName) {
+        super(shortName);
+        this.shortName = shortName;
+        this.longName = longName;
 
         setInformationSwitchStrategy(new RoadMapInformationSwitchStrategy());
     }
@@ -37,8 +65,36 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
     public String getShortName() {
         return this.shortName;
     }
+    
+    /**
+     * Gets a roadmap long name
+     *
+     * @return The long name of the roadmap short
+     */
+    public String getLongName() {
+        return this.shortName;
+    }
+    
+    /**
+     * Gets the releases of the RoadMap
+     *
+     * @return list of releases
+     */
+    public ObservableList<Release> getReleases() {
+        return this.releases;
+    }
+    
+    /**
+     * Adds a Release to the RoadMaps's list of Releases.
+     *
+     * @param release The release to add
+     */
+    public void add(Release release) {
+        Command command = new AddReleaseCommand(this, release);
+        Global.commandManager.executeCommand(command);
+    }
 
-
+    
 
     /**
      * Returns the items held by the RoadMap, blank as the RoadMap has no child items.
@@ -46,7 +102,12 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
      */
     @Override
     public Set<SaharaItem> getItemsSet() {
-        return new HashSet<>();
+        Set<SaharaItem> items = new HashSet<>();
+        for (Release release : releases) {
+            items.addAll(release.getItemsSet());
+        }
+        items.addAll(releases);
+        return items;
     }
 
     /**
@@ -89,6 +150,64 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
     @Override
     public Element generateXML() {
         return null;
+    }
+ 
+    
+    /**
+     * A command class for allowing the adding of Releases to RoadMaps.
+     */
+    private class AddReleaseCommand implements Command {
+        private Release release;
+        private RoadMap roadMap;
+        
+        /**
+         * Constructor for the release addition command.
+         * @param roadMap The roadMap to which the release is being added.
+         * @param release The release to be added.
+         */
+        AddReleaseCommand(RoadMap roadMap, Release release) {
+            this.roadMap = roadMap;
+            this.release = release;
+        }
+
+        /**
+         * Executes the release addition command.
+         */
+        public void execute() {
+            roadMap.getReleases().add(release);
+            
+        }
+
+        /**
+         * Undoes the release addition command.
+         */
+        public void undo() {
+            roadMap.getReleases().remove(release);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(roadMap)) {
+                    this.roadMap = (RoadMap) item;
+                    mapped = true;
+                }
+            }
+            boolean mapped_release = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(release)) {
+                    this.release = (Release) item;
+                    mapped_release = true;
+                }
+            }
+            return mapped && mapped_release;
+        }
     }
 
 

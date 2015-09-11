@@ -8,7 +8,20 @@ import seng302.group2.workspace.skills.Skill;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import javafx.geometry.Insets;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Separator;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import seng302.group2.scenes.control.CustomInfoLabel;
+import seng302.group2.scenes.control.search.SearchableListView;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.workspace.team.Team;
 
 /**
  * The RoadMap information tab
@@ -24,7 +37,62 @@ public class RoadMapInfoTab extends SearchableTab {
      */
     public RoadMapInfoTab(RoadMap currentRoadMap) {
 
+        this.setText("Basic Information");
+        Pane basicInfoPane = new VBox(10);
+        basicInfoPane.setBorder(null);
+        basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
+        ScrollPane wrapper = new ScrollPane(basicInfoPane);
+        this.setContent(wrapper);
 
+        // Create controls
+        SearchableText title = new SearchableTitle(currentRoadMap.getLongName(), searchControls);
+
+        Separator separator = new Separator();
+        Button btnEdit = new Button("Edit");
+
+
+        
+
+        CustomInfoLabel shortNameField = new CustomInfoLabel("Short Name: ", currentRoadMap.getShortName());
+        CustomInfoLabel currentTeamsLabel = new CustomInfoLabel("Current Teams:", "");
+        CustomInfoLabel releasesLabel = new CustomInfoLabel("Releases:", "");
+
+
+
+
+        // Events
+        btnEdit.setOnAction((event) -> {
+                currentRoadMap.switchToInfoScene(true);
+            });
+
+        // Add items to pane & search collection
+        basicInfoPane.getChildren().addAll(
+                title,
+                shortNameField,
+                separator,
+                btnEdit
+        );
+
+        Collections.addAll(searchControls,
+                title,
+                shortNameField,
+                currentTeamsLabel,
+                releasesLabel
+        );
+
+    }
+    
+    /**
+     * Gets the node for the Roadmap.
+     * 
+     * @param currentRoadMap the roadMap to be processed
+     * @return An Hbox with all releases, sprints, stories associated with it.
+     */
+    public HBox roadMapNode(RoadMap currentRoadMap) {
+        
+        
+        
+        return null;
     }
 
 
