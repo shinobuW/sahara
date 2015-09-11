@@ -1,5 +1,6 @@
 package seng302.group2.scenes;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -89,7 +90,8 @@ public class SearchResultPane extends PopOver {
                     ((TrackedTabPane) resultView.getSelectionModel().getSelectedItem().getSearchableScene())
                             .select(selectedTab);
                     selectedItem.switchToInfoScene();
-                    if (searchType != SearchType.REGEX) {
+                    if (searchType == SearchType.NORMAL) {
+                        System.out.println("Into the Highlighting");
                         MainPane.getToolBar().search(searchText);
                     }
                 }
@@ -117,11 +119,11 @@ public class SearchResultPane extends PopOver {
                 searchPopOver.show(App.mainStage);
             });
 
-        this.setOnHiding(event -> {
-                MainPane.getToolBar().search("");
-                Global.advancedSearchExists = false;
-
-            });
+//        this.setOnHiding(event -> {
+//                MainPane.getToolBar().search("");
+//                Global.advancedSearchExists = false;
+//
+//            });
 
         this.setContentNode(content);
         this.setDetached(true);

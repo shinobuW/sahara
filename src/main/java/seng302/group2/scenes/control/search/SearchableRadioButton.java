@@ -76,7 +76,6 @@ public class SearchableRadioButton extends VBox implements SearchableControl {
         return rbLabel.query(query);
     }
 
-    //TODO Advanced search query for this class.
     @Override
     public int advancedQuery(String query, SearchType searchType) {
         return 0;

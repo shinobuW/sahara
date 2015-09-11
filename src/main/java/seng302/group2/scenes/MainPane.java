@@ -123,9 +123,9 @@ public class MainPane extends BorderPane {
      * @param node The node to replace the current content pane
      */
     public void setContent(Node node) {
-        Platform.runLater(() -> {
-                contentPane.setContent(node);
-            });
+//        Platform.runLater(() -> {
+        contentPane.setContent(node);
+//            });
 
     }
 

@@ -79,9 +79,11 @@ public class CreateSearchPopOver extends PopOver {
         normalBtn.setSelected(true);
         RadioButton regexBtn = new RadioButton("Regular Expression");
         regexBtn.setToggleGroup(searchGroup);
+        RadioButton complexBtn = new RadioButton("Complex Expression");
+        complexBtn.setToggleGroup(searchGroup);
 
 
-        searchByBox.getChildren().addAll(normalBtn, regexBtn);
+        searchByBox.getChildren().addAll(normalBtn, regexBtn, complexBtn);
 
         HBox sortByBox = new HBox();
         SearchableText sortByString = new SearchableText("Sort By: ");
@@ -220,6 +222,16 @@ public class CreateSearchPopOver extends PopOver {
                             SearchType.REGEX, treeViewButton.isSelected()), searchText, SearchType.REGEX);
                     resultsPopOver.show(App.mainStage);
                 }
+                else if (complexBtn.isSelected()) {
+                    this.hide();
+                    String searchText = searchField.getText();
+                    List<String> checkedItems = getCheckedItems(workspaceSearchCheck,
+                            modelCheckBoxes);
+                    PopOver resultsPopOver = new SearchResultPane(runSearch(checkedItems, searchText,
+                            SearchType.COMPLEX, treeViewButton.isSelected()), searchText, SearchType.COMPLEX);
+                    resultsPopOver.show(App.mainStage);
+                }
+
             });
 
         btnCancel.setOnAction(event -> {
@@ -231,7 +243,6 @@ public class CreateSearchPopOver extends PopOver {
                 MainPane.getToolBar().search("");
                 Global.advancedSearchExists = false;
             });
-
 
 
     }
