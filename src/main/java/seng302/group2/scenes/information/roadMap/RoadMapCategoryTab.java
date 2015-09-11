@@ -18,6 +18,7 @@ import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.dialog.CreateRoadMapDialog;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 import seng302.group2.workspace.roadMap.RoadMap;
@@ -45,14 +46,14 @@ public class RoadMapCategoryTab extends SearchableTab {
         this.setContent(wrapper);
 
         // Create Controls
-        SearchableText title = new SearchableTitle("Skills in " + currentWorkspace.getShortName());
+        SearchableText title = new SearchableTitle("RoadMaps in " + currentWorkspace.getShortName());
         SearchableListView<RoadMap> roadMapBox = new SearchableListView<>(currentWorkspace.getRoadMaps());
         roadMapBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         roadMapBox.setMaxWidth(275);
 
         Button btnView = new Button("View");
         Button btnDelete = new Button("Delete");
-        Button btnCreate = new Button("Create New Skill");
+        Button btnCreate = new Button("Create New RoadMap");
 
         HBox selectionButtons = new HBox();
         selectionButtons.spacingProperty().setValue(10);
@@ -73,7 +74,7 @@ public class RoadMapCategoryTab extends SearchableTab {
             });
 
         btnCreate.setOnAction((event) -> {
-                javafx.scene.control.Dialog creationDialog = new CreateSkillDialog();
+                javafx.scene.control.Dialog creationDialog = new CreateRoadMapDialog();
                 creationDialog.show();
             });
 

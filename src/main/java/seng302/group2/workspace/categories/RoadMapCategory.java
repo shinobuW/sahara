@@ -25,7 +25,7 @@ import seng302.group2.workspace.person.Person;
 public class RoadMapCategory extends Category {
     
     /**
-     * Constructor for the SkillsCategory class.
+     * Constructor for the RoadMapCategory class.
      */
     public RoadMapCategory() {
         super("RoadMap");
@@ -33,7 +33,7 @@ public class RoadMapCategory extends Category {
     }
 
     /**
-     * Method for creating an XML element for the Team within report generation
+     * Method for creating an XML element for the RoadMap within report generation
      * @return element for XML generation
      */
     @Override
@@ -42,7 +42,7 @@ public class RoadMapCategory extends Category {
     }
 
     /**
-     * Returns the items held by the SkillsCategory, blank as the skills category has no child items.
+     * Returns the items held by the RoadMapCategory, blank as the roadMap category has no child items.
      * @return a blank hash set
      */
     @Override
@@ -51,8 +51,8 @@ public class RoadMapCategory extends Category {
     }
 
     /**
-     * Returns a list of all the skills in the workspace.
-     * @return An ObservableList of the Skills in the workspace.
+     * Returns a list of all the RoadMap in the workspace.
+     * @return An ObservableList of the RoadMap in the workspace.
      */
     @Override
     public ObservableList getChildren() {
@@ -60,7 +60,7 @@ public class RoadMapCategory extends Category {
     }
 
     /**
-     * Shows the Skill creation dialog.
+     * Shows the RoadMap creation dialog.
      */
     @Override
     public void showCreationDialog() {
