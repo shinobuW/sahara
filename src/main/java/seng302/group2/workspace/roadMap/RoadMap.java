@@ -9,6 +9,7 @@ import seng302.group2.workspace.SaharaItem;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
+import seng302.group2.workspace.project.story.Story;
 
 /**
  * RoadMap Model class.
@@ -60,7 +62,7 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
     /**
      * Gets a roadmap short name
      *
-     * @return The short name of the roadmap short
+     * @return The short name of the roadmap
      */
     public String getShortName() {
         return this.shortName;
@@ -69,10 +71,10 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
     /**
      * Gets a roadmap long name
      *
-     * @return The long name of the roadmap short
+     * @return The long name of the roadmap
      */
     public String getLongName() {
-        return this.shortName;
+        return this.longName;
     }
     
     /**
@@ -91,6 +93,16 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
      */
     public void add(Release release) {
         Command command = new AddReleaseCommand(this, release);
+        Global.commandManager.executeCommand(command);
+    }
+    
+    /**
+     * Adds a Release to the RoadMaps's list of Releases.
+     *
+     * @param release The release to add
+     */
+    public void edit(String shortName, Collection<Release> releases) {
+        Command command = new RoadMapEditCommand(this, shortName, releases);
         Global.commandManager.executeCommand(command);
     }
 
@@ -210,6 +222,89 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
         }
     }
 
+    /**
+     * A command class for allowing the editting of RoadMaps.
+     */
+    private class RoadMapEditCommand implements Command {
+        private RoadMap roadMap;
+        
+        private String shortName;
+        private Collection<Release> releases = new HashSet<>();
+        
+        private String oldShortName;
+        private Collection<Release> oldReleases = new HashSet<>();
+        
+        /**
+         * Constructor for the release addition command.
+         * @param roadMap The roadMap to which the release is being added.
+         * @param release The release to be added.
+         */
+        RoadMapEditCommand(RoadMap roadMap, String shortName, Collection<Release> releases) {
+            this.roadMap = roadMap;
+            this.releases = releases;
+            this.shortName = shortName;
+            
+            this.oldShortName = roadMap.getShortName();
+            this.oldReleases = roadMap.getReleases();
+        }
+
+        /**
+         * Executes the release addition command.
+         */
+        public void execute() {
+            roadMap.shortName = shortName;
+            
+            roadMap.releases.removeAll(oldReleases);
+            roadMap.releases.addAll(releases);
+            
+        }
+
+        /**
+         * Undoes the release addition command.
+         */
+        public void undo() {
+            roadMap.shortName = oldShortName;
+            
+            roadMap.releases.removeAll(releases);
+            roadMap.releases.addAll(oldReleases);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(roadMap)) {
+                    this.roadMap = (RoadMap) item;
+                    mapped = true;
+                }
+            }
+            for (Release release : releases) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(release)) {
+                        releases.remove(release);
+                        releases.add((Release)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Release release : oldReleases) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(release)) {
+                        oldReleases.remove(release);
+                        oldReleases.add((Release)item);
+                        break;
+                    }
+                }
+            }
+            return mapped;
+        }
+    }
 
 
 }

@@ -10,6 +10,7 @@ import java.util.Set;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.scenes.dialog.CreateRoadMapDialog;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.RoadMapCategoryCategorySwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.category.SkillsCategoryCategorySwitchStrategy;
@@ -55,7 +56,7 @@ public class RoadMapCategory extends Category {
      */
     @Override
     public ObservableList getChildren() {
-        return Global.currentWorkspace.getSkills();
+        return Global.currentWorkspace.getRoadMaps();
     }
 
     /**
@@ -63,7 +64,7 @@ public class RoadMapCategory extends Category {
      */
     @Override
     public void showCreationDialog() {
-        javafx.scene.control.Dialog creationDialog = new CreateSkillDialog();
+        javafx.scene.control.Dialog creationDialog = new CreateRoadMapDialog();
         creationDialog.show();
     }
 }

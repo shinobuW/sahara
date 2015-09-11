@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Separator;
@@ -57,7 +58,7 @@ public class RoadMapInfoTab extends SearchableTab {
         CustomInfoLabel currentTeamsLabel = new CustomInfoLabel("Current Teams:", "");
         CustomInfoLabel releasesLabel = new CustomInfoLabel("Releases:", "");
 
-
+        Node roadMapNode = new RoadMapNode(currentRoadMap);
 
 
         // Events
@@ -69,8 +70,10 @@ public class RoadMapInfoTab extends SearchableTab {
         basicInfoPane.getChildren().addAll(
                 title,
                 shortNameField,
+                roadMapNode,
                 separator,
                 btnEdit
+                
         );
 
         Collections.addAll(searchControls,
