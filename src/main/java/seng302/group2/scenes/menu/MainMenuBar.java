@@ -202,6 +202,21 @@ public class MainMenuBar extends MenuBar {
             });
         return newStoryItem;
     }
+    
+    /**
+     * Create a menu item "RoadMap" and sets the action event if "RoadMap" is clicked.
+     *
+     * @return MenuItem RoadMap
+     */
+    private static MenuItem createRoadMapItem() {
+
+        MenuItem newBacklogItem = new MenuItem("Road Map");
+        newBacklogItem.setOnAction((event) -> {
+                javafx.scene.control.Dialog creationDialog = new CreateRoadMapDialog();
+                creationDialog.show();
+            });
+        return newBacklogItem;
+    }
 
     /**
      * Create a menu item "Backlog" and sets the action event if "Backlog" is clicked.
@@ -562,6 +577,7 @@ public class MainMenuBar extends MenuBar {
         MenuItem newSprintItem = createSprintItem();
         MenuItem newTeamItem = createTeamItem();
         MenuItem newPersonItem = createPersonItem();
+        MenuItem newRoadMapItem = createRoadMapItem();
         MenuItem newSkillItem = createSkillItem();
 
         // Create other items for file menu
@@ -579,6 +595,7 @@ public class MainMenuBar extends MenuBar {
         newBranch.getItems().add(newSprintItem);
         newBranch.getItems().add(newTeamItem);
         newBranch.getItems().add(newPersonItem);
+        newBranch.getItems().add(newRoadMapItem);
         newBranch.getItems().add(newSkillItem);
 
 
