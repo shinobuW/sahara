@@ -99,7 +99,8 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
     /**
      * Adds a Release to the RoadMaps's list of Releases.
      *
-     * @param release The release to add
+     * @param shortName the Shortname to edit
+     * @param releases The release to add
      */
     public void edit(String shortName, Collection<Release> releases) {
         Command command = new RoadMapEditCommand(this, shortName, releases);
@@ -114,6 +115,26 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
         Global.commandManager.executeCommand(command);
     }
 
+
+    /**
+     * Deserialization post-processing.
+     */
+    public void postSerialization() {
+        releases.clear();
+        for (Release release : serializableReleases) {
+            this.releases.add(release);
+        }
+    }
+
+    /**
+     * Deserialization post-processing.
+     */
+    public void prepSerialization() {
+        serializableReleases.clear();
+        for (Release release : releases) {
+            this.serializableReleases.add(release);
+        }
+    }
     
 
     /**
@@ -245,7 +266,7 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
         /**
          * Constructor for the release addition command.
          * @param roadMap The roadMap to which the release is being added.
-         * @param release The release to be added.
+         * @param releases The release to be added.
          */
         RoadMapEditCommand(RoadMap roadMap, String shortName, Collection<Release> releases) {
             this.roadMap = roadMap;

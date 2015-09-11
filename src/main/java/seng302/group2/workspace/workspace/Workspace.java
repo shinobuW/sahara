@@ -448,6 +448,12 @@ public class Workspace extends SaharaItem implements Serializable {
             workspace.serializableProjects.add(item);
         }
 
+        workspace.serializableRoadMaps.clear();
+        for (RoadMap item : workspace.roadMaps) {
+            item.prepSerialization();
+            workspace.serializableRoadMaps.add(item);
+        }
+
         workspace.serializableSkills.clear();
         for (Skill item : workspace.skills) {
             workspace.serializableSkills.add(item);
@@ -480,6 +486,11 @@ public class Workspace extends SaharaItem implements Serializable {
         for (Person item : workspace.serializablePeople) {
             item.postSerialization();
             workspace.people.add(item);
+        }
+
+        for (RoadMap item : workspace.serializableRoadMaps) {
+            item.postSerialization();
+            workspace.roadMaps.add(item);
         }
 
         for (Project item : workspace.serializableProjects) {
@@ -858,7 +869,7 @@ public class Workspace extends SaharaItem implements Serializable {
         ObservableList<SaharaItem> root = observableArrayList();
 
         // Add the categories
-        root.addAll(projectCategory, teamsCategory, peopleCategory, roadMapCategory, skillCategory, rolesCategory);
+        root.addAll(projectCategory, roadMapCategory, teamsCategory, peopleCategory, skillCategory, rolesCategory);
 
         return root;
     }
@@ -1116,21 +1127,21 @@ public class Workspace extends SaharaItem implements Serializable {
 
         /**
          * Constructor for the project addition command
-         * @param proj The project to be added
+         * @param roadMap The project to be added
          */
         AddRoadMapCommand(RoadMap roadMap) {
             this.roadMap = roadMap;
         }
 
         /**
-         * Executes the project addition command
+         * Executes the Roadmap addition command
          */
         public void execute() {
             Global.currentWorkspace.getRoadMaps().add(roadMap);
         }
 
         /**
-         * Undoes the project addition command
+         * Undoes the Roadmap addition command
          */
         public void undo() {
             Global.currentWorkspace.getRoadMaps().remove(roadMap);

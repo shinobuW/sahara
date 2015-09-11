@@ -8,6 +8,8 @@ package seng302.group2.scenes.information.roadMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
@@ -74,7 +76,14 @@ public class RoadMapNode extends VBox implements SearchableControl {
     
     private Node createReleaseNode(Release release) {
         VBox releaseNode = new VBox();
+        Insets insetsNode = new Insets(5, 5, 5, 0);
+        releaseNode.setPadding(insetsNode);
         HBox releaseContent = new HBox();
+        Insets insetsContent = new Insets(5, 15, 5, 5);
+        releaseContent.setPadding(insetsContent);
+        releaseContent.setStyle("-fx-background-color: rgba(11, 0, 255, 0.62); -fx-border-radius: 5 5 5 5; "
+                + "-fx-background-radius: 0 5 5 5");
+
         HBox releaseChildren = new HBox();
         
         SearchableText shortNameField = new SearchableText(release.getShortName());
@@ -113,7 +122,14 @@ public class RoadMapNode extends VBox implements SearchableControl {
     
     private Node createSprintNode(Sprint sprint) {
         VBox sprintNode = new VBox();
+        Insets insets = new Insets(5, 5, 5, 0);
+        sprintNode.setPadding(insets);
         HBox sprintContent = new HBox();
+        Insets insetsContent = new Insets(5, 15, 5, 5);
+        sprintContent.setPadding(insetsContent);
+        sprintContent.setStyle("-fx-background-color: rgba(100, 255, 124, 0.83); -fx-border-radius: 5 5 5 5; "
+                + "-fx-background-radius: 0 5 5 5");
+
         GridPane sprintChildren = new GridPane();
         int xCounter = 0;
         int yCounter = 0;
@@ -132,7 +148,6 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 shortNameField
         );
         
-        List<Node> releaseNodeList = new ArrayList<>();
         for (Story story : sprint.getStories()) {
             sprintChildren.add(createStoryNode(story), xCounter, yCounter);
             xCounter++;
@@ -157,6 +172,13 @@ public class RoadMapNode extends VBox implements SearchableControl {
     
     private Node createStoryNode(Story story) {
         VBox storyNode = new VBox();
+        Insets insetsNode = new Insets(5, 5, 5, 0);
+        storyNode.setPadding(insetsNode);
+        VBox storyContent = new VBox();
+        Insets insetsContent = new Insets(5, 15, 5, 5);
+        storyContent.setPadding(insetsContent);
+        storyContent.setStyle("-fx-background-color: rgba(255, 7, 0, 0.56); -fx-border-radius: 5 5 5 5; "
+                + "-fx-background-radius: 0 5 5 5");
         SearchableText shortNameField = new SearchableText(story.getShortName());
         
         storyNode.setOnMouseClicked(event -> {
@@ -166,10 +188,14 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 }
                 event.consume();
             });
-        
-        
-        storyNode.getChildren().addAll(
+
+
+        storyContent.getChildren().addAll(
                 shortNameField
+        );
+
+        storyNode.getChildren().addAll(
+                storyContent
         );
 
         // Add items to pane & search collection
