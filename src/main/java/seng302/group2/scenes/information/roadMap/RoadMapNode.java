@@ -86,7 +86,7 @@ public class RoadMapNode extends HBox implements SearchableControl {
         releaseNode.getChildren().addAll(
                 releaseContent,
                 releaseChildren
-            );
+        );
 
         // Add items to pane & search collection
         Collections.addAll(searchControls,
