@@ -197,20 +197,21 @@ public class StoryEditTab extends SearchableTab {
 
         btnAssign.setOnAction((event) -> {
                 Story adding = availableStoryListView.getSelectionModel().getSelectedItem();
-                if (currentStory.checkAddCycle(adding)) {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Conflicting Dependencies");
-                    alert.setHeaderText("Unable to add '" + adding + "'");
-                    alert.setContentText(
-                            "Adding this story would create a cycle in " + currentStory + "'s dependencies");
+                if (adding != null) {
+                    if (currentStory.checkAddCycle(adding)) {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Conflicting Dependencies");
+                        alert.setHeaderText("Unable to add '" + adding + "'");
+                        alert.setContentText(
+                                "Adding this story would create a cycle in " + currentStory + "'s dependencies");
 
-                    alert.showAndWait();
-                }
-                else {
-                    dependentOnList.addAll(
-                            availableStoryListView.getSelectionModel().getSelectedItem());
-                    availableStoryList.removeAll(
-                            availableStoryListView.getSelectionModel().getSelectedItem());
+                        alert.showAndWait();
+                    } else {
+                        dependentOnList.addAll(
+                                availableStoryListView.getSelectionModel().getSelectedItem());
+                        availableStoryList.removeAll(
+                                availableStoryListView.getSelectionModel().getSelectedItem());
+                    }
                 }
             });
 

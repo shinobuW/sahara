@@ -48,38 +48,6 @@ public class RoadMapCategoryTab extends SearchableTab {
 
         // Create Controls
         SearchableText title = new SearchableTitle("RoadMaps in " + currentWorkspace.getShortName());
-        SearchableListView<RoadMap> roadMapBox = new SearchableListView<>(currentWorkspace.getRoadMaps());
-        roadMapBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        roadMapBox.setMaxWidth(275);
-
-        Button btnView = new Button("View");
-        Button btnDelete = new Button("Delete");
-        Button btnCreate = new Button("Create New RoadMap");
-
-        HBox selectionButtons = new HBox();
-        selectionButtons.spacingProperty().setValue(10);
-        selectionButtons.getChildren().addAll(btnView, btnDelete, btnCreate);
-        selectionButtons.setAlignment(Pos.TOP_LEFT);
-        
-        
-
-        // Events
-        btnView.setOnAction((event) -> {
-                if (roadMapBox.getSelectionModel().getSelectedItem() != null) {
-                    App.mainPane.selectItem(roadMapBox.getSelectionModel().getSelectedItem());
-                }
-            });
-
-        btnDelete.setOnAction((event) -> {
-                if (roadMapBox.getSelectionModel().getSelectedItem() != null) {
-                    showDeleteDialog(roadMapBox.getSelectionModel().getSelectedItem());
-                }
-            });
-
-        btnCreate.setOnAction((event) -> {
-                javafx.scene.control.Dialog creationDialog = new CreateRoadMapDialog();
-                creationDialog.show();
-            });
 
         HBox roadMaps = new HBox();
         for (RoadMap roadMap : Global.currentWorkspace.getRoadMaps()) {
@@ -92,15 +60,12 @@ public class RoadMapCategoryTab extends SearchableTab {
         // Add items to pane & search collection
         categoryPane.getChildren().addAll(
                 title,
-                roadMaps,
-                roadMapBox,
-                selectionButtons
+                roadMaps
         );
 
         Collections.addAll(
                 searchControls,
-                title,
-                roadMapBox
+                title
         );
     }
 

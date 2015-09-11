@@ -5,9 +5,7 @@
  */
 package seng302.group2.scenes.information.roadMap;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -43,6 +41,10 @@ public class RoadMapNode extends VBox implements SearchableControl {
     
     public RoadMapNode(RoadMap currentRoadMap) {
         HBox roadMapContent = new HBox();
+        Insets insetsContent = new Insets(5, 15, 5, 5);
+        roadMapContent.setPadding(insetsContent);
+        //roadMapContent.setStyle("-fx-background-color: rgba(255, 116, 10, 0.62); -fx-border-radius: 5 5 5 5; "
+        //        + "-fx-background-radius: 0 5 5 5");
         HBox roadMapChildren = new HBox();
         
         SearchableText shortNameField = new SearchableText(currentRoadMap.getShortName());
@@ -212,7 +214,13 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
     @Override
     public boolean query(String query) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        boolean found = false;
+        for (SearchableControl control : getSearchableControls()) {
+            if (control.query(query)) {
+                found = true;
+            }
+        }
+        return found;
     }
 
     @Override
