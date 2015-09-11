@@ -39,6 +39,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import seng302.group2.workspace.roadMap.RoadMap;
 
 /**
  * Basic workspace class that acts as the root object for Sahara and represents a real-world
@@ -67,13 +68,18 @@ public class Workspace extends SaharaItem implements Serializable {
     private List<Project> serializableProjects = new ArrayList<>();
     private transient ObservableList<Role> roles = observableArrayList();
     private List<Role> serializableRoles = new ArrayList();
+    private transient ObservableList<RoadMap> roadMaps = observableArrayList();
+    private List<RoadMap> serializableRoadMaps = new ArrayList();
 
     // Make the categories
     private transient Category projectCategory = new ProjectCategory();
     private transient Category teamsCategory = new TeamsCategory();
     private transient Category peopleCategory = new PeopleCategory();
+    private transient Category roadMapCategory = new RoadMapCategory();
     private transient Category rolesCategory = new RolesCategory();
     private transient Category skillCategory = new SkillsCategory();
+    
+
     
     private double version = App.version;
 
@@ -726,6 +732,15 @@ public class Workspace extends SaharaItem implements Serializable {
     public ObservableList<Role> getRoles() {
         return this.roles;
     }
+    
+    /**
+     * Gets the workspace's list of RoadMaps
+     *
+     * @return the RoadMaps associated with a workspace
+     */
+    public ObservableList<RoadMap> getRoadMaps() {
+        return this.roadMaps;
+    }
 
     /**
      * Marks the workspace as not having unsaved changes.
@@ -796,6 +811,16 @@ public class Workspace extends SaharaItem implements Serializable {
         Command command = new AddProjectCommand(proj);
         Global.commandManager.executeCommand(command);
     }
+    
+    /**
+     * Adds the given RoadMap to the workspace
+     *
+     * @param roadMap The roadMap to add to the workspace
+     */
+    public void add(RoadMap roadMap) {
+        Command command = new AddRoadMapCommand(roadMap);
+        Global.commandManager.executeCommand(command);
+    }
 
 
     /**
@@ -833,7 +858,7 @@ public class Workspace extends SaharaItem implements Serializable {
         ObservableList<SaharaItem> root = observableArrayList();
 
         // Add the categories
-        root.addAll(projectCategory, teamsCategory, peopleCategory, skillCategory, rolesCategory);
+        root.addAll(projectCategory, teamsCategory, peopleCategory, roadMapCategory, skillCategory, rolesCategory);
 
         return root;
     }
@@ -1076,6 +1101,52 @@ public class Workspace extends SaharaItem implements Serializable {
             for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(team)) {
                     this.team = (Team) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
+    }
+    
+    /**
+     * A command class for allowing the addition of RoadMaps to a Workspace
+     */
+    private class AddRoadMapCommand implements Command {
+        private RoadMap roadMap;
+
+        /**
+         * Constructor for the project addition command
+         * @param proj The project to be added
+         */
+        AddRoadMapCommand(RoadMap roadMap) {
+            this.roadMap = roadMap;
+        }
+
+        /**
+         * Executes the project addition command
+         */
+        public void execute() {
+            Global.currentWorkspace.getRoadMaps().add(roadMap);
+        }
+
+        /**
+         * Undoes the project addition command
+         */
+        public void undo() {
+            Global.currentWorkspace.getRoadMaps().remove(roadMap);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(roadMap)) {
+                    this.roadMap = (RoadMap) item;
                     mapped = true;
                 }
             }

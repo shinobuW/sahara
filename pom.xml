@@ -6,7 +6,7 @@
     <artifactId>project-2</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>SENG302 Group Project</name>
+    <name>Sahara</name>
     <url>http://maven.apache.org</url>
 
     <build>
