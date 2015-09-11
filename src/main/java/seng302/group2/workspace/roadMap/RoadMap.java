@@ -105,6 +105,14 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
         Command command = new RoadMapEditCommand(this, shortName, releases);
         Global.commandManager.executeCommand(command);
     }
+    
+    /**
+     * Deletes the RoadMap 
+     */
+    public void deleteRoadMap() {
+        Command command = new DeleteRoadMapCommand(this);
+        Global.commandManager.executeCommand(command);
+    }
 
     
 
@@ -307,4 +315,49 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
     }
 
 
+    /**
+     * A command class for allowing the deletion of RoadMaps from a Workspace.
+     */
+    private class DeleteRoadMapCommand implements Command {
+        private RoadMap roadMap;
+
+        /**
+         * Constructor for the roadMap deletion command
+         * @param roadMap The roadMap to be deleted
+         */
+        DeleteRoadMapCommand(RoadMap roadMap) {
+            this.roadMap = roadMap;
+        }
+
+        /**
+         * Executes the roadMap deletion command
+         */
+        public void execute() {
+            Global.currentWorkspace.getRoadMaps().remove(roadMap);
+        }
+
+        /**
+         * Undoes the roadMap deletion command
+         */
+        public void undo() {
+            Global.currentWorkspace.getRoadMaps().add(roadMap);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(roadMap)) {
+                    this.roadMap = (RoadMap) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
+    }
 }

@@ -22,6 +22,7 @@ import seng302.group2.workspace.team.Team;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Optional;
+import seng302.group2.workspace.roadMap.RoadMap;
 
 /**
  * The deletion dialog for deleting workspace elements
@@ -93,6 +94,11 @@ public class DeleteDialog {
             else if (element.getClass() == Skill.class) {
                 Skill deletedSkill = (Skill) element;
                 deletedSkill.deleteSkill();
+            }
+            else if (element.getClass() == RoadMap.class) {
+                System.out.println("Into Delete");
+                RoadMap deletedRoadMap = (RoadMap) element;
+                deletedRoadMap.deleteRoadMap();
             }
             else if (element.getClass() == Release.class) {
                 Release deletedRelease = (Release) element;
