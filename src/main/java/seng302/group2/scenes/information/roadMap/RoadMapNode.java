@@ -34,23 +34,38 @@ import seng302.group2.workspace.roadMap.RoadMap;
  *
  * @author crw73
  */
-public class RoadMapNode extends HBox implements SearchableControl {
+public class RoadMapNode extends VBox implements SearchableControl {
     
     List<SearchableControl> searchControls = new ArrayList<>();
 
     
     public RoadMapNode(RoadMap currentRoadMap) {
+        HBox roadMapContent = new HBox();
+        HBox roadMapChildren = new HBox();
         
         SearchableText shortNameField = new SearchableText(currentRoadMap.getShortName());
+        
+        roadMapContent.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && !(((SaharaItem) Global.selectedTreeItem.getValue())
+                        .equals(currentRoadMap))) {
+                    App.mainPane.selectItem(currentRoadMap);
+//                    currentRoadMap.switchToInfoScene();
+                }
+                event.consume();
+            });
 
-        this.getChildren().addAll(
+        roadMapContent.getChildren().addAll(
                 shortNameField
         );
         
         for (Release release : currentRoadMap.getReleases()) {
-            this.getChildren().add(createReleaseNode(release));
+            roadMapChildren.getChildren().add(createReleaseNode(release));
         }
 
+        this.getChildren().addAll(
+                roadMapContent,
+                roadMapChildren
+        );
         // Add items to pane & search collection
         Collections.addAll(searchControls,
                 shortNameField  
@@ -163,6 +178,10 @@ public class RoadMapNode extends HBox implements SearchableControl {
         );
         
         return storyNode;
+    }
+    
+    public List<SearchableControl> getSearchableControls() {
+        return searchControls;
     }
 
     @Override

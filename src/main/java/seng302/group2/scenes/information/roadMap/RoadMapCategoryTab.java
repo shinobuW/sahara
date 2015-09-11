@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
+import seng302.group2.Global;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableTab;
@@ -59,6 +60,8 @@ public class RoadMapCategoryTab extends SearchableTab {
         selectionButtons.spacingProperty().setValue(10);
         selectionButtons.getChildren().addAll(btnView, btnDelete, btnCreate);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
+        
+        
 
         // Events
         btnView.setOnAction((event) -> {
@@ -78,9 +81,18 @@ public class RoadMapCategoryTab extends SearchableTab {
                 creationDialog.show();
             });
 
+        HBox roadMaps = new HBox();
+        for (RoadMap roadMap : Global.currentWorkspace.getRoadMaps()) {
+            RoadMapNode roadMapNode = new RoadMapNode(roadMap);
+            roadMaps.getChildren().add(roadMapNode);
+            searchControls.addAll(roadMapNode.getSearchableControls());
+            
+        } 
+        
         // Add items to pane & search collection
         categoryPane.getChildren().addAll(
                 title,
+                roadMaps,
                 roadMapBox,
                 selectionButtons
         );
