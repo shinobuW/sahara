@@ -206,7 +206,8 @@ public class StoryEditTab extends SearchableTab {
                                 "Adding this story would create a cycle in " + currentStory + "'s dependencies");
 
                         alert.showAndWait();
-                    } else {
+                    }
+                    else {
                         dependentOnList.addAll(
                                 availableStoryListView.getSelectionModel().getSelectedItem());
                         availableStoryList.removeAll(
