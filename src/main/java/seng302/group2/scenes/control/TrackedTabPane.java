@@ -53,7 +53,10 @@ public abstract class TrackedTabPane extends SearchableScene {
         BACKLOG_CATEGORY,
         TASK,
         TASK_EDIT,
-        TASK_CATEGORY
+        TASK_CATEGORY,
+        ROADMAP,
+        ROADMAP_EDIT,
+        ROADMAP_CATEGORY
     }
 
 
