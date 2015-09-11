@@ -64,7 +64,7 @@ public class RoadMapNode extends HBox implements SearchableControl {
         
         SearchableText shortNameField = new SearchableText(release.getShortName());
         
-        shortNameField.setOnMouseClicked(event -> {
+        releaseContent.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2) {
                     App.mainPane.selectItem(release);
                     release.switchToInfoScene();
@@ -105,7 +105,7 @@ public class RoadMapNode extends HBox implements SearchableControl {
         
         SearchableText shortNameField = new SearchableText(sprint.getGoal());
         
-        shortNameField.setOnMouseClicked(event -> {
+        sprintContent.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2) {
                     App.mainPane.selectItem(sprint);
                     sprint.switchToInfoScene();
@@ -144,7 +144,7 @@ public class RoadMapNode extends HBox implements SearchableControl {
         VBox storyNode = new VBox();
         SearchableText shortNameField = new SearchableText(story.getShortName());
         
-        shortNameField.setOnMouseClicked(event -> {
+        storyNode.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2) {
                     App.mainPane.selectItem(story);
                     story.switchToInfoScene();
