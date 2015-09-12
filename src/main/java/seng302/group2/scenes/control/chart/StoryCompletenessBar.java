@@ -174,7 +174,7 @@ public class StoryCompletenessBar extends Pane {
         bluePO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
         Rectangle red = new Rectangle(maxWidth - maxBlue, this.height);
-        Rectangle redSquare = new Rectangle(maxWidth - maxBlue - 7.5, this.height);
+        Rectangle redSquare = new Rectangle(red.getWidth() - red.getWidth()/2.0, red.getHeight());
         red.setArcWidth(15);
         red.setArcHeight(15);
         VBox redVBox = new VBox();
@@ -218,13 +218,14 @@ public class StoryCompletenessBar extends Pane {
             }
             if (maxGreen < 0.1) {
                 if (maxGreen + maxBlue > maxWidth - 0.01) {
+                    // no red at all
                     // round both
                     blue.setArcHeight(15);
                     blue.setArcWidth(15);
                     visualGrid.add(blue, 1, 0);
                 }
                 else {
-                    // round left, square right
+                    // round left, square right of blue box, no green
                     HBox blueBox = new HBox();
                     Rectangle blueSquare = new Rectangle(maxBlue - 7.5, blue.getHeight());
                     blueSquare.setFill(blue.getFill());
@@ -240,8 +241,8 @@ public class StoryCompletenessBar extends Pane {
                     visualGrid.add(redSquare, 2, 0);
                 }
             }
-            else if (maxGreen + maxBlue > maxWidth - 0.01) {
-                // round right
+            else if (red.getWidth() < 1) {
+                // no red, round right
                 Rectangle blueSquare;
                 if ((maxBlue + maxGreen) - maxWidth == 0) {
                     blueSquare = new Rectangle(maxBlue - maxGreen, blue.getHeight());
@@ -289,8 +290,8 @@ public class StoryCompletenessBar extends Pane {
                 red.setFill(ColorUtils.toColor(Task.TASKSTATE.DONE.getColourString()));
             }
         }
-        visualGrid.add(red, 2, 0);
 
+        visualGrid.add(red, 2, 0);
         this.getChildren().add(visualGrid);
     }
 
