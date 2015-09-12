@@ -174,7 +174,7 @@ public class StoryCompletenessBar extends Pane {
         bluePO.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
         Rectangle red = new Rectangle(maxWidth - maxBlue, this.height);
-        Rectangle redSquare = new Rectangle(red.getWidth() - red.getWidth()/2.0, red.getHeight());
+        Rectangle redSquare = new Rectangle(red.getWidth() - red.getWidth() / 2.0, red.getHeight());
         red.setArcWidth(15);
         red.setArcHeight(15);
         VBox redVBox = new VBox();
