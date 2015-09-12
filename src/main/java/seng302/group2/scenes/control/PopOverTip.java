@@ -73,7 +73,16 @@ public class PopOverTip extends PopOver {
      */
     private void setupHover() {
         if (parent != null) {
-            parent.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> show(parent));
+
+            parent.addEventHandler(MouseEvent.MOUSE_MOVED, event -> {
+                if (isShowing()) {
+                    this.setX(event.getScreenX() - this.getWidth() / 2.0);
+                    this.setY(event.getScreenY() + 4);
+
+                }
+            });
+
+            parent.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> show(parent, event.getScreenX(), event.getScreenY() + parent.getBoundsInLocal().getMaxY()));
             parent.addEventHandler(MouseEvent.MOUSE_EXITED, event -> hide());
         }
     }

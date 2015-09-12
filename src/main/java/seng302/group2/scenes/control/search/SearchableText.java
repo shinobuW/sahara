@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class SearchableText extends TextFlow implements SearchableControl {
     List<TextFlow> texts = new ArrayList<>();
-    //String styleDefault = "-fx-background-color: inherit;";
     String styleInject = "";
     String styleHighlighted = "-fx-background-color:" + SearchableControl.highlightColourString + ";";
 
@@ -152,7 +151,7 @@ public class SearchableText extends TextFlow implements SearchableControl {
         if (index == -1 || query.trim().isEmpty()) {
             for (TextFlow flow : texts) {
                 //TODO Ask jd wtf this does
-//                flow.setStyle(styleDefault + styleInject);
+                flow.setStyle(styleInject);
             }
             updateFlow();
             return false;  // Query not in text, keep a single, stitched Text node.
