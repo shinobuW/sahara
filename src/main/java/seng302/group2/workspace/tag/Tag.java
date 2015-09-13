@@ -95,7 +95,7 @@ public class Tag extends SaharaItem {
     public void postSerialization() {
         items.clear();
         for (SaharaItem item : serializableItems) {
-            this.items.add(item);
+            items.add(item);
         }
     }
 
@@ -105,7 +105,7 @@ public class Tag extends SaharaItem {
     public void prepSerialization() {
         serializableItems.clear();
         for (SaharaItem item : items) {
-            this.serializableItems.add(item);
+            serializableItems.add(item);
         }
     }
 

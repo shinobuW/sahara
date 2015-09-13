@@ -32,7 +32,7 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
     static final AtomicLong NEXT_ID = new AtomicLong(0);
     protected final long id = NEXT_ID.getAndIncrement();
 
-    private transient ObservableList<SaharaItem> tags = observableArrayList();
+    private transient ObservableList<Tag> tags = observableArrayList();
     private List<Tag> serializableTags = new ArrayList<>();
 
 
@@ -71,9 +71,32 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
      * Gets the SaharaItems list of tags
      * @return the list of tags of this Sahara item
      */
-    public ObservableList<SaharaItem> getTags() {
+    public ObservableList<Tag> getTags() {
         return tags;
     }
+
+    /**
+     * Deserialization pre-processing for tags. This function will be called in each model
+     * classes post-serialization process.
+     */
+    public void prepTagSerialization() {
+        serializableTags.clear();
+        for (Tag tag : tags) {
+            serializableTags.add(tag);
+        }
+    }
+
+    /**
+     * Deserialization post-processing for tags. This function will be called in each model
+     * classes post-serialization process.
+     */
+    public void postTagSerialization() {
+        tags.clear();
+        for (Tag tag : serializableTags) {
+            tags.add(tag);
+        }
+    }
+
 
 
     /**

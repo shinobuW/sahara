@@ -7,6 +7,7 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.RoadMapInfor
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.release.Release;
+import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
 import java.util.*;
@@ -23,6 +24,7 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
     private String longName;
     private transient ObservableList<Release> releases = observableArrayList();
     private List<Release> serializableReleases = new ArrayList<>();
+
 
     
     
@@ -114,6 +116,7 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
         for (Release release : serializableReleases) {
             this.releases.add(release);
         }
+        getTags().clear();
     }
 
     /**
