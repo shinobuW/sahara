@@ -58,8 +58,66 @@ public class PairLog extends Log {
         Global.commandManager.executeCommand(deleteCommand);
     }
 
+
     /**
-     * A command class that allows the executing and undoing of project edits
+     * Edits the log to the given parameters.
+     * @param logger the logger to edit to
+     * @param partner the partner to edit to
+     * @param startDate the start date to edit to
+     * @param duration the duration to edit to
+     * @param description the description to edit to
+     * @param effortLeftDifference the effort difference to edit to
+     */
+    public void edit(Person logger, Person partner, LocalDateTime startDate, double duration, String description,
+                     double effortLeftDifference) {
+        PairLogEditCommand editCommand = new PairLogEditCommand(this, logger, partner, startDate,
+            duration, description, effortLeftDifference);
+        Global.commandManager.executeCommand(editCommand);
+    }
+
+    /**
+     * Edits the logger of the log to the one given.
+     * @param logger the logger to edit to
+     */
+    public void editLogger(Person logger) {
+        PairLogLoggerEditCommand editCommand = new PairLogLoggerEditCommand(this, logger);
+        Global.commandManager.executeCommand(editCommand);
+    }
+
+
+    /**
+     * Edits the partner of the log to the one given
+     * @param partner the partner to edit to
+     */
+    public void editPartner(Person partner) {
+        PairLogPartnerEditCommand editCommand = new PairLogPartnerEditCommand(this, partner);
+        Global.commandManager.executeCommand(editCommand);
+    }
+
+
+    /**
+     * Edits the duration of the log to the one given.
+     * @param duration the duration to edit to.
+     */
+    public void editDuration(double duration) {
+        PairLogDurationEditCommand editCommand = new PairLogDurationEditCommand(this, duration);
+        Global.commandManager.executeCommand(editCommand);
+    }
+
+
+    /**
+     * Edits the description of the pair log to the given one
+     * @param description the description to edit to
+     */
+    public void editDescription(String description) {
+        PairLogDescriptionEditCommand editCommand = new PairLogDescriptionEditCommand(this, description);
+        Global.commandManager.executeCommand(editCommand);
+    }
+
+
+
+    /**
+     * A command class that allows the executing and undoing of pairLog edits
      */
     private class PairLogEditCommand implements Command {
         private PairLog pLog;
@@ -193,6 +251,220 @@ public class PairLog extends Log {
             this.pLog.task.getLogs().add(this.pLog);
             this.pLog.task.setEffortSpent(this.oldEffortSpent);
             this.pLog.logger.getLogs().add(this.pLog);
+        }
+
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(pLog)) {
+                    this.pLog = (PairLog) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
+    }
+
+    /**
+     * A command class that allows the executing and undoing of PairLog partner edits
+     */
+    private class PairLogPartnerEditCommand implements Command {
+        private PairLog pLog;
+        private Person partner;
+
+        private Person oldPartner;
+
+
+        /**
+         * Constructor
+         * @param pairLog
+         * @param newPartner
+         */
+        protected PairLogPartnerEditCommand(PairLog pairLog, Person newPartner) {
+            this.pLog = pairLog;
+            this.partner = newPartner;
+
+            this.oldPartner = pairLog.getPartner();
+        }
+
+
+        /**
+         * Executes/Redoes the changes of the pair log edit
+         */
+        public void execute() {
+            pLog.partner = partner;
+        }
+
+
+        /**
+         * Undoes the changes of the pair log edit
+         */
+        public void undo() {
+            pLog.partner = oldPartner;
+        }
+
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(pLog)) {
+                    this.pLog = (PairLog) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
+    }
+
+    /**
+     * A command class that allows the executing and undoing of PairLog logger edits
+     */
+    private class PairLogLoggerEditCommand implements Command {
+        private PairLog pLog;
+        private Person logger;
+        private Person oldLogger;
+
+
+        /**
+         * Constructor
+         * @param pairLog the PairLog to be edited
+         * @param newLogger the new logger to edit to
+         */
+        protected PairLogLoggerEditCommand(PairLog pairLog, Person newLogger) {
+            this.pLog = pairLog;
+            this.logger = newLogger;
+            this.oldLogger = pairLog.getLogger();
+        }
+
+
+        /**
+         * Executes/Redoes the changes of the pair log logger edit
+         */
+        public void execute() {
+            pLog.logger = logger;
+        }
+
+
+        /**
+         * Undoes the changes of the pair log logger edit
+         */
+        public void undo() {
+            pLog.logger = oldLogger;
+        }
+
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(pLog)) {
+                    this.pLog = (PairLog) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
+    }
+
+
+    /**
+     * A command class that allows the executing and undoing of PairLog description edits
+     */
+    private class PairLogDescriptionEditCommand implements Command {
+        private PairLog pLog;
+        private String description;
+        private String oldDescription;
+
+        protected PairLogDescriptionEditCommand(PairLog pairLog, String newDescription) {
+            this.pLog = pairLog;
+            this.description = newDescription;
+            this.oldDescription = pairLog.getDescription();
+        }
+
+
+        /**
+         * Executes/Redoes the changes of the pair log description edit
+         */
+        public void execute() {
+            pLog.description = description;
+        }
+
+
+        /**
+         * Undoes the changes of the pair log description edit
+         */
+        public void undo() {
+            pLog.description = oldDescription;
+        }
+
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(pLog)) {
+                    this.pLog = (PairLog) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
+    }
+
+    /**
+     * A command class that allows the executing and undoing of PairLog duration edits
+     */
+    private class PairLogDurationEditCommand implements Command {
+        private PairLog pLog;
+        private double duration;
+        private double oldDuration;
+
+
+        protected PairLogDurationEditCommand(PairLog pairLog, double newDuration) {
+            this.pLog = pairLog;
+            this.duration = newDuration;
+            this.oldDuration = pairLog.getDurationInMinutes();
+        }
+
+
+        /**
+         * Executes/Redoes the changes of the pair log duration edit
+         */
+        public void execute() {
+            task.setEffortSpent(task.getEffortSpent() - pLog.getDurationInMinutes() + duration);
+            pLog.duration = duration;
+        }
+
+
+        /**
+         * Undoes the changes of the pair log duration edit
+         */
+        public void undo() {
+            pLog.duration = oldDuration;
+            task.setEffortSpent(task.getEffortSpent() + pLog.getDurationInMinutes() - duration);
         }
 
 
