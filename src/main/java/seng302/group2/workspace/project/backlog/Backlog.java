@@ -12,6 +12,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
+import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
 import java.util.*;
@@ -321,6 +322,13 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             backlogStories.appendChild(storyElement);
         }
         backlogElement.appendChild(backlogStories);
+
+        Element backlogTagElement = ReportGenerator.doc.createElement("tags");
+        for (Tag tag : this.getTags()) {
+            Element tagElement = tag.generateXML();
+            backlogTagElement.appendChild(tagElement);
+        }
+        backlogElement.appendChild(backlogTagElement);
 
         return backlogElement;
     }

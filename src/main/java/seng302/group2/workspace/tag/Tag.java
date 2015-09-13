@@ -3,6 +3,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 
@@ -70,13 +71,21 @@ public class Tag extends SaharaItem {
 
 
     /**
-     * Method for creating an XML element for the Log within report generation
+     * Gets the short name of the tag.
+     * @return tags short name
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * Method for creating an XML element for the Tag within report generation
      *
      * @return element for XML generation
      */
     @Override
     public Element generateXML() {
-        return null;
+        return ReportGenerator.doc.createElement(this.name);
     }
 
 

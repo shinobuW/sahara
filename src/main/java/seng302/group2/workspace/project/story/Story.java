@@ -16,6 +16,7 @@ import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 import seng302.group2.workspace.project.story.tasks.Task;
+import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
 import java.util.*;
@@ -816,6 +817,13 @@ public class Story extends SaharaItem implements Serializable {
             dependenciesElement.appendChild(dependencyElement);
         }
         storyElement.appendChild(dependenciesElement);
+
+        Element storyTagElement = ReportGenerator.doc.createElement("tags");
+        for (Tag tag : this.getTags()) {
+            Element tagElement = tag.generateXML();
+            storyTagElement.appendChild(tagElement);
+        }
+        storyElement.appendChild(storyTagElement);
 
 //        Element tasksElement = ReportGenerator.doc.createElement("tasks");
 //        for (Task task : this.tasks) {

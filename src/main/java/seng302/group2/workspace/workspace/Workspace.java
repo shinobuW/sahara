@@ -942,6 +942,13 @@ public class Workspace extends SaharaItem implements Serializable {
             }
         }
 
+        Element workspaceTagElement = ReportGenerator.doc.createElement("tags");
+        for (Tag tag : this.getTags()) {
+            Element tagElement = tag.generateXML();
+            workspaceTagElement.appendChild(tagElement);
+        }
+        workSpaceElement.appendChild(workspaceTagElement);
+
         return workSpaceElement;
     }
 

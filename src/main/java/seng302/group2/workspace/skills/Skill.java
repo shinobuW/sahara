@@ -8,6 +8,7 @@ import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
 import java.util.*;
@@ -188,6 +189,14 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
         Element skillDescription = ReportGenerator.doc.createElement("description");
         skillDescription.appendChild(ReportGenerator.doc.createTextNode(description));
         skillElement.appendChild(skillDescription);
+
+        Element skillTagElement = ReportGenerator.doc.createElement("tags");
+        for (Tag tag : this.getTags()) {
+            Element tagElement = tag.generateXML();
+            skillTagElement.appendChild(tagElement);
+        }
+        skillElement.appendChild(skillTagElement);
+
         return skillElement;
     }
 

@@ -12,6 +12,7 @@ import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
@@ -397,6 +398,13 @@ public class Sprint extends SaharaItem {
             sprintStories.appendChild(storyElement);
         }
         sprintElement.appendChild(sprintStories);
+
+        Element sprintTagElement = ReportGenerator.doc.createElement("tags");
+        for (Tag tag : this.getTags()) {
+            Element tagElement = tag.generateXML();
+            sprintTagElement.appendChild(tagElement);
+        }
+        sprintElement.appendChild(sprintTagElement);
 
         return sprintElement;
     }

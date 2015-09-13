@@ -15,6 +15,7 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
@@ -419,6 +420,13 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             skillsElement.appendChild(skillElement);
         }
         personElement.appendChild(skillsElement);
+
+        Element personTagElement = ReportGenerator.doc.createElement("tags");
+        for (Tag tag : this.getTags()) {
+            Element tagElement = tag.generateXML();
+            personTagElement.appendChild(tagElement);
+        }
+        personElement.appendChild(personTagElement);
 
         return personElement;
     }

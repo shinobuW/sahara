@@ -3,9 +3,11 @@ package seng302.group2.workspace.project.story.tasks;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.conversion.DurationConverter;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -216,6 +218,13 @@ public class Log extends SaharaItem implements Serializable {
 //        Element effortLeftElement = ReportGenerator.doc.createElement("effort-left");
 //        effortLeftElement.appendChild(ReportGenerator.doc.createTextNode(effortLeft.toString()));
 //        logElement.appendChild(effortLeftElement);
+//
+//        Element logTagElement = ReportGenerator.doc.createElement("tags");
+//        for (Tag tag : this.getTags()) {
+//            Element tagElement = tag.generateXML();
+//            logTagElement.appendChild(tagElement);
+//        }
+//        logElement.appendChild(logTagElement);
 //
 //        return logElement;
         return null;

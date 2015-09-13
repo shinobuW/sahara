@@ -18,6 +18,7 @@ import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Log;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
@@ -655,6 +656,13 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
                 ReportGenerator.generatedItems.remove(item);
             }
         }
+
+        Element projectTagElement = ReportGenerator.doc.createElement("tags");
+        for (Tag tag : this.getTags()) {
+            Element tagElement = tag.generateXML();
+            projectTagElement.appendChild(tagElement);
+        }
+        projectElement.appendChild(projectTagElement);
 
         return projectElement;
     }

@@ -14,6 +14,7 @@ import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.role.Role;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.io.Serializable;
@@ -421,6 +422,13 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             }
         }
         teamElement.appendChild(othersElement);
+
+        Element teamTagElement = ReportGenerator.doc.createElement("tags");
+        for (Tag tag : this.getTags()) {
+            Element tagElement = tag.generateXML();
+            teamTagElement.appendChild(tagElement);
+        }
+        teamElement.appendChild(teamTagElement);
 
         return teamElement;
     }
