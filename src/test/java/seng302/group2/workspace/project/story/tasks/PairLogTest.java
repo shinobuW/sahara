@@ -14,9 +14,9 @@ import java.time.LocalDateTime;
 public class PairLogTest extends TestCase {
     Story story = new Story("Story", "Long Story", "description", "Creator", new Project(), 2);
     Task task = new Task("Task", "description", story, new Person(), 20 );
-    Person logger = new Person("Logger", "Logger", "Logger", "", "", LocalDate.now());
+    Person originalLogger = new Person("Logger", "Logger", "Logger", "", "", LocalDate.now());
     Person originalPartner = new Person("Partner", "Partner", "Partner", "", "", LocalDate.now());
-    PairLog pLog = new PairLog(task,  "description", logger, originalPartner, 0,
+    PairLog pLog = new PairLog(task,  "description", originalLogger, originalPartner, 0,
                    LocalDateTime.now(), 0);
 
 
@@ -29,7 +29,7 @@ public class PairLogTest extends TestCase {
         pLog.edit(testPerson, pLog.getPartner(), LocalDateTime.now(), 20, "", 0);
         Assert.assertEquals(testPerson, pLog.getLogger());
         Global.commandManager.undo();
-        Assert.assertEquals(logger, pLog.getLogger());
+        Assert.assertEquals(originalLogger, pLog.getLogger());
     }
 
 
@@ -43,6 +43,19 @@ public class PairLogTest extends TestCase {
         Assert.assertEquals(partner, pLog.getPartner());
         Global.commandManager.undo();
         Assert.assertEquals(originalPartner, pLog.getPartner());
+    }
+
+
+    /**
+     * Tests the logger edit method
+     */
+    @Test
+    public void TestLoggerEditCommand() {
+        Person logger = new Person("Jd", "Jordane", "Lew", "", "Just a boy", LocalDate.now());
+        pLog.editLogger(logger);
+        Assert.assertEquals(logger, pLog.getLogger());
+        Global.commandManager.undo();
+        Assert.assertEquals(originalLogger, pLog.getLogger());
     }
 
 
