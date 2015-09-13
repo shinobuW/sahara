@@ -4,8 +4,10 @@ import javafx.scene.paint.Color;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
 
+import org.w3c.dom.Element;
 import java.util.HashSet;
 
 /**
@@ -29,8 +31,11 @@ public class TagTest {
 
     @Test
     public void testGenerateXML() throws Exception {
+        new ReportGenerator();
         Tag tag = new Tag("hash");
-        Assert.assertEquals(null, tag.generateXML());
+
+        Element tagElement = tag.generateXML();
+        Assert.assertEquals("[hash: null]", tagElement.toString());
     }
 
     @Test

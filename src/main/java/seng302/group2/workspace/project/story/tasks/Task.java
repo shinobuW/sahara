@@ -8,11 +8,13 @@ import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.conversion.ColorUtils;
 import seng302.group2.util.conversion.GeneralEnumStringConverter;
+import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -331,18 +333,22 @@ public class Task extends SaharaItem implements Serializable {
      */
     public void prepSerialization() {
         serializableLogs.clear();
-        for (Object item : logs) {
-            this.serializableLogs.add((Log) item);
+        for (Log log : logs) {
+            this.serializableLogs.add(log);
         }
+
+        prepTagSerialization();
     }
 
 
     /**
      * Deserialization post-processing.
      */
-    public void postSerialization() {
+    public void postDeserialization() {
         logs.clear();
         logs.addAll(serializableLogs);
+
+        postTagDeserialization();
         initListeners();
     }
 
@@ -384,6 +390,13 @@ public class Task extends SaharaItem implements Serializable {
 //        Element effortSpentElement = ReportGenerator.doc.createElement("effort-spent");
 //        effortSpentElement.appendChild(ReportGenerator.doc.createTextNode(Double.toString(effortSpent)));
 //        taskElement.appendChild(effortSpentElement);
+//
+//        Element taskTagElement = ReportGenerator.doc.createElement("tags");
+//        for (Tag tag : this.getTags()) {
+//            Element tagElement = tag.generateXML();
+//            taskTagElement.appendChild(tagElement);
+//        }
+//        taskElement.appendChild(taskTagElement);
 //
 //        return taskElement;
         return null;

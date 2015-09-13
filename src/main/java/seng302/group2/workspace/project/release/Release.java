@@ -13,6 +13,7 @@ import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.tag.Tag;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -248,6 +249,13 @@ public class Release extends SaharaItem implements Comparable<Release> {
         Element releaseDate = ReportGenerator.doc.createElement("release-date");
         releaseDate.appendChild(ReportGenerator.doc.createTextNode(getDateString()));
         releaseElement.appendChild(releaseDate);
+
+        Element releaseTagElement = ReportGenerator.doc.createElement("tags");
+        for (Tag tag : this.getTags()) {
+            Element tagElement = tag.generateXML();
+            releaseTagElement.appendChild(tagElement);
+        }
+        releaseElement.appendChild(releaseTagElement);
 
         return releaseElement;
     }

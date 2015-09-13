@@ -14,6 +14,7 @@ import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.role.Role;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.io.Serializable;
@@ -314,30 +315,34 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      */
     public void prepSerialization() {
         serializablePeople.clear();
-        for (Object item : people) {
-            this.serializablePeople.add((Person) item);
+        for (Person person : people) {
+            this.serializablePeople.add(person);
         }
 
         serializableProjectAllocations.clear();
-        for (Object item : projectAllocations) {
-            this.serializableProjectAllocations.add((Allocation) item);
+        for (Allocation item : projectAllocations) {
+            this.serializableProjectAllocations.add(item);
         }
+
+        prepTagSerialization();
     }
 
 
     /**
      * Deserialization post-processing.
      */
-    public void postSerialization() {
+    public void postDeserialization() {
         people.clear();
-        for (Object item : serializablePeople) {
-            this.people.add((Person) item);
+        for (Person person : serializablePeople) {
+            this.people.add(person);
         }
 
         projectAllocations.clear();
         for (Allocation alloc : serializableProjectAllocations) {
             this.projectAllocations.add(alloc);
         }
+
+        postTagDeserialization();
     }
 
     /**
@@ -421,6 +426,13 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             }
         }
         teamElement.appendChild(othersElement);
+
+        Element teamTagElement = ReportGenerator.doc.createElement("tags");
+        for (Tag tag : this.getTags()) {
+            Element tagElement = tag.generateXML();
+            teamTagElement.appendChild(tagElement);
+        }
+        teamElement.appendChild(teamTagElement);
 
         return teamElement;
     }

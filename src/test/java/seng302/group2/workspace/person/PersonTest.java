@@ -214,7 +214,7 @@ public class PersonTest {
         Assert.assertEquals(new ArrayList<Skill>(), basicPerson.getSkills());
 
         basicPerson.getSerializableSkills().add(testSkill);
-        basicPerson.postSerialization();
+        basicPerson.postDeserialization();
 
         ArrayList<Skill> skills = new ArrayList<>();
         skills.add(testSkill);
@@ -322,7 +322,7 @@ public class PersonTest {
         Assert.assertEquals("[#text: 12/04/2015]", personElement.getChildNodes().item(5).getChildNodes().item(0).toString());
         Assert.assertEquals("[#text: description]", personElement.getChildNodes().item(6).getChildNodes().item(0).toString());
         Assert.assertEquals(0, personElement.getChildNodes().item(7).getChildNodes().getLength());
-        Assert.assertEquals(8, personElement.getChildNodes().getLength());
+        Assert.assertEquals(9, personElement.getChildNodes().getLength());
 
     }
 
@@ -345,7 +345,7 @@ public class PersonTest {
         Assert.assertEquals("[#text: 12/04/2015]", personElement.getChildNodes().item(5).getChildNodes().item(0).toString());
         Assert.assertEquals("[#text: description]", personElement.getChildNodes().item(6).getChildNodes().item(0).toString());
         Assert.assertEquals(2, personElement.getChildNodes().item(7).getChildNodes().getLength());
-        Assert.assertEquals(8, personElement.getChildNodes().getLength());
+        Assert.assertEquals(9, personElement.getChildNodes().getLength());
 
     }
 }

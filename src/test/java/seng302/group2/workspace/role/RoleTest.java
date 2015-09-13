@@ -87,7 +87,7 @@ public class RoleTest {
         Assert.assertTrue(role.getRequiredSkills().isEmpty());
 
         role.getSerializableRequiredSkills().add(skill);
-        role.postSerialization();
+        role.postDeserialization();
         Assert.assertTrue(role.getRequiredSkills().contains(skill));
     }
 
@@ -137,6 +137,6 @@ public class RoleTest {
         Element roleElement = role.generateXML();
         Assert.assertEquals("[#text: Tester]", roleElement.getChildNodes().item(1).getChildNodes().item(0).toString());
         Assert.assertEquals("[#text: Manual Testing]", roleElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-        Assert.assertEquals(4, roleElement.getChildNodes().getLength());
+        Assert.assertEquals(5, roleElement.getChildNodes().getLength());
     }
 }

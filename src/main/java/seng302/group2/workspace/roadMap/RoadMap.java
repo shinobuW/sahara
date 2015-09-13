@@ -109,24 +109,27 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
 
 
     /**
-     * Deserialization post-processing.
-     */
-    public void postSerialization() {
-        releases.clear();
-        for (Release release : serializableReleases) {
-            this.releases.add(release);
-        }
-        getTags().clear();
-    }
-
-    /**
-     * Deserialization post-processing.
+     * Serialization pre-processing.
      */
     public void prepSerialization() {
         serializableReleases.clear();
         for (Release release : releases) {
             this.serializableReleases.add(release);
         }
+
+        prepTagSerialization();
+    }
+
+    /**
+     * Deserialization post-processing.
+     */
+    public void postDeserialization() {
+        releases.clear();
+        for (Release release : serializableReleases) {
+            this.releases.add(release);
+        }
+
+        postTagDeserialization();
     }
     
 

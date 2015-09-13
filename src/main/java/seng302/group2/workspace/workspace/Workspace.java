@@ -480,6 +480,12 @@ public class Workspace extends SaharaItem implements Serializable {
             workspace.serializableRoles.add(item);
         }
 
+        workspace.getSerializableTags().clear();
+        for (Tag item : workspace.getTags()) {
+            item.prepSerialization();
+            workspace.getSerializableTags().add(item);
+        }
+
         return workspace;
     }
 
@@ -493,22 +499,22 @@ public class Workspace extends SaharaItem implements Serializable {
     public static void postDeserialization(Workspace workspace) {
         workspace.people = observableArrayList();
         for (Person item : workspace.serializablePeople) {
-            item.postSerialization();
+            item.postDeserialization();
             workspace.people.add(item);
         }
 
         for (RoadMap item : workspace.serializableRoadMaps) {
-            item.postSerialization();
+            item.postDeserialization();
             workspace.roadMaps.add(item);
         }
 
         for (Tag item : workspace.serializableGlobalTags) {
-            item.postSerialization();
+            item.postDeserialization();
             workspace.globalTags.add(item);
         }
 
         for (Project item : workspace.serializableProjects) {
-            item.postSerialization();
+            item.postDeserialization();
             workspace.projects.add(item);
         }
 
@@ -519,14 +525,20 @@ public class Workspace extends SaharaItem implements Serializable {
 
         workspace.teams = observableArrayList();
         for (Team item : workspace.serializableTeams) {
-            item.postSerialization();
+            item.postDeserialization();
             workspace.teams.add(item);
         }
 
         workspace.roles = observableArrayList();
         for (Role item : workspace.serializableRoles) {
-            item.postSerialization();
+            item.postDeserialization();
             workspace.roles.add(item);
+        }
+
+        workspace.getTags().clear();
+        for (Tag item : workspace.getSerializableTags()) {
+            item.postDeserialization();
+            workspace.getTags().add(item);
         }
 
         // Unset saved changes flag, we just opened the workspace.
@@ -941,6 +953,13 @@ public class Workspace extends SaharaItem implements Serializable {
                 ReportGenerator.generatedItems.remove(item);
             }
         }
+
+        Element workspaceTagElement = ReportGenerator.doc.createElement("tags");
+        for (Tag tag : this.getTags()) {
+            Element tagElement = tag.generateXML();
+            workspaceTagElement.appendChild(tagElement);
+        }
+        workSpaceElement.appendChild(workspaceTagElement);
 
         return workSpaceElement;
     }

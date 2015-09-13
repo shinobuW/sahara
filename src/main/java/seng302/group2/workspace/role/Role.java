@@ -12,6 +12,7 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.RoleInformat
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -250,6 +251,8 @@ public class Role extends SaharaItem implements Serializable {
         for (Skill skill : requiredSkills) {
             this.serializableRequiredSkills.add(skill);
         }
+
+        prepTagSerialization();
     }
 
     //</editor-fold>  
@@ -257,11 +260,13 @@ public class Role extends SaharaItem implements Serializable {
     /**
      * Deserialization post-processing.
      */
-    public void postSerialization() {
+    public void postDeserialization() {
         requiredSkills.clear();
         for (Skill skill : serializableRequiredSkills) {
             this.requiredSkills.add(skill);
         }
+
+        postTagDeserialization();
     }
 
     /**
@@ -291,6 +296,13 @@ public class Role extends SaharaItem implements Serializable {
             roleRequiredSkills.appendChild(skillElement);
         }
         roleElement.appendChild(roleRequiredSkills);
+
+        Element roleTagElement = ReportGenerator.doc.createElement("tags");
+        for (Tag tag : this.getTags()) {
+            Element tagElement = tag.generateXML();
+            roleTagElement.appendChild(tagElement);
+        }
+        roleElement.appendChild(roleTagElement);
 
         return roleElement;
     }

@@ -360,7 +360,7 @@ public class ProjectTest extends TestCase {
         proj.getSerializableSprints().add(testSprint);
         proj.getSerializableTeamAllocations().add(testAllocation);
 
-        proj.postSerialization();
+        proj.postDeserialization();
         ArrayList<Release> releases = new ArrayList<>();
         releases.add(testRelease);
 

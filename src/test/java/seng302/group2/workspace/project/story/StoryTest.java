@@ -146,7 +146,7 @@ public class StoryTest {
         story.getSerializableAc().clear();
         story.getAcceptanceCriteria().clear();
         story.getSerializableAc().add(ac);
-        story.postSerialization();
+        story.postDeserialization();
 
         acList.add(ac);
         Assert.assertEquals(acList, story.getAcceptanceCriteria());
@@ -225,7 +225,7 @@ public class StoryTest {
         Assert.assertEquals("[#text: 10]", storyElement.getChildNodes().item(6).getChildNodes().item(0).toString());
         Assert.assertEquals("[#text: Not Ready]", storyElement.getChildNodes().item(7).getChildNodes().item(0).toString());
         Assert.assertEquals(0, storyElement.getChildNodes().item(8).getChildNodes().getLength());
-        Assert.assertEquals(10, storyElement.getChildNodes().getLength());
+        Assert.assertEquals(11, storyElement.getChildNodes().getLength());
 
     }
 

@@ -90,14 +90,16 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
      * Deserialization post-processing for tags. This function will be called in each model
      * classes post-serialization process.
      */
-    public void postTagSerialization() {
+    public void postTagDeserialization() {
         tags.clear();
         for (Tag tag : serializableTags) {
             tags.add(tag);
         }
     }
 
-
+    public List<Tag> getSerializableTags() {
+        return serializableTags;
+    }
 
     /**
      * Checks all IDs in the current pool of Sahara items and sets the minimum ID for new items

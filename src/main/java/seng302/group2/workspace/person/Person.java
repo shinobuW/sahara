@@ -15,6 +15,7 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
@@ -329,30 +330,32 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
      */
     public void prepSerialization() {
         serializableSkills.clear();
-        if (skills == null) {
-            skills = FXCollections.observableArrayList();
+        for (Skill skill : skills) {
+            serializableSkills.add(skill);
         }
-        for (Object item : skills) {
-            this.serializableSkills.add((Skill) item);
-        }
+
         serializableLogs.clear();
-        if (logs == null) {
-            logs = FXCollections.observableArrayList();
+        for (Log log : logs) {
+            serializableLogs.add(log);
         }
-        for (Object item : logs) {
-            this.serializableLogs.add((Log) item);
-        }
+        prepTagSerialization();
     }
 
 
     /**
      * Deserialization post-processing.
      */
-    public void postSerialization() {
+    public void postDeserialization() {
         skills.clear();
-        for (Object item : serializableSkills) {
-            this.skills.add((Skill) item);
+        for (Skill skill : serializableSkills) {
+            skills.add(skill);
         }
+
+        logs.clear();
+        for (Log log : serializableLogs) {
+            logs.add(log);
+        }
+        postTagDeserialization();
     }
 
     /**
@@ -419,6 +422,13 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             skillsElement.appendChild(skillElement);
         }
         personElement.appendChild(skillsElement);
+
+        Element personTagElement = ReportGenerator.doc.createElement("tags");
+        for (Tag tag : this.getTags()) {
+            Element tagElement = tag.generateXML();
+            personTagElement.appendChild(tagElement);
+        }
+        personElement.appendChild(personTagElement);
 
         return personElement;
     }

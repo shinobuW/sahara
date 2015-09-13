@@ -166,7 +166,7 @@ public class TeamTest {
         Assert.assertTrue(testTeam.getPeople().isEmpty());
 
         testTeam.getSerializablePeople().add(testPerson);
-        testTeam.postSerialization();
+        testTeam.postDeserialization();
 
         Assert.assertTrue(testTeam.getPeople().contains(testPerson));
     }
@@ -303,7 +303,7 @@ public class TeamTest {
         Assert.assertEquals("[scrum-master: null]", teamElement.getChildNodes().item(7).toString());
         Assert.assertEquals(0, teamElement.getChildNodes().item(8).getChildNodes().getLength());
         Assert.assertEquals(0, teamElement.getChildNodes().item(9).getChildNodes().getLength());
-        Assert.assertEquals(10, teamElement.getChildNodes().getLength());
+        Assert.assertEquals(11, teamElement.getChildNodes().getLength());
     }
 
     /**
@@ -343,7 +343,7 @@ public class TeamTest {
         Assert.assertEquals(1, teamElement.getChildNodes().item(7).getChildNodes().getLength());
         Assert.assertEquals(2, teamElement.getChildNodes().item(8).getChildNodes().getLength());
         Assert.assertEquals(4, teamElement.getChildNodes().item(9).getChildNodes().getLength());
-        Assert.assertEquals(10, teamElement.getChildNodes().getLength());
+        Assert.assertEquals(11, teamElement.getChildNodes().getLength());
     }
 
     /**
@@ -376,7 +376,7 @@ public class TeamTest {
         Assert.assertEquals("[scrum-master: null]", teamElement.getChildNodes().item(7).toString());
         Assert.assertEquals(0, teamElement.getChildNodes().item(8).getChildNodes().getLength());
         Assert.assertEquals(0, teamElement.getChildNodes().item(9).getChildNodes().getLength());
-        Assert.assertEquals(10, teamElement.getChildNodes().getLength());
+        Assert.assertEquals(11, teamElement.getChildNodes().getLength());
     }
 
     /**
@@ -429,7 +429,7 @@ public class TeamTest {
         Assert.assertEquals(1, teamElement.getChildNodes().item(7).getChildNodes().getLength());
         Assert.assertEquals(2, teamElement.getChildNodes().item(8).getChildNodes().getLength());
         Assert.assertEquals(4, teamElement.getChildNodes().item(9).getChildNodes().getLength());
-        Assert.assertEquals(10, teamElement.getChildNodes().getLength());
+        Assert.assertEquals(11, teamElement.getChildNodes().getLength());
     }
 
 
