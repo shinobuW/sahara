@@ -211,6 +211,13 @@ public class LoggingEffortPane extends Pane {
         VBox newLogFieldFirstRow = new VBox(10);
         final CustomComboBox<Person> personComboBox = new CustomComboBox<>("Logger:", true);
 
+        HBox ppCheckBoxHBox = new HBox(10);
+        Label ppLabel = new Label("Pair Programming");
+        CheckBox ppCheckBox = new CheckBox();
+        ppCheckBoxHBox.getChildren().addAll(ppLabel, ppCheckBox);
+
+        CustomComboBox<Person> partnerComboBox = new CustomComboBox<Person>("Partner");
+
         addButton.setDisable(true);
 
         personComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -220,10 +227,33 @@ public class LoggingEffortPane extends Pane {
                     ValidationStyle.showMessage("Logger required", personComboBox.getComboBox());
                 }
                 else {
+                    partnerComboBox.getComboBox().getItems().remove(newValue);
+                    if (oldValue != null) {
+                        partnerComboBox.getComboBox().getItems().add(oldValue);
+                    }
                     ValidationStyle.borderGlowNone(personComboBox.getComboBox());
                     loggerSelected = true;
                 }
                 addButton.setDisable(!(loggerSelected && correctDuration && correctEffortLeft));
+            });
+
+
+        partnerComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
+                if (partnerComboBox.getComboBox().getSelectionModel().getSelectedItem() != null) {
+                    ppCheckBox.selectedProperty().setValue(true);
+                }
+
+                addButton.setDisable(!(loggerSelected && correctDuration && correctEffortLeft));
+            });
+
+        ppCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                System.out.println("Checked yp");
+                if (ppCheckBox.selectedProperty().getValue()) {
+                    partnerComboBox.getComboBox().setDisable(false);
+                }
+                else {
+                    partnerComboBox.getComboBox().setDisable(true);
+                }
             });
 
 
@@ -269,7 +299,7 @@ public class LoggingEffortPane extends Pane {
                 .subtract(3).divide(100).multiply(30));
         startDatePicker.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
-        newLogFieldFirstRow.getChildren().addAll(personComboBox,
+        newLogFieldFirstRow.getChildren().addAll(personComboBox, ppCheckBoxHBox, partnerComboBox,
                 startDatePicker, startTimeHBox, durationTextField, effortLeftField);
 
         startDatePicker.getDatePicker().setMinWidth(175);
@@ -360,9 +390,8 @@ public class LoggingEffortPane extends Pane {
                 if (teamPopulated) {
                     personComboBox.setDisable(false);
                     for (Team team : teams) {
-                        for (Person person : team.getPeople()) {
-                            personComboBox.getComboBox().getItems().add(person);
-                        }
+                        personComboBox.getComboBox().getItems().addAll(team.getPeople());
+                        partnerComboBox.getComboBox().getItems().addAll(team.getPeople());
                     }
                 }
                 else {

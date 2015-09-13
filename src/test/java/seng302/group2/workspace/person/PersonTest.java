@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
+ * Unit test for Person
  * Created by Jordane on 27/04/2015.
  */
 public class PersonTest {
