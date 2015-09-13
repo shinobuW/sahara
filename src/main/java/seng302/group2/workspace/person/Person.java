@@ -330,30 +330,32 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
      */
     public void prepSerialization() {
         serializableSkills.clear();
-        if (skills == null) {
-            skills = FXCollections.observableArrayList();
+        for (Skill skill : skills) {
+            serializableSkills.add(skill);
         }
-        for (Object item : skills) {
-            this.serializableSkills.add((Skill) item);
-        }
+
         serializableLogs.clear();
-        if (logs == null) {
-            logs = FXCollections.observableArrayList();
+        for (Log log : logs) {
+            serializableLogs.add(log);
         }
-        for (Object item : logs) {
-            this.serializableLogs.add((Log) item);
-        }
+        prepTagSerialization();
     }
 
 
     /**
      * Deserialization post-processing.
      */
-    public void postSerialization() {
+    public void postDeserialization() {
         skills.clear();
-        for (Object item : serializableSkills) {
-            this.skills.add((Skill) item);
+        for (Skill skill : serializableSkills) {
+            skills.add(skill);
         }
+
+        logs.clear();
+        for (Log log : serializableLogs) {
+            logs.add(log);
+        }
+        postTagDeserialization();
     }
 
     /**

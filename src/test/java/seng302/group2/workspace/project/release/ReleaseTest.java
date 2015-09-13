@@ -133,7 +133,7 @@ public class ReleaseTest {
         Assert.assertEquals("[#text: description]", releaseElement.getChildNodes().item(2).getChildNodes().item(0).toString());
         Assert.assertEquals("[#text: 12/04/2015]", releaseElement.getChildNodes().item(3).getChildNodes().item(0).toString());
 
-        Assert.assertEquals(4, releaseElement.getChildNodes().getLength());
+        Assert.assertEquals(5, releaseElement.getChildNodes().getLength());
 
     }
 }

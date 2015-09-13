@@ -99,6 +99,6 @@ public class SkillTest {
         Element skillElement = skill.generateXML();
         Assert.assertEquals("[#text: C#]", skillElement.getChildNodes().item(1).getChildNodes().item(0).toString());
         Assert.assertEquals("[#text: A better language than Java]", skillElement.getChildNodes().item(2).getChildNodes().item(0).toString());
-        Assert.assertEquals(3, skillElement.getChildNodes().getLength());
+        Assert.assertEquals(4, skillElement.getChildNodes().getLength());
     }
 }

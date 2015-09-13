@@ -7,6 +7,7 @@ import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +18,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 /**
  * A class representation of tags, used to highlight and identify different states of other Sahara model objects.
  */
-public class Tag extends SaharaItem {
+public class Tag extends SaharaItem implements Serializable {
     private String name;
     private Color color = Color.ROYALBLUE;
 
@@ -32,6 +33,7 @@ public class Tag extends SaharaItem {
      */
     public Tag(String tagName) {
         this.name = tagName;
+        this.getTags().clear();
     }
 
     /**
@@ -85,7 +87,7 @@ public class Tag extends SaharaItem {
      */
     @Override
     public Element generateXML() {
-        return ReportGenerator.doc.createElement(this.name);
+        return ReportGenerator.doc.createElement(name);
     }
 
 
@@ -99,22 +101,22 @@ public class Tag extends SaharaItem {
     }
 
     /**
-     * Deserialization post-processing.
-     */
-    public void postSerialization() {
-        items.clear();
-        for (SaharaItem item : serializableItems) {
-            items.add(item);
-        }
-    }
-
-    /**
-     * Deserialization pre-processing.
+     * Serialization pre-processing.
      */
     public void prepSerialization() {
         serializableItems.clear();
         for (SaharaItem item : items) {
             serializableItems.add(item);
+        }
+    }
+
+    /**
+     * Deserialization post-processing.
+     */
+    public void postDeserialization() {
+        items.clear();
+        for (SaharaItem item : serializableItems) {
+            items.add(item);
         }
     }
 

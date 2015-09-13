@@ -251,6 +251,8 @@ public class Role extends SaharaItem implements Serializable {
         for (Skill skill : requiredSkills) {
             this.serializableRequiredSkills.add(skill);
         }
+
+        prepTagSerialization();
     }
 
     //</editor-fold>  
@@ -258,11 +260,13 @@ public class Role extends SaharaItem implements Serializable {
     /**
      * Deserialization post-processing.
      */
-    public void postSerialization() {
+    public void postDeserialization() {
         requiredSkills.clear();
         for (Skill skill : serializableRequiredSkills) {
             this.requiredSkills.add(skill);
         }
+
+        postTagDeserialization();
     }
 
     /**

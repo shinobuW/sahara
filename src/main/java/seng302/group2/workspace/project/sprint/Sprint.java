@@ -285,6 +285,7 @@ public class Sprint extends SaharaItem {
      */
     public void prepSerialization() {
         tasksWithoutStory.prepSerialization();
+
         serializableStories.clear();
         for (Story story : stories) {
             story.prepSerialization();
@@ -296,6 +297,8 @@ public class Sprint extends SaharaItem {
             item.prepSerialization();
             this.serializableTasks.add(item);
         }*/
+
+        prepTagSerialization();
     }
 
 
@@ -305,17 +308,18 @@ public class Sprint extends SaharaItem {
     public void postDeserialization() {
         /*unallocatedTasks.clear();
         for (Task task : serializableTasks) {
-            task.postSerialization();
+            task.postDeserialization();
             this.unallocatedTasks.add(task);
         }*/
 
-        tasksWithoutStory.postSerialization();
+        tasksWithoutStory.postDeserialization();
         stories.clear();
         for (Story story : serializableStories) {
-            story.postSerialization();
+            story.postDeserialization();
             this.stories.add(story);
         }
 
+        postTagDeserialization();
         Collections.sort(this.stories, Story.StoryPriorityComparator);
     }
 

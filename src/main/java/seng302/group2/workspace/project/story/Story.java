@@ -738,22 +738,26 @@ public class Story extends SaharaItem implements Serializable {
             task.prepSerialization();
             this.serializableTasks.add(task);
         }
+
+        prepTagSerialization();
     }
 
     /**
      * Deserialization post-processing.
      */
-    public void postSerialization() {
+    public void postDeserialization() {
         acceptanceCriteria.clear();
         for (Object item : serializableAcceptanceCriteria) {
             this.acceptanceCriteria.add((AcceptanceCriteria) item);
         }
         tasks.clear();
         for (Task task : serializableTasks) {
-            task.postSerialization();
+            task.postDeserialization();
             this.tasks.add(task);
             addTaskToLane(task);
         }
+
+        postTagDeserialization();
     }
 
     /**

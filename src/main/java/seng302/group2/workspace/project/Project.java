@@ -535,13 +535,15 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         for (Log log : logs) {
             this.serializableLogs.add(log);
         }
+
+        prepTagSerialization();
     }
 
 
     /**
      * Deserialization post-processing.
      */
-    public void postSerialization() {
+    public void postDeserialization() {
         /*teams.clear();
         for (Object item : serializableTeams)
         {
@@ -560,7 +562,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
 
         unallocatedStories.clear();
         for (Story story : serializableStories) {
-            story.postSerialization();
+            story.postDeserialization();
             this.unallocatedStories.add(story);
         }
 
@@ -580,6 +582,8 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         for (Log log : serializableLogs) {
             this.logs.add(log);
         }
+
+        postTagDeserialization();
     }
 
 

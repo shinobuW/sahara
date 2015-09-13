@@ -315,30 +315,34 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      */
     public void prepSerialization() {
         serializablePeople.clear();
-        for (Object item : people) {
-            this.serializablePeople.add((Person) item);
+        for (Person person : people) {
+            this.serializablePeople.add(person);
         }
 
         serializableProjectAllocations.clear();
-        for (Object item : projectAllocations) {
-            this.serializableProjectAllocations.add((Allocation) item);
+        for (Allocation item : projectAllocations) {
+            this.serializableProjectAllocations.add(item);
         }
+
+        prepTagSerialization();
     }
 
 
     /**
      * Deserialization post-processing.
      */
-    public void postSerialization() {
+    public void postDeserialization() {
         people.clear();
-        for (Object item : serializablePeople) {
-            this.people.add((Person) item);
+        for (Person person : serializablePeople) {
+            this.people.add(person);
         }
 
         projectAllocations.clear();
         for (Allocation alloc : serializableProjectAllocations) {
             this.projectAllocations.add(alloc);
         }
+
+        postTagDeserialization();
     }
 
     /**

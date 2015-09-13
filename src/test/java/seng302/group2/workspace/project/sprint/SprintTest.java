@@ -116,7 +116,7 @@ public class SprintTest {
         Assert.assertEquals("[#text: Untitled Team]", sprintElement.getChildNodes().item(7).getChildNodes().item(0).toString());
         Assert.assertEquals("[#text: Untitled Release]", sprintElement.getChildNodes().item(8).getChildNodes().item(0).toString());
 
-        Assert.assertEquals(10, sprintElement.getChildNodes().getLength());
+        Assert.assertEquals(11, sprintElement.getChildNodes().getLength());
 
     }
 

@@ -218,7 +218,7 @@ public class BacklogTest {
         Assert.assertEquals("[#text: Untitled Person]", backlogElement.getChildNodes().item(4).getChildNodes().item(0).toString());
         Assert.assertEquals("[#text: thing]", backlogElement.getChildNodes().item(5).getChildNodes().item(0).toString());
         Assert.assertEquals(0, backlogElement.getChildNodes().item(6).getChildNodes().getLength());
-        Assert.assertEquals(7, backlogElement.getChildNodes().getLength());
+        Assert.assertEquals(8, backlogElement.getChildNodes().getLength());
 
     }
 
@@ -241,7 +241,7 @@ public class BacklogTest {
         Assert.assertEquals("[#text: Untitled Person]", backlogElement.getChildNodes().item(4).getChildNodes().item(0).toString());
         Assert.assertEquals("[#text: thing]", backlogElement.getChildNodes().item(5).getChildNodes().item(0).toString());
         Assert.assertEquals(2, backlogElement.getChildNodes().item(6).getChildNodes().getLength());
-        Assert.assertEquals(7, backlogElement.getChildNodes().getLength());
+        Assert.assertEquals(8, backlogElement.getChildNodes().getLength());
     }
 
 

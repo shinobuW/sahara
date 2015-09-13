@@ -333,18 +333,22 @@ public class Task extends SaharaItem implements Serializable {
      */
     public void prepSerialization() {
         serializableLogs.clear();
-        for (Object item : logs) {
-            this.serializableLogs.add((Log) item);
+        for (Log log : logs) {
+            this.serializableLogs.add(log);
         }
+
+        prepTagSerialization();
     }
 
 
     /**
      * Deserialization post-processing.
      */
-    public void postSerialization() {
+    public void postDeserialization() {
         logs.clear();
         logs.addAll(serializableLogs);
+
+        postTagDeserialization();
         initListeners();
     }
 
