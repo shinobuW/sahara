@@ -136,7 +136,7 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
             System.out.println("Can't delete this skill");
             return;
         }
-        Command deleteSkill = new DeleteSkillCommand(this, Global.currentWorkspace);
+        Command deleteSkill = new DeleteSkillCommand(this);
         Global.commandManager.executeCommand(deleteSkill);
     }
 
@@ -269,9 +269,8 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
         /**
          * Constructor for the skill deletion command
          * @param skill The skill to be deleted
-         * @param ws The workspace to which the skill belonged
          */
-        DeleteSkillCommand(Skill skill, Workspace ws) {
+        DeleteSkillCommand(Skill skill) {
             this.skill = skill;
             this.people = skill.getPeopleWithSkill();
         }
