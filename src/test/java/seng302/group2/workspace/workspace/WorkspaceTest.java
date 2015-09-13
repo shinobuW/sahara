@@ -5,6 +5,7 @@
  */
 package seng302.group2.workspace.workspace;
 
+import com.sun.xml.internal.ws.api.pipe.FiberContextSwitchInterceptor;
 import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
@@ -43,12 +45,14 @@ public class WorkspaceTest {
         Assert.assertEquals("A blank workspace.", work.getDescription());
         Assert.assertEquals("Untitled Workspace", work.toString());
         Assert.assertEquals(people, work.getPeople());
+        Assert.assertEquals(0, work.getGlobalTags());
 
         Workspace work2 = new Workspace("aShortName", "aLongName", "aDescription");
         Assert.assertEquals("aShortName", work2.getShortName());
         Assert.assertEquals("aLongName", work2.getLongName());
         Assert.assertEquals("aDescription", work2.getDescription());
         Assert.assertEquals("aShortName", work2.toString());
+
     }
 
 
@@ -160,6 +164,34 @@ public class WorkspaceTest {
         Assert.assertEquals(1, work.getTeams().size());
         Global.commandManager.undo();
         Assert.assertEquals(1, work.getTeams().size());  // Can't remove the unassigned team
+    }
+
+    /**
+     * Test the addition of tags to the workspace
+     */
+    @Test
+    public  void testAddGlobalTag() {
+        Workspace work = new Workspace();
+        Global.currentWorkspace = work;
+        Tag tag = new Tag("Tag");
+
+        Assert.assertFalse(work.getGlobalTags().contains(tag));
+        work.add(tag);
+        Assert.assertTrue(work.getGlobalTags().contains(tag));
+
+        work.add(tag);
+        Assert.assertEquals(2, work.getGlobalTags().size());
+
+        Global.commandManager.undo();
+        Assert.assertEquals(1, work.getGlobalTags().size());
+
+        Global.commandManager.undo();
+        Assert.assertEquals(0, work.getGlobalTags().size());
+        Assert.assertFalse(work.getGlobalTags().contains(tag));
+
+        Global.commandManager.redo();
+        Assert.assertEquals(1, work.getGlobalTags().size());
+        Assert.assertTrue(work.getGlobalTags().contains(tag));
     }
 
     /**
