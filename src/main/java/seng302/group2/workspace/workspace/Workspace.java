@@ -32,6 +32,7 @@ import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.io.*;
@@ -70,6 +71,10 @@ public class Workspace extends SaharaItem implements Serializable {
     private List<Role> serializableRoles = new ArrayList();
     private transient ObservableList<RoadMap> roadMaps = observableArrayList();
     private List<RoadMap> serializableRoadMaps = new ArrayList();
+    private transient ObservableList<Tag> globalTags = observableArrayList();
+    private List<Tag> serializableTags = new ArrayList<>();
+    private transient ObservableList<Tag> workspaceTags = observableArrayList();
+    private List<Tag> serializableWorkspaceTags = new ArrayList<>();
 
     // Make the categories
     private transient Category projectCategory = new ProjectCategory();
@@ -454,6 +459,18 @@ public class Workspace extends SaharaItem implements Serializable {
             workspace.serializableRoadMaps.add(item);
         }
 
+        workspace.serializableTags.clear();
+        for (Tag item : workspace.globalTags) {
+            item.prepSerialization();
+            workspace.serializableTags.add(item);
+        }
+
+        workspace.serializableWorkspaceTags.clear();
+        for (Tag item : workspace.workspaceTags) {
+            item.prepSerialization();
+            workspace.serializableWorkspaceTags.add(item);
+        }
+
         workspace.serializableSkills.clear();
         for (Skill item : workspace.skills) {
             workspace.serializableSkills.add(item);
@@ -491,6 +508,11 @@ public class Workspace extends SaharaItem implements Serializable {
         for (RoadMap item : workspace.serializableRoadMaps) {
             item.postSerialization();
             workspace.roadMaps.add(item);
+        }
+
+        for (Tag item : workspace.serializableTags) {
+            item.postSerialization();
+            workspace.globalTags.add(item);
         }
 
         for (Project item : workspace.serializableProjects) {
@@ -695,6 +717,16 @@ public class Workspace extends SaharaItem implements Serializable {
     }
 
     /**
+     * Gets the workspace's list of globalTags.
+     * @return The tag associated with the workspace.
+     */
+    public ObservableList<Tag> getGlobalTags() {
+        return this.globalTags;
+    }
+
+
+
+    /**
      * Gets the workspace's list of Persons.
      *
      * @return The people associated with the workspace
@@ -722,7 +754,7 @@ public class Workspace extends SaharaItem implements Serializable {
     }
 
     /**
-     * Gets the worksppace's list of teams, minus the unassigned team.
+     * Gets the workspace's list of teams, minus the unassigned team.
      *
      * @return The teams associated with a workspace minus the unassigned teams
      */
@@ -777,6 +809,15 @@ public class Workspace extends SaharaItem implements Serializable {
         Global.commandManager.executeCommand(command);
     }
 
+    /**
+     * Adds a Tag to the workspace's list of tags.
+     *
+     * @param tag The tag to add
+     */
+    public void add(Tag tag) {
+        Command command = new AddTagCommand(tag);
+        Global.commandManager.executeCommand(command);
+    }
 
     /**
      * Adds a Skill to the Workspace's list of Skills.
@@ -784,8 +825,7 @@ public class Workspace extends SaharaItem implements Serializable {
      * @param skill The skill to add
      */
     public void add(Skill skill) {
-        if (skill.toString().equals("Product Owner")
-                || skill.toString().equals("Scrum Master")) {
+        if (skill.toString().equals("Product Owner") || skill.toString().equals("Scrum Master")) {
             this.skills.add(skill);
             return;
         }
@@ -1158,6 +1198,52 @@ public class Workspace extends SaharaItem implements Serializable {
             for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(roadMap)) {
                     this.roadMap = (RoadMap) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
+    }
+
+    /**
+     * A command class for allowing the addition of Tags to a Workspace
+     */
+    private class AddTagCommand implements Command {
+        private Tag tag;
+
+        /**
+         * Constructor for the tag add command
+         * @param tag The tag to be added
+         */
+        AddTagCommand(Tag tag) {
+            this.tag = tag;
+        }
+
+        /**
+         * Executes the person addition command
+         */
+        public void execute() {
+            Global.currentWorkspace.getGlobalTags().add(tag);
+        }
+
+        /**
+         * Undoes the tag add command
+         */
+        public void undo() {
+            Global.currentWorkspace.getGlobalTags().remove(tag);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(tag)) {
+                    this.tag = (Tag) item;
                     mapped = true;
                 }
             }

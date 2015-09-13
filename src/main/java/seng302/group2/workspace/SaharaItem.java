@@ -6,8 +6,11 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrategy;
 import seng302.group2.workspace.categories.Category;
+import seng302.group2.workspace.tag.Tag;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -28,6 +31,10 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
 
     static final AtomicLong NEXT_ID = new AtomicLong(0);
     protected final long id = NEXT_ID.getAndIncrement();
+
+    private transient ObservableList<SaharaItem> tags = observableArrayList();
+    private List<Tag> serializableTags = new ArrayList<>();
+
 
     // The pool of all Sahara items
     static Set<SaharaItem> itemPool = new HashSet<>();
@@ -58,6 +65,14 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
      */
     public long getId() {
         return id;
+    }
+
+    /**
+     * Gets the SaharaItems list of tags
+     * @return the list of tags of this Sahara item
+     */
+    public ObservableList<SaharaItem> getTags() {
+        return tags;
     }
 
 
