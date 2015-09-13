@@ -2,6 +2,8 @@ package seng302.group2.workspace.project.story.tasks;
 
 import junit.framework.TestCase;
 import org.junit.Test;
+import org.junit.Assert;
+import seng302.group2.Global;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
@@ -13,20 +15,70 @@ public class PairLogTest extends TestCase {
     Story story = new Story("Story", "Long Story", "description", "Creator", new Project(), 2);
     Task task = new Task("Task", "description", story, new Person(), 20 );
     Person logger = new Person("Logger", "Logger", "Logger", "", "", LocalDate.now());
-    Person partner = new Person("Partner", "Partner", "Partner", "", "", LocalDate.now());
-    PairLog pLog = new PairLog(task,  "description", logger, partner, 0,
+    Person originalPartner = new Person("Partner", "Partner", "Partner", "", "", LocalDate.now());
+    PairLog pLog = new PairLog(task,  "description", logger, originalPartner, 0,
                    LocalDateTime.now(), 0);
 
 
-
+    /**
+     * Tests the main PairLog edit command
+     */
     @Test
-    public void testEditCommandLog() {
-
-
+    public void testMainEditCommandLog() {
+        Person testPerson = new Person("Bron", "Bronson Taryn", "McNaughton", "swagger@", "alpha", LocalDate.now());
+        pLog.edit(testPerson, pLog.getPartner(), LocalDateTime.now(), 20, "", 0);
+        Assert.assertEquals(testPerson, pLog.getLogger());
+        Global.commandManager.undo();
+        Assert.assertEquals(logger, pLog.getLogger());
     }
 
-    @Test
-    public void testDeleteCommandLog() throws Exception {
 
+    /**
+     * Test the PairLog partner edit method
+     */
+    @Test
+    public void TestPartnerEditCommandLog() {
+        Person partner = new Person("Cam", "Cameron", "Williams", "", "what's for dinner", LocalDate.now());
+        pLog.editPartner(partner);
+        Assert.assertEquals(partner, pLog.getPartner());
+        Global.commandManager.undo();
+        Assert.assertEquals(originalPartner, pLog.getPartner());
+    }
+
+
+    /**
+     * Tests the description edit method
+     */
+    @Test
+    public void TestDescriptionEditCommand() {
+        String desc = new String("New Description");
+        pLog.editDescription(desc);
+        Assert.assertEquals(desc, pLog.getDescription());
+        Global.commandManager.undo();
+        Assert.assertEquals("", pLog.getDescription());
+    }
+
+
+    /**
+     * Tests the duration edit method
+     */
+    @Test
+    public void TestDurationDescriptionCommand() {
+        pLog.editDuration(10);
+        Assert.assertEquals(10, pLog.getDurationInHours());
+        Global.commandManager.undo();
+        Assert.assertEquals(20, pLog.getDurationInHours());
+    }
+
+
+    /**
+     * Tests the delete method
+     */
+    @Test
+    public void testDeleteLog() {
+        pLog.deleteLog();
+        Assert.assertTrue(task.getLogs().size() == 0);
+        Global.commandManager.undo();
+        Assert.assertTrue(task.getLogs().contains(pLog));
     }
 }
