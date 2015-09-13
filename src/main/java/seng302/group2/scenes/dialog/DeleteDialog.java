@@ -16,13 +16,13 @@ import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.roadMap.RoadMap;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Optional;
-import seng302.group2.workspace.roadMap.RoadMap;
 
 /**
  * The deletion dialog for deleting workspace elements

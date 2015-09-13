@@ -1087,7 +1087,6 @@ public class Task extends SaharaItem implements Serializable {
     private class DeleteTaskCommand implements Command {
         private Task task;
         private Story story;
-        // TODO maybe needs sprint added in here as well for tasks without a story.
         /* If Story == null, assume it's a task without a story as Story is required when creating a task otherwise */
         
         /**

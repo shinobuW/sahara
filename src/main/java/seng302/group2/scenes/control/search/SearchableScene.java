@@ -1,7 +1,6 @@
 package seng302.group2.scenes.control.search;
 
 import javafx.scene.control.TabPane;
-import seng302.group2.scenes.dialog.CreateSearchPopOver;
 
 import java.util.*;
 

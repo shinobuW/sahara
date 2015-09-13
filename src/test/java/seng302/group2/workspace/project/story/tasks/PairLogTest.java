@@ -1,8 +1,8 @@
 package seng302.group2.workspace.project.story.tasks;
 
 import junit.framework.TestCase;
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;

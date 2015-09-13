@@ -30,6 +30,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
+import seng302.group2.workspace.roadMap.RoadMap;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.tag.Tag;
@@ -40,7 +41,6 @@ import java.nio.file.Paths;
 import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import seng302.group2.workspace.roadMap.RoadMap;
 
 /**
  * Basic workspace class that acts as the root object for Sahara and represents a real-world
@@ -72,9 +72,7 @@ public class Workspace extends SaharaItem implements Serializable {
     private transient ObservableList<RoadMap> roadMaps = observableArrayList();
     private List<RoadMap> serializableRoadMaps = new ArrayList();
     private transient ObservableList<Tag> globalTags = observableArrayList();
-    private List<Tag> serializableTags = new ArrayList<>();
-    private transient ObservableList<Tag> workspaceTags = observableArrayList();
-    private List<Tag> serializableWorkspaceTags = new ArrayList<>();
+    private List<Tag> serializableGlobalTags = new ArrayList<>();
 
     // Make the categories
     private transient Category projectCategory = new ProjectCategory();
@@ -459,16 +457,10 @@ public class Workspace extends SaharaItem implements Serializable {
             workspace.serializableRoadMaps.add(item);
         }
 
-        workspace.serializableTags.clear();
+        workspace.serializableGlobalTags.clear();
         for (Tag item : workspace.globalTags) {
             item.prepSerialization();
-            workspace.serializableTags.add(item);
-        }
-
-        workspace.serializableWorkspaceTags.clear();
-        for (Tag item : workspace.workspaceTags) {
-            item.prepSerialization();
-            workspace.serializableWorkspaceTags.add(item);
+            workspace.serializableGlobalTags.add(item);
         }
 
         workspace.serializableSkills.clear();
@@ -510,7 +502,7 @@ public class Workspace extends SaharaItem implements Serializable {
             workspace.roadMaps.add(item);
         }
 
-        for (Tag item : workspace.serializableTags) {
+        for (Tag item : workspace.serializableGlobalTags) {
             item.postSerialization();
             workspace.globalTags.add(item);
         }

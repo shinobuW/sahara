@@ -1,12 +1,12 @@
 package seng302.group2.scenes.information.roadMap;
 
+import seng302.group2.scenes.control.TrackedTabPane;
+import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.workspace.workspace.Workspace;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import seng302.group2.scenes.control.TrackedTabPane;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.information.skill.SkillCategoryTab;
-import seng302.group2.workspace.workspace.Workspace;
 
 /**
  * Category Scene for RoadMaps

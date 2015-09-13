@@ -5,7 +5,6 @@
  */
 package seng302.group2.scenes.dialog;
 
-import java.util.Map;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -15,12 +14,13 @@ import javafx.scene.control.Dialog;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.workspace.roadMap.RoadMap;
+
+import java.util.Map;
+
 import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
-import seng302.group2.workspace.roadMap.RoadMap;
-import seng302.group2.workspace.workspace.Workspace;
 
 /**
  *

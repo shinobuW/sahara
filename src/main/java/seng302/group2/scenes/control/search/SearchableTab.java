@@ -2,9 +2,7 @@ package seng302.group2.scenes.control.search;
 
 import javafx.scene.control.Tab;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * An abstract class for searchableTabs. Includes a base implementation of the query method.

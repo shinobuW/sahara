@@ -6,7 +6,10 @@ import seng302.group2.scenes.control.search.SearchableScene;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.SaharaItem;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * A Tab Pane extension that keeps a tracked record of the last open tabs for each of its extending

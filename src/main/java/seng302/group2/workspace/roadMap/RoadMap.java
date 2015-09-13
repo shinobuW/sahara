@@ -2,26 +2,16 @@ package seng302.group2.workspace.roadMap;
 
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
+import seng302.group2.Global;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.RoadMapInformationSwitchStrategy;
-import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.SkillInformationSwitchStrategy;
-import seng302.group2.util.reporting.ReportGenerator;
+import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.project.release.Release;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
 import static javafx.collections.FXCollections.observableArrayList;
-import seng302.group2.Global;
-import seng302.group2.util.undoredo.Command;
-import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.project.release.Release;
-import seng302.group2.workspace.project.sprint.Sprint;
-import seng302.group2.workspace.project.story.Story;
 
 /**
  * RoadMap Model class.

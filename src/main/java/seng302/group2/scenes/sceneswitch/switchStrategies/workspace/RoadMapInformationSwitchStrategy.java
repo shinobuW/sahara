@@ -2,11 +2,9 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.workspace;
 
 import seng302.group2.App;
 import seng302.group2.scenes.information.roadMap.RoadMapScene;
-import seng302.group2.scenes.information.skill.SkillScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.roadMap.RoadMap;
-import seng302.group2.workspace.skills.Skill;
 
 /**
  * A switch strategy for road map information and edit scenes

@@ -8,7 +8,6 @@ import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.workspace.Workspace;
 
 import java.io.Serializable;
 import java.util.*;

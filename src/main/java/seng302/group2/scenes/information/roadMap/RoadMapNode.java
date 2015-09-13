@@ -5,23 +5,15 @@
  */
 package seng302.group2.scenes.information.roadMap;
 
-import java.util.*;
-
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.controlsfx.control.spreadsheet.Grid;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.MainPane;
-import seng302.group2.scenes.control.CustomInfoLabel;
-import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
@@ -29,6 +21,10 @@ import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.roadMap.RoadMap;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  *

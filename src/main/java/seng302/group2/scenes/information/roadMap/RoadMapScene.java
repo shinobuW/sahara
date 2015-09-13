@@ -3,9 +3,7 @@ package seng302.group2.scenes.information.roadMap;
 import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.information.skill.SkillEditTab;
 import seng302.group2.workspace.roadMap.RoadMap;
-import seng302.group2.workspace.skills.Skill;
 
 import java.util.ArrayList;
 import java.util.Collection;

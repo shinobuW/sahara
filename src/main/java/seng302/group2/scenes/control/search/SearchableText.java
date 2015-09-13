@@ -150,7 +150,6 @@ public class SearchableText extends TextFlow implements SearchableControl {
 
         if (index == -1 || query.trim().isEmpty()) {
             for (TextFlow flow : texts) {
-                //TODO Ask jd wtf this does
                 flow.setStyle(styleInject);
             }
             updateFlow();

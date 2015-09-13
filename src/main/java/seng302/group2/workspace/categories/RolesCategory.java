@@ -66,6 +66,5 @@ public class RolesCategory extends Category {
      */
     @Override
     public void showCreationDialog() {
-        //TODO For role creation
     }
 }

@@ -5,7 +5,6 @@
  */
 package seng302.group2.workspace.workspace;
 
-import com.sun.xml.internal.ws.api.pipe.FiberContextSwitchInterceptor;
 import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.Test;
@@ -45,7 +44,7 @@ public class WorkspaceTest {
         Assert.assertEquals("A blank workspace.", work.getDescription());
         Assert.assertEquals("Untitled Workspace", work.toString());
         Assert.assertEquals(people, work.getPeople());
-        Assert.assertEquals(0, work.getGlobalTags());
+        Assert.assertEquals(0, work.getGlobalTags().size());
 
         Workspace work2 = new Workspace("aShortName", "aLongName", "aDescription");
         Assert.assertEquals("aShortName", work2.getShortName());

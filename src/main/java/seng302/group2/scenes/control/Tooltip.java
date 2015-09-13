@@ -2,7 +2,6 @@ package seng302.group2.scenes.control;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.util.Duration;
 

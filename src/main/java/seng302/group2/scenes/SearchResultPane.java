@@ -1,14 +1,13 @@
 package seng302.group2.scenes;
 
 //import com.sun.org.apache.xpath.internal.SourceTree;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
@@ -19,30 +18,9 @@ import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.dialog.CreateSearchPopOver;
-import seng302.group2.scenes.information.person.PersonScene;
-import seng302.group2.scenes.information.project.ProjectScene;
-import seng302.group2.scenes.information.project.backlog.BacklogScene;
-import seng302.group2.scenes.information.project.release.ReleaseScene;
-import seng302.group2.scenes.information.project.sprint.SprintScene;
-import seng302.group2.scenes.information.project.story.StoryScene;
-import seng302.group2.scenes.information.role.RoleScene;
-import seng302.group2.scenes.information.skill.SkillScene;
-import seng302.group2.scenes.information.team.TeamScene;
 import seng302.group2.workspace.SaharaItem;
-import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.project.backlog.Backlog;
-import seng302.group2.workspace.project.release.Release;
-import seng302.group2.workspace.project.sprint.Sprint;
-import seng302.group2.workspace.project.story.Story;
-import seng302.group2.workspace.role.Role;
-import seng302.group2.workspace.skills.Skill;
-import seng302.group2.workspace.team.Team;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A window for displaying the results of a search.

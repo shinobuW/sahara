@@ -56,7 +56,6 @@ public class GenerateReportDialog extends Dialog<Map<String, String>> {
         this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
                     List<SaharaItem> checkedItems = getCheckedItems(root);
-                    // TODO: Plug in custom generation method
                     if (!checkedItems.isEmpty()) {
                         ReportGenerator.generateReport(checkedItems);
                         this.close();
@@ -64,7 +63,6 @@ public class GenerateReportDialog extends Dialog<Map<String, String>> {
                 }
                 return null;
             });
-        // TODO: fix resizable bug
         // This bug still exsists but the window is no-longer resizable. May have
         // to look into in the future if we want resizable windows.
         this.setResizable(false);
