@@ -29,7 +29,7 @@ public class Tag extends SaharaItem {
      * Basic constructor for a Tag
      * @param tagName The name of the tag
      */
-    Tag(String tagName) {
+    public Tag(String tagName) {
         this.name = tagName;
     }
 
