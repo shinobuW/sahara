@@ -59,7 +59,7 @@ public class Task extends SaharaItem implements Serializable {
 //        for (Log log : this.logs) {
 //            items.add(log);
 //        }
-        return null;
+        return new HashSet<>();
     }
 
     /**
