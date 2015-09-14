@@ -3,11 +3,10 @@ package seng302.group2.workspace.project.story.tasks;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.conversion.DurationConverter;
-import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.tag.Tag;
+import seng302.group2.workspace.project.sprint.Sprint;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -151,6 +150,15 @@ public class Log extends SaharaItem implements Serializable {
     public String getDurationString() {
         return (int) Math.floor(duration / 60) + "h " + (int) Math.floor(duration % 60) + "min";
     }
+
+    /**
+     * Returns the sprint of the task the log belongs to
+     * @return The Sprint the Log belongs to.
+     */
+    public Sprint getSprint() {
+        return this.getTask().getStory().getSprint();
+    }
+
     
     /**
      * Setting the Log's task to be the new task. Method only needed for edit commands.
