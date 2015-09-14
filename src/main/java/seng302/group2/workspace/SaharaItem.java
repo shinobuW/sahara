@@ -1,8 +1,6 @@
 package seng302.group2.workspace;
 
-import edu.emory.mathcs.backport.java.util.Collections;
 import javafx.collections.ObservableList;
-import org.apache.commons.collections.set.UnmodifiableSet;
 import org.w3c.dom.Element;
 import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;

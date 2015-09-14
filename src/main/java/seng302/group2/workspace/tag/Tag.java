@@ -1,5 +1,4 @@
 package seng302.group2.workspace.tag;
-import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
@@ -8,12 +7,8 @@ import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
-import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * A class representation of tags, used to highlight and identify different states of other Sahara model objects.

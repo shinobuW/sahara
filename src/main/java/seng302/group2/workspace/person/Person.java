@@ -551,7 +551,6 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             this.personTags.addAll(newTags);
             this.globalTags.addAll(newTags);
             this.globalTags.addAll(Global.currentWorkspace.getAllTags());
-            //TODO Bronson what tags should be in here?
 
             this.oldShortName = person.shortName;
             this.oldFirstName = person.firstName;
@@ -669,6 +668,8 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
                     }
                 }
             }
+
+            //TODO Bronson do i need to do this for tags?
 
             return mapped && mapped_old_team && mapped_team;
         }
