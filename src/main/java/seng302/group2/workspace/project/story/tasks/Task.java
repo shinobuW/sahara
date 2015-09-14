@@ -11,11 +11,14 @@ import seng302.group2.util.conversion.GeneralEnumStringConverter;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * The task class.
@@ -37,7 +40,7 @@ public class Task extends SaharaItem implements Serializable {
     private TASKSTATE lane = TASKSTATE.NOT_STARTED;
     private Story story = null;
     private Person assignee = null;
-    private transient ObservableList<Log> logs = FXCollections.observableArrayList();
+
     private transient ObservableList<Log> logsWithoutGhosts = FXCollections.observableArrayList();
     private List<Log> serializableLogs = new ArrayList<>();
     private double effortLeft = 0;
@@ -52,11 +55,11 @@ public class Task extends SaharaItem implements Serializable {
      */
     @Override
     public Set<SaharaItem> getItemsSet() {
-        Set<SaharaItem> items = new HashSet<>();
-        for (Log log : this.logs) {
-            items.add(log);
-        }
-        return items;
+//        Set<SaharaItem> items = new HashSet<>();
+//        for (Log log : this.logs) {
+//            items.add(log);
+//        }
+        return null;
     }
 
     /**
@@ -111,9 +114,9 @@ public class Task extends SaharaItem implements Serializable {
 
 
     void initListeners() {
-        logs.addListener((ListChangeListener<Log>) c -> {
+        this.getLogs().addListener((ListChangeListener<Log>) c -> {
                 logsWithoutGhosts.clear();
-                logsWithoutGhosts.addAll(logs);
+                logsWithoutGhosts.addAll(this.getLogs());
                 Set<Log> logsToRemove = new HashSet<>();
                 for (Log log : logsWithoutGhosts) {
                     if (log.isGhostLog()) {
@@ -302,7 +305,20 @@ public class Task extends SaharaItem implements Serializable {
      * @return list of logs
      */
     public ObservableList<Log> getLogs() {
-        return this.logs;
+
+        ObservableList<Project> projects = Global.currentWorkspace.getProjects();
+        ObservableList<Log> allLogs = observableArrayList();
+        ObservableList<Log> taskLogs = observableArrayList();
+        for (Project proj : projects) {
+            allLogs.addAll(proj.getLogs());
+        }
+        for (Log log : allLogs) {
+            if (log.getTask() == this) {
+                taskLogs.add(log);
+            }
+        }
+        return taskLogs;
+
     }
 
     /**
@@ -319,10 +335,10 @@ public class Task extends SaharaItem implements Serializable {
      * Prepares a Task to be serialized.
      */
     public void prepSerialization() {
-        serializableLogs.clear();
-        for (Log log : logs) {
-            this.serializableLogs.add(log);
-        }
+//        serializableLogs.clear();
+//        for (Log log : logs) {
+//            this.serializableLogs.add(log);
+//        }
 
         prepTagSerialization();
     }
@@ -332,8 +348,8 @@ public class Task extends SaharaItem implements Serializable {
      * Deserialization post-processing.
      */
     public void postDeserialization() {
-        logs.clear();
-        logs.addAll(serializableLogs);
+//        logs.clear();
+//        logs.addAll(serializableLogs);
 
         postTagDeserialization();
         initListeners();
@@ -611,7 +627,7 @@ public class Task extends SaharaItem implements Serializable {
             this.oldImpediments = task.impediments;
             this.oldAssignee = task.assignee;
             this.oldLogs = new HashSet<>();
-            this.oldLogs.addAll(task.logs);
+            this.oldLogs.addAll(task.getLogs());
             this.oldState = task.state;
             this.oldEffortLeft = task.effortLeft;
             this.oldEffortSpent = task.effortSpent;
@@ -638,8 +654,8 @@ public class Task extends SaharaItem implements Serializable {
             
             task.assignee = assignee;
             
-            task.logs.clear();
-            task.logs.addAll(logs);
+//            task.logs.clear();
+//            task.logs.addAll(logs);
         }
 
         /**
@@ -659,9 +675,9 @@ public class Task extends SaharaItem implements Serializable {
             }
 
             task.assignee = oldAssignee;
-            
-            task.logs.clear();
-            task.logs.addAll(oldLogs);
+//
+//            task.logs.clear();
+//            task.logs.addAll(oldLogs);
         }
 
         /**

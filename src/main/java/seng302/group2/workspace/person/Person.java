@@ -12,7 +12,9 @@ import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.PersonInform
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.tasks.Log;
+import seng302.group2.workspace.project.story.tasks.PairLog;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.tag.Tag;
@@ -38,8 +40,6 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
     private LocalDate birthDate = null;
     private transient ObservableList<Skill> skills = observableArrayList();
     private List<Skill> serializableSkills = new ArrayList<>();
-    private transient ObservableList<Log> logs = observableArrayList();
-    private List<Log> serializableLogs = new ArrayList<>();
     private Team team;
     private Role role;
     private final SimpleBooleanProperty selected = new SimpleBooleanProperty(false);
@@ -227,13 +227,28 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         return this.birthDate;
     }
 
+
     /**
      * Gets a list of the Persons Logs
      *
      * @return The list of logs
      */
     public ObservableList<Log> getLogs() {
-        return this.logs;
+        ObservableList<Project> projects = Global.currentWorkspace.getProjects();
+        ObservableList<Log> allLogs = observableArrayList();
+        ObservableList<Log> personLogs = observableArrayList();
+        for (Project proj : projects) {
+            allLogs.addAll(proj.getLogs());
+        }
+        for (Log log : allLogs) {
+            if (log.getLogger() == this) {
+                personLogs.add(log);
+            }
+            else if (log instanceof PairLog && ((PairLog) log).getPartner() == this) {
+                personLogs.add(log);
+            }
+        }
+        return personLogs;
     }
 
     //</editor-fold>
@@ -334,10 +349,10 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             serializableSkills.add(skill);
         }
 
-        serializableLogs.clear();
-        for (Log log : logs) {
-            serializableLogs.add(log);
-        }
+//        serializableLogs.clear();
+//        for (Log log : logs) {
+//            serializableLogs.add(log);
+//        }
         prepTagSerialization();
     }
 
@@ -351,10 +366,10 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             skills.add(skill);
         }
 
-        logs.clear();
-        for (Log log : serializableLogs) {
-            logs.add(log);
-        }
+//        logs.clear();
+//        for (Log log : serializableLogs) {
+//            logs.add(log);
+//        }
         postTagDeserialization();
     }
 
