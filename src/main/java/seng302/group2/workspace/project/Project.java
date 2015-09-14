@@ -18,6 +18,7 @@ import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Log;
+import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
@@ -484,8 +485,10 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      *
      * @param log The log to add
      */
-    public void add(Log log) {
-        this.logs.add(log);
+    public void addLog(Log log) {
+        Task task = log.getTask();
+        AddLogsCommand addCommand = new AddLogsCommand(task, log, task.getStory().getProject(), task.getEffortLeft());
+        Global.commandManager.executeCommand(addCommand);
     }
 
 
@@ -1168,4 +1171,64 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
             return mapped && mapped_alloc && mapped_team;
         }
     }
+
+    /**
+     * Command to add and remote logs from a project
+     */
+    private class AddLogsCommand implements Command {
+        private Log log;
+        private Task task;
+        private Project proj;
+        private double effortLeft;
+
+        private double oldEffortSpent;
+        private double oldEffortLeft;
+
+
+        /**
+         * Constructor for the log addition command
+         *
+         * @param task       The task to which the log is to be added
+         * @param log        The log to be added
+         * @param proj       The project of the task
+         * @param effortLeft The new effort left
+         */
+        AddLogsCommand(Task task, Log log, Project proj, double effortLeft) {
+            this.log = log;
+            this.task = task;
+            this.oldEffortSpent = task.getEffortSpent();
+            this.oldEffortLeft = task.getEffortLeft();
+            this.effortLeft = effortLeft;
+            this.proj = proj;
+        }
+
+        /**
+         * Executes the log addition command
+         */
+        public void execute() {
+            log.setTask(task);
+            double newEffortSpent = task.getEffortSpent() + log.getDurationInMinutes();
+            task.setEffortSpent(newEffortSpent);
+            task.setEffortLeft(this.effortLeft);
+            proj.getLogs().add(log);
+        }
+
+        /**
+         * Undoes the log addition command
+         */
+        public void undo() {
+            log.setTask(null);
+            task.setEffortSpent(oldEffortSpent);
+            task.setEffortLeft(oldEffortLeft);
+            proj.getLogs().remove(log);
+
+        }
+
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            //TODO: implement
+            return false;
+        }
+    }
+
 }

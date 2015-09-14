@@ -9,7 +9,6 @@ import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -336,50 +335,4 @@ public class TaskTest {
 
     }
 
-    /**
-     * Testing Adding logs to a Task.
-     */
-    @Test
-    public void testAddLogsCommand() {
-        Person aPerson = new Person();
-
-        Project proj = new Project("A new Project", "Proj", "Proj");
-        Story story = new Story();
-
-        Task task = new Task("test task", "", story, aPerson, 0);
-        task.setEffortLeft(600);
-
-        story.add(task);
-        proj.add(story);
-        story.setProject(proj);
-
-        Log log1 = new Log(task, "", aPerson, 40, LocalDateTime.now(), 40);
-        Log log2 = new Log(task, "", aPerson, 70, LocalDateTime.now(), 40);
-        Log log3 = new Log(task, "", aPerson, 90, LocalDateTime.now(), 40);
-
-        task.add(log1, 560);
-        Assert.assertEquals(1, task.getLogs().size());
-        Assert.assertEquals(560, task.getEffortLeft(), 0);
-        Assert.assertEquals(40, task.getEffortSpent(), 0);
-        Global.commandManager.undo();
-        Assert.assertEquals(0, task.getLogs().size());
-        Assert.assertEquals(600, task.getEffortLeft(), 0);
-        Assert.assertEquals(0, task.getEffortSpent(), 0);
-        Global.commandManager.redo();
-        Assert.assertEquals(1, task.getLogs().size());
-        Assert.assertEquals(560, task.getEffortLeft(), 0);
-        Assert.assertEquals(40, task.getEffortSpent(), 0);
-
-        task.add(log2, 490);
-        Assert.assertEquals(2, task.getLogs().size());
-        Assert.assertEquals(490, task.getEffortLeft(), 0);
-        Assert.assertEquals(110, task.getEffortSpent(), 0);
-        Global.commandManager.undo();
-
-        task.add(log3, 470);
-        Assert.assertEquals(2, task.getLogs().size());
-        Assert.assertEquals(470, task.getEffortLeft(), 0);
-        Assert.assertEquals(130, task.getEffortSpent(), 0);
-
-    }
 }
