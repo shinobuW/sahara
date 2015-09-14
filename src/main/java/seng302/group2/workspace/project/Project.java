@@ -1064,6 +1064,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          */
         public void execute() {
             proj.getSprints().add(sprint);
+            Collections.sort(sprint.getProject().getSprints());
         }
 
         /**
