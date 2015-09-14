@@ -16,10 +16,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
-import seng302.group2.scenes.control.CustomComboBox;
-import seng302.group2.scenes.control.CustomDatePicker;
-import seng302.group2.scenes.control.CustomTextField;
-import seng302.group2.scenes.control.TimeTextField;
+import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.control.search.SearchableTable;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.validation.ValidationStyle;
@@ -27,6 +24,7 @@ import seng302.group2.util.conversion.DurationConverter;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Log;
+import seng302.group2.workspace.project.story.tasks.PairLog;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
 
@@ -38,6 +36,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
+ * Pane for logging on a given Task.
  * Created by jml168 on 25/08/15.
  */
 public class LoggingEffortPane extends Pane {
@@ -147,6 +146,12 @@ public class LoggingEffortPane extends Pane {
                 }
         );
 
+        TableColumn partnerCol = new TableColumn("Partner");
+        partnerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("partner"));
+        partnerCol.setEditable(true);
+        partnerCol.prefWidthProperty().bind(logTable.widthProperty()
+                .subtract(2).divide(100).multiply(60));
+
 
         TableColumn startTimeCol = new TableColumn("Date");
         startTimeCol.setCellValueFactory(
@@ -179,7 +184,7 @@ public class LoggingEffortPane extends Pane {
 
 
         //logTable.setItems(data);
-        TableColumn[] columns = {loggerCol, startTimeCol, durationCol, descriptionCol};
+        TableColumn[] columns = {loggerCol, partnerCol, startTimeCol, durationCol, descriptionCol};
         logTable.getColumns().setAll(columns);
         logTable.getSortOrder().add(startTimeCol);
 
@@ -199,8 +204,6 @@ public class LoggingEffortPane extends Pane {
             }
         });*/
 
-
-
         HBox buttons = new HBox(10);
         buttons.setAlignment(Pos.BOTTOM_RIGHT);
         Button addButton = new Button("Add");
@@ -210,11 +213,6 @@ public class LoggingEffortPane extends Pane {
         HBox newLogFields = new HBox(10);
         VBox newLogFieldFirstRow = new VBox(10);
         final CustomComboBox<Person> personComboBox = new CustomComboBox<>("Logger:", true);
-
-        HBox ppCheckBoxHBox = new HBox(10);
-        Label ppLabel = new Label("Pair Programming");
-        CheckBox ppCheckBox = new CheckBox();
-        ppCheckBoxHBox.getChildren().addAll(ppLabel, ppCheckBox);
 
         CustomComboBox<Person> partnerComboBox = new CustomComboBox<Person>("Partner");
 
@@ -234,28 +232,21 @@ public class LoggingEffortPane extends Pane {
                     ValidationStyle.borderGlowNone(personComboBox.getComboBox());
                     loggerSelected = true;
                 }
+                if (partnerComboBox.getComboBox().getItems().size() == 0) {
+                    partnerComboBox.getComboBox().setDisable(true);
+                    ValidationStyle.showMessage("There is only one Person in the Team",
+                            partnerComboBox.getComboBox());
+                }
+                else {
+                    partnerComboBox.getComboBox().setDisable(false);
+                }
                 addButton.setDisable(!(loggerSelected && correctDuration && correctEffortLeft));
             });
 
 
         partnerComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
-                if (partnerComboBox.getComboBox().getSelectionModel().getSelectedItem() != null) {
-                    ppCheckBox.selectedProperty().setValue(true);
-                }
-
                 addButton.setDisable(!(loggerSelected && correctDuration && correctEffortLeft));
             });
-
-        ppCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
-                System.out.println("Checked yp");
-                if (ppCheckBox.selectedProperty().getValue()) {
-                    partnerComboBox.getComboBox().setDisable(false);
-                }
-                else {
-                    partnerComboBox.getComboBox().setDisable(true);
-                }
-            });
-
 
         CustomDatePicker startDatePicker = new CustomDatePicker("Date:", true);
 
@@ -299,7 +290,7 @@ public class LoggingEffortPane extends Pane {
                 .subtract(3).divide(100).multiply(30));
         startDatePicker.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(3).divide(100).multiply(30));
-        newLogFieldFirstRow.getChildren().addAll(personComboBox, ppCheckBoxHBox, partnerComboBox,
+        newLogFieldFirstRow.getChildren().addAll(personComboBox, partnerComboBox,
                 startDatePicker, startTimeHBox, durationTextField, effortLeftField);
 
         startDatePicker.getDatePicker().setMinWidth(175);
@@ -406,6 +397,7 @@ public class LoggingEffortPane extends Pane {
 
         addButton.setOnAction((event) -> {
                 ValidationStyle.borderGlowNone(startDatePicker.getDatePicker());
+
                 if (personComboBox.getValue() != null && startDatePicker.getValue() != null) {
                     LocalDate startDate = startDatePicker.getValue();
                     Person selectedPerson = personComboBox.getValue();
@@ -417,9 +409,18 @@ public class LoggingEffortPane extends Pane {
 
                     LocalDateTime dateTime = startDate.atTime(timeTextField.getHours(), timeTextField.getMinutes());
                     double effortLeftDifference = task.getEffortLeft() - effortLeft;
-                    Log newLog = new Log(task, descriptionTextArea.getText(),
-                            selectedPerson, duration, dateTime, effortLeftDifference);
-                    task.add(newLog, effortLeft);
+
+                    Person partner = partnerComboBox.getComboBox().getSelectionModel().getSelectedItem();
+                    if (partner != null) {
+                        PairLog pairLog = new PairLog(task, descriptionTextArea.getText(), selectedPerson, partner,
+                                duration, dateTime, effortLeftDifference);
+                        task.add(pairLog, effortLeft);
+                    }
+                    else {
+                        Log newLog = new Log(task, descriptionTextArea.getText(),
+                                selectedPerson, duration, dateTime, effortLeftDifference);
+                        task.add(newLog, effortLeft);
+                    }
 
                     String effortLeftString = "";
                     if (task.getEffortLeft() == 0
@@ -475,11 +476,6 @@ public class LoggingEffortPane extends Pane {
         content.getChildren().add(logTable);
         content.getChildren().add(newLogFields);
         content.getChildren().add(buttons);
-
-
-
-
-
 
         this.getChildren().add(content);
     }
