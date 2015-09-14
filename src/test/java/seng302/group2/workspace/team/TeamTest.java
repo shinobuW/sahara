@@ -266,6 +266,8 @@ public class TeamTest {
         devs.add(bronson);
 
         ArrayList<Tag> tags = new ArrayList<>();
+        Tag tag = new Tag("Tag");
+        tags.add(tag);
 
         team.edit("Antarctic Eagle", "An even awesomer team name", members,
                 moffat, andrew, devs, tags);
@@ -276,6 +278,9 @@ public class TeamTest {
         Assert.assertTrue(team.getDevs().contains(bronson));
         Assert.assertEquals(andrew, team.getScrumMaster());
         Assert.assertEquals(moffat, team.getProductOwner());
+        Assert.assertEquals(1, team.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", team.getTags().get(0).getName());
 
         Global.commandManager.undo();
 
@@ -285,7 +290,20 @@ public class TeamTest {
         Assert.assertFalse(team.getDevs().contains(bronson));
         Assert.assertNull(team.getScrumMaster());
         Assert.assertNull(team.getProductOwner());
+        Assert.assertEquals(0, team.getTags().size());
+        Assert.assertEquals(0, Global.currentWorkspace.getAllTags().size());
 
+        Global.commandManager.redo();
+
+        Assert.assertEquals("Antarctic Eagle", team.getShortName());
+        Assert.assertEquals("An even awesomer team name", team.getDescription());
+        Assert.assertTrue(team.getPeople().containsAll(members));
+        Assert.assertTrue(team.getDevs().contains(bronson));
+        Assert.assertEquals(andrew, team.getScrumMaster());
+        Assert.assertEquals(moffat, team.getProductOwner());
+        Assert.assertEquals(1, team.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", team.getTags().get(0).getName());
     }
 
     /**
