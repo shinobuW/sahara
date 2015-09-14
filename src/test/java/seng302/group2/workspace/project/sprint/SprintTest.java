@@ -131,13 +131,14 @@ public class SprintTest {
     @Test
     public void testEdit() {
         Global.currentWorkspace = new Workspace();
+        Project project = new Project();
         Sprint sprint = new Sprint();
+        sprint.setProject(project);
         Collection<Story> oldStories = new ArrayList<>();
         Story oldStory = new Story();
         oldStories.add(oldStory);
         sprint.add(oldStory);
 
-        Project project = new Project();
         Team team = new Team();
         Release release = new Release();
         Collection<Story> stories = new ArrayList<>();

@@ -114,6 +114,10 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
         return this.tasksWithoutStory;
     }
 
+    public void setProject(Project proj) {
+        this.project = proj;
+    }
+
     /**
      * Gets the sprints list of stories
      *
