@@ -22,9 +22,9 @@ public class Tag extends SaharaItem implements Serializable {
     private String name;
     private Color color = Color.ROYALBLUE;
 
-    private transient ObservableList<SaharaItem> items = observableArrayList();
-    private List<SaharaItem> serializableItems = new ArrayList<>();
-
+    private static transient ObservableList<Tag> globalTags = observableArrayList();
+    private static List<Tag> serializableGlobalTags = new ArrayList<>();
+    private boolean deleted = false;
 
 
     /**
@@ -34,6 +34,7 @@ public class Tag extends SaharaItem implements Serializable {
     public Tag(String tagName) {
         this.name = tagName;
         this.getTags().clear();
+        globalTags.add(this);
     }
 
     /**
@@ -51,6 +52,10 @@ public class Tag extends SaharaItem implements Serializable {
      */
     public Color getColor() {
         return color;
+    }
+
+    public static ObservableList<Tag> getGlobalTags() {
+        return globalTags;
     }
 
     /**
@@ -77,7 +82,7 @@ public class Tag extends SaharaItem implements Serializable {
      * @return A set of the Sahara Items that have been tagged with this tag
      */
     // Was ObservableList based on this.items
-    public Set<SaharaItem> getItems() {
+    public Set<SaharaItem> getTaggedItems() {
         //return this.items;
         // @BRONSON
         Set<SaharaItem> items = new HashSet<>();
@@ -98,10 +103,18 @@ public class Tag extends SaharaItem implements Serializable {
     public static Set<Tag> getAllTags() {
         Set<Tag> tags = new HashSet<>();
         for (SaharaItem item : SaharaItem.getAllItems()) {
-            if (item instanceof Tag) {
+            if (item instanceof Tag && !((Tag) item).deleted) {
                 tags.add((Tag) item);
             }
         }
+
+        for (Tag tag : globalTags) {
+            if (!tag.deleted) {
+                tags.add(tag);
+            }
+        }
+        tags.addAll(Tag.globalTags);
+
         return tags;
     }
 
@@ -138,9 +151,9 @@ public class Tag extends SaharaItem implements Serializable {
      * Serialization pre-processing.
      */
     public void prepSerialization() {
-        serializableItems.clear();
-        for (SaharaItem item : items) {
-            serializableItems.add(item);
+        serializableGlobalTags.clear();
+        for (Tag item : globalTags) {
+            serializableGlobalTags.add(item);
         }
     }
 
@@ -148,9 +161,9 @@ public class Tag extends SaharaItem implements Serializable {
      * Deserialization post-processing.
      */
     public void postDeserialization() {
-        items.clear();
-        for (SaharaItem item : serializableItems) {
-            items.add(item);
+        globalTags.clear();
+        for (Tag item : serializableGlobalTags) {
+            globalTags.add(item);
         }
     }
 
@@ -159,6 +172,8 @@ public class Tag extends SaharaItem implements Serializable {
      */
     private class DeleteGlobalTagCommand implements Command {
         private Tag tag;
+        private boolean globalTag = false;
+        private Set<SaharaItem> taggedItems = new HashSet<>();
 
         /**
          * Constructor for the global tag deletion command
@@ -172,20 +187,28 @@ public class Tag extends SaharaItem implements Serializable {
          * Executes the tag deletion command
          */
         public void execute() {
-            for (SaharaItem item : items) {
+            taggedItems.addAll(tag.getTaggedItems());
+            if (Tag.globalTags.contains(tag)) {
+                globalTag = true;
+                Tag.globalTags.remove(tag);
+            }
+            for (SaharaItem item : taggedItems) {
                 item.getTags().remove(tag);
             }
-            Global.currentWorkspace.getGlobalTags().remove(tag);
+            tag.deleted = true;
         }
 
         /**
          * Undoes the global tag deletion command
          */
         public void undo() {
-            Global.currentWorkspace.getGlobalTags().add(tag);
-            for (SaharaItem item : items) {
+            for (SaharaItem item : taggedItems) {
                 item.getTags().add(tag);
             }
+            if (globalTag) {
+                Tag.globalTags.add(tag);
+            }
+            tag.deleted = false;
         }
 
         /**

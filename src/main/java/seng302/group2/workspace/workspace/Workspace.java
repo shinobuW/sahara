@@ -724,8 +724,9 @@ public class Workspace extends SaharaItem implements Serializable {
      * Gets the workspace's list of globalTags.
      * @return The tag associated with the workspace.
      */
-    public ObservableList<Tag> getGlobalTags() {
-        return this.globalTags;
+    @Deprecated
+    public Set<Tag> getGlobalTags() {
+        return Tag.getAllTags();
     }
 
 
