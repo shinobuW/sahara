@@ -533,7 +533,8 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
 
         protected PersonEditCommand(Person person, String newShortName, String newFirstName,
                                     String newLastName, String newEmail, LocalDate newBirthDate,
-                                    String newDescription, Team newTeam, ObservableList<Skill> newSkills, ObservableList<Tag> newTags) {
+                                    String newDescription, Team newTeam, ObservableList<Skill> newSkills,
+                                    ObservableList<Tag> newTags) {
             this.person = person;
 
             ObservableList<Tag> newGlobalTags = observableArrayList();

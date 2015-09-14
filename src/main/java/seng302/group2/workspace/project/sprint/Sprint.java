@@ -15,6 +15,7 @@ import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -23,7 +24,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 /**
  * A class to hold information around scrum sprints
  */
-public class Sprint extends SaharaItem {
+public class Sprint extends SaharaItem implements Serializable, Comparable<Sprint> {
 
     private Project project = null;
     private Team team = null;
@@ -269,6 +270,19 @@ public class Sprint extends SaharaItem {
     }
 
     /**
+     * Compares the sprint to another sprint based on their short names
+     *
+     * @param compareSprint The sprint to compare to
+     * @return The string comparison result of the sprint' short names
+     */
+    @Override
+    public int compareTo(Sprint compareSprint) {
+        String sprint1ShortName = this.getGoal();
+        String sprint2ShortName = compareSprint.getGoal();
+        return sprint1ShortName.compareTo(sprint2ShortName);
+    }
+
+    /**
      * Adds listeners to the Sprint tasks for sorting
      */
     /*public void addListeners() {
@@ -506,6 +520,7 @@ public class Sprint extends SaharaItem {
                 oldEstimateDict.put(story, story.getEstimate());
                 oldReadyStateDict.put(story, story.getReady());
             }
+
         }
 
         /**
@@ -533,6 +548,7 @@ public class Sprint extends SaharaItem {
 
             //Are stories sorted in sprint?
             //Collections.sort(sprint.stories, Story.StoryPriorityComparator);
+            Collections.sort(sprint.getProject().getSprints());
         }
 
         /**
@@ -558,6 +574,7 @@ public class Sprint extends SaharaItem {
 
             //Are stories sorted in sprint?
             //Collections.sort(sprint.stories, Story.StoryPriorityComparator);
+            Collections.sort(sprint.getProject().getSprints());
         }
 
         /**
@@ -663,6 +680,7 @@ public class Sprint extends SaharaItem {
         public void undo() {
             //System.out.println("Undone Sprint Delete");
             proj.getSprints().add(sprint);
+            Collections.sort(sprint.getProject().getSprints());
             //release.setProject(proj);
         }
 
