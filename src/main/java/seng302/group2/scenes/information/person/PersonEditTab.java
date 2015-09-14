@@ -23,6 +23,7 @@ import seng302.group2.util.validation.NameValidator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
@@ -279,6 +280,8 @@ public class PersonEditTab extends SearchableTab {
                 boolean firstNameValidated = NameValidator.validateName(firstNameCustomField);
                 boolean lastNameValidated = NameValidator.validateName(lastNameCustomField);
 
+                ObservableList<Tag> tags = observableArrayList();
+
                 // The short name is the same or valid
                 if (correctShortName && firstNameValidated && lastNameValidated) {
                     LocalDate birthDate = birthDatePicker.getValue();
@@ -291,7 +294,8 @@ public class PersonEditTab extends SearchableTab {
                             birthDate,
                             descriptionTextArea.getText(),
                             selectedTeam,
-                            personSkillsBox.getItems()
+                            personSkillsBox.getItems(),
+                            tags
                     );
 
                     Collections.sort(Global.currentWorkspace.getPeople());

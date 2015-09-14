@@ -71,6 +71,10 @@ public class Tag extends SaharaItem implements Serializable {
         return new HashSet<>();
     }
 
+    public ObservableList<SaharaItem> getItems() {
+        return this.items;
+    }
+
 
     /**
      * Gets the short name of the tag.
