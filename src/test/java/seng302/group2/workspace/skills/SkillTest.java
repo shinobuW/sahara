@@ -5,6 +5,9 @@ import org.junit.Test;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;
+import seng302.group2.workspace.tag.Tag;
+
+import java.util.ArrayList;
 
 
 /**
@@ -65,8 +68,8 @@ public class SkillTest {
     @Test
     public void testEdit() {
         Skill skill = new Skill("C#", "A better language than Java");
-
-        skill.edit("Java", "A better language than C#");
+        ArrayList<Tag> tags = new ArrayList<>();
+        skill.edit("Java", "A better language than C#", tags);
         Assert.assertEquals("Java", skill.getShortName());
         Assert.assertEquals("A better language than C#", skill.getDescription());
 

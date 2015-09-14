@@ -13,12 +13,11 @@ import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.util.validation.ShortNameValidator;
+import seng302.group2.workspace.project.story.tasks.Task;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.workspace.Workspace;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A class for displaying a tab used to edit the workspaces.
@@ -77,9 +76,11 @@ public class WorkspaceEditTab extends SearchableTab {
                         currentWorkspace.getShortName());
                 boolean correctLongName = ShortNameValidator.validateShortName(longNameCustomField,
                         currentWorkspace.getLongName());
+
                 if (correctShortName && correctLongName) {
+                    ArrayList<Tag> tags = new ArrayList<>();
                     currentWorkspace.edit(shortNameCustomField.getText(), longNameCustomField.getText(),
-                            descriptionTextArea.getText());
+                            descriptionTextArea.getText(), tags);
                     currentWorkspace.switchToInfoScene();
                     App.mainPane.refreshTree();
                 }
