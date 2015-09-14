@@ -278,7 +278,7 @@ public class LoggingEffortPane extends Pane {
         HBox.setHgrow(timeTextField, Priority.ALWAYS);
         startTimeHBox.getChildren().addAll(startTimeLabel, timeTextField);
 
-        CustomTextField durationTextField = new CustomTextField("Duration:");
+        RequiredField durationTextField = new RequiredField("Duration:");
         durationTextField.getTextField().setPromptText("eg. 1h 20min");
         durationTextField.getTextField().setPrefWidth(175);
         
