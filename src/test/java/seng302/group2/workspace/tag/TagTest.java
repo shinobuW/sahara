@@ -54,6 +54,7 @@ public class TagTest {
         Tag tag = new Tag("New tag");
 
         tag.deleteGlobalTag();
+
         Assert.assertFalse(Global.currentWorkspace.getGlobalTags().contains(tag));
 
         Global.commandManager.undo();

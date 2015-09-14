@@ -515,8 +515,8 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         private String description;
         private Team team;
         private ObservableList<Skill> skills;
-        private ObservableList<Tag> personTags;
-        private ObservableList<Tag> globalTags;
+        private Set<Tag> personTags = new HashSet<>();
+        private Set<Tag> globalTags = new HashSet<>();
 
         private String oldShortName;
         private String oldFirstName;
@@ -526,8 +526,8 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         private String oldDescription;
         private Team oldTeam;
         private ObservableList<Skill> oldSkills;
-        private ObservableList<Tag> oldPersonTags;
-        private ObservableList<Tag> oldGlobalTags;
+        private Set<Tag> oldPersonTags = new HashSet<>();
+        private Set<Tag> oldGlobalTags = new HashSet<>();
 
         private boolean globalTagCreation;
 
@@ -537,15 +537,10 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
                                     ObservableList<Tag> newTags) {
             this.person = person;
 
-            // You don't really need to do this much either
-            ObservableList<Tag> newGlobalTags = observableArrayList();
-            newGlobalTags.addAll(Global.currentWorkspace.getGlobalTags());
-            for (Tag t : newTags) {
-                if (!Global.currentWorkspace.getGlobalTags().contains(t)) {
-                    newGlobalTags.add(t);
-                }
+            if (newTags == null) {
+                newTags = FXCollections.observableArrayList();
             }
-            // It could just be:
+
             // Set<Tag> newGlobalTags = new HashSet<>();
             // newGlobalTags.addAll(Global.currentWorkspace.getGlobalTags());
             // newGlobalTags.addAll(newTags);
@@ -558,8 +553,9 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             this.description = newDescription;
             this.team = newTeam;
             this.skills = newSkills;
-            this.personTags = newTags;
-            this.globalTags = newGlobalTags;
+            this.personTags.addAll(newTags);
+            this.globalTags.addAll(newTags);
+            this.globalTags.addAll(Tag.getAllTags());
 
             this.oldShortName = person.shortName;
             this.oldFirstName = person.firstName;
@@ -569,8 +565,8 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             this.oldDescription = person.description;
             this.oldTeam = person.team;
             this.oldSkills = person.skills;
-            this.oldPersonTags = person.getTags();
-            this.oldGlobalTags = Global.currentWorkspace.getGlobalTags();
+            this.oldPersonTags.addAll(person.getTags());
+            this.oldGlobalTags.addAll(Tag.getAllTags());
         }
 
         /**
@@ -590,15 +586,8 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
 
 
             //Add any created tags to the global collection
-            Global.currentWorkspace.getGlobalTags().clear();
-            Global.currentWorkspace.getGlobalTags().addAll(globalTags);
-
-            //Add the person reference to a tag if person is using that tag
-            /*for (Tag t : personTags) {
-                if (!t.getItems().contains(person)) {
-                    t.getItems().add(person);
-                }
-            }*/
+            Tag.getGlobalTags().clear();
+            Tag.getGlobalTags().addAll(globalTags);
 
             //Add the tags a person has to their list of tags
             person.getTags().clear();
@@ -624,13 +613,9 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             Collections.sort(Global.currentWorkspace.getPeople());
 
             //Adds the old global tags to the overall collection
-            Global.currentWorkspace.getGlobalTags().clear();
-            Global.currentWorkspace.getGlobalTags().addAll(oldGlobalTags);
+            Tag.getGlobalTags().clear();
+            Tag.getGlobalTags().addAll(oldGlobalTags);
 
-            //Removes the person references from old tags
-            // @Jordane How do i do this part?
-            // for (Tag t : ...
-            // This has become obsolete
 
             //Changes the persons list of tags to what they used to be
             person.getTags().clear();

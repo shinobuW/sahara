@@ -44,7 +44,6 @@ public class WorkspaceTest {
         Assert.assertEquals("A blank workspace.", work.getDescription());
         Assert.assertEquals("Untitled Workspace", work.toString());
         Assert.assertEquals(people, work.getPeople());
-        Assert.assertEquals(0, work.getGlobalTags().size());
 
         Workspace work2 = new Workspace("aShortName", "aLongName", "aDescription");
         Assert.assertEquals("aShortName", work2.getShortName());
@@ -168,13 +167,15 @@ public class WorkspaceTest {
     /**
      * Test the addition of tags to the workspace
      */
+    @Deprecated
     @Test
     public  void testAddGlobalTag() {
         Workspace work = new Workspace();
         Global.currentWorkspace = work;
         Tag tag = new Tag("Tag");
 
-        Assert.assertFalse(work.getGlobalTags().contains(tag));
+        // Move to TagTest and reformat
+        /*Assert.assertFalse(work.getGlobalTags().contains(tag));
         work.add(tag);
         Assert.assertTrue(work.getGlobalTags().contains(tag));
 
@@ -190,7 +191,7 @@ public class WorkspaceTest {
 
         Global.commandManager.redo();
         Assert.assertEquals(1, work.getGlobalTags().size());
-        Assert.assertTrue(work.getGlobalTags().contains(tag));
+        Assert.assertTrue(work.getGlobalTags().contains(tag));*/
     }
 
     /**
