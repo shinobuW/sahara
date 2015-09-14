@@ -149,10 +149,9 @@ public class RoadMapEditTab extends SearchableTab {
                 if (shortNameField.getText().equals(currentRoadMap.getShortName()) 
                         || ShortNameValidator.validateShortName(shortNameField, null)) { // validation
                     // Edit Command.
-                    currentRoadMap.edit(shortNameField.getText(),
+                    currentRoadMap.edit(shortNameField.getText(), longNameField.getText(),
                             roadMapList
                     );
-
                     currentRoadMap.switchToInfoScene();
                     App.mainPane.refreshTree();
                 }
