@@ -995,8 +995,8 @@ public class Workspace extends SaharaItem implements Serializable {
      * @param newLongName    The new long name
      * @param newDescription The new description
      */
-    public void edit(String newShortName, String newLongName, String newDescription) {
-        Command wsedit = new WorkspaceEditCommand(this, newShortName, newLongName, newDescription);
+    public void edit(String newShortName, String newLongName, String newDescription, ArrayList<Tag> newTags) {
+        Command wsedit = new WorkspaceEditCommand(this, newShortName, newLongName, newDescription, newTags);
         Global.commandManager.executeCommand(wsedit);
     }
 
@@ -1020,9 +1020,15 @@ public class Workspace extends SaharaItem implements Serializable {
         private String shortName;
         private String longName;
         private String description;
+        private Set<Tag> workspaceTags = new HashSet<>();
+        private Set<Tag> globalTags = new HashSet<>();
+
         private String oldShortName;
         private String oldLongName;
         private String oldDescription;
+        private Set<Tag> oldWorkspaceTags = new HashSet<>();
+        private Set<Tag> oldGlobalTags = new HashSet<>();
+
         
         /**
          * Constructor for the Workspace editing command
@@ -1032,14 +1038,25 @@ public class Workspace extends SaharaItem implements Serializable {
          * @param newDescription The new description for the workspace
          */
         private WorkspaceEditCommand(Workspace ws, String newShortName, String newLongName,
-                                     String newDescription) {
+                                     String newDescription, ArrayList<Tag> newTags) {
             this.ws = ws;
+
+            if (newTags == null) {
+                newTags = new ArrayList<>();
+            }
+
             this.shortName = newShortName;
             this.longName = newLongName;
             this.description = newDescription;
+            this.workspaceTags.addAll(newTags);
+            this.globalTags.addAll(newTags);
+            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
+
             this.oldShortName = ws.shortName;
             this.oldLongName = ws.longName;
             this.oldDescription = ws.description;
+            this.oldWorkspaceTags.addAll(ws.getTags());
+            this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
         }
 
         /**
@@ -1049,6 +1066,14 @@ public class Workspace extends SaharaItem implements Serializable {
             ws.shortName = shortName;
             ws.longName = longName;
             ws.description = description;
+
+            //Add any created tags to the global collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(globalTags);
+
+            //Add the tags the workspace has to their list of tags
+            ws.getTags().clear();
+            ws.getTags().addAll(workspaceTags);
             App.refreshWindowTitle();  // The project name may have changed
         }
 
@@ -1060,6 +1085,14 @@ public class Workspace extends SaharaItem implements Serializable {
             ws.longName = oldLongName;
             ws.description = oldDescription;
             App.refreshWindowTitle();  // The project name may have changed
+
+            //Adds the old global tags to the overall collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(oldGlobalTags);
+
+            //Changes the list of tags to what they used to be
+            ws.getTags().clear();
+            ws.getTags().addAll(oldWorkspaceTags);
         }
 
         /**

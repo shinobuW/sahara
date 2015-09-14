@@ -14,7 +14,9 @@ import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.util.validation.ShortNameValidator;
+import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.tag.Tag;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -80,9 +82,12 @@ public class SkillEditTab extends SearchableTab {
                 boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
                         currentSkill.getShortName());
 
+                ArrayList<Tag> tags = new ArrayList<Tag>();
+
                 if (correctShortName) {
                     currentSkill.edit(shortNameCustomField.getText(),
-                            descriptionTextArea.getText()
+                            descriptionTextArea.getText(),
+                            tags
                     );
 
                     Collections.sort(Global.currentWorkspace.getSkills());

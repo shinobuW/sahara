@@ -21,6 +21,7 @@ import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -192,6 +193,43 @@ public class WorkspaceTest {
         Global.commandManager.redo();
         Assert.assertEquals(1, work.getGlobalTags().size());
         Assert.assertTrue(work.getGlobalTags().contains(tag));*/
+    }
+
+    /**
+     * Tests the workspace's edit command
+     */
+    @Test
+    public void testEdit() {
+        Workspace ws = new Workspace("Name", "Long Name", "Description");
+
+        Tag tag = new Tag("Tag");
+        ArrayList<Tag> newTags = new ArrayList<>();
+        newTags.add(tag);
+        ws.edit("New Name", "New Long Name", "New Description", newTags);
+
+        Assert.assertEquals("New Name", ws.getShortName());
+        Assert.assertEquals("New Long Name", ws.getLongName());
+        Assert.assertEquals("New Description", ws.getDescription());
+        Assert.assertEquals(1, ws.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", ws.getTags().get(0).getName());
+
+        Global.commandManager.undo();
+
+        Assert.assertEquals("Name", ws.getShortName());
+        Assert.assertEquals("Long Name", ws.getLongName());
+        Assert.assertEquals("Description", ws.getDescription());
+        Assert.assertEquals(0, ws.getTags().size());
+        Assert.assertEquals(0, Global.currentWorkspace.getAllTags().size());
+
+        Global.commandManager.redo();
+
+        Assert.assertEquals("New Name", ws.getShortName());
+        Assert.assertEquals("New Long Name", ws.getLongName());
+        Assert.assertEquals("New Description", ws.getDescription());
+        Assert.assertEquals(1, ws.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", ws.getTags().get(0).getName());
     }
 
     /**

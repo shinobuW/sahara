@@ -5,6 +5,9 @@ import org.junit.Test;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;
+import seng302.group2.workspace.tag.Tag;
+
+import java.util.ArrayList;
 
 
 /**
@@ -65,15 +68,31 @@ public class SkillTest {
     @Test
     public void testEdit() {
         Skill skill = new Skill("C#", "A better language than Java");
+        Tag tag = new Tag("Tag");
+        ArrayList<Tag> tags = new ArrayList<>();
+        tags.add(tag);
+        skill.edit("Java", "A better language than C#", tags);
 
-        skill.edit("Java", "A better language than C#");
         Assert.assertEquals("Java", skill.getShortName());
         Assert.assertEquals("A better language than C#", skill.getDescription());
+        Assert.assertEquals(1, skill.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", skill.getTags().get(0).getName());
 
         Global.commandManager.undo();
 
         Assert.assertEquals("C#", skill.getShortName());
         Assert.assertEquals("A better language than Java", skill.getDescription());
+        Assert.assertEquals(0, skill.getTags().size());
+        Assert.assertEquals(0, Global.currentWorkspace.getAllTags().size());
+
+        Global.commandManager.redo();
+
+        Assert.assertEquals("Java", skill.getShortName());
+        Assert.assertEquals("A better language than C#", skill.getDescription());
+        Assert.assertEquals(1, skill.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", skill.getTags().get(0).getName());
     }
 
     @Test

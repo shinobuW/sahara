@@ -164,8 +164,8 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
      * @param newShortName   The new short name
      * @param newDescription The new description
      */
-    public void edit(String newShortName, String newDescription) {
-        Command edit = new SkillEditCommand(this, newShortName, newDescription);
+    public void edit(String newShortName, String newDescription, ArrayList<Tag> newTags) {
+        Command edit = new SkillEditCommand(this, newShortName, newDescription, newTags);
         Global.commandManager.executeCommand(edit);
     }
 
@@ -220,15 +220,32 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
 
         private String shortName;
         private String description;
+        private Set<Tag> skillTags = new HashSet<>();
+        private Set<Tag> globalTags = new HashSet<>();
+
         private String oldShortName;
         private String oldDescription;
+        private Set<Tag> oldSkillTags = new HashSet<>();
+        private Set<Tag> oldGlobalTags = new HashSet<>();
 
-        private SkillEditCommand(Skill skill, String newShortName, String newDescription) {
+        private SkillEditCommand(Skill skill, String newShortName, String newDescription, ArrayList<Tag> newTags) {
             this.skill = skill;
+
+            if (newTags == null) {
+                newTags = new ArrayList<>();
+            }
+
+
             this.shortName = newShortName;
             this.description = newDescription;
+            this.skillTags.addAll(newTags);
+            this.globalTags.addAll(newTags);
+            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
+
             this.oldShortName = skill.shortName;
             this.oldDescription = skill.description;
+            this.oldSkillTags.addAll(skill.getTags());
+            this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
         }
 
         /**
@@ -237,6 +254,14 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
         public void execute() {
             skill.shortName = shortName;
             skill.description = description;
+
+            //Add any created tags to the global collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(globalTags);
+            //Add the tags a skill has to their list of tags
+            skill.getTags().clear();
+            skill.getTags().addAll(skillTags);
+
             Collections.sort(Global.currentWorkspace.getSkills());
         }
 
@@ -246,6 +271,15 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
         public void undo() {
             skill.shortName = oldShortName;
             skill.description = oldDescription;
+
+            //Adds the old global tags to the overall collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(oldGlobalTags);
+
+            //Changes the skills list of tags to what they used to be
+            skill.getTags().clear();
+            skill.getTags().addAll(oldSkillTags);
+
             Collections.sort(Global.currentWorkspace.getSkills());
         }
 

@@ -594,7 +594,6 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             oldTeam.removePerson(person);
             person.skills = skills;
 
-
             //Add any created tags to the global collection
             Global.currentWorkspace.getAllTags().clear();
             Global.currentWorkspace.getAllTags().addAll(globalTags);
@@ -625,10 +624,10 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             Global.currentWorkspace.getAllTags().clear();
             Global.currentWorkspace.getAllTags().addAll(oldGlobalTags);
 
-
             //Changes the persons list of tags to what they used to be
             person.getTags().clear();
             person.getTags().addAll(oldPersonTags);
+
         }
 
         /**

@@ -23,6 +23,7 @@ import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.role.Role;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.util.*;
@@ -283,12 +284,14 @@ public class TeamEditTab extends SearchableTab {
 
         btnDone.setOnAction((event) -> {
                 if (isValidState()) { // validation
+                    ArrayList<Tag> tags = new ArrayList<>();
                     baseTeam.edit(shortNameField.getText(),
                             descriptionField.getText(),
                             teamMembersList,
                             allocatedProductOwner,
                             allocatedScrumMaster,
-                            allocatedDevelopers
+                            allocatedDevelopers,
+                            tags
                     );
 
                     Collections.sort(Global.currentWorkspace.getTeams());

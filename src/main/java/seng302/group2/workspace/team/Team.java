@@ -549,17 +549,17 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         return this.shortName;
     }
 
-    /**
-     * Creates a team edit command and executes it with the Global Command Manager, updating
-     * the team with the new parameter values.
-     *
-     * @param newShortName   The new short name
-     * @param newDescription The new description
-     */
-    public void edit(String newShortName, String newDescription) {
-        Command teamEdit = new BasicTeamEditCommand(this, newShortName, newDescription);
-        Global.commandManager.executeCommand(teamEdit);
-    }
+//    /**
+//     * Creates a team edit command and executes it with the Global Command Manager, updating
+//     * the team with the new parameter values.
+//     *
+//     * @param newShortName   The new short name
+//     * @param newDescription The new description
+//     */
+//    public void edit(String newShortName, String newDescription, ArrayList<Tag> newTags) {
+//        Command teamEdit = new BasicTeamEditCommand(this, newShortName, newDescription, newTags);
+//        Global.commandManager.executeCommand(teamEdit);
+//    }
 
 
     /**
@@ -574,9 +574,9 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      * @param newSM          The new scrum master
      */
     public void edit(String newShortName, String newDescription, Collection<Person> newMembers,
-                     Person newPO, Person newSM, Collection<Person> newDevelopers) {
+                     Person newPO, Person newSM, Collection<Person> newDevelopers, ArrayList<Tag> newTags) {
         Command teamEdit = new ExtendedTeamEditCommand(this, newShortName, newDescription,
-                newMembers, newPO, newSM, newDevelopers);
+                newMembers, newPO, newSM, newDevelopers, newTags);
         Global.commandManager.executeCommand(teamEdit);
     }
 
@@ -641,6 +641,8 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         private Person productOwner;
         private Person scrumMaster;
         private Collection<Person> developers = new HashSet<>();
+        private Set<Tag> teamTags = new HashSet<>();
+        private Set<Tag> globalTags = new HashSet<>();
 
         private String oldShortName;
         private String oldDescription;
@@ -648,11 +650,17 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         private Person oldProductOwner;
         private Person oldScrumMaster;
         private Collection<Person> oldDevelopers = new HashSet<>();
+        private Set<Tag> oldTeamTags = new HashSet<>();
+        private Set<Tag> oldGlobalTags = new HashSet<>();
 
         private ExtendedTeamEditCommand(Team team, String newShortName, String newDescription,
                                         Collection<Person> newMembers, Person newPO, Person newSM,
-                                        Collection<Person> newDevelopers) {
+                                        Collection<Person> newDevelopers, ArrayList<Tag> newTags) {
             this.team = team;
+
+            if (newTags == null) {
+                newTags = new ArrayList<>();
+            }
 
             this.shortName = newShortName;
             this.description = newDescription;
@@ -660,6 +668,9 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             this.productOwner = newPO;
             this.scrumMaster = newSM;
             this.developers.addAll(newDevelopers);
+            this.teamTags.addAll(newTags);
+            this.globalTags.addAll(newTags);
+            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
 
             this.oldShortName = team.shortName;
             this.oldDescription = team.description;
@@ -667,6 +678,8 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             this.oldProductOwner = team.productOwner;
             this.oldScrumMaster = team.scrumMaster;
             this.oldDevelopers.addAll(team.devs);
+            this.oldTeamTags.addAll(team.getTags());
+            this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
         }
 
         /**
@@ -691,6 +704,13 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             team.scrumMaster = scrumMaster;
             team.devs.clear();
             team.devs.addAll(developers);
+
+            //Add any created tags to the global collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(globalTags);
+            //Add the tags a team has to their list of tags
+            team.getTags().clear();
+            team.getTags().addAll(teamTags);
         }
 
         /**
@@ -713,6 +733,15 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             for (Person member : oldMembers) {
                 member.setTeam(team);
             }
+
+            //Adds the old global tags to the overall collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(oldGlobalTags);
+
+            //Changes the team list of tags to what they used to be
+            team.getTags().clear();
+            team.getTags().addAll(oldTeamTags);
+
         }
 
         /**
