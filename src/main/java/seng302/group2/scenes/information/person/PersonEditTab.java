@@ -280,7 +280,7 @@ public class PersonEditTab extends SearchableTab {
                 boolean firstNameValidated = NameValidator.validateName(firstNameCustomField);
                 boolean lastNameValidated = NameValidator.validateName(lastNameCustomField);
 
-                ObservableList<Tag> tags = observableArrayList();
+                ArrayList<Tag> tags = new ArrayList<>();
 
                 // The short name is the same or valid
                 if (correctShortName && firstNameValidated && lastNameValidated) {

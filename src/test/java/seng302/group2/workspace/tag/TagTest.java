@@ -8,6 +8,8 @@ import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
 
 import org.w3c.dom.Element;
+import seng302.group2.workspace.workspace.Workspace;
+
 import java.util.HashSet;
 
 /**
@@ -47,7 +49,7 @@ public class TagTest {
     }
 
     /**
-     * Tests the deletion of a tag globally. //TODO Add in items with the tag, then delete it.
+     * Tests the deletion of a tag globally. //TODO Bronson Add in items with the tag, then delete it.
      */
     @Test
     public void testDeleteGlobalTag() {
@@ -55,14 +57,14 @@ public class TagTest {
 
         tag.deleteGlobalTag();
 
-        Assert.assertFalse(Global.currentWorkspace.getGlobalTags().contains(tag));
+        Assert.assertFalse(Global.currentWorkspace.getAllTags().contains(tag));
 
         Global.commandManager.undo();
 
-        Assert.assertTrue(Global.currentWorkspace.getGlobalTags().contains(tag));
+        Assert.assertTrue(Global.currentWorkspace.getAllTags().contains(tag));
 
         Global.commandManager.redo();
 
-        Assert.assertFalse(Global.currentWorkspace.getGlobalTags().contains(tag));
+        Assert.assertFalse(Global.currentWorkspace.getAllTags().contains(tag));
     }
 }

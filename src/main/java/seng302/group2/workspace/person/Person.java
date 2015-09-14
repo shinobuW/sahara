@@ -483,7 +483,7 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
      */
     public void edit(String newShortName, String newFirstName, String newLastName,
                      String newEmail, LocalDate newBirthDate, String newDescription,
-                     Team newTeam, ObservableList newSkills, ObservableList newTags) {
+                     Team newTeam, ObservableList newSkills, ArrayList newTags) {
         Command persEdit = new PersonEditCommand(this, newShortName, newFirstName, newLastName,
                 newEmail, newBirthDate, newDescription, newTeam, newSkills, newTags);
         Global.commandManager.executeCommand(persEdit);
@@ -529,21 +529,16 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         private Set<Tag> oldPersonTags = new HashSet<>();
         private Set<Tag> oldGlobalTags = new HashSet<>();
 
-        private boolean globalTagCreation;
-
         protected PersonEditCommand(Person person, String newShortName, String newFirstName,
                                     String newLastName, String newEmail, LocalDate newBirthDate,
                                     String newDescription, Team newTeam, ObservableList<Skill> newSkills,
-                                    ObservableList<Tag> newTags) {
+                                    ArrayList<Tag> newTags) {
             this.person = person;
 
             if (newTags == null) {
-                newTags = FXCollections.observableArrayList();
+                newTags = new ArrayList<>();
             }
 
-            // Set<Tag> newGlobalTags = new HashSet<>();
-            // newGlobalTags.addAll(Global.currentWorkspace.getGlobalTags());
-            // newGlobalTags.addAll(newTags);
 
             this.shortName = newShortName;
             this.firstName = newFirstName;
@@ -555,7 +550,8 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             this.skills = newSkills;
             this.personTags.addAll(newTags);
             this.globalTags.addAll(newTags);
-            this.globalTags.addAll(Tag.getAllTags());
+            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
+            //TODO Bronson what tags should be in here?
 
             this.oldShortName = person.shortName;
             this.oldFirstName = person.firstName;
@@ -566,7 +562,7 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             this.oldTeam = person.team;
             this.oldSkills = person.skills;
             this.oldPersonTags.addAll(person.getTags());
-            this.oldGlobalTags.addAll(Tag.getAllTags());
+            this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
         }
 
         /**
@@ -586,8 +582,8 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
 
 
             //Add any created tags to the global collection
-            Tag.getGlobalTags().clear();
-            Tag.getGlobalTags().addAll(globalTags);
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(globalTags);
 
             //Add the tags a person has to their list of tags
             person.getTags().clear();
@@ -613,8 +609,8 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             Collections.sort(Global.currentWorkspace.getPeople());
 
             //Adds the old global tags to the overall collection
-            Tag.getGlobalTags().clear();
-            Tag.getGlobalTags().addAll(oldGlobalTags);
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(oldGlobalTags);
 
 
             //Changes the persons list of tags to what they used to be
