@@ -240,7 +240,7 @@ public class PairLog extends Log {
             this.pLog.task.getLogs().remove(this.pLog);
             this.pLog.task.setEffortSpent((this.oldEffortSpent - this.pLog.duration));
             this.pLog.logger.getLogs().remove(this.pLog);
-            System.out.println(this.pLog.logger + " " + this.pLog);
+            this.pLog.partner.getLogs().remove(this.pLog);
         }
 
 
@@ -251,6 +251,7 @@ public class PairLog extends Log {
             this.pLog.task.getLogs().add(this.pLog);
             this.pLog.task.setEffortSpent(this.oldEffortSpent);
             this.pLog.logger.getLogs().add(this.pLog);
+            this.pLog.partner.getLogs().add(this.pLog);
         }
 
 

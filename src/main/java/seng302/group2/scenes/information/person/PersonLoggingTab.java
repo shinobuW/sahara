@@ -83,9 +83,10 @@ public class PersonLoggingTab extends SearchableTab {
 
         updateFilteredLogs(currentPerson);
 
-        TableColumn loggerCol = new TableColumn("Logger");
-        loggerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("logger"));
-        loggerCol.prefWidthProperty().bind(taskTable.widthProperty()
+        TableColumn partnerCol = new TableColumn("Partner");
+        partnerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("partner"));
+        partnerCol.setEditable(true);
+        partnerCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
         TableColumn taskCol = new TableColumn("Task");
@@ -122,7 +123,7 @@ public class PersonLoggingTab extends SearchableTab {
 
 
         taskTable.setItems(data);
-        TableColumn[] columns = {loggerCol, taskCol, descriptionCol, startTimeCol, durationCol};
+        TableColumn[] columns = {partnerCol, taskCol, descriptionCol, startTimeCol, durationCol};
         taskTable.getColumns().setAll(columns);
 
         final Callback<DatePicker, DateCell> endDateCellFactory =
@@ -219,7 +220,6 @@ public class PersonLoggingTab extends SearchableTab {
 
     private void updateFilteredLogs(Person currentPerson) {
         data.clear();
-        System.out.println(currentPerson.getLogs());
         for (Log log : currentPerson.getLogs()) {
             if (log.getLocalStartDate().isAfter(startDate.minusDays(1))
                     && log.getLocalStartDate().isBefore(endDate.plusDays(1))) {
