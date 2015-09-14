@@ -583,7 +583,6 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             //Add any created tags to the global collection
             Global.currentWorkspace.getAllTags().clear();
             Global.currentWorkspace.getAllTags().addAll(globalTags);
-
             //Add the tags a person has to their list of tags
             person.getTags().clear();
             person.getTags().addAll(personTags);
