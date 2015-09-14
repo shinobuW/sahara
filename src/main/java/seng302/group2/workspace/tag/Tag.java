@@ -1,5 +1,4 @@
 package seng302.group2.workspace.tag;
-import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
@@ -8,12 +7,8 @@ import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
-import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * A class representation of tags, used to highlight and identify different states of other Sahara model objects.
@@ -22,11 +17,6 @@ public class Tag extends SaharaItem implements Serializable {
     private String name;
     private Color color = Color.ROYALBLUE;
 
-    private static transient ObservableList<Tag> globalTags = observableArrayList();
-    private static List<Tag> serializableGlobalTags = new ArrayList<>();
-    private boolean deleted = false;
-
-
     /**
      * Basic constructor for a Tag
      * @param tagName The name of the tag
@@ -34,7 +24,6 @@ public class Tag extends SaharaItem implements Serializable {
     public Tag(String tagName) {
         this.name = tagName;
         this.getTags().clear();
-        globalTags.add(this);
     }
 
     /**
@@ -54,9 +43,7 @@ public class Tag extends SaharaItem implements Serializable {
         return color;
     }
 
-    public static ObservableList<Tag> getGlobalTags() {
-        return globalTags;
-    }
+
 
     /**
      * Deletes the tag from the workspace and removes it from every item that has the tag.
@@ -82,8 +69,8 @@ public class Tag extends SaharaItem implements Serializable {
      * @return A set of the Sahara Items that have been tagged with this tag
      */
     // Was ObservableList based on this.items
+    //TODO Bronson Does this need to be observable list now or nah
     public Set<SaharaItem> getTaggedItems() {
-        //return this.items;
         // @BRONSON
         Set<SaharaItem> items = new HashSet<>();
         for (SaharaItem item : SaharaItem.getAllItems()) {
@@ -93,31 +80,6 @@ public class Tag extends SaharaItem implements Serializable {
         }
         return items;
     }
-
-
-    /**
-     * Returns a complete list of tags in the workspace
-     * @return A list of tags in the workspace
-     */
-    // @BRONSON
-    public static Set<Tag> getAllTags() {
-        Set<Tag> tags = new HashSet<>();
-        for (SaharaItem item : SaharaItem.getAllItems()) {
-            if (item instanceof Tag && !((Tag) item).deleted) {
-                tags.add((Tag) item);
-            }
-        }
-
-        for (Tag tag : globalTags) {
-            if (!tag.deleted) {
-                tags.add(tag);
-            }
-        }
-        tags.addAll(Tag.globalTags);
-
-        return tags;
-    }
-
 
     /**
      * Gets the short name of the tag.
@@ -148,26 +110,6 @@ public class Tag extends SaharaItem implements Serializable {
     }
 
     /**
-     * Serialization pre-processing.
-     */
-    public void prepSerialization() {
-        serializableGlobalTags.clear();
-        for (Tag item : globalTags) {
-            serializableGlobalTags.add(item);
-        }
-    }
-
-    /**
-     * Deserialization post-processing.
-     */
-    public void postDeserialization() {
-        globalTags.clear();
-        for (Tag item : serializableGlobalTags) {
-            globalTags.add(item);
-        }
-    }
-
-    /**
      * A command class for allowing the deletion of Tags from a Workspace.
      */
     private class DeleteGlobalTagCommand implements Command {
@@ -188,14 +130,12 @@ public class Tag extends SaharaItem implements Serializable {
          */
         public void execute() {
             taggedItems.addAll(tag.getTaggedItems());
-            if (Tag.globalTags.contains(tag)) {
-                globalTag = true;
-                Tag.globalTags.remove(tag);
+            if (Global.currentWorkspace.getAllTags().contains(tag)) {
+                Global.currentWorkspace.getAllTags().remove(tag);
             }
             for (SaharaItem item : taggedItems) {
                 item.getTags().remove(tag);
             }
-            tag.deleted = true;
         }
 
         /**
@@ -205,10 +145,7 @@ public class Tag extends SaharaItem implements Serializable {
             for (SaharaItem item : taggedItems) {
                 item.getTags().add(tag);
             }
-            if (globalTag) {
-                Tag.globalTags.add(tag);
-            }
-            tag.deleted = false;
+            Global.currentWorkspace.getAllTags().add(tag);
         }
 
         /**

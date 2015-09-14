@@ -10,6 +10,7 @@ import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
@@ -271,8 +272,11 @@ public class PersonTest {
         Person person = new Person("btm38", "Bronson", "McNaughton", "btm38@gmail.com",
                 "A really cool dude", testDate2);
         Team team = new Team();
+        Tag tag = new Tag("Tag");
+        ArrayList<Tag> newTags = new ArrayList<>();
+        newTags.add(tag);
         person.edit("shortName", "firstName",
-                "lastName", "email", LocalDate.now(), "Desc", team, null, null);
+                "lastName", "email", LocalDate.now(), "Desc", team, null, newTags);
 
         Assert.assertEquals("shortName", person.getShortName());
         Assert.assertEquals("firstName", person.getFirstName());
@@ -280,6 +284,9 @@ public class PersonTest {
         Assert.assertEquals("email", person.getEmail());
         Assert.assertEquals(LocalDate.now(), person.getBirthDate());
         Assert.assertEquals("Desc", person.getDescription());
+        Assert.assertEquals(1, person.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", person.getTags().get(0).getName());
 
         Global.commandManager.undo();
 
@@ -289,6 +296,20 @@ public class PersonTest {
         Assert.assertEquals("btm38@gmail.com", person.getEmail());
         Assert.assertEquals(testDate2, person.getBirthDate());
         Assert.assertEquals("A really cool dude", person.getDescription());
+        Assert.assertEquals(0, person.getTags().size());
+        Assert.assertEquals(0, Global.currentWorkspace.getAllTags().size());
+
+        Global.commandManager.redo();
+
+        Assert.assertEquals("shortName", person.getShortName());
+        Assert.assertEquals("firstName", person.getFirstName());
+        Assert.assertEquals("lastName", person.getLastName());
+        Assert.assertEquals("email", person.getEmail());
+        Assert.assertEquals(LocalDate.now(), person.getBirthDate());
+        Assert.assertEquals("Desc", person.getDescription());
+        Assert.assertEquals(1, person.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", person.getTags().get(0).getName());
     }
 
 

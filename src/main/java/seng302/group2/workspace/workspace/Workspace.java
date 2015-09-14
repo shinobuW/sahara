@@ -457,12 +457,6 @@ public class Workspace extends SaharaItem implements Serializable {
             workspace.serializableRoadMaps.add(item);
         }
 
-        workspace.serializableGlobalTags.clear();
-        for (Tag item : workspace.globalTags) {
-            item.prepSerialization();
-            workspace.serializableGlobalTags.add(item);
-        }
-
         workspace.serializableSkills.clear();
         for (Skill item : workspace.skills) {
             workspace.serializableSkills.add(item);
@@ -480,11 +474,7 @@ public class Workspace extends SaharaItem implements Serializable {
             workspace.serializableRoles.add(item);
         }
 
-        workspace.getSerializableTags().clear();
-        for (Tag item : workspace.getTags()) {
-            item.prepSerialization();
-            workspace.getSerializableTags().add(item);
-        }
+        //TODO Bronson Serialization of tags.
 
         return workspace;
     }
@@ -508,10 +498,6 @@ public class Workspace extends SaharaItem implements Serializable {
             workspace.roadMaps.add(item);
         }
 
-        for (Tag item : workspace.serializableGlobalTags) {
-            item.postDeserialization();
-            workspace.globalTags.add(item);
-        }
 
         for (Project item : workspace.serializableProjects) {
             item.postDeserialization();
@@ -535,12 +521,6 @@ public class Workspace extends SaharaItem implements Serializable {
             workspace.roles.add(item);
         }
 
-        workspace.getTags().clear();
-        for (Tag item : workspace.getSerializableTags()) {
-            item.postDeserialization();
-            workspace.getTags().add(item);
-        }
-
         // Unset saved changes flag, we just opened the workspace.
         workspace.hasUnsavedChanges = false;
 
@@ -549,6 +529,8 @@ public class Workspace extends SaharaItem implements Serializable {
         for (Project proj : workspace.getProjects()) {
             proj.addListeners();
         }
+
+        //TODO Bronson Deserialization of tags
 
         SaharaItem.refreshIDs();
     }
@@ -724,9 +706,8 @@ public class Workspace extends SaharaItem implements Serializable {
      * Gets the workspace's list of globalTags.
      * @return The tag associated with the workspace.
      */
-    @Deprecated
-    public Set<Tag> getGlobalTags() {
-        return Tag.getAllTags();
+    public ObservableList<Tag> getAllTags() {
+        return globalTags;
     }
 
 
@@ -917,6 +898,26 @@ public class Workspace extends SaharaItem implements Serializable {
         root.addAll(projectCategory, roadMapCategory, teamsCategory, peopleCategory, skillCategory, rolesCategory);
 
         return root;
+    }
+
+    /**
+     * Serialization pre-processing.
+     */
+    public void prepSerialization() {
+        serializableGlobalTags.clear();
+        for (Tag item : globalTags) {
+            serializableGlobalTags.add(item);
+        }
+    }
+
+    /**
+     * Deserialization post-processing.
+     */
+    public void postDeserialization() {
+        globalTags.clear();
+        for (Tag item : serializableGlobalTags) {
+            globalTags.add(item);
+        }
     }
 
     /**
@@ -1235,14 +1236,14 @@ public class Workspace extends SaharaItem implements Serializable {
          * Executes the person addition command
          */
         public void execute() {
-            Global.currentWorkspace.getGlobalTags().add(tag);
+            Global.currentWorkspace.getAllTags().add(tag);
         }
 
         /**
          * Undoes the tag add command
          */
         public void undo() {
-            Global.currentWorkspace.getGlobalTags().remove(tag);
+            Global.currentWorkspace.getAllTags().remove(tag);
         }
 
         /**
