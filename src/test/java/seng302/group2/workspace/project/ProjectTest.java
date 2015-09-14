@@ -94,6 +94,7 @@ public class ProjectTest extends TestCase {
     public void testAddSprint() {
         Project proj = new Project();
         Sprint sprint = new Sprint();
+        sprint.setProject(proj);
         proj.add(sprint);
 
         assertTrue(proj.getSprints().contains(sprint));
@@ -225,6 +226,7 @@ public class ProjectTest extends TestCase {
         Story story = new Story();
         proj.add(story);
         Sprint sprint = new Sprint();
+        sprint.setProject(proj);
         proj.add(sprint);
 
         children.clear();
@@ -288,6 +290,7 @@ public class ProjectTest extends TestCase {
         Backlog testBacklog = new Backlog();
         Story testStory = new Story();
         Sprint testSprint = new Sprint();
+        testSprint.setProject(proj);
         Allocation testAllocation = new Allocation(proj, testTeam, LocalDate.now(),
                 LocalDate.now());
 

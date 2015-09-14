@@ -272,7 +272,7 @@ public class PersonTest {
                 "A really cool dude", testDate2);
         Team team = new Team();
         person.edit("shortName", "firstName",
-                "lastName", "email", LocalDate.now(), "Desc", team, null);
+                "lastName", "email", LocalDate.now(), "Desc", team, null, null);
 
         Assert.assertEquals("shortName", person.getShortName());
         Assert.assertEquals("firstName", person.getFirstName());
