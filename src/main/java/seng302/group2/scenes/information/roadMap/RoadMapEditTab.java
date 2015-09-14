@@ -128,18 +128,10 @@ public class RoadMapEditTab extends SearchableTab {
                         break outerloop;
                     }
                 }
-
-                if (uniquePriority) {
-                    roadMapList.addAll(
-                            availableReleaseListView.getSelectionModel().getSelectedItems());
-                    availableReleases.removeAll(
-                            availableReleaseListView.getSelectionModel().getSelectedItems());
-                }
-                else {
-                    errorField.setStyle("-fx-text-fill: #ff0000;");
-                    errorField.setText("* Story \"" + errorRelease.getShortName() + "\" must have a unique priority.");
-                }
-
+                roadMapList.addAll(
+                        availableReleaseListView.getSelectionModel().getSelectedItems());
+                availableReleases.removeAll(
+                        availableReleaseListView.getSelectionModel().getSelectedItems());
             });
 
         btnUnassign.setOnAction((event) -> {
