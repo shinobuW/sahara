@@ -71,8 +71,38 @@ public class Tag extends SaharaItem implements Serializable {
         return new HashSet<>();
     }
 
-    public ObservableList<SaharaItem> getItems() {
-        return this.items;
+
+    /**
+     * Returns all of the Sahara Items that have been tagged with this tag
+     * @return A set of the Sahara Items that have been tagged with this tag
+     */
+    // Was ObservableList based on this.items
+    public Set<SaharaItem> getItems() {
+        //return this.items;
+        // @BRONSON
+        Set<SaharaItem> items = new HashSet<>();
+        for (SaharaItem item : SaharaItem.getAllItems()) {
+            if (item.getTags().contains(this)) {
+                items.add(item);
+            }
+        }
+        return items;
+    }
+
+
+    /**
+     * Returns a complete list of tags in the workspace
+     * @return A list of tags in the workspace
+     */
+    // @BRONSON
+    public static Set<Tag> getAllTags() {
+        Set<Tag> tags = new HashSet<>();
+        for (SaharaItem item : SaharaItem.getAllItems()) {
+            if (item instanceof Tag) {
+                tags.add((Tag) item);
+            }
+        }
+        return tags;
     }
 
 

@@ -533,9 +533,11 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
 
         protected PersonEditCommand(Person person, String newShortName, String newFirstName,
                                     String newLastName, String newEmail, LocalDate newBirthDate,
-                                    String newDescription, Team newTeam, ObservableList<Skill> newSkills, ObservableList<Tag> newTags) {
+                                    String newDescription, Team newTeam, ObservableList<Skill> newSkills,
+                                    ObservableList<Tag> newTags) {
             this.person = person;
 
+            // You don't really need to do this much either
             ObservableList<Tag> newGlobalTags = observableArrayList();
             newGlobalTags.addAll(Global.currentWorkspace.getGlobalTags());
             for (Tag t : newTags) {
@@ -543,6 +545,10 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
                     newGlobalTags.add(t);
                 }
             }
+            // It could just be:
+            // Set<Tag> newGlobalTags = new HashSet<>();
+            // newGlobalTags.addAll(Global.currentWorkspace.getGlobalTags());
+            // newGlobalTags.addAll(newTags);
 
             this.shortName = newShortName;
             this.firstName = newFirstName;
@@ -588,11 +594,11 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             Global.currentWorkspace.getGlobalTags().addAll(globalTags);
 
             //Add the person reference to a tag if person is using that tag
-            for (Tag t : personTags) {
+            /*for (Tag t : personTags) {
                 if (!t.getItems().contains(person)) {
                     t.getItems().add(person);
                 }
-            }
+            }*/
 
             //Add the tags a person has to their list of tags
             person.getTags().clear();
@@ -624,6 +630,7 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             //Removes the person references from old tags
             // @Jordane How do i do this part?
             // for (Tag t : ...
+            // This has become obsolete
 
             //Changes the persons list of tags to what they used to be
             person.getTags().clear();

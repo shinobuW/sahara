@@ -1,5 +1,6 @@
 package seng302.group2.workspace.person;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,12 +11,14 @@ import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -272,7 +275,7 @@ public class PersonTest {
                 "A really cool dude", testDate2);
         Team team = new Team();
         person.edit("shortName", "firstName",
-                "lastName", "email", LocalDate.now(), "Desc", team, null);
+                "lastName", "email", LocalDate.now(), "Desc", team, null, FXCollections.observableArrayList());
 
         Assert.assertEquals("shortName", person.getShortName());
         Assert.assertEquals("firstName", person.getFirstName());
