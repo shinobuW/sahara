@@ -11,7 +11,6 @@ import seng302.group2.util.conversion.GeneralEnumStringConverter;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
 
 import java.io.Serializable;
@@ -314,16 +313,6 @@ public class Task extends SaharaItem implements Serializable {
      */
     public ObservableList<Log> getLogsWithoutGhostLogs() {
         return logsWithoutGhosts;
-    }
-
-   /**
-     * Adds a log to the Tasks Logs list
-     *  @param log The log to add
-     *  @param effortLeft The new effort left for this task
-     */
-    public void add(Log log, double effortLeft) {
-        Command command = new AddLogsCommand(this, log, this.getStory().getProject(), effortLeft);
-        Global.commandManager.executeCommand(command);
     }
 
     /**
@@ -1156,91 +1145,29 @@ public class Task extends SaharaItem implements Serializable {
         }
     }
 
-    /**
-     * Command to add and remove Logs
-     */
-    private class AddLogsCommand implements Command {
-        private Task task;
-        private Log log;
-        private Project proj;
-        private double effortLeft;
-        private Person partner;
-        
-        private double oldEffortSpent;
-        private double oldEffortLeft;
-        
-
-        /**
-         * Constructor for the log addition command
-         * @param task The task to which the log is to be added
-         * @param log The log to be added
-         * @param proj The project of the task
-         * @param effortLeft The new effort left
-         */
-        AddLogsCommand(Task task, Log log, Project proj, double effortLeft) {
-            this.task = task;
-            this.log = log;
-            this.oldEffortSpent = task.getEffortSpent();
-            this.oldEffortLeft = task.getEffortLeft();
-            this.effortLeft = effortLeft;
-            this.proj = proj;
-        }
-
-        /**
-         * Executes the log addition command
-         */
-        public void execute() {
-            task.getLogs().add(log);
-            log.getLogger().getLogs().add(log);
-            log.setTask(task);
-            double newEffortSpent = task.getEffortSpent() + log.getDurationInMinutes();
-            task.setEffortSpent(newEffortSpent);
-            task.setEffortLeft(this.effortLeft);
-            proj.add(log);
-
-            if (log instanceof PairLog) {
-                ((PairLog) log).getPartner().getLogs().add(log);
-            }
-        }
-
-        /**
-         * Undoes the log addition command
-         */
-        public void undo() {
-            task.getLogs().remove(log);
-            log.getLogger().getLogs().remove(log);
-            log.setTask(null);
-            task.setEffortSpent(oldEffortSpent);
-            task.setEffortLeft(oldEffortLeft);
-            proj.delete(log);
-
-            if (log instanceof PairLog) {
-                ((PairLog) log).getPartner().getLogs().remove(log);
-            }
-        }
 
         /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
          */
-        @Override
-        public boolean map(Set<SaharaItem> stateObjects) {
-            boolean mapped_task = false;
-            for (SaharaItem item : stateObjects) {
-                if (item.equals(task)) {
-                    this.task = (Task) item;
-                    mapped_task = true;
-                }
-            }
-            boolean mapped_log = false;
-            for (SaharaItem item : stateObjects) {
-                if (item.equals(log)) {
-                    this.log = (Log) item;
-                    mapped_log = true;
-                }
-            }
-            return mapped_task && mapped_log;
-        }
-    }
+//        @Override
+//        public boolean map(Set<SaharaItem> stateObjects) {
+//            boolean mapped_task = false;
+//            for (SaharaItem item : stateObjects) {
+//                if (item.equals(task)) {
+//                    this.task = (Task) item;
+//                    mapped_task = true;
+//                }
+//            }
+//            boolean mapped_log = false;
+//            for (SaharaItem item : stateObjects) {
+//                if (item.equals(log)) {
+//                    this.log = (Log) item;
+//                    mapped_log = true;
+//                }
+//            }
+//            return mapped_task && mapped_log;
+//        }
+    
 }
