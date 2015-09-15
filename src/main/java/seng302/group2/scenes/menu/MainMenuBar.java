@@ -1,14 +1,18 @@
 package seng302.group2.scenes.menu;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
+import javafx.scene.layout.GridPane;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.dialog.*;
+import seng302.group2.scenes.information.tag.TagManagementPane;
 import seng302.group2.util.revert.RevertManager;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.Category;
@@ -32,6 +36,9 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
  */
 @SuppressWarnings("deprecation")
 public class MainMenuBar extends MenuBar {
+
+    static PopOver taggingPopOver = new PopOver();
+
     /**
      * Creates a menu item "Workspace" and sets the on action event if "Workspace" is clicked.
      *
@@ -117,6 +124,39 @@ public class MainMenuBar extends MenuBar {
                 KeyCombination.SHORTCUT_DOWN));
 
         return newProjectItem;
+    }
+
+
+    /**
+     * Creates a menu item for "Tag Management".
+     *
+     * @return MenuItem for tag management
+     */
+    private static MenuItem createTagMaintenanceItem() {
+        MenuItem newProjectItem = new MenuItem("Tag Management");
+        newProjectItem.setOnAction((ActionEvent event) -> showTaggingPopOver());
+
+        newProjectItem.setAccelerator(new KeyCodeCombination(KeyCode.T,
+                KeyCombination.CONTROL_DOWN,
+                KeyCombination.SHIFT_DOWN,
+                KeyCombination.SHORTCUT_DOWN));
+
+        return newProjectItem;
+    }
+
+    public static void showTaggingPopOver() {
+        if (!taggingPopOver.isShowing()) {
+            taggingPopOver = new PopOver();
+            taggingPopOver.setDetachedTitle("Tag Management");
+            taggingPopOver.setDetached(true);
+            taggingPopOver.setContentNode(new TagManagementPane());
+            Platform.runLater(() -> taggingPopOver.show(App.content, App.mainStage.getX()
+                            + App.mainStage.getWidth() / 2 - 300,
+                    App.mainStage.getY() + App.mainStage.getHeight() / 2 - 200));
+        }
+        else {
+            taggingPopOver.requestFocus();
+        }
     }
 
 
@@ -618,7 +658,8 @@ public class MainMenuBar extends MenuBar {
         // Create MenuItems for Display submenu
         MenuItem toggleTree = createToggleTreeItem();
         MenuItem refreshItem = createRefreshItem();
-        displayMenu.getItems().addAll(toggleTree, refreshItem);
+        MenuItem taggingItem = createTagMaintenanceItem();
+        displayMenu.getItems().addAll(toggleTree, refreshItem, taggingItem);
 
 
         // Create 'Generate >' menu
