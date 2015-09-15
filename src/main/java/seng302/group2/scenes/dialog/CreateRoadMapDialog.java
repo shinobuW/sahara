@@ -49,10 +49,8 @@ public class CreateRoadMapDialog extends Dialog<Map<String, String>> {
         this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
-        RequiredField longNameCustomField = new RequiredField("Long Name:");
 
         grid.getChildren().add(shortNameCustomField);
-        grid.getChildren().add(longNameCustomField);
 
         // Request focus on the short name field by default.
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
@@ -68,20 +66,14 @@ public class CreateRoadMapDialog extends Dialog<Map<String, String>> {
                 createButton.setDisable(!(correctShortName && correctLongName));
             });
 
-        longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctLongName = validateName(longNameCustomField);
-                createButton.setDisable(!(correctShortName && correctLongName));
-            });
-
 
 
         this.setResultConverter(b -> {
                 if (b == btnTypeCreate) {
                     String shortName = shortNameCustomField.getText();
-                    String longName = longNameCustomField.getText();
 
                     if (correctShortName && correctLongName) {
-                        RoadMap roadMap = new RoadMap(shortName, longName);
+                        RoadMap roadMap = new RoadMap(shortName);
                         Global.currentWorkspace.add(roadMap);
                         App.mainPane.selectItem(roadMap);
                         this.close();

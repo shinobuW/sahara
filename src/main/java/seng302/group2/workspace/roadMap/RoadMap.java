@@ -20,7 +20,6 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public class RoadMap extends SaharaItem implements Serializable, Comparable<RoadMap> {
     private String shortName;
-    private String longName;
     private transient ObservableList<Release> releases = observableArrayList();
     private List<Release> serializableReleases = new ArrayList<>();
 
@@ -34,7 +33,6 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
     public RoadMap() {
         super("Untitled RoadMap");
         this.shortName = "Untitled RoadMap";
-        this.longName = "Untitled Long RoadMap";
 
         setInformationSwitchStrategy(new RoadMapInformationSwitchStrategy());
     }
@@ -42,10 +40,9 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
     /**
      * Basic RoadMap constructor
      */
-    public RoadMap(String shortName, String longName) {
+    public RoadMap(String shortName) {
         super(shortName);
         this.shortName = shortName;
-        this.longName = longName;
 
         setInformationSwitchStrategy(new RoadMapInformationSwitchStrategy());
     }
@@ -58,16 +55,7 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
     public String getShortName() {
         return this.shortName;
     }
-    
-    /**
-     * Gets a roadmap long name
-     *
-     * @return The long name of the roadmap
-     */
-    public String getLongName() {
-        return this.longName;
-    }
-    
+
     /**
      * Gets the releases of the RoadMap
      *
@@ -253,11 +241,9 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
         private RoadMap roadMap;
         
         private String shortName;
-        private String longName;
         private Collection<Release> releases = new HashSet<>();
         
         private String oldShortName;
-        private String oldLongName;
         private Collection<Release> oldReleases = new HashSet<>();
 
         /**
