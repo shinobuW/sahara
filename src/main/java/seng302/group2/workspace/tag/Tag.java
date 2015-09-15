@@ -71,7 +71,6 @@ public class Tag extends SaharaItem implements Serializable {
     // Was ObservableList based on this.items
     //TODO Bronson Does this need to be observable list now or nah
     public Set<SaharaItem> getTaggedItems() {
-        // @BRONSON
         Set<SaharaItem> items = new HashSet<>();
         for (SaharaItem item : SaharaItem.getAllItems()) {
             if (item.getTags().contains(this)) {
