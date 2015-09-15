@@ -237,10 +237,8 @@ public class PairLog extends Log {
          * Executes the log deletion command.
          */
         public void execute() {
-            this.pLog.task.getLogs().remove(this.pLog);
+            this.pLog.getTask().getStory().getProject().getLogs().remove(this.pLog);
             this.pLog.task.setEffortSpent((this.oldEffortSpent - this.pLog.duration));
-            this.pLog.logger.getLogs().remove(this.pLog);
-            this.pLog.partner.getLogs().remove(this.pLog);
         }
 
 
@@ -248,10 +246,8 @@ public class PairLog extends Log {
          * Undoes the log deletion command.
          */
         public void undo() {
-            this.pLog.task.getLogs().add(this.pLog);
+            this.pLog.getTask().getStory().getProject().getLogs().add(this.pLog);
             this.pLog.task.setEffortSpent(this.oldEffortSpent);
-            this.pLog.logger.getLogs().add(this.pLog);
-            this.pLog.partner.getLogs().add(this.pLog);
         }
 
 

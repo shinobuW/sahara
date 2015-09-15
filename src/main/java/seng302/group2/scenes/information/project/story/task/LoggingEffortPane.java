@@ -414,12 +414,12 @@ public class LoggingEffortPane extends Pane {
                     if (partner != null) {
                         PairLog pairLog = new PairLog(task, descriptionTextArea.getText(), selectedPerson, partner,
                                 duration, dateTime, effortLeftDifference);
-                        task.getStory().getProject().addLog(pairLog);
+                        task.getStory().getProject().add(pairLog);
                     }
                     else {
                         Log newLog = new Log(task, descriptionTextArea.getText(),
                                 selectedPerson, duration, dateTime, effortLeftDifference);
-                        task.getStory().getProject().addLog(newLog);
+                        task.getStory().getProject().add(newLog);
                     }
 
                     String effortLeftString = "";

@@ -129,7 +129,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      * Adds listeners to the project properties (lists), primarily for sorting
      */
     public void addListeners() {
-        //System.out.println("Listeners added");
         releases.addListener((ListChangeListener<Release>) change -> {
                 if (change.next() && !change.wasPermutated()) {
                     Collections.sort(releases);
@@ -485,7 +484,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      *
      * @param log The log to add
      */
-    public void addLog(Log log) {
+    public void add(Log log) {
         Task task = log.getTask();
         AddLogsCommand addCommand = new AddLogsCommand(task, log, task.getStory().getProject(), task.getEffortLeft());
         Global.commandManager.executeCommand(addCommand);
@@ -953,6 +952,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          */
         public void execute() {
             proj.getUnallocatedStories().add(story);
+            story.setProject(proj);
         }
 
         /**
@@ -960,6 +960,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          */
         public void undo() {
             proj.getUnallocatedStories().remove(story);
+            story.setProject(null);
         }
 
         /**
