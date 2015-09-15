@@ -61,6 +61,9 @@ public class TaskTest {
         Assert.assertEquals("9h 27min", task.getEffortSpentString());
     }
 
+    /**
+     * Test for Task's compare method
+     */
     @Test
     public void testComparators() {
         Task defaultTask = new Task();
@@ -70,7 +73,9 @@ public class TaskTest {
         Assert.assertTrue(0 < Task.TaskNameComparator.compare(task, defaultTask));
     }
 
-
+    /**
+     * Test for task's delete command
+     */
     @Test
     public void testDeleteTask() {
         Project project = new Project();
@@ -336,6 +341,10 @@ public class TaskTest {
 
     }
 
+
+    /**
+     * Test for Task's getLogs method
+     */
     @Test
     public void testGetLogs() {
         Workspace workspace = new Workspace();

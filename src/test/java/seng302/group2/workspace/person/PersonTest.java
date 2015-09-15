@@ -377,6 +377,10 @@ public class PersonTest {
 
     }
 
+
+    /**
+     * Test for Person's getLogs() method
+     */
     @Test
     public void testGetLog() {
         Workspace ws = new Workspace();

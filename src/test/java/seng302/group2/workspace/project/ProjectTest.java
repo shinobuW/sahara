@@ -357,7 +357,9 @@ public class ProjectTest extends TestCase {
         Assert.assertTrue(proj.compareTo(proj) == 0);
     }
 
-
+    /**
+     * Test for Project's edit command
+     */
     @Test
     public void testEdit() {
         Project project = new Project("aShortName", "aLongName", "aDescription");
@@ -428,6 +430,10 @@ public class ProjectTest extends TestCase {
         Assert.assertEquals(1, projectElement.getChildNodes().item(9).getChildNodes().getLength());
     }
 
+
+    /**
+     * Test for Project's add command
+     */
     @Test
     public void testAddLogCommand() {
         Project proj = new Project();

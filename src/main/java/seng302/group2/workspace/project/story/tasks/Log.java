@@ -186,6 +186,10 @@ public class Log extends SaharaItem implements Serializable {
         return new HashSet<>();
     }
 
+    /**
+     * Log's toString method
+     * @return Log information
+     */
     @Override
     public String toString() {
         return "Log: " + this.startTime.toString() + ", " + this.duration + ", Task:" + this.task.toString();

@@ -86,9 +86,8 @@ public class PairLogTest extends TestCase {
         Assert.assertEquals(20, pLog.getDurationInHours());
     }
 
-    //TODO: Shnob update
     /**
-     * Tests the delete method
+     * Tests the PairLog's delete method
      */
     @Test
     public void testDeleteLog() {
