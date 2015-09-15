@@ -25,7 +25,7 @@ public class RoadMapCategory extends Category {
      * Constructor for the RoadMapCategory class.
      */
     public RoadMapCategory() {
-        super("RoadMap");
+        super("RoadMaps");
         setCategorySwitchStrategy(new RoadMapCategoryCategorySwitchStrategy());
     }
 

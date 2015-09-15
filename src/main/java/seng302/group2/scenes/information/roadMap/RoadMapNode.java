@@ -6,6 +6,7 @@
 package seng302.group2.scenes.information.roadMap;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -39,8 +40,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
         HBox roadMapContent = new HBox();
         Insets insetsContent = new Insets(5, 15, 5, 5);
         roadMapContent.setPadding(insetsContent);
-        //roadMapContent.setStyle("-fx-background-color: rgba(255, 116, 10, 0.62); -fx-border-radius: 5 5 5 5; "
-        //        + "-fx-background-radius: 0 5 5 5");
+        roadMapContent.setStyle("-fx-background-color: rgba(255, 116, 10, 0.62); -fx-border-radius: 5 5 5 5; "
+                + "-fx-background-radius: 0 5 5 5");
         HBox roadMapChildren = new HBox();
         
         SearchableText shortNameField = new SearchableText(currentRoadMap.getShortName());
@@ -85,7 +86,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
         HBox releaseChildren = new HBox();
         
         SearchableText shortNameField = new SearchableText(release.getShortName());
-        
+        SearchableText releaseDate = new SearchableText("   " + release.getDateString());
+
         releaseContent.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2) {
                     App.mainPane.selectItem(release);
@@ -104,7 +106,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
             }
         }
         
-        releaseContent.getChildren().add(shortNameField);
+        releaseContent.getChildren().addAll(shortNameField, releaseDate);
+        releaseContent.setAlignment(Pos.CENTER);
         releaseNode.getChildren().addAll(
                 releaseContent,
                 releaseChildren
@@ -156,6 +159,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
         }
 
         sprintContent.getChildren().addAll(shortNameField);
+        sprintContent.setAlignment(Pos.CENTER);
         sprintNode.getChildren().addAll(
                 sprintContent,
                 sprintChildren
@@ -170,6 +174,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
     
     private Node createStoryNode(Story story) {
         VBox storyNode = new VBox();
+        storyNode.setAlignment(Pos.CENTER);
         Insets insetsNode = new Insets(5, 5, 5, 0);
         storyNode.setPadding(insetsNode);
         VBox storyContent = new VBox();
