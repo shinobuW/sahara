@@ -2,7 +2,6 @@ package seng302.group2.workspace.project.story.tasks;
 
 import junit.framework.TestCase;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.workspace.person.Person;
@@ -23,15 +22,6 @@ public class PairLogTest extends TestCase {
     Person originalPartner = new Person("Partner", "Partner", "Partner", "", "", LocalDate.now());
     PairLog pLog = new PairLog(task,  "description", originalLogger, originalPartner, 0,
             LocalDateTime.now(), 0);
-
-    @BeforeClass
-    public void setupTest() {
-        Global.currentWorkspace = ws;
-        ws.add(proj);
-        proj.add(story);
-        proj.add(pLog);
-    }
-
 
     /**
      * Tests the main PairLog edit command
@@ -97,14 +87,18 @@ public class PairLogTest extends TestCase {
     }
 
     //TODO: Shnob update
-//    /**
-//     * Tests the delete method
-//     */
-//    @Test
-//    public void testDeleteLog() {
-//        pLog.deleteLog();
-//        Assert.assertTrue(task.getLogs().size() == 0);
-//        Global.commandManager.undo();
-//        Assert.assertTrue(task.getLogs().contains(pLog));
-//    }
+    /**
+     * Tests the delete method
+     */
+    @Test
+    public void testDeleteLog() {
+        Global.currentWorkspace = ws;
+        ws.add(proj);
+        proj.add(story);
+        proj.add(pLog);
+        pLog.deleteLog();
+        Assert.assertTrue(task.getLogs().size() == 0);
+        Global.commandManager.undo();
+        Assert.assertTrue(task.getLogs().contains(pLog));
+    }
 }

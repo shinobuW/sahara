@@ -8,12 +8,19 @@ import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.tasks.Log;
+import seng302.group2.workspace.project.story.tasks.PairLog;
+import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
+import seng302.group2.workspace.workspace.Workspace;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -368,5 +375,24 @@ public class PersonTest {
         Assert.assertEquals(2, personElement.getChildNodes().item(7).getChildNodes().getLength());
         Assert.assertEquals(9, personElement.getChildNodes().getLength());
 
+    }
+
+    @Test
+    public void testGetLog() {
+        Workspace ws = new Workspace();
+        Person partner = new Person();
+        Project proj = new Project();
+        Story story = new Story("", "", "", "", proj, 0);
+        Task task = new Task("", "", story, basicPerson, 0);
+        Log log = new Log(task, "", basicPerson, 10, LocalDateTime.now(), 0);
+        PairLog pairLog = new PairLog(task, "", partner, basicPerson, 0, LocalDateTime.now(), 0);
+        Global.currentWorkspace = ws;
+        ws.add(proj);
+        proj.add(story);
+        proj.add(log);
+        proj.add(pairLog);
+        story.add(task);
+
+        Assert.assertEquals(2, basicPerson.getLogs().size());
     }
 }
