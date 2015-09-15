@@ -156,7 +156,8 @@ public class PairLog extends Log {
          * @param newEffortLeftDifference the new effort difference to edit to
          */
         protected PairLogEditCommand(PairLog pairLog, Person newLogger, Person newPartner, LocalDateTime newStartDate,
-                                 double newDuration, String newDescription, double newEffortLeftDifference, ArrayList<Tag> newTags) {
+                                 double newDuration, String newDescription, double newEffortLeftDifference,
+                                 ArrayList<Tag> newTags) {
             this.pLog = pairLog;
 
             if (newTags == null) {

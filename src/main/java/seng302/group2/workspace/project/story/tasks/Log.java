@@ -354,8 +354,8 @@ public class Log extends SaharaItem implements Serializable {
         private Set<Tag> oldLogTags = new HashSet<>();
         private Set<Tag> oldGlobalTags = new HashSet<>();
 
-        protected LogEditCommand(Log log, Person newLogger, LocalDateTime newStartDate,
-                                 double newDuration, String newDescription, double newEffortLeftDifference, ArrayList<Tag> newTags) {
+        protected LogEditCommand(Log log, Person newLogger, LocalDateTime newStartDate, double newDuration,
+                                 String newDescription, double newEffortLeftDifference, ArrayList<Tag> newTags) {
             this.log = log;
 
             if (newTags == null) {

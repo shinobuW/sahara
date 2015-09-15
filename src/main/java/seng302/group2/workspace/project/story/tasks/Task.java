@@ -490,7 +490,8 @@ public class Task extends SaharaItem implements Serializable {
      * @param newEffortSpent The new effort spent
      */
     public void edit(String newShortName, String newDescription, String newImpediments, TASKSTATE newState,
-                     Person newAssignee,  List<Log> newLogs, double newEffortLeft, double newEffortSpent, ArrayList<Tag> newTags) {
+                     Person newAssignee,  List<Log> newLogs, double newEffortLeft, double newEffortSpent,
+                     ArrayList<Tag> newTags) {
         Command taskEdit = new TaskEditCommand(this, newShortName, newDescription, newImpediments,
                 newState, newAssignee, newLogs, newEffortLeft, newEffortSpent, newTags);
 

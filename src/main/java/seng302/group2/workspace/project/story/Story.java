@@ -944,9 +944,9 @@ public class Story extends SaharaItem implements Serializable {
          * @param newReady The story's new readiness state
          * @param newDependentOn The new list of stories the story is dependant on
          */
-        private StoryEditCommand(Story story, String newShortName, String newLongName,
-                                 String newDescription, Project newProject, Integer newPriority,
-                                 Backlog newBacklog, String newEstimate, boolean newReady, List<Story> newDependentOn, ArrayList<Tag> newTags) {
+        private StoryEditCommand(Story story, String newShortName, String newLongName, String newDescription,
+                                 Project newProject, Integer newPriority, Backlog newBacklog, String newEstimate,
+                                 boolean newReady, List<Story> newDependentOn, ArrayList<Tag> newTags) {
             this.story = story;
 
             if (newTags == null) {

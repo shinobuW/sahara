@@ -8,8 +8,10 @@ import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
+import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -133,6 +135,15 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
     }
 
     /**
+     * Edits the tags of the Acceptance critera
+     * @param newTags the new tags of the acceptance criteria
+     */
+    public void edit(ArrayList<Tag> newTags) {
+        Command editAc = new EditAcTagsCommand(this, newTags);
+        Global.commandManager.executeCommand(editAc);
+    }
+
+    /**
      * Method for creating an XML element for the Team within report generation
      * @return element for XML generation
      */
@@ -244,6 +255,82 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
             return mapped_ac && mapped_story;
         }
     }
+
+    /**
+     * AC Edit tags command.
+     */
+    private class EditAcTagsCommand implements Command {
+        private AcceptanceCriteria ac;
+
+        private Set<Tag> acTags = new HashSet<>();
+        private Set<Tag> globalTags = new HashSet<>();
+
+        private Set<Tag> oldAcTags = new HashSet<>();
+        private Set<Tag> oldGlobalTags = new HashSet<>();
+
+        /**
+         * Constructor for the ac editing tags command.
+         * @param ac The ac to be edited
+         * @param newTags The ac's new tags.
+         */
+        private EditAcTagsCommand(AcceptanceCriteria ac, ArrayList<Tag> newTags) {
+            this.ac = ac;
+
+            if (newTags == null) {
+                newTags = new ArrayList<>();
+            }
+
+            this.acTags.addAll(newTags);
+            this.globalTags.addAll(newTags);
+            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
+
+            this.oldAcTags.addAll(ac.getTags());
+            this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
+        }
+
+        /**
+         * Executes/Redoes the changes of the person edit
+         */
+        public void execute() {
+            //Add any created tags to the global collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(globalTags);
+            //Add the tags a AC has to their list of tags
+            ac.getTags().clear();
+            ac.getTags().addAll(acTags);
+        }
+
+        /**
+         * Undoes the changes of the ac tags edit
+         */
+        public void undo() {
+            //Adds the old global tags to the overall collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(oldGlobalTags);
+
+            //Changes the AC list of tags to what they used to be
+            ac.getTags().clear();
+            ac.getTags().addAll(oldAcTags);
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(ac)) {
+                    this.ac = (AcceptanceCriteria) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
+    }
+
 
     /**
      * A command class that allows the executing and undoing of story edits

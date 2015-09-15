@@ -540,9 +540,9 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
         private Map<Story, String> oldEstimateDict = new HashMap<>();
         private Map<Story, Boolean> oldReadyStateDict = new HashMap<>();
 
-        private SprintEditCommand(Sprint sprint, String newGoal, String newLongName,
-                                   String newDescription, LocalDate newStartDate, LocalDate newEndDate,
-                                   Team newTeam, Release newRelease, Collection<Story> newStories, ArrayList<Tag> newTags) {
+        private SprintEditCommand(Sprint sprint, String newGoal, String newLongName, String newDescription,
+                                  LocalDate newStartDate, LocalDate newEndDate, Team newTeam, Release newRelease,
+                                  Collection<Story> newStories, ArrayList<Tag> newTags) {
             this.sprint = sprint;
 
             if (newTags == null) {
