@@ -54,7 +54,12 @@ public class TagManagementPane extends SplitPane {
     private void construct() {
         this.getChildren().clear();
         this.constructList();
-        this.constructDetail();
+        if (tagListView.getItems().size() > 0) {
+            this.constructDetail();
+        }
+        else {
+            // make a :( placeholder
+        }
     }
 
 
@@ -69,10 +74,17 @@ public class TagManagementPane extends SplitPane {
         tagListView = new SearchableListView<>(tagList, searchControls);
         tagListView.setPrefHeight(584);
         tagListView.getSelectionModel().getSelectedItems().addListener(
-                (ListChangeListener<Tag>) change -> constructDetail());
+                (ListChangeListener<Tag>) change -> {
+                if (tagListView.getItems().size() > 0) {
+                    constructDetail();
+                }
+            });
 
         // Sort here if needed
-        tagListView.getSelectionModel().select(0);
+        if (tagListView.getItems().size() > 0) {
+            tagListView.getSelectionModel().select(0);
+        }
+
         listPane.getChildren().add(tagListView);
 
         this.getItems().add(listPane);
@@ -88,27 +100,27 @@ public class TagManagementPane extends SplitPane {
         // Find the selected tag and create its tag node
         Tag selectedTag = tagListView.getSelectionModel().getSelectedItem();
 
-        if (selectedTag != null) {
-            TagCellNode cellNode = new TagCellNode(selectedTag);
-            detailsPane.getChildren().add(cellNode);
+        TagCellNode cellNode = new TagCellNode(selectedTag);
+        detailsPane.getChildren().add(cellNode);
 
-            // Create the editable option controls
-            RequiredField tagNameField = new RequiredField("Tag Name", searchControls);
-            tagNameField.getTextField().setPromptText("fix");
-            tagNameField.setText(selectedTag.getName());
-            tagNameField.getTextField().addEventFilter(Event.ANY, event -> {
-                    // @Dave Update the displayed cell node with the name
-                });
+        // Create the editable option controls
+        RequiredField tagNameField = new RequiredField("Tag Name", searchControls);
+        tagNameField.getTextField().setPromptText("fix");
+        tagNameField.setText(selectedTag.getName());
+        tagNameField.getTextField().addEventFilter(Event.ANY, event -> {
+                // @Dave Update the displayed cell node with the name
+                cellNode.setName(tagNameField.getText());
+            });
 
-            ColorPicker colorPicker = new ColorPicker(selectedTag.getColor());
-            colorPicker.setOnAction(event -> {
-                    Color newColor = colorPicker.getValue();
-                    // @Dave Update the displayed cell node with the colour
-                });
+        ColorPicker colorPicker = new ColorPicker(selectedTag.getColor());
+        colorPicker.setOnAction(event -> {
+                cellNode.setColor(colorPicker.getValue());
+                // @Dave Update the displayed cell node with the colour
+            });
 
-            // Group all of the controls into the details pane
-            detailsPane.getChildren().addAll(tagNameField, colorPicker);
-        }
+        // Group all of the controls into the details pane
+        detailsPane.getChildren().addAll(tagNameField, colorPicker);
+
 
         // Create buttons
         Button saveButton = new Button("Save Tag");
@@ -116,6 +128,15 @@ public class TagManagementPane extends SplitPane {
 
         saveButton.setOnAction(event -> {
                 // @Dave create and execute edit
+                boolean nameUnchanged = tagNameField.getText().equals(selectedTag.getName());
+                boolean colorUnchanged = colorPicker.getValue() == (selectedTag.getColor());
+
+                if (nameUnchanged && colorUnchanged) {
+                    event.consume();
+                }
+
+                selectedTag.edit(tagNameField.getText(), colorPicker.getValue());
+
             });
 
         cancelButton.setOnAction(event -> constructDetail());

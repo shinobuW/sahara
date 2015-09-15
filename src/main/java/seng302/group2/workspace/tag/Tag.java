@@ -7,6 +7,8 @@ import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -109,6 +111,73 @@ public class Tag extends SaharaItem implements Serializable {
         return name;
     }
 
+    /**
+     * Creates a tag edit command and executes it with the Global Command Manager, updating
+     * the tag with the new parameter values.
+     *
+     * @param newName   The new tag name
+     * @param newColor The new color
+     */
+    public void edit(String newName, Color newColor) {
+        Command edit = new TagEditCommand(this, newName, newColor);
+        Global.commandManager.executeCommand(edit);
+    }
+
+    /**
+     * A command class that allows the executing and undoing of tag edits
+     */
+    private class TagEditCommand implements Command {
+        private Tag tag;
+
+        private String name;
+        private Color color;
+
+        private String oldName;
+        private Color oldColor;
+
+        private TagEditCommand(Tag tag, String newName, Color newColor) {
+            this.tag = tag;
+
+            this.name = newName;
+            this.color = newColor;
+
+            this.oldName = tag.name;
+            this.oldColor = tag.color;
+        }
+
+        /**
+         * Executes/Redoes the changes of the tag edit
+         */
+        public void execute() {
+            tag.name = name;
+            tag.color = color;
+        }
+
+        /**
+         * Undoes the changes of the tag edit
+         */
+        public void undo() {
+            tag.name = oldName;
+            tag.color = oldColor;
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(tag)) {
+                    this.tag = (Tag) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
+    }
 
     /**
      * A command class for allowing the deletion of Tags from a Workspace.
