@@ -172,9 +172,9 @@ public class Release extends SaharaItem implements Comparable<Release> {
     }
 
     /**
-     * Gets the persons birth date as a string
+     * Gets the release date as a string
      *
-     * @return The persons birth date as a string
+     * @return the release date as a string
      */
     public String getDateString() {
         if (this.estimatedDate == null) {

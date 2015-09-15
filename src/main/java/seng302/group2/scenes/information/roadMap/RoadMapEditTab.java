@@ -57,9 +57,6 @@ public class RoadMapEditTab extends SearchableTab {
         shortNameField = new RequiredField("Short Name:");
         shortNameField.setText(currentRoadMap.getShortName());
         shortNameField.setMaxWidth(275);
-        CustomTextField longNameField = new CustomTextField("Long Name:");
-        longNameField.setText(currentRoadMap.getLongName());
-        longNameField.setMaxWidth(275);
 
         Button btnAssign = new Button("<");
         Button btnUnassign = new Button(">");
@@ -149,7 +146,7 @@ public class RoadMapEditTab extends SearchableTab {
                 if (shortNameField.getText().equals(currentRoadMap.getShortName()) 
                         || ShortNameValidator.validateShortName(shortNameField, null)) { // validation
                     // Edit Command.
-                    currentRoadMap.edit(shortNameField.getText(), longNameField.getText(),
+                    currentRoadMap.edit(shortNameField.getText(),
                             roadMapList
                     );
                     currentRoadMap.switchToInfoScene();
@@ -162,7 +159,6 @@ public class RoadMapEditTab extends SearchableTab {
 
         editPane.getChildren().addAll(
                 shortNameField,
-                longNameField,
                 storyListViews,
                 errorField,
                 sceneButtons
@@ -171,7 +167,6 @@ public class RoadMapEditTab extends SearchableTab {
         // Add items to pane & search collection
         Collections.addAll(searchControls,
                 shortNameField,
-                longNameField,
                 availableReleaseListView,
                 availableStoriesLabel,
                 roadMapReleaseListView,

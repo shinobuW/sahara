@@ -34,7 +34,7 @@ public class RoadMapInfoTab extends SearchableTab {
      */
     public RoadMapInfoTab(RoadMap currentRoadMap) {
 
-        this.setText("Basic Information");
+        this.setText("RoadMap");
         Pane basicInfoPane = new VBox(10);
         basicInfoPane.setBorder(null);
         basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
@@ -42,15 +42,12 @@ public class RoadMapInfoTab extends SearchableTab {
         this.setContent(wrapper);
 
         // Create controls
-        SearchableText title = new SearchableTitle(currentRoadMap.getLongName(), searchControls);
+        SearchableText title = new SearchableTitle(currentRoadMap.getShortName(), searchControls);
 
         Separator separator = new Separator();
         Button btnEdit = new Button("Edit");
 
 
-        
-
-        CustomInfoLabel shortNameField = new CustomInfoLabel("Short Name: ", currentRoadMap.getShortName());
         CustomInfoLabel currentTeamsLabel = new CustomInfoLabel("Current Teams:", "");
         CustomInfoLabel releasesLabel = new CustomInfoLabel("Releases:", "");
 
@@ -65,7 +62,6 @@ public class RoadMapInfoTab extends SearchableTab {
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
                 title,
-                shortNameField,
                 roadMapNode,
                 separator,
                 btnEdit
@@ -74,7 +70,6 @@ public class RoadMapInfoTab extends SearchableTab {
 
         Collections.addAll(searchControls,
                 title,
-                shortNameField,
                 currentTeamsLabel,
                 releasesLabel
         );

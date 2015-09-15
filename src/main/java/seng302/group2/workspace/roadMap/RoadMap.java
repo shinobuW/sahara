@@ -93,8 +93,8 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
      * @param shortName the Shortname to edit
      * @param releases The release to add
      */
-    public void edit(String shortName, String longName, Collection<Release> releases) {
-        Command command = new RoadMapEditCommand(this, shortName, longName, releases);
+    public void edit(String shortName, Collection<Release> releases) {
+        Command command = new RoadMapEditCommand(this, shortName, releases);
         Global.commandManager.executeCommand(command);
     }
     
@@ -265,15 +265,13 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
          * @param roadMap The roadMap to which the release is being added.
          * @param releases The release to be added.
          */
-        RoadMapEditCommand(RoadMap roadMap, String shortName, String longName, Collection<Release> releases) {
+        RoadMapEditCommand(RoadMap roadMap, String shortName, Collection<Release> releases) {
             this.roadMap = roadMap;
             this.releases = releases;
             this.shortName = shortName;
-            this.longName = longName;
 
             this.oldShortName = roadMap.getShortName();
             this.oldReleases = roadMap.getReleases();
-            this.oldLongName = roadMap.getLongName();
         }
 
         /**
@@ -281,7 +279,6 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
          */
         public void execute() {
             roadMap.shortName = shortName;
-            roadMap.longName = longName;
 
             roadMap.releases.removeAll(oldReleases);
             roadMap.releases.addAll(releases);
@@ -293,7 +290,6 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
          */
         public void undo() {
             roadMap.shortName = oldShortName;
-            roadMap.longName = oldLongName;
 
             roadMap.releases.removeAll(releases);
             roadMap.releases.addAll(oldReleases);
