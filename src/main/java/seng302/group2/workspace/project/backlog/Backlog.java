@@ -387,9 +387,9 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
      * @param newStories      The new stories in the backlog
      */
     public void edit(String newShortName, String newLongName, String newDescription,
-                     Person newProductOwner, Project newProject, String newScale, Collection<Story> newStories) {
+                     Person newProductOwner, Project newProject, String newScale, Collection<Story> newStories, ArrayList<Tag> newTags) {
         Command relEdit = new BacklogEditCommand(this, newShortName, newLongName, newDescription,
-                newProductOwner, newProject, newScale, newStories);
+                newProductOwner, newProject, newScale, newStories, newTags);
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -414,6 +414,8 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
         private Project project;
         private String scale;
         private Collection<Story> stories = new HashSet<>();
+        private Set<Tag> backlogTags = new HashSet<>();
+        private Set<Tag> globalTags = new HashSet<>();
 
         private String oldShortName;
         private String oldLongName;
@@ -422,14 +424,19 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
         private Project oldProject;
         private String oldScale;
         private Collection<Story> oldStories = new HashSet<>();
-
         private Map<Story, String> oldEstimateDict = new HashMap<>();
         private Map<Story, Boolean> oldReadyStateDict = new HashMap<>();
+        private Set<Tag> oldBacklogTags = new HashSet<>();
+        private Set<Tag> oldGlobalTags = new HashSet<>();
 
         private BacklogEditCommand(Backlog backlog, String newShortName, String newLongName,
                                    String newDescription, Person newProductOwner,
-                                   Project newProject, String newScale, Collection<Story> newStories) {
+                                   Project newProject, String newScale, Collection<Story> newStories, ArrayList<Tag> newTags) {
             this.backlog = backlog;
+
+            if (newTags == null) {
+                newTags = new ArrayList<>();
+            }
 
             this.shortName = newShortName;
             this.longName = newLongName;
@@ -438,6 +445,9 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             this.project = newProject;
             this.scale = newScale;
             this.stories.addAll(newStories);
+            this.backlogTags.addAll(newTags);
+            this.globalTags.addAll(newTags);
+            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
 
             this.oldShortName = backlog.shortName;
             this.oldLongName = backlog.longName;
@@ -446,6 +456,8 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             this.oldProject = backlog.project;
             this.oldScale = backlog.scale;
             this.oldStories.addAll(backlog.stories);
+            this.oldBacklogTags.addAll(backlog.getTags());
+            this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
 
             for (Story story : oldStories) {
                 oldEstimateDict.put(story, story.getEstimate());
@@ -505,6 +517,13 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
                         EstimationScalesDictionary.DefaultValues.NONE));
             }
 
+            //Add any created tags to the global collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(globalTags);
+            //Add the tags a backlog has to their list of tags
+            backlog.getTags().clear();
+            backlog.getTags().addAll(backlogTags);
+
             Collections.sort(backlog.stories, Story.StoryPriorityComparator);
         }
 
@@ -548,6 +567,14 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
                 story.setEstimate(oldEstimateDict.get(story));
                 story.setReady(oldReadyStateDict.get(story));
             }
+
+            //Adds the old global tags to the overall collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(oldGlobalTags);
+
+            //Changes the backlogs list of tags to what they used to be
+            backlog.getTags().clear();
+            backlog.getTags().addAll(oldBacklogTags);
 
             Collections.sort(backlog.stories, Story.StoryPriorityComparator);
         }

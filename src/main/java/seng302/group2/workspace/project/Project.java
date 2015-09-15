@@ -146,6 +146,19 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
                     Collections.sort(backlogs);
                 }
             });
+
+        sprints.addListener((ListChangeListener<Sprint>) change -> {
+                if (change.next() && !change.wasPermutated()) {
+                    Collections.sort(sprints);
+                }
+            });
+
+        teamAllocations.addListener((ListChangeListener<Allocation>) change -> {
+                if (change.next() && !change.wasPermutated()) {
+                    Collections.sort(teamAllocations);
+                }
+            });
+
         for (Backlog bl : backlogs) {
             bl.addListeners();
         }
@@ -730,9 +743,9 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      * @param teams          The new project teams
      */
     public void edit(String newShortName, String newLongName, String newDescription,
-                     ObservableList<Team> teams) {
+                     ObservableList<Team> teams, ArrayList<Tag> newTags) {
         Command projEdit = new ProjectEditCommand(this, newShortName, newLongName, newDescription,
-                teams);
+                teams, newTags);
         Global.commandManager.executeCommand(projEdit);
     }
 
@@ -746,22 +759,39 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         private String longName;
         private String description;
         private ObservableList<Team> teams;
+        private Set<Tag> projectTags = new HashSet<>();
+        private Set<Tag> globalTags = new HashSet<>();
+
+
         private String oldShortName;
         private String oldLongName;
         private String oldDescription;
         private ObservableList<Team> oldTeams;
+        private Set<Tag> oldProjectTags = new HashSet<>();
+        private Set<Tag> oldGlobalTags = new HashSet<>();
 
         private ProjectEditCommand(Project proj, String newShortName, String newLongName,
-                                   String newDescription, ObservableList<Team> newTeams) {
+                                   String newDescription, ObservableList<Team> newTeams, ArrayList<Tag> newTags) {
             this.proj = proj;
+
+            if (newTags == null) {
+                newTags = new ArrayList<>();
+            }
+
             this.shortName = newShortName;
             this.longName = newLongName;
             this.description = newDescription;
             this.teams = newTeams;
+            this.projectTags.addAll(newTags);
+            this.globalTags.addAll(newTags);
+            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
+
             this.oldShortName = proj.shortName;
             this.oldLongName = proj.longName;
             this.oldDescription = proj.description;
             this.oldTeams = proj.teams;
+            this.oldProjectTags.addAll(proj.getTags());
+            this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
         }
 
         /**
@@ -772,6 +802,14 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
             proj.longName = longName;
             proj.description = description;
             proj.teams = teams;
+
+            //Add any created tags to the global collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(globalTags);
+            //Add the tags a project has to their list of tags
+            proj.getTags().clear();
+            proj.getTags().addAll(projectTags);
+
             Collections.sort(Global.currentWorkspace.getProjects());
         }
 
@@ -783,6 +821,15 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
             proj.longName = oldLongName;
             proj.description = oldDescription;
             proj.teams = oldTeams;
+
+            //Adds the old global tags to the overall collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(oldGlobalTags);
+
+            //Changes the projects list of tags to what they used to be
+            proj.getTags().clear();
+            proj.getTags().addAll(oldProjectTags);
+
             Collections.sort(Global.currentWorkspace.getProjects());
         }
 
@@ -1068,7 +1115,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          */
         public void execute() {
             proj.getSprints().add(sprint);
-            Collections.sort(sprint.getProject().getSprints());
         }
 
         /**
@@ -1129,7 +1175,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         public void execute() {
             proj.getTeamAllocations().add(allocation);
             team.getProjectAllocations().add(allocation);
-            Collections.sort(allocation.getProject().getTeamAllocations());
         }
 
         /**
@@ -1138,7 +1183,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         public void undo() {
             proj.getTeamAllocations().remove(allocation);
             team.getProjectAllocations().remove(allocation);
-            Collections.sort(allocation.getProject().getTeamAllocations());
         }
 
         /**
