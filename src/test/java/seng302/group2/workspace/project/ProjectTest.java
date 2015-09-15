@@ -18,11 +18,14 @@ import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.tasks.Log;
+import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 
@@ -35,41 +38,6 @@ import static javafx.collections.FXCollections.observableArrayList;
  * @author Jordane Lew (jml168)
  */
 public class ProjectTest extends TestCase {
-    /**
-     * A simple test for the Workspace constructors and getters.
-     */
-    @Test
-    public void testProjectConstructors() {
-        Project proj = new Project();
-        assertEquals("Untitled Project", proj.getShortName());
-        assertEquals("Untitled Project", proj.getLongName());
-        assertEquals("A blank project.", proj.getDescription());
-        assertEquals("Untitled Project", proj.toString());
-
-        Project proj2 = new Project("aShortName", "aLongName", "aDescription");
-        assertEquals("aShortName", proj2.getShortName());
-        assertEquals("aLongName", proj2.getLongName());
-        assertEquals("aDescription", proj2.getDescription());
-        assertEquals("aShortName", proj2.toString());
-    }
-
-
-    /**
-     * Tests the projects' setter methods.
-     */
-    @Test
-    public void testProjectSetters() {
-        Project proj = new Project();
-        proj.setShortName("aShortName");
-        proj.setLongName("aLongName");
-        proj.setDescription("aDescription");
-
-        assertEquals("aShortName", proj.getShortName());
-        assertEquals("aLongName", proj.getLongName());
-        assertEquals("aDescription", proj.getDescription());
-        assertEquals("aShortName", proj.toString());
-    }
-
 
     /**
      * Tests that releases are added to projects properly
@@ -458,5 +426,19 @@ public class ProjectTest extends TestCase {
         Assert.assertEquals(1, projectElement.getChildNodes().item(8).getChildNodes().getLength());
         //<unassigned-stories>
         Assert.assertEquals(1, projectElement.getChildNodes().item(9).getChildNodes().getLength());
+    }
+
+    @Test
+    public void testAddLogCommand() {
+        Project proj = new Project();
+        Story story = new Story();
+        Task task = new Task("", "", story, new Person(), 0);
+        proj.add(story);
+        story.add(task);
+        Log log = new Log(task, "", new Person(), 10, LocalDateTime.now(), 0);
+        proj.add(log);
+        Assert.assertTrue(proj.getLogs().contains(log));
+        Global.commandManager.undo();
+        Assert.assertTrue(proj.getLogs().isEmpty());
     }
 }
