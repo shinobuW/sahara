@@ -109,6 +109,7 @@ public class Tag extends SaharaItem implements Serializable {
         return name;
     }
 
+
     /**
      * A command class for allowing the deletion of Tags from a Workspace.
      */

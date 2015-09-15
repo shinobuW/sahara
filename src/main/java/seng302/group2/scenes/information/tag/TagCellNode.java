@@ -15,6 +15,8 @@ public class TagCellNode extends VBox {
     private Tag tag = null;
 
     public TagCellNode(Tag tag) {
+        this.tag = tag;
+
         VBox content = new VBox();
         content.setPrefHeight(35);
         content.setBackground(new Background(new BackgroundFill(tag.getColor(), CornerRadii.EMPTY, Insets.EMPTY)));
@@ -34,29 +36,9 @@ public class TagCellNode extends VBox {
         rightContent.setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(rightContent, Priority.ALWAYS);
 
-        //Node changeColour = createChangeColourNode();
-        //Node delete = createDeleteNode();
-
-        //rightContent.getChildren().addAll(changeColour, delete);
-
         content.getChildren().addAll(textContent, rightContent);
 
         HBox.setHgrow(content, Priority.ALWAYS);
     }
 
-    /*public Node createChangeColourNode() {
-
-        //Icon is only placeholder, to be replaced with appropriate icon
-        ImageView colourImage = new ImageView("icons/dialog-cancel.png");
-
-        colourImage.setOnMouseEntered(me -> {
-                this.getScene().setCursor(Cursor.HAND);
-            });
-        colourImage.setOnMouseExited(me -> {
-                this.getScene().setCursor(Cursor.DEFAULT);
-            });
-
-        PopOver colourPopOver = new PopOver();
-
-    }*/
 }

@@ -1,5 +1,6 @@
 package seng302.group2.scenes.menu;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -133,9 +134,7 @@ public class MainMenuBar extends MenuBar {
      */
     private static MenuItem createTagMaintenanceItem() {
         MenuItem newProjectItem = new MenuItem("Tag Management");
-        newProjectItem.setOnAction((ActionEvent event) -> {
-            showTaggingPopOver();
-        });
+        newProjectItem.setOnAction((ActionEvent event) -> showTaggingPopOver());
 
         newProjectItem.setAccelerator(new KeyCodeCombination(KeyCode.T,
                 KeyCombination.CONTROL_DOWN,
@@ -151,8 +150,9 @@ public class MainMenuBar extends MenuBar {
             taggingPopOver.setDetachedTitle("Tag Management");
             taggingPopOver.setDetached(true);
             taggingPopOver.setContentNode(new TagManagementPane());
-            taggingPopOver.show(App.content, App.mainStage.getX() + App.mainStage.getWidth() / 2,
-                    App.mainStage.getY() + App.mainStage.getHeight() / 2);
+            Platform.runLater(() -> taggingPopOver.show(App.content, App.mainStage.getX()
+                            + App.mainStage.getWidth() / 2 - 300,
+                    App.mainStage.getY() + App.mainStage.getHeight() / 2 - 200));
         }
         else {
             taggingPopOver.requestFocus();
