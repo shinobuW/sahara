@@ -16,6 +16,7 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.tag.Tag;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -287,9 +288,9 @@ public class Release extends SaharaItem implements Comparable<Release> {
      * @param newDescription   The new description
      * @param newEstimatedDate The new estimated date
      */
-    public void edit(String newShortName, String newDescription, LocalDate newEstimatedDate) {
+    public void edit(String newShortName, String newDescription, LocalDate newEstimatedDate, ArrayList<Tag> newTags) {
         Command relEdit = new ReleaseEditCommand(this, newShortName, newDescription,
-                newEstimatedDate);
+                newEstimatedDate, newTags);
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -303,12 +304,16 @@ public class Release extends SaharaItem implements Comparable<Release> {
         private String shortName;
         private String description;
         private LocalDate estimatedDate;
+        private Set<Tag> releaseTags = new HashSet<>();
+        private Set<Tag> globalTags = new HashSet<>();
 
         private Project project;
 
         private String oldShortName;
         private String oldDescription;
         private LocalDate oldEstimatedDate;
+        private Set<Tag> oldReleaseTags = new HashSet<>();
+        private Set<Tag> oldGlobalTags = new HashSet<>();
         
         /**
          * Constructor for the Release Edit command
@@ -318,17 +323,27 @@ public class Release extends SaharaItem implements Comparable<Release> {
          * @param newEstimatedDate The new estimated date for the release
          */
         private ReleaseEditCommand(Release release, String newShortName, String newDescription,
-                                   LocalDate newEstimatedDate) {
+                                   LocalDate newEstimatedDate, ArrayList<Tag> newTags) {
             this.release = release;
+
+            if (newTags == null) {
+                newTags = new ArrayList<>();
+            }
+
             this.shortName = newShortName;
             this.description = newDescription;
             this.estimatedDate = newEstimatedDate;
+            this.releaseTags.addAll(newTags);
+            this.globalTags.addAll(newTags);
+            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
 
             this.project = release.project;
 
             this.oldShortName = release.shortName;
             this.oldDescription = release.description;
             this.oldEstimatedDate = release.estimatedDate;
+            this.oldReleaseTags.addAll(release.getTags());
+            this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
         }
 
         /**
@@ -338,6 +353,14 @@ public class Release extends SaharaItem implements Comparable<Release> {
             release.shortName = shortName;
             release.description = description;
             release.estimatedDate = estimatedDate;
+
+            //Add any created tags to the global collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(globalTags);
+            //Add the tags a release has to their list of tags
+            release.getTags().clear();
+            release.getTags().addAll(releaseTags);
+
             Collections.sort(project.getReleases());
 
         }
@@ -349,6 +372,14 @@ public class Release extends SaharaItem implements Comparable<Release> {
             release.shortName = oldShortName;
             release.description = oldDescription;
             release.estimatedDate = oldEstimatedDate;
+            //Adds the old global tags to the overall collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(oldGlobalTags);
+
+            //Changes the releases list of tags to what they used to be
+            release.getTags().clear();
+            release.getTags().addAll(oldReleaseTags);
+
             Collections.sort(project.getReleases());
         }
 

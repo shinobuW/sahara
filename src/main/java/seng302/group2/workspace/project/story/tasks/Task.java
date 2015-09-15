@@ -13,6 +13,7 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -489,9 +490,9 @@ public class Task extends SaharaItem implements Serializable {
      * @param newEffortSpent The new effort spent
      */
     public void edit(String newShortName, String newDescription, String newImpediments, TASKSTATE newState,
-                     Person newAssignee,  List<Log> newLogs, double newEffortLeft, double newEffortSpent) {
+                     Person newAssignee,  List<Log> newLogs, double newEffortLeft, double newEffortSpent, ArrayList<Tag> newTags) {
         Command taskEdit = new TaskEditCommand(this, newShortName, newDescription, newImpediments,
-                newState, newAssignee, newLogs, newEffortLeft, newEffortSpent);
+                newState, newAssignee, newLogs, newEffortLeft, newEffortSpent, newTags);
 
         Global.commandManager.executeCommand(taskEdit);
     }
@@ -580,6 +581,8 @@ public class Task extends SaharaItem implements Serializable {
         private TASKSTATE lane;
         private double effortLeft;
         private double effortSpent;
+        private Set<Tag> taskTags = new HashSet<>();
+        private Set<Tag> globalTags = new HashSet<>();
 
 
         private String oldShortName;
@@ -591,6 +594,8 @@ public class Task extends SaharaItem implements Serializable {
         private TASKSTATE oldLane;
         private double oldEffortLeft;
         private double oldEffortSpent;
+        private Set<Tag> oldTaskTags = new HashSet<>();
+        private Set<Tag> oldGlobalTags = new HashSet<>();
         
         /**
          * Constructor for the Task Edit command.
@@ -606,8 +611,13 @@ public class Task extends SaharaItem implements Serializable {
          */
         private TaskEditCommand(Task task, String newShortName, String newDescription, 
                 String newImpediments, TASKSTATE newState, Person newAssignee,  List<Log> newLogs,
-                double effortLeft, double effortSpent) {
+                double effortLeft, double effortSpent, ArrayList<Tag> newTags) {
+
             this.task = task;
+
+            if (newTags == null) {
+                newTags = new ArrayList<>();
+            }
 
             this.shortName = newShortName;
             this.description = newDescription;
@@ -621,6 +631,9 @@ public class Task extends SaharaItem implements Serializable {
             if (getLaneStates().contains(newState)) {
                 this.lane = newState;
             }
+            this.taskTags.addAll(newTags);
+            this.globalTags.addAll(newTags);
+            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
 
             this.oldShortName = task.shortName;
             this.oldDescription = task.description;
@@ -634,6 +647,8 @@ public class Task extends SaharaItem implements Serializable {
             if (getLaneStates().contains(state)) {
                 this.oldLane = state;
             }
+            this.oldTaskTags.addAll(task.getTags());
+            this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
         }
 
         /**
@@ -653,7 +668,14 @@ public class Task extends SaharaItem implements Serializable {
             }
             
             task.assignee = assignee;
-            
+
+            //Add any created tags to the global collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(globalTags);
+            //Add the tags a person has to their list of tags
+            task.getTags().clear();
+            task.getTags().addAll(taskTags);
+
 //            task.logs.clear();
 //            task.logs.addAll(logs);
         }
@@ -675,6 +697,14 @@ public class Task extends SaharaItem implements Serializable {
             }
 
             task.assignee = oldAssignee;
+
+            //Adds the old global tags to the overall collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(oldGlobalTags);
+
+            //Changes the persons list of tags to what they used to be
+            task.getTags().clear();
+            task.getTags().addAll(oldTaskTags);
 //
 //            task.logs.clear();
 //            task.logs.addAll(oldLogs);

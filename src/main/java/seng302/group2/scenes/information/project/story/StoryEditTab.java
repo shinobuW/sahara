@@ -22,6 +22,7 @@ import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
+import seng302.group2.workspace.tag.Tag;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -261,6 +262,8 @@ public class StoryEditTab extends SearchableTab {
 
                 if (correctShortName && correctPriority) {
                     // Valid short name, make the edit
+                    ArrayList<Tag> tags = new ArrayList<>();
+
                     currentStory.edit(shortNameCustomField.getText(),
                             longNameTextField.getText(),
                             descriptionTextArea.getText(),
@@ -269,7 +272,8 @@ public class StoryEditTab extends SearchableTab {
                             currentStory.getBacklog(),
                             estimateComboBox.getValue().toString(),
                             readyStateCheck.getCheckBox().selectedProperty().get(),
-                            dependentOnList
+                            dependentOnList,
+                            tags
                     );
 
                     currentStory.switchToInfoScene();

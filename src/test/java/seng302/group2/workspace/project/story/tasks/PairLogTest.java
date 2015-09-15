@@ -29,7 +29,7 @@ public class PairLogTest extends TestCase {
     @Test
     public void testMainEditCommandLog() {
         Person testPerson = new Person("Bron", "Bronson Taryn", "McNaughton", "swagger@", "alpha", LocalDate.now());
-        pLog.edit(testPerson, pLog.getPartner(), LocalDateTime.now(), 20, "", 0);
+        pLog.edit(testPerson, pLog.getPartner(), LocalDateTime.now(), 20, "", 0, null);
         Assert.assertEquals(testPerson, pLog.getLogger());
         Global.commandManager.undo();
         Assert.assertEquals(originalLogger, pLog.getLogger());

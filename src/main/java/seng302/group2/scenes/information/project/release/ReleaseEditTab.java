@@ -19,6 +19,7 @@ import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
+import seng302.group2.workspace.tag.Tag;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -114,10 +115,11 @@ public class ReleaseEditTab extends SearchableTab {
                         currentRelease.getShortName());
                 // The short name is the same or valid
                 if (correctShortName) {
-
+                    ArrayList<Tag> tags = new ArrayList<>();
                     currentRelease.edit(shortNameCustomField.getText(),
                             descriptionTextArea.getText(),
-                            releaseDate
+                            releaseDate,
+                            tags
                     );
 
                     Collections.sort(currentRelease.getProject().getReleases());

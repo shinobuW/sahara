@@ -494,10 +494,10 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
      * @param newStories      The new stories in the backlog
      */
     public void edit(String newGoal, String newLongName, String newDescription, LocalDate newStartDate,
-                     LocalDate newEndDate, Team newTeam, Release newRelease,
-                     Collection<Story> newStories) {
+                     LocalDate newEndDate, Team newTeam, Release newRelease, Collection<Story> newStories,
+                    ArrayList<Tag> newTags) {
         Command relEdit = new SprintEditCommand(this, newGoal, newLongName, newDescription, newStartDate, newEndDate,
-                newTeam, newRelease, newStories);
+                newTeam, newRelease, newStories, newTags);
         Global.commandManager.executeCommand(relEdit);
     }
 
@@ -523,6 +523,8 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
         private Team team;
         private Release release;
         private Collection<Story> stories = new HashSet<>();
+        private Set<Tag> sprintTags = new HashSet<>();
+        private Set<Tag> globalTags = new HashSet<>();
 
         private String oldGoal;
         private String oldLongName;
@@ -532,14 +534,20 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
         private Team oldTeam;
         private Release oldRelease;
         private Collection<Story> oldStories = new HashSet<>();
+        private Set<Tag> oldSprintTags = new HashSet<>();
+        private Set<Tag> oldGlobalTags = new HashSet<>();
 
         private Map<Story, String> oldEstimateDict = new HashMap<>();
         private Map<Story, Boolean> oldReadyStateDict = new HashMap<>();
 
         private SprintEditCommand(Sprint sprint, String newGoal, String newLongName,
                                    String newDescription, LocalDate newStartDate, LocalDate newEndDate,
-                                   Team newTeam, Release newRelease, Collection<Story> newStories) {
+                                   Team newTeam, Release newRelease, Collection<Story> newStories, ArrayList<Tag> newTags) {
             this.sprint = sprint;
+
+            if (newTags == null) {
+                newTags = new ArrayList<>();
+            }
 
             this.goal = newGoal;
             this.longName = newLongName;
@@ -549,6 +557,9 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             this.team = newTeam;
             this.release = newRelease;
             this.stories.addAll(newStories);
+            this.sprintTags.addAll(newTags);
+            this.globalTags.addAll(newTags);
+            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
 
             this.oldGoal = sprint.goal;
             this.oldLongName = sprint.longName;
@@ -558,6 +569,8 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             this.oldTeam = sprint.team;
             this.oldRelease = sprint.release;
             this.oldStories.addAll(sprint.stories);
+            this.oldSprintTags.addAll(sprint.getTags());
+            this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
 
             for (Story story : oldStories) {
                 oldEstimateDict.put(story, story.getEstimate());
@@ -588,6 +601,12 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             }
             //sprint.stories.addAll(stories);
 
+            //Add any created tags to the global collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(globalTags);
+            //Add the tags a sprint has to their list of tags
+            sprint.getTags().clear();
+            sprint.getTags().addAll(sprintTags);
 
             //Are stories sorted in sprint?
             //Collections.sort(sprint.stories, Story.StoryPriorityComparator);
@@ -615,6 +634,13 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
                 sprint.add(story);
             }
 
+            //Adds the old global tags to the overall collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(oldGlobalTags);
+
+            //Changes the persons list of tags to what they used to be
+            sprint.getTags().clear();
+            sprint.getTags().addAll(oldSprintTags);
             //Are stories sorted in sprint?
             //Collections.sort(sprint.stories, Story.StoryPriorityComparator);
             Collections.sort(sprint.getProject().getSprints());

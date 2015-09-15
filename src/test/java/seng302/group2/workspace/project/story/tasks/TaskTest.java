@@ -309,7 +309,7 @@ public class TaskTest {
         double newEffortLeft = 0.5;
 
         Task task = new Task();
-        task.edit("test task", "a task for testing", impediments, state, person, logs, effortLeft, effortSpent);
+        task.edit("test task", "a task for testing", impediments, state, person, logs, effortLeft, effortSpent, null);
         Assert.assertEquals(person, task.getAssignee());
         Assert.assertEquals(impediments, task.getImpediments());
         Assert.assertEquals("test task", task.getShortName());
@@ -320,7 +320,7 @@ public class TaskTest {
 
 
         task.edit("edited test task", "an edited task for testing", newImpediments, newState, newPerson, newLogs,
-                newEffortLeft, newEffortSpent);
+                newEffortLeft, newEffortSpent, null);
         Assert.assertEquals(newPerson, task.getAssignee());
         Assert.assertEquals(newImpediments, task.getImpediments());
         Assert.assertEquals("edited test task", task.getShortName());

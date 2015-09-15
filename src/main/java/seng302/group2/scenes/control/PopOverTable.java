@@ -15,6 +15,9 @@ import seng302.group2.scenes.information.project.story.task.LoggingEffortPane;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Task;
+import seng302.group2.workspace.tag.Tag;
+
+import java.util.ArrayList;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -261,13 +264,14 @@ public class PopOverTable<T> extends SearchableTable<T> {
 
                 if (correctShortName) {
                     //                    Valid short name, make the edit
-
+                    ArrayList<Tag> tags = new ArrayList<>();
                     currentTask.edit(shortNameCustomField.getText(),
                             descriptionTextArea.getText(),
                             impedimentsTextArea.getText(),
                             taskStateComboBox.getValue(),
                             taskAssigneesList.getValue(), currentTask.getLogs(),
-                            Double.parseDouble(effortLeftField.getText()), currentTask.getEffortSpent());
+                            Double.parseDouble(effortLeftField.getText()), currentTask.getEffortSpent(),
+                            tags);
 
 
                 }

@@ -32,6 +32,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.project.story.tasks.Task;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.util.*;
@@ -110,11 +111,13 @@ public class StoryTaskTab extends SearchableTab {
                         Task selectedTask = event.getTableView().getItems().get(
                                 event.getTablePosition().getRow());
                         if (!event.getNewValue().isEmpty() && event.getNewValue() != null) {
+                            ArrayList<Tag> tags = new ArrayList<>();
                             selectedTask.edit(event.getNewValue(), selectedTask.getDescription(),
                                     selectedTask.getImpediments(), selectedTask.getState(), selectedTask.getAssignee(),
                                     selectedTask.getLogs(),
                                     selectedTask.getEffortLeft(),
-                                    selectedTask.getEffortSpent());
+                                    selectedTask.getEffortSpent(),
+                                    tags);
                         }
                     }
                 }
@@ -607,13 +610,15 @@ public class StoryTaskTab extends SearchableTab {
 
                 if (correctShortName) {
                     //                    Valid short name, make the edit
+                    ArrayList<Tag> tags = new ArrayList<>();
 
                     currentTask.edit(shortNameCustomField.getText(),
                             descriptionTextArea.getText(),
                             impedimentsTextArea.getText(),
                             taskStateComboBox.getValue(),
                             taskAssigneesList.getValue(), currentTask.getLogs(),
-                            Double.parseDouble(effortLeftField.getText()), currentTask.getEffortSpent());
+                            Double.parseDouble(effortLeftField.getText()), currentTask.getEffortSpent(),
+                            tags);
 
 
                 }

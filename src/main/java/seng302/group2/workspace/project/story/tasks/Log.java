@@ -7,10 +7,12 @@ import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.sprint.Sprint;
+import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -323,9 +325,9 @@ public class Log extends SaharaItem implements Serializable {
      * @param newEffortLeft the new effort left to set 
      */
     public void edit(Person newLogger, LocalDateTime newStartDate,
-                     double newDuration, String newDescription, double newEffortLeft) {
+                     double newDuration, String newDescription, double newEffortLeft, ArrayList<Tag> newTags) {
         LogEditCommand logEditCommand = new LogEditCommand(this, newLogger, newStartDate, newDuration, newDescription,
-                newEffortLeft);
+                newEffortLeft, newTags );
         Global.commandManager.executeCommand(logEditCommand);
     }
 
@@ -341,27 +343,41 @@ public class Log extends SaharaItem implements Serializable {
         private String description;
         private double effortLeftDifference;
         private Task task;
+        private Set<Tag> logTags = new HashSet<>();
+        private Set<Tag> globalTags = new HashSet<>();
 
         private Person oldLogger;
         private LocalDateTime oldStartTime;
         private double oldDuration;
         private String oldDescription;
         private double oldEffortLeftDifference;
+        private Set<Tag> oldLogTags = new HashSet<>();
+        private Set<Tag> oldGlobalTags = new HashSet<>();
 
         protected LogEditCommand(Log log, Person newLogger, LocalDateTime newStartDate,
-                                 double newDuration, String newDescription, double newEffortLeftDifference) {
+                                 double newDuration, String newDescription, double newEffortLeftDifference, ArrayList<Tag> newTags) {
             this.log = log;
+
+            if (newTags == null) {
+                newTags = new ArrayList<>();
+            }
+
             this.logger = newLogger;
             this.startTime = newStartDate;
             this.duration = newDuration;
             this.description = newDescription;
             this.effortLeftDifference = newEffortLeftDifference;
+            this.logTags.addAll(newTags);
+            this.globalTags.addAll(newTags);
+            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
 
             this.oldLogger = log.logger;
             this.oldStartTime = log.startTime;
             this.oldDuration = log.duration;
             this.oldDescription = log.description;
             this.oldEffortLeftDifference = log.effortLeftDifference;
+            this.oldLogTags.addAll(log.getTags());
+            this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
 
             this.task = log.task;
         }
@@ -379,6 +395,13 @@ public class Log extends SaharaItem implements Serializable {
             log.duration = duration;
             log.effortLeftDifference = effortLeftDifference;
 
+            //Add any created tags to the global collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(globalTags);
+            //Add the tags a log has to their list of tags
+            log.getTags().clear();
+            log.getTags().addAll(logTags);
+
 
         }
 
@@ -393,6 +416,14 @@ public class Log extends SaharaItem implements Serializable {
             log.description = oldDescription;
             log.effortLeftDifference = oldEffortLeftDifference;
             task.setEffortSpent(task.getEffortSpent() + log.getDurationInMinutes() - duration);
+
+            //Adds the old global tags to the overall collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(oldGlobalTags);
+
+            //Changes the logs list of tags to what they used to be
+            log.getTags().clear();
+            log.getTags().addAll(oldLogTags);
 
         }
 

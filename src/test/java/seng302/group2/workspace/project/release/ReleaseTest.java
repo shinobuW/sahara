@@ -87,7 +87,7 @@ public class ReleaseTest {
         Project testProject = new Project();
         release.setProject(testProject);
 
-        release.edit("newShortName", "newDescription", LocalDate.now());
+        release.edit("newShortName", "newDescription", LocalDate.now(), null);
 
         Assert.assertEquals("newShortName", release.getShortName());
         Assert.assertEquals("newDescription", release.getDescription());

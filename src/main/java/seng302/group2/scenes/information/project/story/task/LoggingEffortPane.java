@@ -26,11 +26,13 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.PairLog;
 import seng302.group2.workspace.project.story.tasks.Task;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -139,9 +141,10 @@ public class LoggingEffortPane extends Pane {
                             Person> event) {
                         Log currentLog = event.getTableView().getItems().get(
                                 event.getTablePosition().getRow());
+                        ArrayList<Tag> tags = new ArrayList<>();
                         currentLog.edit(event.getNewValue(), currentLog.getStartDate(),
                                 currentLog.getDurationInMinutes(), currentLog.getDescription(),
-                                currentLog.getEffortLeftDifferenceInMinutes());
+                                currentLog.getEffortLeftDifferenceInMinutes(), tags);
                     }
                 }
         );
