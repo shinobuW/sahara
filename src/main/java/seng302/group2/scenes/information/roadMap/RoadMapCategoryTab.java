@@ -31,7 +31,7 @@ public class RoadMapCategoryTab extends SearchableTab {
      */
     public RoadMapCategoryTab(Workspace currentWorkspace) {
         // Tab Settings
-        this.setText("Basic Information");
+        this.setText("RoadMap");
         Pane categoryPane = new VBox(10);
         categoryPane.setBorder(null);
         categoryPane.setPadding(new Insets(25, 25, 25, 25));
