@@ -2,22 +2,35 @@ package seng302.group2.workspace.project.story.tasks;
 
 import junit.framework.TestCase;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.workspace.Workspace;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class PairLogTest extends TestCase {
-    Story story = new Story("Story", "Long Story", "description", "Creator", new Project(), 2);
+
+    Workspace ws = new Workspace();
+    Project proj = new Project();
+    Story story = new Story("Story", "Long Story", "description", "Creator", proj, 2);
     Task task = new Task("Task", "description", story, new Person(), 20 );
     Person originalLogger = new Person("Logger", "Logger", "Logger", "", "", LocalDate.now());
     Person originalPartner = new Person("Partner", "Partner", "Partner", "", "", LocalDate.now());
     PairLog pLog = new PairLog(task,  "description", originalLogger, originalPartner, 0,
-                   LocalDateTime.now(), 0);
+            LocalDateTime.now(), 0);
+
+    @BeforeClass
+    public void setupTest() {
+        Global.currentWorkspace = ws;
+        ws.add(proj);
+        proj.add(story);
+        proj.add(pLog);
+    }
 
 
     /**

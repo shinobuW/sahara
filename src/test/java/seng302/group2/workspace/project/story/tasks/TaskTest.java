@@ -352,8 +352,8 @@ public class TaskTest {
         Log log1 = new Log(task, "", person, 5, LocalDateTime.now(), 0);
         Log log2 = new Log(task, "", person, 5, LocalDateTime.now(), 0);
 
-        proj.addLog(log1);
-        proj.addLog(log2);
+        proj.add(log1);
+        proj.add(log2);
 
         Assert.assertEquals(2, task.getLogs().size());
         Assert.assertTrue(task.getLogs().contains(log1));
