@@ -164,11 +164,50 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
     }
 
     /**
+     * Gets the start date string
+     * @return the start date string of sprints
+     */
+    public String getStartDateString() {
+        if (this.getStartDate() == null) {
+            return "";
+        }
+        else {
+            try {
+                return this.getStartDate().format(Global.dateFormatter);
+            }
+            catch (Exception e) {
+                System.out.println("Error parsing date");
+                return "";
+            }
+        }
+    }
+
+    /**
      * Gets the end date of the sprint
      * @return The sprint's end date
      */
     public LocalDate getEndDate() {
         return endDate;
+    }
+
+
+    /**
+     * Gets the start date string
+     * @return the start date string of sprints
+     */
+    public String getEndDateString() {
+        if (this.getEndDate() == null) {
+            return "";
+        }
+        else {
+            try {
+                return this.getEndDate().format(Global.dateFormatter);
+            }
+            catch (Exception e) {
+                System.out.println("Error parsing date");
+                return "";
+            }
+        }
     }
 
     /**

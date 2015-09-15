@@ -11,8 +11,11 @@ import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.PopOverTip;
 import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableText;
@@ -84,7 +87,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 + "-fx-background-radius: 0 5 5 5");
 
         HBox releaseChildren = new HBox();
-        
+
         SearchableText shortNameField = new SearchableText(release.getShortName());
         SearchableText releaseDate = new SearchableText("   " + release.getDateString());
 
@@ -95,9 +98,13 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 }
                 event.consume();
             });
-        
-        
-        
+
+        VBox releaseVBox = new VBox();
+        Text releaseEndText = new Text("End date of " + release.getShortName() + " is " + release.getDateString());
+        releaseVBox.getChildren().addAll(releaseEndText);
+        PopOverTip releaseTip = new PopOverTip(releaseContent, releaseVBox);
+        releaseTip.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
+
         for (Project proj : Global.currentWorkspace.getProjects()) {
             for (Sprint sprint : proj.getSprints()) {
                 if (sprint.getRelease().equals(release)) {
@@ -136,7 +143,15 @@ public class RoadMapNode extends VBox implements SearchableControl {
         int yCounter = 0;
         
         SearchableText shortNameField = new SearchableText(sprint.getGoal());
-        
+
+        VBox sprintVBox = new VBox();
+        Text sprintStartText = new Text("Start date of " + sprint.getGoal() + " is " + sprint.getStartDateString());
+        Text sprintEndText = new Text("End date of " + sprint.getGoal() + " is " + sprint.getEndDateString());
+        sprintVBox.getChildren().addAll(sprintStartText, sprintEndText);
+        PopOverTip sprintTip = new PopOverTip(sprintContent, sprintVBox);
+        sprintTip.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
+
+
         sprintContent.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2) {
                     App.mainPane.selectItem(sprint);
@@ -191,6 +206,13 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 }
                 event.consume();
             });
+
+
+        VBox storyVBox = new VBox();
+        Text storyPoint = new Text(story.getShortName() + "'s estimate is " + story.getEstimate());
+        storyVBox.getChildren().addAll(storyPoint);
+        PopOverTip storyTip = new PopOverTip(storyNode, storyVBox);
+        storyTip.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
 
         storyContent.getChildren().addAll(
