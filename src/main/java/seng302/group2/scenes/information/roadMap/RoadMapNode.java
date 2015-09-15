@@ -48,7 +48,9 @@ public class RoadMapNode extends VBox implements SearchableControl {
         HBox roadMapChildren = new HBox();
         
         SearchableText shortNameField = new SearchableText(currentRoadMap.getShortName());
-        
+        roadMapContent.setAlignment(Pos.CENTER);
+        roadMapContent.setMinHeight(35);
+
         roadMapContent.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && !(((SaharaItem) Global.selectedTreeItem.getValue())
                         .equals(currentRoadMap))) {
@@ -87,7 +89,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 + "-fx-background-radius: 0 5 5 5");
 
         HBox releaseChildren = new HBox();
-
+        releaseContent.setMinHeight(35);
         SearchableText shortNameField = new SearchableText(release.getShortName());
         SearchableText releaseDate = new SearchableText("   " + release.getDateString());
 
@@ -141,7 +143,9 @@ public class RoadMapNode extends VBox implements SearchableControl {
         GridPane sprintChildren = new GridPane();
         int xCounter = 0;
         int yCounter = 0;
-        
+
+        sprintContent.setMinHeight(35);
+
         SearchableText shortNameField = new SearchableText(sprint.getGoal());
 
         VBox sprintVBox = new VBox();
@@ -198,7 +202,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
         storyContent.setStyle("-fx-background-color: rgba(255, 7, 0, 0.56); -fx-border-radius: 5 5 5 5; "
                 + "-fx-background-radius: 0 5 5 5");
         SearchableText shortNameField = new SearchableText(story.getShortName());
-        
+        storyContent.setMinHeight(35);
+
         storyNode.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2) {
                     App.mainPane.selectItem(story);
