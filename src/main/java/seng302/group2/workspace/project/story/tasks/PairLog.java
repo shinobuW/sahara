@@ -4,8 +4,11 @@ import seng302.group2.Global;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.tag.Tag;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -69,9 +72,9 @@ public class PairLog extends Log {
      * @param effortLeftDifference the effort difference to edit to
      */
     public void edit(Person logger, Person partner, LocalDateTime startDate, double duration, String description,
-                     double effortLeftDifference) {
+                     double effortLeftDifference, ArrayList<Tag> newTags) {
         PairLogEditCommand editCommand = new PairLogEditCommand(this, logger, partner, startDate,
-            duration, description, effortLeftDifference);
+            duration, description, effortLeftDifference, newTags);
         Global.commandManager.executeCommand(editCommand);
     }
 
@@ -128,6 +131,9 @@ public class PairLog extends Log {
         private String description;
         private double effortLeftDifference;
         private Task task;
+        private Set<Tag> pLogTags = new HashSet<>();
+        private Set<Tag> globalTags = new HashSet<>();
+
 
         private Person oldLogger;
         private Person oldPartner;
@@ -135,6 +141,8 @@ public class PairLog extends Log {
         private double oldDuration;
         private String oldDescription;
         private double oldEffortLeftDifference;
+        private Set<Tag> oldPLogTags = new HashSet<>();
+        private Set<Tag> oldGlobalTags = new HashSet<>();
 
 
         /**
@@ -148,14 +156,23 @@ public class PairLog extends Log {
          * @param newEffortLeftDifference the new effort difference to edit to
          */
         protected PairLogEditCommand(PairLog pairLog, Person newLogger, Person newPartner, LocalDateTime newStartDate,
-                                 double newDuration, String newDescription, double newEffortLeftDifference) {
+                                 double newDuration, String newDescription, double newEffortLeftDifference,
+                                 ArrayList<Tag> newTags) {
             this.pLog = pairLog;
+
+            if (newTags == null) {
+                newTags = new ArrayList<>();
+            }
+
             this.logger = newLogger;
             this.startTime = newStartDate;
             this.duration = newDuration;
             this.description = newDescription;
             this.effortLeftDifference = newEffortLeftDifference;
             this.partner = newPartner;
+            this.pLogTags.addAll(newTags);
+            this.globalTags.addAll(newTags);
+            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
 
             this.oldLogger = pairLog.getLogger();
             this.oldPartner = pairLog.getPartner();
@@ -163,6 +180,8 @@ public class PairLog extends Log {
             this.oldDuration = pairLog.getDurationInMinutes();
             this.oldDescription = pairLog.getDescription();
             this.oldEffortLeftDifference = pairLog.getEffortLeftDifferenceInMinutes();
+            this.oldPLogTags.addAll(pLog.getTags());
+            this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
 
             this.task = pairLog.getTask();
         }
@@ -180,6 +199,13 @@ public class PairLog extends Log {
             pLog.duration = duration;
             pLog.effortLeftDifference = effortLeftDifference;
             pLog.partner = partner;
+
+            //Add any created tags to the global collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(globalTags);
+            //Add the tags a pair log has to their list of tags
+            pLog.getTags().clear();
+            pLog.getTags().addAll(pLogTags);
         }
 
 
@@ -193,6 +219,14 @@ public class PairLog extends Log {
             pLog.description = oldDescription;
             pLog.effortLeftDifference = oldEffortLeftDifference;
             pLog.partner = oldPartner;
+
+            //Adds the old global tags to the overall collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(oldGlobalTags);
+
+            //Changes the pair log's list of tags to what they used to be
+            pLog.getTags().clear();
+            pLog.getTags().addAll(oldPLogTags);
             task.setEffortSpent(task.getEffortSpent() + pLog.getDurationInMinutes() - duration);
         }
 
@@ -237,10 +271,8 @@ public class PairLog extends Log {
          * Executes the log deletion command.
          */
         public void execute() {
-            this.pLog.task.getLogs().remove(this.pLog);
+            this.pLog.getTask().getStory().getProject().getLogs().remove(this.pLog);
             this.pLog.task.setEffortSpent((this.oldEffortSpent - this.pLog.duration));
-            this.pLog.logger.getLogs().remove(this.pLog);
-            this.pLog.partner.getLogs().remove(this.pLog);
         }
 
 
@@ -248,10 +280,8 @@ public class PairLog extends Log {
          * Undoes the log deletion command.
          */
         public void undo() {
-            this.pLog.task.getLogs().add(this.pLog);
+            this.pLog.getTask().getStory().getProject().getLogs().add(this.pLog);
             this.pLog.task.setEffortSpent(this.oldEffortSpent);
-            this.pLog.logger.getLogs().add(this.pLog);
-            this.pLog.partner.getLogs().add(this.pLog);
         }
 
 

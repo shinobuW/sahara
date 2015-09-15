@@ -61,6 +61,9 @@ public class TaskTest {
         Assert.assertEquals("9h 27min", task.getEffortSpentString());
     }
 
+    /**
+     * Test for Task's compare method
+     */
     @Test
     public void testComparators() {
         Task defaultTask = new Task();
@@ -70,7 +73,9 @@ public class TaskTest {
         Assert.assertTrue(0 < Task.TaskNameComparator.compare(task, defaultTask));
     }
 
-
+    /**
+     * Test for task's delete command
+     */
     @Test
     public void testDeleteTask() {
         Project project = new Project();
@@ -304,7 +309,7 @@ public class TaskTest {
         double newEffortLeft = 0.5;
 
         Task task = new Task();
-        task.edit("test task", "a task for testing", impediments, state, person, logs, effortLeft, effortSpent);
+        task.edit("test task", "a task for testing", impediments, state, person, logs, effortLeft, effortSpent, null);
         Assert.assertEquals(person, task.getAssignee());
         Assert.assertEquals(impediments, task.getImpediments());
         Assert.assertEquals("test task", task.getShortName());
@@ -315,7 +320,7 @@ public class TaskTest {
 
 
         task.edit("edited test task", "an edited task for testing", newImpediments, newState, newPerson, newLogs,
-                newEffortLeft, newEffortSpent);
+                newEffortLeft, newEffortSpent, null);
         Assert.assertEquals(newPerson, task.getAssignee());
         Assert.assertEquals(newImpediments, task.getImpediments());
         Assert.assertEquals("edited test task", task.getShortName());
@@ -336,6 +341,10 @@ public class TaskTest {
 
     }
 
+
+    /**
+     * Test for Task's getLogs method
+     */
     @Test
     public void testGetLogs() {
         Workspace workspace = new Workspace();
@@ -352,8 +361,8 @@ public class TaskTest {
         Log log1 = new Log(task, "", person, 5, LocalDateTime.now(), 0);
         Log log2 = new Log(task, "", person, 5, LocalDateTime.now(), 0);
 
-        proj.addLog(log1);
-        proj.addLog(log2);
+        proj.add(log1);
+        proj.add(log2);
 
         Assert.assertEquals(2, task.getLogs().size());
         Assert.assertTrue(task.getLogs().contains(log1));

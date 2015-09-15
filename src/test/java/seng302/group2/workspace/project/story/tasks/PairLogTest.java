@@ -7,18 +7,21 @@ import seng302.group2.Global;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.workspace.Workspace;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class PairLogTest extends TestCase {
-    Story story = new Story("Story", "Long Story", "description", "Creator", new Project(), 2);
+
+    Workspace ws = new Workspace();
+    Project proj = new Project();
+    Story story = new Story("Story", "Long Story", "description", "Creator", proj, 2);
     Task task = new Task("Task", "description", story, new Person(), 20 );
     Person originalLogger = new Person("Logger", "Logger", "Logger", "", "", LocalDate.now());
     Person originalPartner = new Person("Partner", "Partner", "Partner", "", "", LocalDate.now());
     PairLog pLog = new PairLog(task,  "description", originalLogger, originalPartner, 0,
-                   LocalDateTime.now(), 0);
-
+            LocalDateTime.now(), 0);
 
     /**
      * Tests the main PairLog edit command
@@ -26,7 +29,7 @@ public class PairLogTest extends TestCase {
     @Test
     public void testMainEditCommandLog() {
         Person testPerson = new Person("Bron", "Bronson Taryn", "McNaughton", "swagger@", "alpha", LocalDate.now());
-        pLog.edit(testPerson, pLog.getPartner(), LocalDateTime.now(), 20, "", 0);
+        pLog.edit(testPerson, pLog.getPartner(), LocalDateTime.now(), 20, "", 0, null);
         Assert.assertEquals(testPerson, pLog.getLogger());
         Global.commandManager.undo();
         Assert.assertEquals(originalLogger, pLog.getLogger());
@@ -83,15 +86,18 @@ public class PairLogTest extends TestCase {
         Assert.assertEquals(20, pLog.getDurationInHours());
     }
 
-    //TODO: Shnob update
-//    /**
-//     * Tests the delete method
-//     */
-//    @Test
-//    public void testDeleteLog() {
-//        pLog.deleteLog();
-//        Assert.assertTrue(task.getLogs().size() == 0);
-//        Global.commandManager.undo();
-//        Assert.assertTrue(task.getLogs().contains(pLog));
-//    }
+    /**
+     * Tests the PairLog's delete method
+     */
+    @Test
+    public void testDeleteLog() {
+        Global.currentWorkspace = ws;
+        ws.add(proj);
+        proj.add(story);
+        proj.add(pLog);
+        pLog.deleteLog();
+        Assert.assertTrue(task.getLogs().size() == 0);
+        Global.commandManager.undo();
+        Assert.assertTrue(task.getLogs().contains(pLog));
+    }
 }

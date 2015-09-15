@@ -127,7 +127,7 @@ public class BacklogTest {
         Story story = new Story();
         stories.add(story);
 
-        backlog.edit("short", "long", "desc", po, proj, "scale", stories);
+        backlog.edit("short", "long", "desc", po, proj, "scale", stories, null);
 
         Assert.assertEquals("short", backlog.getShortName());
         Assert.assertEquals("long", backlog.getLongName());

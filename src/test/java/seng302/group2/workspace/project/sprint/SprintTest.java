@@ -145,7 +145,7 @@ public class SprintTest {
         Story story = new Story();
         stories.add(story);
 
-        sprint.edit("goal", "long", "desc", LocalDate.now(), LocalDate.now().plusDays(1), team, release, stories);
+        sprint.edit("goal", "long", "desc", LocalDate.now(), LocalDate.now().plusDays(1), team, release, stories, null);
 
         Assert.assertEquals("goal", sprint.getGoal());
         Assert.assertEquals("long", sprint.getLongName());

@@ -26,6 +26,7 @@ import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
@@ -506,6 +507,7 @@ public class SprintEditTab extends SearchableTab {
                         currentSprint.getGoal());
                 // The short name is the same or valid
                 if (correctGoal) {
+                    ArrayList<Tag> tags = new ArrayList<>();
 
                     currentSprint.edit(goalCustomField.getText(),
                             longNameCustomField.getText(),
@@ -514,7 +516,8 @@ public class SprintEditTab extends SearchableTab {
                             sprintEndDatePicker.getValue(),
                             teamComboBox.getValue(),
                             releaseComboBox.getValue(),
-                            storiesInSprint //This line just a placeholder for now
+                            storiesInSprint, //This line just a placeholder for now
+                            tags
                     );
 
                     currentSprint.switchToInfoScene();

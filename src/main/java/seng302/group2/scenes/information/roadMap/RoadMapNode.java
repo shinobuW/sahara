@@ -11,8 +11,11 @@ import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.PopOverTip;
 import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableText;
@@ -45,7 +48,9 @@ public class RoadMapNode extends VBox implements SearchableControl {
         HBox roadMapChildren = new HBox();
         
         SearchableText shortNameField = new SearchableText(currentRoadMap.getShortName());
-        
+        roadMapContent.setAlignment(Pos.CENTER);
+        roadMapContent.setMinHeight(35);
+
         roadMapContent.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && !(((SaharaItem) Global.selectedTreeItem.getValue())
                         .equals(currentRoadMap))) {
@@ -84,7 +89,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 + "-fx-background-radius: 0 5 5 5");
 
         HBox releaseChildren = new HBox();
-        
+        releaseContent.setMinHeight(35);
         SearchableText shortNameField = new SearchableText(release.getShortName());
         SearchableText releaseDate = new SearchableText("   " + release.getDateString());
 
@@ -95,9 +100,13 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 }
                 event.consume();
             });
-        
-        
-        
+
+        VBox releaseVBox = new VBox();
+        Text releaseEndText = new Text("End date of " + release.getShortName() + " is " + release.getDateString());
+        releaseVBox.getChildren().addAll(releaseEndText);
+        PopOverTip releaseTip = new PopOverTip(releaseContent, releaseVBox);
+        releaseTip.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
+
         for (Project proj : Global.currentWorkspace.getProjects()) {
             for (Sprint sprint : proj.getSprints()) {
                 if (sprint.getRelease().equals(release)) {
@@ -134,9 +143,19 @@ public class RoadMapNode extends VBox implements SearchableControl {
         GridPane sprintChildren = new GridPane();
         int xCounter = 0;
         int yCounter = 0;
-        
+
+        sprintContent.setMinHeight(35);
+
         SearchableText shortNameField = new SearchableText(sprint.getGoal());
-        
+
+        VBox sprintVBox = new VBox();
+        Text sprintStartText = new Text("Start date of " + sprint.getGoal() + " is " + sprint.getStartDateString());
+        Text sprintEndText = new Text("End date of " + sprint.getGoal() + " is " + sprint.getEndDateString());
+        sprintVBox.getChildren().addAll(sprintStartText, sprintEndText);
+        PopOverTip sprintTip = new PopOverTip(sprintContent, sprintVBox);
+        sprintTip.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
+
+
         sprintContent.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2) {
                     App.mainPane.selectItem(sprint);
@@ -183,7 +202,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
         storyContent.setStyle("-fx-background-color: rgba(255, 7, 0, 0.56); -fx-border-radius: 5 5 5 5; "
                 + "-fx-background-radius: 0 5 5 5");
         SearchableText shortNameField = new SearchableText(story.getShortName());
-        
+        storyContent.setMinHeight(35);
+
         storyNode.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2) {
                     App.mainPane.selectItem(story);
@@ -191,6 +211,13 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 }
                 event.consume();
             });
+
+
+        VBox storyVBox = new VBox();
+        Text storyPoint = new Text(story.getShortName() + "'s estimate is " + story.getEstimate());
+        storyVBox.getChildren().addAll(storyPoint);
+        PopOverTip storyTip = new PopOverTip(storyNode, storyVBox);
+        storyTip.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
 
 
         storyContent.getChildren().addAll(

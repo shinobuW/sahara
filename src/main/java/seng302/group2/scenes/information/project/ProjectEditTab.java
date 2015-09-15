@@ -17,6 +17,7 @@ import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.util.validation.NameValidator;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.tag.Tag;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -86,9 +87,10 @@ public class ProjectEditTab extends SearchableTab {
                 boolean correctLongName = NameValidator.validateName(longNameCustomField);
 
                 if (correctShortName && correctLongName) {
+                    ArrayList<Tag> tags = new ArrayList<>();
                     currentProject.edit(shortNameCustomField.getText(),
                             longNameCustomField.getText(), descriptionTextArea.getText(),
-                            FXCollections.observableArrayList()
+                            FXCollections.observableArrayList(), tags
                     );
 
                     Collections.sort(Global.currentWorkspace.getProjects());

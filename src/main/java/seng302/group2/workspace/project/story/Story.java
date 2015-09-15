@@ -885,9 +885,9 @@ public class Story extends SaharaItem implements Serializable {
      */
     public void edit(String newShortName, String newLongName, String newDescription,
                      Project newProject, Integer newPriority, Backlog newBacklog, String newEstimate,
-                     boolean newReady, List<Story> newDependentOn) {
+                     boolean newReady, List<Story> newDependentOn, ArrayList<Tag> newTags) {
         Command relEdit = new StoryEditCommand(this, newShortName, newLongName,
-                newDescription, newProject, newPriority, newBacklog, newEstimate, newReady, newDependentOn);
+                newDescription, newProject, newPriority, newBacklog, newEstimate, newReady, newDependentOn, newTags);
 
         Global.commandManager.executeCommand(relEdit);
     }
@@ -916,6 +916,8 @@ public class Story extends SaharaItem implements Serializable {
         private String estimate;
         private boolean ready;
         private Collection<Story> dependentOn;
+        private Set<Tag> storyTags = new HashSet<>();
+        private Set<Tag> globalTags = new HashSet<>();
 
         private String oldShortName;
         private String oldLongName;
@@ -926,6 +928,8 @@ public class Story extends SaharaItem implements Serializable {
         private String oldEstimate;
         private boolean oldReady;
         private Collection<Story> oldDependentOn;
+        private Set<Tag> oldStoryTags = new HashSet<>();
+        private Set<Tag> oldGlobalTags = new HashSet<>();
         
         /**
          * Constructor for the Story Edit command.
@@ -940,10 +944,14 @@ public class Story extends SaharaItem implements Serializable {
          * @param newReady The story's new readiness state
          * @param newDependentOn The new list of stories the story is dependant on
          */
-        private StoryEditCommand(Story story, String newShortName, String newLongName,
-                                 String newDescription, Project newProject, Integer newPriority,
-                                 Backlog newBacklog, String newEstimate, boolean newReady, List<Story> newDependentOn) {
+        private StoryEditCommand(Story story, String newShortName, String newLongName, String newDescription,
+                                 Project newProject, Integer newPriority, Backlog newBacklog, String newEstimate,
+                                 boolean newReady, List<Story> newDependentOn, ArrayList<Tag> newTags) {
             this.story = story;
+
+            if (newTags == null) {
+                newTags = new ArrayList<>();
+            }
 
             this.shortName = newShortName;
             this.longName = newLongName;
@@ -955,6 +963,10 @@ public class Story extends SaharaItem implements Serializable {
             this.ready = newReady;
             this.dependentOn = new HashSet<>();
             this.dependentOn.addAll(newDependentOn);
+            this.storyTags.addAll(newTags);
+            this.globalTags.addAll(newTags);
+            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
+
 
             this.oldShortName = story.shortName;
             this.oldLongName = story.longName;
@@ -966,6 +978,9 @@ public class Story extends SaharaItem implements Serializable {
             this.oldReady = story.ready;
             this.oldDependentOn = new HashSet<>();
             this.oldDependentOn.addAll(story.dependentOn);
+            this.oldStoryTags.addAll(story.getTags());
+            this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
+
 
             if (backlog == null) {
                 estimate = EstimationScalesDictionary.getScaleValue(EstimationScalesDictionary.DefaultValues.NONE);
@@ -994,6 +1009,13 @@ public class Story extends SaharaItem implements Serializable {
             story.dependentOn.clear();
             story.dependentOn.addAll(dependentOn);
 
+            //Add any created tags to the global collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(globalTags);
+            //Add the tags a story has to their list of tags
+            story.getTags().clear();
+            story.getTags().addAll(storyTags);
+
             Collections.sort(project.getUnallocatedStories(), Story.StoryNameComparator);
             if (backlog != null) {
                 Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
@@ -1021,6 +1043,14 @@ public class Story extends SaharaItem implements Serializable {
 
             story.dependentOn.clear();
             story.dependentOn.addAll(oldDependentOn);
+
+            //Adds the old global tags to the overall collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(oldGlobalTags);
+
+            //Changes the story's list of tags to what they used to be
+            story.getTags().clear();
+            story.getTags().addAll(oldStoryTags);
 
             Collections.sort(project.getUnallocatedStories(), Story.StoryNameComparator);
             Collections.sort(backlog.getStories(), Story.StoryPriorityComparator);
