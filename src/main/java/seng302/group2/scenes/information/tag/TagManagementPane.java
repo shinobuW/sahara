@@ -46,8 +46,8 @@ public class TagManagementPane extends SplitPane {
     private void constructList() {
         tagListView = new SearchableListView<>(tagList, searchControls);
         tagListView.selectionModelProperty().addListener(event -> {
-            constructDetail();
-        });
+                constructDetail();
+            });
         // Sort here if needed
         tagListView.getSelectionModel().select(0);
         this.getChildren().add(tagListView);

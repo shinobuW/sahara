@@ -386,8 +386,8 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
      * @param newScale        The new estimation scale
      * @param newStories      The new stories in the backlog
      */
-    public void edit(String newShortName, String newLongName, String newDescription,
-                     Person newProductOwner, Project newProject, String newScale, Collection<Story> newStories, ArrayList<Tag> newTags) {
+    public void edit(String newShortName, String newLongName, String newDescription, Person newProductOwner,
+                     Project newProject, String newScale, Collection<Story> newStories, ArrayList<Tag> newTags) {
         Command relEdit = new BacklogEditCommand(this, newShortName, newLongName, newDescription,
                 newProductOwner, newProject, newScale, newStories, newTags);
         Global.commandManager.executeCommand(relEdit);
@@ -430,8 +430,8 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
         private Set<Tag> oldGlobalTags = new HashSet<>();
 
         private BacklogEditCommand(Backlog backlog, String newShortName, String newLongName,
-                                   String newDescription, Person newProductOwner,
-                                   Project newProject, String newScale, Collection<Story> newStories, ArrayList<Tag> newTags) {
+                                   String newDescription, Person newProductOwner, Project newProject,
+                                   String newScale, Collection<Story> newStories, ArrayList<Tag> newTags) {
             this.backlog = backlog;
 
             if (newTags == null) {

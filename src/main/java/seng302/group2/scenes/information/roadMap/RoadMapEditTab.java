@@ -22,6 +22,7 @@ import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.roadMap.RoadMap;
+import seng302.group2.workspace.tag.Tag;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -146,9 +147,8 @@ public class RoadMapEditTab extends SearchableTab {
                 if (shortNameField.getText().equals(currentRoadMap.getShortName()) 
                         || ShortNameValidator.validateShortName(shortNameField, null)) { // validation
                     // Edit Command.
-                    currentRoadMap.edit(shortNameField.getText(),
-                            roadMapList
-                    );
+                    ArrayList<Tag> tags = new ArrayList<>();
+                    currentRoadMap.edit(shortNameField.getText(), roadMapList, tags);
                     currentRoadMap.switchToInfoScene();
                     App.mainPane.refreshTree();
                 }

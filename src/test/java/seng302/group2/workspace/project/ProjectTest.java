@@ -363,7 +363,7 @@ public class ProjectTest extends TestCase {
     @Test
     public void testEdit() {
         Project project = new Project("aShortName", "aLongName", "aDescription");
-        project.edit("newShortname", "newLongName", "newDescription", null);
+        project.edit("newShortname", "newLongName", "newDescription", null, null);
 
         assertEquals("newShortname", project.getShortName());
         assertEquals("newLongName", project.getLongName());

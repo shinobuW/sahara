@@ -25,6 +25,7 @@ import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.tag.Tag;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -181,13 +182,15 @@ public class BacklogEditTab extends SearchableTab {
         btnDone.setOnAction((event) -> {
                 if (isValidState()) { // validation
                     // Edit Command.
+                    ArrayList<Tag> tags = new ArrayList<>();
                     baseBacklog.edit(shortNameField.getText(),
                             longNameField.getText(),
                             descriptionField.getText(),
                             baseBacklog.getProductOwner(),
                             baseBacklog.getProject(),
-                            scaleComboBox.getValue().toString(),
-                            backlogStoryList
+                            scaleComboBox.getValue(),
+                            backlogStoryList,
+                            tags
                     );
 
                     Collections.sort(baseBacklog.getProject().getBacklogs());
