@@ -51,6 +51,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
         roadMapContent.setAlignment(Pos.CENTER);
         roadMapContent.setMinHeight(35);
 
+        shortNameField.setStyle("-fx-font: 35px Tahoma;");
+        
         roadMapContent.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && !(((SaharaItem) Global.selectedTreeItem.getValue())
                         .equals(currentRoadMap))) {
