@@ -12,10 +12,12 @@ import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 
 /**
  * @author Shinobu
@@ -86,13 +88,18 @@ public class ReleaseTest {
         Release release = new Release();
         Project testProject = new Project();
         release.setProject(testProject);
-
-        release.edit("newShortName", "newDescription", LocalDate.now(), null);
+        Tag tag = new Tag("Tag");
+        ArrayList<Tag> newTags = new ArrayList<>();
+        newTags.add(tag);
+        release.edit("newShortName", "newDescription", LocalDate.now(), newTags);
 
         Assert.assertEquals("newShortName", release.getShortName());
         Assert.assertEquals("newDescription", release.getDescription());
         Assert.assertEquals(LocalDate.now(), release.getEstimatedDate());
         Assert.assertEquals("Untitled Project", release.getProject().getShortName());
+        Assert.assertEquals(1, release.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", release.getTags().get(0).getName());
 
         Global.commandManager.undo();
 
@@ -101,6 +108,19 @@ public class ReleaseTest {
                 release.getDescription());
         Assert.assertEquals(LocalDate.now(), release.getEstimatedDate());
         Assert.assertEquals("Untitled Project", release.getProject().getShortName());
+        Assert.assertEquals(0, release.getTags().size());
+        Assert.assertEquals(0, Global.currentWorkspace.getAllTags().size());
+
+        Global.commandManager.redo();
+
+        Assert.assertEquals("newShortName", release.getShortName());
+        Assert.assertEquals("newDescription", release.getDescription());
+        Assert.assertEquals(LocalDate.now(), release.getEstimatedDate());
+        Assert.assertEquals("Untitled Project", release.getProject().getShortName());
+        Assert.assertEquals(1, release.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", release.getTags().get(0).getName());
+
     }
 
     @Test

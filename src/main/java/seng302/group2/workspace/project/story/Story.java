@@ -953,6 +953,10 @@ public class Story extends SaharaItem implements Serializable {
                 newTags = new ArrayList<>();
             }
 
+            if (newDependentOn == null) {
+                newDependentOn = new ArrayList<>();
+            }
+
             this.shortName = newShortName;
             this.longName = newLongName;
             this.description = newDescription;

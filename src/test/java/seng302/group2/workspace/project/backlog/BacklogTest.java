@@ -10,6 +10,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
@@ -127,7 +128,11 @@ public class BacklogTest {
         Story story = new Story();
         stories.add(story);
 
-        backlog.edit("short", "long", "desc", po, proj, "scale", stories, null);
+        Tag tag = new Tag("Tag");
+        ArrayList<Tag> newTags = new ArrayList<>();
+        newTags.add(tag);
+
+        backlog.edit("short", "long", "desc", po, proj, "scale", stories, newTags);
 
         Assert.assertEquals("short", backlog.getShortName());
         Assert.assertEquals("long", backlog.getLongName());
@@ -138,6 +143,9 @@ public class BacklogTest {
         Assert.assertEquals(stories, backlog.getStories());
         Assert.assertTrue(story.getBacklog() == backlog);
         Assert.assertFalse(oldStory.getBacklog() == backlog);
+        Assert.assertEquals(1, backlog.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", backlog.getTags().get(0).getName());
 
         Global.commandManager.undo();
 
@@ -148,6 +156,8 @@ public class BacklogTest {
         Assert.assertEquals(null, backlog.getProject());
         Assert.assertEquals("Fibonacci", backlog.getScale());
         Assert.assertTrue(backlog.getStories().contains(oldStory));
+        Assert.assertEquals(0, backlog.getTags().size());
+        Assert.assertEquals(0, Global.currentWorkspace.getAllTags().size());
 
         Assert.assertEquals(1, backlog.getStories().size());
         Assert.assertFalse(story.getBacklog() == backlog);
@@ -164,6 +174,9 @@ public class BacklogTest {
         Assert.assertEquals(stories, backlog.getStories());
         Assert.assertTrue(story.getBacklog() == backlog);
         Assert.assertFalse(oldStory.getBacklog() == backlog);
+        Assert.assertEquals(1, backlog.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", backlog.getTags().get(0).getName());
     }
 
 
