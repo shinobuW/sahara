@@ -17,6 +17,7 @@ import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Log;
+import seng302.group2.workspace.project.story.tasks.PairLog;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.time.LocalDate;
@@ -84,7 +85,28 @@ public class PersonLoggingTab extends SearchableTab {
         updateFilteredLogs(currentPerson);
 
         TableColumn partnerCol = new TableColumn("Partner");
-        partnerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("partner"));
+//        partnerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("partner"));
+        partnerCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Log, Person>, ObservableValue<String>>() {
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Log, Person> log) {
+                // p.getValue() returns the Person instance for a particular TableView row
+                SimpleStringProperty prop = new SimpleStringProperty();
+                if (log.getValue().getLogger() == currentPerson) {
+                    if (log.getValue() instanceof PairLog) {
+                        prop.set(((PairLog) log.getValue()).getPartner().toString());
+                    }
+                    else {
+                        prop.set("");
+                    }
+                }
+                else {
+                    prop.set(log.getValue().getLogger().toString());
+                }
+
+                return prop;
+            }
+        });
+
+
         partnerCol.setEditable(true);
         partnerCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
