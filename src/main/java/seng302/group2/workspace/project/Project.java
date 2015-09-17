@@ -1,5 +1,6 @@
 package seng302.group2.workspace.project;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
@@ -54,12 +55,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
     private transient BacklogCategory backlogCategory = new BacklogCategory(this);
     private transient StoryCategory storiesCategory = new StoryCategory(this);
     private transient SprintCategory sprintsCategory = new SprintCategory(this);
-
-
-    @Deprecated
-    private transient ObservableList<Team> teams = observableArrayList();
-    @Deprecated
-    private List<Team> serializableTeams = new ArrayList<>();
 
 
     /**
@@ -758,7 +753,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         private String shortName;
         private String longName;
         private String description;
-        private ObservableList<Team> teams;
+        private ObservableList<Team> teams = FXCollections.observableArrayList();
         private Set<Tag> projectTags = new HashSet<>();
         private Set<Tag> globalTags = new HashSet<>();
 
@@ -766,7 +761,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         private String oldShortName;
         private String oldLongName;
         private String oldDescription;
-        private ObservableList<Team> oldTeams;
+        private ObservableList<Team> oldTeams = FXCollections.observableArrayList();
         private Set<Tag> oldProjectTags = new HashSet<>();
         private Set<Tag> oldGlobalTags = new HashSet<>();
 
@@ -789,7 +784,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
             this.oldShortName = proj.shortName;
             this.oldLongName = proj.longName;
             this.oldDescription = proj.description;
-            this.oldTeams = proj.teams;
             this.oldProjectTags.addAll(proj.getTags());
             this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
         }
@@ -801,7 +795,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
             proj.shortName = shortName;
             proj.longName = longName;
             proj.description = description;
-            proj.teams = teams;
 
             //Add any created tags to the global collection
             Global.currentWorkspace.getAllTags().clear();
@@ -820,7 +813,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
             proj.shortName = oldShortName;
             proj.longName = oldLongName;
             proj.description = oldDescription;
-            proj.teams = oldTeams;
 
             //Adds the old global tags to the overall collection
             Global.currentWorkspace.getAllTags().clear();
@@ -849,7 +841,8 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
             }
 
             // Teams collections
-            for (Team team : teams) {
+            // Teams is deprecated, new use is allocations
+            /*for (Team team : teams) {
                 for (SaharaItem item : stateObjects) {
                     if (item.equivalentTo(team)) {
                         teams.remove(team);
@@ -866,7 +859,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
                         break;
                     }
                 }
-            }
+            }*/
 
             return mapped_project;
         }

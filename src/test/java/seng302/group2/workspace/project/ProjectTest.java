@@ -363,6 +363,9 @@ public class ProjectTest extends TestCase {
      */
     @Test
     public void testEdit() {
+        Global.currentWorkspace = new Workspace();
+
+
         Project project = new Project("aShortName", "aLongName", "aDescription");
         Tag tag = new Tag("Tag");
         ArrayList<Tag> newTags = new ArrayList<>();

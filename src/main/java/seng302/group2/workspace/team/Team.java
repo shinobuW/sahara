@@ -13,6 +13,7 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.workspace.Workspace;
@@ -900,11 +901,16 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
     }
 
     /**
-     * A class for allowing the cascading deletion of the members of a team upon the teams deletion
+     * A class for allowing the cascading deletion of the members of a team upon the teams deletion, as well as any
+     * sprints and allocations associated.
      */
     private class DeleteTeamCascadingCommand implements Command {
         private Team team;
         private List<Person> members = new ArrayList<>();
+        private List<Sprint> sprints = new ArrayList<>();
+        private List<Allocation> teamAllocs = new ArrayList<>();
+        private List<Allocation> futureAllocs = new ArrayList<>();
+        private List<Allocation> pastAllocs = new ArrayList<>();
 
         /**
          * Constructor for the cascading team deletion command
@@ -916,6 +922,29 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             for (Person p : team.getPeople()) {
                 members.add(p);
             }
+            for (Project proj : Global.currentWorkspace.getProjects()) {
+                for (Sprint sprint : proj.getSprints()) {
+                    if (sprint.getTeam() == team) {
+                        sprints.add(sprint);
+                    }
+                }
+                for (Allocation alloc : proj.getTeamAllocations()) {
+                    if (alloc.getTeam() == team) {
+                        teamAllocs.add(alloc);
+                    }
+                }
+                for (Allocation alloc : proj.getFutureAllocations()) {
+                    if (alloc.getTeam() == team) {
+                        futureAllocs.add(alloc);
+                    }
+                }
+                for (Allocation alloc : proj.getPastAllocations()) {
+                    if (alloc.getTeam() == team) {
+                        pastAllocs.add(alloc);
+                    }
+                }
+            }
+
         }
 
         /**
@@ -925,6 +954,31 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             for (Person member : members) {
                 Global.currentWorkspace.getPeople().remove(member);
             }
+            for (Sprint sprint : sprints) {
+                for (Project proj : Global.currentWorkspace.getProjects()) {
+                    if (proj.getSprints().contains(sprint)) {
+                        proj.getSprints().remove(sprint);
+                        break;
+                    }
+                }
+            }
+            for (Project proj : Global.currentWorkspace.getProjects()) {
+                for (Allocation teamAlloc : teamAllocs) {
+                    if (proj.getTeamAllocations().contains(teamAlloc)) {
+                        proj.getTeamAllocations().remove(teamAlloc);
+                    }
+                }
+                for (Allocation futureAlloc : futureAllocs) {
+                    if (proj.getFutureAllocations().contains(futureAlloc)) {
+                        proj.getFutureAllocations().remove(futureAlloc);
+                    }
+                }
+                for (Allocation pastAlloc : pastAllocs) {
+                    if (proj.getPastAllocations().contains(pastAlloc)) {
+                        proj.getPastAllocations().remove(pastAlloc);
+                    }
+                }
+            }
             Global.currentWorkspace.getTeams().remove(team);
         }
 
@@ -932,9 +986,33 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
          * Undoes the team deletion command
          */
         public void undo() {
-            System.out.println("Undone Team Casc Delete");
             for (Person member : members) {
                 Global.currentWorkspace.getPeople().add(member);
+            }
+            for (Sprint sprint : sprints) {
+                for (Project proj : Global.currentWorkspace.getProjects()) {
+                    if (sprint.getProject() == proj) {
+                        proj.getSprints().add(sprint);
+                        break;
+                    }
+                }
+            }
+            for (Project proj : Global.currentWorkspace.getProjects()) {
+                for (Allocation teamAlloc : teamAllocs) {
+                    if (teamAlloc.getProject() == proj) {
+                        proj.getTeamAllocations().add(teamAlloc);
+                    }
+                }
+                for (Allocation futureAlloc : futureAllocs) {
+                    if (futureAlloc.getProject() == proj) {
+                        proj.getFutureAllocations().add(futureAlloc);
+                    }
+                }
+                for (Allocation pastAlloc : pastAllocs) {
+                    if (pastAlloc.getProject() == proj) {
+                        proj.getPastAllocations().add(pastAlloc);
+                    }
+                }
             }
             Global.currentWorkspace.getTeams().add(team);
         }
@@ -960,6 +1038,46 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
                     if (item.equivalentTo(member)) {
                         members.remove(member);
                         members.add((Person)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Sprint sprint : sprints) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(sprint)) {
+                        sprints.remove(sprint);
+                        sprints.add((Sprint)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Allocation teamAlloc : teamAllocs) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(teamAlloc)) {
+                        teamAllocs.remove(teamAlloc);
+                        teamAllocs.add((Allocation)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Allocation futureAlloc : futureAllocs) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(futureAlloc)) {
+                        futureAllocs.remove(futureAlloc);
+                        futureAllocs.add((Allocation)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Allocation pastAlloc : pastAllocs) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(pastAlloc)) {
+                        pastAllocs.remove(pastAlloc);
+                        pastAllocs.add((Allocation)item);
                         break;
                     }
                 }
