@@ -86,7 +86,8 @@ public class PersonLoggingTab extends SearchableTab {
 
         TableColumn partnerCol = new TableColumn("Partner");
 //        partnerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("partner"));
-        partnerCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Log, Person>, ObservableValue<String>>() {
+        partnerCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Log, Person>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Log, Person> log) {
                 // p.getValue() returns the Person instance for a particular TableView row
                 SimpleStringProperty prop = new SimpleStringProperty();

@@ -21,6 +21,7 @@ import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.text.MessageFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -63,7 +64,6 @@ public class DeleteDialog {
                     return false;
                 }
             }
-
         }
         ArrayList<String> dialogText;
         dialogText = getDeleteDialogText(element);
@@ -72,7 +72,7 @@ public class DeleteDialog {
         alert.setTitle(dialogText.get(0));
         alert.setHeaderText("Delete " + "'" + element.toString() + "'?");
         alert.setContentText(dialogText.get(1));
-        alert.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 170px; -fx-pref-width: 600px; "
+        alert.getDialogPane().setStyle(" -fx-max-width:650px; -fx-max-height: 170px; -fx-pref-width: 650px; "
                 + "-fx-pref-height: 170px;");
         Optional<ButtonType> result  = alert.showAndWait();
 
@@ -220,8 +220,9 @@ public class DeleteDialog {
             title = "Delete Team";
             Team deletedTeam = (Team) element;
             message = MessageFormat.format("Are you sure you want to delete the team \"{0}",
-                    deletedTeam.toString() + "\"? \nWARNING: All people "
-                            + "currently part of the team will also be deleted.");
+                    deletedTeam.toString() + "\"? \nWARNING: All people"
+                            + ", sprints and allocations associated with the"
+                            + " team will also be deleted.");
         }
         else if (element.getClass() == Project.class) {
             title = "Delete Project";

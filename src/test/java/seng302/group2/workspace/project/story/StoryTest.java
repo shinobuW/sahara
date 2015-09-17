@@ -20,6 +20,7 @@ import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCrite
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.tag.Tag;
+import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
 
@@ -390,6 +391,8 @@ public class StoryTest {
 
     @Test
     public void testEdit() {
+        Global.currentWorkspace = new Workspace();
+
         Project project = new Project();
         project.setShortName("proj1");
         Project project2 = new Project();
@@ -441,9 +444,6 @@ public class StoryTest {
         Assert.assertEquals(1, story.getTags().size());
         Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
         Assert.assertEquals("Tag", story.getTags().get(0).getName());
-
-
-
 
     }
 }

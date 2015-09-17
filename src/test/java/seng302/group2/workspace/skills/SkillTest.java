@@ -6,6 +6,7 @@ import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.tag.Tag;
+import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
 
@@ -67,6 +68,8 @@ public class SkillTest {
 
     @Test
     public void testEdit() {
+        Global.currentWorkspace = new Workspace();
+
         Skill skill = new Skill("C#", "A better language than Java");
         Tag tag = new Tag("Tag");
         ArrayList<Tag> tags = new ArrayList<>();
