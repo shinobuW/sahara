@@ -3,6 +3,7 @@ package seng302.group2.util.revert;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
 
 /**
@@ -14,8 +15,12 @@ public class RevertManagerTest {
      */
     @Test
     public void testRevertBasic() {
+
+        SaharaItem.refreshIDs();
+
         Workspace ws = new Workspace();
         Global.currentWorkspace = ws;
+
         ws.setShortName("A Name");
         RevertManager.updateRevertState();
         Assert.assertEquals("A Name", Global.currentWorkspace.getShortName());

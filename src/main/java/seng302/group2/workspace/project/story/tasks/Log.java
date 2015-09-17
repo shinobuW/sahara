@@ -328,6 +328,15 @@ public class Log extends SaharaItem implements Serializable {
         Global.commandManager.executeCommand(logEditCommand);
     }
 
+    /**
+     * Edits the Log's description
+     * @param description the description to edit to
+     */
+    public void editDescription(String description) {
+        DescriptionEditCommand editCommand = new DescriptionEditCommand(this, description);
+        Global.commandManager.executeCommand(editCommand);
+    }
+
 
     /**
      * A command class that allows the executing and undoing of project edits
@@ -430,6 +439,58 @@ public class Log extends SaharaItem implements Serializable {
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
          */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(log)) {
+                    this.log = (Log) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
+    }
+
+
+    /**
+     * Edit command for editing description
+     */
+    private class DescriptionEditCommand implements Command {
+        private Log log;
+        private String newDescription;
+        private String oldDescription;
+
+        /**
+         * Constructor
+         * @param log log to edit
+         * @param description new description to edit to
+         */
+        private DescriptionEditCommand(Log log, String description) {
+            this.log = log;
+            this.newDescription = description;
+            this.oldDescription = log.description;
+        }
+
+
+        /**
+         * Executes the edit
+         */
+        @Override
+        public void execute() {
+            log.description = this.newDescription;
+        }
+
+
+        /**
+         * Un-does the edit
+         */
+        @Override
+        public void undo() {
+            log.description = this.oldDescription;
+        }
+
+
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
