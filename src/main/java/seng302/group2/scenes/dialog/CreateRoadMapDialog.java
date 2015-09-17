@@ -27,14 +27,12 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 public class CreateRoadMapDialog extends Dialog<Map<String, String>> {
 
     Boolean correctShortName = Boolean.FALSE;
-    Boolean correctLongName = Boolean.FALSE;
 
     /**
      * Displays the Dialog box for creating a workspace.
      */
     public CreateRoadMapDialog() {
         correctShortName = Boolean.FALSE;
-        correctLongName = Boolean.FALSE;
         this.setTitle("New RoadMap");
         this.getDialogPane().setStyle(" -fx-max-width:600px; -fx-max-height: 300px; -fx-pref-width: 600px; "
                 + "-fx-pref-height: 300px;");
@@ -62,7 +60,7 @@ public class CreateRoadMapDialog extends Dialog<Map<String, String>> {
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
             correctShortName = validateShortName(shortNameCustomField, null);
-            createButton.setDisable(!(correctShortName && correctLongName));
+            createButton.setDisable(!(correctShortName));
         });
 
 
@@ -70,7 +68,7 @@ public class CreateRoadMapDialog extends Dialog<Map<String, String>> {
             if (b == btnTypeCreate) {
                 String shortName = shortNameCustomField.getText();
 
-                if (correctShortName && correctLongName) {
+                if (correctShortName) {
                     RoadMap roadMap = new RoadMap(shortName);
                     Global.currentWorkspace.add(roadMap);
                     App.mainPane.selectItem(roadMap);
