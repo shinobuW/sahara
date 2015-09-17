@@ -70,34 +70,40 @@ public class ProjectLoggingTab extends SearchableTab {
 
         datePickers.getChildren().addAll(startDatePicker, endDatePicker);
 
-        SearchableTable<Log> taskTable = new SearchableTable<>();
-        taskTable.setEditable(false);
-        taskTable.setPrefWidth(700);
-        taskTable.setPrefHeight(200);
-        taskTable.setPlaceholder(new SearchableText("There are currently no "
+        SearchableTable<Log> logTable = new SearchableTable<>();
+        logTable.setEditable(false);
+        logTable.setPrefWidth(700);
+        logTable.setPrefHeight(200);
+        logTable.setPlaceholder(new SearchableText("There are currently no "
                 + "logs between the specified dates.", searchControls));
-        taskTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        logTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        startDatePicker.prefWidthProperty().bind(taskTable.widthProperty()
+        startDatePicker.prefWidthProperty().bind(logTable.widthProperty()
                 .divide(2));
-        endDatePicker.prefWidthProperty().bind(taskTable.widthProperty()
+        endDatePicker.prefWidthProperty().bind(logTable.widthProperty()
                 .divide(2));
 
         updateFilteredLogs(currentProject);
 
         TableColumn loggerCol = new TableColumn("Logger");
         loggerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("logger"));
-        loggerCol.prefWidthProperty().bind(taskTable.widthProperty()
+        loggerCol.prefWidthProperty().bind(logTable.widthProperty()
+                .subtract(2).divide(100).multiply(60));
+
+        TableColumn partnerCol = new TableColumn("Partner");
+        partnerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("partner"));
+        partnerCol.setEditable(true);
+        partnerCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
         TableColumn taskCol = new TableColumn("Task");
         taskCol.setCellValueFactory(new PropertyValueFactory<Log, Task>("task"));
-        taskCol.prefWidthProperty().bind(taskTable.widthProperty()
+        taskCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
         TableColumn descriptionCol = new TableColumn("Description");
         descriptionCol.setCellValueFactory(new PropertyValueFactory<Log, String>("description"));
-        descriptionCol.prefWidthProperty().bind(taskTable.widthProperty()
+        descriptionCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
         TableColumn startTimeCol = new TableColumn("Start Time");
@@ -113,19 +119,19 @@ public class ProjectLoggingTab extends SearchableTab {
                         return property;
                     }
                 });
-        startTimeCol.prefWidthProperty().bind(taskTable.widthProperty()
+        startTimeCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
         startTimeCol.setSortType(TableColumn.SortType.ASCENDING);
 
         TableColumn durationCol = new TableColumn("Duration");
         durationCol.setCellValueFactory(new PropertyValueFactory<Log, Long>("durationString"));
-        durationCol.prefWidthProperty().bind(taskTable.widthProperty()
+        durationCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
 
-        taskTable.setItems(data);
-        TableColumn[] columns = {loggerCol, taskCol, descriptionCol, startTimeCol, durationCol};
-        taskTable.getColumns().setAll(columns);
+        logTable.setItems(data);
+        TableColumn[] columns = {loggerCol, partnerCol, taskCol, descriptionCol, startTimeCol, durationCol};
+        logTable.getColumns().setAll(columns);
 
         final Callback<DatePicker, DateCell> endDateCellFactory =
             new Callback<DatePicker, DateCell>() {
@@ -146,7 +152,7 @@ public class ProjectLoggingTab extends SearchableTab {
         endDatePicker.getDatePicker().setDayCellFactory(endDateCellFactory);
 
         // Listener to disable columns being movable
-        taskTable.getColumns().addListener(new ListChangeListener() {
+        logTable.getColumns().addListener(new ListChangeListener() {
             public boolean suspended;
 
             @Override
@@ -154,7 +160,7 @@ public class ProjectLoggingTab extends SearchableTab {
                 change.next();
                 if (change.wasReplaced() && !suspended) {
                     this.suspended = true;
-                    taskTable.getColumns().setAll(columns);
+                    logTable.getColumns().setAll(columns);
                     this.suspended = false;
                 }
             }
@@ -204,14 +210,14 @@ public class ProjectLoggingTab extends SearchableTab {
 
         basicInfoPane.getChildren().add(title);
         basicInfoPane.getChildren().add(datePickers);
-        basicInfoPane.getChildren().add(taskTable);
+        basicInfoPane.getChildren().add(logTable);
 
 
         Collections.addAll(searchControls,
                 title,
                 startDatePicker,
                 endDatePicker,
-                taskTable
+                logTable
         );
 
     }
@@ -225,7 +231,6 @@ public class ProjectLoggingTab extends SearchableTab {
                 data.add(log);
             }
         }
-
     }
 
 

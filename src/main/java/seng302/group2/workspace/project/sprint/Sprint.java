@@ -267,7 +267,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
      *
      * @return A list of logs of the tasks within a sprint.
      */
-    public List<Log> getAllLogsWithInitialLogs() {
+    public ObservableList<Log> getAllLogsWithInitialLogs() {
         ObservableList<Project> projects = Global.currentWorkspace.getProjects();
         ObservableList<Log> allLogs = observableArrayList();
         ObservableList<Log> logList = observableArrayList();
