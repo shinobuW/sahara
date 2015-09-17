@@ -187,7 +187,8 @@ public class PersonEditTab extends SearchableTab {
                     ValidationStyle.borderGlowRed(teamBox.getComboBox());
                     ValidationStyle.showMessage("This person is currently the Product Owner of the team "
                                     + currentPerson.getTeamName() + "! \n"
-                                    + "You must put someone else into the role before you can change this persons team.",
+                                    + "You must put someone else into the role before you can change this"
+                                    + "person's team.",
                             teamBox.getComboBox());
                     teamBox.setTooltip(new Tooltip("This person is currently the Product Owner of the team "
                             + currentPerson.getTeamName() + "! \n"
@@ -199,7 +200,8 @@ public class PersonEditTab extends SearchableTab {
                     ValidationStyle.borderGlowRed(teamBox.getComboBox());
                     ValidationStyle.showMessage("This person is currently the Scrum Master of the team "
                                     + currentPerson.getTeamName() + "! \n"
-                                    + "You must put someone else into the role before you can change this persons team.",
+                                    + "You must put someone else into the role before you can change this person's"
+                                    + " team.",
                             teamBox.getComboBox());
                     teamBox.setTooltip(new Tooltip("This person is currently the Scrum Master of the team "
                             + currentPerson.getTeamName() + "! \n"
