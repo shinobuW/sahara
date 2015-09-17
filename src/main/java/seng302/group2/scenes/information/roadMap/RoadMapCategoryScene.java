@@ -13,7 +13,6 @@ import java.util.Collections;
  * Created by cvs20 on 11/09/15.
  */
 public class RoadMapCategoryScene extends TrackedTabPane {
-    Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
     /**
      * Constructor for the RoadMapCategoryScene class. Creates a tab
@@ -25,17 +24,8 @@ public class RoadMapCategoryScene extends TrackedTabPane {
 
         // Define and add the tabs
         SearchableTab categoryTab = new RoadMapCategoryTab(currentWorkspace);
-        Collections.addAll(searchableTabs, categoryTab);
+        Collections.addAll(getSearchableTabs(), categoryTab);
 
-        this.getTabs().addAll(searchableTabs);
-    }
-
-    /**
-     * Gets all the SearchableTabs on this scene
-     * @return collection of SearchableTabs
-     */
-    @Override
-    public Collection<SearchableTab> getSearchableTabs() {
-        return searchableTabs;
+        this.getTabs().addAll(getSearchableTabs());
     }
 }

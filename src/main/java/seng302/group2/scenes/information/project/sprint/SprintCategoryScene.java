@@ -16,24 +16,13 @@ import java.util.Collections;
  */
 public class SprintCategoryScene extends TrackedTabPane {
 
-    Collection<SearchableTab> searchableTabs = new ArrayList<>();
-
     public SprintCategoryScene(SprintCategory selectedCategory) {
         super(ContentScene.SPRINT_CATEGORY, selectedCategory.getProject());
 
         // Define and add the tabs
         SearchableTab informationTab = new SprintCategoryTab(selectedCategory);
-        Collections.addAll(searchableTabs, informationTab);
+        Collections.addAll(getSearchableTabs(), informationTab);
 
-        this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
-    }
-
-    /**
-     * Gets all the SearchableTabs on this scene
-     * @return collection of tabs
-     */
-    @Override
-    public Collection<SearchableTab> getSearchableTabs() {
-        return searchableTabs;
+        this.getTabs().addAll(getSearchableTabs());  // Add the tabs to the pane
     }
 }

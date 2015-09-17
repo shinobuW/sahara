@@ -16,8 +16,6 @@ import java.util.Collections;
  */
 public class BacklogCategoryScene extends TrackedTabPane {
 
-    Collection<SearchableTab> searchableTabs = new ArrayList<>();
-
     /**
      * Constructor for the BacklogCategoryScene class. Creates a tab
      * of BacklogCategoryTab and displays it.
@@ -30,17 +28,8 @@ public class BacklogCategoryScene extends TrackedTabPane {
         SearchableTab categoryTab = new BacklogCategoryTab(selectedCategory);
         SearchableTab scaleInfoTab = new StoryEstimationScaleInfoTab();
 
-        Collections.addAll(searchableTabs, categoryTab, scaleInfoTab);
+        Collections.addAll(getSearchableTabs(), categoryTab, scaleInfoTab);
 
-        this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
-    }
-
-    /**
-     * Gets all the SearchableTabs on this scene
-     * @return collection of SearchableTabs
-     */
-    @Override
-    public Collection<SearchableTab> getSearchableTabs() {
-        return searchableTabs;
+        this.getTabs().addAll(getSearchableTabs());  // Add the tabs to the pane
     }
 }

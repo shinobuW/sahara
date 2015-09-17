@@ -16,8 +16,6 @@ import java.util.Collections;
  */
 public class SkillCategoryScene extends TrackedTabPane {
 
-    Collection<SearchableTab> searchableTabs = new ArrayList<>();
-
     /**
      * Constructor for the SkillCategoryScene class. Creates a tab
      * of SkillCategoryTab and displays it.
@@ -28,17 +26,8 @@ public class SkillCategoryScene extends TrackedTabPane {
 
         // Define and add the tabs
         SearchableTab categoryTab = new SkillCategoryTab(currentWorkspace);
-        Collections.addAll(searchableTabs, categoryTab);
+        Collections.addAll(getSearchableTabs(), categoryTab);
 
-        this.getTabs().addAll(searchableTabs);
-    }
-
-    /**
-     * Gets all the SearchableTabs on this scene
-     * @return collection of SearchableTabs
-     */
-    @Override
-    public Collection<SearchableTab> getSearchableTabs() {
-        return searchableTabs;
+        this.getTabs().addAll(getSearchableTabs());
     }
 }

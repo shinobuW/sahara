@@ -16,8 +16,6 @@ import java.util.Collections;
  */
 public class StoryCategoryScene extends TrackedTabPane {
 
-    Collection<SearchableTab> searchableTabs = new ArrayList<>();
-
     /**
      * Constructor for the StoryCategoryScene class. Creates a tab
      * of StoryCategoryTab and displays it.
@@ -28,17 +26,8 @@ public class StoryCategoryScene extends TrackedTabPane {
 
         // Define and add the tabs
         SearchableTab informationTab = new StoryCategoryTab(selectedCategory);
-        Collections.addAll(searchableTabs, informationTab);
+        Collections.addAll(getSearchableTabs(), informationTab);
 
-        this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
-    }
-
-    /**
-     * Gets all the SearchableTabs on this scene
-     * @return collection of SearchableTabs
-     */
-    @Override
-    public Collection<SearchableTab> getSearchableTabs() {
-        return searchableTabs;
+        this.getTabs().addAll(getSearchableTabs());  // Add the tabs to the pane
     }
 }

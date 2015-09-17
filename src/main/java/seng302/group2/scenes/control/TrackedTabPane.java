@@ -18,8 +18,12 @@ import java.util.Map;
  */
 public abstract class TrackedTabPane extends SearchableScene {
 
-    @Override
-    public abstract Collection<SearchableTab> getSearchableTabs();
+
+    Collection<SearchableTab> searchableTabs = new ArrayList<>();
+
+    public Collection<SearchableTab> getSearchableTabs() {
+        return searchableTabs;
+    }
 
     /**
      * An enumeration of scenes in the project

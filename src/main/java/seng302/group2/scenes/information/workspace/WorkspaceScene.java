@@ -15,8 +15,6 @@ import java.util.Collections;
  */
 public class WorkspaceScene extends TrackedTabPane {
 
-    Collection<SearchableTab> searchableTabs = new ArrayList<>();
-
     /**
      * Constructor for the Workspace Scene. Creates an instance of the WorkspaceInfoTab and displays it.
      * 
@@ -27,8 +25,8 @@ public class WorkspaceScene extends TrackedTabPane {
 
         // Define and add the tabs
         SearchableTab informationTab = new WorkspaceInfoTab(currentWorkspace);
-        Collections.addAll(searchableTabs, informationTab);
-        this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
+        Collections.addAll(getSearchableTabs(), informationTab);
+        this.getTabs().addAll(getSearchableTabs());  // Add the tabs to the pane
     }
 
     /**
@@ -42,18 +40,8 @@ public class WorkspaceScene extends TrackedTabPane {
 
         // Define and add the tabs
         SearchableTab editTab = new WorkspaceEditTab(currentWorkspace);
-        Collections.addAll(searchableTabs, editTab);
+        Collections.addAll(getSearchableTabs(), editTab);
 
         this.getTabs().addAll(editTab);  // Add the tabs to the pane
-    }
-
-
-    /**
-     * Gets all the SearchableTabs on this scene
-     * @return collection of SearchableTabs
-     */
-    @Override
-    public Collection<SearchableTab> getSearchableTabs() {
-        return searchableTabs;
     }
 }
