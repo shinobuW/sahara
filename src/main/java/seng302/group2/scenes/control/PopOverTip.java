@@ -19,6 +19,7 @@ public class PopOverTip extends PopOver {
 
     /**
      * Creates a PopOverTip on the given parent/owner
+     *
      * @param parentNode The parent of the PopOverTip
      */
     public PopOverTip(Node parentNode) {
@@ -29,7 +30,8 @@ public class PopOverTip extends PopOver {
 
     /**
      * Creates a PopOverTip on the given parent/owner with the given content as the inner of the PopOverTip
-     * @param parentNode The parent of the PopOverTip
+     *
+     * @param parentNode  The parent of the PopOverTip
      * @param contentNode The content of the PopOverTip
      */
     public PopOverTip(Node parentNode, Node contentNode) {
@@ -47,6 +49,7 @@ public class PopOverTip extends PopOver {
 
     /**
      * Performs basic initialisation of the PopOverTip
+     *
      * @param parentNode The parent of the PopOverTip
      */
     private void init(Node parentNode) {
@@ -57,6 +60,7 @@ public class PopOverTip extends PopOver {
 
     /**
      * Creates a wrapper of a node with some added padding
+     *
      * @param node The node to wrap
      * @return The node wrapped in an HBox with a default padding
      */
@@ -75,12 +79,12 @@ public class PopOverTip extends PopOver {
         if (parent != null) {
 
             parent.addEventHandler(MouseEvent.MOUSE_MOVED, event -> {
-                    if (isShowing()) {
-                        this.setX(event.getScreenX() - this.getWidth() / 2.0);
-                        this.setY(event.getScreenY() + 4);
+                if (isShowing()) {
+                    this.setX(event.getScreenX() - this.getWidth() / 2.0);
+                    this.setY(event.getScreenY() + 4);
 
-                    }
-                });
+                }
+            });
 
             parent.addEventHandler(MouseEvent.MOUSE_ENTERED, event -> show(parent, event.getScreenX(),
                     event.getScreenY() + parent.getBoundsInLocal().getMaxY()));

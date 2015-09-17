@@ -56,28 +56,28 @@ public class CustomTextArea extends VBox implements SearchableControl {
         this.getChildren().add(entry);
 
         inputText.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-                if (event.getCode() == KeyCode.TAB) {
-                    TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
-                    if (skin.getBehavior() != null) {
-                        TextAreaBehavior behavior = skin.getBehavior();
-                        if (event.isControlDown()) {
-                            behavior.callAction("InsertTab");
-                        }
-                        else {
-                            behavior.callAction("TraverseNext");
-                        }
-                        event.consume();
+            if (event.getCode() == KeyCode.TAB) {
+                TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
+                if (skin.getBehavior() != null) {
+                    TextAreaBehavior behavior = skin.getBehavior();
+                    if (event.isControlDown()) {
+                        behavior.callAction("InsertTab");
                     }
-
+                    else {
+                        behavior.callAction("TraverseNext");
+                    }
+                    event.consume();
                 }
-            });
+
+            }
+        });
     }
 
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
      * asterisk.
      *
-     * @param name The node field that is required
+     * @param name               The node field that is required
      * @param searchableControls The collection of searchable controls to add this control too
      */
     public CustomTextArea(String name, Collection<SearchableControl> searchableControls) {
@@ -105,21 +105,21 @@ public class CustomTextArea extends VBox implements SearchableControl {
         this.getChildren().add(entry);
 
         inputText.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-                if (event.getCode() == KeyCode.TAB) {
-                    TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
-                    if (skin.getBehavior() != null) {
-                        TextAreaBehavior behavior = skin.getBehavior();
-                        if (event.isControlDown()) {
-                            behavior.callAction("InsertTab");
-                        }
-                        else {
-                            behavior.callAction("TraverseNext");
-                        }
-                        event.consume();
+            if (event.getCode() == KeyCode.TAB) {
+                TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
+                if (skin.getBehavior() != null) {
+                    TextAreaBehavior behavior = skin.getBehavior();
+                    if (event.isControlDown()) {
+                        behavior.callAction("InsertTab");
                     }
-
+                    else {
+                        behavior.callAction("TraverseNext");
+                    }
+                    event.consume();
                 }
-            });
+
+            }
+        });
     }
 
     /**
@@ -151,21 +151,21 @@ public class CustomTextArea extends VBox implements SearchableControl {
         this.getChildren().add(entry);
 
         inputText.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-                if (event.getCode() == KeyCode.TAB) {
-                    TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
-                    if (skin.getBehavior() != null) {
-                        TextAreaBehavior behavior = skin.getBehavior();
-                        if (event.isControlDown()) {
-                            behavior.callAction("InsertTab");
-                        }
-                        else {
-                            behavior.callAction("TraverseNext");
-                        }
-                        event.consume();
+            if (event.getCode() == KeyCode.TAB) {
+                TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
+                if (skin.getBehavior() != null) {
+                    TextAreaBehavior behavior = skin.getBehavior();
+                    if (event.isControlDown()) {
+                        behavior.callAction("InsertTab");
                     }
-
+                    else {
+                        behavior.callAction("TraverseNext");
+                    }
+                    event.consume();
                 }
-            });
+
+            }
+        });
     }
 
 
@@ -173,8 +173,8 @@ public class CustomTextArea extends VBox implements SearchableControl {
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
      * asterisk.
      *
-     * @param name  The node field that is required
-     * @param width The width of the area
+     * @param name               The node field that is required
+     * @param width              The width of the area
      * @param searchableControls The collection of searchable controls to add this control too
      */
     public CustomTextArea(String name, int width, Collection<SearchableControl> searchableControls) {
@@ -200,21 +200,21 @@ public class CustomTextArea extends VBox implements SearchableControl {
         this.getChildren().add(entry);
 
         inputText.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-                if (event.getCode() == KeyCode.TAB) {
-                    TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
-                    if (skin.getBehavior() != null) {
-                        TextAreaBehavior behavior = skin.getBehavior();
-                        if (event.isControlDown()) {
-                            behavior.callAction("InsertTab");
-                        }
-                        else {
-                            behavior.callAction("TraverseNext");
-                        }
-                        event.consume();
+            if (event.getCode() == KeyCode.TAB) {
+                TextAreaSkin skin = (TextAreaSkin) inputText.getSkin();
+                if (skin.getBehavior() != null) {
+                    TextAreaBehavior behavior = skin.getBehavior();
+                    if (event.isControlDown()) {
+                        behavior.callAction("InsertTab");
                     }
-
+                    else {
+                        behavior.callAction("TraverseNext");
+                    }
+                    event.consume();
                 }
-            });
+
+            }
+        });
     }
 
     /**
@@ -239,6 +239,7 @@ public class CustomTextArea extends VBox implements SearchableControl {
 
     /**
      * Returns the inner text area
+     *
      * @return The inner text area
      */
     public TextArea getTextArea() {
@@ -249,7 +250,7 @@ public class CustomTextArea extends VBox implements SearchableControl {
     @Override
     public boolean query(String query) {
         boolean found = false;
-        
+
         if (query.isEmpty()) {
             ValidationStyle.borderGlowNone(inputText);
         }

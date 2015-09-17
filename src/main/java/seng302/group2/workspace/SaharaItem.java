@@ -22,22 +22,17 @@ import static javafx.collections.FXCollections.observableArrayList;
  * @author Jordane
  */
 public abstract class SaharaItem implements HierarchyData<SaharaItem> {
+    static final AtomicLong NEXT_ID = new AtomicLong(0);
+    // The pool of all Sahara items
+    static Set<SaharaItem> itemPool = new HashSet<>();
+    protected final long id = NEXT_ID.getAndIncrement();
     private String itemName = "";
     private transient ObservableList<SaharaItem> children = observableArrayList();
-
     private transient CategorySwitchStrategy categorySwitchStrategy;
     private transient InformationSwitchStrategy informationSwitchStrategy;
     private transient SubCategorySwitchStrategy subCategorySwitchStrategy;
-
-    static final AtomicLong NEXT_ID = new AtomicLong(0);
-    protected final long id = NEXT_ID.getAndIncrement();
-
     private transient ObservableList<Tag> tags = observableArrayList();
     private List<Tag> serializableTags = new ArrayList<>();
-
-
-    // The pool of all Sahara items
-    static Set<SaharaItem> itemPool = new HashSet<>();
 
 
     /**
@@ -64,9 +59,48 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
         return itemPool;
     }
 
+    /**
+     * Checks all IDs in the current pool of Sahara items and sets the minimum ID for new items
+     */
+    public static void refreshIDs() {
+        long maxID = 0;
+        for (SaharaItem item : itemPool) {
+            if (item.getId() > maxID) {
+                maxID = item.getId();
+            }
+        }
+        setStartId(maxID);
+    }
+
+    /**
+     * Sets the new starting ID for new Sahara items
+     *
+     * @param startId The ID to start from
+     */
+    public static void setStartId(long startId) {
+        if (startId > NEXT_ID.get()) {
+            NEXT_ID.set(startId);
+        }
+    }
+
+    /**
+     * Sets the new starting ID for new Sahara items
+     *
+     * @param startId The ID to start from
+     * @param force   Whether or not to override the current ID regardless whether or not it is less than the current ID
+     */
+    public static void setStartId(long startId, boolean force) {
+        if (force) {
+            NEXT_ID.set(startId);
+        }
+        else {
+            setStartId(startId);
+        }
+    }
 
     /**
      * Gets the Sahara item's ID
+     *
      * @return The ID of this Sahara item
      */
     public long getId() {
@@ -75,6 +109,7 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
 
     /**
      * Gets the SaharaItems list of tags
+     *
      * @return the list of tags of this Sahara item
      */
     public ObservableList<Tag> getTags() {
@@ -108,45 +143,6 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
     }
 
     /**
-     * Checks all IDs in the current pool of Sahara items and sets the minimum ID for new items
-     */
-    public static void refreshIDs() {
-        long maxID = 0;
-        for (SaharaItem item : itemPool) {
-            if (item.getId() > maxID) {
-                maxID = item.getId();
-            }
-        }
-        setStartId(maxID);
-    }
-
-
-    /**
-     * Sets the new starting ID for new Sahara items
-     * @param startId The ID to start from
-     */
-    public static void setStartId(long startId) {
-        if (startId > NEXT_ID.get()) {
-            NEXT_ID.set(startId);
-        }
-    }
-
-    /**
-     * Sets the new starting ID for new Sahara items
-     * @param startId The ID to start from
-     * @param force Whether or not to override the current ID regardless whether or not it is less than the current ID
-     */
-    public static void setStartId(long startId, boolean force) {
-        if (force) {
-            NEXT_ID.set(startId);
-        }
-        else {
-            setStartId(startId);
-        }
-    }
-
-
-    /**
      * Allows the setting of the category switch strategy for children classes
      *
      * @param categorySwitchStrategy The strategy to set
@@ -178,6 +174,7 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
 
     /**
      * Returns the items inside of the current SaharaItem
+     *
      * @return A set of items inside of this SaharaItem
      */
     public abstract Set<SaharaItem> getItemsSet();
@@ -215,6 +212,7 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
 
     /**
      * Switches the scene based on the TVItem's switching strategy
+     *
      * @param subCategory the sub category to switch to
      */
     public void switchToCategoryScene(Category subCategory) {
@@ -232,6 +230,7 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
 
     /**
      * Switches the scene based on the TVItem's switching strategy
+     *
      * @param edit Whether or not to switch to the edit scene
      */
     public void switchToInfoScene(boolean edit) {
@@ -241,12 +240,14 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
 
     /**
      * Abstract method for creating an XML element for the report generation
+     *
      * @return element for XML generation
      */
     public abstract Element generateXML();
 
     /**
      * Checks whether or not <i>this</i> is <b>equivalent</b> to the passed object
+     *
      * @param object The object to compare to
      * @return true if <i>this</i> and the object are equivalent
      */
@@ -256,10 +257,10 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
     }
 
 
-
     /**
      * Checks whether or not <i>this</i> is <b>equivalent</b> to the passed object based only on the
      * short names and classes of the objects
+     *
      * @param object The object to compare to
      * @return true if <i>this</i> and the object are equivalent by name and type
      */

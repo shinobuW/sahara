@@ -21,7 +21,6 @@ import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
 import java.text.MessageFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -40,7 +39,7 @@ public class DeleteDialog {
      */
     public static boolean showDeleteDialog(SaharaItem element) {
         if (element instanceof Release) {
-            for (Sprint sprint : ((Release)element).getProject().getSprints()) {
+            for (Sprint sprint : ((Release) element).getProject().getSprints()) {
                 if (sprint.getRelease() == element) {
                     CustomDialog.showDialog("Cannot Delete Release", "The chosen release cannot be deleted"
                             + " as it has one or more associated Sprints!", Alert.AlertType.WARNING);
@@ -74,7 +73,7 @@ public class DeleteDialog {
         alert.setContentText(dialogText.get(1));
         alert.getDialogPane().setStyle(" -fx-max-width:650px; -fx-max-height: 170px; -fx-pref-width: 650px; "
                 + "-fx-pref-height: 170px;");
-        Optional<ButtonType> result  = alert.showAndWait();
+        Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == ButtonType.OK) {
             if (element.getClass() == Person.class) {

@@ -10,6 +10,7 @@ public class GeneralEnumStringConverter extends StringConverter<String> {
 
     /**
      * Converts a human readable string value into an equivalent enum string value.
+     *
      * @param value The string value to convert
      * @return The enum value converted to
      */
@@ -20,6 +21,7 @@ public class GeneralEnumStringConverter extends StringConverter<String> {
 
     /**
      * Converts an enum string value into an equivalent human readable string value.
+     *
      * @param value The enum value to convert
      * @return The string value converted to
      */

@@ -15,13 +15,14 @@ import java.util.regex.Pattern;
  * Created by btm38 on 1/09/15.
  */
 public class CustomInfoLabel extends HBox implements SearchableControl {
-    private Set<SearchableControl> searchControls = new HashSet<>();
     SearchableText label;
     SearchableText value;
+    private Set<SearchableControl> searchControls = new HashSet<>();
 
     /**
      * Basic constructor. Given a label string and value string, will return an HBox containing the two.
      * The label string will be bolded.
+     *
      * @param labelText The label string
      * @param valueText The value string
      */
@@ -36,8 +37,9 @@ public class CustomInfoLabel extends HBox implements SearchableControl {
     /**
      * Basic constructor. Given a label string and value string, will return an HBox containing the two.
      * The label string will be bolded.
-     * @param labelText The label string
-     * @param valueText The value string
+     *
+     * @param labelText          The label string
+     * @param valueText          The value string
      * @param searchableControls The collection of searchable controls to add this to
      */
     public CustomInfoLabel(String labelText, String valueText, Collection<SearchableControl> searchableControls) {
@@ -49,20 +51,20 @@ public class CustomInfoLabel extends HBox implements SearchableControl {
         this.getChildren().addAll(label, value);
     }
 
-    public void setLabel(String labelText) {
-        label.setText(labelText);
-    }
-
-    public void setValue(String valueText) {
-        value.setText(valueText);
-    }
-
     public String getLabel() {
         return label.getText();
     }
 
+    public void setLabel(String labelText) {
+        label.setText(labelText);
+    }
+
     public String getValue() {
         return value.getText();
+    }
+
+    public void setValue(String valueText) {
+        value.setText(valueText);
     }
 
     @Override
@@ -80,7 +82,7 @@ public class CustomInfoLabel extends HBox implements SearchableControl {
                 found = true;
             }
         }
-        return  found;
+        return found;
     }
 
     @Override

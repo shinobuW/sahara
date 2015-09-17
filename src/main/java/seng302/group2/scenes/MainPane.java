@@ -32,14 +32,13 @@ import static seng302.group2.App.refreshWindowTitle;
  * @author Jordane Lew (jml168)
  */
 public class MainPane extends BorderPane {
+    private static MainToolbar toolBar = null;
+    Preferences userPrefs = Preferences.userNodeForPackage(getClass());
     private TreeViewWithItems<SaharaItem> treeView;
     private Pane informationPane = new Pane();
     private ScrollPane contentPane;
     private boolean menuHidden = false;
     private double dividerPositions;
-    private static MainToolbar toolBar = null;
-
-    Preferences userPrefs = Preferences.userNodeForPackage(getClass());
 
     /**
      * The default constructor of the main pane that performs basic initialisation
@@ -62,6 +61,15 @@ public class MainPane extends BorderPane {
 
         double split = userPrefs.getDouble("pane.split", 0.225);
         Platform.runLater(() -> content.setDividerPositions(split));
+    }
+
+    /**
+     * Gets the Toolbar of the App
+     *
+     * @return The toolbar object of the app.
+     */
+    public static MainToolbar getToolBar() {
+        return toolBar;
     }
 
     /**
@@ -118,7 +126,17 @@ public class MainPane extends BorderPane {
     }
 
     /**
+     * Gets the main content within the scene
+     *
+     * @return The information panes.
+     */
+    public Node getContent() {
+        return contentPane.getContent();
+    }
+
+    /**
      * Sets the content pane child to the given node
+     *
      * @param node The node to replace the current content pane
      */
     public void setContent(Node node) {
@@ -126,22 +144,6 @@ public class MainPane extends BorderPane {
         contentPane.setContent(node);
 //            });
 
-    }
-
-    /**
-     * Gets the Toolbar of the App
-     * @return The toolbar object of the app.
-     */
-    public static MainToolbar getToolBar() {
-        return toolBar;
-    }
-
-    /**
-     * Gets the main content within the scene
-     * @return The information panes.
-     */
-    public Node getContent() {
-        return contentPane.getContent();
     }
 
     /**
@@ -162,7 +164,7 @@ public class MainPane extends BorderPane {
 
         // Refresh based on the selected item's type
         if (selected instanceof SubCategory) {
-            selected.switchToCategoryScene((Category)selected);
+            selected.switchToCategoryScene((Category) selected);
         }
         else if (selected instanceof Category) {
             selected.switchToCategoryScene();
@@ -200,16 +202,17 @@ public class MainPane extends BorderPane {
         this.setContent(new WorkspaceScene(Global.currentWorkspace));
 
         this.heightProperty().addListener((arg0, arg1, arg2) -> {
-                App.content.setPrefHeight(arg2.doubleValue());
-            });
+            App.content.setPrefHeight(arg2.doubleValue());
+        });
 
         treeView.widthProperty().addListener(event -> {
-                userPrefs.putDouble("pane.split", content.getDividerPositions()[0]);
-            });
+            userPrefs.putDouble("pane.split", content.getDividerPositions()[0]);
+        });
     }
 
     /**
      * Selects the given item inside the pane (by selecting it through the tree as if it were clicked)
+     *
      * @param item The item to select
      */
     public void selectItem(SaharaItem item) {

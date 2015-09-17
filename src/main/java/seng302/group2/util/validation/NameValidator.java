@@ -10,11 +10,13 @@ import seng302.group2.scenes.validation.ValidationStyle;
 
 /**
  * A class for checking the validity of inputted Names.
+ *
  * @author Jordane
  */
 public class NameValidator {
     /**
      * Checks whether the name is not null or an empty string
+     *
      * @param name The name to check
      * @return An enum value showing whether the name is not null or an empty string
      */

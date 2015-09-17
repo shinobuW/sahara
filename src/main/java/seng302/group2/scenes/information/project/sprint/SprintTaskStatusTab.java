@@ -25,15 +25,13 @@ import java.util.*;
 
 public class SprintTaskStatusTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
-    Pane basicInfoPane = new VBox();
-    VBox listWrapper = new VBox();
-
     public ToggleGroup group = new ToggleGroup();
     public CustomComboBox<String> filterBox;
+    List<SearchableControl> searchControls = new ArrayList<>();
     public SearchableRadioButton statusToggle = new SearchableRadioButton("Status", searchControls);
     public SearchableRadioButton storyToggle = new SearchableRadioButton("Story", searchControls);
-
+    Pane basicInfoPane = new VBox();
+    VBox listWrapper = new VBox();
     String unassignedFilter = "Unassigned";
     String uncompletedFilter = "Uncompleted";
     String allFilter = "All Tasks";

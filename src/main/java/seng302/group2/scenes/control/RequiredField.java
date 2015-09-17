@@ -56,7 +56,7 @@ public class RequiredField extends VBox implements SearchableControl {
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
      * asterisk.
      *
-     * @param name The node field that is required
+     * @param name              The node field that is required
      * @param controlCollection The search collection to add this control to
      */
     public RequiredField(String name, Collection<SearchableControl> controlCollection) {
@@ -106,6 +106,7 @@ public class RequiredField extends VBox implements SearchableControl {
 
     /**
      * Gets the input text field
+     *
      * @return textfield
      */
     public TextField getTextField() {

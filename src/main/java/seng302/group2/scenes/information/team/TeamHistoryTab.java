@@ -400,7 +400,8 @@ public class TeamHistoryTab extends SearchableTab {
 
 
     /**
-     * A subclass of TableCell to allow for date pickers to be bound to the cell
+   ng rep
+  * A subclass of TableCell to allow for date pickers to be bound to the cell
      * to allow for start and end date to be edited
      */
     class EditingCell extends TableCell<Allocation, String> {
@@ -533,7 +534,7 @@ public class TeamHistoryTab extends SearchableTab {
     }
 
     /**
-     * Gets the string representation of the current Tab
+     * Gets the striresentation of the current Tab
      * @return The String value
      */
     @Override

@@ -33,17 +33,7 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
         setInformationSwitchStrategy(new SkillInformationSwitchStrategy());
     }
 
-    /**
-     * Returns the items held by the Skill, blank as the skill has no child items.
-     * @return a blank hash set
-     */
-    @Override
-    public Set<SaharaItem> getItemsSet() {
-        return new HashSet<>();
-    }
-
-    /**
-     * Basic Skill constructor with all fields
+    /** Basic Skill constructor with all fields
      *
      * @param shortName   A unique short name to identify a Skill
      * @param description The Description of a skill
@@ -57,10 +47,22 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
         setInformationSwitchStrategy(new SkillInformationSwitchStrategy());
     }
 
-    // <editor-fold defaultstate="collapsed" desc="Getters"> 
+    /**
+
+/**
+     * Returns the items held by the Skill, blank as the skill has no child items.
+     * @return a blank hash set
+     */
+    @Override
+    public Set<SaharaItem> getItemsSet() {
+        return new HashSet<>();
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="Getters">
 
     /**
-     * Gets a skills short name
+
+  * Gets a skills short name
      *
      * @return The short name of the skill
      */

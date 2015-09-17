@@ -63,7 +63,7 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
     /**
      * Creates a ComboBox and Label inside a single HBox.
      *
-     * @param name The label of the combo box
+     * @param name     The label of the combo box
      * @param required Whether or not the field is required
      */
     public CustomComboBox(String name, boolean required) {
@@ -95,7 +95,7 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
     /**
      * Creates a ComboBox and Label inside a single HBox.
      *
-     * @param name The label of the combo box
+     * @param name               The label of the combo box
      * @param searchableControls The collection of searchable controls to add this to
      */
     public CustomComboBox(String name, Collection<SearchableControl> searchableControls) {
@@ -127,8 +127,8 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
     /**
      * Creates a ComboBox and Label inside a single HBox.
      *
-     * @param name The label of the combo box
-     * @param required Whether or not the field is required
+     * @param name               The label of the combo box
+     * @param required           Whether or not the field is required
      * @param searchableControls The collection of searchable controls to add this to
      */
     public CustomComboBox(String name, boolean required, Collection<SearchableControl> searchableControls) {
@@ -161,6 +161,7 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
 
     /**
      * Disables and enables the combobox. Does not affect the labels.
+     *
      * @param disable boolean which either disables or enables depending on its value
      */
     public void disable(boolean disable) {
@@ -174,6 +175,7 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
 
     /**
      * Sets the tooltip of the combobox.
+     *
      * @param tool The tooltip
      */
     public void setTooltip(javafx.scene.control.Tooltip tool) {
@@ -241,6 +243,7 @@ public class CustomComboBox<T> extends VBox implements SearchableControl {
     /**
      * Queries the combo box to find any elements containing the given query string. If found inside the combo box, the
      * combo box border will be highlighted, and if found in the label text, the matching text will be highlighted.
+     *
      * @param query The query string to search
      * @return Whether any elements inside of the combobox or label were found to contain the query string
      */

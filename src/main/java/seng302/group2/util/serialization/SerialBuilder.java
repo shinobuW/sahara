@@ -57,9 +57,9 @@ public class SerialBuilder {
                 .addType(PairLog.class)
 
 
-                // TODO REMINDER: Add any new classes. Do not delete this todo.
+                        // TODO REMINDER: Add any new classes. Do not delete this todo.
 
-                // Category classes
+                        // Category classes
                 .addType(Category.class)
                 .addType(SubCategory.class)
                 .addType(PeopleCategory.class)

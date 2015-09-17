@@ -15,15 +15,16 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class Tooltip extends javafx.scene.control.Tooltip {
 
+    static Lock staticLock = new ReentrantLock();
     /**
      * The default delay for custom Tooltips, much shorter than original JavaFX Tooltips
      */
     private final int defaultDelay = 200;
-    static Lock staticLock = new ReentrantLock();
 
 
     /**
      * Basic constructor for a Sahara Tooltip
+     *
      * @param tipText The tooltip text
      */
     public Tooltip(String tipText) {
@@ -34,8 +35,9 @@ public class Tooltip extends javafx.scene.control.Tooltip {
 
     /**
      * Constructor for a Sahara Tooltip with custom show delay
+     *
      * @param tipText The tooltip text
-     * @param delay The delay the Tooltip has from hovering to showing
+     * @param delay   The delay the Tooltip has from hovering to showing
      */
     public Tooltip(String tipText, int delay) {
         super(tipText);
@@ -45,8 +47,9 @@ public class Tooltip extends javafx.scene.control.Tooltip {
 
     /**
      * Constructor for a Sahara Tooltip with a given node to install on, and a custom show delay
+     *
      * @param tipText The tooltip text
-     * @param node The node that the Tooltip should be automatically installed onto
+     * @param node    The node that the Tooltip should be automatically installed onto
      */
     public Tooltip(String tipText, Node node) {
         super(tipText);
@@ -57,9 +60,10 @@ public class Tooltip extends javafx.scene.control.Tooltip {
 
     /**
      * Constructor for a Sahara Tooltip with a given node to install on, and a custom show delay
+     *
      * @param tipText The tooltip text
-     * @param node The node that the Tooltip should be automatically installed onto
-     * @param delay The delay the Tooltip has from hovering to showing
+     * @param node    The node that the Tooltip should be automatically installed onto
+     * @param delay   The delay the Tooltip has from hovering to showing
      */
     public Tooltip(String tipText, Node node, int delay) {
         super(tipText);
@@ -70,8 +74,9 @@ public class Tooltip extends javafx.scene.control.Tooltip {
 
     /**
      * An on-the-fly creation method for a Sahara Tooltip with a given node to install on, and a custom show delay
+     *
      * @param tipText The tooltip text
-     * @param node The node that the Tooltip should be automatically installed onto
+     * @param node    The node that the Tooltip should be automatically installed onto
      */
     public static void create(String tipText, Node node) {
         Tooltip tt = new Tooltip(tipText, node);
@@ -80,28 +85,20 @@ public class Tooltip extends javafx.scene.control.Tooltip {
 
     /**
      * An on-the-fly creation method for a Sahara Tooltip with a given node to install on, and a custom show delay
+     *
      * @param tipText The tooltip text
-     * @param node The node that the Tooltip should be automatically installed onto
-     * @param delay The delay the Tooltip has from hovering to showing
+     * @param node    The node that the Tooltip should be automatically installed onto
+     * @param delay   The delay the Tooltip has from hovering to showing
      */
     public static void create(String tipText, Node node, int delay) {
         Tooltip tt = new Tooltip(tipText, node, delay);
     }
 
-
-    /**
-     * Sets the showing delay of the Tooltip
-     * @param delay The delay between hovering and showing the Tooltip in milliseconds
-     */
-    public void setDelay(int delay) {
-        setDelay(this, delay);
-    }
-
-
     /**
      * Sets the delay of a JavaFX Tooltip using reflection
+     *
      * @param tooltip The Tooltip to set the delay of showing
-     * @param delay The delay in milliseconds
+     * @param delay   The delay in milliseconds
      */
     private static void setDelay(javafx.scene.control.Tooltip tooltip, int delay) {
         staticLock.lock();
@@ -121,5 +118,14 @@ public class Tooltip extends javafx.scene.control.Tooltip {
             e.printStackTrace();
         }
         staticLock.unlock();
+    }
+
+    /**
+     * Sets the showing delay of the Tooltip
+     *
+     * @param delay The delay between hovering and showing the Tooltip in milliseconds
+     */
+    public void setDelay(int delay) {
+        setDelay(this, delay);
     }
 }

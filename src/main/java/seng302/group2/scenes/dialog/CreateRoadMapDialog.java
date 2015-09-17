@@ -19,17 +19,16 @@ import seng302.group2.workspace.roadMap.RoadMap;
 
 import java.util.Map;
 
-import static seng302.group2.util.validation.NameValidator.validateName;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
- *
  * @author Darzolak
  */
 public class CreateRoadMapDialog extends Dialog<Map<String, String>> {
-    
+
     Boolean correctShortName = Boolean.FALSE;
     Boolean correctLongName = Boolean.FALSE;
+
     /**
      * Displays the Dialog box for creating a workspace.
      */
@@ -62,25 +61,24 @@ public class CreateRoadMapDialog extends Dialog<Map<String, String>> {
         createButton.setDisable(true);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctShortName = validateShortName(shortNameCustomField, null);
-                createButton.setDisable(!(correctShortName && correctLongName));
-            });
-
+            correctShortName = validateShortName(shortNameCustomField, null);
+            createButton.setDisable(!(correctShortName && correctLongName));
+        });
 
 
         this.setResultConverter(b -> {
-                if (b == btnTypeCreate) {
-                    String shortName = shortNameCustomField.getText();
+            if (b == btnTypeCreate) {
+                String shortName = shortNameCustomField.getText();
 
-                    if (correctShortName && correctLongName) {
-                        RoadMap roadMap = new RoadMap(shortName);
-                        Global.currentWorkspace.add(roadMap);
-                        App.mainPane.selectItem(roadMap);
-                        this.close();
-                    }
+                if (correctShortName && correctLongName) {
+                    RoadMap roadMap = new RoadMap(shortName);
+                    Global.currentWorkspace.add(roadMap);
+                    App.mainPane.selectItem(roadMap);
+                    this.close();
                 }
-                return null;
-            });
+            }
+            return null;
+        });
 
         this.setResizable(false);
         this.show();

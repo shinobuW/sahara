@@ -77,6 +77,7 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
                             {
                                 super.setPrefWidth(100);
                             }
+
                             @Override
                             public void updateItem(Project item,
                                                    boolean empty) {
@@ -151,103 +152,103 @@ public class CreateTaskDialog extends Dialog<Map<String, String>> {
         createButton.setDisable(true);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctShortName = validateShortName(shortNameCustomField, null);
-                toggleCreateBtn();
-            });
+            correctShortName = validateShortName(shortNameCustomField, null);
+            toggleCreateBtn();
+        });
 
         effortLeftField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctEffortLeft = DateValidator.validDuration(newValue) && !newValue.isEmpty();
-                if (correctEffortLeft) {
-                    ValidationStyle.borderGlowNone(effortLeftField.getTextField());
+            correctEffortLeft = DateValidator.validDuration(newValue) && !newValue.isEmpty();
+            if (correctEffortLeft) {
+                ValidationStyle.borderGlowNone(effortLeftField.getTextField());
+            }
+            else {
+                if (newValue.isEmpty()) {
+                    ValidationStyle.borderGlowRed(effortLeftField.getTextField());
+                    ValidationStyle.showMessage("This field must be filled", effortLeftField.getTextField());
                 }
                 else {
-                    if (newValue.isEmpty()) {
-                        ValidationStyle.borderGlowRed(effortLeftField.getTextField());
-                        ValidationStyle.showMessage("This field must be filled", effortLeftField.getTextField());
-                    }
-                    else {
-                        ValidationStyle.borderGlowRed(effortLeftField.getTextField());
-                        ValidationStyle.showMessage("Please input in valid format", effortLeftField.getTextField());
-                    }
+                    ValidationStyle.borderGlowRed(effortLeftField.getTextField());
+                    ValidationStyle.showMessage("Please input in valid format", effortLeftField.getTextField());
                 }
-                toggleCreateBtn();
-            });
+            }
+            toggleCreateBtn();
+        });
 
         projectComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue == null) {
-                    projectSelected = false;
-                    return;
+            if (newValue == null) {
+                projectSelected = false;
+                return;
+            }
+            projectSelected = true;
+            backlogComboBox.getComboBox().getItems().clear();
+            storyComboBox.getComboBox().getItems().clear();
+            if (newValue.getBacklogs().size() == 0) {
+                backlogComboBox.disable(true);
+            }
+            else {
+                backlogComboBox.disable(false);
+                for (Backlog backlog : newValue.getBacklogs()) {
+                    backlogComboBox.getComboBox().getItems().add(backlog);
                 }
-                projectSelected = true;
-                backlogComboBox.getComboBox().getItems().clear();
-                storyComboBox.getComboBox().getItems().clear();
-                if (newValue.getBacklogs().size() == 0) {
-                    backlogComboBox.disable(true);
-                }
-                else {
-                    backlogComboBox.disable(false);
-                    for (Backlog backlog : newValue.getBacklogs()) {
-                        backlogComboBox.getComboBox().getItems().add(backlog);
-                    }
-                }
+            }
 
-                assigneeComboBox.clear();
-                if (newValue.getCurrentTeams().size() == 0) {
-                    assigneeComboBox.disable(true);
-                }
-                else {
-                    assigneeComboBox.disable(false);
-                    Person blankPerson = new Person("", "", "", null, null, null);
-                    assigneeComboBox.addToComboBox(blankPerson);
-                    for (Team team : newValue.getCurrentTeams()) {
-                        for (Person person : team.getPeople()) {
-                            assigneeComboBox.addToComboBox(person);
-                        }
+            assigneeComboBox.clear();
+            if (newValue.getCurrentTeams().size() == 0) {
+                assigneeComboBox.disable(true);
+            }
+            else {
+                assigneeComboBox.disable(false);
+                Person blankPerson = new Person("", "", "", null, null, null);
+                assigneeComboBox.addToComboBox(blankPerson);
+                for (Team team : newValue.getCurrentTeams()) {
+                    for (Person person : team.getPeople()) {
+                        assigneeComboBox.addToComboBox(person);
                     }
                 }
-                toggleCreateBtn();
-            });
+            }
+            toggleCreateBtn();
+        });
 
         backlogComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue == null) {
-                    backlogSelected = false;
-                    return;
-                }
-                storyComboBox.getComboBox().getItems().clear();
-                for (Story story : newValue.getStories()) {
-                    storyComboBox.getComboBox().getItems().add(story);
-                }
-                storyComboBox.disable(false);
-                backlogSelected = true;
-                toggleCreateBtn();
-            });
+            if (newValue == null) {
+                backlogSelected = false;
+                return;
+            }
+            storyComboBox.getComboBox().getItems().clear();
+            for (Story story : newValue.getStories()) {
+                storyComboBox.getComboBox().getItems().add(story);
+            }
+            storyComboBox.disable(false);
+            backlogSelected = true;
+            toggleCreateBtn();
+        });
 
         storyComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
-                storySelected = storyComboBox.getValue() == null ? false : true;
-                toggleCreateBtn();
-            }
+                    storySelected = storyComboBox.getValue() == null ? false : true;
+                    toggleCreateBtn();
+                }
         );
 
         this.setResultConverter(b -> {
-                if (b == btnTypeCreate) {
-                    //get user input
-                    String shortName = shortNameCustomField.getText();
-                    String description = descriptionTextArea.getText();
-                    Double effortLeft = DurationConverter.readDurationToMinutes(effortLeftField.getText());
-                    Story story =  storyComboBox.getValue();
-                    Person assignee = null;
-                    if (assigneeComboBox.getValue() != null && !assigneeComboBox.getValue().toString().isEmpty()) {
-                        assignee = assigneeComboBox.getValue();
-                    }
-
-                    Task task = new Task(shortName, description, story, assignee, effortLeft);
-                    story.add(task);
-                    App.refreshMainScene();
-                    App.mainPane.selectItem(task.getStory());
-                    this.close();
+            if (b == btnTypeCreate) {
+                //get user input
+                String shortName = shortNameCustomField.getText();
+                String description = descriptionTextArea.getText();
+                Double effortLeft = DurationConverter.readDurationToMinutes(effortLeftField.getText());
+                Story story = storyComboBox.getValue();
+                Person assignee = null;
+                if (assigneeComboBox.getValue() != null && !assigneeComboBox.getValue().toString().isEmpty()) {
+                    assignee = assigneeComboBox.getValue();
                 }
-                return null;
-            });
+
+                Task task = new Task(shortName, description, story, assignee, effortLeft);
+                story.add(task);
+                App.refreshMainScene();
+                App.mainPane.selectItem(task.getStory());
+                this.close();
+            }
+            return null;
+        });
         this.setResizable(false);
         this.show();
     }

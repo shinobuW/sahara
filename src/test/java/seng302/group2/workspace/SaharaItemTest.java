@@ -50,17 +50,17 @@ public class SaharaItemTest {
             i++;
         }
     }
-    
+
     @Test
     public void testEquivalentTo() {
         Person person1 = new Person();
         Person person2 = new Person();
-        
+
         PeopleCategory peopleCategory1 = new PeopleCategory();
-        
+
         Assert.assertTrue(person1.equivalentTo(person1));
         Assert.assertFalse(person1.equivalentTo(person2));
-        
+
         Assert.assertFalse(person1.equivalentTo(peopleCategory1));
     }
 }

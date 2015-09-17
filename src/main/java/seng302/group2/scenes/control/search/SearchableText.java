@@ -83,20 +83,8 @@ public class SearchableText extends TextFlow implements SearchableControl {
 
 
     /**
-     * Sets the current text of the SearchableText to the string given
-     * @param content The string text for the SearchableText to adopt
-     */
-    public void setText(String content) {
-        texts.clear();
-        TextFlow text = new TextFlow(new Text(content));
-        text.setStyle(styleInject);
-        texts.add(text);
-        updateFlow();
-    }
-
-
-    /**
-     * Updates the text inside the SearchableText to match any updated children
+     * Sets the current text of the S
+eText to match any updated children
      */
     void updateFlow() {
         this.getChildren().clear();
@@ -106,7 +94,8 @@ public class SearchableText extends TextFlow implements SearchableControl {
 
 
     /**
-     * Stitches all current Text nodes together into a single unformatted Text node
+     * Stitches all current Text nodearchabl
+her into a single unformatted Text node
      * @return the stitched Text node
      */
     private Text stitch() {
@@ -125,7 +114,8 @@ public class SearchableText extends TextFlow implements SearchableControl {
 
     /**
      * Gets the text in this SearchableText.
-     * @return string of the text
+s toget
+ @return string of the text
      */
     public String getText() {
         Text contentText = stitch();
@@ -133,7 +123,22 @@ public class SearchableText extends TextFlow implements SearchableControl {
     }
 
     /**
-     * Performs a basic string query on the SearchableText element, highlighting any matches with a flashy styling.
+     * Performs a basic string query on the Searchab     *
+earchableText to the string given
+     * @param content The string text for the SearchableText to adopt
+     */
+    public void setText(String content) {
+        texts.clear();
+        TextFlow text = new TextFlow(new Text(content));
+        text.setStyle(styleInject);
+        texts.add(text);
+        updateFlow();
+    }
+
+
+    /**
+     * Updates the text inside the SeleText
+ element, highlighting any matches with a flashy styling.
      * Queries are case-insensitive
      * @param query The string to query
      * @return If at least one match was found

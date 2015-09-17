@@ -3,11 +3,9 @@ package seng302.group2.util.undoredo;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.TrackedTabPane;
-import seng302.group2.scenes.control.search.SearchableScene;
 import seng302.group2.scenes.menu.MainToolbar;
 import seng302.group2.workspace.SaharaItem;
 
-import javax.sound.midi.Track;
 import java.util.Set;
 import java.util.Stack;
 
@@ -122,7 +120,6 @@ public class CommandManager {
             refreshTree();
 
 
-
             try {
                 MainToolbar.undoRedoToggle();
                 if (App.mainPane.getContent() instanceof TrackedTabPane) {
@@ -195,7 +192,6 @@ public class CommandManager {
             refreshTree();
 
 
-
             try {
                 MainToolbar.undoRedoToggle();
                 if (App.mainPane.getContent() instanceof TrackedTabPane) {
@@ -256,6 +252,7 @@ public class CommandManager {
 
     /**
      * Clones and returns the current undo stack
+     *
      * @return A clone of the current undo stack
      */
     public Stack<Command> getUndoCloneStack() {

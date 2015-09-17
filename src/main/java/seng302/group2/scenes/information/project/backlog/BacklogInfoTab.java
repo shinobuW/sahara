@@ -45,56 +45,7 @@ public class BacklogInfoTab extends SearchableTab {
 
     }
 
-    /**
-     * A class used to show the progress of a story.
-     */
-    class ProgressCell extends TableCell<Object, String> {
-        public Node node;
-        public Backlog backlog;
-
-        /**
-         * Constructor
-         * @param backlog The backlog of the story.
-         */
-        private ProgressCell(Backlog backlog) {
-            this.backlog = backlog;
-        }
-
-        /**
-         * Updates the item
-         *
-         * @param item the item to update to
-         * @param empty if the cell is empty
-         */
-        @Override
-        public void updateItem(String item, boolean empty) {
-            super.updateItem(item, empty);
-            if (empty || item == null) {
-                setText(null);
-                setGraphic(null);
-            }
-            else {
-                this.node = new HBox();
-                ((HBox) this.node).setPrefSize(220,18);
-                ((HBox) this.node).getChildren().add(new StoryCompletenessBar(getStory(), 220, 18));
-                setGraphic(node);
-            }
-        }
-
-        public Story getStory() {
-            Story result = null;
-            for (Story story : this.backlog.getStories()) {
-                if (story.getShortName().equals(getItem())) {
-                    result = story;
-                }
-            }
-            return result;
-        }
-
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
+     /** Gets all the searchable controls on this tab.
      * @return a collection of all the searchable controls on this tab.
      */
     @Override
@@ -311,7 +262,57 @@ public class BacklogInfoTab extends SearchableTab {
     }
 
     /**
-     * Gets the string representation of the current Tab
+     * Gets th
+ /**
+     * A class used to show the progress of a story.
+     */
+    class ProgressCell extends TableCell<Object, String> {
+        public Node node;
+        public Backlog backlog;
+
+        /**
+         * Constructor
+         * @param backlog The backlog of the story.
+         */
+        private ProgressCell(Backlog backlog) {
+            this.backlog = backlog;
+        }
+
+        /**
+         * Updates the item
+         *
+         * @param item the item to update to
+         * @param empty if the cell is empty
+         */
+        @Override
+        public void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty || item == null) {
+                setText(null);
+                setGraphic(null);
+            }
+            else {
+                this.node = new HBox();
+                ((HBox) this.node).setPrefSize(220,18);
+                ((HBox) this.node).getChildren().add(new StoryCompletenessBar(getStory(), 220, 18));
+                setGraphic(node);
+            }
+        }
+
+        public Story getStory() {
+            Story result = null;
+            for (Story story : this.backlog.getStories()) {
+                if (story.getShortName().equals(getItem())) {
+                    result = story;
+                }
+            }
+            return result;
+        }
+
+    }
+
+    /**
+ e string representation of the current Tab
      * @return The String value
      */
     @Override

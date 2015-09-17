@@ -17,11 +17,11 @@ import seng302.group2.scenes.control.search.SearchBox;
  */
 public class MainToolbar extends ToolBar {
 
+    static Button undoButton = new Button();
+    static Button redoButton = new Button();
     Button newButton = new Button();
     Button openButton = new Button();
     Button saveButton = new Button();
-    static Button undoButton = new Button();
-    static Button redoButton = new Button();
     Button generateButton = new Button();
     Button taggingButton = new Button();
 
@@ -50,6 +50,15 @@ public class MainToolbar extends ToolBar {
                 leftRightSeparator,
                 searchBox
         );
+    }
+
+    /**
+     * Disables / Enables the undo/redo button depending on whether the
+     * commands are available.
+     */
+    public static void undoRedoToggle() {
+        MainToolbar.undoButton.setDisable(!Global.commandManager.isUndoAvailable());
+        MainToolbar.redoButton.setDisable(!Global.commandManager.isRedoAvailable());
     }
 
     private void setActions() {
@@ -96,24 +105,12 @@ public class MainToolbar extends ToolBar {
         undoRedoToggle();
     }
 
-
     /**
      * Sets the focus to the search field of the toolbar
      */
     public void focusSearch() {
         searchBox.requestFocus();
     }
-
-
-    /**
-     * Disables / Enables the undo/redo button depending on whether the
-     * commands are available.
-     */
-    public static void undoRedoToggle() {
-        MainToolbar.undoButton.setDisable(!Global.commandManager.isUndoAvailable());
-        MainToolbar.redoButton.setDisable(!Global.commandManager.isRedoAvailable());
-    }
-
 
     public void search(String query) {
         searchBox.setText(query);

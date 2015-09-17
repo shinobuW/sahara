@@ -21,6 +21,7 @@ public interface Command {
 
     /**
      * Searches the stateObjects to find an equal model class to map to
+     *
      * @param stateObjects A set of objects to search through
      * @return If the item was successfully mapped
      */

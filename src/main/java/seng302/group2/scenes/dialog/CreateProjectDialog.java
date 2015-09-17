@@ -64,30 +64,30 @@ public class CreateProjectDialog extends Dialog<Map<String, String>> {
         createButton.setDisable(true);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctShortName = ShortNameValidator.validateShortName(shortNameCustomField, null);
-                createButton.setDisable(!(correctShortName && correctLongName));
-            });
+            correctShortName = ShortNameValidator.validateShortName(shortNameCustomField, null);
+            createButton.setDisable(!(correctShortName && correctLongName));
+        });
 
         longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctLongName = NameValidator.validateName(longNameCustomField);
-                createButton.setDisable(!(correctShortName && correctLongName));
-            });
+            correctLongName = NameValidator.validateName(longNameCustomField);
+            createButton.setDisable(!(correctShortName && correctLongName));
+        });
 
         this.setResultConverter(b -> {
-                if (b == btnTypeCreate) {
-                    String shortName = shortNameCustomField.getText();
-                    String longName = longNameCustomField.getText();
-                    String description = descriptionTextArea.getText();
+            if (b == btnTypeCreate) {
+                String shortName = shortNameCustomField.getText();
+                String longName = longNameCustomField.getText();
+                String description = descriptionTextArea.getText();
 
-                    if (correctShortName && correctLongName) {
-                        Project project = new Project(shortName, longName, description);
-                        Global.currentWorkspace.add(project);
-                        App.mainPane.selectItem(project);
-                        this.close();
-                    }
+                if (correctShortName && correctLongName) {
+                    Project project = new Project(shortName, longName, description);
+                    Global.currentWorkspace.add(project);
+                    App.mainPane.selectItem(project);
+                    this.close();
                 }
-                return null;
-            });
+            }
+            return null;
+        });
         this.setResizable(false);
         this.show();
     }

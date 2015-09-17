@@ -411,7 +411,8 @@ public class ProjectHistoryTab extends SearchableTab {
 
 
     /**
-     * A subclass of TableCell to allow for date pickers to be bound to the cell
+   ing rep
+  * A subclass of TableCell to allow for date pickers to be bound to the cell
      * to allow for start and end date to be edited
      */
     class EditingCell extends TableCell<Allocation, String> {
@@ -547,7 +548,7 @@ public class ProjectHistoryTab extends SearchableTab {
 
 
     /**
-     * Gets the string representation of the current Tab
+     * Gets the strresentation of the current Tab
      * @return The String value
      */
     @Override

@@ -21,6 +21,7 @@ import seng302.group2.workspace.team.Team;
 
 /**
  * A class for checking the validity of a short name.
+ *
  * @author Jordane
  */
 public class ShortNameValidator {
@@ -28,7 +29,7 @@ public class ShortNameValidator {
     /**
      * Checks whether a given short name is valid (unique and not null/empty)
      *
-     * @param shortNameField  is a short name field
+     * @param shortNameField   is a short name field
      * @param currentShortName If an element is being edited, the current short name of that element.
      * @return If the short name is valid
      */
@@ -132,12 +133,12 @@ public class ShortNameValidator {
                     return ValidationStatus.NON_UNIQUE;
                 }
             }
-            for (Backlog backlog :proj.getBacklogs()) {
+            for (Backlog backlog : proj.getBacklogs()) {
                 if (backlog.getShortName().equals(shortName)) {
                     return ValidationStatus.NON_UNIQUE;
                 }
             }
-            for (Sprint sprint :proj.getSprints()) {
+            for (Sprint sprint : proj.getSprints()) {
                 if (sprint.getGoal().equals(shortName)) {
                     return ValidationStatus.NON_UNIQUE;
                 }

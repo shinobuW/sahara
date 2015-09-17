@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 
 /**
  * A class used to check the validity of inputted Dates.
+ *
  * @author Jordane
  */
 public class DateValidator {
@@ -262,6 +263,7 @@ public class DateValidator {
      * Validates a string to see if the string is formatted correctly i.e 2h30min where h can be replaced with "hour,
      * "h", "hrs", "hr", "hours" and "min" can be placed with "m", "minute", "minutes" or "mins"
      * "min" can also be replaced with "m"
+     *
      * @param inputString time string to validate
      * @return true if input string is in the right format
      */

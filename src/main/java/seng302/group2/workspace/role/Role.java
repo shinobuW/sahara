@@ -34,6 +34,7 @@ public class Role extends SaharaItem implements Serializable {
     private transient ObservableList<Skill> requiredSkills = observableArrayList();
     private List<Skill> serializableRequiredSkills = new ArrayList<>();
     private boolean defaultRole;
+
     /**
      * Basic Role constructor
      */

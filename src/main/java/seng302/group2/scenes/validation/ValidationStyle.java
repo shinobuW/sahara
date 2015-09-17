@@ -19,6 +19,7 @@ public class ValidationStyle {
 
     /**
      * Adds a smooth, red border glow effect on the node, generally used to show an invalid state
+     *
      * @param node The node to apply the glow effect to
      */
     public static void borderGlowRed(Node node) {
@@ -27,6 +28,7 @@ public class ValidationStyle {
 
     /**
      * Adds a smooth, red border glow effect on the node, generally used to show an invalid state
+     *
      * @param node The node to apply the glow effect to
      */
     public static void borderGlowSearch(Node node) {
@@ -35,6 +37,7 @@ public class ValidationStyle {
 
     /**
      * Adds a transparent glow effect on the node, generally used to stop showing any other flow effect
+     *
      * @param node The node to apply the glow effect to
      */
     public static void borderGlowNone(Node node) {
@@ -44,7 +47,8 @@ public class ValidationStyle {
     /**
      * Adds a custom coloured glow effect on the node with the given Color. Red, Green, Blue, and Alpha channels of the
      * Color are used
-     * @param node The node to apply the glow effect to
+     *
+     * @param node  The node to apply the glow effect to
      * @param color The color of the glow effect
      */
     public static void borderGlow(Node node, Color color) {
@@ -59,8 +63,9 @@ public class ValidationStyle {
 
     /**
      * Shows a PopOver message containing the given message on the given node
+     *
      * @param message The message to display
-     * @param node The node to show the PopOver on
+     * @param node    The node to show the PopOver on
      */
     public static void showMessage(String message, Node node) {
         PopOver po = new PopOver();
@@ -75,8 +80,8 @@ public class ValidationStyle {
         Platform.runLater(() -> po.show(node));
 
         node.onMouseClickedProperty().addListener((observable, oldValue, newValue) -> {
-                po.hide();
-            });
+            po.hide();
+        });
 
         timeoutHide(po);
     }
@@ -84,8 +89,9 @@ public class ValidationStyle {
 
     /**
      * Shows a PopOver message containing the given message on the given text field
+     *
      * @param message The message to display
-     * @param node The text field to show the PopOver on
+     * @param node    The text field to show the PopOver on
      */
     public static void showMessage(String message, TextField node) {
         PopOver po = new PopOver();
@@ -99,12 +105,12 @@ public class ValidationStyle {
         po.show(node);
 
         node.onMouseClickedProperty().addListener((observable, oldValue, newValue) -> {
-                po.hide();
-            });
+            po.hide();
+        });
 
         node.textProperty().addListener((observable, oldValue, newValue) -> {
-                po.hide();
-            });
+            po.hide();
+        });
 
         timeoutHide(po);
     }
@@ -112,6 +118,7 @@ public class ValidationStyle {
 
     /**
      * Hides the PopOver after a timeout of 4000ms, handled by starting and sleeping a new thread
+     *
      * @param po The PopOver to hide
      */
     private static void timeoutHide(PopOver po) {

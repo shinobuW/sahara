@@ -46,18 +46,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
         setInformationSwitchStrategy(new ReleaseInformationSwitchStrategy());
     }
 
-    /**
-     * Returns the items held by the release, blank as the release has no child items.
-     * @return a blank hash set
-     */
-    @Override
-    public Set<SaharaItem> getItemsSet() {
-        return new HashSet<>();
-    }
-
-
-    /**
-     * Required Constructor
+    /** Required Constructor
      *
      * @param shortName short name to be set
      * @param project   project to be set
@@ -89,11 +78,24 @@ public class Release extends SaharaItem implements Comparable<Release> {
     }
 
 
-    // <editor-fold defaultstate="collapsed" desc="Getters"> 
+    /**
+
+/**
+     * Returns the items held by the release, blank as the release has no child items.
+     * @return a blank hash set
+     */
+    @Override
+    public Set<SaharaItem> getItemsSet() {
+        return new HashSet<>();
+    }
+
+
+    // <editor-fold defaultstate="collapsed" desc="Getters">
 
 
     /**
-     * Gets short name of the release
+
+  * Gets short name of the release
      *
      * @return short name of the release
      */

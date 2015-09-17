@@ -31,7 +31,8 @@ public class SearchResultPane extends PopOver {
 
     /**
      * Constructor
-     * @param results The list of Search Results.
+     *
+     * @param results    The list of Search Results.
      * @param searchText The text being searched for
      * @param searchType The type of the search
      */
@@ -60,21 +61,21 @@ public class SearchResultPane extends PopOver {
         }
 
         resultView.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
+            if (event.getClickCount() == 2) {
 
-                    SaharaItem selectedItem = (SaharaItem) resultView.getSelectionModel().getSelectedItem().getItem();
-                    App.mainPane.selectItem(selectedItem);
-                    Tab selectedTab = (SearchableTab) resultView.getSelectionModel().getSelectedItem().getTab();
-                    ((TrackedTabPane) resultView.getSelectionModel().getSelectedItem().getSearchableScene())
-                            .select(selectedTab);
-                    selectedItem.switchToInfoScene();
-                    if (searchType == SearchType.NORMAL) {
-                        System.out.println("Into the Highlighting");
-                        MainPane.getToolBar().search(searchText);
-                    }
+                SaharaItem selectedItem = (SaharaItem) resultView.getSelectionModel().getSelectedItem().getItem();
+                App.mainPane.selectItem(selectedItem);
+                Tab selectedTab = (SearchableTab) resultView.getSelectionModel().getSelectedItem().getTab();
+                ((TrackedTabPane) resultView.getSelectionModel().getSelectedItem().getSearchableScene())
+                        .select(selectedTab);
+                selectedItem.switchToInfoScene();
+                if (searchType == SearchType.NORMAL) {
+                    System.out.println("Into the Highlighting");
+                    MainPane.getToolBar().search(searchText);
                 }
-                event.consume();
-            });
+            }
+            event.consume();
+        });
 
         HBox buttons = new HBox();
         Button btnClose = new Button("Close");
@@ -84,18 +85,18 @@ public class SearchResultPane extends PopOver {
         buttons.setPadding(insets);
         buttons.getChildren().addAll(btnBack, btnClose);
 
-        content.getChildren().addAll(resultsFound ,resultView, buttons);
+        content.getChildren().addAll(resultsFound, resultView, buttons);
 
         btnClose.setOnAction(event -> {
-                this.hide();
-                Global.advancedSearchExists = false;
-            });
+            this.hide();
+            Global.advancedSearchExists = false;
+        });
 
         btnBack.setOnAction(event -> {
-                this.hide();
-                PopOver searchPopOver = new CreateSearchPopOver();
-                searchPopOver.show(App.mainStage);
-            });
+            this.hide();
+            PopOver searchPopOver = new CreateSearchPopOver();
+            searchPopOver.show(App.mainStage);
+        });
 
 //        this.setOnHiding(event -> {
 //                MainPane.getToolBar().search("");

@@ -18,9 +18,9 @@ public class CategoryTreeContextMenu extends ContextMenu {
         MenuItem createItem = new MenuItem("Create new...");
         createItem.setDisable(false);
         createItem.setOnAction(e -> {
-                ((Category) Global.selectedTreeItem.getValue()).showCreationDialog();
-                //showCreateNewDialog(Global.selectedTreeItem.getValue().toString());
-            });
+            ((Category) Global.selectedTreeItem.getValue()).showCreationDialog();
+            //showCreateNewDialog(Global.selectedTreeItem.getValue().toString());
+        });
 
         this.getItems().addAll(createItem);
     }
@@ -35,9 +35,9 @@ public class CategoryTreeContextMenu extends ContextMenu {
         MenuItem createItem = new MenuItem("Create new...");
         createItem.setDisable(!enabled);
         createItem.setOnAction(e -> {
-                ((Category) Global.selectedTreeItem.getValue()).showCreationDialog();
-                //showCreateNewDialog(Global.selectedTreeItem.getValue().toString());
-            });
+            ((Category) Global.selectedTreeItem.getValue()).showCreationDialog();
+            //showCreateNewDialog(Global.selectedTreeItem.getValue().toString());
+        });
 
         this.getItems().addAll(createItem);
     }

@@ -3,12 +3,12 @@ package seng302.group2.util.conversion;
 import seng302.group2.util.validation.DateValidator;
 
 /**
- *
  * Created by Shinobu on 26/08/2015.
  */
 public class DurationConverter {
     /**
      * Converts string formatted duration to duration in minutes
+     *
      * @param inputDuration the string duration to be converted
      * @return duration in minutes
      */
@@ -64,6 +64,7 @@ public class DurationConverter {
 
     /**
      * Converts string formatted duration to duration in hour
+     *
      * @param inputDuration the string duration to be converted
      * @return duration in hours
      */

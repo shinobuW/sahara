@@ -40,8 +40,8 @@ public class CreateStoryDialog extends Dialog<Map<String, String>> {
     /**
      * Constructor for the CreateStoryDialog class. Creates and displays a JavaFX
      * dialog used to create new sprints. A default project is selected in the project combo box.
-     * @param defaultProject the selected project combobox option. set to null for no default option.
      *
+     * @param defaultProject the selected project combobox option. set to null for no default option.
      */
     public CreateStoryDialog(Project defaultProject) {
         correctCreator = false;
@@ -93,47 +93,47 @@ public class CreateStoryDialog extends Dialog<Map<String, String>> {
 
         //Validation
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctShortName = validateShortName(shortNameCustomField, null);
-                createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
-            });
+            correctShortName = validateShortName(shortNameCustomField, null);
+            createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
+        });
 
         creatorCustomField.getTextField().textProperty().addListener((observable, oldValue, newvalue) -> {
-                correctCreator = validateName(creatorCustomField);
-                createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
-            });
+            correctCreator = validateName(creatorCustomField);
+            createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
+        });
 
         longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctLongName = validateName(longNameCustomField);
-                createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
-            });
+            correctLongName = validateName(longNameCustomField);
+            createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
+        });
 
         priorityNumberField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctPriority = validatePriorityField(priorityNumberField, null, null);
-                createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
-            });
+            correctPriority = validatePriorityField(priorityNumberField, null, null);
+            createButton.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
+        });
 
         this.setResultConverter(b -> {
-                if (b == btnTypeCreate) {
+            if (b == btnTypeCreate) {
 
-                    if (correctShortName && correctLongName && correctCreator && correctPriority) {
+                if (correctShortName && correctLongName && correctCreator && correctPriority) {
 
-                        //get user input
-                        String shortName = shortNameCustomField.getText();
-                        String longName = longNameCustomField.getText();
-                        String creator = creatorCustomField.getText();
-                        String description = descriptionTextArea.getText();
-                        Integer priority = Integer.parseInt(priorityNumberField.getText());
+                    //get user input
+                    String shortName = shortNameCustomField.getText();
+                    String longName = longNameCustomField.getText();
+                    String creator = creatorCustomField.getText();
+                    String description = descriptionTextArea.getText();
+                    Integer priority = Integer.parseInt(priorityNumberField.getText());
 
-                        Project project = projectComboBox.getValue();
-                        Story story = new Story(shortName, longName, description, creator, project,
-                                priority);
-                        project.add(story);
-                        App.mainPane.selectItem(story);
-                        this.close();
-                    }
+                    Project project = projectComboBox.getValue();
+                    Story story = new Story(shortName, longName, description, creator, project,
+                            priority);
+                    project.add(story);
+                    App.mainPane.selectItem(story);
+                    this.close();
                 }
-                return null;
-            });
+            }
+            return null;
+        });
         this.setResizable(false);
         this.show();
     }

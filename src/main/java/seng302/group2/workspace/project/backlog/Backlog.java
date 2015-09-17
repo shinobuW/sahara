@@ -52,26 +52,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
         setInformationSwitchStrategy(new BacklogInformationSwitchStrategy());
     }
 
-    /**
-     * Gets the set of SaharaItems 'belonging' to the Backlog (It's Stories).
-     * @return A set of SaharaItems belonging to the backlog
-     */
-    @Override
-    public Set<SaharaItem> getItemsSet() {
-        Set<SaharaItem> items = new HashSet<>();
-
-        for (Story story : stories) {
-            items.addAll(story.getItemsSet());
-        }
-        items.addAll(stories);
-
-
-        return items;
-    }
-
-
-    /**
-     * Backlog Constructor with all fields
+    /** Backlog Constructor with all fields
      *
      * @param shortName    short name to identify the story
      * @param longName     long name
@@ -95,7 +76,28 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
 
 
     /**
-     * Adds listeners to the backlog stories for sorting
+
+/**
+     * Gets the set of SaharaItems 'belonging' to the Backlog (It's Stories).
+     * @return A set of SaharaItems belonging to the backlog
+     */
+    @Override
+    public Set<SaharaItem> getItemsSet() {
+        Set<SaharaItem> items = new HashSet<>();
+
+        for (Story story : stories) {
+            items.addAll(story.getItemsSet());
+        }
+        items.addAll(stories);
+
+
+        return items;
+    }
+
+
+    /**
+
+  * Adds listeners to the backlog stories for sorting
      */
     public void addListeners() {
         stories.addListener((ListChangeListener<Story>) change -> {
@@ -181,20 +183,8 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
     }
 
     /**
-     * Gets the estimation scale used in the Backlog
-     *
-     * @return Estimation scale name
-     */
-    public String getScale() {
-        return this.scale;
-    }
 
-    //</editor-fold>
-
-    // <editor-fold defaultstate="collapsed" desc="Setters">
-
-    /**
-     * Sets the product owner of the Backlog
+  * Sets the product owner of the Backlog
      *
      * @param productOwner description to be set
      */
@@ -202,8 +192,23 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
         this.productOwner = productOwner;
     }
 
+    //</editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Setters">
+
     /**
-     * Gets the project the Backlog is assigned to
+
+  * Gets the estimation scale used in the Backlog
+     *
+     * @return Estimation scale name
+     */
+    public String getScale() {
+        return this.scale;
+    }
+
+    /**
+
+  * Gets the project the Backlog is assigned to
      *
      * @return The description of the team
      */

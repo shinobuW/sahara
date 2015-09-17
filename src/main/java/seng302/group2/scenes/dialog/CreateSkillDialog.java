@@ -56,21 +56,21 @@ public class CreateSkillDialog extends Dialog<Map<String, String>> {
 
         //Validation
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                Boolean correctShortName = validateShortName(shortNameCustomField, null);
-                createButton.setDisable(!correctShortName);
-            });
+            Boolean correctShortName = validateShortName(shortNameCustomField, null);
+            createButton.setDisable(!correctShortName);
+        });
 
         this.setResultConverter(b -> {
-                if (b == btnTypeCreate) {
-                    String shortName = shortNameCustomField.getText();
-                    String description = descriptionTextArea.getText();
-                    Skill skill = new Skill(shortName, description);
-                    Global.currentWorkspace.add(skill);
-                    App.mainPane.selectItem(skill);
-                    this.close();
-                }
-                return null;
-            });
+            if (b == btnTypeCreate) {
+                String shortName = shortNameCustomField.getText();
+                String description = descriptionTextArea.getText();
+                Skill skill = new Skill(shortName, description);
+                Global.currentWorkspace.add(skill);
+                App.mainPane.selectItem(skill);
+                this.close();
+            }
+            return null;
+        });
 
         this.setResizable(false);
         this.show();

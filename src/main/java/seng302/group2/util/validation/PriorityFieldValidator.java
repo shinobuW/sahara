@@ -14,8 +14,8 @@ public class PriorityFieldValidator {
     /**
      * Checks whether the new input priority is valid
      *
-     * @param input The input priority
-     * @param backlog The current backlog to check
+     * @param input           The input priority
+     * @param backlog         The current backlog to check
      * @param currentPriority The current priority
      * @return A status representing the state of validity
      */
@@ -52,8 +52,8 @@ public class PriorityFieldValidator {
     /**
      * Checks whether the priority is valid
      *
-     * @param numberField The nominated priority
-     * @param backlog The current backlog of the story. null if a new story.
+     * @param numberField     The nominated priority
+     * @param backlog         The current backlog of the story. null if a new story.
      * @param currentPriority the current priority. null if a new story.
      * @return If the priority is valid
      */

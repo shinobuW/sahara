@@ -23,6 +23,7 @@ public class CumulativeCommand implements Command {
 
     /**
      * A constructor that takes in an initial collection of sub-commands
+     *
      * @param commands The initial collection of sub-commands
      */
     public CumulativeCommand(Collection<Command> commands) {
@@ -32,6 +33,7 @@ public class CumulativeCommand implements Command {
 
     /**
      * Adds a command to the collection of cumulative commands
+     *
      * @param command The command to add
      * @return The result of adding the command to the cumulative commands collection
      */
@@ -41,6 +43,7 @@ public class CumulativeCommand implements Command {
 
     /**
      * Gets the number of sub-commands inside the cumulative command
+     *
      * @return The size of the list of sub-commands
      */
     public int size() {
@@ -69,6 +72,7 @@ public class CumulativeCommand implements Command {
 
     /**
      * Searches the stateObjects to find an equal model class to map to
+     *
      * @param stateObjects A set of objects to search through
      * @return If the item was successfully mapped
      */

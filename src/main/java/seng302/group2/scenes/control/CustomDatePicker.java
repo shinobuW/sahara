@@ -63,8 +63,8 @@ public class CustomDatePicker extends VBox implements SearchableControl {
      * Creates a required label HBox inside of the VBox containing a Label with an appended red
      * asterisk if the field is required.
      *
-     * @param name     The node field
-     * @param required Whether or not the field is required
+     * @param name               The node field
+     * @param required           Whether or not the field is required
      * @param searchableControls A collection of searchable controls to add this control to
      */
     public CustomDatePicker(String name, boolean required, Collection<SearchableControl> searchableControls) {
@@ -100,6 +100,7 @@ public class CustomDatePicker extends VBox implements SearchableControl {
 
     /**
      * Sets the tooltip of the date picker.
+     *
      * @param tool The tooltip
      */
     public void setTooltip(javafx.scene.control.Tooltip tool) {
@@ -137,7 +138,17 @@ public class CustomDatePicker extends VBox implements SearchableControl {
     }
 
     /**
+     * Sets the value of the date picker
+     *
+     * @param value value to set to
+     */
+    public void setValue(LocalDate value) {
+        this.datePicker.setValue(value);
+    }
+
+    /**
      * Disables and enables the date picker. Does not effect the labels.
+     *
      * @param disable boolean which either disables or enables depending on its value
      */
     public void disable(boolean disable) {
@@ -150,18 +161,9 @@ public class CustomDatePicker extends VBox implements SearchableControl {
     }
 
     /**
-     * Sets the value of the date picker
-     *
-     * @param value value to set to
-     */
-    public void setValue(LocalDate value) {
-        this.datePicker.setValue(value);
-    }
-
-
-    /**
      * Queries the date picker to find any elements containing the given query string. If found inside the date picker,
      * the picker border will be highlighted, and if found in the label text, the matching text will be highlighted.
+     *
      * @param query The query string to search
      * @return Whether any elements inside of the date picker or label were found to contain the query string
      */

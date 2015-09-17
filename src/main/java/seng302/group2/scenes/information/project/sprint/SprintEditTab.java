@@ -42,12 +42,10 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  */
 public class SprintEditTab extends SearchableTab {
 
-    Set<SearchableControl> searchControls = new HashSet<>();
-    Sprint currentSprint;
-
     static Boolean correctGoal = Boolean.FALSE;
     static Boolean correctLongName = Boolean.FALSE;
-
+    Set<SearchableControl> searchControls = new HashSet<>();
+    Sprint currentSprint;
     Button btnDone;
 
     RequiredField goalCustomField;

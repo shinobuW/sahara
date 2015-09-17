@@ -83,7 +83,7 @@ public class PopOverTable<T> extends SearchableTable<T> {
 
                         taskContent.getChildren().add(collapsableLoggingPane);
                         taskWrapper.setStyle(" -fx-background: -fx-control-inner-background ;\n"
-                                + "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n" );
+                                + "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n");
                     }
 
                     taskPopover.setContentNode(taskContent);
@@ -96,16 +96,16 @@ public class PopOverTable<T> extends SearchableTable<T> {
                     }
                     this.setOnMouseClicked(event -> {
 
-                            if (taskPopover.isShowing()) {
-                                taskPopover.hide();
+                        if (taskPopover.isShowing()) {
+                            taskPopover.hide();
+                        }
+                        else {
+                            if (event.getClickCount() == 2) {
+                                taskPopover.show(this);
                             }
-                            else {
-                                if (event.getClickCount() == 2) {
-                                    taskPopover.show(this);
-                                }
-                            }
-                            event.consume();
-                        });
+                        }
+                        event.consume();
+                    });
                 }
 
                 this.getChildren().add(content);
@@ -142,21 +142,19 @@ public class PopOverTable<T> extends SearchableTable<T> {
         Button btnEdit = new Button("Edit");
 
 
-
         taskInfo.getChildren().addAll(
-            title,
-            description,
-            impediments,
-            effortLeft,
-            effortSpent,
-            taskState,
-            assignedPerson,
-            btnEdit
+                title,
+                description,
+                impediments,
+                effortLeft,
+                effortSpent,
+                taskState,
+                assignedPerson,
+                btnEdit
         );
 
         taskInfo.setStyle(" -fx-background: -fx-control-inner-background ;\n"
                 + "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n");
-
 
 
         TitledPane collapsableInfoPane = new TitledPane("Task Info", taskInfo);
@@ -167,8 +165,8 @@ public class PopOverTable<T> extends SearchableTable<T> {
 
         taskContent.getChildren().add(0, collapsableInfoPane);
         btnEdit.setOnAction((event) -> {
-                taskEditPane(currentTask, taskContent);
-            });
+            taskEditPane(currentTask, taskContent);
+        });
     }
 
     private void taskEditPane(Task currentTask, VBox taskContent) {
@@ -224,32 +222,31 @@ public class PopOverTable<T> extends SearchableTable<T> {
 
         //Adding to MainPane
         taskInfo.getChildren().addAll(shortNameCustomField,
-            descriptionTextArea,
-            impedimentsTextArea,
-            effortLeftField,
-            taskHbox,
-            taskAssigneesList,
-            buttons
+                descriptionTextArea,
+                impedimentsTextArea,
+                effortLeftField,
+                taskHbox,
+                taskAssigneesList,
+                buttons
         );
 
 
-
         btnDone.setOnAction((event) -> {
-                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                        currentTask.getShortName());
+            boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                    currentTask.getShortName());
 
-                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                        currentTask.getDescription());
+            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                    currentTask.getDescription());
 
-                boolean impedimentsUnchanged = impedimentsTextArea.getText().equals(
-                        currentTask.getImpediments());
+            boolean impedimentsUnchanged = impedimentsTextArea.getText().equals(
+                    currentTask.getImpediments());
 
-                boolean taskstateUnchanged = taskStateComboBox.getValue().equals(
-                        currentTask.getState());
+            boolean taskstateUnchanged = taskStateComboBox.getValue().equals(
+                    currentTask.getState());
 
-                boolean effortLeftUnchanged = effortLeftField.getText().equals(
-                        Double.toString(currentTask.getEffortLeft()));
-                //TODO deal with null assignment in the combobox
+            boolean effortLeftUnchanged = effortLeftField.getText().equals(
+                    Double.toString(currentTask.getEffortLeft()));
+            //TODO deal with null assignment in the combobox
 //                boolean assigneesUnchanged = taskAssigneesList.getValue().equals((currentTask.getAssignee()));
 
 
@@ -259,27 +256,27 @@ public class PopOverTable<T> extends SearchableTable<T> {
 //                    taskInfoPane(currentTask, taskContent);
 //                    return;
 //                }
-                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                        currentTask.getShortName());
+            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                    currentTask.getShortName());
 
-                if (correctShortName) {
-                    //                    Valid short name, make the edit
-                    ArrayList<Tag> tags = new ArrayList<>();
-                    currentTask.edit(shortNameCustomField.getText(),
-                            descriptionTextArea.getText(),
-                            impedimentsTextArea.getText(),
-                            taskStateComboBox.getValue(),
-                            taskAssigneesList.getValue(), currentTask.getLogs(),
-                            Double.parseDouble(effortLeftField.getText()), currentTask.getEffortSpent(),
-                            tags);
+            if (correctShortName) {
+                //                    Valid short name, make the edit
+                ArrayList<Tag> tags = new ArrayList<>();
+                currentTask.edit(shortNameCustomField.getText(),
+                        descriptionTextArea.getText(),
+                        impedimentsTextArea.getText(),
+                        taskStateComboBox.getValue(),
+                        taskAssigneesList.getValue(), currentTask.getLogs(),
+                        Double.parseDouble(effortLeftField.getText()), currentTask.getEffortSpent(),
+                        tags);
 
 
-                }
-                else {
-                    event.consume();
-                }
+            }
+            else {
+                event.consume();
+            }
 
-            });
+        });
 
         taskInfo.setStyle(" -fx-background: -fx-control-inner-background ;\n"
                 + "  -fx-background-color: -fx-table-cell-border-color, -fx-background ;\n");

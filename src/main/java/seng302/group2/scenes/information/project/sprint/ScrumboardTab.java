@@ -22,10 +22,9 @@ import java.util.*;
 public class ScrumboardTab extends SearchableTab {
 
     public List<SearchableControl> searchControls = new ArrayList<>();
+    public int hoverIndex;
     Map<SearchableListView<Task>, Task.TASKSTATE> laneStateDict = new HashMap<>();
     Task interactiveTask = null;
-    public int hoverIndex;
-
     Pane basicInfoPane = new VBox(10);
     Sprint currentSprint;
 

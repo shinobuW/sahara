@@ -54,15 +54,15 @@ public class GenerateReportDialog extends Dialog<Map<String, String>> {
         this.getDialogPane().setContent(grid);
 
         this.setResultConverter(b -> {
-                if (b == btnTypeCreate) {
-                    List<SaharaItem> checkedItems = getCheckedItems(root);
-                    if (!checkedItems.isEmpty()) {
-                        ReportGenerator.generateReport(checkedItems);
-                        this.close();
-                    }
+            if (b == btnTypeCreate) {
+                List<SaharaItem> checkedItems = getCheckedItems(root);
+                if (!checkedItems.isEmpty()) {
+                    ReportGenerator.generateReport(checkedItems);
+                    this.close();
                 }
-                return null;
-            });
+            }
+            return null;
+        });
         // This bug still exsists but the window is no-longer resizable. May have
         // to look into in the future if we want resizable windows.
         this.setResizable(false);
@@ -71,6 +71,7 @@ public class GenerateReportDialog extends Dialog<Map<String, String>> {
 
     /**
      * Adds children of the SaharaItem to its TreeItem wrapper recursively
+     *
      * @param root The root tree item
      */
     protected static void addChildren(TreeItem<SaharaItem> root) {
@@ -86,14 +87,15 @@ public class GenerateReportDialog extends Dialog<Map<String, String>> {
 
     /**
      * Gets a list of items that have been checked.
-     * @param root The root tree item  
+     *
+     * @param root The root tree item
      * @return A list of the checked items
      */
     protected static List<SaharaItem> getCheckedItems(TreeItem<SaharaItem> root) {
 
         List<SaharaItem> checkedItems = new ArrayList<>();
 
-        if (((CheckBoxTreeItem)root).isSelected() || ((CheckBoxTreeItem)root).isIndeterminate() ) {
+        if (((CheckBoxTreeItem) root).isSelected() || ((CheckBoxTreeItem) root).isIndeterminate()) {
             checkedItems.add(root.getValue());
         }
 

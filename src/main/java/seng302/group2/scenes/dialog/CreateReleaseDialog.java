@@ -28,6 +28,7 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 
 /**
  * Class to create a popup dialog for creating a release.
+ *
  * @author Shinobu
  */
 public class CreateReleaseDialog extends Dialog<Map<String, String>> {
@@ -37,6 +38,7 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
 
     /**
      * Shows a dialog used for creating a new release. A default project is selected in the project combo box.
+     *
      * @param defaultProject The default project combobox selection. Set to null for no default selection.
      */
     public CreateReleaseDialog(Project defaultProject) {
@@ -79,26 +81,26 @@ public class CreateReleaseDialog extends Dialog<Map<String, String>> {
         createButton.setDisable(true);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctShortName = validateShortName(shortNameCustomField, null);
+            correctShortName = validateShortName(shortNameCustomField, null);
 
-                createButton.setDisable(!(correctShortName && correctDate));
-            });
+            createButton.setDisable(!(correctShortName && correctDate));
+        });
 
         this.setResultConverter(b -> {
-                if (b == btnTypeCreate) {
-                    String shortName = shortNameCustomField.getText();
-                    String description = descriptionTextArea.getText();
-                    LocalDate releaseDate = releaseDatePicker.getValue();
+            if (b == btnTypeCreate) {
+                String shortName = shortNameCustomField.getText();
+                String description = descriptionTextArea.getText();
+                LocalDate releaseDate = releaseDatePicker.getValue();
 
-                    Project project = projectComboBox.getValue();
+                Project project = projectComboBox.getValue();
 
-                    Release release = new Release(shortName, description, releaseDate, project);
-                    project.add(release);
-                    App.mainPane.selectItem(release);
-                    this.close();
-                }
-                return null;
-            });
+                Release release = new Release(shortName, description, releaseDate, project);
+                project.add(release);
+                App.mainPane.selectItem(release);
+                this.close();
+            }
+            return null;
+        });
         this.setResizable(false);
         this.show();
     }

@@ -108,73 +108,73 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
         setContextMenu(new CategoryTreeContextMenu(true));
 
         rootProperty().addListener((observableValue, oldRoot, newRoot) -> {
-                clear(oldRoot);
-                updateItems();
-            });
+            clear(oldRoot);
+            updateItems();
+        });
 
         setItems(FXCollections.<T>observableArrayList());
 
         /* Do not use ChangeListener, because it won't trigger if old list equals new list (but in
         fact different references). */
         items.addListener(observable -> {
-                clear(getRoot());
-                updateItems();
-            });
+            clear(getRoot());
+            updateItems();
+        });
 
         /* Sets the App.selectedTreeItem when a new selection is made, and sets the information
          * shown in the main pane to the selected item's details */
         this.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
 
-                Global.selectedTreeItem = newValue;
+                    Global.selectedTreeItem = newValue;
 
-                SaharaItem selected = null;
+                    SaharaItem selected = null;
 
-                //Updates the display pane to be pane for the selectItem
-                if (Global.selectedTreeItem == null
-                        || Global.selectedTreeItem.getValue() == null) {
-                    // Nothing is selected, make a default selection?
-                    Global.currentWorkspace.switchToInfoScene();
-                    return;
-                }
+                    //Updates the display pane to be pane for the selectItem
+                    if (Global.selectedTreeItem == null
+                            || Global.selectedTreeItem.getValue() == null) {
+                        // Nothing is selected, make a default selection?
+                        Global.currentWorkspace.switchToInfoScene();
+                        return;
+                    }
 
-                selected = (SaharaItem) Global.selectedTreeItem.getValue();
+                    selected = (SaharaItem) Global.selectedTreeItem.getValue();
 
-                // Make a switch based on the type
-                if (selected instanceof SubCategory) {
-                    selected.switchToCategoryScene((Category)selected);
-                    setContextMenu(new CategoryTreeContextMenu());
-                    if (selected instanceof BacklogCategory) {
-                        boolean PoExists = false;
-                        for (Person person : Global.currentWorkspace.getPeople()) {
-                            if (person.getSkills().containsAll(Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER)
-                                    .getRequiredSkills())) {
+                    // Make a switch based on the type
+                    if (selected instanceof SubCategory) {
+                        selected.switchToCategoryScene((Category) selected);
+                        setContextMenu(new CategoryTreeContextMenu());
+                        if (selected instanceof BacklogCategory) {
+                            boolean PoExists = false;
+                            for (Person person : Global.currentWorkspace.getPeople()) {
+                                if (person.getSkills().containsAll(Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER)
+                                        .getRequiredSkills())) {
 
-                                PoExists = true;
+                                    PoExists = true;
+                                }
                             }
+                            setContextMenu(new CategoryTreeContextMenu(PoExists));
                         }
-                        setContextMenu(new CategoryTreeContextMenu(PoExists));
-                    }
-                    if (selected instanceof SprintCategory) {
-                        boolean releasesExists = ((((Project) Global.selectedTreeItem.getParent().getValue())
-                                .getReleases().isEmpty()) ? false : true);
+                        if (selected instanceof SprintCategory) {
+                            boolean releasesExists = ((((Project) Global.selectedTreeItem.getParent().getValue())
+                                    .getReleases().isEmpty()) ? false : true);
 
-                        setContextMenu(new CategoryTreeContextMenu(releasesExists));
+                            setContextMenu(new CategoryTreeContextMenu(releasesExists));
+                        }
                     }
-                }
-                else if (selected instanceof Category) {
-                    selected.switchToCategoryScene();
-                    setContextMenu(new CategoryTreeContextMenu());
-                    if (selected instanceof RolesCategory) {
-                        setContextMenu(new CategoryTreeContextMenu(false));
+                    else if (selected instanceof Category) {
+                        selected.switchToCategoryScene();
+                        setContextMenu(new CategoryTreeContextMenu());
+                        if (selected instanceof RolesCategory) {
+                            setContextMenu(new CategoryTreeContextMenu(false));
+                        }
                     }
-                }
-                else {
-                    // Assumed workspace item
-                    selected.switchToInfoScene();
-                    setContextMenu(new ElementTreeContextMenu());
-                }
-            });
+                    else {
+                        // Assumed workspace item
+                        selected.switchToInfoScene();
+                        setContextMenu(new ElementTreeContextMenu());
+                    }
+                });
     }
 
 
@@ -366,6 +366,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
 
     /**
      * Returns a set of all treeItems inside of the tree.
+     *
      * @return A set of all treeItems inside of the tree
      */
     public Set<TreeItem<T>> getTreeItems() {
@@ -378,6 +379,7 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
 
     /**
      * Returns a set of children of a treeItem that already exists within the tree.
+     *
      * @param treeItem The tree item to explore the children of
      * @return The children tree items of the given tree item
      */

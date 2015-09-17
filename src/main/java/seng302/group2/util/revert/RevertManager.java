@@ -26,7 +26,7 @@ public class RevertManager {
      */
     public static void revertWorkspace() {
         if (revertWorkspace != null) {
-            Stack<Command> undos = (Stack<Command>)revertUndos.clone();
+            Stack<Command> undos = (Stack<Command>) revertUndos.clone();
 
             Workspace currentWorkspace = SerialBuilder.getBuilder().fromJson(revertWorkspace,
                     Workspace.class);

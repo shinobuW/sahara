@@ -61,23 +61,23 @@ public class CreateTeamDialog extends Dialog<Map<String, String>> {
         createButton.setDisable(true);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                createButton.setDisable(!validateShortName(shortNameCustomField, null));
-            });
+            createButton.setDisable(!validateShortName(shortNameCustomField, null));
+        });
 
         this.setResultConverter(b -> {
-                if (b == btnTypeCreate) {
-                    //get user input
-                    String shortName = shortNameCustomField.getText();
-                    String description = descriptionTextArea.getText();
+            if (b == btnTypeCreate) {
+                //get user input
+                String shortName = shortNameCustomField.getText();
+                String description = descriptionTextArea.getText();
 
-                    Team team = new Team(shortName, description);
-                    Global.currentWorkspace.add(team);
-                    App.mainPane.selectItem(team);
-                    this.close();
+                Team team = new Team(shortName, description);
+                Global.currentWorkspace.add(team);
+                App.mainPane.selectItem(team);
+                this.close();
 
-                }
-                return null;
-            });
+            }
+            return null;
+        });
 
         this.setResizable(false);
         this.show();

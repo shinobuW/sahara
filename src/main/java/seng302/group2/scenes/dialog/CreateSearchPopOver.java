@@ -188,58 +188,58 @@ public class CreateSearchPopOver extends PopOver {
 
 
         searchField.getTextField().textProperty().addListener(new ChangeListener<String>() {
-                @Override
-                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                    if (newValue.equals("")) {
-                        btnSearch.setDisable(true);
-                    }
-                    else {
-                        btnSearch.setDisable(false);
-                    }
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue.equals("")) {
+                    btnSearch.setDisable(true);
                 }
-            });
+                else {
+                    btnSearch.setDisable(false);
+                }
+            }
+        });
 
         btnSearch.setOnAction(event -> {
-                if (normalBtn.isSelected()) {
-                    this.hide();
-                    String searchText = searchField.getText();
-                    List<String> checkedItems = getCheckedItems(workspaceSearchCheck,
-                            modelCheckBoxes);
-                    PopOver resultsPopOver = new SearchResultPane(runSearch(checkedItems, searchText,
-                            SearchType.NORMAL, treeViewButton.isSelected()), searchText, SearchType.NORMAL);
+            if (normalBtn.isSelected()) {
+                this.hide();
+                String searchText = searchField.getText();
+                List<String> checkedItems = getCheckedItems(workspaceSearchCheck,
+                        modelCheckBoxes);
+                PopOver resultsPopOver = new SearchResultPane(runSearch(checkedItems, searchText,
+                        SearchType.NORMAL, treeViewButton.isSelected()), searchText, SearchType.NORMAL);
 
-                    resultsPopOver.show(App.mainStage);
-                }
-                else if (regexBtn.isSelected()) {
-                    this.hide();
-                    String searchText = searchField.getText();
-                    List<String> checkedItems = getCheckedItems(workspaceSearchCheck,
-                            modelCheckBoxes);
-                    PopOver resultsPopOver = new SearchResultPane(runSearch(checkedItems, searchText,
-                            SearchType.REGEX, treeViewButton.isSelected()), searchText, SearchType.REGEX);
-                    resultsPopOver.show(App.mainStage);
-                }
-                else if (complexBtn.isSelected()) {
-                    this.hide();
-                    String searchText = searchField.getText();
-                    List<String> checkedItems = getCheckedItems(workspaceSearchCheck,
-                            modelCheckBoxes);
-                    PopOver resultsPopOver = new SearchResultPane(runSearch(checkedItems, searchText,
-                            SearchType.COMPLEX, treeViewButton.isSelected()), searchText, SearchType.COMPLEX);
-                    resultsPopOver.show(App.mainStage);
-                }
+                resultsPopOver.show(App.mainStage);
+            }
+            else if (regexBtn.isSelected()) {
+                this.hide();
+                String searchText = searchField.getText();
+                List<String> checkedItems = getCheckedItems(workspaceSearchCheck,
+                        modelCheckBoxes);
+                PopOver resultsPopOver = new SearchResultPane(runSearch(checkedItems, searchText,
+                        SearchType.REGEX, treeViewButton.isSelected()), searchText, SearchType.REGEX);
+                resultsPopOver.show(App.mainStage);
+            }
+            else if (complexBtn.isSelected()) {
+                this.hide();
+                String searchText = searchField.getText();
+                List<String> checkedItems = getCheckedItems(workspaceSearchCheck,
+                        modelCheckBoxes);
+                PopOver resultsPopOver = new SearchResultPane(runSearch(checkedItems, searchText,
+                        SearchType.COMPLEX, treeViewButton.isSelected()), searchText, SearchType.COMPLEX);
+                resultsPopOver.show(App.mainStage);
+            }
 
-            });
+        });
 
         btnCancel.setOnAction(event -> {
-                Global.advancedSearchExists = false;
-                this.hide();
-            });
+            Global.advancedSearchExists = false;
+            this.hide();
+        });
 
         this.setOnHiding(event -> {
-                MainPane.getToolBar().search("");
-                Global.advancedSearchExists = false;
-            });
+            MainPane.getToolBar().search("");
+            Global.advancedSearchExists = false;
+        });
 
 
     }
@@ -247,8 +247,9 @@ public class CreateSearchPopOver extends PopOver {
 
     /**
      * Gets the checked item.
+     *
      * @param workspaceSearchCheck The check box for searching through the whole workspace
-     * @param modelCheckBoxes List of check boxes in the search dialog
+     * @param modelCheckBoxes      List of check boxes in the search dialog
      * @return a list of checked items
      */
     protected static List<String> getCheckedItems(CheckBox workspaceSearchCheck,
@@ -277,12 +278,30 @@ public class CreateSearchPopOver extends PopOver {
         return checkedItems;
     }
 
+    private static Map sortByValue(Map map) {
+        List list = new LinkedList(map.entrySet());
+        Collections.sort(list, new Comparator() {
+            public int compare(Object o1, Object o2) {
+                return ((Comparable) ((Map.Entry) (o2)).getValue())
+                        .compareTo(((Map.Entry) (o1)).getValue());
+            }
+        });
+
+        Map result = new LinkedHashMap();
+        for (Iterator it = list.iterator(); it.hasNext(); ) {
+            Map.Entry entry = (Map.Entry) it.next();
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
+    }
+
     /**
      * Runs the search through the checked items and constructs the SearchResultCellNode to be added to the search
      * result pane
+     *
      * @param checkedItems items that are being searched through
-     * @param searchText the text to be searched
-     * @param searchType the type of the search
+     * @param searchText   the text to be searched
+     * @param searchType   the type of the search
      * @return a list of SearchResultCellNode
      */
     public List<SearchResultCellNode> runSearch(List<String> checkedItems, String searchText, SearchType searchType,
@@ -293,7 +312,7 @@ public class CreateSearchPopOver extends PopOver {
         for (String item : checkedItems) {
             if (item.equals("Projects")) {
                 for (Project proj : Global.currentWorkspace.getProjects()) {
-                    TrackedTabPane scene =  new ProjectScene(proj);
+                    TrackedTabPane scene = new ProjectScene(proj);
                     Map<SearchableTab, Integer> map = scene.advancedQuery(searchText, searchType);
 
                     for (SearchableTab tab : map.keySet()) {
@@ -437,23 +456,6 @@ public class CreateSearchPopOver extends PopOver {
         System.out.println("After " + returnedList);
 
         return returnedList;
-    }
-
-    private static Map sortByValue(Map map) {
-        List list = new LinkedList(map.entrySet());
-        Collections.sort(list, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                return ((Comparable) ((Map.Entry) (o2)).getValue())
-                        .compareTo(((Map.Entry) (o1)).getValue());
-            }
-        });
-
-        Map result = new LinkedHashMap();
-        for (Iterator it = list.iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry)it.next();
-            result.put(entry.getKey(), entry.getValue());
-        }
-        return result;
     }
 
 }

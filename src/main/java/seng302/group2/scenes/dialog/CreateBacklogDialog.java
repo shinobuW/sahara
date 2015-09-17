@@ -35,11 +35,12 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
     Boolean correctLongName = Boolean.FALSE;
     Boolean required = true;
     CustomComboBox<Project> projComboBox = new CustomComboBox<>("Project: ", required);
-    CustomComboBox<Person> productOwnerComboBox = new CustomComboBox<>("Product Owner: ",required);
+    CustomComboBox<Person> productOwnerComboBox = new CustomComboBox<>("Product Owner: ", required);
     CustomComboBox<String> scaleComboBox = new CustomComboBox<>("Scale: ", required);
 
     /**
      * Shows a backlog creation dialog. A default project is selected in the project combo box.
+     *
      * @param defaultProject The project to be used as the default project.
      */
     public CreateBacklogDialog(Project defaultProject) {
@@ -98,16 +99,16 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
 
         // Validation.
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctShortName = validateShortName(shortNameCustomField, null);
-                createButton.setDisable(!(correctShortName && correctLongName
-                        && projectSelected() & poSelected() & scaleSelected()));
-            });
+            correctShortName = validateShortName(shortNameCustomField, null);
+            createButton.setDisable(!(correctShortName && correctLongName
+                    && projectSelected() & poSelected() & scaleSelected()));
+        });
 
         longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctLongName = validateName(longNameCustomField);
-                createButton.setDisable(!(correctShortName && correctLongName
-                        && projectSelected() & poSelected() & scaleSelected()));
-            });
+            correctLongName = validateName(longNameCustomField);
+            createButton.setDisable(!(correctShortName && correctLongName
+                    && projectSelected() & poSelected() & scaleSelected()));
+        });
 
         projComboBox.getComboBox().valueProperty().addListener(new ChangeListener<Project>() {
             @Override
@@ -115,7 +116,7 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
                 createButton.setDisable(!(correctShortName && correctLongName
                         && projectSelected() && poSelected() && scaleSelected()));
             }
-            });
+        });
 
         productOwnerComboBox.getComboBox().valueProperty().addListener(new ChangeListener<Person>() {
             @Override
@@ -123,7 +124,7 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
                 createButton.setDisable(!(correctShortName && correctLongName
                         && projectSelected() && poSelected() && scaleSelected()));
             }
-            });
+        });
 
         scaleComboBox.getComboBox().valueProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -131,29 +132,29 @@ public class CreateBacklogDialog extends Dialog<Map<String, String>> {
                 createButton.setDisable(!(correctShortName && correctLongName
                         && projectSelected() && poSelected() && scaleSelected()));
             }
-            });
+        });
 
         // Create button event
         this.setResultConverter(b -> {
-                if (b == btnTypeCreate) {
-                    String shortName = shortNameCustomField.getText();
-                    String longName = longNameCustomField.getText();
-                    String description = descriptionTextArea.getText();
+            if (b == btnTypeCreate) {
+                String shortName = shortNameCustomField.getText();
+                String longName = longNameCustomField.getText();
+                String description = descriptionTextArea.getText();
 
-                    Project project = projComboBox.getComboBox().getValue();
-                    Person productOwner = productOwnerComboBox.getValue();
-                    String scale = scaleComboBox.getValue();
+                Project project = projComboBox.getComboBox().getValue();
+                Person productOwner = productOwnerComboBox.getValue();
+                String scale = scaleComboBox.getValue();
 
-                    Backlog backlog = new Backlog(shortName, longName, description, productOwner,
-                            project, scale);
+                Backlog backlog = new Backlog(shortName, longName, description, productOwner,
+                        project, scale);
 
-                    project.add(backlog);
-                    App.mainPane.selectItem(backlog);
-                    this.close();
+                project.add(backlog);
+                App.mainPane.selectItem(backlog);
+                this.close();
 
-                }
-                return null;
-            });
+            }
+            return null;
+        });
 
         this.setResizable(false);
         this.show();

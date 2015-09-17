@@ -20,14 +20,15 @@ import java.util.List;
 
 /**
  * A class for generating an XML report showing information about elements of the workspace selected by the user.
+ *
  * @author crw73
  */
 public class ReportGenerator {
-    private static DocumentBuilderFactory docFactory = null;
-    private static DocumentBuilder docBuilder = null;
     public static Document doc = null;
     public static List<SaharaItem> generatedItems = null;
     public static int iterator = 0;
+    private static DocumentBuilderFactory docFactory = null;
+    private static DocumentBuilder docBuilder = null;
 
     /**
      * Basic Constructor, only used to set up basic report elements for tests
@@ -45,6 +46,7 @@ public class ReportGenerator {
 
     /**
      * Generates a report outputted to an XML file using a list of checked items from the workspace
+     *
      * @param checkedItems A list of the items chosen to be included in the report
      * @return A boolean showing whether the report has been successfully generated
      */

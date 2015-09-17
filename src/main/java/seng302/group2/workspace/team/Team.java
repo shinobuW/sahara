@@ -54,24 +54,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         setInformationSwitchStrategy(new TeamInformationSwitchStrategy());
     }
 
-    /**
-     * Gets the set of SaharaItems 'belonging' to the Team: People, those in Dev roles, and its allocations
-     * @return A set of SaharaItems belonging to the team
-     */
-    @Override
-    public Set<SaharaItem> getItemsSet() {
-        Set<SaharaItem> items = new HashSet<>();
-
-        items.addAll(people);
-        items.addAll(devs);
-        items.addAll(projectAllocations);
-
-        return items;
-    }
-
-
-    /**
-     * Basic team constructor with all fields
+    /** Basic team constructor with all fields
      *
      * @param shortName   A unique short name to identify a Team
      * @param description of a Team
@@ -86,8 +69,6 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
     }
 
 
-    // <editor-fold defaultstate="collapsed" desc="Getters"> 
-
     /**
      * Adds the 'Unassigned' team to the workspace.
      *
@@ -99,6 +80,26 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         temp.unassigned = true;
         return temp;
     }
+
+    /// <editor-fold defaultstate="collapsed" desc="Getters">
+
+    /**
+
+/**
+     * Gets the set of SaharaItems 'belonging' to the Team: People, those in Dev roles, and its allocations
+     * @return A set of SaharaItems belonging to the team
+     */
+    @Override
+    public Set<SaharaItem> getItemsSet() {
+        Set<SaharaItem> items = new HashSet<>();
+
+        items.addAll(people);
+        items.addAll(devs);
+        items.addAll(projectAllocations);
+
+        return items;
+    }
+
 
     /**
      * Gets the Team's short name

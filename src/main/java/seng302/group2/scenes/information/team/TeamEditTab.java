@@ -37,7 +37,8 @@ import static javafx.collections.FXCollections.observableArrayList;
 public class TeamEditTab extends SearchableTab {
 
     Set<SearchableControl> searchControls = new HashSet<>();
-
+    String poPlaceholder = "No Product Owner Assigned";
+    String smPlaceholder = "No Scrum Master Assigned";
     private Team baseTeam;
     private RequiredField shortNameField;
     private CustomTextArea descriptionField;
@@ -47,8 +48,6 @@ public class TeamEditTab extends SearchableTab {
     private ObservableList<Role> roleList = observableArrayList();
     private CustomComboBox<Role> roleComboBox;
     private Role noneRole = new Role("", Role.RoleType.NONE);
-    String poPlaceholder = "No Product Owner Assigned";
-    String smPlaceholder = "No Scrum Master Assigned";
 
     /**
      * Constructor for the Team Edit Tab class. This constructor creates a JavaFX ScrollPane

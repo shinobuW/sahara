@@ -20,6 +20,7 @@ public class HierarchyTracker {
 
     /**
      * Refreshes the mapping of the tree items and if they are expanded or not.
+     *
      * @param tree The tree to map items for
      */
     public static void refreshMap(TreeViewWithItems<SaharaItem> tree) {
@@ -30,6 +31,7 @@ public class HierarchyTracker {
 
     /**
      * Restores the mapping of the tree items from the dictionary of expanded items.
+     *
      * @param tree The tree to restore the mapping of
      */
     public static void restoreMap(TreeViewWithItems<SaharaItem> tree) {
@@ -41,6 +43,7 @@ public class HierarchyTracker {
     /**
      * Checks to see if an item in the tree is expanded or not. If the items
      * aren't in the dictionary, they are treated as expanded by default.
+     *
      * @param item The item to check
      * @return If the item is expanded
      */
@@ -56,6 +59,7 @@ public class HierarchyTracker {
     /**
      * Expands all items in the tree by mapping all of the items inside of it to true, and then
      * restoring the map state from the dictionary
+     *
      * @param tree The tree to expand all items of
      */
     public static void expandAll(TreeViewWithItems<SaharaItem> tree) {

@@ -28,6 +28,7 @@ public class CreateWorkspaceDialog extends Dialog<Map<String, String>> {
 
     Boolean correctShortName = Boolean.FALSE;
     Boolean correctLongName = Boolean.FALSE;
+
     /**
      * Displays the Dialog box for creating a workspace.
      */
@@ -64,32 +65,31 @@ public class CreateWorkspaceDialog extends Dialog<Map<String, String>> {
         createButton.setDisable(true);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctShortName = validateShortName(shortNameCustomField, null);
-                createButton.setDisable(!(correctShortName && correctLongName));
-            });
+            correctShortName = validateShortName(shortNameCustomField, null);
+            createButton.setDisable(!(correctShortName && correctLongName));
+        });
 
         longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctLongName = validateName(longNameCustomField);
-                createButton.setDisable(!(correctShortName && correctLongName));
-            });
-
+            correctLongName = validateName(longNameCustomField);
+            createButton.setDisable(!(correctShortName && correctLongName));
+        });
 
 
         this.setResultConverter(b -> {
-                if (b == btnTypeCreate) {
-                    String shortName = shortNameCustomField.getText();
-                    String longName = longNameCustomField.getText();
-                    String description = descriptionTextArea.getText();
+            if (b == btnTypeCreate) {
+                String shortName = shortNameCustomField.getText();
+                String longName = longNameCustomField.getText();
+                String description = descriptionTextArea.getText();
 
-                    Workspace workspace = new Workspace(shortName, longName, description);
-                    Global.currentWorkspace = workspace;
-                    App.mainPane.selectItem(Global.currentWorkspace);
-                    App.mainPane.refreshAll();
-                    Global.setCurrentWorkspaceChanged();
-                    this.close();
-                }
-                return null;
-            });
+                Workspace workspace = new Workspace(shortName, longName, description);
+                Global.currentWorkspace = workspace;
+                App.mainPane.selectItem(Global.currentWorkspace);
+                App.mainPane.refreshAll();
+                Global.setCurrentWorkspaceChanged();
+                this.close();
+            }
+            return null;
+        });
 
         this.setResizable(false);
         this.show();

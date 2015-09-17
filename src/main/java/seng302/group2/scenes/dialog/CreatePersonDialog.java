@@ -43,6 +43,7 @@ public class CreatePersonDialog extends Dialog<Map<String, String>> {
     private Boolean correctShortName = Boolean.FALSE;
     private Boolean correctFirstName = Boolean.FALSE;
     private Boolean correctLastName = Boolean.FALSE;
+
     /**
      * Displays the Dialog box for creating a person.
      */
@@ -74,21 +75,21 @@ public class CreatePersonDialog extends Dialog<Map<String, String>> {
         CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
 
         final Callback<DatePicker, DateCell> birthDateCellFactory =
-            new Callback<DatePicker, DateCell>() {
-                @Override
-                public DateCell call(final DatePicker datePicker) {
-                    return new DateCell() {
-                        @Override
-                        public void updateItem(LocalDate item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (item.isAfter(LocalDate.now())) {
-                                setDisable(true);
-                                setStyle("-fx-background-color: #ffc0cb;");
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (item.isAfter(LocalDate.now())) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #ffc0cb;");
+                                }
                             }
-                        }
-                    };
-                }
-            };
+                        };
+                    }
+                };
         birthDatePicker.getDatePicker().setDayCellFactory(birthDateCellFactory);
 
         grid.getChildren().addAll(shortNameCustomField, firstNameCustomField, lastNameCustomField,
@@ -105,62 +106,62 @@ public class CreatePersonDialog extends Dialog<Map<String, String>> {
 
         //Validation
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctShortName = validateShortName(shortNameCustomField, null);
-                createButton.setDisable(!correctUserInput());
-            });
+            correctShortName = validateShortName(shortNameCustomField, null);
+            createButton.setDisable(!correctUserInput());
+        });
 
         firstNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newvalue) -> {
-                correctFirstName = validateName(firstNameCustomField);
-                createButton.setDisable(!correctUserInput());
-            });
+            correctFirstName = validateName(firstNameCustomField);
+            createButton.setDisable(!correctUserInput());
+        });
 
         lastNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctLastName = validateName(lastNameCustomField);
-                createButton.setDisable(!correctUserInput());
-            });
+            correctLastName = validateName(lastNameCustomField);
+            createButton.setDisable(!correctUserInput());
+        });
 
         birthDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
-                @Override
-                public void changed(ObservableValue<? extends LocalDate> observable,
-                                    LocalDate oldValue, LocalDate newValue) {
-                    if (newValue != null && newValue.isAfter(LocalDate.now())) {
-                        ValidationStyle.borderGlowRed(birthDatePicker.getDatePicker());
-                        ValidationStyle.showMessage("A Persons birth date must be in the past",
-                                birthDatePicker.getDatePicker());
-                    }
-                    else {
-                        ValidationStyle.borderGlowNone(birthDatePicker.getDatePicker());
-                    }
-                    createButton.setDisable(!correctUserInput());
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable,
+                                LocalDate oldValue, LocalDate newValue) {
+                if (newValue != null && newValue.isAfter(LocalDate.now())) {
+                    ValidationStyle.borderGlowRed(birthDatePicker.getDatePicker());
+                    ValidationStyle.showMessage("A Persons birth date must be in the past",
+                            birthDatePicker.getDatePicker());
                 }
-            });
+                else {
+                    ValidationStyle.borderGlowNone(birthDatePicker.getDatePicker());
+                }
+                createButton.setDisable(!correctUserInput());
+            }
+        });
 
         this.setResultConverter(b -> {
-                if (b == btnTypeCreate) {
-                    //get user input
-                    String firstName = firstNameCustomField.getText();
-                    String lastName = lastNameCustomField.getText();
-                    String shortName = shortNameCustomField.getText();
-                    String email = emailTextField.getText();
-                    String description = descriptionTextArea.getText();
+            if (b == btnTypeCreate) {
+                //get user input
+                String firstName = firstNameCustomField.getText();
+                String lastName = lastNameCustomField.getText();
+                String shortName = shortNameCustomField.getText();
+                String email = emailTextField.getText();
+                String description = descriptionTextArea.getText();
 
-                    LocalDate birthDate = birthDatePicker.getValue();
+                LocalDate birthDate = birthDatePicker.getValue();
 
-                    if (firstName.equals("John") && lastName.equals("Cena")) {
-                        String path = ("resources/media/Cena.mp3");
-                        Media hit = new Media(new File(path).toURI().toString());
-                        MediaPlayer mediaPlayer = new MediaPlayer(hit);
-                        mediaPlayer.play();
-                    }
-
-                    Person person = new Person(shortName, firstName, lastName, email, description,
-                            birthDate);
-                    Global.currentWorkspace.add(person);
-                    App.mainPane.selectItem(person);
-                    this.close();
+                if (firstName.equals("John") && lastName.equals("Cena")) {
+                    String path = ("resources/media/Cena.mp3");
+                    Media hit = new Media(new File(path).toURI().toString());
+                    MediaPlayer mediaPlayer = new MediaPlayer(hit);
+                    mediaPlayer.play();
                 }
-                return null;
-            });
+
+                Person person = new Person(shortName, firstName, lastName, email, description,
+                        birthDate);
+                Global.currentWorkspace.add(person);
+                App.mainPane.selectItem(person);
+                this.close();
+            }
+            return null;
+        });
 
         this.setResizable(false);
         this.show();

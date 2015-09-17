@@ -1,4 +1,5 @@
 package seng302.group2.workspace.tag;
+
 import javafx.scene.paint.Color;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
@@ -7,8 +8,6 @@ import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +20,7 @@ public class Tag extends SaharaItem implements Serializable {
 
     /**
      * Basic constructor for a Tag
+     *
      * @param tagName The name of the tag
      */
     public Tag(String tagName) {
@@ -29,23 +29,22 @@ public class Tag extends SaharaItem implements Serializable {
     }
 
     /**
-     * Sets the colour of the tag for use on the visual tag nodes
-     * @param color The colour to set the tag
-     */
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-
-    /**
      * Gets the colour of the tag for use on the visual tag nodes
+     *
      * @return The colour of the tag
      */
     public Color getColor() {
         return color;
     }
 
-
+    /**
+     * Sets the colour of the tag for use on the visual tag nodes
+     *
+     * @param color The colour to set the tag
+     */
+    public void setColor(Color color) {
+        this.color = color;
+    }
 
     /**
      * Deletes the tag from the workspace and removes it from every item that has the tag.
@@ -68,6 +67,7 @@ public class Tag extends SaharaItem implements Serializable {
 
     /**
      * Returns all of the Sahara Items that have been tagged with this tag
+     *
      * @return A set of the Sahara Items that have been tagged with this tag
      */
     // Was ObservableList based on this.items
@@ -84,6 +84,7 @@ public class Tag extends SaharaItem implements Serializable {
 
     /**
      * Gets the short name of the tag.
+     *
      * @return tags short name
      */
     public String getName() {
@@ -103,6 +104,7 @@ public class Tag extends SaharaItem implements Serializable {
 
     /**
      * Overridden method for displaying the tag as a string
+     *
      * @return The name of the tag
      */
     @Override
@@ -114,7 +116,7 @@ public class Tag extends SaharaItem implements Serializable {
      * Creates a tag edit command and executes it with the Global Command Manager, updating
      * the tag with the new parameter values.
      *
-     * @param newName   The new tag name
+     * @param newName  The new tag name
      * @param newColor The new color
      */
     public void edit(String newName, Color newColor) {
@@ -162,6 +164,7 @@ public class Tag extends SaharaItem implements Serializable {
 
         /**
          * Searches the stateObjects to find an equal model class to map to
+         *
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
          */
@@ -188,6 +191,7 @@ public class Tag extends SaharaItem implements Serializable {
 
         /**
          * Constructor for the global tag deletion command
+         *
          * @param tag The tag to be removed from every item, and then the workspace.
          */
         DeleteGlobalTagCommand(Tag tag) {
@@ -219,6 +223,7 @@ public class Tag extends SaharaItem implements Serializable {
 
         /**
          * Searches the stateObjects to find an equal model class to map to
+         *
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
          */

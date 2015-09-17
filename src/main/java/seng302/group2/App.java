@@ -93,7 +93,7 @@ public class App extends Application {
         alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo, buttonTypeCancel);
 
 
-        Optional<ButtonType> result  = alert.showAndWait();
+        Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == buttonTypeYes) {
             SaveLoadResult saved = Workspace.saveWorkspace(Global.currentWorkspace, false);
@@ -167,17 +167,17 @@ public class App extends Application {
         // Exit button handling
         Platform.setImplicitExit(false);
         primaryStage.setOnCloseRequest(event -> {
-                // Set user preferences for window
-                userPrefs.putBoolean("stage.maximized", primaryStage.isMaximized());
-                userPrefs.putDouble("stage.x", primaryStage.getX());
-                userPrefs.putDouble("stage.y", primaryStage.getY());
-                userPrefs.putDouble("stage.width", primaryStage.getWidth());
-                userPrefs.putDouble("stage.height", primaryStage.getHeight());
+            // Set user preferences for window
+            userPrefs.putBoolean("stage.maximized", primaryStage.isMaximized());
+            userPrefs.putDouble("stage.x", primaryStage.getX());
+            userPrefs.putDouble("stage.y", primaryStage.getY());
+            userPrefs.putDouble("stage.width", primaryStage.getWidth());
+            userPrefs.putDouble("stage.height", primaryStage.getHeight());
 
-                // Perform shutdown of application
-                exitApp();
-                event.consume();
-            });
+            // Perform shutdown of application
+            exitApp();
+            event.consume();
+        });
 
         // Show the stage/window
         App.refreshWindowTitle();
