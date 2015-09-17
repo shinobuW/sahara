@@ -23,9 +23,8 @@ public class SprintTaskStatusTabTest {
         JavaFxTestApp.initJFX();
     }
 
-    @Test
+    /*@Test
     public void testCollectTasksUnassigned() throws Exception {
-
         Project project = new Project();
         Team team = new Team();
         Release release = new Release();
@@ -125,5 +124,5 @@ public class SprintTaskStatusTabTest {
         List<Task> storyFilteredTasks = taskStatusTab.collectTasks();
 
         Assert.assertTrue(storyFilteredTasks.contains(testTask));
-    }
+    }*/
 }

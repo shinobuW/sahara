@@ -5,6 +5,7 @@ import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.tag.Tag;
+import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
 
@@ -72,6 +73,8 @@ public class AcceptanceCriteriaTest {
 
     @Test
     public void testTagEdit() {
+        Global.currentWorkspace = new Workspace();
+
         AcceptanceCriteria ac = new AcceptanceCriteria("", null);
         Tag tag = new Tag("Tag");
         ArrayList<Tag> newTags = new ArrayList<>();
