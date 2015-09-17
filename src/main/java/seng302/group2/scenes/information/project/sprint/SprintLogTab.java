@@ -39,6 +39,8 @@ public class SprintLogTab extends SearchableTab {
     Person partner = null;
     CustomComboBox<Person> loggerComboBox;
     CustomComboBox<Person> partnerComboBox;
+    Person nullPerson = new Person("", "", "", "", "", null);
+
     /**
      * Constructor for the sprint logging tab
      * @param currentSprint
@@ -51,7 +53,6 @@ public class SprintLogTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(loggingPane);
         this.setContent(wrapper);
 
-
         loggerComboBox = new CustomComboBox<Person>("Logger");
         partnerComboBox = new CustomComboBox<Person>("Partner");
 
@@ -63,11 +64,15 @@ public class SprintLogTab extends SearchableTab {
             allPeople.addAll(team.getPeople());
         }
 
+        loggerComboBox.getComboBox().getItems().add(nullPerson);
         loggerComboBox.getComboBox().getItems().addAll(allPeople);
+
+        partnerComboBox.getComboBox().getItems().add(nullPerson);
         partnerComboBox.getComboBox().getItems().addAll(allPeople);
 
         loggerComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
                     partnerComboBox.clear();
+                    partnerComboBox.getComboBox().getItems().add(nullPerson);
                     partnerComboBox.getComboBox().getItems().addAll(allPeople);
                     partnerComboBox.getComboBox().getItems().remove(newValue);
                     updateFilteredLogs(currentSprint);
@@ -176,12 +181,12 @@ public class SprintLogTab extends SearchableTab {
         for (Log log : sprint.getAllLogsWithInitialLogs()) {
             if (selectedLogger != null)
             {
-                if (log.getLogger() != selectedLogger) {
+                if (selectedLogger != nullPerson && log.getLogger() != selectedLogger) {
                     data.remove(log);
                 }
             }
 
-            if (selectedPartner != null) {
+            if (selectedPartner != null && selectedPartner != nullPerson) {
                 if (!(log instanceof PairLog)) {
                     data.remove(log);
                 }
