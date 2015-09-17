@@ -30,6 +30,7 @@ import java.util.List;
 public class SkillEditTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+    Skill currentSkill;
 
     /**
      * Constructor for the SkillEditTab class. This constructor creates a JavaFX ScrollPane
@@ -38,6 +39,21 @@ public class SkillEditTab extends SearchableTab {
      * @param currentSkill The skill being edited
      */
     public SkillEditTab(Skill currentSkill) {
+        this.currentSkill = currentSkill;
+        this.construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab Settings
         this.setText("Edit Skill");
         Pane editPane = new VBox(10);
@@ -69,53 +85,44 @@ public class SkillEditTab extends SearchableTab {
 
         // Events
         btnDone.setOnAction((event) -> {
-                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                        currentSkill.getShortName());
-                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                        currentSkill.getDescription());
+            boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                    currentSkill.getShortName());
+            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                    currentSkill.getDescription());
 
-                if (shortNameUnchanged && descriptionUnchanged) {
-                    currentSkill.switchToInfoScene();
-                    return;
-                }
+            if (shortNameUnchanged && descriptionUnchanged) {
+                currentSkill.switchToInfoScene();
+                return;
+            }
 
-                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                        currentSkill.getShortName());
+            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                    currentSkill.getShortName());
 
-                ArrayList<Tag> tags = new ArrayList<Tag>();
+            ArrayList<Tag> tags = new ArrayList<Tag>();
 
-                if (correctShortName) {
-                    currentSkill.edit(shortNameCustomField.getText(),
-                            descriptionTextArea.getText(),
-                            tags
-                    );
+            if (correctShortName) {
+                currentSkill.edit(shortNameCustomField.getText(),
+                        descriptionTextArea.getText(),
+                        tags
+                );
 
-                    Collections.sort(Global.currentWorkspace.getSkills());
-                    currentSkill.switchToInfoScene();
-                    App.mainPane.refreshTree();
-                }
-                else {
-                    event.consume();
-                }
+                Collections.sort(Global.currentWorkspace.getSkills());
+                currentSkill.switchToInfoScene();
+                App.mainPane.refreshTree();
+            }
+            else {
+                event.consume();
+            }
 
-            });
+        });
 
         btnCancel.setOnAction((event) -> {
-                currentSkill.switchToInfoScene();
-            });
+            currentSkill.switchToInfoScene();
+        });
 
         // Add items to pane & search collection
         editPane.getChildren().addAll(shortNameCustomField, descriptionTextArea, buttons);
         Collections.addAll(searchControls, shortNameCustomField, descriptionTextArea);
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }
 

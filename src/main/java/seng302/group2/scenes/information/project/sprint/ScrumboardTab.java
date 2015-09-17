@@ -26,36 +26,26 @@ public class ScrumboardTab extends SearchableTab {
     Task interactiveTask = null;
     public int hoverIndex;
 
+    Pane basicInfoPane = new VBox(10);
+    Sprint currentSprint;
+
     /**
      * Constructor for the Backlog Info tab
      *
      * @param currentSprint The currently selected backlog
      */
     public ScrumboardTab(Sprint currentSprint) {
+        this.currentSprint = currentSprint;
+
         this.setText("Scrumboard");
-        Pane basicInfoPane = new VBox(10);
+        basicInfoPane = new VBox(10);
 
         basicInfoPane.setBorder(null);
         basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        Platform.runLater(() -> {
-                SearchableText title = new SearchableTitle(currentSprint.getLongName());
-                basicInfoPane.getChildren().add(title);
-
-
-                // Create story title pane regions
-
-                for (Story story : currentSprint.getStories().sorted(Story.StoryPriorityComparator)) {
-                    basicInfoPane.getChildren().add(getCollapsableStoryPane(story));
-                }
-                basicInfoPane.getChildren().add(getCollapsableStoryPane(currentSprint.getUnallocatedTasksStory()));
-
-
-                // Add the searchable controls to the collection for searching
-                Collections.addAll(searchControls, title);
-            });
+        construct();
 
 
     }
@@ -172,6 +162,26 @@ public class ScrumboardTab extends SearchableTab {
     @Override
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;
+    }
+
+    @Override
+    public void construct() {
+        Platform.runLater(() -> {
+            SearchableText title = new SearchableTitle(currentSprint.getLongName());
+            basicInfoPane.getChildren().add(title);
+
+
+            // Create story title pane regions
+
+            for (Story story : currentSprint.getStories().sorted(Story.StoryPriorityComparator)) {
+                basicInfoPane.getChildren().add(getCollapsableStoryPane(story));
+            }
+            basicInfoPane.getChildren().add(getCollapsableStoryPane(currentSprint.getUnallocatedTasksStory()));
+
+
+            // Add the searchable controls to the collection for searching
+            Collections.addAll(searchControls, title);
+        });
     }
 
     /**

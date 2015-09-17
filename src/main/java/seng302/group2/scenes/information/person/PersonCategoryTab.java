@@ -28,11 +28,29 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 public class PersonCategoryTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+    Workspace currentWorkspace;
+
     /**
      * Constructor for PersonCategoryTab class.
      * @param currentWorkspace The current workspace
      */
     public PersonCategoryTab(Workspace currentWorkspace) {
+        this.currentWorkspace = currentWorkspace;
+        this.construct();
+
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Basic Information");
         Pane categoryPane = new VBox(10);
@@ -60,36 +78,27 @@ public class PersonCategoryTab extends SearchableTab {
 
         // Events
         btnView.setOnAction((event) -> {
-                if (personBox.getSelectionModel().getSelectedItem() != null) {
-                    App.mainPane.selectItem((SaharaItem)
-                            personBox.getSelectionModel().getSelectedItem());
-                }
-            });
+            if (personBox.getSelectionModel().getSelectedItem() != null) {
+                App.mainPane.selectItem((SaharaItem)
+                        personBox.getSelectionModel().getSelectedItem());
+            }
+        });
 
 
         btnDelete.setOnAction((event) -> {
-                if (personBox.getSelectionModel().getSelectedItem() != null) {
-                    showDeleteDialog((SaharaItem)
-                            personBox.getSelectionModel().getSelectedItem());
-                }
-            });
+            if (personBox.getSelectionModel().getSelectedItem() != null) {
+                showDeleteDialog((SaharaItem)
+                        personBox.getSelectionModel().getSelectedItem());
+            }
+        });
 
         btnCreate.setOnAction((event) -> {
-                javafx.scene.control.Dialog creationDialog = new CreatePersonDialog();
-                creationDialog.show();
-            });
+            javafx.scene.control.Dialog creationDialog = new CreatePersonDialog();
+            creationDialog.show();
+        });
 
         // Add items to pane & search collection
         categoryPane.getChildren().addAll(title, personBox, selectionButtons);
         Collections.addAll(searchControls, title, personBox);
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }

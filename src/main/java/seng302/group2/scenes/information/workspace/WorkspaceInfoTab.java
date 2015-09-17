@@ -24,6 +24,7 @@ import java.util.List;
  */
 public class WorkspaceInfoTab extends SearchableTab {
 
+    private Workspace currentWorkspace;
     List<SearchableControl> searchControls = new ArrayList<>();
 
     /**
@@ -32,6 +33,23 @@ public class WorkspaceInfoTab extends SearchableTab {
      * @param currentWorkspace The currently selected Workspace.
      */
     public WorkspaceInfoTab(Workspace currentWorkspace) {
+        this.currentWorkspace = currentWorkspace;
+        setContent(new Pane());
+        construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Basic Information");
 
@@ -49,8 +67,8 @@ public class WorkspaceInfoTab extends SearchableTab {
 
         // Events
         btnEdit.setOnAction((event) -> {
-                currentWorkspace.switchToInfoScene(true);
-            });
+            currentWorkspace.switchToInfoScene(true);
+        });
 
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
@@ -65,15 +83,6 @@ public class WorkspaceInfoTab extends SearchableTab {
                 shortName,
                 desc
         );
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 
     /**

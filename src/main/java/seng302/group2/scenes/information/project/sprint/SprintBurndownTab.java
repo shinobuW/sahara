@@ -40,33 +40,7 @@ public class SprintBurndownTab extends SearchableTab {
      */
     public SprintBurndownTab(Sprint currentSprint) {
         this.currentSprint = currentSprint;
-
-        this.setText("Burndown Chart");
-        Pane burndownPane = new VBox(10);
-        burndownPane.setBorder(null);
-        burndownPane.setPadding(new Insets(25, 25, 25, 25));
-        ScrollPane wrapper = new ScrollPane(burndownPane);
-        this.setContent(wrapper);
-
-        SearchableText title = new SearchableTitle(currentSprint.getGoal() + " Burndown");
-        burndownPane.getChildren().add(title);
-
-        //defining the axes
-
-
-        configureAxis();
-        BurndownChart burndown = new BurndownChart(xAxis, yAxis);
-        burndown.setPrefSize(800, 600);
-        burndown.setMaxSize(800, 600);
-        burndown.populateGraph(currentSprint);
-
-        burndownPane.getChildren().add(burndown);
-
-
-
-
-        // Add all our searchable controls on the page to the collection of searchable items
-        Collections.addAll(searchControls, title);
+        construct();
     }
 
     /**
@@ -103,6 +77,34 @@ public class SprintBurndownTab extends SearchableTab {
     @Override
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;
+    }
+
+    @Override
+    public void construct() {
+        this.setText("Burndown Chart");
+        Pane burndownPane = new VBox(10);
+        burndownPane.setBorder(null);
+        burndownPane.setPadding(new Insets(25, 25, 25, 25));
+        ScrollPane wrapper = new ScrollPane(burndownPane);
+        this.setContent(wrapper);
+
+        SearchableText title = new SearchableTitle(currentSprint.getGoal() + " Burndown");
+        burndownPane.getChildren().add(title);
+
+        //defining the axes
+
+
+        configureAxis();
+        BurndownChart burndown = new BurndownChart(xAxis, yAxis);
+        burndown.setPrefSize(800, 600);
+        burndown.setMaxSize(800, 600);
+        burndown.populateGraph(currentSprint);
+
+        burndownPane.getChildren().add(burndown);
+
+
+        // Add all our searchable controls on the page to the collection of searchable items
+        Collections.addAll(searchControls, title);
     }
 
     /**

@@ -26,6 +26,7 @@ import java.util.*;
 public class WorkspaceEditTab extends SearchableTab {
 
     Set<SearchableControl> searchControls = new HashSet<>();
+    Workspace currentWorkspace;
 
     /**
      * Constructor for the WorkspaceEditTab class. This constructor creates a JavaFX ScrollPane
@@ -33,6 +34,21 @@ public class WorkspaceEditTab extends SearchableTab {
      * @param currentWorkspace The workspace being edited
      */
     public WorkspaceEditTab(Workspace currentWorkspace) {
+        this.currentWorkspace = currentWorkspace;
+        construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Edit Workspace");
         Pane editPane = new VBox(10);
@@ -63,31 +79,31 @@ public class WorkspaceEditTab extends SearchableTab {
         btnCancel.setOnAction((event) -> currentWorkspace.switchToInfoScene());
 
         btnDone.setOnAction((event) -> {
-                boolean shortNameUnchanged = shortNameCustomField.getText().equals(currentWorkspace.getShortName());
-                boolean longNameUnchanged = longNameCustomField.getText().equals(currentWorkspace.getLongName());
-                boolean descriptionUnchanged = descriptionTextArea.getText().equals(currentWorkspace.getDescription());
+            boolean shortNameUnchanged = shortNameCustomField.getText().equals(currentWorkspace.getShortName());
+            boolean longNameUnchanged = longNameCustomField.getText().equals(currentWorkspace.getLongName());
+            boolean descriptionUnchanged = descriptionTextArea.getText().equals(currentWorkspace.getDescription());
 
-                if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
-                    currentWorkspace.switchToInfoScene();
-                    return;
-                }
+            if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
+                currentWorkspace.switchToInfoScene();
+                return;
+            }
 
-                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                        currentWorkspace.getShortName());
-                boolean correctLongName = ShortNameValidator.validateShortName(longNameCustomField,
-                        currentWorkspace.getLongName());
+            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                    currentWorkspace.getShortName());
+            boolean correctLongName = ShortNameValidator.validateShortName(longNameCustomField,
+                    currentWorkspace.getLongName());
 
-                if (correctShortName && correctLongName) {
-                    ArrayList<Tag> tags = new ArrayList<>();
-                    currentWorkspace.edit(shortNameCustomField.getText(), longNameCustomField.getText(),
-                            descriptionTextArea.getText(), tags);
-                    currentWorkspace.switchToInfoScene();
-                    App.mainPane.refreshTree();
-                }
-                else {
-                    event.consume();
-                }
-            });
+            if (correctShortName && correctLongName) {
+                ArrayList<Tag> tags = new ArrayList<>();
+                currentWorkspace.edit(shortNameCustomField.getText(), longNameCustomField.getText(),
+                        descriptionTextArea.getText(), tags);
+                currentWorkspace.switchToInfoScene();
+                App.mainPane.refreshTree();
+            }
+            else {
+                event.consume();
+            }
+        });
 
         // Add items to pane & search collection
         editPane.getChildren().addAll(
@@ -102,14 +118,5 @@ public class WorkspaceEditTab extends SearchableTab {
                 longNameCustomField,
                 descriptionTextArea
         );
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }

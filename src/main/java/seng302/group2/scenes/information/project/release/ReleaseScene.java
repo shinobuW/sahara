@@ -43,7 +43,8 @@ public class ReleaseScene extends TrackedTabPane {
         this.currentRelease = currentRelease;
 
         // Define and add the tabs
-        updateAllTabs();
+        informationTab = new ReleaseInfoTab(currentRelease);
+
 
         Collections.addAll(searchableTabs, informationTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
@@ -62,7 +63,7 @@ public class ReleaseScene extends TrackedTabPane {
         this.editScene = editScene;
 
         // Define and add the tabs
-        updateAllTabs();
+        editTab = new ReleaseEditTab(currentRelease);
 
         Collections.addAll(searchableTabs, editTab);
 
@@ -78,30 +79,4 @@ public class ReleaseScene extends TrackedTabPane {
         return searchableTabs;
     }
 
-
-    @Override
-    public void updateTabs() {
-        Tab selectedTab = this.getSelectionModel().getSelectedItem();
-
-        if (editScene) {
-            if (editTab != selectedTab) {
-                new ReleaseEditTab(currentRelease);
-            }
-        }
-        else {
-            if (informationTab != selectedTab) {
-                informationTab = new ReleaseInfoTab(currentRelease);
-            }
-        }
-    }
-
-    @Override
-    public void updateAllTabs() {
-        if (editScene) {
-            editTab = new ReleaseEditTab(currentRelease);
-        }
-        else {
-            informationTab = new ReleaseInfoTab(currentRelease);
-        }
-    }
 }

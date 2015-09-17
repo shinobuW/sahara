@@ -32,22 +32,11 @@ public class TeamCategoryScene extends TrackedTabPane {
         this.currentWorkspace = currentWorkspace;
 
         // Define and add the tabs
+        categoryTab = new TeamCategoryTab(currentWorkspace);
         updateAllTabs();
 
         Collections.addAll(getSearchableTabs(), categoryTab);
         this.getTabs().addAll(getSearchableTabs());
     }
 
-    @Override
-    public void updateTabs() {
-        Tab selectedTab = this.getSelectionModel().getSelectedItem();
-        if (categoryTab != selectedTab) {
-            categoryTab = new ProjectCategoryTab(currentWorkspace);
-        }
-    }
-
-    @Override
-    public void updateAllTabs() {
-        categoryTab = new ProjectCategoryTab(currentWorkspace);
-    }
 }

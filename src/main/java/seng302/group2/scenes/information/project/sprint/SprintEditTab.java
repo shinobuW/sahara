@@ -43,6 +43,7 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 public class SprintEditTab extends SearchableTab {
 
     Set<SearchableControl> searchControls = new HashSet<>();
+    Sprint currentSprint;
 
     static Boolean correctGoal = Boolean.FALSE;
     static Boolean correctLongName = Boolean.FALSE;
@@ -65,6 +66,91 @@ public class SprintEditTab extends SearchableTab {
      * @param currentSprint the sprint being edited
      */
     public SprintEditTab(Sprint currentSprint) {
+        this.currentSprint = currentSprint;
+        construct();
+
+    }
+
+    private String getTooltipStr(long dur) {
+        String returnStr;
+        if (Math.floorDiv(dur, 7) == 0) {
+            if (dur == 0) {
+                returnStr = "Sprint duration: less than a day.";
+            }
+            else if (dur % 7 == 1) {
+                returnStr = "Sprint duration: 1 day.";
+            }
+            else {
+                returnStr = "Sprint duration: " + (dur % 7) + " days.";
+            }
+        }
+        else if (dur % 7 == 0) {
+            if (Math.floorDiv(dur, 7 ) == 1 && (dur % 7) == 0) {
+                returnStr = "Sprint duration: 1 week.";
+            }
+            else {
+                returnStr = "Sprint duration: " + Math.floorDiv(dur, 7) + " weeks.";
+            }
+        }
+        else {
+            if (Math.floorDiv(dur, 7) == 1 && (dur % 7) == 1) {
+                returnStr = "Sprint duration: 1 week and 1 day.";
+            }
+            else if (Math.floorDiv(dur, 7) == 1) {
+                returnStr = "Sprint duration: 1 week and " + (dur % 7) + " days.";
+            }
+            else if (dur % 7 == 1) {
+                returnStr = "Sprint duration: " + Math.floorDiv(dur, 7) + " weeks and 1 day.";
+            }
+            else {
+                returnStr = "Sprint duration: " + Math.floorDiv(dur, 7) + " weeks and " + (dur % 7) + " days.";
+            }
+        }
+        return returnStr;
+    }
+
+    private Boolean teamSelected() {
+        return !(teamComboBox.getValue() == null);
+    }
+
+    private Boolean releaseSelected() {
+        return !(releaseComboBox.getValue() == null);
+    }
+
+    private Boolean startDateSelected() {
+        return !(sprintStartDatePicker.getValue() == null)
+                && (releaseComboBox.getValue().getEstimatedDate() == null
+                || sprintStartDatePicker.getValue().isBefore(releaseComboBox.getValue().
+                getEstimatedDate().plusDays(1)));
+    }
+
+    private Boolean endDateSelected() {
+        return !(sprintEndDatePicker.getValue() == null)
+                && (sprintEndDatePicker.getValue().isAfter(sprintStartDatePicker.getValue().minusDays(1)))
+                && (releaseComboBox.getValue().getEstimatedDate() == null
+                || sprintEndDatePicker.getValue().isBefore(releaseComboBox.getValue().getEstimatedDate().plusDays(1)));
+    }
+
+    private void toggleDone() {
+
+        correctGoal = validateShortName(goalCustomField, currentGoal);
+        correctLongName = validateName(longNameCustomField);
+
+        btnDone.setDisable(!(correctGoal && correctLongName && teamSelected() && releaseSelected()
+                && startDateSelected() && endDateSelected()));
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         this.currentGoal = currentSprint.getGoal();
         this.setText("Edit Sprint");
         Pane editPane = new VBox(10);
@@ -160,8 +246,8 @@ public class SprintEditTab extends SearchableTab {
         }
         availableStories.removeAll(currentSprint.getStories());
 
-        
-        
+
+
         editPane.getChildren().addAll(goalCustomField, longNameCustomField, descriptionTextArea,
                 releaseComboBox, sprintStartDatePicker, sprintEndDatePicker, teamComboBox, storyHBox, buttons);
 
@@ -175,63 +261,63 @@ public class SprintEditTab extends SearchableTab {
         // Actions and events
 
         final Callback<DatePicker, DateCell> startDateCellFactory =
-            new Callback<DatePicker, DateCell>() {
-                @Override
-                public DateCell call(final DatePicker datePicker) {
-                    return new DateCell() {
-                        @Override
-                        public void updateItem(LocalDate item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (releaseComboBox.getValue().getEstimatedDate() != null
-                                    && item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
-                                setDisable(true);
-                                setStyle("-fx-background-color: #ffc0cb;");
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (releaseComboBox.getValue().getEstimatedDate() != null
+                                        && item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #ffc0cb;");
+                                }
                             }
-                        }
-                    };
-                }
-            };
+                        };
+                    }
+                };
 
         sprintStartDatePicker.getDatePicker().setDayCellFactory(startDateCellFactory);
 
         final Callback<DatePicker, DateCell> endDateCellFactory =
-            new Callback<DatePicker, DateCell>() {
-                @Override
-                public DateCell call(final DatePicker datePicker) {
-                    return new DateCell() {
-                        @Override
-                        public void updateItem(LocalDate item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (item.isBefore(sprintStartDatePicker.getValue())) {
-                                setDisable(true);
-                                setStyle("-fx-background-color: #ffc0cb;");
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (item.isBefore(sprintStartDatePicker.getValue())) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #ffc0cb;");
+                                }
+                                if (releaseComboBox.getValue().getEstimatedDate() != null
+                                        && item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #ffc0cb;");
+                                }
+                                long p = ChronoUnit.DAYS.between(sprintStartDatePicker.getValue(), item);
+                                setTooltip(new Tooltip(getTooltipStr(p)));
                             }
-                            if (releaseComboBox.getValue().getEstimatedDate() != null
-                                    && item.isAfter(releaseComboBox.getValue().getEstimatedDate())) {
-                                setDisable(true);
-                                setStyle("-fx-background-color: #ffc0cb;");
-                            }
-                            long p = ChronoUnit.DAYS.between(sprintStartDatePicker.getValue(), item);
-                            setTooltip(new Tooltip(getTooltipStr(p)));
-                        }
-                    };
-                }
-            };
+                        };
+                    }
+                };
         sprintEndDatePicker.getDatePicker().setDayCellFactory(endDateCellFactory);
 
         goalCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctGoal = validateShortName(goalCustomField, null);
-                toggleDone();
-            });
+            correctGoal = validateShortName(goalCustomField, null);
+            toggleDone();
+        });
 
         longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctLongName = validateName(longNameCustomField);
-                toggleDone();
-            });
+            correctLongName = validateName(longNameCustomField);
+            toggleDone();
+        });
 
         teamComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
-                toggleDone();
-            });
+            toggleDone();
+        });
 
         releaseComboBox.getComboBox().valueProperty().addListener(new ChangeListener<Release>() {
             @Override
@@ -247,7 +333,7 @@ public class SprintEditTab extends SearchableTab {
                             && newValue.getEstimatedDate().isBefore(sprintStartDatePicker.getValue())) {
                         ValidationStyle.borderGlowRed(sprintStartDatePicker.getDatePicker());
                         ValidationStyle.showMessage("The start date of the Sprint must be before the estimated"
-                                + " release date of the Release: " + newValue.getEstimatedDate().toString(),
+                                        + " release date of the Release: " + newValue.getEstimatedDate().toString(),
                                 sprintStartDatePicker.getDatePicker());
                         sprintStartDatePicker.setTooltip(new Tooltip("The start date of"
                                 + " the Sprint must be before the estimated release date of the Release: "
@@ -328,8 +414,8 @@ public class SprintEditTab extends SearchableTab {
                             && releaseComboBox.getValue().getEstimatedDate().isBefore(sprintEndDatePicker.getValue())) {
                         ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
                         ValidationStyle.showMessage("The end date of the Sprint must be before the estimated"
-                                + " release date of the Release: "
-                                + releaseComboBox.getValue().getEstimatedDate().toString(),
+                                        + " release date of the Release: "
+                                        + releaseComboBox.getValue().getEstimatedDate().toString(),
                                 sprintEndDatePicker.getDatePicker());
                         sprintEndDatePicker.setTooltip(new Tooltip("The end date of"
                                 + " the Sprint must be before the estimated release date of the Release: "
@@ -383,7 +469,7 @@ public class SprintEditTab extends SearchableTab {
         sprintEndDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
             @Override
             public void changed(ObservableValue<? extends LocalDate> observable,
-                    LocalDate oldValue, LocalDate newValue) {
+                                LocalDate oldValue, LocalDate newValue) {
 
 
                 Team prevTeam = teamComboBox.getValue();
@@ -457,158 +543,80 @@ public class SprintEditTab extends SearchableTab {
 
         // Button events
         btnAssign.setOnAction((event) -> {
-                Collection<Story> selectedStories = new ArrayList<>();
-                selectedStories.addAll(availableStoriesView.getSelectionModel().
-                        getSelectedItems());
+            Collection<Story> selectedStories = new ArrayList<>();
+            selectedStories.addAll(availableStoriesView.getSelectionModel().
+                    getSelectedItems());
 
-                storiesInSprint.addAll(
-                        availableStoriesView.getSelectionModel().getSelectedItems());
-                availableStories.removeAll(
-                        availableStoriesView.getSelectionModel().getSelectedItems());
-            });
+            storiesInSprint.addAll(
+                    availableStoriesView.getSelectionModel().getSelectedItems());
+            availableStories.removeAll(
+                    availableStoriesView.getSelectionModel().getSelectedItems());
+        });
 
         btnUnassign.setOnAction((event) -> {
-                Collection<Story> selectedPeople = new ArrayList<>();
-                selectedPeople.addAll(storiesInSprintView.getSelectionModel().
-                        getSelectedItems());
-                availableStories.addAll(selectedPeople);
-                storiesInSprint.removeAll(selectedPeople);
-            });
+            Collection<Story> selectedPeople = new ArrayList<>();
+            selectedPeople.addAll(storiesInSprintView.getSelectionModel().
+                    getSelectedItems());
+            availableStories.addAll(selectedPeople);
+            storiesInSprint.removeAll(selectedPeople);
+        });
 
 
 
 
 
         btnDone.setOnAction((event) -> {
-                boolean goalUnchanged = goalCustomField.getText().equals(
-                        currentSprint.getGoal());
-                boolean longNameUnchanged = longNameCustomField.getText().equals(
-                        currentSprint.getLongName());
-                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                        currentSprint.getDescription());
-                boolean teamUnchanged = teamComboBox.getValue().equals(
-                        currentSprint.getTeam());
-                boolean releaseUnchanged = releaseComboBox.getValue().equals(
-                        currentSprint.getRelease());
-                boolean startDateUnchanged = sprintStartDatePicker.getValue().equals(
-                        currentSprint.getStartDate());
-                boolean endDateUnchanged = sprintEndDatePicker.getValue().equals(
-                        currentSprint.getEndDate());
-                boolean storiesUnchanged = storiesInSprint.equals(currentSprint.getStories());
-                if (goalUnchanged && longNameUnchanged && descriptionUnchanged
-                        && teamUnchanged && releaseUnchanged && startDateUnchanged && endDateUnchanged
-                        && storiesUnchanged) {
-                    // No fields have been changed
-                    currentSprint.switchToInfoScene();
-                    return;
-                }
+            boolean goalUnchanged = goalCustomField.getText().equals(
+                    currentSprint.getGoal());
+            boolean longNameUnchanged = longNameCustomField.getText().equals(
+                    currentSprint.getLongName());
+            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                    currentSprint.getDescription());
+            boolean teamUnchanged = teamComboBox.getValue().equals(
+                    currentSprint.getTeam());
+            boolean releaseUnchanged = releaseComboBox.getValue().equals(
+                    currentSprint.getRelease());
+            boolean startDateUnchanged = sprintStartDatePicker.getValue().equals(
+                    currentSprint.getStartDate());
+            boolean endDateUnchanged = sprintEndDatePicker.getValue().equals(
+                    currentSprint.getEndDate());
+            boolean storiesUnchanged = storiesInSprint.equals(currentSprint.getStories());
+            if (goalUnchanged && longNameUnchanged && descriptionUnchanged
+                    && teamUnchanged && releaseUnchanged && startDateUnchanged && endDateUnchanged
+                    && storiesUnchanged) {
+                // No fields have been changed
+                currentSprint.switchToInfoScene();
+                return;
+            }
 
-                boolean correctGoal = ShortNameValidator.validateShortName(goalCustomField,
-                        currentSprint.getGoal());
-                // The short name is the same or valid
-                if (correctGoal) {
-                    ArrayList<Tag> tags = new ArrayList<>();
+            boolean correctGoal = ShortNameValidator.validateShortName(goalCustomField,
+                    currentSprint.getGoal());
+            // The short name is the same or valid
+            if (correctGoal) {
+                ArrayList<Tag> tags = new ArrayList<>();
 
-                    currentSprint.edit(goalCustomField.getText(),
-                            longNameCustomField.getText(),
-                            descriptionTextArea.getText(),
-                            sprintStartDatePicker.getValue(),
-                            sprintEndDatePicker.getValue(),
-                            teamComboBox.getValue(),
-                            releaseComboBox.getValue(),
-                            storiesInSprint, //This line just a placeholder for now
-                            tags
-                    );
+                currentSprint.edit(goalCustomField.getText(),
+                        longNameCustomField.getText(),
+                        descriptionTextArea.getText(),
+                        sprintStartDatePicker.getValue(),
+                        sprintEndDatePicker.getValue(),
+                        teamComboBox.getValue(),
+                        releaseComboBox.getValue(),
+                        storiesInSprint, //This line just a placeholder for now
+                        tags
+                );
 
-                    currentSprint.switchToInfoScene();
-                    App.mainPane.refreshTree();
-                }
-                else {
-                    // One or more fields incorrectly validated, stay on the edit scene
-                    event.consume();
-                }
-            });
+                currentSprint.switchToInfoScene();
+                App.mainPane.refreshTree();
+            }
+            else {
+                // One or more fields incorrectly validated, stay on the edit scene
+                event.consume();
+            }
+        });
 
         btnCancel.setOnAction((event) -> {
-                currentSprint.switchToInfoScene();
-            });
-    }
-
-    private String getTooltipStr(long dur) {
-        String returnStr;
-        if (Math.floorDiv(dur, 7) == 0) {
-            if (dur == 0) {
-                returnStr = "Sprint duration: less than a day.";
-            }
-            else if (dur % 7 == 1) {
-                returnStr = "Sprint duration: 1 day.";
-            }
-            else {
-                returnStr = "Sprint duration: " + (dur % 7) + " days.";
-            }
-        }
-        else if (dur % 7 == 0) {
-            if (Math.floorDiv(dur, 7 ) == 1 && (dur % 7) == 0) {
-                returnStr = "Sprint duration: 1 week.";
-            }
-            else {
-                returnStr = "Sprint duration: " + Math.floorDiv(dur, 7) + " weeks.";
-            }
-        }
-        else {
-            if (Math.floorDiv(dur, 7) == 1 && (dur % 7) == 1) {
-                returnStr = "Sprint duration: 1 week and 1 day.";
-            }
-            else if (Math.floorDiv(dur, 7) == 1) {
-                returnStr = "Sprint duration: 1 week and " + (dur % 7) + " days.";
-            }
-            else if (dur % 7 == 1) {
-                returnStr = "Sprint duration: " + Math.floorDiv(dur, 7) + " weeks and 1 day.";
-            }
-            else {
-                returnStr = "Sprint duration: " + Math.floorDiv(dur, 7) + " weeks and " + (dur % 7) + " days.";
-            }
-        }
-        return returnStr;
-    }
-
-    private Boolean teamSelected() {
-        return !(teamComboBox.getValue() == null);
-    }
-
-    private Boolean releaseSelected() {
-        return !(releaseComboBox.getValue() == null);
-    }
-
-    private Boolean startDateSelected() {
-        return !(sprintStartDatePicker.getValue() == null)
-                && (releaseComboBox.getValue().getEstimatedDate() == null
-                || sprintStartDatePicker.getValue().isBefore(releaseComboBox.getValue().
-                getEstimatedDate().plusDays(1)));
-    }
-
-    private Boolean endDateSelected() {
-        return !(sprintEndDatePicker.getValue() == null)
-                && (sprintEndDatePicker.getValue().isAfter(sprintStartDatePicker.getValue().minusDays(1)))
-                && (releaseComboBox.getValue().getEstimatedDate() == null
-                || sprintEndDatePicker.getValue().isBefore(releaseComboBox.getValue().getEstimatedDate().plusDays(1)));
-    }
-
-    private void toggleDone() {
-
-        correctGoal = validateShortName(goalCustomField, currentGoal);
-        correctLongName = validateName(longNameCustomField);
-
-        btnDone.setDisable(!(correctGoal && correctLongName && teamSelected() && releaseSelected()
-                && startDateSelected() && endDateSelected()));
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
+            currentSprint.switchToInfoScene();
+        });
     }
 }

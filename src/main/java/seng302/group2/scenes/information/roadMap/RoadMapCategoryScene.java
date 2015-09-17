@@ -30,22 +30,11 @@ public class RoadMapCategoryScene extends TrackedTabPane {
         this.currentWorkspace = currentWorkspace;
 
         // Define and add the tabs
+        categoryTab = new RoadMapCategoryTab(currentWorkspace);
         updateAllTabs();
 
         Collections.addAll(getSearchableTabs(), categoryTab);
         this.getTabs().addAll(getSearchableTabs());
     }
 
-    @Override
-    public void updateTabs() {
-        Tab selectedTab = this.getSelectionModel().getSelectedItem();
-        if (categoryTab != selectedTab) {
-            categoryTab = new RoadMapCategoryTab(currentWorkspace);
-        }
-    }
-
-    @Override
-    public void updateAllTabs() {
-        categoryTab = new RoadMapCategoryTab(currentWorkspace);
-    }
 }

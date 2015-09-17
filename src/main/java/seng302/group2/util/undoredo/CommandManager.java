@@ -44,7 +44,6 @@ public class CommandManager {
         try {
             MainToolbar.undoRedoToggle();
             if (App.mainPane.getContent() instanceof TrackedTabPane) {
-                System.out.println("updating tabs");
                 ((TrackedTabPane) App.mainPane.getContent()).updateTabs();
             }
         }
@@ -127,7 +126,6 @@ public class CommandManager {
             try {
                 MainToolbar.undoRedoToggle();
                 if (App.mainPane.getContent() instanceof TrackedTabPane) {
-                    System.out.println("updating tabs");
                     ((TrackedTabPane) App.mainPane.getContent()).updateTabs();
                 }
             }
@@ -201,7 +199,6 @@ public class CommandManager {
             try {
                 MainToolbar.undoRedoToggle();
                 if (App.mainPane.getContent() instanceof TrackedTabPane) {
-                    System.out.println("updating tabs");
                     ((TrackedTabPane) App.mainPane.getContent()).updateTabs();
                 }
             }

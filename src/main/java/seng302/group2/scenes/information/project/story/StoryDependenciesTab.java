@@ -26,6 +26,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 public class StoryDependenciesTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+    Story currentStory;
 
 
     /**
@@ -34,6 +35,21 @@ public class StoryDependenciesTab extends SearchableTab {
      * @param currentStory The currently selected story
      */
     public StoryDependenciesTab(Story currentStory) {
+        this.currentStory = currentStory;
+        construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         this.setText("Dependencies");
         Pane dependenciesPane = new VBox(10);  // The pane that holds the basic info
         dependenciesPane.setBorder(null);
@@ -98,13 +114,13 @@ public class StoryDependenciesTab extends SearchableTab {
         Button btnView = new Button("View");
 
         btnView.setOnAction((event) -> {
-                if (dependsTable.getSelectionModel().getSelectedItem() != null) {
-                    App.mainPane.selectItem(dependsTable.getSelectionModel().getSelectedItem());
-                }
-                if (dependantsTable.getSelectionModel().getSelectedItem() != null) {
-                    App.mainPane.selectItem(dependantsTable.getSelectionModel().getSelectedItem());
-                }
-            });
+            if (dependsTable.getSelectionModel().getSelectedItem() != null) {
+                App.mainPane.selectItem(dependsTable.getSelectionModel().getSelectedItem());
+            }
+            if (dependantsTable.getSelectionModel().getSelectedItem() != null) {
+                App.mainPane.selectItem(dependantsTable.getSelectionModel().getSelectedItem());
+            }
+        });
 
         dependenciesPane.getChildren().addAll(
                 dependsTable,
@@ -119,15 +135,6 @@ public class StoryDependenciesTab extends SearchableTab {
                 dependsTable,
                 dependantsTable
         );
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 
     /**

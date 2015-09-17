@@ -38,6 +38,8 @@ public class TeamScene extends TrackedTabPane {
         this.currentTeam = currentTeam;
 
         // Define and add the tabs
+        informationTab = new TeamInfoTab(currentTeam);
+        editTab = new TeamEditTab(currentTeam);
         updateAllTabs();
 
         Collections.addAll(searchableTabs, informationTab);
@@ -62,6 +64,8 @@ public class TeamScene extends TrackedTabPane {
         this.editScene = editScene;
 
         // Define and add the tabs
+        informationTab = new TeamInfoTab(currentTeam);
+        editTab = new TeamEditTab(currentTeam);
         updateAllTabs();
         Collections.addAll(searchableTabs, editTab);
 
@@ -78,30 +82,4 @@ public class TeamScene extends TrackedTabPane {
         return searchableTabs;
     }
 
-
-    @Override
-    public void updateTabs() {
-        Tab selectedTab = this.getSelectionModel().getSelectedItem();
-
-        if (editScene) {
-            if (editTab != selectedTab) {
-                editTab = new TeamEditTab(currentTeam);
-            }
-        }
-        else {
-            if (informationTab != selectedTab) {
-                informationTab = new TeamInfoTab(currentTeam);
-            }
-        }
-    }
-
-    @Override
-    public void updateAllTabs() {
-        if (editScene) {
-            editTab = new TeamEditTab(currentTeam);
-        }
-        else {
-            informationTab = new TeamInfoTab(currentTeam);
-        }
-    }
 }

@@ -17,6 +17,12 @@ public abstract class SearchableTab extends Tab {
      */
     public abstract Collection<SearchableControl> getSearchableControls();
 
+
+    /**
+     * Constructs the contents of the tab
+     */
+    public abstract void construct();
+
     /**
      * Checks to see if the query matches any string in the searchable controls on this tab.
      * @param query The string to be matched within the tab.

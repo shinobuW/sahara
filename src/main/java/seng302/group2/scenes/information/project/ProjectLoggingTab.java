@@ -39,6 +39,7 @@ public class ProjectLoggingTab extends SearchableTab {
     LocalDate startDate;
     LocalDate endDate;
     ObservableList<Log> data = observableArrayList();
+    Project currentProject;
 
     /**
      * Constructor for the Project Logging Tab
@@ -46,7 +47,33 @@ public class ProjectLoggingTab extends SearchableTab {
      * @param currentProject The currently selected Project
      */
     public ProjectLoggingTab(Project currentProject) {
+        this.currentProject = currentProject;
+        construct();
+    }
 
+
+    private void updateFilteredLogs(Project currentProject) {
+        data.clear();
+        for (Log log : currentProject.getLogs()) {
+            if (log.getLocalStartDate().isAfter(startDate.minusDays(1))
+                    && log.getLocalStartDate().isBefore(endDate.plusDays(1))) {
+                data.add(log);
+            }
+        }
+    }
+
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         this.setText("Logging Effort");
         Pane basicInfoPane = new VBox(10);
 
@@ -134,21 +161,21 @@ public class ProjectLoggingTab extends SearchableTab {
         logTable.getColumns().setAll(columns);
 
         final Callback<DatePicker, DateCell> endDateCellFactory =
-            new Callback<DatePicker, DateCell>() {
-                @Override
-                public DateCell call(final DatePicker datePicker) {
-                    return new DateCell() {
-                        @Override
-                        public void updateItem(LocalDate item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (startDatePicker.getValue() != null && (item.isBefore(startDatePicker.getValue()))) {
-                                setDisable(true);
-                                setStyle("-fx-background-color: #ffc0cb;");
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (startDatePicker.getValue() != null && (item.isBefore(startDatePicker.getValue()))) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #ffc0cb;");
+                                }
                             }
-                        }
-                    };
-                }
-            };
+                        };
+                    }
+                };
         endDatePicker.getDatePicker().setDayCellFactory(endDateCellFactory);
 
         // Listener to disable columns being movable
@@ -219,28 +246,6 @@ public class ProjectLoggingTab extends SearchableTab {
                 endDatePicker,
                 logTable
         );
-
-    }
-
-
-    private void updateFilteredLogs(Project currentProject) {
-        data.clear();
-        for (Log log : currentProject.getLogs()) {
-            if (log.getLocalStartDate().isAfter(startDate.minusDays(1))
-                    && log.getLocalStartDate().isBefore(endDate.plusDays(1))) {
-                data.add(log);
-            }
-        }
-    }
-
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 
     /**

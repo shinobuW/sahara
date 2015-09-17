@@ -53,7 +53,42 @@ public class BacklogEditTab extends SearchableTab {
     public BacklogEditTab(Backlog baseBacklog) {
         // Init
         this.baseBacklog = baseBacklog;
+        construct();
 
+    }
+
+
+    /**
+     * Checks if the changes in the scene are valid
+     *
+     * @return If the changes in the scene are valid
+     */
+    private boolean isValidState() {
+
+        ButtonType confirm;
+        if (!scaleComboBox.getValue().equals(baseBacklog.getScale())) {
+            confirm = CustomDialog.showConfirmation("Estimation Scale", "All existing estimations "
+                    + "will be lost if the scale is changed. Continue?");
+            if (confirm == ButtonType.CANCEL) {
+                return false;
+            }
+
+        }
+        return (shortNameField.getText().equals(baseBacklog.getShortName())  // Is the same,
+                || ShortNameValidator.validateShortName(shortNameField, null)); // new name validate
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Setup basic GUI
         this.setText("Edit Backlog");
         Pane editPane = new VBox(10);
@@ -141,66 +176,66 @@ public class BacklogEditTab extends SearchableTab {
 
         // Events
         btnAssign.setOnAction((event) -> {
-                boolean uniquePriority = true;
-                Story errorStory = null;
-                errorField.setText("");
-                outerloop:
-                for (Story story : backlogStoryList) {
-                    for (Story addedStory : availableStoryListView.getSelectionModel().getSelectedItems()) {
-                        if (story.getPriority().equals(addedStory.getPriority())) {
-                            uniquePriority = false;
-                            errorStory = addedStory;
-                            break outerloop;
-                        }
+            boolean uniquePriority = true;
+            Story errorStory = null;
+            errorField.setText("");
+            outerloop:
+            for (Story story : backlogStoryList) {
+                for (Story addedStory : availableStoryListView.getSelectionModel().getSelectedItems()) {
+                    if (story.getPriority().equals(addedStory.getPriority())) {
+                        uniquePriority = false;
+                        errorStory = addedStory;
+                        break outerloop;
                     }
                 }
+            }
 
-                if (uniquePriority) {
-                    backlogStoryList.addAll(
-                            availableStoryListView.getSelectionModel().getSelectedItems());
-                    availableStoryList.removeAll(
-                            availableStoryListView.getSelectionModel().getSelectedItems());
-                }
-                else {
-                    errorField.setStyle("-fx-text-fill: #ff0000;");
-                    errorField.setText("* Story \"" + errorStory.getShortName() + "\" must have a unique priority.");
-                }
+            if (uniquePriority) {
+                backlogStoryList.addAll(
+                        availableStoryListView.getSelectionModel().getSelectedItems());
+                availableStoryList.removeAll(
+                        availableStoryListView.getSelectionModel().getSelectedItems());
+            }
+            else {
+                errorField.setStyle("-fx-text-fill: #ff0000;");
+                errorField.setText("* Story \"" + errorStory.getShortName() + "\" must have a unique priority.");
+            }
 
-            });
+        });
 
         btnUnassign.setOnAction((event) -> {
-                errorField.setText("");
-                availableStoryList.addAll(
-                        backlogStoryListView.getSelectionModel().getSelectedItems());
-                backlogStoryList.removeAll(
-                        backlogStoryListView.getSelectionModel().getSelectedItems());
-            });
+            errorField.setText("");
+            availableStoryList.addAll(
+                    backlogStoryListView.getSelectionModel().getSelectedItems());
+            backlogStoryList.removeAll(
+                    backlogStoryListView.getSelectionModel().getSelectedItems());
+        });
 
 
         btnCancel.setOnAction((event) -> baseBacklog.switchToInfoScene());
 
         btnDone.setOnAction((event) -> {
-                if (isValidState()) { // validation
-                    // Edit Command.
-                    ArrayList<Tag> tags = new ArrayList<>();
-                    baseBacklog.edit(shortNameField.getText(),
-                            longNameField.getText(),
-                            descriptionField.getText(),
-                            baseBacklog.getProductOwner(),
-                            baseBacklog.getProject(),
-                            scaleComboBox.getValue(),
-                            backlogStoryList,
-                            tags
-                    );
+            if (isValidState()) { // validation
+                // Edit Command.
+                ArrayList<Tag> tags = new ArrayList<>();
+                baseBacklog.edit(shortNameField.getText(),
+                        longNameField.getText(),
+                        descriptionField.getText(),
+                        baseBacklog.getProductOwner(),
+                        baseBacklog.getProject(),
+                        scaleComboBox.getValue(),
+                        backlogStoryList,
+                        tags
+                );
 
-                    Collections.sort(baseBacklog.getProject().getBacklogs());
-                    baseBacklog.switchToInfoScene();
-                    App.mainPane.refreshTree();
-                }
-                else {
-                    event.consume();
-                }
-            });
+                Collections.sort(baseBacklog.getProject().getBacklogs());
+                baseBacklog.switchToInfoScene();
+                App.mainPane.refreshTree();
+            }
+            else {
+                event.consume();
+            }
+        });
 
         editPane.getChildren().addAll(
                 shortNameField,
@@ -224,36 +259,6 @@ public class BacklogEditTab extends SearchableTab {
                 backlogStoriesLabel,
                 errorField
         );
-    }
-
-
-    /**
-     * Checks if the changes in the scene are valid
-     *
-     * @return If the changes in the scene are valid
-     */
-    private boolean isValidState() {
-
-        ButtonType confirm;
-        if (!scaleComboBox.getValue().equals(baseBacklog.getScale())) {
-            confirm = CustomDialog.showConfirmation("Estimation Scale", "All existing estimations "
-                    + "will be lost if the scale is changed. Continue?");
-            if (confirm == ButtonType.CANCEL) {
-                return false;
-            }
-
-        }
-        return (shortNameField.getText().equals(baseBacklog.getShortName())  // Is the same,
-                || ShortNameValidator.validateShortName(shortNameField, null)); // new name validate
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }
 

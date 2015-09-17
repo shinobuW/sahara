@@ -26,12 +26,29 @@ import java.util.List;
 public class RoadMapCategoryTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+    Workspace currentWorkspace;
 
     /**
      * Constructor for RoadMapCategoryTab class.
      * @param currentWorkspace The current workspace
      */
     public RoadMapCategoryTab(Workspace currentWorkspace) {
+        this.currentWorkspace = currentWorkspace;
+        this.construct();
+
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab Settings
         this.setText("RoadMap");
         Pane categoryPane = new VBox(10);
@@ -48,7 +65,7 @@ public class RoadMapCategoryTab extends SearchableTab {
             RoadMapNode roadMapNode = new RoadMapNode(roadMap);
             roadMaps.getChildren().add(roadMapNode);
             searchControls.addAll(roadMapNode.getSearchableControls());
-            
+
         }
 
         HBox roadmapKeyBox = new HBox(8);
@@ -89,7 +106,7 @@ public class RoadMapCategoryTab extends SearchableTab {
 
         Pane keyBox = new VBox(4);
         keyBox.getChildren().addAll(roadmapKeyBox, releaseKeyBox, sprintKeyBox, storyKeyBox);
-        
+
         // Add items to pane & search collection
         categoryPane.getChildren().addAll(
                 title,
@@ -101,15 +118,6 @@ public class RoadMapCategoryTab extends SearchableTab {
                 searchControls,
                 title
         );
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }
 

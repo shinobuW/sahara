@@ -38,7 +38,7 @@ public class BacklogScene extends TrackedTabPane {
         this.currentBacklog = currentBacklog;
 
         // Define and add the tabs
-        updateAllTabs();
+        informationTab = new BacklogInfoTab(currentBacklog);
 
         Collections.addAll(searchableTabs, informationTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
@@ -57,7 +57,7 @@ public class BacklogScene extends TrackedTabPane {
         this.editScene = editScene;
 
         // Define and add the tabs
-        updateAllTabs();
+        editTab = new BacklogEditTab(currentBacklog);
 
         Collections.addAll(searchableTabs, editTab);
 
@@ -73,30 +73,4 @@ public class BacklogScene extends TrackedTabPane {
         return searchableTabs;
     }
 
-
-    @Override
-    public void updateTabs() {
-        Tab selectedTab = this.getSelectionModel().getSelectedItem();
-
-        if (editScene) {
-            if (editTab != selectedTab) {
-                editTab = new BacklogEditTab(currentBacklog);
-            }
-        }
-        else {
-            if (informationTab != selectedTab) {
-                informationTab = new BacklogInfoTab(currentBacklog);
-            }
-        }
-    }
-
-    @Override
-    public void updateAllTabs() {
-        if (editScene) {
-            editTab = new BacklogEditTab(currentBacklog);
-        }
-        else {
-            informationTab = new BacklogInfoTab(currentBacklog);
-        }
-    }
 }

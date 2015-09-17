@@ -40,6 +40,7 @@ public class RoleScene extends TrackedTabPane {
         this.currentRole = currentRole;
 
         // Define and add the tabs
+        informationTab = new RoleInfoTab(currentRole);
         updateAllTabs();
 
         Collections.addAll(searchableTabs, informationTab);
@@ -56,20 +57,4 @@ public class RoleScene extends TrackedTabPane {
         return searchableTabs;
     }
 
-
-    @Override
-    public void updateTabs() {
-        Tab selectedTab = this.getSelectionModel().getSelectedItem();
-
-
-        if (informationTab != selectedTab) {
-            informationTab = new RoleInfoTab(currentRole);
-        }
-
-    }
-
-    @Override
-    public void updateAllTabs() {
-        informationTab = new RoleInfoTab(currentRole);
-    }
 }

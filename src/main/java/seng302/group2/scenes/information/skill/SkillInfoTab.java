@@ -27,12 +27,28 @@ public class SkillInfoTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
     Button btnEdit = new Button("Edit");
+    Skill currentSkill;
 
     /**
      * Constructor for the SkillInfoTab class.
      * @param currentSkill the current skill for which information will be displayed
      */
     public SkillInfoTab(Skill currentSkill) {
+        this.currentSkill = currentSkill;
+        this.construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Basic Information");
         Pane basicInfoPane = new VBox(10);
@@ -67,17 +83,6 @@ public class SkillInfoTab extends SearchableTab {
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(title, desc, listViewLabel, personListView, btnEdit);
         Collections.addAll(searchControls, title, desc, listViewLabel, personListView);
-
-
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 
     /**

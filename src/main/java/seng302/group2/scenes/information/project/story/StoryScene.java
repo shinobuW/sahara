@@ -3,16 +3,9 @@ package seng302.group2.scenes.information.project.story;
 import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.information.project.ProjectEditTab;
-import seng302.group2.scenes.information.project.ProjectHistoryTab;
-import seng302.group2.scenes.information.project.ProjectInfoTab;
-import seng302.group2.scenes.information.project.ProjectLoggingTab;
-import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * A class for displaying the story scene
@@ -25,7 +18,6 @@ public class StoryScene extends TrackedTabPane {
     SearchableTab informationTab;
     SearchableTab acceptanceCriteriaTab;
     SearchableTab dependantTab;
-
     SearchableTab taskTab;
 
     SearchableTab editTab;
@@ -46,7 +38,11 @@ public class StoryScene extends TrackedTabPane {
 
 
         // Define and add the tabs
-        updateAllTabs();
+        informationTab = new StoryInfoTab(currentStory);
+        acceptanceCriteriaTab = new StoryAcTab(currentStory);
+        dependantTab = new StoryDependenciesTab(currentStory);
+        taskTab = new StoryTaskTab(currentStory);
+
 
         if (!currentStory.tasksWithoutStory) {
             Collections.addAll(searchableTabs, informationTab, acceptanceCriteriaTab, dependantTab);
@@ -69,7 +65,8 @@ public class StoryScene extends TrackedTabPane {
         this.editScene = editScene;
 
         // Define and add the tabs
-        updateAllTabs();
+        informationTab = new StoryInfoTab(currentStory);
+        editTab = new StoryEditTab(currentStory);
 
         Collections.addAll(searchableTabs, editTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
@@ -84,45 +81,4 @@ public class StoryScene extends TrackedTabPane {
         return searchableTabs;
     }
 
-
-    @Override
-    public void updateTabs() {
-        Tab selectedTab = this.getSelectionModel().getSelectedItem();
-
-        if (editScene) {
-            if (editTab != selectedTab) {
-                editTab = new StoryEditTab(currentStory);
-            }
-        }
-        else {
-            if (informationTab != selectedTab) {
-                informationTab = new StoryInfoTab(currentStory);
-            }
-            if (acceptanceCriteriaTab != selectedTab) {
-                acceptanceCriteriaTab = new StoryAcTab(currentStory);
-            }
-            if (dependantTab != selectedTab) {
-                dependantTab = new StoryDependenciesTab(currentStory);
-            }
-            if (taskTab != selectedTab) {
-                taskTab = new StoryTaskTab(currentStory);
-            }
-        }
-    }
-
-    @Override
-    public void updateAllTabs() {
-        if (editScene) {
-            editTab = new StoryEditTab(currentStory);
-        }
-        else {
-            if (!currentStory.tasksWithoutStory) {
-                informationTab = new StoryInfoTab(currentStory);
-                acceptanceCriteriaTab = new StoryAcTab(currentStory);
-                dependantTab = new StoryDependenciesTab(currentStory);
-            }
-
-            taskTab = new StoryTaskTab(currentStory);
-        }
-    }
 }

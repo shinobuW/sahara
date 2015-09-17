@@ -27,22 +27,9 @@ public class SprintCategoryScene extends TrackedTabPane {
         this.selectedCategory = selectedCategory;
 
         // Define and add the tabs
-        updateAllTabs();
+        informationTab = new SprintCategoryTab(selectedCategory);
 
         Collections.addAll(getSearchableTabs(), informationTab);
         this.getTabs().addAll(getSearchableTabs());  // Add the tabs to the pane
-    }
-
-    @Override
-    public void updateTabs() {
-        Tab selectedTab = this.getSelectionModel().getSelectedItem();
-        if (informationTab != selectedTab) {
-            informationTab = new SprintCategoryTab(selectedCategory);
-        }
-    }
-
-    @Override
-    public void updateAllTabs() {
-        informationTab = new SprintCategoryTab(selectedCategory);
     }
 }

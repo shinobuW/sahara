@@ -22,6 +22,7 @@ import java.util.List;
 public class RoleInfoTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+    Role currentRole;
 
     /**
      * Constructor for the Role Info Tab
@@ -29,6 +30,21 @@ public class RoleInfoTab extends SearchableTab {
      * @param currentRole The currently selected Role. 
      */
     public RoleInfoTab(Role currentRole) {
+        this.currentRole = currentRole;
+        this.construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Basic Information");
         Pane basicInfoPane = new VBox(10);  // The pane that holds the basic info
@@ -62,15 +78,6 @@ public class RoleInfoTab extends SearchableTab {
                 required,
                 skillsBox
         );
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 
     /**

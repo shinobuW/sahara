@@ -28,11 +28,29 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 public class ReleaseCategoryTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+    ReleaseCategory selectedCategory;
+
     /**
      * Constructor for ReleaseCategoryTab class.
      * @param selectedCategory The current selected category
      */
     public ReleaseCategoryTab(ReleaseCategory selectedCategory) {
+        this.selectedCategory = selectedCategory;
+        construct();
+
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Basic Information");
         Pane categoryPane = new VBox(10);
@@ -58,24 +76,24 @@ public class ReleaseCategoryTab extends SearchableTab {
 
         // Events
         btnView.setOnAction((event) -> {
-                if (releaseBox.getSelectionModel().getSelectedItem() != null) {
-                    App.mainPane.selectItem((SaharaItem)
-                            releaseBox.getSelectionModel().getSelectedItem());
-                }
-            });
+            if (releaseBox.getSelectionModel().getSelectedItem() != null) {
+                App.mainPane.selectItem((SaharaItem)
+                        releaseBox.getSelectionModel().getSelectedItem());
+            }
+        });
 
 
         btnDelete.setOnAction((event) -> {
-                if (releaseBox.getSelectionModel().getSelectedItem() != null) {
-                    showDeleteDialog((SaharaItem) releaseBox
-                            .getSelectionModel().getSelectedItem());
-                }
-            });
+            if (releaseBox.getSelectionModel().getSelectedItem() != null) {
+                showDeleteDialog((SaharaItem) releaseBox
+                        .getSelectionModel().getSelectedItem());
+            }
+        });
 
         btnCreate.setOnAction((event) -> {
-                javafx.scene.control.Dialog creationDialog = new CreateReleaseDialog(selectedCategory.getProject());
-                creationDialog.show();
-            });
+            javafx.scene.control.Dialog creationDialog = new CreateReleaseDialog(selectedCategory.getProject());
+            creationDialog.show();
+        });
 
         // Add items to pane & search collection
         categoryPane.getChildren().addAll(
@@ -88,15 +106,6 @@ public class ReleaseCategoryTab extends SearchableTab {
                 title,
                 releaseBox
         );
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }
 

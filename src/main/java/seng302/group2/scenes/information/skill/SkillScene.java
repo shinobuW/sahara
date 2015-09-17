@@ -36,6 +36,8 @@ public class SkillScene extends TrackedTabPane {
         this.currentSkill = currentSkill;
 
         // Define and add the tabs
+        informationTab = new SkillInfoTab(currentSkill);
+        editTab = new SkillEditTab(currentSkill);
         updateAllTabs();
 
         Collections.addAll(searchableTabs, informationTab);
@@ -76,29 +78,4 @@ public class SkillScene extends TrackedTabPane {
         return searchableTabs;
     }
 
-    @Override
-    public void updateTabs() {
-        Tab selectedTab = this.getSelectionModel().getSelectedItem();
-
-        if (editScene) {
-            if (editTab != selectedTab) {
-                editTab = new SkillEditTab(currentSkill);
-            }
-        }
-        else {
-            if (informationTab != selectedTab) {
-                informationTab = new SkillInfoTab(currentSkill);
-            }
-        }
-    }
-
-    @Override
-    public void updateAllTabs() {
-        if (editScene) {
-            editTab = new SkillEditTab(currentSkill);
-        }
-        else {
-            informationTab = new SkillInfoTab(currentSkill);
-        }
-    }
 }

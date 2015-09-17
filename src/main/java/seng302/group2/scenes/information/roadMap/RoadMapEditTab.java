@@ -41,6 +41,8 @@ public class RoadMapEditTab extends SearchableTab {
     private RequiredField shortNameField;
     private CustomComboBox<String> scaleComboBox;
 
+    RoadMap currentRoadMap;
+
     /**
      * Constructor for the RoadMapEditTab class. This constructor creates a JavaFX ScrollPane
      * which is populated with relevant controls and then shown.
@@ -48,6 +50,21 @@ public class RoadMapEditTab extends SearchableTab {
      * @param currentRoadMap The skill being edited
      */
     public RoadMapEditTab(RoadMap currentRoadMap) {
+        this.currentRoadMap = currentRoadMap;
+        construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         this.setText("Edit RoadMap");
         Pane editPane = new VBox(10);
         editPane.setBorder(null);
@@ -115,47 +132,47 @@ public class RoadMapEditTab extends SearchableTab {
 
         // Events
         btnAssign.setOnAction((event) -> {
-                boolean uniquePriority = true;
-                Release errorRelease = null;
-                errorField.setText("");
-                outerloop:
-                for (Release release : roadMapList) {
-                    for (Release addedStory : availableReleaseListView.getSelectionModel().getSelectedItems()) {
-                        uniquePriority = false;
-                        errorRelease = addedStory;
-                        break outerloop;
-                    }
+            boolean uniquePriority = true;
+            Release errorRelease = null;
+            errorField.setText("");
+            outerloop:
+            for (Release release : roadMapList) {
+                for (Release addedStory : availableReleaseListView.getSelectionModel().getSelectedItems()) {
+                    uniquePriority = false;
+                    errorRelease = addedStory;
+                    break outerloop;
                 }
-                roadMapList.addAll(
-                        availableReleaseListView.getSelectionModel().getSelectedItems());
-                availableReleases.removeAll(
-                        availableReleaseListView.getSelectionModel().getSelectedItems());
-            });
+            }
+            roadMapList.addAll(
+                    availableReleaseListView.getSelectionModel().getSelectedItems());
+            availableReleases.removeAll(
+                    availableReleaseListView.getSelectionModel().getSelectedItems());
+        });
 
         btnUnassign.setOnAction((event) -> {
-                errorField.setText("");
-                availableReleases.addAll(
-                        roadMapReleaseListView.getSelectionModel().getSelectedItems());
-                roadMapList.removeAll(
-                        roadMapReleaseListView.getSelectionModel().getSelectedItems());
-            });
+            errorField.setText("");
+            availableReleases.addAll(
+                    roadMapReleaseListView.getSelectionModel().getSelectedItems());
+            roadMapList.removeAll(
+                    roadMapReleaseListView.getSelectionModel().getSelectedItems());
+        });
 
 
         btnCancel.setOnAction((event) -> currentRoadMap.switchToInfoScene());
 
         btnDone.setOnAction((event) -> {
-                if (shortNameField.getText().equals(currentRoadMap.getShortName()) 
-                        || ShortNameValidator.validateShortName(shortNameField, null)) { // validation
-                    // Edit Command.
-                    ArrayList<Tag> tags = new ArrayList<>();
-                    currentRoadMap.edit(shortNameField.getText(), roadMapList, tags);
-                    currentRoadMap.switchToInfoScene();
-                    App.mainPane.refreshTree();
-                }
-                else {
-                    event.consume();
-                }
-            });
+            if (shortNameField.getText().equals(currentRoadMap.getShortName())
+                    || ShortNameValidator.validateShortName(shortNameField, null)) { // validation
+                // Edit Command.
+                ArrayList<Tag> tags = new ArrayList<>();
+                currentRoadMap.edit(shortNameField.getText(), roadMapList, tags);
+                currentRoadMap.switchToInfoScene();
+                App.mainPane.refreshTree();
+            }
+            else {
+                event.consume();
+            }
+        });
 
         editPane.getChildren().addAll(
                 shortNameField,
@@ -175,14 +192,5 @@ public class RoadMapEditTab extends SearchableTab {
         );
     }
 
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
-    }
 
-  
 }

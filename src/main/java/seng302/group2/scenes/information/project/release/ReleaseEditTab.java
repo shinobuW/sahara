@@ -33,7 +33,9 @@ import java.util.List;
  */
 public class ReleaseEditTab extends SearchableTab {
 
+    Release currentRelease;
     List<SearchableControl> searchControls = new ArrayList<>();
+
     /**
      * Constructor for the ReleaseEditTab class. This constructor creates a JavaFX ScrollPane
      * which is populated with relevant controls then shown.
@@ -41,6 +43,22 @@ public class ReleaseEditTab extends SearchableTab {
      * @param currentRelease the release being edited
      */
     public ReleaseEditTab(Release currentRelease) {
+        this.currentRelease = currentRelease;
+        construct();
+
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Edit Release");
         Pane editPane = new VBox(10);
@@ -98,43 +116,43 @@ public class ReleaseEditTab extends SearchableTab {
         });
 
         btnDone.setOnAction((event) -> {
-                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                        currentRelease.getShortName());
-                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                        currentRelease.getDescription());
-                boolean dateUnchanged = releaseDatePicker.getValue() == currentRelease.getEstimatedDate();
-                if (shortNameUnchanged && descriptionUnchanged && dateUnchanged) {
-                    // No fields have been changed
-                    currentRelease.switchToInfoScene();
-                    return;
-                }
+            boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                    currentRelease.getShortName());
+            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                    currentRelease.getDescription());
+            boolean dateUnchanged = releaseDatePicker.getValue() == currentRelease.getEstimatedDate();
+            if (shortNameUnchanged && descriptionUnchanged && dateUnchanged) {
+                // No fields have been changed
+                currentRelease.switchToInfoScene();
+                return;
+            }
 
-                LocalDate releaseDate = releaseDatePicker.getValue();
+            LocalDate releaseDate = releaseDatePicker.getValue();
 
-                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                        currentRelease.getShortName());
-                // The short name is the same or valid
-                if (correctShortName) {
-                    ArrayList<Tag> tags = new ArrayList<>();
-                    currentRelease.edit(shortNameCustomField.getText(),
-                            descriptionTextArea.getText(),
-                            releaseDate,
-                            tags
-                    );
+            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                    currentRelease.getShortName());
+            // The short name is the same or valid
+            if (correctShortName) {
+                ArrayList<Tag> tags = new ArrayList<>();
+                currentRelease.edit(shortNameCustomField.getText(),
+                        descriptionTextArea.getText(),
+                        releaseDate,
+                        tags
+                );
 
-                    Collections.sort(currentRelease.getProject().getReleases());
-                    currentRelease.switchToInfoScene();
-                    App.mainPane.refreshTree();
-                }
-                else {
-                    // One or more fields incorrectly validated, stay on the edit scene
-                    event.consume();
-                }
-            });
+                Collections.sort(currentRelease.getProject().getReleases());
+                currentRelease.switchToInfoScene();
+                App.mainPane.refreshTree();
+            }
+            else {
+                // One or more fields incorrectly validated, stay on the edit scene
+                event.consume();
+            }
+        });
 
         btnCancel.setOnAction((event) -> {
-                currentRelease.switchToInfoScene();
-            });
+            currentRelease.switchToInfoScene();
+        });
 
         // Add items to pane & search collection
         editPane.getChildren().addAll(
@@ -149,15 +167,6 @@ public class ReleaseEditTab extends SearchableTab {
                 descriptionTextArea,
                 releaseDatePicker
         );
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }
 

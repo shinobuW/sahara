@@ -32,12 +32,28 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 public class TeamCategoryTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+    Workspace currentWorkspace;
 
     /**
      * Constructor for TeamCategoryTab class.
      * @param currentWorkspace The current workspace
      */
     public TeamCategoryTab(Workspace currentWorkspace) {
+        this.currentWorkspace = currentWorkspace;
+        this.construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab Settings
         this.setText("Basic Information");
 
@@ -78,22 +94,22 @@ public class TeamCategoryTab extends SearchableTab {
                 }
         );
         btnView.setOnAction((event) -> {
-                if (teamBox.getSelectionModel().getSelectedItem() != null) {
-                    App.mainPane.selectItem(teamBox.getSelectionModel().getSelectedItem());
-                }
-            });
+            if (teamBox.getSelectionModel().getSelectedItem() != null) {
+                App.mainPane.selectItem(teamBox.getSelectionModel().getSelectedItem());
+            }
+        });
 
         btnDelete.setOnAction((event) -> {
-                if (teamBox.getSelectionModel().getSelectedItem() != null) {
-                    showDeleteDialog((SaharaItem)
-                            teamBox.getSelectionModel().getSelectedItem());
-                }
-            });
+            if (teamBox.getSelectionModel().getSelectedItem() != null) {
+                showDeleteDialog((SaharaItem)
+                        teamBox.getSelectionModel().getSelectedItem());
+            }
+        });
 
         btnCreate.setOnAction((event) -> {
-                javafx.scene.control.Dialog creationDialog = new CreateTeamDialog();
-                creationDialog.show();
-            });
+            javafx.scene.control.Dialog creationDialog = new CreateTeamDialog();
+            creationDialog.show();
+        });
 
         // Add items to pane & search collection
         categoryPane.getChildren().addAll(
@@ -106,16 +122,6 @@ public class TeamCategoryTab extends SearchableTab {
                 title,
                 teamBox
         );
-
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }
 

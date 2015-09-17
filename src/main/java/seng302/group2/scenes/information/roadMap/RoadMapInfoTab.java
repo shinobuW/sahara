@@ -30,13 +30,42 @@ import java.util.List;
 public class RoadMapInfoTab extends SearchableTab {
     List<SearchableControl> searchControls = new ArrayList<>();
     Button btnEdit = new Button("Edit");
+    RoadMap currentRoadMap;
 
     /**
      * Constructor for the RoadMapInfoTab class.
      * @param currentRoadMap the current roadmap for which information will be displayed
      */
     public RoadMapInfoTab(RoadMap currentRoadMap) {
+        this.currentRoadMap = currentRoadMap;
+        this.construct();
+    }
+    
+    /**
+     * Gets the node for the Roadmap.
+     * 
+     * @param currentRoadMap the roadMap to be processed
+     * @return An Hbox with all releases, sprints, stories associated with it.
+     */
+    public HBox roadMapNode(RoadMap currentRoadMap) {
+        
+        
+        
+        return null;
+    }
 
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         this.setText("RoadMap");
         Pane basicInfoPane = new VBox(10);
         basicInfoPane.setBorder(null);
@@ -98,8 +127,8 @@ public class RoadMapInfoTab extends SearchableTab {
 
         // Events
         btnEdit.setOnAction((event) -> {
-                currentRoadMap.switchToInfoScene(true);
-            });
+            currentRoadMap.switchToInfoScene(true);
+        });
 
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
@@ -116,30 +145,6 @@ public class RoadMapInfoTab extends SearchableTab {
                 currentTeamsLabel,
                 releasesLabel
         );
-
-    }
-    
-    /**
-     * Gets the node for the Roadmap.
-     * 
-     * @param currentRoadMap the roadMap to be processed
-     * @return An Hbox with all releases, sprints, stories associated with it.
-     */
-    public HBox roadMapNode(RoadMap currentRoadMap) {
-        
-        
-        
-        return null;
-    }
-
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 
     /**

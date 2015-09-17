@@ -39,7 +39,8 @@ public class PersonScene extends TrackedTabPane {
         this.currentPerson = currentPerson;
 
         // Define and add the tabs
-        updateAllTabs();
+        informationTab = new PersonInfoTab(currentPerson);
+        loggingTab = new PersonLoggingTab(currentPerson);
 
         Collections.addAll(searchableTabs, informationTab, loggingTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
@@ -57,7 +58,7 @@ public class PersonScene extends TrackedTabPane {
         this.editScene = editScene;
 
         // Define and add the tabs
-        updateAllTabs();
+        editTab = new PersonEditTab(currentPerson);
 
         Collections.addAll(searchableTabs, editTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
@@ -72,34 +73,4 @@ public class PersonScene extends TrackedTabPane {
         return searchableTabs;
     }
 
-
-    @Override
-    public void updateTabs() {
-        Tab selectedTab = this.getSelectionModel().getSelectedItem();
-
-        if (editScene) {
-            if (editTab != selectedTab) {
-                editTab = new PersonEditTab(currentPerson);
-            }
-        }
-        else {
-            if (informationTab != selectedTab) {
-                informationTab = new PersonInfoTab(currentPerson);
-            }
-            if (loggingTab != selectedTab) {
-                loggingTab = new PersonLoggingTab(currentPerson);
-            }
-        }
-    }
-
-    @Override
-    public void updateAllTabs() {
-        if (editScene) {
-            editTab = new PersonEditTab(currentPerson);
-        }
-        else {
-            informationTab = new PersonInfoTab(currentPerson);
-            loggingTab = new PersonLoggingTab(currentPerson);
-        }
-    }
 }

@@ -49,13 +49,30 @@ public class StoryTaskTab extends SearchableTab {
     static Boolean correctShortName = Boolean.FALSE;
     static Boolean correctEffortLeft = Boolean.FALSE;
 
+    Story currentStory;
+
     /**
      * Constructor for the Story Task Tab
      *
      * @param currentStory The currently selected Story
      */
     public StoryTaskTab(Story currentStory) {
+        this.currentStory = currentStory;
+        construct();
+    }
 
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         this.setText("Tasks");
         correctShortName = false;
         correctEffortLeft = false;
@@ -223,17 +240,17 @@ public class StoryTaskTab extends SearchableTab {
                 .subtract(2).divide(100).multiply(60));
 
         spentCol.setCellFactory(
-            column -> {
-                return new TableCell<Task, String>()
-                {
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        setText(item);
-                        setTooltip(new Tooltip("Effort spent is not editable"));
-                    }
-                };
-            });
+                column -> {
+                    return new TableCell<Task, String>()
+                    {
+                        @Override
+                        protected void updateItem(String item, boolean empty) {
+                            super.updateItem(item, empty);
+                            setText(item);
+                            setTooltip(new Tooltip("Effort spent is not editable"));
+                        }
+                    };
+                });
 
         TableColumn impedimentsCol = new TableColumn("Impediments");
         impedimentsCol.prefWidthProperty().bind(taskTable.widthProperty()
@@ -297,60 +314,60 @@ public class StoryTaskTab extends SearchableTab {
         buttons.setAlignment(Pos.TOP_LEFT);
 
         btnView.setOnAction((event) -> {
-                PopOver taskPopover = new PopOver();
-                VBox taskContent = new VBox();
-                taskContent.setPadding(new Insets(8, 8, 8, 8));
-                if (taskTable.getSelectionModel().getSelectedItem() == null) {
-                    SearchableText noTaskLabel = new SearchableText("No tasks selected.", searchControls);
-                    taskContent.getChildren().add(noTaskLabel);
-                }
-                else {
-                    Task currentTask = taskTable.getSelectionModel().getSelectedItem();
-                    taskPopover.setDetachedTitle(currentTask.toString());
+            PopOver taskPopover = new PopOver();
+            VBox taskContent = new VBox();
+            taskContent.setPadding(new Insets(8, 8, 8, 8));
+            if (taskTable.getSelectionModel().getSelectedItem() == null) {
+                SearchableText noTaskLabel = new SearchableText("No tasks selected.", searchControls);
+                taskContent.getChildren().add(noTaskLabel);
+            }
+            else {
+                Task currentTask = taskTable.getSelectionModel().getSelectedItem();
+                taskPopover.setDetachedTitle(currentTask.toString());
 
-                    ScrollPane taskWrapper = new ScrollPane();
-                    LoggingEffortPane loggingPane = new LoggingEffortPane(currentTask,
-                            taskPopover, taskTable);
-                    loggingPane.setStyle(null);
+                ScrollPane taskWrapper = new ScrollPane();
+                LoggingEffortPane loggingPane = new LoggingEffortPane(currentTask,
+                        taskPopover, taskTable);
+                loggingPane.setStyle(null);
 
-                    taskWrapper.setContent(loggingPane);
+                taskWrapper.setContent(loggingPane);
 
-                    TitledPane collapsableLoggingPane = new TitledPane("Task Logging", taskWrapper);
-                    collapsableLoggingPane.setExpanded(true);
-                    collapsableLoggingPane.setAnimated(true);
+                TitledPane collapsableLoggingPane = new TitledPane("Task Logging", taskWrapper);
+                collapsableLoggingPane.setExpanded(true);
+                collapsableLoggingPane.setAnimated(true);
 
-                    taskContent.getChildren().addAll(collapsableLoggingPane);
-                }
+                taskContent.getChildren().addAll(collapsableLoggingPane);
+            }
 
-                taskPopover.setContentNode(taskContent);
-                taskPopover.show(btnView);
-            });
+            taskPopover.setContentNode(taskContent);
+            taskPopover.show(btnView);
+        });
 
         btnDelete.setOnAction((event) -> {
-                if (taskTable.getSelectionModel().getSelectedItem() != null) {
-                    Task currentTask = taskTable.getSelectionModel().getSelectedItem();
-                    if (currentTask != null) {
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setTitle("Delete");
-                        alert.setHeaderText("Delete Task?");
-                        alert.setContentText("Do you really want to delete this Task?");
+            if (taskTable.getSelectionModel().getSelectedItem() != null) {
+                Task currentTask = taskTable.getSelectionModel().getSelectedItem();
+                if (currentTask != null) {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Delete");
+                    alert.setHeaderText("Delete Task?");
+                    alert.setContentText("Do you really want to delete this Task?");
 
-                        ButtonType buttonTypeYes = new ButtonType("Yes");
-                        ButtonType buttonTypeNo = new ButtonType("No");
+                    ButtonType buttonTypeYes = new ButtonType("Yes");
+                    ButtonType buttonTypeNo = new ButtonType("No");
 
-                        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
-                        Optional<ButtonType> result = alert.showAndWait();
+                    alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+                    Optional<ButtonType> result = alert.showAndWait();
 
-                        if (result.get() == buttonTypeYes) {
-                            currentTask.deleteTask();
-                        }
-                        else if (result.get() == buttonTypeNo) {
-                            event.consume();
-                        }
+                    if (result.get() == buttonTypeYes) {
+                        currentTask.deleteTask();
+                    }
+                    else if (result.get() == buttonTypeNo) {
+                        event.consume();
                     }
                 }
+            }
 
-            });
+        });
 
         VBox addTaskBox = new VBox(10);
         SearchableText task = new SearchableText("Add Quick Tasks:", "-fx-font-weight: bold;");
@@ -387,48 +404,48 @@ public class StoryTaskTab extends SearchableTab {
 
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                ValidationStyle.borderGlowNone(shortNameCustomField.getTextField());
-                correctShortName = !shortNameCustomField.getText().isEmpty();
-                if (!correctShortName) {
-                    ValidationStyle.borderGlowRed(shortNameCustomField.getTextField());
-                    ValidationStyle.showMessage("Short Name required",
-                            shortNameCustomField.getTextField());
-                }
-                btnAdd.setDisable(!(correctShortName && correctEffortLeft));
-            });
+            ValidationStyle.borderGlowNone(shortNameCustomField.getTextField());
+            correctShortName = !shortNameCustomField.getText().isEmpty();
+            if (!correctShortName) {
+                ValidationStyle.borderGlowRed(shortNameCustomField.getTextField());
+                ValidationStyle.showMessage("Short Name required",
+                        shortNameCustomField.getTextField());
+            }
+            btnAdd.setDisable(!(correctShortName && correctEffortLeft));
+        });
 
         effortLeftField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctEffortLeft = DateValidator.validDuration(newValue) && !newValue.isEmpty();
-                if (correctEffortLeft) {
-                    ValidationStyle.borderGlowNone(effortLeftField.getTextField());
+            correctEffortLeft = DateValidator.validDuration(newValue) && !newValue.isEmpty();
+            if (correctEffortLeft) {
+                ValidationStyle.borderGlowNone(effortLeftField.getTextField());
+            }
+            else {
+                if (newValue.isEmpty()) {
+                    ValidationStyle.borderGlowRed(effortLeftField.getTextField());
+                    ValidationStyle.showMessage("This field must be filled", effortLeftField.getTextField());
                 }
                 else {
-                    if (newValue.isEmpty()) {
-                        ValidationStyle.borderGlowRed(effortLeftField.getTextField());
-                        ValidationStyle.showMessage("This field must be filled", effortLeftField.getTextField());
-                    }
-                    else {
-                        ValidationStyle.borderGlowRed(effortLeftField.getTextField());
-                        ValidationStyle.showMessage("Please input in valid format", effortLeftField.getTextField());
-                    }
+                    ValidationStyle.borderGlowRed(effortLeftField.getTextField());
+                    ValidationStyle.showMessage("Please input in valid format", effortLeftField.getTextField());
                 }
-                btnAdd.setDisable(!(correctShortName && correctEffortLeft));
-            });
+            }
+            btnAdd.setDisable(!(correctShortName && correctEffortLeft));
+        });
 
         btnAdd.setOnAction((event) -> {
-                //get user input
-                String shortName = shortNameCustomField.getText();
-                Task newTask;
-                if (effortLeftField.getText().isEmpty()) {
-                    newTask = new Task(shortName, " ", currentStory, assigneeComboBox.getValue(), 0);
-                }
-                else {
-                    newTask = new Task(shortName, " ", currentStory, assigneeComboBox.getValue(),
-                            DurationConverter.readDurationToMinutes(effortLeftField.getText()));
-                }
-                currentStory.add(newTask);
-                App.refreshMainScene();
-            });
+            //get user input
+            String shortName = shortNameCustomField.getText();
+            Task newTask;
+            if (effortLeftField.getText().isEmpty()) {
+                newTask = new Task(shortName, " ", currentStory, assigneeComboBox.getValue(), 0);
+            }
+            else {
+                newTask = new Task(shortName, " ", currentStory, assigneeComboBox.getValue(),
+                        DurationConverter.readDurationToMinutes(effortLeftField.getText()));
+            }
+            currentStory.add(newTask);
+            App.refreshMainScene();
+        });
 
         basicInfoPane.getChildren().addAll(
                 tasksTitle,
@@ -447,17 +464,6 @@ public class StoryTaskTab extends SearchableTab {
                 assigneeComboBox,
                 taskTable
         );
-
-
-
-    }
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 
     private void taskInfoPane(Task currentTask, VBox taskContent) {

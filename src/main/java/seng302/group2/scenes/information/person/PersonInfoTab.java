@@ -34,12 +34,28 @@ import static javafx.collections.FXCollections.observableArrayList;
 public class PersonInfoTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+    Person currentPerson;
 
     /**
      * A tab to display information on a selected tasks.
      * @param currentPerson The person to display the information about
      */
     public PersonInfoTab(Person currentPerson) {
+        this.currentPerson = currentPerson;
+        construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Basic Information");
         Pane basicInfoPane = new VBox(10);
@@ -109,27 +125,27 @@ public class PersonInfoTab extends SearchableTab {
 
         // Events
         btnEdit.setOnAction((event) -> {
-                currentPerson.switchToInfoScene(true);
-            });
+            currentPerson.switchToInfoScene(true);
+        });
 
         filterComboBox.getComboBox().valueProperty().addListener(new ChangeListener<Object>() {
-                @Override
-                public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
-                    filteredList.clear();
-                    if (newValue == "All") {
-                        for (Task task : taskList) {
+            @Override
+            public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
+                filteredList.clear();
+                if (newValue == "All") {
+                    for (Task task : taskList) {
+                        filteredList.add(task);
+                    }
+                }
+                else {
+                    for (Task task : taskList) {
+                        if (task.getState() == newValue) {
                             filteredList.add(task);
                         }
                     }
-                    else {
-                        for (Task task : taskList) {
-                            if (task.getState() == newValue) {
-                                filteredList.add(task);
-                            }
-                        }
-                    }
                 }
-            });
+            }
+        });
 
         filterComboBox.getComboBox().setValue(filterComboBox.getComboBox().getItems().get(0));
 
@@ -160,15 +176,6 @@ public class PersonInfoTab extends SearchableTab {
                 taskBox,
                 taskLabel
         );
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 
     /**

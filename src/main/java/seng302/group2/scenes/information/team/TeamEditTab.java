@@ -59,6 +59,80 @@ public class TeamEditTab extends SearchableTab {
     public TeamEditTab(Team baseTeam) {
         // Initialise Variables
         this.baseTeam = baseTeam;
+        construct();
+    }
+
+
+    /**
+     * Updates the roles in the role allocation combo box with those that the given person can fill
+     *
+     * @param person The person whose roles to check
+     */
+    private void updateRoles(Person person) {
+        roleList.clear();
+        roleList.add(noneRole);
+        for (Role role : Global.currentWorkspace.getRoles()) {
+            if (person != null && person.getSkills().containsAll(role.getRequiredSkills())) {
+                roleList.add(role);
+            }
+        }
+    }
+
+
+    /**
+     * Checks if the changes in the scene are valid
+     *
+     * @return If the changes in the scene are valid
+     */
+    private boolean isValidState() {
+        return (shortNameField.getText().equals(baseTeam.getShortName())  // Is the same,
+                || ShortNameValidator.validateShortName(shortNameField, null))// new name validates
+                && areRolesValid();
+    }
+
+
+    /**
+     * Checks if the current role changes are valid, and displays a dialog with the first found
+     * violation
+     *
+     * @return If the role changes are valid
+     */
+    private boolean areRolesValid() {
+        // Find and store errors in validation
+        String errorMessage = null;
+        if (allocatedScrumMaster == allocatedProductOwner && allocatedScrumMaster != null) {
+            errorMessage = "Cannot have the same person assigned to Product Owner and Scrum Master";
+        }
+        else if (allocatedDevelopers.contains(allocatedScrumMaster) && allocatedScrumMaster != null) {
+            errorMessage = "The Scrum Master cannot also be assigned as a developer";
+        }
+        else if (allocatedDevelopers.contains(allocatedProductOwner)
+                && allocatedProductOwner != null) {
+            errorMessage = "The Product Owner cannot also be assigned as a developer";
+        }
+
+        // Display the first found error, or pass if valid
+        if (errorMessage == null) {
+            return true;
+        }
+        else {
+            CustomDialog.showDialog("Invalid Role Assignment", errorMessage,
+                    Alert.AlertType.WARNING);
+            return false;
+        }
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         allocatedDevelopers.addAll(baseTeam.getDevs());
         SearchableText poText;
         SearchableText smText;
@@ -183,125 +257,125 @@ public class TeamEditTab extends SearchableTab {
         // Listeners
         // Update the roles combo when the selected person changes
         teamMembersListView.getSelectionModel().selectedItemProperty().addListener((event) -> {
-                roleList.clear();
-                if (teamMembersListView.getSelectionModel().getSelectedItems().size() == 1) {
-                    roleComboBox.setDisable(false);
-                    btnRoleAssign.setDisable(false);
-                    updateRoles(teamMembersListView.getSelectionModel().getSelectedItems().get(0));
-                }
-                else {
-                    // No person, or more than one person, selected
-                    roleComboBox.setDisable(true);
-                    btnRoleAssign.setDisable(true);
-                }
-            });
+            roleList.clear();
+            if (teamMembersListView.getSelectionModel().getSelectedItems().size() == 1) {
+                roleComboBox.setDisable(false);
+                btnRoleAssign.setDisable(false);
+                updateRoles(teamMembersListView.getSelectionModel().getSelectedItems().get(0));
+            }
+            else {
+                // No person, or more than one person, selected
+                roleComboBox.setDisable(true);
+                btnRoleAssign.setDisable(true);
+            }
+        });
 
 
         // Events
         btnAssign.setOnAction((event) -> {
-                Collection<Person> selectedPeople = new ArrayList<>();
-                selectedPeople.addAll(availablePeopleListView.getSelectionModel().
-                        getSelectedItems());
-                for (Person person : selectedPeople) {
-                    if (person.getRole() == Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER)) {
-                        person.setRole(Role.getRoleFromType(Role.RoleType.NONE));
-                    }
-                    if (person.getRole() == Role.getRoleFromType(Role.RoleType.SCRUM_MASTER)) {
-                        person.setRole(Role.getRoleFromType(Role.RoleType.NONE));
-                    }
+            Collection<Person> selectedPeople = new ArrayList<>();
+            selectedPeople.addAll(availablePeopleListView.getSelectionModel().
+                    getSelectedItems());
+            for (Person person : selectedPeople) {
+                if (person.getRole() == Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER)) {
+                    person.setRole(Role.getRoleFromType(Role.RoleType.NONE));
                 }
+                if (person.getRole() == Role.getRoleFromType(Role.RoleType.SCRUM_MASTER)) {
+                    person.setRole(Role.getRoleFromType(Role.RoleType.NONE));
+                }
+            }
 
-                teamMembersList.addAll(
-                        availablePeopleListView.getSelectionModel().getSelectedItems());
-                availablePeopleList.removeAll(
-                        availablePeopleListView.getSelectionModel().getSelectedItems());
-            });
+            teamMembersList.addAll(
+                    availablePeopleListView.getSelectionModel().getSelectedItems());
+            availablePeopleList.removeAll(
+                    availablePeopleListView.getSelectionModel().getSelectedItems());
+        });
 
         btnUnassign.setOnAction((event) -> {
-                Collection<Person> selectedPeople = new ArrayList<>();
-                selectedPeople.addAll(teamMembersListView.getSelectionModel().
-                        getSelectedItems());
-                availablePeopleList.addAll(selectedPeople);
-                teamMembersList.removeAll(selectedPeople);
+            Collection<Person> selectedPeople = new ArrayList<>();
+            selectedPeople.addAll(teamMembersListView.getSelectionModel().
+                    getSelectedItems());
+            availablePeopleList.addAll(selectedPeople);
+            teamMembersList.removeAll(selectedPeople);
 
-                for (Person person : selectedPeople) {
-                    if (allocatedProductOwner == person) {
-                        allocatedProductOwner = null;
-                    }
-                    if (allocatedScrumMaster == person) {
-                        allocatedProductOwner = null;
-                    }
-                    if (allocatedDevelopers.contains(person)) {
-                        allocatedDevelopers.remove(person);
-                    }
+            for (Person person : selectedPeople) {
+                if (allocatedProductOwner == person) {
+                    allocatedProductOwner = null;
                 }
-            });
+                if (allocatedScrumMaster == person) {
+                    allocatedProductOwner = null;
+                }
+                if (allocatedDevelopers.contains(person)) {
+                    allocatedDevelopers.remove(person);
+                }
+            }
+        });
 
         btnRoleAssign.setOnAction((event) -> {
-                Person selectedPerson =
-                        teamMembersListView.getSelectionModel().getSelectedItems().get(0);
-                Role selectedRole = roleComboBox.getComboBox().getSelectionModel().getSelectedItem();
-                if (selectedRole == null) {
-                    return;
-                }
-                switch (selectedRole.getType()) {
-                    case PRODUCT_OWNER:
-                        if (allocatedProductOwner != null) {
-                            allocatedProductOwner.setRole(Role.getRoleFromType(Role.RoleType.NONE));
-                        }
-                        allocatedProductOwner = selectedPerson;
-                        poText.setText("Product Owner: " + allocatedProductOwner);
-                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER));
-                        break;
-                    case SCRUM_MASTER:
-                        if (allocatedScrumMaster != null) {
-                            allocatedScrumMaster.setRole(Role.getRoleFromType(Role.RoleType.NONE));
-                        }
-                        allocatedScrumMaster = selectedPerson;
-                        smText.setText("Scrum Master: " + allocatedScrumMaster);
-                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.SCRUM_MASTER));
-                        break;
-                    case DEVELOPMENT_TEAM_MEMBER:
-                        allocatedDevelopers.add(selectedPerson);
-                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
-                        break;
-                    case NONE:
-                        if (allocatedProductOwner == selectedPerson) {
-                            allocatedProductOwner = null;
-                        }
-                        if (allocatedScrumMaster == selectedPerson) {
-                            allocatedScrumMaster = null;
-                        }
-                        allocatedDevelopers.remove(selectedPerson);
-                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.NONE));
-                        break;
-                    default:
-                        break;
-                }
-            });
+            Person selectedPerson =
+                    teamMembersListView.getSelectionModel().getSelectedItems().get(0);
+            Role selectedRole = roleComboBox.getComboBox().getSelectionModel().getSelectedItem();
+            if (selectedRole == null) {
+                return;
+            }
+            switch (selectedRole.getType()) {
+                case PRODUCT_OWNER:
+                    if (allocatedProductOwner != null) {
+                        allocatedProductOwner.setRole(Role.getRoleFromType(Role.RoleType.NONE));
+                    }
+                    allocatedProductOwner = selectedPerson;
+                    poText.setText("Product Owner: " + allocatedProductOwner);
+                    selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER));
+                    break;
+                case SCRUM_MASTER:
+                    if (allocatedScrumMaster != null) {
+                        allocatedScrumMaster.setRole(Role.getRoleFromType(Role.RoleType.NONE));
+                    }
+                    allocatedScrumMaster = selectedPerson;
+                    smText.setText("Scrum Master: " + allocatedScrumMaster);
+                    selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.SCRUM_MASTER));
+                    break;
+                case DEVELOPMENT_TEAM_MEMBER:
+                    allocatedDevelopers.add(selectedPerson);
+                    selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
+                    break;
+                case NONE:
+                    if (allocatedProductOwner == selectedPerson) {
+                        allocatedProductOwner = null;
+                    }
+                    if (allocatedScrumMaster == selectedPerson) {
+                        allocatedScrumMaster = null;
+                    }
+                    allocatedDevelopers.remove(selectedPerson);
+                    selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.NONE));
+                    break;
+                default:
+                    break;
+            }
+        });
 
         btnCancel.setOnAction((event) -> baseTeam.switchToInfoScene());
 
         btnDone.setOnAction((event) -> {
-                if (isValidState()) { // validation
-                    ArrayList<Tag> tags = new ArrayList<>();
-                    baseTeam.edit(shortNameField.getText(),
-                            descriptionField.getText(),
-                            teamMembersList,
-                            allocatedProductOwner,
-                            allocatedScrumMaster,
-                            allocatedDevelopers,
-                            tags
-                    );
+            if (isValidState()) { // validation
+                ArrayList<Tag> tags = new ArrayList<>();
+                baseTeam.edit(shortNameField.getText(),
+                        descriptionField.getText(),
+                        teamMembersList,
+                        allocatedProductOwner,
+                        allocatedScrumMaster,
+                        allocatedDevelopers,
+                        tags
+                );
 
-                    Collections.sort(Global.currentWorkspace.getTeams());
-                    baseTeam.switchToInfoScene();
-                    App.mainPane.refreshTree();
-                }
-                else {
-                    event.consume();
-                }
-            });
+                Collections.sort(Global.currentWorkspace.getTeams());
+                baseTeam.switchToInfoScene();
+                App.mainPane.refreshTree();
+            }
+            else {
+                event.consume();
+            }
+        });
 
         // Add items to pane & search collection
         editPane.getChildren().addAll(
@@ -325,74 +399,5 @@ public class TeamEditTab extends SearchableTab {
                 teamMemberLabel,
                 availablePeopleLabel
         );
-    }
-
-
-    /**
-     * Updates the roles in the role allocation combo box with those that the given person can fill
-     *
-     * @param person The person whose roles to check
-     */
-    private void updateRoles(Person person) {
-        roleList.clear();
-        roleList.add(noneRole);
-        for (Role role : Global.currentWorkspace.getRoles()) {
-            if (person != null && person.getSkills().containsAll(role.getRequiredSkills())) {
-                roleList.add(role);
-            }
-        }
-    }
-
-
-    /**
-     * Checks if the changes in the scene are valid
-     *
-     * @return If the changes in the scene are valid
-     */
-    private boolean isValidState() {
-        return (shortNameField.getText().equals(baseTeam.getShortName())  // Is the same,
-                || ShortNameValidator.validateShortName(shortNameField, null))// new name validates
-                && areRolesValid();
-    }
-
-
-    /**
-     * Checks if the current role changes are valid, and displays a dialog with the first found
-     * violation
-     *
-     * @return If the role changes are valid
-     */
-    private boolean areRolesValid() {
-        // Find and store errors in validation
-        String errorMessage = null;
-        if (allocatedScrumMaster == allocatedProductOwner && allocatedScrumMaster != null) {
-            errorMessage = "Cannot have the same person assigned to Product Owner and Scrum Master";
-        }
-        else if (allocatedDevelopers.contains(allocatedScrumMaster) && allocatedScrumMaster != null) {
-            errorMessage = "The Scrum Master cannot also be assigned as a developer";
-        }
-        else if (allocatedDevelopers.contains(allocatedProductOwner)
-                && allocatedProductOwner != null) {
-            errorMessage = "The Product Owner cannot also be assigned as a developer";
-        }
-
-        // Display the first found error, or pass if valid
-        if (errorMessage == null) {
-            return true;
-        }
-        else {
-            CustomDialog.showDialog("Invalid Role Assignment", errorMessage,
-                    Alert.AlertType.WARNING);
-            return false;
-        }
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }

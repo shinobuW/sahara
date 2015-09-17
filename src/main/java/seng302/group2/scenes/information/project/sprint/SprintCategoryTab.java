@@ -32,12 +32,28 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 public class SprintCategoryTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+    SprintCategory selectedCategory;
 
     /**
      * Constructor for SprintCategoryTab class.
      * @param selectedCategory The current selected category
      */
     public SprintCategoryTab(SprintCategory selectedCategory) {
+        this.selectedCategory = selectedCategory;
+        construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         this.setText("Basic Information");
         Pane categoryPane = new VBox(10);
         categoryPane.setBorder(null);
@@ -68,33 +84,24 @@ public class SprintCategoryTab extends SearchableTab {
         categoryPane.getChildren().add(selectionButtons);
 
         btnView.setOnAction((event) -> {
-                if (sprintBox.getSelectionModel().getSelectedItem() != null) {
-                    App.mainPane.selectItem((SaharaItem)
-                            sprintBox.getSelectionModel().getSelectedItem());
-                }
-            });
+            if (sprintBox.getSelectionModel().getSelectedItem() != null) {
+                App.mainPane.selectItem((SaharaItem)
+                        sprintBox.getSelectionModel().getSelectedItem());
+            }
+        });
 
 
         btnDelete.setOnAction((event) -> {
-                if (sprintBox.getSelectionModel().getSelectedItem() != null) {
-                    showDeleteDialog((SaharaItem) sprintBox
-                            .getSelectionModel().getSelectedItem());
-                }
-            });
+            if (sprintBox.getSelectionModel().getSelectedItem() != null) {
+                showDeleteDialog((SaharaItem) sprintBox
+                        .getSelectionModel().getSelectedItem());
+            }
+        });
 
         btnCreate.setOnAction((event) -> {
-                new CreateSprintDialog(selectedCategory.getProject());
-            });
+            new CreateSprintDialog(selectedCategory.getProject());
+        });
 
         Collections.addAll(searchControls, title);
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }

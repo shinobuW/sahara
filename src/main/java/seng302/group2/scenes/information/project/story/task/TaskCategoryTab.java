@@ -32,6 +32,7 @@ public class TaskCategoryTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
     static Boolean correctShortName = Boolean.FALSE;
+    TaskCategory selectedCategory;
 
 
     /**
@@ -39,6 +40,22 @@ public class TaskCategoryTab extends SearchableTab {
      * @param selectedCategory The current selected category
      */
     public TaskCategoryTab(TaskCategory selectedCategory) {
+        this.selectedCategory = selectedCategory;
+        construct();
+
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         //TODO When shortname validation done on Stories table for tasks, also needs to be implemented here
         this.setText("Tasks");
         Pane basicInfoPane = new VBox(10);
@@ -119,20 +136,20 @@ public class TaskCategoryTab extends SearchableTab {
         addTaskBox.getChildren().addAll(task, shortNameCustomField, btnAdd);
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                correctShortName = validateShortName(shortNameCustomField, null);
-                btnAdd.setDisable(!(correctShortName));
+            correctShortName = validateShortName(shortNameCustomField, null);
+            btnAdd.setDisable(!(correctShortName));
 
-            });
+        });
 
         btnAdd.setOnAction((event) -> {
-                if (correctShortName) {
-                    //get user input
-                    String shortName = shortNameCustomField.getText();
-                    Task newTask = new Task(shortName, "", null, null, 0);
-                    currentSprint.getUnallocatedTasks().add(newTask);
-                    App.refreshMainScene();
-                }
-            });
+            if (correctShortName) {
+                //get user input
+                String shortName = shortNameCustomField.getText();
+                Task newTask = new Task(shortName, "", null, null, 0);
+                currentSprint.getUnallocatedTasks().add(newTask);
+                App.refreshMainScene();
+            }
+        });
 
         basicInfoPane.getChildren().addAll(
                 title,
@@ -146,14 +163,5 @@ public class TaskCategoryTab extends SearchableTab {
                 task,
                 shortNameCustomField
         );
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }

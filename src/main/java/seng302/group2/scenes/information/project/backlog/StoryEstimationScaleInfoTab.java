@@ -28,6 +28,20 @@ public class StoryEstimationScaleInfoTab extends SearchableTab {
      * Constructor for the StoryEstimationInfoTab class
      */
     public StoryEstimationScaleInfoTab() {
+        construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         this.setText("Available Scales");
         Pane scaleInfoPane = new VBox(10);
         scaleInfoPane.setBorder(null);
@@ -59,14 +73,14 @@ public class StoryEstimationScaleInfoTab extends SearchableTab {
         scaleValuesList.setPrefHeight(300);
 
         scaleComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
-                scaleValues.clear();
-                ArrayList<String> valueList = Global.currentWorkspace.getEstimationScales().
-                        getEstimationScaleDict().get(newValue);
+            scaleValues.clear();
+            ArrayList<String> valueList = Global.currentWorkspace.getEstimationScales().
+                    getEstimationScaleDict().get(newValue);
 
-                for (String value : valueList) {
-                    scaleValues.add(value);
-                }
-            });
+            for (String value : valueList) {
+                scaleValues.add(value);
+            }
+        });
 
         scaleInfoPane.getChildren().add(title);
         scaleInfoPane.getChildren().add(instructions);
@@ -74,14 +88,5 @@ public class StoryEstimationScaleInfoTab extends SearchableTab {
         scaleInfoPane.getChildren().add(scaleValuesList);
 
         Collections.addAll(searchControls, instructions, scaleComboBox, title, scaleValuesList);
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }

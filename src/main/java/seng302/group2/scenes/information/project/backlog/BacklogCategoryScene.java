@@ -34,28 +34,12 @@ public class BacklogCategoryScene extends TrackedTabPane {
         this.selectedCategory = selectedCategory;
 
         // Define and add the tabs
-        updateAllTabs();
+        categoryTab = new BacklogCategoryTab(selectedCategory);
+        scaleInfoTab = new StoryEstimationScaleInfoTab();
 
         Collections.addAll(getSearchableTabs(), categoryTab, scaleInfoTab);
 
         this.getTabs().addAll(getSearchableTabs());  // Add the tabs to the pane
     }
 
-    @Override
-    public void updateTabs() {
-        Tab selectedTab = this.getSelectionModel().getSelectedItem();
-
-        if (categoryTab != selectedTab) {
-            categoryTab = new BacklogCategoryTab(selectedCategory);
-        }
-        if (scaleInfoTab != selectedTab) {
-            scaleInfoTab = new StoryEstimationScaleInfoTab();
-        }
-    }
-
-    @Override
-    public void updateAllTabs() {
-        categoryTab = new BacklogCategoryTab(selectedCategory);
-        scaleInfoTab = new StoryEstimationScaleInfoTab();
-    }
 }

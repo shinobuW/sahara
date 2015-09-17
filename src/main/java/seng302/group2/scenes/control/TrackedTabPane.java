@@ -67,6 +67,7 @@ public abstract class TrackedTabPane extends SearchableScene {
     }
 
 
+
     /**
      * A map to keep of each of the last selected tabs in the scenes
      */
@@ -133,11 +134,24 @@ public abstract class TrackedTabPane extends SearchableScene {
     /**
      * Updates each of the tabs in the scene, except for the current tab
      */
-    public abstract void updateTabs();
+    public void updateTabs() {
+        for (SearchableTab tab : getSearchableTabs()) {
+            if (!tab.isSelected()) {
+                tab.getSearchableControls().clear();  // These should be re-added on construction
+                tab.construct();
+            }
+        }
+    }
+
 
     /**
      * Updates each of the tabs in the scene, including the current tab
      */
-    public abstract void updateAllTabs();
+    public void updateAllTabs() {
+        for (SearchableTab tab : getSearchableTabs()) {
+            tab.getSearchableControls().clear();  // These should be re-added on construction
+            tab.construct();
+        }
+    }
 
 }

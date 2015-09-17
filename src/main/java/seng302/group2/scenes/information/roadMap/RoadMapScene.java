@@ -34,7 +34,8 @@ public class RoadMapScene extends TrackedTabPane {
         this.currentRoadMap = currentRoadMap;
 
         //Define and add the tabs
-        updateAllTabs();
+        informationTab = new RoadMapInfoTab(currentRoadMap);
+        //updateAllTabs();
 
         Collections.addAll(searchableTabs, informationTab);
         this.getTabs().addAll(searchableTabs);
@@ -53,7 +54,9 @@ public class RoadMapScene extends TrackedTabPane {
         this.editScene = editScene;
 
         // Define and add the tabs
-        updateAllTabs();
+        informationTab = new RoadMapInfoTab(currentRoadMap);
+        editTab = new RoadMapEditTab(currentRoadMap);
+        //updateAllTabs();
 
         Collections.addAll(searchableTabs, editTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
@@ -69,30 +72,5 @@ public class RoadMapScene extends TrackedTabPane {
         return searchableTabs;
     }
 
-
-    @Override
-    public void updateTabs() {
-        Tab selectedTab = this.getSelectionModel().getSelectedItem();
-
-        if (editScene) {
-            if (informationTab != selectedTab) {
-                informationTab = new RoadMapInfoTab(currentRoadMap);
-            }
-            if (editTab != selectedTab) {
-                editTab = new RoadMapEditTab(currentRoadMap);
-            }
-        }
-
-    }
-
-    @Override
-    public void updateAllTabs() {
-        if (editScene) {
-            editTab = new RoadMapEditTab(currentRoadMap);
-        }
-        else {
-            informationTab = new RoadMapInfoTab(currentRoadMap);
-        }
-    }
 }
 

@@ -25,6 +25,7 @@ import java.util.List;
  */
 public class StoryInfoTab extends SearchableTab {
 
+    private Story currentStory;
     List<SearchableControl> searchControls = new ArrayList<>();
 
 
@@ -34,7 +35,16 @@ public class StoryInfoTab extends SearchableTab {
      * @param currentStory The currently selected Story 
      */
     public StoryInfoTab(Story currentStory) {
+        this.currentStory = currentStory;
+        construct();
+    }
 
+
+    /**
+     * Constructs the contents of the tab
+     */
+    @Override
+    public void construct() {
         this.setText("Basic Information");
 
         Pane basicInfoPane = new VBox(10);
@@ -60,8 +70,8 @@ public class StoryInfoTab extends SearchableTab {
         progressBox.getChildren().addAll(progressLabel, progressBar);
 
         btnEdit.setOnAction((event) -> {
-                currentStory.switchToInfoScene(true);
-            });
+            currentStory.switchToInfoScene(true);
+        });
 
         basicInfoPane.getChildren().addAll(
                 title,
@@ -85,6 +95,7 @@ public class StoryInfoTab extends SearchableTab {
                 creator
         );
     }
+
 
     /**
      * Gets all the searchable controls on this tab.

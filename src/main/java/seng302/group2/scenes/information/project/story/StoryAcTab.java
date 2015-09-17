@@ -31,9 +31,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 public class StoryAcTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
-
-
-    private static final DataFormat SERIALIZED_MIME_TYPE = new DataFormat("application/x-java-serialized-object");
+    Story story;
 
     /**
      * Constructor for the Story Acceptance Criteria Tab.
@@ -41,6 +39,21 @@ public class StoryAcTab extends SearchableTab {
      * @param story The currently selected Story
      */
     public StoryAcTab(Story story) {
+        this.story = story;
+        construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Acceptance Criteria");
         Pane acPane = new VBox(10);  // The pane that holds the basic info
@@ -61,59 +74,6 @@ public class StoryAcTab extends SearchableTab {
         SearchableText noAcLabel = new SearchableText("This project has no acceptance criteria");
         acTable.setPlaceholder(noAcLabel);
         acTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-
-        // A row factory snippet to allow item drag and drop re-ordering
-        /*acTable.setRowFactory(tv -> {
-                TableRow<AcceptanceCriteria> row = new TableRow<>();
-
-                row.setOnDragDetected(event -> {
-                        if (!row.isEmpty()) {
-                            Integer index = row.getIndex();
-                            Dragboard db = row.startDragAndDrop(TransferMode.MOVE);
-                            db.setDragView(row.snapshot(null, null));
-                            ClipboardContent cc = new ClipboardContent();
-                            cc.put(SERIALIZED_MIME_TYPE, index);
-                            db.setContent(cc);
-                            event.consume();
-                        }
-                    });
-
-                row.setOnDragOver(event -> {
-                        Dragboard db = event.getDragboard();
-                        if (db.hasContent(SERIALIZED_MIME_TYPE)) {
-                            if (row.getIndex() != ((Integer)db.getContent(SERIALIZED_MIME_TYPE)).intValue()) {
-                                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-                                event.consume();
-                            }
-                        }
-                    });
-
-                row.setOnDragDropped(event -> {
-                        Dragboard db = event.getDragboard();
-                        if (db.hasContent(SERIALIZED_MIME_TYPE)) {
-                            int draggedIndex = (Integer) db.getContent(SERIALIZED_MIME_TYPE);
-                            AcceptanceCriteria draggedAC = acTable.getItems().remove(draggedIndex);
-
-                            int dropIndex ;
-
-                            if (row.isEmpty()) {
-                                dropIndex = acTable.getItems().size() ;
-                            }
-                            else {
-                                dropIndex = row.getIndex();
-                            }
-
-                            acTable.getItems().add(dropIndex, draggedAC);
-
-                            event.setDropCompleted(true);
-                            acTable.getSelectionModel().select(dropIndex);
-                            event.consume();
-                        }
-                    });
-
-                return row ;
-            });*/
 
 
         HBox buttons = new HBox(10);
@@ -152,7 +112,7 @@ public class StoryAcTab extends SearchableTab {
         stateCol.setCellFactory(ComboBoxTableCell.forTableColumn(
                 converter,
                 acStates
-            ));
+        ));
         stateCol.setOnEditCommit(
                 new EventHandler<TableColumn.CellEditEvent<AcceptanceCriteria, AcceptanceCriteria.AcState>>() {
                     @Override
@@ -170,13 +130,13 @@ public class StoryAcTab extends SearchableTab {
         acTable.getColumns().setAll(columns);
 
         acTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                if (newSelection != null) {
-                    deleteButton.setDisable(false);
-                }
-                else {
-                    deleteButton.setDisable(true);
-                }
-            });
+            if (newSelection != null) {
+                deleteButton.setDisable(false);
+            }
+            else {
+                deleteButton.setDisable(true);
+            }
+        });
 
 
 
@@ -184,66 +144,57 @@ public class StoryAcTab extends SearchableTab {
 
         // Events
         descriptionTextArea.getTextArea().textProperty().addListener((observable, oldValue, newValue) -> {
-                if (descriptionTextArea.getText().isEmpty()) {
-                    addButton.setDisable(true);
-                }
-                else {
-                    addButton.setDisable(false);
-                }
-            });
+            if (descriptionTextArea.getText().isEmpty()) {
+                addButton.setDisable(true);
+            }
+            else {
+                addButton.setDisable(false);
+            }
+        });
 
 
         addButton.setOnAction((event) -> {
-                if (!descriptionTextArea.getText().isEmpty()) {
-                    String description = descriptionTextArea.getText();
-                    AcceptanceCriteria newAc = new AcceptanceCriteria(description, story);
-                    story.add(newAc);
-                    descriptionTextArea.getTextArea().clear();
-                }
-                else {
-                    event.consume();
-                }
-            });
+            if (!descriptionTextArea.getText().isEmpty()) {
+                String description = descriptionTextArea.getText();
+                AcceptanceCriteria newAc = new AcceptanceCriteria(description, story);
+                story.add(newAc);
+                descriptionTextArea.getTextArea().clear();
+            }
+            else {
+                event.consume();
+            }
+        });
 
         deleteButton.setOnAction((event) -> {
-                AcceptanceCriteria selectedAc = acTable.getSelectionModel().getSelectedItem();
-                if (selectedAc != null) {
+            AcceptanceCriteria selectedAc = acTable.getSelectionModel().getSelectedItem();
+            if (selectedAc != null) {
 
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Delete");
-                    alert.setHeaderText("Delete Acceptance Criteria?");
-                    alert.setContentText("Do you really want to delete this Acceptance Criteria?");
-                    alert.getDialogPane().setStyle(" -fx-max-width:400px; -fx-max-height: 100px; -fx-pref-width: 400px;"
-                            + "-fx-pref-height: 100px;");
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Delete");
+                alert.setHeaderText("Delete Acceptance Criteria?");
+                alert.setContentText("Do you really want to delete this Acceptance Criteria?");
+                alert.getDialogPane().setStyle(" -fx-max-width:400px; -fx-max-height: 100px; -fx-pref-width: 400px;"
+                        + "-fx-pref-height: 100px;");
 
-                    ButtonType buttonTypeYes = new ButtonType("Yes");
-                    ButtonType buttonTypeNo = new ButtonType("No");
+                ButtonType buttonTypeYes = new ButtonType("Yes");
+                ButtonType buttonTypeNo = new ButtonType("No");
 
-                    alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+                alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
 
-                    Optional<ButtonType> result  = alert.showAndWait();
+                Optional<ButtonType> result  = alert.showAndWait();
 
-                    if (result.get() == buttonTypeYes) {
-                        selectedAc.delete();
-                        App.mainPane.refreshContent();
-                    }
-                    else if (result.get() == buttonTypeNo) {
-                        event.consume();
-                    }
+                if (result.get() == buttonTypeYes) {
+                    selectedAc.delete();
+                    App.mainPane.refreshContent();
                 }
-            });
+                else if (result.get() == buttonTypeNo) {
+                    event.consume();
+                }
+            }
+        });
 
         acPane.getChildren().addAll(title, acTable, descriptionTextArea, buttons);
         Collections.addAll(searchControls, acTable, title, descriptionTextArea, noAcLabel);
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 
     /**

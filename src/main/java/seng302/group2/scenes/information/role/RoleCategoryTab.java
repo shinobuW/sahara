@@ -25,12 +25,29 @@ import java.util.List;
 public class RoleCategoryTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+    Workspace currentWorkspace;
 
     /**
      * Constructor for RoleCategoryTab class.
      * @param currentWorkspace The current workspace
      */
     public RoleCategoryTab(Workspace currentWorkspace) {
+        this.currentWorkspace = currentWorkspace;
+        construct();
+
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Basic Information");
         Pane categoryPane = new VBox(10);
@@ -54,11 +71,11 @@ public class RoleCategoryTab extends SearchableTab {
 
         // Events
         btnView.setOnAction((event) -> {
-                if (roleBox.getSelectionModel().getSelectedItem() != null) {
-                    App.mainPane.selectItem((SaharaItem)
-                            roleBox.getSelectionModel().getSelectedItem());
-                }
-            });
+            if (roleBox.getSelectionModel().getSelectedItem() != null) {
+                App.mainPane.selectItem((SaharaItem)
+                        roleBox.getSelectionModel().getSelectedItem());
+            }
+        });
 
         // Add items to pane & search collection
         categoryPane.getChildren().addAll(
@@ -71,14 +88,5 @@ public class RoleCategoryTab extends SearchableTab {
                 title,
                 roleBox
         );
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }

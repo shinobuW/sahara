@@ -43,6 +43,8 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 public class PersonEditTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+    Person currentPerson;
+
     /**
      * Constructor for the PersonEditTab class. This constructor creates a JavaFX ScrollPane
      * which is populated with relevant controls then shown.
@@ -50,6 +52,21 @@ public class PersonEditTab extends SearchableTab {
      * @param currentPerson The person being edited
      */
     public PersonEditTab(Person currentPerson) {
+        this.currentPerson = currentPerson;
+        construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Edit Person");
         Pane editPane = new VBox(10);
@@ -65,21 +82,21 @@ public class PersonEditTab extends SearchableTab {
         CustomTextField emailTextField = new CustomTextField("Email:");
         CustomDatePicker birthDatePicker = new CustomDatePicker("Birth Date:", false);
         final Callback<DatePicker, DateCell> birthDateCellFactory =
-            new Callback<DatePicker, DateCell>() {
-                @Override
-                public DateCell call(final DatePicker datePicker) {
-                    return new DateCell() {
-                        @Override
-                        public void updateItem(LocalDate item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (item.isAfter(LocalDate.now())) {
-                                setDisable(true);
-                                setStyle("-fx-background-color: #ffc0cb;");
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (item.isAfter(LocalDate.now())) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #ffc0cb;");
+                                }
                             }
-                        }
-                    };
-                }
-            };
+                        };
+                    }
+                };
         birthDatePicker.getDatePicker().setDayCellFactory(birthDateCellFactory);
 
         CustomTextArea descriptionTextArea = new CustomTextArea("Person Description:", 300);
@@ -169,8 +186,8 @@ public class PersonEditTab extends SearchableTab {
                         && currentPerson.getRole().toString().equals("Product Owner")) {
                     ValidationStyle.borderGlowRed(teamBox.getComboBox());
                     ValidationStyle.showMessage("This person is currently the Product Owner of the team "
-                            + currentPerson.getTeamName() + "! \n"
-                            + "You must put someone else into the role before you can change this persons team.",
+                                    + currentPerson.getTeamName() + "! \n"
+                                    + "You must put someone else into the role before you can change this persons team.",
                             teamBox.getComboBox());
                     teamBox.setTooltip(new Tooltip("This person is currently the Product Owner of the team "
                             + currentPerson.getTeamName() + "! \n"
@@ -181,8 +198,8 @@ public class PersonEditTab extends SearchableTab {
                         && currentPerson.getRole().toString().equals("Scrum Master")) {
                     ValidationStyle.borderGlowRed(teamBox.getComboBox());
                     ValidationStyle.showMessage("This person is currently the Scrum Master of the team "
-                            + currentPerson.getTeamName() + "! \n"
-                            + "You must put someone else into the role before you can change this persons team.",
+                                    + currentPerson.getTeamName() + "! \n"
+                                    + "You must put someone else into the role before you can change this persons team.",
                             teamBox.getComboBox());
                     teamBox.setTooltip(new Tooltip("This person is currently the Scrum Master of the team "
                             + currentPerson.getTeamName() + "! \n"
@@ -196,120 +213,120 @@ public class PersonEditTab extends SearchableTab {
         });
 
         birthDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
-                @Override
-                public void changed(ObservableValue<? extends LocalDate> observable,
-                                    LocalDate oldValue, LocalDate newValue) {
-                    if (newValue != null && newValue.isAfter(LocalDate.now())) {
-                        ValidationStyle.borderGlowRed(birthDatePicker.getDatePicker());
-                        ValidationStyle.showMessage("A Persons birth date must be in the past",
-                                birthDatePicker.getDatePicker());
-                        btnDone.setDisable(true);
-                    }
-                    else {
-                        ValidationStyle.borderGlowNone(birthDatePicker.getDatePicker());
-                        btnDone.setDisable(false);
-                    }
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable,
+                                LocalDate oldValue, LocalDate newValue) {
+                if (newValue != null && newValue.isAfter(LocalDate.now())) {
+                    ValidationStyle.borderGlowRed(birthDatePicker.getDatePicker());
+                    ValidationStyle.showMessage("A Persons birth date must be in the past",
+                            birthDatePicker.getDatePicker());
+                    btnDone.setDisable(true);
                 }
-            });
+                else {
+                    ValidationStyle.borderGlowNone(birthDatePicker.getDatePicker());
+                    btnDone.setDisable(false);
+                }
+            }
+        });
 
         // Events
         btnAdd.setOnAction((event) -> {
-                ObservableList<Skill> selectedSkills =
-                        skillsBox.getSelectionModel().getSelectedItems();
-                for (Skill item : selectedSkills) {
-                    tempPerson.getSkills().add(item);
-                }
+            ObservableList<Skill> selectedSkills =
+                    skillsBox.getSelectionModel().getSelectedItems();
+            for (Skill item : selectedSkills) {
+                tempPerson.getSkills().add(item);
+            }
 
-                dialogSkills.clear();
-                for (SaharaItem projectSkill : currentWorkspace.getSkills()) {
-                    if (!tempPerson.getSkills().contains(projectSkill)) {
-                        dialogSkills.add((Skill) projectSkill);
-                    }
+            dialogSkills.clear();
+            for (SaharaItem projectSkill : currentWorkspace.getSkills()) {
+                if (!tempPerson.getSkills().contains(projectSkill)) {
+                    dialogSkills.add((Skill) projectSkill);
                 }
-            });
+            }
+        });
 
         btnDelete.setOnAction((event) -> {
-                ObservableList<Skill> selectedSkills =
-                        personSkillsBox.getSelectionModel().getSelectedItems();
-                for (int i = selectedSkills.size() - 1; i >= 0; i--) {
-                    tempPerson.getSkills().remove(selectedSkills.get(i));
-                }
+            ObservableList<Skill> selectedSkills =
+                    personSkillsBox.getSelectionModel().getSelectedItems();
+            for (int i = selectedSkills.size() - 1; i >= 0; i--) {
+                tempPerson.getSkills().remove(selectedSkills.get(i));
+            }
 
-                dialogSkills.clear();
-                for (SaharaItem projectSkill : currentWorkspace.getSkills()) {
-                    if (!tempPerson.getSkills().contains(projectSkill)) {
-                        dialogSkills.add((Skill) projectSkill);
-                    }
+            dialogSkills.clear();
+            for (SaharaItem projectSkill : currentWorkspace.getSkills()) {
+                if (!tempPerson.getSkills().contains(projectSkill)) {
+                    dialogSkills.add((Skill) projectSkill);
                 }
-            });
+            }
+        });
 
         btnDone.setOnAction((event) -> {
-                Team selectedTeam = teamBox.getValue();
+            Team selectedTeam = teamBox.getValue();
 
-                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                        currentPerson.getShortName());
-                boolean firstNameUnchanged = firstNameCustomField.getText().equals(
-                        currentPerson.getFirstName());
-                boolean lastNameUnchanged = lastNameCustomField.getText().equals(
-                        currentPerson.getLastName());
-                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                        currentPerson.getDescription());
-                boolean birthdayUnchanged = birthDatePicker.getValue() == currentPerson.getBirthDate();
-                boolean emailUnchanged = emailTextField.getText().equals(
-                        currentPerson.getEmail());
-                boolean teamUnchanged = selectedTeam.getShortName().equals(
-                        currentPerson.getTeamName());
-                boolean skillsUnchanged = true;
-                for (Object skill : personSkillsBox.getItems()) {
-                    if (!currentPerson.getSkills().contains(skill)) {
-                        skillsUnchanged = false;
-                        break;
-                    }
+            boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                    currentPerson.getShortName());
+            boolean firstNameUnchanged = firstNameCustomField.getText().equals(
+                    currentPerson.getFirstName());
+            boolean lastNameUnchanged = lastNameCustomField.getText().equals(
+                    currentPerson.getLastName());
+            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                    currentPerson.getDescription());
+            boolean birthdayUnchanged = birthDatePicker.getValue() == currentPerson.getBirthDate();
+            boolean emailUnchanged = emailTextField.getText().equals(
+                    currentPerson.getEmail());
+            boolean teamUnchanged = selectedTeam.getShortName().equals(
+                    currentPerson.getTeamName());
+            boolean skillsUnchanged = true;
+            for (Object skill : personSkillsBox.getItems()) {
+                if (!currentPerson.getSkills().contains(skill)) {
+                    skillsUnchanged = false;
+                    break;
                 }
+            }
 
-                if (shortNameUnchanged && firstNameUnchanged && lastNameUnchanged
-                        && descriptionUnchanged && birthdayUnchanged && emailUnchanged
-                        && teamUnchanged && skillsUnchanged) {
-                    // No fields have been changed
-                    currentPerson.switchToInfoScene();
-                    return;
-                }
+            if (shortNameUnchanged && firstNameUnchanged && lastNameUnchanged
+                    && descriptionUnchanged && birthdayUnchanged && emailUnchanged
+                    && teamUnchanged && skillsUnchanged) {
+                // No fields have been changed
+                currentPerson.switchToInfoScene();
+                return;
+            }
 
-                boolean correctShortName = validateShortName(shortNameCustomField,
-                        currentPerson.getShortName());
-                boolean firstNameValidated = NameValidator.validateName(firstNameCustomField);
-                boolean lastNameValidated = NameValidator.validateName(lastNameCustomField);
+            boolean correctShortName = validateShortName(shortNameCustomField,
+                    currentPerson.getShortName());
+            boolean firstNameValidated = NameValidator.validateName(firstNameCustomField);
+            boolean lastNameValidated = NameValidator.validateName(lastNameCustomField);
 
-                ArrayList<Tag> tags = new ArrayList<>();
+            ArrayList<Tag> tags = new ArrayList<>();
 
-                // The short name is the same or valid
-                if (correctShortName && firstNameValidated && lastNameValidated) {
-                    LocalDate birthDate = birthDatePicker.getValue();
+            // The short name is the same or valid
+            if (correctShortName && firstNameValidated && lastNameValidated) {
+                LocalDate birthDate = birthDatePicker.getValue();
 
 
-                    currentPerson.edit(shortNameCustomField.getText(),
-                            firstNameCustomField.getText(),
-                            lastNameCustomField.getText(),
-                            emailTextField.getText(),
-                            birthDate,
-                            descriptionTextArea.getText(),
-                            selectedTeam,
-                            personSkillsBox.getItems(),
-                            tags
-                    );
+                currentPerson.edit(shortNameCustomField.getText(),
+                        firstNameCustomField.getText(),
+                        lastNameCustomField.getText(),
+                        emailTextField.getText(),
+                        birthDate,
+                        descriptionTextArea.getText(),
+                        selectedTeam,
+                        personSkillsBox.getItems(),
+                        tags
+                );
 
-                    Collections.sort(Global.currentWorkspace.getPeople());
-                    currentPerson.switchToInfoScene();
-                    App.mainPane.refreshTree();
-                }
-                else {
-                    event.consume();
-                }
-            });
+                Collections.sort(Global.currentWorkspace.getPeople());
+                currentPerson.switchToInfoScene();
+                App.mainPane.refreshTree();
+            }
+            else {
+                event.consume();
+            }
+        });
 
         btnCancel.setOnAction((event) -> {
-                currentPerson.switchToInfoScene();
-            });
+            currentPerson.switchToInfoScene();
+        });
 
         // Add items to pane & search collection
         editPane.getChildren().addAll(
@@ -337,15 +354,5 @@ public class PersonEditTab extends SearchableTab {
                 v2Label,
                 skillsBox
         );
-
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }

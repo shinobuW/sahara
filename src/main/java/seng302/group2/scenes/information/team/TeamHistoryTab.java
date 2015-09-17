@@ -37,7 +37,8 @@ import static seng302.group2.util.validation.DateValidator.validateAllocation;
  */
 public class TeamHistoryTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
+    Set<SearchableControl> searchControls = new HashSet<>();
+    Team currentTeam;
 
     Boolean isValidEdit;
 
@@ -47,6 +48,90 @@ public class TeamHistoryTab extends SearchableTab {
      * @param currentTeam currently selected team
      */
     public TeamHistoryTab(Team currentTeam) {
+        this.currentTeam = currentTeam;
+        construct();
+    }
+
+    /**
+     * Displays the appropriate error dialog according to the validation status
+     *
+     * @param status the validation status
+     */
+    private void showErrorDialog(ValidationStatus status) {
+        switch (status) {
+            case VALID:
+                break;
+            case ALLOCATION_DATES_WRONG_ORDER:
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; -fx-pref-width: 550px; "
+                        + "-fx-pref-height: 100px;");
+                alert.setTitle("Error");
+                alert.setHeaderText("Allocation Date Error");
+                alert.setContentText("The end date of your new allocation cannot be before the start date.");
+                alert.showAndWait();
+                break;
+            case ALLOCATION_DATES_EQUAL:
+                Alert alertDatesEquals = new Alert(Alert.AlertType.ERROR);
+                alertDatesEquals.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; "
+                        + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
+                alertDatesEquals.setTitle("Error");
+                alertDatesEquals.setHeaderText("Allocation Date Error");
+                alertDatesEquals.setContentText("An allocation with those start and end dates already exists.");
+                alertDatesEquals.showAndWait();
+                break;
+            case START_OVERLAP:
+                Alert alertOverlap = new Alert(Alert.AlertType.ERROR);
+                alertOverlap.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; "
+                        + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
+                alertOverlap.setTitle("Error");
+                alertOverlap.setHeaderText("Allocation Date Error");
+                alertOverlap.setContentText("Start date overlaps with an already existing allocation for that team.");
+                alertOverlap.showAndWait();
+                break;
+            case END_OVERLAP:
+                Alert alertEndOverlap = new Alert(Alert.AlertType.ERROR);
+                alertEndOverlap.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; "
+                        + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
+                alertEndOverlap.setTitle("Error");
+                alertEndOverlap.setHeaderText("Allocation Date Error");
+                alertEndOverlap.setContentText("End date overlaps with an already existing allocation for that team.");
+                alertEndOverlap.showAndWait();
+                break;
+            case SUPER_OVERLAP:
+                Alert alertSuperOverlap = new Alert(Alert.AlertType.ERROR);
+                alertSuperOverlap.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; "
+                        + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
+                alertSuperOverlap.setTitle("Error");
+                alertSuperOverlap.setHeaderText("Allocation Date Error");
+                alertSuperOverlap.setContentText("Start and end dates encompass an existing allocation for that team.");
+                alertSuperOverlap.showAndWait();
+                break;
+            case SUB_OVERLAP:
+                Alert alertSubOverlap = new Alert(Alert.AlertType.ERROR);
+                alertSubOverlap.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; "
+                        + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
+                alertSubOverlap.setTitle("Error");
+                alertSubOverlap.setHeaderText("Allocation Date Error");
+                alertSubOverlap.setContentText("Start and end dates are encompassed by an existing allocation"
+                        + " for that team.");
+                alertSubOverlap.showAndWait();
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Allocation History");
         Pane historyPane = new VBox(10);
@@ -207,76 +292,76 @@ public class TeamHistoryTab extends SearchableTab {
 
         // Events
         projectComboBox.getComboBox().setOnMouseClicked(event -> {
-                projectComboBox.getComboBox().getItems().clear();
-                for (Project proj : Global.currentWorkspace.getProjects()) {
-                    projectComboBox.getComboBox().getItems().add(proj);
-                }
-            });
+            projectComboBox.getComboBox().getItems().clear();
+            for (Project proj : Global.currentWorkspace.getProjects()) {
+                projectComboBox.getComboBox().getItems().add(proj);
+            }
+        });
 
         addButton.setOnAction((event) -> {
-                ValidationStyle.borderGlowNone(projectComboBox.getComboBox());
-                ValidationStyle.borderGlowNone(startDatePicker.getDatePicker());
-                if (projectComboBox.getValue() != null && startDatePicker.getValue() != null) {
-                    LocalDate endDate = endDatePicker.getValue();
-                    LocalDate startDate = startDatePicker.getValue();
-                    Project selectedProject = null;
+            ValidationStyle.borderGlowNone(projectComboBox.getComboBox());
+            ValidationStyle.borderGlowNone(startDatePicker.getDatePicker());
+            if (projectComboBox.getValue() != null && startDatePicker.getValue() != null) {
+                LocalDate endDate = endDatePicker.getValue();
+                LocalDate startDate = startDatePicker.getValue();
+                Project selectedProject = null;
 
-                    for (Project proj : Global.currentWorkspace.getProjects()) {
-                        if (proj.equals(projectComboBox.getValue())) {
-                            selectedProject = proj;
-                        }
+                for (Project proj : Global.currentWorkspace.getProjects()) {
+                    if (proj.equals(projectComboBox.getValue())) {
+                        selectedProject = proj;
                     }
+                }
 
-                    if (validateAllocation(selectedProject, currentTeam, startDate, endDate)
-                            == ValidationStatus.VALID) {
-                        Allocation alloc = new Allocation(selectedProject, currentTeam,
-                                startDate, endDate);
-                        currentTeam.add(alloc);
-                    }
-                    else {
-                        showErrorDialog(validateAllocation(selectedProject,
-                                currentTeam, startDate, endDate));
-                        event.consume();
-                    }
+                if (validateAllocation(selectedProject, currentTeam, startDate, endDate)
+                        == ValidationStatus.VALID) {
+                    Allocation alloc = new Allocation(selectedProject, currentTeam,
+                            startDate, endDate);
+                    currentTeam.add(alloc);
                 }
                 else {
-                    if (projectComboBox.getValue() == null) {
-                        ValidationStyle.borderGlowRed(projectComboBox.getComboBox());
-                        ValidationStyle.showMessage("Please select a project", projectComboBox.getComboBox());
-                        event.consume();
-                    }
-                    if (startDatePicker.getValue() == null) {
-                        ValidationStyle.borderGlowRed(startDatePicker.getDatePicker());
-                        ValidationStyle.showMessage("Please select a date", startDatePicker.getDatePicker());
-                        event.consume();
-                    }
+                    showErrorDialog(validateAllocation(selectedProject,
+                            currentTeam, startDate, endDate));
+                    event.consume();
                 }
-            });
+            }
+            else {
+                if (projectComboBox.getValue() == null) {
+                    ValidationStyle.borderGlowRed(projectComboBox.getComboBox());
+                    ValidationStyle.showMessage("Please select a project", projectComboBox.getComboBox());
+                    event.consume();
+                }
+                if (startDatePicker.getValue() == null) {
+                    ValidationStyle.borderGlowRed(startDatePicker.getDatePicker());
+                    ValidationStyle.showMessage("Please select a date", startDatePicker.getDatePicker());
+                    event.consume();
+                }
+            }
+        });
 
         deleteButton.setOnAction((event) -> {
-                Allocation selectedAlloc = historyTable.getSelectionModel().getSelectedItem();
-                if (selectedAlloc != null) {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Delete");
-                    alert.setHeaderText("Delete Allocation?");
-                    alert.setContentText("Do you really want to delete this allocation?");
-                    alert.getDialogPane().setStyle(" -fx-max-width:450; -fx-max-height: 100px; -fx-pref-width: 450px; "
-                            + "-fx-pref-height: 100px;");
+            Allocation selectedAlloc = historyTable.getSelectionModel().getSelectedItem();
+            if (selectedAlloc != null) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Delete");
+                alert.setHeaderText("Delete Allocation?");
+                alert.setContentText("Do you really want to delete this allocation?");
+                alert.getDialogPane().setStyle(" -fx-max-width:450; -fx-max-height: 100px; -fx-pref-width: 450px; "
+                        + "-fx-pref-height: 100px;");
 
-                    ButtonType buttonTypeYes = new ButtonType("Yes");
-                    ButtonType buttonTypeNo = new ButtonType("No");
+                ButtonType buttonTypeYes = new ButtonType("Yes");
+                ButtonType buttonTypeNo = new ButtonType("No");
 
-                    alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
-                    Optional<ButtonType> result  = alert.showAndWait();
+                alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+                Optional<ButtonType> result  = alert.showAndWait();
 
-                    if (result.get() == buttonTypeYes) {
-                        selectedAlloc.delete();
-                    }
-                    else if (result.get() == buttonTypeNo) {
-                        event.consume();
-                    }
+                if (result.get() == buttonTypeYes) {
+                    selectedAlloc.delete();
                 }
-            });
+                else if (result.get() == buttonTypeNo) {
+                    event.consume();
+                }
+            }
+        });
 
         TableColumn[] columns = {teamCol, startDateCol, endDateCol};
         historyTable.getColumns().setAll(columns);
@@ -311,84 +396,6 @@ public class TeamHistoryTab extends SearchableTab {
                 startDatePicker,
                 endDatePicker
         );
-    }
-
-    /**
-     * Displays the appropriate error dialog according to the validation status
-     *
-     * @param status the validation status
-     */
-    private void showErrorDialog(ValidationStatus status) {
-        switch (status) {
-            case VALID:
-                break;
-            case ALLOCATION_DATES_WRONG_ORDER:
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; -fx-pref-width: 550px; "
-                        + "-fx-pref-height: 100px;");
-                alert.setTitle("Error");
-                alert.setHeaderText("Allocation Date Error");
-                alert.setContentText("The end date of your new allocation cannot be before the start date.");
-                alert.showAndWait();
-                break;
-            case ALLOCATION_DATES_EQUAL:
-                Alert alertDatesEquals = new Alert(Alert.AlertType.ERROR);
-                alertDatesEquals.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; "
-                        + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
-                alertDatesEquals.setTitle("Error");
-                alertDatesEquals.setHeaderText("Allocation Date Error");
-                alertDatesEquals.setContentText("An allocation with those start and end dates already exists.");
-                alertDatesEquals.showAndWait();
-                break;
-            case START_OVERLAP:
-                Alert alertOverlap = new Alert(Alert.AlertType.ERROR);
-                alertOverlap.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; "
-                        + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
-                alertOverlap.setTitle("Error");
-                alertOverlap.setHeaderText("Allocation Date Error");
-                alertOverlap.setContentText("Start date overlaps with an already existing allocation for that team.");
-                alertOverlap.showAndWait();
-                break;
-            case END_OVERLAP:
-                Alert alertEndOverlap = new Alert(Alert.AlertType.ERROR);
-                alertEndOverlap.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; "
-                        + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
-                alertEndOverlap.setTitle("Error");
-                alertEndOverlap.setHeaderText("Allocation Date Error");
-                alertEndOverlap.setContentText("End date overlaps with an already existing allocation for that team.");
-                alertEndOverlap.showAndWait();
-                break;
-            case SUPER_OVERLAP:
-                Alert alertSuperOverlap = new Alert(Alert.AlertType.ERROR);
-                alertSuperOverlap.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; "
-                        + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
-                alertSuperOverlap.setTitle("Error");
-                alertSuperOverlap.setHeaderText("Allocation Date Error");
-                alertSuperOverlap.setContentText("Start and end dates encompass an existing allocation for that team.");
-                alertSuperOverlap.showAndWait();
-                break;
-            case SUB_OVERLAP:
-                Alert alertSubOverlap = new Alert(Alert.AlertType.ERROR);
-                alertSubOverlap.getDialogPane().setStyle(" -fx-max-width:550px; -fx-max-height: 100px; "
-                        + "-fx-pref-width: 550px; -fx-pref-height: 100px;");
-                alertSubOverlap.setTitle("Error");
-                alertSubOverlap.setHeaderText("Allocation Date Error");
-                alertSubOverlap.setContentText("Start and end dates are encompassed by an existing allocation"
-                        + " for that team.");
-                alertSubOverlap.showAndWait();
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 
 

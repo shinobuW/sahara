@@ -40,12 +40,50 @@ public class SprintLogTab extends SearchableTab {
     CustomComboBox<Person> loggerComboBox;
     CustomComboBox<Person> partnerComboBox;
     Person nullPerson = new Person("", "", "", "", "", null);
+    Sprint currentSprint;
 
     /**
      * Constructor for the sprint logging tab
      * @param currentSprint
      */
     public SprintLogTab(Sprint currentSprint) {
+        this.currentSprint = currentSprint;
+        construct();
+    }
+
+    private void updateFilteredLogs(Sprint sprint) {
+        data.clear();
+        data.addAll(sprint.getAllLogsWithInitialLogs());
+        Person selectedLogger = loggerComboBox.getComboBox().getValue();
+        Person selectedPartner = partnerComboBox.getComboBox().getValue();
+        for (Log log : sprint.getAllLogsWithInitialLogs()) {
+            if (selectedLogger != null) {
+                if (selectedLogger != nullPerson && log.getLogger() != selectedLogger) {
+                    data.remove(log);
+                }
+            }
+
+            if (selectedPartner != null && selectedPartner != nullPerson) {
+                if (!(log instanceof PairLog)) {
+                    data.remove(log);
+                }
+                else if (log instanceof PairLog && ((PairLog)log).getPartner() != null) {
+                    if (selectedPartner == log.getLogger() && ((PairLog) log).getPartner() != selectedPartner) {
+                        data.remove(log);
+                    }
+                }
+            }
+        }
+    }
+
+
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return null;
+    }
+
+    @Override
+    public void construct() {
         this.setText("Logging Effort");
         Pane loggingPane = new VBox(10);
         loggingPane.setBorder(null);
@@ -71,16 +109,16 @@ public class SprintLogTab extends SearchableTab {
         partnerComboBox.getComboBox().getItems().addAll(allPeople);
 
         loggerComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
-                partnerComboBox.clear();
-                partnerComboBox.getComboBox().getItems().add(nullPerson);
-                partnerComboBox.getComboBox().getItems().addAll(allPeople);
-                partnerComboBox.getComboBox().getItems().remove(newValue);
-                updateFilteredLogs(currentSprint);
-            });
+            partnerComboBox.clear();
+            partnerComboBox.getComboBox().getItems().add(nullPerson);
+            partnerComboBox.getComboBox().getItems().addAll(allPeople);
+            partnerComboBox.getComboBox().getItems().remove(newValue);
+            updateFilteredLogs(currentSprint);
+        });
 
         partnerComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
-                updateFilteredLogs(currentSprint);
-            });
+            updateFilteredLogs(currentSprint);
+        });
 
 
         HBox filterHBox = new HBox(10);
@@ -170,37 +208,5 @@ public class SprintLogTab extends SearchableTab {
 //            );
 
 //            loggingPane.getChildren().addAll((currentSprint), btnEdit);
-
-    }
-
-    private void updateFilteredLogs(Sprint sprint) {
-        data.clear();
-        data.addAll(sprint.getAllLogsWithInitialLogs());
-        Person selectedLogger = loggerComboBox.getComboBox().getValue();
-        Person selectedPartner = partnerComboBox.getComboBox().getValue();
-        for (Log log : sprint.getAllLogsWithInitialLogs()) {
-            if (selectedLogger != null) {
-                if (selectedLogger != nullPerson && log.getLogger() != selectedLogger) {
-                    data.remove(log);
-                }
-            }
-
-            if (selectedPartner != null && selectedPartner != nullPerson) {
-                if (!(log instanceof PairLog)) {
-                    data.remove(log);
-                }
-                else if (log instanceof PairLog && ((PairLog)log).getPartner() != null) {
-                    if (selectedPartner == log.getLogger() && ((PairLog) log).getPartner() != selectedPartner) {
-                        data.remove(log);
-                    }
-                }
-            }
-        }
-    }
-
-
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return null;
     }
 }

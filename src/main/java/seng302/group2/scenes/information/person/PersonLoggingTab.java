@@ -38,6 +38,7 @@ public class PersonLoggingTab extends SearchableTab {
     LocalDate startDate;
     LocalDate endDate;
     ObservableList<Log> data = observableArrayList();
+    Person currentPerson;
 
     /**
      * Constructor for the Person Logging Tab
@@ -45,7 +46,36 @@ public class PersonLoggingTab extends SearchableTab {
      * @param currentPerson The currently selected Person
      */
     public PersonLoggingTab(Person currentPerson) {
+        this.currentPerson = currentPerson;
+        construct();
 
+
+    }
+
+
+    private void updateFilteredLogs(Person currentPerson) {
+        data.clear();
+        for (Log log : currentPerson.getLogs()) {
+            if (log.getLocalStartDate().isAfter(startDate.minusDays(1))
+                    && log.getLocalStartDate().isBefore(endDate.plusDays(1))) {
+                data.add(log);
+            }
+        }
+
+    }
+
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         this.setText("Logging Effort");
         Pane basicInfoPane = new VBox(10);
 
@@ -150,58 +180,58 @@ public class PersonLoggingTab extends SearchableTab {
         taskTable.getColumns().setAll(columns);
 
         final Callback<DatePicker, DateCell> endDateCellFactory =
-            new Callback<DatePicker, DateCell>() {
-                @Override
-                public DateCell call(final DatePicker datePicker) {
-                    return new DateCell() {
-                        @Override
-                        public void updateItem(LocalDate item, boolean empty) {
-                            super.updateItem(item, empty);
-                            if (startDatePicker.getValue() != null && (item.isBefore(startDatePicker.getValue()))) {
-                                setDisable(true);
-                                setStyle("-fx-background-color: #ffc0cb;");
+                new Callback<DatePicker, DateCell>() {
+                    @Override
+                    public DateCell call(final DatePicker datePicker) {
+                        return new DateCell() {
+                            @Override
+                            public void updateItem(LocalDate item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (startDatePicker.getValue() != null && (item.isBefore(startDatePicker.getValue()))) {
+                                    setDisable(true);
+                                    setStyle("-fx-background-color: #ffc0cb;");
+                                }
                             }
-                        }
-                    };
-                }
-            };
+                        };
+                    }
+                };
         endDatePicker.getDatePicker().setDayCellFactory(endDateCellFactory);
 
         // Listener to disable columns being movable
         taskTable.getColumns().addListener(new ListChangeListener() {
-                public boolean suspended;
+            public boolean suspended;
 
-                @Override
-                public void onChanged(ListChangeListener.Change change) {
-                    change.next();
-                    if (change.wasReplaced() && !suspended) {
-                        this.suspended = true;
-                        taskTable.getColumns().setAll(columns);
-                        this.suspended = false;
-                    }
+            @Override
+            public void onChanged(ListChangeListener.Change change) {
+                change.next();
+                if (change.wasReplaced() && !suspended) {
+                    this.suspended = true;
+                    taskTable.getColumns().setAll(columns);
+                    this.suspended = false;
                 }
-            });
+            }
+        });
 
         //TODO restrict date selection so can't pick startdate past end date and visa-versa
         startDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
-                @Override
-                public void changed(ObservableValue<? extends LocalDate> observable,
-                                    LocalDate oldValue, LocalDate newValue) {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable,
+                                LocalDate oldValue, LocalDate newValue) {
 
-                    if (newValue != null && endDatePicker.getValue() != null
-                            && newValue.isAfter(endDatePicker.getValue())) {
-                        ValidationStyle.borderGlowRed(endDatePicker.getDatePicker());
-                        ValidationStyle.showMessage("The end date cannot be before the start date!",
-                                endDatePicker.getDatePicker());
-                        endDatePicker.setTooltip(new seng302.group2.scenes.control.Tooltip("The end date cannot be "
-                                + "before the start date!"));
-                    }
-
-                    //TODO Actually restrict date usage
-                    startDate = newValue;
-                    updateFilteredLogs(currentPerson);
+                if (newValue != null && endDatePicker.getValue() != null
+                        && newValue.isAfter(endDatePicker.getValue())) {
+                    ValidationStyle.borderGlowRed(endDatePicker.getDatePicker());
+                    ValidationStyle.showMessage("The end date cannot be before the start date!",
+                            endDatePicker.getDatePicker());
+                    endDatePicker.setTooltip(new seng302.group2.scenes.control.Tooltip("The end date cannot be "
+                            + "before the start date!"));
                 }
-            });
+
+                //TODO Actually restrict date usage
+                startDate = newValue;
+                updateFilteredLogs(currentPerson);
+            }
+        });
 
         endDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
             @Override
@@ -237,29 +267,6 @@ public class PersonLoggingTab extends SearchableTab {
                 endDatePicker,
                 taskTable
         );
-
-    }
-
-
-    private void updateFilteredLogs(Person currentPerson) {
-        data.clear();
-        for (Log log : currentPerson.getLogs()) {
-            if (log.getLocalStartDate().isAfter(startDate.minusDays(1))
-                    && log.getLocalStartDate().isBefore(endDate.plusDays(1))) {
-                data.add(log);
-            }
-        }
-
-    }
-
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 
     /**

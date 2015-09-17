@@ -34,12 +34,87 @@ public class TeamInfoTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
 
+    Team currentTeam;
+
     /**
      * Constructor for team basic information tab
      *
      * @param currentTeam currently selected team
      */
     public TeamInfoTab(Team currentTeam) {
+        this.currentTeam = currentTeam;
+        construct();
+    }
+
+
+    /**
+    * @param currentTeam It is the team to be converted.
+    * @return returns a List of the People converted to a List of their Shortnames
+    */
+    public static ObservableList<String> personRoleToString(ObservableList<Person> currentTeam) {
+        ObservableList<String> currentStringTeam = observableArrayList();
+
+        for (Person person : currentTeam) {
+            if (person.getRole() != null) {
+                if (person.getRole().toString().equals("Product Owner")) {
+                    currentStringTeam.add(person.toString() + " (" + person.getRole() + ")");
+                }
+                else if (person.getRole().toString().equals("Scrum Master")) {
+                    currentStringTeam.add(person.toString() + " (" + person.getRole() + ")");
+                }
+                else if (person.getRole().toString().equals("Development Team Member")) {
+                    currentStringTeam.add(person.toString() + " (" + person.getRole() + ")");
+                }
+            }
+            else {
+                currentStringTeam.add(person.toString());
+            }
+        }
+
+        return currentStringTeam;
+    }
+
+
+    /**
+    * Sorts a list of people based on their roles on a team, PO first, SM second, Dev third
+    * then lastly goes people without a role.
+    * @param currentTeam The team to sort by.
+    * @return Returns sorted list.
+    */
+    public static ObservableList<Person> sortListView(ObservableList<Person> currentTeam) {
+        ObservableList<Person> teamList = observableArrayList();
+
+        for (Person person : currentTeam) {
+            if (person.getRole() != null) {
+                if (person.getRole().toString().equals("Product Owner")) {
+                    teamList.add(person);
+                }
+                else if (person.getRole().toString().equals("Scrum Master")) {
+                    teamList.add(person);
+                }
+                else if (person.getRole().toString().equals("Development Team Member")) {
+                    teamList.add(person);
+                }
+            }
+            else {
+                teamList.add(person);
+            }
+        }
+
+        return teamList;
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Basic Information");
 
@@ -117,73 +192,6 @@ public class TeamInfoTab extends SearchableTab {
 
         basicInfoPane.getChildren().addAll(listViewLabel, teamsPeopleBox, btnEdit);
         Collections.addAll(searchControls,listViewLabel, teamsPeopleBox);
-    }
-
-
-    /**
-    * @param currentTeam It is the team to be converted.
-    * @return returns a List of the People converted to a List of their Shortnames
-    */
-    public static ObservableList<String> personRoleToString(ObservableList<Person> currentTeam) {
-        ObservableList<String> currentStringTeam = observableArrayList();
-
-        for (Person person : currentTeam) {
-            if (person.getRole() != null) {
-                if (person.getRole().toString().equals("Product Owner")) {
-                    currentStringTeam.add(person.toString() + " (" + person.getRole() + ")");
-                }
-                else if (person.getRole().toString().equals("Scrum Master")) {
-                    currentStringTeam.add(person.toString() + " (" + person.getRole() + ")");
-                }
-                else if (person.getRole().toString().equals("Development Team Member")) {
-                    currentStringTeam.add(person.toString() + " (" + person.getRole() + ")");
-                }
-            }
-            else {
-                currentStringTeam.add(person.toString());
-            }
-        }
-
-        return currentStringTeam;
-    }
-
-
-    /**
-    * Sorts a list of people based on their roles on a team, PO first, SM second, Dev third
-    * then lastly goes people without a role.
-    * @param currentTeam The team to sort by.
-    * @return Returns sorted list.
-    */
-    public static ObservableList<Person> sortListView(ObservableList<Person> currentTeam) {
-        ObservableList<Person> teamList = observableArrayList();
-
-        for (Person person : currentTeam) {
-            if (person.getRole() != null) {
-                if (person.getRole().toString().equals("Product Owner")) {
-                    teamList.add(person);
-                }
-                else if (person.getRole().toString().equals("Scrum Master")) {
-                    teamList.add(person);
-                }
-                else if (person.getRole().toString().equals("Development Team Member")) {
-                    teamList.add(person);
-                }
-            }
-            else {
-                teamList.add(person);
-            }
-        }
-
-        return teamList;
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 
     /**

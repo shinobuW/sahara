@@ -47,64 +47,8 @@ public class SprintTaskStatusTab extends SearchableTab {
      *@param currentSprint the currently selected sprint
      */
     public SprintTaskStatusTab(Sprint currentSprint) {
-        sprint = currentSprint;
-
-        // Tab settings
-        this.setText("Task Visualisation");
-        basicInfoPane = new VBox(10);
-        basicInfoPane.setBorder(null);
-        basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
-        ScrollPane wrapper = new ScrollPane(basicInfoPane);
-        this.setContent(wrapper);
-
-
-        SearchableText title = new SearchableTitle("Task Visualisation", searchControls);
-        SearchableText groupBy = new SearchableText("Group By: ", searchControls);
-        groupBy.setStyle("-fx-font-weight: bold");
-
-        statusToggle.getRadioButton().setToggleGroup(group);
-        statusToggle.getRadioButton().setSelected(true);
-        storyToggle.getRadioButton().setToggleGroup(group);
-
-        group.selectedToggleProperty().addListener(event -> {
-                createVisualisation();
-            });
-
-        HBox buttonBox = new HBox(10);
-        buttonBox.getChildren().addAll(groupBy, statusToggle, storyToggle);
-
-        filterBox = new CustomComboBox<>("Filter by: ", searchControls);
-        filterBox.getComboBox().getSelectionModel().selectedItemProperty().addListener(event -> {
-                createVisualisation();
-            });
-
-
-        filterBox.addToComboBox(unassignedFilter);
-        filterBox.addToComboBox(uncompletedFilter);
-        filterBox.addToComboBox(allFilter);
-
-        filterBox.setValue(unassignedFilter);
-
-
-
-        Platform.runLater(() -> {
-                basicInfoPane.getChildren().addAll(
-                        title,
-                        buttonBox,
-                        filterBox
-                );
-
-                createVisualisation();
-
-                Collections.addAll(searchControls,
-                        title,
-                        statusToggle,
-                        storyToggle,
-                        filterBox
-                );
-            });
-
-
+        this.sprint = currentSprint;
+        construct();
     }
 
 
@@ -243,6 +187,65 @@ public class SprintTaskStatusTab extends SearchableTab {
     @Override
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;
+    }
+
+    @Override
+    public void construct() {
+
+        // Tab settings
+        this.setText("Task Visualisation");
+        basicInfoPane = new VBox(10);
+        basicInfoPane.setBorder(null);
+        basicInfoPane.setPadding(new Insets(25, 25, 25, 25));
+        ScrollPane wrapper = new ScrollPane(basicInfoPane);
+        this.setContent(wrapper);
+
+
+        SearchableText title = new SearchableTitle("Task Visualisation", searchControls);
+        SearchableText groupBy = new SearchableText("Group By: ", searchControls);
+        groupBy.setStyle("-fx-font-weight: bold");
+
+        statusToggle.getRadioButton().setToggleGroup(group);
+        statusToggle.getRadioButton().setSelected(true);
+        storyToggle.getRadioButton().setToggleGroup(group);
+
+        group.selectedToggleProperty().addListener(event -> {
+            createVisualisation();
+        });
+
+        HBox buttonBox = new HBox(10);
+        buttonBox.getChildren().addAll(groupBy, statusToggle, storyToggle);
+
+        filterBox = new CustomComboBox<>("Filter by: ", searchControls);
+        filterBox.getComboBox().getSelectionModel().selectedItemProperty().addListener(event -> {
+            createVisualisation();
+        });
+
+
+        filterBox.addToComboBox(unassignedFilter);
+        filterBox.addToComboBox(uncompletedFilter);
+        filterBox.addToComboBox(allFilter);
+
+        filterBox.setValue(unassignedFilter);
+
+
+
+        Platform.runLater(() -> {
+            basicInfoPane.getChildren().addAll(
+                    title,
+                    buttonBox,
+                    filterBox
+            );
+
+            createVisualisation();
+
+            Collections.addAll(searchControls,
+                    title,
+                    statusToggle,
+                    storyToggle,
+                    filterBox
+            );
+        });
     }
 
 }

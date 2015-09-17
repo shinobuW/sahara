@@ -41,7 +41,12 @@ public class SprintScene extends TrackedTabPane {
         this.currentSprint = currentSprint;
 
         //Define and add the tabs
-        updateAllTabs();
+        informationTab = new SprintInfoTab(currentSprint);
+        burndownTab = new SprintBurndownTab(currentSprint);
+        scrumboardTab = new ScrumboardTab(currentSprint);
+        taskStatusTab = new SprintTaskStatusTab(currentSprint);
+
+
 
         Collections.addAll(searchableTabs, informationTab, scrumboardTab, burndownTab, taskStatusTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
@@ -60,7 +65,7 @@ public class SprintScene extends TrackedTabPane {
         this.editScene = editScene;
 
         //Define and add the tabs
-        updateAllTabs();
+        editTab = new SprintEditTab(currentSprint);
 
         Collections.addAll(searchableTabs, editTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
@@ -76,42 +81,4 @@ public class SprintScene extends TrackedTabPane {
         return searchableTabs;
     }
 
-
-    @Override
-    public void updateTabs() {
-        Tab selectedTab = this.getSelectionModel().getSelectedItem();
-
-        if (editScene) {
-            if (editTab != selectedTab) {
-                editTab = new SprintEditTab(currentSprint);
-            }
-        }
-        else {
-            if (informationTab != selectedTab) {
-                informationTab = new SprintInfoTab(currentSprint);
-            }
-            if (burndownTab != selectedTab) {
-                burndownTab = new SprintBurndownTab(currentSprint);
-            }
-            if (scrumboardTab != selectedTab) {
-                scrumboardTab = new ScrumboardTab(currentSprint);
-            }
-            if (taskStatusTab != selectedTab) {
-                taskStatusTab = new SprintTaskStatusTab(currentSprint);
-            }
-        }
-    }
-
-    @Override
-    public void updateAllTabs() {
-        if (editScene) {
-            editTab = new SprintEditTab(currentSprint);
-        }
-        else {
-            informationTab = new SprintInfoTab(currentSprint);
-            burndownTab = new SprintBurndownTab(currentSprint);
-            scrumboardTab = new ScrumboardTab(currentSprint);
-            taskStatusTab = new SprintTaskStatusTab(currentSprint);
-        }
-    }
 }

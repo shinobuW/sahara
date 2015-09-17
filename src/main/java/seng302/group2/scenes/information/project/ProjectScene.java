@@ -39,7 +39,11 @@ public class ProjectScene extends TrackedTabPane {
         this.currentProject = currentProject;
 
         // Define and add the tabs
-        updateAllTabs();
+        informationTab = new ProjectInfoTab(currentProject);
+        allocation = new ProjectHistoryTab(currentProject);
+        projectLogs = new ProjectLoggingTab(currentProject);
+
+        //updateAllTabs();
 
         Collections.addAll(searchableTabs, informationTab, allocation, projectLogs);
 
@@ -58,7 +62,8 @@ public class ProjectScene extends TrackedTabPane {
         this.editScene = editScene;
 
         // Define and add the tabs
-        updateAllTabs();
+        editTab = new ProjectEditTab(currentProject);
+        //updateAllTabs();
 
         Collections.addAll(searchableTabs, editTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
@@ -73,38 +78,4 @@ public class ProjectScene extends TrackedTabPane {
         return searchableTabs;
     }
 
-    @Override
-    public void updateTabs() {
-        Tab selectedTab = this.getSelectionModel().getSelectedItem();
-
-        if (editScene) {
-            if (editTab != selectedTab) {
-                editTab = new ProjectEditTab(currentProject);
-            }
-        }
-        else {
-            if (informationTab != selectedTab) {
-                informationTab = new ProjectInfoTab(currentProject);
-            }
-            if (allocation != selectedTab) {
-                allocation = new ProjectHistoryTab(currentProject);
-            }
-            if (projectLogs != selectedTab) {
-                projectLogs = new ProjectLoggingTab(currentProject);
-            }
-        }
-
-    }
-
-    @Override
-    public void updateAllTabs() {
-        if (editScene) {
-            editTab = new ProjectEditTab(currentProject);
-        }
-        else {
-            informationTab = new ProjectInfoTab(currentProject);
-            allocation = new ProjectHistoryTab(currentProject);
-            projectLogs = new ProjectLoggingTab(currentProject);
-        }
-    }
 }

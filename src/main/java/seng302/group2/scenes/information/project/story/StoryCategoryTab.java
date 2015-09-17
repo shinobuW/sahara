@@ -27,6 +27,7 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
  */
 public class StoryCategoryTab extends SearchableTab {
 
+    StoryCategory selectedCategory;
     List<SearchableControl> searchControls = new ArrayList<>();
 
     /**
@@ -34,6 +35,21 @@ public class StoryCategoryTab extends SearchableTab {
      * @param selectedCategory The current selected category
      */
     public StoryCategoryTab(StoryCategory selectedCategory) {
+        this.selectedCategory = selectedCategory;
+        this.construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Basic Information");
         Pane categoryPane = new VBox(10);
@@ -60,23 +76,23 @@ public class StoryCategoryTab extends SearchableTab {
 
         // Events
         btnView.setOnAction((event) -> {
-                if (storyBox.getSelectionModel().getSelectedItem() != null) {
-                    App.mainPane.selectItem((SaharaItem)
-                            storyBox.getSelectionModel().getSelectedItem());
-                }
-            });
+            if (storyBox.getSelectionModel().getSelectedItem() != null) {
+                App.mainPane.selectItem((SaharaItem)
+                        storyBox.getSelectionModel().getSelectedItem());
+            }
+        });
 
 
         btnDelete.setOnAction((event) -> {
-                if (storyBox.getSelectionModel().getSelectedItem() != null) {
-                    showDeleteDialog((SaharaItem) storyBox
-                            .getSelectionModel().getSelectedItem());
-                }
-            });
+            if (storyBox.getSelectionModel().getSelectedItem() != null) {
+                showDeleteDialog((SaharaItem) storyBox
+                        .getSelectionModel().getSelectedItem());
+            }
+        });
 
         btnCreate.setOnAction((event) -> {
-                new CreateStoryDialog(selectedCategory.getProject());
-            });
+            new CreateStoryDialog(selectedCategory.getProject());
+        });
 
         // Add items to pane & search collection
         categoryPane.getChildren().addAll(
@@ -89,14 +105,5 @@ public class StoryCategoryTab extends SearchableTab {
                 title,
                 storyBox
         );
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }

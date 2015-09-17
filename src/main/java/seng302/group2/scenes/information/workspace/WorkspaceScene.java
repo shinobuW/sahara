@@ -33,6 +33,7 @@ public class WorkspaceScene extends TrackedTabPane {
         this.currentWorkspace = currentWorkspace;
 
         // Define and add the tabs
+        informationTab = new WorkspaceInfoTab(currentWorkspace);
         updateAllTabs();
 
         Collections.addAll(getSearchableTabs(), informationTab);
@@ -52,35 +53,12 @@ public class WorkspaceScene extends TrackedTabPane {
         this.currentWorkspace = currentWorkspace;
 
         // Define and add the tabs
+        informationTab = new WorkspaceInfoTab(currentWorkspace);
+        editTab = new WorkspaceEditTab(currentWorkspace);
         updateAllTabs();
         Collections.addAll(getSearchableTabs(), editTab);
 
         this.getTabs().addAll(editTab);  // Add the tabs to the pane
     }
 
-    @Override
-    public void updateTabs() {
-        Tab selectedTab = this.getSelectionModel().getSelectedItem();
-
-        if (editScene) {
-            if (editTab != selectedTab) {
-                editTab = new WorkspaceEditTab(currentWorkspace);
-            }
-        }
-        else {
-            if (informationTab != selectedTab) {
-                informationTab = new WorkspaceInfoTab(currentWorkspace);
-            }
-        }
-    }
-
-    @Override
-    public void updateAllTabs() {
-        if (editScene) {
-            editTab = new WorkspaceEditTab(currentWorkspace);
-        }
-        else {
-            informationTab = new WorkspaceInfoTab(currentWorkspace);
-        }
-    }
 }

@@ -32,6 +32,7 @@ public class BacklogInfoTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
     static Boolean highlightMode = Boolean.FALSE;
+    Backlog currentBacklog;
 
     /**
      * Constructor for the Backlog Info tab
@@ -39,6 +40,70 @@ public class BacklogInfoTab extends SearchableTab {
      * @param currentBacklog The currently selected backlog
      */
     public BacklogInfoTab(Backlog currentBacklog) {
+        this.currentBacklog = currentBacklog;
+        construct();
+
+    }
+
+    /**
+     * A class used to show the progress of a story.
+     */
+    class ProgressCell extends TableCell<Object, String> {
+        public Node node;
+        public Backlog backlog;
+
+        /**
+         * Constructor
+         * @param backlog The backlog of the story.
+         */
+        private ProgressCell(Backlog backlog) {
+            this.backlog = backlog;
+        }
+
+        /**
+         * Updates the item
+         *
+         * @param item the item to update to
+         * @param empty if the cell is empty
+         */
+        @Override
+        public void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty || item == null) {
+                setText(null);
+                setGraphic(null);
+            }
+            else {
+                this.node = new HBox();
+                ((HBox) this.node).setPrefSize(220,18);
+                ((HBox) this.node).getChildren().add(new StoryCompletenessBar(getStory(), 220, 18));
+                setGraphic(node);
+            }
+        }
+
+        public Story getStory() {
+            Story result = null;
+            for (Story story : this.backlog.getStories()) {
+                if (story.getShortName().equals(getItem())) {
+                    result = story;
+                }
+            }
+            return result;
+        }
+
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Basic Information");
         Pane basicInfoPane = new VBox(10);
@@ -93,31 +158,31 @@ public class BacklogInfoTab extends SearchableTab {
         storyTable.getColumns().addAll(priorityCol, storyCol, readyCol, progressCol);
 
         storyTable.setRowFactory(tr -> new SearchableTableRow<Story>(storyTable) {
-                /**
-                 * An Overidden updateItem method to control the highlighting of cells in the backlog info tab.
-                 *
-                 * @param item  The item to be updated
-                 * @param empty Whether the cell is empty or not
-                 */
-                @Override
-                protected void updateItem(Story item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (item == null) {
-                        return;
-                    }
-                    item.setHighlightColour();
-                    if (parentTable.matchingItems.contains(item)) {
-                        setStyle("-fx-background-color: " + SearchableControl.highlightColourString + "; ");
-                    }
-                    else if (highlightMode && item.getColour() != "transparent") {
-                        setStyle("-fx-background-color: " + item.getColour() + ";");
-                    }
-                    else {
-                        setStyle(null);
-                    }
+            /**
+             * An Overidden updateItem method to control the highlighting of cells in the backlog info tab.
+             *
+             * @param item  The item to be updated
+             * @param empty Whether the cell is empty or not
+             */
+            @Override
+            protected void updateItem(Story item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null) {
+                    return;
                 }
+                item.setHighlightColour();
+                if (parentTable.matchingItems.contains(item)) {
+                    setStyle("-fx-background-color: " + SearchableControl.highlightColourString + "; ");
+                }
+                else if (highlightMode && item.getColour() != "transparent") {
+                    setStyle("-fx-background-color: " + item.getColour() + ";");
+                }
+                else {
+                    setStyle(null);
+                }
+            }
 
-            });
+        });
 
         // Create controls
         SearchableText title = new SearchableTitle(currentBacklog.getLongName());
@@ -179,37 +244,37 @@ public class BacklogInfoTab extends SearchableTab {
         btnEdit.setOnAction((event) -> currentBacklog.switchToInfoScene(true));
 
         btnView.setOnAction((event) -> {
-                if (storyTable.getSelectionModel().getSelectedItem() != null) {
-                    App.mainPane.selectItem(storyTable.getSelectionModel().getSelectedItem());
-                }
-            });
+            if (storyTable.getSelectionModel().getSelectedItem() != null) {
+                App.mainPane.selectItem(storyTable.getSelectionModel().getSelectedItem());
+            }
+        });
 
         btnHighlight.setOnAction((event) ->
-            {
-                if (highlightMode) {
-                    //basicInfoPane.getChildren().remove(keyBox);
-                    tableKey.getChildren().remove(keyBox);
-                }
-                else {
-                    //basicInfoPane.getChildren().add(keyBox);
-                    tableKey.getChildren().add(keyBox);
-                }
+        {
+            if (highlightMode) {
+                //basicInfoPane.getChildren().remove(keyBox);
+                tableKey.getChildren().remove(keyBox);
+            }
+            else {
+                //basicInfoPane.getChildren().add(keyBox);
+                tableKey.getChildren().add(keyBox);
+            }
 
-                highlightMode = !highlightMode;
+            highlightMode = !highlightMode;
 
-                for (int i = 0; i < storyTable.getColumns().size(); i++) {
-                    ((TableColumn)(storyTable.getColumns().get(i))).setVisible(false);
-                    ((TableColumn)(storyTable.getColumns().get(i))).setVisible(true);
-                }
-                storyCol.prefWidthProperty().bind(storyTable.widthProperty()
-                        .subtract(2).divide(100).multiply(33));
-                priorityCol.prefWidthProperty().bind(storyTable.widthProperty()
-                        .subtract(2).divide(100).multiply(13));
-                readyCol.prefWidthProperty().bind(storyTable.widthProperty()
-                        .subtract(2).divide(100).multiply(16));
-                progressCol.prefWidthProperty().bind(storyTable.widthProperty()
-                        .subtract(2).divide(100).multiply(38));
-            });
+            for (int i = 0; i < storyTable.getColumns().size(); i++) {
+                ((TableColumn)(storyTable.getColumns().get(i))).setVisible(false);
+                ((TableColumn)(storyTable.getColumns().get(i))).setVisible(true);
+            }
+            storyCol.prefWidthProperty().bind(storyTable.widthProperty()
+                    .subtract(2).divide(100).multiply(33));
+            priorityCol.prefWidthProperty().bind(storyTable.widthProperty()
+                    .subtract(2).divide(100).multiply(13));
+            readyCol.prefWidthProperty().bind(storyTable.widthProperty()
+                    .subtract(2).divide(100).multiply(16));
+            progressCol.prefWidthProperty().bind(storyTable.widthProperty()
+                    .subtract(2).divide(100).multiply(38));
+        });
 
 
 
@@ -243,63 +308,6 @@ public class BacklogInfoTab extends SearchableTab {
                 redKeyLabel,
                 tablePlaceholder
         );
-    }
-
-    /**
-     * A class used to show the progress of a story.
-     */
-    class ProgressCell extends TableCell<Object, String> {
-        public Node node;
-        public Backlog backlog;
-
-        /**
-         * Constructor
-         * @param backlog The backlog of the story.
-         */
-        private ProgressCell(Backlog backlog) {
-            this.backlog = backlog;
-        }
-
-        /**
-         * Updates the item
-         *
-         * @param item the item to update to
-         * @param empty if the cell is empty
-         */
-        @Override
-        public void updateItem(String item, boolean empty) {
-            super.updateItem(item, empty);
-            if (empty || item == null) {
-                setText(null);
-                setGraphic(null);
-            }
-            else {
-                this.node = new HBox();
-                ((HBox) this.node).setPrefSize(220,18);
-                ((HBox) this.node).getChildren().add(new StoryCompletenessBar(getStory(), 220, 18));
-                setGraphic(node);
-            }
-        }
-
-        public Story getStory() {
-            Story result = null;
-            for (Story story : this.backlog.getStories()) {
-                if (story.getShortName().equals(getItem())) {
-                    result = story;
-                }
-            }
-            return result;
-        }
-
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 
     /**

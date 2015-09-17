@@ -31,6 +31,7 @@ import java.util.List;
 public class ProjectEditTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+    Project currentProject;
 
     /**
      * Gets the workspace edit information scene.
@@ -38,6 +39,21 @@ public class ProjectEditTab extends SearchableTab {
      * @param currentProject The project to display the editable information of
      */
     public ProjectEditTab(Project currentProject) {
+        this.currentProject = currentProject;
+        construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Edit Project");
         Pane editPane = new VBox(10);
@@ -69,42 +85,42 @@ public class ProjectEditTab extends SearchableTab {
 
         // Events
         btnDone.setOnAction((event) -> {
-                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                        currentProject.getShortName());
-                boolean longNameUnchanged = longNameCustomField.getText().equals(
-                        currentProject.getLongName());
-                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                        currentProject.getDescription());
+            boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                    currentProject.getShortName());
+            boolean longNameUnchanged = longNameCustomField.getText().equals(
+                    currentProject.getLongName());
+            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                    currentProject.getDescription());
 
-                // If no fields have been changed
-                if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
-                    currentProject.switchToInfoScene();
-                    return;
-                }
+            // If no fields have been changed
+            if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
+                currentProject.switchToInfoScene();
+                return;
+            }
 
-                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                        currentProject.getShortName());
-                boolean correctLongName = NameValidator.validateName(longNameCustomField);
+            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                    currentProject.getShortName());
+            boolean correctLongName = NameValidator.validateName(longNameCustomField);
 
-                if (correctShortName && correctLongName) {
-                    ArrayList<Tag> tags = new ArrayList<>();
-                    currentProject.edit(shortNameCustomField.getText(),
-                            longNameCustomField.getText(), descriptionTextArea.getText(),
-                            FXCollections.observableArrayList(), tags
-                    );
+            if (correctShortName && correctLongName) {
+                ArrayList<Tag> tags = new ArrayList<>();
+                currentProject.edit(shortNameCustomField.getText(),
+                        longNameCustomField.getText(), descriptionTextArea.getText(),
+                        FXCollections.observableArrayList(), tags
+                );
 
-                    Collections.sort(Global.currentWorkspace.getProjects());
-                    currentProject.switchToInfoScene();
-                    App.mainPane.refreshTree();
-                }
-                else {
-                    event.consume();
-                }
-            });
+                Collections.sort(Global.currentWorkspace.getProjects());
+                currentProject.switchToInfoScene();
+                App.mainPane.refreshTree();
+            }
+            else {
+                event.consume();
+            }
+        });
 
         btnCancel.setOnAction((event) -> {
-                currentProject.switchToInfoScene();
-            });
+            currentProject.switchToInfoScene();
+        });
 
         // Add items to pane & search collection
         editPane.getChildren().addAll(
@@ -119,16 +135,6 @@ public class ProjectEditTab extends SearchableTab {
                 longNameCustomField,
                 descriptionTextArea
         );
-
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }
 

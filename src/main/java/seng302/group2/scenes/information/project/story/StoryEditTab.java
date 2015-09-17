@@ -36,6 +36,7 @@ import java.util.List;
 public class StoryEditTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+    Story currentStory;
 
     /**
      * Constructor for the StoryEditTab class. This constructor creates a JavaFX ScrollPane
@@ -44,6 +45,22 @@ public class StoryEditTab extends SearchableTab {
      * @param currentStory The story being edited
      */
     public StoryEditTab(Story currentStory) {
+        this.currentStory = currentStory;
+        construct();
+    }
+
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Edit Story");
         Pane editPane = new VBox(10);
@@ -114,17 +131,17 @@ public class StoryEditTab extends SearchableTab {
         }
 
         estimateComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
-                if (currentStory.getBacklog() == null
-                        || (newValue != null && newValue.equals(EstimationScalesDictionary.getScaleValue(
-                        EstimationScalesDictionary.DefaultValues.NONE)))
-                        || currentStory.getAcceptanceCriteria().isEmpty()) {
-                    readyStateCheck.getCheckBox().setSelected(false);
-                    readyStateCheck.getCheckBox().setDisable(true);
-                }
-                else {
-                    readyStateCheck.getCheckBox().setDisable(false);
-                }
-            });
+            if (currentStory.getBacklog() == null
+                    || (newValue != null && newValue.equals(EstimationScalesDictionary.getScaleValue(
+                    EstimationScalesDictionary.DefaultValues.NONE)))
+                    || currentStory.getAcceptanceCriteria().isEmpty()) {
+                readyStateCheck.getCheckBox().setSelected(false);
+                readyStateCheck.getCheckBox().setDisable(true);
+            }
+            else {
+                readyStateCheck.getCheckBox().setDisable(false);
+            }
+        });
 
 
         HBox.setHgrow(estimateHBox, Priority.ALWAYS);
@@ -136,7 +153,7 @@ public class StoryEditTab extends SearchableTab {
                     EstimationScalesDictionary.DefaultValues.NONE));
             Tooltip tool = new seng302.group2.scenes.control.Tooltip(
                     "A Story must be assigned to a backlog and have at least one Acceptance "
-                    + "criteria before an estimate can be given.");
+                            + "criteria before an estimate can be given.");
             Tooltip.install(estimateHBox, tool);
             estimateComboBox.setTooltip(tool);
         }
@@ -197,92 +214,92 @@ public class StoryEditTab extends SearchableTab {
         }
 
         btnAssign.setOnAction((event) -> {
-                Story adding = availableStoryListView.getSelectionModel().getSelectedItem();
-                if (adding != null) {
-                    if (currentStory.checkAddCycle(adding)) {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Conflicting Dependencies");
-                        alert.setHeaderText("Unable to add '" + adding + "'");
-                        alert.setContentText(
-                                "Adding this story would create a cycle in " + currentStory + "'s dependencies");
+            Story adding = availableStoryListView.getSelectionModel().getSelectedItem();
+            if (adding != null) {
+                if (currentStory.checkAddCycle(adding)) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Conflicting Dependencies");
+                    alert.setHeaderText("Unable to add '" + adding + "'");
+                    alert.setContentText(
+                            "Adding this story would create a cycle in " + currentStory + "'s dependencies");
 
-                        alert.showAndWait();
-                    }
-                    else {
-                        dependentOnList.addAll(
-                                availableStoryListView.getSelectionModel().getSelectedItem());
-                        availableStoryList.removeAll(
-                                availableStoryListView.getSelectionModel().getSelectedItem());
-                    }
-                }
-            });
-
-        btnUnassign.setOnAction((event) -> {
-                availableStoryList.addAll(
-                        dependantStoriesListView.getSelectionModel().getSelectedItem());
-                dependentOnList.removeAll(
-                        dependantStoriesListView.getSelectionModel().getSelectedItem());
-
-            });
-
-        btnCancel.setOnAction((event) -> {
-                currentStory.switchToInfoScene();
-            });
-
-        btnDone.setOnAction((event) -> {
-                boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                        currentStory.getShortName());
-                boolean longNameUnchanged = longNameTextField.getText().equals(
-                        currentStory.getLongName());
-                boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                        currentStory.getDescription());
-                boolean priorityUnchanged = priorityNumberField.getText().equals(
-                        currentStory.getPriority().toString());
-                boolean readyUnchanged = readyStateCheck.getCheckBox().isSelected() == currentStory.getReady();
-                boolean estimateUnchanged = estimateComboBox.getValue().equals(currentStory.getEstimate());
-
-                boolean dependentChanged = true;
-                if (currentStory.getDependentOn().containsAll(dependentOnList)
-                        && dependentOnList.containsAll(currentStory.getDependentOn())) {
-                    dependentChanged = false;
-                }
-
-
-                if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged
-                        && priorityUnchanged && readyUnchanged && estimateUnchanged && !dependentChanged) {
-                    // No changes
-                    currentStory.switchToInfoScene();
-                    return;
-                }
-
-                boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                        currentStory.getShortName());
-                boolean correctPriority = PriorityFieldValidator.validatePriorityField(priorityNumberField,
-                        currentStory.getBacklog(), currentStory.getPriority());
-
-                if (correctShortName && correctPriority) {
-                    // Valid short name, make the edit
-                    ArrayList<Tag> tags = new ArrayList<>();
-
-                    currentStory.edit(shortNameCustomField.getText(),
-                            longNameTextField.getText(),
-                            descriptionTextArea.getText(),
-                            currentStory.getProject(),
-                            Integer.parseInt(priorityNumberField.getText()),
-                            currentStory.getBacklog(),
-                            estimateComboBox.getValue().toString(),
-                            readyStateCheck.getCheckBox().selectedProperty().get(),
-                            dependentOnList,
-                            tags
-                    );
-
-                    currentStory.switchToInfoScene();
-                    App.mainPane.refreshTree();
+                    alert.showAndWait();
                 }
                 else {
-                    event.consume();
+                    dependentOnList.addAll(
+                            availableStoryListView.getSelectionModel().getSelectedItem());
+                    availableStoryList.removeAll(
+                            availableStoryListView.getSelectionModel().getSelectedItem());
                 }
-            });
+            }
+        });
+
+        btnUnassign.setOnAction((event) -> {
+            availableStoryList.addAll(
+                    dependantStoriesListView.getSelectionModel().getSelectedItem());
+            dependentOnList.removeAll(
+                    dependantStoriesListView.getSelectionModel().getSelectedItem());
+
+        });
+
+        btnCancel.setOnAction((event) -> {
+            currentStory.switchToInfoScene();
+        });
+
+        btnDone.setOnAction((event) -> {
+            boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                    currentStory.getShortName());
+            boolean longNameUnchanged = longNameTextField.getText().equals(
+                    currentStory.getLongName());
+            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                    currentStory.getDescription());
+            boolean priorityUnchanged = priorityNumberField.getText().equals(
+                    currentStory.getPriority().toString());
+            boolean readyUnchanged = readyStateCheck.getCheckBox().isSelected() == currentStory.getReady();
+            boolean estimateUnchanged = estimateComboBox.getValue().equals(currentStory.getEstimate());
+
+            boolean dependentChanged = true;
+            if (currentStory.getDependentOn().containsAll(dependentOnList)
+                    && dependentOnList.containsAll(currentStory.getDependentOn())) {
+                dependentChanged = false;
+            }
+
+
+            if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged
+                    && priorityUnchanged && readyUnchanged && estimateUnchanged && !dependentChanged) {
+                // No changes
+                currentStory.switchToInfoScene();
+                return;
+            }
+
+            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                    currentStory.getShortName());
+            boolean correctPriority = PriorityFieldValidator.validatePriorityField(priorityNumberField,
+                    currentStory.getBacklog(), currentStory.getPriority());
+
+            if (correctShortName && correctPriority) {
+                // Valid short name, make the edit
+                ArrayList<Tag> tags = new ArrayList<>();
+
+                currentStory.edit(shortNameCustomField.getText(),
+                        longNameTextField.getText(),
+                        descriptionTextArea.getText(),
+                        currentStory.getProject(),
+                        Integer.parseInt(priorityNumberField.getText()),
+                        currentStory.getBacklog(),
+                        estimateComboBox.getValue().toString(),
+                        readyStateCheck.getCheckBox().selectedProperty().get(),
+                        dependentOnList,
+                        tags
+                );
+
+                currentStory.switchToInfoScene();
+                App.mainPane.refreshTree();
+            }
+            else {
+                event.consume();
+            }
+        });
 
         // Add items to pane & search collection
         editPane.getChildren().addAll(
@@ -307,15 +324,5 @@ public class StoryEditTab extends SearchableTab {
                 availableStoryLabel,
                 availableStoryListView
         );
-
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }

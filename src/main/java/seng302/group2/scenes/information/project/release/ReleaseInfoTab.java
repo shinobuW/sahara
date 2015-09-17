@@ -23,6 +23,8 @@ import java.util.List;
  * Created by jml168 on 11/05/15.
  */
 public class ReleaseInfoTab extends SearchableTab {
+
+    Release currentRelease;
     List<SearchableControl> searchControls = new ArrayList<>();
     
     /**
@@ -31,6 +33,22 @@ public class ReleaseInfoTab extends SearchableTab {
      * @param currentRelease The currently selected Release
      */
     public ReleaseInfoTab(Release currentRelease) {
+        this.currentRelease = currentRelease;
+        construct();
+
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Basic Information");
         Pane basicInfoPane = new VBox(10);
@@ -55,8 +73,8 @@ public class ReleaseInfoTab extends SearchableTab {
 
         // Events
         btnEdit.setOnAction((event) -> {
-                currentRelease.switchToInfoScene(true);
-            });
+            currentRelease.switchToInfoScene(true);
+        });
 
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
@@ -73,15 +91,6 @@ public class ReleaseInfoTab extends SearchableTab {
                 releaseDate,
                 projectLabel
         );
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 
     /**

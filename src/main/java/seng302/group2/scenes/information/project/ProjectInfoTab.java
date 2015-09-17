@@ -31,12 +31,29 @@ public class ProjectInfoTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
 
+    Project currentProject;
+
     /**
      * Constructor for Project info tab
      * 
      * @param currentProject currently selected project
      */
     public ProjectInfoTab(Project currentProject) {
+        this.currentProject = currentProject;
+        construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         // Tab settings
         this.setText("Basic Information");
         Pane basicInfoPane = new VBox(10);
@@ -53,11 +70,11 @@ public class ProjectInfoTab extends SearchableTab {
 
 
         this.setOnSelectionChanged(event -> {
-                currentTeams.clear();
-                for (Team team : currentProject.getCurrentTeams()) {
-                    currentTeams.add(team);
-                }
-            });
+            currentTeams.clear();
+            for (Team team : currentProject.getCurrentTeams()) {
+                currentTeams.add(team);
+            }
+        });
 
         CustomInfoLabel shortNameField = new CustomInfoLabel("Short Name: ", currentProject.getShortName());
         CustomInfoLabel description = new CustomInfoLabel("Project Description: ", currentProject.getDescription());
@@ -84,8 +101,8 @@ public class ProjectInfoTab extends SearchableTab {
 
         // Events
         btnEdit.setOnAction((event) -> {
-                currentProject.switchToInfoScene(true);
-            });
+            currentProject.switchToInfoScene(true);
+        });
 
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
@@ -106,15 +123,6 @@ public class ProjectInfoTab extends SearchableTab {
                 releasesLabel,
                 projectReleaseBox
         );
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 
     @Override

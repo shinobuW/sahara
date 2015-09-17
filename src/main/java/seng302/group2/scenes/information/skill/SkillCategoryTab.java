@@ -28,6 +28,7 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 public class SkillCategoryTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
+    Workspace currentWorkspace;
 
     /**
      * Constructor for SkillCategoryTab class.
@@ -35,6 +36,21 @@ public class SkillCategoryTab extends SearchableTab {
      */
     public SkillCategoryTab(Workspace currentWorkspace) {
         // Tab Settings
+        this.currentWorkspace = currentWorkspace;
+        construct();
+    }
+
+    /**
+     * Gets all the searchable controls on this tab.
+     * @return a collection of all the searchable controls on this tab.
+     */
+    @Override
+    public Collection<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public void construct() {
         this.setText("Basic Information");
         Pane categoryPane = new VBox(10);
         categoryPane.setBorder(null);
@@ -59,21 +75,21 @@ public class SkillCategoryTab extends SearchableTab {
 
         // Events
         btnView.setOnAction((event) -> {
-                if (skillBox.getSelectionModel().getSelectedItem() != null) {
-                    App.mainPane.selectItem(skillBox.getSelectionModel().getSelectedItem());
-                }
-            });
+            if (skillBox.getSelectionModel().getSelectedItem() != null) {
+                App.mainPane.selectItem(skillBox.getSelectionModel().getSelectedItem());
+            }
+        });
 
         btnDelete.setOnAction((event) -> {
-                if (skillBox.getSelectionModel().getSelectedItem() != null) {
-                    showDeleteDialog(skillBox.getSelectionModel().getSelectedItem());
-                }
-            });
+            if (skillBox.getSelectionModel().getSelectedItem() != null) {
+                showDeleteDialog(skillBox.getSelectionModel().getSelectedItem());
+            }
+        });
 
         btnCreate.setOnAction((event) -> {
-                javafx.scene.control.Dialog creationDialog = new CreateSkillDialog();
-                creationDialog.show();
-            });
+            javafx.scene.control.Dialog creationDialog = new CreateSkillDialog();
+            creationDialog.show();
+        });
 
         // Add items to pane & search collection
         categoryPane.getChildren().addAll(
@@ -87,15 +103,6 @@ public class SkillCategoryTab extends SearchableTab {
                 title,
                 skillBox
         );
-    }
-
-    /**
-     * Gets all the searchable controls on this tab.
-     * @return a collection of all the searchable controls on this tab.
-     */
-    @Override
-    public Collection<SearchableControl> getSearchableControls() {
-        return searchControls;
     }
 }
 
