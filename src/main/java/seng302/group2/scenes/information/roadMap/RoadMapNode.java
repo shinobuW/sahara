@@ -93,7 +93,6 @@ public class RoadMapNode extends VBox implements SearchableControl {
         HBox releaseChildren = new HBox();
         releaseContent.setMinHeight(35);
         SearchableText shortNameField = new SearchableText(release.getShortName());
-        SearchableText releaseDate = new SearchableText("   " + release.getDateString());
 
         releaseContent.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2) {
@@ -117,7 +116,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
             }
         }
         
-        releaseContent.getChildren().addAll(shortNameField, releaseDate);
+        releaseContent.getChildren().addAll(shortNameField);
         releaseContent.setAlignment(Pos.CENTER);
         releaseNode.getChildren().addAll(
                 releaseContent,
