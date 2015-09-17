@@ -1,7 +1,9 @@
 package seng302.group2.scenes.information.project.story;
 
+import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.information.project.story.task.TaskCategoryTab;
 import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
 
 import java.util.ArrayList;
@@ -16,6 +18,9 @@ import java.util.Collections;
  */
 public class StoryCategoryScene extends TrackedTabPane {
 
+    StoryCategory selectedCategory;
+    SearchableTab informationTab;
+
     /**
      * Constructor for the StoryCategoryScene class. Creates a tab
      * of StoryCategoryTab and displays it.
@@ -24,10 +29,25 @@ public class StoryCategoryScene extends TrackedTabPane {
     public StoryCategoryScene(StoryCategory selectedCategory) {
         super(ContentScene.RELEASE_CATEGORY, selectedCategory.getProject());
 
+        this.selectedCategory = selectedCategory;
+
         // Define and add the tabs
-        SearchableTab informationTab = new StoryCategoryTab(selectedCategory);
+        updateAllTabs();
         Collections.addAll(getSearchableTabs(), informationTab);
 
         this.getTabs().addAll(getSearchableTabs());  // Add the tabs to the pane
+    }
+
+    @Override
+    public void updateTabs() {
+        Tab selectedTab = this.getSelectionModel().getSelectedItem();
+        if (informationTab != selectedTab) {
+            informationTab = new StoryCategoryTab(selectedCategory);
+        }
+    }
+
+    @Override
+    public void updateAllTabs() {
+        informationTab = new StoryCategoryTab(selectedCategory);
     }
 }

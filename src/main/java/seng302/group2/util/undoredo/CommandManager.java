@@ -2,9 +2,12 @@ package seng302.group2.util.undoredo;
 
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.TrackedTabPane;
+import seng302.group2.scenes.control.search.SearchableScene;
 import seng302.group2.scenes.menu.MainToolbar;
 import seng302.group2.workspace.SaharaItem;
 
+import javax.sound.midi.Track;
 import java.util.Set;
 import java.util.Stack;
 
@@ -13,6 +16,7 @@ import java.util.Stack;
  * Created by Jordane on 7/05/2015.
  */
 public class CommandManager {
+
     private Stack<Command> undos = new Stack<>();
     private Stack<Command> redos = new Stack<>();
     private Command lastSaveCommand = null;
@@ -39,11 +43,14 @@ public class CommandManager {
         redos.clear();
         try {
             MainToolbar.undoRedoToggle();
+            if (App.mainPane.getContent() instanceof TrackedTabPane) {
+                System.out.println("updating tabs");
+                ((TrackedTabPane) App.mainPane.getContent()).updateTabs();
+            }
         }
-        catch (ExceptionInInitializerError | NoClassDefFoundError ex) {
+        catch (ExceptionInInitializerError | NoClassDefFoundError | NullPointerException ex) {
             return;
         }
-
     }
 
     /**
@@ -111,12 +118,20 @@ public class CommandManager {
                 Global.setCurrentWorkspaceChanged();
             }
 
+
+            //Refresh the tree, and update the other tabs in the scene
             refreshTree();
+
+
 
             try {
                 MainToolbar.undoRedoToggle();
+                if (App.mainPane.getContent() instanceof TrackedTabPane) {
+                    System.out.println("updating tabs");
+                    ((TrackedTabPane) App.mainPane.getContent()).updateTabs();
+                }
             }
-            catch (ExceptionInInitializerError | NoClassDefFoundError ex) {
+            catch (ExceptionInInitializerError | NoClassDefFoundError | NullPointerException ex) {
                 return;
             }
         }
@@ -177,11 +192,20 @@ public class CommandManager {
                 Global.setCurrentWorkspaceChanged();
             }
 
+
+            //Refresh the tree, and update the other tabs in the scene
             refreshTree();
+
+
+
             try {
                 MainToolbar.undoRedoToggle();
+                if (App.mainPane.getContent() instanceof TrackedTabPane) {
+                    System.out.println("updating tabs");
+                    ((TrackedTabPane) App.mainPane.getContent()).updateTabs();
+                }
             }
-            catch (ExceptionInInitializerError | NoClassDefFoundError ex) {
+            catch (ExceptionInInitializerError | NoClassDefFoundError | NullPointerException ex) {
                 return;
             }
         }

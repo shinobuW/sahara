@@ -1,7 +1,13 @@
 package seng302.group2.scenes.information.project.story;
 
+import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.information.project.ProjectEditTab;
+import seng302.group2.scenes.information.project.ProjectHistoryTab;
+import seng302.group2.scenes.information.project.ProjectInfoTab;
+import seng302.group2.scenes.information.project.ProjectLoggingTab;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
 
 import java.util.ArrayList;
@@ -16,6 +22,17 @@ public class StoryScene extends TrackedTabPane {
 
     Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
+    SearchableTab informationTab;
+    SearchableTab acceptanceCriteriaTab;
+    SearchableTab dependantTab;
+
+    SearchableTab taskTab;
+
+    SearchableTab editTab;
+
+    Story currentStory;
+    boolean editScene = false;
+
     /**
      * Constructor for the Story Scene. Creates instances of the StoryInfoTab, StoryAcTab and StoryDependenciedTab
      * and displays them.
@@ -25,15 +42,15 @@ public class StoryScene extends TrackedTabPane {
     public StoryScene(Story currentStory) {
         super(ContentScene.STORY, currentStory);
 
+        this.currentStory = currentStory;
+
+
         // Define and add the tabs
+        updateAllTabs();
+
         if (!currentStory.tasksWithoutStory) {
-            SearchableTab informationTab = new StoryInfoTab(currentStory);
-            SearchableTab acceptanceCriteriaTab = new StoryAcTab(currentStory);
-            SearchableTab dependantTab = new StoryDependenciesTab(currentStory);
             Collections.addAll(searchableTabs, informationTab, acceptanceCriteriaTab, dependantTab);
         }
-
-        SearchableTab taskTab = new StoryTaskTab(currentStory);
         searchableTabs.add(taskTab);
 
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
@@ -48,8 +65,11 @@ public class StoryScene extends TrackedTabPane {
     public StoryScene(Story currentStory, boolean editScene) {
         super(ContentScene.STORY_EDIT, currentStory);
 
+        this.currentStory = currentStory;
+        this.editScene = editScene;
+
         // Define and add the tabs
-        SearchableTab editTab = new StoryEditTab(currentStory);
+        updateAllTabs();
 
         Collections.addAll(searchableTabs, editTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
@@ -62,5 +82,47 @@ public class StoryScene extends TrackedTabPane {
     @Override
     public Collection<SearchableTab> getSearchableTabs() {
         return searchableTabs;
+    }
+
+
+    @Override
+    public void updateTabs() {
+        Tab selectedTab = this.getSelectionModel().getSelectedItem();
+
+        if (editScene) {
+            if (editTab != selectedTab) {
+                editTab = new StoryEditTab(currentStory);
+            }
+        }
+        else {
+            if (informationTab != selectedTab) {
+                informationTab = new StoryInfoTab(currentStory);
+            }
+            if (acceptanceCriteriaTab != selectedTab) {
+                acceptanceCriteriaTab = new StoryAcTab(currentStory);
+            }
+            if (dependantTab != selectedTab) {
+                dependantTab = new StoryDependenciesTab(currentStory);
+            }
+            if (taskTab != selectedTab) {
+                taskTab = new StoryTaskTab(currentStory);
+            }
+        }
+    }
+
+    @Override
+    public void updateAllTabs() {
+        if (editScene) {
+            editTab = new StoryEditTab(currentStory);
+        }
+        else {
+            if (!currentStory.tasksWithoutStory) {
+                informationTab = new StoryInfoTab(currentStory);
+                acceptanceCriteriaTab = new StoryAcTab(currentStory);
+                dependantTab = new StoryDependenciesTab(currentStory);
+            }
+
+            taskTab = new StoryTaskTab(currentStory);
+        }
     }
 }

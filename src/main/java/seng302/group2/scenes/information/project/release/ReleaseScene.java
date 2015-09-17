@@ -5,9 +5,13 @@
  */
 package seng302.group2.scenes.information.project.release;
 
+import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.information.roadMap.RoadMapEditTab;
+import seng302.group2.scenes.information.roadMap.RoadMapInfoTab;
 import seng302.group2.workspace.project.release.Release;
+import seng302.group2.workspace.roadMap.RoadMap;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,6 +25,12 @@ import java.util.Collections;
 public class ReleaseScene extends TrackedTabPane {
 
     Collection<SearchableTab> searchableTabs = new ArrayList<>();
+
+    Release currentRelease;
+    boolean editScene = false;
+
+    SearchableTab informationTab;
+    SearchableTab editTab;
     
     /**
      * Constructor for the Release Scene. Creates an instance of the ReleaseInfoTab class and displays it.
@@ -30,8 +40,11 @@ public class ReleaseScene extends TrackedTabPane {
     public ReleaseScene(Release currentRelease) {
         super(ContentScene.RELEASE, currentRelease.getProject());
 
+        this.currentRelease = currentRelease;
+
         // Define and add the tabs
-        SearchableTab informationTab = new ReleaseInfoTab(currentRelease);
+        updateAllTabs();
+
         Collections.addAll(searchableTabs, informationTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
@@ -45,8 +58,12 @@ public class ReleaseScene extends TrackedTabPane {
     public ReleaseScene(Release currentRelease, boolean editScene) {
         super(ContentScene.RELEASE_EDIT, currentRelease.getProject());
 
+        this.currentRelease = currentRelease;
+        this.editScene = editScene;
+
         // Define and add the tabs
-        SearchableTab editTab = new ReleaseEditTab(currentRelease);
+        updateAllTabs();
+
         Collections.addAll(searchableTabs, editTab);
 
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
@@ -59,5 +76,32 @@ public class ReleaseScene extends TrackedTabPane {
     @Override
     public Collection<SearchableTab> getSearchableTabs() {
         return searchableTabs;
+    }
+
+
+    @Override
+    public void updateTabs() {
+        Tab selectedTab = this.getSelectionModel().getSelectedItem();
+
+        if (editScene) {
+            if (editTab != selectedTab) {
+                new ReleaseEditTab(currentRelease);
+            }
+        }
+        else {
+            if (informationTab != selectedTab) {
+                informationTab = new ReleaseInfoTab(currentRelease);
+            }
+        }
+    }
+
+    @Override
+    public void updateAllTabs() {
+        if (editScene) {
+            editTab = new ReleaseEditTab(currentRelease);
+        }
+        else {
+            informationTab = new ReleaseInfoTab(currentRelease);
+        }
     }
 }

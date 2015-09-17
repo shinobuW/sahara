@@ -1,7 +1,9 @@
 package seng302.group2.scenes.information.role;
 
+import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.information.project.ProjectCategoryTab;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
@@ -16,6 +18,9 @@ import java.util.Collections;
  */
 public class RoleCategoryScene extends TrackedTabPane {
 
+    Workspace currentWorkspace;
+    SearchableTab categoryTab;
+
     /**
      * Constructor for the RoleCategoryScene class. Creates a tab
      * of RoleCategoryTab and displays it.
@@ -24,10 +29,25 @@ public class RoleCategoryScene extends TrackedTabPane {
     public RoleCategoryScene(Workspace currentWorkspace) {
         super(ContentScene.ROLE_CATEGORY, currentWorkspace);
 
-        // Define and add the tabs
-        SearchableTab categoryTab = new RoleCategoryTab(currentWorkspace);
-        Collections.addAll(getSearchableTabs(), categoryTab);
+        this.currentWorkspace = currentWorkspace;
 
+        // Define and add the tabs
+        updateAllTabs();
+
+        Collections.addAll(getSearchableTabs(), categoryTab);
         this.getTabs().addAll(getSearchableTabs());  // Add the tabs to the pane
+    }
+
+    @Override
+    public void updateTabs() {
+        Tab selectedTab = this.getSelectionModel().getSelectedItem();
+        if (categoryTab != selectedTab) {
+            categoryTab = new ProjectCategoryTab(currentWorkspace);
+        }
+    }
+
+    @Override
+    public void updateAllTabs() {
+        categoryTab = new ProjectCategoryTab(currentWorkspace);
     }
 }

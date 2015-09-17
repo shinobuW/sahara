@@ -3,6 +3,7 @@ package seng302.group2.scenes.information.roadMap;
 import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.information.role.RoleInfoTab;
 import seng302.group2.workspace.roadMap.RoadMap;
 
 import java.util.ArrayList;
@@ -16,6 +17,13 @@ public class RoadMapScene extends TrackedTabPane {
 
     Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
+
+    RoadMap currentRoadMap;
+    boolean editScene = false;
+
+    SearchableTab informationTab;
+    SearchableTab editTab;
+
     /**
      * Constructor for the RoadMapScene class. Displays an instance of RoadMapInfoTab.
      * @param currentRoadMap the current RoadMap for which information will be displayed
@@ -23,8 +31,10 @@ public class RoadMapScene extends TrackedTabPane {
     public RoadMapScene(RoadMap currentRoadMap) {
         super(ContentScene.ROADMAP, currentRoadMap);
 
+        this.currentRoadMap = currentRoadMap;
+
         //Define and add the tabs
-        SearchableTab informationTab = new RoadMapInfoTab(currentRoadMap);
+        updateAllTabs();
 
         Collections.addAll(searchableTabs, informationTab);
         this.getTabs().addAll(searchableTabs);
@@ -39,17 +49,16 @@ public class RoadMapScene extends TrackedTabPane {
     public RoadMapScene(RoadMap currentRoadMap, boolean editScene) {
         super(ContentScene.ROADMAP_EDIT, currentRoadMap);
 
-        // Define and add the tabs
-        SearchableTab editTab = new RoadMapEditTab(currentRoadMap);
-        Collections.addAll(searchableTabs, editTab);
+        this.currentRoadMap = currentRoadMap;
+        this.editScene = editScene;
 
+        // Define and add the tabs
+        updateAllTabs();
+
+        Collections.addAll(searchableTabs, editTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 
-
-    public Tab getCurrentTab() {
-        return this.getSelectionModel().getSelectedItem();
-    }
 
     /**
      * Gets all the SearchableTabs on this scene
@@ -60,5 +69,30 @@ public class RoadMapScene extends TrackedTabPane {
         return searchableTabs;
     }
 
+
+    @Override
+    public void updateTabs() {
+        Tab selectedTab = this.getSelectionModel().getSelectedItem();
+
+        if (editScene) {
+            if (informationTab != selectedTab) {
+                informationTab = new RoadMapInfoTab(currentRoadMap);
+            }
+            if (editTab != selectedTab) {
+                editTab = new RoadMapEditTab(currentRoadMap);
+            }
+        }
+
+    }
+
+    @Override
+    public void updateAllTabs() {
+        if (editScene) {
+            editTab = new RoadMapEditTab(currentRoadMap);
+        }
+        else {
+            informationTab = new RoadMapInfoTab(currentRoadMap);
+        }
+    }
 }
 

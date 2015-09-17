@@ -130,4 +130,14 @@ public abstract class TrackedTabPane extends SearchableScene {
     }
 
 
+    /**
+     * Updates each of the tabs in the scene, except for the current tab
+     */
+    public abstract void updateTabs();
+
+    /**
+     * Updates each of the tabs in the scene, including the current tab
+     */
+    public abstract void updateAllTabs();
+
 }

@@ -71,12 +71,12 @@ public class SprintLogTab extends SearchableTab {
         partnerComboBox.getComboBox().getItems().addAll(allPeople);
 
         loggerComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
-                    partnerComboBox.clear();
-                    partnerComboBox.getComboBox().getItems().add(nullPerson);
-                    partnerComboBox.getComboBox().getItems().addAll(allPeople);
-                    partnerComboBox.getComboBox().getItems().remove(newValue);
-                    updateFilteredLogs(currentSprint);
-                });
+                partnerComboBox.clear();
+                partnerComboBox.getComboBox().getItems().add(nullPerson);
+                partnerComboBox.getComboBox().getItems().addAll(allPeople);
+                partnerComboBox.getComboBox().getItems().remove(newValue);
+                updateFilteredLogs(currentSprint);
+            });
 
         partnerComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
                 updateFilteredLogs(currentSprint);
@@ -179,8 +179,7 @@ public class SprintLogTab extends SearchableTab {
         Person selectedLogger = loggerComboBox.getComboBox().getValue();
         Person selectedPartner = partnerComboBox.getComboBox().getValue();
         for (Log log : sprint.getAllLogsWithInitialLogs()) {
-            if (selectedLogger != null)
-            {
+            if (selectedLogger != null) {
                 if (selectedLogger != nullPerson && log.getLogger() != selectedLogger) {
                     data.remove(log);
                 }

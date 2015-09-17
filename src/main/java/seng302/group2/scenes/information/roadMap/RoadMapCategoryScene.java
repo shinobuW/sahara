@@ -1,7 +1,9 @@
 package seng302.group2.scenes.information.roadMap;
 
+import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.information.project.ProjectCategoryTab;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
@@ -14,6 +16,9 @@ import java.util.Collections;
  */
 public class RoadMapCategoryScene extends TrackedTabPane {
 
+    Workspace currentWorkspace;
+    SearchableTab categoryTab;
+
     /**
      * Constructor for the RoadMapCategoryScene class. Creates a tab
      * of RoadMapCategoryTab and displays it.
@@ -22,10 +27,25 @@ public class RoadMapCategoryScene extends TrackedTabPane {
     public RoadMapCategoryScene(Workspace currentWorkspace) {
         super(TrackedTabPane.ContentScene.ROADMAP_CATEGORY, currentWorkspace);
 
-        // Define and add the tabs
-        SearchableTab categoryTab = new RoadMapCategoryTab(currentWorkspace);
-        Collections.addAll(getSearchableTabs(), categoryTab);
+        this.currentWorkspace = currentWorkspace;
 
+        // Define and add the tabs
+        updateAllTabs();
+
+        Collections.addAll(getSearchableTabs(), categoryTab);
         this.getTabs().addAll(getSearchableTabs());
+    }
+
+    @Override
+    public void updateTabs() {
+        Tab selectedTab = this.getSelectionModel().getSelectedItem();
+        if (categoryTab != selectedTab) {
+            categoryTab = new ProjectCategoryTab(currentWorkspace);
+        }
+    }
+
+    @Override
+    public void updateAllTabs() {
+        categoryTab = new ProjectCategoryTab(currentWorkspace);
     }
 }

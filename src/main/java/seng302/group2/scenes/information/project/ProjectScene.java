@@ -1,7 +1,10 @@
 package seng302.group2.scenes.information.project;
 
+import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.information.roadMap.RoadMapEditTab;
+import seng302.group2.scenes.information.roadMap.RoadMapInfoTab;
 import seng302.group2.workspace.project.Project;
 
 import java.util.ArrayList;
@@ -17,6 +20,14 @@ public class ProjectScene extends TrackedTabPane {
 
     Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
+    SearchableTab informationTab;
+    SearchableTab allocation;
+    SearchableTab projectLogs;
+    SearchableTab editTab;
+
+    Project currentProject;
+    boolean editScene = false;
+
     /**
      * Constructor for the Project Scene tab
      * 
@@ -25,10 +36,11 @@ public class ProjectScene extends TrackedTabPane {
     public ProjectScene(Project currentProject) {
         super(ContentScene.PROJECT, currentProject);
 
+        this.currentProject = currentProject;
+
         // Define and add the tabs
-        SearchableTab informationTab = new ProjectInfoTab(currentProject);
-        SearchableTab allocation = new ProjectHistoryTab(currentProject);
-        SearchableTab projectLogs = new ProjectLoggingTab(currentProject);
+        updateAllTabs();
+
         Collections.addAll(searchableTabs, informationTab, allocation, projectLogs);
 
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
@@ -42,8 +54,12 @@ public class ProjectScene extends TrackedTabPane {
     public ProjectScene(Project currentProject, boolean editScene) {
         super(ContentScene.PROJECT_EDIT, currentProject);
 
+        this.currentProject = currentProject;
+        this.editScene = editScene;
+
         // Define and add the tabs
-        SearchableTab editTab = new ProjectEditTab(currentProject);
+        updateAllTabs();
+
         Collections.addAll(searchableTabs, editTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
@@ -57,5 +73,38 @@ public class ProjectScene extends TrackedTabPane {
         return searchableTabs;
     }
 
+    @Override
+    public void updateTabs() {
+        Tab selectedTab = this.getSelectionModel().getSelectedItem();
 
+        if (editScene) {
+            if (editTab != selectedTab) {
+                editTab = new ProjectEditTab(currentProject);
+            }
+        }
+        else {
+            if (informationTab != selectedTab) {
+                informationTab = new ProjectInfoTab(currentProject);
+            }
+            if (allocation != selectedTab) {
+                allocation = new ProjectHistoryTab(currentProject);
+            }
+            if (projectLogs != selectedTab) {
+                projectLogs = new ProjectLoggingTab(currentProject);
+            }
+        }
+
+    }
+
+    @Override
+    public void updateAllTabs() {
+        if (editScene) {
+            editTab = new ProjectEditTab(currentProject);
+        }
+        else {
+            informationTab = new ProjectInfoTab(currentProject);
+            allocation = new ProjectHistoryTab(currentProject);
+            projectLogs = new ProjectLoggingTab(currentProject);
+        }
+    }
 }

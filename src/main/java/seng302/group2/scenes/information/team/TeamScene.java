@@ -1,7 +1,10 @@
 package seng302.group2.scenes.information.team;
 
+import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.information.workspace.WorkspaceEditTab;
+import seng302.group2.scenes.information.workspace.WorkspaceInfoTab;
 import seng302.group2.workspace.team.Team;
 
 import java.util.ArrayList;
@@ -17,6 +20,12 @@ public class TeamScene extends TrackedTabPane {
 
     Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
+    Team currentTeam;
+    boolean editScene = false;
+
+    SearchableTab informationTab;
+    SearchableTab editTab;
+
     /**
      * Constructor for the Team scene. Creates an instance of the TeamInfoTab and displays it. If the team is not
      * the unassigned team, also creates an instance of the TeamHistoryTab to display.
@@ -26,8 +35,11 @@ public class TeamScene extends TrackedTabPane {
     public TeamScene(Team currentTeam) {
         super(ContentScene.TEAM, currentTeam);
 
+        this.currentTeam = currentTeam;
+
         // Define and add the tabs
-        SearchableTab informationTab = new TeamInfoTab(currentTeam);
+        updateAllTabs();
+
         Collections.addAll(searchableTabs, informationTab);
         this.getTabs().addAll(searchableTabs);
 
@@ -46,8 +58,11 @@ public class TeamScene extends TrackedTabPane {
     public TeamScene(Team currentTeam, boolean editScene) {
         super(ContentScene.TEAM_EDIT, currentTeam);
 
+        this.currentTeam = currentTeam;
+        this.editScene = editScene;
+
         // Define and add the tabs
-        SearchableTab editTab = new TeamEditTab(currentTeam);
+        updateAllTabs();
         Collections.addAll(searchableTabs, editTab);
 
         this.getTabs().addAll(editTab);
@@ -61,5 +76,32 @@ public class TeamScene extends TrackedTabPane {
     @Override
     public Collection<SearchableTab> getSearchableTabs() {
         return searchableTabs;
+    }
+
+
+    @Override
+    public void updateTabs() {
+        Tab selectedTab = this.getSelectionModel().getSelectedItem();
+
+        if (editScene) {
+            if (editTab != selectedTab) {
+                editTab = new TeamEditTab(currentTeam);
+            }
+        }
+        else {
+            if (informationTab != selectedTab) {
+                informationTab = new TeamInfoTab(currentTeam);
+            }
+        }
+    }
+
+    @Override
+    public void updateAllTabs() {
+        if (editScene) {
+            editTab = new TeamEditTab(currentTeam);
+        }
+        else {
+            informationTab = new TeamInfoTab(currentTeam);
+        }
     }
 }

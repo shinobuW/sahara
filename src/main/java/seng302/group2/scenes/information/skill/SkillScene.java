@@ -3,6 +3,8 @@ package seng302.group2.scenes.information.skill;
 import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.information.workspace.WorkspaceEditTab;
+import seng302.group2.scenes.information.workspace.WorkspaceInfoTab;
 import seng302.group2.workspace.skills.Skill;
 
 import java.util.ArrayList;
@@ -16,6 +18,12 @@ import java.util.Collections;
  */
 public class SkillScene extends TrackedTabPane {
 
+    Skill currentSkill;
+    boolean editScene = false;
+
+    SearchableTab informationTab;
+    SearchableTab editTab;
+
     Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
     /**
@@ -25,12 +33,15 @@ public class SkillScene extends TrackedTabPane {
     public SkillScene(Skill currentSkill) {
         super(ContentScene.SKILL, currentSkill);
 
+        this.currentSkill = currentSkill;
+
         // Define and add the tabs
-        SearchableTab informationTab = new SkillInfoTab(currentSkill);
+        updateAllTabs();
 
         Collections.addAll(searchableTabs, informationTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
+
 
     /**
      * Constructor for the SkillScene class. This creates an instance of the SkillEditTab tab and displays it.
@@ -40,8 +51,12 @@ public class SkillScene extends TrackedTabPane {
     public SkillScene(Skill currentSkill, boolean editScene) {
         super(ContentScene.SKILL_EDIT, currentSkill);
 
+        this.currentSkill = currentSkill;
+        this.editScene = editScene;
+
         // Define and add the tabs
-        SearchableTab editTab = new SkillEditTab(currentSkill);
+        updateAllTabs();
+
         Collections.addAll(searchableTabs, editTab);
 
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
@@ -51,6 +66,7 @@ public class SkillScene extends TrackedTabPane {
         return this.getSelectionModel().getSelectedItem();
     }
 
+
     /**
      * Gets all the SearchableTabs on this scene
      * @return collection of SearchableTabs
@@ -58,5 +74,31 @@ public class SkillScene extends TrackedTabPane {
     @Override
     public Collection<SearchableTab> getSearchableTabs() {
         return searchableTabs;
+    }
+
+    @Override
+    public void updateTabs() {
+        Tab selectedTab = this.getSelectionModel().getSelectedItem();
+
+        if (editScene) {
+            if (editTab != selectedTab) {
+                editTab = new SkillEditTab(currentSkill);
+            }
+        }
+        else {
+            if (informationTab != selectedTab) {
+                informationTab = new SkillInfoTab(currentSkill);
+            }
+        }
+    }
+
+    @Override
+    public void updateAllTabs() {
+        if (editScene) {
+            editTab = new SkillEditTab(currentSkill);
+        }
+        else {
+            informationTab = new SkillInfoTab(currentSkill);
+        }
     }
 }
