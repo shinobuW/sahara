@@ -40,12 +40,12 @@ public class RoadMapCategoryScene extends TrackedTabPane {
     public void updateTabs() {
         Tab selectedTab = this.getSelectionModel().getSelectedItem();
         if (categoryTab != selectedTab) {
-            categoryTab = new ProjectCategoryTab(currentWorkspace);
+            categoryTab = new RoadMapCategoryTab(currentWorkspace);
         }
     }
 
     @Override
     public void updateAllTabs() {
-        categoryTab = new ProjectCategoryTab(currentWorkspace);
+        categoryTab = new RoadMapCategoryTab(currentWorkspace);
     }
 }
