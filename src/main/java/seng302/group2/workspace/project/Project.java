@@ -499,7 +499,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      */
     public void add(Log log) {
         Task task = log.getTask();
-        AddLogsCommand addCommand = new AddLogsCommand(task, log, task.getStory().getProject(), task.getEffortLeft());
+        AddLogsCommand addCommand = new AddLogsCommand(task, log, this, task.getEffortLeft());
         Global.commandManager.executeCommand(addCommand);
     }
 
