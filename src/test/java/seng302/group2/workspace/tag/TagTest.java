@@ -1,5 +1,6 @@
 package seng302.group2.workspace.tag;
 
+import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import org.junit.Assert;
 import org.junit.Test;
@@ -7,7 +8,12 @@ import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.skills.Skill;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -46,23 +52,71 @@ public class TagTest {
         Assert.assertEquals("tag", tag2.toString());
     }
 
+    @Test
+    public void testGetTaggedItems() {
+        Tag tag1 = new Tag("Tag1");
+        Person peter = new Person();
+
+        Global.currentWorkspace.add(tag1);
+        peter.getTags().addAll(tag1);
+
+        peter.getTags().get(0).setName("peter tags");
+
+
+        System.out.println(Global.currentWorkspace.getAllTags());
+        System.out.println(peter.getTags());
+
+
+
+    }
+
     /**
      * Tests the deletion of a tag globally. //TODO Bronson Add in items with the tag, then delete it.
      */
     @Test
     public void testDeleteGlobalTag() {
         Tag tag = new Tag("New tag");
+        Person person1 = new Person();
+        person1.getTags().add(tag);
+
+        Assert.assertEquals(person1.getTags().get(0).getName(), "New tag");
 
         tag.deleteGlobalTag();
 
+        Assert.assertFalse(person1.getTags().contains(tag));
         Assert.assertFalse(Global.currentWorkspace.getAllTags().contains(tag));
 
         Global.commandManager.undo();
 
+        Assert.assertTrue(person1.getTags().contains(tag));
         Assert.assertTrue(Global.currentWorkspace.getAllTags().contains(tag));
 
         Global.commandManager.redo();
 
+        Assert.assertFalse(person1.getTags().contains(tag));
         Assert.assertFalse(Global.currentWorkspace.getAllTags().contains(tag));
+    }
+
+    /**
+     * Tests the edit of a tag.
+     */
+    @Test
+    public void testEdit() {
+        Tag tag = new Tag("Tag");
+
+        tag.edit("New Tag", Color.WHEAT);
+
+        Assert.assertEquals("New Tag", tag.getName());
+        Assert.assertEquals(Color.WHEAT, tag.getColor());
+
+        Global.commandManager.undo();
+
+        Assert.assertEquals("Tag", tag.getName());
+        Assert.assertEquals(Color.ROYALBLUE, tag.getColor());
+
+        Global.commandManager.redo();
+
+        Assert.assertEquals("New Tag", tag.getName());
+        Assert.assertEquals(Color.WHEAT, tag.getColor());
     }
 }

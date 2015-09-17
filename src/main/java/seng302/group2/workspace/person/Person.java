@@ -644,6 +644,10 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
                     mapped = true;
                 }
             }
+
+
+
+
             boolean mapped_team = false;
             for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(team)) {

@@ -47,6 +47,15 @@ public class Tag extends SaharaItem implements Serializable {
     }
 
     /**
+     * Sets the name of the tag
+     * @param name The name of the tag
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    /**
      * Deletes the tag from the workspace and removes it from every item that has the tag.
      */
     public void deleteGlobalTag() {
@@ -71,7 +80,6 @@ public class Tag extends SaharaItem implements Serializable {
      * @return A set of the Sahara Items that have been tagged with this tag
      */
     // Was ObservableList based on this.items
-    //TODO Bronson Does this need to be observable list now or nah
     public Set<SaharaItem> getTaggedItems() {
         Set<SaharaItem> items = new HashSet<>();
         for (SaharaItem item : SaharaItem.getAllItems()) {

@@ -15,6 +15,7 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.ProjectCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.roadMap.RoadMap;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
@@ -23,6 +24,7 @@ import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -251,6 +253,44 @@ public class WorkspaceTest {
         Assert.assertEquals(1, ws.getTags().size());
         Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
         Assert.assertEquals("Tag", ws.getTags().get(0).getName());
+    }
+
+    /**
+     * Checks to see if getAllTags() returns all the tags in the workspace
+     */
+    @Test
+    public void testGetAllTags() {
+        Tag tag1 = new Tag("Tag1");
+        Tag tag2 = new Tag("Tag2");
+        Tag tag3 = new Tag("Tag3");
+
+        ArrayList<Tag> projectTags = new ArrayList<>();
+        projectTags.add(tag2);
+        ArrayList<Tag> skillTags = new ArrayList<>();
+        skillTags.add(tag3);
+        skillTags.add(tag2);
+
+        Project project1 = new Project();
+        project1.edit("", "", "", null, projectTags);
+
+        Skill skill1 = new Skill();
+        skill1.edit("", "", skillTags);
+
+
+        Global.currentWorkspace.add(tag1);
+        project1.getTags().add(tag2);
+        Global.currentWorkspace.add(project1);
+        skill1.getTags().add(tag3);
+        Global.currentWorkspace.add(skill1);
+
+        ObservableList<Tag> tagList = Global.currentWorkspace.getAllTags();
+
+        System.out.println(tagList);
+
+        Assert.assertTrue(tagList.contains(tag1));
+        Assert.assertTrue(tagList.contains(tag2));
+        Assert.assertTrue(tagList.contains(tag3));
+
     }
 
     /**
