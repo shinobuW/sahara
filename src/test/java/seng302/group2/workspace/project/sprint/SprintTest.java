@@ -5,13 +5,18 @@ import org.junit.Test;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.tasks.Log;
+import seng302.group2.workspace.project.story.tasks.PairLog;
+import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -86,7 +91,11 @@ public class SprintTest {
         Assert.assertEquals(1, sprint.getStories().size());
     }
 
+
     @Test
+    /**
+     * Test for Sprint's add story command
+     */
     public void testAddStory() {
         Sprint sprint = new Sprint();
         Story story = new Story();
@@ -101,7 +110,11 @@ public class SprintTest {
         Assert.assertTrue(sprint.getStories().contains(story));
     }
 
+
     @Test
+    /**
+     * Test for Sprint's generateXml method
+     */
     public void testGenerateXML() {
         new ReportGenerator();
         Sprint sprint = new Sprint("goal", "longname", "description", LocalDate.now(), LocalDate.now().plusDays(5), new Project(), new Team(), new Release());
@@ -120,15 +133,11 @@ public class SprintTest {
 
     }
 
-    @Test
-    public void testToString() {
-        Sprint sprintDefault = new Sprint();
-        Sprint sprint = new Sprint("goal", "long", "desc", LocalDate.now(), LocalDate.now().plusDays(1), null, null, null);
-        Assert.assertEquals("Untitled Sprint/Goal", sprintDefault.toString());
-        Assert.assertEquals("goal", sprint.toString());
-    }
 
     @Test
+    /**
+     * Test for Sprint's edit command
+     */
     public void testEdit() {
         Global.currentWorkspace = new Workspace();
         Project project = new Project();
@@ -180,6 +189,9 @@ public class SprintTest {
     }
 
     @Test
+    /**
+     * Test for Sprint's delete command
+     */
     public void testDeleteSprint() {
         Project project = new Project();
         Sprint sprint = new Sprint("goal", "long", "desc", LocalDate.now(), LocalDate.now().plusDays(1), project, null, null);
@@ -191,5 +203,60 @@ public class SprintTest {
 
         Global.commandManager.undo();
         Assert.assertTrue(project.getSprints().contains(sprint));
+    }
+
+
+    @Test
+    /**
+     * Tests Sprint's method which returns all the logs associated to it
+     */
+    public void testGetAllLogs() {
+        Workspace ws = new Workspace();
+        Global.currentWorkspace = ws;
+        Project proj = new Project();
+        Sprint sprint = new Sprint();
+        Story story = new Story();
+        Task task = new Task("", "", story, new Person(), 0);
+        Log log = new Log(task, "", new Person(), 0, LocalDateTime.now(), 0);
+        Log log2 = new Log(task, "", new Person(), 0, LocalDateTime.now(), 0);
+        log2.setGhostLog();
+        PairLog log3 = new PairLog(task, "", new Person(), new Person(), 0, LocalDateTime.now(), 0);
+
+        ws.add(proj);
+        proj.add(sprint);
+        sprint.add(story);
+        story.add(task);
+        proj.add(log);
+        proj.add(log2);
+        proj.add(log3);
+
+        Assert.assertEquals(3, sprint.getAllLogs().size());
+    }
+
+    @Test
+    /**
+     * Tests Sprint's method which returns all logs that are not ghost logs.
+     */
+    public void testGetAllLogsWithInitialLogs() {
+        Workspace ws = new Workspace();
+        Global.currentWorkspace = ws;
+        Project proj = new Project();
+        Sprint sprint = new Sprint();
+        Story story = new Story();
+        Task task = new Task("", "", story, new Person(), 0);
+        Log log = new Log(task, "", new Person(), 0, LocalDateTime.now(), 0);
+        Log log2 = new Log(task, "", new Person(), 0, LocalDateTime.now(), 0);
+        log2.setGhostLog();
+        PairLog log3 = new PairLog(task, "", new Person(), new Person(), 0, LocalDateTime.now(), 0);
+
+        ws.add(proj);
+        proj.add(sprint);
+        sprint.add(story);
+        story.add(task);
+        proj.add(log);
+        proj.add(log2);
+        proj.add(log3);
+
+        Assert.assertEquals(2, sprint.getAllLogsWithInitialLogs().size());
     }
 }
