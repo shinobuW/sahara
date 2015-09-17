@@ -4,6 +4,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.tag.Tag;
+
+import java.util.ArrayList;
 
 /**
  * A series of tests relating to AcceptanceCriteria class
@@ -65,6 +68,31 @@ public class AcceptanceCriteriaTest {
         Assert.assertEquals(AcceptanceCriteria.AcState.UNACCEPTED, ac.getState());
         Global.commandManager.redo();
         Assert.assertEquals(AcceptanceCriteria.AcState.ACCEPTED, ac.getState());
+    }
+
+    @Test
+    public void testTagEdit() {
+        AcceptanceCriteria ac = new AcceptanceCriteria("", null);
+        Tag tag = new Tag("Tag");
+        ArrayList<Tag> newTags = new ArrayList<>();
+        newTags.add(tag);
+
+        ac.edit(newTags);
+
+        Assert.assertEquals(1, ac.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", ac.getTags().get(0).getName());
+
+        Global.commandManager.undo();
+
+        Assert.assertEquals(0, ac.getTags().size());
+        Assert.assertEquals(0, Global.currentWorkspace.getAllTags().size());
+
+        Global.commandManager.redo();
+
+        Assert.assertEquals(1, ac.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", ac.getTags().get(0).getName());
     }
 
 }

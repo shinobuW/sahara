@@ -1,13 +1,10 @@
 package seng302.group2.workspace.project.story.tasks;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.conversion.ColorUtils;
-import seng302.group2.util.conversion.GeneralEnumStringConverter;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
@@ -42,13 +39,9 @@ public class Task extends SaharaItem implements Serializable {
     private Story story = null;
     private Person assignee = null;
 
-    private transient ObservableList<Log> logsWithoutGhosts = FXCollections.observableArrayList();
-    private List<Log> serializableLogs = new ArrayList<>();
     private double effortLeft = 0;
     private double effortSpent = 0;
     private Log initialLog;
-
-    GeneralEnumStringConverter converter = new GeneralEnumStringConverter();
 
     /**
      * Returns the items held by the Task
@@ -77,7 +70,7 @@ public class Task extends SaharaItem implements Serializable {
         this.effortSpent = 0;
         this.initialLog = new Log(this, "initial log (this should be hidden)", null, 0,
                 LocalDateTime.now(), 0 - effortLeft);
-        initListeners();
+//        initListeners();
     }
 
 
@@ -110,23 +103,21 @@ public class Task extends SaharaItem implements Serializable {
         this.assignee = person;
         this.initialLog = new Log(this, "initial log (this should be hidden)", null, 0,
                 LocalDateTime.now(), 0 - effortLeft);
-        initListeners();
+//        initListeners();
     }
 
 
-    void initListeners() {
-        this.getLogs().addListener((ListChangeListener<Log>) c -> {
-                logsWithoutGhosts.clear();
-                logsWithoutGhosts.addAll(this.getLogs());
-                Set<Log> logsToRemove = new HashSet<>();
-                for (Log log : logsWithoutGhosts) {
-                    if (log.isGhostLog()) {
-                        logsToRemove.add(log);
-                    }
-                }
-                logsWithoutGhosts.removeAll(logsToRemove);
-            });
-    }
+//    void initListeners() {
+//        this.getLogs().addListener((ListChangeListener<Log>) c -> {
+//                Set<Log> logsToRemove = new HashSet<>();
+//                for (Log log : getLogsWithoutGhostLogs()) {
+//                    if (log.isGhostLog()) {
+//                        logsToRemove.add(log);
+//                    }
+//                }
+//                logsWithoutGhosts.removeAll(logsToRemove);
+//            });
+//    }
 
     /**
      * Gets the Person assigned to the Task
@@ -329,7 +320,18 @@ public class Task extends SaharaItem implements Serializable {
      * @return list of logs without ghostlogs
      */
     public ObservableList<Log> getLogsWithoutGhostLogs() {
-        return logsWithoutGhosts;
+        ObservableList<Project> projects = Global.currentWorkspace.getProjects();
+        ObservableList<Log> allLogs = observableArrayList();
+        ObservableList<Log> taskLogs = observableArrayList();
+        for (Project proj : projects) {
+            allLogs.addAll(proj.getLogs());
+        }
+        for (Log log : allLogs) {
+            if (log.getTask() == this && !taskLogs.contains(log) && !log.isGhostLog()) {
+                taskLogs.add(log);
+            }
+        }
+        return taskLogs;
     }
 
     /**
@@ -353,7 +355,7 @@ public class Task extends SaharaItem implements Serializable {
 //        logs.addAll(serializableLogs);
 
         postTagDeserialization();
-        initListeners();
+//        initListeners();
     }
 
     /**

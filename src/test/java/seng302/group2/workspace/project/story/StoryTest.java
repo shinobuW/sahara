@@ -19,6 +19,7 @@ import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 import seng302.group2.workspace.project.story.tasks.Task;
+import seng302.group2.workspace.tag.Tag;
 
 import java.util.ArrayList;
 
@@ -386,4 +387,66 @@ public class StoryTest {
         story.add(task3);
         Assert.assertEquals(2, story.getTasks().size());
     }
+
+    @Test
+    public void testEdit() {
+        Project project = new Project();
+        project.setShortName("proj1");
+        Project project2 = new Project();
+        project2.setShortName("proj2");
+        Backlog newBacklog = new Backlog();
+        newBacklog.setShortName("a");
+        Story story = new Story("short name", "long name", "description", "creator", project, 5);
+
+        Tag tag = new Tag("Tag");
+        ArrayList<Tag> newTags = new ArrayList<>();
+        newTags.add(tag);
+
+        story.edit("short", "long", "desc", project2, 10, newBacklog, "Estimate", true, null, newTags);
+
+        Assert.assertEquals("short", story.getShortName());
+        Assert.assertEquals("long", story.getLongName());
+        Assert.assertEquals("desc", story.getDescription());
+        Assert.assertEquals("proj2", story.getProject().getShortName());
+        Assert.assertEquals(new Integer(10), story.getPriority());
+        Assert.assertEquals("a",story.getBacklog().toString());
+        Assert.assertEquals("Estimate", story.getEstimate());
+        Assert.assertEquals(true, story.getReady());
+        Assert.assertEquals(1, story.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", story.getTags().get(0).getName());
+
+        Global.commandManager.undo();
+
+        Assert.assertEquals("short name", story.getShortName());
+        Assert.assertEquals("long name", story.getLongName());
+        Assert.assertEquals("description", story.getDescription());
+        Assert.assertEquals("proj1", story.getProject().getShortName());
+        Assert.assertEquals(new Integer(5), story.getPriority());
+        Assert.assertEquals(null, story.getBacklog());
+        Assert.assertEquals(false, story.getReady());
+        Assert.assertEquals(0, story.getTags().size());
+        Assert.assertEquals(0, Global.currentWorkspace.getAllTags().size());
+
+        Global.commandManager.redo();
+
+        Assert.assertEquals("short", story.getShortName());
+        Assert.assertEquals("long", story.getLongName());
+        Assert.assertEquals("desc", story.getDescription());
+        Assert.assertEquals("proj2", story.getProject().getShortName());
+        Assert.assertEquals(new Integer(10), story.getPriority());
+        Assert.assertEquals("a",story.getBacklog().toString());
+        Assert.assertEquals("Estimate", story.getEstimate());
+        Assert.assertEquals(true, story.getReady());
+        Assert.assertEquals(1, story.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", story.getTags().get(0).getName());
+
+
+
+
+    }
 }
+
+
+

@@ -21,6 +21,7 @@ import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 import seng302.group2.workspace.workspace.Workspace;
 
@@ -363,17 +364,37 @@ public class ProjectTest extends TestCase {
     @Test
     public void testEdit() {
         Project project = new Project("aShortName", "aLongName", "aDescription");
-        project.edit("newShortname", "newLongName", "newDescription", null, null);
+        Tag tag = new Tag("Tag");
+        ArrayList<Tag> newTags = new ArrayList<>();
+        newTags.add(tag);
+        project.edit("newShortname", "newLongName", "newDescription", null, newTags);
 
         assertEquals("newShortname", project.getShortName());
         assertEquals("newLongName", project.getLongName());
         assertEquals("newDescription", project.getDescription());
+        Assert.assertEquals(1, project.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", project.getTags().get(0).getName());
+
 
         Global.commandManager.undo();
 
         assertEquals("aShortName", project.getShortName());
         assertEquals("aLongName", project.getLongName());
         assertEquals("aDescription", project.getDescription());
+        Assert.assertEquals(0, project.getTags().size());
+        Assert.assertEquals(0, Global.currentWorkspace.getAllTags().size());
+
+        Global.commandManager.redo();
+
+        assertEquals("newShortname", project.getShortName());
+        assertEquals("newLongName", project.getLongName());
+        assertEquals("newDescription", project.getDescription());
+        Assert.assertEquals(1, project.getTags().size());
+        Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals("Tag", project.getTags().get(0).getName());
+
+
     }
 
 

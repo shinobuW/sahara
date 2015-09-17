@@ -240,9 +240,14 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
      * @return A list of logs of the tasks within a sprint.
      */
     public List<Log> getAllLogs() {
-        List<Log> logList = new ArrayList<>();
-        for (Task task : this.getAllTasks()) {
-            for (Log log : task.getLogs()) {
+        ObservableList<Project> projects = Global.currentWorkspace.getProjects();
+        ObservableList<Log> allLogs = observableArrayList();
+        ObservableList<Log> logList = observableArrayList();
+        for (Project proj : projects) {
+            allLogs.addAll(proj.getLogs());
+        }
+        for (Log log : allLogs) {
+            if (log.getTask().getStory().getSprint() == this) {
                 logList.add(log);
             }
         }
@@ -263,10 +268,14 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
      * @return A list of logs of the tasks within a sprint.
      */
     public List<Log> getAllLogsWithInitialLogs() {
-        List<Log> logList = new ArrayList<>();
-        for (Task task : this.getAllTasks()) {
-            logList.add(task.getInitialLog());
-            for (Log log : task.getLogs()) {
+        ObservableList<Project> projects = Global.currentWorkspace.getProjects();
+        ObservableList<Log> allLogs = observableArrayList();
+        ObservableList<Log> logList = observableArrayList();
+        for (Project proj : projects) {
+            allLogs.addAll(proj.getLogs());
+        }
+        for (Log log : allLogs) {
+            if (log.getTask().getStory().getSprint() == this && !log.isGhostLog()) {
                 logList.add(log);
             }
         }

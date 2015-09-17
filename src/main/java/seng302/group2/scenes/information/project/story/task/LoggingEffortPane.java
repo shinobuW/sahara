@@ -93,14 +93,14 @@ public class LoggingEffortPane extends Pane {
         VBox content = new VBox(8);
         content.setPadding(new Insets(8));
 
-        SearchableTable<Log> logTable = new SearchableTable<>(task.getLogsWithoutGhostLogs());
+        SearchableTable<Log> logTable = new SearchableTable<>();
         logTable.setEditable(true);
         logTable.setPrefWidth(400);
         logTable.setPrefHeight(200);
         logTable.setPlaceholder(new SearchableText("There are currently no logs in this task."));
         logTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        //ObservableList<Log> data = task.getLogsWithoutGhostLogs();
+        ObservableList<Log> data = task.getLogsWithoutGhostLogs();
 
         TableColumn loggerCol = new TableColumn("Logger");
         loggerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("logger"));
@@ -186,7 +186,7 @@ public class LoggingEffortPane extends Pane {
                 .subtract(2).divide(100).multiply(60));
 
 
-        //logTable.setItems(data);
+        logTable.setItems(data);
         TableColumn[] columns = {loggerCol, partnerCol, startTimeCol, durationCol, descriptionCol};
         logTable.getColumns().setAll(columns);
         logTable.getSortOrder().add(startTimeCol);
@@ -439,7 +439,9 @@ public class LoggingEffortPane extends Pane {
                     }
 
                     effortLeftField.getTextField().setText(effortLeftString);
-
+                    data.removeAll(task.getLogsWithoutGhostLogs());
+                    data.addAll(task.getLogsWithoutGhostLogs());
+                    SearchableTable.refresh(logTable, logTable.getItems());
                     // Refresh the table if used, so that the logged effort updates after adding
                     if (table != null) {
                         SearchableTable.refresh(table, table.getItems());

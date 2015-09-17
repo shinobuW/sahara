@@ -474,7 +474,12 @@ public class Workspace extends SaharaItem implements Serializable {
             workspace.serializableRoles.add(item);
         }
 
-        //TODO Bronson Serialization of tags.
+        workspace.serializableGlobalTags.clear();
+        for (Tag item : workspace.globalTags) {
+            workspace.serializableGlobalTags.add(item);
+        }
+
+        workspace.prepTagSerialization();
 
         return workspace;
     }
@@ -521,6 +526,13 @@ public class Workspace extends SaharaItem implements Serializable {
             workspace.roles.add(item);
         }
 
+        workspace.globalTags = observableArrayList();
+        for (Tag item : workspace.serializableGlobalTags) {
+            workspace.globalTags.add(item);
+        }
+
+        workspace.prepTagSerialization();
+
         // Unset saved changes flag, we just opened the workspace.
         workspace.hasUnsavedChanges = false;
 
@@ -529,6 +541,8 @@ public class Workspace extends SaharaItem implements Serializable {
         for (Project proj : workspace.getProjects()) {
             proj.addListeners();
         }
+
+
 
         //TODO Bronson Deserialization of tags
 

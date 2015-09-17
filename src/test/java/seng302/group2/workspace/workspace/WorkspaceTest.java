@@ -15,6 +15,7 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.ProjectCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.roadMap.RoadMap;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.tag.Tag;
@@ -114,6 +115,26 @@ public class WorkspaceTest {
         Assert.assertEquals(1, work.getProjects().size());
         Global.commandManager.undo();
         Assert.assertEquals(0, work.getProjects().size());
+    }
+
+    /**
+     * Tests that roadmaps are correctly added to the workspace through the add() method.
+     */
+    @Test
+    public void testAddRoadMap() {
+        Workspace work = new Workspace();
+        Global.currentWorkspace = work;
+        RoadMap roadMap = new RoadMap();
+        work.add(roadMap);
+
+        Assert.assertTrue(work.getRoadMaps().contains(roadMap));
+
+        work.add(roadMap);
+        Assert.assertEquals(2, work.getRoadMaps().size());
+        Global.commandManager.undo();
+        Assert.assertEquals(1, work.getRoadMaps().size());
+        Global.commandManager.undo();
+        Assert.assertEquals(0, work.getRoadMaps().size());
     }
 
 
