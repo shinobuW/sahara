@@ -163,22 +163,23 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
             for (T aData : this.getItems()) {
 
                 for (TableColumn<T, ?> col : cols) {
-                    String cellValue = col.getCellData(aData).toString();
+                    if (col.getCellData(aData) != null) {
+                        String cellValue = col.getCellData(aData).toString();
 
-                    cellValue = cellValue.toLowerCase();
-                    if (searchType == SearchType.NORMAL) {
-                        if (cellValue.equals(query.trim().toLowerCase())) {
-                            matchingItems.add(aData);
-                            count = 2;
-                        }
-                        if (cellValue.contains(query.trim().toLowerCase())) {
-                            matchingItems.add(aData);
-                            count = 1;
-                        }
-                    }
-                    else if (searchType == SearchType.REGEX) {
-                        if (Pattern.matches(query, cellValue)) {
-                            matchingItems.add(aData);
+                        cellValue = cellValue.toLowerCase();
+                        if (searchType == SearchType.NORMAL) {
+                            if (cellValue.equals(query.trim().toLowerCase())) {
+                                matchingItems.add(aData);
+                                count = 2;
+                            }
+                            if (cellValue.contains(query.trim().toLowerCase())) {
+                                matchingItems.add(aData);
+                                count = 1;
+                            }
+                        } else if (searchType == SearchType.REGEX) {
+                            if (Pattern.matches(query.trim(), cellValue)) {
+                                matchingItems.add(aData);
+                            }
                         }
                     }
                 }
