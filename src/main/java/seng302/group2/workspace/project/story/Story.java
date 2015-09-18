@@ -1069,6 +1069,13 @@ public class Story extends SaharaItem implements Serializable {
         }
 
         /**
+         * Gets the String value of the Command for editting stories.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -1211,6 +1218,13 @@ public class Story extends SaharaItem implements Serializable {
         }
 
         /**
+         * Gets the String value of the Command for deleting stories.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -1284,6 +1298,13 @@ public class Story extends SaharaItem implements Serializable {
         }
 
         /**
+         * Gets the String value of the Command for adding acceptance criteria.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -1338,6 +1359,13 @@ public class Story extends SaharaItem implements Serializable {
          */
         public void undo() {
             story.getTasks().remove(task);
+        }
+
+        /**
+         * Gets the String value of the Command for adding Tasks.
+         */
+        public String getString() {
+            return null;
         }
 
         /**

@@ -827,6 +827,13 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         }
 
         /**
+         * Gets the String value of the Command for editting projects.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -916,6 +923,13 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         }
 
         /**
+         * Gets the String value of the Command for deleting projects.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -964,6 +978,13 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         public void undo() {
             proj.getReleases().remove(release);
             release.setProject(null);
+        }
+
+        /**
+         * Gets the String value of the Command for adding releases.
+         */
+        public String getString() {
+            return null;
         }
 
         /**
@@ -1025,6 +1046,13 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         }
 
         /**
+         * Gets the String value of the Command for adding stories.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -1083,6 +1111,13 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         }
 
         /**
+         * Gets the String value of the Command for adding backlogs.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -1136,6 +1171,13 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          */
         public void undo() {
             proj.getSprints().remove(sprint);
+        }
+
+        /**
+         * Gets the String value of the Command for adding sprints.
+         */
+        public String getString() {
+            return null;
         }
 
         /**
@@ -1197,6 +1239,13 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         public void undo() {
             proj.getTeamAllocations().remove(allocation);
             team.getProjectAllocations().remove(allocation);
+        }
+
+        /**
+         * Gets the String value of the Command for adding allocations.
+         */
+        public String getString() {
+            return null;
         }
 
         /**
@@ -1281,6 +1330,13 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
             task.setEffortLeft(oldEffortLeft);
             proj.getLogs().remove(log);
 
+        }
+
+        /**
+         * Gets the String value of the Command for adding logs.
+         */
+        public String getString() {
+            return null;
         }
 
         @Override

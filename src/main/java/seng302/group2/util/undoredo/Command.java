@@ -20,6 +20,11 @@ public interface Command {
     public void undo();
 
     /**
+     * Gets the string value of the Command.
+     */
+    public String getString();
+
+    /**
      * Searches the stateObjects to find an equal model class to map to
      *
      * @param stateObjects A set of objects to search through

@@ -214,6 +214,13 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
         }
 
         /**
+         * Gets the String value of the Command for adding releases.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -317,6 +324,13 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
             roadMap.getTags().addAll(oldRoadMapTags);
 
             Collections.sort(Global.currentWorkspace.getRoadMaps());
+        }
+
+        /**
+         * Gets the String value of the Command for editting releases.
+         */
+        public String getString() {
+            return null;
         }
 
         /**
@@ -424,6 +438,13 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
          */
         public void undo() {
             Global.currentWorkspace.getRoadMaps().add(roadMap);
+        }
+
+        /**
+         * Gets the String value of the Command for deleting roadmaps.
+         */
+        public String getString() {
+            return null;
         }
 
         /**

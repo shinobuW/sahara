@@ -18,6 +18,7 @@ public class CommandManager {
     private Stack<Command> undos = new Stack<>();
     private Stack<Command> redos = new Stack<>();
     private Command lastSaveCommand = null;
+    private Command lastCommand = null;
 
     /**
      * sets the local undo Stack
@@ -37,6 +38,9 @@ public class CommandManager {
     public void executeCommand(Command command) {
         Global.setCurrentWorkspaceChanged();
         command.execute();
+        if (command.getString() != null) {
+            lastCommand = command;
+        }
         undos.push(command);
         redos.clear();
         try {
@@ -273,6 +277,11 @@ public class CommandManager {
         @Override
         public void undo() {
             // Do nothing
+        }
+
+        @Override
+        public String getString() {
+            return "Workspace has been saved";
         }
 
         @Override

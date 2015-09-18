@@ -275,6 +275,13 @@ public class Allocation extends SaharaItem implements Serializable, Comparable<A
         }
 
         /**
+         * Gets the String value of the Command for editting allocations.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -327,6 +334,13 @@ public class Allocation extends SaharaItem implements Serializable, Comparable<A
         public void undo() {
             team.getProjectAllocations().add(allocation);
             project.getTeamAllocations().add(allocation);
+        }
+
+        /**
+         * Gets the String value of the Command for deleting allocations.
+         */
+        public String getString() {
+            return null;
         }
 
         /**

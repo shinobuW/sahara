@@ -658,6 +658,13 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
         }
 
         /**
+         * Gets the String value of the Command for editting sprints.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -765,6 +772,13 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
         }
 
         /**
+         * Gets the String value of the Command for deleting sprints.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -814,6 +828,13 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
         public void undo() {
             sprint.stories.remove(story);
             story.setSprint(null);
+        }
+
+        /**
+         * Gets the String value of the Command for adding stories.
+         */
+        public String getString() {
+            return null;
         }
 
         /**

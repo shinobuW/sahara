@@ -586,6 +586,13 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
         }
 
         /**
+         * Gets the String value of the Command for editting backlogs.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -732,6 +739,13 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
         }
 
         /**
+         * Gets the String value of the Command for deleting backlogs.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -801,6 +815,13 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             if (backlog.getProject() != null) {
                 backlog.getProject().getUnallocatedStories().add(story);
             }
+        }
+
+        /**
+         * Gets the String value of the Command for adding a story.
+         */
+        public String getString() {
+            return null;
         }
 
         /**

@@ -107,6 +107,10 @@ public class CumulativeCommandTest {
             obj.testString = oldName;
         }
 
+        public String getString() {
+            return null;
+        }
+
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             return true;

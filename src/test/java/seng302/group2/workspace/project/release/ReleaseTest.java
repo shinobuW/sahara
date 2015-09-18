@@ -85,6 +85,7 @@ public class ReleaseTest {
 
     @Test
     public void testEdit() {
+        Global.currentWorkspace.getAllTags().clear();
         Release release = new Release();
         Project testProject = new Project();
         release.setProject(testProject);

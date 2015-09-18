@@ -1112,6 +1112,14 @@ public class Workspace extends SaharaItem implements Serializable {
         }
 
         /**
+         * Gets the String value of the Command for editting a workspace.
+         */
+        @Override
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -1198,6 +1206,13 @@ public class Workspace extends SaharaItem implements Serializable {
         }
 
         /**
+         * Gets the String value of the Command for adding a project.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -1241,6 +1256,13 @@ public class Workspace extends SaharaItem implements Serializable {
          */
         public void undo() {
             Global.currentWorkspace.getTeams().remove(team);
+        }
+
+        /**
+         * Gets the String value of the Command for adding teams.
+         */
+        public String getString() {
+            return null;
         }
 
         /**
@@ -1290,6 +1312,13 @@ public class Workspace extends SaharaItem implements Serializable {
         }
 
         /**
+         * Gets the String value of the Command for adding roadmaps.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -1333,6 +1362,13 @@ public class Workspace extends SaharaItem implements Serializable {
          */
         public void undo() {
             Global.currentWorkspace.getAllTags().remove(tag);
+        }
+
+        /**
+         * Gets the String value of the Command for adding Tags.
+         */
+        public String getString() {
+            return null;
         }
 
         /**
@@ -1387,6 +1423,13 @@ public class Workspace extends SaharaItem implements Serializable {
         }
 
         /**
+         * Gets the String value of the Command for adding people.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -1430,6 +1473,13 @@ public class Workspace extends SaharaItem implements Serializable {
          */
         public void undo() {
             Global.currentWorkspace.getSkills().remove(skill);
+        }
+
+        /**
+         * Gets the String value of the Command for editting skills.
+         */
+        public String getString() {
+            return null;
         }
 
         /**

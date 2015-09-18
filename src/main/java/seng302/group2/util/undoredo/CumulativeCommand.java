@@ -13,6 +13,7 @@ import java.util.Set;
 public class CumulativeCommand implements Command {
 
     Collection<Command> commands = new LinkedList<>();
+    String statusBarString = null;
 
     /**
      * The default constructor for CumulativeCommands, has no initial sub-commands
@@ -68,6 +69,20 @@ public class CumulativeCommand implements Command {
         for (Command command : commands) {
             command.undo();
         }
+    }
+
+    /**
+     * sets the String value of the Command for cumulative commands.
+     */
+    public void setString(String string) {
+        statusBarString = string;
+    }
+
+    /**
+     * Gets the String value of the Command for cumulative commands.
+     */
+    public String getString() {
+        return statusBarString;
     }
 
     /**

@@ -3,10 +3,12 @@ package seng302.group2.scenes;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
@@ -36,6 +38,7 @@ public class MainPane extends BorderPane {
     Preferences userPrefs = Preferences.userNodeForPackage(getClass());
     private TreeViewWithItems<SaharaItem> treeView;
     private Pane informationPane = new Pane();
+    private HBox statusBar;
     private ScrollPane contentPane;
     private boolean menuHidden = false;
     private double dividerPositions;
@@ -57,7 +60,14 @@ public class MainPane extends BorderPane {
             content.getItems().add(treeView);
         }
         content.getItems().add(contentPane);
+        statusBar = statusBar("A message to display");
+
         this.setCenter(content);
+
+
+//        statusBar = statusBar(Global.commandManager.lastAction());
+
+        this.setBottom(statusBar);
 
         double split = userPrefs.getDouble("pane.split", 0.225);
         Platform.runLater(() -> content.setDividerPositions(split));
@@ -123,6 +133,13 @@ public class MainPane extends BorderPane {
         }
 
         userPrefs.putBoolean("tree.hidden", !content.getItems().contains(treeView));
+    }
+
+    public static HBox statusBar(String input) {
+        HBox statusBar = new HBox();
+        Label messageLabel = new Label(input);
+        statusBar.getChildren().add(messageLabel);
+        return statusBar;
     }
 
     /**

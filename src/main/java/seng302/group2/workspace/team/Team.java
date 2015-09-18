@@ -618,6 +618,13 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             team.description = oldDescription;
         }
 
+        /**
+         * Gets the String value of the Command for editting a Team.
+         */
+        public String getString() {
+            return null;
+        }
+
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             boolean mapped = false;
@@ -745,6 +752,13 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             team.getTags().clear();
             team.getTags().addAll(oldTeamTags);
 
+        }
+
+        /**
+         * Gets the String value of the Command for editting Teams.
+         */
+        public String getString() {
+            return null;
         }
 
         /**
@@ -915,6 +929,13 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         }
 
         /**
+         * Gets the String value of the Command for deleting Teams.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -1062,6 +1083,13 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         }
 
         /**
+         * Gets the String value of the Command for cascading team deletion.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -1165,6 +1193,13 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         }
 
         /**
+         * Gets the String value of the Command for adding a Person.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -1220,6 +1255,13 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         public void undo() {
             team.getPeople().add(person);
             //person.setTeam(team);
+        }
+
+        /**
+         * Gets the String value of the Command for removing a Person off a team.
+         */
+        public String getString() {
+            return null;
         }
 
         /**
@@ -1281,6 +1323,13 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         public void undo() {
             proj.getTeamAllocations().remove(allocation);
             team.getProjectAllocations().remove(allocation);
+        }
+
+        /**
+         * Gets the String value of the Command for adding an allocation.
+         */
+        public String getString() {
+            return null;
         }
 
         /**

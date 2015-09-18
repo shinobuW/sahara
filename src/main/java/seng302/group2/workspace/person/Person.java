@@ -632,6 +632,13 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
         }
 
         /**
+         * Gets the String value of the Command for Editting a person.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -763,6 +770,13 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             team.getPeople().add(person);
             person.setTeam(team);
             Global.currentWorkspace.getPeople().add(person);
+        }
+
+        /**
+         * Gets the String value of the Command for deleting a Person.
+         */
+        public String getString() {
+            return null;
         }
 
         /**

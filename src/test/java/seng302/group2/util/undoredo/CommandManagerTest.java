@@ -140,6 +140,11 @@ public class CommandManagerTest {
         }
 
         @Override
+        public String getString() {
+            return null;
+        }
+
+        @Override
         public boolean map(Set<SaharaItem> stateObjects) {
             return true;
         }

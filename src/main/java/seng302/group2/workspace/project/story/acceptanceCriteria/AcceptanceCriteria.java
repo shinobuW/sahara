@@ -232,6 +232,13 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
         }
 
         /**
+         * Gets the String value of the Command for deleting acceptance criteria.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -311,6 +318,13 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
             //Changes the AC list of tags to what they used to be
             ac.getTags().clear();
             ac.getTags().addAll(oldAcTags);
+        }
+
+        /**
+         * Gets the String value of the Command for editting acceptance criteria tags.
+         */
+        public String getString() {
+            return null;
         }
 
         /**
@@ -410,6 +424,13 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
         }
 
         /**
+         * Gets the String value of the Command for editting the AC state.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          *
          * @param stateObjects A set of objects to search through
@@ -464,6 +485,13 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
          */
         public void undo() {
             ac.description = oldDescription;
+        }
+
+        /**
+         * Gets the String value of the Command for editting AC descriptions.
+         */
+        public String getString() {
+            return null;
         }
 
         /**

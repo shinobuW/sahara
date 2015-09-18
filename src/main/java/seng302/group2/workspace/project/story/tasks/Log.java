@@ -280,6 +280,13 @@ public class Log extends SaharaItem implements Serializable {
             this.log.task.setEffortSpent(this.oldEffortSpent);
         }
 
+        /**
+         * Gets the String value of the Command for deletion of logs.
+         */
+        public String getString() {
+            return null;
+        }
+
 
         /**
          * Searches the stateObjects to find an equal model class to map to
@@ -434,6 +441,13 @@ public class Log extends SaharaItem implements Serializable {
 
         }
 
+        /**
+         * Gets the String value of the Command for Editting of Logs.
+         */
+        public String getString() {
+            return null;
+        }
+
 
         /**
          * Searches the stateObjects to find an equal model class to map to
@@ -530,6 +544,13 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void undo() {
             log.description = this.oldDescription;
+        }
+
+        /**
+         * Gets the String value of the Command for editting the description of Logs.
+         */
+        public String getString() {
+            return null;
         }
 
 

@@ -288,6 +288,13 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
         }
 
         /**
+         * Gets the String value of the Command for editting skills.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -381,6 +388,13 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
                 person.getSkills().add(skill);
             }
             Global.currentWorkspace.getSkills().add(skill);
+        }
+
+        /**
+         * Gets the String value of the Command for deleting skills.
+         */
+        public String getString() {
+            return null;
         }
 
         /**

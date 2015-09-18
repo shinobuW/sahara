@@ -716,6 +716,13 @@ public class Task extends SaharaItem implements Serializable {
         }
 
         /**
+         * Gets the String value of the Command for Editting of Tasks.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -812,6 +819,13 @@ public class Task extends SaharaItem implements Serializable {
         }
 
         /**
+         * Gets the String value of the Command for editting the assignee of a task.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -867,6 +881,13 @@ public class Task extends SaharaItem implements Serializable {
         public void undo() {
             task.lane = this.oldLane;
             task.state = this.oldState;
+        }
+
+        /**
+         * Gets the String value of the Command for editting the State of a task.
+         */
+        public String getString() {
+            return null;
         }
 
         /**
@@ -933,6 +954,13 @@ public class Task extends SaharaItem implements Serializable {
         }
 
         /**
+         * Gets the String value of the Command for Editting the effortleft of a task.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -986,6 +1014,13 @@ public class Task extends SaharaItem implements Serializable {
          */
         public void undo() {
             task.description = oldDescription;
+        }
+
+        /**
+         * Gets the String value of the Command for editting the description of a task.
+         */
+        public String getString() {
+            return null;
         }
 
         /**
@@ -1084,6 +1119,13 @@ public class Task extends SaharaItem implements Serializable {
         }
 
         /**
+         * Gets the String value of the Command for editting the Lane of a task.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -1154,6 +1196,13 @@ public class Task extends SaharaItem implements Serializable {
         }
 
         /**
+         * Gets the String value of the Command for editting the impediements of a task.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -1209,7 +1258,14 @@ public class Task extends SaharaItem implements Serializable {
             }
             
         }
-        
+
+        /**
+         * Gets the String value of the Command for deleting a task.
+         */
+        public String getString() {
+            return null;
+        }
+
         /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through

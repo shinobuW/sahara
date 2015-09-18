@@ -232,6 +232,13 @@ public class PairLog extends Log {
             task.setEffortSpent(task.getEffortSpent() + pLog.getDurationInMinutes() - duration);
         }
 
+        /**
+         * Gets the String value of the Command for editting pairlogs.
+         */
+        public String getString() {
+            return null;
+        }
+
 
         /**
          * Searches the stateObjects to find an equal model class to map to
@@ -328,6 +335,13 @@ public class PairLog extends Log {
             this.pLog.task.setEffortSpent(this.oldEffortSpent);
         }
 
+        /**
+         * Gets the String value of the Command for deleting pairlogs.
+         */
+        public String getString() {
+            return null;
+        }
+
 
         /**
          * Searches the stateObjects to find an equal model class to map to
@@ -385,6 +399,13 @@ public class PairLog extends Log {
             pLog.partner = oldPartner;
         }
 
+        /**
+         * Gets the String value of the Command for editting the partner of a log.
+         */
+        public String getString() {
+            return null;
+        }
+
 
         /**
          * Searches the stateObjects to find an equal model class to map to
@@ -440,6 +461,13 @@ public class PairLog extends Log {
             pLog.logger = oldLogger;
         }
 
+        /**
+         * Gets the String value of the Command for logger edits.
+         */
+        public String getString() {
+            return null;
+        }
+
 
         /**
          * Searches the stateObjects to find an equal model class to map to
@@ -490,6 +518,12 @@ public class PairLog extends Log {
             pLog.description = oldDescription;
         }
 
+        /**
+         * Gets the String value of the Command for editting a pairlogs description.
+         */
+        public String getString() {
+            return null;
+        }
 
         /**
          * Searches the stateObjects to find an equal model class to map to
@@ -540,6 +574,13 @@ public class PairLog extends Log {
         public void undo() {
             pLog.duration = oldDuration;
             task.setEffortSpent(task.getEffortSpent() + pLog.getDurationInMinutes() - duration);
+        }
+
+        /**
+         * Gets the String value of the Command for editting the duration of a pairlog.
+         */
+        public String getString() {
+            return null;
         }
 
 

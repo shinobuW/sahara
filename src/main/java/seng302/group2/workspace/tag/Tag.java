@@ -171,6 +171,13 @@ public class Tag extends SaharaItem implements Serializable {
         }
 
         /**
+         * Gets the String value of the Command for Tags.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          *
          * @param stateObjects A set of objects to search through
@@ -219,6 +226,13 @@ public class Tag extends SaharaItem implements Serializable {
             for (SaharaItem item : taggedItems) {
                 item.getTags().remove(tag);
             }
+        }
+
+        /**
+         * Gets the String value of the Command for Tags delete command.
+         */
+        public String getString() {
+            return null;
         }
 
         /**

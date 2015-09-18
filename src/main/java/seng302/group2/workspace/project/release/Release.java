@@ -390,6 +390,13 @@ public class Release extends SaharaItem implements Comparable<Release> {
         }
 
         /**
+         * Gets the String value of the Command for editting releases.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
          * Searches the stateObjects to find an equal model class to map to
          * @param stateObjects A set of objects to search through
          * @return If the item was successfully mapped
@@ -486,6 +493,14 @@ public class Release extends SaharaItem implements Comparable<Release> {
         public void undo() {
             proj.getReleases().add(release);
             //release.setProject(proj);
+        }
+
+        /**
+         * Gets the String value of the Command for deleting releases.
+         */
+        @Override
+        public String getString() {
+            return null;
         }
 
         /**
