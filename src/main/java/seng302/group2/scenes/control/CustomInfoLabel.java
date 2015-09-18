@@ -97,7 +97,7 @@ public class CustomInfoLabel extends HBox implements SearchableControl {
         if (searchType == SearchType.NORMAL) {
             if (this.value.query(query)) {
                 if (this.label.getText().contains("Short")) {
-                    if (this.value.getText().equals(query)) {
+                    if (this.value.getText().trim().equals(query)) {
                         count = 4;
                     }
                     else {
