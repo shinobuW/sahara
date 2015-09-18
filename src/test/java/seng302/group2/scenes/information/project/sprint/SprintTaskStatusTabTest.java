@@ -1,19 +1,7 @@
 package seng302.group2.scenes.information.project.sprint;
 
-import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import seng302.group2.scenes.JavaFxTestApp;
-import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.project.release.Release;
-import seng302.group2.workspace.project.sprint.Sprint;
-import seng302.group2.workspace.project.story.Story;
-import seng302.group2.workspace.project.story.tasks.Task;
-import seng302.group2.workspace.team.Team;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class SprintTaskStatusTabTest {

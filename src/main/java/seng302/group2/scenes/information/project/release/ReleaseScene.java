@@ -5,13 +5,9 @@
  */
 package seng302.group2.scenes.information.project.release;
 
-import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.information.roadMap.RoadMapEditTab;
-import seng302.group2.scenes.information.roadMap.RoadMapInfoTab;
 import seng302.group2.workspace.project.release.Release;
-import seng302.group2.workspace.roadMap.RoadMap;
 
 import java.util.ArrayList;
 import java.util.Collection;

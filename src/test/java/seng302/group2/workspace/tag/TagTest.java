@@ -1,6 +1,5 @@
 package seng302.group2.workspace.tag;
 
-import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,11 +8,7 @@ import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
-import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.project.story.Story;
-import seng302.group2.workspace.skills.Skill;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 /**

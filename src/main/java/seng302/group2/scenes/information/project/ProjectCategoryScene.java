@@ -1,13 +1,9 @@
 package seng302.group2.scenes.information.project;
 
-import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.information.project.story.StoryCategoryTab;
 import seng302.group2.workspace.workspace.Workspace;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 /**

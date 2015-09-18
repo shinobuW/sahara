@@ -14,7 +14,6 @@ import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.util.validation.ShortNameValidator;
-import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.tag.Tag;
 
@@ -98,7 +97,7 @@ public class SkillEditTab extends SearchableTab {
             boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
                     currentSkill.getShortName());
 
-            ArrayList<Tag> tags = new ArrayList<Tag>();
+            ArrayList<Tag> tags = new ArrayList<>();
 
             if (correctShortName) {
                 currentSkill.edit(shortNameCustomField.getText(),
@@ -116,9 +115,7 @@ public class SkillEditTab extends SearchableTab {
 
         });
 
-        btnCancel.setOnAction((event) -> {
-            currentSkill.switchToInfoScene();
-        });
+        btnCancel.setOnAction((event) -> currentSkill.switchToInfoScene());
 
         // Add items to pane & search collection
         editPane.getChildren().addAll(shortNameCustomField, descriptionTextArea, buttons);
