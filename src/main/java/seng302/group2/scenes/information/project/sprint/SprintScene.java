@@ -1,9 +1,7 @@
 package seng302.group2.scenes.information.project.sprint;
 
-import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.information.project.story.*;
 import seng302.group2.workspace.project.sprint.Sprint;
 
 import java.util.ArrayList;
@@ -24,6 +22,7 @@ public class SprintScene extends TrackedTabPane {
     SearchableTab burndownTab;
     SearchableTab scrumboardTab;
     SearchableTab taskStatusTab;
+    SearchableTab loggingEffortTab;
     SearchableTab editTab;
 
 
@@ -45,10 +44,10 @@ public class SprintScene extends TrackedTabPane {
         burndownTab = new SprintBurndownTab(currentSprint);
         scrumboardTab = new ScrumboardTab(currentSprint);
         taskStatusTab = new SprintTaskStatusTab(currentSprint);
+        loggingEffortTab = new SprintLogTab(currentSprint);
 
 
-
-        Collections.addAll(searchableTabs, informationTab, scrumboardTab, burndownTab, taskStatusTab);
+        Collections.addAll(searchableTabs, informationTab, scrumboardTab, burndownTab, taskStatusTab, loggingEffortTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 

@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Separator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,6 +25,7 @@ import seng302.group2.workspace.team.Team;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,12 +51,15 @@ public class SprintLogTab extends SearchableTab {
         construct();
     }
 
-    private void updateFilteredLogs(Sprint sprint) {
+    /**
+     * Updates the data in the log table view according to the filter combo boxes.
+     */
+    private void updateFilteredLogs() {
         data.clear();
-        data.addAll(sprint.getAllLogsWithInitialLogs());
+        data.addAll(currentSprint.getAllLogsWithInitialLogs());
         Person selectedLogger = loggerComboBox.getComboBox().getValue();
         Person selectedPartner = partnerComboBox.getComboBox().getValue();
-        for (Log log : sprint.getAllLogsWithInitialLogs()) {
+        for (Log log : currentSprint.getAllLogsWithInitialLogs()) {
             if (selectedLogger != null) {
                 if (selectedLogger != nullPerson && log.getLogger() != selectedLogger) {
                     data.remove(log);
@@ -76,12 +79,18 @@ public class SprintLogTab extends SearchableTab {
         }
     }
 
-
+    /**
+     * Gets all the searchable controls in the tab
+     * @return Collection of Searchable Controls
+     */
     @Override
     public Collection<SearchableControl> getSearchableControls() {
         return null;
     }
 
+    /**
+     * constructs the contents of the tab
+     */
     @Override
     public void construct() {
         this.setText("Logging Effort");
@@ -113,11 +122,11 @@ public class SprintLogTab extends SearchableTab {
             partnerComboBox.getComboBox().getItems().add(nullPerson);
             partnerComboBox.getComboBox().getItems().addAll(allPeople);
             partnerComboBox.getComboBox().getItems().remove(newValue);
-            updateFilteredLogs(currentSprint);
+            updateFilteredLogs();
         });
 
         partnerComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
-            updateFilteredLogs(currentSprint);
+            updateFilteredLogs();
         });
 
 
@@ -125,9 +134,6 @@ public class SprintLogTab extends SearchableTab {
         filterHBox.getChildren().addAll(loggerComboBox, partnerComboBox);
 
         SearchableText title = new SearchableTitle(currentSprint.getLongName() + " Logging Effort");
-
-        final Separator separator = new Separator();
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         SearchableTable<Log> logTable = new SearchableTable<>();
         logTable.setEditable(false);
@@ -137,7 +143,7 @@ public class SprintLogTab extends SearchableTab {
                 + "logs between the specified dates.", searchControls));
         logTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        updateFilteredLogs(currentSprint);
+        updateFilteredLogs();
 
         TableColumn loggerCol = new TableColumn("Logger");
         loggerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("logger"));
@@ -193,20 +199,12 @@ public class SprintLogTab extends SearchableTab {
                 filterHBox,
                 logTable
         );
-//
-//            Collections.addAll(searchControls,
-//                    title,
-//                    sprintName,
-//                    sprintGoal,
-//                    sprintStart,
-//                    sprintEnd,
-//                    desc,
-//                    team,
-//                    project,
-//                    release,
-//                    stories
-//            );
 
-//            loggingPane.getChildren().addAll((currentSprint), btnEdit);
+        Collections.addAll(searchControls,
+                title,
+                logTable,
+                loggerComboBox,
+                partnerComboBox
+        );
     }
 }
