@@ -70,7 +70,7 @@ public class PersonInfoTab extends SearchableTab {
 
         SearchableText title = new SearchableTitle(currentPerson.getFirstName() + " " + currentPerson.getLastName());
 
-        VBox skillVBox = new VBox(10);
+        VBox skillVBox = new VBox(20);
         CustomInfoLabel skill  = new CustomInfoLabel("Skills: ", "");
         SearchableListView personSkillsBox = new SearchableListView<>(currentPerson.getSkills());
         personSkillsBox.setPrefHeight(192);
