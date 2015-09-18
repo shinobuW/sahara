@@ -649,6 +649,47 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
                 }
             }
 
+            //Tag collections
+            for (Tag tag : backlogTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        backlogTags.remove(tag);
+                        backlogTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Tag tag : oldBacklogTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        oldBacklogTags.remove(tag);
+                        oldBacklogTags.add((Tag) item);
+                        break;
+                    }
+                }
+            }
+
+            for (Tag tag : globalTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        globalTags.remove(tag);
+                        globalTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Tag tag : oldGlobalTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        oldGlobalTags.remove(tag);
+                        oldGlobalTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
             return mapped_po && mapped_bl && mapped_proj && mapped_old_proj && mapped_old_po;
         }
     }

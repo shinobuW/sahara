@@ -728,6 +728,47 @@ public class Task extends SaharaItem implements Serializable {
                 }
             }
 
+            //Tag collections
+            for (Tag tag : taskTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        taskTags.remove(tag);
+                        taskTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Tag tag : oldTaskTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        oldTaskTags.remove(tag);
+                        oldTaskTags.add((Tag) item);
+                        break;
+                    }
+                }
+            }
+
+            for (Tag tag : globalTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        globalTags.remove(tag);
+                        globalTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Tag tag : oldGlobalTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        oldGlobalTags.remove(tag);
+                        oldGlobalTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
             return  mapped_task;
         }
     }

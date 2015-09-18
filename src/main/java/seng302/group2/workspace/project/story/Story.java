@@ -1110,6 +1110,47 @@ public class Story extends SaharaItem implements Serializable {
                 }
             }
 
+            //Tag collections
+            for (Tag tag : storyTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        storyTags.remove(tag);
+                        storyTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Tag tag : oldStoryTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        oldStoryTags.remove(tag);
+                        oldStoryTags.add((Tag) item);
+                        break;
+                    }
+                }
+            }
+
+            for (Tag tag : globalTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        globalTags.remove(tag);
+                        globalTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Tag tag : oldGlobalTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        oldGlobalTags.remove(tag);
+                        oldGlobalTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
             return mapped_backlog && mapped_project && mapped_story && mapped_old_backlog
                     && mapped_old_project;
         }

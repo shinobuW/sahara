@@ -840,26 +840,46 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
                 }
             }
 
-            // Teams collections
-            // Teams is deprecated, new use is allocations
-            /*for (Team team : teams) {
+            //Tag collections
+            for (Tag tag : projectTags) {
                 for (SaharaItem item : stateObjects) {
-                    if (item.equivalentTo(team)) {
-                        teams.remove(team);
-                        teams.add((Team)item);
+                    if (item.equivalentTo(tag)) {
+                        projectTags.remove(tag);
+                        projectTags.add((Tag)item);
                         break;
                     }
                 }
             }
-            for (Team team : oldTeams) {
+
+            for (Tag tag : oldProjectTags) {
                 for (SaharaItem item : stateObjects) {
-                    if (item.equivalentTo(team)) {
-                        oldTeams.remove(team);
-                        oldTeams.add((Team)item);
+                    if (item.equivalentTo(tag)) {
+                        oldProjectTags.remove(tag);
+                        oldProjectTags.add((Tag) item);
                         break;
                     }
                 }
-            }*/
+            }
+
+            for (Tag tag : globalTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        globalTags.remove(tag);
+                        globalTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Tag tag : oldGlobalTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        oldGlobalTags.remove(tag);
+                        oldGlobalTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
 
             return mapped_project;
         }

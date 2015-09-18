@@ -299,6 +299,48 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
                     mapped = true;
                 }
             }
+
+            //Tag collections
+            for (Tag tag : skillTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        skillTags.remove(tag);
+                        skillTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Tag tag : oldSkillTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        oldSkillTags.remove(tag);
+                        oldSkillTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Tag tag : globalTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        globalTags.remove(tag);
+                        globalTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Tag tag : oldGlobalTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        oldGlobalTags.remove(tag);
+                        oldGlobalTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
             return mapped;
         }
     }
