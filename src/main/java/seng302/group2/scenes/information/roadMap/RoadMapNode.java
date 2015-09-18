@@ -46,7 +46,11 @@ public class RoadMapNode extends VBox implements SearchableControl {
         roadMapContent.setStyle("-fx-background-color: rgba(255, 116, 10, 0.62); -fx-border-radius: 5 5 5 5; "
                 + "-fx-background-radius: 0 5 5 5");
         HBox roadMapChildren = new HBox();
-        
+
+        Insets insetsNode = new Insets(0, 5, 5, 0);
+        this.setPadding(insetsNode);
+
+
         SearchableText shortNameField = new SearchableText(currentRoadMap.getShortName());
         roadMapContent.setAlignment(Pos.CENTER);
         roadMapContent.setMinHeight(35);
