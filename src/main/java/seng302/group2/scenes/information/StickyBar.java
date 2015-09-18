@@ -26,7 +26,7 @@ public class StickyBar extends Pane {
             this.getChildren().add(new Button("Cancel"));
         }
         if (type == STICKYTYPE.OTHER) {
-
+            this.getChildren().add(new Button("Done"));
         }
 
     }
