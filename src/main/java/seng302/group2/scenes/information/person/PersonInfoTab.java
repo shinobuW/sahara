@@ -11,6 +11,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomInfoLabel;
@@ -66,7 +67,6 @@ public class PersonInfoTab extends SearchableTab {
 
         // Create controls
         HBox listViewHBox = new HBox(10);
-
 
         SearchableText title = new SearchableTitle(currentPerson.getFirstName() + " " + currentPerson.getLastName());
 

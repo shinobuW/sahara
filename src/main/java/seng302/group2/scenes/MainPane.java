@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.information.StickyBar;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
 import seng302.group2.scenes.menu.MainMenuBar;
 import seng302.group2.scenes.menu.MainToolbar;
@@ -37,8 +38,7 @@ public class MainPane extends BorderPane {
     private ScrollPane contentPane;
     private boolean menuHidden = false;
     private double dividerPositions;
-
-    public HBox stickyBar = new HBox();
+    public StickyBar stickyBar = new StickyBar();
 
 
     /**
@@ -60,8 +60,8 @@ public class MainPane extends BorderPane {
 
         VBox stickyBarBox = new VBox();
         VBox.setVgrow(stickyBarBox, Priority.ALWAYS);
-        stickyBarBox.setAlignment(Pos.BOTTOM_RIGHT);
-        stickyBarBox.getChildren().addAll(new Separator(), new Button("Sticky"));
+        stickyBarBox.setAlignment(Pos.BOTTOM_LEFT);
+        stickyBarBox.getChildren().addAll(new Separator(), stickyBar);
 
         VBox contentVBox = new VBox();
         contentVBox.getChildren().addAll(contentPane, stickyBarBox);
@@ -169,6 +169,15 @@ public class MainPane extends BorderPane {
         contentPane.setContent(node);
 //            });
 
+    }
+
+    /**
+     * Sets the content pane child to the given node
+     *
+     * @param type The node to replace the current content pane
+     */
+    public void setStick(StickyBar.STICKYTYPE type) {
+        stickyBar = new StickyBar(type);
     }
 
     /**
