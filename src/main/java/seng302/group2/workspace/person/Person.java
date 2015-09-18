@@ -13,7 +13,6 @@ import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
-import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.PairLog;
 import seng302.group2.workspace.role.Role;
@@ -496,6 +495,7 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
      * @param newDescription The persons new description
      * @param newSkills      the persons new list of skills
      * @param newTeam        the persons new team
+     * @param newTags        The persons new tags
      */
     public void edit(String newShortName, String newFirstName, String newLastName,
                      String newEmail, LocalDate newBirthDate, String newDescription,

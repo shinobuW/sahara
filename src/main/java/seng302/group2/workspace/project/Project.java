@@ -736,6 +736,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      * @param newLongName    The new long name
      * @param newDescription The new description
      * @param teams          The new project teams
+     * @param newTags        The new tags
      */
     public void edit(String newShortName, String newLongName, String newDescription,
                      ObservableList<Team> teams, ArrayList<Tag> newTags) {

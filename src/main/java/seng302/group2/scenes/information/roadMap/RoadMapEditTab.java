@@ -12,7 +12,6 @@ import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
-import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
@@ -132,17 +131,7 @@ public class RoadMapEditTab extends SearchableTab {
 
         // Events
         btnAssign.setOnAction((event) -> {
-            boolean uniquePriority = true;
-            Release errorRelease = null;
             errorField.setText("");
-            outerloop:
-            for (Release release : roadMapList) {
-                for (Release addedStory : availableReleaseListView.getSelectionModel().getSelectedItems()) {
-                    uniquePriority = false;
-                    errorRelease = addedStory;
-                    break outerloop;
-                }
-            }
             roadMapList.addAll(
                     availableReleaseListView.getSelectionModel().getSelectedItems());
             availableReleases.removeAll(

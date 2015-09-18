@@ -501,6 +501,8 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
      * @param newTeam         The new team
      * @param newRelease      The new release
      * @param newStories      The new stories in the backlog
+     * @param newTags         The new tags
+
      */
     public void edit(String newGoal, String newLongName, String newDescription, LocalDate newStartDate,
                      LocalDate newEndDate, Team newTeam, Release newRelease, Collection<Story> newStories,

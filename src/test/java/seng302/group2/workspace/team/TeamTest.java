@@ -8,10 +8,8 @@ package seng302.group2.workspace.team;
 import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Element;
-import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
@@ -379,9 +377,9 @@ public class TeamTest {
         new ReportGenerator();
         Team team = new Team("shortname", "description");
 
-        Allocation pastAllocation1 = new Allocation(new Project(), team, LocalDate.of(1994, Month.DECEMBER, 01), LocalDate.of(1994, Month.DECEMBER, 02));
-        Allocation pastAllocation2 = new Allocation(new Project(), team, LocalDate.of(1994, Month.DECEMBER, 01), LocalDate.of(1994, Month.DECEMBER, 02));
-        Allocation currentAllocation = new Allocation(new Project(), team, LocalDate.of(2000, Month.JANUARY, 01), LocalDate.of(3000, Month.JANUARY, 01));
+        Allocation pastAllocation1 = new Allocation(new Project(), team, LocalDate.of(1994, Month.DECEMBER, 1), LocalDate.of(1994, Month.DECEMBER, 2));
+        Allocation pastAllocation2 = new Allocation(new Project(), team, LocalDate.of(1994, Month.DECEMBER, 1), LocalDate.of(1994, Month.DECEMBER, 2));
+        Allocation currentAllocation = new Allocation(new Project(), team, LocalDate.of(2000, Month.JANUARY, 1), LocalDate.of(3000, Month.JANUARY, 1));
         Allocation futureAllocation1 = new Allocation(new Project(), team, LocalDate.of(3000, Month.DECEMBER, 31), LocalDate.of(3001, Month.DECEMBER, 31));
         Allocation futureAllocation2 = new Allocation(new Project(), team, LocalDate.of(3002, Month.DECEMBER, 31), LocalDate.of(3911, Month.DECEMBER, 31));
 
@@ -423,9 +421,9 @@ public class TeamTest {
         Person other3 = new Person();
         Person other4 = new Person();
 
-        Allocation pastAllocation1 = new Allocation(new Project(), team, LocalDate.of(1994, Month.DECEMBER, 01), LocalDate.of(1994, Month.DECEMBER, 02));
-        Allocation pastAllocation2 = new Allocation(new Project(), team, LocalDate.of(1994, Month.DECEMBER, 01), LocalDate.of(1994, Month.DECEMBER, 02));
-        Allocation currentAllocation = new Allocation(new Project(), team, LocalDate.of(2000, Month.JANUARY, 01), LocalDate.of(3000, Month.JANUARY, 01));
+        Allocation pastAllocation1 = new Allocation(new Project(), team, LocalDate.of(1994, Month.DECEMBER, 1), LocalDate.of(1994, Month.DECEMBER, 2));
+        Allocation pastAllocation2 = new Allocation(new Project(), team, LocalDate.of(1994, Month.DECEMBER, 1), LocalDate.of(1994, Month.DECEMBER, 2));
+        Allocation currentAllocation = new Allocation(new Project(), team, LocalDate.of(2000, Month.JANUARY, 1), LocalDate.of(3000, Month.JANUARY, 1));
         Allocation futureAllocation1 = new Allocation(new Project(), team, LocalDate.of(3000, Month.DECEMBER, 31), LocalDate.of(3001, Month.DECEMBER, 31));
         Allocation futureAllocation2 = new Allocation(new Project(), team, LocalDate.of(3002, Month.DECEMBER, 31), LocalDate.of(3911, Month.DECEMBER, 31));
 

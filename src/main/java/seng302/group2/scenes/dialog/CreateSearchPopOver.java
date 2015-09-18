@@ -302,6 +302,7 @@ public class CreateSearchPopOver extends PopOver {
      * @param checkedItems items that are being searched through
      * @param searchText   the text to be searched
      * @param searchType   the type of the search
+     * @param sortByTree   wether to sort via the tree or not
      * @return a list of SearchResultCellNode
      */
     public List<SearchResultCellNode> runSearch(List<String> checkedItems, String searchText, SearchType searchType,

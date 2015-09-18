@@ -1,9 +1,7 @@
 package seng302.group2.scenes.information.roadMap;
 
-import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.information.role.RoleInfoTab;
 import seng302.group2.workspace.roadMap.RoadMap;
 
 import java.util.ArrayList;
@@ -11,6 +9,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
+ * Scene for displaying all the road map information.
  * Created by cvs20 on 11/09/15.
  */
 public class RoadMapScene extends TrackedTabPane {

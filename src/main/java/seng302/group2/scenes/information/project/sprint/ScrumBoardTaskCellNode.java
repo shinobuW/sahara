@@ -59,6 +59,7 @@ public class ScrumBoardTaskCellNode extends HBox implements SearchableControl {
     /**
      * The constructor that creates a scrumboard task cell for the given task
      * @param task The task the cell should reflect the information of
+     * @param statusTab The tab that applies to this cell node
      */
     public ScrumBoardTaskCellNode(Task task, SprintTaskStatusTab statusTab) {
         this.statusTab = statusTab;

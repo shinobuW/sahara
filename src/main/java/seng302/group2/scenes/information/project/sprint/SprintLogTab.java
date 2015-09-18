@@ -44,7 +44,7 @@ public class SprintLogTab extends SearchableTab {
 
     /**
      * Constructor for the sprint logging tab
-     * @param currentSprint
+     * @param currentSprint The current sprint
      */
     public SprintLogTab(Sprint currentSprint) {
         this.currentSprint = currentSprint;

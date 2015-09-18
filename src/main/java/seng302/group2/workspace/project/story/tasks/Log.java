@@ -319,7 +319,8 @@ public class Log extends SaharaItem implements Serializable {
      * @param newStartDate the new start date to set
      * @param newDuration the new duration to set
      * @param newDescription the new description to set
-     * @param newEffortLeft the new effort left to set 
+     * @param newEffortLeft the new effort left to set
+     * @param newTags        The new tags
      */
     public void edit(Person newLogger, LocalDateTime newStartDate,
                      double newDuration, String newDescription, double newEffortLeft, ArrayList<Tag> newTags) {

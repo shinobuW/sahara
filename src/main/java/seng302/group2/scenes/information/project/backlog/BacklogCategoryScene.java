@@ -1,14 +1,9 @@
 package seng302.group2.scenes.information.project.backlog;
 
-import javafx.scene.control.Tab;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.information.person.PersonCategoryTab;
 import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
-import seng302.group2.workspace.workspace.Workspace;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 /**

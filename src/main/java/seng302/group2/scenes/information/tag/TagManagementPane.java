@@ -4,28 +4,20 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import org.controlsfx.control.PopOver;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.PopOverTip;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
-import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.workspace.tag.Tag;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -58,7 +50,7 @@ public class TagManagementPane extends SplitPane {
             this.constructDetail();
         }
         else {
-            // make a :( placeholder
+            //TODO make a :( placeholder
         }
     }
 

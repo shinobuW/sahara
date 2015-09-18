@@ -1005,9 +1005,10 @@ public class Workspace extends SaharaItem implements Serializable {
      * Creates a Workspace edit command and executes it with the Global Command Manager, updating
      * the workspace with the new parameter values.
      *
-     * @param newShortName   The new short name
-     * @param newLongName    The new long name
-     * @param newDescription The new description
+     * @param newShortName      The new short name
+     * @param newLongName       The new long name
+     * @param newDescription    The new description
+     * @param newTags           The new tags of the workspace
      */
     public void edit(String newShortName, String newLongName, String newDescription, ArrayList<Tag> newTags) {
         Command wsedit = new WorkspaceEditCommand(this, newShortName, newLongName, newDescription, newTags);
@@ -1050,6 +1051,7 @@ public class Workspace extends SaharaItem implements Serializable {
          * @param newShortName The new short name for the workspace
          * @param newLongName The new long name for the workspace
          * @param newDescription The new description for the workspace
+         * @param newTags The new tags of the workspace
          */
         private WorkspaceEditCommand(Workspace ws, String newShortName, String newLongName,
                                      String newDescription, ArrayList<Tag> newTags) {

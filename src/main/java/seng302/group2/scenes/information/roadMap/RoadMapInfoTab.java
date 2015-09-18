@@ -15,7 +15,6 @@ import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTitle;
-import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.roadMap.RoadMap;
 
 import java.util.ArrayList;
@@ -29,7 +28,6 @@ import java.util.List;
  */
 public class RoadMapInfoTab extends SearchableTab {
     List<SearchableControl> searchControls = new ArrayList<>();
-    Button btnEdit = new Button("Edit");
     RoadMap currentRoadMap;
 
     /**
@@ -88,7 +86,7 @@ public class RoadMapInfoTab extends SearchableTab {
 
         HBox roadmapKeyBox = new HBox(8);
         Rectangle yellow = new Rectangle(250,25,20,20);
-        yellow.setFill(Color.color(255 / 255, 0.5, 10 / 255, 0.62));
+        yellow.setFill(Color.color(1, 0.5, 10 / 255, 0.62));
         yellow.setStrokeWidth(3);
         yellow.setArcWidth(10);
         yellow.setArcHeight(10);
@@ -97,7 +95,7 @@ public class RoadMapInfoTab extends SearchableTab {
 
         HBox releaseKeyBox = new HBox(8);
         Rectangle blue = new Rectangle(250,25,20,20);
-        blue.setFill(Color.color(11 / 255, 0, 255 / 255, 0.62));
+        blue.setFill(Color.color(11 / 255, 0, 1, 0.62));
         blue.setStrokeWidth(3);
         blue.setArcWidth(10);
         blue.setArcHeight(10);
@@ -106,7 +104,7 @@ public class RoadMapInfoTab extends SearchableTab {
 
         HBox sprintKeyBox = new HBox(8);
         Rectangle green = new Rectangle(250,25,20,20);
-        green.setFill(Color.color(100 / 255, 255 / 255, 124 / 255, 0.83));
+        green.setFill(Color.color(100 / 255, 1, 124 / 255, 0.83));
         green.setStrokeWidth(3);
         green.setArcWidth(10);
         green.setArcHeight(10);
@@ -115,7 +113,7 @@ public class RoadMapInfoTab extends SearchableTab {
 
         HBox storyKeyBox = new HBox(8);
         Rectangle red = new Rectangle(250,25,20,20);
-        red.setFill(Color.color(255 / 255, 7 / 255, 0, 0.56));
+        red.setFill(Color.color(1, 7 / 255, 0, 0.56));
         red.setStrokeWidth(3);
         red.setArcWidth(10);
         red.setArcHeight(10);
@@ -126,9 +124,7 @@ public class RoadMapInfoTab extends SearchableTab {
         keyBox.getChildren().addAll(roadmapKeyBox, releaseKeyBox, sprintKeyBox, storyKeyBox);
 
         // Events
-        btnEdit.setOnAction((event) -> {
-            currentRoadMap.switchToInfoScene(true);
-        });
+        btnEdit.setOnAction((event) -> currentRoadMap.switchToInfoScene(true));
 
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
