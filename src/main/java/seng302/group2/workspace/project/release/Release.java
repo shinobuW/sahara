@@ -289,6 +289,8 @@ public class Release extends SaharaItem implements Comparable<Release> {
      * @param newShortName     The new short name
      * @param newDescription   The new description
      * @param newEstimatedDate The new estimated date
+     * @param newTags          The new tags
+
      */
     public void edit(String newShortName, String newDescription, LocalDate newEstimatedDate, ArrayList<Tag> newTags) {
         Command relEdit = new ReleaseEditCommand(this, newShortName, newDescription,
@@ -323,6 +325,8 @@ public class Release extends SaharaItem implements Comparable<Release> {
          * @param newShortName The new short name for the release
          * @param newDescription The new description for the release
          * @param newEstimatedDate The new estimated date for the release
+         * @param newTags        The new tags
+
          */
         private ReleaseEditCommand(Release release, String newShortName, String newDescription,
                                    LocalDate newEstimatedDate, ArrayList<Tag> newTags) {

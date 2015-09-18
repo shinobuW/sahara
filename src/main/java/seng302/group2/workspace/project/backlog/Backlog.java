@@ -390,6 +390,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
      * @param newProject      The new project
      * @param newScale        The new estimation scale
      * @param newStories      The new stories in the backlog
+     * @param newTags        The new tags
      */
     public void edit(String newShortName, String newLongName, String newDescription, Person newProductOwner,
                      Project newProject, String newScale, Collection<Story> newStories, ArrayList<Tag> newTags) {

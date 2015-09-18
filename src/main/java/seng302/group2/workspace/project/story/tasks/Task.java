@@ -490,6 +490,7 @@ public class Task extends SaharaItem implements Serializable {
      * @param newLogs        The new Logs
      * @param newEffortLeft  The new effort left
      * @param newEffortSpent The new effort spent
+     * @param newTags        The new tags
      */
     public void edit(String newShortName, String newDescription, String newImpediments, TASKSTATE newState,
                      Person newAssignee,  List<Log> newLogs, double newEffortLeft, double newEffortSpent,
@@ -611,6 +612,7 @@ public class Task extends SaharaItem implements Serializable {
          * @param newLogs The new Logs
          * @param effortLeft The new effort left
          * @param effortSpent The new effort spent
+         * @param newTags The new tags
          */
         private TaskEditCommand(Task task, String newShortName, String newDescription, 
                 String newImpediments, TASKSTATE newState, Person newAssignee,  List<Log> newLogs,

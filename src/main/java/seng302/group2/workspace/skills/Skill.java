@@ -165,6 +165,8 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
      *
      * @param newShortName   The new short name
      * @param newDescription The new description
+     * @param newTags        The new tags of the Skill
+
      */
     public void edit(String newShortName, String newDescription, ArrayList<Tag> newTags) {
         Command edit = new SkillEditCommand(this, newShortName, newDescription, newTags);

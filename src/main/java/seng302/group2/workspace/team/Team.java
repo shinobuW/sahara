@@ -574,6 +574,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      * @param newMembers     The new team members
      * @param newPO          The new product owner
      * @param newSM          The new scrum master
+     * @param newTags        The new tags
      */
     public void edit(String newShortName, String newDescription, Collection<Person> newMembers,
                      Person newPO, Person newSM, Collection<Person> newDevelopers, ArrayList<Tag> newTags) {

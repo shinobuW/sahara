@@ -70,6 +70,7 @@ public class PairLog extends Log {
      * @param duration the duration to edit to
      * @param description the description to edit to
      * @param effortLeftDifference the effort difference to edit to
+     * @param newTags The new tags
      */
     public void edit(Person logger, Person partner, LocalDateTime startDate, double duration, String description,
                      double effortLeftDifference, ArrayList<Tag> newTags) {
@@ -154,6 +155,7 @@ public class PairLog extends Log {
          * @param newDuration the duration to edit to
          * @param newDescription the description to edit to
          * @param newEffortLeftDifference the new effort difference to edit to
+         * @param newTags        The new tags
          */
         protected PairLogEditCommand(PairLog pairLog, Person newLogger, Person newPartner, LocalDateTime newStartDate,
                                  double newDuration, String newDescription, double newEffortLeftDifference,
@@ -357,8 +359,8 @@ public class PairLog extends Log {
 
         /**
          * Constructor
-         * @param pairLog
-         * @param newPartner
+         * @param pairLog The pair log to be edited
+         * @param newPartner The pair logs new partner
          */
         protected PairLogPartnerEditCommand(PairLog pairLog, Person newPartner) {
             this.pLog = pairLog;

@@ -882,6 +882,7 @@ public class Story extends SaharaItem implements Serializable {
      * @param newEstimate    The new estimate
      * @param newReady       The new ready state
      * @param newDependentOn The new dependent ons
+     * @param newTags        The new tags
      */
     public void edit(String newShortName, String newLongName, String newDescription,
                      Project newProject, Integer newPriority, Backlog newBacklog, String newEstimate,
@@ -943,6 +944,8 @@ public class Story extends SaharaItem implements Serializable {
          * @param newEstimate The new estimate value for the story
          * @param newReady The story's new readiness state
          * @param newDependentOn The new list of stories the story is dependant on
+         * @param newTags        The new tags
+
          */
         private StoryEditCommand(Story story, String newShortName, String newLongName, String newDescription,
                                  Project newProject, Integer newPriority, Backlog newBacklog, String newEstimate,
