@@ -176,7 +176,8 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
                                 matchingItems.add(aData);
                                 count = 1;
                             }
-                        } else if (searchType == SearchType.REGEX) {
+                        }
+                        else if (searchType == SearchType.REGEX) {
                             if (Pattern.matches(query.trim(), cellValue)) {
                                 matchingItems.add(aData);
                             }
