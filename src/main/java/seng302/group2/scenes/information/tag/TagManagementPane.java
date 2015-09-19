@@ -61,6 +61,7 @@ public class TagManagementPane extends SplitPane {
         listPane.setPadding(new Insets(8));
         listPane.setMaxWidth(292);
 
+        // TODO Remove these test tags
         tagList.addAll(new Tag("crap"), new Tag("hash"));
 
         tagListView = new SearchableListView<>(tagList, searchControls);
@@ -79,7 +80,7 @@ public class TagManagementPane extends SplitPane {
 
         listPane.getChildren().add(tagListView);
 
-        this.getItems().add(listPane);
+        this.getItems().add(0, listPane);
     }
 
 
@@ -129,6 +130,8 @@ public class TagManagementPane extends SplitPane {
 
                 selectedTag.edit(tagNameField.getText(), colorPicker.getValue());
 
+                constructList();
+                tagListView.getSelectionModel().select(selectedTag);
             });
 
         cancelButton.setOnAction(event -> constructDetail());

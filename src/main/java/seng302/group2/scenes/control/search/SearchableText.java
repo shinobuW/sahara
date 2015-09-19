@@ -1,5 +1,6 @@
 package seng302.group2.scenes.control.search;
 
+import javafx.scene.Node;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
@@ -204,6 +205,9 @@ earchableText to the string given
         styleInject = styleInject + style;
 
         for (TextFlow text : texts) {
+            for (Node node : text.getChildren()) {
+                node.setStyle(styleInject);
+            }
             text.setStyle(styleInject);
         }
     }

@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.workspace.tag.Tag;
 
@@ -22,29 +23,39 @@ public class TagCellNode extends VBox {
         this.tagName = tag.getName();
         this.tagColor = tag.getColor();
 
-        VBox content = new VBox();
-        content.setPrefHeight(35);
-        content.setBackground(new Background(new BackgroundFill(tagColor, CornerRadii.EMPTY, Insets.EMPTY)));
+        construct();
+    }
+
+
+    void construct() {
+        this.getChildren().clear();
+
+        HBox content = new HBox();
+        Insets insetsContent = new Insets(2, 2, 2, 2);
+        content.setPadding(insetsContent);
+        content.setBackground(new Background(new BackgroundFill(tagColor, new CornerRadii(4), Insets.EMPTY)));
+
+        setPrefWidth(20);
+        setMaxWidth(100);
 
         VBox textContent = new VBox();
         textContent.setPadding(new Insets(2, 2, 2, 6));
         textContent.setAlignment(Pos.CENTER_LEFT);
 
-        SearchableText titleLabel = new SearchableText(tagName);
-        titleLabel.injectStyle("-fx-font-weight: bold");
+        Text titleLabel = new Text(tagName);
+        titleLabel.setStyle("-fx-font-weight: bold;");
+
+        if (tagColor.getBrightness() < 0.9) {
+            titleLabel.setFill(Color.WHITE);
+        }
 
         textContent.getChildren().addAll(titleLabel);
 
-        VBox rightContent = new VBox(1);
-        rightContent.setPrefHeight(35);
+        content.getChildren().addAll(textContent);
 
-        rightContent.setAlignment(Pos.CENTER_RIGHT);
-        HBox.setHgrow(rightContent, Priority.ALWAYS);
-
-        content.getChildren().addAll(textContent, rightContent);
-
-        HBox.setHgrow(content, Priority.ALWAYS);
+        this.getChildren().add(content);
     }
+
 
     /**
      * Sets the name of the cell.
@@ -52,6 +63,7 @@ public class TagCellNode extends VBox {
      */
     public void setName(String newName) {
         this.tagName = newName;
+        construct();
     }
 
     /**
@@ -60,6 +72,7 @@ public class TagCellNode extends VBox {
      */
     public void setColor(Color newColor) {
         this.tagColor = newColor;
+        construct();
     }
 
 }
