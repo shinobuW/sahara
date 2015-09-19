@@ -582,44 +582,14 @@
   },
   "0x20": {
     "name": "banger",
-    "color": {
-      "red": 0.25490198,
-      "green": 0.4117647,
-      "blue": 0.88235295,
-      "opacity": 1.0,
-      "platformPaint": {
-        "argb": -12490271,
-        "r": 0.25490198,
-        "g": 0.4117647,
-        "b": 0.88235295,
-        "a": 1.0,
-        "type": "COLOR",
-        "proportional": false,
-        "isMutable": false
-      }
-    },
+    "colorCode": "#4D66CCFF",
     "id": 6877,
     "itemName": "",
     "serializableTags": []
   },
   "0x21": {
     "name": "buggy",
-    "color": {
-      "red": 0.7019608,
-      "green": 0.101960786,
-      "blue": 0.101960786,
-      "opacity": 1.0,
-      "platformPaint": {
-        "argb": -5039590,
-        "r": 0.7019608,
-        "g": 0.101960786,
-        "b": 0.101960786,
-        "a": 1.0,
-        "type": "COLOR",
-        "proportional": false,
-        "isMutable": false
-      }
-    },
+    "colorCode": "#CC3333FF",
     "id": 6878,
     "itemName": "",
     "serializableTags": []

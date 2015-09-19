@@ -3,6 +3,7 @@ package seng302.group2.workspace.tag;
 import javafx.scene.paint.Color;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
+import seng302.group2.util.conversion.ColorUtils;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
@@ -16,7 +17,7 @@ import java.util.Set;
  */
 public class Tag extends SaharaItem implements Serializable {
     private String name;
-    private Color color = Color.ROYALBLUE;
+    private String colorCode = ColorUtils.toRGBCode(Color.ROYALBLUE);
 
     /**
      * Basic constructor for a Tag
@@ -26,6 +27,7 @@ public class Tag extends SaharaItem implements Serializable {
     public Tag(String tagName) {
         this.name = tagName;
         this.getTags().clear();
+        this.colorCode = ColorUtils.toRGBCode(Color.ROYALBLUE);
     }
 
     /**
@@ -34,7 +36,10 @@ public class Tag extends SaharaItem implements Serializable {
      * @return The colour of the tag
      */
     public Color getColor() {
-        return color;
+        if (this.colorCode == null) {
+            this.colorCode = ColorUtils.toRGBCode(Color.ROYALBLUE);
+        }
+        return ColorUtils.toColor(this.colorCode);
     }
 
     /**
@@ -43,7 +48,7 @@ public class Tag extends SaharaItem implements Serializable {
      * @param color The colour to set the tag
      */
     public void setColor(Color color) {
-        this.color = color;
+        this.colorCode = ColorUtils.toRGBCode(color);
     }
 
     /**
@@ -139,19 +144,19 @@ public class Tag extends SaharaItem implements Serializable {
         private Tag tag;
 
         private String name;
-        private Color color;
+        private String color;
 
         private String oldName;
-        private Color oldColor;
+        private String oldColor;
 
         private TagEditCommand(Tag tag, String newName, Color newColor) {
             this.tag = tag;
 
             this.name = newName;
-            this.color = newColor;
+            this.color = ColorUtils.toRGBCode(newColor);
 
             this.oldName = tag.name;
-            this.oldColor = tag.color;
+            this.oldColor = tag.colorCode;
         }
 
         /**
@@ -159,7 +164,7 @@ public class Tag extends SaharaItem implements Serializable {
          */
         public void execute() {
             tag.name = name;
-            tag.color = color;
+            tag.colorCode = color;
         }
 
         /**
@@ -167,7 +172,7 @@ public class Tag extends SaharaItem implements Serializable {
          */
         public void undo() {
             tag.name = oldName;
-            tag.color = oldColor;
+            tag.colorCode = oldColor;
         }
 
         /**

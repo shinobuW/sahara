@@ -15,8 +15,8 @@ import seng302.group2.workspace.tag.Tag;
 public class TagCellNode extends VBox {
 
     private Tag tag = null;
-    private String tagName;
-    private Color tagColor;
+    private String tagName = "";
+    private Color tagColor = Color.ROYALBLUE;
 
     public TagCellNode(Tag tag) {
         this.tag = tag;

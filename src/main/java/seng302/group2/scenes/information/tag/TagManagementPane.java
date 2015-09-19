@@ -142,6 +142,7 @@ public class TagManagementPane extends SplitPane {
         // Create buttons
         Button saveButton = new Button("Save Tag");
         Button cancelButton = new Button("Cancel Changes");
+        Button deleteButton = new Button("Delete");
 
         saveButton.setOnAction(event -> {
                 // @Dave create and execute edit
