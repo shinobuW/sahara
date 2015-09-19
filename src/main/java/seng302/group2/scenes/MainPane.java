@@ -2,17 +2,13 @@ package seng302.group2.scenes;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TreeItem;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.information.StickyBar;
 import seng302.group2.scenes.information.workspace.WorkspaceScene;
 import seng302.group2.scenes.menu.MainMenuBar;
 import seng302.group2.scenes.menu.MainToolbar;
@@ -42,6 +38,8 @@ public class MainPane extends BorderPane {
     private ScrollPane contentPane;
     private boolean menuHidden = false;
     private double dividerPositions;
+    public StickyBar stickyBar = new StickyBar();
+
 
     /**
      * The default constructor of the main pane that performs basic initialisation
@@ -59,7 +57,17 @@ public class MainPane extends BorderPane {
         if (!menuHidden) {
             content.getItems().add(treeView);
         }
-        content.getItems().add(contentPane);
+
+        VBox stickyBarBox = new VBox();
+        VBox.setVgrow(stickyBarBox, Priority.ALWAYS);
+        stickyBarBox.setAlignment(Pos.BOTTOM_LEFT);
+        stickyBarBox.getChildren().addAll(new Separator(), stickyBar);
+
+        VBox contentVBox = new VBox();
+        contentVBox.getChildren().addAll(contentPane, stickyBarBox);
+
+
+        content.getItems().add(contentVBox);
         statusBar = statusBar("A message to display");
 
         this.setCenter(content);
@@ -161,6 +169,15 @@ public class MainPane extends BorderPane {
         contentPane.setContent(node);
 //            });
 
+    }
+
+    /**
+     * Sets the content pane child to the given node
+     *
+     * @param type The node to replace the current content pane
+     */
+    public void setStick(StickyBar.STICKYTYPE type) {
+        stickyBar = new StickyBar(type);
     }
 
     /**

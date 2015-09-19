@@ -35,8 +35,8 @@ public class SkillScene extends TrackedTabPane {
 
         // Define and add the tabs
         informationTab = new SkillInfoTab(currentSkill);
-        editTab = new SkillEditTab(currentSkill);
-        updateAllTabs();
+
+        //updateAllTabs();
 
         Collections.addAll(searchableTabs, informationTab);
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
@@ -55,7 +55,7 @@ public class SkillScene extends TrackedTabPane {
         this.editScene = editScene;
 
         // Define and add the tabs
-        updateAllTabs();
+        editTab = new SkillEditTab(currentSkill);
 
         Collections.addAll(searchableTabs, editTab);
 
