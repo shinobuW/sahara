@@ -4,14 +4,16 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SplitPane;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Box;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.CustomTextField;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
@@ -61,9 +63,6 @@ public class TagManagementPane extends SplitPane {
         listPane.setPadding(new Insets(8));
         listPane.setMaxWidth(292);
 
-        // TODO Remove these test tags
-        tagList.addAll(new Tag("crap"), new Tag("hash"));
-
         tagListView = new SearchableListView<>(tagList, searchControls);
         tagListView.setPrefHeight(584);
         tagListView.getSelectionModel().getSelectedItems().addListener(
@@ -78,7 +77,32 @@ public class TagManagementPane extends SplitPane {
             tagListView.getSelectionModel().select(0);
         }
 
-        listPane.getChildren().add(tagListView);
+        HBox labelBox = new HBox();
+        labelBox.setAlignment(Pos.CENTER_LEFT);
+        labelBox.getChildren().add(new Text("New Tag"));
+
+        TextField newTagField = new TextField();
+
+        newTagField.setPromptText("Buggy");
+        Button addNewTagButton = new Button("Create");
+        HBox newTagBox = new HBox(8);
+        HBox.setHgrow(newTagField, Priority.ALWAYS);
+        newTagBox.getChildren().addAll(labelBox, newTagField, addNewTagButton);
+
+        addNewTagButton.setOnAction(event -> {
+            newTagField.setText(newTagField.getText().trim());
+            for (Tag tag : Global.currentWorkspace.getTags()) {
+                if (tag.getName().equals(newTagField.getText())) {
+                    // Tag already exists TODO: Dialog
+                    return;
+                }
+            }
+
+            Tag newTag = new Tag(newTagField.getText());
+            Global.currentWorkspace.add(newTag);
+        });
+
+        listPane.getChildren().addAll(tagListView, newTagBox);
 
         this.getItems().add(0, listPane);
     }
