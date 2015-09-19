@@ -1302,6 +1302,7 @@ public class Workspace extends SaharaItem implements Serializable {
          */
         public void execute() {
             Global.currentWorkspace.getRoadMaps().add(roadMap);
+            Global.currentWorkspace.getRoadMaps().sort(RoadMap.RoadMapPriorityComparator);
         }
 
         /**
@@ -1309,6 +1310,7 @@ public class Workspace extends SaharaItem implements Serializable {
          */
         public void undo() {
             Global.currentWorkspace.getRoadMaps().remove(roadMap);
+            Global.currentWorkspace.getRoadMaps().sort(RoadMap.RoadMapPriorityComparator);
         }
 
         /**

@@ -23,9 +23,15 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
     private String shortName;
     private transient ObservableList<Release> releases = observableArrayList();
     private List<Release> serializableReleases = new ArrayList<>();
+    private Integer priority = 0;
 
 
-    
+    /**
+     * A comparator that returns the comparison of two story's priorities
+     */
+    public static Comparator<RoadMap> RoadMapPriorityComparator = (roadMap1, roadMap2) -> {
+        return roadMap2.getPriority().compareTo(roadMap1.getPriority());
+    };
     
 
     /**
@@ -43,9 +49,10 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
      *
      * @param shortName The short name of the road map
      */
-    public RoadMap(String shortName) {
+    public RoadMap(String shortName, Integer priority) {
         super(shortName);
         this.shortName = shortName;
+        this.priority = priority;
 
         setInformationSwitchStrategy(new RoadMapInformationSwitchStrategy());
     }
@@ -57,6 +64,15 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
      */
     public String getShortName() {
         return this.shortName;
+    }
+
+    /**
+     * Gets a roadmap priority
+     *
+     * @return The priority of the roadmap
+     */
+    public Integer getPriority() {
+        return this.priority;
     }
 
     /**
@@ -82,11 +98,12 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
      * Adds a Release to the RoadMaps's list of Releases.
      *
      * @param shortName The Shortname to edit
+     * @param priority  The Priority to edit
      * @param releases  The release to add
      * @param newTags   The new tags of the roadmap
      */
-    public void edit(String shortName, Collection<Release> releases, ArrayList<Tag> newTags) {
-        Command command = new RoadMapEditCommand(this, shortName, releases, newTags);
+    public void edit(String shortName, Integer priority, Collection<Release> releases, ArrayList<Tag> newTags) {
+        Command command = new RoadMapEditCommand(this, shortName, priority, releases, newTags);
         Global.commandManager.executeCommand(command);
     }
     
@@ -252,11 +269,13 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
         private RoadMap roadMap;
         
         private String shortName;
+        private Integer priority;
         private Collection<Release> releases = new HashSet<>();
         private Set<Tag> roadMapTags = new HashSet<>();
         private Set<Tag> globalTags = new HashSet<>();
         
         private String oldShortName;
+        private Integer oldPriority;
         private Collection<Release> oldReleases = new HashSet<>();
         private Set<Tag> oldRoadMapTags = new HashSet<>();
         private Set<Tag> oldGlobalTags = new HashSet<>();
@@ -268,7 +287,8 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
          * @param releases The release to be added.
          * @param newTags   The new tags of the roadmap
          */
-        RoadMapEditCommand(RoadMap roadMap, String shortName, Collection<Release> releases, ArrayList<Tag> newTags) {
+        RoadMapEditCommand(RoadMap roadMap, String shortName, Integer priority, Collection<Release> releases,
+                           ArrayList<Tag> newTags) {
             this.roadMap = roadMap;
 
             if (newTags == null) {
@@ -276,12 +296,14 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
             }
 
             this.releases = releases;
+            this.priority = priority;
             this.shortName = shortName;
             this.roadMapTags.addAll(newTags);
             this.globalTags.addAll(newTags);
             this.globalTags.addAll(Global.currentWorkspace.getAllTags());
 
             this.oldShortName = roadMap.getShortName();
+            this.oldPriority = roadMap.getPriority();
             this.oldReleases = roadMap.getReleases();
             this.oldRoadMapTags.addAll(roadMap.getTags());
             this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
@@ -292,6 +314,7 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
          */
         public void execute() {
             roadMap.shortName = shortName;
+            roadMap.priority = priority;
 
             roadMap.releases.removeAll(oldReleases);
             roadMap.releases.addAll(releases);
@@ -303,7 +326,8 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
             roadMap.getTags().clear();
             roadMap.getTags().addAll(roadMapTags);
 
-            Collections.sort(Global.currentWorkspace.getRoadMaps());
+
+            Global.currentWorkspace.getRoadMaps().sort(RoadMap.RoadMapPriorityComparator);
         }
 
         /**
@@ -311,6 +335,7 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
          */
         public void undo() {
             roadMap.shortName = oldShortName;
+            roadMap.priority = oldPriority;
 
             roadMap.releases.removeAll(releases);
             roadMap.releases.addAll(oldReleases);
@@ -323,7 +348,7 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
             roadMap.getTags().clear();
             roadMap.getTags().addAll(oldRoadMapTags);
 
-            Collections.sort(Global.currentWorkspace.getRoadMaps());
+            Global.currentWorkspace.getRoadMaps().sort(RoadMap.RoadMapPriorityComparator);
         }
 
         /**

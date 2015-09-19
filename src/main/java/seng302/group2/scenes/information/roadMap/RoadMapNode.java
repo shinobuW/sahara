@@ -56,6 +56,13 @@ public class RoadMapNode extends VBox implements SearchableControl {
         roadMapContent.setMinHeight(35);
 
         shortNameField.setStyle("-fx-font: 35px Tahoma;");
+
+        VBox roadMapVbox = new VBox();
+        Text roadMapPriority = new Text(currentRoadMap.getShortName() + "'s priority is "
+                + currentRoadMap.getPriority().toString());
+        roadMapVbox.getChildren().addAll(roadMapPriority);
+        PopOverTip storyTip = new PopOverTip(roadMapContent, roadMapVbox);
+        storyTip.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
         
         roadMapContent.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && !(((SaharaItem) Global.selectedTreeItem.getValue())

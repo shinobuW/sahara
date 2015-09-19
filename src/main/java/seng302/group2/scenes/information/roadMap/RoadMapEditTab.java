@@ -17,6 +17,7 @@ import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.util.validation.PriorityFieldValidator;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
@@ -29,6 +30,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import static seng302.group2.util.validation.PriorityFieldValidator.validatePriorityField;
 
 /**
  * The RoadMap edit tab
@@ -74,6 +76,11 @@ public class RoadMapEditTab extends SearchableTab {
         shortNameField = new RequiredField("Short Name:");
         shortNameField.setText(currentRoadMap.getShortName());
         shortNameField.setMaxWidth(275);
+
+        RequiredField priorityNumberField = new RequiredField("Story Priority:");
+        priorityNumberField.setText(currentRoadMap.getPriority().toString());
+        priorityNumberField.setMaxWidth(275);
+
 
         Button btnAssign = new Button("<");
         Button btnUnassign = new Button(">");
@@ -150,11 +157,20 @@ public class RoadMapEditTab extends SearchableTab {
         btnCancel.setOnAction((event) -> currentRoadMap.switchToInfoScene());
 
         btnDone.setOnAction((event) -> {
-            if (shortNameField.getText().equals(currentRoadMap.getShortName())
-                    || ShortNameValidator.validateShortName(shortNameField, null)) { // validation
+            boolean shortNameUnchanged = priorityNumberField.getText().equals(
+                    currentRoadMap.getShortName().toString());
+            boolean priorityUnchanged = priorityNumberField.getText().equals(
+                    currentRoadMap.getPriority().toString());
+
+            boolean correctShortName = ShortNameValidator.validateShortName(shortNameField,
+                    currentRoadMap.getShortName());
+            boolean correctPriority = validatePriorityField(priorityNumberField, null, null);
+
+            if (correctPriority && correctShortName) { // validation
                 // Edit Command.
                 ArrayList<Tag> tags = new ArrayList<>();
-                currentRoadMap.edit(shortNameField.getText(), roadMapList, tags);
+                currentRoadMap.edit(shortNameField.getText(), new Integer(priorityNumberField.getText()),
+                        roadMapList, tags);
                 currentRoadMap.switchToInfoScene();
                 App.mainPane.refreshTree();
             }
@@ -165,6 +181,7 @@ public class RoadMapEditTab extends SearchableTab {
 
         editPane.getChildren().addAll(
                 shortNameField,
+                priorityNumberField,
                 storyListViews,
                 errorField,
                 sceneButtons
@@ -173,6 +190,7 @@ public class RoadMapEditTab extends SearchableTab {
         // Add items to pane & search collection
         Collections.addAll(searchControls,
                 shortNameField,
+                priorityNumberField,
                 availableReleaseListView,
                 availableStoriesLabel,
                 roadMapReleaseListView,

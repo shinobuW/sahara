@@ -26,7 +26,7 @@ public class RoadMapTest {
         Assert.assertEquals("Untitled RoadMap", RoadMap.toString());
         Assert.assertEquals(null, RoadMap.getChildren());
 
-        RoadMap RoadMap2 = new RoadMap("RoadMap 1");
+        RoadMap RoadMap2 = new RoadMap("RoadMap 1", 0);
         Assert.assertEquals("RoadMap 1", RoadMap2.getShortName());
         Assert.assertEquals("RoadMap 1", RoadMap2.toString());
 
@@ -39,8 +39,8 @@ public class RoadMapTest {
      */
     @Test
     public void testCompareTo() {
-        RoadMap RoadMap1 = new RoadMap("A");
-        RoadMap RoadMap2 = new RoadMap("Z");
+        RoadMap RoadMap1 = new RoadMap("A", 0);
+        RoadMap RoadMap2 = new RoadMap("Z", 0);
 
         Assert.assertTrue(RoadMap1.compareTo(RoadMap2) <= 0);
         Assert.assertTrue(RoadMap2.compareTo(RoadMap1) >= 0);
@@ -53,7 +53,7 @@ public class RoadMapTest {
     @Test
     public void testAddReleaseCommand() {
         Project proj = new Project();
-        RoadMap roadMap = new RoadMap("Roadmap Item 1");
+        RoadMap roadMap = new RoadMap("Roadmap Item 1", 0);
         Release release = new Release("test release", proj);
         proj.add(release);
         roadMap.add(release);
@@ -71,7 +71,7 @@ public class RoadMapTest {
      */
     @Test
     public void testEdit() {
-        RoadMap RoadMap = new RoadMap("RoadMap 1");
+        RoadMap RoadMap = new RoadMap("RoadMap 1", 0);
         Tag tag = new Tag("Tag");
         ArrayList<Tag> tags = new ArrayList<>();
         tags.add(tag);
@@ -82,7 +82,7 @@ public class RoadMapTest {
         releases.add(release1);
         releases.add(release2);
 
-        RoadMap.edit("Java", releases, tags);
+        RoadMap.edit("Java", 0, releases, tags);
 
         Assert.assertEquals("Java", RoadMap.getShortName());
         Assert.assertEquals(1, RoadMap.getTags().size());
@@ -111,7 +111,7 @@ public class RoadMapTest {
      */
     @Test
     public void testDeleteRoadMap() {
-        RoadMap RoadMap = new RoadMap("RoadMap 1");
+        RoadMap RoadMap = new RoadMap("RoadMap 1", 0);
 
         RoadMap.deleteRoadMap();
         Assert.assertFalse(Global.currentWorkspace.getRoadMaps().contains(RoadMap));
@@ -127,7 +127,7 @@ public class RoadMapTest {
     @Test
     public void testGenerateXML() {
         new ReportGenerator();
-        RoadMap RoadMap = new RoadMap("RoadMap 1");
+        RoadMap RoadMap = new RoadMap("RoadMap 1", 0);
 
         Element roadMapElement = RoadMap.generateXML();
         Assert.assertEquals(null, roadMapElement);
