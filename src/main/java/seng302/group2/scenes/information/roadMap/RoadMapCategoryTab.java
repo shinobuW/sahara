@@ -61,6 +61,7 @@ public class RoadMapCategoryTab extends SearchableTab {
         SearchableText title = new SearchableTitle("RoadMaps in " + currentWorkspace.getShortName());
 
         HBox roadMaps = new HBox();
+
         for (RoadMap roadMap : Global.currentWorkspace.getRoadMaps()) {
             RoadMapNode roadMapNode = new RoadMapNode(roadMap);
             roadMaps.getChildren().add(roadMapNode);

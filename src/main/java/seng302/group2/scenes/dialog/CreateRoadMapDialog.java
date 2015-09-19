@@ -5,6 +5,7 @@
  */
 package seng302.group2.scenes.dialog;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -19,6 +20,7 @@ import seng302.group2.workspace.roadMap.RoadMap;
 
 import java.util.Map;
 
+import static seng302.group2.util.validation.PriorityFieldValidator.validatePriorityField;
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
@@ -27,6 +29,7 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 public class CreateRoadMapDialog extends Dialog<Map<String, String>> {
 
     Boolean correctShortName = Boolean.FALSE;
+    Boolean correctPriority = Boolean.FALSE;
 
     /**
      * Displays the Dialog box for creating a workspace.
@@ -46,8 +49,9 @@ public class CreateRoadMapDialog extends Dialog<Map<String, String>> {
         this.getDialogPane().getButtonTypes().addAll(btnTypeCreate, ButtonType.CANCEL);
 
         RequiredField shortNameCustomField = new RequiredField("Short Name:");
+        RequiredField priorityNumberField = new RequiredField("Priority:");
 
-        grid.getChildren().add(shortNameCustomField);
+        grid.getChildren().addAll(shortNameCustomField, priorityNumberField);
 
         // Request focus on the short name field by default.
         Platform.runLater(() -> shortNameCustomField.getTextField().requestFocus());
@@ -60,7 +64,12 @@ public class CreateRoadMapDialog extends Dialog<Map<String, String>> {
 
         shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
             correctShortName = validateShortName(shortNameCustomField, null);
-            createButton.setDisable(!(correctShortName));
+            createButton.setDisable(!(correctShortName && correctPriority));
+        });
+
+        priorityNumberField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+            correctPriority = validatePriorityField(priorityNumberField, null, null);
+            createButton.setDisable(!(correctShortName && correctPriority));
         });
 
 
@@ -68,8 +77,10 @@ public class CreateRoadMapDialog extends Dialog<Map<String, String>> {
             if (b == btnTypeCreate) {
                 String shortName = shortNameCustomField.getText();
 
-                if (correctShortName) {
-                    RoadMap roadMap = new RoadMap(shortName);
+
+                if (correctShortName && correctPriority) {
+                    Integer priority = new Integer(priorityNumberField.getText());
+                    RoadMap roadMap = new RoadMap(shortName, priority);
                     Global.currentWorkspace.add(roadMap);
                     App.mainPane.selectItem(roadMap);
                     this.close();
