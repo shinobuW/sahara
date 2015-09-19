@@ -1,32 +1,88 @@
 package seng302.group2.scenes.information;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import seng302.group2.App;
+import seng302.group2.Global;
+import seng302.group2.scenes.control.search.SearchableScene;
 import seng302.group2.util.conversion.ColorUtils;
+import seng302.group2.workspace.SaharaItem;
 
 /**
  * Created by cvs20 on 19/09/15.
  */
-public class StickyBar extends Pane {
+public class StickyBar extends HBox {
+
+    Button editButton = new Button("Edit");
+    Button doneButton = new Button("Done");
+    Button cancelButton = new Button("Cancel");
 
     public StickyBar() {
+        this.setSpacing(8);
+        this.setAlignment(Pos.CENTER_RIGHT);
+        this.setPadding(new Insets(4));
+
+        addEvents();
     }
 
-    public StickyBar(STICKYTYPE type) {
-        construct(type);
+    /**
+     * Adds event handlers for the buttons on the sticky bar
+     */
+    void addEvents() {
+        editButton.setOnAction(event -> {
+            try {
+                SaharaItem selected = (SaharaItem) Global.selectedTreeItem.getValue();
+                selected.switchToInfoScene(true);
+            }
+            catch (NullPointerException ex) {
+
+            }
+        });
+
+        doneButton.setOnAction(event -> {
+            try {
+                // TODO THIS ISN'T RIGHT, NO CHANGES WILL BE SAVED, NEEDS TO CALL DONE() ON THE TAB AND THEN SWITCH
+                SaharaItem selected = (SaharaItem) Global.selectedTreeItem.getValue();
+                selected.switchToInfoScene(false);
+            }
+            catch (NullPointerException ex) {
+
+            }
+        });
+
+        cancelButton.setOnAction(event -> {
+            try {
+                // THIS ISN'T RIGHT, NO CHANGES WILL BE SAVED, NEEDS TO CALL DONE() ON THE TAB~
+                SaharaItem selected = (SaharaItem) Global.selectedTreeItem.getValue();
+                selected.switchToInfoScene(false);
+            }
+            catch (NullPointerException ex) {
+
+            }
+        });
     }
 
-    void construct(STICKYTYPE type) {
+
+    /**
+     * Reconstruct the sticky bar with the given type of buttons
+     * @param type The buttons to add to the bar
+     */
+    public void construct(STICKYTYPE type) {
+        this.getChildren().clear();
+
         if (type == STICKYTYPE.INFO) {
-            this.getChildren().add(new Button("Edit"));
+            this.getChildren().add(editButton);
         }
         if (type == STICKYTYPE.EDIT) {
-            this.getChildren().add(new Button("Done"));
-            this.getChildren().add(new Button("Cancel"));
+            this.getChildren().add(doneButton);
+            this.getChildren().add(cancelButton);
         }
         if (type == STICKYTYPE.OTHER) {
-            this.getChildren().add(new Button("Done"));
+            this.getChildren().add(doneButton);
         }
 
     }

@@ -38,6 +38,7 @@ public class MainPane extends BorderPane {
     private ScrollPane contentPane;
     private boolean menuHidden = false;
     private double dividerPositions;
+
     public StickyBar stickyBar = new StickyBar();
 
 
@@ -171,14 +172,6 @@ public class MainPane extends BorderPane {
 
     }
 
-    /**
-     * Sets the content pane child to the given node
-     *
-     * @param type The node to replace the current content pane
-     */
-    public void setStick(StickyBar.STICKYTYPE type) {
-        stickyBar = new StickyBar(type);
-    }
 
     /**
      * Refreshes the content child of the pane

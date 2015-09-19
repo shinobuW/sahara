@@ -21,7 +21,7 @@ public class WorkspaceInformationSwitchStrategy implements InformationSwitchStra
     public void switchScene(SaharaItem item) {
         if (item instanceof Workspace) {
             App.mainPane.setContent(new WorkspaceScene((Workspace) item));
-            // Codie to come back to. App.mainPane.setStick(StickyBar.STICKYTYPE.INFO);
+            App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
         }
         else {
             // Bad call
@@ -38,12 +38,12 @@ public class WorkspaceInformationSwitchStrategy implements InformationSwitchStra
         if (item instanceof Workspace) {
             if (editScene) {
                 App.mainPane.setContent(new WorkspaceScene((Workspace) item, true));
-                // Codie to come back to. App.mainPane.setStick(StickyBar.STICKYTYPE.EDIT);
+                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDIT);
 
             }
             else {
                 switchScene(item);
-                // Codie to come back to. App.mainPane.setStick(StickyBar.STICKYTYPE.INFO);
+                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
             }
         }
         else {
