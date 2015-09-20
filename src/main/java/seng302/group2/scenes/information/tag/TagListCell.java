@@ -30,13 +30,13 @@ public class TagListCell extends ListCell<Tag> {
     }
 
     @Override
-    protected void updateItem(Tag t, boolean bln) {
-        super.updateItem(t, bln);
-        if (t != null) {
+    protected void updateItem(Tag tagItem, boolean bln) {
+        super.updateItem(tagItem, bln);
+        if (tagItem != null) {
             deleteCell.setAlignment(Pos.BASELINE_RIGHT);
             System.out.println("Draw string");
-            Node deletionNode = createDeletionNode(t);
-            Label tagName = new Label(t.getName());
+            Node deletionNode = createDeletionNode(tagItem);
+            Label tagName = new Label(tagItem.getName());
             deleteCell.getChildren().add(deletionNode);
             cell.getChildren().addAll(tagName, deleteCell);
             setGraphic(cell);
