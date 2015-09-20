@@ -220,7 +220,6 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
      * A command class that allows the executing and undoing of skill edits
      */
     private class SkillEditCommand implements Command {
-        private String commandString;
         private Skill skill;
 
         private String shortName;
@@ -268,7 +267,6 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
             skill.getTags().addAll(skillTags);
 
             Collections.sort(Global.currentWorkspace.getSkills());
-            commandString = "Redoing the edit of Skill \"" + shortName + "\".";
         }
 
         /**
@@ -287,14 +285,13 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
             skill.getTags().addAll(oldSkillTags);
 
             Collections.sort(Global.currentWorkspace.getSkills());
-            commandString = "Undoing the edit of Skill \"" + oldShortName + "\".";
         }
 
         /**
          * Gets the String value of the Command for editting skills.
          */
         public String getString() {
-            return commandString;
+            return "the edit of Skill \"" + shortName + "\".";
         }
 
         /**
@@ -361,7 +358,6 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
      * A command class for allowing the deletion of Skills from a Workspace.
      */
     private class DeleteSkillCommand implements Command {
-        private String commandString;
         private Skill skill;
         private List<Person> people;
 
@@ -382,7 +378,6 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
                 person.getSkills().remove(skill);
             }
             Global.currentWorkspace.getSkills().remove(skill);
-            commandString = "Redoing the deletion of Skill \"" + skill.getShortName() + "\".";
         }
 
         /**
@@ -393,14 +388,13 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
                 person.getSkills().add(skill);
             }
             Global.currentWorkspace.getSkills().add(skill);
-            commandString = "Undoing the deletion of Skill \"" + skill.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for deleting skills.
          */
         public String getString() {
-            return commandString;
+            return "the deletion of Skill \"" + skill.getShortName() + "\".";
         }
 
         /**

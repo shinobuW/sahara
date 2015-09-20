@@ -369,7 +369,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
             release.getTags().addAll(releaseTags);
 
             Collections.sort(project.getReleases());
-            commandString = "Redoing the edit of Release \"" + shortName + "\".";
+            commandString = "Redid the edit of Release \"" + shortName + "\".";
 
         }
 
@@ -389,7 +389,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
             release.getTags().addAll(oldReleaseTags);
 
             Collections.sort(project.getReleases());
-            commandString = "Undoing the edit of Release \"" + oldShortName + "\".";
+            commandString = "Undid the edit of Release \"" + oldShortName + "\".";
         }
 
         /**
@@ -489,7 +489,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
         public void execute() {
             proj.getReleases().remove(release);
             //release.setProject(null);
-            commandString = "Redoing the deletion of Release \"" + release.getShortName() + "\".";
+            commandString = "Redid the deletion of Release \"" + release.getShortName() + "\".";
         }
 
         /**
@@ -498,7 +498,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
         public void undo() {
             proj.getReleases().add(release);
             //release.setProject(proj);
-            commandString = "Undoing the deletion of Release \"" + release.getShortName() + "\".";
+            commandString = "Undid the deletion of Release \"" + release.getShortName() + "\".";
         }
 
         /**

@@ -1031,7 +1031,6 @@ public class Workspace extends SaharaItem implements Serializable {
      * A command class that allows the executing and undoing of workspace edits
      */
     private class WorkspaceEditCommand implements Command {
-        private String commandString;
 
         private Workspace ws;
         private String shortName;
@@ -1083,7 +1082,6 @@ public class Workspace extends SaharaItem implements Serializable {
          * Executes/Redoes the changes of the workspace edit
          */
         public void execute() {
-            this.commandString = "Redoing the edit of Workspace \"" + shortName + "\".";
             ws.shortName = shortName;
             ws.longName = longName;
             ws.description = description;
@@ -1102,7 +1100,6 @@ public class Workspace extends SaharaItem implements Serializable {
          * Undoes the changes of the workspace edit
          */
         public void undo() {
-            this.commandString = "Undoing the edit of Workspace \"" + oldShortName + "\".";
             ws.shortName = oldShortName;
             ws.longName = oldLongName;
             ws.description = oldDescription;
@@ -1122,7 +1119,7 @@ public class Workspace extends SaharaItem implements Serializable {
          */
         @Override
         public String getString() {
-            return commandString;
+            return "the edit of Workspace \"" + shortName + "\".";
         }
 
         /**
@@ -1187,7 +1184,6 @@ public class Workspace extends SaharaItem implements Serializable {
      * A command class for allowing the addition of Projects to a Workspace
      */
     private class AddProjectCommand implements Command {
-        private String commandString;
 
         private Project proj;
 
@@ -1205,7 +1201,6 @@ public class Workspace extends SaharaItem implements Serializable {
          */
         public void execute() {
             Global.currentWorkspace.getProjects().add(proj);
-            commandString = "Redoing the creation of Project \"" + proj.getShortName() + "\".";
         }
 
         /**
@@ -1213,14 +1208,13 @@ public class Workspace extends SaharaItem implements Serializable {
          */
         public void undo() {
             Global.currentWorkspace.getProjects().remove(proj);
-            commandString = "Undoing the creation of Project \"" + proj.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for adding a project.
          */
         public String getString() {
-            return null;
+            return "the creation of Project \"" + proj.getShortName() + "\".";
         }
 
         /**
@@ -1245,8 +1239,6 @@ public class Workspace extends SaharaItem implements Serializable {
      * A command class for allowing the addition of Teams to a Workspace
      */
     private class AddTeamCommand implements Command {
-        private String commandString;
-
         private Team team;
 
         /**
@@ -1262,7 +1254,6 @@ public class Workspace extends SaharaItem implements Serializable {
          */
         public void execute() {
             Global.currentWorkspace.getTeams().add(team);
-            commandString = "Redoing the creation of Team \"" + team.getShortName() + "\".";
         }
 
         /**
@@ -1270,14 +1261,13 @@ public class Workspace extends SaharaItem implements Serializable {
          */
         public void undo() {
             Global.currentWorkspace.getTeams().remove(team);
-            commandString = "Undoing the creation of Team \"" + team.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for adding teams.
          */
         public String getString() {
-            return commandString;
+            return "the creation of Team \"" + team.getShortName() + "\".";
         }
 
         /**
@@ -1302,7 +1292,6 @@ public class Workspace extends SaharaItem implements Serializable {
      * A command class for allowing the addition of RoadMaps to a Workspace
      */
     private class AddRoadMapCommand implements Command {
-        private String commandString;
         private RoadMap roadMap;
 
         /**
@@ -1319,7 +1308,6 @@ public class Workspace extends SaharaItem implements Serializable {
         public void execute() {
             Global.currentWorkspace.getRoadMaps().add(roadMap);
             Global.currentWorkspace.getRoadMaps().sort(RoadMap.RoadMapPriorityComparator);
-            commandString = "Redoing the creation of Road map \"" + roadMap.getShortName() + "\".";
         }
 
         /**
@@ -1328,14 +1316,13 @@ public class Workspace extends SaharaItem implements Serializable {
         public void undo() {
             Global.currentWorkspace.getRoadMaps().remove(roadMap);
             Global.currentWorkspace.getRoadMaps().sort(RoadMap.RoadMapPriorityComparator);
-            commandString = "Undoing the creation of Road map \"" + roadMap.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for adding roadmaps.
          */
         public String getString() {
-            return commandString;
+            return "the creation of Road map \"" + roadMap.getShortName() + "\".";
         }
 
         /**
@@ -1360,8 +1347,6 @@ public class Workspace extends SaharaItem implements Serializable {
      * A command class for allowing the addition of Tags to a Workspace
      */
     private class AddTagCommand implements Command {
-        private String commandString;
-
         private Tag tag;
 
         /**
@@ -1377,7 +1362,6 @@ public class Workspace extends SaharaItem implements Serializable {
          */
         public void execute() {
             Global.currentWorkspace.getAllTags().add(tag);
-            commandString = "Redoing the creation of Tag \"" + tag.getName() + "\".";
         }
 
         /**
@@ -1385,14 +1369,13 @@ public class Workspace extends SaharaItem implements Serializable {
          */
         public void undo() {
             Global.currentWorkspace.getAllTags().remove(tag);
-            commandString = "Undoing the creation of Tag \"" + tag.getName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for adding Tags.
          */
         public String getString() {
-            return commandString;
+            return "the creation of Tag \"" + tag.getName() + "\".";
         }
 
         /**
@@ -1417,8 +1400,6 @@ public class Workspace extends SaharaItem implements Serializable {
      * A command class for allowing the addition of People to a Workspace
      */
     private class AddPersonCommand implements Command {
-        private String commandString;
-
         private Person person;
 
         /**
@@ -1435,7 +1416,6 @@ public class Workspace extends SaharaItem implements Serializable {
         public void execute() {
             Global.currentWorkspace.getPeople().add(person);
             Global.getUnassignedTeam().getPeople().add(person);
-            commandString = "Redoing the creation of Person \"" + person.getShortName() + "\".";
         }
 
         /**
@@ -1447,14 +1427,13 @@ public class Workspace extends SaharaItem implements Serializable {
             if (Global.getUnassignedTeam() != null) {
                 Global.getUnassignedTeam().getPeople().remove(person);
             }
-            commandString = "Undoing the creation of Person \"" + person.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for adding people.
          */
         public String getString() {
-            return commandString;
+            return "the creation of Person \"" + person.getShortName() + "\".";
         }
 
         /**
@@ -1479,7 +1458,6 @@ public class Workspace extends SaharaItem implements Serializable {
      * A command class for allowing the addition of Skills to a Workspace
      */
     private class AddSkillCommand implements Command {
-        private String commandString;
         private Skill skill;
 
         /**
@@ -1495,7 +1473,6 @@ public class Workspace extends SaharaItem implements Serializable {
          */
         public void execute() {
             Global.currentWorkspace.getSkills().add(skill);
-            commandString = "Redoing the creation of Skill \"" + skill.getShortName() + "\".";
         }
 
         /**
@@ -1503,14 +1480,13 @@ public class Workspace extends SaharaItem implements Serializable {
          */
         public void undo() {
             Global.currentWorkspace.getSkills().remove(skill);
-            commandString = "Undoing the creation of Skill \"" + skill.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for adding skills.
          */
         public String getString() {
-            return commandString;
+            return "the creation of Skill \"" + skill.getShortName() + "\".";
         }
 
         /**

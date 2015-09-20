@@ -436,7 +436,7 @@ public class Log extends SaharaItem implements Serializable {
             log.getTags().clear();
             log.getTags().addAll(logTags);
 
-            commandString = "Redoing the edit of Log \"" + log.toString() + "\".";
+            commandString = "Redid the edit of Log \"" + log.toString() + "\".";
 
 
         }
@@ -460,7 +460,7 @@ public class Log extends SaharaItem implements Serializable {
             //Changes the logs list of tags to what they used to be
             log.getTags().clear();
             log.getTags().addAll(oldLogTags);
-            commandString = "Undoing the edit of Log \"" + log.toString() + "\".";
+            commandString = "Undid the edit of Log \"" + log.toString() + "\".";
 
         }
 
@@ -559,7 +559,7 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void execute() {
             log.description = this.newDescription;
-            commandString = "Redoing the edit of Description on Log \"" + log.toString() + "\".";
+            commandString = "Redid the edit of Description on Log \"" + log.toString() + "\".";
         }
 
 
@@ -569,7 +569,7 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void undo() {
             log.description = this.oldDescription;
-            commandString = "Undoing the edit of Description on Log \"" + log.toString() + "\".";
+            commandString = "Undid the edit of Description on Log \"" + log.toString() + "\".";
         }
 
         /**
@@ -619,7 +619,7 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void execute() {
             log.logger = this.newLogger;
-            commandString = "Redoing the edit of Logger on Log \"" + log.toString() + "\".";
+            commandString = "Redid the edit of Logger on Log \"" + log.toString() + "\".";
         }
 
 
@@ -629,7 +629,7 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void undo() {
             log.logger = this.oldLogger;
-            commandString = "Undoing the edit of Logger on Log \"" + log.toString() + "\".";
+            commandString = "Undid the edit of Logger on Log \"" + log.toString() + "\".";
         }
 
 
@@ -681,7 +681,7 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void execute() {
             log.duration = this.newDuration;
-            commandString = "Redoing the edit of Duration on Log \"" + log.toString() + "\".";
+            commandString = "Redid the edit of Duration on Log \"" + log.toString() + "\".";
         }
 
         /**
@@ -690,7 +690,7 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void undo() {
             log.duration = this.oldDuration;
-            commandString = "Undoing the edit of Duration on Log \"" + log.toString() + "\".";
+            commandString = "Undid the edit of Duration on Log \"" + log.toString() + "\".";
         }
 
         @Override

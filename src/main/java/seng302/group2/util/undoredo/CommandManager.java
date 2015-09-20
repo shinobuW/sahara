@@ -1,7 +1,9 @@
 package seng302.group2.util.undoredo;
 
+import javafx.scene.control.ToolBar;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.menu.MainToolbar;
 import seng302.group2.workspace.SaharaItem;
@@ -18,7 +20,6 @@ public class CommandManager {
     private Stack<Command> undos = new Stack<>();
     private Stack<Command> redos = new Stack<>();
     private Command lastSaveCommand = null;
-    private Command lastCommand = null;
 
     /**
      * sets the local undo Stack
@@ -39,13 +40,6 @@ public class CommandManager {
         Global.setCurrentWorkspaceChanged();
         command.execute();
         
-        if (command.getString() != null && !command.getString().toLowerCase().contains("redo")) {
-            System.out.println(command.getString() + " " + command);
-            lastCommand = command;
-            if (App.mainPane != null) {
-                App.mainPane.refreshStatusBar(lastCommand.getString());
-            }
-        }
         undos.push(command);
         redos.clear();
         try {
@@ -57,6 +51,8 @@ public class CommandManager {
         catch (ExceptionInInitializerError | NoClassDefFoundError | NullPointerException ex) {
             return;
         }
+        App.mainPane.toolBar.setUndoToolTip("Undo " + undos.peek().getString());
+        App.mainPane.toolBar.setRedoToolTip("No Redo Available");
     }
 
     /**
@@ -88,9 +84,6 @@ public class CommandManager {
         return true;
     }
     
-    public Command getLastCommand() {
-        return lastCommand;
-    }
 
     /**
      * Undoes the last action added to the undo stack
@@ -118,7 +111,6 @@ public class CommandManager {
 
             //System.out.println("undo: " + command);
             command.undo();
-            lastCommand = command;
             if (App.mainPane != null) {
                 App.mainPane.refreshStatusBar(command.getString());
             }
@@ -147,6 +139,10 @@ public class CommandManager {
             catch (ExceptionInInitializerError | NoClassDefFoundError | NullPointerException ex) {
                 return;
             }
+            if (!undos.empty()) {
+                App.mainPane.toolBar.setUndoToolTip("Undo " + undos.peek().getString());
+            }
+            App.mainPane.toolBar.setRedoToolTip("Redo " + redos.peek().getString());
         }
     }
 
@@ -190,7 +186,6 @@ public class CommandManager {
             Command command = redos.pop();
             //System.out.println("redo: " + command);
             command.execute();
-            lastCommand = command;
             if (App.mainPane != null) {
                 App.mainPane.refreshStatusBar(command.getString());
             }
@@ -222,6 +217,10 @@ public class CommandManager {
             }
             catch (ExceptionInInitializerError | NoClassDefFoundError | NullPointerException ex) {
                 return;
+            }
+            App.mainPane.toolBar.setUndoToolTip("Undo " + undos.peek().getString());
+            if (!redos.empty()) {
+                App.mainPane.toolBar.setRedoToolTip("Redo " + redos.peek().getString());
             }
         }
     }
@@ -279,6 +278,15 @@ public class CommandManager {
      */
     public Stack<Command> getUndoCloneStack() {
         return (Stack<Command>) undos.clone();
+    }
+
+    /**
+     * Clones and returns the current redo stack
+     *
+     * @return A clone of the current redo stack
+     */
+    public Stack<Command> getRedoCloneStack() {
+        return (Stack<Command>) redos.clone();
     }
 
 

@@ -44,6 +44,9 @@ public class RevertManager {
             SaharaItem.refreshIDs();
 
             App.refreshMainScene();
+            if (App.mainPane != null) {
+                App.mainPane.refreshStatusBar("Workspace has been Reverted.");
+            }
         }
     }
 
