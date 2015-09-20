@@ -563,7 +563,7 @@ public class Log extends SaharaItem implements Serializable {
         }
 
         /**
-         * Gets the String value of the Command for editting the description of Logs.
+         * Gets the String value of the Command for editing the description of Logs.
          */
         public String getString() {
             return commandString;
@@ -590,6 +590,7 @@ public class Log extends SaharaItem implements Serializable {
         private Log log;
         private Person oldLogger;
         private Person newLogger;
+        private String commandString;
 
         /**
          * Constructor
@@ -608,6 +609,7 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void execute() {
             log.logger = this.newLogger;
+            commandString = "Redoing the edit of Logger on Log \"" + log.toString() + "\".";
         }
 
 
@@ -617,6 +619,7 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void undo() {
             log.logger = this.oldLogger;
+            commandString = "Undoing the edit of Logger on Log \"" + log.toString() + "\".";
         }
 
 
