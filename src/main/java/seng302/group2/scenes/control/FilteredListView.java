@@ -17,6 +17,8 @@ import java.util.regex.Pattern;
 import static javafx.collections.FXCollections.observableArrayList;
 
 /**
+ * Class for Filtering a listview via a Textbox.
+ *
  * Created by crw73 on 20/09/15.
  */
 public class FilteredListView<T> extends VBox implements SearchableControl {
@@ -27,7 +29,10 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
     private SearchableListView<T> listView;
 
 
-
+    /**
+     * Constructor for the VBox for Filtered Listviews
+     * @param data
+     */
     public FilteredListView(ObservableList<T> data) {
         inputText.setPromptText("Search list...");
         listView = new SearchableListView(data);
@@ -49,6 +54,10 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
         Collections.addAll(searchControls, listView);
     }
 
+    /**
+     * Gets the Searchable Listview
+     * @return the Searchable Listview
+     */
     public SearchableListView<T> getListView() {
         return listView;
     }
