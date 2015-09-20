@@ -10,13 +10,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.FilteredListView;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreateSprintDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.SprintCategory;
+import seng302.group2.workspace.project.sprint.Sprint;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -75,12 +74,14 @@ public class SprintCategoryTab extends SearchableTab {
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
 
-        ListView sprintBox = new ListView(selectedCategory.getProject().getSprints());
+        FilteredListView<Sprint> sprintFilteredListView = new
+                FilteredListView<Sprint>(selectedCategory.getProject().getSprints(), "sprints");
+        SearchableListView sprintBox = sprintFilteredListView.getListView();
         sprintBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         sprintBox.setMaxWidth(275);
 
         categoryPane.getChildren().add(title);
-        categoryPane.getChildren().add(sprintBox);
+        categoryPane.getChildren().add(sprintFilteredListView);
         categoryPane.getChildren().add(selectionButtons);
 
         btnView.setOnAction((event) -> {
@@ -102,6 +103,6 @@ public class SprintCategoryTab extends SearchableTab {
             new CreateSprintDialog(selectedCategory.getProject());
         });
 
-        Collections.addAll(searchControls, title);
+        Collections.addAll(searchControls, sprintFilteredListView, title);
     }
 }
