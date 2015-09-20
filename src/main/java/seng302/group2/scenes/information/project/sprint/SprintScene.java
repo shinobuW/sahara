@@ -18,12 +18,12 @@ public class SprintScene extends TrackedTabPane {
     Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
 
-    SearchableTab informationTab;
-    SearchableTab burndownTab;
-    SearchableTab scrumboardTab;
-    SearchableTab taskStatusTab;
-    SearchableTab loggingEffortTab;
-    SearchableTab editTab;
+    SprintInfoTab informationTab;
+    SprintBurndownTab burndownTab;
+    ScrumboardTab scrumboardTab;
+    SprintTaskStatusTab taskStatusTab;
+    SprintLogTab loggingEffortTab;
+    SprintEditTab editTab;
 
 
     Sprint currentSprint;
@@ -78,6 +78,36 @@ public class SprintScene extends TrackedTabPane {
     @Override
     public Collection<SearchableTab> getSearchableTabs() {
         return searchableTabs;
+    }
+
+    /**
+     * Calls the done functionality behind the done button on the edit tab
+     */
+    @Override
+    public void done() {
+        if (getSelectionModel().getSelectedItem() == editTab) {
+            editTab.done();
+        }
+    }
+
+    /**
+     * Calls the functionality behind the edit button on the info tab
+     */
+    @Override
+    public void edit() {
+        if (getSelectionModel().getSelectedItem() == informationTab) {
+            informationTab.edit();
+        }
+    }
+
+    /**
+     * Calls the functionality behind the edit button on the edit tab
+     */
+    @Override
+    public void cancel() {
+        if (getSelectionModel().getSelectedItem() == editTab) {
+            editTab.cancel();
+        }
     }
 
 }

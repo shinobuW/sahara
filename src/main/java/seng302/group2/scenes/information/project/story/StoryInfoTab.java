@@ -56,7 +56,6 @@ public class StoryInfoTab extends SearchableTab {
 
         SearchableText title = new SearchableTitle(currentStory.getShortName());
 
-        Button btnEdit = new Button("Edit");
 
         CustomInfoLabel description = new CustomInfoLabel("Story Description: ", currentStory.getDescription());
         CustomInfoLabel project = new CustomInfoLabel("Project: ", currentStory.getProject().toString());
@@ -69,10 +68,6 @@ public class StoryInfoTab extends SearchableTab {
         StoryCompletenessBar progressBar = new StoryCompletenessBar(currentStory);
         progressBox.getChildren().addAll(progressLabel, progressBar);
 
-        btnEdit.setOnAction((event) -> {
-            currentStory.switchToInfoScene(true);
-        });
-
         basicInfoPane.getChildren().addAll(
                 title,
                 description,
@@ -81,8 +76,7 @@ public class StoryInfoTab extends SearchableTab {
                 estimate,
                 state,
                 creator,
-                progressBox,
-                btnEdit
+                progressBox
         );
 
         Collections.addAll(searchControls,
@@ -114,4 +108,13 @@ public class StoryInfoTab extends SearchableTab {
     public String toString() {
         return "Story Info Tab";
     }
+
+    /**
+     * Switches to the edit scene
+     */
+    public void edit() {
+        currentStory.switchToInfoScene(true);
+    }
+
+
 }

@@ -119,14 +119,7 @@ public class PersonInfoTab extends SearchableTab {
         String roleString = currentPerson.getRole() == null ? "" : currentPerson.getRole().toString();
         CustomInfoLabel role = new CustomInfoLabel("Role: ", roleString);
 
-        Button btnEdit = new Button("Edit");
-
         final Separator separator = new Separator();
-
-        // Events
-        btnEdit.setOnAction((event) -> {
-            currentPerson.switchToInfoScene(true);
-        });
 
         filterComboBox.getComboBox().valueProperty().addListener(new ChangeListener<Object>() {
             @Override
@@ -160,8 +153,7 @@ public class PersonInfoTab extends SearchableTab {
                 team,
                 role,
                 separator,
-                listViewHBox,
-                btnEdit);
+                listViewHBox);
 
         Collections.addAll(searchControls,
                 title,
@@ -186,4 +178,12 @@ public class PersonInfoTab extends SearchableTab {
     public String toString() {
         return "Person Info Tab";
     }
+
+    /**
+     * Switches to the edit scene
+     */
+    public void edit() {
+        currentPerson.switchToInfoScene(true);
+    }
+
 }

@@ -30,6 +30,8 @@ public class SkillEditTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
     Skill currentSkill;
+    RequiredField shortNameCustomField = new RequiredField("Short Name:");
+    CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description:", 300);
 
     /**
      * Constructor for the SkillEditTab class. This constructor creates a JavaFX ScrollPane
@@ -68,58 +70,48 @@ public class SkillEditTab extends SearchableTab {
         CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description:", 300);
         shortNameCustomField.setMaxWidth(275);
         descriptionTextArea.setMaxWidth(275);
-
-        shortNameCustomField.setText(currentSkill.getShortName());
-        descriptionTextArea.setText(currentSkill.getDescription());
-
-        Button btnCancel = new Button("Cancel");
-        Button btnDone = new Button("Done");
-
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.TOP_LEFT);
-        buttons.getChildren().addAll(btnDone, btnCancel);
-
-
-
-        // Events
-        btnDone.setOnAction((event) -> {
-            boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                    currentSkill.getShortName());
-            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                    currentSkill.getDescription());
-
-            if (shortNameUnchanged && descriptionUnchanged) {
-                currentSkill.switchToInfoScene();
-                return;
-            }
-
-            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                    currentSkill.getShortName());
-
-            ArrayList<Tag> tags = new ArrayList<>();
-
-            if (correctShortName) {
-                currentSkill.edit(shortNameCustomField.getText(),
-                        descriptionTextArea.getText(),
-                        tags
-                );
-
-                Collections.sort(Global.currentWorkspace.getSkills());
-                currentSkill.switchToInfoScene();
-                App.mainPane.refreshTree();
-            }
-            else {
-                event.consume();
-            }
-
-        });
-
-        btnCancel.setOnAction((event) -> currentSkill.switchToInfoScene());
-
         // Add items to pane & search collection
-        editPane.getChildren().addAll(shortNameCustomField, descriptionTextArea, buttons);
+        editPane.getChildren().addAll(shortNameCustomField, descriptionTextArea);
         Collections.addAll(searchControls, shortNameCustomField, descriptionTextArea);
+    }
+
+    /**
+     * Cancels the edit
+     */
+    public void cancel() {
+        currentSkill.switchToInfoScene();
+    }
+
+    /**
+     * Changes the values depending on what the user edits
+     */
+    public void done() {
+        boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                currentSkill.getShortName());
+        boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                currentSkill.getDescription());
+
+        if (shortNameUnchanged && descriptionUnchanged) {
+            currentSkill.switchToInfoScene();
+            return;
+        }
+
+        boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                currentSkill.getShortName());
+
+        ArrayList<Tag> tags = new ArrayList<>();
+
+        if (correctShortName) {
+            currentSkill.edit(shortNameCustomField.getText(),
+                    descriptionTextArea.getText(),
+                    tags
+            );
+
+            Collections.sort(Global.currentWorkspace.getSkills());
+            currentSkill.switchToInfoScene();
+            App.mainPane.refreshTree();
+
+        }
     }
 }
 

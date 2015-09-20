@@ -138,14 +138,6 @@ public class TeamInfoTab extends SearchableTab {
         Separator separator = new Separator();
 
 
-        Button btnEdit = new Button("Edit");
-        if (currentTeam.isUnassignedTeam()) {
-            btnEdit.setVisible(false);
-        }
-        else {
-            btnEdit.setVisible(true);
-        }
-
         basicInfoPane.getChildren().addAll(
                 title,
                 desc,
@@ -182,16 +174,23 @@ public class TeamInfoTab extends SearchableTab {
 
             basicInfoPane.getChildren().addAll(poLabel, smLabel);
             Collections.addAll(searchControls, poLabel, smLabel);
-
-            btnEdit.setOnAction((event) -> currentTeam.switchToInfoScene(true));
         }
 
         else {
             listViewLabel.setLabel("Unassigned People: ");
         }
 
-        basicInfoPane.getChildren().addAll(listViewLabel, teamsPeopleBox, btnEdit);
+        basicInfoPane.getChildren().addAll(listViewLabel, teamsPeopleBox);
         Collections.addAll(searchControls,listViewLabel, teamsPeopleBox);
+    }
+
+    /**
+     * Switches to the edit scene
+     */
+    public void edit() {
+        if (!currentTeam.isUnassignedTeam()) {
+            currentTeam.switchToInfoScene(true);
+        }
     }
 
     /**

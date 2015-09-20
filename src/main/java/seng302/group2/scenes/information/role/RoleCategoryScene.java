@@ -35,4 +35,7 @@ public class RoleCategoryScene extends TrackedTabPane {
         this.getTabs().addAll(getSearchableTabs());  // Add the tabs to the pane
     }
 
+    public void done() {}
+    public void edit() {}
+    public void cancel() {}
 }

@@ -1,6 +1,7 @@
 package seng302.group2.scenes.sceneswitch.switchStrategies.workspace;
 
 import seng302.group2.App;
+import seng302.group2.scenes.information.StickyBar;
 import seng302.group2.scenes.information.role.RoleScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.workspace.SaharaItem;
@@ -20,6 +21,7 @@ public class RoleInformationSwitchStrategy implements InformationSwitchStrategy 
     public void switchScene(SaharaItem item) {
         if (item instanceof Role) {
             App.mainPane.setContent(new RoleScene((Role) item));
+
         }
     }
 

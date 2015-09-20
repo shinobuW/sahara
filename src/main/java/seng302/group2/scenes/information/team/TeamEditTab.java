@@ -48,6 +48,8 @@ public class TeamEditTab extends SearchableTab {
     private ObservableList<Role> roleList = observableArrayList();
     private CustomComboBox<Role> roleComboBox;
     private Role noneRole = new Role("", Role.RoleType.NONE);
+    ObservableList<Person> teamMembersList = observableArrayList();
+
 
     /**
      * Constructor for the Team Edit Tab class. This constructor creates a JavaFX ScrollPane
@@ -123,6 +125,7 @@ public class TeamEditTab extends SearchableTab {
 
     /**
      * Gets all the searchable controls on this tab.
+     *
      * @return a collection of all the searchable controls on this tab.
      */
     @Override
@@ -178,16 +181,6 @@ public class TeamEditTab extends SearchableTab {
         assignmentButtons.getChildren().addAll(btnAssign, btnUnassign);
         assignmentButtons.setAlignment(Pos.CENTER);
 
-
-        // Buttons for the scene
-        Button btnDone = new Button("Done");
-        Button btnCancel = new Button("Cancel");
-        HBox sceneButtons = new HBox();
-        sceneButtons.spacingProperty().setValue(10);
-        sceneButtons.alignmentProperty().set(Pos.TOP_LEFT);
-        sceneButtons.getChildren().addAll(btnDone, btnCancel);
-
-
         // Role assignment
         Button btnRoleAssign = new Button("Assign");
         btnRoleAssign.setDisable(true);
@@ -203,9 +196,7 @@ public class TeamEditTab extends SearchableTab {
         }
 
 
-
         // Draft member and available people lists
-        ObservableList<Person> teamMembersList = observableArrayList();
         teamMembersList.addAll(baseTeam.getPeople());
 
         ObservableList<Person> availablePeopleList = observableArrayList();
@@ -353,29 +344,6 @@ public class TeamEditTab extends SearchableTab {
             }
         });
 
-        btnCancel.setOnAction((event) -> baseTeam.switchToInfoScene());
-
-        btnDone.setOnAction((event) -> {
-            if (isValidState()) { // validation
-                ArrayList<Tag> tags = new ArrayList<>();
-                baseTeam.edit(shortNameField.getText(),
-                        descriptionField.getText(),
-                        teamMembersList,
-                        allocatedProductOwner,
-                        allocatedScrumMaster,
-                        allocatedDevelopers,
-                        tags
-                );
-
-                Collections.sort(Global.currentWorkspace.getTeams());
-                baseTeam.switchToInfoScene();
-                App.mainPane.refreshTree();
-            }
-            else {
-                event.consume();
-            }
-        });
-
         // Add items to pane & search collection
         editPane.getChildren().addAll(
                 shortNameField,
@@ -383,8 +351,7 @@ public class TeamEditTab extends SearchableTab {
                 memberListViews,
                 roleAssignmentBox,
                 poText,
-                smText,
-                sceneButtons
+                smText
         );
 
         Collections.addAll(searchControls,
@@ -398,5 +365,33 @@ public class TeamEditTab extends SearchableTab {
                 teamMemberLabel,
                 availablePeopleLabel
         );
+    }
+
+    /**
+     * Cancels the edit
+     */
+    public void cancel() {
+        baseTeam.switchToInfoScene();
+    }
+
+    /**
+     * Changes the values depending on what the user edits
+     */
+    public void done() {
+        if (isValidState()) { // validation
+            ArrayList<Tag> tags = new ArrayList<>();
+            baseTeam.edit(shortNameField.getText(),
+                    descriptionField.getText(),
+                    teamMembersList,
+                    allocatedProductOwner,
+                    allocatedScrumMaster,
+                    allocatedDevelopers,
+                    tags
+            );
+
+            Collections.sort(Global.currentWorkspace.getTeams());
+            baseTeam.switchToInfoScene();
+            App.mainPane.refreshTree();
+        }
     }
 }

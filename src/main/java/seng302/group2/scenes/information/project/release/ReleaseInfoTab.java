@@ -68,21 +68,12 @@ public class ReleaseInfoTab extends SearchableTab {
         CustomInfoLabel releaseDate = new CustomInfoLabel("Estimated Release Date: ", releaseDateString);
         CustomInfoLabel projectLabel = new CustomInfoLabel("Project: ", currentRelease.getProject().toString());
 
-
-        Button btnEdit = new Button("Edit");
-
-        // Events
-        btnEdit.setOnAction((event) -> {
-            currentRelease.switchToInfoScene(true);
-        });
-
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
                 title,
                 description,
                 releaseDate,
-                projectLabel,
-                btnEdit
+                projectLabel
         );
 
         Collections.addAll(searchControls,
@@ -100,6 +91,13 @@ public class ReleaseInfoTab extends SearchableTab {
     @Override
     public String toString() {
         return "Release Info Tab";
+    }
+
+    /**
+     * Switches to the edit scene
+     */
+    public void edit() {
+        currentRelease.switchToInfoScene(true);
     }
 
 }

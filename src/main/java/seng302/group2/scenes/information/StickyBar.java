@@ -4,12 +4,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import seng302.group2.App;
 import seng302.group2.Global;
+
 import seng302.group2.scenes.control.search.SearchableScene;
-import seng302.group2.util.conversion.ColorUtils;
+import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.SaharaItem;
 
 /**
@@ -23,7 +22,7 @@ public class StickyBar extends HBox {
 
     public StickyBar() {
         this.setSpacing(8);
-        this.setAlignment(Pos.CENTER_RIGHT);
+        this.setAlignment(Pos.CENTER_LEFT);
         this.setPadding(new Insets(4));
 
         addEvents();
@@ -46,8 +45,10 @@ public class StickyBar extends HBox {
         doneButton.setOnAction(event -> {
             try {
                 // TODO THIS ISN'T RIGHT, NO CHANGES WILL BE SAVED, NEEDS TO CALL DONE() ON THE TAB AND THEN SWITCH
-                SaharaItem selected = (SaharaItem) Global.selectedTreeItem.getValue();
-                selected.switchToInfoScene(false);
+                /*SaharaItem selected = (SaharaItem) Global.selectedTreeItem.getValue();
+                selected.
+                selected.switchToInfoScene(false);*/
+                ((SearchableScene)App.mainPane.contentPane.getContent()).done();
             }
             catch (NullPointerException ex) {
 
@@ -82,7 +83,8 @@ public class StickyBar extends HBox {
             this.getChildren().add(cancelButton);
         }
         if (type == STICKYTYPE.OTHER) {
-            this.getChildren().add(doneButton);
+            editButton.setDisable(true);
+            this.getChildren().add(editButton);
         }
 
     }

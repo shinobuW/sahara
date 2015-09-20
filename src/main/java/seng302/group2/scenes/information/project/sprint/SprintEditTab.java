@@ -56,6 +56,8 @@ public class SprintEditTab extends SearchableTab {
 
     CustomDatePicker sprintStartDatePicker;
     CustomDatePicker sprintEndDatePicker;
+    CustomTextArea descriptionTextArea = new CustomTextArea("Sprint Description:", 300, searchControls);
+    ObservableList<Story> storiesInSprint = FXCollections.observableArrayList();
 
     /**
      * Constructor for the SprintEditTab class. This constructor creates a JavaFX ScrollPane
@@ -157,17 +159,8 @@ public class SprintEditTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(editPane);
         this.setContent(wrapper);
 
-        Button btnCancel = new Button("Cancel");
-        btnDone = new Button("Done");
-
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.TOP_LEFT);
-        buttons.getChildren().addAll(btnDone, btnCancel);
-
         goalCustomField = new RequiredField("Goal:", searchControls);
         longNameCustomField = new RequiredField("Long Name:", searchControls);
-        CustomTextArea descriptionTextArea = new CustomTextArea("Sprint Description:", 300, searchControls);
 
         teamComboBox = new CustomComboBox<>("Team:", true, searchControls);
         releaseComboBox = new CustomComboBox<>("Release:", true, searchControls);
@@ -212,7 +205,6 @@ public class SprintEditTab extends SearchableTab {
         assignmentButtons.setAlignment(Pos.CENTER);
 
         // Story list view setup
-        ObservableList<Story> storiesInSprint = FXCollections.observableArrayList();
         ObservableList<Story> availableStories = FXCollections.observableArrayList();
         SearchableListView<Story> storiesInSprintView = new SearchableListView<>();
         SearchableListView<Story> availableStoriesView = new SearchableListView<>();
@@ -247,7 +239,7 @@ public class SprintEditTab extends SearchableTab {
 
 
         editPane.getChildren().addAll(goalCustomField, longNameCustomField, descriptionTextArea,
-                releaseComboBox, sprintStartDatePicker, sprintEndDatePicker, teamComboBox, storyHBox, buttons);
+                releaseComboBox, sprintStartDatePicker, sprintEndDatePicker, teamComboBox, storyHBox);
 
         Collections.addAll(searchControls, storiesInSprintView, availableStoriesView);
 
@@ -559,62 +551,60 @@ public class SprintEditTab extends SearchableTab {
             storiesInSprint.removeAll(selectedPeople);
         });
 
+    }
 
-
-
-
-        btnDone.setOnAction((event) -> {
-            boolean goalUnchanged = goalCustomField.getText().equals(
-                    currentSprint.getGoal());
-            boolean longNameUnchanged = longNameCustomField.getText().equals(
-                    currentSprint.getLongName());
-            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                    currentSprint.getDescription());
-            boolean teamUnchanged = teamComboBox.getValue().equals(
-                    currentSprint.getTeam());
-            boolean releaseUnchanged = releaseComboBox.getValue().equals(
-                    currentSprint.getRelease());
-            boolean startDateUnchanged = sprintStartDatePicker.getValue().equals(
-                    currentSprint.getStartDate());
-            boolean endDateUnchanged = sprintEndDatePicker.getValue().equals(
-                    currentSprint.getEndDate());
-            boolean storiesUnchanged = storiesInSprint.equals(currentSprint.getStories());
-            if (goalUnchanged && longNameUnchanged && descriptionUnchanged
-                    && teamUnchanged && releaseUnchanged && startDateUnchanged && endDateUnchanged
-                    && storiesUnchanged) {
-                // No fields have been changed
-                currentSprint.switchToInfoScene();
-                return;
-            }
-
-            boolean correctGoal = ShortNameValidator.validateShortName(goalCustomField,
-                    currentSprint.getGoal());
-            // The short name is the same or valid
-            if (correctGoal) {
-                ArrayList<Tag> tags = new ArrayList<>();
-
-                currentSprint.edit(goalCustomField.getText(),
-                        longNameCustomField.getText(),
-                        descriptionTextArea.getText(),
-                        sprintStartDatePicker.getValue(),
-                        sprintEndDatePicker.getValue(),
-                        teamComboBox.getValue(),
-                        releaseComboBox.getValue(),
-                        storiesInSprint, //This line just a placeholder for now
-                        tags
-                );
-
-                currentSprint.switchToInfoScene();
-                App.mainPane.refreshTree();
-            }
-            else {
-                // One or more fields incorrectly validated, stay on the edit scene
-                event.consume();
-            }
-        });
-
-        btnCancel.setOnAction((event) -> {
+    /**
+     * Cancels the edit
+     */
+    public void cancel() {
+        currentSprint.switchToInfoScene();
+    }
+    /**
+     * Changes the values depending on what the user edits
+     */
+    public void done() {
+        boolean goalUnchanged = goalCustomField.getText().equals(
+                currentSprint.getGoal());
+        boolean longNameUnchanged = longNameCustomField.getText().equals(
+                currentSprint.getLongName());
+        boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                currentSprint.getDescription());
+        boolean teamUnchanged = teamComboBox.getValue().equals(
+                currentSprint.getTeam());
+        boolean releaseUnchanged = releaseComboBox.getValue().equals(
+                currentSprint.getRelease());
+        boolean startDateUnchanged = sprintStartDatePicker.getValue().equals(
+                currentSprint.getStartDate());
+        boolean endDateUnchanged = sprintEndDatePicker.getValue().equals(
+                currentSprint.getEndDate());
+        boolean storiesUnchanged = storiesInSprint.equals(currentSprint.getStories());
+        if (goalUnchanged && longNameUnchanged && descriptionUnchanged
+                && teamUnchanged && releaseUnchanged && startDateUnchanged && endDateUnchanged
+                && storiesUnchanged) {
+            // No fields have been changed
             currentSprint.switchToInfoScene();
-        });
+            return;
+        }
+
+        boolean correctGoal = ShortNameValidator.validateShortName(goalCustomField,
+                currentSprint.getGoal());
+        // The short name is the same or valid
+        if (correctGoal) {
+            ArrayList<Tag> tags = new ArrayList<>();
+
+            currentSprint.edit(goalCustomField.getText(),
+                    longNameCustomField.getText(),
+                    descriptionTextArea.getText(),
+                    sprintStartDatePicker.getValue(),
+                    sprintEndDatePicker.getValue(),
+                    teamComboBox.getValue(),
+                    releaseComboBox.getValue(),
+                    storiesInSprint, //This line just a placeholder for now
+                    tags
+            );
+
+            currentSprint.switchToInfoScene();
+            App.mainPane.refreshTree();
+        }
     }
 }

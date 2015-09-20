@@ -1,6 +1,7 @@
 package seng302.group2.scenes.sceneswitch.switchStrategies.workspace;
 
 import seng302.group2.App;
+import seng302.group2.scenes.information.StickyBar;
 import seng302.group2.scenes.information.roadMap.RoadMapScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.workspace.SaharaItem;
@@ -20,6 +21,8 @@ public class RoadMapInformationSwitchStrategy implements InformationSwitchStrate
     public void switchScene(SaharaItem item) {
         if (item instanceof RoadMap) {
             App.mainPane.setContent(new RoadMapScene((RoadMap) item));
+            App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
+
         }
         else {
             // Bad call
@@ -36,9 +39,13 @@ public class RoadMapInformationSwitchStrategy implements InformationSwitchStrate
         if (item instanceof RoadMap) {
             if (editScene) {
                 App.mainPane.setContent(new RoadMapScene((RoadMap) item, true));
+                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDIT);
+
             }
             else {
                 switchScene(item);
+                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
+
             }
         }
         else {
