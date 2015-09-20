@@ -39,7 +39,7 @@ public class CommandManager {
         Global.setCurrentWorkspaceChanged();
         command.execute();
         
-        if (command.getString() != null) {
+        if (command.getString() != null && !command.getString().toLowerCase().contains("redo")) {
             System.out.println(command.getString() + " " + command);
             lastCommand = command;
             if (App.mainPane != null) {
@@ -115,12 +115,13 @@ public class CommandManager {
 
             // Normal undo
             Command command = undos.pop();
+
+            //System.out.println("undo: " + command);
+            command.undo();
             lastCommand = command;
             if (App.mainPane != null) {
                 App.mainPane.refreshStatusBar(command.getString());
             }
-            //System.out.println("undo: " + command);
-            command.undo();
 
             redos.push(command);
 
@@ -189,6 +190,10 @@ public class CommandManager {
             Command command = redos.pop();
             //System.out.println("redo: " + command);
             command.execute();
+            lastCommand = command;
+            if (App.mainPane != null) {
+                App.mainPane.refreshStatusBar(command.getString());
+            }
             undos.push(command);
 
             if (isRedoAvailable() && redos.peek().getClass() == SaveTrackerCommand.class) {

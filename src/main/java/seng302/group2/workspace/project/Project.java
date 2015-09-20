@@ -750,6 +750,8 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      * A command class that allows the executing and undoing of project edits
      */
     private class ProjectEditCommand implements Command {
+        private String commandString;
+
         private Project proj;
         private String shortName;
         private String longName;
@@ -805,6 +807,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
             proj.getTags().addAll(projectTags);
 
             Collections.sort(Global.currentWorkspace.getProjects());
+            commandString = "Redoing the edit of Project \"" + shortName + "\".";
         }
 
         /**
@@ -824,13 +827,14 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
             proj.getTags().addAll(oldProjectTags);
 
             Collections.sort(Global.currentWorkspace.getProjects());
+            commandString = "Redoing the edit of Project \"" + oldShortName + "\".";
         }
 
         /**
          * Gets the String value of the Command for editting projects.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -898,6 +902,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      * A command class for allowing the deletion of Projects.
      */
     private class DeleteProjectCommand implements Command {
+        private String commandString;
         private Project proj;
 
         /**
@@ -913,6 +918,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          */
         public void execute() {
             Global.currentWorkspace.getProjects().remove(proj);
+            commandString = "Redoing the deletion of Project \"" + proj.getShortName() + "\".";
         }
 
         /**
@@ -920,6 +926,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          */
         public void undo() {
             Global.currentWorkspace.getProjects().add(proj);
+            commandString = "Undoing the deletion of Project \"" + proj.getShortName() + "\".";
         }
 
         /**
@@ -951,6 +958,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      * A command class for allowing the adding of Releases to Projects.
      */
     private class AddReleaseCommand implements Command {
+        private String commandString;
         private Release release;
         private Project proj;
 
@@ -970,6 +978,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         public void execute() {
             proj.getReleases().add(release);
             release.setProject(proj);
+            commandString = "Redoing the creation of Release \"" + release.getShortName() + "\".";
         }
 
         /**
@@ -978,13 +987,14 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         public void undo() {
             proj.getReleases().remove(release);
             release.setProject(null);
+            commandString = "Undoing the creation of Release \"" + release.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for adding releases.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -1016,6 +1026,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      * A command class for allowing the addition of Stories to Projects.
      */
     private class AddStoryCommand implements Command {
+        private String commandString;
         private Story story;
         private Project proj;
 
@@ -1035,6 +1046,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         public void execute() {
             proj.getUnallocatedStories().add(story);
             story.setProject(proj);
+            commandString = "Redoing the creation of Story \"" + story.getShortName() + "\".";
         }
 
         /**
@@ -1043,13 +1055,14 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         public void undo() {
             proj.getUnallocatedStories().remove(story);
             story.setProject(null);
+            commandString = "Undoing the creation of Story \"" + story.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for adding stories.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -1081,6 +1094,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      * A command class for allowing the addition of Backlogs to Projects.
      */
     private class AddBacklogCommand implements Command {
+        private String commandString;
         private Backlog backlog;
         private Project proj;
 
@@ -1100,6 +1114,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         public void execute() {
             proj.getBacklogs().add(backlog);
             backlog.setProject(proj);
+            commandString = "Redoing the creation of Backlog \"" + backlog.getShortName() + "\".";
         }
 
         /**
@@ -1108,13 +1123,14 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         public void undo() {
             proj.getBacklogs().remove(backlog);
             backlog.setProject(null);
+            commandString = "Undoing the creation of Backlog \"" + backlog.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for adding backlogs.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -1146,6 +1162,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      * A command class for allowing the addition of Sprints to Projects.
      */
     private class AddSprintCommand implements Command {
+        private String commandString;
         private Sprint sprint;
         private Project proj;
 
@@ -1164,6 +1181,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          */
         public void execute() {
             proj.getSprints().add(sprint);
+            commandString = "Redoing the creation of Sprint \"" + sprint.getGoal() + "\".";
         }
 
         /**
@@ -1171,13 +1189,14 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          */
         public void undo() {
             proj.getSprints().remove(sprint);
+            commandString = "Undoing the creation of Sprint \"" + sprint.getGoal() + "\".";
         }
 
         /**
          * Gets the String value of the Command for adding sprints.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -1209,6 +1228,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      * A command class for allowing the addition of Allocations to Projects.
      */
     private class AddAllocationCommand implements Command {
+        private String commandString;
         private Project proj;
         private Team team;
         private Allocation allocation;
@@ -1231,6 +1251,8 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         public void execute() {
             proj.getTeamAllocations().add(allocation);
             team.getProjectAllocations().add(allocation);
+            commandString = "Redoing the creation of an Allocation for \"" + team.getShortName() + "\" on \""
+                    + proj.getShortName() + "\".";
         }
 
         /**
@@ -1239,13 +1261,15 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         public void undo() {
             proj.getTeamAllocations().remove(allocation);
             team.getProjectAllocations().remove(allocation);
+            commandString = "Undoing the creation of an Allocation for \"" + team.getShortName() + "\" on \""
+                    + proj.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for adding allocations.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -1284,6 +1308,8 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      * Command to add and remote logs from a project
      */
     private class AddLogsCommand implements Command {
+        //TODO implement command string for logs
+        private String commandString;
         private Log log;
         private Task task;
         private Project proj;

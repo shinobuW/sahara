@@ -350,6 +350,7 @@ public class Log extends SaharaItem implements Serializable {
      * A command class that allows the executing and undoing of project edits
      */
     private class LogEditCommand implements Command {
+        private String commandString;
         private Log log;
         private Person logger;
         private LocalDateTime startTime;
@@ -416,6 +417,8 @@ public class Log extends SaharaItem implements Serializable {
             log.getTags().clear();
             log.getTags().addAll(logTags);
 
+            commandString = "Redoing the edit of Log \"" + log.toString() + "\".";
+
 
         }
 
@@ -438,6 +441,7 @@ public class Log extends SaharaItem implements Serializable {
             //Changes the logs list of tags to what they used to be
             log.getTags().clear();
             log.getTags().addAll(oldLogTags);
+            commandString = "Undoing the edit of Log \"" + log.toString() + "\".";
 
         }
 
@@ -445,7 +449,7 @@ public class Log extends SaharaItem implements Serializable {
          * Gets the String value of the Command for Editting of Logs.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
 
@@ -513,6 +517,7 @@ public class Log extends SaharaItem implements Serializable {
      * Edit command for editing description
      */
     private class DescriptionEditCommand implements Command {
+        private String commandString;
         private Log log;
         private String newDescription;
         private String oldDescription;
@@ -535,6 +540,7 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void execute() {
             log.description = this.newDescription;
+            commandString = "Redoing the edit of Description on Log \"" + log.toString() + "\".";
         }
 
 
@@ -544,13 +550,14 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void undo() {
             log.description = this.oldDescription;
+            commandString = "Undoing the edit of Description on Log \"" + log.toString() + "\".";
         }
 
         /**
          * Gets the String value of the Command for editting the description of Logs.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
 

@@ -303,6 +303,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
      * A command class that allows the executing and undoing of release edits
      */
     private class ReleaseEditCommand implements Command {
+        private String commandString;
         private Release release;
 
         private String shortName;
@@ -368,6 +369,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
             release.getTags().addAll(releaseTags);
 
             Collections.sort(project.getReleases());
+            commandString = "Redoing the edit of Release \"" + shortName + "\".";
 
         }
 
@@ -387,13 +389,14 @@ public class Release extends SaharaItem implements Comparable<Release> {
             release.getTags().addAll(oldReleaseTags);
 
             Collections.sort(project.getReleases());
+            commandString = "Undoing the edit of Release \"" + oldShortName + "\".";
         }
 
         /**
          * Gets the String value of the Command for editting releases.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -467,6 +470,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
      * A command class for allowing the deletion of Releases.
      */
     private class DeleteReleaseCommand implements Command {
+        private String commandString;
         private Release release;
         private Project proj;
 
@@ -485,6 +489,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
         public void execute() {
             proj.getReleases().remove(release);
             //release.setProject(null);
+            commandString = "Redoing the deletion of Release \"" + release.getShortName() + "\".";
         }
 
         /**
@@ -493,6 +498,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
         public void undo() {
             proj.getReleases().add(release);
             //release.setProject(proj);
+            commandString = "Undoing the deletion of Release \"" + release.getShortName() + "\".";
         }
 
         /**
@@ -500,7 +506,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
          */
         @Override
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
