@@ -2,6 +2,7 @@ package seng302.group2.scenes.sceneswitch.switchStrategies.category;
 
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.information.StickyBar;
 import seng302.group2.scenes.information.team.TeamCategoryScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy;
 
@@ -17,5 +18,6 @@ public class TeamCategoryCategorySwitchStrategy implements CategorySwitchStrateg
     @Override
     public void switchScene() {
         App.mainPane.setContent(new TeamCategoryScene(Global.currentWorkspace));
+        App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.OTHER);
     }
 }

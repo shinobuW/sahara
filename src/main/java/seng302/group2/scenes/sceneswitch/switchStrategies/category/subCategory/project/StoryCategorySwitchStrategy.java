@@ -1,6 +1,7 @@
 package seng302.group2.scenes.sceneswitch.switchStrategies.category.subCategory.project;
 
 import seng302.group2.App;
+import seng302.group2.scenes.information.StickyBar;
 import seng302.group2.scenes.information.project.story.StoryCategoryScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrategy;
 import seng302.group2.workspace.categories.Category;
@@ -21,6 +22,8 @@ public class StoryCategorySwitchStrategy implements SubCategorySwitchStrategy {
     public void switchScene(Category storyCategory) {
         if (storyCategory instanceof StoryCategory) {
             App.mainPane.setContent(new StoryCategoryScene((StoryCategory) storyCategory));
+            App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.OTHER);
+
         }
     }
 }

@@ -76,6 +76,7 @@ public class StickyBar extends HBox {
         this.getChildren().clear();
 
         if (type == STICKYTYPE.INFO) {
+            editButton.setDisable(false);
             this.getChildren().add(editButton);
         }
         if (type == STICKYTYPE.EDIT) {
