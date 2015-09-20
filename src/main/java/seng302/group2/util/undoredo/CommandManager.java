@@ -112,7 +112,7 @@ public class CommandManager {
             //System.out.println("undo: " + command);
             command.undo();
             if (App.mainPane != null) {
-                App.mainPane.refreshStatusBar(command.getString());
+                App.mainPane.refreshStatusBar("Undid " + command.getString());
             }
 
             redos.push(command);
@@ -187,7 +187,7 @@ public class CommandManager {
             //System.out.println("redo: " + command);
             command.execute();
             if (App.mainPane != null) {
-                App.mainPane.refreshStatusBar(command.getString());
+                App.mainPane.refreshStatusBar("Redid " + command.getString());
             }
             undos.push(command);
 
