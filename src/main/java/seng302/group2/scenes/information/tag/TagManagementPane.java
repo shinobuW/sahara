@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.*;
@@ -101,6 +102,14 @@ public class TagManagementPane extends SplitPane {
 
         tagListView = new SearchableListView<>(tagList, searchControls);
         tagListView.setPrefHeight(584);
+
+        this.tagListView.setCellFactory(new Callback<ListView<Tag>, ListCell<Tag>>() {
+            @Override
+            public ListCell<Tag> call(ListView<Tag> param) {
+                return new ListCellView();
+            }
+        });
+
         tagListView.getSelectionModel().getSelectedItems().addListener(
                 (ListChangeListener<Tag>) change -> {
                 if (tagListView.getItems().size() > 0) {
@@ -287,7 +296,6 @@ public class TagManagementPane extends SplitPane {
             }
             else {
                 showDeleteDialog(selectedTag);
-
             }
         });
 
