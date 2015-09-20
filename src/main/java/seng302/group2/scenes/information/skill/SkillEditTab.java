@@ -65,11 +65,12 @@ public class SkillEditTab extends SearchableTab {
 
         // Create Controls
 
-
-        RequiredField shortNameCustomField = new RequiredField("Short Name:");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description:", 300);
         shortNameCustomField.setMaxWidth(275);
         descriptionTextArea.setMaxWidth(275);
+
+        shortNameCustomField.setText(currentSkill.getShortName());
+        descriptionTextArea.setText(currentSkill.getDescription());
+
         // Add items to pane & search collection
         editPane.getChildren().addAll(shortNameCustomField, descriptionTextArea);
         Collections.addAll(searchControls, shortNameCustomField, descriptionTextArea);

@@ -45,7 +45,6 @@ public class TeamInformationSwitchStrategy implements InformationSwitchStrategy 
             else {
                 switchScene(item);
                 App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
-
             }
         }
         else {
