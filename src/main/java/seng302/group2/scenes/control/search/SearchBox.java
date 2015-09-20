@@ -14,7 +14,7 @@ public class SearchBox extends TextField {
      * Creates a search box element for searching text in the current content scene
      */
     public SearchBox() {
-        this.setPromptText("Search...");
+        this.setPromptText("Search this pane...");
 
         // Rounds the edges, adds an icon, and makes it look like a search box!
         this.setStyle("-fx-border-radius: 12 12 12 12;"
@@ -36,6 +36,10 @@ public class SearchBox extends TextField {
             });
     }
 
+    /**
+     * Querys all the tabs in the current scene
+     * @param query the string to query
+     */
     public void search(String query) {
         System.out.println("High");
         Collection<SearchableTab> tabs =

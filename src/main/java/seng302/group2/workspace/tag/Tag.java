@@ -19,6 +19,12 @@ public class Tag extends SaharaItem implements Serializable {
     private String name;
     private String colorCode = ColorUtils.toRGBCode(Color.ROYALBLUE);
 
+
+    /**
+     * Empty constructor.
+     */
+    public Tag() {}
+
     /**
      * Basic constructor for a Tag
      *
@@ -40,6 +46,29 @@ public class Tag extends SaharaItem implements Serializable {
             this.colorCode = ColorUtils.toRGBCode(Color.ROYALBLUE);
         }
         return ColorUtils.toColor(this.colorCode);
+    }
+
+    /**
+     * This function takes in a tag short name, and searches the global list of tags to see if it already
+     * exists (matching short name). If so, returns the already existing tag, else will return a new tag
+     * with the specified short name.
+     * @param tagShortName The short name of a potential new tag
+     * @return A tag from the global list or a new tag.
+     */
+    public static Tag getNewTag(String tagShortName) {
+        Tag returnTag = null;
+        for (Tag tag : Global.currentWorkspace.getAllTags()) {
+            if (tag.getName().equals(tagShortName)) {
+                returnTag = tag;
+                break;
+            }
+        }
+
+        if (returnTag == null) {
+            returnTag = new Tag(tagShortName);
+        }
+
+        return returnTag;
     }
 
     /**
