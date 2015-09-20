@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import org.controlsfx.control.StatusBar;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.information.StickyBar;
@@ -145,11 +146,13 @@ public class MainPane extends BorderPane {
     }
 
     public static HBox statusBar(String input) {
-        HBox statusBar = new HBox();
-        Label messageLabel = new Label(input);
-        
-        statusBar.getChildren().add(messageLabel);
-        return statusBar;
+        HBox statusBarBox = new HBox();
+        StatusBar statusBar = new StatusBar();
+        statusBar.setText(input);
+        HBox.setHgrow(statusBarBox, Priority.ALWAYS);
+        HBox.setHgrow(statusBar, Priority.ALWAYS);
+        statusBarBox.getChildren().add(statusBar);
+        return statusBarBox;
     }
     
     public void refreshStatusBar(String input) {
