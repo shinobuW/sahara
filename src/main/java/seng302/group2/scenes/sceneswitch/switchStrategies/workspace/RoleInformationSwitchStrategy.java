@@ -20,6 +20,7 @@ public class RoleInformationSwitchStrategy implements InformationSwitchStrategy 
     @Override
     public void switchScene(SaharaItem item) {
         if (item instanceof Role) {
+            App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.OTHER);
             App.mainPane.setContent(new RoleScene((Role) item));
 
         }
@@ -34,6 +35,7 @@ public class RoleInformationSwitchStrategy implements InformationSwitchStrategy 
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Role) {
             if (!editScene) {
+                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.OTHER);
                 switchScene(item);
             }
         }

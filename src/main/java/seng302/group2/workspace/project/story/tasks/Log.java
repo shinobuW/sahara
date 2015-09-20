@@ -345,6 +345,25 @@ public class Log extends SaharaItem implements Serializable {
         Global.commandManager.executeCommand(editCommand);
     }
 
+    /**
+     * Edits the Log's logger
+     * @param logger the logger to edit to
+     */
+    public void editLogger(Person logger) {
+        LoggerEditCommand command = new LoggerEditCommand(this, logger);
+        Global.commandManager.executeCommand(command);
+    }
+
+
+    /**
+     * Edits the duration command
+     * @param duration the duration to edit to
+     */
+    public void editDuration(Double duration) {
+        DurationEditCommand command = new DurationEditCommand(this, duration);
+        Global.commandManager.executeCommand(command);
+    }
+
 
     /**
      * A command class that allows the executing and undoing of project edits
@@ -554,7 +573,7 @@ public class Log extends SaharaItem implements Serializable {
         }
 
         /**
-         * Gets the String value of the Command for editting the description of Logs.
+         * Gets the String value of the Command for editing the description of Logs.
          */
         public String getString() {
             return commandString;
@@ -573,4 +592,118 @@ public class Log extends SaharaItem implements Serializable {
             return mapped;
         }
     }
+
+    /**
+     * Edit command for editing the logger
+     */
+    private class LoggerEditCommand implements Command {
+        private Log log;
+        private Person oldLogger;
+        private Person newLogger;
+        private String commandString;
+
+        /**
+         * Constructor
+         * @param log log to edit
+         * @param logger new logger to edit to
+         */
+        private LoggerEditCommand(Log log, Person logger) {
+            this.log = log;
+            this.newLogger = logger;
+            this.oldLogger = log.getLogger();
+        }
+
+        /**
+         * Executes the logger edit
+         */
+        @Override
+        public void execute() {
+            log.logger = this.newLogger;
+            commandString = "Redoing the edit of Logger on Log \"" + log.toString() + "\".";
+        }
+
+
+        /**
+         * Un-does the logger edit
+         */
+        @Override
+        public void undo() {
+            log.logger = this.oldLogger;
+            commandString = "Undoing the edit of Logger on Log \"" + log.toString() + "\".";
+        }
+
+
+        /**
+         * Gets the String value of the Command for editing the description of Logs.
+         */
+        @Override
+        public String getString() {
+            return null;
+        }
+
+
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(log)) {
+                    this.log = (Log) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
+    }
+
+
+    private class DurationEditCommand implements Command {
+        private Log log;
+        private double newDuration;
+        private double oldDuration;
+        private String commandString;
+
+
+        /**
+         * Constructor
+         * @param log Log to edit
+         * @param duration Duration to edit to
+         */
+        private DurationEditCommand(Log log, Double duration) {
+            this.newDuration = duration;
+            this.oldDuration = duration;
+            this.log = log;
+        }
+
+
+        /**
+         * Executes the duration edit
+         */
+        @Override
+        public void execute() {
+            log.duration = this.newDuration;
+            commandString = "Redoing the edit of Duration on Log \"" + log.toString() + "\".";
+        }
+
+        /**
+         * Undoes the duration edit
+         */
+        @Override
+        public void undo() {
+            log.duration = this.oldDuration;
+            commandString = "Undoing the edit of Duration on Log \"" + log.toString() + "\".";
+        }
+
+        @Override
+        public String getString() {
+            return commandString;
+        }
+
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            return false;
+        }
+    }
+
+
+
 }
