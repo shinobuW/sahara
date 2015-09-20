@@ -18,6 +18,10 @@ public class TagCellNode extends VBox {
     private String tagName = "";
     private Color tagColor = Color.ROYALBLUE;
 
+    /**
+     * Constructor for a tag cell node.
+     * @param tag The tag to display.
+     */
     public TagCellNode(Tag tag) {
         this.tag = tag;
         this.tagName = tag.getName();
@@ -26,7 +30,9 @@ public class TagCellNode extends VBox {
         construct();
     }
 
-
+    /**
+     * Creates the cell node, including text, size and background colour.
+     */
     void construct() {
         this.getChildren().clear();
 
