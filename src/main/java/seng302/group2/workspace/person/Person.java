@@ -522,6 +522,8 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
      * A command class that allows the executing and undoing of project edits
      */
     private class PersonEditCommand implements Command {
+        private String commandString;
+        
         private Person person;
         private String shortName;
         private String firstName;
@@ -635,7 +637,7 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
          * Gets the String value of the Command for Editting a person.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**

@@ -38,8 +38,11 @@ public class CommandManager {
     public void executeCommand(Command command) {
         Global.setCurrentWorkspaceChanged();
         command.execute();
+        
         if (command.getString() != null) {
+            System.out.println(command.getString() + " " + command);
             lastCommand = command;
+            App.mainPane.refreshStatusBar(lastCommand.getString());
         }
         undos.push(command);
         redos.clear();
@@ -82,6 +85,10 @@ public class CommandManager {
         }
         return true;
     }
+    
+    public Command getLastCommand() {
+        return lastCommand;
+    }
 
     /**
      * Undoes the last action added to the undo stack
@@ -106,6 +113,8 @@ public class CommandManager {
 
             // Normal undo
             Command command = undos.pop();
+            lastCommand = command;
+            App.mainPane.refreshStatusBar(command.getString());
             //System.out.println("undo: " + command);
             command.undo();
 

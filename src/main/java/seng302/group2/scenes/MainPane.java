@@ -147,8 +147,15 @@ public class MainPane extends BorderPane {
     public static HBox statusBar(String input) {
         HBox statusBar = new HBox();
         Label messageLabel = new Label(input);
+        
         statusBar.getChildren().add(messageLabel);
         return statusBar;
+    }
+    
+    public void refreshStatusBar(String input) {
+        this.getChildren().remove(statusBar);
+        statusBar = statusBar(input);
+        this.setBottom(statusBar);
     }
 
     /**
