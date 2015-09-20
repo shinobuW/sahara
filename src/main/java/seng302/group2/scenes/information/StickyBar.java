@@ -38,16 +38,12 @@ public class StickyBar extends HBox {
                 selected.switchToInfoScene(true);
             }
             catch (NullPointerException ex) {
-
+                System.out.println("nothing selected");
             }
         });
 
         doneButton.setOnAction(event -> {
             try {
-                // TODO THIS ISN'T RIGHT, NO CHANGES WILL BE SAVED, NEEDS TO CALL DONE() ON THE TAB AND THEN SWITCH
-                /*SaharaItem selected = (SaharaItem) Global.selectedTreeItem.getValue();
-                selected.
-                selected.switchToInfoScene(false);*/
                 ((SearchableScene)App.mainPane.contentPane.getContent()).done();
             }
             catch (NullPointerException ex) {
@@ -57,7 +53,6 @@ public class StickyBar extends HBox {
 
         cancelButton.setOnAction(event -> {
             try {
-                // THIS ISN'T RIGHT, NO CHANGES WILL BE SAVED, NEEDS TO CALL DONE() ON THE TAB~
                 SaharaItem selected = (SaharaItem) Global.selectedTreeItem.getValue();
                 selected.switchToInfoScene(false);
             }

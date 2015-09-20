@@ -38,7 +38,7 @@ public class BacklogInformationSwitchStrategy implements InformationSwitchStrate
     public void switchScene(SaharaItem item, boolean editScene) {
         if (item instanceof Backlog) {
             if (editScene) {
-                App.mainPane.setContent(new BacklogScene((Backlog) item, true));
+                App.mainPane.setContent(new BacklogScene((Backlog) item, editScene));
                 App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDIT);
 
             }

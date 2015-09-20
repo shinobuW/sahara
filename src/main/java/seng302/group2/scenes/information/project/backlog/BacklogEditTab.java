@@ -41,8 +41,8 @@ import static javafx.collections.FXCollections.observableArrayList;
 public class BacklogEditTab extends SearchableTab {
     List<SearchableControl> searchControls = new ArrayList<>();
     private Backlog baseBacklog;
-    private RequiredField shortNameField;
-    private CustomComboBox<String> scaleComboBox;
+    private RequiredField shortNameField = new RequiredField("Short Name:", searchControls);
+    private CustomComboBox<String> scaleComboBox = new CustomComboBox<>("Scale", true, searchControls);
     CustomTextField longNameField = new CustomTextField("Long Name:");
     CustomTextArea descriptionField = new CustomTextArea("Backlog Description:", 300);
     ObservableList<Story> backlogStoryList = observableArrayList();
@@ -57,7 +57,6 @@ public class BacklogEditTab extends SearchableTab {
         // Init
         this.baseBacklog = baseBacklog;
         construct();
-
     }
 
 
