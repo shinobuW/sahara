@@ -10,12 +10,14 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
+import seng302.group2.Global;
 import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.control.search.SearchableTable;
 import seng302.group2.scenes.control.search.SearchableText;
@@ -31,6 +33,7 @@ import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -155,8 +158,51 @@ public class LoggingEffortPane extends Pane {
         partnerCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
+        Callback<TableColumn, TableCell> cellFactory = col -> new DatePickerEditCell();
 
-        TableColumn startTimeCol = new TableColumn("Date");
+        TableColumn startDateTimeCol = new TableColumn("Start Time");
+        TableColumn startDateCol = new TableColumn("Date");
+        startDateCol.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Log, String>,
+                        ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<Log,
+                            String> log) {
+                        SimpleStringProperty property = new SimpleStringProperty();
+                        property.setValue(log.getValue().getStartDate().format(Global.dateFormatter));
+                        return property;
+                    }
+                });
+
+        startDateCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Log, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Log, String> event) {
+                        if (!event.getNewValue().isEmpty()) {
+                            Log currentLog = event.getTableView().getItems()
+                                    .get(event.getTablePosition().getRow());
+
+                            int hour = currentLog.getStartDate().getHour();
+                            int min = currentLog.getStartDate().getMinute();
+
+                            LocalDate startDate = LocalDate.parse(event.getNewValue(),
+                                    DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                            Month month = startDate.getMonth();
+                            int day = startDate.getDayOfMonth();
+                            int year = startDate.getYear();
+
+                            LocalDateTime newStartDateTime = LocalDateTime.of(year, month, day, hour, min);
+                            currentLog.editStartTime(newStartDateTime);
+                        }
+                    }
+                });
+        startDateCol.setCellFactory(cellFactory);
+        startDateCol.prefWidthProperty().bind(logTable.widthProperty()
+                .subtract(2).divide(100).multiply(60));
+        startDateCol.setSortType(TableColumn.SortType.ASCENDING);
+
+        TableColumn startTimeCol = new TableColumn("Time");
         startTimeCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Log, String>,
                         ObservableValue<String>>() {
@@ -164,20 +210,55 @@ public class LoggingEffortPane extends Pane {
                     public ObservableValue<String> call(TableColumn.CellDataFeatures<Log,
                             String> log) {
                         SimpleStringProperty property = new SimpleStringProperty();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
                         property.setValue(log.getValue().getStartDate().format(formatter));
                         return property;
                     }
                 });
-        startTimeCol.prefWidthProperty().bind(logTable.widthProperty()
-                .subtract(2).divide(100).multiply(60));
-        startTimeCol.setSortType(TableColumn.SortType.ASCENDING);
 
+        startTimeCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Log, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Log, String> event) {
+                        if (!event.getNewValue().isEmpty()) {
+                            Log currentLog = event.getTableView().getItems()
+                                    .get(event.getTablePosition().getRow());
+
+                            LocalDate newStartDate = LocalDate.parse(event.getNewValue(),
+                                    DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                            int month = currentLog.getStartDate().getMonthValue();
+                            int day = currentLog.getStartDate().getDayOfMonth();
+
+//                            LocalDateTime dateTime = startDate.atTime(timeTextField.getHours(),
+// timeTextField.getMinutes())
+                        }
+                    }
+                });
+
+//        startDateCol.setCellFactory(cellFactory);
+
+        startDateTimeCol.getColumns().addAll(startDateCol, startTimeCol);
 
         TableColumn descriptionCol = new TableColumn("Description");
         descriptionCol.setCellValueFactory(new PropertyValueFactory<Log, String>("description"));
         descriptionCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
+
+        descriptionCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        descriptionCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Log, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Log, String> event) {
+                        Log selectedLog = event.getTableView().getItems().get(
+                                event.getTablePosition().getRow());
+                        if (!event.getNewValue().isEmpty() && event.getNewValue() != null) {
+                            ArrayList<Tag> tags = new ArrayList<>();
+
+                        }
+                    }
+                }
+        );
 
 
         TableColumn durationCol = new TableColumn("Duration");
@@ -187,9 +268,9 @@ public class LoggingEffortPane extends Pane {
 
 
         logTable.setItems(data);
-        TableColumn[] columns = {loggerCol, partnerCol, startTimeCol, durationCol, descriptionCol};
+        TableColumn[] columns = {loggerCol, partnerCol, startDateTimeCol, durationCol, descriptionCol};
         logTable.getColumns().setAll(columns);
-        logTable.getSortOrder().add(startTimeCol);
+        logTable.getSortOrder().add(startDateCol);
 
 
         // Listener to disable columns being movable
