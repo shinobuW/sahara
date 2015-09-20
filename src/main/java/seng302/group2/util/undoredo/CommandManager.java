@@ -42,7 +42,9 @@ public class CommandManager {
         if (command.getString() != null) {
             System.out.println(command.getString() + " " + command);
             lastCommand = command;
-            App.mainPane.refreshStatusBar(lastCommand.getString());
+            if (App.mainPane != null) {
+                App.mainPane.refreshStatusBar(lastCommand.getString());
+            }
         }
         undos.push(command);
         redos.clear();
@@ -114,7 +116,9 @@ public class CommandManager {
             // Normal undo
             Command command = undos.pop();
             lastCommand = command;
-            App.mainPane.refreshStatusBar(command.getString());
+            if (App.mainPane != null) {
+                App.mainPane.refreshStatusBar(command.getString());
+            }
             //System.out.println("undo: " + command);
             command.undo();
 
