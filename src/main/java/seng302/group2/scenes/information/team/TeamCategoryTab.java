@@ -55,7 +55,7 @@ public class TeamCategoryTab extends SearchableTab {
     @Override
     public void construct() {
         // Tab Settings
-        this.setText("Basic Information");
+        this.setText("Teams");
 
         Pane categoryPane = new VBox(10);
         categoryPane.setBorder(null);
