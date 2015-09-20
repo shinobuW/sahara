@@ -10,11 +10,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreateBacklogDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.BacklogCategory;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.role.Role;
 
 import java.util.ArrayList;
@@ -76,10 +78,11 @@ public class BacklogCategoryTab extends SearchableTab {
         selectionButtons.getChildren().addAll(btnView, btnDelete, btnCreate);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
-
-        SearchableListView backlogListView = new SearchableListView<>(selectedCategory.getProject().getBacklogs());
+        FilteredListView<Backlog> backlogFilteredListView = new FilteredListView<Backlog>(
+                selectedCategory.getProject().getBacklogs(), "backlogs");
+        SearchableListView backlogListView = backlogFilteredListView.getListView();
         backlogListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        backlogListView.setMaxWidth(450);
+        backlogFilteredListView.setMaxWidth(450);
 
         boolean poExists = false;
         for (Person person : Global.currentWorkspace.getPeople()) {
@@ -112,7 +115,7 @@ public class BacklogCategoryTab extends SearchableTab {
         });
 
         // Add items to pane & search collection
-        categoryPane.getChildren().addAll(title, backlogListView, selectionButtons);
-        Collections.addAll(searchControls, title, backlogListView);
+        categoryPane.getChildren().addAll(title, backlogFilteredListView, selectionButtons);
+        Collections.addAll(searchControls, title, backlogFilteredListView);
     }
 }

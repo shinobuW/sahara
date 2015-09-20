@@ -6,8 +6,10 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.CustomInfoLabel;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.role.Role;
+import seng302.group2.workspace.skills.Skill;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,7 +59,10 @@ public class RoleInfoTab extends SearchableTab {
         SearchableText title = new SearchableTitle(currentRole.getShortName());
         CustomInfoLabel desc = new CustomInfoLabel("Role Description: ", currentRole.getDescription());
         CustomInfoLabel required = new CustomInfoLabel("Required Skills: ", "");
-        SearchableListView skillsBox = new SearchableListView<>(currentRole.getRequiredSkills());
+
+        FilteredListView<Skill> skillFilteredListView = new FilteredListView<Skill>(currentRole.getRequiredSkills(),
+                "skills");
+        SearchableListView skillsBox = skillFilteredListView.getListView();
         skillsBox.setPrefHeight(192);
         skillsBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         skillsBox.setMaxWidth(450);
@@ -69,14 +74,14 @@ public class RoleInfoTab extends SearchableTab {
                 title,
                 desc,
                 required,
-                skillsBox
+                skillFilteredListView
         );
 
         Collections.addAll(searchControls,
                 title,
                 desc,
                 required,
-                skillsBox
+                skillFilteredListView
         );
     }
 

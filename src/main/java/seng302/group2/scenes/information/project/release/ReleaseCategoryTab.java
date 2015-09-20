@@ -9,10 +9,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreateReleaseDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.ReleaseCategory;
+import seng302.group2.workspace.project.release.Release;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,7 +63,9 @@ public class ReleaseCategoryTab extends SearchableTab {
 
         // Create controls
         SearchableText title = new SearchableTitle("Releases in " + selectedCategory.getProject().toString());
-        SearchableListView releaseBox = new SearchableListView<>(selectedCategory.getProject().getReleases());
+        FilteredListView<Release> releaseFilteredListView = new FilteredListView<Release>(
+                selectedCategory.getProject().getReleases(), "releases");
+        SearchableListView releaseBox = releaseFilteredListView.getListView();
         releaseBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         releaseBox.setMaxWidth(275);
 
@@ -98,13 +102,13 @@ public class ReleaseCategoryTab extends SearchableTab {
         // Add items to pane & search collection
         categoryPane.getChildren().addAll(
                 title,
-                releaseBox,
+                releaseFilteredListView,
                 selectionButtons
         );
 
         Collections.addAll(searchControls,
                 title,
-                releaseBox
+                releaseFilteredListView
         );
     }
 }

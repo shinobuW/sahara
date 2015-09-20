@@ -9,8 +9,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
@@ -58,7 +60,8 @@ public class RoleCategoryTab extends SearchableTab {
 
         // Create controls
         SearchableText title = new SearchableTitle("Roles in " + currentWorkspace.getShortName(), searchControls);
-        SearchableListView roleBox = new SearchableListView<>(currentWorkspace.getRoles(), searchControls);
+        FilteredListView<Role> roleFilteredListView = new FilteredListView<Role>(currentWorkspace.getRoles(), "roles");
+        SearchableListView roleBox = roleFilteredListView.getListView();
         roleBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         roleBox.setMaxWidth(450);
 
@@ -80,13 +83,13 @@ public class RoleCategoryTab extends SearchableTab {
         // Add items to pane & search collection
         categoryPane.getChildren().addAll(
                 title,
-                roleBox,
+                roleFilteredListView,
                 selectionButtons
         );
 
         Collections.addAll(searchControls,
                 title,
-                roleBox
+                roleFilteredListView
         );
     }
 }

@@ -15,6 +15,7 @@ import javafx.scene.shape.Rectangle;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomInfoLabel;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
@@ -72,10 +73,11 @@ public class PersonInfoTab extends SearchableTab {
 
         VBox skillVBox = new VBox(20);
         CustomInfoLabel skill  = new CustomInfoLabel("Skills: ", "");
-        SearchableListView personSkillsBox = new SearchableListView<>(currentPerson.getSkills());
-        personSkillsBox.setPrefHeight(192);
+        FilteredListView<Person> personFilteredListView = new FilteredListView(currentPerson.getSkills(), "skills");
+        SearchableListView personSkillsBox = personFilteredListView.getListView();
+        personFilteredListView.setPrefHeight(192);
         personSkillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        skillVBox.getChildren().addAll(skill, personSkillsBox);
+        skillVBox.getChildren().addAll(skill, personFilteredListView);
 
         VBox taskVBox = new VBox(10);
         HBox titleAndCombo = new HBox(10);
@@ -104,11 +106,12 @@ public class PersonInfoTab extends SearchableTab {
                 }
             }
         }
-        SearchableListView taskBox = new SearchableListView<>(filteredList);
-        taskBox.setPrefHeight(192);
+        FilteredListView<Task> taskFilteredListView = new FilteredListView<>(filteredList, "skills");
+        SearchableListView taskBox = taskFilteredListView.getListView();
+        taskFilteredListView.setPrefHeight(192);
         taskBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         titleAndCombo.getChildren().addAll(taskLabel, filterComboBox);
-        taskVBox.getChildren().addAll(titleAndCombo, taskBox);
+        taskVBox.getChildren().addAll(titleAndCombo, taskFilteredListView);
         listViewHBox.getChildren().addAll(skillVBox, taskVBox);
 
         CustomInfoLabel shortName = new CustomInfoLabel("Short Name: ", currentPerson.getShortName());
@@ -164,8 +167,8 @@ public class PersonInfoTab extends SearchableTab {
                 team,
                 role,
                 skill,
-                personSkillsBox,
-                taskBox,
+                personFilteredListView,
+                taskFilteredListView,
                 taskLabel
         );
     }

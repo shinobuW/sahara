@@ -24,6 +24,7 @@ import static javafx.collections.FXCollections.observableArrayList;
 public class FilteredListView<T> extends VBox implements SearchableControl {
 
     private Set<SearchableControl> searchControls = new HashSet<>();
+    private ObservableList<T> originalData = observableArrayList();
     private ObservableList<T> sortedData = observableArrayList();
     private TextField inputText = new TextField();
     private SearchableListView<T> listView;
@@ -34,17 +35,48 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
      * @param data
      */
     public FilteredListView(ObservableList<T> data) {
+        originalData = data;
         inputText.setPromptText("Search list...");
         listView = new SearchableListView(data);
         inputText.setOnKeyReleased(event -> {
             sortedData.clear();
-            for (T item : data) {
+            for (T item : originalData) {
                 if (item.toString().toLowerCase().contains(inputText.getText().toLowerCase())) {
                     sortedData.add(item);
                 }
             }
             listView.setItems(sortedData);
         });
+
+
+
+        this.getChildren().addAll(
+                inputText,
+                listView
+        );
+
+        Collections.addAll(searchControls, listView);
+    }
+
+    /**
+     * Constructor for the VBox for Filtered Listviews
+     * @param data
+     */
+    public FilteredListView(ObservableList<T> data, String promptText) {
+        originalData = data;
+        inputText.setPromptText("Search " + promptText + "...");
+        listView = new SearchableListView(data);
+        inputText.setOnKeyReleased(event -> {
+            sortedData.clear();
+            for (T item : originalData) {
+                if (item.toString().toLowerCase().contains(inputText.getText().toLowerCase())) {
+                    sortedData.add(item);
+                }
+            }
+            listView.setItems(sortedData);
+        });
+
+
 
         this.getChildren().addAll(
                 inputText,
@@ -60,6 +92,16 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
      */
     public SearchableListView<T> getListView() {
         return listView;
+    }
+
+    public void resetInputText() {
+        sortedData.clear();
+        for (T item : originalData) {
+            if (item.toString().toLowerCase().contains(inputText.getText().toLowerCase())) {
+                sortedData.add(item);
+            }
+        }
+        listView.setItems(sortedData);
     }
 
     @Override

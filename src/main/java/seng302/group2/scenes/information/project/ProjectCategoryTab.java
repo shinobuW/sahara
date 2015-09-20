@@ -9,9 +9,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreateProjectDialog;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
@@ -60,9 +62,11 @@ public class ProjectCategoryTab extends SearchableTab {
 
         // Create controls
         SearchableText title = new SearchableTitle("Projects in " + currentWorkspace.getShortName(), searchControls);
-        SearchableListView projectBox = new SearchableListView<>(currentWorkspace.getProjects());
+        FilteredListView<Project> projectFilteredListView = new FilteredListView<>(currentWorkspace.getProjects(),
+                "projects");
+        SearchableListView projectBox = projectFilteredListView.getListView();
         projectBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        projectBox.setMaxWidth(275);
+        projectFilteredListView.setMaxWidth(275);
 
         Button btnView = new Button("View");
         Button btnDelete = new Button("Delete");
@@ -96,13 +100,13 @@ public class ProjectCategoryTab extends SearchableTab {
         // Add items to pane & search collection
         categoryPane.getChildren().addAll(
                 title,
-                projectBox,
+                projectFilteredListView,
                 createButton
         );
 
         Collections.addAll(searchControls,
                 title,
-                projectBox
+                projectFilteredListView
         );
     }
 }

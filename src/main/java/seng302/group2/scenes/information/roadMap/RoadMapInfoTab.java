@@ -40,20 +40,6 @@ public class RoadMapInfoTab extends SearchableTab {
     }
     
     /**
-     * Gets the node for the Roadmap.
-     * 
-     * @param currentRoadMap the roadMap to be processed
-     * @return An Hbox with all releases, sprints, stories associated with it.
-     */
-    public HBox roadMapNode(RoadMap currentRoadMap) {
-        
-        
-        
-        return null;
-    }
-
-
-    /**
      * Gets all the searchable controls on this tab.
      * @return a collection of all the searchable controls on this tab.
      */
@@ -79,7 +65,7 @@ public class RoadMapInfoTab extends SearchableTab {
         CustomInfoLabel currentTeamsLabel = new CustomInfoLabel("Current Teams:", "");
         CustomInfoLabel releasesLabel = new CustomInfoLabel("Releases:", "");
 
-        Node roadMapNode = new RoadMapNode(currentRoadMap);
+        RoadMapNode roadMapNode = new RoadMapNode(currentRoadMap);
 
 
         HBox roadmapKeyBox = new HBox(8);
@@ -132,6 +118,7 @@ public class RoadMapInfoTab extends SearchableTab {
 
         Collections.addAll(searchControls,
                 title,
+                roadMapNode,
                 currentTeamsLabel,
                 releasesLabel
         );

@@ -54,7 +54,8 @@ public class PersonEditTab extends SearchableTab {
     CustomDatePicker birthDatePicker = new CustomDatePicker("Birth Date:", false);
     CustomComboBox<Team> teamBox = new CustomComboBox<>("Team: ");
     CustomTextArea descriptionTextArea = new CustomTextArea("Person Description:", 300);
-    SearchableListView personSkillsBox = new SearchableListView<>(tempPerson.getSkills());
+    FilteredListView personSkillsBox = new FilteredListView(tempPerson.getSkills(), "skills");
+    SearchableListView personSkillsList = personSkillsBox.getListView();
 
     /**
      * Constructor for the PersonEditTab class. This constructor creates a JavaFX ScrollPane
@@ -111,15 +112,16 @@ public class PersonEditTab extends SearchableTab {
         }
 
         personSkillsBox.setPrefHeight(192);
-        personSkillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        personSkillsList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         personSkillsBox.setMaxWidth(275);
 
         ObservableList<Skill> dialogSkills = observableArrayList();
         ObservableList<Skill> dialogSkillsCopy = observableArrayList();
 
-        SearchableListView skillsBox = new SearchableListView<>(dialogSkills);
+        FilteredListView<Skill> skillsBox = new FilteredListView<>(dialogSkills, "skills");
+        SearchableListView skillsList = skillsBox.getListView();
         skillsBox.setPrefHeight(192);
-        skillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        skillsList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         skillsBox.setMaxWidth(275);
 
         teamBox.getComboBox().setItems(Global.currentWorkspace.getTeams());
@@ -232,7 +234,7 @@ public class PersonEditTab extends SearchableTab {
         // Events
         btnAdd.setOnAction((event) -> {
             ObservableList<Skill> selectedSkills =
-                    skillsBox.getSelectionModel().getSelectedItems();
+                    skillsList.getSelectionModel().getSelectedItems();
             for (Skill item : selectedSkills) {
                 tempPerson.getSkills().add(item);
             }
@@ -243,6 +245,8 @@ public class PersonEditTab extends SearchableTab {
                     dialogSkills.add((Skill) projectSkill);
                 }
             }
+            skillsBox.resetInputText();
+            personSkillsBox.resetInputText();
         });
 
         // Add items to pane & search collection
@@ -266,9 +270,9 @@ public class PersonEditTab extends SearchableTab {
                 descriptionTextArea,
                 teamBox,
                 v1Label,
-                personSkillsBox,
+                personSkillsList,
                 v2Label,
-                skillsBox
+                skillsList
         );
     }
 
@@ -299,7 +303,7 @@ public class PersonEditTab extends SearchableTab {
         boolean teamUnchanged = selectedTeam.getShortName().equals(
                 currentPerson.getTeamName());
         boolean skillsUnchanged = true;
-        for (Object skill : personSkillsBox.getItems()) {
+        for (Object skill : personSkillsList.getItems()) {
             if (!currentPerson.getSkills().contains(skill)) {
                 skillsUnchanged = false;
                 break;
@@ -333,7 +337,7 @@ public class PersonEditTab extends SearchableTab {
                     birthDate,
                     descriptionTextArea.getText(),
                     selectedTeam,
-                    personSkillsBox.getItems(),
+                    personSkillsList.getItems(),
                     tags
             );
 

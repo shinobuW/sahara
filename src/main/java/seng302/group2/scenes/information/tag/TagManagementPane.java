@@ -100,13 +100,14 @@ public class TagManagementPane extends SplitPane {
         listPane.setPadding(new Insets(8));
         listPane.setMaxWidth(292);
 
-        tagListView = new SearchableListView<>(tagList, searchControls);
+        FilteredListView<Tag> tagFilteredListView = new FilteredListView<Tag>(tagList, "tags");
+        tagListView = tagFilteredListView.getListView();
         tagListView.setPrefHeight(584);
 
         this.tagListView.setCellFactory(new Callback<ListView<Tag>, ListCell<Tag>>() {
             @Override
             public ListCell<Tag> call(ListView<Tag> param) {
-                return new ListCellView();
+                return new TagListCell(popOver);
             }
         });
 
@@ -173,7 +174,7 @@ public class TagManagementPane extends SplitPane {
                 }
             });
 
-        listPane.getChildren().addAll(tagListView, newTagBox);
+        listPane.getChildren().addAll(tagFilteredListView, newTagBox);
 
         this.getItems().add(0, listPane);
     }
@@ -244,17 +245,17 @@ public class TagManagementPane extends SplitPane {
         Button deleteButton = new Button("Delete Tag");
 
         tagNameField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
-                if (newValue.length() > 20) {
-                    tagNameField.getTextField().setText(oldValue);
-                    ValidationStyle.borderGlowRed(tagNameField.getTextField());
-                    ValidationStyle.showMessage("A tag must be 20 characters or fewer", tagNameField.getTextField());
-                    saveButton.setDisable(true);
-                }
-                else {
-                    ValidationStyle.borderGlowNone(tagNameField.getTextField());
-                    saveButton.setDisable(false);
-                }
-            });
+            if (newValue.length() > 20) {
+                tagNameField.getTextField().setText(oldValue);
+                ValidationStyle.borderGlowRed(tagNameField.getTextField());
+                ValidationStyle.showMessage("A tag must be 20 characters or fewer", tagNameField.getTextField());
+                saveButton.setDisable(true);
+            }
+            else {
+                ValidationStyle.borderGlowNone(tagNameField.getTextField());
+                saveButton.setDisable(false);
+            }
+        });
 
         saveButton.setOnAction(event -> {
                 // @Dave create and execute edit

@@ -10,8 +10,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.CustomInfoLabel;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.team.Team;
 
 import java.util.ArrayList;
@@ -81,21 +83,20 @@ public class ProjectInfoTab extends SearchableTab {
         CustomInfoLabel releasesLabel = new CustomInfoLabel("Releases:", "");
 
 
+        FilteredListView<Team> teamFilteredListView = new FilteredListView<>(currentTeams, "teams");
+        teamFilteredListView.setPrefHeight(192);
+        teamFilteredListView.setMaxHeight(150);
 
-        SearchableListView projectTeamsBox = new SearchableListView<>(currentTeams);
-        projectTeamsBox.setPrefHeight(192);
-        projectTeamsBox.setMaxHeight(150);
-        projectTeamsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-        SearchableListView projectReleaseBox = new SearchableListView<>(currentProject.getReleases());
-        projectReleaseBox.setPrefHeight(192);
-        projectReleaseBox.setMaxHeight(150);
+        FilteredListView<Release> releaseFilteredListView = new FilteredListView<>(currentProject.getReleases(),
+                "releases");
+        releaseFilteredListView.setPrefHeight(192);
+        releaseFilteredListView.setMaxHeight(150);
 
         HBox listBoxes = new HBox(12);
         VBox teamsBox = new VBox();
         VBox releaseBox = new VBox();
-        teamsBox.getChildren().addAll(currentTeamsLabel, projectTeamsBox);
-        releaseBox.getChildren().addAll(releasesLabel, projectReleaseBox);
+        teamsBox.getChildren().addAll(currentTeamsLabel, teamFilteredListView);
+        releaseBox.getChildren().addAll(releasesLabel, releaseFilteredListView);
         listBoxes.getChildren().addAll(teamsBox, releaseBox);
 
         // Add items to pane & search collection
@@ -112,9 +113,9 @@ public class ProjectInfoTab extends SearchableTab {
                 shortNameField,
                 description,
                 currentTeamsLabel,
-                projectTeamsBox,
+                teamFilteredListView,
                 releasesLabel,
-                projectReleaseBox
+                releaseFilteredListView
         );
     }
 

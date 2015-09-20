@@ -2,12 +2,20 @@ package seng302.group2.scenes.information.tag;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import seng302.group2.scenes.control.Tooltip;
+import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.workspace.tag.Tag;
+
+import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * The content of a Tag cell as shown on the Tag management pane.
@@ -57,8 +65,8 @@ public class TagCellNode extends VBox implements SearchableControl {
         }
 
         textContent.getChildren().addAll(titleLabel);
-
-        content.getChildren().addAll(textContent);
+        Node deletionNode = createDeletionNode(tag);
+        content.getChildren().addAll(textContent, deletionNode);
 
         this.getChildren().add(content);
     }
@@ -88,6 +96,31 @@ public class TagCellNode extends VBox implements SearchableControl {
      */
     public Tag getTag() {
         return this.tag;
+    }
+
+    /**
+     * Creates a deletion node
+     * @param tag The tag to be deleted
+     */
+    public Node createDeletionNode(Tag tag) {
+        ImageView deletionImage = new ImageView("icons/dialog-cancel.png");
+        Tooltip.create("Delete Tag", deletionImage, 50);
+
+        deletionImage.setOnMouseEntered(me -> {
+            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+        });
+        deletionImage.setOnMouseExited(me -> {
+            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+        });
+
+        deletionImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            showDeleteDialog(tag);
+            event.consume();
+        });
+
+
+        return deletionImage;
+
     }
 
     @Override

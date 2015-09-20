@@ -13,10 +13,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.CustomComboBox;
-import seng302.group2.scenes.control.CustomTextArea;
-import seng302.group2.scenes.control.CustomTextField;
-import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableTab;
@@ -141,23 +138,25 @@ public class BacklogEditTab extends SearchableTab {
 
 
         // List views
-        SearchableListView<Story> backlogStoryListView = new SearchableListView<>(backlogStoryList);
+        FilteredListView<Story> backlogStoryListBox = new FilteredListView<Story>(backlogStoryList, "stories");
+        SearchableListView<Story> backlogStoryListView = backlogStoryListBox.getListView();
         backlogStoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         backlogStoryListView.getSelectionModel().select(0);
 
-        SearchableListView<Story> availableStoryListView = new SearchableListView<>(availableStoryList);
+        FilteredListView<Story> availableStoryListBox = new FilteredListView<Story>(availableStoryList, "stories");
+        SearchableListView<Story> availableStoryListView = availableStoryListBox.getListView();
         availableStoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         availableStoryListView.getSelectionModel().select(0);
 
         VBox backlogStoryBox = new VBox(10);
         SearchableText backlogStoriesLabel = new SearchableText("Backlog Stories: ");
         backlogStoriesLabel.setStyle("-fx-font-weight: bold");
-        backlogStoryBox.getChildren().addAll(backlogStoriesLabel, backlogStoryListView);
+        backlogStoryBox.getChildren().addAll(backlogStoriesLabel, backlogStoryListBox);
 
         VBox availableStoryBox = new VBox(10);
         SearchableText availableStoriesLabel = new SearchableText("Available Stories: ");
         availableStoriesLabel.setStyle("-fx-font-weight: bold");
-        availableStoryBox.getChildren().addAll(availableStoriesLabel, availableStoryListView);
+        availableStoryBox.getChildren().addAll(availableStoriesLabel, availableStoryListBox);
 
         HBox storyListViews = new HBox(10);
         storyListViews.getChildren().addAll(backlogStoryBox, assignmentButtons, availableStoryBox);
@@ -189,6 +188,8 @@ public class BacklogEditTab extends SearchableTab {
                 errorField.setStyle("-fx-text-fill: #ff0000;");
                 errorField.setText("* Story \"" + errorStory.getShortName() + "\" must have a unique priority.");
             }
+            availableStoryListBox.resetInputText();
+            backlogStoryListBox.resetInputText();
 
         });
 
@@ -198,6 +199,8 @@ public class BacklogEditTab extends SearchableTab {
                     backlogStoryListView.getSelectionModel().getSelectedItems());
             backlogStoryList.removeAll(
                     backlogStoryListView.getSelectionModel().getSelectedItems());
+            availableStoryListBox.resetInputText();
+            backlogStoryListBox.resetInputText();
         });
 
 
