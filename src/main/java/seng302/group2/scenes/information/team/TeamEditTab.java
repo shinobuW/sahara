@@ -14,6 +14,7 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
@@ -27,6 +28,7 @@ import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.util.*;
+import java.util.logging.Filter;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -209,24 +211,27 @@ public class TeamEditTab extends SearchableTab {
 
 
         // List views
-        SearchableListView<Person> teamMembersListView = new SearchableListView<>(teamMembersList);
+        FilteredListView<Person> teamMembersListBox = new FilteredListView<>(teamMembersList, "team members");
+        SearchableListView<Person> teamMembersListView = teamMembersListBox.getListView();
         teamMembersListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         teamMembersListView.getSelectionModel().select(0);
 
-        SearchableListView<Person> availablePeopleListView = new SearchableListView<>(availablePeopleList);
+        FilteredListView<Person> availablePeopleListBox = new FilteredListView<>(availablePeopleList,
+                "available people");
+        SearchableListView<Person> availablePeopleListView = availablePeopleListBox.getListView();
         availablePeopleListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         availablePeopleListView.getSelectionModel().select(0);
 
         VBox teamMembersBox = new VBox(10);
         SearchableText teamMemberLabel = new SearchableText("Team Members: ");
         teamMemberLabel.setStyle("-fx-font-weight: bold");
-        teamMembersBox.getChildren().addAll(teamMemberLabel, teamMembersListView);
+        teamMembersBox.getChildren().addAll(teamMemberLabel, teamMembersListBox);
 
 
         VBox availablePeopleBox = new VBox(10);
         SearchableText availablePeopleLabel = new SearchableText("Available People: ");
         availablePeopleLabel.setStyle("-fx-font-weight: bold");
-        availablePeopleBox.getChildren().addAll(availablePeopleLabel, availablePeopleListView);
+        availablePeopleBox.getChildren().addAll(availablePeopleLabel, availablePeopleListBox);
 
         HBox memberListViews = new HBox(10);
         memberListViews.getChildren().addAll(teamMembersBox, assignmentButtons, availablePeopleBox);
@@ -279,6 +284,8 @@ public class TeamEditTab extends SearchableTab {
                     availablePeopleListView.getSelectionModel().getSelectedItems());
             availablePeopleList.removeAll(
                     availablePeopleListView.getSelectionModel().getSelectedItems());
+            availablePeopleListBox.resetInputText();
+            teamMembersListBox.resetInputText();
         });
 
         btnUnassign.setOnAction((event) -> {
@@ -299,6 +306,8 @@ public class TeamEditTab extends SearchableTab {
                     allocatedDevelopers.remove(person);
                 }
             }
+            teamMembersListBox.resetInputText();
+            availablePeopleListBox.resetInputText();
         });
 
         btnRoleAssign.setOnAction((event) -> {

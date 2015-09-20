@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomInfoLabel;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.skills.Skill;
@@ -68,11 +69,12 @@ public class SkillInfoTab extends SearchableTab {
                 peopleWithSkill.add(p);
             }
         }
-        SearchableListView<Person> personListView = new SearchableListView<>(peopleWithSkill);
+        FilteredListView<Person> personFilteredListView = new FilteredListView<Person>(peopleWithSkill, "people");
+        SearchableListView<Person> personListView = personFilteredListView.getListView();
 
         // Add items to pane & search collection
-        basicInfoPane.getChildren().addAll(title, desc, listViewLabel, personListView);
-        Collections.addAll(searchControls, title, desc, listViewLabel, personListView);
+        basicInfoPane.getChildren().addAll(title, desc, listViewLabel, personFilteredListView);
+        Collections.addAll(searchControls, title, desc, listViewLabel, personFilteredListView);
     }
 
     /**

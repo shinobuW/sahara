@@ -6,16 +6,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.CustomComboBox;
-import seng302.group2.scenes.control.CustomTextArea;
-import seng302.group2.scenes.control.CustomTextField;
-import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.util.validation.PriorityFieldValidator;
 import seng302.group2.util.validation.ShortNameValidator;
@@ -174,11 +172,13 @@ public class StoryEditTab extends SearchableTab {
         availableStoryList.removeAll(dependentOnList);
         availableStoryList.remove(currentStory);
 
-        SearchableListView<Story> dependantStoriesListView = new SearchableListView<>(dependentOnList);
+        FilteredListView<Story> dependantStoriesFilteredList = new FilteredListView<Story>(dependentOnList);
+        SearchableListView<Story> dependantStoriesListView = dependantStoriesFilteredList.getListView();
         dependantStoriesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         dependantStoriesListView.getSelectionModel().select(0);
 
-        SearchableListView<Story> availableStoryListView = new SearchableListView<>(availableStoryList);
+        FilteredListView<Story> availableStoryFilteredList = new FilteredListView<Story>(availableStoryList);
+        SearchableListView<Story> availableStoryListView = availableStoryFilteredList.getListView();
         availableStoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         availableStoryListView.getSelectionModel().select(0);
 
@@ -188,11 +188,11 @@ public class StoryEditTab extends SearchableTab {
 
         SearchableText dependantStoryLabel = new SearchableText("Dependant On: ");
         dependantStoryLabel.setStyle("-fx-font-weight: bold");
-        backlogStoryBox.getChildren().addAll(dependantStoryLabel, dependantStoriesListView);
+        backlogStoryBox.getChildren().addAll(dependantStoryLabel, dependantStoriesFilteredList);
 
         SearchableText availableStoryLabel = new SearchableText("Available Stories: ");
         availableStoryLabel.setStyle("-fx-font-weight: bold");
-        availableStoryBox.getChildren().addAll(availableStoryLabel, availableStoryListView);
+        availableStoryBox.getChildren().addAll(availableStoryLabel, availableStoryFilteredList);
 
 
         storyListViews.getChildren().addAll(backlogStoryBox, assignmentButtons, availableStoryBox);
@@ -225,6 +225,8 @@ public class StoryEditTab extends SearchableTab {
                             availableStoryListView.getSelectionModel().getSelectedItem());
                 }
             }
+            availableStoryFilteredList.resetInputText();
+            dependantStoriesFilteredList.resetInputText();
         });
 
         btnUnassign.setOnAction((event) -> {
@@ -232,7 +234,8 @@ public class StoryEditTab extends SearchableTab {
                     dependantStoriesListView.getSelectionModel().getSelectedItem());
             dependentOnList.removeAll(
                     dependantStoriesListView.getSelectionModel().getSelectedItem());
-
+            availableStoryFilteredList.resetInputText();
+            dependantStoriesFilteredList.resetInputText();
         });
 
         // Add items to pane & search collection

@@ -9,9 +9,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreatePersonDialog;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
@@ -72,23 +74,24 @@ public class PersonCategoryTab extends SearchableTab {
         selectionButtons.getChildren().addAll(btnView, btnDelete, btnCreate);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
-        SearchableListView personBox = new SearchableListView<>(currentWorkspace.getPeople());
-        personBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        FilteredListView<Person> personBox = new FilteredListView(currentWorkspace.getPeople());
+        SearchableListView personList = personBox.getListView();
+        personList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         personBox.setMaxWidth(275);
 
         // Events
         btnView.setOnAction((event) -> {
-            if (personBox.getSelectionModel().getSelectedItem() != null) {
+            if (personList.getSelectionModel().getSelectedItem() != null) {
                 App.mainPane.selectItem((SaharaItem)
-                        personBox.getSelectionModel().getSelectedItem());
+                        personList.getSelectionModel().getSelectedItem());
             }
         });
 
 
         btnDelete.setOnAction((event) -> {
-            if (personBox.getSelectionModel().getSelectedItem() != null) {
+            if (personList.getSelectionModel().getSelectedItem() != null) {
                 showDeleteDialog((SaharaItem)
-                        personBox.getSelectionModel().getSelectedItem());
+                        personList.getSelectionModel().getSelectedItem());
             }
         });
 

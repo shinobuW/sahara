@@ -9,10 +9,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreateStoryDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.subCategory.project.StoryCategory;
+import seng302.group2.workspace.project.story.Story;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -69,7 +71,9 @@ public class StoryCategoryTab extends SearchableTab {
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
 
-        SearchableListView storyBox = new SearchableListView<>(selectedCategory.getProject().getUnallocatedStories());
+        FilteredListView<Story> storyFilteredListView = new FilteredListView<Story>(
+                selectedCategory.getProject().getUnallocatedStories());
+        SearchableListView storyBox = storyFilteredListView.getListView();
         storyBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         storyBox.setMaxWidth(275);
 
@@ -97,13 +101,13 @@ public class StoryCategoryTab extends SearchableTab {
         // Add items to pane & search collection
         categoryPane.getChildren().addAll(
                 title,
-                storyBox,
+                storyFilteredListView,
                 selectionButtons
         );
 
         Collections.addAll(searchControls,
                 title,
-                storyBox
+                storyFilteredListView
         );
     }
 }

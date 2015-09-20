@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomInfoLabel;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableTab;
@@ -130,9 +131,10 @@ public class TeamInfoTab extends SearchableTab {
         CustomInfoLabel listViewLabel = new CustomInfoLabel("", "");
 
         ObservableList<Person> personList = currentTeam.getPeople();
-        SearchableListView<Person> teamsPeopleBox = new SearchableListView<>(personList, searchControls);
+        FilteredListView teamsPeopleBox = new FilteredListView(personList);
+        SearchableListView<Person> teamsPeoplelist = teamsPeopleBox.getListView();
         teamsPeopleBox.setPrefHeight(192);
-        teamsPeopleBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        teamsPeoplelist.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         teamsPeopleBox.setMaxWidth(275);
 
         Separator separator = new Separator();
@@ -181,7 +183,7 @@ public class TeamInfoTab extends SearchableTab {
         }
 
         basicInfoPane.getChildren().addAll(listViewLabel, teamsPeopleBox);
-        Collections.addAll(searchControls,listViewLabel, teamsPeopleBox);
+        Collections.addAll(searchControls,listViewLabel, teamsPeoplelist);
     }
 
     /**

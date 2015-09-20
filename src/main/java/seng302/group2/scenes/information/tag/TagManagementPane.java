@@ -99,7 +99,8 @@ public class TagManagementPane extends SplitPane {
         listPane.setPadding(new Insets(8));
         listPane.setMaxWidth(292);
 
-        tagListView = new SearchableListView<>(tagList, searchControls);
+        FilteredListView<Tag> tagFilteredListView = new FilteredListView<Tag>(tagList, "tags");
+        tagListView = tagFilteredListView.getListView();
         tagListView.setPrefHeight(584);
         tagListView.getSelectionModel().getSelectedItems().addListener(
                 (ListChangeListener<Tag>) change -> {
@@ -164,7 +165,7 @@ public class TagManagementPane extends SplitPane {
                 }
             });
 
-        listPane.getChildren().addAll(tagListView, newTagBox);
+        listPane.getChildren().addAll(tagFilteredListView, newTagBox);
 
         this.getItems().add(0, listPane);
     }

@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
@@ -105,23 +106,27 @@ public class RoadMapEditTab extends SearchableTab {
 
 
         // List views
-        SearchableListView<Release> roadMapReleaseListView = new SearchableListView<>(roadMapList);
+        FilteredListView<Release> roadMapReleaseFiltered = new FilteredListView<Release>(roadMapList,
+                "road map releases");
+        SearchableListView<Release> roadMapReleaseListView = roadMapReleaseFiltered.getListView();
         roadMapReleaseListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         roadMapReleaseListView.getSelectionModel().select(0);
 
-        SearchableListView<Release> availableReleaseListView = new SearchableListView<>(availableReleases);
+        FilteredListView<Release> availableReleaseFiltered = new FilteredListView<Release>(availableReleases,
+                "available releases");
+        SearchableListView<Release> availableReleaseListView = availableReleaseFiltered.getListView();
         availableReleaseListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         availableReleaseListView.getSelectionModel().select(0);
 
         VBox roadMapReleaseBox = new VBox(10);
         SearchableText backlogStoriesLabel = new SearchableText("RoadMap Releases: ");
         backlogStoriesLabel.setStyle("-fx-font-weight: bold");
-        roadMapReleaseBox.getChildren().addAll(backlogStoriesLabel, roadMapReleaseListView);
+        roadMapReleaseBox.getChildren().addAll(backlogStoriesLabel, roadMapReleaseFiltered);
 
         VBox availableReleaseBox = new VBox(10);
         SearchableText availableStoriesLabel = new SearchableText("Available Releases: ");
         availableStoriesLabel.setStyle("-fx-font-weight: bold");
-        availableReleaseBox.getChildren().addAll(availableStoriesLabel, availableReleaseListView);
+        availableReleaseBox.getChildren().addAll(availableStoriesLabel, availableReleaseFiltered);
 
         HBox storyListViews = new HBox(10);
         storyListViews.getChildren().addAll(roadMapReleaseBox, assignmentButtons, availableReleaseBox);
@@ -134,6 +139,8 @@ public class RoadMapEditTab extends SearchableTab {
                     availableReleaseListView.getSelectionModel().getSelectedItems());
             availableReleases.removeAll(
                     availableReleaseListView.getSelectionModel().getSelectedItems());
+            roadMapReleaseFiltered.resetInputText();
+            availableReleaseFiltered.resetInputText();
         });
 
         btnUnassign.setOnAction((event) -> {
@@ -142,6 +149,8 @@ public class RoadMapEditTab extends SearchableTab {
                     roadMapReleaseListView.getSelectionModel().getSelectedItems());
             roadMapList.removeAll(
                     roadMapReleaseListView.getSelectionModel().getSelectedItems());
+            roadMapReleaseFiltered.resetInputText();
+            availableReleaseFiltered.resetInputText();
         });
 
         editPane.getChildren().addAll(
@@ -155,9 +164,9 @@ public class RoadMapEditTab extends SearchableTab {
         Collections.addAll(searchControls,
                 shortNameField,
                 priorityNumberField,
-                availableReleaseListView,
+                availableReleaseFiltered,
                 availableStoriesLabel,
-                roadMapReleaseListView,
+                roadMapReleaseFiltered,
                 backlogStoriesLabel,
                 errorField
         );

@@ -206,8 +206,14 @@ public class SprintEditTab extends SearchableTab {
 
         // Story list view setup
         ObservableList<Story> availableStories = FXCollections.observableArrayList();
-        SearchableListView<Story> storiesInSprintView = new SearchableListView<>();
-        SearchableListView<Story> availableStoriesView = new SearchableListView<>();
+        FilteredListView<Story> storiesInSprintFilteredList = new FilteredListView<Story>(storiesInSprint,
+                "stories in the sprint");
+        SearchableListView<Story> storiesInSprintView = storiesInSprintFilteredList.getListView();
+        FilteredListView<Story> availableStoriesFilteredList = new FilteredListView<Story>(availableStories,
+                "available stories");
+        SearchableListView<Story> availableStoriesView = availableStoriesFilteredList.getListView();
+
+
         storiesInSprintView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         availableStoriesView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         VBox inSprintVBox = new VBox();
@@ -216,14 +222,12 @@ public class SprintEditTab extends SearchableTab {
         sprintStoriesLabel.setStyle("-fx-font-weight: bold");
         SearchableText availableStoriesLabel = new SearchableText("Available Stories: ", searchControls);
         availableStoriesLabel.setStyle("-fx-font-weight: bold");
-        inSprintVBox.getChildren().addAll(sprintStoriesLabel, storiesInSprintView);
-        availableVBox.getChildren().addAll(availableStoriesLabel, availableStoriesView);
+        inSprintVBox.getChildren().addAll(sprintStoriesLabel, storiesInSprintFilteredList);
+        availableVBox.getChildren().addAll(availableStoriesLabel, availableStoriesFilteredList);
         HBox storyHBox = new HBox(10);
         storyHBox.setPrefHeight(192);
         storyHBox.getChildren().addAll(inSprintVBox, assignmentButtons, availableVBox);
 
-        storiesInSprintView.setItems(storiesInSprint);
-        availableStoriesView.setItems(availableStories);
 
         storiesInSprint.addAll(currentSprint.getStories());
         //availableStories.addAll(Global.currentWorkspace.getAllStories());
@@ -541,6 +545,8 @@ public class SprintEditTab extends SearchableTab {
                     availableStoriesView.getSelectionModel().getSelectedItems());
             availableStories.removeAll(
                     availableStoriesView.getSelectionModel().getSelectedItems());
+            storiesInSprintFilteredList.getListView();
+            availableStoriesFilteredList.getListView();
         });
 
         btnUnassign.setOnAction((event) -> {
@@ -549,6 +555,8 @@ public class SprintEditTab extends SearchableTab {
                     getSelectedItems());
             availableStories.addAll(selectedPeople);
             storiesInSprint.removeAll(selectedPeople);
+            storiesInSprintFilteredList.getListView();
+            availableStoriesFilteredList.getListView();
         });
 
     }

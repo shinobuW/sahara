@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreateTeamDialog;
 import seng302.group2.workspace.SaharaItem;
@@ -66,7 +67,8 @@ public class TeamCategoryTab extends SearchableTab {
 
         // Create Controls
         SearchableText title = new SearchableTitle("Teams in " + currentWorkspace.getShortName());
-        SearchableListView<Team> teamBox = new SearchableListView<>(currentWorkspace.getTeams());
+        FilteredListView<Team> teamFilteredListView = new FilteredListView<Team>(currentWorkspace.getTeams(), "teams");
+        SearchableListView<Team> teamBox = teamFilteredListView.getListView();
         teamBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         teamBox.setMaxWidth(275);
 
@@ -114,13 +116,13 @@ public class TeamCategoryTab extends SearchableTab {
         // Add items to pane & search collection
         categoryPane.getChildren().addAll(
                 title,
-                teamBox,
+                teamFilteredListView,
                 selectionButtons
         );
 
         Collections.addAll(searchControls,
                 title,
-                teamBox
+                teamFilteredListView
         );
     }
 }

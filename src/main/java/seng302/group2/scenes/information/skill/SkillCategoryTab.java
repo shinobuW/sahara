@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreateSkillDialog;
 import seng302.group2.workspace.skills.Skill;
@@ -60,7 +61,9 @@ public class SkillCategoryTab extends SearchableTab {
 
         // Create Controls
         SearchableText title = new SearchableTitle("Skills in " + currentWorkspace.getShortName());
-        SearchableListView<Skill> skillBox = new SearchableListView<>(currentWorkspace.getSkills());
+        FilteredListView<Skill> skillFilteredListView = new FilteredListView<Skill>(currentWorkspace.getSkills(),
+                "skills");
+        SearchableListView<Skill> skillBox = skillFilteredListView.getListView();
         skillBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         skillBox.setMaxWidth(275);
 
@@ -94,14 +97,14 @@ public class SkillCategoryTab extends SearchableTab {
         // Add items to pane & search collection
         categoryPane.getChildren().addAll(
                 title,
-                skillBox,
+                skillFilteredListView,
                 selectionButtons
         );
 
         Collections.addAll(
                 searchControls,
                 title,
-                skillBox
+                skillFilteredListView
         );
     }
 }

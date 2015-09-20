@@ -98,12 +98,13 @@ public class StoryTaskTab extends SearchableTab {
         acContent.setAlignment(Pos.CENTER);
         acContent.setPadding(new Insets(8, 8, 8, 8));
 
-        SearchableListView<AcceptanceCriteria> acListView = new SearchableListView<>(
-                currentStory.getAcceptanceCriteria());
+        FilteredListView<AcceptanceCriteria> acceptanceCriteriaFilteredListView = new
+                FilteredListView<AcceptanceCriteria>(currentStory.getAcceptanceCriteria());
+        SearchableListView<AcceptanceCriteria> acListView = acceptanceCriteriaFilteredListView.getListView();
         ScrollPane acWrapper = new ScrollPane();
         acListView.setPrefSize(640, 250);
         acListView.setPlaceholder(new SearchableText("No Acceptance Criteria", searchControls));
-        acWrapper.setContent(acListView);
+        acWrapper.setContent(acceptanceCriteriaFilteredListView);
         acContent.getChildren().add(acWrapper);
 
         acPopover.setContentNode(acContent);
