@@ -366,6 +366,15 @@ public class Log extends SaharaItem implements Serializable {
 
 
     /**
+     * Edits the start date and time of the log
+     * @param startdate the local date time to change to
+     */
+    public void editStartTime(LocalDateTime startdate) {
+        StartEditDateCommand command = new StartEditDateCommand(this, startdate);
+        Global.commandManager.executeCommand(command);
+    }
+
+    /**
      * A command class that allows the executing and undoing of project edits
      */
     private class LogEditCommand implements Command {
@@ -619,7 +628,7 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void execute() {
             log.logger = this.newLogger;
-            commandString = "Redid the edit of Logger on Log \"" + log.toString() + "\".";
+            //TODO: Cameron
         }
 
 
@@ -629,7 +638,7 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void undo() {
             log.logger = this.oldLogger;
-            commandString = "Undid the edit of Logger on Log \"" + log.toString() + "\".";
+//            TODO: Cameron
         }
 
 
@@ -700,10 +709,65 @@ public class Log extends SaharaItem implements Serializable {
 
         @Override
         public boolean map(Set<SaharaItem> stateObjects) {
-            return false;
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(log)) {
+                    this.log = (Log) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
         }
     }
 
 
+    /**
+     * Command class for editing the start date
+     */
+    private class StartEditDateCommand implements Command {
+        private Log log;
+        private LocalDateTime newDate;
+        private LocalDateTime oldDate;
+        private String commandString;
+
+        /**
+         * Constructor
+         * @param log the log to be edited
+         * @param localDateTime to date and time to edit to
+         */
+        private StartEditDateCommand(Log log, LocalDateTime localDateTime) {
+            this.log = log;
+            this.newDate = localDateTime;
+        }
+
+        @Override
+        public void execute() {
+            log.startTime = newDate;
+            //TODO:Cameron
+        }
+
+        @Override
+        public void undo() {
+            log.startTime = oldDate;
+            //TODO:Cameron
+        }
+
+        @Override
+        public String getString() {
+            return commandString;
+        }
+
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(log)) {
+                    this.log = (Log) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
+    }
 
 }

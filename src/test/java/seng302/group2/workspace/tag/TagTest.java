@@ -57,16 +57,25 @@ public class TagTest {
 
         peter.getTags().get(0).setName("peter tags");
 
-
         System.out.println(Global.currentWorkspace.getAllTags());
         System.out.println(peter.getTags());
+    }
+
+    @Test
+    public void testGetNewTag() {
+        Tag tag1 = new Tag("Tag1");
+
+        Global.currentWorkspace.add(tag1);
+        Tag tag1Alt = Tag.getNewTag("Tag1");
+        Tag newTag = Tag.getNewTag("Another Tag");
 
 
-
+        Assert.assertEquals(tag1, tag1Alt);
+        Assert.assertEquals(newTag.getName(), "Another Tag");
     }
 
     /**
-     * Tests the deletion of a tag globally. //TODO Bronson Add in items with the tag, then delete it.
+     * Tests the deletion of a tag globally.
      */
     @Test
     public void testDeleteGlobalTag() {
