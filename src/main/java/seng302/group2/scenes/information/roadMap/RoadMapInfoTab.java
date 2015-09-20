@@ -64,7 +64,7 @@ public class RoadMapInfoTab extends SearchableTab {
 
     @Override
     public void construct() {
-        this.setText("RoadMap");
+        this.setText("Basic Information");
         Pane basicInfoPane = new VBox(10);
         basicInfoPane.setBorder(null);
         basicInfoPane.setPadding(new Insets(25, 25, 25, 25));

@@ -75,12 +75,18 @@ public class StickyBar extends HBox {
             this.getChildren().add(editButton);
         }
         if (type == STICKYTYPE.EDIT) {
+            doneButton.setDisable(false);
             this.getChildren().add(doneButton);
             this.getChildren().add(cancelButton);
         }
         if (type == STICKYTYPE.OTHER) {
             editButton.setDisable(true);
             this.getChildren().add(editButton);
+        }
+        if (type == STICKYTYPE.EDITDISABLED) {
+            doneButton.setDisable(true);
+            this.getChildren().add(doneButton);
+            this.getChildren().add(cancelButton);
         }
 
     }
@@ -91,7 +97,7 @@ public class StickyBar extends HBox {
     public enum STICKYTYPE {
         INFO,
         EDIT,
-        CATEGORY,
+        EDITDISABLED,
         OTHER
     }
 }

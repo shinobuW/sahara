@@ -1223,6 +1223,7 @@ public class Task extends SaharaItem implements Serializable {
     private class DeleteTaskCommand implements Command {
         private Task task;
         private Story story;
+        private Object lane;
         /* If Story == null, assume it's a task without a story as Story is required when creating a task otherwise */
         
         /**
@@ -1233,6 +1234,20 @@ public class Task extends SaharaItem implements Serializable {
         DeleteTaskCommand(Task task) {
             this.task = task;
             this.story = task.getStory();
+            if (story != null) {
+                if (story.todoTasks.contains(task)) {
+                    lane = story.todoTasks;
+                }
+                else if (story.inProgTasks.contains(task)) {
+                    lane = story.inProgTasks;
+                }
+                else if (story.verifyTasks.contains(task)) {
+                    lane = story.verifyTasks;
+                }
+                else {
+                    lane = story.completedTasks;
+                }
+            }
         }
 
         /**
@@ -1241,6 +1256,7 @@ public class Task extends SaharaItem implements Serializable {
         public void execute() {
             if (story != null) {
                 story.getTasks().remove(task);
+                ((ObservableList<Task>) lane).remove(task);
             }
         }
 
@@ -1250,6 +1266,7 @@ public class Task extends SaharaItem implements Serializable {
         public void undo() {
             if (story != null) {
                 story.getTasks().add(task);
+                ((ObservableList<Task>) lane).add(task);
             }
         }
 

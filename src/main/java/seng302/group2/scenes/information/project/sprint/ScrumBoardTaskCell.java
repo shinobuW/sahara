@@ -3,11 +3,16 @@ package seng302.group2.scenes.information.project.sprint;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.Tab;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import seng302.group2.App;
+import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.information.project.story.StoryScene;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.util.HashSet;
@@ -78,6 +83,15 @@ public class ScrumBoardTaskCell extends ListCell<Task> implements SearchableCont
                 tab.hoverIndex = dropIndex;
             });
 
+        this.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                App.mainPane.selectItem(task.getStory());
+
+                ((StoryScene) App.mainPane.getContent()).select(((StoryScene) App.mainPane.getContent()).getTaskTab());
+                task.getStory().switchToInfoScene();
+            }
+            event.consume();
+        });
         setTextOverrun(OverrunStyle.CLIP);
     }
 

@@ -28,6 +28,10 @@ public class CustomInfoLabel extends HBox implements SearchableControl {
      */
     public CustomInfoLabel(String labelText, String valueText) {
         label = new SearchableText(labelText, searchControls);
+        if (label.getText().length() < 30) {
+            label.setMinWidth(220);
+            label.setPrefWidth(230);
+        }
         value = new SearchableText(valueText, searchControls);
         label.setStyle("-fx-font-weight: bold");
 
