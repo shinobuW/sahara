@@ -906,6 +906,7 @@ public class Story extends SaharaItem implements Serializable {
      * A command class that allows the executing and undoing of story edits
      */
     private class StoryEditCommand implements Command {
+        private String commandString;
         private Story story;
 
         private String shortName;
@@ -1032,6 +1033,7 @@ public class Story extends SaharaItem implements Serializable {
             if (backlog != null && project != null) {
                 project.getUnallocatedStories().remove(story);
             }
+            commandString = "Redoing the edit of Story \"" + shortName + "\".";
         }
 
         /**
@@ -1066,6 +1068,7 @@ public class Story extends SaharaItem implements Serializable {
             if (oldBacklog != null && oldProject != null) {
                 oldProject.getUnallocatedStories().remove(story);
             }
+            commandString = "Undoing the edit of Story \"" + oldShortName + "\".";
         }
 
         /**
@@ -1170,6 +1173,7 @@ public class Story extends SaharaItem implements Serializable {
      * A class for implementing story deletion in the Command undo/redo structure.
      */
     private class DeleteStoryCommand implements Command {
+        private String commandString;
         private Story story;
         private Project proj;
         private Backlog backlog;
@@ -1200,6 +1204,7 @@ public class Story extends SaharaItem implements Serializable {
             if (sprint != null) {
                 sprint.getStories().remove(story);
             }
+            commandString = "Redoing the deletion of Story \"" + story.getShortName() + "\".";
         }
 
         /**
@@ -1215,13 +1220,14 @@ public class Story extends SaharaItem implements Serializable {
             if (sprint != null) {
                 sprint.getStories().add(story);
             }
+            commandString = "Undoing the deletion of Story \"" + story.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for deleting stories.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -1268,6 +1274,7 @@ public class Story extends SaharaItem implements Serializable {
      * Command to add and remove acceptance criteria
      */
     private class AddAcceptanceCriteriaCommand implements Command {
+        private String commandString;
         private Story story;
         private AcceptanceCriteria ac;
 
@@ -1287,6 +1294,7 @@ public class Story extends SaharaItem implements Serializable {
         public void execute() {
             story.getAcceptanceCriteria().add(ac);
             ac.setStory(story);
+            commandString = "Redoing the creation of Acceptance Criteria \"" + ac.toString() + "\".";
         }
 
         /**
@@ -1295,13 +1303,14 @@ public class Story extends SaharaItem implements Serializable {
         public void undo() {
             story.getAcceptanceCriteria().remove(ac);
             ac.setStory(null);
+            commandString = "Undoing the creation of Acceptance Criteria \"" + ac.toString() + "\".";
         }
 
         /**
          * Gets the String value of the Command for adding acceptance criteria.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -1333,6 +1342,7 @@ public class Story extends SaharaItem implements Serializable {
      * Command to add and remove acceptance criteria
      */
     private class AddTaskCommand implements Command {
+        private String commandString;
         private Story story;
         private Task task;
 
@@ -1352,6 +1362,7 @@ public class Story extends SaharaItem implements Serializable {
          */
         public void execute() {
             story.getTasks().add(task);
+            commandString = "Redoing the creation of Task \"" + task.getShortName() + "\".";
         }
 
         /**
@@ -1359,13 +1370,14 @@ public class Story extends SaharaItem implements Serializable {
          */
         public void undo() {
             story.getTasks().remove(task);
+            commandString = "Undoing the creation of Task \"" + task.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for adding Tasks.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**

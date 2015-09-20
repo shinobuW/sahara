@@ -574,6 +574,7 @@ public class Task extends SaharaItem implements Serializable {
      * A command class that allows the executing and undoing of task edits
      */
     private class TaskEditCommand implements Command {
+        private String commandString;
         private Task task;
 
         private String shortName;
@@ -683,6 +684,7 @@ public class Task extends SaharaItem implements Serializable {
 
 //            task.logs.clear();
 //            task.logs.addAll(logs);
+            commandString = "Redoing the edit of Task \"" + shortName + "\".";
         }
 
         /**
@@ -713,13 +715,14 @@ public class Task extends SaharaItem implements Serializable {
 //
 //            task.logs.clear();
 //            task.logs.addAll(oldLogs);
+            commandString = "Undoing the edit of Task \"" + oldShortName + "\".";
         }
 
         /**
          * Gets the String value of the Command for Editting of Tasks.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -787,6 +790,7 @@ public class Task extends SaharaItem implements Serializable {
      * A command class that allows the executing and undoing of task edits
      */
     private class TaskEditAssigneeCommand implements Command {
+        private String commandString;
 
         private Task task;
         private Person assignee;
@@ -809,6 +813,7 @@ public class Task extends SaharaItem implements Serializable {
          */
         public void execute() {
             task.assignee = assignee;
+            commandString = "Redoing the edit of Assignee on Task \"" + task.getShortName() + "\".";
         }
 
         /**
@@ -816,13 +821,14 @@ public class Task extends SaharaItem implements Serializable {
          */
         public void undo() {
             task.assignee = oldAssignee;
+            commandString = "Undoing the edit of Assignee on Task \"" + task.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for editting the assignee of a task.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -849,6 +855,7 @@ public class Task extends SaharaItem implements Serializable {
      * A command class that allows the executing and undoing of task state edits
      */
     private class TaskEditStateCommand implements Command {
+        private String commandString;
 
         private Task task;
         private TASKSTATE state;
@@ -873,6 +880,7 @@ public class Task extends SaharaItem implements Serializable {
         public void execute() {
             task.lane = this.state;
             task.state = this.state;
+            commandString = "Redoing the edit of Task State on Task \"" + task.getShortName() + "\".";
         }
 
         /**
@@ -881,13 +889,14 @@ public class Task extends SaharaItem implements Serializable {
         public void undo() {
             task.lane = this.oldLane;
             task.state = this.oldState;
+            commandString = "Undoing the edit of Task State on Task \"" + task.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for editting the State of a task.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -913,6 +922,7 @@ public class Task extends SaharaItem implements Serializable {
      * A command class that allows the executing and undoing of task effort left edits
      */
     private class TaskEditEffortLeftCommand implements Command {
+        private String commandString;
         private Task task;
 
         private Log effortLeftLog;
@@ -943,6 +953,7 @@ public class Task extends SaharaItem implements Serializable {
         public void execute() {
             task.effortLeft = effortLeft;
             task.getLogs().add(effortLeftLog);
+            commandString = "Redoing the edit of Effort Left on Task \"" + task.getShortName() + "\".";
         }
 
         /**
@@ -951,13 +962,14 @@ public class Task extends SaharaItem implements Serializable {
         public void undo() {
             task.effortLeft = oldEffortLeft;
             task.getLogs().remove(effortLeftLog);
+            commandString = "Undoing the edit of Effort Left on Task \"" + task.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for Editting the effortleft of a task.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -983,6 +995,7 @@ public class Task extends SaharaItem implements Serializable {
      * A command class that allows the executing and undoing of task description edits
      */
     private class TaskEditDescriptionCommand implements Command {
+        private String commandString;
         private Task task;
 
         private String description;
@@ -1007,6 +1020,7 @@ public class Task extends SaharaItem implements Serializable {
          */
         public void execute() {
             task.description = description;
+            commandString = "Redoing the edit of Description on Task \"" + task.getShortName() + "\".";
         }
 
         /**
@@ -1014,13 +1028,14 @@ public class Task extends SaharaItem implements Serializable {
          */
         public void undo() {
             task.description = oldDescription;
+            commandString = "Undoing the edit of Description on Task \"" + task.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for editting the description of a task.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -1048,6 +1063,7 @@ public class Task extends SaharaItem implements Serializable {
      * A command class that allows the executing and undoing of task lane edits
      */
     private class TaskEditLaneCommand implements Command {
+        private String commandString;
 
         private Task task;
         private TASKSTATE lane;
@@ -1102,7 +1118,7 @@ public class Task extends SaharaItem implements Serializable {
             if (lane.equals(TASKSTATE.DONE)) {
                 task.getStory().setDone(storyDone);
             }
-
+            commandString = "Redoing the edit of Lane on Task \"" + task.getShortName() + "\".";
             //System.out.println("Task state: " + task.getState() + ", lane: " + task.getLane());
         }
 
@@ -1116,13 +1132,14 @@ public class Task extends SaharaItem implements Serializable {
                 task.getStory().addTaskToLane(task, oldIndex);
             }
             task.getStory().setDone(oldStoryDone);
+            commandString = "Undoing the edit of Lane on Task \"" + task.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for editting the Lane of a task.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -1149,6 +1166,7 @@ public class Task extends SaharaItem implements Serializable {
      * A command class that allows the executing and undoing of task lane edits
      */
     private class TaskEditImpedimentStatusCommand implements Command {
+        private String commandString;
 
         private Task task;
 
@@ -1185,6 +1203,7 @@ public class Task extends SaharaItem implements Serializable {
                 task.state = state;
             }
             task.impediments = impediments;
+            commandString = "Redoing the edit of Impediments on Task \"" + task.getShortName() + "\".";
         }
 
         /**
@@ -1193,13 +1212,14 @@ public class Task extends SaharaItem implements Serializable {
         public void undo() {
             task.state = oldState;
             task.impediments = oldImpediments;
+            commandString = "Undoing the edit of Impediments on Task \"" + task.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for editting the impediements of a task.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -1226,6 +1246,7 @@ public class Task extends SaharaItem implements Serializable {
      * A class for implementing task deletion in the Command undo/redo structure.
      */
     private class DeleteTaskCommand implements Command {
+        private String commandString;
         private Task task;
         private Story story;
         /* If Story == null, assume it's a task without a story as Story is required when creating a task otherwise */
@@ -1247,6 +1268,7 @@ public class Task extends SaharaItem implements Serializable {
             if (story != null) {
                 story.getTasks().remove(task);
             }
+            commandString = "Redoing the deletion of Task \"" + task.getShortName() + "\".";
         }
 
         /**
@@ -1256,6 +1278,7 @@ public class Task extends SaharaItem implements Serializable {
             if (story != null) {
                 story.getTasks().add(task);
             }
+            commandString = "Undoing the deletion of Task \"" + task.getShortName() + "\".";
             
         }
 
@@ -1263,7 +1286,7 @@ public class Task extends SaharaItem implements Serializable {
          * Gets the String value of the Command for deleting a task.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**

@@ -38,6 +38,16 @@ public class StoryEditTab extends SearchableTab {
     List<SearchableControl> searchControls = new ArrayList<>();
     Story currentStory;
 
+    RequiredField shortNameCustomField = new RequiredField("Short Name:");
+    CustomTextField longNameTextField = new CustomTextField("Long Name:");
+    CustomTextArea descriptionTextArea = new CustomTextArea("Story Description:", 300);
+    RequiredField priorityNumberField = new RequiredField("Story Priority:");
+    CustomComboBox estimateComboBox = new CustomComboBox("Estimate:", false);
+
+    SearchableCheckBox readyStateCheck = new SearchableCheckBox("Ready?");
+
+    ObservableList<Story> dependentOnList = FXCollections.observableArrayList();
+
     /**
      * Constructor for the StoryEditTab class. This constructor creates a JavaFX ScrollPane
      * which is populated with relevant controls then shown.
@@ -70,13 +80,6 @@ public class StoryEditTab extends SearchableTab {
         this.setContent(wrapper);
 
 
-        RequiredField shortNameCustomField = new RequiredField("Short Name:");
-        CustomTextField longNameTextField = new CustomTextField("Long Name:");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Story Description:", 300);
-        RequiredField priorityNumberField = new RequiredField("Story Priority:");
-        CustomComboBox estimateComboBox = new CustomComboBox("Estimate:", false);
-
-        SearchableCheckBox readyStateCheck = new SearchableCheckBox("Ready?");
 
         Button btnAssign = new Button("<");
         Button btnUnassign = new Button(">");
@@ -86,15 +89,6 @@ public class StoryEditTab extends SearchableTab {
         assignmentButtons.setAlignment(Pos.CENTER);
 
         HBox estimateHBox = new HBox();
-
-        Button btnCancel = new Button("Cancel");
-        Button btnDone = new Button("Done");
-
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.TOP_LEFT);
-        buttons.getChildren().addAll(btnDone, btnCancel);
-
 
         boolean unassigned = false;
         if (currentStory.getBacklog() == null) {
@@ -169,7 +163,6 @@ public class StoryEditTab extends SearchableTab {
         descriptionTextArea.setText(currentStory.getDescription());
         priorityNumberField.setText(currentStory.getPriority().toString());
 
-        ObservableList<Story> dependentOnList = FXCollections.observableArrayList();
         dependentOnList.addAll(currentStory.getDependentOn());
 
         Backlog currentBacklog = currentStory.getBacklog();
@@ -242,65 +235,6 @@ public class StoryEditTab extends SearchableTab {
 
         });
 
-        btnCancel.setOnAction((event) -> {
-            currentStory.switchToInfoScene();
-        });
-
-        btnDone.setOnAction((event) -> {
-            boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                    currentStory.getShortName());
-            boolean longNameUnchanged = longNameTextField.getText().equals(
-                    currentStory.getLongName());
-            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                    currentStory.getDescription());
-            boolean priorityUnchanged = priorityNumberField.getText().equals(
-                    currentStory.getPriority().toString());
-            boolean readyUnchanged = readyStateCheck.getCheckBox().isSelected() == currentStory.getReady();
-            boolean estimateUnchanged = estimateComboBox.getValue().equals(currentStory.getEstimate());
-
-            boolean dependentChanged = true;
-            if (currentStory.getDependentOn().containsAll(dependentOnList)
-                    && dependentOnList.containsAll(currentStory.getDependentOn())) {
-                dependentChanged = false;
-            }
-
-
-            if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged
-                    && priorityUnchanged && readyUnchanged && estimateUnchanged && !dependentChanged) {
-                // No changes
-                currentStory.switchToInfoScene();
-                return;
-            }
-
-            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                    currentStory.getShortName());
-            boolean correctPriority = PriorityFieldValidator.validatePriorityField(priorityNumberField,
-                    currentStory.getBacklog(), currentStory.getPriority());
-
-            if (correctShortName && correctPriority) {
-                // Valid short name, make the edit
-                ArrayList<Tag> tags = new ArrayList<>();
-
-                currentStory.edit(shortNameCustomField.getText(),
-                        longNameTextField.getText(),
-                        descriptionTextArea.getText(),
-                        currentStory.getProject(),
-                        Integer.parseInt(priorityNumberField.getText()),
-                        currentStory.getBacklog(),
-                        estimateComboBox.getValue().toString(),
-                        readyStateCheck.getCheckBox().selectedProperty().get(),
-                        dependentOnList,
-                        tags
-                );
-
-                currentStory.switchToInfoScene();
-                App.mainPane.refreshTree();
-            }
-            else {
-                event.consume();
-            }
-        });
-
         // Add items to pane & search collection
         editPane.getChildren().addAll(
                 shortNameCustomField,
@@ -309,8 +243,7 @@ public class StoryEditTab extends SearchableTab {
                 priorityNumberField,
                 estimateHBox,
                 readyStateCheck,
-                storyListViews,
-                buttons);
+                storyListViews);
 
         Collections.addAll(searchControls,
                 shortNameCustomField,
@@ -324,5 +257,67 @@ public class StoryEditTab extends SearchableTab {
                 availableStoryLabel,
                 availableStoryListView
         );
+    }
+
+    /**
+     * Cancels the edit
+     */
+    public void cancel() {
+        currentStory.switchToInfoScene();
+    }
+
+    /**
+     * Changes the values depending on what the user edits
+     */
+    public void done() {
+        boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                currentStory.getShortName());
+        boolean longNameUnchanged = longNameTextField.getText().equals(
+                currentStory.getLongName());
+        boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                currentStory.getDescription());
+        boolean priorityUnchanged = priorityNumberField.getText().equals(
+                currentStory.getPriority().toString());
+        boolean readyUnchanged = readyStateCheck.getCheckBox().isSelected() == currentStory.getReady();
+        boolean estimateUnchanged = estimateComboBox.getValue().equals(currentStory.getEstimate());
+
+        boolean dependentChanged = true;
+        if (currentStory.getDependentOn().containsAll(dependentOnList)
+                && dependentOnList.containsAll(currentStory.getDependentOn())) {
+            dependentChanged = false;
+        }
+
+
+        if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged
+                && priorityUnchanged && readyUnchanged && estimateUnchanged && !dependentChanged) {
+            // No changes
+            currentStory.switchToInfoScene();
+            return;
+        }
+
+        boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                currentStory.getShortName());
+        boolean correctPriority = PriorityFieldValidator.validatePriorityField(priorityNumberField,
+                currentStory.getBacklog(), currentStory.getPriority());
+
+        if (correctShortName && correctPriority) {
+            // Valid short name, make the edit
+            ArrayList<Tag> tags = new ArrayList<>();
+
+            currentStory.edit(shortNameCustomField.getText(),
+                    longNameTextField.getText(),
+                    descriptionTextArea.getText(),
+                    currentStory.getProject(),
+                    Integer.parseInt(priorityNumberField.getText()),
+                    currentStory.getBacklog(),
+                    estimateComboBox.getValue().toString(),
+                    readyStateCheck.getCheckBox().selectedProperty().get(),
+                    dependentOnList,
+                    tags
+            );
+
+            currentStory.switchToInfoScene();
+            App.mainPane.refreshTree();
+        }
     }
 }

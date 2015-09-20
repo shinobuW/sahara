@@ -61,21 +61,15 @@ public class WorkspaceInfoTab extends SearchableTab {
 
         // Create Controls
         SearchableText title = new SearchableTitle(currentWorkspace.getLongName());
-        Button btnEdit = new Button("Edit");
         CustomInfoLabel shortName = new CustomInfoLabel("Short Name: ", currentWorkspace.getShortName());
         CustomInfoLabel desc = new CustomInfoLabel("Workspace Description: ", currentWorkspace.getDescription());
-
-        // Events
-        btnEdit.setOnAction((event) -> {
-            currentWorkspace.switchToInfoScene(true);
-        });
 
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
                 title,
                 shortName,
-                desc,
-                btnEdit
+                desc
+
         );
 
         Collections.addAll(searchControls,
@@ -83,6 +77,13 @@ public class WorkspaceInfoTab extends SearchableTab {
                 shortName,
                 desc
         );
+    }
+
+    /**
+     * Switches to the edit scene
+     */
+    public void edit() {
+        currentWorkspace.switchToInfoScene(true);
     }
 
     /**

@@ -411,6 +411,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
      * A command class that allows the executing and undoing of backlog edits
      */
     private class BacklogEditCommand implements Command {
+        private String commandString;
         private Backlog backlog;
 
         private String shortName;
@@ -531,6 +532,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             backlog.getTags().addAll(backlogTags);
 
             Collections.sort(backlog.stories, Story.StoryPriorityComparator);
+            commandString = "Redoing the edit of Backlog \"" + shortName + "\".";
         }
 
         /**
@@ -583,13 +585,14 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             backlog.getTags().addAll(oldBacklogTags);
 
             Collections.sort(backlog.stories, Story.StoryPriorityComparator);
+            commandString = "Undoing the edit of Backlog \"" + oldShortName + "\".";
         }
 
         /**
          * Gets the String value of the Command for editting backlogs.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -706,6 +709,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
      * A command class for allowing the deletion of Backlogs.
      */
     private class DeleteBacklogCommand implements Command {
+        private String commandString;
         private Backlog backlog;
         private Project proj;
 
@@ -726,6 +730,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             proj.getBacklogs().remove(backlog);
             backlog.setProject(null);
             //release.setProject(null);
+            commandString = "Redoing the deletion of Backlog \"" + backlog.getShortName() + "\".";
         }
 
         /**
@@ -736,13 +741,14 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             proj.getBacklogs().add(backlog);
             backlog.setProject(proj);
             //release.setProject(proj);
+            commandString = "Undoing the deletion of Backlog \"" + backlog.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for deleting backlogs.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -774,6 +780,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
      * A command class for allowing the addition of Stories to Backlogs.
      */
     private class AddStoryCommand implements Command {
+        private String commandString;
         private Project proj;
         private Backlog backlog;
         private Story story;
@@ -801,6 +808,8 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             if (backlog.getProject() != null) {
                 backlog.getProject().getUnallocatedStories().remove(story);
             }
+            commandString = "Redoing the addition of Story \"" + story.getShortName() + "\" to Backlog \""
+                    + backlog.getShortName() + "\".";
         }
 
         /**
@@ -815,13 +824,16 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
             if (backlog.getProject() != null) {
                 backlog.getProject().getUnallocatedStories().add(story);
             }
+            commandString = "Undoing the addition of Story \"" + story.getShortName() + "\" to Backlog \""
+                    + backlog.getShortName() + "\".";
+
         }
 
         /**
          * Gets the String value of the Command for adding a story.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**

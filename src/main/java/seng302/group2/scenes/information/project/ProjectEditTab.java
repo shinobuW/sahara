@@ -32,6 +32,9 @@ public class ProjectEditTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
     Project currentProject;
+    RequiredField shortNameCustomField = new RequiredField("Short Name:");
+    RequiredField longNameCustomField = new RequiredField("Long Name:");
+    CustomTextArea descriptionTextArea = new CustomTextArea("Project Description:", 300);
 
     /**
      * Gets the workspace edit information scene.
@@ -63,71 +66,23 @@ public class ProjectEditTab extends SearchableTab {
         this.setContent(wrapper);
 
         // Create controls
-        RequiredField shortNameCustomField = new RequiredField("Short Name:");
-        RequiredField longNameCustomField = new RequiredField("Long Name:");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Project Description:", 300);
 
         shortNameCustomField.setMaxWidth(275);
         longNameCustomField.setMaxWidth(275);
         descriptionTextArea.setMaxWidth(275);
 
-        Button btnCancel = new Button("Cancel");
-        Button btnDone = new Button("Done");
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.TOP_LEFT);
-        buttons.getChildren().addAll(btnDone, btnCancel);
 
         // Set values
         shortNameCustomField.setText(currentProject.getShortName());
         longNameCustomField.setText(currentProject.getLongName());
         descriptionTextArea.setText(currentProject.getDescription());
 
-        // Events
-        btnDone.setOnAction((event) -> {
-            boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                    currentProject.getShortName());
-            boolean longNameUnchanged = longNameCustomField.getText().equals(
-                    currentProject.getLongName());
-            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                    currentProject.getDescription());
-
-            // If no fields have been changed
-            if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
-                currentProject.switchToInfoScene();
-                return;
-            }
-
-            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                    currentProject.getShortName());
-            boolean correctLongName = NameValidator.validateName(longNameCustomField);
-
-            if (correctShortName && correctLongName) {
-                ArrayList<Tag> tags = new ArrayList<>();
-                currentProject.edit(shortNameCustomField.getText(),
-                        longNameCustomField.getText(), descriptionTextArea.getText(),
-                        FXCollections.observableArrayList(), tags
-                );
-
-                Collections.sort(Global.currentWorkspace.getProjects());
-                currentProject.switchToInfoScene();
-                App.mainPane.refreshTree();
-            }
-            else {
-                event.consume();
-            }
-        });
-
-        btnCancel.setOnAction((event) -> {
-            currentProject.switchToInfoScene();
-        });
 
         // Add items to pane & search collection
         editPane.getChildren().addAll(
                 shortNameCustomField,
                 longNameCustomField,
-                descriptionTextArea,
-                buttons
+                descriptionTextArea
         );
 
         Collections.addAll(searchControls,
@@ -135,6 +90,47 @@ public class ProjectEditTab extends SearchableTab {
                 longNameCustomField,
                 descriptionTextArea
         );
+    }
+
+    /**
+     * Cancels the edit
+     */
+    public void cancel() {
+        currentProject.switchToInfoScene();
+    }
+
+    /**
+     * Changes the values depending on what the user edits
+     */
+    public void done() {
+        boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                currentProject.getShortName());
+        boolean longNameUnchanged = longNameCustomField.getText().equals(
+                currentProject.getLongName());
+        boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                currentProject.getDescription());
+
+        // If no fields have been changed
+        if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
+            currentProject.switchToInfoScene();
+            return;
+        }
+
+        boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                currentProject.getShortName());
+        boolean correctLongName = NameValidator.validateName(longNameCustomField);
+
+        if (correctShortName && correctLongName) {
+            ArrayList<Tag> tags = new ArrayList<>();
+            currentProject.edit(shortNameCustomField.getText(),
+                    longNameCustomField.getText(), descriptionTextArea.getText(),
+                    FXCollections.observableArrayList(), tags
+            );
+
+            Collections.sort(Global.currentWorkspace.getProjects());
+            currentProject.switchToInfoScene();
+            App.mainPane.refreshTree();
+        }
     }
 }
 

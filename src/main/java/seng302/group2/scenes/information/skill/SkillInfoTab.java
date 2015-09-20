@@ -26,7 +26,6 @@ import java.util.List;
 public class SkillInfoTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
-    Button btnEdit = new Button("Edit");
     Skill currentSkill;
 
     /**
@@ -71,17 +70,15 @@ public class SkillInfoTab extends SearchableTab {
         }
         SearchableListView<Person> personListView = new SearchableListView<>(peopleWithSkill);
 
-        boolean skillIsProductOwner = currentSkill.getShortName().equals("Product Owner");
+        //TODO implement this in sticky bar
+        /*boolean skillIsProductOwner = currentSkill.getShortName().equals("Product Owner");
         boolean skillIsScrumMaster = currentSkill.getShortName().equals("Scrum Master");
         if (skillIsProductOwner || skillIsScrumMaster) {
             btnEdit.setDisable(true);
-        }
-
-        // Events
-        btnEdit.setOnAction((event) -> currentSkill.switchToInfoScene(true));
+        }*/
 
         // Add items to pane & search collection
-        basicInfoPane.getChildren().addAll(title, desc, listViewLabel, personListView, btnEdit);
+        basicInfoPane.getChildren().addAll(title, desc, listViewLabel, personListView);
         Collections.addAll(searchControls, title, desc, listViewLabel, personListView);
     }
 
@@ -93,4 +90,12 @@ public class SkillInfoTab extends SearchableTab {
     public String toString() {
         return "Skill Info Tab";
     }
+
+    /**
+     * Switches to the edit scene
+     */
+    public void edit() {
+        currentSkill.switchToInfoScene(true);
+    }
+
 }

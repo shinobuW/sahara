@@ -192,6 +192,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
      * A command class for allowing the deletion of Acceptance Criteria from Stories.
      */
     private class DeleteAcCommand implements Command {
+        private String commandString;
         private AcceptanceCriteria acceptanceCriteria;
         private Story story;
         private boolean oldStoryReady = false;
@@ -220,6 +221,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
                 story.setEstimate(EstimationScalesDictionary.getScaleValue(
                         EstimationScalesDictionary.DefaultValues.NONE));
             }
+            commandString = "Redoing the deletion of Acceptance Criteria \"" + acceptanceCriteria.toString() + "\".";
         }
 
         /**
@@ -229,13 +231,14 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
             story.getAcceptanceCriteria().add(acceptanceCriteria);
             story.setReady(oldStoryReady);
             story.setEstimate(oldEstimate);
+            commandString = "Undoing the deletion of Acceptance Criteria \"" + acceptanceCriteria.toString() + "\".";
         }
 
         /**
          * Gets the String value of the Command for deleting acceptance criteria.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -267,6 +270,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
      * AC Edit tags command.
      */
     private class EditAcTagsCommand implements Command {
+        private String commandString;
         private AcceptanceCriteria ac;
 
         private Set<Tag> acTags = new HashSet<>();
@@ -305,6 +309,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
             //Add the tags a AC has to their list of tags
             ac.getTags().clear();
             ac.getTags().addAll(acTags);
+            commandString = "Redoing the edit of Tags on Acceptance Criteria \"" + ac.toString() + "\".";
         }
 
         /**
@@ -318,13 +323,14 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
             //Changes the AC list of tags to what they used to be
             ac.getTags().clear();
             ac.getTags().addAll(oldAcTags);
+            commandString = "Undoing the edit of Tags on Acceptance Criteria \"" + ac.toString() + "\".";
         }
 
         /**
          * Gets the String value of the Command for editting acceptance criteria tags.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -392,6 +398,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
      * A command class that allows the executing and undoing of story edits
      */
     private class EditAcStateCommand implements Command {
+        private String commandString;
         private AcceptanceCriteria ac;
 
         private AcState newAcState;
@@ -414,6 +421,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
          */
         public void execute() {
             ac.state = newAcState;
+            commandString = "Redoing the edit of State on Acceptance Criteria \"" + ac.toString() + "\".";
         }
 
         /**
@@ -421,13 +429,14 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
          */
         public void undo() {
             ac.state = oldAcState;
+            commandString = "Undoing the edit of State on Acceptance Criteria \"" + ac.toString() + "\".";
         }
 
         /**
          * Gets the String value of the Command for editting the AC state.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -456,6 +465,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
      * A command class that allows the executing and undoing of story edits
      */
     private class EditAcCommand implements Command {
+        private String commandString;
         private AcceptanceCriteria ac;
 
         private String newDescription;
@@ -478,6 +488,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
          */
         public void execute() {
             ac.description = newDescription;
+            commandString = "Redoing the edit of Acceptance Criteria \"" + ac.toString() + "\".";
         }
 
         /**
@@ -485,13 +496,14 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
          */
         public void undo() {
             ac.description = oldDescription;
+            commandString = "Undoing the edit of Acceptance Criteria \"" + ac.toString() + "\".";
         }
 
         /**
          * Gets the String value of the Command for editting AC descriptions.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**

@@ -524,6 +524,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
      * A command class that allows the executing and undoing of backlog edits
      */
     private class SprintEditCommand implements Command {
+        private String commandString;
         private Sprint sprint;
 
         private String goal;

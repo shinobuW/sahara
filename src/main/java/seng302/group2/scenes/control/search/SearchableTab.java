@@ -18,6 +18,8 @@ public abstract class SearchableTab extends Tab {
     public abstract Collection<SearchableControl> getSearchableControls();
 
 
+
+
     /**
      * Constructs the contents of the tab
      */

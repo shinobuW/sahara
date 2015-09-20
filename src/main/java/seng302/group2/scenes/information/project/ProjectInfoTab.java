@@ -66,7 +66,6 @@ public class ProjectInfoTab extends SearchableTab {
         SearchableText title = new SearchableTitle(currentProject.getLongName(), searchControls);
 
         Separator separator = new Separator();
-        Button btnEdit = new Button("Edit");
 
 
         this.setOnSelectionChanged(event -> {
@@ -99,19 +98,13 @@ public class ProjectInfoTab extends SearchableTab {
         releaseBox.getChildren().addAll(releasesLabel, projectReleaseBox);
         listBoxes.getChildren().addAll(teamsBox, releaseBox);
 
-        // Events
-        btnEdit.setOnAction((event) -> {
-            currentProject.switchToInfoScene(true);
-        });
-
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
                 title,
                 shortNameField,
                 description,
                 separator,
-                listBoxes,
-                btnEdit
+                listBoxes
         );
 
         Collections.addAll(searchControls,
@@ -129,4 +122,12 @@ public class ProjectInfoTab extends SearchableTab {
     public String toString() {
         return "Project Info Tab";
     }
+
+    /**
+     * Switches to the edit scene
+     */
+    public void edit() {
+        currentProject.switchToInfoScene(true);
+    }
+
 }

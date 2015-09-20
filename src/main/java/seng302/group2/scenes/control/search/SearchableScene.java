@@ -13,6 +13,11 @@ public abstract class SearchableScene extends TabPane {
 
     public abstract Collection<SearchableTab> getSearchableTabs();
 
+    public abstract void done();
+    public abstract void edit();
+    public abstract void cancel();
+
+
     /**
      * Searches each tab of the scene to try and find a match
      * @param query the query string

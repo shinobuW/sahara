@@ -35,4 +35,9 @@ public class TeamCategoryScene extends TrackedTabPane {
         this.getTabs().addAll(getSearchableTabs());
     }
 
+
+    public void done() {}
+    public void edit() {}
+    public void cancel() {}
+
 }

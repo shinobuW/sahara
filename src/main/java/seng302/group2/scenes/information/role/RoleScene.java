@@ -24,7 +24,7 @@ public class RoleScene extends TrackedTabPane {
             ArrayList<>();
 
     Role currentRole;
-    SearchableTab informationTab;
+    RoleInfoTab informationTab;
     
     /**
      * Constructor for the Role Scene. Creates an instance of the Role Info Tab and displays it.
@@ -52,6 +52,27 @@ public class RoleScene extends TrackedTabPane {
     @Override
     public Collection<SearchableTab> getSearchableTabs() {
         return searchableTabs;
+    }
+
+    /**
+     * Calls the done functionality behind the done button on the edit tab
+     */
+    @Override
+    public void done() {
+    }
+
+    /**
+     * Calls the functionality behind the edit button on the info tab
+     */
+    @Override
+    public void edit() {
+    }
+
+    /**
+     * Calls the functionality behind the edit button on the edit tab
+     */
+    @Override
+    public void cancel() {
     }
 
 }

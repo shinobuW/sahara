@@ -75,8 +75,6 @@ public class RoadMapInfoTab extends SearchableTab {
         SearchableText title = new SearchableTitle(currentRoadMap.getShortName(), searchControls);
 
         Separator separator = new Separator();
-        Button btnEdit = new Button("Edit");
-
 
         CustomInfoLabel currentTeamsLabel = new CustomInfoLabel("Current Teams:", "");
         CustomInfoLabel releasesLabel = new CustomInfoLabel("Releases:", "");
@@ -122,17 +120,13 @@ public class RoadMapInfoTab extends SearchableTab {
 
         Pane keyBox = new VBox(4);
         keyBox.getChildren().addAll(roadmapKeyBox, releaseKeyBox, sprintKeyBox, storyKeyBox);
-
-        // Events
-        btnEdit.setOnAction((event) -> currentRoadMap.switchToInfoScene(true));
-
+        
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
                 title,
                 roadMapNode,
                 keyBox,
-                separator,
-                btnEdit
+                separator
 
         );
 
@@ -150,6 +144,13 @@ public class RoadMapInfoTab extends SearchableTab {
     @Override
     public String toString() {
         return "RoadMap Info Tab";
+    }
+
+    /**
+     * Switches to the edit scene
+     */
+    public void edit() {
+        currentRoadMap.switchToInfoScene(true);
     }
 
 }

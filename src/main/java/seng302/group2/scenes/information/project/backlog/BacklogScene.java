@@ -20,8 +20,8 @@ public class BacklogScene extends TrackedTabPane {
     Backlog currentBacklog;
     boolean editScene = false;
 
-    SearchableTab informationTab;
-    SearchableTab editTab;
+    BacklogInfoTab informationTab;
+    BacklogEditTab editTab;
     
     /**
      * Constructor for the Backlog scene
@@ -67,6 +67,36 @@ public class BacklogScene extends TrackedTabPane {
     @Override
     public Collection<SearchableTab> getSearchableTabs() {
         return searchableTabs;
+    }
+
+    /**
+     * Calls the done functionality behind the done button on the edit tab
+     */
+    @Override
+    public void done() {
+        if (getSelectionModel().getSelectedItem() == editTab) {
+            editTab.done();
+        }
+    }
+
+    /**
+     * Calls the functionality behind the edit button on the info tab
+     */
+    @Override
+    public void edit() {
+        if (getSelectionModel().getSelectedItem() == informationTab) {
+            informationTab.edit();
+        }
+    }
+
+    /**
+     * Calls the functionality behind the edit button on the edit tab
+     */
+    @Override
+    public void cancel() {
+        if (getSelectionModel().getSelectedItem() == editTab) {
+            editTab.cancel();
+        }
     }
 
 }

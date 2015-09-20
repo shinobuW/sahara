@@ -43,6 +43,9 @@ public class BacklogEditTab extends SearchableTab {
     private Backlog baseBacklog;
     private RequiredField shortNameField;
     private CustomComboBox<String> scaleComboBox;
+    CustomTextField longNameField = new CustomTextField("Long Name:");
+    CustomTextArea descriptionField = new CustomTextArea("Backlog Description:", 300);
+    ObservableList<Story> backlogStoryList = observableArrayList();
 
     /**
      * Constructor for the BacklogEditTab class. This constructor creates a JavaFX ScrollPane
@@ -98,13 +101,10 @@ public class BacklogEditTab extends SearchableTab {
         this.setContent(wrapper);
 
         // Basic information fields
-        shortNameField = new RequiredField("Short Name:");
         shortNameField.setText(baseBacklog.getShortName());
         shortNameField.setMaxWidth(275);
-        CustomTextField longNameField = new CustomTextField("Long Name:");
         longNameField.setText(baseBacklog.getLongName());
         longNameField.setMaxWidth(275);
-        CustomTextArea descriptionField = new CustomTextArea("Backlog Description:", 300);
         descriptionField.setText(baseBacklog.getDescription());
         descriptionField.setMaxWidth(275);
         SearchableText errorField = new SearchableText("");
@@ -129,17 +129,7 @@ public class BacklogEditTab extends SearchableTab {
         assignmentButtons.getChildren().addAll(btnAssign, btnUnassign);
         assignmentButtons.setAlignment(Pos.CENTER);
 
-
-        // Buttons for the scene
-        Button btnDone = new Button("Done");
-        Button btnCancel = new Button("Cancel");
-        HBox sceneButtons = new HBox();
-        sceneButtons.spacingProperty().setValue(10);
-        sceneButtons.alignmentProperty().set(Pos.TOP_LEFT);
-        sceneButtons.getChildren().addAll(btnDone, btnCancel);
-
         // Draft member and available people lists
-        ObservableList<Story> backlogStoryList = observableArrayList();
         backlogStoryList.addAll(baseBacklog.getStories());
 
         ObservableList<Story> availableStoryList = observableArrayList();
@@ -212,39 +202,13 @@ public class BacklogEditTab extends SearchableTab {
         });
 
 
-        btnCancel.setOnAction((event) -> baseBacklog.switchToInfoScene());
-
-        btnDone.setOnAction((event) -> {
-            if (isValidState()) { // validation
-                // Edit Command.
-                ArrayList<Tag> tags = new ArrayList<>();
-                baseBacklog.edit(shortNameField.getText(),
-                        longNameField.getText(),
-                        descriptionField.getText(),
-                        baseBacklog.getProductOwner(),
-                        baseBacklog.getProject(),
-                        scaleComboBox.getValue(),
-                        backlogStoryList,
-                        tags
-                );
-
-                Collections.sort(baseBacklog.getProject().getBacklogs());
-                baseBacklog.switchToInfoScene();
-                App.mainPane.refreshTree();
-            }
-            else {
-                event.consume();
-            }
-        });
-
         editPane.getChildren().addAll(
                 shortNameField,
                 longNameField,
                 descriptionField,
                 scaleHBox,
                 storyListViews,
-                errorField,
-                sceneButtons
+                errorField
         );
 
         // Add items to pane & search collection
@@ -259,6 +223,36 @@ public class BacklogEditTab extends SearchableTab {
                 backlogStoriesLabel,
                 errorField
         );
+    }
+
+    /**
+     * Cancels the edit
+     */
+    public void cancel() {
+        baseBacklog.switchToInfoScene();
+    }
+
+    /**
+     * Changes the values depending on what the user edits
+     */
+    public void done() {
+        if (isValidState()) { // validation
+            // Edit Command.
+            ArrayList<Tag> tags = new ArrayList<>();
+            baseBacklog.edit(shortNameField.getText(),
+                    longNameField.getText(),
+                    descriptionField.getText(),
+                    baseBacklog.getProductOwner(),
+                    baseBacklog.getProject(),
+                    scaleComboBox.getValue(),
+                    backlogStoryList,
+                    tags
+            );
+
+            Collections.sort(baseBacklog.getProject().getBacklogs());
+            baseBacklog.switchToInfoScene();
+            App.mainPane.refreshTree();
+        }
     }
 }
 

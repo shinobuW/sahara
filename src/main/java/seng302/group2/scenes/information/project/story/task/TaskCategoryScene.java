@@ -32,4 +32,18 @@ public class TaskCategoryScene extends TrackedTabPane {
         this.getTabs().addAll(getSearchableTabs());  // Add the tabs to the pane
     }
 
+    @Override
+    public void done() {
+
+    }
+
+    @Override
+    public void edit() {
+
+    }
+
+    @Override
+    public void cancel() {
+
+    }
 }

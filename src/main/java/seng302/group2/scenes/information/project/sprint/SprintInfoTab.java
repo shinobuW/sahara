@@ -102,8 +102,6 @@ public class SprintInfoTab extends SearchableTab {
         Platform.runLater(() -> {
             SearchableText title = new SearchableTitle(currentSprint.getLongName());
 
-            Button btnEdit = new Button("Edit");
-
             /*//SUBJECT TO CHANGE BASED ON FUTURE STORIES
             ObservableList<Story> data = observableArrayList();
             data.addAll(currentSprint.getStories());
@@ -127,8 +125,6 @@ public class SprintInfoTab extends SearchableTab {
             CustomInfoLabel project = new CustomInfoLabel("Project: ", currentSprint.getProject().toString());
             CustomInfoLabel release = new CustomInfoLabel("Release: ", currentSprint.getRelease().toString());
             CustomInfoLabel stories = new CustomInfoLabel("Stories: ", "");
-
-            btnEdit.setOnAction((event) -> currentSprint.switchToInfoScene(true));
 
             basicInfoPane.getChildren().addAll(
                     title,
@@ -158,7 +154,7 @@ public class SprintInfoTab extends SearchableTab {
                     stories
             );
 
-            basicInfoPane.getChildren().addAll(createStoryTitlePanes(currentSprint), btnEdit);
+            basicInfoPane.getChildren().addAll(createStoryTitlePanes(currentSprint));
         });
     }
 
@@ -170,4 +166,12 @@ public class SprintInfoTab extends SearchableTab {
     public String toString() {
         return "Sprint Info Tab";
     }
+
+    /**
+     * Switches to the edit scene
+     */
+    public void edit() {
+        currentSprint.switchToInfoScene(true);
+    }
+
 }
