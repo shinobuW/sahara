@@ -81,4 +81,12 @@ public class TagCellNode extends VBox {
         construct();
     }
 
+    /**
+     * Gets the tag that the cell node is based on
+     * @return The cell node's associated tag
+     */
+    public Tag getTag() {
+        return this.tag;
+    }
+
 }

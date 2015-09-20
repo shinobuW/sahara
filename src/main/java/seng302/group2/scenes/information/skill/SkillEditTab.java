@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -13,6 +14,8 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.TagField;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.tag.Tag;
@@ -33,6 +36,7 @@ public class SkillEditTab extends SearchableTab {
     RequiredField shortNameCustomField = new RequiredField("Short Name:");
     CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description:", 300);
 
+
     /**
      * Constructor for the SkillEditTab class. This constructor creates a JavaFX ScrollPane
      * which is populated with relevant controls and then shown.
@@ -44,6 +48,7 @@ public class SkillEditTab extends SearchableTab {
         this.construct();
     }
 
+
     /**
      * Gets all the searchable controls on this tab.
      * @return a collection of all the searchable controls on this tab.
@@ -52,6 +57,7 @@ public class SkillEditTab extends SearchableTab {
     public Collection<SearchableControl> getSearchableControls() {
         return searchControls;
     }
+
 
     @Override
     public void construct() {
@@ -74,6 +80,24 @@ public class SkillEditTab extends SearchableTab {
         // Add items to pane & search collection
         editPane.getChildren().addAll(shortNameCustomField, descriptionTextArea);
         Collections.addAll(searchControls, shortNameCustomField, descriptionTextArea);
+
+
+
+
+        // Set up the tagging
+        SearchableText tagLabel = new SearchableText("Tags:", "-fx-font-weight: bold;", searchControls);
+        tagLabel.setMinWidth(60);
+        TagField tagField = new TagField(currentSkill.getTags());
+        HBox.setHgrow(tagField, Priority.ALWAYS);
+
+        HBox tagBox = new HBox();
+        tagBox.getChildren().addAll(tagLabel, tagField);
+
+
+
+        editPane.getChildren().add(tagBox);
+
+
     }
 
     /**
