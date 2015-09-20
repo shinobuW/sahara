@@ -655,9 +655,38 @@ public class Workspace extends SaharaItem implements Serializable {
         return this.shortName;
     }
 
+    /**
+     * Counts the amount of people in the workspace
+     * @return number of people in the workspace
+     */
     public Integer getNumPeople() {
         int num = 0;
         for (Person person : this.getPeople()) {
+            num += 1;
+        }
+        return num;
+    }
+
+    /**
+     * Counts the amount of teams in the workspace
+     * @return number of teams in the workspace
+     */
+    public Integer getNumTeams() {
+        int num = 0;
+        for (Team team : this.getTeams()) {
+            num += 1;
+        }
+        return num - 1;
+    }
+
+    /**
+     * Counts the amount of teams in the workspace
+     * @return number of teams in the workspace
+     */
+
+    public Integer getNumProjects() {
+        int num = 0;
+        for (Project project : this.getProjects()) {
             num += 1;
         }
         return num;
