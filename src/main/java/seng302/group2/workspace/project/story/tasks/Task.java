@@ -1237,11 +1237,14 @@ public class Task extends SaharaItem implements Serializable {
             if (story != null) {
                 if (story.todoTasks.contains(task)) {
                     lane = story.todoTasks;
-                } else if (story.inProgTasks.contains(task)) {
+                }
+                else if (story.inProgTasks.contains(task)) {
                     lane = story.inProgTasks;
-                } else if (story.verifyTasks.contains(task)) {
+                }
+                else if (story.verifyTasks.contains(task)) {
                     lane = story.verifyTasks;
-                } else {
+                }
+                else {
                     lane = story.completedTasks;
                 }
             }
