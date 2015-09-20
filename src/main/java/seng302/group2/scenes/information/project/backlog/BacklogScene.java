@@ -53,10 +53,10 @@ public class BacklogScene extends TrackedTabPane {
         this.editScene = editScene;
 
         // Define and add the tabs
+        informationTab = new BacklogInfoTab(currentBacklog);
         editTab = new BacklogEditTab(currentBacklog);
 
         Collections.addAll(searchableTabs, editTab);
-
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 

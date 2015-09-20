@@ -57,7 +57,7 @@ public class BacklogCategoryTab extends SearchableTab {
     @Override
     public void construct() {
         // Tab settings
-        this.setText("Basic Information");
+        this.setText("Backlogs");
         Pane categoryPane = new VBox(10);
         categoryPane.setBorder(null);
         categoryPane.setPadding(new Insets(25, 25, 25, 25));

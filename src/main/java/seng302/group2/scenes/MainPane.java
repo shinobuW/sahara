@@ -30,7 +30,7 @@ import static seng302.group2.App.refreshWindowTitle;
  * @author Jordane Lew (jml168)
  */
 public class MainPane extends BorderPane {
-    private static MainToolbar toolBar = null;
+    public static MainToolbar toolBar = null;
     Preferences userPrefs = Preferences.userNodeForPackage(getClass());
     private TreeViewWithItems<SaharaItem> treeView;
     private Pane informationPane = new Pane();

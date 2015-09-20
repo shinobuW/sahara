@@ -18,6 +18,7 @@ import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.roadMap.RoadMap;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.text.MessageFormat;
@@ -115,6 +116,10 @@ public class DeleteDialog {
             else if (element.getClass() == Sprint.class) {
                 Sprint deletedSprint = (Sprint) element;
                 deletedSprint.deleteSprint();
+            }
+            else if (element.getClass() == Tag.class) {
+                Tag deletedTag = (Tag) element;
+                deletedTag.deleteGlobalTag();
             }
             else {
                 System.out.printf("Deletion dialog for that element has not been deleted");
@@ -252,6 +257,12 @@ public class DeleteDialog {
             Sprint deletedSprint = (Sprint) element;
             message = MessageFormat.format("Are you sure you want to delete the sprint \"{0}",
                     deletedSprint.toString() + "\"?");
+        }
+        else if (element.getClass() == Tag.class) {
+            title = "Delete Tag";
+            Tag deletedTag = (Tag) element;
+            message = MessageFormat.format("Are you sure you want to delete the tag \"{0}",
+                    deletedTag.toString() + "\"? \n This will remove it from all currently tagged items.");
         }
         else {
             title = "Delete Item";

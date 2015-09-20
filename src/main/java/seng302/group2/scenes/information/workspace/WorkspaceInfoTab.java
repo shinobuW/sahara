@@ -63,11 +63,20 @@ public class WorkspaceInfoTab extends SearchableTab {
         SearchableText title = new SearchableTitle(currentWorkspace.getLongName());
         CustomInfoLabel shortName = new CustomInfoLabel("Short Name: ", currentWorkspace.getShortName());
         CustomInfoLabel desc = new CustomInfoLabel("Workspace Description: ", currentWorkspace.getDescription());
+        CustomInfoLabel numOfPeople = new CustomInfoLabel("Number of people in " + currentWorkspace.getShortName()
+                + ": ", currentWorkspace.getNumPeople().toString());
+        CustomInfoLabel numOfTeams = new CustomInfoLabel("Number of teams in " + currentWorkspace.getShortName()
+                + ": ", currentWorkspace.getNumTeams().toString());
+        CustomInfoLabel numOfProjects = new CustomInfoLabel("Number of people in " + currentWorkspace.getShortName()
+                + ": ", currentWorkspace.getNumProjects().toString());
 
-        // Add items to pane & search collection
+                // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
                 title,
                 shortName,
+                numOfProjects,
+                numOfTeams,
+                numOfPeople,
                 desc
 
         );
@@ -75,6 +84,7 @@ public class WorkspaceInfoTab extends SearchableTab {
         Collections.addAll(searchControls,
                 title,
                 shortName,
+                numOfPeople,
                 desc
         );
     }

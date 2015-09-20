@@ -17,6 +17,8 @@ import seng302.group2.scenes.control.search.SearchBox;
  */
 public class MainToolbar extends ToolBar {
 
+    private Tooltip toolUndo;
+    private Tooltip toolRedo;
     static Button undoButton = new Button();
     static Button redoButton = new Button();
     Button newButton = new Button();
@@ -81,8 +83,14 @@ public class MainToolbar extends ToolBar {
         Tooltip toolNew = new Tooltip("New Workspace");
         Tooltip toolOpen = new Tooltip("Open Workspace");
         Tooltip toolSave = new Tooltip("Save Workspace");
-        Tooltip toolUndo = new Tooltip("Undo");
-        Tooltip toolRedo = new Tooltip("Redo");
+        toolUndo = new Tooltip("Undo");
+        if (!Global.commandManager.getUndoCloneStack().empty()) {
+            toolUndo = new Tooltip(Global.commandManager.getUndoCloneStack().peek().getString());
+        }
+        toolRedo = new Tooltip("Redo");
+        if (!Global.commandManager.getRedoCloneStack().empty()) {
+            toolRedo = new Tooltip(Global.commandManager.getUndoCloneStack().peek().getString());
+        }
         Tooltip toolGenerate = new Tooltip("Generate Report");
         Tooltip toolTagging = new Tooltip("Tag Management");
 
@@ -103,6 +111,22 @@ public class MainToolbar extends ToolBar {
         taggingButton.setOnAction((event) -> MainMenuBar.showTaggingPopOver());
 
         undoRedoToggle();
+    }
+
+    /**
+     * Sets the ToolTip string for the Undo button.
+     */
+    public void setUndoToolTip(String string) {
+        toolUndo = new Tooltip(string);
+        Tooltip.install(undoButton, toolUndo);
+    }
+
+    /**
+     * Sets the ToolTip string for the Redo button.
+     */
+    public void setRedoToolTip(String string) {
+        toolRedo = new Tooltip(string);
+        Tooltip.install(redoButton, toolRedo);
     }
 
     /**

@@ -65,8 +65,6 @@ public class RequiredField extends VBox implements SearchableControl {
 
         HBox labelBox = new HBox();
         labelBox.setPrefWidth(175);
-        labelBox.spacingProperty().setValue(0);
-        labelBox.setAlignment(Pos.CENTER_LEFT);
 
         Label aster = new Label(" * ");
         aster.setTextFill(Color.web("#ff0000"));

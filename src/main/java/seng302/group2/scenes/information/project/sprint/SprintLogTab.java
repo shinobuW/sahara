@@ -85,7 +85,7 @@ public class SprintLogTab extends SearchableTab {
      */
     @Override
     public Collection<SearchableControl> getSearchableControls() {
-        return null;
+        return searchControls;
     }
 
     /**

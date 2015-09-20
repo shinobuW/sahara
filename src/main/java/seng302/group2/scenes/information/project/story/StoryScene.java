@@ -73,6 +73,10 @@ public class StoryScene extends TrackedTabPane {
         this.getTabs().addAll(searchableTabs);  // Add the tabs to the pane
     }
 
+    public SearchableTab getTaskTab() {
+        return taskTab;
+    }
+
     /**
      * Gets all the SearchableTabs on this scene
      * @return collection of SearchableTabs
