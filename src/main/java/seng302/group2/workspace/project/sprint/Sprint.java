@@ -524,7 +524,6 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
      * A command class that allows the executing and undoing of backlog edits
      */
     private class SprintEditCommand implements Command {
-        private String commandString;
         private Sprint sprint;
 
         private String goal;
@@ -623,7 +622,6 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             //Are stories sorted in sprint?
             //Collections.sort(sprint.stories, Story.StoryPriorityComparator);
             Collections.sort(sprint.getProject().getSprints());
-            commandString = "Redoing the edit of Sprint \"" + goal + "\".";
         }
 
         /**
@@ -657,14 +655,13 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             //Are stories sorted in sprint?
             //Collections.sort(sprint.stories, Story.StoryPriorityComparator);
             Collections.sort(sprint.getProject().getSprints());
-            commandString = "Undoing the edit of Sprint \"" + oldGoal + "\".";
         }
 
         /**
          * Gets the String value of the Command for editting sprints.
          */
         public String getString() {
-            return commandString;
+            return "the edit of Sprint \"" + goal + "\".";
         }
 
         /**
@@ -743,7 +740,6 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
      * A command class for allowing the deletion of Sprints.
      */
     private class DeleteSprintCommand implements Command {
-        private String commandString;
         private Sprint sprint;
         private Project proj;
 
@@ -763,7 +759,6 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             //System.out.println("Exec Sprint Delete");
             proj.getSprints().remove(sprint);
             //release.setProject(null);
-            commandString = "Redoing the deletion of Sprint \"" + sprint.getGoal() + "\".";
         }
 
         /**
@@ -774,14 +769,13 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             proj.getSprints().add(sprint);
             Collections.sort(sprint.getProject().getSprints());
             //release.setProject(proj);
-            commandString = "Undoing the deletion of Sprint \"" + sprint.getGoal() + "\".";
         }
 
         /**
          * Gets the String value of the Command for deleting sprints.
          */
         public String getString() {
-            return commandString;
+            return "the deletion of Sprint \"" + sprint.getGoal() + "\".";
         }
 
         /**
@@ -806,7 +800,6 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
      * A command class for allowing the addition of Stories to Sprints.
      */
     private class AddStoryCommand implements Command {
-        private String commandString;
         private Sprint sprint;
         private Story story;
 
@@ -827,8 +820,6 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
         public void execute() {
             sprint.stories.add(story);
             story.setSprint(sprint);
-            commandString = "Redoing the addition of Story \"" + story.getShortName() + "\" to Sprint \""
-                    + sprint.getGoal() + "\".";
         }
 
         /**
@@ -837,15 +828,14 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
         public void undo() {
             sprint.stories.remove(story);
             story.setSprint(null);
-            commandString = "Undoing the addition of Story \"" + story.getShortName() + "\" to Sprint \""
-                    + sprint.getGoal() + "\".";
         }
 
         /**
          * Gets the String value of the Command for adding stories.
          */
         public String getString() {
-            return commandString;
+            return "the addition of Story \"" + story.getShortName() + "\" to Sprint \""
+                    + sprint.getGoal() + "\".";
         }
 
         /**

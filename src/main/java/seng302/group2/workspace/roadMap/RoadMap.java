@@ -329,7 +329,7 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
 
 
             Global.currentWorkspace.getRoadMaps().sort(RoadMap.RoadMapPriorityComparator);
-            commandString = "Redoing the edit of Road Map \"" + shortName + "\".";
+            commandString = "Redid the edit of Road Map \"" + shortName + "\".";
         }
 
         /**
@@ -351,7 +351,7 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
             roadMap.getTags().addAll(oldRoadMapTags);
 
             Global.currentWorkspace.getRoadMaps().sort(RoadMap.RoadMapPriorityComparator);
-            commandString = "Undoing the edit of Road Map \"" + oldShortName + "\".";
+            commandString = "Undid the edit of Road Map \"" + oldShortName + "\".";
         }
 
         /**
@@ -460,7 +460,7 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
          */
         public void execute() {
             Global.currentWorkspace.getRoadMaps().remove(roadMap);
-            commandString = "Redoing the deletion of Road Map \"" + roadMap.getShortName() + "\".";
+            commandString = "Redid the deletion of Road Map \"" + roadMap.getShortName() + "\".";
         }
 
         /**
@@ -468,7 +468,7 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
          */
         public void undo() {
             Global.currentWorkspace.getRoadMaps().add(roadMap);
-            commandString = "Undoing the deletion of Road Map \"" + roadMap.getShortName() + "\".";
+            commandString = "Undid the deletion of Road Map \"" + roadMap.getShortName() + "\".";
         }
 
         /**

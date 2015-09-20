@@ -18,7 +18,6 @@ public class CommandManager {
     private Stack<Command> undos = new Stack<>();
     private Stack<Command> redos = new Stack<>();
     private Command lastSaveCommand = null;
-    private Command lastCommand = null;
 
     /**
      * sets the local undo Stack
@@ -39,13 +38,6 @@ public class CommandManager {
         Global.setCurrentWorkspaceChanged();
         command.execute();
         
-        if (command.getString() != null && !command.getString().toLowerCase().contains("redo")) {
-            System.out.println(command.getString() + " " + command);
-            lastCommand = command;
-            if (App.mainPane != null) {
-                App.mainPane.refreshStatusBar(lastCommand.getString());
-            }
-        }
         undos.push(command);
         redos.clear();
         try {
@@ -88,9 +80,6 @@ public class CommandManager {
         return true;
     }
     
-    public Command getLastCommand() {
-        return lastCommand;
-    }
 
     /**
      * Undoes the last action added to the undo stack
@@ -118,7 +107,6 @@ public class CommandManager {
 
             //System.out.println("undo: " + command);
             command.undo();
-            lastCommand = command;
             if (App.mainPane != null) {
                 App.mainPane.refreshStatusBar(command.getString());
             }
@@ -190,7 +178,6 @@ public class CommandManager {
             Command command = redos.pop();
             //System.out.println("redo: " + command);
             command.execute();
-            lastCommand = command;
             if (App.mainPane != null) {
                 App.mainPane.refreshStatusBar(command.getString());
             }
