@@ -3,6 +3,8 @@ package seng302.group2.util.serialization;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.collections.ObservableList;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.categories.*;
@@ -53,6 +55,10 @@ public class SerialBuilder {
                 .addType(Task.class)
                 .addType(Log.class)
                 .addType(Tag.class)
+
+                .addType(Color.class)
+                .addType(Paint.class)
+
                 .addType(RoadMap.class)
                 .addType(PairLog.class)
 
