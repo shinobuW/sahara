@@ -9,6 +9,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import org.apache.commons.lang.ObjectUtils;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.project.sprint.Sprint;
@@ -229,11 +230,16 @@ public class SprintTaskStatusTab extends SearchableTab {
 
 
         Platform.runLater(() -> {
-            basicInfoPane.getChildren().addAll(
-                    title,
-                    buttonBox,
-                    filterBox
-            );
+            try {
+                basicInfoPane.getChildren().addAll(
+                        title,
+                        buttonBox,
+                        filterBox
+                );
+            }
+            catch (IllegalArgumentException exception) {
+
+            }
 
             createVisualisation();
 
