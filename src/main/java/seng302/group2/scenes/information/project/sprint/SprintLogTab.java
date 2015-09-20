@@ -121,7 +121,9 @@ public class SprintLogTab extends SearchableTab {
             partnerComboBox.clear();
             partnerComboBox.getComboBox().getItems().add(nullPerson);
             partnerComboBox.getComboBox().getItems().addAll(allPeople);
-            partnerComboBox.getComboBox().getItems().remove(newValue);
+            if (newValue != nullPerson) {
+                partnerComboBox.getComboBox().getItems().remove(newValue);
+            }
             updateFilteredLogs();
         });
 
