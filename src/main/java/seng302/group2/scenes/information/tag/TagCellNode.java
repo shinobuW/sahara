@@ -5,14 +5,15 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchType;
+import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.workspace.tag.Tag;
 
 /**
  * The content of a Tag cell as shown on the Tag management pane.
  * Created by drm127 on 14/09/15.
  */
-public class TagCellNode extends VBox {
+public class TagCellNode extends VBox implements SearchableControl {
 
     private Tag tag = null;
     private String tagName = "";
@@ -89,4 +90,15 @@ public class TagCellNode extends VBox {
         return this.tag;
     }
 
+    @Override
+    public boolean query(String query) {
+        // TODO @Jordane
+        return false;
+    }
+
+    @Override
+    public int advancedQuery(String query, SearchType searchType) {
+        // TODO @Jordane
+        return 0;
+    }
 }

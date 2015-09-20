@@ -77,27 +77,21 @@ public class SkillEditTab extends SearchableTab {
         shortNameCustomField.setText(currentSkill.getShortName());
         descriptionTextArea.setText(currentSkill.getDescription());
 
-        // Add items to pane & search collection
-        editPane.getChildren().addAll(shortNameCustomField, descriptionTextArea);
-        Collections.addAll(searchControls, shortNameCustomField, descriptionTextArea);
 
 
-
-
-        // Set up the tagging
+        // Set up the tagging field
         SearchableText tagLabel = new SearchableText("Tags:", "-fx-font-weight: bold;", searchControls);
         tagLabel.setMinWidth(60);
-        TagField tagField = new TagField(currentSkill.getTags());
+        TagField tagField = new TagField(currentSkill.getTags(), searchControls);
         HBox.setHgrow(tagField, Priority.ALWAYS);
 
         HBox tagBox = new HBox();
         tagBox.getChildren().addAll(tagLabel, tagField);
 
 
-
-        editPane.getChildren().add(tagBox);
-
-
+        // Add items to pane & search collection
+        editPane.getChildren().addAll(shortNameCustomField, tagBox, descriptionTextArea);
+        Collections.addAll(searchControls, shortNameCustomField, descriptionTextArea);
     }
 
     /**
