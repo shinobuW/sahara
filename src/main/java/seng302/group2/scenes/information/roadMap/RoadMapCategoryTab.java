@@ -50,7 +50,7 @@ public class RoadMapCategoryTab extends SearchableTab {
     @Override
     public void construct() {
         // Tab Settings
-        this.setText("RoadMap");
+        this.setText("Basic Information");
         Pane categoryPane = new VBox(10);
         categoryPane.setBorder(null);
         categoryPane.setPadding(new Insets(25, 25, 25, 25));

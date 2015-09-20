@@ -15,6 +15,7 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.information.StickyBar;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.release.Release;
@@ -75,9 +76,9 @@ public class ReleaseEditTab extends SearchableTab {
 
 
 
-        shortNameCustomField.setPrefWidth(300);
-        descriptionTextArea.setPrefWidth(300);
-        releaseDatePicker.setPrefWidth(300);
+        shortNameCustomField.setPrefWidth(370);
+        descriptionTextArea.setPrefWidth(370);
+        releaseDatePicker.setPrefWidth(370);
 
         shortNameCustomField.setText(currentRelease.getShortName());
         descriptionTextArea.setText(currentRelease.getDescription());
@@ -100,13 +101,11 @@ public class ReleaseEditTab extends SearchableTab {
                     ValidationStyle.borderGlowRed(releaseDatePicker.getDatePicker());
                     ValidationStyle.showMessage("The estimated date of release cannot be before the end"
                             + " date of any sprint that exists for this release", releaseDatePicker.getDatePicker());
-
-                    // btnDone.setDisable(true);
+                    App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDITDISABLED);
                 }
                 else {
                     ValidationStyle.borderGlowNone(releaseDatePicker.getDatePicker());
-                    //TODO Implement this in sticky bar
-                    //btnDone.setDisable(false);
+                    App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDIT);
                 }
             }
         });

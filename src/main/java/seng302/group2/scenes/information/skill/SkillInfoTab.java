@@ -70,13 +70,6 @@ public class SkillInfoTab extends SearchableTab {
         }
         SearchableListView<Person> personListView = new SearchableListView<>(peopleWithSkill);
 
-        //TODO implement this in sticky bar
-        /*boolean skillIsProductOwner = currentSkill.getShortName().equals("Product Owner");
-        boolean skillIsScrumMaster = currentSkill.getShortName().equals("Scrum Master");
-        if (skillIsProductOwner || skillIsScrumMaster) {
-            btnEdit.setDisable(true);
-        }*/
-
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(title, desc, listViewLabel, personListView);
         Collections.addAll(searchControls, title, desc, listViewLabel, personListView);

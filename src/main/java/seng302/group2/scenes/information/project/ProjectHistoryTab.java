@@ -1,6 +1,5 @@
 package seng302.group2.scenes.information.project;
 
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,6 +15,7 @@ import javafx.util.Callback;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomDatePicker;
+import seng302.group2.scenes.control.DatePickerEditCell;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.validation.ValidationStatus;
@@ -155,7 +155,7 @@ public class ProjectHistoryTab extends SearchableTab {
         historyTable.setPlaceholder(tablePlaceholder);
         historyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        Callback<TableColumn, TableCell> cellFactory = col -> new EditingCell();
+        Callback<TableColumn, TableCell> cellFactory = col -> new DatePickerEditCell(this);
 
         TableColumn teamCol = new TableColumn("Team");
         teamCol.setCellValueFactory(new PropertyValueFactory<Allocation, String>("Team"));
@@ -409,141 +409,12 @@ public class ProjectHistoryTab extends SearchableTab {
         );
     }
 
-
     /**
-   ing rep
-  * A subclass of TableCell to allow for date pickers to be bound to the cell
-     * to allow for start and end date to be edited
+     * Returns whether the new allocation edit is valid or not.
+     * @return true if valid
      */
-    class EditingCell extends TableCell<Allocation, String> {
-
-        public DatePicker datePicker;
-
-        /**
-         * Blank constructor for EditingCell
-         */
-        public EditingCell() {
-        }
-
-        /**
-         * Start editing the Datepicker cell
-         */
-        @Override
-        public void startEdit() {
-            if (!isEmpty()) {
-                super.startEdit();
-                createTextField();
-                setGraphic(datePicker);
-
-                if (!getText().isEmpty()) {
-                    datePicker.setValue(LocalDate.parse(getText(),
-                            DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-                }
-                else {
-                    datePicker.setValue(null);
-                }
-                Platform.runLater(() -> {
-                        datePicker.requestFocus();
-                    });
-
-            }
-        }
-
-        /**
-         * Cancel the editing of the cell.
-         */
-        @Override
-        public void cancelEdit() {
-            super.cancelEdit();
-            setGraphic(null);
-        }
-
-        /**
-         * Updates the item in the cell
-         * @param item The item to update
-         * @param empty Whether the cell is empty or not
-         */
-        @Override
-        public void updateItem(String item, boolean empty) {
-            super.updateItem(item, empty);
-            if (empty) {
-                setText(null);
-                setGraphic(null);
-            }
-            else {
-                if (isEditing()) {
-                    if (!getItem().isEmpty()) {
-                        datePicker.setValue(LocalDate.parse(getItem(),
-                                DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-                    }
-                    setGraphic(datePicker);
-                }
-                else {
-                    if (datePicker == null) {
-                        setText(getString());
-                    }
-                    else {
-                        if (datePicker.getValue() == null) {
-                            setText(getString());
-                        }
-                        else if (isValidEdit) {
-                            setText(datePicker.getValue().format(Global.dateFormatter));
-                        }
-                    }
-
-                    setGraphic(null);
-                }
-            }
-        }
-
-        /**
-         * Creates a text field for use in the editing cell
-         */
-        private void createTextField() {
-            datePicker = new DatePicker();
-            datePicker.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
-            datePicker.focusedProperty().addListener(new ChangeListener<Boolean>() {
-                @Override
-                public void changed(ObservableValue<? extends Boolean> arg0,
-                                    Boolean arg1, Boolean arg2) {
-                    if (!arg2) {
-                        if (datePicker.getValue() != null) {
-                            commitEdit(datePicker.getValue().toString());
-                        }
-                        else {
-                            commitEdit("");
-                        }
-                    }
-                    else {
-                        updateItem(getItem(), false);
-                    }
-                }
-            });
-        }
-
-        /**
-         * Returns a string in a Date format for use in the cell
-         * @return The string in Date format
-         */
-        private String getString() {
-            LocalDate date;
-
-            if (getItem().isEmpty()) {
-                return getItem();
-            }
-            else {
-                if (getItem().matches("([0-9]{2})/([0-9]{2})/([0-9]{4})")) {
-                    date = LocalDate.parse(getItem(),
-                            DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-                }
-                else {
-                    date = LocalDate.parse(getItem(),
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                }
-                String dateString = date.format(Global.dateFormatter);
-                return getItem() == null ? "" : dateString;
-            }
-        }
+    public Boolean getIsValidEdit() {
+        return this.isValidEdit;
     }
 
 
