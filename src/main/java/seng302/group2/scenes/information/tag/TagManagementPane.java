@@ -250,7 +250,8 @@ public class TagManagementPane extends SplitPane {
                 ValidationStyle.borderGlowRed(tagNameField.getTextField());
                 ValidationStyle.showMessage("A tag must be 20 characters or fewer", tagNameField.getTextField());
                 saveButton.setDisable(true);
-            } else {
+            }
+            else {
                 ValidationStyle.borderGlowNone(tagNameField.getTextField());
                 saveButton.setDisable(false);
             }
