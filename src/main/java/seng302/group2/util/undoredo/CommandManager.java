@@ -1,7 +1,9 @@
 package seng302.group2.util.undoredo;
 
+import javafx.scene.control.ToolBar;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.menu.MainToolbar;
 import seng302.group2.workspace.SaharaItem;
@@ -49,6 +51,8 @@ public class CommandManager {
         catch (ExceptionInInitializerError | NoClassDefFoundError | NullPointerException ex) {
             return;
         }
+        App.mainPane.toolBar.setUndoToolTip("Undo " + undos.peek().getString());
+        App.mainPane.toolBar.setRedoToolTip("No Redo Available");
     }
 
     /**
@@ -135,6 +139,10 @@ public class CommandManager {
             catch (ExceptionInInitializerError | NoClassDefFoundError | NullPointerException ex) {
                 return;
             }
+            if (!undos.empty()) {
+                App.mainPane.toolBar.setUndoToolTip("Undo " + undos.peek().getString());
+            }
+            App.mainPane.toolBar.setRedoToolTip("Redo " + redos.peek().getString());
         }
     }
 
@@ -210,6 +218,10 @@ public class CommandManager {
             catch (ExceptionInInitializerError | NoClassDefFoundError | NullPointerException ex) {
                 return;
             }
+            App.mainPane.toolBar.setUndoToolTip("Undo " + undos.peek().getString());
+            if (!redos.empty()) {
+                App.mainPane.toolBar.setRedoToolTip("Redo " + redos.peek().getString());
+            }
         }
     }
 
@@ -266,6 +278,15 @@ public class CommandManager {
      */
     public Stack<Command> getUndoCloneStack() {
         return (Stack<Command>) undos.clone();
+    }
+
+    /**
+     * Clones and returns the current redo stack
+     *
+     * @return A clone of the current redo stack
+     */
+    public Stack<Command> getRedoCloneStack() {
+        return (Stack<Command>) redos.clone();
     }
 
 
