@@ -21,7 +21,15 @@ public class SkillInformationSwitchStrategy implements InformationSwitchStrategy
     public void switchScene(SaharaItem item) {
         if (item instanceof Skill) {
             App.mainPane.setContent(new SkillScene((Skill) item));
-            App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
+            if (((Skill) item).getShortName().equals("Product Owner")) {
+                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.OTHER);
+            }
+            else if (((Skill) item).getShortName().equals("Scrum Master")) {
+                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.OTHER);
+            }
+            else {
+                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
+            }
 
         }
         else {
@@ -40,12 +48,18 @@ public class SkillInformationSwitchStrategy implements InformationSwitchStrategy
             if (editScene) {
                 App.mainPane.setContent(new SkillScene((Skill) item, true));
                 App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDIT);
-
             }
             else {
                 switchScene(item);
-                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
-
+                if (((Skill) item).getShortName().equals("Product Owner")) {
+                    App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.OTHER);
+                }
+                else if (((Skill) item).getShortName().equals("Scrum Master")) {
+                    App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.OTHER);
+                }
+                else {
+                    App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
+                }
             }
         }
         else {

@@ -18,6 +18,7 @@ import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.information.StickyBar;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.validation.NameValidator;
 import seng302.group2.workspace.SaharaItem;
@@ -185,8 +186,8 @@ public class PersonEditTab extends SearchableTab {
                     teamBox.setTooltip(new Tooltip("This person is currently the Product Owner of the team "
                             + currentPerson.getTeamName() + "! \n"
                             + "You must put someone else into the role before you can change this persons team."));
-                    //TODO Implement this in sticky bar
-                    // btnDone.setDisable(true);
+                    App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDITDISABLED);
+
                 }
                 else if (newValue != currentPerson.getTeam() && currentPerson.getRole() != null
                         && currentPerson.getRole().toString().equals("Scrum Master")) {
@@ -199,13 +200,12 @@ public class PersonEditTab extends SearchableTab {
                     teamBox.setTooltip(new Tooltip("This person is currently the Scrum Master of the team "
                             + currentPerson.getTeamName() + "! \n"
                             + "You must put someone else into the role before you can change this persons team."));
-                    //TODO Implement this in sticky bar
-                    // btnDone.setDisable(true);
+                    App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDITDISABLED);
+
                 }
                 else {
+                    App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDIT);
 
-                    //TODO Implement this in sticky bar
-                    // btnDone.setDisable(false);
                 }
             }
         });
@@ -218,13 +218,13 @@ public class PersonEditTab extends SearchableTab {
                     ValidationStyle.borderGlowRed(birthDatePicker.getDatePicker());
                     ValidationStyle.showMessage("A Persons birth date must be in the past",
                             birthDatePicker.getDatePicker());
-                    //TODO Implement this in sticky bar
-                    // btnDone.setDisable(true);
+                    App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDITDISABLED);
+
                 }
                 else {
                     ValidationStyle.borderGlowNone(birthDatePicker.getDatePicker());
-                    //TODO Implement this in sticky bar
-                    // btnDone.setDisable(false);
+                    App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDIT);
+
                 }
             }
         });

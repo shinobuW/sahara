@@ -648,6 +648,13 @@ public class Workspace extends SaharaItem implements Serializable {
         return this.shortName;
     }
 
+    public Integer getNumPeople() {
+        int num = 0;
+        for (Person person : this.getPeople()) {
+            num += 1;
+        }
+        return num;
+    }
     /**
      * Sets the workspace's short name.
      *
