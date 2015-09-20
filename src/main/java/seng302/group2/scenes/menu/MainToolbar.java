@@ -125,7 +125,6 @@ public class MainToolbar extends ToolBar {
      * Sets the ToolTip string for the Redo button.
      */
     public void setRedoToolTip(String string) {
-        System.out.println("Does it go in here?");
         toolRedo = new Tooltip(string);
         Tooltip.install(redoButton, toolRedo);
     }

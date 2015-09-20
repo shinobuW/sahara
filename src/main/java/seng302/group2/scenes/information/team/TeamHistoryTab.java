@@ -150,7 +150,7 @@ public class TeamHistoryTab extends SearchableTab {
         historyTable.setPlaceholder(tablePlaceholder);
         historyTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        Callback<TableColumn, TableCell> cellFactory = col -> new DatePickerEditCell(this);
+        Callback<TableColumn, TableCell> cellFactory = col -> new DatePickerEditCell();
 
         TableColumn<Allocation, String> teamCol = new TableColumn<>("Project");
         teamCol.setCellValueFactory(new PropertyValueFactory<>("Project"));
@@ -168,8 +168,7 @@ public class TeamHistoryTab extends SearchableTab {
                     public ObservableValue<String> call(TableColumn.CellDataFeatures<Allocation,
                             String> alloc) {
                         SimpleStringProperty property = new SimpleStringProperty();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                        property.setValue(alloc.getValue().getStartDate().format(formatter));
+                        property.setValue(alloc.getValue().getStartDate().format(Global.dateFormatter));
                         return property;
                     }
                 });
@@ -215,7 +214,7 @@ public class TeamHistoryTab extends SearchableTab {
                     public ObservableValue<String> call(TableColumn.CellDataFeatures<Allocation,
                             String> alloc) {
                         SimpleStringProperty property = new SimpleStringProperty();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        DateTimeFormatter formatter = Global.dateFormatter;
                         if (alloc.getValue().getEndDate() != null) {
                             property.setValue(alloc.getValue().getEndDate().format(formatter));
                         }
