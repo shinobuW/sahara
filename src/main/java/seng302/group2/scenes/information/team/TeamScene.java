@@ -20,8 +20,8 @@ public class TeamScene extends TrackedTabPane {
     Team currentTeam;
     boolean editScene = false;
 
-    SearchableTab informationTab;
-    SearchableTab editTab;
+    TeamInfoTab informationTab;
+    TeamEditTab editTab;
 
     /**
      * Constructor for the Team scene. Creates an instance of the TeamInfoTab and displays it. If the team is not
@@ -69,6 +69,37 @@ public class TeamScene extends TrackedTabPane {
         this.getTabs().addAll(editTab);
 
     }
+
+    /**
+     * Calls the done functionality behind the done button on the edit tab
+     */
+    @Override
+    public void done() {
+        if (getSelectionModel().getSelectedItem() == editTab) {
+            editTab.done();
+        }
+    }
+
+    /**
+     * Calls the functionality behind the edit button on the info tab
+     */
+    @Override
+    public void edit() {
+        if (getSelectionModel().getSelectedItem() == informationTab) {
+            informationTab.edit();
+        }
+    }
+
+    /**
+     * Calls the functionality behind the edit button on the edit tab
+     */
+    @Override
+    public void cancel() {
+        if (getSelectionModel().getSelectedItem() == editTab) {
+            editTab.cancel();
+        }
+    }
+
 
     /**
      * Gets all the SearchableTabs on this scene

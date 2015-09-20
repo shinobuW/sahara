@@ -16,8 +16,8 @@ public class WorkspaceScene extends TrackedTabPane {
     Workspace currentWorkspace;
     boolean editScene = false;
 
-    SearchableTab informationTab;
-    SearchableTab editTab;
+    WorkspaceInfoTab informationTab;
+    WorkspaceEditTab editTab;
 
     /**
      * Constructor for the Workspace Scene. Creates an instance of the WorkspaceInfoTab and displays it.
@@ -58,4 +58,33 @@ public class WorkspaceScene extends TrackedTabPane {
         this.getTabs().addAll(editTab);  // Add the tabs to the pane
     }
 
+    /**
+     * Calls the done functionality behind the done button on the edit tab
+     */
+    @Override
+    public void done() {
+        if (getSelectionModel().getSelectedItem() == editTab) {
+            editTab.done();
+        }
+    }
+
+    /**
+     * Calls the functionality behind the edit button on the info tab
+     */
+    @Override
+    public void edit() {
+        if (getSelectionModel().getSelectedItem() == informationTab) {
+            informationTab.edit();
+        }
+    }
+
+    /**
+     * Calls the functionality behind the edit button on the edit tab
+     */
+    @Override
+    public void cancel() {
+        if (getSelectionModel().getSelectedItem() == editTab) {
+            editTab.cancel();
+        }
+    }
 }

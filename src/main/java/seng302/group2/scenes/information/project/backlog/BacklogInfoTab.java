@@ -175,7 +175,6 @@ public class BacklogInfoTab extends SearchableTab {
         Pane keyBox = new VBox(4);
         keyBox.getChildren().addAll(greenKeyHbox, orangeKeyHbox, redKeyHbox);
 
-        Button btnEdit = new Button("Edit");
         Button btnView = new Button("View");
         Button btnHighlight = new Button("Highlight");
 
@@ -191,8 +190,6 @@ public class BacklogInfoTab extends SearchableTab {
             tableKey.getChildren().add(keyBox);
         }
 
-        // Events
-        btnEdit.setOnAction((event) -> currentBacklog.switchToInfoScene(true));
 
         btnView.setOnAction((event) -> {
             if (storyTable.getSelectionModel().getSelectedItem() != null) {
@@ -240,8 +237,7 @@ public class BacklogInfoTab extends SearchableTab {
                 storiesTableLabel,
                 //storyTable,
                 tableKey,
-                buttonHBox,
-                btnEdit
+                buttonHBox
         );
 
         // Add items to pane & search collection
@@ -319,4 +315,13 @@ public class BacklogInfoTab extends SearchableTab {
     public String toString() {
         return "Backlog Info Tab";
     }
+
+    /**
+     * Switches to the edit scene
+     */
+    public void edit() {
+        currentBacklog.switchToInfoScene(true);
+    }
+
+
 }

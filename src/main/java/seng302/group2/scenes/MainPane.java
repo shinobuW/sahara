@@ -35,7 +35,7 @@ public class MainPane extends BorderPane {
     private TreeViewWithItems<SaharaItem> treeView;
     private Pane informationPane = new Pane();
     private HBox statusBar;
-    private ScrollPane contentPane;
+    public ScrollPane contentPane;
     private boolean menuHidden = false;
     private double dividerPositions;
 

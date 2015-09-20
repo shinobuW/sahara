@@ -36,6 +36,12 @@ public class ReleaseEditTab extends SearchableTab {
     Release currentRelease;
     List<SearchableControl> searchControls = new ArrayList<>();
 
+    // Create controls
+    RequiredField shortNameCustomField = new RequiredField("Short Name:");
+    CustomTextArea descriptionTextArea = new CustomTextArea("Release Description:", 300);
+    CustomDatePicker releaseDatePicker = new CustomDatePicker("Estimated Release Date:", false);
+
+
     /**
      * Constructor for the ReleaseEditTab class. This constructor creates a JavaFX ScrollPane
      * which is populated with relevant controls then shown.
@@ -67,23 +73,11 @@ public class ReleaseEditTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(editPane);
         this.setContent(wrapper);
 
-        // Create controls
-        RequiredField shortNameCustomField = new RequiredField("Short Name:");
-        CustomTextArea descriptionTextArea = new CustomTextArea("Release Description:", 300);
-        CustomDatePicker releaseDatePicker = new CustomDatePicker("Estimated Release Date:", false);
 
 
         shortNameCustomField.setPrefWidth(300);
         descriptionTextArea.setPrefWidth(300);
         releaseDatePicker.setPrefWidth(300);
-
-        Button btnCancel = new Button("Cancel");
-        Button btnDone = new Button("Done");
-
-        HBox buttons = new HBox();
-        buttons.spacingProperty().setValue(10);
-        buttons.alignmentProperty().set(Pos.TOP_LEFT);
-        buttons.getChildren().addAll(btnDone, btnCancel);
 
         shortNameCustomField.setText(currentRelease.getShortName());
         descriptionTextArea.setText(currentRelease.getDescription());
@@ -106,60 +100,22 @@ public class ReleaseEditTab extends SearchableTab {
                     ValidationStyle.borderGlowRed(releaseDatePicker.getDatePicker());
                     ValidationStyle.showMessage("The estimated date of release cannot be before the end"
                             + " date of any sprint that exists for this release", releaseDatePicker.getDatePicker());
-                    btnDone.setDisable(true);
+
+                    // btnDone.setDisable(true);
                 }
                 else {
                     ValidationStyle.borderGlowNone(releaseDatePicker.getDatePicker());
-                    btnDone.setDisable(false);
+                    //TODO Implement this in sticky bar
+                    //btnDone.setDisable(false);
                 }
             }
-        });
-
-        btnDone.setOnAction((event) -> {
-            boolean shortNameUnchanged = shortNameCustomField.getText().equals(
-                    currentRelease.getShortName());
-            boolean descriptionUnchanged = descriptionTextArea.getText().equals(
-                    currentRelease.getDescription());
-            boolean dateUnchanged = releaseDatePicker.getValue() == currentRelease.getEstimatedDate();
-            if (shortNameUnchanged && descriptionUnchanged && dateUnchanged) {
-                // No fields have been changed
-                currentRelease.switchToInfoScene();
-                return;
-            }
-
-            LocalDate releaseDate = releaseDatePicker.getValue();
-
-            boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
-                    currentRelease.getShortName());
-            // The short name is the same or valid
-            if (correctShortName) {
-                ArrayList<Tag> tags = new ArrayList<>();
-                currentRelease.edit(shortNameCustomField.getText(),
-                        descriptionTextArea.getText(),
-                        releaseDate,
-                        tags
-                );
-
-                Collections.sort(currentRelease.getProject().getReleases());
-                currentRelease.switchToInfoScene();
-                App.mainPane.refreshTree();
-            }
-            else {
-                // One or more fields incorrectly validated, stay on the edit scene
-                event.consume();
-            }
-        });
-
-        btnCancel.setOnAction((event) -> {
-            currentRelease.switchToInfoScene();
         });
 
         // Add items to pane & search collection
         editPane.getChildren().addAll(
                 shortNameCustomField,
                 descriptionTextArea,
-                releaseDatePicker,
-                buttons
+                releaseDatePicker
         );
 
         Collections.addAll(searchControls,
@@ -168,5 +124,47 @@ public class ReleaseEditTab extends SearchableTab {
                 releaseDatePicker
         );
     }
+
+    /**
+     * Cancels the edit
+     */
+    public void cancel() {
+         currentRelease.switchToInfoScene();
+    }
+
+    /**
+     * Changes the values depending on what the user edits
+     */
+    public void done() {
+        boolean shortNameUnchanged = shortNameCustomField.getText().equals(
+                currentRelease.getShortName());
+        boolean descriptionUnchanged = descriptionTextArea.getText().equals(
+                currentRelease.getDescription());
+        boolean dateUnchanged = releaseDatePicker.getValue() == currentRelease.getEstimatedDate();
+        if (shortNameUnchanged && descriptionUnchanged && dateUnchanged) {
+            // No fields have been changed
+            currentRelease.switchToInfoScene();
+            return;
+        }
+
+        LocalDate releaseDate = releaseDatePicker.getValue();
+
+        boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
+                currentRelease.getShortName());
+        // The short name is the same or valid
+        if (correctShortName) {
+            ArrayList<Tag> tags = new ArrayList<>();
+            currentRelease.edit(shortNameCustomField.getText(),
+                    descriptionTextArea.getText(),
+                    releaseDate,
+                    tags
+            );
+
+            Collections.sort(currentRelease.getProject().getReleases());
+            currentRelease.switchToInfoScene();
+            App.mainPane.refreshTree();
+        }
+    }
+
 }
 

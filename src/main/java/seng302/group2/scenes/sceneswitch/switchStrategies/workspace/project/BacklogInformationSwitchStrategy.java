@@ -1,6 +1,7 @@
 package seng302.group2.scenes.sceneswitch.switchStrategies.workspace.project;
 
 import seng302.group2.App;
+import seng302.group2.scenes.information.StickyBar;
 import seng302.group2.scenes.information.project.backlog.BacklogScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.workspace.SaharaItem;
@@ -20,6 +21,8 @@ public class BacklogInformationSwitchStrategy implements InformationSwitchStrate
     public void switchScene(SaharaItem item) {
         if (item instanceof Backlog) {
             App.mainPane.setContent(new BacklogScene((Backlog) item));
+            App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
+
         }
         else {
             // Bad call
@@ -36,9 +39,13 @@ public class BacklogInformationSwitchStrategy implements InformationSwitchStrate
         if (item instanceof Backlog) {
             if (editScene) {
                 App.mainPane.setContent(new BacklogScene((Backlog) item, true));
+                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDIT);
+
             }
             else {
                 switchScene(item);
+                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
+
             }
         }
         else {

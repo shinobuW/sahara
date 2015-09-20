@@ -1,6 +1,7 @@
 package seng302.group2.scenes.sceneswitch.switchStrategies.workspace;
 
 import seng302.group2.App;
+import seng302.group2.scenes.information.StickyBar;
 import seng302.group2.scenes.information.skill.SkillScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.workspace.SaharaItem;
@@ -20,6 +21,8 @@ public class SkillInformationSwitchStrategy implements InformationSwitchStrategy
     public void switchScene(SaharaItem item) {
         if (item instanceof Skill) {
             App.mainPane.setContent(new SkillScene((Skill) item));
+            App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
+
         }
         else {
             // Bad call
@@ -36,9 +39,13 @@ public class SkillInformationSwitchStrategy implements InformationSwitchStrategy
         if (item instanceof Skill) {
             if (editScene) {
                 App.mainPane.setContent(new SkillScene((Skill) item, true));
+                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDIT);
+
             }
             else {
                 switchScene(item);
+                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
+
             }
         }
         else {

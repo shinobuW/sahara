@@ -34,5 +34,8 @@ public class ProjectCategoryScene extends TrackedTabPane {
         Collections.addAll(getSearchableTabs(), categoryTab);
         this.getTabs().addAll(getSearchableTabs());
     }
+    public void done() {}
+    public void edit() {}
+    public void cancel() {}
 
 }
