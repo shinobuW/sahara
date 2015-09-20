@@ -15,7 +15,7 @@ import java.util.Set;
 /**
  * A class representation of tags, used to highlight and identify different states of other Sahara model objects.
  */
-public class Tag extends SaharaItem implements Serializable {
+public class Tag extends SaharaItem implements Serializable, Comparable<Tag> {
     private String name;
     private String colorCode = ColorUtils.toRGBCode(Color.ROYALBLUE);
 
@@ -164,6 +164,19 @@ public class Tag extends SaharaItem implements Serializable {
     public void edit(String newName, Color newColor) {
         Command edit = new TagEditCommand(this, newName, newColor);
         Global.commandManager.executeCommand(edit);
+    }
+
+    /**
+     * Compares the tag to another tag based on their names
+     *
+     * @param tag The tag to compare to
+     * @return The string comparison result of the tag names
+     */
+    @Override
+    public int compareTo(Tag tag) {
+        String tag1Name = this.getName();
+        String tag2Name = tag.getName();
+        return tag1Name.compareTo(tag2Name);
     }
 
     /**

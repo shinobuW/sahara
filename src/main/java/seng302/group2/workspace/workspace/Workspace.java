@@ -628,6 +628,13 @@ public class Workspace extends SaharaItem implements Serializable {
                     Collections.sort(skills);
                 }
             });
+
+        getAllTags().addListener((ListChangeListener<Tag>) change ->
+        {
+            if (change.next() && !change.wasPermutated()) {
+                Collections.sort(getAllTags());
+            }
+        });
     }
 
     /**
