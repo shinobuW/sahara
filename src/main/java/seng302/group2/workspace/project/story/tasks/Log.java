@@ -345,6 +345,15 @@ public class Log extends SaharaItem implements Serializable {
         Global.commandManager.executeCommand(editCommand);
     }
 
+    /**
+     * Edits the Log's logger
+     * @param logger the logger to edit to
+     */
+    public void editLogger(Person logger) {
+        LoggerEditCommand command = new LoggerEditCommand(this, logger);
+        Global.commandManager.executeCommand(command);
+    }
+
 
     /**
      * A command class that allows the executing and undoing of project edits
@@ -566,4 +575,64 @@ public class Log extends SaharaItem implements Serializable {
             return mapped;
         }
     }
+
+    /**
+     * Edit command for editing the logger
+     */
+    private class LoggerEditCommand implements Command {
+        private Log log;
+        private Person oldLogger;
+        private Person newLogger;
+
+        /**
+         * Constructor
+         * @param log log to edit
+         * @param logger new logger to edit to
+         */
+        private LoggerEditCommand(Log log, Person logger) {
+            this.log = log;
+            this.newLogger = logger;
+            this.oldLogger = log.getLogger();
+        }
+
+        /**
+         * Executes the logger edit
+         */
+        @Override
+        public void execute() {
+            log.logger = this.newLogger;
+        }
+
+
+        /**
+         * Un-does the logger edit
+         */
+        @Override
+        public void undo() {
+            log.logger = this.oldLogger;
+        }
+
+
+        /**
+         * Gets the String value of the Command for editing the description of Logs.
+         */
+        @Override
+        public String getString() {
+            return null;
+        }
+
+
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(log)) {
+                    this.log = (Log) item;
+                    mapped = true;
+                }
+            }
+            return mapped;
+        }
+    }
+
 }
