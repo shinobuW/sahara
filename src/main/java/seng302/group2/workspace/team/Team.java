@@ -588,6 +588,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      * A command class that allows the executing and undoing of basic team edits
      */
     private class BasicTeamEditCommand implements Command {
+        private String commandString;
         private Team team;
         private String shortName;
         private String description;
@@ -608,6 +609,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         public void execute() {
             team.shortName = shortName;
             team.description = description;
+            commandString = "Redoing the edit of Team \"" + shortName + "\".";
         }
 
         /**
@@ -616,13 +618,14 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         public void undo() {
             team.shortName = oldShortName;
             team.description = oldDescription;
+            commandString = "Undoing the edit of Team \"" + oldShortName + "\".";
         }
 
         /**
          * Gets the String value of the Command for editting a Team.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         @Override
@@ -643,6 +646,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      * A command class that allows the executing and undoing of team edits
      */
     private class ExtendedTeamEditCommand implements Command {
+        private String commandString;
         private Team team;
 
         private String shortName;
@@ -721,6 +725,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             //Add the tags a team has to their list of tags
             team.getTags().clear();
             team.getTags().addAll(teamTags);
+            commandString = "Redoing the edit of Team \"" + shortName + "\".";
         }
 
         /**
@@ -751,6 +756,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             //Changes the team list of tags to what they used to be
             team.getTags().clear();
             team.getTags().addAll(oldTeamTags);
+            commandString = "Undoing the edit of Team \"" + oldShortName + "\".";
 
         }
 
@@ -758,7 +764,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
          * Gets the String value of the Command for editting Teams.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -896,6 +902,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      * A command class for allowing the deletion of Teams
      */
     private class DeleteTeamCommand implements Command {
+        private String commandString;
         private Team team;
         private List<Person> members;
 
@@ -916,6 +923,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
             for (Person member : members) {
                 member.setTeam(null);
             }
+            commandString = "Redoing the deletion of Team \"" + team.getShortName() + "\".";
         }
 
         /**
@@ -926,13 +934,14 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
                 member.setTeam(team);
             }
             Global.currentWorkspace.getTeams().add(team);
+            commandString = "Undoing the deletion of Team \"" + team.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for deleting Teams.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -970,6 +979,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      * sprints and allocations associated.
      */
     private class DeleteTeamCascadingCommand implements Command {
+        private String commandString;
         private Team team;
         private List<Person> members = new ArrayList<>();
         private List<Sprint> sprints = new ArrayList<>();
@@ -1045,6 +1055,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
                 }
             }
             Global.currentWorkspace.getTeams().remove(team);
+            commandString = "Redoing the cascading deletion of Team \"" + team.getShortName() + "\".";
         }
 
         /**
@@ -1080,13 +1091,14 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
                 }
             }
             Global.currentWorkspace.getTeams().add(team);
+            commandString = "Undoing the cascading deletion of Team \"" + team.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for cascading team deletion.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -1163,6 +1175,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      * A command class for allowing the addition of People to Teams
      */
     private class AddPersonCommand implements Command {
+        private String commandString;
         private Person person;
         private Team team;
 
@@ -1182,6 +1195,8 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         public void execute() {
             team.getPeople().add(person);
             //person.setTeam(team);
+            commandString = "Redoing the addition of Person \"" + person.getShortName() + "\" to Team \""
+                    + team.getShortName() + "\".";
         }
 
         /**
@@ -1190,13 +1205,15 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         public void undo() {
             team.getPeople().remove(person);
             //person.setTeam(team);
+            commandString = "Undoing the addition of Person \"" + person.getShortName() + "\" to Team \""
+                    + team.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for adding a Person.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -1228,6 +1245,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      * A command class for allowing the removal of People from Teams
      */
     private class RemovePersonCommand implements Command {
+        private String commandString;
         private Person person;
         private Team team;
 
@@ -1247,6 +1265,9 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         public void execute() {
             team.getPeople().remove(person);
             //person.setTeam(team);
+            commandString = "Redoing the removal of Person \"" + person.getShortName() + "\" off Team \""
+                    + team.getShortName() + "\".";
+
         }
 
         /**
@@ -1255,13 +1276,15 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         public void undo() {
             team.getPeople().add(person);
             //person.setTeam(team);
+            commandString = "Undoing the removal of Person \"" + person.getShortName() + "\" off Team \""
+                    + team.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for removing a Person off a team.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
@@ -1293,6 +1316,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      * A command class for allowing the addition of Allocations to Teams
      */
     private class AddAllocationCommand implements Command {
+        private String commandString;
         private Project proj;
         private Team team;
         private Allocation allocation;
@@ -1315,6 +1339,8 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         public void execute() {
             proj.getTeamAllocations().add(allocation);
             team.getProjectAllocations().add(allocation);
+            commandString = "Redoing the creation of an Allocation for \"" + team.getShortName() + "\" on \""
+                    + proj.getShortName() + "\".";
         }
 
         /**
@@ -1323,13 +1349,15 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
         public void undo() {
             proj.getTeamAllocations().remove(allocation);
             team.getProjectAllocations().remove(allocation);
+            commandString = "Undoing the creation of an Allocation for \"" + team.getShortName() + "\" on \""
+                    + proj.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for adding an allocation.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**

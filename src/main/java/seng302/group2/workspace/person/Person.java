@@ -605,6 +605,7 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             person.getTags().addAll(personTags);
 
             Collections.sort(Global.currentWorkspace.getPeople());
+            commandString = "Redoing the edit of Person \"" + shortName + "\".";
         }
 
         /**
@@ -630,6 +631,7 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             //Changes the persons list of tags to what they used to be
             person.getTags().clear();
             person.getTags().addAll(oldPersonTags);
+            commandString = "Undoing the edit of Person \"" + oldShortName + "\".";
 
         }
 
@@ -744,6 +746,7 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
      * A command class for allowing the deletion of people.
      */
     private class DeletePersonCommand implements Command {
+        private String commandString;
         private Person person;
         private Team team;
 
@@ -763,6 +766,8 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             team.getPeople().remove(person);
             person.setTeam(null);
             Global.currentWorkspace.getPeople().remove(person);
+            commandString = "Redoing the deletion of Person \"" + person.getShortName() + "\".";
+
         }
 
         /**
@@ -772,13 +777,14 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             team.getPeople().add(person);
             person.setTeam(team);
             Global.currentWorkspace.getPeople().add(person);
+            commandString = "Undoing the deletion of Person \"" + person.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for deleting a Person.
          */
         public String getString() {
-            return null;
+            return commandString;
         }
 
         /**
