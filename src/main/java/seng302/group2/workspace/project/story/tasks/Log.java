@@ -356,6 +356,16 @@ public class Log extends SaharaItem implements Serializable {
 
 
     /**
+     * Edits the duration command
+     * @param duration the duration to edit to
+     */
+    public void editDuration(Double duration) {
+        DurationEditCommand command = new DurationEditCommand(this, duration);
+        Global.commandManager.executeCommand(command);
+    }
+
+
+    /**
      * A command class that allows the executing and undoing of project edits
      */
     private class LogEditCommand implements Command {
@@ -644,5 +654,56 @@ public class Log extends SaharaItem implements Serializable {
             return mapped;
         }
     }
+
+
+    private class DurationEditCommand implements Command {
+        private Log log;
+        private double newDuration;
+        private double oldDuration;
+        private String commandString;
+
+
+        /**
+         * Constructor
+         * @param log Log to edit
+         * @param duration Duration to edit to
+         */
+        private DurationEditCommand(Log log, Double duration) {
+            this.newDuration = duration;
+            this.oldDuration = duration;
+            this.log = log;
+        }
+
+
+        /**
+         * Executes the duration edit
+         */
+        @Override
+        public void execute() {
+            log.duration = this.newDuration;
+            commandString = "Redoing the edit of Duration on Log \"" + log.toString() + "\".";
+        }
+
+        /**
+         * Undoes the duration edit
+         */
+        @Override
+        public void undo() {
+            log.duration = this.oldDuration;
+            commandString = "Undoing the edit of Duration on Log \"" + log.toString() + "\".";
+        }
+
+        @Override
+        public String getString() {
+            return commandString;
+        }
+
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            return false;
+        }
+    }
+
+
 
 }
