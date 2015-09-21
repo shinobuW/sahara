@@ -29,6 +29,7 @@ public class RoadMapCategoryTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
     Workspace currentWorkspace;
+    RoadMap interactiveRoadMap;
     Release interactiveRelease;
     Sprint interactiveSprint;
     Story interactiveStory;
@@ -183,6 +184,7 @@ public class RoadMapCategoryTab extends SearchableTab {
 
         roadMapNode.setOnDragDetected(event -> {
             System.out.println(roadMapNode.getRoadmap().getShortName());
+            interactiveRoadMap = currentRoadMap;
             interactiveRelease = roadMapNode.getSelectedRelease();
         });
 
@@ -194,11 +196,8 @@ public class RoadMapCategoryTab extends SearchableTab {
         roadMapNode.setOnDragDropped(dragEvent -> {
             if (dragEvent.getDragboard().getString() == "release") {
                 System.out.println(roadMapNode.getRoadmap().getShortName() + " Drag dropped");
-                for (RoadMap roadMap : currentWorkspace.getRoadMaps()) {
-                    if (roadMap.getReleases().contains(interactiveRelease)) {
-                        roadMap.getReleases().remove(interactiveRelease);
-                    }
-                }
+                interactiveRoadMap.getReleases().remove(interactiveRelease);
+
                 //TODO possibly needs cumulative commands
                 currentRoadMap.getReleases().add(interactiveRelease);
 //                currentRoadMap.edit(currentRoadMap.getShortName(), currentRoadMap.getPriority(), ,
