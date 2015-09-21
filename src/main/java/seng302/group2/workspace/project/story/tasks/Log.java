@@ -25,6 +25,7 @@ public class Log extends SaharaItem implements Serializable {
     protected double duration = 0;
     protected double effortLeftDifference = 0;
     protected Person logger = null;
+    protected Person partner = null;
     protected Task task = null;
     protected String description = "";
     protected boolean ghostLog = false;
@@ -39,15 +40,17 @@ public class Log extends SaharaItem implements Serializable {
      * @param task the task the los is for
      * @param description description of the work accomplished
      * @param logger the person logging the time
+     * @param partner the other logger
      * @param duration the duration the person worked for
      * @param startTime time the logger started working on the task
      * @param effortLeftDifference The effort left in minutes
      */
-    public Log(Task task, String description, Person logger, double duration,
+    public Log(Task task, String description, Person logger, Person partner, double duration,
                LocalDateTime startTime, double effortLeftDifference) {
         super("Untitled Log");
         this.task = task;
         this.logger = logger;
+        this.partner = partner;
         this.startTime = startTime;
         this.description = description;
         this.duration = duration;
@@ -135,6 +138,28 @@ public class Log extends SaharaItem implements Serializable {
      */
     public Person getLogger() {
         return this.logger;
+    }
+
+    /**
+     * Returns the person who worked with the main logger
+     * @return the other logger
+     */
+    public Person getPartner() {
+        return this.partner;
+    }
+
+
+    /**
+     * Returns half of the duration
+     * @return half the duration in minutes.
+     */
+    public double getIndividualDuration() {
+        if (partner != null) {
+            return getDurationInMinutes() / 2;
+        }
+        else {
+            return getDurationInMinutes();
+        }
     }
 
     /**
@@ -322,17 +347,18 @@ public class Log extends SaharaItem implements Serializable {
 
     /**
      * Edits the log using the commands to allow for undo-redo
-     * @param newLogger the logger to edit to 
+     * @param newLogger the logger to edit to
+     * @param newPartner the other logger to edit to
      * @param newStartDate the new start date to set
      * @param newDuration the new duration to set
      * @param newDescription the new description to set
      * @param newEffortLeft the new effort left to set
      * @param newTags        The new tags
      */
-    public void edit(Person newLogger, LocalDateTime newStartDate,
+    public void edit(Person newLogger, Person newPartner, LocalDateTime newStartDate,
                      double newDuration, String newDescription, double newEffortLeft, ArrayList<Tag> newTags) {
-        LogEditCommand logEditCommand = new LogEditCommand(this, newLogger, newStartDate, newDuration, newDescription,
-                newEffortLeft, newTags );
+        LogEditCommand logEditCommand = new LogEditCommand(this, newLogger, newPartner, newStartDate, newDuration,
+                newDescription, newEffortLeft, newTags );
         Global.commandManager.executeCommand(logEditCommand);
     }
 
@@ -375,20 +401,31 @@ public class Log extends SaharaItem implements Serializable {
     }
 
     /**
+     * Edits the partner of the log to the one given
+     * @param partner the partner to edit to
+     */
+    public void editPartner(Person partner) {
+        LogPartnerEditCommand editCommand = new LogPartnerEditCommand(this, partner);
+        Global.commandManager.executeCommand(editCommand);
+    }
+
+    /**
      * A command class that allows the executing and undoing of project edits
      */
     private class LogEditCommand implements Command {
         private Log log;
-        private Person logger;
-        private LocalDateTime startTime;
-        private double duration;
-        private String description;
-        private double effortLeftDifference;
+        private Person newLogger;
+        private Person newPartner;
+        private LocalDateTime newStartTime;
+        private double newDuration;
+        private String newDescription;
+        private double newEffortLeftDifference;
         private Task task;
-        private Set<Tag> logTags = new HashSet<>();
-        private Set<Tag> globalTags = new HashSet<>();
+        private Set<Tag> newLogTags = new HashSet<>();
+        private Set<Tag> newGlobalTags = new HashSet<>();
 
         private Person oldLogger;
+        private Person oldPartner;
         private LocalDateTime oldStartTime;
         private double oldDuration;
         private String oldDescription;
@@ -396,24 +433,26 @@ public class Log extends SaharaItem implements Serializable {
         private Set<Tag> oldLogTags = new HashSet<>();
         private Set<Tag> oldGlobalTags = new HashSet<>();
 
-        protected LogEditCommand(Log log, Person newLogger, LocalDateTime newStartDate, double newDuration,
-                                 String newDescription, double newEffortLeftDifference, ArrayList<Tag> newTags) {
+        protected LogEditCommand(Log log, Person newLogger, Person newPartner, LocalDateTime newStartDate,
+                                 double newDuration, String newDescription, double newEffortLeftDifference,
+                                 ArrayList<Tag> newTags) {
             this.log = log;
-
             if (newTags == null) {
                 newTags = new ArrayList<>();
             }
 
-            this.logger = newLogger;
-            this.startTime = newStartDate;
-            this.duration = newDuration;
-            this.description = newDescription;
-            this.effortLeftDifference = newEffortLeftDifference;
-            this.logTags.addAll(newTags);
-            this.globalTags.addAll(newTags);
-            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
+            this.newLogger = newLogger;
+            this.newPartner = newPartner;
+            this.newStartTime = newStartDate;
+            this.newDuration = newDuration;
+            this.newDescription = newDescription;
+            this.newEffortLeftDifference = newEffortLeftDifference;
+            this.newLogTags.addAll(newTags);
+            this.newGlobalTags.addAll(newTags);
+            this.newGlobalTags.addAll(Global.currentWorkspace.getAllTags());
 
             this.oldLogger = log.logger;
+            this.oldPartner = log.partner;
             this.oldStartTime = log.startTime;
             this.oldDuration = log.duration;
             this.oldDescription = log.description;
@@ -430,19 +469,20 @@ public class Log extends SaharaItem implements Serializable {
          */
         public void execute() {
             task.setEffortSpent(task.getEffortSpent() - log.getDurationInMinutes() + duration);
-            log.logger = logger;
-            log.startTime = startTime;
-            log.duration = duration;
-            log.description = description;
-            log.duration = duration;
-            log.effortLeftDifference = effortLeftDifference;
+            log.logger = newLogger;
+            log.startTime = newStartTime;
+            log.duration = newDuration;
+            log.description = newDescription;
+            log.duration = newDuration;
+            log.effortLeftDifference = newEffortLeftDifference;
+            log.partner = newPartner;
 
             //Add any created tags to the global collection
             Global.currentWorkspace.getAllTags().clear();
-            Global.currentWorkspace.getAllTags().addAll(globalTags);
+            Global.currentWorkspace.getAllTags().addAll(newGlobalTags);
             //Add the tags a log has to their list of tags
             log.getTags().clear();
-            log.getTags().addAll(logTags);
+            log.getTags().addAll(newLogTags);
         }
 
 
@@ -451,6 +491,7 @@ public class Log extends SaharaItem implements Serializable {
          */
         public void undo() {
             log.logger = oldLogger;
+            log.partner = oldPartner;
             log.startTime = oldStartTime;
             log.duration = oldDuration;
             log.description = oldDescription;
@@ -490,11 +531,11 @@ public class Log extends SaharaItem implements Serializable {
             }
 
             //Tag collections
-            for (Tag tag : logTags) {
+            for (Tag tag : newLogTags) {
                 for (SaharaItem item : stateObjects) {
                     if (item.equivalentTo(tag)) {
-                        logTags.remove(tag);
-                        logTags.add((Tag)item);
+                        newLogTags.remove(tag);
+                        newLogTags.add((Tag)item);
                         break;
                     }
                 }
@@ -510,11 +551,11 @@ public class Log extends SaharaItem implements Serializable {
                 }
             }
 
-            for (Tag tag : globalTags) {
+            for (Tag tag : newGlobalTags) {
                 for (SaharaItem item : stateObjects) {
                     if (item.equivalentTo(tag)) {
-                        globalTags.remove(tag);
-                        globalTags.add((Tag)item);
+                        newGlobalTags.remove(tag);
+                        newGlobalTags.add((Tag)item);
                         break;
                     }
                 }
@@ -527,6 +568,68 @@ public class Log extends SaharaItem implements Serializable {
                         oldGlobalTags.add((Tag)item);
                         break;
                     }
+                }
+            }
+            return mapped;
+        }
+    }
+
+    /**
+     * A command class that allows the executing and undoing of PairLog partner edits
+     */
+    private class LogPartnerEditCommand implements Command {
+        private Log log;
+        private Person partner;
+        private Person oldPartner;
+
+
+        /**
+         * Constructor
+         * @param pairLog The pair log to be edited
+         * @param newPartner The pair logs new partner
+         */
+        protected LogPartnerEditCommand(Log pairLog, Person newPartner) {
+            this.log = pairLog;
+            this.partner = newPartner;
+
+            this.oldPartner = pairLog.getPartner();
+        }
+
+        /**
+         * Executes/Redoes the changes of the pair log edit
+         */
+        public void execute() {
+            log.partner = partner;
+        }
+
+
+        /**
+         * Undoes the changes of the pair log edit
+         */
+        public void undo() {
+            log.partner = oldPartner;
+        }
+
+        /**
+         * Gets the String value of the Command for editing the partner of a log.
+         */
+        public String getString() {
+            return null;
+        }
+
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(log)) {
+                    this.log = (PairLog) item;
+                    mapped = true;
                 }
             }
             return mapped;

@@ -29,11 +29,10 @@ public class PairLog extends Log {
      * @param startTime time the logger started working on the task
      * @param effortLeftDifference The effort left in minutes
      */
-    public PairLog(Task task, String description, Person logger, Person partner, double duration,
-               LocalDateTime startTime, double effortLeftDifference) {
-        super(task, description, logger, duration, startTime, effortLeftDifference);
-        this.partner = partner;
-    }
+//    public PairLog(Task task, String description, Person logger, Person partner, double duration,
+//               LocalDateTime startTime, double effortLeftDifference) {
+//        super(task, description, logger, partner, duration, startTime, effortLeftDifference);
+//    }
 
     /**
      * Returns the person who worked with the main logger

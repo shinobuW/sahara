@@ -25,7 +25,7 @@ public class LogTest {
         Assert.assertEquals(0, log.getDurationInMinutes(), 0);
         Assert.assertEquals(0, log.getDurationInHours(), 0);
 
-        Log log1 = new Log(task, "A new Log", aPerson, 122, LocalDateTime.now(), 122);
+        Log log1 = new Log(task, "A new Log", aPerson, new Person(), 122, LocalDateTime.now(), 122);
         Assert.assertEquals("A new Log", log1.getDescription());
         Assert.assertEquals(122, log1.getDurationInMinutes(), 0);
         Assert.assertEquals(2, log1.getDurationInHours(), 0.5);
@@ -175,7 +175,7 @@ public class LogTest {
         task.setEffortLeft(600);
         story.add(task);
 
-        Log log = new Log(task, "", aPerson, 40, LocalDateTime.now(), 40);
+        Log log = new Log(task, "", aPerson, new Person(), 40, LocalDateTime.now(), 40);
         Assert.assertEquals(null, log.generateXML());
         
     }

@@ -40,18 +40,21 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import static javafx.collections.FXCollections.observableArrayList;
+
 /**
  * Pane for logging on a given Task.
  * Created by jml168 on 25/08/15.
  */
 public class LoggingEffortPane extends Pane {
 
-    PopOver popOver = null;
-    Boolean correctEffortLeft = Boolean.FALSE;
-    Boolean correctDuration = Boolean.FALSE;
-    Boolean loggerSelected = Boolean.FALSE;
-    TableView table = null;
-    //TODO Make this a Searchable Pane
+    private PopOver popOver = null;
+    private Boolean correctEffortLeft = Boolean.FALSE;
+    private Boolean correctDuration = Boolean.FALSE;
+    private Boolean loggerSelected = Boolean.FALSE;
+    private TableView table = null;
+    private Person nullPerson = new Person("", "", "", "", "", null);
+    private ObservableList<Person> availablePeople = FXCollections.observableArrayList();
 
 
     public LoggingEffortPane(Task task) {
@@ -111,7 +114,12 @@ public class LoggingEffortPane extends Pane {
         loggerCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
-        ObservableList<Person> availablePeople = FXCollections.observableArrayList();
+        ObservableList<Person> availableLoggers = observableArrayList();
+        logTable.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
+            updateObservablePeopleList(availableLoggers, newSelection.getLogger());
+        });
+
+
         Set<Team> availableTeams = ((task.getStory().getBacklog() == null)
                 ? new HashSet<Team>() :
                 task.getStory().getBacklog().getProject().getCurrentTeams());
@@ -119,10 +127,8 @@ public class LoggingEffortPane extends Pane {
             availablePeople.addAll(team.getPeople());
         }
 
-
-        //Callback<TableColumn, TableCell> loggerColFactory = col -> new ComboBoxCell(availablePeople);
         loggerCol.setCellFactory(ComboBoxTableCell.forTableColumn(
-                availablePeople
+                availableLoggers
         ));
         loggerCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Log, String>,
@@ -145,16 +151,56 @@ public class LoggingEffortPane extends Pane {
                         Log currentLog = event.getTableView().getItems().get(
                                 event.getTablePosition().getRow());
                         ArrayList<Tag> tags = new ArrayList<>();
-                        currentLog.edit(event.getNewValue(), currentLog.getStartDate(),
+                        currentLog.edit(event.getNewValue(), currentLog.getPartner(), currentLog.getStartDate(),
                                 currentLog.getDurationInMinutes(), currentLog.getDescription(),
                                 currentLog.getEffortLeftDifferenceInMinutes(), tags);
                     }
                 }
         );
 
+        ObservableList<Person> availablePartners = observableArrayList();
+
+        logTable.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
+                updateObservablePeopleList(availablePartners, newSelection.getLogger());
+            });
+
         TableColumn partnerCol = new TableColumn("Partner");
         partnerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("partner"));
         partnerCol.setEditable(true);
+
+        partnerCol.setCellFactory(ComboBoxTableCell.forTableColumn(
+                availablePartners
+        ));
+        partnerCol.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Log, String>,
+                        ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<Log,
+                            String> log) {
+                        SimpleStringProperty property = new SimpleStringProperty();
+                        if (log.getValue() instanceof PairLog) {
+                            property.setValue(((PairLog) log.getValue()).getPartner().toString());
+                        }
+                        return property;
+                    }
+                });
+
+
+        loggerCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Log, Person>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Log,
+                            Person> event) {
+                        Log currentLog = event.getTableView().getItems().get(
+                                event.getTablePosition().getRow());
+                        ArrayList<Tag> tags = new ArrayList<>();
+                        if (currentLog instanceof PairLog) {
+                            ((PairLog)currentLog).editPartner(event.getNewValue());
+                        }
+                    }
+                }
+        );
+
         partnerCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
@@ -520,16 +566,9 @@ public class LoggingEffortPane extends Pane {
                     double effortLeftDifference = task.getEffortLeft() - effortLeft;
 
                     Person partner = partnerComboBox.getComboBox().getSelectionModel().getSelectedItem();
-                    if (partner != null) {
-                        PairLog pairLog = new PairLog(task, descriptionTextArea.getText(), selectedPerson, partner,
-                                duration, dateTime, effortLeftDifference);
-                        task.getStory().getProject().add(pairLog);
-                    }
-                    else {
-                        Log newLog = new Log(task, descriptionTextArea.getText(),
-                                selectedPerson, duration, dateTime, effortLeftDifference);
-                        task.getStory().getProject().add(newLog);
-                    }
+                    Log newLog = new Log(task, descriptionTextArea.getText(),
+                            selectedPerson, partner, duration, dateTime, effortLeftDifference);
+                    task.getStory().getProject().add(newLog);
 
                     String effortLeftString = "";
                     if (task.getEffortLeft() == 0
@@ -589,5 +628,12 @@ public class LoggingEffortPane extends Pane {
         content.getChildren().add(buttons);
 
         this.getChildren().add(content);
+    }
+
+    private void updateObservablePeopleList(ObservableList<Person> peopleList, Person removePerson) {
+        peopleList.clear();
+        peopleList.add(nullPerson);
+        peopleList.addAll(availablePeople);
+        peopleList.remove(removePerson);
     }
 }
