@@ -557,7 +557,8 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
                     this.newRoadMap = (RoadMap) item;
                     mapped_new = true;
                 }
-            }boolean mapped_old = false;
+            }
+            boolean mapped_old = false;
             for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(oldRoadMap)) {
                     this.oldRoadMap = (RoadMap) item;
