@@ -31,7 +31,7 @@ public class TeamInformationSwitchStrategy implements InformationSwitchStrategy 
             }
         }
         else {
-
+            // Bad call
         }
     }
 
