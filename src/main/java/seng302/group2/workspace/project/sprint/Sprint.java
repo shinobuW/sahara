@@ -578,7 +578,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             this.endDate = newEndDate;
             this.team = newTeam;
             this.release = newRelease;
-            this.stories = newStories;
+            this.stories.addAll(newStories);
             this.sprintTags.addAll(newTags);
             this.globalTags.addAll(newTags);
             this.globalTags.addAll(Global.currentWorkspace.getAllTags());
@@ -593,7 +593,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             this.oldEndDate = sprint.endDate;
             this.oldTeam = sprint.team;
             this.oldRelease = sprint.release;
-            this.oldStories = sprint.getStories();
+            this.oldStories.addAll(sprint.stories);
             this.oldSprintTags.addAll(sprint.getTags());
             this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
 
@@ -639,7 +639,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
 
             System.out.println("old stories in execute 4 " + oldStories);
 */
-            sprint.stories.removeAll(oldStories);
+            sprint.stories.clear();
             sprint.stories.addAll(stories);
 
             for (Story story : oldStories) {

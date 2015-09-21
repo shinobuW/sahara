@@ -30,7 +30,8 @@ public class RoadMapCategoryTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
     Workspace currentWorkspace;
-    RoadMap interactiveRoadMap;
+    RoadMapNode interactiveRoadMap;
+//    RoadMap
     Release interactiveRelease;
     Sprint interactiveSprint;
     Story interactiveStory;
@@ -184,17 +185,21 @@ public class RoadMapCategoryTab extends SearchableTab {
     private void initRoadMapListeners(RoadMapNode roadMapNode, RoadMap currentRoadMap) {
         roadMapNode.setOnDragDetected(event -> {
             System.out.println(roadMapNode.getRoadmap().getShortName());
-            interactiveRoadMap = currentRoadMap;
+            interactiveRoadMap = roadMapNode;
             interactiveRelease = roadMapNode.getSelectedRelease();
+
         });
 
         roadMapNode.setOnDragOver(dragEvent -> {
             System.out.println(roadMapNode.getRoadmap().getShortName());
             dragEvent.acceptTransferModes(TransferMode.MOVE);
+            roadMapNode.setSelectedSprint(interactiveRoadMap.getSelectedSprint());
+            roadMapNode.setSelectedStory(interactiveRoadMap.getSelectedStory());
         });
 
         roadMapNode.setOnDragDropped(dragEvent -> {
             Boolean confirm = true;
+            System.out.println("First");
             if (dragEvent.getDragboard().getString() == "release") {
                 for (Release release : currentRoadMap.getReleases()) {
                     if (release == interactiveRelease) {
@@ -206,7 +211,7 @@ public class RoadMapCategoryTab extends SearchableTab {
                 }
                 if (confirm) {
                     System.out.println(roadMapNode.getRoadmap().getShortName() + " Drag dropped");
-                    interactiveRoadMap.addRemove(currentRoadMap, interactiveRoadMap, interactiveRelease);
+                    interactiveRoadMap.getRoadmap().addRemove(currentRoadMap, interactiveRoadMap.getRoadmap(), interactiveRelease);
                 }
 
                 //TODO possibly needs cumulative commands

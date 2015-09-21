@@ -492,6 +492,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
         });
 
         releaseNode.setOnDragDropped(dragEvent -> {
+            System.out.println("Second");
             if (dragEvent.getDragboard().getString() == "sprint") {
                 if (selectedSprint.getProject().equals(currentRelease.getProject())) {
                     System.out.println(currentRelease.getShortName() + " Drag dropped");
@@ -524,10 +525,17 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         sprintNode.setOnDragDropped(dragEvent -> {
             if (dragEvent.getDragboard().getString() == "story") {
-                if (currentSprint.getProject().equals(selectedStory.getProject())) {
-                    currentSprint.addRemove(currentSprint, selectedSprint, selectedStory);
+                System.out.println(currentSprint.getProject());
+                System.out.println(selectedSprint);
+                System.out.println(interactiveSprint);
+                if (currentSprint.getProject().equals(selectedStory.getProject()) && !currentSprint.equals(selectedSprint) && interactiveSprint != null) {
+                    System.out.println(currentSprint + " " + selectedSprint);
+                    currentSprint.addRemove(currentSprint, interactiveSprint, selectedStory);
 
                     App.mainPane.refreshAll();
+                }
+                else if (interactiveSprint == null) {
+                    dragEvent.consume();
                 }
                 else {
                     dragEvent.consume();
@@ -540,15 +548,27 @@ public class RoadMapNode extends VBox implements SearchableControl {
     }
 
     public Release getSelectedRelease() {
-        return selectedRelease;
+        return interactiveRelease;
+    }
+
+    public void setSelectedRelease(Release release) {
+        selectedRelease = release;
     }
 
     public Sprint getSelectedSprint() {
-        return selectedSprint;
+        return interactiveSprint;
+    }
+
+    public void setSelectedSprint(Sprint sprint) {
+        selectedSprint = sprint;
     }
 
     public Story getSelectedStory() {
-        return selectedStory;
+        return interactiveStory;
+    }
+
+    public void setSelectedStory(Story story) {
+        selectedStory = story;
     }
 
     public RoadMap getRoadmap() {
