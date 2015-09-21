@@ -295,8 +295,6 @@ public class WorkspaceTest {
 
         ObservableList<Tag> tagList = Global.currentWorkspace.getAllTags();
 
-        System.out.println(tagList);
-
         Assert.assertTrue(tagList.contains(tag1));
         Assert.assertTrue(tagList.contains(tag2));
         Assert.assertTrue(tagList.contains(tag3));
