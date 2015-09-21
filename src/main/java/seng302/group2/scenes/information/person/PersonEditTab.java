@@ -54,7 +54,7 @@ public class PersonEditTab extends SearchableTab {
     CustomDatePicker birthDatePicker = new CustomDatePicker("Birth Date:", false);
     CustomComboBox<Team> teamBox = new CustomComboBox<>("Team: ");
     CustomTextArea descriptionTextArea = new CustomTextArea("Person Description:", 300);
-    FilteredListView personSkillsBox = new FilteredListView(tempPerson.getSkills(), "skills");
+    FilteredListView personSkillsBox = new FilteredListView<>(tempPerson.getSkills(), "skills");
     SearchableListView personSkillsList = personSkillsBox.getListView();
 
     /**
@@ -190,8 +190,7 @@ public class PersonEditTab extends SearchableTab {
                             + "You must put someone else into the role before you can change this persons team."));
                     App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDITDISABLED);
 
-                }
-                else if (newValue != currentPerson.getTeam() && currentPerson.getRole() != null
+                } else if (newValue != currentPerson.getTeam() && currentPerson.getRole() != null
                         && currentPerson.getRole().toString().equals("Scrum Master")) {
                     ValidationStyle.borderGlowRed(teamBox.getComboBox());
                     ValidationStyle.showMessage("This person is currently the Scrum Master of the team "
@@ -204,8 +203,7 @@ public class PersonEditTab extends SearchableTab {
                             + "You must put someone else into the role before you can change this persons team."));
                     App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDITDISABLED);
 
-                }
-                else {
+                } else {
                     App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDIT);
 
                 }
@@ -222,11 +220,21 @@ public class PersonEditTab extends SearchableTab {
                             birthDatePicker.getDatePicker());
                     App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDITDISABLED);
 
-                }
-                else {
+                } else {
                     ValidationStyle.borderGlowNone(birthDatePicker.getDatePicker());
                     App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDIT);
 
+                }
+            }
+        });
+
+        // Fires if the focus is changed. then sets the value of the date picker field.
+        birthDatePicker.getDatePicker().focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue){
+                    birthDatePicker.setValue(birthDatePicker.getDatePicker().getConverter().fromString(
+                            birthDatePicker.getDatePicker().getEditor().getText()));
                 }
             }
         });
@@ -315,6 +323,9 @@ public class PersonEditTab extends SearchableTab {
         boolean descriptionUnchanged = descriptionTextArea.getText().equals(
                 currentPerson.getDescription());
         boolean birthdayUnchanged = birthDatePicker.getValue() == currentPerson.getBirthDate();
+        System.out.println(birthDatePicker.getValue());
+        System.out.println(currentPerson.getBirthDate());
+        System.out.println(birthdayUnchanged);
         boolean emailUnchanged = emailTextField.getText().equals(
                 currentPerson.getEmail());
         boolean teamUnchanged = selectedTeam.getShortName().equals(
