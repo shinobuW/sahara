@@ -26,7 +26,6 @@ import seng302.group2.util.conversion.DurationConverter;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Log;
-import seng302.group2.workspace.project.story.tasks.PairLog;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
@@ -115,10 +114,6 @@ public class LoggingEffortPane extends Pane {
                 .subtract(2).divide(100).multiply(60));
 
         ObservableList<Person> availableLoggers = observableArrayList();
-        logTable.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
-            updateObservablePeopleList(availableLoggers, newSelection.getLogger());
-        });
-
 
         Set<Team> availableTeams = ((task.getStory().getBacklog() == null)
                 ? new HashSet<Team>() :
@@ -161,16 +156,27 @@ public class LoggingEffortPane extends Pane {
         ObservableList<Person> availablePartners = observableArrayList();
 
         logTable.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
-                updateObservablePeopleList(availablePartners, newSelection.getLogger());
+                Boolean isPartnerList = true;
+                updateObservablePeopleList(availablePartners, newSelection.getLogger(), isPartnerList);
+                updateObservablePeopleList(availableLoggers, newSelection.getLogger(), !isPartnerList);
             });
 
         TableColumn partnerCol = new TableColumn("Partner");
         partnerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("partner"));
         partnerCol.setEditable(true);
-
+//
+//        ComboBoxTableCell blah = new ComboBoxTableCell(availablePartners);
+//        blah.focusedProperty().addListener(new ChangeListener<Boolean>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+//
+//            }
+//        });
         partnerCol.setCellFactory(ComboBoxTableCell.forTableColumn(
                 availablePartners
         ));
+
+
         partnerCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Log, String>,
                         ObservableValue<String>>() {
@@ -178,15 +184,15 @@ public class LoggingEffortPane extends Pane {
                     public ObservableValue<String> call(TableColumn.CellDataFeatures<Log,
                             String> log) {
                         SimpleStringProperty property = new SimpleStringProperty();
-                        if (log.getValue() instanceof PairLog) {
-                            property.setValue(((PairLog) log.getValue()).getPartner().toString());
+                        if (log.getValue().getPartner() != null) {
+                            property.setValue(log.getValue().getPartner().toString());
                         }
                         return property;
                     }
                 });
 
 
-        loggerCol.setOnEditCommit(
+        partnerCol.setOnEditCommit(
                 new EventHandler<TableColumn.CellEditEvent<Log, Person>>() {
                     @Override
                     public void handle(TableColumn.CellEditEvent<Log,
@@ -194,9 +200,7 @@ public class LoggingEffortPane extends Pane {
                         Log currentLog = event.getTableView().getItems().get(
                                 event.getTablePosition().getRow());
                         ArrayList<Tag> tags = new ArrayList<>();
-                        if (currentLog instanceof PairLog) {
-                            ((PairLog)currentLog).editPartner(event.getNewValue());
-                        }
+                        currentLog.editPartner(event.getNewValue());
                     }
                 }
         );
@@ -630,9 +634,12 @@ public class LoggingEffortPane extends Pane {
         this.getChildren().add(content);
     }
 
-    private void updateObservablePeopleList(ObservableList<Person> peopleList, Person removePerson) {
+    private void updateObservablePeopleList(ObservableList<Person> peopleList, Person removePerson,
+                                            Boolean isPartnerList) {
         peopleList.clear();
-        peopleList.add(nullPerson);
+        if (isPartnerList) {
+            peopleList.add(nullPerson);
+        }
         peopleList.addAll(availablePeople);
         peopleList.remove(removePerson);
     }

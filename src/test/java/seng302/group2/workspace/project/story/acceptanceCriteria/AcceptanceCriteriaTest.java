@@ -1,5 +1,7 @@
 package seng302.group2.workspace.project.story.acceptanceCriteria;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
@@ -77,7 +79,7 @@ public class AcceptanceCriteriaTest {
 
         AcceptanceCriteria ac = new AcceptanceCriteria("", null);
         Tag tag = new Tag("Tag");
-        ArrayList<Tag> newTags = new ArrayList<>();
+        ObservableList<Tag> newTags = FXCollections.observableArrayList();
         newTags.add(tag);
 
         ac.edit(newTags);

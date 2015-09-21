@@ -1,5 +1,6 @@
 package seng302.group2.scenes.control.search;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
@@ -17,13 +18,23 @@ import java.util.Set;
  */
 public class TagLabel extends HBox implements SearchableControl {
     private Set<SearchableControl> searchControls = new HashSet<>();
+    ObservableList<Tag> tags = FXCollections.observableArrayList();
+
 
 
     public TagLabel(ObservableList<Tag> tags) {
+        construct(tags);
+
+    }
+
+    public void construct(ObservableList<Tag> newTags) {
+        this.tags.clear();
+        this.tags = newTags;
+        this.getChildren().clear();
         this.setSpacing(5);
         CustomInfoLabel label = new CustomInfoLabel("Tags: ", "", searchControls);
         this.getChildren().add(label);
-        for (Tag tag : tags) {
+        for (Tag tag : this.tags) {
             TagCellNode node = new TagCellNode(tag, false, searchControls);
             this.getChildren().add(node);
         }
