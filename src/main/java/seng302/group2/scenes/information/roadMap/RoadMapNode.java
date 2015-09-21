@@ -439,19 +439,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
         sprintNode.setOnDragDropped(dragEvent -> {
             if (dragEvent.getDragboard().getString() == "story") {
                 if (currentSprint.getProject().equals(selectedStory.getProject())) {
-                    System.out.println("Story Dropped.........");
-                    System.out.println(selectedStory);
-                    System.out.println(selectedStory.getSprint().getGoal());
-                    System.out.println(currentSprint);
+                    currentSprint.addRemove(currentSprint, selectedSprint, selectedStory);
 
-                    selectedStory.getSprint().getStories().remove(selectedStory);
-                    selectedStory.setSprint(currentSprint);
-                    currentSprint.getStories().add(selectedStory);
-
-//                selectedSprint.edit(selectedSprint.getGoal(), selectedSprint.getLongName(),
-//                        selectedSprint.getDescription(), selectedSprint.getStartDate(), selectedSprint.getEndDate(),
-//                        selectedSprint.getTeam(), selectedSprint.getRelease(), selectedSprint.getStories(),
-//                        selectedSprint.getTags());
                     App.mainPane.refreshAll();
                 }
                 else {
