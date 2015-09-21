@@ -62,20 +62,20 @@ public class MainPane extends BorderPane {
             content.getItems().add(treeView);
         }
 
+        VBox.setVgrow(contentPane, Priority.ALWAYS);
+
         VBox stickyBarBox = new VBox();
-        VBox.setVgrow(stickyBarBox, Priority.ALWAYS);
+        VBox.setVgrow(stickyBarBox, Priority.SOMETIMES);
         stickyBarBox.setAlignment(Pos.BOTTOM_LEFT);
         stickyBarBox.getChildren().addAll(new Separator(), stickyBar);
 
         VBox contentVBox = new VBox();
         contentVBox.getChildren().addAll(contentPane, stickyBarBox);
 
-
         content.getItems().add(contentVBox);
         statusBar = statusBar("Opened the Project");
 
         this.setCenter(content);
-
 
 //        statusBar = statusBar(Global.commandManager.lastAction());
 
