@@ -582,6 +582,9 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             this.globalTags.addAll(newTags);
             this.globalTags.addAll(Global.currentWorkspace.getAllTags());
 
+            System.out.println(this.stories);
+            System.out.println(this.oldStories);
+
             this.oldGoal = sprint.goal;
             this.oldLongName = sprint.longName;
             this.oldDescription = sprint.description;
