@@ -142,6 +142,7 @@ public class RoadMapInfoTab extends SearchableTab {
 
         Collections.addAll(searchControls,
                 title,
+                roadMapTags,
                 roadMapNode,
                 currentTeamsLabel,
                 releasesLabel
