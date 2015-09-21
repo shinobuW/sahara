@@ -53,6 +53,7 @@ public class CommandManager {
         }
         App.mainPane.toolBar.setUndoToolTip("Undo " + undos.peek().getString());
         App.mainPane.toolBar.setRedoToolTip("No Redo Available");
+        App.mainPane.refreshStatusBar(null);
     }
 
     /**

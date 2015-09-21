@@ -19,6 +19,8 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.Category;
 import seng302.group2.workspace.categories.subCategory.SubCategory;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.prefs.Preferences;
 
 import static seng302.group2.App.content;
@@ -70,7 +72,7 @@ public class MainPane extends BorderPane {
 
 
         content.getItems().add(contentVBox);
-        statusBar = statusBar("A message to display");
+        statusBar = statusBar("Opened the Project");
 
         this.setCenter(content);
 
@@ -148,7 +150,12 @@ public class MainPane extends BorderPane {
     public static HBox statusBar(String input) {
         HBox statusBarBox = new HBox();
         StatusBar statusBar = new StatusBar();
-        statusBar.setText(input);
+        if (input != null) {
+            statusBar.setText(input + " at " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        }
+        else {
+            statusBar.setText("");
+        }
         HBox.setHgrow(statusBarBox, Priority.ALWAYS);
         HBox.setHgrow(statusBar, Priority.ALWAYS);
         statusBarBox.getChildren().add(statusBar);

@@ -258,6 +258,7 @@ public class Workspace extends SaharaItem implements Serializable {
 
             App.refreshMainScene();
             Global.commandManager.trackSave();
+            App.mainPane.refreshStatusBar("Saved the Workspace "  + Global.currentWorkspace.getShortName());
 
             return SaveLoadResult.SUCCESS;
         }
@@ -405,6 +406,7 @@ public class Workspace extends SaharaItem implements Serializable {
 
             Global.commandManager.clear();
             Global.commandManager.trackSave();
+            App.mainPane.refreshStatusBar("Loaded the Workspace " + Global.currentWorkspace.getShortName());
 
             App.mainPane.selectItem(Global.currentWorkspace);
 
