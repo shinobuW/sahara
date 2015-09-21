@@ -113,6 +113,7 @@ public class ProjectInfoTab extends SearchableTab {
         Collections.addAll(searchControls,
                 title,
                 shortNameField,
+                projectTags,
                 description,
                 currentTeamsLabel,
                 teamFilteredListView,

@@ -82,6 +82,7 @@ public class WorkspaceInfoTab extends SearchableTab {
         Collections.addAll(searchControls,
                 title,
                 shortName,
+                workspaceTags,
                 numOfProjects,
                 numOfTeams,
                 numOfPeople,
