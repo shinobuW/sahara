@@ -78,11 +78,6 @@ public class TagListCell extends ListCell<Tag> {
                     Platform.runLater(() -> taggingPopOver.show(App.content, App.mainStage.getX()
                                     + App.mainStage.getWidth() / 2 - 300,
                             App.mainStage.getY() + App.mainStage.getHeight() / 2 - 200));
-
-//                    Tag newTag = managementPane.tagListView.getSelectionModel().getSelectedItem();
-//
-//                    if ((managementPane).tagListView.getItems().contains(tag)) {
-//                        (managementPane).tagListView.getSelectionModel().select(tag);
                     });
             }
             else {
@@ -92,7 +87,4 @@ public class TagListCell extends ListCell<Tag> {
 
         return deletionImage;
     }
-
-
-
 }
