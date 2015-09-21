@@ -14,6 +14,7 @@ import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreateReleaseDialog;
 import seng302.group2.scenes.dialog.CreateSprintDialog;
 import seng302.group2.scenes.dialog.CreateStoryDialog;
+import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
@@ -181,7 +182,6 @@ public class RoadMapCategoryTab extends SearchableTab {
     }
 
     private void initRoadMapListeners(RoadMapNode roadMapNode, RoadMap currentRoadMap) {
-
         roadMapNode.setOnDragDetected(event -> {
             System.out.println(roadMapNode.getRoadmap().getShortName());
             interactiveRoadMap = currentRoadMap;
@@ -194,13 +194,24 @@ public class RoadMapCategoryTab extends SearchableTab {
         });
 
         roadMapNode.setOnDragDropped(dragEvent -> {
+            Boolean confirm = true;
             if (dragEvent.getDragboard().getString() == "release") {
-                System.out.println(roadMapNode.getRoadmap().getShortName() + " Drag dropped");
-                interactiveRoadMap.addRemove(currentRoadMap, interactiveRoadMap, interactiveRelease);
+                for (Release release : currentRoadMap.getReleases()) {
+                    if (release == interactiveRelease) {
+                        dragEvent.consume();
+                        confirm = false;
+                        CustomDialog.showDialog("Cannot Move Release"
+                                , "You cannot have double up releases in a RoadMap", Alert.AlertType.WARNING);
+                    }
+                }
+                if (confirm) {
+                    System.out.println(roadMapNode.getRoadmap().getShortName() + " Drag dropped");
+                    interactiveRoadMap.addRemove(currentRoadMap, interactiveRoadMap, interactiveRelease);
+                }
 
                 //TODO possibly needs cumulative commands
-//                currentRoadMap.edit(currentRoadMap.getShortName(), currentRoadMap.getPriority(), ,
-// currentRoadMap.getTags());
+                // currentRoadMap.edit(currentRoadMap.getShortName(), currentRoadMap.getPriority(), ,
+                // currentRoadMap.getTags());
                 App.mainPane.refreshAll();
             }
         });
