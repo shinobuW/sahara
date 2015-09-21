@@ -249,6 +249,23 @@ public class PersonEditTab extends SearchableTab {
             personSkillsBox.resetInputText();
         });
 
+        btnDelete.setOnAction((event) -> {
+            ObservableList<Skill> selectedSkills = personSkillsList.getSelectionModel().getSelectedItems();
+            for (Skill item : selectedSkills) {
+                tempPerson.getSkills().remove(item);
+            }
+
+            dialogSkills.clear();
+            for (SaharaItem projectSkill : currentWorkspace.getSkills()) {
+                if (!tempPerson.getSkills().contains(projectSkill)) {
+                    dialogSkills.add((Skill) projectSkill);
+                }
+            }
+            skillsBox.resetInputText();
+            personSkillsBox.resetInputText();
+
+        });
+
         // Add items to pane & search collection
         editPane.getChildren().addAll(
                 shortNameCustomField,
