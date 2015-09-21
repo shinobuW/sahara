@@ -225,13 +225,14 @@ public class LoggingEffortPane extends Pane {
                             Log currentLog = event.getTableView().getItems()
                                     .get(event.getTablePosition().getRow());
 
+                            int year = currentLog.getStartDate().getYear();
                             int month = currentLog.getStartDate().getMonthValue();
                             int day = currentLog.getStartDate().getDayOfMonth();
-                            String newTime = event.getNewValue();
-                            System.out.println(newTime);
+                            int hours = Integer.parseInt(event.getNewValue().substring(0, 2));
+                            int minutes = Integer.parseInt(event.getNewValue().substring(3,5));
 
-//                            LocalDateTime dateTime = startDate.atTime(timeTextField.getHours(),
-// timeTextField.getMinutes())
+                            LocalDateTime newDateTime = LocalDateTime.of(year, month, day, hours, minutes);
+                            currentLog.editStartTime(newDateTime);
                         }
                     }
                 });
