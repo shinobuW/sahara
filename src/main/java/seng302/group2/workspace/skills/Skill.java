@@ -290,7 +290,7 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
          * Gets the String value of the Command for editting skills.
          */
         public String getString() {
-            return "the edit of Skill \"" + shortName + "\".";
+            return "the edit of Skill \"" + skill.getShortName() + "\".";
         }
 
         /**

@@ -758,7 +758,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
          * Gets the String value of the Command for editting Teams.
          */
         public String getString() {
-            return "the edit of Team \"" + oldShortName + "\".";
+            return "the edit of Team \"" + team.getShortName() + "\".";
         }
 
         /**

@@ -216,6 +216,9 @@ public class TeamTest {
         team.deleteTeam();
         Assert.assertFalse(Global.currentWorkspace.getTeams().contains(team));
         Assert.assertEquals(null, p1.getTeam());
+
+        Assert.assertEquals("the deletion of Team \"" + team.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
         Assert.assertTrue(Global.currentWorkspace.getTeams().contains(team));
     }
@@ -242,6 +245,8 @@ public class TeamTest {
         Assert.assertFalse(Global.currentWorkspace.getPeople().contains(p1));
         Assert.assertFalse(Global.currentWorkspace.getPeople().contains(p2));
 
+        Assert.assertEquals("the cascading deletion of Team \"" + team.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
 
         Assert.assertTrue(Global.currentWorkspace.getTeams().contains(team));
@@ -284,6 +289,8 @@ public class TeamTest {
         Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
         Assert.assertEquals("Tag", team.getTags().get(0).getName());
 
+        Assert.assertEquals("the edit of Team \"" + team.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
 
         Assert.assertEquals("Arctic Falcon", team.getShortName());

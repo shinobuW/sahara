@@ -1162,7 +1162,7 @@ public class Workspace extends SaharaItem implements Serializable {
          */
         @Override
         public String getString() {
-            return "the edit of Workspace \"" + shortName + "\".";
+            return "the edit of Workspace \"" + ws.getShortName() + "\".";
         }
 
         /**

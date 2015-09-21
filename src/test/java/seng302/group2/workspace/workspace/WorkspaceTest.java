@@ -87,6 +87,8 @@ public class WorkspaceTest {
         work.add(pers);
 
         Assert.assertEquals(2, work.getPeople().size());
+        Assert.assertEquals("the creation of Person \"" + pers.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
 
         Global.commandManager.undo();
         Assert.assertEquals(1, work.getPeople().size());
@@ -109,6 +111,8 @@ public class WorkspaceTest {
         Assert.assertTrue(work.getProjects().contains(proj));
 
         work.add(proj);
+        Assert.assertEquals("the creation of Project \"" + proj.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Assert.assertEquals(2, work.getProjects().size());
         Global.commandManager.undo();
         Assert.assertEquals(1, work.getProjects().size());
@@ -128,6 +132,8 @@ public class WorkspaceTest {
 
         Assert.assertTrue(work.getRoadMaps().contains(roadMap));
 
+        Assert.assertEquals("the creation of Road map \"" + roadMap.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         work.add(roadMap);
         Assert.assertEquals(2, work.getRoadMaps().size());
         Global.commandManager.undo();
@@ -151,6 +157,8 @@ public class WorkspaceTest {
 
         work.add(skill);
 
+        Assert.assertEquals("the creation of Skill \"" + skill.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         // Also account for the two default skills in workspaces, SM, PO
         Assert.assertEquals(4, work.getSkills().size());
         Global.commandManager.undo();
@@ -177,6 +185,8 @@ public class WorkspaceTest {
         work.add(team);
         Assert.assertEquals(3, work.getTeams().size());  // Including the unassigned team
 
+        Assert.assertEquals("the creation of Team \"" + team.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
         Assert.assertEquals(2, work.getTeams().size());
         Global.commandManager.undo();
@@ -200,6 +210,8 @@ public class WorkspaceTest {
         Assert.assertTrue(work.getAllTags().contains(tag));
 
         work.add(tag);
+        Assert.assertEquals("the creation of Tag \"" + tag.getName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Assert.assertEquals(2, work.getAllTags().size());
 
         Global.commandManager.undo();
@@ -233,6 +245,8 @@ public class WorkspaceTest {
         Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
         Assert.assertEquals("Tag", ws.getTags().get(0).getName());
 
+        Assert.assertEquals("the edit of Workspace \"" + ws.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
 
         Assert.assertEquals("Name", ws.getShortName());
