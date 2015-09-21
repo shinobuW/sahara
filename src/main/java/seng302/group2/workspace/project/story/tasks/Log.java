@@ -378,7 +378,6 @@ public class Log extends SaharaItem implements Serializable {
      * A command class that allows the executing and undoing of project edits
      */
     private class LogEditCommand implements Command {
-        private String commandString;
         private Log log;
         private Person logger;
         private LocalDateTime startTime;
@@ -444,10 +443,6 @@ public class Log extends SaharaItem implements Serializable {
             //Add the tags a log has to their list of tags
             log.getTags().clear();
             log.getTags().addAll(logTags);
-
-            commandString = "Redid the edit of Log \"" + log.toString() + "\".";
-
-
         }
 
 
@@ -469,15 +464,13 @@ public class Log extends SaharaItem implements Serializable {
             //Changes the logs list of tags to what they used to be
             log.getTags().clear();
             log.getTags().addAll(oldLogTags);
-            commandString = "Undid the edit of Log \"" + log.toString() + "\".";
-
         }
 
         /**
          * Gets the String value of the Command for Editting of Logs.
          */
         public String getString() {
-            return commandString;
+            return "the edit of Log \"" + log.toString() + "\".";
         }
 
 
@@ -545,7 +538,6 @@ public class Log extends SaharaItem implements Serializable {
      * Edit command for editing description
      */
     private class DescriptionEditCommand implements Command {
-        private String commandString;
         private Log log;
         private String newDescription;
         private String oldDescription;
@@ -568,7 +560,6 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void execute() {
             log.description = this.newDescription;
-            commandString = "Redid the edit of Description on Log \"" + log.toString() + "\".";
         }
 
 
@@ -578,14 +569,13 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void undo() {
             log.description = this.oldDescription;
-            commandString = "Undid the edit of Description on Log \"" + log.toString() + "\".";
         }
 
         /**
          * Gets the String value of the Command for editing the description of Logs.
          */
         public String getString() {
-            return commandString;
+            return "the edit of Description on Log \"" + log.toString() + "\".";
         }
 
 
@@ -609,7 +599,6 @@ public class Log extends SaharaItem implements Serializable {
         private Log log;
         private Person oldLogger;
         private Person newLogger;
-        private String commandString;
 
         /**
          * Constructor
@@ -628,7 +617,6 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void execute() {
             log.logger = this.newLogger;
-            //TODO: Cameron
         }
 
 
@@ -638,7 +626,6 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void undo() {
             log.logger = this.oldLogger;
-//            TODO: Cameron
         }
 
 
@@ -647,7 +634,7 @@ public class Log extends SaharaItem implements Serializable {
          */
         @Override
         public String getString() {
-            return null;
+            return "the edit of Log \"" + log.toString() + "\".";
         }
 
 
@@ -669,7 +656,6 @@ public class Log extends SaharaItem implements Serializable {
         private Log log;
         private double newDuration;
         private double oldDuration;
-        private String commandString;
 
 
         /**
@@ -690,7 +676,6 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void execute() {
             log.duration = this.newDuration;
-            commandString = "Redid the edit of Duration on Log \"" + log.toString() + "\".";
         }
 
         /**
@@ -699,12 +684,11 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void undo() {
             log.duration = this.oldDuration;
-            commandString = "Undid the edit of Duration on Log \"" + log.toString() + "\".";
         }
 
         @Override
         public String getString() {
-            return commandString;
+            return "the edit of Duration on Log \"" + log.toString() + "\".";
         }
 
         @Override
