@@ -26,15 +26,17 @@ public class TagCellNode extends VBox implements SearchableControl {
     private Tag tag = null;
     private String tagName = "";
     private Color tagColor = Color.ROYALBLUE;
+    private boolean removable;
 
     /**
      * Constructor for a tag cell node.
      * @param tag The tag to display.
      */
-    public TagCellNode(Tag tag) {
+    public TagCellNode(Tag tag, boolean removable) {
         this.tag = tag;
         this.tagName = tag.getName();
         this.tagColor = tag.getColor();
+        this.removable = removable;
 
         construct();
     }
@@ -65,8 +67,13 @@ public class TagCellNode extends VBox implements SearchableControl {
         }
 
         textContent.getChildren().addAll(titleLabel);
-        Node deletionNode = createDeletionNode(tag);
-        content.getChildren().addAll(textContent, deletionNode);
+        if (removable) {
+            Node deletionNode = createDeletionNode(tag);
+            content.getChildren().addAll(textContent, deletionNode);
+        }
+        else {
+            content.getChildren().addAll(textContent);
+        }
 
         this.getChildren().add(content);
     }

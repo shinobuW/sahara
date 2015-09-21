@@ -205,7 +205,7 @@ public class TagManagementPane extends SplitPane {
         if (selectedTag == null) {
             return;
         }
-        TagCellNode cellNode = new TagCellNode(selectedTag);
+        TagCellNode cellNode = new TagCellNode(selectedTag, false);
         cellNode.setAlignment(Pos.CENTER);
         cellBox.getChildren().add(cellNode);
         detailsPane.getChildren().add(cellBox);
