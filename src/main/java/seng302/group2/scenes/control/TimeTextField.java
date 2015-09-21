@@ -44,10 +44,6 @@ public class TimeTextField extends SearchableTextField {
     }
 
 
-//    public ReadOnlyIntegerProperty hoursProperty() {
-//        return hours.getReadOnlyProperty();
-//    }
-
     /**
      * Gets the inputted minutes
      *
@@ -56,10 +52,6 @@ public class TimeTextField extends SearchableTextField {
     public int getMinutes() {
         return minutes.get();
     }
-
-//    public ReadOnlyIntegerProperty minutesProperty() {
-//        return minutes.getReadOnlyProperty();
-//    }
 
     /**
      * Customised deleteNextChar method which replaces the character that follows the current caret position from the
