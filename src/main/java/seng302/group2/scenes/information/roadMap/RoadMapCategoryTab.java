@@ -201,7 +201,8 @@ public class RoadMapCategoryTab extends SearchableTab {
                 }
 
                 currentRoadMap.getReleases().add(interactiveRelease);
-//                currentRoadMap.edit(currentRoadMap.getShortName(), currentRoadMap.getPriority(), , currentRoadMap.getTags());
+//                currentRoadMap.edit(currentRoadMap.getShortName(), currentRoadMap.getPriority(), ,
+// currentRoadMap.getTags());
                 App.mainPane.refreshAll();
             }
         });
