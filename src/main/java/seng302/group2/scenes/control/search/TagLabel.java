@@ -1,0 +1,45 @@
+package seng302.group2.scenes.control.search;
+
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.layout.HBox;
+import seng302.group2.scenes.control.CustomInfoLabel;
+import seng302.group2.scenes.information.tag.TagCellNode;
+import seng302.group2.workspace.tag.Tag;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * A class for displaying the tags on an info scene.
+ * Created by Bronson Laptop on 21/09/2015.
+ */
+public class TagLabel extends HBox implements SearchableControl {
+    private Set<SearchableControl> searchControls = new HashSet<>();
+
+
+    public TagLabel(ObservableList<Tag> tags) {
+        this.setSpacing(5);
+        CustomInfoLabel label = new CustomInfoLabel("Tags: ", "", searchControls);
+        this.getChildren().add(label);
+        for (Tag tag : tags) {
+            TagCellNode node = new TagCellNode(tag, false);
+            this.getChildren().add(node);
+        }
+    }
+
+    @Override
+    public boolean query(String query) {
+        // TODO @Bronson
+        return false;
+    }
+
+    @Override
+    public int advancedQuery(String query, SearchType searchType) {
+        // TODO @Bronson
+        return 0;
+    }
+
+
+}
