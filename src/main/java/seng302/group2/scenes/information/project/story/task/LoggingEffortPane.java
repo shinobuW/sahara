@@ -159,6 +159,7 @@ public class LoggingEffortPane extends Pane {
                 .subtract(2).divide(100).multiply(60));
 
         Callback<TableColumn, TableCell> cellFactory = col -> new DatePickerEditCell();
+        Callback<TableColumn, TableCell> startTimeCellFactory = col -> new TimeTextFieldEditCell();
 
         TableColumn startDateTimeCol = new TableColumn("Start Time");
         TableColumn startDateCol = new TableColumn("Date");
@@ -224,19 +225,19 @@ public class LoggingEffortPane extends Pane {
                             Log currentLog = event.getTableView().getItems()
                                     .get(event.getTablePosition().getRow());
 
-                            LocalDate newStartDate = LocalDate.parse(event.getNewValue(),
-                                    DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
+                            int year = currentLog.getStartDate().getYear();
                             int month = currentLog.getStartDate().getMonthValue();
                             int day = currentLog.getStartDate().getDayOfMonth();
+                            int hours = Integer.parseInt(event.getNewValue().substring(0, 2));
+                            int minutes = Integer.parseInt(event.getNewValue().substring(3,5));
 
-//                            LocalDateTime dateTime = startDate.atTime(timeTextField.getHours(),
-// timeTextField.getMinutes())
+                            LocalDateTime newDateTime = LocalDateTime.of(year, month, day, hours, minutes);
+                            currentLog.editStartTime(newDateTime);
                         }
                     }
                 });
 
-//        startDateCol.setCellFactory(cellFactory);
+        startTimeCol.setCellFactory(startTimeCellFactory);
 
         startDateTimeCol.getColumns().addAll(startDateCol, startTimeCol);
 
