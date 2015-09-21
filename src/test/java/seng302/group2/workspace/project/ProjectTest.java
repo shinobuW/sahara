@@ -478,7 +478,7 @@ public class ProjectTest extends TestCase {
         Task task = new Task("", "", story, new Person(), 0);
         proj.add(story);
         story.add(task);
-        Log log = new Log(task, "", new Person(), 10, LocalDateTime.now(), 0);
+        Log log = new Log(task, "", new Person(), new Person(), 10, LocalDateTime.now(), 0);
         proj.add(log);
 
         Assert.assertTrue(proj.getLogs().contains(log));
