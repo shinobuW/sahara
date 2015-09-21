@@ -18,6 +18,7 @@ import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.workspace.tag.Tag;
 
@@ -113,10 +114,10 @@ public class TagManagementPane extends SplitPane {
 
         tagListView.getSelectionModel().getSelectedItems().addListener(
                 (ListChangeListener<Tag>) change -> {
-                if (tagListView.getItems().size() > 0) {
-                    constructDetail();
-                }
-            });
+                    if (tagListView.getItems().size() > 0) {
+                        constructDetail();
+                    }
+                });
 
         // Sort here if needed
         if (tagListView.getItems().size() > 0) {
@@ -177,6 +178,11 @@ public class TagManagementPane extends SplitPane {
         listPane.getChildren().addAll(tagFilteredListView, newTagBox);
 
         this.getItems().add(0, listPane);
+
+        Platform.runLater(() -> {
+            newTagField.requestFocus();
+        });
+
     }
 
     /**
@@ -193,9 +199,12 @@ public class TagManagementPane extends SplitPane {
         Tag selectedTag = tagListView.getSelectionModel().getSelectedItem();
 
         //HBox titleBox = new HBox();
-        SearchableText title = new SearchableText("Edit Tag:", searchControls);
-        title.injectStyle("-fx-font-weight: bold");
+        SearchableTitle title = new SearchableTitle("Edit Tag:", searchControls);
         detailsPane.getChildren().add(title);
+
+        SearchableText preview = new SearchableText("Preview:", searchControls);
+        preview.injectStyle("-fx-font-weight: bold");
+        detailsPane.getChildren().add(preview);
 
         HBox cellBox = new HBox();
         cellBox.setPrefHeight(100);
