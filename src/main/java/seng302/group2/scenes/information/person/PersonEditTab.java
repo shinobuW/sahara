@@ -8,16 +8,14 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.control.Tooltip;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableListView;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.information.StickyBar;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.validation.NameValidator;
@@ -56,6 +54,7 @@ public class PersonEditTab extends SearchableTab {
     CustomTextArea descriptionTextArea = new CustomTextArea("Person Description:", 300);
     FilteredListView personSkillsBox = new FilteredListView<>(tempPerson.getSkills(), "skills");
     SearchableListView personSkillsList = personSkillsBox.getListView();
+    TagField tagField;
 
     /**
      * Constructor for the PersonEditTab class. This constructor creates a JavaFX ScrollPane
@@ -143,6 +142,15 @@ public class PersonEditTab extends SearchableTab {
             }
         }
 
+        // Set up the tagging field
+        SearchableText tagLabel = new SearchableText("Tags:", "-fx-font-weight: bold;", searchControls);
+        tagLabel.setMinWidth(60);
+        tagField = new TagField(currentPerson.getTags(), searchControls);
+        HBox.setHgrow(tagField, Priority.ALWAYS);
+
+        HBox tagBox = new HBox();
+        tagBox.getChildren().addAll(tagLabel, tagField);
+
         shortNameCustomField.setText(currentPerson.getShortName());
         firstNameCustomField.setText(currentPerson.getFirstName());
         lastNameCustomField.setText(currentPerson.getLastName());
@@ -190,7 +198,8 @@ public class PersonEditTab extends SearchableTab {
                             + "You must put someone else into the role before you can change this persons team."));
                     App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDITDISABLED);
 
-                } else if (newValue != currentPerson.getTeam() && currentPerson.getRole() != null
+                }
+                else if (newValue != currentPerson.getTeam() && currentPerson.getRole() != null
                         && currentPerson.getRole().toString().equals("Scrum Master")) {
                     ValidationStyle.borderGlowRed(teamBox.getComboBox());
                     ValidationStyle.showMessage("This person is currently the Scrum Master of the team "
@@ -203,7 +212,8 @@ public class PersonEditTab extends SearchableTab {
                             + "You must put someone else into the role before you can change this persons team."));
                     App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDITDISABLED);
 
-                } else {
+                }
+                else {
                     App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDIT);
 
                 }
@@ -220,7 +230,8 @@ public class PersonEditTab extends SearchableTab {
                             birthDatePicker.getDatePicker());
                     App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDITDISABLED);
 
-                } else {
+                }
+                else {
                     ValidationStyle.borderGlowNone(birthDatePicker.getDatePicker());
                     App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.EDIT);
 
@@ -232,7 +243,7 @@ public class PersonEditTab extends SearchableTab {
         birthDatePicker.getDatePicker().focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (!newValue){
+                if (!newValue) {
                     birthDatePicker.setValue(birthDatePicker.getDatePicker().getConverter().fromString(
                             birthDatePicker.getDatePicker().getEditor().getText()));
                 }
@@ -277,6 +288,7 @@ public class PersonEditTab extends SearchableTab {
         // Add items to pane & search collection
         editPane.getChildren().addAll(
                 shortNameCustomField,
+                tagBox,
                 firstNameCustomField,
                 lastNameCustomField,
                 emailTextField,
@@ -337,10 +349,11 @@ public class PersonEditTab extends SearchableTab {
                 break;
             }
         }
+        boolean tagsUnchanged = tagField.getTags().equals(currentPerson.getTags());
 
         if (shortNameUnchanged && firstNameUnchanged && lastNameUnchanged
                 && descriptionUnchanged && birthdayUnchanged && emailUnchanged
-                && teamUnchanged && skillsUnchanged) {
+                && teamUnchanged && skillsUnchanged && tagsUnchanged) {
             // No fields have been changed
             currentPerson.switchToInfoScene();
             return;
@@ -351,7 +364,7 @@ public class PersonEditTab extends SearchableTab {
         boolean firstNameValidated = NameValidator.validateName(firstNameCustomField);
         boolean lastNameValidated = NameValidator.validateName(lastNameCustomField);
 
-        ArrayList<Tag> tags = new ArrayList<>();
+        ArrayList<Tag> tags = new ArrayList<>(tagField.getTags());
 
         // The short name is the same or valid
         if (correctShortName && firstNameValidated && lastNameValidated) {

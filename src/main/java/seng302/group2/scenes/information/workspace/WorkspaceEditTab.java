@@ -6,12 +6,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.TagField;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.workspace.Workspace;
@@ -31,7 +34,7 @@ public class WorkspaceEditTab extends SearchableTab {
     RequiredField shortNameCustomField = new RequiredField("Short Name:");
     RequiredField longNameCustomField = new RequiredField("Long Name:");
     CustomTextArea descriptionTextArea = new CustomTextArea("Workspace Description:", 300);
-
+    TagField tagField;
 
     /**
      * Constructor for the WorkspaceEditTab class. This constructor creates a JavaFX ScrollPane
@@ -67,9 +70,19 @@ public class WorkspaceEditTab extends SearchableTab {
         longNameCustomField.setText(currentWorkspace.getLongName());
         descriptionTextArea.setText(currentWorkspace.getDescription());
 
+        // Set up the tagging field
+        SearchableText tagLabel = new SearchableText("Tags:", "-fx-font-weight: bold;", searchControls);
+        tagLabel.setMinWidth(60);
+        tagField = new TagField(currentWorkspace.getTags(), searchControls);
+        HBox.setHgrow(tagField, Priority.ALWAYS);
+
+        HBox tagBox = new HBox();
+        tagBox.getChildren().addAll(tagLabel, tagField);
+
         // Add items to pane & search collection
         editPane.getChildren().addAll(
                 shortNameCustomField,
+                tagBox,
                 longNameCustomField,
                 descriptionTextArea
 
@@ -96,8 +109,9 @@ public class WorkspaceEditTab extends SearchableTab {
         boolean shortNameUnchanged = shortNameCustomField.getText().equals(currentWorkspace.getShortName());
         boolean longNameUnchanged = longNameCustomField.getText().equals(currentWorkspace.getLongName());
         boolean descriptionUnchanged = descriptionTextArea.getText().equals(currentWorkspace.getDescription());
+        boolean tagsUnchanged = tagField.getTags().equals(currentWorkspace.getTags());
 
-        if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
+        if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged && tagsUnchanged) {
             currentWorkspace.switchToInfoScene();
             return;
         }
@@ -108,7 +122,7 @@ public class WorkspaceEditTab extends SearchableTab {
                 currentWorkspace.getLongName());
 
         if (correctShortName && correctLongName) {
-            ArrayList<Tag> tags = new ArrayList<>();
+            ArrayList<Tag> tags = new ArrayList<>(tagField.getTags());
             currentWorkspace.edit(shortNameCustomField.getText(), longNameCustomField.getText(),
                     descriptionTextArea.getText(), tags);
             currentWorkspace.switchToInfoScene();
