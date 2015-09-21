@@ -174,7 +174,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
         for (Project proj : Global.currentWorkspace.getProjects()) {
             for (Sprint sprint : proj.getSprints()) {
                 if (sprint.getRelease().equals(release)) {
-                    Node sprintNode = createSprintNode(sprint, release);
+                    Node sprintNode = createSprintNode(sprint);
                     releaseChildren.getChildren().add(sprintNode);
                     initSprintListeners(sprintNode, sprint);
 
@@ -194,9 +194,18 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         VBox content = new VBox(1);
         content.getChildren().addAll(shortNameField, projectName);
-        releaseContent.getChildren().addAll(content, deletionBox);
         content.setPadding(insetsContent);
 
+        HBox deletionHBox = new HBox();
+        deletionHBox.getChildren().add(deletionBox);
+        deletionHBox.setAlignment(Pos.CENTER_RIGHT);
+
+        HBox nameHBox = new HBox();
+        nameHBox.getChildren().add(content);
+        nameHBox.setAlignment(Pos.CENTER);
+        HBox.setHgrow(nameHBox, Priority.ALWAYS);
+
+        releaseContent.getChildren().addAll(nameHBox, deletionHBox);
         releaseContent.setAlignment(Pos.CENTER);
         releaseNode.getChildren().addAll(
                 releaseContent,
@@ -210,16 +219,19 @@ public class RoadMapNode extends VBox implements SearchableControl {
         return releaseNode;
     }
 
-    private Node createSprintNode(Sprint sprint, Release release) {
+    private Node createSprintNode(Sprint sprint) {
         VBox sprintNode = new VBox();
+        sprintNode.setAlignment(Pos.CENTER);
         Insets insets = new Insets(5, 5, 5, 0);
+
         sprintNode.setPadding(insets);
+
         HBox sprintContent = new HBox();
+        HBox.setHgrow(sprintContent, Priority.ALWAYS);
         sprintContent.setStyle("-fx-background-color: rgba(100, 255, 124, 0.83); -fx-border-radius: 5 5 5 5; "
                 + "-fx-background-radius: 0 5 5 5");
 
         VBox deletionBox = deletionBox(sprint);
-        HBox.setHgrow(sprintContent, Priority.ALWAYS);
         deletionBox.setAlignment(Pos.TOP_RIGHT);
 
         GridPane sprintChildren = new GridPane();
@@ -248,10 +260,6 @@ public class RoadMapNode extends VBox implements SearchableControl {
             event.consume();
         });
 
-        sprintNode.getChildren().addAll(
-                shortNameField
-        );
-
         for (Story story : sprint.getStories()) {
             Node storyNode = createStoryNode(story, sprint);
             sprintChildren.add(storyNode, xCounter, yCounter);
@@ -272,7 +280,16 @@ public class RoadMapNode extends VBox implements SearchableControl {
             dragBoard.setContent(content);
         });
 
-        sprintContent.getChildren().addAll(shortNameField, deletionBox);
+        HBox deletionHBox = new HBox();
+        deletionHBox.getChildren().add(deletionBox);
+        deletionHBox.setAlignment(Pos.CENTER_RIGHT);
+
+        HBox nameHBox = new HBox();
+        nameHBox.getChildren().add(shortNameField);
+        nameHBox.setAlignment(Pos.CENTER);
+        HBox.setHgrow(nameHBox, Priority.ALWAYS);
+
+        sprintContent.getChildren().addAll(nameHBox, deletionHBox);
         sprintContent.setAlignment(Pos.CENTER);
         sprintNode.getChildren().addAll(
                 sprintContent,
@@ -295,6 +312,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
         HBox storyContent = new HBox();
         storyContent.setStyle("-fx-background-color: rgba(255, 7, 0, 0.56); -fx-border-radius: 5 5 5 5; "
                 + "-fx-background-radius: 0 5 5 5");
+
         SearchableText shortNameField = new SearchableText(story.getShortName());
         Insets insetsContent = new Insets(5, 15, 5, 5);
         shortNameField.setPadding(insetsContent);
@@ -350,10 +368,18 @@ public class RoadMapNode extends VBox implements SearchableControl {
             dragBoard.setContent(content);
         });
 
+        HBox deletionHBox = new HBox();
+        deletionHBox.getChildren().add(deletionBox);
+        deletionHBox.setAlignment(Pos.CENTER_RIGHT);
+
+        HBox nameHBox = new HBox();
+        nameHBox.getChildren().add(shortNameField);
+        nameHBox.setAlignment(Pos.CENTER);
+        HBox.setHgrow(nameHBox, Priority.ALWAYS);
 
         storyContent.getChildren().addAll(
-                shortNameField,
-                deletionBox
+                nameHBox,
+                deletionHBox
         );
 
         storyNode.getChildren().addAll(
