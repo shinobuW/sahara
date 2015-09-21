@@ -10,7 +10,6 @@ import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Log;
-import seng302.group2.workspace.project.story.tasks.PairLog;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
 import seng302.group2.workspace.workspace.Workspace;
@@ -224,10 +223,10 @@ public class SprintTest {
         Sprint sprint = new Sprint();
         Story story = new Story();
         Task task = new Task("", "", story, new Person(), 0);
-        Log log = new Log(task, "", new Person(), 0, LocalDateTime.now(), 0);
-        Log log2 = new Log(task, "", new Person(), 0, LocalDateTime.now(), 0);
+        Log log = new Log(task, "", new Person(), new Person(), 0, LocalDateTime.now(), 0);
+        Log log2 = new Log(task, "", new Person(), new Person(), 0, LocalDateTime.now(), 0);
         log2.setGhostLog();
-        PairLog log3 = new PairLog(task, "", new Person(), new Person(), 0, LocalDateTime.now(), 0);
+        Log log3 = new Log(task, "", new Person(), new Person(), 0, LocalDateTime.now(), 0);
 
         ws.add(proj);
         proj.add(sprint);
@@ -251,10 +250,10 @@ public class SprintTest {
         Sprint sprint = new Sprint();
         Story story = new Story();
         Task task = new Task("", "", story, new Person(), 0);
-        Log log = new Log(task, "", new Person(), 0, LocalDateTime.now(), 0);
-        Log log2 = new Log(task, "", new Person(), 0, LocalDateTime.now(), 0);
+        Log log = new Log(task, "", new Person(), null, 0, LocalDateTime.now(), 0);
+        Log log2 = new Log(task, "", new Person(), null, 0, LocalDateTime.now(), 0);
         log2.setGhostLog();
-        PairLog log3 = new PairLog(task, "", new Person(), new Person(), 0, LocalDateTime.now(), 0);
+        Log log3 = new Log(task, "", new Person(), new Person(), 0, LocalDateTime.now(), 0);
 
         ws.add(proj);
         proj.add(sprint);

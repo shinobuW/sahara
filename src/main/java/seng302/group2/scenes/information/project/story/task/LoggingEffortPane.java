@@ -26,7 +26,6 @@ import seng302.group2.util.conversion.DurationConverter;
 import seng302.group2.util.validation.DateValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Log;
-import seng302.group2.workspace.project.story.tasks.PairLog;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
@@ -40,18 +39,21 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import static javafx.collections.FXCollections.observableArrayList;
+
 /**
  * Pane for logging on a given Task.
  * Created by jml168 on 25/08/15.
  */
 public class LoggingEffortPane extends Pane {
 
-    PopOver popOver = null;
-    Boolean correctEffortLeft = Boolean.FALSE;
-    Boolean correctDuration = Boolean.FALSE;
-    Boolean loggerSelected = Boolean.FALSE;
-    TableView table = null;
-    //TODO Make this a Searchable Pane
+    private PopOver popOver = null;
+    private Boolean correctEffortLeft = Boolean.FALSE;
+    private Boolean correctDuration = Boolean.FALSE;
+    private Boolean loggerSelected = Boolean.FALSE;
+    private TableView table = null;
+    private Person nullPerson = new Person("", "", "", "", "", null);
+    private ObservableList<Person> availablePeople = FXCollections.observableArrayList();
 
 
     public LoggingEffortPane(Task task) {
@@ -111,7 +113,8 @@ public class LoggingEffortPane extends Pane {
         loggerCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
-        ObservableList<Person> availablePeople = FXCollections.observableArrayList();
+        ObservableList<Person> availableLoggers = observableArrayList();
+
         Set<Team> availableTeams = ((task.getStory().getBacklog() == null)
                 ? new HashSet<Team>() :
                 task.getStory().getBacklog().getProject().getCurrentTeams());
@@ -119,10 +122,8 @@ public class LoggingEffortPane extends Pane {
             availablePeople.addAll(team.getPeople());
         }
 
-
-        //Callback<TableColumn, TableCell> loggerColFactory = col -> new ComboBoxCell(availablePeople);
         loggerCol.setCellFactory(ComboBoxTableCell.forTableColumn(
-                availablePeople
+                availableLoggers
         ));
         loggerCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Log, String>,
@@ -145,16 +146,65 @@ public class LoggingEffortPane extends Pane {
                         Log currentLog = event.getTableView().getItems().get(
                                 event.getTablePosition().getRow());
                         ArrayList<Tag> tags = new ArrayList<>();
-                        currentLog.edit(event.getNewValue(), currentLog.getStartDate(),
+                        currentLog.edit(event.getNewValue(), currentLog.getPartner(), currentLog.getStartDate(),
                                 currentLog.getDurationInMinutes(), currentLog.getDescription(),
                                 currentLog.getEffortLeftDifferenceInMinutes(), tags);
                     }
                 }
         );
 
+        ObservableList<Person> availablePartners = observableArrayList();
+
+        logTable.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
+                Boolean isPartnerList = true;
+                updateObservablePeopleList(availablePartners, newSelection.getLogger(), isPartnerList);
+                updateObservablePeopleList(availableLoggers, newSelection.getLogger(), !isPartnerList);
+            });
+
         TableColumn partnerCol = new TableColumn("Partner");
         partnerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("partner"));
         partnerCol.setEditable(true);
+//
+//        ComboBoxTableCell blah = new ComboBoxTableCell(availablePartners);
+//        blah.focusedProperty().addListener(new ChangeListener<Boolean>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+//
+//            }
+//        });
+        partnerCol.setCellFactory(ComboBoxTableCell.forTableColumn(
+                availablePartners
+        ));
+
+
+        partnerCol.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Log, String>,
+                        ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<Log,
+                            String> log) {
+                        SimpleStringProperty property = new SimpleStringProperty();
+                        if (log.getValue().getPartner() != null) {
+                            property.setValue(log.getValue().getPartner().toString());
+                        }
+                        return property;
+                    }
+                });
+
+
+        partnerCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Log, Person>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Log,
+                            Person> event) {
+                        Log currentLog = event.getTableView().getItems().get(
+                                event.getTablePosition().getRow());
+                        ArrayList<Tag> tags = new ArrayList<>();
+                        currentLog.editPartner(event.getNewValue());
+                    }
+                }
+        );
+
         partnerCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
@@ -520,16 +570,9 @@ public class LoggingEffortPane extends Pane {
                     double effortLeftDifference = task.getEffortLeft() - effortLeft;
 
                     Person partner = partnerComboBox.getComboBox().getSelectionModel().getSelectedItem();
-                    if (partner != null) {
-                        PairLog pairLog = new PairLog(task, descriptionTextArea.getText(), selectedPerson, partner,
-                                duration, dateTime, effortLeftDifference);
-                        task.getStory().getProject().add(pairLog);
-                    }
-                    else {
-                        Log newLog = new Log(task, descriptionTextArea.getText(),
-                                selectedPerson, duration, dateTime, effortLeftDifference);
-                        task.getStory().getProject().add(newLog);
-                    }
+                    Log newLog = new Log(task, descriptionTextArea.getText(),
+                            selectedPerson, partner, duration, dateTime, effortLeftDifference);
+                    task.getStory().getProject().add(newLog);
 
                     String effortLeftString = "";
                     if (task.getEffortLeft() == 0
@@ -589,5 +632,15 @@ public class LoggingEffortPane extends Pane {
         content.getChildren().add(buttons);
 
         this.getChildren().add(content);
+    }
+
+    private void updateObservablePeopleList(ObservableList<Person> peopleList, Person removePerson,
+                                            Boolean isPartnerList) {
+        peopleList.clear();
+        if (isPartnerList) {
+            peopleList.add(nullPerson);
+        }
+        peopleList.addAll(availablePeople);
+        peopleList.remove(removePerson);
     }
 }

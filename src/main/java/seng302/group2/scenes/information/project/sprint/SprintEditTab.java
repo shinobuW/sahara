@@ -557,11 +557,11 @@ public class SprintEditTab extends SearchableTab {
         });
 
         btnUnassign.setOnAction((event) -> {
-            Collection<Story> selectedPeople = new ArrayList<>();
-            selectedPeople.addAll(storiesInSprintView.getSelectionModel().
+            Collection<Story> selectedStories = new ArrayList<>();
+            selectedStories.addAll(storiesInSprintView.getSelectionModel().
                     getSelectedItems());
-            availableStories.addAll(selectedPeople);
-            storiesInSprint.removeAll(selectedPeople);
+            availableStories.addAll(selectedStories);
+            storiesInSprint.removeAll(selectedStories);
             storiesInSprintFilteredList.getListView();
             availableStoriesFilteredList.getListView();
         });

@@ -11,8 +11,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
@@ -23,23 +22,23 @@ import javafx.scene.text.Text;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.PopOverTip;
 import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.roadMap.RoadMap;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -174,7 +173,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
         for (Project proj : Global.currentWorkspace.getProjects()) {
             for (Sprint sprint : proj.getSprints()) {
                 if (sprint.getRelease().equals(release)) {
-                    Node sprintNode = createSprintNode(sprint, release);
+                    Node sprintNode = createSprintNode(sprint);
                     releaseChildren.getChildren().add(sprintNode);
                     initSprintListeners(sprintNode, sprint);
 
@@ -194,9 +193,18 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         VBox content = new VBox(1);
         content.getChildren().addAll(shortNameField, projectName);
-        releaseContent.getChildren().addAll(content, deletionBox);
         content.setPadding(insetsContent);
 
+        HBox deletionHBox = new HBox();
+        deletionHBox.getChildren().add(deletionBox);
+        deletionHBox.setAlignment(Pos.CENTER_RIGHT);
+
+        HBox nameHBox = new HBox();
+        nameHBox.getChildren().add(content);
+        nameHBox.setAlignment(Pos.CENTER);
+        HBox.setHgrow(nameHBox, Priority.ALWAYS);
+
+        releaseContent.getChildren().addAll(nameHBox, deletionHBox);
         releaseContent.setAlignment(Pos.CENTER);
         releaseNode.getChildren().addAll(
                 releaseContent,
@@ -210,16 +218,19 @@ public class RoadMapNode extends VBox implements SearchableControl {
         return releaseNode;
     }
 
-    private Node createSprintNode(Sprint sprint, Release release) {
+    private Node createSprintNode(Sprint sprint) {
         VBox sprintNode = new VBox();
+        sprintNode.setAlignment(Pos.CENTER);
         Insets insets = new Insets(5, 5, 5, 0);
+
         sprintNode.setPadding(insets);
+
         HBox sprintContent = new HBox();
+        HBox.setHgrow(sprintContent, Priority.ALWAYS);
         sprintContent.setStyle("-fx-background-color: rgba(100, 255, 124, 0.83); -fx-border-radius: 5 5 5 5; "
                 + "-fx-background-radius: 0 5 5 5");
 
         VBox deletionBox = deletionBox(sprint);
-        HBox.setHgrow(sprintContent, Priority.ALWAYS);
         deletionBox.setAlignment(Pos.TOP_RIGHT);
 
         GridPane sprintChildren = new GridPane();
@@ -248,10 +259,6 @@ public class RoadMapNode extends VBox implements SearchableControl {
             event.consume();
         });
 
-        sprintNode.getChildren().addAll(
-                shortNameField
-        );
-
         for (Story story : sprint.getStories()) {
             Node storyNode = createStoryNode(story, sprint);
             sprintChildren.add(storyNode, xCounter, yCounter);
@@ -272,7 +279,16 @@ public class RoadMapNode extends VBox implements SearchableControl {
             dragBoard.setContent(content);
         });
 
-        sprintContent.getChildren().addAll(shortNameField, deletionBox);
+        HBox deletionHBox = new HBox();
+        deletionHBox.getChildren().add(deletionBox);
+        deletionHBox.setAlignment(Pos.CENTER_RIGHT);
+
+        HBox nameHBox = new HBox();
+        nameHBox.getChildren().add(shortNameField);
+        nameHBox.setAlignment(Pos.CENTER);
+        HBox.setHgrow(nameHBox, Priority.ALWAYS);
+
+        sprintContent.getChildren().addAll(nameHBox, deletionHBox);
         sprintContent.setAlignment(Pos.CENTER);
         sprintNode.getChildren().addAll(
                 sprintContent,
@@ -295,6 +311,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
         HBox storyContent = new HBox();
         storyContent.setStyle("-fx-background-color: rgba(255, 7, 0, 0.56); -fx-border-radius: 5 5 5 5; "
                 + "-fx-background-radius: 0 5 5 5");
+
         SearchableText shortNameField = new SearchableText(story.getShortName());
         Insets insetsContent = new Insets(5, 15, 5, 5);
         shortNameField.setPadding(insetsContent);
@@ -303,6 +320,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
         VBox deletionBox = new VBox();
         ImageView deletionImage = new ImageView("icons/tag_remove.png");
         Tooltip.create("Remove Story from Sprint", deletionImage, 50);
+
 
         deletionImage.setOnMouseEntered(me -> {
             this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
@@ -350,10 +368,18 @@ public class RoadMapNode extends VBox implements SearchableControl {
             dragBoard.setContent(content);
         });
 
+        HBox deletionHBox = new HBox();
+        deletionHBox.getChildren().add(deletionBox);
+        deletionHBox.setAlignment(Pos.CENTER_RIGHT);
+
+        HBox nameHBox = new HBox();
+        nameHBox.getChildren().add(shortNameField);
+        nameHBox.setAlignment(Pos.CENTER);
+        HBox.setHgrow(nameHBox, Priority.ALWAYS);
 
         storyContent.getChildren().addAll(
-                shortNameField,
-                deletionBox
+                nameHBox,
+                deletionHBox
         );
 
         storyNode.getChildren().addAll(
@@ -370,9 +396,13 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
 
     private VBox deletionBox(SaharaItem item) {
+        HBox iconBox = new HBox();
         VBox deletionBox = new VBox();
         ImageView deletionImage = new ImageView("icons/tag_remove.png");
-        Tooltip.create("Remove", deletionImage, 50);
+        Tooltip.create("Delete Sprint", deletionImage, 50);
+
+        ImageView addImage = new ImageView("icons/add.png");
+        Tooltip.create("Add Story to Sprint", addImage, 50);
 
         deletionImage.setOnMouseEntered(me -> {
             this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
@@ -385,14 +415,70 @@ public class RoadMapNode extends VBox implements SearchableControl {
         deletionImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             showDeleteDialog(item);
             event.consume();
+            App.mainPane.refreshAll();
+
         });
 
+        addImage.setOnMouseEntered(me -> {
+            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+        });
 
-        Insets insetsNode = new Insets(0, 5, 5, 0);
+        addImage.setOnMouseExited(me -> {
+            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+        });
+
+        addImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            event.consume();
+
+            PopOver addStoryPopover = new PopOver();
+            VBox addContent = new VBox();
+            addContent.setPadding(new Insets(8, 8, 8, 8));
+            VBox existingStories = new VBox(5);
+            addContent.setPadding(new Insets(8, 8, 8, 8));
+
+            ObservableList<Story> unassignedStories = observableArrayList();
+            for (Story story : Global.currentWorkspace.getAllStories()) {
+                if (story.getShortName().equals("Slurp")) {
+                    System.out.println(story.getSprint());
+                }
+                if (story.getSprint() == null) {
+                    unassignedStories.add(story);
+                }
+                //System.out.println(story.getShortName() + ": " + story.getBacklog());
+            }
+
+            FilteredListView<Story> unassignedStoryBox = new FilteredListView<>(unassignedStories,
+                    "Unassigned Stories");
+            SearchableListView<Story> unassignedStoryListView = unassignedStoryBox.getListView();
+            unassignedStoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            unassignedStoryListView.getSelectionModel().select(0);
+
+            Button btnAdd = new Button("Add");
+            btnAdd.setOnAction((event_) -> {
+                Collection<Story> selectedStories = new ArrayList<>();
+                selectedStories.addAll(unassignedStoryListView.getSelectionModel().getSelectedItems());
+                for (Story story : selectedStories) {
+                    ((Sprint) item).add(story);
+                }
+            });
+
+            existingStories.getChildren().addAll(unassignedStoryBox, btnAdd);
+
+            TitledPane collapsableExisting = new TitledPane("Add Unassigned Stories", existingStories);
+            collapsableExisting.setExpanded(true);
+            collapsableExisting.setAnimated(true);
+
+            addContent.getChildren().add(collapsableExisting);
+            addStoryPopover.setContentNode(addContent);
+            addStoryPopover.show(addImage);
+        });
+
+            Insets insetsNode = new Insets(0, 5, 5, 0);
         this.setPadding(insetsNode);
-        deletionBox.getChildren().addAll(deletionImage);
+            iconBox.getChildren().addAll(addImage, deletionImage);
+            deletionBox.getChildren().addAll(iconBox);
 
-        return deletionBox;
+            return deletionBox;
     }
 
     private void initReleaseListeners(Node releaseNode, Release currentRelease) {
@@ -439,19 +525,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
         sprintNode.setOnDragDropped(dragEvent -> {
             if (dragEvent.getDragboard().getString() == "story") {
                 if (currentSprint.getProject().equals(selectedStory.getProject())) {
-                    System.out.println("Story Dropped.........");
-                    System.out.println(selectedStory);
-                    System.out.println(selectedStory.getSprint().getGoal());
-                    System.out.println(currentSprint);
+                    currentSprint.addRemove(currentSprint, selectedSprint, selectedStory);
 
-                    selectedStory.getSprint().getStories().remove(selectedStory);
-                    selectedStory.setSprint(currentSprint);
-                    currentSprint.getStories().add(selectedStory);
-
-//                selectedSprint.edit(selectedSprint.getGoal(), selectedSprint.getLongName(),
-//                        selectedSprint.getDescription(), selectedSprint.getStartDate(), selectedSprint.getEndDate(),
-//                        selectedSprint.getTeam(), selectedSprint.getRelease(), selectedSprint.getStories(),
-//                        selectedSprint.getTags());
                     App.mainPane.refreshAll();
                 }
                 else {

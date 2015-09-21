@@ -20,6 +20,7 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.sceneswitch.switchStrategies.workspace.WorkspaceInformationSwitchStrategy;
+import seng302.group2.scenes.treeView.HierarchyTracker;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.util.revert.RevertManager;
 import seng302.group2.util.serialization.SerialBuilder;
@@ -81,8 +82,8 @@ public class Workspace extends SaharaItem implements Serializable {
     private transient Category roadMapCategory = new RoadMapCategory();
     private transient Category rolesCategory = new RolesCategory();
     private transient Category skillCategory = new SkillsCategory();
-    
 
+    private Map<SaharaItem, Boolean> hierarchyMap = new HashMap<>();
     
     private double version = App.version;
 
@@ -441,6 +442,7 @@ public class Workspace extends SaharaItem implements Serializable {
      * @return A serializable version of the given workspace
      */
     public static Workspace prepSerialization(Workspace workspace) {
+
         workspace.serializablePeople.clear();
         for (Person item : workspace.people) {
             item.prepSerialization();
@@ -543,6 +545,8 @@ public class Workspace extends SaharaItem implements Serializable {
         for (Project proj : workspace.getProjects()) {
             proj.addListeners();
         }
+
+        HierarchyTracker.expandWorkspace();
 
         SaharaItem.refreshIDs();
     }
@@ -955,25 +959,6 @@ public class Workspace extends SaharaItem implements Serializable {
         return root;
     }
 
-    /**
-     * Serialization pre-processing.
-     */
-    public void prepSerialization() {
-        serializableGlobalTags.clear();
-        for (Tag item : globalTags) {
-            serializableGlobalTags.add(item);
-        }
-    }
-
-    /**
-     * Deserialization post-processing.
-     */
-    public void postDeserialization() {
-        globalTags.clear();
-        for (Tag item : serializableGlobalTags) {
-            globalTags.add(item);
-        }
-    }
 
     /**
      * Method for creating an XML element for the Workspace within report generation

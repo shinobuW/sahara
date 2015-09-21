@@ -12,6 +12,7 @@ import seng302.group2.workspace.workspace.Workspace;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+@Deprecated
 public class PairLogTest extends TestCase {
 
     Workspace ws = new Workspace();
@@ -20,7 +21,7 @@ public class PairLogTest extends TestCase {
     Task task = new Task("Task", "description", story, new Person(), 20 );
     Person originalLogger = new Person("Logger", "Logger", "Logger", "", "", LocalDate.now());
     Person originalPartner = new Person("Partner", "Partner", "Partner", "", "", LocalDate.now());
-    PairLog pLog = new PairLog(task,  "description", originalLogger, originalPartner, 0,
+    Log pLog = new Log(task,  "description", originalLogger, originalPartner, 0,
             LocalDateTime.now(), 0);
 
     /**
@@ -80,7 +81,7 @@ public class PairLogTest extends TestCase {
      */
     @Test
     public void TestDurationDescriptionCommand() {
-        pLog.editDuration(10);
+        pLog.editDuration(new Double(10));
         Assert.assertEquals(10, pLog.getDurationInHours());
         Global.commandManager.undo();
         Assert.assertEquals(20, pLog.getDurationInHours());

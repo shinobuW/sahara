@@ -68,7 +68,7 @@ public class Task extends SaharaItem implements Serializable {
         this.state = TASKSTATE.NOT_STARTED;
         this.effortLeft = 0;
         this.effortSpent = 0;
-        this.initialLog = new Log(this, "initial log (this should be hidden)", null, 0,
+        this.initialLog = new Log(this, "initial log (this should be hidden)", null, null, 0,
                 LocalDateTime.now(), 0 - effortLeft);
 //        initListeners();
     }
@@ -101,7 +101,7 @@ public class Task extends SaharaItem implements Serializable {
         this.effortLeft = effortLeft;
         this.effortSpent = (float) 0;
         this.assignee = person;
-        this.initialLog = new Log(this, "initial log (this should be hidden)", null, 0,
+        this.initialLog = new Log(this, "initial log (this should be hidden)", null, null, 0,
                 LocalDateTime.now(), 0 - effortLeft);
 //        initListeners();
     }
@@ -503,7 +503,7 @@ public class Task extends SaharaItem implements Serializable {
 
 
     public void editEffortLeft(double newEffortLeft) {
-        Log manualEffortLeftLog = new Log(this, "Manual Edit Log", null, 0,
+        Log manualEffortLeftLog = new Log(this, "Manual Edit Log", null, null, 0,
                 LocalDateTime.now(), this.getEffortLeft() - newEffortLeft);
         manualEffortLeftLog.setGhostLog();
         Command effortLeftEdit = new TaskEditEffortLeftCommand(this, newEffortLeft, manualEffortLeftLog);

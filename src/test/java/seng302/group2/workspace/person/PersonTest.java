@@ -11,7 +11,6 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Log;
-import seng302.group2.workspace.project.story.tasks.PairLog;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
@@ -390,15 +389,13 @@ public class PersonTest {
         Project proj = new Project();
         Story story = new Story("", "", "", "", proj, 0);
         Task task = new Task("", "", story, basicPerson, 0);
-        Log log = new Log(task, "", basicPerson, 10, LocalDateTime.now(), 0);
-        PairLog pairLog = new PairLog(task, "", partner, basicPerson, 0, LocalDateTime.now(), 0);
+        Log log = new Log(task, "", basicPerson, partner, 10, LocalDateTime.now(), 0);
         Global.currentWorkspace = ws;
         ws.add(proj);
         proj.add(story);
         proj.add(log);
-        proj.add(pairLog);
         story.add(task);
 
-        Assert.assertEquals(2, basicPerson.getLogs().size());
+        Assert.assertEquals(1, basicPerson.getLogs().size());
     }
 }

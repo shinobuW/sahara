@@ -371,8 +371,8 @@ public class TaskTest {
         proj.add(sprint);
         sprint.add(story);
 
-        Log log1 = new Log(task, "", person, 5, LocalDateTime.now(), 0);
-        Log log2 = new Log(task, "", person, 5, LocalDateTime.now(), 0);
+        Log log1 = new Log(task, "", person, new Person(), 5, LocalDateTime.now(), 0);
+        Log log2 = new Log(task, "", person, new Person(), 5, LocalDateTime.now(), 0);
 
         proj.add(log1);
         proj.add(log2);

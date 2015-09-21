@@ -176,7 +176,7 @@ public class BurndownChart extends LineChart {
                 int minuteInt = t.getInitialLog().getStartDate().getMinute();
                 LocalDateTime dateTime = date.atTime(hourInt, minuteInt);
 
-                logList.add(new Log(t, "initial log (this should be hidden)", null, 0,
+                logList.add(new Log(t, "initial log (this should be hidden)", null, null, 0,
                         dateTime, t.getInitialLog().getEffortLeftDifferenceInMinutes()));
             }
             else {
