@@ -266,7 +266,6 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
      * A command class for allowing the editting of RoadMaps.
      */
     private class RoadMapEditCommand implements Command {
-        private String commandString;
         private RoadMap roadMap;
         
         private String shortName;
@@ -329,7 +328,6 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
 
 
             Global.currentWorkspace.getRoadMaps().sort(RoadMap.RoadMapPriorityComparator);
-            commandString = "Redid the edit of Road Map \"" + shortName + "\".";
         }
 
         /**
@@ -351,14 +349,13 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
             roadMap.getTags().addAll(oldRoadMapTags);
 
             Global.currentWorkspace.getRoadMaps().sort(RoadMap.RoadMapPriorityComparator);
-            commandString = "Undid the edit of Road Map \"" + oldShortName + "\".";
         }
 
         /**
          * Gets the String value of the Command for editting releases.
          */
         public String getString() {
-            return commandString;
+            return "the edit of Road Map \"" + oldShortName + "\".";
         }
 
         /**
@@ -444,7 +441,6 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
      * A command class for allowing the deletion of RoadMaps from a Workspace.
      */
     private class DeleteRoadMapCommand implements Command {
-        private String commandString;
         private RoadMap roadMap;
 
         /**
@@ -460,7 +456,6 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
          */
         public void execute() {
             Global.currentWorkspace.getRoadMaps().remove(roadMap);
-            commandString = "Redid the deletion of Road Map \"" + roadMap.getShortName() + "\".";
         }
 
         /**
@@ -468,14 +463,13 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
          */
         public void undo() {
             Global.currentWorkspace.getRoadMaps().add(roadMap);
-            commandString = "Undid the deletion of Road Map \"" + roadMap.getShortName() + "\".";
         }
 
         /**
          * Gets the String value of the Command for deleting roadmaps.
          */
         public String getString() {
-            return commandString;
+            return "the deletion of Road Map \"" + roadMap.getShortName() + "\".";
         }
 
         /**
