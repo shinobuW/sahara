@@ -506,7 +506,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
      */
     public void edit(String newGoal, String newLongName, String newDescription, LocalDate newStartDate,
                      LocalDate newEndDate, Team newTeam, Release newRelease, Collection<Story> newStories,
-                    ArrayList<Tag> newTags) {
+                    Collection<Tag> newTags) {
         Command relEdit = new SprintEditCommand(this, newGoal, newLongName, newDescription, newStartDate, newEndDate,
                 newTeam, newRelease, newStories, newTags);
         Global.commandManager.executeCommand(relEdit);
@@ -553,7 +553,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
 
         private SprintEditCommand(Sprint sprint, String newGoal, String newLongName, String newDescription,
                                   LocalDate newStartDate, LocalDate newEndDate, Team newTeam, Release newRelease,
-                                  Collection<Story> newStories, ArrayList<Tag> newTags) {
+                                  Collection<Story> newStories, Collection<Tag> newTags) {
             this.sprint = sprint;
 
             if (newTags == null) {
@@ -607,9 +607,8 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
                 story.setSprint(null);
             }
 
-            for (Story story : stories) {
-                sprint.add(story);
-            }
+            sprint.stories.clear();
+            sprint.stories.addAll(stories);
             //sprint.stories.addAll(stories);
 
             //Add any created tags to the global collection
@@ -641,9 +640,8 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
                 story.setSprint(null);
             }
 
-            for (Story story : oldStories) {
-                sprint.add(story);
-            }
+            sprint.stories.clear();
+            sprint.stories.addAll(oldStories);
 
             //Adds the old global tags to the overall collection
             Global.currentWorkspace.getAllTags().clear();

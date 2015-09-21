@@ -15,6 +15,9 @@ import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.dialog.CreateReleaseDialog;
+import seng302.group2.scenes.dialog.CreateSprintDialog;
+import seng302.group2.scenes.dialog.CreateStoryDialog;
 import seng302.group2.workspace.roadMap.RoadMap;
 
 import java.util.ArrayList;
@@ -106,7 +109,29 @@ public class RoadMapInfoTab extends SearchableTab {
 
         Pane keyBox = new VBox(4);
         keyBox.getChildren().addAll(roadmapKeyBox, releaseKeyBox, sprintKeyBox, storyKeyBox);
-        
+
+        HBox btnBox = new HBox();
+        btnBox.spacingProperty().setValue(10);
+        Button btnCreateRelease = new Button("Create New Release");
+        Button btnCreateSprint = new Button("Create New Sprint");
+        Button btnCreateStory = new Button("Create New Story");
+
+
+        btnCreateRelease.setOnAction((event) -> {
+            javafx.scene.control.Dialog creationDialog = new CreateReleaseDialog(null);
+            creationDialog.show();
+        });
+        btnCreateSprint.setOnAction((event) -> {
+            javafx.scene.control.Dialog creationDialog = new CreateSprintDialog(null);
+            creationDialog.show();
+        });
+        btnCreateStory.setOnAction((event) -> {
+            javafx.scene.control.Dialog creationDialog = new CreateStoryDialog(null);
+            creationDialog.show();
+        });
+
+        btnBox.getChildren().addAll(btnCreateRelease, btnCreateSprint, btnCreateStory);
+
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
                 title,

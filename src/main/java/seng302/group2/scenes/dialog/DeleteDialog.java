@@ -96,7 +96,6 @@ public class DeleteDialog {
                 deletedSkill.deleteSkill();
             }
             else if (element.getClass() == RoadMap.class) {
-                System.out.println("Into Delete");
                 RoadMap deletedRoadMap = (RoadMap) element;
                 deletedRoadMap.deleteRoadMap();
             }
