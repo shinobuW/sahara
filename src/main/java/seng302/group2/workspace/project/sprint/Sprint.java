@@ -10,6 +10,7 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.tag.Tag;
@@ -531,7 +532,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
     }
 
     /**
-     * A command class that allows the executing and undoing of backlog edits
+     * A command class that allows the executing and undoing of sprint edits
      */
     private class SprintEditCommand implements Command {
         private Sprint sprint;
@@ -577,7 +578,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             this.endDate = newEndDate;
             this.team = newTeam;
             this.release = newRelease;
-            this.stories.addAll(newStories);
+            this.stories = newStories;
             this.sprintTags.addAll(newTags);
             this.globalTags.addAll(newTags);
             this.globalTags.addAll(Global.currentWorkspace.getAllTags());
@@ -592,7 +593,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             this.oldEndDate = sprint.endDate;
             this.oldTeam = sprint.team;
             this.oldRelease = sprint.release;
-            this.oldStories.addAll(sprint.stories);
+            this.oldStories = sprint.getStories();
             this.oldSprintTags.addAll(sprint.getTags());
             this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
 
@@ -601,10 +602,13 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
                 oldReadyStateDict.put(story, story.getReady());
             }
 
+            System.out.println("stories = " + stories);
+            System.out.println("old stories = " + oldStories);
+
         }
 
         /**
-         * Executes/Redoes the changes of the backlog edit
+         * Executes/Redoes the changes of the sprint edit
          */
         public void execute() {
             sprint.goal = goal;
@@ -614,14 +618,38 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             sprint.endDate = endDate;
             sprint.team = team;
             sprint.release = release;
+            /*System.out.println("old stories in execute star " + oldStories);
 
-            sprint.stories.removeAll(oldStories);
             for (Story story : oldStories) {
                 story.setSprint(null);
             }
 
-            sprint.stories.clear();
+            System.out.println("old stories in execute 1 " + oldStories);
+
+            //sprint.stories.clear();
+
+            System.out.println("old stories in execute 2 " + oldStories);
+
+            for (Story newStory : stories) {
+                newStory.setSprint(sprint);
+            }
+            System.out.println("old stories in execute 3 " + oldStories);
+
+            //sprint.stories.addAll(stories);
+
+            System.out.println("old stories in execute 4 " + oldStories);
+*/
+            sprint.stories.removeAll(oldStories);
             sprint.stories.addAll(stories);
+
+            for (Story story : oldStories) {
+                story.setSprint(null);
+            }
+
+            for (Story newStory : stories) {
+                newStory.setSprint(sprint);
+            }
+
             //sprint.stories.addAll(stories);
 
             //Add any created tags to the global collection
@@ -631,6 +659,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             sprint.getTags().clear();
             sprint.getTags().addAll(sprintTags);
 
+            System.out.println("old stories in execute" + oldStories);
             //Are stories sorted in sprint?
             //Collections.sort(sprint.stories, Story.StoryPriorityComparator);
             Collections.sort(sprint.getProject().getSprints());
@@ -648,12 +677,17 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             sprint.team = oldTeam;
             sprint.release = oldRelease;
 
-            sprint.stories.removeAll(stories);
             for (Story story : stories) {
                 story.setSprint(null);
             }
 
             sprint.stories.clear();
+
+            for (Story story : oldStories) {
+                story.setSprint(sprint);
+            }
+
+            System.out.println(oldStories);
             sprint.stories.addAll(oldStories);
 
             //Adds the old global tags to the overall collection

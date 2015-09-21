@@ -37,7 +37,7 @@ public class HierarchyTracker {
      */
     public static void refreshMap(TreeViewWithItems<SaharaItem> tree) {
         for (TreeItem<SaharaItem> item : tree.getTreeItems()) {
-            System.out.println(item + " " + item.isExpanded());
+            //System.out.println(item + " " + item.isExpanded());
             collapseMap.put(item.getValue(), item.isExpanded());
         }
     }
