@@ -103,7 +103,7 @@ public class TagCellNode extends VBox implements SearchableControl {
      * @param tag The tag to be deleted
      */
     public Node createDeletionNode(Tag tag) {
-        ImageView deletionImage = new ImageView("icons/dialog-cancel.png");
+        ImageView deletionImage = new ImageView("icons/tag_remove.png");
         Tooltip.create("Delete Tag", deletionImage, 50);
 
         deletionImage.setOnMouseEntered(me -> {
