@@ -93,6 +93,16 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
         Command command = new AddReleaseCommand(this, release);
         Global.commandManager.executeCommand(command);
     }
+
+    /**
+     * Adds a Release to the RoadMaps's list of Releases.
+     *
+     * @param release The release to add
+     */
+    public void addRemove(RoadMap newRoadMap, RoadMap oldRoadMap, Release release) {
+        Command command = new AddRemoveReleaseCommand(newRoadMap, oldRoadMap, release);
+        Global.commandManager.executeCommand(command);
+    }
     
     /**
      * Adds a Release to the RoadMaps's list of Releases.
@@ -487,6 +497,83 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
                 }
             }
             return mapped;
+        }
+    }
+
+    /**
+     * A command for the adding of a release from one roadmap to another.
+     */
+    private class AddRemoveReleaseCommand implements Command {
+        private Release release;
+        private RoadMap newRoadMap;
+        private RoadMap oldRoadMap;
+
+        /**
+         * Constructor for the release addition command.
+         * @param newRoadMap The roadMap to which the release is being added.
+         * @param oldRoadMap The roadMap to which the release is being added.
+         * @param release The release to be added.
+         */
+        AddRemoveReleaseCommand(RoadMap newRoadMap, RoadMap oldRoadMap, Release release) {
+            this.newRoadMap = newRoadMap;
+            this.oldRoadMap = oldRoadMap;
+            this.release = release;
+        }
+
+        /**
+         * Executes the release addition command.
+         */
+        public void execute() {
+            newRoadMap.getReleases().add(release);
+            oldRoadMap.getReleases().remove(release);
+
+        }
+
+        /**
+         * Undoes the release addition command.
+         */
+        public void undo() {
+            newRoadMap.getReleases().remove(release);
+            oldRoadMap.getReleases().add(release);
+        }
+
+        /**
+         * Gets the String value of the Command for adding releases.
+         */
+        public String getString() {
+            return null;
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped_new = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(newRoadMap)) {
+                    this.newRoadMap = (RoadMap) item;
+                    mapped_new = true;
+                }
+            }
+            boolean mapped_old = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(oldRoadMap)) {
+                    this.oldRoadMap = (RoadMap) item;
+                    mapped_old = true;
+                }
+            }
+
+            boolean mapped_release = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(release)) {
+                    this.release = (Release) item;
+                    mapped_release = true;
+                }
+            }
+            return mapped_new && mapped_old && mapped_release;
         }
     }
 }

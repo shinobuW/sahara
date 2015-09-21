@@ -196,10 +196,9 @@ public class RoadMapCategoryTab extends SearchableTab {
         roadMapNode.setOnDragDropped(dragEvent -> {
             if (dragEvent.getDragboard().getString() == "release") {
                 System.out.println(roadMapNode.getRoadmap().getShortName() + " Drag dropped");
-                interactiveRoadMap.getReleases().remove(interactiveRelease);
+                interactiveRoadMap.addRemove(currentRoadMap, interactiveRoadMap, interactiveRelease);
 
                 //TODO possibly needs cumulative commands
-                currentRoadMap.getReleases().add(interactiveRelease);
 //                currentRoadMap.edit(currentRoadMap.getShortName(), currentRoadMap.getPriority(), ,
 // currentRoadMap.getTags());
                 App.mainPane.refreshAll();
