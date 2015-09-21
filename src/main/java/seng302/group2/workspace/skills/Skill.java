@@ -239,7 +239,6 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
                 newTags = new ArrayList<>();
             }
 
-
             this.shortName = newShortName;
             this.description = newDescription;
             this.skillTags.addAll(newTags);

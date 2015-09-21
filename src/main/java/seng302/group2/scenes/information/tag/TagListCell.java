@@ -33,13 +33,17 @@ public class TagListCell extends ListCell<Tag> {
     protected void updateItem(Tag tagItem, boolean bln) {
         super.updateItem(tagItem, bln);
         if (tagItem != null) {
+            cell = new HBox(10);
             deleteCell.setAlignment(Pos.BASELINE_RIGHT);
-            System.out.println("Draw string");
             Node deletionNode = createDeletionNode(tagItem);
             Label tagName = new Label(tagItem.getName());
+            deleteCell.getChildren().clear();
             deleteCell.getChildren().add(deletionNode);
             cell.getChildren().addAll(tagName, deleteCell);
             setGraphic(cell);
+        }
+        else {
+            setGraphic(null);
         }
     }
 
@@ -74,11 +78,6 @@ public class TagListCell extends ListCell<Tag> {
                     Platform.runLater(() -> taggingPopOver.show(App.content, App.mainStage.getX()
                                     + App.mainStage.getWidth() / 2 - 300,
                             App.mainStage.getY() + App.mainStage.getHeight() / 2 - 200));
-
-//                    Tag newTag = managementPane.tagListView.getSelectionModel().getSelectedItem();
-//
-//                    if ((managementPane).tagListView.getItems().contains(tag)) {
-//                        (managementPane).tagListView.getSelectionModel().select(tag);
                     });
             }
             else {
@@ -88,7 +87,4 @@ public class TagListCell extends ListCell<Tag> {
 
         return deletionImage;
     }
-
-
-
 }

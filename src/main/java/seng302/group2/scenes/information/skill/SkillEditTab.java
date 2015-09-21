@@ -35,6 +35,7 @@ public class SkillEditTab extends SearchableTab {
     Skill currentSkill;
     RequiredField shortNameCustomField = new RequiredField("Short Name:");
     CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description:", 300);
+    TagField tagField;
 
 
     /**
@@ -82,7 +83,7 @@ public class SkillEditTab extends SearchableTab {
         // Set up the tagging field
         SearchableText tagLabel = new SearchableText("Tags:", "-fx-font-weight: bold;", searchControls);
         tagLabel.setMinWidth(60);
-        TagField tagField = new TagField(currentSkill.getTags(), searchControls);
+        tagField = new TagField(currentSkill.getTags(), searchControls);
         HBox.setHgrow(tagField, Priority.ALWAYS);
 
         HBox tagBox = new HBox();
@@ -110,15 +111,13 @@ public class SkillEditTab extends SearchableTab {
         boolean descriptionUnchanged = descriptionTextArea.getText().equals(
                 currentSkill.getDescription());
 
-        if (shortNameUnchanged && descriptionUnchanged) {
-            currentSkill.switchToInfoScene();
-            return;
-        }
+//
+
 
         boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
                 currentSkill.getShortName());
 
-        ArrayList<Tag> tags = new ArrayList<>();
+        ArrayList<Tag> tags = new ArrayList<>(tagField.getTags());
 
         if (correctShortName) {
             currentSkill.edit(shortNameCustomField.getText(),

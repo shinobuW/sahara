@@ -156,9 +156,9 @@ public class TagManagementPane extends SplitPane {
             Tag newTag = new Tag(newTagField.getText());
             Global.currentWorkspace.add(newTag);
 
-            tagListView.getSelectionModel().select(newTag);
-
             newTagField.clear();
+            this.constructList();
+            tagListView.getSelectionModel().select(newTag);
         });
 
         newTagField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -205,7 +205,7 @@ public class TagManagementPane extends SplitPane {
         if (selectedTag == null) {
             return;
         }
-        TagCellNode cellNode = new TagCellNode(selectedTag);
+        TagCellNode cellNode = new TagCellNode(selectedTag, false);
         cellNode.setAlignment(Pos.CENTER);
         cellBox.getChildren().add(cellNode);
         detailsPane.getChildren().add(cellBox);

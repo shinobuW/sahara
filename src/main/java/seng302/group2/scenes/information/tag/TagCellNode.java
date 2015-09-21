@@ -9,11 +9,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import org.controlsfx.control.spreadsheet.Grid;
 import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.workspace.tag.Tag;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
@@ -26,15 +31,35 @@ public class TagCellNode extends VBox implements SearchableControl {
     private Tag tag = null;
     private String tagName = "";
     private Color tagColor = Color.ROYALBLUE;
+    private boolean removable;
+
+    private Set<SearchableControl> searchControls = new HashSet<>();
+
 
     /**
      * Constructor for a tag cell node.
      * @param tag The tag to display.
      */
-    public TagCellNode(Tag tag) {
+    public TagCellNode(Tag tag, boolean removable) {
         this.tag = tag;
         this.tagName = tag.getName();
         this.tagColor = tag.getColor();
+        this.removable = removable;
+
+        construct();
+    }
+
+    /**
+     * Constructor for a tag cell node. Adds to the given list of searchable controls
+     * @param tag The tag to display.
+     */
+    public TagCellNode(Tag tag, boolean removable, Collection<SearchableControl> searchableControls) {
+        this.tag = tag;
+        this.tagName = tag.getName();
+        this.tagColor = tag.getColor();
+        this.removable = removable;
+
+        searchableControls.add(this);
 
         construct();
     }
@@ -54,19 +79,33 @@ public class TagCellNode extends VBox implements SearchableControl {
         setMaxWidth(100);
 
         VBox textContent = new VBox();
-        textContent.setPadding(new Insets(2, 2, 2, 6));
+        textContent.setPadding(new Insets(2, 4, 2, 4));
         textContent.setAlignment(Pos.CENTER_LEFT);
 
-        Text titleLabel = new Text(tagName);
-        titleLabel.setStyle("-fx-font-weight: bold;");
+        SearchableText titleLabel = new SearchableText(tagName, "-fx-font-weight: bold;", searchControls);
+        Text titleLabelShadow = new Text(tagName);  // A transparent text to keep the width of the tag equal to the text
+        titleLabelShadow.setFill(Color.TRANSPARENT);
+        titleLabelShadow.setStyle("-fx-font-weight: bold;");
+        GridPane titleGrid = new GridPane();
+        titleGrid.add(titleLabel, 0, 0);
+        titleGrid.add(titleLabelShadow, 0, 0);
 
         if (tagColor.getBrightness() < 0.9) {
-            titleLabel.setFill(Color.WHITE);
+            for (Text text : titleLabel.getTexts()) {
+                text.setFill(Color.WHITE);
+            }
+            titleLabel.injectStyle("-fx-text-fill: white;");
         }
 
-        textContent.getChildren().addAll(titleLabel);
-        Node deletionNode = createDeletionNode(tag);
-        content.getChildren().addAll(textContent, deletionNode);
+        textContent.getChildren().addAll(titleGrid);
+
+        if (removable) {
+            Node deletionNode = createDeletionNode(tag);
+            content.getChildren().addAll(textContent, deletionNode);
+        }
+        else {
+            content.getChildren().addAll(textContent);
+        }
 
         this.getChildren().add(content);
     }
@@ -103,8 +142,8 @@ public class TagCellNode extends VBox implements SearchableControl {
      * @param tag The tag to be deleted
      */
     public Node createDeletionNode(Tag tag) {
-        ImageView deletionImage = new ImageView("icons/dialog-cancel.png");
-        Tooltip.create("Delete Tag", deletionImage, 50);
+        ImageView deletionImage = new ImageView("icons/tag_remove.png");
+        Tooltip.create("Remove", deletionImage, 50);
 
         deletionImage.setOnMouseEntered(me -> {
             this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
@@ -125,8 +164,11 @@ public class TagCellNode extends VBox implements SearchableControl {
 
     @Override
     public boolean query(String query) {
-        // TODO @Jordane
-        return false;
+        boolean found = false;
+        for (SearchableControl control : searchControls) {
+            found = control.query(query) || found;
+        }
+        return found;
     }
 
     @Override

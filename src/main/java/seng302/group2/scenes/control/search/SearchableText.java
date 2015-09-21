@@ -226,4 +226,17 @@ earchableText to the string given
     public int advancedQuery(String query, SearchType searchType) {
         return 0;
     }
+
+
+    public List<Text> getTexts() {
+        List<Text> texts = new ArrayList<>();
+        for (TextFlow textFlow : this.texts) {
+            for (Node node : textFlow.getChildren()) {
+                if (node instanceof Text) {
+                    texts.add((Text) node);
+                }
+            }
+        }
+        return texts;
+    }
 }

@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import org.apache.maven.lifecycle.internal.GoalTask;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.FilteredListView;
@@ -49,6 +50,7 @@ public class SkillInfoTab extends SearchableTab {
 
     @Override
     public void construct() {
+        System.out.println(Global.currentWorkspace.getAllTags());
         // Tab settings
         this.setText("Basic Information");
         Pane basicInfoPane = new VBox(10);
@@ -63,6 +65,8 @@ public class SkillInfoTab extends SearchableTab {
         SearchableText title = new SearchableTitle(currentSkill.getShortName());
         //SearchableText desc = new SearchableText("Description: " + currentSkill.getDescription());
         CustomInfoLabel listViewLabel = new CustomInfoLabel("People who have this skill:", "");
+        TagLabel skillTags = new TagLabel(currentSkill.getTags());
+
         ObservableList<Person> peopleWithSkill = FXCollections.observableArrayList();
         for (Person p : Global.currentWorkspace.getPeople()) {
             if (p.getSkills().contains(currentSkill)) {
@@ -73,8 +77,8 @@ public class SkillInfoTab extends SearchableTab {
         SearchableListView<Person> personListView = personFilteredListView.getListView();
 
         // Add items to pane & search collection
-        basicInfoPane.getChildren().addAll(title, desc, listViewLabel, personFilteredListView);
-        Collections.addAll(searchControls, title, desc, listViewLabel, personFilteredListView);
+        basicInfoPane.getChildren().addAll(title, desc, skillTags, listViewLabel, personFilteredListView);
+        Collections.addAll(searchControls, title, desc, skillTags, listViewLabel, personFilteredListView);
     }
 
     /**

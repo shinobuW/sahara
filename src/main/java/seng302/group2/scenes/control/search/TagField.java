@@ -11,9 +11,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.information.tag.TagCellNode;
 import seng302.group2.workspace.tag.Tag;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * A control used to identify and add/remove tags to and from models.
@@ -23,6 +21,8 @@ public class TagField extends CustomTextField implements SearchableControl {
 
     List<Tag> tags = new ArrayList<>();
     public HBox tagStack = new HBox(4);
+
+    Set<SearchableControl> searchControls = new HashSet<>();
 
 
     /**
@@ -89,11 +89,12 @@ public class TagField extends CustomTextField implements SearchableControl {
                 Tag selectedTag = null;
 
                 // Find the tag in the global workspace
-                for (Tag tag : Global.currentWorkspace.getAllTags()) {
-                    if (tagString.equals(tag.getName())) {
-                        selectedTag = tag;
-                    }
-                }
+                selectedTag = Tag.getNewTag(tagString);
+//                for (Tag tag : Global.currentWorkspace.getAllTags()) {
+//                    if (tagString.equals(tag.getName())) {
+//                        selectedTag = tag;
+//                    }
+//                }
 
                 // Or maybe it's in the list we have already typed out?
                 for (Tag tag : tags) {
@@ -103,10 +104,10 @@ public class TagField extends CustomTextField implements SearchableControl {
                     }
                 }
 
-                // Or create it if not found
-                if (selectedTag == null) {
-                    selectedTag = new Tag(tagString);
-                }
+//                // Or create it if not found
+//                if (selectedTag == null) {
+//                    selectedTag = new Tag(tagString);
+//                }
 
                 tags.add(selectedTag);
 
@@ -148,7 +149,7 @@ public class TagField extends CustomTextField implements SearchableControl {
         tagStack.getChildren().clear();
 
         for (Tag tag : tags) {
-            TagCellNode node = new TagCellNode(tag);
+            TagCellNode node = new TagCellNode(tag, true, searchControls);
             tagStack.getChildren().add(node);
         }
 
@@ -176,10 +177,21 @@ public class TagField extends CustomTextField implements SearchableControl {
         return newTags;
     }
 
+    /**
+     * Returns a list of tags in the tag field.
+     * @return All tags in the tag field.
+     */
+    public List<Tag> getTags() {
+        return this.tags;
+    }
+
     @Override
     public boolean query(String query) {
-        // TODO @Jordane
-        return false;
+        boolean found = false;
+        for (SearchableControl control : searchControls) {
+            found = control.query(query) || found;
+        }
+        return found;
     }
 
     @Override
