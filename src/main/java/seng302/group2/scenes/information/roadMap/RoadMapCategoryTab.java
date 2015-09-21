@@ -199,7 +199,7 @@ public class RoadMapCategoryTab extends SearchableTab {
                         roadMap.getReleases().remove(interactiveRelease);
                     }
                 }
-
+                //TODO possibly needs cumulative commands
                 currentRoadMap.getReleases().add(interactiveRelease);
 //                currentRoadMap.edit(currentRoadMap.getShortName(), currentRoadMap.getPriority(), ,
 // currentRoadMap.getTags());

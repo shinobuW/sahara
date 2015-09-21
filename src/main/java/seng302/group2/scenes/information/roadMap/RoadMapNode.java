@@ -11,6 +11,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
@@ -26,6 +28,7 @@ import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
@@ -36,6 +39,7 @@ import seng302.group2.workspace.roadMap.RoadMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -400,11 +404,19 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         releaseNode.setOnDragDropped(dragEvent -> {
             if (dragEvent.getDragboard().getString() == "sprint") {
-                System.out.println(currentRelease.getShortName() + " Drag dropped");
-                selectedSprint.edit(selectedSprint.getGoal(), selectedSprint.getLongName(),
-                        selectedSprint.getDescription(), selectedSprint.getStartDate(), selectedSprint.getEndDate(),
-                        selectedSprint.getTeam(), currentRelease, selectedSprint.getStories(),
-                        selectedSprint.getTags());
+                if (selectedSprint.getProject().equals(currentRelease.getProject())) {
+                    System.out.println(currentRelease.getShortName() + " Drag dropped");
+                    selectedSprint.edit(selectedSprint.getGoal(), selectedSprint.getLongName(),
+                            selectedSprint.getDescription(), selectedSprint.getStartDate(), selectedSprint.getEndDate(),
+                            selectedSprint.getTeam(), currentRelease, selectedSprint.getStories(),
+                            selectedSprint.getTags());
+                }
+                else {
+                    dragEvent.consume();
+                    //TODO Need an extra click for clicking Dialog OK, does the same thing on the scrumboard.
+                    CustomDialog.showDialog("Cannot Move Sprint", "Cannot give the chosen Sprint a Release"
+                            + " from a different Project.", Alert.AlertType.WARNING);
+                }
                 App.mainPane.refreshAll();
             }
         });
@@ -423,20 +435,28 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         sprintNode.setOnDragDropped(dragEvent -> {
             if (dragEvent.getDragboard().getString() == "story") {
-                System.out.println("Story Dropped.........");
-                System.out.println(selectedStory);
-                System.out.println(selectedStory.getSprint().getGoal());
-                System.out.println(currentSprint);
+                if (currentSprint.getProject().equals(selectedStory.getProject())) {
+                    System.out.println("Story Dropped.........");
+                    System.out.println(selectedStory);
+                    System.out.println(selectedStory.getSprint().getGoal());
+                    System.out.println(currentSprint);
 
-                selectedStory.getSprint().getStories().remove(selectedStory);
-                selectedStory.setSprint(currentSprint);
-                currentSprint.getStories().add(selectedStory);
+                    selectedStory.getSprint().getStories().remove(selectedStory);
+                    selectedStory.setSprint(currentSprint);
+                    currentSprint.getStories().add(selectedStory);
 
 //                selectedSprint.edit(selectedSprint.getGoal(), selectedSprint.getLongName(),
 //                        selectedSprint.getDescription(), selectedSprint.getStartDate(), selectedSprint.getEndDate(),
 //                        selectedSprint.getTeam(), selectedSprint.getRelease(), selectedSprint.getStories(),
 //                        selectedSprint.getTags());
-                App.mainPane.refreshAll();
+                    App.mainPane.refreshAll();
+                }
+                else {
+                    dragEvent.consume();
+                    //TODO Need an extra click for clicking Dialog OK, does the same thing on the scrumboard.
+                    CustomDialog.showDialog("Cannot Move Story", "Cannot move the Story to a Sprint of a "
+                            + " different Project.", Alert.AlertType.WARNING);
+                }
             }
         });
     }
