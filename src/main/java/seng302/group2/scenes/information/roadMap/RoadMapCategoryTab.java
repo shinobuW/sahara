@@ -1,28 +1,29 @@
 package seng302.group2.scenes.information.roadMap;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreateReleaseDialog;
 import seng302.group2.scenes.dialog.CreateSprintDialog;
 import seng302.group2.scenes.dialog.CreateStoryDialog;
+import seng302.group2.workspace.project.release.Release;
+import seng302.group2.workspace.project.story.Story;
+import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.roadMap.RoadMap;
 import seng302.group2.workspace.workspace.Workspace;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by cvs20 on 11/09/15.
@@ -31,6 +32,7 @@ public class RoadMapCategoryTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
     Workspace currentWorkspace;
+    Release interactiveRelease;
 
     /**
      * Constructor for RoadMapCategoryTab class.
@@ -68,10 +70,37 @@ public class RoadMapCategoryTab extends SearchableTab {
 
         for (RoadMap roadMap : Global.currentWorkspace.getRoadMaps()) {
             RoadMapNode roadMapNode = new RoadMapNode(roadMap);
+
+//            roadMapNode.setOnDragDropped(new EventHandler<DragEvent>() {
+//                public void handle(DragEvent event) {
+//                /* data dropped */
+//                    System.out.println("onDragDropped");
+//                /* if there is a string data on dragboard, read it and use it */
+//                    Dragboard db = event.getDragboard();
+//                    boolean success = false;
+//                    if (db.hasString()) {
+//                        for (RoadMap roadMap : currentWorkspace.getRoadMaps()) {
+//                            if (db.getString() == roadMap.getShortName()) {
+//                                roadMap.add(roadMapNode.getSelectedRelease());
+//                            }
+//
+//                        }
+//                        success = true;
+//                    }
+//                /* let the source know whether the string was successfully
+//                 * transferred and used */
+//                    event.setDropCompleted(success);
+//
+//                    event.consume();
+//                }
+//            });
+
             roadMaps.getChildren().add(roadMapNode);
+            initLaneListeners(roadMapNode, roadMap);
             searchControls.addAll(roadMapNode.getSearchableControls());
 
         }
+
 
         HBox roadmapKeyBox = new HBox(8);
         Rectangle yellow = new Rectangle(250,25,20,20);
@@ -149,6 +178,36 @@ public class RoadMapCategoryTab extends SearchableTab {
                 searchControls,
                 title
         );
+    }
+
+    private void initLaneListeners(RoadMapNode roadMapNode, RoadMap currentRoadMap) {
+
+        roadMapNode.setOnDragDetected(event -> {
+            System.out.println(roadMapNode.getRoadmap().getShortName());
+            interactiveRelease = roadMapNode.getSelectedRelease();
+        });
+
+        roadMapNode.setOnDragOver(dragEvent -> {
+            System.out.println(roadMapNode.getRoadmap().getShortName());
+            dragEvent.acceptTransferModes(TransferMode.MOVE);
+        });
+
+        roadMapNode.setOnDragDropped(dragEvent -> {
+            System.out.println(roadMapNode.getRoadmap().getShortName() + " Drag dropped");
+            for (RoadMap roadMap : currentWorkspace.getRoadMaps()) {
+                if (roadMap.getReleases().contains(interactiveRelease)) {
+                    roadMap.getReleases().remove(interactiveRelease);
+                }
+            }
+            currentRoadMap.getReleases().add(interactiveRelease);
+            App.mainPane.refreshAll();
+
+
+
+
+
+        });
+
     }
 }
 
