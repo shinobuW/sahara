@@ -55,8 +55,6 @@ public class RoadMapNode extends VBox implements SearchableControl {
     Story selectedStory;
     Story interactiveStory;
 
-
-    
     public RoadMapNode(RoadMap currentRoadMap) {
         roadMap = currentRoadMap;
         HBox roadMapContent = new HBox();
@@ -97,54 +95,11 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 shortNameField
         );
 
-        
         for (Release release : currentRoadMap.getReleases()) {
             Node releaseNode = createReleaseNode(release, currentRoadMap);
             roadMapChildren.getChildren().add(releaseNode);
-
-//            releaseNode.setOnDragDetected(event -> {
-//                selectedRelease = release;
-//                Dragboard dragBoard = this.startDragAndDrop(TransferMode.MOVE);
-//                dragBoard.setDragView(this.snapshot(null, null));
-//                ClipboardContent content = new ClipboardContent();
-//                content.putString("release");
-//                dragBoard.setContent(content);
-//            });
-
             initReleaseListeners(releaseNode, release);
-//            releaseNode.setOnDragOver(event -> {
-//                Dragboard db = event.getDragboard();
-//                if (db.hasContent(DataFormat.PLAIN_TEXT)) {
-//                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-//                    event.consume();
-//                }
-//            });
-
-//            releaseNode.setOnDragDropped(event -> {
-//                Dragboard db = event.getDragboard();
-//                if (db.hasContent(DataFormat.PLAIN_TEXT)) {
-//                    int draggedIndex = (Integer) db.getContent(DataFormat.PLAIN_TEXT);
-//                    T draggedItem = table.getItems().remove(draggedIndex);
-//
-//                    int dropIndex;
-//
-//                    if (row.isEmpty()) {
-//                        dropIndex = table.getItems().size();
-//                    }
-//                    else {
-//                        dropIndex = row.getIndex();
-//                    }
-//
-//                    table.getItems().add(dropIndex, draggedItem);
-//
-//                    event.setDropCompleted(true);
-//                    table.getSelectionModel().select(dropIndex);
-//                    event.consume();
-//                }
-//            });
         }
-
-
 
         this.getChildren().addAll(
                 roadMapContent,
