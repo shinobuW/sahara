@@ -654,9 +654,11 @@ public class Log extends SaharaItem implements Serializable {
 
     private class DurationEditCommand implements Command {
         private Log log;
+        private Task task;
         private double newDuration;
         private double oldDuration;
-
+        private double oldEffortSpent;
+        private double newEffortSpent;
 
         /**
          * Constructor
@@ -665,8 +667,11 @@ public class Log extends SaharaItem implements Serializable {
          */
         private DurationEditCommand(Log log, Double duration) {
             this.newDuration = duration;
-            this.oldDuration = duration;
+            this.oldDuration = log.getDurationInMinutes();
             this.log = log;
+            this.task = log.getTask();
+            this.oldEffortSpent = task.getEffortSpent();
+            this.newEffortSpent = this.oldEffortSpent - this.oldDuration + this.newDuration;
         }
 
 
@@ -676,6 +681,7 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void execute() {
             log.duration = this.newDuration;
+            task.setEffortSpent(this.newEffortSpent);
         }
 
         /**
@@ -684,6 +690,7 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void undo() {
             log.duration = this.oldDuration;
+            task.setEffortSpent(this.oldEffortSpent);
         }
 
         @Override

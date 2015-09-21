@@ -255,7 +255,7 @@ public class LoggingEffortPane extends Pane {
                                 event.getTablePosition().getRow());
                         if (!event.getNewValue().isEmpty() && event.getNewValue() != null) {
                             ArrayList<Tag> tags = new ArrayList<>();
-
+                        selectedLog.editDescription(event.getNewValue());
                         }
                     }
                 }
@@ -264,6 +264,30 @@ public class LoggingEffortPane extends Pane {
 
         TableColumn durationCol = new TableColumn("Duration");
         durationCol.setCellValueFactory(new PropertyValueFactory<Log, String>("durationString"));
+        durationCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        durationCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Log, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Log, String> event) {
+                        Log selectedLog = event.getTableView().getItems().get(
+                                event.getTablePosition().getRow());
+                        if (!event.getNewValue().isEmpty() && event.getNewValue() != null) {
+                            ArrayList<Tag> tags = new ArrayList<>();
+                        }
+                        if (DateValidator.validDuration(event.getNewValue())
+                                && !event.getNewValue().isEmpty()) {
+                            double duration = DurationConverter.readDurationToMinutes(event.getNewValue());
+                            selectedLog.editDuration(duration);
+                            System.out.println(selectedLog.getTask().getEffortSpent());
+                            //TODO:Shinobu figure out how to display error
+                        }
+                        logTable.refresh(logTable, logTable.getItems());
+                        if (table != null) {
+                            SearchableTable.refresh(table, table.getItems());
+                        }
+                    }
+                }
+        );
         durationCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
