@@ -46,7 +46,9 @@ public class SearchableText extends TextFlow implements SearchableControl {
     public SearchableText(String content, Collection<SearchableControl> collection) {
         collection.add(this);
         texts.clear();
-        texts.add(new TextFlow(new Text(content)));
+        Text innerText = new Text(content);
+        innerText.setStyle(styleInject);
+        texts.add(new TextFlow(innerText));
         updateFlow();
     }
 
@@ -59,7 +61,9 @@ public class SearchableText extends TextFlow implements SearchableControl {
     public SearchableText(String content, String style) {
         this.styleInject = style;
         this.setStyle(styleInject);
-        TextFlow text = new TextFlow(new Text(content));
+        Text innerText = new Text(content);
+        innerText.setStyle(styleInject);
+        TextFlow text = new TextFlow(innerText);
         text.setStyle(styleInject);
         texts.add(text);
         updateFlow();
@@ -76,7 +80,9 @@ public class SearchableText extends TextFlow implements SearchableControl {
         collection.add(this);
         this.styleInject = style;
         this.setStyle(styleInject);
-        TextFlow text = new TextFlow(new Text(content));
+        Text innerText = new Text(content);
+        innerText.setStyle(styleInject);
+        TextFlow text = new TextFlow(innerText);
         text.setStyle(styleInject);
         texts.add(text);
         updateFlow();
@@ -105,7 +111,9 @@ her into a single unformatted Text node
             content += ((Text)(tFlow.getChildren().get(0))).getText();
         }
         texts.clear();
+
         Text stitched = new Text(content);
+        stitched.setStyle(styleInject);
         texts.add(new TextFlow(stitched));
 
         updateFlow();
@@ -130,7 +138,9 @@ earchableText to the string given
      */
     public void setText(String content) {
         texts.clear();
-        TextFlow text = new TextFlow(new Text(content));
+        Text innerText = new Text(content);
+        innerText.setStyle(styleInject);
+        TextFlow text = new TextFlow(innerText);
         text.setStyle(styleInject);
         texts.add(text);
         updateFlow();

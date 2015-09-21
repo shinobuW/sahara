@@ -35,6 +35,7 @@ public class SkillEditTab extends SearchableTab {
     Skill currentSkill;
     RequiredField shortNameCustomField = new RequiredField("Short Name:");
     CustomTextArea descriptionTextArea = new CustomTextArea("Skill Description:", 300);
+    TagField tagField;
 
 
     /**
@@ -77,27 +78,21 @@ public class SkillEditTab extends SearchableTab {
         shortNameCustomField.setText(currentSkill.getShortName());
         descriptionTextArea.setText(currentSkill.getDescription());
 
-        // Add items to pane & search collection
-        editPane.getChildren().addAll(shortNameCustomField, descriptionTextArea);
-        Collections.addAll(searchControls, shortNameCustomField, descriptionTextArea);
 
 
-
-
-        // Set up the tagging
+        // Set up the tagging field
         SearchableText tagLabel = new SearchableText("Tags:", "-fx-font-weight: bold;", searchControls);
         tagLabel.setMinWidth(60);
-        TagField tagField = new TagField(currentSkill.getTags());
+        tagField = new TagField(currentSkill.getTags(), searchControls);
         HBox.setHgrow(tagField, Priority.ALWAYS);
 
         HBox tagBox = new HBox();
         tagBox.getChildren().addAll(tagLabel, tagField);
 
 
-
-        editPane.getChildren().add(tagBox);
-
-
+        // Add items to pane & search collection
+        editPane.getChildren().addAll(shortNameCustomField, tagBox, descriptionTextArea);
+        Collections.addAll(searchControls, shortNameCustomField, descriptionTextArea);
     }
 
     /**
@@ -116,15 +111,16 @@ public class SkillEditTab extends SearchableTab {
         boolean descriptionUnchanged = descriptionTextArea.getText().equals(
                 currentSkill.getDescription());
 
-        if (shortNameUnchanged && descriptionUnchanged) {
-            currentSkill.switchToInfoScene();
-            return;
-        }
+//        // @Bronson
+//        if (shortNameUnchanged && descriptionUnchanged) {
+//            currentSkill.switchToInfoScene();
+//            return;
+//        }
 
         boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
                 currentSkill.getShortName());
 
-        ArrayList<Tag> tags = new ArrayList<>();
+        ArrayList<Tag> tags = new ArrayList<>(tagField.getTags());
 
         if (correctShortName) {
             currentSkill.edit(shortNameCustomField.getText(),

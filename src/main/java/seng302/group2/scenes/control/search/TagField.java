@@ -12,13 +12,14 @@ import seng302.group2.scenes.information.tag.TagCellNode;
 import seng302.group2.workspace.tag.Tag;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * A control used to identify and add/remove tags to and from models.
  * Created by jml168 on 20/09/15.
  */
-public class TagField extends CustomTextField {
+public class TagField extends CustomTextField implements SearchableControl {
 
     List<Tag> tags = new ArrayList<>();
     public HBox tagStack = new HBox(4);
@@ -45,6 +46,30 @@ public class TagField extends CustomTextField {
 
 
     /**
+     * Creates an empty tag field
+     * @param searchableControls The collection of searchable controls to add this to
+     */
+    public TagField(Collection<SearchableControl> searchableControls) {
+        addListeners();
+        update();
+        searchableControls.add(this);
+    }
+
+
+    /**
+     * Creates a tag field containing the given tags
+     * @param tags The initial list of tags to contain
+     * @param searchableControls The collection of searchable controls to add this to
+     */
+    public TagField(List<Tag> tags, Collection<SearchableControl> searchableControls) {
+        this.tags.addAll(tags);
+        addListeners();
+        update();
+        searchableControls.add(this);
+    }
+
+
+    /**
      * Adds listeners to the field to add and remove tags on entry as necessary
      */
     void addListeners() {
@@ -64,11 +89,12 @@ public class TagField extends CustomTextField {
                 Tag selectedTag = null;
 
                 // Find the tag in the global workspace
-                for (Tag tag : Global.currentWorkspace.getAllTags()) {
-                    if (tagString.equals(tag.getName())) {
-                        selectedTag = tag;
-                    }
-                }
+                selectedTag = Tag.getNewTag(tagString);
+//                for (Tag tag : Global.currentWorkspace.getAllTags()) {
+//                    if (tagString.equals(tag.getName())) {
+//                        selectedTag = tag;
+//                    }
+//                }
 
                 // Or maybe it's in the list we have already typed out?
                 for (Tag tag : tags) {
@@ -78,10 +104,10 @@ public class TagField extends CustomTextField {
                     }
                 }
 
-                // Or create it if not found
-                if (selectedTag == null) {
-                    selectedTag = new Tag(tagString);
-                }
+//                // Or create it if not found
+//                if (selectedTag == null) {
+//                    selectedTag = new Tag(tagString);
+//                }
 
                 tags.add(selectedTag);
 
@@ -123,7 +149,7 @@ public class TagField extends CustomTextField {
         tagStack.getChildren().clear();
 
         for (Tag tag : tags) {
-            TagCellNode node = new TagCellNode(tag);
+            TagCellNode node = new TagCellNode(tag, false);
             tagStack.getChildren().add(node);
         }
 
@@ -151,4 +177,23 @@ public class TagField extends CustomTextField {
         return newTags;
     }
 
+    /**
+     * Returns a list of tags in the tag field.
+     * @return All tags in the tag field.
+     */
+    public List<Tag> getTags() {
+        return this.tags;
+    }
+
+    @Override
+    public boolean query(String query) {
+        // TODO @Jordane
+        return false;
+    }
+
+    @Override
+    public int advancedQuery(String query, SearchType searchType) {
+        // TODO @Jordane
+        return 0;
+    }
 }

@@ -11,6 +11,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.SearchType;
+import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.workspace.tag.Tag;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -19,20 +21,22 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
  * The content of a Tag cell as shown on the Tag management pane.
  * Created by drm127 on 14/09/15.
  */
-public class TagCellNode extends VBox {
+public class TagCellNode extends VBox implements SearchableControl {
 
     private Tag tag = null;
     private String tagName = "";
     private Color tagColor = Color.ROYALBLUE;
+    private boolean removable;
 
     /**
      * Constructor for a tag cell node.
      * @param tag The tag to display.
      */
-    public TagCellNode(Tag tag) {
+    public TagCellNode(Tag tag, boolean removable) {
         this.tag = tag;
         this.tagName = tag.getName();
         this.tagColor = tag.getColor();
+        this.removable = removable;
 
         construct();
     }
@@ -63,8 +67,13 @@ public class TagCellNode extends VBox {
         }
 
         textContent.getChildren().addAll(titleLabel);
-        Node deletionNode = createDeletionNode(tag);
-        content.getChildren().addAll(textContent, deletionNode);
+        if (removable) {
+            Node deletionNode = createDeletionNode(tag);
+            content.getChildren().addAll(textContent, deletionNode);
+        }
+        else {
+            content.getChildren().addAll(textContent);
+        }
 
         this.getChildren().add(content);
     }
@@ -101,7 +110,7 @@ public class TagCellNode extends VBox {
      * @param tag The tag to be deleted
      */
     public Node createDeletionNode(Tag tag) {
-        ImageView deletionImage = new ImageView("icons/dialog-cancel.png");
+        ImageView deletionImage = new ImageView("icons/tag_remove.png");
         Tooltip.create("Delete Tag", deletionImage, 50);
 
         deletionImage.setOnMouseEntered(me -> {
@@ -121,4 +130,15 @@ public class TagCellNode extends VBox {
 
     }
 
+    @Override
+    public boolean query(String query) {
+        // TODO @Jordane
+        return false;
+    }
+
+    @Override
+    public int advancedQuery(String query, SearchType searchType) {
+        // TODO @Jordane
+        return 0;
+    }
 }

@@ -34,7 +34,6 @@ public class TagListCell extends ListCell<Tag> {
         super.updateItem(tagItem, bln);
         if (tagItem != null) {
             deleteCell.setAlignment(Pos.BASELINE_RIGHT);
-            System.out.println("Draw string");
             Node deletionNode = createDeletionNode(tagItem);
             Label tagName = new Label(tagItem.getName());
             deleteCell.getChildren().add(deletionNode);

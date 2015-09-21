@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import org.apache.maven.lifecycle.internal.GoalTask;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.FilteredListView;
@@ -49,6 +50,7 @@ public class SkillInfoTab extends SearchableTab {
 
     @Override
     public void construct() {
+        System.out.println(Global.currentWorkspace.getAllTags());
         // Tab settings
         this.setText("Basic Information");
         Pane basicInfoPane = new VBox(10);
