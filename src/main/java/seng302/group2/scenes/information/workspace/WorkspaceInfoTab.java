@@ -67,7 +67,7 @@ public class WorkspaceInfoTab extends SearchableTab {
                 + ": ", currentWorkspace.getNumPeople().toString());
         CustomInfoLabel numOfTeams = new CustomInfoLabel("Number of teams in " + currentWorkspace.getShortName()
                 + ": ", currentWorkspace.getNumTeams().toString());
-        CustomInfoLabel numOfProjects = new CustomInfoLabel("Number of people in " + currentWorkspace.getShortName()
+        CustomInfoLabel numOfProjects = new CustomInfoLabel("Number of projects in " + currentWorkspace.getShortName()
                 + ": ", currentWorkspace.getNumProjects().toString());
 
                 // Add items to pane & search collection

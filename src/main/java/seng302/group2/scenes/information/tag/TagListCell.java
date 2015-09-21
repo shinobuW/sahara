@@ -42,6 +42,9 @@ public class TagListCell extends ListCell<Tag> {
             cell.getChildren().addAll(tagName, deleteCell);
             setGraphic(cell);
         }
+        else {
+            setGraphic(null);
+        }
     }
 
     /**
