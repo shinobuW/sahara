@@ -149,7 +149,7 @@ public class TagField extends CustomTextField implements SearchableControl {
         tagStack.getChildren().clear();
 
         for (Tag tag : tags) {
-            TagCellNode node = new TagCellNode(tag, false);
+            TagCellNode node = new TagCellNode(tag, true);
             tagStack.getChildren().add(node);
         }
 
