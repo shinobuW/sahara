@@ -11,9 +11,7 @@ import seng302.group2.Global;
 import seng302.group2.scenes.information.tag.TagCellNode;
 import seng302.group2.workspace.tag.Tag;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * A control used to identify and add/remove tags to and from models.
@@ -23,6 +21,8 @@ public class TagField extends CustomTextField implements SearchableControl {
 
     List<Tag> tags = new ArrayList<>();
     public HBox tagStack = new HBox(4);
+
+    Set<SearchableControl> searchControls = new HashSet<>();
 
 
     /**
@@ -149,7 +149,7 @@ public class TagField extends CustomTextField implements SearchableControl {
         tagStack.getChildren().clear();
 
         for (Tag tag : tags) {
-            TagCellNode node = new TagCellNode(tag, true);
+            TagCellNode node = new TagCellNode(tag, true, searchControls);
             tagStack.getChildren().add(node);
         }
 
@@ -187,8 +187,11 @@ public class TagField extends CustomTextField implements SearchableControl {
 
     @Override
     public boolean query(String query) {
-        // TODO @Jordane
-        return false;
+        boolean found = false;
+        for (SearchableControl control : searchControls) {
+            found = control.query(query) || found;
+        }
+        return found;
     }
 
     @Override
