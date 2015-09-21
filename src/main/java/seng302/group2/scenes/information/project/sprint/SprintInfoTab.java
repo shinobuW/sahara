@@ -10,10 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.chart.StoryCompletenessBar;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
@@ -115,6 +112,7 @@ public class SprintInfoTab extends SearchableTab {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
             CustomInfoLabel sprintName = new CustomInfoLabel("Sprint Name: ", currentSprint.getLongName());
+            TagLabel sprintTags = new TagLabel(currentSprint.getTags());
             CustomInfoLabel sprintGoal = new CustomInfoLabel("Sprint Goal: ", currentSprint.getGoal());
             String startDateString = currentSprint.getStartDate().format(formatter);
             CustomInfoLabel sprintStart = new CustomInfoLabel("Start Date: ", startDateString);
@@ -130,6 +128,7 @@ public class SprintInfoTab extends SearchableTab {
                     title,
                     sprintName,
                     sprintGoal,
+                    sprintTags,
                     sprintStart,
                     sprintEnd,
                     desc,

@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -14,6 +15,8 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.TagField;
 import seng302.group2.util.validation.NameValidator;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.Project;
@@ -35,6 +38,7 @@ public class ProjectEditTab extends SearchableTab {
     RequiredField shortNameCustomField = new RequiredField("Short Name:");
     RequiredField longNameCustomField = new RequiredField("Long Name:");
     CustomTextArea descriptionTextArea = new CustomTextArea("Project Description:", 300);
+    TagField tagField;
 
     /**
      * Gets the workspace edit information scene.
@@ -65,6 +69,15 @@ public class ProjectEditTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(editPane);
         this.setContent(wrapper);
 
+        // Set up the tagging field
+        SearchableText tagLabel = new SearchableText("Tags:", "-fx-font-weight: bold;", searchControls);
+        tagLabel.setMinWidth(60);
+        tagField = new TagField(currentProject.getTags(), searchControls);
+        HBox.setHgrow(tagField, Priority.ALWAYS);
+
+        HBox tagBox = new HBox();
+        tagBox.getChildren().addAll(tagLabel, tagField);
+
         // Create controls
 
         shortNameCustomField.setMaxWidth(275);
@@ -81,6 +94,7 @@ public class ProjectEditTab extends SearchableTab {
         // Add items to pane & search collection
         editPane.getChildren().addAll(
                 shortNameCustomField,
+                tagBox,
                 longNameCustomField,
                 descriptionTextArea
         );
@@ -109,9 +123,10 @@ public class ProjectEditTab extends SearchableTab {
                 currentProject.getLongName());
         boolean descriptionUnchanged = descriptionTextArea.getText().equals(
                 currentProject.getDescription());
+        boolean tagsUnchanged = tagField.getTags().equals(currentProject.getTags());
 
         // If no fields have been changed
-        if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged) {
+        if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged && tagsUnchanged) {
             currentProject.switchToInfoScene();
             return;
         }
@@ -121,7 +136,7 @@ public class ProjectEditTab extends SearchableTab {
         boolean correctLongName = NameValidator.validateName(longNameCustomField);
 
         if (correctShortName && correctLongName) {
-            ArrayList<Tag> tags = new ArrayList<>();
+            ArrayList<Tag> tags = new ArrayList<>(tagField.getTags());
             currentProject.edit(shortNameCustomField.getText(),
                     longNameCustomField.getText(), descriptionTextArea.getText(),
                     FXCollections.observableArrayList(), tags

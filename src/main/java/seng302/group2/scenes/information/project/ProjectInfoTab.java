@@ -78,6 +78,7 @@ public class ProjectInfoTab extends SearchableTab {
         });
 
         CustomInfoLabel shortNameField = new CustomInfoLabel("Short Name: ", currentProject.getShortName());
+        TagLabel projectTags = new TagLabel(currentProject.getTags());
         CustomInfoLabel description = new CustomInfoLabel("Project Description: ", currentProject.getDescription());
         CustomInfoLabel currentTeamsLabel = new CustomInfoLabel("Current Teams:", "");
         CustomInfoLabel releasesLabel = new CustomInfoLabel("Releases:", "");
@@ -103,6 +104,7 @@ public class ProjectInfoTab extends SearchableTab {
         basicInfoPane.getChildren().addAll(
                 title,
                 shortNameField,
+                projectTags,
                 description,
                 separator,
                 listBoxes

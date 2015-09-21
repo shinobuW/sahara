@@ -8,10 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.chart.StoryCompletenessBar;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.project.story.Story;
 
 import java.util.ArrayList;
@@ -56,7 +53,7 @@ public class StoryInfoTab extends SearchableTab {
 
         SearchableText title = new SearchableTitle(currentStory.getShortName());
 
-
+        TagLabel storyTags = new TagLabel(currentStory.getTags());
         CustomInfoLabel description = new CustomInfoLabel("Story Description: ", currentStory.getDescription());
         CustomInfoLabel project = new CustomInfoLabel("Project: ", currentStory.getProject().toString());
         CustomInfoLabel priority = new CustomInfoLabel("Priority: ", currentStory.getPriority().toString());
@@ -70,6 +67,7 @@ public class StoryInfoTab extends SearchableTab {
 
         basicInfoPane.getChildren().addAll(
                 title,
+                storyTags,
                 description,
                 project,
                 priority,

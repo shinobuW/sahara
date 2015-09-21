@@ -9,6 +9,7 @@ import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.TagLabel;
 import seng302.group2.workspace.project.release.Release;
 
 import java.time.format.DateTimeFormatter;
@@ -59,6 +60,7 @@ public class ReleaseInfoTab extends SearchableTab {
 
         // Create controls
         SearchableTitle title = new SearchableTitle(currentRelease.getShortName());
+        TagLabel releaseTags  = new TagLabel(currentRelease.getTags());
         CustomInfoLabel description = new CustomInfoLabel("Release Description: ", currentRelease.getDescription());
         String releaseDateString = "";
         if (currentRelease.getEstimatedDate() != null) {
@@ -71,6 +73,7 @@ public class ReleaseInfoTab extends SearchableTab {
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
                 title,
+                releaseTags,
                 description,
                 releaseDate,
                 projectLabel

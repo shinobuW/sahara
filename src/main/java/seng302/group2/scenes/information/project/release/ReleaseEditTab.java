@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.scenes.control.CustomDatePicker;
@@ -15,6 +16,8 @@ import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.TagField;
 import seng302.group2.scenes.information.StickyBar;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.validation.ShortNameValidator;
@@ -41,7 +44,7 @@ public class ReleaseEditTab extends SearchableTab {
     RequiredField shortNameCustomField = new RequiredField("Short Name:");
     CustomTextArea descriptionTextArea = new CustomTextArea("Release Description:", 300);
     CustomDatePicker releaseDatePicker = new CustomDatePicker("Estimated Release Date:", false);
-
+    TagField tagField;
 
     /**
      * Constructor for the ReleaseEditTab class. This constructor creates a JavaFX ScrollPane
@@ -74,7 +77,14 @@ public class ReleaseEditTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(editPane);
         this.setContent(wrapper);
 
+        // Set up the tagging field
+        SearchableText tagLabel = new SearchableText("Tags:", "-fx-font-weight: bold;", searchControls);
+        tagLabel.setMinWidth(60);
+        tagField = new TagField(currentRelease.getTags(), searchControls);
+        HBox.setHgrow(tagField, Priority.ALWAYS);
 
+        HBox tagBox = new HBox();
+        tagBox.getChildren().addAll(tagLabel, tagField);
 
         shortNameCustomField.setPrefWidth(370);
         descriptionTextArea.setPrefWidth(370);
@@ -113,6 +123,7 @@ public class ReleaseEditTab extends SearchableTab {
         // Add items to pane & search collection
         editPane.getChildren().addAll(
                 shortNameCustomField,
+                tagBox,
                 descriptionTextArea,
                 releaseDatePicker
         );
@@ -140,7 +151,8 @@ public class ReleaseEditTab extends SearchableTab {
         boolean descriptionUnchanged = descriptionTextArea.getText().equals(
                 currentRelease.getDescription());
         boolean dateUnchanged = releaseDatePicker.getValue() == currentRelease.getEstimatedDate();
-        if (shortNameUnchanged && descriptionUnchanged && dateUnchanged) {
+        boolean tagsUnchanged = tagField.getTags().equals(currentRelease.getTags());
+        if (shortNameUnchanged && descriptionUnchanged && dateUnchanged && tagsUnchanged) {
             // No fields have been changed
             currentRelease.switchToInfoScene();
             return;
@@ -152,7 +164,7 @@ public class ReleaseEditTab extends SearchableTab {
                 currentRelease.getShortName());
         // The short name is the same or valid
         if (correctShortName) {
-            ArrayList<Tag> tags = new ArrayList<>();
+            ArrayList<Tag> tags = new ArrayList<>(tagField.getTags());
             currentRelease.edit(shortNameCustomField.getText(),
                     descriptionTextArea.getText(),
                     releaseDate,

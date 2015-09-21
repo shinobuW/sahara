@@ -10,16 +10,14 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.control.Tooltip;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableListView;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.allocation.Allocation;
@@ -58,6 +56,7 @@ public class SprintEditTab extends SearchableTab {
     CustomDatePicker sprintEndDatePicker;
     CustomTextArea descriptionTextArea = new CustomTextArea("Sprint Description:", 300, searchControls);
     ObservableList<Story> storiesInSprint = FXCollections.observableArrayList();
+    TagField tagField;
 
     /**
      * Constructor for the SprintEditTab class. This constructor creates a JavaFX ScrollPane
@@ -168,6 +167,14 @@ public class SprintEditTab extends SearchableTab {
         sprintStartDatePicker = new CustomDatePicker("Start Date:", true, searchControls);
         sprintEndDatePicker  = new CustomDatePicker("End Date:", true, searchControls);
 
+        // Set up the tagging field
+        SearchableText tagLabel = new SearchableText("Tags:", "-fx-font-weight: bold;", searchControls);
+        tagLabel.setMinWidth(60);
+        tagField = new TagField(currentSprint.getTags(), searchControls);
+        HBox.setHgrow(tagField, Priority.ALWAYS);
+
+        HBox tagBox = new HBox();
+        tagBox.getChildren().addAll(tagLabel, tagField);
 
         goalCustomField.setMaxWidth(275);
         longNameCustomField.setMaxWidth(275);
@@ -242,7 +249,7 @@ public class SprintEditTab extends SearchableTab {
 
 
 
-        editPane.getChildren().addAll(goalCustomField, longNameCustomField, descriptionTextArea,
+        editPane.getChildren().addAll(goalCustomField, tagBox, longNameCustomField, descriptionTextArea,
                 releaseComboBox, sprintStartDatePicker, sprintEndDatePicker, teamComboBox, storyHBox);
 
         Collections.addAll(searchControls, storiesInSprintView, availableStoriesView);
@@ -586,9 +593,10 @@ public class SprintEditTab extends SearchableTab {
         boolean endDateUnchanged = sprintEndDatePicker.getValue().equals(
                 currentSprint.getEndDate());
         boolean storiesUnchanged = storiesInSprint.equals(currentSprint.getStories());
+        boolean tagsUnchanged = tagField.getTags().equals(currentSprint.getTags());
         if (goalUnchanged && longNameUnchanged && descriptionUnchanged
                 && teamUnchanged && releaseUnchanged && startDateUnchanged && endDateUnchanged
-                && storiesUnchanged) {
+                && storiesUnchanged && tagsUnchanged) {
             // No fields have been changed
             currentSprint.switchToInfoScene();
             return;
@@ -598,7 +606,7 @@ public class SprintEditTab extends SearchableTab {
                 currentSprint.getGoal());
         // The short name is the same or valid
         if (correctGoal) {
-            ArrayList<Tag> tags = new ArrayList<>();
+            ArrayList<Tag> tags = new ArrayList<>(tagField.getTags());
 
             currentSprint.edit(goalCustomField.getText(),
                     longNameCustomField.getText(),

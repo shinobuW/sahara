@@ -138,6 +138,7 @@ public class BacklogInfoTab extends SearchableTab {
         // Create controls
         SearchableText title = new SearchableTitle(currentBacklog.getLongName());
         CustomInfoLabel shortName = new CustomInfoLabel("Short Name: ", currentBacklog.getShortName());
+        TagLabel backlogTags = new TagLabel(currentBacklog.getTags());
         CustomInfoLabel description = new CustomInfoLabel("Backlog Description: ", currentBacklog.getDescription());
         CustomInfoLabel project = new CustomInfoLabel("Project: ", currentBacklog.getProject().toString());
         CustomInfoLabel storiesTableLabel = new CustomInfoLabel("Stories: ", "");
@@ -229,6 +230,7 @@ public class BacklogInfoTab extends SearchableTab {
         basicInfoPane.getChildren().addAll(
                 title,
                 shortName,
+                backlogTags,
                 description,
                 project,
                 po,
