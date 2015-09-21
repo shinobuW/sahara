@@ -1,5 +1,7 @@
 package seng302.group2.workspace.project.story.acceptanceCriteria;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.util.StringConverter;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
@@ -138,7 +140,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
      * Edits the tags of the Acceptance critera
      * @param newTags the new tags of the acceptance criteria
      */
-    public void edit(ArrayList<Tag> newTags) {
+    public void edit(ObservableList<Tag> newTags) {
         Command editAc = new EditAcTagsCommand(this, newTags);
         Global.commandManager.executeCommand(editAc);
     }
@@ -280,11 +282,11 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
          * @param ac The ac to be edited
          * @param newTags The ac's new tags.
          */
-        private EditAcTagsCommand(AcceptanceCriteria ac, ArrayList<Tag> newTags) {
+        private EditAcTagsCommand(AcceptanceCriteria ac, ObservableList<Tag> newTags) {
             this.ac = ac;
 
             if (newTags == null) {
-                newTags = new ArrayList<>();
+                newTags = FXCollections.observableArrayList();
             }
 
             this.acTags.addAll(newTags);

@@ -1,5 +1,8 @@
 package seng302.group2.scenes.information.project.story;
 
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -11,12 +14,16 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import seng302.group2.App;
+import seng302.group2.Global;
+import seng302.group2.scenes.TagsTableCell;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcEnumStringConverter;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
+import seng302.group2.workspace.tag.Tag;
 
 import java.util.*;
 
@@ -31,6 +38,20 @@ public class StoryAcTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
     Story story;
+
+    ListProperty<Tag> tags = new SimpleListProperty<>(FXCollections.observableList(new ArrayList<Tag>()));
+
+    public ListProperty<Tag> tagsProperty() {
+        return tags;
+    }
+
+    public ObservableList<Tag> getEmails() {
+        return tagsProperty().get();
+    }
+
+    public void setTags(ObservableList<Tag> tags) {
+        tagsProperty().set(tags);
+    }
 
     /**
      * Constructor for the Story Acceptance Criteria Tab.
@@ -107,7 +128,8 @@ public class StoryAcTab extends SearchableTab {
 
         AcEnumStringConverter converter = new AcEnumStringConverter();
         TableColumn stateCol = new TableColumn("State");
-        stateCol.setCellValueFactory(new PropertyValueFactory<AcceptanceCriteria, AcceptanceCriteria.AcState>("state"));
+        stateCol.setCellValueFactory(new PropertyValueFactory<AcceptanceCriteria,
+                AcceptanceCriteria.AcState>("state"));
         stateCol.setCellFactory(ComboBoxTableCell.forTableColumn(
                 converter,
                 acStates
@@ -124,8 +146,29 @@ public class StoryAcTab extends SearchableTab {
                 }
         );
 
+        TableColumn tagCol = new TableColumn("Tags");
+
+        tagCol.setCellValueFactory(new PropertyValueFactory<AcceptanceCriteria, ObservableList<Tag>>("tags"));
+
+        Callback<TableColumn, TableCell> tagCellFactory = col -> new TagsTableCell(story);
+        tagCol.setCellFactory(tagCellFactory);
+
+        tagCol.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<AcceptanceCriteria, ObservableList<Tag>>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<AcceptanceCriteria, ObservableList<Tag>> event) {
+                        if (!event.getNewValue().isEmpty()) {
+                            AcceptanceCriteria currentAc = event.getTableView().getItems().get(event.getTablePosition().getRow());
+
+                            ObservableList<Tag> newTags = event.getNewValue();
+                            currentAc.edit(newTags);
+                        }
+                    }
+                }
+        );
+
         acTable.setItems(data);
-        TableColumn[] columns = {descriptionCol, stateCol};
+        TableColumn[] columns = {descriptionCol, stateCol, tagCol};
         acTable.getColumns().setAll(columns);
 
         acTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {

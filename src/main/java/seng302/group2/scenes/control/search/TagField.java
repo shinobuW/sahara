@@ -1,6 +1,8 @@
 package seng302.group2.scenes.control.search;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
@@ -19,7 +21,7 @@ import java.util.*;
  */
 public class TagField extends CustomTextField implements SearchableControl {
 
-    List<Tag> tags = new ArrayList<>();
+    ObservableList<Tag> tags = FXCollections.observableArrayList();
     public HBox tagStack = new HBox(4);
 
     Set<SearchableControl> searchControls = new HashSet<>();
@@ -104,6 +106,7 @@ public class TagField extends CustomTextField implements SearchableControl {
                     }
                 }
 
+
 //                // Or create it if not found
 //                if (selectedTag == null) {
 //                    selectedTag = new Tag(tagString);
@@ -181,8 +184,16 @@ public class TagField extends CustomTextField implements SearchableControl {
      * Returns a list of tags in the tag field.
      * @return All tags in the tag field.
      */
-    public List<Tag> getTags() {
+    public ObservableList<Tag> getTags() {
         return this.tags;
+    }
+
+    /**
+     * Sets the new list of tags in the tag field.
+     * @param newTags The new list of tags
+     */
+    public void setTags(ObservableList<Tag> newTags) {
+        this.tags = newTags;
     }
 
     @Override
