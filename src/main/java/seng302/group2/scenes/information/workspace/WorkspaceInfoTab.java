@@ -74,16 +74,17 @@ public class WorkspaceInfoTab extends SearchableTab {
         basicInfoPane.getChildren().addAll(
                 title,
                 shortName,
+                desc,
                 numOfProjects,
                 numOfTeams,
-                numOfPeople,
-                desc
-
+                numOfPeople
         );
 
         Collections.addAll(searchControls,
                 title,
                 shortName,
+                numOfProjects,
+                numOfTeams,
                 numOfPeople,
                 desc
         );
