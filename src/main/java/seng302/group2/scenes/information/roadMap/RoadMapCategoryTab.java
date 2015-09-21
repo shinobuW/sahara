@@ -1,10 +1,7 @@
 package seng302.group2.scenes.information.roadMap;
 
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -18,8 +15,8 @@ import seng302.group2.scenes.dialog.CreateReleaseDialog;
 import seng302.group2.scenes.dialog.CreateSprintDialog;
 import seng302.group2.scenes.dialog.CreateStoryDialog;
 import seng302.group2.workspace.project.release.Release;
+import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
-import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.roadMap.RoadMap;
 import seng302.group2.workspace.workspace.Workspace;
 
@@ -33,6 +30,8 @@ public class RoadMapCategoryTab extends SearchableTab {
     List<SearchableControl> searchControls = new ArrayList<>();
     Workspace currentWorkspace;
     Release interactiveRelease;
+    Sprint interactiveSprint;
+    Story interactiveStory;
 
     /**
      * Constructor for RoadMapCategoryTab class.
@@ -96,7 +95,7 @@ public class RoadMapCategoryTab extends SearchableTab {
 //            });
 
             roadMaps.getChildren().add(roadMapNode);
-            initLaneListeners(roadMapNode, roadMap);
+            initRoadMapListeners(roadMapNode, roadMap);
             searchControls.addAll(roadMapNode.getSearchableControls());
 
         }
@@ -180,7 +179,7 @@ public class RoadMapCategoryTab extends SearchableTab {
         );
     }
 
-    private void initLaneListeners(RoadMapNode roadMapNode, RoadMap currentRoadMap) {
+    private void initRoadMapListeners(RoadMapNode roadMapNode, RoadMap currentRoadMap) {
 
         roadMapNode.setOnDragDetected(event -> {
             System.out.println(roadMapNode.getRoadmap().getShortName());
@@ -193,21 +192,42 @@ public class RoadMapCategoryTab extends SearchableTab {
         });
 
         roadMapNode.setOnDragDropped(dragEvent -> {
-            System.out.println(roadMapNode.getRoadmap().getShortName() + " Drag dropped");
-            for (RoadMap roadMap : currentWorkspace.getRoadMaps()) {
-                if (roadMap.getReleases().contains(interactiveRelease)) {
-                    roadMap.getReleases().remove(interactiveRelease);
+            if (dragEvent.getDragboard().getString() == "release") {
+                System.out.println(roadMapNode.getRoadmap().getShortName() + " Drag dropped");
+                for (RoadMap roadMap : currentWorkspace.getRoadMaps()) {
+                    if (roadMap.getReleases().contains(interactiveRelease)) {
+                        roadMap.getReleases().remove(interactiveRelease);
+                    }
                 }
+                currentRoadMap.getReleases().add(interactiveRelease);
+                App.mainPane.refreshAll();
             }
-            currentRoadMap.getReleases().add(interactiveRelease);
-            App.mainPane.refreshAll();
-
-
-
-
-
         });
 
+    }
+
+    public Release getSelectedRelease() {
+        return interactiveRelease;
+    }
+
+    public void setSelectedRelease(Release release) {
+        interactiveRelease = release;
+    }
+
+    public Sprint getSelectedSprint() {
+        return interactiveSprint;
+    }
+
+    public void setSelectedSprint(Sprint sprint) {
+        interactiveSprint = sprint;
+    }
+
+    public Story getSelectedStory() {
+        return interactiveStory;
+    }
+
+    public void setSelectedStory(Story story) {
+        interactiveStory = story;
     }
 }
 

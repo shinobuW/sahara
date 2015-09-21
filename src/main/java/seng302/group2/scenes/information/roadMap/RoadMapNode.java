@@ -49,6 +49,12 @@ public class RoadMapNode extends VBox implements SearchableControl {
     List<SearchableControl> searchControls = new ArrayList<>();
     RoadMap roadMap;
     Release selectedRelease;
+    Release interactiveRelease;
+    Sprint selectedSprint;
+    Sprint interactiveSprint;
+    Story selectedStory;
+    Story interactiveStory;
+
 
     
     public RoadMapNode(RoadMap currentRoadMap) {
@@ -96,15 +102,16 @@ public class RoadMapNode extends VBox implements SearchableControl {
             Node releaseNode = createReleaseNode(release, currentRoadMap);
             roadMapChildren.getChildren().add(releaseNode);
 
-            releaseNode.setOnDragDetected(event -> {
-                selectedRelease = release;
-                Dragboard dragBoard = this.startDragAndDrop(TransferMode.MOVE);
-                dragBoard.setDragView(this.snapshot(null, null));
-                ClipboardContent content = new ClipboardContent();
-                content.putString("");
-                dragBoard.setContent(content);
-            });
+//            releaseNode.setOnDragDetected(event -> {
+//                selectedRelease = release;
+//                Dragboard dragBoard = this.startDragAndDrop(TransferMode.MOVE);
+//                dragBoard.setDragView(this.snapshot(null, null));
+//                ClipboardContent content = new ClipboardContent();
+//                content.putString("release");
+//                dragBoard.setContent(content);
+//            });
 
+            initReleaseListeners(releaseNode, release);
 //            releaseNode.setOnDragOver(event -> {
 //                Dragboard db = event.getDragboard();
 //                if (db.hasContent(DataFormat.PLAIN_TEXT)) {
@@ -149,7 +156,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
         );
     }
     
-    private Node createReleaseNode(Release release, RoadMap roadmap) {
+
+    private VBox createReleaseNode(Release release, RoadMap roadmap) {
         VBox releaseNode = new VBox();
         Insets insetsNode = new Insets(5, 5, 5, 0);
         releaseNode.setPadding(insetsNode);
@@ -191,12 +199,12 @@ public class RoadMapNode extends VBox implements SearchableControl {
         HBox.setHgrow(releaseContent, Priority.ALWAYS);
 
         releaseContent.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
-                    App.mainPane.selectItem(release);
-                    release.switchToInfoScene();
-                }
-                event.consume();
-            });
+            if (event.getClickCount() == 2) {
+                App.mainPane.selectItem(release);
+                release.switchToInfoScene();
+            }
+            event.consume();
+        });
 
         VBox releaseVBox = new VBox();
         Text releaseEndText = new Text("End date of " + release.getShortName() + " is " + release.getDateString());
@@ -207,11 +215,25 @@ public class RoadMapNode extends VBox implements SearchableControl {
         for (Project proj : Global.currentWorkspace.getProjects()) {
             for (Sprint sprint : proj.getSprints()) {
                 if (sprint.getRelease().equals(release)) {
-                    releaseChildren.getChildren().add(createSprintNode(sprint, release));
+                    Node sprintNode = createSprintNode(sprint, release);
+                    releaseChildren.getChildren().add(sprintNode);
+                    initSprintListeners(sprintNode, sprint);
+
                 }
             }
         }
-        
+
+        releaseContent.setOnDragDetected(event -> {
+            selectedRelease = release;
+            Dragboard dragBoard = this.startDragAndDrop(TransferMode.MOVE);
+            dragBoard.setDragView(this.snapshot(null, null));
+            ClipboardContent content = new ClipboardContent();
+            content.putString("release");
+            dragBoard.setContent(content);
+        });
+
+
+
         releaseContent.getChildren().addAll(shortNameField, deletionBox);
         releaseContent.setAlignment(Pos.CENTER);
         releaseNode.getChildren().addAll(
@@ -221,9 +243,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         // Add items to pane & search collection
         Collections.addAll(searchControls,
-                shortNameField  
+                shortNameField
         );
-        
         return releaseNode;
     }
 
@@ -258,25 +279,36 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
 
         sprintContent.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
-                    App.mainPane.selectItem(sprint);
-                    sprint.switchToInfoScene();
-                }
-                event.consume();
-            });
-        
+            if (event.getClickCount() == 2) {
+                App.mainPane.selectItem(sprint);
+                sprint.switchToInfoScene();
+            }
+            event.consume();
+        });
+
         sprintNode.getChildren().addAll(
                 shortNameField
         );
-        
+
         for (Story story : sprint.getStories()) {
-            sprintChildren.add(createStoryNode(story, sprint), xCounter, yCounter);
+            Node storyNode = createStoryNode(story, sprint);
+            sprintChildren.add(storyNode, xCounter, yCounter);
             xCounter++;
             if (xCounter == 3) {
                 yCounter++;
                 xCounter = 0;
             }
+
         }
+
+        sprintContent.setOnDragDetected(event -> {
+            selectedSprint = sprint;
+            Dragboard dragBoard = this.startDragAndDrop(TransferMode.MOVE);
+            dragBoard.setDragView(this.snapshot(null, null));
+            ClipboardContent content = new ClipboardContent();
+            content.putString("sprint");
+            dragBoard.setContent(content);
+        });
 
         sprintContent.getChildren().addAll(shortNameField, deletionBox);
         sprintContent.setAlignment(Pos.CENTER);
@@ -288,10 +320,10 @@ public class RoadMapNode extends VBox implements SearchableControl {
         Collections.addAll(searchControls,
                 shortNameField
         );
-        
+
         return sprintNode;
     }
-    
+
     private Node createStoryNode(Story story, Sprint sprint) {
         VBox storyNode = new VBox();
         storyNode.setAlignment(Pos.CENTER);
@@ -333,21 +365,28 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         HBox.setHgrow(storyContent, Priority.ALWAYS);
         deletionBox.setAlignment(Pos.TOP_RIGHT);
-
-        storyNode.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2) {
-                    App.mainPane.selectItem(story);
-                    story.switchToInfoScene();
-                }
-                event.consume();
-            });
-
-
         VBox storyVBox = new VBox();
         Text storyPoint = new Text(story.getShortName() + "'s estimate is " + story.getEstimate());
         storyVBox.getChildren().addAll(storyPoint);
         PopOverTip storyTip = new PopOverTip(storyNode, storyVBox);
         storyTip.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
+
+        storyNode.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                App.mainPane.selectItem(story);
+                story.switchToInfoScene();
+            }
+            event.consume();
+        });
+
+        storyContent.setOnDragDetected(event -> {
+            selectedStory = story;
+            Dragboard dragBoard = this.startDragAndDrop(TransferMode.MOVE);
+            dragBoard.setDragView(this.snapshot(null, null));
+            ClipboardContent content = new ClipboardContent();
+            content.putString("story");
+            dragBoard.setContent(content);
+        });
 
 
         storyContent.getChildren().addAll(
@@ -361,31 +400,12 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         // Add items to pane & search collection
         Collections.addAll(searchControls,
-                shortNameField  
+                shortNameField
         );
-        
+
         return storyNode;
     }
-    
-    public List<SearchableControl> getSearchableControls() {
-        return searchControls;
-    }
 
-    @Override
-    public boolean query(String query) {
-        boolean found = false;
-        for (SearchableControl control : getSearchableControls()) {
-            if (control.query(query)) {
-                found = true;
-            }
-        }
-        return found;
-    }
-
-    @Override
-    public int advancedQuery(String query, SearchType searchType) {
-        throw new UnsupportedOperationException("Not supported yet."); 
-    }
 
     private VBox deletionBox(SaharaItem item) {
         VBox deletionBox = new VBox();
@@ -413,12 +433,96 @@ public class RoadMapNode extends VBox implements SearchableControl {
         return deletionBox;
     }
 
-    public RoadMap getRoadmap() {
-        return roadMap;
+    private void initReleaseListeners(Node releaseNode, Release currentRelease) {
+
+        releaseNode.setOnDragDetected(event -> {
+            interactiveRelease = currentRelease;
+        });
+
+        releaseNode.setOnDragOver(dragEvent -> {
+            dragEvent.acceptTransferModes(TransferMode.MOVE);
+        });
+
+        releaseNode.setOnDragDropped(dragEvent -> {
+            if (dragEvent.getDragboard().getString() == "sprint") {
+                System.out.println(currentRelease.getShortName() + " Drag dropped");
+                selectedSprint.edit(selectedSprint.getGoal(), selectedSprint.getLongName(),
+                        selectedSprint.getDescription(), selectedSprint.getStartDate(), selectedSprint.getEndDate(),
+                        selectedSprint.getTeam(), currentRelease, selectedSprint.getStories(),
+                        selectedSprint.getTags());
+                App.mainPane.refreshAll();
+            }
+        });
+    }
+
+    private void initSprintListeners(Node sprintNode, Sprint currentSprint) {
+
+        sprintNode.setOnDragDetected(event -> {
+            System.out.println(currentSprint);
+            interactiveSprint = currentSprint;
+        });
+
+        sprintNode.setOnDragOver(dragEvent -> {
+            dragEvent.acceptTransferModes(TransferMode.MOVE);
+        });
+
+        sprintNode.setOnDragDropped(dragEvent -> {
+            if (dragEvent.getDragboard().getString() == "story") {
+                System.out.println("Story Dropped.........");
+                System.out.println(selectedStory);
+                System.out.println(selectedStory.getSprint().getGoal());
+                System.out.println(currentSprint);
+
+                selectedStory.getSprint().getStories().remove(selectedStory);
+                selectedStory.setSprint(currentSprint);
+                currentSprint.getStories().add(selectedStory);
+
+//                selectedSprint.edit(selectedSprint.getGoal(), selectedSprint.getLongName(),
+//                        selectedSprint.getDescription(), selectedSprint.getStartDate(), selectedSprint.getEndDate(),
+//                        selectedSprint.getTeam(), selectedSprint.getRelease(), selectedSprint.getStories(),
+//                        selectedSprint.getTags());
+                App.mainPane.refreshAll();
+            }
+        });
     }
 
     public Release getSelectedRelease() {
         return selectedRelease;
     }
-    
+
+    public Sprint getSelectedSprint() {
+        return selectedSprint;
+    }
+
+    public Story getSelectedStory() {
+        return selectedStory;
+    }
+
+    public RoadMap getRoadmap() {
+        return roadMap;
+    }
+
+
+    public List<SearchableControl> getSearchableControls() {
+        return searchControls;
+    }
+
+    @Override
+    public boolean query(String query) {
+        boolean found = false;
+        for (SearchableControl control : getSearchableControls()) {
+            if (control.query(query)) {
+                found = true;
+            }
+        }
+        return found;
+    }
+
+    @Override
+    public int advancedQuery(String query, SearchType searchType) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+
+
 }
