@@ -94,6 +94,9 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
         return listView;
     }
 
+    /**
+     * Resets the data of the Listview based on the current input string.
+     */
     public void resetInputText() {
         sortedData.clear();
         for (T item : originalData) {

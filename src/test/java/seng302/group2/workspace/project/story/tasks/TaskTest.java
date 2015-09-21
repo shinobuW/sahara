@@ -99,8 +99,11 @@ public class TaskTest {
 
         Assert.assertFalse(story.getTasks().contains(task));
         Assert.assertFalse(sprint.getUnallocatedTasks().contains(task));
-
+        Assert.assertEquals("the deletion of Task \"" + task2.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
+        Assert.assertEquals("the deletion of Task \"" + task.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
 
         Assert.assertTrue(story.getTasks().contains(task));
@@ -148,6 +151,8 @@ public class TaskTest {
         task.editLane(Task.TASKSTATE.IN_PROGRESS, -1, false);
         Assert.assertEquals(Task.TASKSTATE.IN_PROGRESS, task.getState());
         Assert.assertEquals(Task.TASKSTATE.IN_PROGRESS, task.getLane());
+        Assert.assertEquals("the edit of Lane on Task \"" + task.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
         Assert.assertEquals(Task.TASKSTATE.NOT_STARTED, task.getState());
         Assert.assertEquals(Task.TASKSTATE.NOT_STARTED, task.getLane());
@@ -212,6 +217,8 @@ public class TaskTest {
         task.editImpedimentState(Task.TASKSTATE.BLOCKED, "An impediment");
         Assert.assertEquals(Task.TASKSTATE.BLOCKED, task.getState());
         Assert.assertEquals("An impediment", task.getImpediments());
+        Assert.assertEquals("the edit of Impediments on Task \"" + task.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
         Assert.assertEquals(Task.TASKSTATE.NOT_STARTED, task.getState());
         Assert.assertEquals("", task.getImpediments());
@@ -244,6 +251,8 @@ public class TaskTest {
 
         task.editDescription("a task for testing");
         Assert.assertEquals("a task for testing", task.getDescription());
+        Assert.assertEquals("the edit of Description on Task \"" + task.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
         Assert.assertEquals("", task.getDescription());
         Global.commandManager.redo();
@@ -276,6 +285,8 @@ public class TaskTest {
         task.editAssignee(person);
         Assert.assertEquals(person, task.getAssignee());
 
+        Assert.assertEquals("the edit of Assignee on Task \"" + task.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
         Assert.assertEquals(null, task.getAssignee());
 
@@ -329,6 +340,8 @@ public class TaskTest {
         Assert.assertEquals(newEffortLeft, task.getEffortLeft(), 0.0001);
         Assert.assertEquals(newEffortSpent, task.getEffortSpent(), 0.0001);
 
+        Assert.assertEquals("the edit of Task \"" + task.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
 
         Assert.assertEquals(person, task.getAssignee());

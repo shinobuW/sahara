@@ -82,6 +82,8 @@ public class SkillTest {
         Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
         Assert.assertEquals("Tag", skill.getTags().get(0).getName());
 
+        Assert.assertEquals("the edit of Skill \"" + skill.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
 
         Assert.assertEquals("C#", skill.getShortName());
@@ -105,6 +107,8 @@ public class SkillTest {
         skill.deleteSkill();
         Assert.assertFalse(Global.currentWorkspace.getSkills().contains(skill));
 
+        Assert.assertEquals("the deletion of Skill \"" + skill.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
 
         Assert.assertTrue(Global.currentWorkspace.getSkills().contains(skill));

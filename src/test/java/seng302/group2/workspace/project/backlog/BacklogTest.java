@@ -78,6 +78,9 @@ public class BacklogTest {
         Story story = new Story();
 
         backlog.add(story);
+        Assert.assertEquals("the addition of Story \"" + story.getShortName() + "\" to Backlog \""
+                        + backlog.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Assert.assertTrue(backlog.getStories().contains(story));
 
         Global.commandManager.undo();
@@ -146,6 +149,8 @@ public class BacklogTest {
         Assert.assertEquals(1, backlog.getTags().size());
         Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
         Assert.assertEquals("Tag", backlog.getTags().get(0).getName());
+        Assert.assertEquals("the edit of Backlog \"" + backlog.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
 
         Global.commandManager.undo();
 
@@ -191,6 +196,8 @@ public class BacklogTest {
         Assert.assertFalse(project.getBacklogs().contains(backlog));
         Assert.assertNotEquals(project, backlog.getProject());
 
+        Assert.assertEquals("the deletion of Backlog \"" + backlog.getShortName() + "\".",
+                Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
         Assert.assertTrue(project.getBacklogs().contains(backlog));
         Assert.assertEquals(project, backlog.getProject());

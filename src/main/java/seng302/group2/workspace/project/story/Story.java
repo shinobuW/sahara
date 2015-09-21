@@ -1072,7 +1072,7 @@ public class Story extends SaharaItem implements Serializable {
          * Gets the String value of the Command for editting stories.
          */
         public String getString() {
-            return "the edit of Story \"" + oldShortName + "\".";
+            return "the edit of Story \"" + story.getShortName() + "\".";
         }
 
         /**

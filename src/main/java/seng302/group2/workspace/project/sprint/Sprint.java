@@ -661,7 +661,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
          * Gets the String value of the Command for editting sprints.
          */
         public String getString() {
-            return "the edit of Sprint \"" + goal + "\".";
+            return "the edit of Sprint \"" + sprint.getGoal() + "\".";
         }
 
         /**

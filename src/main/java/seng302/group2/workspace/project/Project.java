@@ -831,7 +831,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for editting projects.
          */
         public String getString() {
-            return "the edit of Project \"" + shortName + "\".";
+            return "the edit of Project \"" + proj.getShortName() + "\".";
         }
 
         /**
