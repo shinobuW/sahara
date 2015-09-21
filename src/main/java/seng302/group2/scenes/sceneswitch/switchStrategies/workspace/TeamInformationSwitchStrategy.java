@@ -1,6 +1,7 @@
 package seng302.group2.scenes.sceneswitch.switchStrategies.workspace;
 
 import seng302.group2.App;
+import seng302.group2.Global;
 import seng302.group2.scenes.information.StickyBar;
 import seng302.group2.scenes.information.team.TeamScene;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
@@ -20,9 +21,14 @@ public class TeamInformationSwitchStrategy implements InformationSwitchStrategy 
     @Override
     public void switchScene(SaharaItem item) {
         if (item instanceof Team) {
-            App.mainPane.setContent(new TeamScene((Team) item));
-            App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
-
+            if (item == Global.getUnassignedTeam()) {
+                App.mainPane.setContent(new TeamScene((Team) item));
+                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.OTHER);
+            }
+            else {
+                App.mainPane.setContent(new TeamScene((Team) item));
+                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
+            }
         }
         else {
             // Bad call
