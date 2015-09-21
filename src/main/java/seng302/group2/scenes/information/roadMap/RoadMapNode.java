@@ -454,7 +454,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
             unassignedStoryListView.getSelectionModel().select(0);
 
             Button btnAdd = new Button("Add");
-            btnAdd.setOnAction((event_) -> {
+            btnAdd.setOnAction(random -> {
                 Collection<Story> selectedStories = new ArrayList<>();
                 selectedStories.addAll(unassignedStoryListView.getSelectionModel().getSelectedItems());
                 for (Story story : selectedStories) {
@@ -528,7 +528,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 System.out.println(currentSprint.getProject());
                 System.out.println(selectedSprint);
                 System.out.println(interactiveSprint);
-                if (currentSprint.getProject().equals(selectedStory.getProject()) && !currentSprint.equals(selectedSprint) && interactiveSprint != null) {
+                if (currentSprint.getProject().equals(selectedStory.getProject())
+                        && !currentSprint.equals(selectedSprint) && interactiveSprint != null) {
                     System.out.println(currentSprint + " " + selectedSprint);
                     currentSprint.addRemove(currentSprint, interactiveSprint, selectedStory);
 

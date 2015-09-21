@@ -158,7 +158,8 @@ public class StoryAcTab extends SearchableTab {
                     @Override
                     public void handle(TableColumn.CellEditEvent<AcceptanceCriteria, ObservableList<Tag>> event) {
                         if (!event.getNewValue().isEmpty()) {
-                            AcceptanceCriteria currentAc = event.getTableView().getItems().get(event.getTablePosition().getRow());
+                            AcceptanceCriteria currentAc = event.getTableView().getItems().get(
+                                    event.getTablePosition().getRow());
 
                             ObservableList<Tag> newTags = event.getNewValue();
                             currentAc.edit(newTags);

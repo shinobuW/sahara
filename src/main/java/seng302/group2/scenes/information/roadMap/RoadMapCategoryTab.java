@@ -211,7 +211,8 @@ public class RoadMapCategoryTab extends SearchableTab {
                 }
                 if (confirm) {
                     System.out.println(roadMapNode.getRoadmap().getShortName() + " Drag dropped");
-                    interactiveRoadMap.getRoadmap().addRemove(currentRoadMap, interactiveRoadMap.getRoadmap(), interactiveRelease);
+                    interactiveRoadMap.getRoadmap().addRemove(currentRoadMap,
+                            interactiveRoadMap.getRoadmap(), interactiveRelease);
                 }
 
                 //TODO possibly needs cumulative commands
