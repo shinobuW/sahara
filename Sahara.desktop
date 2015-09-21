@@ -1,7 +1,0 @@
-[Desktop Entry]
-Comment=Sahara
-Terminal=false
-Name=Sahara
-Exec=/usr/bin/java -jar /home/cosc/student/cvs20/SENG302/Sahara/target/project-2-1.0-SNAPSHOT-launcher.jar
-Type=Application
-Icon=/home/cosc/student/cvs20/SENG302/Sahara/resources/icon.png
