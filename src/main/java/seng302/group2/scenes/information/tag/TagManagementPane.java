@@ -251,7 +251,6 @@ public class TagManagementPane extends SplitPane {
         // Create buttons
         Button saveButton = new Button("Save Changes");
         Button cancelButton = new Button("Cancel Changes");
-        Button deleteButton = new Button("Delete Tag");
 
         tagNameField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.length() > 20) {
@@ -283,34 +282,36 @@ public class TagManagementPane extends SplitPane {
 
         cancelButton.setOnAction(event -> constructDetail());
 
-        deleteButton.setOnAction(event -> {
-            if (popOver != null) {
-                Node parent = popOver.getOwnerNode();
-                double x = popOver.getX();
-                double y = popOver.getY();
-                popOver.hide();
-                showDeleteDialog(selectedTag);
-                popOver.setDetached(true);
-                Platform.runLater(() -> {
-                    popOver.show(parent, x, y);
-                    TagManagementPane managementPane = (TagManagementPane) popOver.getContentNode();
 
-                    Tag tag = managementPane.tagListView.getSelectionModel().getSelectedItem();
-
-                    managementPane.construct();
-
-                    if ((managementPane).tagListView.getItems().contains(tag)) {
-                        (managementPane).tagListView.getSelectionModel().select(tag);
-                    }
-                });
-            }
-            else {
-                showDeleteDialog(selectedTag);
-            }
-        });
+        //Commented as delete button no longer exists. Have kept the code for the popover logic involved,
+        //incase we need to reuse somewhere else in the project.
+//        deleteButton.setOnAction(event -> {
+//            if (popOver != null) {
+//                Node parent = popOver.getOwnerNode();
+//                double x = popOver.getX();
+//                double y = popOver.getY();
+//                popOver.hide();
+//                showDeleteDialog(selectedTag);
+//                popOver.setDetached(true);
+//                Platform.runLater(() -> {
+//                    popOver.show(parent, x, y);
+//                    TagManagementPane managementPane = (TagManagementPane) popOver.getContentNode();
+//
+//                    Tag tag = managementPane.tagListView.getSelectionModel().getSelectedItem();
+//
+//                    managementPane.construct();
+//
+//                    if ((managementPane).tagListView.getItems().contains(tag)) {
+//                        (managementPane).tagListView.getSelectionModel().select(tag);
+//                    }
+//                });
+//            }
+//            else {
+//                showDeleteDialog(selectedTag);
+//            }
+//        });
 
         HBox deleteBox = new HBox();
-        deleteBox.getChildren().addAll(deleteButton);
         deleteBox.setAlignment(Pos.CENTER_RIGHT);
 
 

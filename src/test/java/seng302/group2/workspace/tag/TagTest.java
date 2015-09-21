@@ -47,6 +47,7 @@ public class TagTest {
         Assert.assertEquals("tag", tag2.toString());
     }
 
+    //TODO Bronson
     @Test
     public void testGetTaggedItems() {
         Tag tag1 = new Tag("Tag1");
@@ -56,9 +57,6 @@ public class TagTest {
         peter.getTags().addAll(tag1);
 
         peter.getTags().get(0).setName("peter tags");
-
-        System.out.println(Global.currentWorkspace.getAllTags());
-        System.out.println(peter.getTags());
     }
 
     @Test

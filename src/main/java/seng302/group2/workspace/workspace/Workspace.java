@@ -531,7 +531,7 @@ public class Workspace extends SaharaItem implements Serializable {
             workspace.globalTags.add(item);
         }
 
-        workspace.prepTagSerialization();
+        workspace.postTagDeserialization();
 
         // Unset saved changes flag, we just opened the workspace.
         workspace.hasUnsavedChanges = false;
@@ -541,10 +541,6 @@ public class Workspace extends SaharaItem implements Serializable {
         for (Project proj : workspace.getProjects()) {
             proj.addListeners();
         }
-
-
-
-        //TODO Bronson Deserialization of tags
 
         SaharaItem.refreshIDs();
     }

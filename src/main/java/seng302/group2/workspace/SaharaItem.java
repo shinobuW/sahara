@@ -55,7 +55,6 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
 
 
     public static Set<SaharaItem> getAllItems() {
-        // @BRONSON
         return itemPool;
     }
 
