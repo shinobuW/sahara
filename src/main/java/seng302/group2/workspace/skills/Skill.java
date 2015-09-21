@@ -260,7 +260,6 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
 
             //Add any created tags to the global collection
             Global.currentWorkspace.getAllTags().clear();
-            System.out.println("Global tags: " + globalTags);
             Global.currentWorkspace.getAllTags().addAll(globalTags);
             //Add the tags a skill has to their list of tags
             skill.getTags().clear();

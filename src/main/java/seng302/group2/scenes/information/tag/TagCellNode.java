@@ -111,7 +111,7 @@ public class TagCellNode extends VBox implements SearchableControl {
      */
     public Node createDeletionNode(Tag tag) {
         ImageView deletionImage = new ImageView("icons/tag_remove.png");
-        Tooltip.create("Delete Tag", deletionImage, 50);
+        Tooltip.create("Remove", deletionImage, 50);
 
         deletionImage.setOnMouseEntered(me -> {
             this.getScene().setCursor(Cursor.HAND); //Change cursor to hand

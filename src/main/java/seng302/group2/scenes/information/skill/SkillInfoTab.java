@@ -65,6 +65,8 @@ public class SkillInfoTab extends SearchableTab {
         SearchableText title = new SearchableTitle(currentSkill.getShortName());
         //SearchableText desc = new SearchableText("Description: " + currentSkill.getDescription());
         CustomInfoLabel listViewLabel = new CustomInfoLabel("People who have this skill:", "");
+        TagLabel skillTags = new TagLabel(currentSkill.getTags());
+
         ObservableList<Person> peopleWithSkill = FXCollections.observableArrayList();
         for (Person p : Global.currentWorkspace.getPeople()) {
             if (p.getSkills().contains(currentSkill)) {
@@ -75,8 +77,8 @@ public class SkillInfoTab extends SearchableTab {
         SearchableListView<Person> personListView = personFilteredListView.getListView();
 
         // Add items to pane & search collection
-        basicInfoPane.getChildren().addAll(title, desc, listViewLabel, personFilteredListView);
-        Collections.addAll(searchControls, title, desc, listViewLabel, personFilteredListView);
+        basicInfoPane.getChildren().addAll(title, desc, skillTags, listViewLabel, personFilteredListView);
+        Collections.addAll(searchControls, title, desc, skillTags, listViewLabel, personFilteredListView);
     }
 
     /**
