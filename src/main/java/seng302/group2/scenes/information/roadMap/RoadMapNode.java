@@ -128,8 +128,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
         HBox releaseChildren = new HBox();
         releaseContent.setMinHeight(35);
         SearchableText shortNameField = new SearchableText(release.getShortName());
+        SearchableText projectName = new SearchableText("Project: " + release.getProject().toString());
         Insets insetsContent = new Insets(5, 15, 5, 5);
-        shortNameField.setPadding(insetsContent);
 
         VBox deletionBox = new VBox();
         ImageView deletionImage = new ImageView("icons/tag_remove.png");
@@ -192,8 +192,11 @@ public class RoadMapNode extends VBox implements SearchableControl {
         });
 
 
+        VBox content = new VBox(1);
+        content.getChildren().addAll(shortNameField, projectName);
+        releaseContent.getChildren().addAll(content, deletionBox);
+        content.setPadding(insetsContent);
 
-        releaseContent.getChildren().addAll(shortNameField, deletionBox);
         releaseContent.setAlignment(Pos.CENTER);
         releaseNode.getChildren().addAll(
                 releaseContent,
