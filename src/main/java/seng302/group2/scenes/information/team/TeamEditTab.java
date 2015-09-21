@@ -9,6 +9,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -16,10 +17,7 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableListView;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.person.Person;
@@ -51,6 +49,7 @@ public class TeamEditTab extends SearchableTab {
     private CustomComboBox<Role> roleComboBox;
     private Role noneRole = new Role("", Role.RoleType.NONE);
     ObservableList<Person> teamMembersList = observableArrayList();
+    TagField tagField;
 
 
     /**
@@ -165,6 +164,15 @@ public class TeamEditTab extends SearchableTab {
         editPane.setPadding(new Insets(25, 25, 25, 25));
         ScrollPane wrapper = new ScrollPane(editPane);
         this.setContent(wrapper);
+
+        // Set up the tagging field
+        SearchableText tagLabel = new SearchableText("Tags:", "-fx-font-weight: bold;", searchControls);
+        tagLabel.setMinWidth(60);
+        tagField = new TagField(baseTeam.getTags(), searchControls);
+        HBox.setHgrow(tagField, Priority.ALWAYS);
+
+        HBox tagBox = new HBox();
+        tagBox.getChildren().addAll(tagLabel, tagField);
 
 
         // Basic information fields
@@ -356,6 +364,7 @@ public class TeamEditTab extends SearchableTab {
         // Add items to pane & search collection
         editPane.getChildren().addAll(
                 shortNameField,
+                tagBox,
                 descriptionField,
                 memberListViews,
                 roleAssignmentBox,
@@ -388,7 +397,7 @@ public class TeamEditTab extends SearchableTab {
      */
     public void done() {
         if (isValidState()) { // validation
-            ArrayList<Tag> tags = new ArrayList<>();
+            ArrayList<Tag> tags = new ArrayList<>(tagField.getTags());
             baseTeam.edit(shortNameField.getText(),
                     descriptionField.getText(),
                     teamMembersList,

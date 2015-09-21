@@ -11,10 +11,7 @@ import javafx.scene.layout.VBox;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.FilteredListView;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableListView;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.team.Team;
@@ -127,6 +124,7 @@ public class TeamInfoTab extends SearchableTab {
 
         // Create Controls
         SearchableTitle title = new SearchableTitle(currentTeam.getShortName());
+        TagLabel teamTags = new TagLabel(currentTeam.getTags());
         CustomInfoLabel desc = new CustomInfoLabel("Team Description: ", currentTeam.getDescription());
         CustomInfoLabel listViewLabel = new CustomInfoLabel("", "");
 
@@ -142,6 +140,7 @@ public class TeamInfoTab extends SearchableTab {
 
         basicInfoPane.getChildren().addAll(
                 title,
+                teamTags,
                 desc,
                 separator
         );

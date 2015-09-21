@@ -11,10 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import seng302.group2.scenes.control.CustomInfoLabel;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreateReleaseDialog;
 import seng302.group2.scenes.dialog.CreateSprintDialog;
 import seng302.group2.scenes.dialog.CreateStoryDialog;
@@ -62,6 +59,7 @@ public class RoadMapInfoTab extends SearchableTab {
 
         // Create controls
         SearchableText title = new SearchableTitle(currentRoadMap.getShortName(), searchControls);
+        TagLabel roadMapTags = new TagLabel(currentRoadMap.getTags());
 
         Separator separator = new Separator();
 
@@ -135,6 +133,7 @@ public class RoadMapInfoTab extends SearchableTab {
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
                 title,
+                roadMapTags,
                 roadMapNode,
                 keyBox,
                 separator

@@ -14,6 +14,8 @@ import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.TagField;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.tag.Tag;
 
 import java.util.Collection;
@@ -32,6 +34,7 @@ public class TagCellNode extends VBox implements SearchableControl {
     private String tagName = "";
     private Color tagColor = Color.ROYALBLUE;
     private boolean removable;
+    private TagField tagField = null;
 
     private Set<SearchableControl> searchControls = new HashSet<>();
 
@@ -58,6 +61,23 @@ public class TagCellNode extends VBox implements SearchableControl {
         this.tagName = tag.getName();
         this.tagColor = tag.getColor();
         this.removable = removable;
+
+        searchableControls.add(this);
+
+        construct();
+    }
+
+    /**
+     * Constructor for a tag cell node. Adds to the given list of searchable controls
+     * @param tag The tag to display.
+     */
+    public TagCellNode(Tag tag, boolean removable,
+                       TagField tagField, Collection<SearchableControl> searchableControls) {
+        this.tag = tag;
+        this.tagName = tag.getName();
+        this.tagColor = tag.getColor();
+        this.removable = removable;
+        this.tagField = tagField;
 
         searchableControls.add(this);
 
@@ -153,7 +173,11 @@ public class TagCellNode extends VBox implements SearchableControl {
         });
 
         deletionImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            showDeleteDialog(tag);
+            if (this.tagField != null) {
+                this.tagField.getTags().remove(tag);
+                this.tagField.update();
+            }
+
             event.consume();
         });
 

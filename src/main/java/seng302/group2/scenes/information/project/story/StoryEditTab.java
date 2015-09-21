@@ -45,6 +45,7 @@ public class StoryEditTab extends SearchableTab {
     SearchableCheckBox readyStateCheck = new SearchableCheckBox("Ready?");
 
     ObservableList<Story> dependentOnList = FXCollections.observableArrayList();
+    TagField tagField;
 
     /**
      * Constructor for the StoryEditTab class. This constructor creates a JavaFX ScrollPane
@@ -150,6 +151,15 @@ public class StoryEditTab extends SearchableTab {
             estimateComboBox.setTooltip(tool);
         }
 
+        // Set up the tagging field
+        SearchableText tagLabel = new SearchableText("Tags:", "-fx-font-weight: bold;", searchControls);
+        tagLabel.setMinWidth(60);
+        tagField = new TagField(currentStory.getTags(), searchControls);
+        HBox.setHgrow(tagField, Priority.ALWAYS);
+
+        HBox tagBox = new HBox();
+        tagBox.getChildren().addAll(tagLabel, tagField);
+
         shortNameCustomField.setMaxWidth(275);
         longNameTextField.setMaxWidth(275);
         descriptionTextArea.setMaxWidth(275);
@@ -241,6 +251,7 @@ public class StoryEditTab extends SearchableTab {
         // Add items to pane & search collection
         editPane.getChildren().addAll(
                 shortNameCustomField,
+                tagBox,
                 longNameTextField,
                 descriptionTextArea,
                 priorityNumberField,
@@ -283,6 +294,7 @@ public class StoryEditTab extends SearchableTab {
                 currentStory.getPriority().toString());
         boolean readyUnchanged = readyStateCheck.getCheckBox().isSelected() == currentStory.getReady();
         boolean estimateUnchanged = estimateComboBox.getValue().equals(currentStory.getEstimate());
+        boolean tagsUnchanged = tagField.getTags().equals(currentStory.getTags());
 
         boolean dependentChanged = true;
         if (currentStory.getDependentOn().containsAll(dependentOnList)
@@ -292,7 +304,7 @@ public class StoryEditTab extends SearchableTab {
 
 
         if (shortNameUnchanged && longNameUnchanged && descriptionUnchanged
-                && priorityUnchanged && readyUnchanged && estimateUnchanged && !dependentChanged) {
+                && priorityUnchanged && readyUnchanged && estimateUnchanged && !dependentChanged && tagsUnchanged) {
             // No changes
             currentStory.switchToInfoScene();
             return;
@@ -305,7 +317,7 @@ public class StoryEditTab extends SearchableTab {
 
         if (correctShortName && correctPriority) {
             // Valid short name, make the edit
-            ArrayList<Tag> tags = new ArrayList<>();
+            ArrayList<Tag> tags = new ArrayList<>(tagField.getTags());
 
             currentStory.edit(shortNameCustomField.getText(),
                     longNameTextField.getText(),

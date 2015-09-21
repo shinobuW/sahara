@@ -6,10 +6,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.CustomInfoLabel;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.control.search.SearchableTitle;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.ArrayList;
@@ -62,6 +59,7 @@ public class WorkspaceInfoTab extends SearchableTab {
         // Create Controls
         SearchableText title = new SearchableTitle(currentWorkspace.getLongName());
         CustomInfoLabel shortName = new CustomInfoLabel("Short Name: ", currentWorkspace.getShortName());
+        TagLabel workspaceTags = new TagLabel(currentWorkspace.getTags());
         CustomInfoLabel desc = new CustomInfoLabel("Workspace Description: ", currentWorkspace.getDescription());
         CustomInfoLabel numOfPeople = new CustomInfoLabel("Number of people in " + currentWorkspace.getShortName()
                 + ": ", currentWorkspace.getNumPeople().toString());
@@ -74,6 +72,7 @@ public class WorkspaceInfoTab extends SearchableTab {
         basicInfoPane.getChildren().addAll(
                 title,
                 shortName,
+                workspaceTags,
                 desc,
                 numOfProjects,
                 numOfTeams,

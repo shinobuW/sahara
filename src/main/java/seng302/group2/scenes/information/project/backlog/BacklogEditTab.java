@@ -14,10 +14,7 @@ import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.*;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableListView;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -43,6 +40,7 @@ public class BacklogEditTab extends SearchableTab {
     CustomTextField longNameField = new CustomTextField("Long Name:");
     CustomTextArea descriptionField = new CustomTextArea("Backlog Description:", 300);
     ObservableList<Story> backlogStoryList = observableArrayList();
+    TagField tagField;
 
     /**
      * Constructor for the BacklogEditTab class. This constructor creates a JavaFX ScrollPane
@@ -104,6 +102,15 @@ public class BacklogEditTab extends SearchableTab {
         descriptionField.setText(baseBacklog.getDescription());
         descriptionField.setMaxWidth(275);
         SearchableText errorField = new SearchableText("");
+
+        // Set up the tagging field
+        SearchableText tagLabel = new SearchableText("Tags:", "-fx-font-weight: bold;", searchControls);
+        tagLabel.setMinWidth(60);
+        tagField = new TagField(baseBacklog.getTags(), searchControls);
+        HBox.setHgrow(tagField, Priority.ALWAYS);
+
+        HBox tagBox = new HBox();
+        tagBox.getChildren().addAll(tagLabel, tagField);
 
         scaleComboBox = new CustomComboBox<String>("Estimation Scale:", true);
 
@@ -206,6 +213,7 @@ public class BacklogEditTab extends SearchableTab {
 
         editPane.getChildren().addAll(
                 shortNameField,
+                tagBox,
                 longNameField,
                 descriptionField,
                 scaleHBox,
@@ -240,7 +248,7 @@ public class BacklogEditTab extends SearchableTab {
     public void done() {
         if (isValidState()) { // validation
             // Edit Command.
-            ArrayList<Tag> tags = new ArrayList<>();
+            ArrayList<Tag> tags = new ArrayList<>(tagField.getTags());
             baseBacklog.edit(shortNameField.getText(),
                     longNameField.getText(),
                     descriptionField.getText(),

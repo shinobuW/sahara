@@ -110,9 +110,12 @@ public class SkillEditTab extends SearchableTab {
                 currentSkill.getShortName());
         boolean descriptionUnchanged = descriptionTextArea.getText().equals(
                 currentSkill.getDescription());
+        boolean tagsUnchanged = tagField.getTags().equals(currentSkill.getTags());
 
-//
-
+        if (shortNameUnchanged && descriptionUnchanged && tagsUnchanged) {
+            currentSkill.switchToInfoScene();
+            return;
+        }
 
         boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
                 currentSkill.getShortName());

@@ -115,6 +115,7 @@ public class PersonInfoTab extends SearchableTab {
         listViewHBox.getChildren().addAll(skillVBox, taskVBox);
 
         CustomInfoLabel shortName = new CustomInfoLabel("Short Name: ", currentPerson.getShortName());
+        TagLabel personTags = new TagLabel(currentPerson.getTags());
         CustomInfoLabel emailAddress = new CustomInfoLabel("Email Address: ", currentPerson.getEmail());
         CustomInfoLabel birthDate = new CustomInfoLabel("Birth Date: ", currentPerson.getDateString());
         CustomInfoLabel desc = new CustomInfoLabel("Person Description: ", currentPerson.getDescription());
@@ -150,6 +151,7 @@ public class PersonInfoTab extends SearchableTab {
         basicInfoPane.getChildren().addAll(
                 title,
                 shortName,
+                personTags,
                 emailAddress,
                 birthDate,
                 desc,

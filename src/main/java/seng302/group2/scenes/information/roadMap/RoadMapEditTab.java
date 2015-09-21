@@ -8,16 +8,14 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.RequiredField;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableListView;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.util.validation.PriorityFieldValidator;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.Project;
@@ -46,6 +44,7 @@ public class RoadMapEditTab extends SearchableTab {
     RoadMap currentRoadMap;
     RequiredField priorityNumberField = new RequiredField("Story Priority:");
     ObservableList<Release> roadMapList = observableArrayList();
+    TagField tagField;
 
     /**
      * Constructor for the RoadMapEditTab class. This constructor creates a JavaFX ScrollPane
@@ -104,6 +103,15 @@ public class RoadMapEditTab extends SearchableTab {
         }
         availableReleases.removeAll(roadMapList);
 
+        // Set up the tagging field
+        SearchableText tagLabel = new SearchableText("Tags:", "-fx-font-weight: bold;", searchControls);
+        tagLabel.setMinWidth(60);
+        tagField = new TagField(currentRoadMap.getTags(), searchControls);
+        HBox.setHgrow(tagField, Priority.ALWAYS);
+
+        HBox tagBox = new HBox();
+        tagBox.getChildren().addAll(tagLabel, tagField);
+
 
         // List views
         FilteredListView<Release> roadMapReleaseFiltered = new FilteredListView<Release>(roadMapList,
@@ -155,6 +163,7 @@ public class RoadMapEditTab extends SearchableTab {
 
         editPane.getChildren().addAll(
                 shortNameField,
+                tagBox,
                 priorityNumberField,
                 storyListViews,
                 errorField
@@ -187,6 +196,12 @@ public class RoadMapEditTab extends SearchableTab {
                 currentRoadMap.getShortName().toString());
         boolean priorityUnchanged = priorityNumberField.getText().equals(
                 currentRoadMap.getPriority().toString());
+        boolean tagsUnchanged = tagField.getTags().equals(currentRoadMap.getTags());
+
+        if (shortNameUnchanged && priorityUnchanged && tagsUnchanged) {
+            currentRoadMap.switchToInfoScene();
+            return;
+        }
 
         boolean correctShortName = ShortNameValidator.validateShortName(shortNameField,
                 currentRoadMap.getShortName());
@@ -194,7 +209,7 @@ public class RoadMapEditTab extends SearchableTab {
 
         if (correctPriority && correctShortName) { // validation
             // Edit Command.
-            ArrayList<Tag> tags = new ArrayList<>();
+            ArrayList<Tag> tags = new ArrayList<>(tagField.getTags());
             currentRoadMap.edit(shortNameField.getText(), new Integer(priorityNumberField.getText()),
                     roadMapList, tags);
             currentRoadMap.switchToInfoScene();

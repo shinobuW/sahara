@@ -144,12 +144,12 @@ public class TagField extends CustomTextField implements SearchableControl {
     /**
      * Calls an update on the list of tags so that new tags entered are visible
      */
-    void update() {
+    public void update() {
 
         tagStack.getChildren().clear();
 
         for (Tag tag : tags) {
-            TagCellNode node = new TagCellNode(tag, true, searchControls);
+            TagCellNode node = new TagCellNode(tag, true, this, searchControls);
             tagStack.getChildren().add(node);
         }
 
