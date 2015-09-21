@@ -79,6 +79,7 @@ public class StoryInfoTab extends SearchableTab {
 
         Collections.addAll(searchControls,
                 title,
+                storyTags,
                 description,
                 project,
                 priority,

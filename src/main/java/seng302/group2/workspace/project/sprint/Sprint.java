@@ -416,6 +416,16 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
         Global.commandManager.executeCommand(addStory);
     }
 
+    /**
+     * Adds a story to the sprints list of stories and Removes from another sprint.
+     *
+     * @param story Story to add
+     */
+    public void addRemove(Sprint newSprint, Sprint oldSprint, Story story) {
+        Command addStory = new AddRemoveStoryCommand(newSprint, oldSprint, story);
+        Global.commandManager.executeCommand(addStory);
+    }
+
 
     /**
      * Method for creating an XML element for the Sprint within report generation
@@ -858,6 +868,84 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
                 }
             }
             return mapped_sp && mapped_story;
+        }
+    }
+
+    /**
+     * A command class for moving a Story from one sprint to another.
+     */
+    private class AddRemoveStoryCommand implements Command {
+        private Sprint newSprint;
+        private Sprint oldSprint;
+        private Story story;
+
+        /**
+         * Constructor for the story add/remove command.
+         * @param newSprint The sprint to which the story is to be added.
+         * @param oldSprint The sprint to which the story is to be added.
+         * @param story The story to be added.
+         */
+        AddRemoveStoryCommand(Sprint newSprint, Sprint oldSprint, Story story) {
+            this.oldSprint = oldSprint;
+            this.newSprint = newSprint;
+            this.story = story;
+        }
+
+        /**
+         * Executes the Story add/remove command
+         */
+        public void execute() {
+            newSprint.stories.add(story);
+            story.setSprint(newSprint);
+            oldSprint.stories.remove(story);
+        }
+
+        /**
+         * Undoes the story add/remove command.
+         */
+        public void undo() {
+            newSprint.stories.remove(story);
+            story.setSprint(oldSprint);
+            oldSprint.stories.add(story);
+        }
+
+        /**
+         * Gets the String value of the Command for adding/removing stories.
+         */
+        public String getString() {
+            return "the addition of Story \"" + story.getShortName() + "\" to Sprint \""
+                    + newSprint.getGoal() + "\".";
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override //
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped_new = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(newSprint)) {
+                    this.newSprint = (Sprint) item;
+                    mapped_new = true;
+                }
+            }
+            boolean mapped_old = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(oldSprint)) {
+                    this.oldSprint = (Sprint) item;
+                    mapped_old = true;
+                }
+            }
+            boolean mapped_story = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(story)) {
+                    this.story = (Story) item;
+                    mapped_story = true;
+                }
+            }
+            return mapped_new && mapped_old && mapped_story;
         }
     }
 }

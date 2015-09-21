@@ -246,6 +246,7 @@ public class BacklogInfoTab extends SearchableTab {
         Collections.addAll(searchControls,
                 title,
                 shortName,
+                backlogTags,
                 description,
                 project,
                 po,

@@ -81,6 +81,7 @@ public class ReleaseInfoTab extends SearchableTab {
 
         Collections.addAll(searchControls,
                 title,
+                releaseTags,
                 description,
                 releaseDate,
                 projectLabel

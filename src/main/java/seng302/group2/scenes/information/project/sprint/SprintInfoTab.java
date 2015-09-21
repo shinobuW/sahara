@@ -144,6 +144,7 @@ public class SprintInfoTab extends SearchableTab {
                     title,
                     sprintName,
                     sprintGoal,
+                    sprintTags,
                     sprintStart,
                     sprintEnd,
                     desc,

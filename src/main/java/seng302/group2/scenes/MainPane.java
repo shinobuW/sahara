@@ -21,6 +21,7 @@ import seng302.group2.workspace.categories.subCategory.SubCategory;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
 import java.util.prefs.Preferences;
 
 import static seng302.group2.App.content;
@@ -62,20 +63,20 @@ public class MainPane extends BorderPane {
             content.getItems().add(treeView);
         }
 
+        VBox.setVgrow(contentPane, Priority.ALWAYS);
+
         VBox stickyBarBox = new VBox();
-        VBox.setVgrow(stickyBarBox, Priority.ALWAYS);
+        VBox.setVgrow(stickyBarBox, Priority.SOMETIMES);
         stickyBarBox.setAlignment(Pos.BOTTOM_LEFT);
         stickyBarBox.getChildren().addAll(new Separator(), stickyBar);
 
         VBox contentVBox = new VBox();
         contentVBox.getChildren().addAll(contentPane, stickyBarBox);
 
-
         content.getItems().add(contentVBox);
         statusBar = statusBar("Opened the Project");
 
         this.setCenter(content);
-
 
 //        statusBar = statusBar(Global.commandManager.lastAction());
 
@@ -92,6 +93,10 @@ public class MainPane extends BorderPane {
      */
     public static MainToolbar getToolBar() {
         return toolBar;
+    }
+
+    public TreeViewWithItems<SaharaItem> getTree() {
+        return treeView;
     }
 
     /**

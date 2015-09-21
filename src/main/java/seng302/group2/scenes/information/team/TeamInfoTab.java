@@ -147,6 +147,7 @@ public class TeamInfoTab extends SearchableTab {
 
         Collections.addAll(searchControls,
                 title,
+                teamTags,
                 desc
         );
 
