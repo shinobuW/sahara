@@ -50,7 +50,6 @@ public class SkillInfoTab extends SearchableTab {
 
     @Override
     public void construct() {
-        System.out.println(Global.currentWorkspace.getAllTags());
         // Tab settings
         this.setText("Basic Information");
         Pane basicInfoPane = new VBox(10);

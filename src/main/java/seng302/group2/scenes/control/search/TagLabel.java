@@ -24,15 +24,18 @@ public class TagLabel extends HBox implements SearchableControl {
         CustomInfoLabel label = new CustomInfoLabel("Tags: ", "", searchControls);
         this.getChildren().add(label);
         for (Tag tag : tags) {
-            TagCellNode node = new TagCellNode(tag, false);
+            TagCellNode node = new TagCellNode(tag, false, searchControls);
             this.getChildren().add(node);
         }
     }
 
     @Override
     public boolean query(String query) {
-        // TODO @Bronson
-        return false;
+        boolean found = false;
+        for (SearchableControl control : searchControls) {
+            found = control.query(query) || found;
+        }
+        return found;
     }
 
     @Override
