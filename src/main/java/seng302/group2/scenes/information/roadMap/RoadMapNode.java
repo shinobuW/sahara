@@ -411,6 +411,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
         deletionImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             showDeleteDialog(item);
             event.consume();
+            App.mainPane.refreshAll();
+
         });
 
 
