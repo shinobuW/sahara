@@ -21,6 +21,7 @@ import seng302.group2.workspace.categories.subCategory.SubCategory;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
 import java.util.prefs.Preferences;
 
 import static seng302.group2.App.content;
@@ -92,6 +93,10 @@ public class MainPane extends BorderPane {
      */
     public static MainToolbar getToolBar() {
         return toolBar;
+    }
+
+    public TreeViewWithItems<SaharaItem> getTree() {
+        return treeView;
     }
 
     /**

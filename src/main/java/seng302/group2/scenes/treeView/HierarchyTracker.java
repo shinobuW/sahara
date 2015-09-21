@@ -1,6 +1,8 @@
 package seng302.group2.scenes.treeView;
 
 import javafx.scene.control.TreeItem;
+import seng302.group2.App;
+import seng302.group2.Global;
 import seng302.group2.workspace.SaharaItem;
 
 import java.util.HashMap;
@@ -18,6 +20,16 @@ public class HierarchyTracker {
      */
     private static Map<SaharaItem, Boolean> collapseMap = new HashMap<>();
 
+
+    /**
+     * Analyses items in the workspace (usually after a deserialization,) and adds their expansion values to the
+     * tracking map
+     */
+    public static void expandWorkspace() {
+        collapseMap.put(Global.currentWorkspace, true);
+    }
+
+
     /**
      * Refreshes the mapping of the tree items and if they are expanded or not.
      *
@@ -25,12 +37,13 @@ public class HierarchyTracker {
      */
     public static void refreshMap(TreeViewWithItems<SaharaItem> tree) {
         for (TreeItem<SaharaItem> item : tree.getTreeItems()) {
+            System.out.println(item + " " + item.isExpanded());
             collapseMap.put(item.getValue(), item.isExpanded());
         }
     }
 
     /**
-     * Restores the mapping of the tree items from the dictionary of expanded items.
+     * Restores the mapping of the tree items from the internal dictionary of expanded items.
      *
      * @param tree The tree to restore the mapping of
      */
