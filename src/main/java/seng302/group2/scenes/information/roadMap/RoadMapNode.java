@@ -6,12 +6,13 @@
 package seng302.group2.scenes.information.roadMap;
 
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -46,9 +47,12 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 public class RoadMapNode extends VBox implements SearchableControl {
     
     List<SearchableControl> searchControls = new ArrayList<>();
+    RoadMap roadMap;
+    Release selectedRelease;
 
     
     public RoadMapNode(RoadMap currentRoadMap) {
+        roadMap = currentRoadMap;
         HBox roadMapContent = new HBox();
 
 
@@ -65,7 +69,6 @@ public class RoadMapNode extends VBox implements SearchableControl {
         shortNameField.setStyle("-fx-font: 35px Tahoma;");
 
         HBox.setHgrow(roadMapContent, Priority.ALWAYS);
-
 
 
         VBox roadMapVbox = new VBox();
@@ -90,8 +93,51 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         
         for (Release release : currentRoadMap.getReleases()) {
-            roadMapChildren.getChildren().add(createReleaseNode(release, currentRoadMap));
+            Node releaseNode = createReleaseNode(release, currentRoadMap);
+            roadMapChildren.getChildren().add(releaseNode);
+
+            releaseNode.setOnDragDetected(event -> {
+                selectedRelease = release;
+                Dragboard dragBoard = this.startDragAndDrop(TransferMode.MOVE);
+                dragBoard.setDragView(this.snapshot(null, null));
+                ClipboardContent content = new ClipboardContent();
+                content.putString("");
+                dragBoard.setContent(content);
+            });
+
+//            releaseNode.setOnDragOver(event -> {
+//                Dragboard db = event.getDragboard();
+//                if (db.hasContent(DataFormat.PLAIN_TEXT)) {
+//                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+//                    event.consume();
+//                }
+//            });
+
+//            releaseNode.setOnDragDropped(event -> {
+//                Dragboard db = event.getDragboard();
+//                if (db.hasContent(DataFormat.PLAIN_TEXT)) {
+//                    int draggedIndex = (Integer) db.getContent(DataFormat.PLAIN_TEXT);
+//                    T draggedItem = table.getItems().remove(draggedIndex);
+//
+//                    int dropIndex;
+//
+//                    if (row.isEmpty()) {
+//                        dropIndex = table.getItems().size();
+//                    }
+//                    else {
+//                        dropIndex = row.getIndex();
+//                    }
+//
+//                    table.getItems().add(dropIndex, draggedItem);
+//
+//                    event.setDropCompleted(true);
+//                    table.getSelectionModel().select(dropIndex);
+//                    event.consume();
+//                }
+//            });
         }
+
+
 
         this.getChildren().addAll(
                 roadMapContent,
@@ -365,6 +411,14 @@ public class RoadMapNode extends VBox implements SearchableControl {
         deletionBox.getChildren().addAll(deletionImage);
 
         return deletionBox;
+    }
+
+    public RoadMap getRoadmap() {
+        return roadMap;
+    }
+
+    public Release getSelectedRelease() {
+        return selectedRelease;
     }
     
 }
