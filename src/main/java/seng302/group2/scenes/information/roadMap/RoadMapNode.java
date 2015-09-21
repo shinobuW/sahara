@@ -11,8 +11,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
@@ -23,23 +22,23 @@ import javafx.scene.text.Text;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.PopOverTip;
 import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.roadMap.RoadMap;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -322,6 +321,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
         ImageView deletionImage = new ImageView("icons/tag_remove.png");
         Tooltip.create("Remove Story from Sprint", deletionImage, 50);
 
+
         deletionImage.setOnMouseEntered(me -> {
             this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
         });
@@ -396,9 +396,13 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
 
     private VBox deletionBox(SaharaItem item) {
+        HBox iconBox = new HBox();
         VBox deletionBox = new VBox();
         ImageView deletionImage = new ImageView("icons/tag_remove.png");
-        Tooltip.create("Remove", deletionImage, 50);
+        Tooltip.create("Delete Sprint", deletionImage, 50);
+
+        ImageView addImage = new ImageView("icons/add.png");
+        Tooltip.create("Add Story to Sprint", addImage, 50);
 
         deletionImage.setOnMouseEntered(me -> {
             this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
@@ -415,12 +419,66 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         });
 
+        addImage.setOnMouseEntered(me -> {
+            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+        });
 
-        Insets insetsNode = new Insets(0, 5, 5, 0);
+        addImage.setOnMouseExited(me -> {
+            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+        });
+
+        addImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            event.consume();
+
+            PopOver addStoryPopover = new PopOver();
+            VBox addContent = new VBox();
+            addContent.setPadding(new Insets(8, 8, 8, 8));
+            VBox existingStories = new VBox(5);
+            addContent.setPadding(new Insets(8, 8, 8, 8));
+
+            ObservableList<Story> unassignedStories = observableArrayList();
+            for (Story story : Global.currentWorkspace.getAllStories()) {
+                if (story.getShortName().equals("Slurp")) {
+                    System.out.println(story.getSprint());
+                }
+                if (story.getSprint() == null) {
+                    unassignedStories.add(story);
+                }
+                //System.out.println(story.getShortName() + ": " + story.getBacklog());
+            }
+
+            FilteredListView<Story> unassignedStoryBox = new FilteredListView<>(unassignedStories,
+                    "Unassigned Stories");
+            SearchableListView<Story> unassignedStoryListView = unassignedStoryBox.getListView();
+            unassignedStoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            unassignedStoryListView.getSelectionModel().select(0);
+
+            Button btnAdd = new Button("Add");
+            btnAdd.setOnAction((event_) -> {
+                Collection<Story> selectedStories = new ArrayList<>();
+                selectedStories.addAll(unassignedStoryListView.getSelectionModel().getSelectedItems());
+                for (Story story : selectedStories) {
+                    ((Sprint) item).add(story);
+                }
+            });
+
+            existingStories.getChildren().addAll(unassignedStoryBox, btnAdd);
+
+            TitledPane collapsableExisting = new TitledPane("Add Unassigned Stories", existingStories);
+            collapsableExisting.setExpanded(true);
+            collapsableExisting.setAnimated(true);
+
+            addContent.getChildren().add(collapsableExisting);
+            addStoryPopover.setContentNode(addContent);
+            addStoryPopover.show(addImage);
+        });
+
+            Insets insetsNode = new Insets(0, 5, 5, 0);
         this.setPadding(insetsNode);
-        deletionBox.getChildren().addAll(deletionImage);
+            iconBox.getChildren().addAll(addImage, deletionImage);
+            deletionBox.getChildren().addAll(iconBox);
 
-        return deletionBox;
+            return deletionBox;
     }
 
     private void initReleaseListeners(Node releaseNode, Release currentRelease) {
