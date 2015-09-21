@@ -33,9 +33,11 @@ public class TagListCell extends ListCell<Tag> {
     protected void updateItem(Tag tagItem, boolean bln) {
         super.updateItem(tagItem, bln);
         if (tagItem != null) {
+            cell = new HBox(10);
             deleteCell.setAlignment(Pos.BASELINE_RIGHT);
             Node deletionNode = createDeletionNode(tagItem);
             Label tagName = new Label(tagItem.getName());
+            deleteCell.getChildren().clear();
             deleteCell.getChildren().add(deletionNode);
             cell.getChildren().addAll(tagName, deleteCell);
             setGraphic(cell);
