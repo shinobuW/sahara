@@ -657,10 +657,10 @@ public class LoggingEffortPane extends Pane {
     }
 
     /**
-     *
-     * @param peopleList
-     * @param removePerson
-     * @param isPartnerList
+     * Updates the list of people bound to the combo boxes so that the partner/logger is remove from them
+     * @param peopleList the list to update
+     * @param removePerson the person to remove
+     * @param isPartnerList whether the list is the one bound to the partner combo box
      */
     private void updateObservablePeopleList(ObservableList<Person> peopleList, Person removePerson,
                                             Boolean isPartnerList) {
