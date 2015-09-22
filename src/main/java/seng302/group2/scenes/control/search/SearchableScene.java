@@ -41,7 +41,7 @@ public abstract class SearchableScene extends TabPane {
      * @return a collection of tabs with items found on them
      */
     public Map advancedQuery(String query, SearchType searchType) {
-        Map<SearchableTab, Integer> matches = new LinkedHashMap<>();
+        Map<SearchableTab, Integer> matches = new HashMap<>();
 
         for (SearchableTab tab : getSearchableTabs()) {
             int result = tab.advancedQuery(query, searchType);

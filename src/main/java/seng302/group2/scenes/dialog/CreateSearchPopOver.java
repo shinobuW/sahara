@@ -279,7 +279,7 @@ public class CreateSearchPopOver extends PopOver {
     }
 
     private static Map sortByValue(Map map) {
-        List list = new LinkedList(map.entrySet());
+        List list = new ArrayList(map.entrySet());
         Collections.sort(list, new Comparator() {
             public int compare(Object o1, Object o2) {
                 return ((Comparable) ((Map.Entry) (o2)).getValue())
@@ -287,7 +287,7 @@ public class CreateSearchPopOver extends PopOver {
             }
         });
 
-        Map result = new LinkedHashMap();
+        Map result = new HashMap<>();
         for (Iterator it = list.iterator(); it.hasNext(); ) {
             Map.Entry entry = (Map.Entry) it.next();
             result.put(entry.getKey(), entry.getValue());
@@ -308,7 +308,7 @@ public class CreateSearchPopOver extends PopOver {
     public List<SearchResultCellNode> runSearch(List<String> checkedItems, String searchText, SearchType searchType,
                                                 boolean sortByTree) {
 
-        Map<SearchResultCellNode, Integer> results = new LinkedMap();
+        Map<SearchResultCellNode, Integer> results = new HashMap<>();
 
         for (String item : checkedItems) {
             if (item.equals("Projects")) {
@@ -441,7 +441,6 @@ public class CreateSearchPopOver extends PopOver {
             }
         }
 
-        System.out.println("Before" + results);
         List<SearchResultCellNode> returnedList;
         if (sortByTree) {
             returnedList = new ArrayList<>();
@@ -449,12 +448,12 @@ public class CreateSearchPopOver extends PopOver {
 
         }
         else {
+            System.out.println("Sorting");
             Map<SearchResultCellNode, Integer> searchResults = sortByValue(results);
             returnedList = new ArrayList<>();
             returnedList.addAll(searchResults.keySet());
 
         }
-        System.out.println("After " + returnedList);
 
         return returnedList;
     }
