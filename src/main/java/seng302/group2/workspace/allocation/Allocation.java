@@ -275,10 +275,11 @@ public class Allocation extends SaharaItem implements Serializable, Comparable<A
         }
 
         /**
-         * Gets the String value of the Command for editting allocations.
+         * Gets the String value of the Command for editing allocations.
          */
         public String getString() {
-            return null;
+            return "the editing of an Allocation for \"" + team.getShortName() + "\" on \""
+                    + project.getShortName() + "\"";
         }
 
         /**
@@ -340,7 +341,8 @@ public class Allocation extends SaharaItem implements Serializable, Comparable<A
          * Gets the String value of the Command for deleting allocations.
          */
         public String getString() {
-            return null;
+            return "the deletion of an Allocation for \"" + team.getShortName() + "\" on \""
+                    + project.getShortName() + "\"";
         }
 
         /**

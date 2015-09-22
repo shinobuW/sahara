@@ -634,7 +634,7 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
          * Gets the String value of the Command for Editting a person.
          */
         public String getString() {
-            return "the edit of Person \"" + shortName + "\".";
+            return "the edit of Person \"" + shortName + "\"";
         }
 
         /**
@@ -776,7 +776,7 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
          * Gets the String value of the Command for deleting a Person.
          */
         public String getString() {
-            return "the deletion of Person \"" + person.getShortName() + "\".";
+            return "the deletion of Person \"" + person.getShortName() + "\"";
         }
 
         /**

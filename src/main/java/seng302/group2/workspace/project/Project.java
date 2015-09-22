@@ -844,7 +844,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for editting projects.
          */
         public String getString() {
-            return "the edit of Project \"" + proj.getShortName() + "\".";
+            return "the edit of Project \"" + proj.getShortName() + "\"";
         }
 
         /**
@@ -940,7 +940,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for deleting projects.
          */
         public String getString() {
-            return "the deletion of Project \"" + proj.getShortName() + "\".";
+            return "the deletion of Project \"" + proj.getShortName() + "\"";
         }
 
         /**
@@ -998,7 +998,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for adding releases.
          */
         public String getString() {
-            return "the creation of Release \"" + release.getShortName() + "\".";
+            return "the creation of Release \"" + release.getShortName() + "\"";
         }
 
         /**
@@ -1064,7 +1064,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for adding stories.
          */
         public String getString() {
-            return "the creation of Story \"" + story.getShortName() + "\".";
+            return "the creation of Story \"" + story.getShortName() + "\"";
         }
 
         /**
@@ -1138,7 +1138,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for adding stories.
          */
         public String getString() {
-            return "the creation of Story \"" + story.getShortName() + "\".";
+            return "the creation of Story \"" + story.getShortName() + "\"";
         }
 
         /**
@@ -1211,7 +1211,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for adding backlogs.
          */
         public String getString() {
-            return "the creation of Backlog \"" + backlog.getShortName() + "\".";
+            return "the creation of Backlog \"" + backlog.getShortName() + "\"";
         }
 
         /**
@@ -1274,7 +1274,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for adding sprints.
          */
         public String getString() {
-            return "the creation of Sprint \"" + sprint.getGoal() + "\".";
+            return "the creation of Sprint \"" + sprint.getGoal() + "\"";
         }
 
         /**
@@ -1343,7 +1343,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          */
         public String getString() {
             return "the creation of an Allocation for \"" + team.getShortName() + "\" on \""
-                    + proj.getShortName() + "\".";
+                    + proj.getShortName() + "\"";
         }
 
         /**

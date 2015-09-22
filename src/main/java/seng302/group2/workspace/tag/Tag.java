@@ -221,7 +221,7 @@ public class Tag extends SaharaItem implements Serializable, Comparable<Tag> {
          * Gets the String value of the Command for Tags.
          */
         public String getString() {
-            return null;
+            return "the edit of Tag\"" + tag.getName() + "\"";
         }
 
         /**
@@ -279,7 +279,7 @@ public class Tag extends SaharaItem implements Serializable, Comparable<Tag> {
          * Gets the String value of the Command for Tags delete command.
          */
         public String getString() {
-            return null;
+            return "the deletion of Tag \"" + tag.getName() + "\"";
         }
 
         /**

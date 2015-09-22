@@ -221,10 +221,10 @@ public class LoggingEffortPane extends Pane {
 
         logTable.setOnMouseClicked(event -> {
             if (logTable.getSelectionModel().getSelectedItem() != null) {
-                updateObservablePeopleList(availableLoggers, logTable.getSelectionModel().getSelectedItem().getPartner(),
-                        false);
-                updateObservablePeopleList(availablePartners, logTable.getSelectionModel().getSelectedItem().getLogger(),
-                        true);
+                updateObservablePeopleList(availableLoggers, logTable.getSelectionModel().getSelectedItem().
+                                getPartner(), false);
+                updateObservablePeopleList(availablePartners, logTable.getSelectionModel().getSelectedItem().
+                                getLogger(), true);
             }
 
         });

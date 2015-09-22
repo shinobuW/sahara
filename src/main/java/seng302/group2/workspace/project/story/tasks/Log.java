@@ -522,7 +522,7 @@ public class Log extends SaharaItem implements Serializable {
          * Gets the String value of the Command for Editting of Logs.
          */
         public String getString() {
-            return "the edit of Log \"" + log.toString() + "\".";
+            return "the edit of Log \"" + log.toString() + "\"";
         }
 
 
@@ -689,7 +689,7 @@ public class Log extends SaharaItem implements Serializable {
          * Gets the String value of the Command for editing the description of Logs.
          */
         public String getString() {
-            return "the edit of Description on Log \"" + log.toString() + "\".";
+            return "the edit of Description on Log \"" + log.toString() + "\"";
         }
 
 
@@ -748,7 +748,7 @@ public class Log extends SaharaItem implements Serializable {
          */
         @Override
         public String getString() {
-            return "the edit of Log \"" + log.toString() + "\".";
+            return "the edit of Log \"" + log.toString() + "\"";
         }
 
 
@@ -809,7 +809,7 @@ public class Log extends SaharaItem implements Serializable {
 
         @Override
         public String getString() {
-            return "the edit of Duration on Log \"" + log.toString() + "\".";
+            return "the edit of Duration on Log \"" + log.toString() + "\"";
         }
 
         @Override

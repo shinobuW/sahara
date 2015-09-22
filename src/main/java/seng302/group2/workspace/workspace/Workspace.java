@@ -1145,7 +1145,7 @@ public class Workspace extends SaharaItem implements Serializable {
          */
         @Override
         public String getString() {
-            return "the edit of Workspace \"" + ws.getShortName() + "\".";
+            return "the edit of Workspace \"" + ws.getShortName() + "\"";
         }
 
         /**
@@ -1240,8 +1240,7 @@ public class Workspace extends SaharaItem implements Serializable {
          * Gets the String value of the Command for adding a project.
          */
         public String getString() {
-            return "the creation of Project \"" + proj.getShortName() + "\".";
-        }
+            return "the creation of Project \"" + proj.getShortName() + "\"";        }
 
         /**
          * Searches the stateObjects to find an equal model class to map to
@@ -1293,8 +1292,7 @@ public class Workspace extends SaharaItem implements Serializable {
          * Gets the String value of the Command for adding teams.
          */
         public String getString() {
-            return "the creation of Team \"" + team.getShortName() + "\".";
-        }
+            return "the creation of Team \"" + team.getShortName() + "\"";       }
 
         /**
          * Searches the stateObjects to find an equal model class to map to
@@ -1348,8 +1346,7 @@ public class Workspace extends SaharaItem implements Serializable {
          * Gets the String value of the Command for adding roadmaps.
          */
         public String getString() {
-            return "the creation of Road map \"" + roadMap.getShortName() + "\".";
-        }
+            return "the creation of Road map \"" + roadMap.getShortName() + "\"";      }
 
         /**
          * Searches the stateObjects to find an equal model class to map to
@@ -1401,8 +1398,7 @@ public class Workspace extends SaharaItem implements Serializable {
          * Gets the String value of the Command for adding Tags.
          */
         public String getString() {
-            return "the creation of Tag \"" + tag.getName() + "\".";
-        }
+            return "the creation of Tag \"" + tag.getName() + "\"";     }
 
         /**
          * Searches the stateObjects to find an equal model class to map to
@@ -1459,8 +1455,7 @@ public class Workspace extends SaharaItem implements Serializable {
          * Gets the String value of the Command for adding people.
          */
         public String getString() {
-            return "the creation of Person \"" + person.getShortName() + "\".";
-        }
+            return "the creation of Person \"" + person.getShortName() + "\"";    }
 
         /**
          * Searches the stateObjects to find an equal model class to map to
@@ -1512,7 +1507,7 @@ public class Workspace extends SaharaItem implements Serializable {
          * Gets the String value of the Command for adding skills.
          */
         public String getString() {
-            return "the creation of Skill \"" + skill.getShortName() + "\".";
+            return "the creation of Skill \"" + skill.getShortName() + "\"";
         }
 
         /**

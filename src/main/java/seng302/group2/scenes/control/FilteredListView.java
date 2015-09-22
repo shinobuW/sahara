@@ -34,7 +34,7 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
     public FilteredListView(ObservableList<T> data) {
         originalData = data;
         inputText.setPromptText("Filter list...");
-        listView = new SearchableListView(data);
+        listView = new SearchableListView<>(data);
         inputText.setOnKeyReleased(event -> {
             sortedData.clear();
             for (T item : originalData) {

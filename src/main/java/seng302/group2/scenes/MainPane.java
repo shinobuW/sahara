@@ -165,7 +165,7 @@ public class MainPane extends BorderPane {
         HBox statusBarBox = new HBox();
         StatusBar statusBar = new StatusBar();
         if (input != null) {
-            statusBar.setText(input + " at " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+            statusBar.setText(input + " at " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm" + ".")));
         }
         else {
             statusBar.setText("");
