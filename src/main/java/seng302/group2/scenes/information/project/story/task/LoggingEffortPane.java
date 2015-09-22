@@ -164,9 +164,7 @@ public class LoggingEffortPane extends Pane {
                         Log currentLog = event.getTableView().getItems().get(
                                 event.getTablePosition().getRow());
                         ArrayList<Tag> tags = new ArrayList<>();
-                        currentLog.edit(event.getNewValue(), currentLog.getPartner(), currentLog.getStartDate(),
-                                currentLog.getDurationInMinutes(), currentLog.getDescription(),
-                                currentLog.getEffortLeftDifferenceInMinutes(), tags);
+                        currentLog.editLogger(event.getNewValue());
                     }
                 }
         );
@@ -595,6 +593,7 @@ public class LoggingEffortPane extends Pane {
                     Person partner = partnerComboBox.getComboBox().getSelectionModel().getSelectedItem();
                     Log newLog = new Log(task, descriptionTextArea.getText(),
                             selectedPerson, partner, duration, dateTime, effortLeftDifference);
+
                     task.getStory().getProject().add(newLog);
 
                     String effortLeftString = "";

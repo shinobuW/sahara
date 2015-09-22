@@ -507,7 +507,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      */
     public void add(Log log) {
         Task task = log.getTask();
-        AddLogsCommand addCommand = new AddLogsCommand(task, log, this, task.getEffortLeft());
+        AddLogsCommand addCommand = new AddLogsCommand(task, log, this);
         Global.commandManager.executeCommand(addCommand);
     }
 
@@ -1382,16 +1382,10 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      * Command to add and remote logs from a project
      */
     private class AddLogsCommand implements Command {
-        //TODO implement command string for logs
-        private String commandString;
         private Log log;
         private Task task;
         private Project proj;
         private double effortLeft;
-
-        private double oldEffortSpent;
-        private double oldEffortLeft;
-
 
         /**
          * Constructor for the log addition command
@@ -1399,35 +1393,30 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * @param task       The task to which the log is to be added
          * @param log        The log to be added
          * @param proj       The project of the task
-         * @param effortLeft The new effort left
          */
-        AddLogsCommand(Task task, Log log, Project proj, double effortLeft) {
+        AddLogsCommand(Task task, Log log, Project proj) {
             this.log = log;
             this.task = task;
-            this.oldEffortSpent = task.getEffortSpent();
-            this.oldEffortLeft = task.getEffortLeft();
-            this.effortLeft = effortLeft;
             this.proj = proj;
+
         }
 
         /**
          * Executes the log addition command
          */
         public void execute() {
-            log.setTask(task);
-            double newEffortSpent = task.getEffortSpent() + log.getDurationInMinutes();
-            task.setEffortSpent(newEffortSpent);
-            task.setEffortLeft(this.effortLeft);
             proj.getLogs().add(log);
+            task.setEffortSpent(task.getEffortSpent() + log.getDurationInMinutes());
+            task.setEffortLeft(task.getEffortLeft() - log.getEffortLeftDifferenceInMinutes());
+
         }
 
         /**
          * Undoes the log addition command
          */
         public void undo() {
-            log.setTask(null);
-            task.setEffortSpent(oldEffortSpent);
-            task.setEffortLeft(oldEffortLeft);
+            task.setEffortSpent(task.getEffortSpent() - log.getDurationInMinutes());
+            task.setEffortLeft(task.getEffortLeft() + log.getEffortLeftDifferenceInMinutes());
             proj.getLogs().remove(log);
 
         }

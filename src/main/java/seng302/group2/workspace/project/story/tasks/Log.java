@@ -410,19 +410,21 @@ public class Log extends SaharaItem implements Serializable {
     }
 
     /**
-     * A command class that allows the executing and undoing of project edits
+     * A command class that allows the executing and undoing of log edits
      */
     private class LogEditCommand implements Command {
         private Log log;
-        private Person newLogger;
-        private Person newPartner;
-        private LocalDateTime newStartTime;
-        private double newDuration;
-        private String newDescription;
-        private double newEffortLeftDifference;
+        private Person logger;
+        private Person partner;
+        private LocalDateTime startTime;
+        private double duration;
+        private String description;
+        private double effortLeftDifference;
         private Task task;
-        private Set<Tag> newLogTags = new HashSet<>();
-        private Set<Tag> newGlobalTags = new HashSet<>();
+        private Set<Tag> logTags = new HashSet<>();
+        private Set<Tag> globalTags = new HashSet<>();
+        private double effortSpent;
+        private double effortLeft;
 
         private Person oldLogger;
         private Person oldPartner;
@@ -432,24 +434,30 @@ public class Log extends SaharaItem implements Serializable {
         private double oldEffortLeftDifference;
         private Set<Tag> oldLogTags = new HashSet<>();
         private Set<Tag> oldGlobalTags = new HashSet<>();
+        private double oldEffortSpent;
+        private double oldEffortLeft;
+
+
 
         protected LogEditCommand(Log log, Person newLogger, Person newPartner, LocalDateTime newStartDate,
-                                 double newDuration, String newDescription, double newEffortLeftDifference,
+                                 double newDuration, String newDescription, double effortLeft,
                                  ArrayList<Tag> newTags) {
             this.log = log;
             if (newTags == null) {
                 newTags = new ArrayList<>();
             }
 
-            this.newLogger = newLogger;
-            this.newPartner = newPartner;
-            this.newStartTime = newStartDate;
-            this.newDuration = newDuration;
-            this.newDescription = newDescription;
-            this.newEffortLeftDifference = newEffortLeftDifference;
-            this.newLogTags.addAll(newTags);
-            this.newGlobalTags.addAll(newTags);
-            this.newGlobalTags.addAll(Global.currentWorkspace.getAllTags());
+            this.logger = newLogger;
+            this.partner = newPartner;
+            this.startTime = newStartDate;
+            this.duration = newDuration;
+            this.description = newDescription;
+            //this.effortLeftDifference = newEffortLeftDifference;
+            this.effortLeft = task.getEffortLeft() - Log.this.duration;
+//            this.effortSpent = this.oldEffortSpent - this.oldDuration + this.duration;
+            this.logTags.addAll(newTags);
+            this.globalTags.addAll(newTags);
+            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
 
             this.oldLogger = log.logger;
             this.oldPartner = log.partner;
@@ -459,6 +467,7 @@ public class Log extends SaharaItem implements Serializable {
             this.oldEffortLeftDifference = log.effortLeftDifference;
             this.oldLogTags.addAll(log.getTags());
             this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
+//            this.oldEffortSpent = log.getTask().getEffortSpent();
 
             this.task = log.task;
         }
@@ -468,21 +477,21 @@ public class Log extends SaharaItem implements Serializable {
          * Executes/Redoes the changes of the log edit
          */
         public void execute() {
-            task.setEffortSpent(task.getEffortSpent() - log.getDurationInMinutes() + duration);
-            log.logger = newLogger;
-            log.startTime = newStartTime;
-            log.duration = newDuration;
-            log.description = newDescription;
-            log.duration = newDuration;
-            log.effortLeftDifference = newEffortLeftDifference;
-            log.partner = newPartner;
+            log.logger = logger;
+            log.startTime = startTime;
+            log.duration = duration;
+            log.description = description;
+            log.duration = duration;
+            log.effortLeftDifference = effortLeftDifference;
+            log.partner = partner;
 
             //Add any created tags to the global collection
             Global.currentWorkspace.getAllTags().clear();
-            Global.currentWorkspace.getAllTags().addAll(newGlobalTags);
+            Global.currentWorkspace.getAllTags().addAll(globalTags);
             //Add the tags a log has to their list of tags
             log.getTags().clear();
-            log.getTags().addAll(newLogTags);
+            log.getTags().addAll(logTags);
+            task.setEffortSpent(this.effortSpent);
         }
 
 
@@ -496,7 +505,7 @@ public class Log extends SaharaItem implements Serializable {
             log.duration = oldDuration;
             log.description = oldDescription;
             log.effortLeftDifference = oldEffortLeftDifference;
-            task.setEffortSpent(task.getEffortSpent() + log.getDurationInMinutes() - duration);
+//            task.setEffortSpent(task.getEffortSpent() + log.getDurationInMinutes() - duration);
 
             //Adds the old global tags to the overall collection
             Global.currentWorkspace.getAllTags().clear();
@@ -505,6 +514,8 @@ public class Log extends SaharaItem implements Serializable {
             //Changes the logs list of tags to what they used to be
             log.getTags().clear();
             log.getTags().addAll(oldLogTags);
+            task.setEffortSpent(this.oldEffortSpent);
+
         }
 
         /**
@@ -531,11 +542,11 @@ public class Log extends SaharaItem implements Serializable {
             }
 
             //Tag collections
-            for (Tag tag : newLogTags) {
+            for (Tag tag : logTags) {
                 for (SaharaItem item : stateObjects) {
                     if (item.equivalentTo(tag)) {
-                        newLogTags.remove(tag);
-                        newLogTags.add((Tag)item);
+                        logTags.remove(tag);
+                        logTags.add((Tag)item);
                         break;
                     }
                 }
@@ -551,11 +562,11 @@ public class Log extends SaharaItem implements Serializable {
                 }
             }
 
-            for (Tag tag : newGlobalTags) {
+            for (Tag tag : globalTags) {
                 for (SaharaItem item : stateObjects) {
                     if (item.equivalentTo(tag)) {
-                        newGlobalTags.remove(tag);
-                        newGlobalTags.add((Tag)item);
+                        globalTags.remove(tag);
+                        globalTags.add((Tag)item);
                         break;
                     }
                 }
