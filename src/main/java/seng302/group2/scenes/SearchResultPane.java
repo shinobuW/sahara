@@ -70,7 +70,7 @@ public class SearchResultPane extends PopOver {
                         .select(selectedTab);
                 selectedItem.switchToInfoScene();
                 if (searchType == SearchType.NORMAL) {
-                    System.out.println("Into the Highlighting");
+                    //System.out.println("Into the Highlighting");
                     MainPane.getToolBar().search(searchText);
                 }
             }
