@@ -99,7 +99,8 @@ public class StoryTaskTab extends SearchableTab {
         acContent.setPadding(new Insets(8, 8, 8, 8));
 
         FilteredListView<AcceptanceCriteria> acceptanceCriteriaFilteredListView = new
-                FilteredListView<AcceptanceCriteria>(currentStory.getAcceptanceCriteria());
+                FilteredListView<AcceptanceCriteria>(currentStory.getAcceptanceCriteria(),
+                "acceptance criteria");
         SearchableListView<AcceptanceCriteria> acListView = acceptanceCriteriaFilteredListView.getListView();
         ScrollPane acWrapper = new ScrollPane();
         acListView.setPrefSize(640, 250);
