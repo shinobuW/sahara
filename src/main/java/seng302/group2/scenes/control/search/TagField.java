@@ -193,6 +193,9 @@ public class TagField extends CustomTextField implements SearchableControl {
      * @param newTags The new list of tags
      */
     public void setTags(ObservableList<Tag> newTags) {
+        if (newTags == null) {
+            newTags = FXCollections.observableArrayList();
+        }
         this.tags = newTags;
     }
 
