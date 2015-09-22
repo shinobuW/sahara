@@ -137,7 +137,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
 
         VBox roadMapVbox = new VBox();
-        Text roadMapPriority = new Text(currentRoadMap.getShortName() + "'s priority is "
+        Text roadMapPriority = new Text("Priority: "
                 + currentRoadMap.getPriority().toString());
         roadMapVbox.getChildren().addAll(roadMapPriority);
         PopOverTip storyTip = new PopOverTip(roadMapContent, roadMapVbox);
@@ -559,7 +559,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
         });
 
         VBox releaseVBox = new VBox();
-        Text releaseEndText = new Text("End date of " + release.getShortName() + " is " + release.getDateString());
+        Text releaseEndText = new Text("End date: " + release.getDateString());
         releaseVBox.getChildren().addAll(releaseEndText);
         PopOverTip releaseTip = new PopOverTip(releaseContent, releaseVBox);
         releaseTip.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
@@ -637,8 +637,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
         shortNameField.setPadding(insetsContent);
 
         VBox sprintVBox = new VBox();
-        Text sprintStartText = new Text("Start date of " + sprint.getGoal() + " is " + sprint.getStartDateString());
-        Text sprintEndText = new Text("End date of " + sprint.getGoal() + " is " + sprint.getEndDateString());
+        Text sprintStartText = new Text("Start date: " + sprint.getStartDateString());
+        Text sprintEndText = new Text("End date: " + sprint.getEndDateString());
         sprintVBox.getChildren().addAll(sprintStartText, sprintEndText);
         PopOverTip sprintTip = new PopOverTip(sprintContent, sprintVBox);
         sprintTip.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
@@ -739,7 +739,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
         HBox.setHgrow(storyContent, Priority.ALWAYS);
         deletionBox.setAlignment(Pos.TOP_RIGHT);
         VBox storyVBox = new VBox();
-        Text storyPoint = new Text(story.getShortName() + "'s estimate is " + story.getEstimate());
+        Text storyPoint = new Text("Estimate: " + story.getEstimate());
         storyVBox.getChildren().addAll(storyPoint);
         PopOverTip storyTip = new PopOverTip(storyNode, storyVBox);
         storyTip.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
