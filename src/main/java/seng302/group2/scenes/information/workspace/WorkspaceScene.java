@@ -1,7 +1,6 @@
 package seng302.group2.scenes.information.workspace;
 
 import seng302.group2.scenes.control.TrackedTabPane;
-import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.Collections;

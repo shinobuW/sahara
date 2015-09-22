@@ -9,20 +9,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import org.controlsfx.control.spreadsheet.Grid;
 import seng302.group2.scenes.control.Tooltip;
-import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.TagField;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.tag.Tag;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
-import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * The content of a Tag cell as shown on the Tag management pane.

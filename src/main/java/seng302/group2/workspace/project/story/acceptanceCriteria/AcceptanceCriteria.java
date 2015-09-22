@@ -13,7 +13,6 @@ import seng302.group2.workspace.project.story.estimation.EstimationScalesDiction
 import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -307,6 +306,9 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
             //Add the tags a AC has to their list of tags
             ac.getTags().clear();
             ac.getTags().addAll(acTags);
+
+            System.out.println("executed:" + ac.getTags());
+
         }
 
         /**
