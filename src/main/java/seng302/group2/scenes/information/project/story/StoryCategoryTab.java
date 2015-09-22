@@ -72,7 +72,7 @@ public class StoryCategoryTab extends SearchableTab {
 
 
         FilteredListView<Story> storyFilteredListView = new FilteredListView<Story>(
-                selectedCategory.getProject().getUnallocatedStories());
+                selectedCategory.getProject().getUnallocatedStories(), "stories");
         SearchableListView storyBox = storyFilteredListView.getListView();
         storyBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         storyBox.setMaxWidth(275);

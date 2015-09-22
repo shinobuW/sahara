@@ -82,7 +82,7 @@ public class AcceptanceCriteriaTest {
         ObservableList<Tag> newTags = FXCollections.observableArrayList();
         newTags.add(tag);
 
-        ac.edit(newTags);
+        ac.editAcTags(newTags);
 
         Assert.assertEquals(1, ac.getTags().size());
         Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());

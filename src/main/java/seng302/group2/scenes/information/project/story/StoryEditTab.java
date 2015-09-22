@@ -182,12 +182,14 @@ public class StoryEditTab extends SearchableTab {
         availableStoryList.removeAll(dependentOnList);
         availableStoryList.remove(currentStory);
 
-        FilteredListView<Story> dependantStoriesFilteredList = new FilteredListView<Story>(dependentOnList);
+        FilteredListView<Story> dependantStoriesFilteredList = new FilteredListView<Story>(dependentOnList,
+                "dependents");
         SearchableListView<Story> dependantStoriesListView = dependantStoriesFilteredList.getListView();
         dependantStoriesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         dependantStoriesListView.getSelectionModel().select(0);
 
-        FilteredListView<Story> availableStoryFilteredList = new FilteredListView<Story>(availableStoryList);
+        FilteredListView<Story> availableStoryFilteredList = new FilteredListView<Story>(availableStoryList,
+                "dependents");
         SearchableListView<Story> availableStoryListView = availableStoryFilteredList.getListView();
         availableStoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         availableStoryListView.getSelectionModel().select(0);

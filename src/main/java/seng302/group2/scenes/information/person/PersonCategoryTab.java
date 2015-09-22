@@ -74,7 +74,7 @@ public class PersonCategoryTab extends SearchableTab {
         selectionButtons.getChildren().addAll(btnView, btnDelete, btnCreate);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
-        FilteredListView<Person> personBox = new FilteredListView(currentWorkspace.getPeople());
+        FilteredListView<Person> personBox = new FilteredListView(currentWorkspace.getPeople(), "people");
         SearchableListView personList = personBox.getListView();
         personList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         personBox.setMaxWidth(275);

@@ -140,7 +140,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
      * Edits the tags of the Acceptance critera
      * @param newTags the new tags of the acceptance criteria
      */
-    public void edit(ObservableList<Tag> newTags) {
+    public void editAcTags(ObservableList<Tag> newTags) {
         Command editAc = new EditAcTagsCommand(this, newTags);
         Global.commandManager.executeCommand(editAc);
     }
