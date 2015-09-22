@@ -163,15 +163,26 @@ public class StoryAcTab extends SearchableTab {
                     @Override
                     public void handle(TableColumn.CellEditEvent<AcceptanceCriteria, ObservableList<Tag>> event) {
                         if (!event.getNewValue().isEmpty()) {
-                            AcceptanceCriteria currentAc = event.getTableView().getItems().get(
-                                    event.getTablePosition().getRow());
+
+                            AcceptanceCriteria currentAc = acTable.getSelectionModel().getSelectedItem();
 
                             ObservableList<Tag> newTags = event.getNewValue();
-                            currentAc.editAcTags(newTags);
+                            System.out.println("new tags = " + newTags);
+
+//                            currentAc.getTags().add(event.getNewValue().get(0));
+//                            currentAc.editAcTags(newTags);
+                            System.out.println(currentAc);
+                            //Wny the **** does current ac's get tags have the new tags WITHOUT any edit? @JESUS
+                            System.out.println("actual tags = " + currentAc.getTags());
                         }
                     }
                 }
         );
+
+        wrapper.setOnMouseClicked(event -> {
+            System.out.println(story.getAcceptanceCriteria().get(0));
+            System.out.println(story.getAcceptanceCriteria().get(0).getTags());
+        });
 
         acTable.setItems(data);
         TableColumn[] columns = {descriptionCol, stateCol, tagCol};

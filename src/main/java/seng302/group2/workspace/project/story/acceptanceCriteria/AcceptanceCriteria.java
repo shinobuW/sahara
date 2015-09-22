@@ -307,6 +307,9 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
             //Add the tags a AC has to their list of tags
             ac.getTags().clear();
             ac.getTags().addAll(acTags);
+
+            System.out.println("executed:" + ac.getTags());
+
         }
 
         /**

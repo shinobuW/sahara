@@ -38,16 +38,13 @@ public class TagsTableCell extends TableCell<AcceptanceCriteria, ObservableList<
      */
     @Override
     public void startEdit() {
+        super.startEdit();
+
         if (!isEmpty()) {
-            super.startEdit();
             createTagField();
 
-            if (getItem() != null && !getItem().isEmpty()) {
-                tagField.setTags(getItem());
-            }
-            else {
-                tagField.setTags(null);
-            }
+            tagField.setTags(getTableView().getSelectionModel().getSelectedItem().getTags());
+
 
             cell.getChildren().clear();
             cell.getChildren().add(tagField);
@@ -84,18 +81,25 @@ public class TagsTableCell extends TableCell<AcceptanceCriteria, ObservableList<
         else {
             cell.getChildren().clear();
             if (isEditing()) {
-                System.out.println("get item = " + getItem());
+                System.out.println("editing");
                 if (getItem() != null && !getItem().isEmpty()) {
                     System.out.println("we are inside the loop");
-                    tagField.setTags(getItem());
+                    //tagField.setTags(getItem());
                 }
+
+                tagField.setTags(getTableView().getSelectionModel().getSelectedItem().getTags());
                 cell.getChildren().addAll(tagField);
             }
             else {
                 if (getTableView().getSelectionModel().getSelectedItem() != null) {
                     tagLabel.constructAC(getTableView().getSelectionModel().getSelectedItem());
                 }
+                try {
+                    tagLabel = new TagLabel(getTableView().getSelectionModel().getSelectedItem().getTags());
+                }
+                catch (NullPointerException ex) {
 
+                }
                 cell.getChildren().add(tagLabel);
             }
             setGraphic(cell);
