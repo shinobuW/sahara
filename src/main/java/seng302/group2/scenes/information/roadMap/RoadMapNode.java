@@ -90,6 +90,39 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 + "-fx-background-radius: 0 5 5 5");
         HBox roadMapChildren = new HBox();
 
+        VBox deletionBox = new VBox();
+        ImageView deletionImage = new ImageView("icons/tag_remove.png");
+        Tooltip.create("Remove Release from Road Map", deletionImage, 50);
+        ImageView addImage = new ImageView("icons/add.png");
+        Tooltip.create("Add Story to Sprint", addImage, 50);
+        HBox iconBox = new HBox();
+        iconBox.getChildren().addAll(addImage, deletionImage);
+        deletionBox.getChildren().add(iconBox);
+
+        deletionImage.setOnMouseEntered(me -> {
+            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+        });
+
+        deletionImage.setOnMouseExited(me -> {
+            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+        });
+
+        deletionImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+
+        });
+
+        addImage.setOnMouseEntered(me -> {
+            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+        });
+
+        addImage.setOnMouseExited(me -> {
+            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+        });
+
+        addImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+
+        });
+
         SearchableText shortNameField = new SearchableText(currentRoadMap.getShortName());
         roadMapContent.setAlignment(Pos.CENTER);
         roadMapContent.setMinHeight(35);
@@ -117,8 +150,18 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 event.consume();
             });
 
+        HBox nameHBox = new HBox();
+        nameHBox.getChildren().add(shortNameField);
+        nameHBox.setAlignment(Pos.CENTER);
+        HBox.setHgrow(nameHBox, Priority.ALWAYS);
+
+        HBox deletionHBox = new HBox();
+        deletionHBox.getChildren().add(deletionBox);
+        deletionHBox.setAlignment(Pos.CENTER_RIGHT);
+
         roadMapContent.getChildren().addAll(
-                shortNameField
+                nameHBox,
+                deletionHBox
         );
 
         for (Release release : currentRoadMap.getReleases()) {
