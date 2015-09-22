@@ -3,7 +3,7 @@
     "shortName": "WWE",
     "longName": "WWE",
     "description": "",
-    "lastSaveLocation": "/home/cosc/student/jml168/Documents/300-Level/SENG302/Greoup Projeckt/WWE.proj",
+    "lastSaveLocation": "/home/cosc/student/cvs20/SENG302/Sahara/WWE.proj",
     "estimationScales": {
       "estimationScaleDict": {
         "T-Shirt Sizes": [
@@ -106,6 +106,7 @@
       "0x27",
       "0x28"
     ],
+    "hierarchyMap": {},
     "version": 0.5,
     "id": 2438,
     "itemName": "Dope Name",
@@ -1131,7 +1132,6 @@
     "colour": "DEFAULT",
     "priority": 5,
     "project": "0x1c",
-    "sprint": "0x46",
     "done": true,
     "estimate": "-",
     "ready": false,
@@ -1189,7 +1189,6 @@
     "team": "0x2",
     "release": "0x42",
     "serializableStories": [
-      "0x43",
       "0x44"
     ],
     "goal": "Getting Softer",
