@@ -1,8 +1,10 @@
 package seng302.group2.util.revert;
 
 import com.google.gson.Gson;
+import javafx.application.Platform;
 import seng302.group2.App;
 import seng302.group2.Global;
+import seng302.group2.scenes.information.StickyBar;
 import seng302.group2.util.serialization.SerialBuilder;
 import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
@@ -47,6 +49,12 @@ public class RevertManager {
             if (App.mainPane != null) {
                 App.mainPane.refreshStatusBar("Workspace has been Reverted.");
             }
+
+            Platform.runLater(() -> {
+                App.mainPane.getTree().selectItem(Global.currentWorkspace);
+                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
+                App.mainPane.getTree().getSelectionModel().getSelectedItem().setExpanded(true);
+            });
         }
     }
 
