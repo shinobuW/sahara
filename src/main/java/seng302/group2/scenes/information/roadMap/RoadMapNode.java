@@ -95,8 +95,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
         Tooltip.create("Remove Release from Road Map", deletionImage, 50);
         ImageView addImage = new ImageView("icons/add.png");
         Tooltip.create("Add Story to Sprint", addImage, 50);
-        HBox iconBox = new HBox();
-        iconBox.getChildren().addAll(addImage, deletionImage);
+        VBox iconBox = new VBox();
+        iconBox.getChildren().addAll(deletionImage, addImage);
         deletionBox.getChildren().add(iconBox);
 
         deletionImage.setOnMouseEntered(me -> {
@@ -108,7 +108,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
         });
 
         deletionImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-
+            showDeleteDialog(currentRoadMap);
+            App.refreshMainScene();
         });
 
         addImage.setOnMouseEntered(me -> {
@@ -120,6 +121,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
         });
 
         addImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+
 
         });
 
@@ -220,8 +222,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         ImageView addImage = new ImageView("icons/add.png");
         Tooltip.create("Add Story to Sprint", addImage, 50);
-        HBox iconBox = new HBox();
-        iconBox.getChildren().addAll(addImage, deletionImage);
+        VBox iconBox = new VBox();
+        iconBox.getChildren().addAll(deletionImage, addImage);
 
         addImage.setOnMouseEntered(me -> {
             this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
@@ -787,7 +789,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
 
     private VBox deletionBox(SaharaItem item) {
-        HBox iconBox = new HBox();
+        VBox iconBox = new VBox();
         VBox deletionBox = new VBox();
         ImageView deletionImage = new ImageView("icons/tag_remove.png");
         Tooltip.create("Delete Sprint", deletionImage, 50);
@@ -923,12 +925,12 @@ public class RoadMapNode extends VBox implements SearchableControl {
             addStoryPopover.show(addImage);
         });
 
-            Insets insetsNode = new Insets(0, 5, 5, 0);
-            this.setPadding(insetsNode);
-            iconBox.getChildren().addAll(addImage, deletionImage);
-            deletionBox.getChildren().addAll(iconBox);
+        Insets insetsNode = new Insets(0, 5, 5, 0);
+        this.setPadding(insetsNode);
+        iconBox.getChildren().addAll(deletionImage, addImage);
+        deletionBox.getChildren().addAll(iconBox);
 
-            return deletionBox;
+        return deletionBox;
     }
 
     private void initReleaseListeners(Node releaseNode, Release currentRelease) {
@@ -942,10 +944,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
         });
 
         releaseNode.setOnDragDropped(dragEvent -> {
-            System.out.println("Second");
             if (dragEvent.getDragboard().getString() == "sprint") {
                 if (selectedSprint.getProject().equals(currentRelease.getProject())) {
-                    System.out.println(currentRelease.getShortName() + " Drag dropped");
                     selectedSprint.edit(selectedSprint.getGoal(), selectedSprint.getLongName(),
                             selectedSprint.getDescription(), selectedSprint.getStartDate(), selectedSprint.getEndDate(),
                             selectedSprint.getTeam(), currentRelease, selectedSprint.getStories(),
@@ -965,7 +965,6 @@ public class RoadMapNode extends VBox implements SearchableControl {
     private void initSprintListeners(Node sprintNode, Sprint currentSprint) {
 
         sprintNode.setOnDragDetected(event -> {
-            System.out.println(currentSprint);
             selectedSprint = currentSprint;
         });
 
@@ -975,12 +974,11 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         sprintNode.setOnDragDropped(dragEvent -> {
             if (dragEvent.getDragboard().getString() == "story") {
-                System.out.println(selectedStory);
-                System.out.println(selectedSprint);
-                System.out.println(currentSprint);
-                if (currentSprint.getProject().equals(selectedStory.getProject())
+                if (currentSprint.equals(selectedSprint)) {
+                    dragEvent.consume();
+                }
+                else if (currentSprint.getProject().equals(selectedStory.getProject())
                         && !currentSprint.equals(selectedSprint) && selectedSprint != null) {
-                    System.out.println(currentSprint + " " + selectedSprint);
                     currentSprint.addRemove(currentSprint, selectedSprint, selectedStory);
 
                     App.mainPane.refreshAll();
@@ -991,7 +989,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 else {
                     dragEvent.consume();
                     //TODO Need an extra click for clicking Dialog OK, does the same thing on the scrumboard.
-                    CustomDialog.showDialog("Cannot Move Story", "Cannot move the Story to a Sprint of a "
+                    CustomDialog.showDialog("Cannot Move Story", "Cannot move the Story to a Sprint of a"
                             + " different Project.", Alert.AlertType.WARNING);
                 }
             }

@@ -263,6 +263,12 @@ public class DeleteDialog {
             message = MessageFormat.format("Are you sure you want to delete the tag \"{0}",
                     deletedTag.toString() + "\"? \n This will remove it from all currently tagged items.");
         }
+        else if (element.getClass() == RoadMap.class) {
+            title = "Delete Road Map";
+            RoadMap deletedRoadMap = (RoadMap) element;
+            message = MessageFormat.format("Are you sure you want to delete the Road Map \"{0}",
+                    deletedRoadMap.toString() + "\"? \n This will all it's children intact.");
+        }
         else {
             title = "Delete Item";
             message = MessageFormat.format("Are you sure you want to delete {0}",

@@ -201,8 +201,9 @@ public class RoadMapCategoryTab extends SearchableTab {
             Boolean confirm = true;
             System.out.println("First");
             if (dragEvent.getDragboard().getString() == "release") {
-                for (Release release : currentRoadMap.getReleases()) {
-                    if (release == draggedRelease) {
+                for (Release release : currentRoadMap.getReleases() ) {
+                    if (release == draggedRelease && !currentRoadMap.equals(
+                            interactiveRoadMap.getRoadmap())) {
                         dragEvent.consume();
                         confirm = false;
                         CustomDialog.showDialog("Cannot Move Release"
@@ -215,9 +216,6 @@ public class RoadMapCategoryTab extends SearchableTab {
                             interactiveRoadMap.getRoadmap(), draggedRelease);
                 }
 
-                //TODO possibly needs cumulative commands
-                // currentRoadMap.edit(currentRoadMap.getShortName(), currentRoadMap.getPriority(), ,
-                // currentRoadMap.getTags());
                 App.mainPane.refreshAll();
             }
         });
