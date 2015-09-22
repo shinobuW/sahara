@@ -129,7 +129,7 @@ public class TeamInfoTab extends SearchableTab {
         CustomInfoLabel listViewLabel = new CustomInfoLabel("", "");
 
         ObservableList<Person> personList = currentTeam.getPeople();
-        FilteredListView teamsPeopleBox = new FilteredListView(personList);
+        FilteredListView teamsPeopleBox = new FilteredListView(personList, "people");
         SearchableListView<Person> teamsPeoplelist = teamsPeopleBox.getListView();
         teamsPeopleBox.setPrefHeight(192);
         teamsPeoplelist.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

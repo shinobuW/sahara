@@ -2,6 +2,7 @@ package seng302.group2.util.revert;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import seng302.group2.Global;
 import seng302.group2.scenes.JavaFxTestApp;
@@ -13,8 +14,8 @@ import seng302.group2.workspace.workspace.Workspace;
  */
 public class RevertManagerTest {
 
-    @Before
-    public void setup() {
+    @BeforeClass
+    public static void before() {
         JavaFxTestApp.initJFX();
     }
 

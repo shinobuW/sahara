@@ -70,7 +70,7 @@ public class StoryEstimationScaleInfoTab extends SearchableTab {
         }
 
         ObservableList<String> scaleValues = observableArrayList();
-        FilteredListView<String> scaleFilteredListView = new FilteredListView<String>(scaleValues);
+        FilteredListView<String> scaleFilteredListView = new FilteredListView<String>(scaleValues, "scales");
         SearchableListView<String> scaleValuesList = scaleFilteredListView.getListView();
         scaleValuesList.setPrefHeight(300);
 
