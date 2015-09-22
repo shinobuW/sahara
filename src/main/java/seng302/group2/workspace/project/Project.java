@@ -431,6 +431,8 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         Global.commandManager.executeCommand(command);
 
     }
+
+
     /**
      * Adds a Backlog to the Backlog list of Backlogs
      *

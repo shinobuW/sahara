@@ -5,6 +5,8 @@
  */
 package seng302.group2.scenes.information.roadMap;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -19,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -30,14 +33,19 @@ import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.dialog.CreateStoryDialog;
 import seng302.group2.scenes.dialog.CustomDialog;
+import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.roadMap.RoadMap;
+import seng302.group2.workspace.team.Team;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -65,6 +73,12 @@ public class RoadMapNode extends VBox implements SearchableControl {
     private static Boolean correctCreator = Boolean.FALSE;
     private static Boolean correctLongName = Boolean.FALSE;
     private static Boolean correctPriority = Boolean.FALSE;
+
+    private static Boolean correctSprintShortName = Boolean.FALSE;
+    private static Boolean correctSprintLongName = Boolean.FALSE;
+    private CustomComboBox<Team> teamComboBox;
+    private CustomDatePicker sprintStartDatePicker;
+    private CustomDatePicker sprintEndDatePicker;
 
 
     public RoadMapNode(RoadMap currentRoadMap) {
@@ -161,7 +175,333 @@ public class RoadMapNode extends VBox implements SearchableControl {
             event.consume();
         });
 
-        deletionBox.getChildren().addAll(deletionImage);
+        ImageView addImage = new ImageView("icons/add.png");
+        Tooltip.create("Add Story to Sprint", addImage, 50);
+        HBox iconBox = new HBox();
+        iconBox.getChildren().addAll(addImage, deletionImage);
+
+        addImage.setOnMouseEntered(me -> {
+            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
+        });
+
+        addImage.setOnMouseExited(me -> {
+            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
+        });
+
+        addImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            correctSprintShortName = Boolean.FALSE;
+            correctSprintLongName = Boolean.FALSE;
+
+            PopOver addSprintPopover = new PopOver();
+            VBox addContent = new VBox();
+            addContent.setPadding(new Insets(8, 8, 8, 8));
+
+            VBox newSprint = new VBox(5);
+            newSprint.setPadding(new Insets(8, 8, 8, 8));
+
+            Button btnAddNew = new Button("Add");
+            btnAddNew.setDisable(true);
+            RequiredField shortNameCustomField = new RequiredField("Goal:");
+            RequiredField longNameCustomField = new RequiredField("Long Name:");
+            CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
+            sprintStartDatePicker = new CustomDatePicker("Start Date:", true);
+            sprintEndDatePicker = new CustomDatePicker("End Date:", true);
+
+            final Callback<DatePicker, DateCell> startDateCellFactory =
+                    new Callback<DatePicker, DateCell>() {
+                        @Override
+                        public DateCell call(final DatePicker datePicker) {
+                            return new DateCell() {
+                                @Override
+                                public void updateItem(LocalDate item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (release.getEstimatedDate() != null
+                                            && item.isAfter(release.getEstimatedDate())) {
+                                        setDisable(true);
+                                        setStyle("-fx-background-color: #ffc0cb;");
+                                    }
+                                }
+                            };
+                        }
+                    };
+            sprintStartDatePicker.getDatePicker().setDayCellFactory(startDateCellFactory);
+
+            final Callback<DatePicker, DateCell> endDateCellFactory =
+                    new Callback<DatePicker, DateCell>() {
+                        @Override
+                        public DateCell call(final DatePicker datePicker) {
+                            return new DateCell() {
+                                @Override
+                                public void updateItem(LocalDate item, boolean empty) {
+                                    super.updateItem(item, empty);
+                                    if (sprintStartDatePicker.getValue() != null
+                                            && (item.isBefore(sprintStartDatePicker.getValue()))) {
+                                        setDisable(true);
+                                        setStyle("-fx-background-color: #ffc0cb;");
+                                    }
+                                    if (release.getEstimatedDate() != null
+                                            && item.isAfter(release.getEstimatedDate())) {
+                                        setDisable(true);
+                                        setStyle("-fx-background-color: #ffc0cb;");
+                                    }
+                                    if (sprintStartDatePicker.getValue() != null) {
+                                        long p = ChronoUnit.DAYS.between(sprintStartDatePicker.getValue(), item);
+                                        setTooltip(new Tooltip(getTooltipStr(p)));
+                                    }
+
+                                }
+                            };
+                        }
+                    };
+            sprintEndDatePicker.getDatePicker().setDayCellFactory(endDateCellFactory);
+
+            ObservableList<Team> teamOptions = observableArrayList();
+            for (Team team : release.getProject().getCurrentTeams()) {
+                teamOptions.add(team);
+            }
+            teamComboBox = new CustomComboBox<>("Team:", true);
+            teamComboBox.getComboBox().setItems(teamOptions);
+
+            newSprint.getChildren().addAll(shortNameCustomField, longNameCustomField,
+                    sprintStartDatePicker, sprintEndDatePicker, teamComboBox, descriptionTextArea, btnAddNew);
+
+            shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctShortName = validateShortName(shortNameCustomField, null);
+                System.out.println("Short name: " + correctShortName);
+                System.out.println("Long name: " + correctLongName);
+                System.out.println("Team: " + teamComboBox.getValue());
+                System.out.println("Start: " + sprintStartDatePicker.getValue());
+                System.out.println("End: " + sprintEndDatePicker.getValue());
+
+                btnAddNew.setDisable(!(correctShortName && correctLongName && teamComboBox.getValue() != null
+                        && sprintStartDatePicker.getValue() != null && sprintEndDatePicker.getValue() != null));
+            });
+
+            longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newvalue) -> {
+                correctLongName = validateName(longNameCustomField);
+                btnAddNew.setDisable(!(correctShortName && correctLongName && teamComboBox.getValue() != null
+                        && sprintStartDatePicker.getValue() != null && sprintEndDatePicker.getValue() != null));
+            });
+
+            sprintStartDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
+                @Override
+                public void changed(ObservableValue<? extends LocalDate> observable,
+                                    LocalDate oldValue, LocalDate newValue) {
+                    Team prevTeam = teamComboBox.getValue();
+
+                    ValidationStyle.borderGlowNone(sprintStartDatePicker.getDatePicker());
+                    sprintStartDatePicker.removeTooltip();
+
+
+                    if (newValue != null && release.getEstimatedDate() != null
+                            && release.getEstimatedDate().isBefore(newValue)) {
+                        ValidationStyle.borderGlowRed(sprintStartDatePicker.getDatePicker());
+                        ValidationStyle.showMessage("The start date of the Sprint must be before the estimated"
+                                        + " release date of the Release: "
+                                        + release.getEstimatedDate().toString(),
+                                sprintStartDatePicker.getDatePicker());
+                        sprintStartDatePicker.setTooltip(new seng302.group2.scenes.control.Tooltip("The start date of"
+                                + " the Sprint must be before the estimated release date of the Release: "
+                                + release.getEstimatedDate().toString()));
+                        sprintStartDatePicker.setDisable(false);
+                        teamComboBox.setDisable(true);
+                    }
+                    if ((sprintEndDatePicker.getValue() != null) && (newValue != null)
+                            && newValue.isAfter(sprintEndDatePicker.getValue())) {
+                        sprintEndDatePicker.setDisable(false);
+                        ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
+                        ValidationStyle.showMessage("The end date of the Sprint must be after the start date",
+                                sprintEndDatePicker.getDatePicker());
+                        sprintEndDatePicker.setTooltip(new seng302.group2.scenes.control.Tooltip("The end date of the"
+                                + " Sprint must be after the start date"));
+                        //sprintEndDatePicker.setValue(null);
+                        teamComboBox.setValue(null);
+                        teamComboBox.setDisable(true);
+                    }
+                    else if (newValue != null) {
+
+                        if (sprintEndDatePicker.getValue() != null
+                                && release.getEstimatedDate() != null
+                                && release.getEstimatedDate().
+                                isBefore(sprintEndDatePicker.getValue())) {
+                            ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
+                            ValidationStyle.showMessage("The end date of the Sprint must be before the estimated"
+                                            + " release date of the Release: "
+                                            + release.getEstimatedDate().toString(),
+                                    sprintEndDatePicker.getDatePicker());
+                            sprintEndDatePicker.setTooltip(new seng302.group2.scenes.control.Tooltip("The end date of"
+                                    + " the Sprint must be before the estimated release date of the Release: "
+                                    + release.getEstimatedDate().toString()));
+                            sprintEndDatePicker.setDisable(false);
+                            teamComboBox.setDisable(true);
+                        }
+                        else {
+                            ValidationStyle.borderGlowNone(sprintEndDatePicker.getDatePicker());
+                            sprintEndDatePicker.removeTooltip();
+                            sprintEndDatePicker.setDisable(false);
+                            teamComboBox.clear();
+                            if (sprintStartDatePicker.getValue() != null) {
+                                outer:
+                                for (Team team : release.getProject().getAllTeams()) {
+                                    for (Allocation alloc : team.getProjectAllocations()) {
+
+                                        if (alloc.getStartDate().
+                                                isBefore((sprintStartDatePicker.getValue().plusDays(1)))
+                                                && alloc.getEndDate().isAfter(sprintStartDatePicker.getValue())) {
+                                            teamComboBox.addToComboBox(team);
+                                            continue outer;
+
+                                        }
+                                    }
+                                }
+                            }
+                            teamComboBox.setDisable(false);
+                            teamComboBox.setValue(null);
+                        }
+                    }
+                    if (prevTeam != null && teamComboBox.getComboBox().getItems().contains(prevTeam)) {
+                        ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
+                        teamComboBox.removeTooltip();
+                        teamComboBox.setValue(prevTeam);
+                    }
+                    else if (sprintStartDatePicker.getValue() != null
+                            && teamComboBox.getComboBox().getItems().size() == 0) {
+                        ValidationStyle.borderGlowRed(teamComboBox.getComboBox());
+                        ValidationStyle.showMessage("There are no Teams allocated to this project at the start date"
+                                + " specified", teamComboBox.getComboBox());
+                        teamComboBox.setTooltip(new seng302.group2.scenes.control.Tooltip("There are no Teams allocated"
+                                + " to this project at the start date specified"));
+                    }
+                    else {
+                        ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
+                        teamComboBox.removeTooltip();
+                    }
+                    btnAddNew.setDisable(!(correctShortName && correctLongName && teamComboBox.getValue() != null
+                            && sprintStartDatePicker.getValue() != null && sprintEndDatePicker.getValue() != null));
+                }
+            });
+
+
+            sprintEndDatePicker.getDatePicker().valueProperty().addListener(new ChangeListener<LocalDate>() {
+                @Override
+                public void changed(ObservableValue<? extends LocalDate> observable,
+                                    LocalDate oldValue, LocalDate newValue) {
+
+
+                    Team prevTeam = teamComboBox.getValue();
+
+                    ValidationStyle.borderGlowNone(sprintEndDatePicker.getDatePicker());
+                    sprintEndDatePicker.getDatePicker().setTooltip(null);
+                    if (newValue != null) {
+                        sprintEndDatePicker.setStyle(null);
+                        sprintEndDatePicker.getDatePicker().setTooltip(null);
+
+                        if (release.getEstimatedDate() != null
+                                && release.getEstimatedDate().
+                                isBefore(sprintEndDatePicker.getValue())) {
+                            ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
+                            ValidationStyle.showMessage("The end date of the Sprint must be before the estimated"
+                                            + " release date of the Release: "
+                                            + release.getEstimatedDate().toString(),
+                                    sprintEndDatePicker.getDatePicker());
+                            sprintEndDatePicker.setTooltip(new seng302.group2.scenes.control.Tooltip("The end date of"
+                                    + " the Sprint must be before the estimated release date of the Release: "
+                                    + release.getEstimatedDate().toString()));
+                            sprintEndDatePicker.setDisable(false);
+                            teamComboBox.setDisable(true);
+                        }
+                        else if (sprintStartDatePicker.getValue() != null
+                                && newValue.isBefore(sprintStartDatePicker.getValue())) {
+                            ValidationStyle.borderGlowRed(sprintEndDatePicker.getDatePicker());
+                            ValidationStyle.showMessage("The end date of the Sprint must be after the start date",
+                                    sprintEndDatePicker.getDatePicker());
+                            sprintEndDatePicker.setTooltip(new seng302.group2.scenes.control.Tooltip("The end date of"
+                                    + " the Sprint must be after the start date"));
+                            sprintEndDatePicker.setDisable(false);
+                            teamComboBox.setDisable(true);
+                        }
+                        else {
+                            teamComboBox.clear();
+
+                            if (sprintStartDatePicker.getValue() != null) {
+                                outer:
+                                for (Team team : release.getProject().getAllTeams()) {
+                                    for (Allocation alloc : team.getProjectAllocations()) {
+
+                                        if (alloc.getStartDate().
+                                                isBefore((sprintStartDatePicker.getValue().plusDays(1)))
+                                                && alloc.getEndDate().isAfter(sprintStartDatePicker.getValue())) {
+                                            teamComboBox.addToComboBox(team);
+                                            continue outer;
+
+                                        }
+                                    }
+                                }
+                            }
+                            teamComboBox.setDisable(false);
+                            teamComboBox.setValue(null);
+
+                            if (prevTeam != null && teamComboBox.getComboBox().getItems().contains(prevTeam)) {
+                                ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
+                                teamComboBox.removeTooltip();
+                                teamComboBox.setValue(prevTeam);
+                            }
+                            else if (sprintStartDatePicker.getValue() != null
+                                    && teamComboBox.getComboBox().getItems().size() == 0) {
+                                ValidationStyle.borderGlowRed(teamComboBox.getComboBox());
+                                ValidationStyle.showMessage("There are no Teams allocated to this project at the start"
+                                        + " date specified", teamComboBox.getComboBox());
+                                teamComboBox.setTooltip(new seng302.group2.scenes.control.Tooltip("There are no Teams "
+                                        + "allocated to this project at the start date specified"));
+                            }
+                            else {
+                                ValidationStyle.borderGlowNone(teamComboBox.getComboBox());
+                                teamComboBox.removeTooltip();
+                            }
+                        }
+                        btnAddNew.setDisable(!(correctShortName && correctLongName && teamComboBox.getValue() != null
+                                && sprintStartDatePicker.getValue() != null && sprintEndDatePicker.getValue() != null));
+                    }
+                }
+            });
+
+            teamComboBox.getComboBox().valueProperty().addListener(new ChangeListener<Team>() {
+                @Override
+                public void changed(ObservableValue<? extends Team> observable, Team oldValue, Team newValue) {
+                    btnAddNew.setDisable(!(correctShortName && correctLongName && teamComboBox.getValue() != null
+                            && sprintStartDatePicker.getValue() != null && sprintEndDatePicker.getValue() != null));
+                }
+            });
+
+
+            btnAddNew.setOnAction(random -> {
+                String goal = shortNameCustomField.getText();
+                String longName = longNameCustomField.getText();
+                String description = descriptionTextArea.getText();
+                LocalDate sprintStartDate = sprintStartDatePicker.getValue();
+                LocalDate sprintEndDate = sprintEndDatePicker.getValue();
+                Project sprintProject = release.getProject();
+                Team sprintTeam = teamComboBox.getValue();
+                Release sprintRelease = release;
+
+                Sprint sprint = new Sprint(goal, longName, description, sprintStartDate,
+                        sprintEndDate, sprintProject, sprintTeam, sprintRelease);
+                sprintProject.add(sprint);
+                App.mainPane.refreshTree();
+
+            });
+
+
+            TitledPane collapsableNew = new TitledPane("Add a new Sprint", newSprint);
+            collapsableNew.setExpanded(true);
+            collapsableNew.setAnimated(true);
+
+            addContent.getChildren().addAll(collapsableNew);
+            addSprintPopover.setContentNode(addContent);
+            addSprintPopover.show(addImage);
+        });
+
+        deletionBox.getChildren().addAll(iconBox);
 
         HBox.setHgrow(releaseContent, Priority.ALWAYS);
 
@@ -541,7 +881,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
         });
 
             Insets insetsNode = new Insets(0, 5, 5, 0);
-        this.setPadding(insetsNode);
+            this.setPadding(insetsNode);
             iconBox.getChildren().addAll(addImage, deletionImage);
             deletionBox.getChildren().addAll(iconBox);
 
@@ -662,6 +1002,44 @@ public class RoadMapNode extends VBox implements SearchableControl {
     @Override
     public int advancedQuery(String query, SearchType searchType) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    private String getTooltipStr(long dur) {
+        String returnStr;
+        if (Math.floorDiv(dur, 7) == 0) {
+            if (dur == 0) {
+                returnStr = "Sprint duration: less than a day.";
+            }
+            else if (dur % 7 == 1) {
+                returnStr = "Sprint duration: 1 day.";
+            }
+            else {
+                returnStr = "Sprint duration: " + (dur % 7) + " days.";
+            }
+        }
+        else if (dur % 7 == 0) {
+            if (Math.floorDiv(dur, 7) == 1 && (dur % 7) == 0) {
+                returnStr = "Sprint duration: 1 week.";
+            }
+            else {
+                returnStr = "Sprint duration: " + Math.floorDiv(dur, 7) + " weeks.";
+            }
+        }
+        else {
+            if (Math.floorDiv(dur, 7) == 1 && (dur % 7) == 1) {
+                returnStr = "Sprint duration: 1 week and 1 day.";
+            }
+            else if (Math.floorDiv(dur, 7) == 1) {
+                returnStr = "Sprint duration: 1 week and " + (dur % 7) + " days.";
+            }
+            else if (dur % 7 == 1) {
+                returnStr = "Sprint duration: " + Math.floorDiv(dur, 7) + " weeks and 1 day.";
+            }
+            else {
+                returnStr = "Sprint duration: " + Math.floorDiv(dur, 7) + " weeks and " + (dur % 7) + " days.";
+            }
+        }
+        return returnStr;
     }
 
 
