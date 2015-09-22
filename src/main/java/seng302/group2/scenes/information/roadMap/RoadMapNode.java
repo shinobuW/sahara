@@ -95,8 +95,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
         Tooltip.create("Remove Release from Road Map", deletionImage, 50);
         ImageView addImage = new ImageView("icons/add.png");
         Tooltip.create("Add Story to Sprint", addImage, 50);
-        VBox iconBox = new VBox();
-        iconBox.getChildren().addAll(deletionImage, addImage);
+        HBox iconBox = new HBox();
+        iconBox.getChildren().addAll(addImage, deletionImage);
         deletionBox.getChildren().add(iconBox);
 
         deletionImage.setOnMouseEntered(me -> {
@@ -222,8 +222,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         ImageView addImage = new ImageView("icons/add.png");
         Tooltip.create("Add Story to Sprint", addImage, 50);
-        VBox iconBox = new VBox();
-        iconBox.getChildren().addAll(deletionImage, addImage);
+        HBox iconBox = new HBox();
+        iconBox.getChildren().addAll(addImage, deletionImage);
 
         addImage.setOnMouseEntered(me -> {
             this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
@@ -789,7 +789,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
 
     private VBox deletionBox(SaharaItem item) {
-        VBox iconBox = new VBox();
+        HBox iconBox = new HBox();
         VBox deletionBox = new VBox();
         ImageView deletionImage = new ImageView("icons/tag_remove.png");
         Tooltip.create("Delete Sprint", deletionImage, 50);
@@ -927,7 +927,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         Insets insetsNode = new Insets(0, 5, 5, 0);
         this.setPadding(insetsNode);
-        iconBox.getChildren().addAll(deletionImage, addImage);
+        iconBox.getChildren().addAll(addImage, deletionImage);
         deletionBox.getChildren().addAll(iconBox);
 
         return deletionBox;
