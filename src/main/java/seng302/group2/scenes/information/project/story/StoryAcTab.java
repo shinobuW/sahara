@@ -76,6 +76,11 @@ public class StoryAcTab extends SearchableTab {
     public void construct() {
         // Tab settings
         this.setText("Acceptance Criteria");
+
+        for (AcceptanceCriteria ac : story.getAcceptanceCriteria()) {
+            System.out.println(ac.getDescription() + " " + ac.getTags());
+        }
+
         Pane acPane = new VBox(10);  // The pane that holds the basic info
         acPane.setBorder(null);
         acPane.setPadding(new Insets(25, 25, 25, 25));
@@ -162,7 +167,7 @@ public class StoryAcTab extends SearchableTab {
                                     event.getTablePosition().getRow());
 
                             ObservableList<Tag> newTags = event.getNewValue();
-                            currentAc.edit(newTags);
+                            currentAc.editAcTags(newTags);
                         }
                     }
                 }
