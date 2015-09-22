@@ -229,7 +229,6 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
     private Node createSprintNode(Sprint sprint) {
         VBox sprintNode = new VBox();
-        sprintNode.setAlignment(Pos.CENTER);
         Insets insets = new Insets(5, 5, 5, 0);
 
         sprintNode.setPadding(insets);
