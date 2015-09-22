@@ -236,7 +236,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
          * Gets the String value of the Command for deleting acceptance criteria.
          */
         public String getString() {
-            return "the deletion of Acceptance Criteria \"" + acceptanceCriteria.toString() + "\".";
+            return "the deletion of Acceptance Criteria \"" + acceptanceCriteria.toString() + "\"";
         }
 
         /**
@@ -328,7 +328,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
          * Gets the String value of the Command for editting acceptance criteria tags.
          */
         public String getString() {
-            return "the edit of Tags on Acceptance Criteria \"" + ac.toString() + "\".";
+            return "the edit of Tags on Acceptance Criteria \"" + ac.toString() + "\"";
         }
 
         /**
@@ -431,7 +431,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
          * Gets the String value of the Command for editting the AC state.
          */
         public String getString() {
-            return "the edit of State on Acceptance Criteria \"" + ac.toString() + "\".";
+            return "the edit of State on Acceptance Criteria \"" + ac.toString() + "\"";
         }
 
         /**
@@ -495,7 +495,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
          * Gets the String value of the Command for editting AC descriptions.
          */
         public String getString() {
-            return "the edit of Acceptance Criteria \"" + ac.toString() + "\".";
+            return "the edit of Acceptance Criteria \"" + ac.toString() + "\"";
         }
 
         /**

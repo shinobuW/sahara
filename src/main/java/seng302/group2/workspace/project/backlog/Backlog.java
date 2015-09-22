@@ -589,7 +589,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
          * Gets the String value of the Command for editting backlogs.
          */
         public String getString() {
-            return "the edit of Backlog \"" + shortName + "\".";
+            return "the edit of Backlog \"" + shortName + "\"";
         }
 
         /**
@@ -742,7 +742,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
          * Gets the String value of the Command for deleting backlogs.
          */
         public String getString() {
-            return "the deletion of Backlog \"" + backlog.getShortName() + "\".";
+            return "the deletion of Backlog \"" + backlog.getShortName() + "\"";
         }
 
         /**
@@ -822,7 +822,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
          */
         public String getString() {
             return "the addition of Story \"" + story.getShortName() + "\" to Backlog \""
-                    + backlog.getShortName() + "\".";
+                    + backlog.getShortName() + "\"";
         }
 
         /**

@@ -622,7 +622,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
          * Gets the String value of the Command for editting a Team.
          */
         public String getString() {
-            return "the edit of Team \"" + shortName + "\".";
+            return "the edit of Team \"" + shortName + "\"";
         }
 
         @Override
@@ -758,7 +758,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
          * Gets the String value of the Command for editting Teams.
          */
         public String getString() {
-            return "the edit of Team \"" + team.getShortName() + "\".";
+            return "the edit of Team \"" + team.getShortName() + "\"";
         }
 
         /**
@@ -932,7 +932,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
          * Gets the String value of the Command for deleting Teams.
          */
         public String getString() {
-            return "the deletion of Team \"" + team.getShortName() + "\".";
+            return "the deletion of Team \"" + team.getShortName() + "\"";
         }
 
         /**
@@ -1086,7 +1086,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
          * Gets the String value of the Command for cascading team deletion.
          */
         public String getString() {
-            return "the cascading deletion of Team \"" + team.getShortName() + "\".";
+            return "the cascading deletion of Team \"" + team.getShortName() + "\"";
         }
 
         /**
@@ -1197,7 +1197,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
          */
         public String getString() {
             return "the addition of Person \"" + person.getShortName() + "\" to Team \""
-                    + team.getShortName() + "\".";
+                    + team.getShortName() + "\"";
         }
 
         /**
@@ -1263,7 +1263,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
          */
         public String getString() {
             return "the removal of Person \"" + person.getShortName() + "\" off Team \""
-                    + team.getShortName() + "\".";
+                    + team.getShortName() + "\"";
         }
 
         /**
@@ -1332,7 +1332,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
          */
         public String getString() {
             return "the creation of an Allocation for \"" + team.getShortName() + "\" on \""
-                    + proj.getShortName() + "\".";
+                    + proj.getShortName() + "\"";
         }
 
         /**
