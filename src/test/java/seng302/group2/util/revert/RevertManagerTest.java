@@ -1,8 +1,10 @@
 package seng302.group2.util.revert;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import seng302.group2.Global;
+import seng302.group2.scenes.JavaFxTestApp;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.workspace.Workspace;
 
@@ -10,6 +12,13 @@ import seng302.group2.workspace.workspace.Workspace;
  * Created by Jordane on 30/06/2015.
  */
 public class RevertManagerTest {
+
+    @Before
+    public void setup() {
+        JavaFxTestApp.initJFX();
+    }
+
+
     /**
      * Revert test - simple renaming of a workspace
      */
