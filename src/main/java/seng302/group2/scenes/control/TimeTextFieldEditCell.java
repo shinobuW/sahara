@@ -3,15 +3,8 @@ package seng302.group2.scenes.control;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableCell;
-import seng302.group2.Global;
-import seng302.group2.scenes.information.project.ProjectHistoryTab;
-import seng302.group2.scenes.information.team.TeamHistoryTab;
 import seng302.group2.workspace.SaharaItem;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Custom table cell with a time text field
@@ -42,9 +35,7 @@ public class TimeTextFieldEditCell extends TableCell<SaharaItem, String> {
             else {
                 timeTextField.setText(null);
             }
-            Platform.runLater(() -> {
-                timeTextField.requestFocus();
-            });
+            Platform.runLater(() -> timeTextField.requestFocus());
         }
     }
 

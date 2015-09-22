@@ -2,14 +2,12 @@ package seng302.group2.scenes.control.search;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.information.tag.TagCellNode;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.tag.Tag;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 

@@ -13,7 +13,6 @@ import seng302.group2.workspace.project.story.estimation.EstimationScalesDiction
 import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 

@@ -16,7 +16,6 @@ import seng302.group2.scenes.control.CustomComboBox;
 import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.*;
-import seng302.group2.util.validation.PriorityFieldValidator;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;

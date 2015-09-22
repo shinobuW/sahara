@@ -16,7 +16,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import seng302.group2.App;
-import seng302.group2.Global;
 import seng302.group2.scenes.TagsTableCell;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.search.*;

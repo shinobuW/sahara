@@ -6,17 +6,18 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.*;
+import seng302.group2.scenes.control.FilteredListView;
+import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchableTitle;
 import seng302.group2.scenes.validation.ValidationStyle;
@@ -24,8 +25,6 @@ import seng302.group2.workspace.tag.Tag;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * A Pane for the creation and management of Tags.

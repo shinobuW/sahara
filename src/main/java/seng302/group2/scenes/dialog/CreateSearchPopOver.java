@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.apache.commons.collections.map.LinkedMap;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.Global;

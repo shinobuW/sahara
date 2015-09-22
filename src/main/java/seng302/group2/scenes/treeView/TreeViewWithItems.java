@@ -1,6 +1,5 @@
 package seng302.group2.scenes.treeView;
 
-import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;

@@ -2,7 +2,6 @@ package seng302.group2.scenes.information.project.sprint;
 
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TitledPane;

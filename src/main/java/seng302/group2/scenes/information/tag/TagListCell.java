@@ -4,7 +4,8 @@ import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
@@ -13,7 +14,6 @@ import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.workspace.tag.Tag;
-
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
