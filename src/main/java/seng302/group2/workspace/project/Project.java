@@ -1385,7 +1385,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
         private Log log;
         private Task task;
         private Project proj;
-        private double effortLeft;
 
         /**
          * Constructor for the log addition command
@@ -1425,7 +1424,15 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for adding logs.
          */
         public String getString() {
-            return null;
+            String description = log.getDescription();
+            String pairString = "";
+            if (description.length() > 40) {
+                description = description.substring(0, 40) + "...";
+            }
+            if (log.getPartner() != null) {
+                pairString = " and " + log.getPartner();
+            }
+            return "creation of Log \"" + description + "\", by " + log.getLogger() + pairString;
         }
 
         @Override

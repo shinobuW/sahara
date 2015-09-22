@@ -7,12 +7,10 @@ import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.sprint.Sprint;
-import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -346,23 +344,6 @@ public class Log extends SaharaItem implements Serializable {
     }
 
     /**
-     * Edits the log using the commands to allow for undo-redo
-     * @param newLogger the logger to edit to
-     * @param newPartner the other logger to edit to
-     * @param newStartDate the new start date to set
-     * @param newDuration the new duration to set
-     * @param newDescription the new description to set
-     * @param newEffortLeft the new effort left to set
-     * @param newTags        The new tags
-     */
-    public void edit(Person newLogger, Person newPartner, LocalDateTime newStartDate,
-                     double newDuration, String newDescription, double newEffortLeft, ArrayList<Tag> newTags) {
-        LogEditCommand logEditCommand = new LogEditCommand(this, newLogger, newPartner, newStartDate, newDuration,
-                newDescription, newEffortLeft, newTags );
-        Global.commandManager.executeCommand(logEditCommand);
-    }
-
-    /**
      * Edits the Log's description
      * @param description the description to edit to
      */
@@ -409,181 +390,7 @@ public class Log extends SaharaItem implements Serializable {
         Global.commandManager.executeCommand(editCommand);
     }
 
-    /**
-     * A command class that allows the executing and undoing of log edits
-     */
-    private class LogEditCommand implements Command {
-        private Log log;
-        private Person logger;
-        private Person partner;
-        private LocalDateTime startTime;
-        private double duration;
-        private String description;
-        private double effortLeftDifference;
-        private Task task;
-        private Set<Tag> logTags = new HashSet<>();
-        private Set<Tag> globalTags = new HashSet<>();
-        private double effortSpent;
-        private double effortLeft;
 
-        private Person oldLogger;
-        private Person oldPartner;
-        private LocalDateTime oldStartTime;
-        private double oldDuration;
-        private String oldDescription;
-        private double oldEffortLeftDifference;
-        private Set<Tag> oldLogTags = new HashSet<>();
-        private Set<Tag> oldGlobalTags = new HashSet<>();
-        private double oldEffortSpent;
-        private double oldEffortLeft;
-
-
-
-        protected LogEditCommand(Log log, Person newLogger, Person newPartner, LocalDateTime newStartDate,
-                                 double newDuration, String newDescription, double effortLeft,
-                                 ArrayList<Tag> newTags) {
-            this.log = log;
-            if (newTags == null) {
-                newTags = new ArrayList<>();
-            }
-
-            this.logger = newLogger;
-            this.partner = newPartner;
-            this.startTime = newStartDate;
-            this.duration = newDuration;
-            this.description = newDescription;
-            //this.effortLeftDifference = newEffortLeftDifference;
-            this.effortLeft = task.getEffortLeft() - Log.this.duration;
-//            this.effortSpent = this.oldEffortSpent - this.oldDuration + this.duration;
-            this.logTags.addAll(newTags);
-            this.globalTags.addAll(newTags);
-            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
-
-            this.oldLogger = log.logger;
-            this.oldPartner = log.partner;
-            this.oldStartTime = log.startTime;
-            this.oldDuration = log.duration;
-            this.oldDescription = log.description;
-            this.oldEffortLeftDifference = log.effortLeftDifference;
-            this.oldLogTags.addAll(log.getTags());
-            this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
-//            this.oldEffortSpent = log.getTask().getEffortSpent();
-
-            this.task = log.task;
-        }
-
-
-        /**
-         * Executes/Redoes the changes of the log edit
-         */
-        public void execute() {
-            log.logger = logger;
-            log.startTime = startTime;
-            log.duration = duration;
-            log.description = description;
-            log.duration = duration;
-            log.effortLeftDifference = effortLeftDifference;
-            log.partner = partner;
-
-            //Add any created tags to the global collection
-            Global.currentWorkspace.getAllTags().clear();
-            Global.currentWorkspace.getAllTags().addAll(globalTags);
-            //Add the tags a log has to their list of tags
-            log.getTags().clear();
-            log.getTags().addAll(logTags);
-            task.setEffortSpent(this.effortSpent);
-        }
-
-
-        /**
-         * Undoes the changes of the log edit
-         */
-        public void undo() {
-            log.logger = oldLogger;
-            log.partner = oldPartner;
-            log.startTime = oldStartTime;
-            log.duration = oldDuration;
-            log.description = oldDescription;
-            log.effortLeftDifference = oldEffortLeftDifference;
-//            task.setEffortSpent(task.getEffortSpent() + log.getDurationInMinutes() - duration);
-
-            //Adds the old global tags to the overall collection
-            Global.currentWorkspace.getAllTags().clear();
-            Global.currentWorkspace.getAllTags().addAll(oldGlobalTags);
-
-            //Changes the logs list of tags to what they used to be
-            log.getTags().clear();
-            log.getTags().addAll(oldLogTags);
-            task.setEffortSpent(this.oldEffortSpent);
-
-        }
-
-        /**
-         * Gets the String value of the Command for Editting of Logs.
-         */
-        public String getString() {
-            return "the edit of Log \"" + log.toString() + "\"";
-        }
-
-
-        /**
-         * Searches the stateObjects to find an equal model class to map to
-         * @param stateObjects A set of objects to search through
-         * @return If the item was successfully mapped
-         */
-        @Override
-        public boolean map(Set<SaharaItem> stateObjects) {
-            boolean mapped = false;
-            for (SaharaItem item : stateObjects) {
-                if (item.equivalentTo(log)) {
-                    this.log = (Log) item;
-                    mapped = true;
-                }
-            }
-
-            //Tag collections
-            for (Tag tag : logTags) {
-                for (SaharaItem item : stateObjects) {
-                    if (item.equivalentTo(tag)) {
-                        logTags.remove(tag);
-                        logTags.add((Tag)item);
-                        break;
-                    }
-                }
-            }
-
-            for (Tag tag : oldLogTags) {
-                for (SaharaItem item : stateObjects) {
-                    if (item.equivalentTo(tag)) {
-                        oldLogTags.remove(tag);
-                        oldLogTags.add((Tag) item);
-                        break;
-                    }
-                }
-            }
-
-            for (Tag tag : globalTags) {
-                for (SaharaItem item : stateObjects) {
-                    if (item.equivalentTo(tag)) {
-                        globalTags.remove(tag);
-                        globalTags.add((Tag)item);
-                        break;
-                    }
-                }
-            }
-
-            for (Tag tag : oldGlobalTags) {
-                for (SaharaItem item : stateObjects) {
-                    if (item.equivalentTo(tag)) {
-                        oldGlobalTags.remove(tag);
-                        oldGlobalTags.add((Tag)item);
-                        break;
-                    }
-                }
-            }
-            return mapped;
-        }
-    }
 
     /**
      * A command class that allows the executing and undoing of PairLog partner edits
