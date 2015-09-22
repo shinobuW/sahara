@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.information.tag.TagCellNode;
+import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.tag.Tag;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class TagLabel extends HBox implements SearchableControl {
     ObservableList<Tag> tags = FXCollections.observableArrayList();
 
 
+    public TagLabel() {}
 
     public TagLabel(ObservableList<Tag> tags) {
         construct(tags);
@@ -39,6 +41,19 @@ public class TagLabel extends HBox implements SearchableControl {
             this.getChildren().add(node);
         }
     }
+
+
+    public void constructAC(AcceptanceCriteria ac) {
+        this.tags.clear();
+        this.tags = ac.getTags();
+        this.getChildren().clear();
+        this.setSpacing(5);
+        for (Tag tag : this.tags) {
+            TagCellNode node = new TagCellNode(tag, false, searchControls);
+            this.getChildren().add(node);
+        }
+    }
+
 
     @Override
     public boolean query(String query) {

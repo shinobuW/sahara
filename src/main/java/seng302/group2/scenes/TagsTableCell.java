@@ -16,9 +16,9 @@ import seng302.group2.workspace.tag.Tag;
  * A cell used for storing tags
  * Created by btm38 on 21/09/15.
  */
-public class TagsTableCell extends TableCell<Tag, ObservableList<Tag>> {
+public class TagsTableCell extends TableCell<AcceptanceCriteria, ObservableList<Tag>> {
     private TagField tagField;
-    private TagLabel tagLabel;
+    private TagLabel tagLabel = new TagLabel();
     private HBox cell = new HBox();
     private AcceptanceCriteria ac;
     private Story story;
@@ -28,7 +28,9 @@ public class TagsTableCell extends TableCell<Tag, ObservableList<Tag>> {
      */
     public TagsTableCell(Story story) {
         this.story = story;
-        tagLabel = new TagLabel(getTableView().getSelectionModel().getSelectedItems());
+        if (getTableView() != null) {
+            tagLabel = new TagLabel(getTableView().getSelectionModel().getSelectedItem().getTags());
+        }
     }
 
     /**
@@ -40,8 +42,7 @@ public class TagsTableCell extends TableCell<Tag, ObservableList<Tag>> {
             super.startEdit();
             createTagField();
 
-
-            if (!getText().isEmpty()) {
+            if (getItem() != null && !getItem().isEmpty()) {
                 tagField.setTags(getItem());
             }
             else {
@@ -76,25 +77,23 @@ public class TagsTableCell extends TableCell<Tag, ObservableList<Tag>> {
     @Override
     public void updateItem(ObservableList<Tag> item, boolean empty) {
         super.updateItem(item, empty);
-        if (empty) {
+        if (empty || item == null) {
             setText(null);
             setGraphic(null);
         }
         else {
             cell.getChildren().clear();
             if (isEditing()) {
-                if (!getItem().isEmpty()) {
+                System.out.println("get item = " + getItem());
+                if (getItem() != null && !getItem().isEmpty()) {
+                    System.out.println("we are inside the loop");
                     tagField.setTags(getItem());
                 }
                 cell.getChildren().addAll(tagField);
             }
             else {
-                // TODO BRONSOn
-                if (tagField == null) {
-                    setItem(null);
-                }
-                else if (getTableView().getSelectionModel().getSelectedItems() != null) {
-                    tagLabel.construct(getTableView().getSelectionModel().getSelectedItems());
+                if (getTableView().getSelectionModel().getSelectedItem() != null) {
+                    tagLabel.constructAC(getTableView().getSelectionModel().getSelectedItem());
                 }
 
                 cell.getChildren().add(tagLabel);
