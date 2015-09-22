@@ -122,9 +122,27 @@ public class LoggingEffortPane extends Pane {
             availablePeople.addAll(team.getPeople());
         }
 
+
+
+
         loggerCol.setCellFactory(ComboBoxTableCell.forTableColumn(
                 availableLoggers
         ));
+
+//        ComboBoxTableCell comboBoxEditCell = new ComboBoxTableCell<>(availableLoggers);
+//        comboBoxEditCell.focusedProperty().addListener(new ChangeListener<Boolean>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+//                System.out.println("hello");
+//            }
+//        });
+//        loggerCol.setCellFactory(comboBoxEditCell.);
+
+//        System.out.println(loggerCol.getCellFactory());
+
+//        ComboBoxTableCell loggerEditCell = new ComboBoxTableCell(availableLoggers);
+//        loggerCol.setCellFactory(loggerEditCell);
+
         loggerCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Log, String>,
                         ObservableValue<String>>() {
@@ -164,18 +182,10 @@ public class LoggingEffortPane extends Pane {
         TableColumn partnerCol = new TableColumn("Partner");
         partnerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("partner"));
         partnerCol.setEditable(true);
-//
-//        ComboBoxTableCell blah = new ComboBoxTableCell(availablePartners);
-//        blah.focusedProperty().addListener(new ChangeListener<Boolean>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-//
-//            }
-//        });
+
         partnerCol.setCellFactory(ComboBoxTableCell.forTableColumn(
                 availablePartners
         ));
-
 
         partnerCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Log, String>,
@@ -207,6 +217,16 @@ public class LoggingEffortPane extends Pane {
 
         partnerCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
+
+
+        logTable.setOnMouseClicked(event -> {
+            System.out.println("hello");
+            updateObservablePeopleList(availableLoggers, logTable.getSelectionModel().getSelectedItem().getPartner(),
+                    false);
+            updateObservablePeopleList(availablePartners, logTable.getSelectionModel().getSelectedItem().getLogger(),
+                    true);
+
+        });
 
         Callback<TableColumn, TableCell> cellFactory = col -> new DatePickerEditCell();
         Callback<TableColumn, TableCell> startTimeCellFactory = col -> new TimeTextFieldEditCell();
@@ -634,6 +654,12 @@ public class LoggingEffortPane extends Pane {
         this.getChildren().add(content);
     }
 
+    /**
+     *
+     * @param peopleList
+     * @param removePerson
+     * @param isPartnerList
+     */
     private void updateObservablePeopleList(ObservableList<Person> peopleList, Person removePerson,
                                             Boolean isPartnerList) {
         peopleList.clear();
