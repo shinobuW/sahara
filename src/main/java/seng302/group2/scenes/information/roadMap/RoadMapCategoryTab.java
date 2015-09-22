@@ -32,7 +32,7 @@ public class RoadMapCategoryTab extends SearchableTab {
     Workspace currentWorkspace;
     RoadMapNode interactiveRoadMap;
 //    RoadMap
-    Release interactiveRelease;
+    Release draggedRelease;
     Sprint interactiveSprint;
     Story interactiveStory;
 
@@ -186,7 +186,7 @@ public class RoadMapCategoryTab extends SearchableTab {
         roadMapNode.setOnDragDetected(event -> {
             System.out.println(roadMapNode.getRoadmap().getShortName());
             interactiveRoadMap = roadMapNode;
-            interactiveRelease = roadMapNode.getSelectedRelease();
+            draggedRelease = roadMapNode.getSelectedRelease();
 
         });
 
@@ -202,7 +202,7 @@ public class RoadMapCategoryTab extends SearchableTab {
             System.out.println("First");
             if (dragEvent.getDragboard().getString() == "release") {
                 for (Release release : currentRoadMap.getReleases()) {
-                    if (release == interactiveRelease) {
+                    if (release == draggedRelease) {
                         dragEvent.consume();
                         confirm = false;
                         CustomDialog.showDialog("Cannot Move Release"
@@ -212,7 +212,7 @@ public class RoadMapCategoryTab extends SearchableTab {
                 if (confirm) {
                     System.out.println(roadMapNode.getRoadmap().getShortName() + " Drag dropped");
                     interactiveRoadMap.getRoadmap().addRemove(currentRoadMap,
-                            interactiveRoadMap.getRoadmap(), interactiveRelease);
+                            interactiveRoadMap.getRoadmap(), draggedRelease);
                 }
 
                 //TODO possibly needs cumulative commands
@@ -225,11 +225,11 @@ public class RoadMapCategoryTab extends SearchableTab {
     }
 
     public Release getSelectedRelease() {
-        return interactiveRelease;
+        return draggedRelease;
     }
 
     public void setSelectedRelease(Release release) {
-        interactiveRelease = release;
+        draggedRelease = release;
     }
 
     public Sprint getSelectedSprint() {

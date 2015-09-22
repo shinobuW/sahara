@@ -36,7 +36,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
     private Person productOwner;
     private transient ObservableList<Person> people = observableArrayList();
     private List<Person> serializablePeople = new ArrayList<>();
-    private transient ObservableList<Person> devs = observableArrayList();
+    private transient Set<Person> devs = new HashSet<>();
     private List<Person> serializableDevs = new ArrayList<>();
     private transient ObservableList<Allocation> projectAllocations = observableArrayList();
     private List<Allocation> serializableProjectAllocations = new ArrayList<>();
@@ -168,7 +168,7 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
      *
      * @return The observable list of roles
      */
-    public ObservableList<Person> getDevs() {
+    public Set<Person> getDevs() {
         /*this.serializableDevs.clear();
         for (Object item : this.devs)
         {

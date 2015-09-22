@@ -584,7 +584,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         sprintNode.setOnDragDetected(event -> {
             System.out.println(currentSprint);
-            interactiveSprint = currentSprint;
+            selectedSprint = currentSprint;
         });
 
         sprintNode.setOnDragOver(dragEvent -> {
@@ -593,17 +593,17 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         sprintNode.setOnDragDropped(dragEvent -> {
             if (dragEvent.getDragboard().getString() == "story") {
-                System.out.println(currentSprint.getProject());
+                System.out.println(selectedStory);
                 System.out.println(selectedSprint);
-                System.out.println(interactiveSprint);
+                System.out.println(currentSprint);
                 if (currentSprint.getProject().equals(selectedStory.getProject())
-                        && !currentSprint.equals(selectedSprint) && interactiveSprint != null) {
+                        && !currentSprint.equals(selectedSprint) && selectedSprint != null) {
                     System.out.println(currentSprint + " " + selectedSprint);
-                    currentSprint.addRemove(currentSprint, interactiveSprint, selectedStory);
+                    currentSprint.addRemove(currentSprint, selectedSprint, selectedStory);
 
                     App.mainPane.refreshAll();
                 }
-                else if (interactiveSprint == null) {
+                else if (selectedSprint == null) {
                     dragEvent.consume();
                 }
                 else {
@@ -625,7 +625,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
     }
 
     public Sprint getSelectedSprint() {
-        return interactiveSprint;
+        return selectedSprint;
     }
 
     public void setSelectedSprint(Sprint sprint) {
@@ -633,7 +633,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
     }
 
     public Story getSelectedStory() {
-        return interactiveStory;
+        return selectedStory;
     }
 
     public void setSelectedStory(Story story) {

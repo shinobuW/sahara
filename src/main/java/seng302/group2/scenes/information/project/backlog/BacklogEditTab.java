@@ -34,7 +34,7 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public class BacklogEditTab extends SearchableTab {
     List<SearchableControl> searchControls = new ArrayList<>();
-    private Backlog baseBacklog;
+    private Backlog currentBacklog;
     private RequiredField shortNameField = new RequiredField("Short Name:", searchControls);
     private CustomComboBox<String> scaleComboBox = new CustomComboBox<>("Scale", true, searchControls);
     CustomTextField longNameField = new CustomTextField("Long Name:");
@@ -46,11 +46,11 @@ public class BacklogEditTab extends SearchableTab {
      * Constructor for the BacklogEditTab class. This constructor creates a JavaFX ScrollPane
      * which is populated with relevant controls then shown.
      *
-     * @param baseBacklog the backlog being edited
+     * @param currentBacklog the backlog being edited
      */
-    public BacklogEditTab(Backlog baseBacklog) {
+    public BacklogEditTab(Backlog currentBacklog) {
         // Init
-        this.baseBacklog = baseBacklog;
+        this.currentBacklog = currentBacklog;
         construct();
     }
 
@@ -63,7 +63,7 @@ public class BacklogEditTab extends SearchableTab {
     private boolean isValidState() {
 
         ButtonType confirm;
-        if (!scaleComboBox.getValue().equals(baseBacklog.getScale())) {
+        if (!scaleComboBox.getValue().equals(currentBacklog.getScale())) {
             confirm = CustomDialog.showConfirmation("Estimation Scale", "All existing estimations "
                     + "will be lost if the scale is changed. Continue?");
             if (confirm == ButtonType.CANCEL) {
@@ -71,7 +71,7 @@ public class BacklogEditTab extends SearchableTab {
             }
 
         }
-        return (shortNameField.getText().equals(baseBacklog.getShortName())  // Is the same,
+        return (shortNameField.getText().equals(currentBacklog.getShortName())  // Is the same,
                 || ShortNameValidator.validateShortName(shortNameField, null)); // new name validate
     }
 
@@ -95,18 +95,18 @@ public class BacklogEditTab extends SearchableTab {
         this.setContent(wrapper);
 
         // Basic information fields
-        shortNameField.setText(baseBacklog.getShortName());
+        shortNameField.setText(currentBacklog.getShortName());
         shortNameField.setMaxWidth(275);
-        longNameField.setText(baseBacklog.getLongName());
+        longNameField.setText(currentBacklog.getLongName());
         longNameField.setMaxWidth(275);
-        descriptionField.setText(baseBacklog.getDescription());
+        descriptionField.setText(currentBacklog.getDescription());
         descriptionField.setMaxWidth(275);
         SearchableText errorField = new SearchableText("");
 
         // Set up the tagging field
         SearchableText tagLabel = new SearchableText("Tags:", "-fx-font-weight: bold;", searchControls);
         tagLabel.setMinWidth(60);
-        tagField = new TagField(baseBacklog.getTags(), searchControls);
+        tagField = new TagField(currentBacklog.getTags(), searchControls);
         HBox.setHgrow(tagField, Priority.ALWAYS);
 
         HBox tagBox = new HBox();
@@ -118,7 +118,7 @@ public class BacklogEditTab extends SearchableTab {
             scaleComboBox.addToComboBox(scaleName);
         }
 
-        scaleComboBox.setValue(baseBacklog.getScale());
+        scaleComboBox.setValue(currentBacklog.getScale());
 
         HBox scaleHBox = new HBox();
         HBox.setHgrow(scaleHBox, Priority.ALWAYS);
@@ -133,10 +133,10 @@ public class BacklogEditTab extends SearchableTab {
         assignmentButtons.setAlignment(Pos.CENTER);
 
         // Draft member and available people lists
-        backlogStoryList.addAll(baseBacklog.getStories());
+        backlogStoryList.addAll(currentBacklog.getStories());
 
         ObservableList<Story> availableStoryList = observableArrayList();
-        for (Story story : baseBacklog.getProject().getUnallocatedStories()) {
+        for (Story story : currentBacklog.getProject().getUnallocatedStories()) {
             if (story.getBacklog() == null) {
                 availableStoryList.add(story);
             }
@@ -239,28 +239,42 @@ public class BacklogEditTab extends SearchableTab {
      * Cancels the edit
      */
     public void cancel() {
-        baseBacklog.switchToInfoScene();
+        currentBacklog.switchToInfoScene();
     }
 
     /**
      * Changes the values depending on what the user edits
      */
     public void done() {
+
+        boolean shortNameUnchanged = shortNameField.getText().equals(currentBacklog.getShortName());
+        boolean tagsUnchanged = tagField.getTags().equals(currentBacklog.getTags());
+        boolean longNameUnchanged = longNameField.getText().equals(currentBacklog.getLongName());
+        boolean descriptionUnchanged = descriptionField.getText().equals(currentBacklog.getDescription());
+        boolean scaleUnchanged = scaleComboBox.getValue().equals(currentBacklog.getScale());
+        boolean storiesUnchanged = backlogStoryList.equals(currentBacklog.getStories());
+
+        if (shortNameUnchanged && tagsUnchanged && longNameUnchanged && descriptionUnchanged && scaleUnchanged
+                && storiesUnchanged) {
+            currentBacklog.switchToInfoScene();
+            return;
+        }
+
         if (isValidState()) { // validation
             // Edit Command.
             ArrayList<Tag> tags = new ArrayList<>(tagField.getTags());
-            baseBacklog.edit(shortNameField.getText(),
+            currentBacklog.edit(shortNameField.getText(),
                     longNameField.getText(),
                     descriptionField.getText(),
-                    baseBacklog.getProductOwner(),
-                    baseBacklog.getProject(),
+                    currentBacklog.getProductOwner(),
+                    currentBacklog.getProject(),
                     scaleComboBox.getValue(),
                     backlogStoryList,
                     tags
             );
 
-            Collections.sort(baseBacklog.getProject().getBacklogs());
-            baseBacklog.switchToInfoScene();
+            Collections.sort(currentBacklog.getProject().getBacklogs());
+            currentBacklog.switchToInfoScene();
             App.mainPane.refreshTree();
         }
     }
