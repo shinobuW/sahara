@@ -175,8 +175,10 @@ public class LoggingEffortPane extends Pane {
 
         logTable.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
                 Boolean isPartnerList = true;
-                updateObservablePeopleList(availablePartners, newSelection.getLogger(), isPartnerList);
-                updateObservablePeopleList(availableLoggers, newSelection.getLogger(), !isPartnerList);
+                if (logTable.getSelectionModel().getSelectedItem() != null) {
+                    updateObservablePeopleList(availablePartners, newSelection.getLogger(), isPartnerList);
+                    updateObservablePeopleList(availableLoggers, newSelection.getLogger(), !isPartnerList);
+                }
             });
 
         TableColumn partnerCol = new TableColumn("Partner");
@@ -221,11 +223,12 @@ public class LoggingEffortPane extends Pane {
 
         logTable.setOnMouseClicked(event -> {
             if (logTable.getSelectionModel().getSelectedItem() != null) {
-                updateObservablePeopleList(availableLoggers,
-                        logTable.getSelectionModel().getSelectedItem().getPartner(), false);
-                updateObservablePeopleList(availablePartners,
-                        logTable.getSelectionModel().getSelectedItem().getLogger(), true);
+                updateObservablePeopleList(availableLoggers, logTable.getSelectionModel().getSelectedItem().getPartner(),
+                        false);
+                updateObservablePeopleList(availablePartners, logTable.getSelectionModel().getSelectedItem().getLogger(),
+                        true);
             }
+
         });
 
         Callback<TableColumn, TableCell> cellFactory = col -> new DatePickerEditCell();
