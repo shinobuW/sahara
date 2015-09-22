@@ -3,6 +3,7 @@ package seng302.group2.scenes.information.workspace;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.CustomInfoLabel;
@@ -61,12 +62,12 @@ public class WorkspaceInfoTab extends SearchableTab {
         CustomInfoLabel shortName = new CustomInfoLabel("Short Name: ", currentWorkspace.getShortName());
         TagLabel workspaceTags = new TagLabel(currentWorkspace.getTags());
         CustomInfoLabel desc = new CustomInfoLabel("Workspace Description: ", currentWorkspace.getDescription());
-        CustomInfoLabel numOfPeople = new CustomInfoLabel("Number of people in " + currentWorkspace.getShortName()
-                + ": ", currentWorkspace.getNumPeople().toString());
-        CustomInfoLabel numOfTeams = new CustomInfoLabel("Number of teams in " + currentWorkspace.getShortName()
-                + ": ", currentWorkspace.getNumTeams().toString());
-        CustomInfoLabel numOfProjects = new CustomInfoLabel("Number of projects in " + currentWorkspace.getShortName()
-                + ": ", currentWorkspace.getNumProjects().toString());
+
+        Separator sep = new Separator();
+
+        CustomInfoLabel numOfPeople = new CustomInfoLabel("Number of people: ", currentWorkspace.getNumPeople().toString());
+        CustomInfoLabel numOfTeams = new CustomInfoLabel("Number of teams: ", currentWorkspace.getNumTeams().toString());
+        CustomInfoLabel numOfProjects = new CustomInfoLabel("Number of projects: ", currentWorkspace.getNumProjects().toString());
 
                 // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
@@ -74,6 +75,7 @@ public class WorkspaceInfoTab extends SearchableTab {
                 shortName,
                 workspaceTags,
                 desc,
+                sep,
                 numOfProjects,
                 numOfTeams,
                 numOfPeople

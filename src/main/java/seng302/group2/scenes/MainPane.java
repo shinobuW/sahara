@@ -52,8 +52,6 @@ public class MainPane extends BorderPane {
     public MainPane() {
         this.init();
 
-        HierarchyTracker.expandAll(treeView);
-
         if (contentPane == null) {
             contentPane = new ScrollPane();
         }
@@ -83,6 +81,7 @@ public class MainPane extends BorderPane {
         this.setBottom(statusBar);
 
         double split = userPrefs.getDouble("pane.split", 0.225);
+
         Platform.runLater(() -> content.setDividerPositions(split));
     }
 
@@ -126,6 +125,14 @@ public class MainPane extends BorderPane {
         }
         else if (Global.selectedTreeItem != null && Global.selectedTreeItem.getValue() != null) {
             treeView.selectItem((SaharaItem) Global.selectedTreeItem.getValue());
+        }
+        else {
+            Platform.runLater(() -> {
+                treeView.selectItem(Global.currentWorkspace);
+                stickyBar.construct(StickyBar.STICKYTYPE.INFO);
+                treeView.getSelectionModel().getSelectedItem().setExpanded(true);
+            });
+
         }
     }
 

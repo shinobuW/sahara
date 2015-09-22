@@ -11,6 +11,7 @@ import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.information.StickyBar;
 import seng302.group2.workspace.workspace.Workspace;
 
 import java.util.Map;
@@ -86,6 +87,13 @@ public class CreateWorkspaceDialog extends Dialog<Map<String, String>> {
                 App.mainPane.selectItem(Global.currentWorkspace);
                 App.mainPane.refreshAll();
                 Global.setCurrentWorkspaceChanged();
+
+                Platform.runLater(() -> {
+                    App.mainPane.getTree().selectItem(Global.currentWorkspace);
+                    App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
+                    App.mainPane.getTree().getSelectionModel().getSelectedItem().setExpanded(true);
+                });
+
                 this.close();
             }
             return null;

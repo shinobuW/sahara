@@ -10,6 +10,7 @@ import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.scenes.dialog.*;
+import seng302.group2.scenes.information.StickyBar;
 import seng302.group2.scenes.information.tag.TagManagementPane;
 import seng302.group2.util.revert.RevertManager;
 import seng302.group2.workspace.SaharaItem;
