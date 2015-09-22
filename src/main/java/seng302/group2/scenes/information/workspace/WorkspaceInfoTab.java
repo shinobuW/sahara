@@ -65,9 +65,12 @@ public class WorkspaceInfoTab extends SearchableTab {
 
         Separator sep = new Separator();
 
-        CustomInfoLabel numOfPeople = new CustomInfoLabel("Number of people: ", currentWorkspace.getNumPeople().toString());
-        CustomInfoLabel numOfTeams = new CustomInfoLabel("Number of teams: ", currentWorkspace.getNumTeams().toString());
-        CustomInfoLabel numOfProjects = new CustomInfoLabel("Number of projects: ", currentWorkspace.getNumProjects().toString());
+        CustomInfoLabel numOfPeople = new CustomInfoLabel("Number of people: ",
+                currentWorkspace.getNumPeople().toString());
+        CustomInfoLabel numOfTeams = new CustomInfoLabel("Number of teams: ",
+                currentWorkspace.getNumTeams().toString());
+        CustomInfoLabel numOfProjects = new CustomInfoLabel("Number of projects: ",
+                currentWorkspace.getNumProjects().toString());
 
                 // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
