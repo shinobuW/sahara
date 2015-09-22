@@ -103,7 +103,7 @@ public class SprintTest {
         Assert.assertTrue(sprint.getStories().contains(story));
 
         Assert.assertEquals("the addition of Story \"" + story.getShortName() + "\" to Sprint \""
-                        + sprint.getGoal() + "\".",
+                        + sprint.getGoal() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
         Assert.assertFalse(sprint.getStories().contains(story));
@@ -167,7 +167,7 @@ public class SprintTest {
         Assert.assertEquals(release, sprint.getRelease());
         Assert.assertEquals(stories, sprint.getStories());
 
-        Assert.assertEquals("the edit of Sprint \"" + sprint.getGoal() + "\".",
+        Assert.assertEquals("the edit of Sprint \"" + sprint.getGoal() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
 
@@ -205,7 +205,7 @@ public class SprintTest {
         sprint.deleteSprint();
         Assert.assertFalse(project.getSprints().contains(sprint));
 
-        Assert.assertEquals("the deletion of Sprint \"" + sprint.getGoal() + "\".",
+        Assert.assertEquals("the deletion of Sprint \"" + sprint.getGoal() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
         Assert.assertTrue(project.getSprints().contains(sprint));
