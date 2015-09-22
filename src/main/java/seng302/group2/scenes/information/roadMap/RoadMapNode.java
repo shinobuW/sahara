@@ -153,7 +153,6 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
             shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctReleaseShortName = validateShortName(shortNameCustomField, null);
-                System.out.println(correctReleaseShortName);
                 btnAddRelease.setDisable(!(correctReleaseShortName));
             });
 
