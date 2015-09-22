@@ -22,13 +22,13 @@ import javafx.scene.text.Text;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.FilteredListView;
-import seng302.group2.scenes.control.PopOverTip;
+import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.dialog.CreateStoryDialog;
 import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
@@ -42,6 +42,9 @@ import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
+import static seng302.group2.util.validation.NameValidator.validateName;
+import static seng302.group2.util.validation.PriorityFieldValidator.validatePriorityField;
+import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
  *
@@ -57,6 +60,12 @@ public class RoadMapNode extends VBox implements SearchableControl {
     Sprint interactiveSprint;
     Story selectedStory;
     Story interactiveStory;
+
+    private static Boolean correctShortName = Boolean.FALSE;
+    private static Boolean correctCreator = Boolean.FALSE;
+    private static Boolean correctLongName = Boolean.FALSE;
+    private static Boolean correctPriority = Boolean.FALSE;
+
 
     public RoadMapNode(RoadMap currentRoadMap) {
         roadMap = currentRoadMap;
@@ -430,21 +439,24 @@ public class RoadMapNode extends VBox implements SearchableControl {
         addImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             event.consume();
 
+            correctCreator = false;
+            correctLongName = false;
+            correctShortName = false;
+            correctPriority = false;
+
+
             PopOver addStoryPopover = new PopOver();
             VBox addContent = new VBox();
             addContent.setPadding(new Insets(8, 8, 8, 8));
+
             VBox existingStories = new VBox(5);
-            addContent.setPadding(new Insets(8, 8, 8, 8));
+            existingStories.setPadding(new Insets(8, 8, 8, 8));
 
             ObservableList<Story> unassignedStories = observableArrayList();
             for (Story story : Global.currentWorkspace.getAllStories()) {
-                if (story.getShortName().equals("Slurp")) {
-                    System.out.println(story.getSprint());
-                }
                 if (story.getSprint() == null) {
                     unassignedStories.add(story);
                 }
-                //System.out.println(story.getShortName() + ": " + story.getBacklog());
             }
 
             FilteredListView<Story> unassignedStoryBox = new FilteredListView<>(unassignedStories,
@@ -468,7 +480,63 @@ public class RoadMapNode extends VBox implements SearchableControl {
             collapsableExisting.setExpanded(true);
             collapsableExisting.setAnimated(true);
 
-            addContent.getChildren().add(collapsableExisting);
+            VBox newStories = new VBox(5);
+            newStories.setPadding(new Insets(8, 8, 8, 8));
+
+            RequiredField shortNameCustomField = new RequiredField("Short Name:");
+            RequiredField longNameCustomField = new RequiredField("Long Name:");
+            RequiredField creatorCustomField = new RequiredField("Creator:");
+            CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
+            RequiredField priorityNumberField = new RequiredField("Priority:");
+            Button btnAddNew = new Button("Add");
+            newStories.getChildren().addAll(shortNameCustomField, longNameCustomField, creatorCustomField,
+                    priorityNumberField, descriptionTextArea, btnAddNew);
+
+            //Validation
+            shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctShortName = validateShortName(shortNameCustomField, null);
+                btnAddNew.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
+            });
+
+            creatorCustomField.getTextField().textProperty().addListener((observable, oldValue, newvalue) -> {
+                correctCreator = validateName(creatorCustomField);
+                btnAddNew.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
+            });
+
+            longNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctLongName = validateName(longNameCustomField);
+                btnAddNew.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
+            });
+
+            priorityNumberField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctPriority = validatePriorityField(priorityNumberField, null, null);
+                btnAddNew.setDisable(!(correctShortName && correctCreator && correctPriority && correctLongName));
+            });
+
+
+            btnAddNew.setOnAction(random -> {
+                if (correctShortName && correctLongName && correctCreator && correctPriority) {
+
+                    String shortName = shortNameCustomField.getText();
+                    String longName = longNameCustomField.getText();
+                    String creator = creatorCustomField.getText();
+                    String description = descriptionTextArea.getText();
+                    Integer priority = Integer.parseInt(priorityNumberField.getText());
+
+                    Project project = ((Sprint) item).getProject();
+                    Story story = new Story(shortName, longName, description, creator, project,
+                            priority);
+                    project.add(story, ((Sprint) item));
+
+                    App.mainPane.refreshTree();
+                }
+            });
+
+            TitledPane collapsableNew = new TitledPane("Add a new Story", newStories);
+            collapsableNew.setExpanded(false);
+            collapsableNew.setAnimated(true);
+
+            addContent.getChildren().addAll(collapsableExisting, collapsableNew);
             addStoryPopover.setContentNode(addContent);
             addStoryPopover.show(addImage);
         });

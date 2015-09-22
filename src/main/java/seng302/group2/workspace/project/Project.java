@@ -408,6 +408,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
 
     //</editor-fold>
 
+
     /**
      * Adds a Project to the Project list of Stories
      *
@@ -419,7 +420,17 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
 
     }
 
+    /**
+     * Adds a Project to the Project list of Stories and to the sprint
+     *
+     * @param story the story to add
+     * @param sprint to add story to
+     */
+    public void add(Story story, Sprint sprint) {
+        Command command = new AddStorySprintCommand(this, story, sprint);
+        Global.commandManager.executeCommand(command);
 
+    }
     /**
      * Adds a Backlog to the Backlog list of Backlogs
      *
@@ -1030,6 +1041,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
             this.story = story;
         }
 
+
         /**
          * Executes the story addition command.
          */
@@ -1077,6 +1089,88 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
             return mapped && mapped_story;
         }
     }
+
+    /**
+     * A command class for allowing the addition of Stories to Projects.
+     * and stories to a sprint
+     */
+    private class AddStorySprintCommand implements Command {
+        private Story story;
+        private Project proj;
+        private Sprint sprint;
+
+        /**
+         * Constructor for the story addition command.
+         * @param proj The project to which the story is to be added.
+         * @param story The story to be added.
+         * @param sprint The sprint to add the story to
+         */
+        AddStorySprintCommand(Project proj, Story story, Sprint sprint) {
+            this.proj = proj;
+            this.story = story;
+            this.sprint = sprint;
+        }
+
+
+        /**
+         * Executes the story addition command.
+         */
+        public void execute() {
+            proj.getUnallocatedStories().add(story);
+            story.setProject(proj);
+            sprint.getStories().add(story);
+            story.setSprint(sprint);
+        }
+
+        /**
+         * Undoes the story addition command.
+         */
+        public void undo() {
+            proj.getUnallocatedStories().remove(story);
+            story.setProject(null);
+            sprint.getStories().remove(story);
+            story.setSprint(null);
+        }
+
+        /**
+         * Gets the String value of the Command for adding stories.
+         */
+        public String getString() {
+            return "the creation of Story \"" + story.getShortName() + "\".";
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(proj)) {
+                    this.proj = (Project) item;
+                    mapped = true;
+                }
+            }
+            boolean mapped_story = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(story)) {
+                    this.story = (Story) item;
+                    mapped_story = true;
+                }
+            }
+            boolean mapped_sprint = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(sprint)) {
+                    this.sprint = (Sprint) item;
+                    mapped_sprint = true;
+                }
+            }
+            return mapped && mapped_story && mapped_sprint;
+        }
+    }
+
 
     /**
      * A command class for allowing the addition of Backlogs to Projects.

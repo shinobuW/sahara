@@ -602,9 +602,6 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
                 oldReadyStateDict.put(story, story.getReady());
             }
 
-            System.out.println("stories = " + stories);
-            System.out.println("old stories = " + oldStories);
-
         }
 
         /**
@@ -618,27 +615,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             sprint.endDate = endDate;
             sprint.team = team;
             sprint.release = release;
-            /*System.out.println("old stories in execute star " + oldStories);
 
-            for (Story story : oldStories) {
-                story.setSprint(null);
-            }
-
-            System.out.println("old stories in execute 1 " + oldStories);
-
-            //sprint.stories.clear();
-
-            System.out.println("old stories in execute 2 " + oldStories);
-
-            for (Story newStory : stories) {
-                newStory.setSprint(sprint);
-            }
-            System.out.println("old stories in execute 3 " + oldStories);
-
-            //sprint.stories.addAll(stories);
-
-            System.out.println("old stories in execute 4 " + oldStories);
-*/
             sprint.stories.clear();
             sprint.stories.addAll(stories);
 
@@ -659,7 +636,6 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             sprint.getTags().clear();
             sprint.getTags().addAll(sprintTags);
 
-            System.out.println("old stories in execute" + oldStories);
             //Are stories sorted in sprint?
             //Collections.sort(sprint.stories, Story.StoryPriorityComparator);
             Collections.sort(sprint.getProject().getSprints());
