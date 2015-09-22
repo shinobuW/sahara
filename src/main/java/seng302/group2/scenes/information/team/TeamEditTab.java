@@ -26,7 +26,6 @@ import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.util.*;
-import java.util.logging.Filter;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -39,7 +38,7 @@ public class TeamEditTab extends SearchableTab {
     Set<SearchableControl> searchControls = new HashSet<>();
     String poPlaceholder = "No Product Owner Assigned";
     String smPlaceholder = "No Scrum Master Assigned";
-    private Team baseTeam;
+    private Team currentTeam;
     private RequiredField shortNameField;
     private CustomTextArea descriptionField;
     private Person allocatedProductOwner;
@@ -56,11 +55,11 @@ public class TeamEditTab extends SearchableTab {
      * Constructor for the Team Edit Tab class. This constructor creates a JavaFX ScrollPane
      * which is populated with relevant controls and then shown.
      *
-     * @param baseTeam The team being edited
+     * @param currentTeam The team being edited
      */
-    public TeamEditTab(Team baseTeam) {
+    public TeamEditTab(Team currentTeam) {
         // Initialise Variables
-        this.baseTeam = baseTeam;
+        this.currentTeam = currentTeam;
         construct();
     }
 
@@ -87,7 +86,7 @@ public class TeamEditTab extends SearchableTab {
      * @return If the changes in the scene are valid
      */
     private boolean isValidState() {
-        return (shortNameField.getText().equals(baseTeam.getShortName())  // Is the same,
+        return (shortNameField.getText().equals(currentTeam.getShortName())  // Is the same,
                 || ShortNameValidator.validateShortName(shortNameField, null))// new name validates
                 && areRolesValid();
     }
@@ -136,20 +135,20 @@ public class TeamEditTab extends SearchableTab {
 
     @Override
     public void construct() {
-        allocatedDevelopers.addAll(baseTeam.getDevs());
+        allocatedDevelopers.addAll(currentTeam.getDevs());
         SearchableText poText;
         SearchableText smText;
 
-        if (baseTeam.getProductOwner() != null) {
-            allocatedProductOwner = baseTeam.getProductOwner();
+        if (currentTeam.getProductOwner() != null) {
+            allocatedProductOwner = currentTeam.getProductOwner();
             poText = new SearchableText("Product Owner: " + allocatedProductOwner);
         }
         else {
             poText = new SearchableText("Product Owner: " + poPlaceholder);
         }
 
-        if (baseTeam.getScrumMaster() != null) {
-            allocatedScrumMaster = baseTeam.getScrumMaster();
+        if (currentTeam.getScrumMaster() != null) {
+            allocatedScrumMaster = currentTeam.getScrumMaster();
             smText = new SearchableText("Scrum Master: " + allocatedScrumMaster);
         }
         else {
@@ -168,7 +167,7 @@ public class TeamEditTab extends SearchableTab {
         // Set up the tagging field
         SearchableText tagLabel = new SearchableText("Tags:", "-fx-font-weight: bold;", searchControls);
         tagLabel.setMinWidth(60);
-        tagField = new TagField(baseTeam.getTags(), searchControls);
+        tagField = new TagField(currentTeam.getTags(), searchControls);
         HBox.setHgrow(tagField, Priority.ALWAYS);
 
         HBox tagBox = new HBox();
@@ -177,10 +176,10 @@ public class TeamEditTab extends SearchableTab {
 
         // Basic information fields
         shortNameField = new RequiredField("Short Name:");
-        shortNameField.setText(baseTeam.getShortName());
+        shortNameField.setText(currentTeam.getShortName());
         shortNameField.setMaxWidth(275);
         descriptionField = new CustomTextArea("Team Description:", 300);
-        descriptionField.setText(baseTeam.getDescription());
+        descriptionField.setText(currentTeam.getDescription());
         descriptionField.setMaxWidth(275);
 
         // Team assignment buttons
@@ -207,7 +206,7 @@ public class TeamEditTab extends SearchableTab {
 
 
         // Draft member and available people lists
-        teamMembersList.addAll(baseTeam.getPeople());
+        teamMembersList.addAll(currentTeam.getPeople());
 
         ObservableList<Person> availablePeopleList = observableArrayList();
         for (Person person : Global.currentWorkspace.getPeople()) {
@@ -389,16 +388,33 @@ public class TeamEditTab extends SearchableTab {
      * Cancels the edit
      */
     public void cancel() {
-        baseTeam.switchToInfoScene();
+        currentTeam.switchToInfoScene();
     }
 
     /**
      * Changes the values depending on what the user edits
      */
     public void done() {
+
+
+        boolean shortNameUnchanged = shortNameField.getText().equals(currentTeam.getShortName());
+        boolean tagUnchanged = tagField.getTags().equals(currentTeam.getTags());
+        boolean descriptionUnchanged = descriptionField.getText().equals(currentTeam.getDescription());
+        boolean membersUnchanged = teamMembersList.equals(currentTeam.getPeople());
+        boolean developersUnchanged = allocatedDevelopers.equals(currentTeam.getDevs());
+        boolean smUnchanged = allocatedScrumMaster == currentTeam.getScrumMaster();
+        boolean poUnchanged = allocatedProductOwner == currentTeam.getProductOwner();
+
+        if (shortNameUnchanged && tagUnchanged && descriptionUnchanged && membersUnchanged && developersUnchanged
+                && smUnchanged && poUnchanged) {
+            currentTeam.switchToInfoScene();
+            return;
+        }
+
         if (isValidState()) { // validation
             ArrayList<Tag> tags = new ArrayList<>(tagField.getTags());
-            baseTeam.edit(shortNameField.getText(),
+
+            currentTeam.edit(shortNameField.getText(),
                     descriptionField.getText(),
                     teamMembersList,
                     allocatedProductOwner,
@@ -408,7 +424,7 @@ public class TeamEditTab extends SearchableTab {
             );
 
             Collections.sort(Global.currentWorkspace.getTeams());
-            baseTeam.switchToInfoScene();
+            currentTeam.switchToInfoScene();
             App.mainPane.refreshTree();
         }
     }
