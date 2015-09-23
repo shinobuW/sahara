@@ -27,6 +27,7 @@ import seng302.group2.workspace.tag.Tag;
 import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import seng302.group2.Global;
 
 
 /**
@@ -37,7 +38,8 @@ public class StoryAcTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
     Story story;
-
+    
+    ObservableList<Tag> newTags = observableArrayList();
     ListProperty<Tag> tags = new SimpleListProperty<>(FXCollections.observableList(new ArrayList<Tag>()));
 
     public ListProperty<Tag> tagsProperty() {
@@ -165,9 +167,12 @@ public class StoryAcTab extends SearchableTab {
 
                             AcceptanceCriteria currentAc = acTable.getSelectionModel().getSelectedItem();
 
-                            ObservableList<Tag> newTags = event.getNewValue();
-                            System.out.println("new tags = " + newTags);
-
+                            newTags.clear();
+                            newTags.addAll(event.getNewValue());
+                            System.out.println("AC Tags = " + currentAc.getTags());
+                            System.out.println("Event Tags = " + newTags);
+                            //currentAc.getTags().clear();
+                            
 //                            currentAc.getTags().add(event.getNewValue().get(0));
 //                            currentAc.editAcTags(newTags);
                             System.out.println(currentAc);
@@ -179,8 +184,11 @@ public class StoryAcTab extends SearchableTab {
         );
 
         wrapper.setOnMouseClicked(event -> {
-            System.out.println(story.getAcceptanceCriteria().get(0));
-            System.out.println(story.getAcceptanceCriteria().get(0).getTags());
+            System.out.println("Out of edit tags" + newTags);
+            if (!newTags.isEmpty()) {
+                ((AcceptanceCriteria) acTable.getSelectionModel().getSelectedItem()).editAcTags(newTags);
+            }
+            System.out.println(((AcceptanceCriteria) acTable.getSelectionModel().getSelectedItem()).getTags());
         });
 
         acTable.setItems(data);
