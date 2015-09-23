@@ -100,6 +100,11 @@ public class LogTest {
         Assert.assertTrue(!proj.getLogs().contains(log1));
         Assert.assertEquals(20, task.getEffortSpent(), 0);
 
+        Global.commandManager.undo();
+
+        Assert.assertTrue(proj.getLogs().contains(log1));
+        Assert.assertEquals(30, task.getEffortSpent(), 0);
+
     }
 
 
