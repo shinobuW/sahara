@@ -227,24 +227,6 @@ public class Story extends SaharaItem implements Serializable {
     }
 
     /**
-     * Gets the duration spent on the story
-     * @return duration in days
-     */
-    public long getDuration() {
-        //if sprint completed
-        if (startDate != null && endDate != null) {
-            return Duration.between(startDate, endDate).toDays();
-        }
-        //in progress but not done
-        else if (startDate != null) {
-            return Duration.between(startDate, LocalDate.now()).toDays();
-        }
-        else {
-            return 0;
-        }
-    }
-
-    /**
      * Sets the end date of the story
      */
     public void setEndDate(LocalDate date) {

@@ -13,6 +13,7 @@ import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.team.Team;
 
 import java.util.ArrayList;
@@ -127,8 +128,16 @@ public class TeamInfoTab extends SearchableTab {
         CustomInfoLabel desc = new CustomInfoLabel("Team Description: ", currentTeam.getDescription());
         CustomInfoLabel listViewLabel = new CustomInfoLabel("", "");
 
+       /* String velocity = "";
+        for (Sprint sprint : currentTeam.getProject().getSprints()) {
+            if (sprint.getTeam() == currentTeam) {
+                System.out.println(sprint.getPointsPerDay());
+            }
+        }
+        //CustomInfoLabel velocity = new CustomInfoLabel("Velocy", currentTeam.getProject().getSprints(). )*/
+
         ObservableList<Person> personList = currentTeam.getPeople();
-        FilteredListView teamsPeopleBox = new FilteredListView(personList, "people");
+        FilteredListView teamsPeopleBox = new FilteredListView<>(personList, "people");
         SearchableListView<Person> teamsPeoplelist = teamsPeopleBox.getListView();
         teamsPeopleBox.setPrefHeight(192);
         teamsPeoplelist.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
