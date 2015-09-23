@@ -13,6 +13,7 @@ import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -528,6 +529,7 @@ public class Task extends SaharaItem implements Serializable {
      * @param markStoryDone Wether to mark the story done or not
      */
     public void editLane(TASKSTATE newState, int index, boolean markStoryDone) {
+
         Command relEdit = new TaskEditLaneCommand(this, newState, index, markStoryDone);
         Global.commandManager.executeCommand(relEdit);
     }
@@ -1054,7 +1056,7 @@ public class Task extends SaharaItem implements Serializable {
         private int oldIndex = -1;
         private boolean storyDone = false;
         private boolean oldStoryDone = false;
-
+        private LocalDate oldEndDate = null;
 
         /**
          * Constructor for the Task Edit State command, used for changing lanes in the scrumboard
@@ -1068,6 +1070,7 @@ public class Task extends SaharaItem implements Serializable {
             this.lane = newLane;
             this.oldState = task.state;
             this.oldLane = task.lane;
+            this.oldEndDate = task.getStory().getEndDate();
 
             this.storyDone = markStoryDone;
             this.oldStoryDone = task.getStory().isDone();
@@ -1095,12 +1098,20 @@ public class Task extends SaharaItem implements Serializable {
                     }
                 }
             }
-
-            if (lane.equals(TASKSTATE.DONE)) {
-                task.getStory().setDone(storyDone);
+            task.getStory().setDone(storyDone);
+            if (lane == TASKSTATE.IN_PROGRESS) {
+                if (task.getStory().getStartDate() == null) {
+                    task.getStory().setStartDate(LocalDate.now());
+                }
             }
-            //System.out.println("Task state: " + task.getState() + ", lane: " + task.getLane());
+            if (storyDone) {
+                task.getStory().setEndDate(LocalDate.now());
+            }
+            else {
+                task.getStory().setEndDate(null);
+            }
         }
+
 
         /**
          * Undoes the changes of the task edit
@@ -1112,6 +1123,18 @@ public class Task extends SaharaItem implements Serializable {
                 task.getStory().addTaskToLane(task, oldIndex);
             }
             task.getStory().setDone(oldStoryDone);
+            if (storyDone) {
+                task.getStory().setEndDate(null);
+            }
+            else {
+                task.getStory().setEndDate(oldEndDate);
+            }
+
+            if (lane == TASKSTATE.IN_PROGRESS) {
+                if (task.getStory().getStartDate() != null) {
+                    task.getStory().setStartDate(null);
+                }
+            }
         }
 
         /**

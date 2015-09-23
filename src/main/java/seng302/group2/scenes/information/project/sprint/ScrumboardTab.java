@@ -147,7 +147,7 @@ public class ScrumboardTab extends SearchableTab {
                         }
                     }
                     else {
-                        interactiveTask.editLane(laneStateDict.get(lane), hoverIndex, story.isDone());
+                        interactiveTask.editLane(laneStateDict.get(lane), hoverIndex, false);
                     }
                 });
         }
