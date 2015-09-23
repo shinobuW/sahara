@@ -1,9 +1,8 @@
 package seng302.group2.workspace.project.story.estimation;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import javafx.scene.transform.Scale;
+
+import java.util.*;
 
 /**
  * A singleton class containing a dictionary mapping the name of a story estimation scale to an
@@ -110,6 +109,84 @@ public class EstimationScalesDictionary {
         scaleValues.add(defaultValuesDict.get(DefaultValues.QUESTION));
 
         estimationScaleDict.put(scaleName, scaleValues);
+    }
+
+
+    /**
+     * Given a list of scales, and the sequence number of an element inside the sequence (index + 1), returns an
+     * approximate fibonacci equivalent of the element
+     * @param scale A list of values inside the scale
+     * @param seqNo The sequence number of the element to find the equivalent scale for
+     * @return An approximate fibonacci equivalent for the element inside the given scale
+     */
+    public int getFibScaleEquivalent(List<String> scale, int seqNo) {
+        if (seqNo == 0) {
+            return 0;
+        }
+
+        List<String> values = new ArrayList<>();
+        values.addAll(scale);
+        values.removeAll(defaultValuesDict.values());
+        values.add(0, defaultValuesDict.get(DefaultValues.ZERO));
+
+        return modifiedFibEquivalent(seqNo, values.size());
+    }
+
+
+    /**
+     * Given a list of scales, and the sequence number of an element inside the sequence (index + 1), returns an
+     * approximate fibonacci equivalent of the element
+     * @param scale A list of values inside the scale
+     * @param value The value of the element to find the equivalent scale for
+     * @return An approximate fibonacci equivalent for the element inside the given scale
+     */
+    public int getFibScaleEquivalent(List<String> scale, String value) {
+        if (value.equals(scale.get(0))) {
+            return getFibScaleEquivalent(scale, 1);
+        }
+
+        int i = 0;
+        while (i < scale.size() && !value.equals(scale.get(i))) {
+            i++;
+        }
+        i++;
+
+        return getFibScaleEquivalent(scale, i + 1);  // Account for added first '0'
+    }
+
+
+    /**
+     * Given a number and a total/maximum number in a scale, calculates an approximate fibonacci equivalent for the
+     * number, based on the total number
+     * @param seqNo The number to find an approximate fibonacci value for
+     * @param totalNo The total number of elements in the scale of the given seqNo
+     * @return A rounded, approximate fibonacci scaled value for the given seqNo
+     */
+    int modifiedFibEquivalent(int seqNo, int totalNo) {
+        if (seqNo == 0) {
+            return 0;
+        }
+
+        int fibSeqLength = estimationScaleDict.get("Fibonacci").size() - defaultValuesDict.size() + 1;
+        double phi = (1 + Math.sqrt(5)) / 2.0;
+        Double approxFib = ((Math.pow(phi, (seqNo / (1.0 * totalNo) * (fibSeqLength * 1.0) ))) / Math.sqrt(5) + 0.5);
+
+        return new Double(approxFib * 100.0 / fib(fibSeqLength)).intValue(); // Normalise and return
+    }
+
+
+    /**
+     * Calculates the fibonacci number for the given n
+     * @param n The sequence number to calculate the fibonacci value of
+     * @return The fibonacci number at element n
+     */
+    static double fib(double n) {
+        if (n < 2) {
+            return n;
+        }
+        else {
+            return fib(n - 2) + fib(n - 1);
+        }
     }
 
 }
