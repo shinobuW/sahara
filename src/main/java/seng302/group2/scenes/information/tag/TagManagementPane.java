@@ -256,6 +256,11 @@ public class TagManagementPane extends SplitPane {
         Button cancelButton = new Button("Cancel Changes");
 
         tagNameField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!tagNameField.getTextWithoutTrim().isEmpty() && tagNameField.getTextWithoutTrim().length() >= 2
+                    && (tagNameField.getTextWithoutTrim().endsWith(" "))) {
+                tagNameField.setText(tagNameField.getTextWithoutTrim().substring(
+                        0, tagNameField.getTextWithoutTrim().length() - 1) + "_");
+            }
             if (newValue.length() > 20) {
                 tagNameField.getTextField().setText(oldValue);
                 ValidationStyle.borderGlowRed(tagNameField.getTextField());

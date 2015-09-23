@@ -92,6 +92,16 @@ public class RequiredField extends VBox implements SearchableControl {
 
 
     /**
+     * Returns the text inside the text field of the RequiredField.
+     *
+     * @return The text of the text field
+     */
+    public String getTextWithoutTrim() {
+        return this.inputText.getText();
+    }
+
+
+    /**
      * Sets the text inside the text field of the RequiredField.
      *
      * @param text the text to be inserted into the text field
