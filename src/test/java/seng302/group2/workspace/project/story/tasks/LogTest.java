@@ -2,6 +2,7 @@ package seng302.group2.workspace.project.story.tasks;
 
 import org.junit.Assert;
 import org.junit.Test;
+import seng302.group2.Global;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.Story;
@@ -10,6 +11,11 @@ import java.time.LocalDateTime;
 
 public class LogTest {
     Log log = new Log();
+    Person testPerson = new Person();
+    Person partner = new Person();
+    Log testLog = new Log(new Task(), "", testPerson, partner, 40, LocalDateTime.now(), 0);
+
+
     /**
      * Test Log constructors
      */
@@ -64,10 +70,6 @@ public class LogTest {
         Assert.assertEquals("2h 30min", log.getDurationString());
     }
 
-    //ToDo: Update testEditLog
-
-
-
 
     /**
      * Tests the DeleteLogs Method in the log class.
@@ -93,12 +95,27 @@ public class LogTest {
         proj.add(log1);
         proj.add(log2);
         proj.add(log3);
-        System.out.println(task.getEffortLeft());
+
         log1.deleteLog();
         Assert.assertTrue(!proj.getLogs().contains(log1));
         Assert.assertEquals(20, task.getEffortSpent(), 0);
-        System.out.println(task.getEffortLeft());
 
+    }
+
+
+    /**
+     * Tests the description edit command
+     */
+    @Test
+    public void testDescriptionEdit() {
+        String description = "description";
+        String description2 = "test";
+        Log log = new Log(new Task(), description, new Person(), new Person(), 10, LocalDateTime.now(), 0);
+        Assert.assertEquals(description, log.getDescription());
+
+        Global.commandManager.undo();
+        log.editDescription(description2);
+        Assert.assertEquals(description2, log.getDescription());
     }
 
     /**
@@ -115,6 +132,47 @@ public class LogTest {
 
         Log log = new Log(task, "", aPerson, new Person(), 40, LocalDateTime.now(), 40);
         Assert.assertEquals(null, log.generateXML());
-        
     }
+
+    /**
+     * Tests the log's edit logger command
+     */
+    @Test
+    public void editLoggerTest() {
+        Person editPerson = new Person();
+        testLog.editLogger(editPerson);
+        Assert.assertEquals(editPerson, testLog.getLogger());
+        Global.commandManager.undo();
+        Assert.assertEquals(testPerson, testLog.getLogger());
+    }
+
+
+    /**
+     * Test the log's partner edit command
+     */
+    @Test
+    public void editPartnerTest() {
+        Person editPerson = new Person();
+        testLog.editPartner(editPerson);
+        Assert.assertEquals(editPerson, testLog.getPartner());
+        Global.commandManager.undo();
+        Assert.assertEquals(partner, testLog.getPartner());
+    }
+
+
+//    public void editDurationTest() {
+//        Project proj = new Project();
+//        Story story = new Story();
+//        Person aPerson = new Person();
+//        Task task = new Task("test task", "", story, aPerson, 0);
+//        Log log1 = new Log(task, "A new Log", aPerson, new Person(), 122, LocalDateTime.now(), 122);
+//        task.setEffortLeft(600);
+//        story.add(task);
+//        proj.add(log1);
+//
+//
+//
+//    }
+
+
 }
