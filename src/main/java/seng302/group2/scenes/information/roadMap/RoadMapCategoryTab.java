@@ -1,5 +1,6 @@
 package seng302.group2.scenes.information.roadMap;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
@@ -38,6 +39,7 @@ public class RoadMapCategoryTab extends SearchableTab {
     Sprint interactiveSprint;
     Story interactiveStory;
     Boolean dragging = false;
+    Integer viewportWidth = 0;
 
     /**
      * Constructor for RoadMapCategoryTab class.
@@ -169,13 +171,28 @@ public class RoadMapCategoryTab extends SearchableTab {
 
         btnBox.getChildren().addAll(btnCreateRelease, btnCreateSprint, btnCreateStory);
 
+
         categoryPane.setOnDragOver(event -> {
-                    System.out.println("1 " + wrapper.getViewportBounds().getWidth());
-                    if (wrapper.getViewportBounds().getWidth() - event.getSceneX() <= 20) {
-                        wrapper.setHvalue(wrapper.getHvalue() + 0.01);
-                        System.out.println("2 " + wrapper.getViewportBounds().getWidth());
-                    }
-                });
+                System.out.println((event.getSceneX() - App.mainPane.getTree().getWidth()) + " "
+                        + wrapper.getViewportBounds().getMinX() + " " + wrapper.getViewportBounds().getWidth());
+                if (wrapper.getViewportBounds().getWidth() - event.getSceneX()
+                        + App.mainPane.getTree().getWidth() <= 100) {
+                    wrapper.setHvalue(wrapper.getHvalue() + 0.01);
+                    System.out.println("2 " + wrapper.getViewportBounds().getWidth());
+                    viewportWidth = new Integer((int) wrapper.getHvalue());
+                }
+                else if (event.getSceneX() - App.mainPane.getTree().getWidth() <= 100) {
+                    wrapper.setHvalue(wrapper.getHvalue() - 0.01);
+                    System.out.println("2 " + wrapper.getViewportBounds().getWidth());
+                    viewportWidth = new Integer((int) wrapper.getHvalue());
+                }
+            });
+
+
+        categoryPane.setOnDragDropped(event -> {
+            System.out.println(viewportWidth);
+            wrapper.setHvalue(viewportWidth);
+        });
 /*
 
             //System.out.println(event.getX() + " " + event.getY() + " " + categoryPane.getBoundsInParent()
@@ -196,6 +213,27 @@ public class RoadMapCategoryTab extends SearchableTab {
             }
         });
 */
+
+//        categoryPane.setOnDragOver(event -> {
+//            System.out.println(event.getX() + " " + event.getY() + " " + categoryPane.getBoundsInParent()
+//                    .getMinX() + " " + categoryPane.getParent().getParent().getBoundsInParent().getMaxX());
+//            if (dragging) {
+//                System.out.println(event.getX() + " " + event.getY() + " " + categoryPane.getBoundsInParent()
+//                        .getMinX() + " " + categoryPane.getParent().getParent().getBoundsInParent().getMaxX());
+//                if (categoryPane.getParent().getParent().getBoundsInParent().getMaxX() - event.getX() < 100) {
+//                    for (Node node : wrapper.getChildrenUnmodifiable()) {
+//                        if (node instanceof ScrollBar) {
+//                            ScrollBar scrollBar = (ScrollBar) node;
+//                            if (scrollBar.getOrientation().equals(Orientation.HORIZONTAL)) {
+//                                Platform.runLater();
+//                                scrollBar.increment();
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        });
+
 
 
         // Add items to pane & search collection
