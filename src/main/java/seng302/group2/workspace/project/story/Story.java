@@ -19,6 +19,7 @@ import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -51,6 +52,9 @@ public class Story extends SaharaItem implements Serializable {
     private Backlog backlog = null;
     private Project project = null;
     private Sprint sprint = null;
+
+    private LocalDate startDate = null;
+    private LocalDate endDate = null;
 
     private boolean done = false;
 
@@ -201,6 +205,40 @@ public class Story extends SaharaItem implements Serializable {
      */
     public void setLongName(String longName) {
         this.longName = longName;
+    }
+
+    /**
+     * Gets the end date of the story
+     *
+     * @return end date
+     */
+    public LocalDate getEndDate() {
+        return this.endDate;
+    }
+
+    /**
+     * Gets the start date of the story
+     *
+     * @return start date
+     */
+    public LocalDate getStartDate() {
+        return this.startDate;
+    }
+
+    /**
+     * Sets the end date of the story
+     */
+    public void setEndDate(LocalDate date) {
+        this.endDate = date;
+    }
+
+    /**
+     * Sets the start date of the story
+     *
+     * @return start date
+     */
+    public void setStartDate(LocalDate date) {
+        this.startDate = date;
     }
 
     /**
