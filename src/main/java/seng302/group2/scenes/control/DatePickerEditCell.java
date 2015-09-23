@@ -122,7 +122,7 @@ public class DatePickerEditCell extends TableCell<SaharaItem, String> {
      */
     private void createDateField() {
         datePicker = new DatePicker();
-        datePicker.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+        datePicker.setMaxWidth(this.getWidth() - this.getGraphicTextGap() * 2);
         datePicker.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> arg0,
