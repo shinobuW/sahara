@@ -19,6 +19,7 @@ import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -223,6 +224,24 @@ public class Story extends SaharaItem implements Serializable {
      */
     public LocalDate getStartDate() {
         return this.startDate;
+    }
+
+    /**
+     * Gets the duration spent on the story
+     * @return duration in days
+     */
+    public long getDuration() {
+        //if sprint completed
+        if (startDate != null && endDate != null) {
+            return Duration.between(startDate, endDate).toDays();
+        }
+        //in progress but not done
+        else if (startDate != null) {
+            return Duration.between(startDate, LocalDate.now()).toDays();
+        }
+        else {
+            return 0;
+        }
     }
 
     /**

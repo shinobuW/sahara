@@ -16,6 +16,7 @@ import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -320,6 +321,62 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
 
         return children;
     }
+
+
+    /**
+     * Gets the duration of the sprint
+     * @return the duration
+     */
+    public long getDuration() {
+        if (endDate != null) {
+            return Duration.between(startDate, endDate).toDays();
+        }
+        return -1;
+    }
+
+//    /**
+//     * Calculates the velocity (points/week) of the team for this sprint
+//     */
+//    public void getVelocity() {
+//        if (endDate != null && endDate.isAfter(LocalDate.now())) {
+//            for (Story story : stories) {
+//                if (story.isDone()) {
+//                    .
+//                }
+//            }
+//        }
+////    }
+//
+//
+//    /**
+//     * Constructs a dictionary to be used for storing data for each week. The key is a value pair of start date and
+//         end
+//     * date. Value is initialised to zero.
+//     * @return
+//     */
+//    public Map constructVelocityDictionary() {
+//        Map<List<LocalDate>, Double> pointDictionary = new HashMap<>();
+//        LocalDate tempStartDate = startDate;
+//            while (tempStartDate.isBefore(endDate) || tempStartDate.isBefore(LocalDate.now())) {
+//                LocalDate tempEndDate = tempStartDate.plusDays(8);
+//
+//                if (endDate != null) {
+//                    if (tempEndDate.isAfter(endDate) || tempEndDate != endDate) {
+//                        tempEndDate = endDate;
+//                    }
+//                } else {
+//                    tempEndDate = LocalDate.now();
+//                }
+//                List<LocalDate> key = new ArrayList<LocalDate>();
+//                key.add(tempStartDate);
+//                key.add(tempEndDate);
+//
+//                pointDictionary.put(key, 0.0);
+//                tempStartDate.plusDays(8);
+//            }
+//        return pointDictionary;
+//    }
+
 
     /**
      * Compares the sprint to another sprint based on their short names
