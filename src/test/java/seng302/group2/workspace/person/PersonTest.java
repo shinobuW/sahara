@@ -294,7 +294,7 @@ public class PersonTest {
         Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
         Assert.assertEquals("Tag", person.getTags().get(0).getName());
 
-        Assert.assertEquals("the edit of Person \"" + person.getShortName() + "\".",
+        Assert.assertEquals("the edit of Person \"" + person.getShortName() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
 

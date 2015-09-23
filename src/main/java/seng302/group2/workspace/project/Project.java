@@ -507,7 +507,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      */
     public void add(Log log) {
         Task task = log.getTask();
-        AddLogsCommand addCommand = new AddLogsCommand(task, log, this, task.getEffortLeft());
+        AddLogsCommand addCommand = new AddLogsCommand(task, log, this);
         Global.commandManager.executeCommand(addCommand);
     }
 
@@ -844,7 +844,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for editting projects.
          */
         public String getString() {
-            return "the edit of Project \"" + proj.getShortName() + "\".";
+            return "the edit of Project \"" + proj.getShortName() + "\"";
         }
 
         /**
@@ -940,7 +940,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for deleting projects.
          */
         public String getString() {
-            return "the deletion of Project \"" + proj.getShortName() + "\".";
+            return "the deletion of Project \"" + proj.getShortName() + "\"";
         }
 
         /**
@@ -998,7 +998,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for adding releases.
          */
         public String getString() {
-            return "the creation of Release \"" + release.getShortName() + "\".";
+            return "the creation of Release \"" + release.getShortName() + "\"";
         }
 
         /**
@@ -1064,7 +1064,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for adding stories.
          */
         public String getString() {
-            return "the creation of Story \"" + story.getShortName() + "\".";
+            return "the creation of Story \"" + story.getShortName() + "\"";
         }
 
         /**
@@ -1138,7 +1138,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for adding stories.
          */
         public String getString() {
-            return "the creation of Story \"" + story.getShortName() + "\".";
+            return "the creation of Story \"" + story.getShortName() + "\"";
         }
 
         /**
@@ -1211,7 +1211,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for adding backlogs.
          */
         public String getString() {
-            return "the creation of Backlog \"" + backlog.getShortName() + "\".";
+            return "the creation of Backlog \"" + backlog.getShortName() + "\"";
         }
 
         /**
@@ -1274,7 +1274,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for adding sprints.
          */
         public String getString() {
-            return "the creation of Sprint \"" + sprint.getGoal() + "\".";
+            return "the creation of Sprint \"" + sprint.getGoal() + "\"";
         }
 
         /**
@@ -1343,7 +1343,7 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          */
         public String getString() {
             return "the creation of an Allocation for \"" + team.getShortName() + "\" on \""
-                    + proj.getShortName() + "\".";
+                    + proj.getShortName() + "\"";
         }
 
         /**
@@ -1382,16 +1382,9 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      * Command to add and remote logs from a project
      */
     private class AddLogsCommand implements Command {
-        //TODO implement command string for logs
-        private String commandString;
         private Log log;
         private Task task;
         private Project proj;
-        private double effortLeft;
-
-        private double oldEffortSpent;
-        private double oldEffortLeft;
-
 
         /**
          * Constructor for the log addition command
@@ -1399,35 +1392,30 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * @param task       The task to which the log is to be added
          * @param log        The log to be added
          * @param proj       The project of the task
-         * @param effortLeft The new effort left
          */
-        AddLogsCommand(Task task, Log log, Project proj, double effortLeft) {
+        AddLogsCommand(Task task, Log log, Project proj) {
             this.log = log;
             this.task = task;
-            this.oldEffortSpent = task.getEffortSpent();
-            this.oldEffortLeft = task.getEffortLeft();
-            this.effortLeft = effortLeft;
             this.proj = proj;
+
         }
 
         /**
          * Executes the log addition command
          */
         public void execute() {
-            log.setTask(task);
-            double newEffortSpent = task.getEffortSpent() + log.getDurationInMinutes();
-            task.setEffortSpent(newEffortSpent);
-            task.setEffortLeft(this.effortLeft);
             proj.getLogs().add(log);
+            task.setEffortSpent(task.getEffortSpent() + log.getDurationInMinutes());
+            task.setEffortLeft(task.getEffortLeft() - log.getEffortLeftDifferenceInMinutes());
+
         }
 
         /**
          * Undoes the log addition command
          */
         public void undo() {
-            log.setTask(null);
-            task.setEffortSpent(oldEffortSpent);
-            task.setEffortLeft(oldEffortLeft);
+            task.setEffortSpent(task.getEffortSpent() - log.getDurationInMinutes());
+            task.setEffortLeft(task.getEffortLeft() + log.getEffortLeftDifferenceInMinutes());
             proj.getLogs().remove(log);
 
         }
@@ -1436,7 +1424,15 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
          * Gets the String value of the Command for adding logs.
          */
         public String getString() {
-            return null;
+            String description = log.getDescription();
+            String pairString = "";
+            if (description.length() > 40) {
+                description = description.substring(0, 40) + "...";
+            }
+            if (log.getPartner() != null) {
+                pairString = " and " + log.getPartner();
+            }
+            return "creation of Log \"" + description + "\", by " + log.getLogger() + pairString;
         }
 
         @Override

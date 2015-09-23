@@ -1072,7 +1072,7 @@ public class Story extends SaharaItem implements Serializable {
          * Gets the String value of the Command for editting stories.
          */
         public String getString() {
-            return "the edit of Story \"" + story.getShortName() + "\".";
+            return "the edit of Story \"" + story.getShortName() + "\"";
         }
 
         /**
@@ -1221,7 +1221,7 @@ public class Story extends SaharaItem implements Serializable {
          * Gets the String value of the Command for deleting stories.
          */
         public String getString() {
-            return "the deletion of Story \"" + story.getShortName() + "\".";
+            return "the deletion of Story \"" + story.getShortName() + "\"";
         }
 
         /**
@@ -1302,7 +1302,7 @@ public class Story extends SaharaItem implements Serializable {
          * Gets the String value of the Command for adding acceptance criteria.
          */
         public String getString() {
-            return "the creation of Acceptance Criteria \"" + ac.toString() + "\".";
+            return "the creation of Acceptance Criteria \"" + ac.toString() + "\"";
         }
 
         /**
@@ -1366,7 +1366,7 @@ public class Story extends SaharaItem implements Serializable {
          * Gets the String value of the Command for adding Tasks.
          */
         public String getString() {
-            return "the creation of Task \"" + task.getShortName() + "\".";
+            return "the creation of Task \"" + task.getShortName() + "\"";
         }
 
         /**

@@ -51,9 +51,15 @@ public class RevertManager {
             }
 
             Platform.runLater(() -> {
-                App.mainPane.getTree().selectItem(Global.currentWorkspace);
-                App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
-                App.mainPane.getTree().getSelectionModel().getSelectedItem().setExpanded(true);
+                if (App.mainPane != null && App.mainPane.getTree() != null) {
+                    if (Global.currentWorkspace != null) {
+                        App.mainPane.getTree().selectItem(Global.currentWorkspace);
+                    }
+                    App.mainPane.stickyBar.construct(StickyBar.STICKYTYPE.INFO);
+                    if (App.mainPane.getTree().getSelectionModel().getSelectedItem() != null) {
+                        App.mainPane.getTree().getSelectionModel().getSelectedItem().setExpanded(true);
+                    }
+                }
             });
         }
     }

@@ -1,7 +1,6 @@
 package seng302.group2.scenes.information.roadMap;
 
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;

@@ -1,9 +1,7 @@
 package seng302.group2.util.undoredo;
 
-import javafx.scene.control.ToolBar;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.Tooltip;
 import seng302.group2.scenes.control.TrackedTabPane;
 import seng302.group2.scenes.menu.MainToolbar;
 import seng302.group2.workspace.SaharaItem;

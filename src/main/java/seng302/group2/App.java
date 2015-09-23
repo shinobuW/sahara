@@ -11,7 +11,6 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import seng302.group2.scenes.MainPane;
 import seng302.group2.scenes.menu.MainToolbar;

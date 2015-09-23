@@ -13,7 +13,6 @@ import seng302.group2.workspace.project.story.estimation.EstimationScalesDiction
 import seng302.group2.workspace.tag.Tag;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -237,7 +236,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
          * Gets the String value of the Command for deleting acceptance criteria.
          */
         public String getString() {
-            return "the deletion of Acceptance Criteria \"" + acceptanceCriteria.toString() + "\".";
+            return "the deletion of Acceptance Criteria \"" + acceptanceCriteria.toString() + "\"";
         }
 
         /**
@@ -307,6 +306,9 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
             //Add the tags a AC has to their list of tags
             ac.getTags().clear();
             ac.getTags().addAll(acTags);
+
+            System.out.println("executed:" + ac.getTags());
+
         }
 
         /**
@@ -326,7 +328,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
          * Gets the String value of the Command for editting acceptance criteria tags.
          */
         public String getString() {
-            return "the edit of Tags on Acceptance Criteria \"" + ac.toString() + "\".";
+            return "the edit of Tags on Acceptance Criteria \"" + ac.toString() + "\"";
         }
 
         /**
@@ -429,7 +431,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
          * Gets the String value of the Command for editting the AC state.
          */
         public String getString() {
-            return "the edit of State on Acceptance Criteria \"" + ac.toString() + "\".";
+            return "the edit of State on Acceptance Criteria \"" + ac.toString() + "\"";
         }
 
         /**
@@ -493,7 +495,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
          * Gets the String value of the Command for editting AC descriptions.
          */
         public String getString() {
-            return "the edit of Acceptance Criteria \"" + ac.toString() + "\".";
+            return "the edit of Acceptance Criteria \"" + ac.toString() + "\"";
         }
 
         /**

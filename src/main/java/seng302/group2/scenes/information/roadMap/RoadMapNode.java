@@ -8,14 +8,16 @@ package seng302.group2.scenes.information.roadMap;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -31,12 +33,10 @@ import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
 import seng302.group2.scenes.control.search.SearchableText;
-import seng302.group2.scenes.dialog.CreateStoryDialog;
 import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.allocation.Allocation;
-import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.sprint.Sprint;
@@ -46,7 +46,10 @@ import seng302.group2.workspace.team.Team;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import static javafx.collections.FXCollections.observableArrayList;
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -76,10 +79,12 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
     private static Boolean correctSprintShortName = Boolean.FALSE;
     private static Boolean correctSprintLongName = Boolean.FALSE;
+
     private CustomComboBox<Team> teamComboBox;
     private CustomDatePicker sprintStartDatePicker;
     private CustomDatePicker sprintEndDatePicker;
 
+    private Boolean correctReleaseShortName = Boolean.FALSE;
 
     public RoadMapNode(RoadMap currentRoadMap) {
         roadMap = currentRoadMap;
@@ -92,9 +97,9 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         VBox deletionBox = new VBox();
         ImageView deletionImage = new ImageView("icons/tag_remove.png");
-        Tooltip.create("Remove Release from Road Map", deletionImage, 50);
+        Tooltip.create("Remove RoadMap", deletionImage, 50);
         ImageView addImage = new ImageView("icons/add.png");
-        Tooltip.create("Add Story to Sprint", addImage, 50);
+        Tooltip.create("Add Release to RoadMap", addImage, 50);
         HBox iconBox = new HBox();
         iconBox.getChildren().addAll(addImage, deletionImage);
         deletionBox.getChildren().add(iconBox);
@@ -121,8 +126,55 @@ public class RoadMapNode extends VBox implements SearchableControl {
         });
 
         addImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            event.consume();
+            correctReleaseShortName = Boolean.FALSE;
 
+            PopOver addStoryPopover = new PopOver();
+            VBox addContent = new VBox();
+            addContent.setPadding(new Insets(8, 8, 8, 8));
 
+            VBox newRelease = new VBox(5);
+            newRelease.setPadding(new Insets(8, 8, 8, 8));
+
+            RequiredField shortNameCustomField = new RequiredField("Short Name:");
+            CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
+            CustomDatePicker releaseDatePicker = new CustomDatePicker("Estimated Release Date:", false);
+            CustomComboBox<Project> projectComboBox = new CustomComboBox<>("Project:", true);
+            projectComboBox.getComboBox().setItems(Global.currentWorkspace.getProjects());
+            projectComboBox.setValue(Global.currentWorkspace.getProjects().get(0));
+
+            Button btnAddRelease = new Button("Add");
+            btnAddRelease.setDisable(true);
+
+            newRelease.getChildren().addAll(shortNameCustomField, releaseDatePicker, projectComboBox,
+                    descriptionTextArea, btnAddRelease);
+
+            shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
+                correctReleaseShortName = validateShortName(shortNameCustomField, null);
+                btnAddRelease.setDisable(!(correctReleaseShortName));
+            });
+
+            btnAddRelease.setOnAction(random -> {
+                String shortName = shortNameCustomField.getText();
+                String description = descriptionTextArea.getText();
+                LocalDate releaseDate = releaseDatePicker.getValue();
+
+                Project project = projectComboBox.getValue();
+
+                Release release = new Release(shortName, description, releaseDate, project);
+                project.add(release);
+                roadMap.add(release);
+                App.mainPane.refreshTree();
+
+            });
+
+            TitledPane collapsableNew = new TitledPane("Add a new Release", newRelease);
+            collapsableNew.setExpanded(true);
+            collapsableNew.setAnimated(true);
+
+            addContent.getChildren().addAll(collapsableNew);
+            addStoryPopover.setContentNode(addContent);
+            addStoryPopover.show(addImage);
         });
 
         SearchableText shortNameField = new SearchableText(currentRoadMap.getShortName());
@@ -221,7 +273,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
         });
 
         ImageView addImage = new ImageView("icons/add.png");
-        Tooltip.create("Add Story to Sprint", addImage, 50);
+        Tooltip.create("Add Sprint to RoadMap", addImage, 50);
         HBox iconBox = new HBox();
         iconBox.getChildren().addAll(addImage, deletionImage);
 
@@ -786,27 +838,9 @@ public class RoadMapNode extends VBox implements SearchableControl {
     private VBox deletionBox(SaharaItem item) {
         HBox iconBox = new HBox();
         VBox deletionBox = new VBox();
-        ImageView deletionImage = new ImageView("icons/tag_remove.png");
-        Tooltip.create("Delete Sprint", deletionImage, 50);
 
         ImageView addImage = new ImageView("icons/add.png");
         Tooltip.create("Add Story to Sprint", addImage, 50);
-
-        deletionImage.setOnMouseEntered(me -> {
-            this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
-        });
-
-        deletionImage.setOnMouseExited(me -> {
-            this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
-        });
-
-        deletionImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            showDeleteDialog(item);
-            event.consume();
-            App.mainPane.refreshAll();
-
-        });
-
         addImage.setOnMouseEntered(me -> {
             this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
         });
@@ -851,6 +885,14 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 for (Story story : selectedStories) {
                     ((Sprint) item).add(story);
                 }
+                App.mainPane.refreshTree();
+
+                unassignedStories.clear();
+                for (Story story : Global.currentWorkspace.getAllStories()) {
+                    if (story.getSprint() == null) {
+                        unassignedStories.add(story);
+                    }
+                }
             });
 
             existingStories.getChildren().addAll(unassignedStoryBox, btnAdd);
@@ -868,6 +910,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
             CustomTextArea descriptionTextArea = new CustomTextArea("Description:");
             RequiredField priorityNumberField = new RequiredField("Priority:");
             Button btnAddNew = new Button("Add");
+            btnAddNew.setDisable(true);
             newStories.getChildren().addAll(shortNameCustomField, longNameCustomField, creatorCustomField,
                     priorityNumberField, descriptionTextArea, btnAddNew);
 
@@ -922,7 +965,7 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
         Insets insetsNode = new Insets(0, 5, 5, 0);
         this.setPadding(insetsNode);
-        iconBox.getChildren().addAll(addImage, deletionImage);
+        iconBox.getChildren().addAll(addImage);
         deletionBox.getChildren().addAll(iconBox);
 
         return deletionBox;

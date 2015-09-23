@@ -9,20 +9,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import org.controlsfx.control.spreadsheet.Grid;
 import seng302.group2.scenes.control.Tooltip;
-import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
+import seng302.group2.scenes.control.search.SearchableText;
 import seng302.group2.scenes.control.search.TagField;
-import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.tag.Tag;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-
-import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
 
 /**
  * The content of a Tag cell as shown on the Tag management pane.
@@ -35,6 +31,7 @@ public class TagCellNode extends VBox implements SearchableControl {
     private Color tagColor = Color.ROYALBLUE;
     private boolean removable;
     private TagField tagField = null;
+    private SearchableText titleLabel;
 
     private Set<SearchableControl> searchControls = new HashSet<>();
 
@@ -102,7 +99,7 @@ public class TagCellNode extends VBox implements SearchableControl {
         textContent.setPadding(new Insets(2, 4, 2, 4));
         textContent.setAlignment(Pos.CENTER_LEFT);
 
-        SearchableText titleLabel = new SearchableText(tagName, "-fx-font-weight: bold;", searchControls);
+        titleLabel = new SearchableText(tagName, "-fx-font-weight: bold;", searchControls);
         Text titleLabelShadow = new Text(tagName);  // A transparent text to keep the width of the tag equal to the text
         titleLabelShadow.setFill(Color.TRANSPARENT);
         titleLabelShadow.setStyle("-fx-font-weight: bold;");
@@ -120,8 +117,7 @@ public class TagCellNode extends VBox implements SearchableControl {
         textContent.getChildren().addAll(titleGrid);
 
         if (removable) {
-            Node deletionNode = createDeletionNode(tag);
-            content.getChildren().addAll(textContent, deletionNode);
+            content.getChildren().addAll(textContent, createDeletionNode(tag));
         }
         else {
             content.getChildren().addAll(textContent);
@@ -162,13 +158,21 @@ public class TagCellNode extends VBox implements SearchableControl {
      * @param tag The tag to be deleted
      */
     public Node createDeletionNode(Tag tag) {
-        ImageView deletionImage = new ImageView("icons/tag_remove.png");
+
+        VBox deletionNode = new VBox();
+
+        ImageView deletionImage = new ImageView("icons/tag_remove_black.png");
+
+        if (tagColor.getBrightness() < 0.9) {
+            deletionImage = new ImageView("icons/tag_remove_white.png");
+        }
+
         Tooltip.create("Remove", deletionImage, 50);
 
-        deletionImage.setOnMouseEntered(me -> {
+        deletionNode.setOnMouseEntered(me -> {
             this.getScene().setCursor(Cursor.HAND); //Change cursor to hand
         });
-        deletionImage.setOnMouseExited(me -> {
+        deletionNode.setOnMouseExited(me -> {
             this.getScene().setCursor(Cursor.DEFAULT); //Change cursor to hand
         });
 
@@ -182,7 +186,11 @@ public class TagCellNode extends VBox implements SearchableControl {
         });
 
 
-        return deletionImage;
+        deletionNode.getChildren().add(deletionImage);
+        VBox.setVgrow(deletionNode, Priority.ALWAYS);
+        deletionNode.setAlignment(Pos.CENTER);
+
+        return deletionNode;
 
     }
 

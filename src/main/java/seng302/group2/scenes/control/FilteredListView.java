@@ -1,18 +1,15 @@
 package seng302.group2.scenes.control;
 
 import javafx.collections.ObservableList;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -37,7 +34,7 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
     public FilteredListView(ObservableList<T> data) {
         originalData = data;
         inputText.setPromptText("Filter list...");
-        listView = new SearchableListView(data);
+        listView = new SearchableListView<>(data);
         inputText.setOnKeyReleased(event -> {
             sortedData.clear();
             for (T item : originalData) {

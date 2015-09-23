@@ -49,7 +49,7 @@ public class ProjectTest extends TestCase {
         Release release = new Release("test release", proj);
         proj.add(release);
 
-        Assert.assertEquals("the creation of Release \"" + release.getShortName() + "\".",
+        Assert.assertEquals("the creation of Release \"" + release.getShortName() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
         assertTrue(proj.getReleases().contains(release));
 
@@ -68,7 +68,7 @@ public class ProjectTest extends TestCase {
         sprint.setProject(proj);
         proj.add(sprint);
 
-        Assert.assertEquals("the creation of Sprint \"" + sprint.getGoal() + "\".",
+        Assert.assertEquals("the creation of Sprint \"" + sprint.getGoal() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
         assertTrue(proj.getSprints().contains(sprint));
 
@@ -86,7 +86,7 @@ public class ProjectTest extends TestCase {
         Backlog backlog = new Backlog();
         proj.add(backlog);
 
-        Assert.assertEquals("the creation of Backlog \"" + backlog.getShortName() + "\".",
+        Assert.assertEquals("the creation of Backlog \"" + backlog.getShortName() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
         assertTrue(proj.getBacklogs().contains(backlog));
 
@@ -110,7 +110,7 @@ public class ProjectTest extends TestCase {
         Assert.assertTrue(proj.getTeamAllocations().contains(allocation));
 
         Assert.assertEquals("the creation of an Allocation for \"" + team.getShortName() + "\" on \""
-                        + proj.getShortName() + "\".",
+                        + proj.getShortName() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
         Assert.assertFalse(proj.getTeamAllocations().contains(allocation));
@@ -228,7 +228,7 @@ public class ProjectTest extends TestCase {
         Global.currentWorkspace.add(proj);
         proj.deleteProject();
         Assert.assertFalse(Global.currentWorkspace.getProjects().contains(proj));
-        Assert.assertEquals("the deletion of Project \"" + proj.getShortName() + "\".",
+        Assert.assertEquals("the deletion of Project \"" + proj.getShortName() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
 
         Global.commandManager.undo();
@@ -248,7 +248,7 @@ public class ProjectTest extends TestCase {
         back.add(backStory);
         proj.add(loneStory);
 
-        Assert.assertEquals("the creation of Story \"" + loneStory.getShortName() + "\".",
+        Assert.assertEquals("the creation of Story \"" + loneStory.getShortName() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
         Assert.assertTrue(proj.getUnallocatedStories().contains(loneStory));
         Assert.assertFalse(proj.getUnallocatedStories().contains(backStory));
@@ -392,7 +392,7 @@ public class ProjectTest extends TestCase {
         Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
         Assert.assertEquals("Tag", project.getTags().get(0).getName());
 
-        Assert.assertEquals("the edit of Project \"" + project.getShortName() + "\".",
+        Assert.assertEquals("the edit of Project \"" + project.getShortName() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
 
         Global.commandManager.undo();

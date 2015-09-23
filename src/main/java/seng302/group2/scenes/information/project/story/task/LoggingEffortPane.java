@@ -122,9 +122,27 @@ public class LoggingEffortPane extends Pane {
             availablePeople.addAll(team.getPeople());
         }
 
+
+
+
         loggerCol.setCellFactory(ComboBoxTableCell.forTableColumn(
                 availableLoggers
         ));
+
+//        ComboBoxTableCell comboBoxEditCell = new ComboBoxTableCell<>(availableLoggers);
+//        comboBoxEditCell.focusedProperty().addListener(new ChangeListener<Boolean>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+//                System.out.println("hello");
+//            }
+//        });
+//        loggerCol.setCellFactory(comboBoxEditCell.);
+
+//        System.out.println(loggerCol.getCellFactory());
+
+//        ComboBoxTableCell loggerEditCell = new ComboBoxTableCell(availableLoggers);
+//        loggerCol.setCellFactory(loggerEditCell);
+
         loggerCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Log, String>,
                         ObservableValue<String>>() {
@@ -146,9 +164,7 @@ public class LoggingEffortPane extends Pane {
                         Log currentLog = event.getTableView().getItems().get(
                                 event.getTablePosition().getRow());
                         ArrayList<Tag> tags = new ArrayList<>();
-                        currentLog.edit(event.getNewValue(), currentLog.getPartner(), currentLog.getStartDate(),
-                                currentLog.getDurationInMinutes(), currentLog.getDescription(),
-                                currentLog.getEffortLeftDifferenceInMinutes(), tags);
+                        currentLog.editLogger(event.getNewValue());
                     }
                 }
         );
@@ -157,25 +173,19 @@ public class LoggingEffortPane extends Pane {
 
         logTable.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
                 Boolean isPartnerList = true;
-                updateObservablePeopleList(availablePartners, newSelection.getLogger(), isPartnerList);
-                updateObservablePeopleList(availableLoggers, newSelection.getLogger(), !isPartnerList);
+                if (logTable.getSelectionModel().getSelectedItem() != null) {
+                    updateObservablePeopleList(availablePartners, newSelection.getLogger(), isPartnerList);
+                    updateObservablePeopleList(availableLoggers, newSelection.getLogger(), !isPartnerList);
+                }
             });
 
         TableColumn partnerCol = new TableColumn("Partner");
         partnerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("partner"));
         partnerCol.setEditable(true);
-//
-//        ComboBoxTableCell blah = new ComboBoxTableCell(availablePartners);
-//        blah.focusedProperty().addListener(new ChangeListener<Boolean>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-//
-//            }
-//        });
+
         partnerCol.setCellFactory(ComboBoxTableCell.forTableColumn(
                 availablePartners
         ));
-
 
         partnerCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Log, String>,
@@ -207,6 +217,17 @@ public class LoggingEffortPane extends Pane {
 
         partnerCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
+
+
+        logTable.setOnMouseClicked(event -> {
+            if (logTable.getSelectionModel().getSelectedItem() != null) {
+                updateObservablePeopleList(availableLoggers, logTable.getSelectionModel().getSelectedItem().
+                                getPartner(), false);
+                updateObservablePeopleList(availablePartners, logTable.getSelectionModel().getSelectedItem().
+                                getLogger(), true);
+            }
+
+        });
 
         Callback<TableColumn, TableCell> cellFactory = col -> new DatePickerEditCell();
         Callback<TableColumn, TableCell> startTimeCellFactory = col -> new TimeTextFieldEditCell();
@@ -572,6 +593,7 @@ public class LoggingEffortPane extends Pane {
                     Person partner = partnerComboBox.getComboBox().getSelectionModel().getSelectedItem();
                     Log newLog = new Log(task, descriptionTextArea.getText(),
                             selectedPerson, partner, duration, dateTime, effortLeftDifference);
+
                     task.getStory().getProject().add(newLog);
 
                     String effortLeftString = "";
@@ -634,6 +656,12 @@ public class LoggingEffortPane extends Pane {
         this.getChildren().add(content);
     }
 
+    /**
+     * Updates the list of people bound to the combo boxes so that the partner/logger is remove from them
+     * @param peopleList the list to update
+     * @param removePerson the person to remove
+     * @param isPartnerList whether the list is the one bound to the partner combo box
+     */
     private void updateObservablePeopleList(ObservableList<Person> peopleList, Person removePerson,
                                             Boolean isPartnerList) {
         peopleList.clear();

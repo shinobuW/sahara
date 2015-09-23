@@ -2,14 +2,12 @@ package seng302.group2.scenes.control.search;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.information.tag.TagCellNode;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.tag.Tag;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,12 +40,13 @@ public class TagLabel extends HBox implements SearchableControl {
         }
     }
 
-
     public void constructAC(AcceptanceCriteria ac) {
         this.tags.clear();
         this.tags = ac.getTags();
         this.getChildren().clear();
         this.setSpacing(5);
+        CustomInfoLabel label = new CustomInfoLabel("Tags: ", "", searchControls);
+        this.getChildren().add(label);
         for (Tag tag : this.tags) {
             TagCellNode node = new TagCellNode(tag, false, searchControls);
             this.getChildren().add(node);

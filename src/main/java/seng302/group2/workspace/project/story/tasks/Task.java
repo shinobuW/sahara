@@ -719,7 +719,7 @@ public class Task extends SaharaItem implements Serializable {
          * Gets the String value of the Command for Editting of Tasks.
          */
         public String getString() {
-            return "the edit of Task \"" + shortName + "\".";
+            return "the edit of Task \"" + shortName + "\"";
         }
 
         /**
@@ -821,7 +821,7 @@ public class Task extends SaharaItem implements Serializable {
          * Gets the String value of the Command for editting the assignee of a task.
          */
         public String getString() {
-            return "the edit of Assignee on Task \"" + task.getShortName() + "\".";
+            return "the edit of Assignee on Task \"" + task.getShortName() + "\"";
         }
 
         /**
@@ -885,7 +885,7 @@ public class Task extends SaharaItem implements Serializable {
          * Gets the String value of the Command for editting the State of a task.
          */
         public String getString() {
-            return "the edit of Task State on Task \"" + task.getShortName() + "\".";
+            return "the edit of Task State on Task \"" + task.getShortName() + "\"";
         }
 
         /**
@@ -955,7 +955,7 @@ public class Task extends SaharaItem implements Serializable {
          * Gets the String value of the Command for Editting the effortleft of a task.
          */
         public String getString() {
-            return "the edit of Effort Left on Task \"" + task.getShortName() + "\".";
+            return "the edit of Effort Left on Task \"" + task.getShortName() + "\"";
         }
 
         /**
@@ -1018,7 +1018,7 @@ public class Task extends SaharaItem implements Serializable {
          * Gets the String value of the Command for editting the description of a task.
          */
         public String getString() {
-            return "the edit of Description on Task \"" + task.getShortName() + "\".";
+            return "the edit of Description on Task \"" + task.getShortName() + "\"";
         }
 
         /**
@@ -1118,7 +1118,7 @@ public class Task extends SaharaItem implements Serializable {
          * Gets the String value of the Command for editting the Lane of a task.
          */
         public String getString() {
-            return "the edit of Lane on Task \"" + task.getShortName() + "\".";
+            return "the edit of Lane on Task \"" + task.getShortName() + "\"";
         }
 
         /**
@@ -1194,7 +1194,7 @@ public class Task extends SaharaItem implements Serializable {
          * Gets the String value of the Command for editting the impediements of a task.
          */
         public String getString() {
-            return "the edit of Impediments on Task \"" + task.getShortName() + "\".";
+            return "the edit of Impediments on Task \"" + task.getShortName() + "\"";
         }
 
         /**
@@ -1274,7 +1274,7 @@ public class Task extends SaharaItem implements Serializable {
          * Gets the String value of the Command for deleting a task.
          */
         public String getString() {
-            return "the deletion of Task \"" + task.getShortName() + "\".";
+            return "the deletion of Task \"" + task.getShortName() + "\"";
         }
 
         /**

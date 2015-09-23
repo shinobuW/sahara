@@ -10,7 +10,6 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.story.Story;
-import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
 import seng302.group2.workspace.project.story.tasks.Log;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.tag.Tag;
@@ -682,7 +681,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
          * Gets the String value of the Command for editting sprints.
          */
         public String getString() {
-            return "the edit of Sprint \"" + sprint.getGoal() + "\".";
+            return "the edit of Sprint \"" + sprint.getGoal() + "\"";
         }
 
         /**
@@ -796,7 +795,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
          * Gets the String value of the Command for deleting sprints.
          */
         public String getString() {
-            return "the deletion of Sprint \"" + sprint.getGoal() + "\".";
+            return "the deletion of Sprint \"" + sprint.getGoal() + "\"";
         }
 
         /**
@@ -856,7 +855,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
          */
         public String getString() {
             return "the addition of Story \"" + story.getShortName() + "\" to Sprint \""
-                    + sprint.getGoal() + "\".";
+                    + sprint.getGoal() + "\"";
         }
 
         /**
@@ -927,7 +926,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
          */
         public String getString() {
             return "the addition of Story \"" + story.getShortName() + "\" to Sprint \""
-                    + newSprint.getGoal() + "\".";
+                    + newSprint.getGoal() + "\"";
         }
 
         /**

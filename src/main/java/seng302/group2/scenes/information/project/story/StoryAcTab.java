@@ -16,7 +16,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import seng302.group2.App;
-import seng302.group2.Global;
 import seng302.group2.scenes.TagsTableCell;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.search.*;
@@ -163,16 +162,26 @@ public class StoryAcTab extends SearchableTab {
                     @Override
                     public void handle(TableColumn.CellEditEvent<AcceptanceCriteria, ObservableList<Tag>> event) {
                         if (!event.getNewValue().isEmpty()) {
-                            AcceptanceCriteria currentAc = event.getTableView().getItems().get(
-                                    event.getTablePosition().getRow());
+
+                            AcceptanceCriteria currentAc = acTable.getSelectionModel().getSelectedItem();
 
                             ObservableList<Tag> newTags = event.getNewValue();
-                            currentAc.getTags().addAll(event.getNewValue());
+                            System.out.println("new tags = " + newTags);
+
+//                            currentAc.getTags().add(event.getNewValue().get(0));
 //                            currentAc.editAcTags(newTags);
+                            System.out.println(currentAc);
+                            //Wny the **** does current ac's get tags have the new tags WITHOUT any edit? @JESUS
+                            System.out.println("actual tags = " + currentAc.getTags());
                         }
                     }
                 }
         );
+
+        wrapper.setOnMouseClicked(event -> {
+            System.out.println(story.getAcceptanceCriteria().get(0));
+            System.out.println(story.getAcceptanceCriteria().get(0).getTags());
+        });
 
         acTable.setItems(data);
         TableColumn[] columns = {descriptionCol, stateCol, tagCol};

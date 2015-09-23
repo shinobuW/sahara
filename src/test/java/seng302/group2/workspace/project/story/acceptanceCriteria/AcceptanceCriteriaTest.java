@@ -9,8 +9,6 @@ import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.workspace.Workspace;
 
-import java.util.ArrayList;
-
 /**
  * A series of tests relating to AcceptanceCriteria class
  * Created by swi67 on 31/05/15.

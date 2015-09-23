@@ -115,7 +115,7 @@ public class StoryTest {
         Assert.assertFalse(back.getStories().contains(story2));
         Assert.assertFalse(proj.getUnallocatedStories().contains(story1));
 
-        Assert.assertEquals("the deletion of Story \"" + story2.getShortName() + "\".",
+        Assert.assertEquals("the deletion of Story \"" + story2.getShortName() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
         Global.commandManager.undo();
@@ -163,7 +163,7 @@ public class StoryTest {
     @Test
     public void testAddACs() {
         story.add(ac);
-        Assert.assertEquals("the creation of Acceptance Criteria \"" + ac.toString() + "\".",
+        Assert.assertEquals("the creation of Acceptance Criteria \"" + ac.toString() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
         Assert.assertTrue(story.getAcceptanceCriteria().contains(ac));
         Global.commandManager.undo();
@@ -380,7 +380,7 @@ public class StoryTest {
 
         story.add(task1);
         Assert.assertEquals(1, story.getTasks().size());
-        Assert.assertEquals("the creation of Task \"" + task1.getShortName() + "\".",
+        Assert.assertEquals("the creation of Task \"" + task1.getShortName() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
         Assert.assertEquals(0, story.getTasks().size());
@@ -425,7 +425,7 @@ public class StoryTest {
         Assert.assertEquals(1, Global.currentWorkspace.getAllTags().size());
         Assert.assertEquals("Tag", story.getTags().get(0).getName());
 
-        Assert.assertEquals("the edit of Story \"" + story.getShortName() + "\".",
+        Assert.assertEquals("the edit of Story \"" + story.getShortName() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
 

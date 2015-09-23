@@ -6,12 +6,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import seng302.group2.App;
 import seng302.group2.Global;
-
 import seng302.group2.scenes.control.search.SearchableScene;
-import seng302.group2.scenes.control.search.SearchableTab;
 import seng302.group2.workspace.SaharaItem;
 
 /**
+ * A class for creating sticky bar.
  * Created by cvs20 on 19/09/15.
  */
 public class StickyBar extends HBox {

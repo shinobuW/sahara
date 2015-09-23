@@ -4,7 +4,10 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TreeItem;
 import javafx.scene.layout.*;
 import org.controlsfx.control.StatusBar;
 import seng302.group2.App;
@@ -21,7 +24,6 @@ import seng302.group2.workspace.categories.subCategory.SubCategory;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Set;
 import java.util.prefs.Preferences;
 
 import static seng302.group2.App.content;
@@ -163,7 +165,7 @@ public class MainPane extends BorderPane {
         HBox statusBarBox = new HBox();
         StatusBar statusBar = new StatusBar();
         if (input != null) {
-            statusBar.setText(input + " at " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+            statusBar.setText(input + " at " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm" + ".")));
         }
         else {
             statusBar.setText("");

@@ -1,7 +1,6 @@
 package seng302.group2.scenes.treeView;
 
 import javafx.scene.control.TreeItem;
-import seng302.group2.App;
 import seng302.group2.Global;
 import seng302.group2.workspace.SaharaItem;
 
