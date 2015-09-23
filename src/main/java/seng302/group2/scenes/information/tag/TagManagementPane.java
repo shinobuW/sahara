@@ -162,6 +162,10 @@ public class TagManagementPane extends SplitPane {
         });
 
         newTagField.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newTagField.getText().isEmpty() && newTagField.getText().length() >= 2
+                        && (newTagField.getText().endsWith(" "))) {
+                    newTagField.setText(newTagField.getText().substring(0, newTagField.getText().length() - 1) + "_");
+                }
                 if (newValue.length() > 20) {
                     newTagField.setText(oldValue);
                     ValidationStyle.borderGlowRed(newTagField);
