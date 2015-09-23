@@ -169,25 +169,33 @@ public class RoadMapCategoryTab extends SearchableTab {
 
         btnBox.getChildren().addAll(btnCreateRelease, btnCreateSprint, btnCreateStory);
 
-        categoryPane.setOnMouseMoved(event -> {
-                System.out.println(event.getX() + " " + event.getY() + " " + categoryPane.getBoundsInParent()
-                        .getMinX() + " " + categoryPane.getParent().getParent().getBoundsInParent().getMaxX());
-                if (dragging) {
-                    System.out.println(event.getX() + " " + event.getY() + " " + categoryPane.getBoundsInParent()
-                            .getMinX() + " " + categoryPane.getParent().getParent().getBoundsInParent().getMaxX());
-                    if (categoryPane.getParent().getParent().getBoundsInParent().getMaxX() - event.getX() < 100) {
-                        for (Node node : wrapper.getChildrenUnmodifiable()) {
-                            if (node instanceof ScrollBar) {
-                                ScrollBar scrollBar = (ScrollBar) node;
-                                if (scrollBar.getOrientation().equals(Orientation.HORIZONTAL)) {
-                                    scrollBar.increment();
-                                }
+        categoryPane.setOnDragOver(event -> {
+                    System.out.println("1 " + wrapper.getViewportBounds().getWidth());
+                    if (wrapper.getViewportBounds().getWidth() - event.getSceneX() <= 20) {
+                        wrapper.setHvalue(wrapper.getHvalue() + 0.01);
+                        System.out.println("2 " + wrapper.getViewportBounds().getWidth());
+                    }
+                });
+/*
+
+            //System.out.println(event.getX() + " " + event.getY() + " " + categoryPane.getBoundsInParent()
+             //       .getMinX() + " " + categoryPane.getParent().getParent().getBoundsInParent().getMaxX());
+            if (dragging) {
+             //   System.out.println(event.getX() + " " + event.getY() + " " + categoryPane.getBoundsInParent()
+               //         .getMinX() + " " + categoryPane.getParent().getParent().getBoundsInParent().getMaxX());
+                if (categoryPane.getParent().getParent().getBoundsInParent().getMaxX() - event.getX() < 100) {
+                    for (Node node : wrapper.getChildrenUnmodifiable()) {
+                        if (node instanceof ScrollBar) {
+                            ScrollBar scrollBar = (ScrollBar) node;
+                            if (scrollBar.getOrientation().equals(Orientation.HORIZONTAL)) {
+                                scrollBar.increment();
                             }
                         }
                     }
                 }
-            });
-
+            }
+        });
+*/
 
 
         // Add items to pane & search collection
