@@ -890,6 +890,14 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 for (Story story : selectedStories) {
                     ((Sprint) item).add(story);
                 }
+                App.mainPane.refreshTree();
+
+                unassignedStories.clear();
+                for (Story story : Global.currentWorkspace.getAllStories()) {
+                    if (story.getSprint() == null) {
+                        unassignedStories.add(story);
+                    }
+                }
             });
 
             existingStories.getChildren().addAll(unassignedStoryBox, btnAdd);
