@@ -160,19 +160,28 @@ public class LogTest {
     }
 
 
-//    public void editDurationTest() {
-//        Project proj = new Project();
-//        Story story = new Story();
-//        Person aPerson = new Person();
-//        Task task = new Task("test task", "", story, aPerson, 0);
-//        Log log1 = new Log(task, "A new Log", aPerson, new Person(), 122, LocalDateTime.now(), 122);
-//        task.setEffortLeft(600);
-//        story.add(task);
-//        proj.add(log1);
-//
-//
-//
-//    }
+    /**
+     * Test for Log's edit duration command
+     */
+    @Test
+    public void editDurationTest() {
+        testLog.editDuration(50.0);
+        Assert.assertEquals(50.0, testLog.getDurationInMinutes(), 0);
+        Global.commandManager.undo();
+        Assert.assertEquals(40, testLog.getDurationInMinutes(), 0);
+    }
+
+    /**
+     * Test for Log's start date and time edit command
+     */
+    @Test
+    public void editStartDateTimeTest() {
+        LocalDateTime newDate = LocalDateTime.of(2010, 5, 6, 12, 00);
+        testLog.editStartTime(newDate);
+        Assert.assertEquals(newDate, testLog.getStartDate());
+        Global.commandManager.undo();
+        Assert.assertEquals(LocalDateTime.now().toLocalDate(), testLog.getStartDate().toLocalDate());
+    }
 
 
 }

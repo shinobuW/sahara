@@ -640,7 +640,6 @@ public class Log extends SaharaItem implements Serializable {
         private Log log;
         private LocalDateTime newDate;
         private LocalDateTime oldDate;
-        private String commandString;
 
         /**
          * Constructor
@@ -650,6 +649,7 @@ public class Log extends SaharaItem implements Serializable {
         private StartEditDateCommand(Log log, LocalDateTime localDateTime) {
             this.log = log;
             this.newDate = localDateTime;
+            this.oldDate = log.getStartDate();
         }
 
         @Override
@@ -666,7 +666,7 @@ public class Log extends SaharaItem implements Serializable {
 
         @Override
         public String getString() {
-            return commandString;
+            return "the edit of Duration on Log \"" + log.toString() + "\"";
         }
 
         @Override
