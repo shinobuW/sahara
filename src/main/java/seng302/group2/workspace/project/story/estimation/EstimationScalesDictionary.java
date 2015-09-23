@@ -177,15 +177,15 @@ public class EstimationScalesDictionary {
 
     /**
      * Calculates the fibonacci number for the given n
-     * @param n The sequence number to calculate the fibonacci value of
+     * @param seqNo The sequence number to calculate the fibonacci value of
      * @return The fibonacci number at element n
      */
-    static double fib(double n) {
-        if (n < 2) {
-            return n;
+    static double fib(double seqNo) {
+        if (seqNo < 2) {
+            return seqNo;
         }
         else {
-            return fib(n - 2) + fib(n - 1);
+            return fib(seqNo - 2) + fib(seqNo - 1);
         }
     }
 
