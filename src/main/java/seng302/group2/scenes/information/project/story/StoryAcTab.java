@@ -167,7 +167,8 @@ public class StoryAcTab extends SearchableTab {
                                     event.getTablePosition().getRow());
 
                             ObservableList<Tag> newTags = event.getNewValue();
-                            currentAc.editAcTags(newTags);
+                            currentAc.getTags().addAll(event.getNewValue());
+//                            currentAc.editAcTags(newTags);
                         }
                     }
                 }

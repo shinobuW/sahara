@@ -312,11 +312,6 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
             shortNameCustomField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
                 correctShortName = validateShortName(shortNameCustomField, null);
-                System.out.println("Short name: " + correctShortName);
-                System.out.println("Long name: " + correctLongName);
-                System.out.println("Team: " + teamComboBox.getValue());
-                System.out.println("Start: " + sprintStartDatePicker.getValue());
-                System.out.println("End: " + sprintEndDatePicker.getValue());
 
                 btnAddNew.setDisable(!(correctShortName && correctLongName && teamComboBox.getValue() != null
                         && sprintStartDatePicker.getValue() != null && sprintEndDatePicker.getValue() != null));

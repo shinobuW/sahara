@@ -1,6 +1,8 @@
 package seng302.group2.scenes.information.roadMap;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
@@ -35,6 +37,7 @@ public class RoadMapCategoryTab extends SearchableTab {
     Release draggedRelease;
     Sprint interactiveSprint;
     Story interactiveStory;
+    Boolean dragging = false;
 
     /**
      * Constructor for RoadMapCategoryTab class.
@@ -166,6 +169,25 @@ public class RoadMapCategoryTab extends SearchableTab {
 
         btnBox.getChildren().addAll(btnCreateRelease, btnCreateSprint, btnCreateStory);
 
+        categoryPane.setOnMouseMoved(event -> {
+                System.out.println(event.getX() + " " + event.getY() + " " + categoryPane.getBoundsInParent()
+                        .getMinX() + " " + categoryPane.getParent().getParent().getBoundsInParent().getMaxX());
+                if (dragging) {
+                    System.out.println(event.getX() + " " + event.getY() + " " + categoryPane.getBoundsInParent()
+                            .getMinX() + " " + categoryPane.getParent().getParent().getBoundsInParent().getMaxX());
+                    if (categoryPane.getParent().getParent().getBoundsInParent().getMaxX() - event.getX() < 100) {
+                        for (Node node : wrapper.getChildrenUnmodifiable()) {
+                            if (node instanceof ScrollBar) {
+                                ScrollBar scrollBar = (ScrollBar) node;
+                                if (scrollBar.getOrientation().equals(Orientation.HORIZONTAL)) {
+                                    scrollBar.increment();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
 
 
         // Add items to pane & search collection
@@ -184,22 +206,21 @@ public class RoadMapCategoryTab extends SearchableTab {
 
     private void initRoadMapListeners(RoadMapNode roadMapNode, RoadMap currentRoadMap) {
         roadMapNode.setOnDragDetected(event -> {
-            System.out.println(roadMapNode.getRoadmap().getShortName());
             interactiveRoadMap = roadMapNode;
             draggedRelease = roadMapNode.getSelectedRelease();
+            dragging = true;
 
         });
 
         roadMapNode.setOnDragOver(dragEvent -> {
-            System.out.println(roadMapNode.getRoadmap().getShortName());
             dragEvent.acceptTransferModes(TransferMode.MOVE);
             roadMapNode.setSelectedSprint(interactiveRoadMap.getSelectedSprint());
             roadMapNode.setSelectedStory(interactiveRoadMap.getSelectedStory());
         });
 
         roadMapNode.setOnDragDropped(dragEvent -> {
+            dragging = false;
             Boolean confirm = true;
-            System.out.println("First");
             if (dragEvent.getDragboard().getString() == "release") {
                 for (Release release : currentRoadMap.getReleases() ) {
                     if (release == draggedRelease && !currentRoadMap.equals(
@@ -219,6 +240,7 @@ public class RoadMapCategoryTab extends SearchableTab {
                 App.mainPane.refreshAll();
             }
         });
+
 
     }
 
