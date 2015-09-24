@@ -119,12 +119,15 @@ public class PersonLoggingTab extends SearchableTab {
                 ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Log, Person> log) {
                 // p.getValue() returns the Person instance for a particular TableView row
+                // TODO @SHINOBU CHECK
                 SimpleStringProperty prop = new SimpleStringProperty();
-                if (log.getValue().getLogger() == currentPerson) {
+                if (log.getValue().getLogger() != null && log.getValue().getPartner() != null) {
+                    if (log.getValue().getLogger() == currentPerson) {
                         prop.set(log.getValue().getPartner().toString());
-                }
-                else {
-                    prop.set(log.getValue().getLogger().toString());
+                    }
+                    else {
+                        prop.set(log.getValue().getLogger().toString());
+                    }
                 }
 
                 return prop;
