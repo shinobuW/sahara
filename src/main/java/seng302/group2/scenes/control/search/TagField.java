@@ -198,6 +198,11 @@ public class TagField extends CustomTextField implements SearchableControl {
         this.tags = newTags;
     }
 
+    /**
+     * Queries all the searchable controls within the pane to see if they have a matching string
+     * @param query the string to be queried
+     * @return if a matching query was found
+     */
     @Override
     public boolean query(String query) {
         boolean found = false;
@@ -207,9 +212,20 @@ public class TagField extends CustomTextField implements SearchableControl {
         return found;
     }
 
+    /**
+     * Iterates over all the controls within this control and calls their advanced search method.
+     * @param query the string to be searched
+     * @param searchType SearchType for the Advanced Search
+     * @return int the priority value
+     */
     @Override
     public int advancedQuery(String query, SearchType searchType) {
-        // TODO @Jordane
-        return 0;
+        int found = 0;
+        for (SearchableControl control : searchControls) {
+            if (control.advancedQuery(query, searchType) > 0) {
+                return control.advancedQuery(query, searchType);
+            }
+        }
+        return found;
     }
 }
