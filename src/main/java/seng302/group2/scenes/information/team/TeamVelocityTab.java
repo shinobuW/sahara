@@ -72,8 +72,8 @@ public class TeamVelocityTab extends SearchableTab {
 
         configureAxis();
         VelocityChart velocityChart = new VelocityChart(xAxis, yAxis);
-        //velocityChart.setPrefSize(800, 600);
-        //velocityChart.setMaxSize(800, 600);
+        velocityChart.setPrefSize(800, 600);
+        velocityChart.setMaxSize(800, 600);
         velocityChart.populateGraph(currentTeam);
         basicInfoPane.getChildren().addAll(title, velocityChart);
         Collections.addAll(searchControls, title);
