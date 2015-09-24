@@ -1,5 +1,6 @@
 package seng302.group2.workspace;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
@@ -274,7 +275,7 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
      * Edits the tags of the SaharaItem.
      * @param newTags the new tags of the sahara item
      */
-    public void editTags(ArrayList<Tag> newTags) {
+    public void editTags(ObservableList<Tag> newTags) {
         Command editSaharaItem = new SaharaItemEditTagsCommand(this, newTags);
         Global.commandManager.executeCommand(editSaharaItem);
     }
@@ -296,11 +297,11 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
          * @param item The SaharaItem to be edited
          * @param newTags The item's new tags.
          */
-        private SaharaItemEditTagsCommand(SaharaItem item, ArrayList<Tag> newTags) {
+        private SaharaItemEditTagsCommand(SaharaItem item, ObservableList<Tag> newTags) {
             this.item = item;
 
             if (newTags == null) {
-                newTags = new ArrayList<>();
+                newTags = FXCollections.observableArrayList();
             }
 
             this.acTags.addAll(newTags);

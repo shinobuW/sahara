@@ -1,5 +1,7 @@
 package seng302.group2.workspace;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.Test;
 import seng302.group2.Global;
@@ -79,7 +81,7 @@ public class SaharaItemTest {
         Tag tag = new Tag("Hey");
         Tag tag2 = new Tag("Ya!");
 
-        ArrayList<Tag> tags = new ArrayList<>();
+        ObservableList<Tag> tags = FXCollections.observableArrayList();
 
         tags.add(tag);
         tags.add(tag2);

@@ -68,7 +68,7 @@ public class TaggingPane extends Pane implements SearchableControl {
         btnCancel.setOnAction((event) -> constructInfo());
 
         btnDone.setOnAction((event) -> {
-            item.editTags((ArrayList<Tag>) tagField.getTags());
+            item.editTags(tagField.getTags());
             constructInfo();
         });
     }
