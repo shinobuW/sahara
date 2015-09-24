@@ -55,8 +55,6 @@ public class TeamVelocityTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-
-
         basicInfoPane.getChildren().addAll();
         Collections.addAll(searchControls);
 
