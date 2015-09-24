@@ -127,6 +127,7 @@ public class TeamInfoTab extends SearchableTab {
         TagLabel teamTags = new TagLabel(currentTeam.getTags());
         CustomInfoLabel desc = new CustomInfoLabel("Team Description: ", currentTeam.getDescription());
         CustomInfoLabel listViewLabel = new CustomInfoLabel("", "");
+        CustomInfoLabel devLabel = new CustomInfoLabel("Developers: ", "");
 
         ObservableList<Person> personList = currentTeam.getPeople();
         FilteredListView teamsPeopleBox = new FilteredListView<>(personList, "people");
@@ -195,14 +196,24 @@ public class TeamInfoTab extends SearchableTab {
 
             basicInfoPane.getChildren().addAll(poLabel, smLabel);
             Collections.addAll(searchControls, poLabel, smLabel);
+
+            ObservableList<Person> devList = currentTeam.getDevs();
+            FilteredListView devsListBox = new FilteredListView<>(devList, "devs");
+            SearchableListView<Person> devsPeopleList = devsListBox.getListView();
+            devsListBox.setPrefHeight(192);
+            devsPeopleList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            devsListBox.setMaxWidth(275);
+
+            basicInfoPane.getChildren().addAll(listViewLabel, teamsPeopleBox, devLabel, devsListBox);
+            Collections.addAll(searchControls,listViewLabel, teamsPeoplelist, devLabel, devsListBox);
         }
 
         else {
             listViewLabel.setLabel("Unassigned People: ");
+            basicInfoPane.getChildren().addAll(listViewLabel, teamsPeopleBox);
+            Collections.addAll(searchControls,listViewLabel, teamsPeoplelist);
         }
 
-        basicInfoPane.getChildren().addAll(listViewLabel, teamsPeopleBox);
-        Collections.addAll(searchControls,listViewLabel, teamsPeoplelist);
     }
 
     /**

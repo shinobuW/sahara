@@ -1,12 +1,14 @@
 package seng302.group2.scenes.information.team;
 
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -19,6 +21,7 @@ import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CustomDialog;
+import seng302.group2.scenes.information.person.PersonScene;
 import seng302.group2.util.validation.ShortNameValidator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.role.Role;
@@ -28,6 +31,7 @@ import seng302.group2.workspace.team.Team;
 import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
+import static javafx.collections.FXCollections.observableList;
 
 /**
  * A class for displaying a tab used to edit teams.
@@ -102,14 +106,14 @@ public class TeamEditTab extends SearchableTab {
         // Find and store errors in validation
         String errorMessage = null;
         if (allocatedScrumMaster == allocatedProductOwner && allocatedScrumMaster != null) {
-            errorMessage = "Cannot have the same person assigned to Product Owner and Scrum Master";
+            errorMessage = "Cannot have the same person assigned to Product Owner and Scrum Master.";
         }
         else if (allocatedDevelopers.contains(allocatedScrumMaster) && allocatedScrumMaster != null) {
-            errorMessage = "The Scrum Master cannot also be assigned as a developer";
+            errorMessage = "The Scrum Master cannot also be assigned as a Developer.";
         }
         else if (allocatedDevelopers.contains(allocatedProductOwner)
                 && allocatedProductOwner != null) {
-            errorMessage = "The Product Owner cannot also be assigned as a developer";
+            errorMessage = "The Product Owner cannot also be assigned as a Developer.";
         }
 
         // Display the first found error, or pass if valid
@@ -244,6 +248,26 @@ public class TeamEditTab extends SearchableTab {
         memberListViews.getChildren().addAll(teamMembersBox, assignmentButtons, availablePeopleBox);
         memberListViews.setPrefHeight(192);
 
+        ObservableList<Person> devList = observableArrayList();
+
+        for (Person person : allocatedDevelopers) {
+            devList.add(person);
+        }
+
+        FilteredListView<Person> devListBox = new FilteredListView<>(devList, "team members");
+        SearchableListView<Person> devListView = devListBox.getListView();
+        devListView.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                event.consume();
+            }
+        });
+
+        VBox devBox = new VBox(10);
+        SearchableText devLabel = new SearchableText("Developers: ");
+        devLabel.setStyle("-fx-font-weight: bold");
+        devBox.getChildren().addAll(devLabel, devListBox);
+        devBox.setPrefHeight(192);
 
         // Load the initial role assignment options
         if (teamMembersListView.getSelectionModel().getSelectedItems().size() == 1) {
@@ -342,8 +366,20 @@ public class TeamEditTab extends SearchableTab {
                     selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.SCRUM_MASTER));
                     break;
                 case DEVELOPMENT_TEAM_MEMBER:
-                    allocatedDevelopers.add(selectedPerson);
-                    selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
+                    if (selectedPerson == allocatedProductOwner) {
+                        String errorMessage = "The Product Owner cannot also be assigned as a Developer.";
+                        CustomDialog.showDialog("Invalid Role Assignment", errorMessage,
+                                Alert.AlertType.WARNING);
+                    }
+                    else if (selectedPerson == allocatedScrumMaster) {
+                        String errorMessage = "The Scrum Master cannot also be assigned as a Developer.";
+                        CustomDialog.showDialog("Invalid Role Assignment", errorMessage,
+                                Alert.AlertType.WARNING);
+                    }
+                    else {
+                        allocatedDevelopers.add(selectedPerson);
+                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.DEVELOPMENT_TEAM_MEMBER));
+                    }
                     break;
                 case NONE:
                     if (allocatedProductOwner == selectedPerson) {
@@ -358,6 +394,11 @@ public class TeamEditTab extends SearchableTab {
                 default:
                     break;
             }
+            devList.clear();
+            for (Person person : allocatedDevelopers) {
+                devList.add(person);
+            }
+
         });
 
         // Add items to pane & search collection
@@ -368,7 +409,8 @@ public class TeamEditTab extends SearchableTab {
                 memberListViews,
                 roleAssignmentBox,
                 poText,
-                smText
+                smText,
+                devBox
         );
 
         Collections.addAll(searchControls,
@@ -379,6 +421,8 @@ public class TeamEditTab extends SearchableTab {
                 smText,
                 teamMembersListView,
                 availablePeopleListView,
+                devListView,
+                devLabel,
                 teamMemberLabel,
                 availablePeopleLabel
         );
