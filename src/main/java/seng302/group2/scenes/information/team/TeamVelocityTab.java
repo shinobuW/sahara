@@ -43,8 +43,7 @@ public class TeamVelocityTab extends SearchableTab {
      * Sets the axis configuration.
      */
     private void configureAxis() {
-        ObservableList<String> xLabels = FXCollections.observableArrayList();
-        xAxis.setLabel("Sprint's");
+        xAxis.setLabel("Sprints");
         yAxis.setLabel("Average Points Per Week");
     }
 

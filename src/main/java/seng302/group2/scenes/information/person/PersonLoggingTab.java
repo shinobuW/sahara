@@ -17,7 +17,6 @@ import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Log;
-import seng302.group2.workspace.project.story.tasks.PairLog;
 import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.time.LocalDate;
@@ -122,12 +121,7 @@ public class PersonLoggingTab extends SearchableTab {
                 // p.getValue() returns the Person instance for a particular TableView row
                 SimpleStringProperty prop = new SimpleStringProperty();
                 if (log.getValue().getLogger() == currentPerson) {
-                    if (log.getValue() instanceof PairLog) {
-                        prop.set(((PairLog) log.getValue()).getPartner().toString());
-                    }
-                    else {
-                        prop.set("");
-                    }
+                        prop.set(log.getValue().getPartner().toString());
                 }
                 else {
                     prop.set(log.getValue().getLogger().toString());

@@ -24,7 +24,7 @@ import static seng302.group2.util.validation.PriorityFieldValidator.validatePrio
 import static seng302.group2.util.validation.ShortNameValidator.validateShortName;
 
 /**
- * @author Darzolak
+ * @author crw73
  */
 public class CreateRoadMapDialog extends Dialog<Map<String, String>> {
 

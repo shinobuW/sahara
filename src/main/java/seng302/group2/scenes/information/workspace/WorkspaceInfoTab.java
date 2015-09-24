@@ -70,6 +70,14 @@ public class WorkspaceInfoTab extends SearchableTab {
                 currentWorkspace.getNumTeams().toString());
         CustomInfoLabel numOfProjects = new CustomInfoLabel("Number of projects: ",
                 currentWorkspace.getNumProjects().toString());
+        CustomInfoLabel numOfSprints = new CustomInfoLabel("Number of sprints: ",
+                currentWorkspace.getNumSprints().toString());
+        CustomInfoLabel numOfStories = new CustomInfoLabel("Number of stories: ",
+                currentWorkspace.getNumStories().toString());
+        CustomInfoLabel numOfTasks = new CustomInfoLabel("Number of tasks: ",
+                currentWorkspace.getNumTasks().toString());
+        CustomInfoLabel numOfLogs = new CustomInfoLabel("Number of logs: ",
+                currentWorkspace.getNumLogs().toString());
         CustomInfoLabel numOfSkills = new CustomInfoLabel("Number of skills: ",
                 "" + currentWorkspace.getSkills().size());
 
@@ -81,6 +89,10 @@ public class WorkspaceInfoTab extends SearchableTab {
                 desc,
                 sep,
                 numOfProjects,
+                numOfSprints,
+                numOfStories,
+                numOfTasks,
+                numOfLogs,
                 numOfTeams,
                 numOfPeople,
                 numOfSkills
@@ -91,6 +103,10 @@ public class WorkspaceInfoTab extends SearchableTab {
                 shortName,
                 workspaceTags,
                 numOfProjects,
+                numOfSprints,
+                numOfStories,
+                numOfTasks,
+                numOfLogs,
                 numOfTeams,
                 numOfPeople,
                 numOfSkills,

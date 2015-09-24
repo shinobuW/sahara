@@ -1,5 +1,6 @@
 package seng302.group2.workspace.project.sprint;
 
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Element;
@@ -7,6 +8,7 @@ import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.backlog.Backlog;
 import seng302.group2.workspace.project.release.Release;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Log;
@@ -265,4 +267,41 @@ public class SprintTest {
 
         Assert.assertEquals(2, sprint.getAllLogsWithInitialLogs().size());
     }
+
+    @Test
+    /**
+     * Tests Sprint's method which returns points per day for a sprint.
+     */
+    public void testGetPointsPerDay() {
+        Workspace ws = new Workspace();
+        Global.currentWorkspace = ws;
+        Project proj = new Project();
+        Team team = new Team();
+        Release release = new Release();
+        Sprint sprint = new Sprint("", "", "", LocalDate.now().minusWeeks(2), LocalDate.now(), proj, team, release);
+        Person codie = new Person();
+        Backlog backlog = new Backlog("", "", "", codie, proj, "T-Shirt Sizes");
+        Story story = new Story();
+        Story story2 = new Story();
+
+        System.out.println(sprint.getStartDate());
+        System.out.println(sprint.getEndDate());
+        backlog.add(story);
+        backlog.add(story2);
+        story.setBacklog(backlog);
+        story2.setBacklog(backlog);
+
+        story.setEstimate("S");
+        story2.setEstimate("4XL");
+        story.setDone(true);
+        story2.setDone(true);
+
+        ws.add(proj);
+        proj.add(sprint);
+        sprint.add(story);
+        sprint.add(story2);
+
+        Assert.assertEquals(7.357142857142857, sprint.getPointsPerDay(), 0);
+    }
+
 }

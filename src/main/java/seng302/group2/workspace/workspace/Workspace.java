@@ -29,8 +29,12 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.categories.*;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.backlog.Backlog;
+import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.estimation.EstimationScalesDictionary;
+import seng302.group2.workspace.project.story.tasks.Log;
+import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.roadMap.RoadMap;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
@@ -685,7 +689,6 @@ public class Workspace extends SaharaItem implements Serializable {
      * Counts the amount of teams in the workspace
      * @return number of teams in the workspace
      */
-
     public Integer getNumProjects() {
         int num = 0;
         for (Project project : this.getProjects()) {
@@ -693,6 +696,65 @@ public class Workspace extends SaharaItem implements Serializable {
         }
         return num;
     }
+
+    /**
+     * Counts the amount of teams in the workspace
+     * @return number of teams in the workspace
+     */
+    public Integer getNumSprints() {
+        int num = 0;
+        for (Project project : this.getProjects()) {
+            for (Sprint sprint : project.getSprints()) {
+                num += 1;
+            }
+        }
+        return num;
+    }
+
+    /**
+     * Counts the amount of teams in the workspace
+     * @return number of teams in the workspace
+     */
+    public Integer getNumStories() {
+        int num = 0;
+        for (Project project : this.getProjects()) {
+            for (Story story : project.getAllStories()) {
+                num += 1;
+            }
+        }
+        return num;
+    }
+
+    /**
+     * Counts the amount of teams in the workspace
+     * @return number of teams in the workspace
+     */
+    public Integer getNumTasks() {
+        int num = 0;
+        for (Project project : this.getProjects()) {
+            for (Story story : project.getAllStories()) {
+                for (Task task : story.getTasks()) {
+                    num += 1;
+                }
+            }
+        }
+        return num;
+    }
+
+    /**
+     * Counts the amount of teams in the workspace
+     * @return number of teams in the workspace
+     */
+    public Integer getNumLogs() {
+        int num = 0;
+        for (Project project : this.getProjects()) {
+            for (Log log : project.getLogs()) {
+                num += 1;
+            }
+        }
+        return num;
+    }
+
     /**
      * Sets the workspace's short name.
      *

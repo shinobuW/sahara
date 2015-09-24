@@ -446,7 +446,7 @@ public class Log extends SaharaItem implements Serializable {
             boolean mapped = false;
             for (SaharaItem item : stateObjects) {
                 if (item.equivalentTo(log)) {
-                    this.log = (PairLog) item;
+                    this.log = (Log)item;
                     mapped = true;
                 }
             }
