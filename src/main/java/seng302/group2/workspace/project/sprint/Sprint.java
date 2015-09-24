@@ -345,6 +345,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
                 int point = Global.currentWorkspace.getEstimationScales().getFibScaleEquivalent(
                         Global.currentWorkspace.getEstimationScales().getEstimationScaleDict().get(
                                 story.getBacklog().getScale()), story.getEstimate());
+                System.out.println(point + " " + story.getEstimate());
                 totalPoints += point;
             }
         }

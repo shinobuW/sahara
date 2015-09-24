@@ -128,13 +128,14 @@ public class TeamInfoTab extends SearchableTab {
         CustomInfoLabel desc = new CustomInfoLabel("Team Description: ", currentTeam.getDescription());
         CustomInfoLabel listViewLabel = new CustomInfoLabel("", "");
 
-       /* String velocity = "";
         for (Sprint sprint : currentTeam.getProject().getSprints()) {
             if (sprint.getTeam() == currentTeam) {
+                Double velocity = sprint.getPointsPerDay();
+                velocity.toString();
                 System.out.println(sprint.getPointsPerDay());
             }
         }
-        //CustomInfoLabel velocity = new CustomInfoLabel("Velocy", currentTeam.getProject().getSprints(). )*/
+        //CustomInfoLabel velocity = new CustomInfoLabel("Velocy", currentTeam.getProject().getSprints(). )
 
         ObservableList<Person> personList = currentTeam.getPeople();
         FilteredListView teamsPeopleBox = new FilteredListView<>(personList, "people");
