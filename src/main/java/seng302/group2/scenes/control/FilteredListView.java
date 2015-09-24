@@ -53,7 +53,8 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
         });
         listView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                if (listView.getSelectionModel().getSelectedItem() != null && listView.getSelectionModel().getSelectedItem() instanceof SaharaItem) {
+                if (listView.getSelectionModel().getSelectedItem() != null && listView.getSelectionModel()
+                        .getSelectedItem() instanceof SaharaItem) {
                     SaharaItem selectedItem = ((SaharaItem) listView.getSelectionModel().getSelectedItem());
                     App.mainPane.selectItem(selectedItem);
                 }
@@ -76,7 +77,7 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
      * Constructor for the VBox for Filtered Listviews
      * @param data
      */
-    public FilteredListView(ObservableList < T > data, String promptText) {
+    public FilteredListView(ObservableList<T> data, String promptText) {
         this.setMaxWidth(275);
         this.setPrefWidth(275);
         originalData = data;
@@ -101,7 +102,8 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
 
         listView.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                if (listView.getSelectionModel().getSelectedItem() != null && listView.getSelectionModel().getSelectedItem() instanceof SaharaItem) {
+                if (listView.getSelectionModel().getSelectedItem() != null && listView.getSelectionModel()
+                        .getSelectedItem() instanceof SaharaItem) {
                     SaharaItem selectedItem = ((SaharaItem) listView.getSelectionModel().getSelectedItem());
                     App.mainPane.selectItem(selectedItem);
                 }
