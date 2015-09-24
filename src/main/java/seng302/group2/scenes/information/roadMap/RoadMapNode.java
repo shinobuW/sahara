@@ -201,7 +201,6 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 if (event.getClickCount() == 2 && !(((SaharaItem) Global.selectedTreeItem.getValue())
                         .equals(currentRoadMap))) {
                     App.mainPane.selectItem(currentRoadMap);
-//                    currentRoadMap.switchToInfoScene();
                 }
                 event.consume();
             });

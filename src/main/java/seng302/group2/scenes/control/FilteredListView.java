@@ -32,6 +32,8 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
      * @param data
      */
     public FilteredListView(ObservableList<T> data) {
+        this.setMaxWidth(275);
+        this.setPrefWidth(275);
         originalData = data;
         inputText.setPromptText("Filter list...");
         listView = new SearchableListView<>(data);
@@ -60,6 +62,8 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
      * @param data
      */
     public FilteredListView(ObservableList<T> data, String promptText) {
+        this.setMaxWidth(275);
+        this.setPrefWidth(275);
         originalData = data;
         inputText.setPromptText("Filter " + promptText + "...");
         listView = new SearchableListView(data);
