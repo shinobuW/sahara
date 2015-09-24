@@ -79,10 +79,9 @@ public class PersonInfoTab extends SearchableTab {
 
         VBox taskVBox = new VBox(10);
         HBox titleAndCombo = new HBox(10);
-        CustomInfoLabel taskLabel = new CustomInfoLabel("Tasks: ", "");
         ObservableList<Task.TASKSTATE> taskStates = observableArrayList(Task.TASKSTATE.values());
 
-        CustomComboBox<Object> filterComboBox = new CustomComboBox<>("");
+        CustomComboBox<Object> filterComboBox = new CustomComboBox<>("Tasks: ");
         filterComboBox.addToComboBox("All");
 
         for (Task.TASKSTATE state : taskStates) {
@@ -104,11 +103,12 @@ public class PersonInfoTab extends SearchableTab {
                 }
             }
         }
-        FilteredListView<Task> taskFilteredListView = new FilteredListView<>(filteredList, "skills");
+        FilteredListView<Task> taskFilteredListView = new FilteredListView<>(filteredList, "tasks");
         SearchableListView taskBox = taskFilteredListView.getListView();
         taskFilteredListView.setPrefHeight(192);
+        taskFilteredListView.setPrefWidth(275);
         taskBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        titleAndCombo.getChildren().addAll(taskLabel, filterComboBox);
+        titleAndCombo.getChildren().addAll(filterComboBox);
         taskVBox.getChildren().addAll(titleAndCombo, taskFilteredListView);
         listViewHBox.getChildren().addAll(skillVBox, taskVBox);
 
@@ -168,8 +168,7 @@ public class PersonInfoTab extends SearchableTab {
                 role,
                 skill,
                 personFilteredListView,
-                taskFilteredListView,
-                taskLabel
+                taskFilteredListView
         );
     }
 

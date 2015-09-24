@@ -128,9 +128,6 @@ public class EstimationScalesDictionary {
         values.addAll(scale);
         values.removeAll(defaultValuesDict.values());
         values.add(0, defaultValuesDict.get(DefaultValues.ZERO));
-        System.out.println(scale + " " + seqNo);
-        System.out.println(scale + " jhdsanbfkjndsaljhf " + values.size());
-        System.out.println(modifiedFibEquivalent(seqNo, values.size()));
         return modifiedFibEquivalent(seqNo, values.size());
     }
 
