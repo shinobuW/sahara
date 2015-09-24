@@ -154,13 +154,15 @@ public class TeamInfoTab extends SearchableTab {
         if (!currentTeam.isUnassignedTeam()) {
             CustomInfoLabel sprintText = new CustomInfoLabel("Sprint Velocity: ", "");
             basicInfoPane.getChildren().add(sprintText);
-            for (Sprint sprint : currentTeam.getProject().getSprints()) {
-                Double velocity = sprint.getPointsPerDay();
-                String velocity_ = velocity.toString();
-                CustomInfoLabel sprintLabel = new CustomInfoLabel(
-                        "   " + sprint.getGoal() + ": ", velocity_);
-                basicInfoPane.getChildren().add(sprintLabel);
-                Collections.addAll(searchControls, sprintLabel, sprintText);
+            if (currentTeam.getProject() != null) {
+                for (Sprint sprint : currentTeam.getProject().getSprints()) {
+                    Double velocity = sprint.getPointsPerDay();
+                    String velocity_ = velocity.toString();
+                    CustomInfoLabel sprintLabel = new CustomInfoLabel(
+                            "   " + sprint.getGoal() + ": ", velocity_);
+                    basicInfoPane.getChildren().add(sprintLabel);
+                    Collections.addAll(searchControls, sprintLabel, sprintText);
+                }
             }
         }
 

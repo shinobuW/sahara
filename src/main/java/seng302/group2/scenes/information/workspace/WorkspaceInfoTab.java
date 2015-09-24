@@ -70,6 +70,8 @@ public class WorkspaceInfoTab extends SearchableTab {
                 currentWorkspace.getNumTeams().toString());
         CustomInfoLabel numOfProjects = new CustomInfoLabel("Number of projects: ",
                 currentWorkspace.getNumProjects().toString());
+        CustomInfoLabel numOfSkills = new CustomInfoLabel("Number of skills: ",
+                "" + currentWorkspace.getSkills().size());
 
                 // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(
@@ -80,7 +82,8 @@ public class WorkspaceInfoTab extends SearchableTab {
                 sep,
                 numOfProjects,
                 numOfTeams,
-                numOfPeople
+                numOfPeople,
+                numOfSkills
         );
 
         Collections.addAll(searchControls,
@@ -90,6 +93,7 @@ public class WorkspaceInfoTab extends SearchableTab {
                 numOfProjects,
                 numOfTeams,
                 numOfPeople,
+                numOfSkills,
                 desc
         );
     }

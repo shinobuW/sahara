@@ -552,8 +552,8 @@ public class SprintEditTab extends SearchableTab {
                     availableStoriesView.getSelectionModel().getSelectedItems());
             availableStories.removeAll(
                     availableStoriesView.getSelectionModel().getSelectedItems());
-            storiesInSprintFilteredList.getListView();
-            availableStoriesFilteredList.getListView();
+            storiesInSprintFilteredList.resetInputText();
+            availableStoriesFilteredList.resetInputText();
         });
 
         btnUnassign.setOnAction((event) -> {
@@ -562,8 +562,8 @@ public class SprintEditTab extends SearchableTab {
                     getSelectedItems());
             availableStories.addAll(selectedStories);
             storiesInSprint.removeAll(selectedStories);
-            storiesInSprintFilteredList.getListView();
-            availableStoriesFilteredList.getListView();
+            storiesInSprintFilteredList.resetInputText();
+            availableStoriesFilteredList.resetInputText();
         });
 
     }

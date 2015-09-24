@@ -1,11 +1,16 @@
 package seng302.group2.scenes.control;
 
 import javafx.collections.ObservableList;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import seng302.group2.App;
+import seng302.group2.scenes.MainPane;
 import seng302.group2.scenes.control.search.SearchType;
 import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableListView;
+import seng302.group2.scenes.control.search.SearchableTab;
+import seng302.group2.workspace.SaharaItem;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -46,7 +51,17 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
             }
             listView.setItems(sortedData);
         });
+        listView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                if (listView.getSelectionModel().getSelectedItem() != null && listView.getSelectionModel().getSelectedItem() instanceof SaharaItem) {
+                    SaharaItem selectedItem = ((SaharaItem) listView.getSelectionModel().getSelectedItem());
+                    App.mainPane.selectItem(selectedItem);
+                }
 
+
+            }
+            event.consume();
+        });
 
 
         this.getChildren().addAll(
@@ -61,7 +76,7 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
      * Constructor for the VBox for Filtered Listviews
      * @param data
      */
-    public FilteredListView(ObservableList<T> data, String promptText) {
+    public FilteredListView(ObservableList < T > data, String promptText) {
         this.setMaxWidth(275);
         this.setPrefWidth(275);
         originalData = data;
@@ -84,6 +99,17 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
                 listView
         );
 
+        listView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                if (listView.getSelectionModel().getSelectedItem() != null && listView.getSelectionModel().getSelectedItem() instanceof SaharaItem) {
+                    SaharaItem selectedItem = ((SaharaItem) listView.getSelectionModel().getSelectedItem());
+                    App.mainPane.selectItem(selectedItem);
+                }
+
+
+            }
+            event.consume();
+        });
         Collections.addAll(searchControls, listView);
     }
 
