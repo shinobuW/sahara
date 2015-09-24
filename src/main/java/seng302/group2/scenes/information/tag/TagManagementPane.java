@@ -15,6 +15,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.Global;
+import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
@@ -60,7 +61,7 @@ public class TagManagementPane extends SplitPane {
         this.getChildren().clear();
         this.constructList();
         if (tagListView.getItems().size() > 0) {
-            this.constructDetail();
+            this.constructInfo();
             tagListView.getSelectionModel().select(0);
         }
         else {
@@ -114,7 +115,7 @@ public class TagManagementPane extends SplitPane {
         tagListView.getSelectionModel().getSelectedItems().addListener(
                 (ListChangeListener<Tag>) change -> {
                     if (tagListView.getItems().size() > 0) {
-                        constructDetail();
+                        constructInfo();
                     }
                 });
 
@@ -189,10 +190,58 @@ public class TagManagementPane extends SplitPane {
     }
 
     /**
+     * Creates an info pane for a tag, displays the tag, name and colour value.
+     */
+    private void constructInfo() {
+        this.getItems().remove(detailsPane);
+        detailsPane = new VBox(8);
+        detailsPane.setPadding(new Insets(8));
+        detailsPane.setMaxWidth(357);
+
+        // Find the selected tag and create its tag node
+        Tag selectedTag = tagListView.getSelectionModel().getSelectedItem();
+
+        //HBox titleBox = new HBox();
+        SearchableTitle title = new SearchableTitle("View Tag:", searchControls);
+        detailsPane.getChildren().add(title);
+
+        SearchableText preview = new SearchableText("Preview:", searchControls);
+        preview.injectStyle("-fx-font-weight: bold");
+        detailsPane.getChildren().add(preview);
+
+        HBox cellBox = new HBox();
+        cellBox.setPrefHeight(100);
+        cellBox.setAlignment(Pos.CENTER);
+        VBox.setVgrow(cellBox, Priority.ALWAYS);
+
+        if (selectedTag == null) {
+            return;
+        }
+        TagCellNode cellNode = new TagCellNode(selectedTag, false);
+        cellNode.setAlignment(Pos.CENTER);
+        cellBox.getChildren().add(cellNode);
+        detailsPane.getChildren().add(cellBox);
+
+        Button editButton = new Button("Edit");
+
+        HBox buttonsBox = new HBox(8);
+        VBox.setVgrow(buttonsBox, Priority.ALWAYS);
+        buttonsBox.getChildren().addAll(editButton);
+        detailsPane.getChildren().addAll(buttonsBox);
+
+        buttonsBox.setAlignment(Pos.BOTTOM_RIGHT);
+
+        editButton.setOnAction(event -> constructEdit());
+
+        this.getItems().add(detailsPane);
+
+
+    }
+    /**
      * Creates the detail pane for editing tags in the workspace. Contains controls for editing the text and colour
      * of a tag, and deleting the tag.
      */
-    private void constructDetail() {
+    private void constructEdit() {
         this.getItems().remove(detailsPane);
         detailsPane = new VBox(8);
         detailsPane.setPadding(new Insets(8));
@@ -210,7 +259,7 @@ public class TagManagementPane extends SplitPane {
         detailsPane.getChildren().add(preview);
 
         HBox cellBox = new HBox();
-        cellBox.setPrefHeight(100);
+        cellBox.setPrefHeight(175);
         cellBox.setAlignment(Pos.CENTER);
         VBox.setVgrow(cellBox, Priority.ALWAYS);
 
@@ -249,11 +298,11 @@ public class TagManagementPane extends SplitPane {
         colorBox.getChildren().addAll(labelBox, colorPicker);
 
         // Group all of the controls into the details pane
-        detailsPane.getChildren().addAll(tagNameField, colorBox);;
+        detailsPane.getChildren().addAll(tagNameField, colorBox);
 
         // Create buttons
-        Button saveButton = new Button("Save Changes");
-        Button cancelButton = new Button("Cancel Changes");
+        Button saveButton = new Button("Done");
+        Button cancelButton = new Button("Cancel");
 
         tagNameField.getTextField().textProperty().addListener((observable, oldValue, newValue) -> {
             if (!tagNameField.getTextWithoutTrim().isEmpty() && tagNameField.getTextWithoutTrim().length() >= 2
@@ -286,9 +335,10 @@ public class TagManagementPane extends SplitPane {
 
                 constructList();
                 tagListView.getSelectionModel().select(selectedTag);
+                constructInfo();
             });
 
-        cancelButton.setOnAction(event -> constructDetail());
+        cancelButton.setOnAction(event -> constructInfo());
 
 
         //Commented as delete button no longer exists. Have kept the code for the popover logic involved,

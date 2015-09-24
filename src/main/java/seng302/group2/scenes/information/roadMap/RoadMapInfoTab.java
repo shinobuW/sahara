@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import seng302.group2.App;
 import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CreateReleaseDialog;
@@ -28,6 +29,7 @@ import java.util.List;
 public class RoadMapInfoTab extends SearchableTab {
     List<SearchableControl> searchControls = new ArrayList<>();
     RoadMap currentRoadMap;
+    int viewportWidth = 0;
 
     /**
      * Constructor for the RoadMapInfoTab class.
@@ -126,6 +128,22 @@ public class RoadMapInfoTab extends SearchableTab {
             javafx.scene.control.Dialog creationDialog = new CreateStoryDialog(null);
             creationDialog.show();
         });
+
+        basicInfoPane.setOnDragOver(event -> {
+                System.out.println((event.getSceneX() - App.mainPane.getTree().getWidth()) + " "
+                        + wrapper.getViewportBounds().getMinX() + " " + wrapper.getViewportBounds().getWidth());
+                if (wrapper.getViewportBounds().getWidth() - event.getSceneX()
+                        + App.mainPane.getTree().getWidth() <= 100) {
+                    wrapper.setHvalue(wrapper.getHvalue() + 0.01);
+                    System.out.println("2 " + wrapper.getViewportBounds().getWidth());
+                    viewportWidth = new Integer((int) wrapper.getHvalue());
+                }
+                else if (event.getSceneX() - App.mainPane.getTree().getWidth() <= 100) {
+                    wrapper.setHvalue(wrapper.getHvalue() - 0.01);
+                    System.out.println("2 " + wrapper.getViewportBounds().getWidth());
+                    viewportWidth = new Integer((int) wrapper.getHvalue());
+                }
+            });
 
         btnBox.getChildren().addAll(btnCreateRelease, btnCreateSprint, btnCreateStory);
 

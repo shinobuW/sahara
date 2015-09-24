@@ -251,4 +251,13 @@ public class SprintTaskStatusTab extends SearchableTab {
         });
     }
 
+    /**
+     * Gets the string representation of the current Tab
+     * @return The String value
+     */
+    @Override
+    public String toString() {
+        return "Sprint Task Status Tab";
+    }
+
 }

@@ -65,9 +65,12 @@ public class TagLabel extends HBox implements SearchableControl {
 
     @Override
     public int advancedQuery(String query, SearchType searchType) {
-        // TODO @Bronson
-        return 0;
+        int found = 0;
+        for (SearchableControl control : searchControls) {
+            if (control.advancedQuery(query, searchType) > 0) {
+                return control.advancedQuery(query, searchType);
+            }
+        }
+        return found;
     }
-
-
 }
