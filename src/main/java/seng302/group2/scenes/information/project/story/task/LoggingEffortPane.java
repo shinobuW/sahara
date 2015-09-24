@@ -35,7 +35,6 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -113,13 +112,11 @@ public class LoggingEffortPane extends Pane {
         loggerCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
-        Set<Team> availableTeams = ((task.getStory().getBacklog() == null)
-                ? new HashSet<Team>() :
-                task.getStory().getBacklog().getProject().getCurrentTeams());
+        Set<Team> availableTeams = task.getStory().getProject().getCurrentTeams();
         for (Team team : availableTeams) {
             availablePeople.addAll(team.getPeople());
-            System.out.println("ap" + availablePeople);
         }
+
 
         ObservableList<Person> availableLoggers = observableArrayList(availablePeople);
         System.out.println("al" + availableLoggers);
