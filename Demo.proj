@@ -1,8 +1,8 @@
 {
   "0x1": {
-    "shortName": "Untitled Workspace",
-    "longName": "Untitled Workspace",
-    "description": "A blank workspace.",
+    "shortName": "Demo",
+    "longName": "The One and Only Demo",
+    "description": "A non-blank workspace.",
     "lastSaveLocation": "/home/cosc/student/crw73/Sahara/Demo.proj",
     "estimationScales": {
       "estimationScaleDict": {
@@ -2792,7 +2792,9 @@
       "0xaa9",
       "0xaaa"
     ],
-    "serializableRoadMaps": [],
+    "serializableRoadMaps": [
+      "0xaab"
+    ],
     "serializableGlobalTags": [],
     "hierarchyMap": {},
     "version": 0.6,
@@ -2850,7 +2852,7 @@
     ],
     "serializableDevs": [],
     "serializableProjectAllocations": [
-      "0xaab"
+      "0xaac"
     ],
     "unassigned": false,
     "id": 7534,
@@ -44527,20 +44529,24 @@
     "longName": "SENG302 Project",
     "description": "",
     "serializableReleases": [
-      "0xaac"
-    ],
-    "serializableTeamAllocations": [
-      "0xaab"
-    ],
-    "serializableStories": [],
-    "serializableBacklogs": [
       "0xaad",
       "0xaae"
     ],
-    "serializableSprints": [
+    "serializableTeamAllocations": [
+      "0xaac"
+    ],
+    "serializableStories": [],
+    "serializableBacklogs": [
       "0xaaf",
-      "0xab0",
-      "0xab1"
+      "0xab0"
+    ],
+    "serializableSprints": [
+      "0xab1",
+      "0xab2",
+      "0xab3",
+      "0xab4",
+      "0xab5",
+      "0xab6"
     ],
     "serializableLogs": [],
     "id": 7628,
@@ -44582,35 +44588,49 @@
     "serializableTags": []
   },
   "0xaab": {
-    "startDate": "0xab2",
-    "endDate": "0xab3",
+    "shortName": "SENG302-2015",
+    "serializableReleases": [
+      "0xaad",
+      "0xaae"
+    ],
+    "priority": 100,
+    "id": 7744,
+    "itemName": "SENG302-2015",
+    "serializableTags": []
+  },
+  "0xaac": {
+    "startDate": "0xab7",
+    "endDate": "0xab8",
     "project": "0xaa7",
     "team": "0x5",
     "id": 7697,
     "itemName": "",
     "serializableTags": []
   },
-  "0xaac": {
+  "0xaad": {
     "shortName": "Final Deliverable",
     "description": "",
-    "estimatedDate": "0xab4",
+    "estimatedDate": "0xab9",
     "project": "0xaa7",
     "id": 7696,
     "itemName": "",
     "serializableTags": []
   },
-  "0xaad": {
+  "0xaae": {
+    "shortName": "Midyear Deliverable",
+    "description": "",
+    "estimatedDate": "0xaba",
+    "project": "0xaa7",
+    "id": 7793,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xaaf": {
     "shortName": "302 Backlog",
     "longName": "302 Backlog",
     "description": "",
     "productOwner": "0xa",
     "serializableStories": [
-      "0xab5",
-      "0xab6",
-      "0xab7",
-      "0xab8",
-      "0xab9",
-      "0xaba",
       "0xabb",
       "0xabc",
       "0xabd",
@@ -44621,7 +44641,31 @@
       "0xac2",
       "0xac3",
       "0xac4",
-      "0xac5"
+      "0xac5",
+      "0xac6",
+      "0xac7",
+      "0xac8",
+      "0xac9",
+      "0xaca",
+      "0xacb",
+      "0xacc",
+      "0xacd",
+      "0xace",
+      "0xacf",
+      "0xad0",
+      "0xad1",
+      "0xad2",
+      "0xad3",
+      "0xad4",
+      "0xad5",
+      "0xad6",
+      "0xad7",
+      "0xad8",
+      "0xad9",
+      "0xada",
+      "0xadb",
+      "0xadc",
+      "0xadd"
     ],
     "project": "0xaa7",
     "scale": "Fibonacci",
@@ -44629,18 +44673,18 @@
     "itemName": "302 Backlog",
     "serializableTags": []
   },
-  "0xaae": {
+  "0xab0": {
     "shortName": "Final Sprint",
     "longName": "Final Sprint",
     "description": "",
     "productOwner": "0xa",
     "serializableStories": [
-      "0xac6",
-      "0xac7",
-      "0xac8",
-      "0xac9",
-      "0xaca",
-      "0xacb"
+      "0xade",
+      "0xadf",
+      "0xae0",
+      "0xae1",
+      "0xae2",
+      "0xae3"
     ],
     "project": "0xaa7",
     "scale": "Fibonacci",
@@ -44648,104 +44692,182 @@
     "itemName": "Final Sprint",
     "serializableTags": []
   },
-  "0xaaf": {
-    "project": "0xaa7",
-    "team": "0x5",
-    "release": "0xaac",
-    "serializableStories": [
-      "0xac7",
-      "0xac8",
-      "0xaca",
-      "0xacb",
-      "0xac9",
-      "0xac6"
-    ],
-    "goal": "No Bean No",
-    "longName": "Sprint 6",
-    "description": "",
-    "startDate": "0xacc",
-    "endDate": "0xacd",
-    "tasksWithoutStory": "0xace",
-    "id": 7698,
-    "itemName": "",
-    "serializableTags": []
-  },
-  "0xab0": {
-    "project": "0xaa7",
-    "team": "0x5",
-    "release": "0xaac",
-    "serializableStories": [
-      "0xab8",
-      "0xab7",
-      "0xab5",
-      "0xab6"
-    ],
-    "goal": "Sa-ha-ra",
-    "longName": "Sprint 1",
-    "description": "",
-    "startDate": "0xacf",
-    "endDate": "0xad0",
-    "tasksWithoutStory": "0xad1",
-    "id": 7719,
-    "itemName": "",
-    "serializableTags": []
-  },
   "0xab1": {
     "project": "0xaa7",
     "team": "0x5",
-    "release": "0xaac",
+    "release": "0xaae",
     "serializableStories": [
-      "0xabc",
-      "0xabd",
-      "0xabb",
-      "0xab9",
-      "0xaba"
+      "0xac4",
+      "0xac5",
+      "0xac6",
+      "0xac7",
+      "0xac8",
+      "0xac9",
+      "0xaca"
     ],
-    "goal": "Uncomfortable",
-    "longName": "Sprint 2",
+    "goal": "Dat Burndown",
+    "longName": "Check out dat burndown",
     "description": "",
-    "startDate": "0xad2",
-    "endDate": "0xad3",
-    "tasksWithoutStory": "0xad4",
-    "id": 7742,
+    "startDate": "0xae4",
+    "endDate": "0xae5",
+    "tasksWithoutStory": "0xae6",
+    "id": 7803,
     "itemName": "",
     "serializableTags": []
   },
   "0xab2": {
+    "project": "0xaa7",
+    "team": "0x5",
+    "release": "0xaad",
+    "serializableStories": [
+      "0xacb",
+      "0xacc",
+      "0xacd",
+      "0xace",
+      "0xacf",
+      "0xad0",
+      "0xad1",
+      "0xad2"
+    ],
+    "goal": "Just wanted to dance",
+    "longName": "I just wanted to dance",
+    "description": "",
+    "startDate": "0xae7",
+    "endDate": "0xae8",
+    "tasksWithoutStory": "0xae9",
+    "id": 7810,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xab3": {
+    "project": "0xaa7",
+    "team": "0x5",
+    "release": "0xaad",
+    "serializableStories": [
+      "0xae0",
+      "0xae2",
+      "0xae1",
+      "0xadf",
+      "0xae3",
+      "0xade"
+    ],
+    "goal": "No Bean No",
+    "longName": "Sprint 6",
+    "description": "",
+    "startDate": "0xaea",
+    "endDate": "0xaeb",
+    "tasksWithoutStory": "0xaec",
+    "id": 7698,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xab4": {
+    "project": "0xaa7",
+    "team": "0x5",
+    "release": "0xaae",
+    "serializableStories": [
+      "0xabb",
+      "0xabc",
+      "0xabd",
+      "0xabe"
+    ],
+    "goal": "Sa-ha-ra",
+    "longName": "Sprint 1",
+    "description": "",
+    "startDate": "0xaed",
+    "endDate": "0xaee",
+    "tasksWithoutStory": "0xaef",
+    "id": 7719,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xab5": {
+    "project": "0xaa7",
+    "team": "0x5",
+    "release": "0xaad",
+    "serializableStories": [
+      "0xad4",
+      "0xad5",
+      "0xad6",
+      "0xad7",
+      "0xad8",
+      "0xad9",
+      "0xadb",
+      "0xada",
+      "0xadc",
+      "0xadd"
+    ],
+    "goal": "Take a break",
+    "longName": "It\u0027s Friday night, take a break. OMG",
+    "description": "",
+    "startDate": "0xaf0",
+    "endDate": "0xaf1",
+    "tasksWithoutStory": "0xaf2",
+    "id": 7817,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xab6": {
+    "project": "0xaa7",
+    "team": "0x5",
+    "release": "0xaae",
+    "serializableStories": [
+      "0xabf",
+      "0xac0",
+      "0xac1",
+      "0xac2",
+      "0xac3"
+    ],
+    "goal": "Uncomfortable",
+    "longName": "Sprint 2",
+    "description": "",
+    "startDate": "0xaf3",
+    "endDate": "0xaf4",
+    "tasksWithoutStory": "0xaf5",
+    "id": 7742,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xab7": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xab3": {
+  "0xab8": {
     "year": 2015,
     "month": 11,
     "day": 19
   },
-  "0xab4": {
+  "0xab9": {
     "year": 2015,
     "month": 11,
     "day": 26
   },
-  "0xab5": {
+  "0xaba": {
+    "year": 2015,
+    "month": 5,
+    "day": 26
+  },
+  "0xabb": {
     "shortName": "Basic App",
     "longName": "Basic App",
     "description": "In order to be able to see my information and perform actions, as a user, I need a simple\napplication with a text area, menu bar and other basic features. The main application pane\nwill have a list on the left side (which can be hidden/displayed using a menu item) and the\nremainder will be an area for text display and editing. At some point we’ll need a more\nsophisticated interface, but we don’t yet know exactly what we’ll need)",
     "creator": "Moffat",
     "colour": "ORANGE",
     "priority": 50,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
-    "sprint": "0xab0",
+    "sprint": "0xab4",
     "done": false,
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xad5",
-      "0xad6",
-      "0xad7",
-      "0xad8",
-      "0xad9",
-      "0xada"
+      "0xaf6",
+      "0xaf7",
+      "0xaf8",
+      "0xaf9",
+      "0xafa",
+      "0xafb"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -44754,28 +44876,28 @@
     "itemName": "Basic App",
     "serializableTags": []
   },
-  "0xab6": {
+  "0xabc": {
     "shortName": "Project structure",
     "longName": "Project structure",
     "description": "So that I can keep track of all the information about projects, as a manager, I need to be able\nto keep it all together. Initially, there will just be basic information, such as name, but later\non we’ll need to keep track of collections of associated information about stories etc.\nI’d like to keep these in some sort of project so I don’t have to remember too many file\nnames",
     "creator": "Moffat",
     "colour": "ORANGE",
     "priority": 49,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
-    "sprint": "0xab0",
+    "sprint": "0xab4",
     "done": false,
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xadb",
-      "0xadc",
-      "0xadd",
-      "0xade",
-      "0xadf",
-      "0xae0",
-      "0xae1",
-      "0xae2"
+      "0xafc",
+      "0xafd",
+      "0xafe",
+      "0xaff",
+      "0xb00",
+      "0xb01",
+      "0xb02",
+      "0xb03"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -44784,16 +44906,16 @@
     "itemName": "Project structure",
     "serializableTags": []
   },
-  "0xab7": {
+  "0xabd": {
     "shortName": "People maintenance",
     "longName": "People maintenance",
     "description": "So that I can keep track of individual profiles and activities, as a manager, I need to be able\nto enter and update details of particular people in our organisation. For now, just basic\ninformation will be sufficient.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 48,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
-    "sprint": "0xab0",
+    "sprint": "0xab4",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -44805,16 +44927,16 @@
     "itemName": "People maintenance",
     "serializableTags": []
   },
-  "0xab8": {
+  "0xabe": {
     "shortName": "List Display",
     "longName": "List Display",
     "description": "So that I can see what information I am dealing with and access relevant material quickly, as\na user, I need to be able to see lists of elements of my project or organisation.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 47,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
-    "sprint": "0xab0",
+    "sprint": "0xab4",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -44826,16 +44948,16 @@
     "itemName": "List Display",
     "serializableTags": []
   },
-  "0xab9": {
+  "0xabf": {
     "shortName": "Skills register",
     "longName": "Skills register",
     "description": "So that I can allocate resources appropriately across teams, as a manager, I need to be able\nto maintain a list of skills and associate them with individuals.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 46,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
-    "sprint": "0xab1",
+    "sprint": "0xab6",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -44847,16 +44969,16 @@
     "itemName": "Skills register",
     "serializableTags": []
   },
-  "0xaba": {
+  "0xac0": {
     "shortName": "Team maintenance",
     "longName": "Team maintenance",
     "description": "So that I can allocate and manage agile teams, as a manager, I need to be able to record and\nedit information about teams and their members.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 45,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
-    "sprint": "0xab1",
+    "sprint": "0xab6",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -44868,16 +44990,16 @@
     "itemName": "Team maintenance",
     "serializableTags": []
   },
-  "0xabb": {
+  "0xac1": {
     "shortName": "Role maintenance",
     "longName": "Role maintenance",
     "description": "So that I can allocate and manage essential specialist roles to teams, as a manager, I need a\nway to associate roles with team membership.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 44,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
-    "sprint": "0xab1",
+    "sprint": "0xab6",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -44889,16 +45011,16 @@
     "itemName": "Role maintenance",
     "serializableTags": []
   },
-  "0xabc": {
+  "0xac2": {
     "shortName": "Element deletion I",
     "longName": "Element deletion I",
     "description": "So that I can remove unwanted elements from my project, as a manager, I need a way to\nsafely delete people, teams etc.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 43,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
-    "sprint": "0xab1",
+    "sprint": "0xab6",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -44910,16 +45032,16 @@
     "itemName": "Element deletion I",
     "serializableTags": []
   },
-  "0xabd": {
+  "0xac3": {
     "shortName": "Release maintenance",
     "longName": "Release maintenance",
     "description": "So that I can manage the release plans for our products, as a manager, I need to be able to\nspecify current and future releases and update them as our plans evolve.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 42,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
-    "sprint": "0xab1",
+    "sprint": "0xab6",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -44931,15 +45053,16 @@
     "itemName": "Release maintenance",
     "serializableTags": []
   },
-  "0xabe": {
+  "0xac4": {
     "shortName": "Alloc Maintenance",
     "longName": "Project allocation maintenance",
     "description": "So that we can record information about our development activity, as a manager, I need to be\nable to allocate teams to projects and to specify the corresponding backlogs.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 41,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
+    "sprint": "0xab1",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -44951,15 +45074,16 @@
     "itemName": "Alloc Maintenance",
     "serializableTags": []
   },
-  "0xabf": {
+  "0xac5": {
     "shortName": "Status reports",
     "longName": "Status reports",
     "description": "So that I can capture a snapshot of our organisation, as a manager, I need to be able to save a\nreport representing the status of projects. People should be able to read the file if\nnecessary, and it needs to be in a format suitable for processing by other applications.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 40,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
+    "sprint": "0xab1",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -44971,15 +45095,16 @@
     "itemName": "Status reports",
     "serializableTags": []
   },
-  "0xac0": {
+  "0xac6": {
     "shortName": "UX I",
     "longName": "UX I",
     "description": "So that I can maximise my efficiency and minimise errors and frustration, as a user, I need a\nconsistent and easy-to-use application.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 39,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
+    "sprint": "0xab1",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -44991,15 +45116,16 @@
     "itemName": "UX I",
     "serializableTags": []
   },
-  "0xac1": {
+  "0xac7": {
     "shortName": "Revert",
     "longName": "Revert",
     "description": "If I decide that I don\u0027t want to keep the work I\u0027ve done and there\u0027s too many things to be\nbothered with using \u0027Undo,\u0027 as a user, I need a way to be able to discard all the changes and\ngo back to the way my project was when I last opened it.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 38,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
+    "sprint": "0xab1",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -45011,15 +45137,16 @@
     "itemName": "Revert",
     "serializableTags": []
   },
-  "0xac2": {
+  "0xac8": {
     "shortName": "Story maintenance",
     "longName": "Basic Story maintenance",
     "description": "So that I can keep track of the things we need to do, as a manager, I need a way to record\nwork items as user stories. For now, we just need the most basic detail but we’ll add more in\nsubsequent stories.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 38,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
+    "sprint": "0xab1",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -45031,15 +45158,16 @@
     "itemName": "Story maintenance",
     "serializableTags": []
   },
-  "0xac3": {
+  "0xac9": {
     "shortName": "Display list order I",
     "longName": "Display list order I",
     "description": "So that I can find elements conveniently, as a user, I need to be able to see display lists\nordered alphabetically/lexically.\nAlphabetical order implies an appropriate case-independent collation order.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 37,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
+    "sprint": "0xab1",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -45051,15 +45179,16 @@
     "itemName": "Display list order I",
     "serializableTags": []
   },
-  "0xac4": {
+  "0xaca": {
     "shortName": "Backlog maintenance",
     "longName": "Backlog maintenance",
     "description": "So that I can order uncompleted work items by their value to the customer, as a PO, I need to\nbe able to maintain stories in a backlog. These are what we could call “product backlogs” or\njust “products”.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 36,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
+    "sprint": "0xab1",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -45071,15 +45200,16 @@
     "itemName": "Backlog maintenance",
     "serializableTags": []
   },
-  "0xac5": {
+  "0xacb": {
     "shortName": "Report Generation",
     "longName": "Parameterised Reports",
     "description": "",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 35,
-    "backlog": "0xaad",
+    "backlog": "0xaaf",
     "project": "0xaa7",
+    "sprint": "0xab2",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -45091,29 +45221,406 @@
     "itemName": "Report Generation",
     "serializableTags": []
   },
-  "0xac6": {
+  "0xacc": {
+    "shortName": "Backlog priority",
+    "longName": "Backlog priority display order",
+    "description": "So that I can understand and update a backlog, as a PO, I need to be able to see the stories in\npriority order.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 34,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab2",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7775,
+    "itemName": "Backlog priority",
+    "serializableTags": []
+  },
+  "0xacd": {
+    "shortName": "Backlog report",
+    "longName": "Backlog report",
+    "description": "",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 33,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab2",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7776,
+    "itemName": "Backlog report",
+    "serializableTags": []
+  },
+  "0xace": {
+    "shortName": "AC maintenance",
+    "longName": "AC maintenance",
+    "description": "So that I can communicate expectations to the team, as a PO, I need a way to enter and\nmanage acceptance criteria (ACs) for stories.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 32,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab2",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7777,
+    "itemName": "AC maintenance",
+    "serializableTags": []
+  },
+  "0xacf": {
+    "shortName": "Story estimation",
+    "longName": "Story estimation",
+    "description": "So that I can communicate the size of a story to the whole scrum team, as a team member, I\nneed to be able to record and manage story point estimates for backlog items",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 31,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab2",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7778,
+    "itemName": "Story estimation",
+    "serializableTags": []
+  },
+  "0xad0": {
+    "shortName": "Readiness",
+    "longName": "Readiness",
+    "description": "In order to communicate which stories are candidates for consideration in sprint planning, as\na Scrum team member, I need to be able to specify whether or not a story meets our team’s\ndefinition of ready.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 30,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab2",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7779,
+    "itemName": "Readiness",
+    "serializableTags": []
+  },
+  "0xad1": {
+    "shortName": "Dependencies",
+    "longName": "Dependencies",
+    "description": "In order to highlight constraints among the stories in a backlog, as a Scrum team member, I\nneed to be able to specify and modify dependencies.\nIf story X depends on story S then story S would normally have the higher priority in the\nbacklog. Otherwise, a potentially serious problem exists.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 29,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab2",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7780,
+    "itemName": "Dependencies",
+    "serializableTags": []
+  },
+  "0xad2": {
+    "shortName": "Highlighting story",
+    "longName": "Highlighting story state",
+    "description": "So that everybody can see the current nature of our entire backlog, as a Scrum team member,\nI need to be able to see a simple visualisation of the backlog.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 28,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab2",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7781,
+    "itemName": "Highlighting story",
+    "serializableTags": []
+  },
+  "0xad3": {
+    "shortName": "Tool Bar",
+    "longName": "Tool Bar",
+    "description": "So that I can work efficiently, as a user, I want to be able to access the main features of the\nprogram from a toolbar.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 28,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7782,
+    "itemName": "Tool Bar",
+    "serializableTags": []
+  },
+  "0xad4": {
+    "shortName": "Sprint maintenance",
+    "longName": "Sprint maintenance",
+    "description": "So that I can keep track of the work complete, in progress and awaiting scheduling, as a user, I\nneed to be able to record and maintain information about sprints.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 27,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab5",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7783,
+    "itemName": "Sprint maintenance",
+    "serializableTags": []
+  },
+  "0xad5": {
+    "shortName": "Basic Search",
+    "longName": "Basic Search",
+    "description": "So that I can conveniently access information as the size of my system grows, as a user, I need\nto be able to search for occurrences of strings.\nIt is envisaged that this search will be used where a short name/label is known (e.g. “Dave”) or a\nkeyword (e.g. “task”) that might occur in longer names or descriptions etc is known. See also\nLess Basic Search for description of a more sophisticated search feature.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 26,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab5",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7784,
+    "itemName": "Basic Search",
+    "serializableTags": []
+  },
+  "0xad6": {
+    "shortName": "Task maintenance",
+    "longName": "Task maintenance",
+    "description": "So that I can understand the detailed activities involved in completing a work item (user story),\nas a user, I need to be able to access information about tasks.\nNormally, tasks are created during (sometimes before) sprint planning is completed but\nsometimes they will arise during a sprint. In the future, we will need to be able to associate\nadditional information (such as logged hours by team members) against tasks but for now just\nthe basic structure is required.\nA clear policy must be developed. For example, activities such as grooming could be handled\nby not including them in the available hours for a sprint rather than allowing them to appear as\ntasks. However, it might be felt that there is sufficient value in recording them that this will be\nsupported. Similarly, if tasks without a corresponding story emerge during a sprint then should\nit be possible to include them?",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 25,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab5",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7785,
+    "itemName": "Task maintenance",
+    "serializableTags": []
+  },
+  "0xad7": {
+    "shortName": "Scrum board support",
+    "longName": "Standup/Scrum board support",
+    "description": "So that I can update daily the state of our current sprint, as a scrum team member, I need to be\nable to review and update the relevant tasks and stories.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 23,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab5",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7786,
+    "itemName": "Scrum board support",
+    "serializableTags": []
+  },
+  "0xad8": {
+    "shortName": "UX 2",
+    "longName": "UX 2",
+    "description": "",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 22,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab5",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7787,
+    "itemName": "UX 2",
+    "serializableTags": []
+  },
+  "0xad9": {
+    "shortName": "Burndown chart",
+    "longName": "Burndown chart",
+    "description": "So that I can tell if the team is on track to complete a sprint successfully, as a scrum team\nmember, I need to be able to see target and actual work remaining throughout the sprint period.\nIt is conventional to represent burndown with a line graph but a bar chart is another possible\noption to discuss.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 21,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab5",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7788,
+    "itemName": "Burndown chart",
+    "serializableTags": []
+  },
+  "0xada": {
+    "shortName": "Logging Effort",
+    "longName": "Logging Effort",
+    "description": "So that I can help the team track progress, as a team member, I need to be able to record the\neffort I spend on tasks.\nA clear policy for other activity must be developed. For example, activities such as grooming\ncould be handled by not including them in the available hours for a sprint. However, it might be\nfelt that there is sufficient value in recording them that this will be supported. Similarly, if tasks\nwithout a corresponding story emerge during a sprint these cannot currently be included.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 20,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab5",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7790,
+    "itemName": "Logging Effort",
+    "serializableTags": []
+  },
+  "0xadb": {
+    "shortName": "Task status",
+    "longName": "Task status visualisation",
+    "description": "So that I can conveniently see where to commit my efforts next, as a development team\nmember, I need to be able to access information about unallocated (and maybe also\nuncompleted) tasks.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 20,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab5",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7789,
+    "itemName": "Task status",
+    "serializableTags": []
+  },
+  "0xadc": {
+    "shortName": "Story completeness",
+    "longName": "Story completeness visualisation",
+    "description": "So that I can readily comprehend the status of the current sprint, as a scrum team member, I\nneed to be able to see the extent to which each story has been completed.\nOn the physical scrum boards that each team has access to, the snowplough effect provides a\nsimilar indication.\nMaybe something like this would be suitable. Here the stories in the sprint backlog are shown\nas rectangles whose size reflects the corresponding story points value. The green bars indicate\nthe percentage of completed tasks for the story and the red those yet to be done. Maybe we\ncould add orange for those in progress too.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 19,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab5",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7791,
+    "itemName": "Story completeness",
+    "serializableTags": []
+  },
+  "0xadd": {
+    "shortName": "Quick start-up",
+    "longName": "Quick start-up",
+    "description": "So that I can conveniently identify and start the application, as a user, I need to be able to\ndouble­click on the application’s icon to begin execution.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 18,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab5",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7792,
+    "itemName": "Quick start-up",
+    "serializableTags": []
+  },
+  "0xade": {
     "shortName": "Tag maintenance",
     "longName": "Tag maintenance",
     "description": "So that I can associate specific information with elements in the system, as a user, I need to be\nable to maintain a set of categories that can be used as tags.\n\nNote:\n● Tags are simple indicators of a specific category of information (e.g. “needs PO\nclarification” or “high risk”) rather than a note tailored to the specific context.\n● We may be interested in the ability to locate occurrences of specific tags or tracking their\nrelative numbers over time.",
     "creator": "Moffat",
     "colour": "RED",
     "priority": 70,
-    "backlog": "0xaae",
+    "backlog": "0xab0",
     "project": "0xaa7",
-    "sprint": "0xaaf",
+    "sprint": "0xab3",
     "done": false,
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xae3",
-      "0xae4",
-      "0xae5",
-      "0xae6",
-      "0xae7",
-      "0xae8"
+      "0xb04",
+      "0xb05",
+      "0xb06",
+      "0xb07",
+      "0xb08",
+      "0xb09"
     ],
     "dependentOn": [
-      "0xac7"
+      "0xadf"
     ],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45121,16 +45628,16 @@
     "itemName": "Tag maintenance",
     "serializableTags": []
   },
-  "0xac7": {
+  "0xadf": {
     "shortName": "Tagging",
     "longName": "Tagging",
     "description": "So that I can identify tags applicable to system elements, as a user, I need to be able to\nmanage the association of tags.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 69,
-    "backlog": "0xaae",
+    "backlog": "0xab0",
     "project": "0xaa7",
-    "sprint": "0xaaf",
+    "sprint": "0xab3",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -45142,16 +45649,16 @@
     "itemName": "Tagging",
     "serializableTags": []
   },
-  "0xac8": {
+  "0xae0": {
     "shortName": "Story mapping view",
     "longName": "Story mapping view",
     "description": "So that release planning can be managed effectively, as a PO, I need to be able to perform\nstory mapping in the application\n\nNote:\n● Story mapping encompasses a range of things but the basic idea is to show the way\nhigh level goals (e.g. road map items (RMIs), epics, ...) correspond to smaller, more\nconcrete activities (e.g. releases, sprints, stories) where delivery of features occurs.\n● The rough sketch below shows time progressing left to right. The RMIs at the top level\nare then ordered so that we’ll tackle the highest priority ones first. The next `row’ shows\nthe release plan: one or more releases is associated with delivery of an RMI. Each\nrelease consists of one or more sprints, each of which has a sprint backlog containing\nstories from our product backlog.\n● Note the snowplough effect — we know less about future details.\n● There are other similar ways to present maps. For example, one might have a `row’ for\neach sprint in order to build a matrix of story/release relationships.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 68,
-    "backlog": "0xaae",
+    "backlog": "0xab0",
     "project": "0xaa7",
-    "sprint": "0xaaf",
+    "sprint": "0xab3",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -45163,16 +45670,16 @@
     "itemName": "Story mapping view",
     "serializableTags": []
   },
-  "0xac9": {
+  "0xae1": {
     "shortName": "Pair programming",
     "longName": "Pair programming",
     "description": "So that I can determine the extent and effectiveness of pair programming, as a team member, I\nneed to be able to record pair programming activity.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 67,
-    "backlog": "0xaae",
+    "backlog": "0xab0",
     "project": "0xaa7",
-    "sprint": "0xaaf",
+    "sprint": "0xab3",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -45184,22 +45691,22 @@
     "itemName": "Pair programming",
     "serializableTags": []
   },
-  "0xaca": {
+  "0xae2": {
     "shortName": "Story mapping editor",
     "longName": "Story mapping editor",
     "description": "So that I can conveniently update my planning without the distraction of navigation, as a PO, I\nneed to be able to update my system plans directly from the story map view.\nSee also: Story mapping view",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 60,
-    "backlog": "0xaae",
+    "backlog": "0xab0",
     "project": "0xaa7",
-    "sprint": "0xaaf",
+    "sprint": "0xab3",
     "done": false,
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [],
     "dependentOn": [
-      "0xac8"
+      "0xae0"
     ],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45207,16 +45714,16 @@
     "itemName": "Story mapping editor",
     "serializableTags": []
   },
-  "0xacb": {
+  "0xae3": {
     "shortName": "Velocity tracking",
     "longName": "Velocity tracking",
     "description": "So that I can help understand, manage and improve my team’s productivity, as a team member,\nI need to be able to track velocity.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 59,
-    "backlog": "0xaae",
+    "backlog": "0xab0",
     "project": "0xaa7",
-    "sprint": "0xaaf",
+    "sprint": "0xab3",
     "done": false,
     "estimate": "-",
     "ready": false,
@@ -45228,77 +45735,17 @@
     "itemName": "Velocity tracking",
     "serializableTags": []
   },
-  "0xacc": {
-    "year": 2015,
-    "month": 9,
-    "day": 7
-  },
-  "0xacd": {
-    "year": 2015,
-    "month": 9,
-    "day": 25
-  },
-  "0xace": {
-    "shortName": "Tasks without a Story",
-    "longName": "Tasks without a Story",
-    "description": "A collection of tasks that do not belong to a story",
-    "creator": "",
-    "colour": "DEFAULT",
-    "priority": 0,
-    "project": "0xaa7",
-    "sprint": "0xaaf",
-    "done": false,
-    "estimate": "-",
-    "ready": true,
-    "serializableAcceptanceCriteria": [],
-    "dependentOn": [],
-    "serializableTasks": [],
-    "tasksWithoutStory": true,
-    "id": 7700,
-    "itemName": "Tasks without a Story",
-    "serializableTags": []
-  },
-  "0xacf": {
-    "year": 2015,
-    "month": 3,
-    "day": 10
-  },
-  "0xad0": {
-    "year": 2015,
-    "month": 3,
-    "day": 24
-  },
-  "0xad1": {
-    "shortName": "Tasks without a Story",
-    "longName": "Tasks without a Story",
-    "description": "A collection of tasks that do not belong to a story",
-    "creator": "",
-    "colour": "DEFAULT",
-    "priority": 0,
-    "project": "0xaa7",
-    "sprint": "0xab0",
-    "done": false,
-    "estimate": "-",
-    "ready": true,
-    "serializableAcceptanceCriteria": [],
-    "dependentOn": [],
-    "serializableTasks": [],
-    "tasksWithoutStory": true,
-    "id": 7721,
-    "itemName": "Tasks without a Story",
-    "serializableTags": []
-  },
-  "0xad2": {
-    "year": 2015,
-    "month": 3,
-    "day": 25
-  },
-  "0xad3": {
+  "0xae4": {
     "year": 2015,
     "month": 5,
-    "day": 5
+    "day": 6
   },
-  "0xad4": {
+  "0xae5": {
+    "year": 2015,
+    "month": 5,
+    "day": 26
+  },
+  "0xae6": {
     "shortName": "Tasks without a Story",
     "longName": "Tasks without a Story",
     "description": "A collection of tasks that do not belong to a story",
@@ -45314,166 +45761,316 @@
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": true,
+    "id": 7805,
+    "itemName": "Tasks without a Story",
+    "serializableTags": []
+  },
+  "0xae7": {
+    "year": 2015,
+    "month": 5,
+    "day": 27
+  },
+  "0xae8": {
+    "year": 2015,
+    "month": 7,
+    "day": 22
+  },
+  "0xae9": {
+    "shortName": "Tasks without a Story",
+    "longName": "Tasks without a Story",
+    "description": "A collection of tasks that do not belong to a story",
+    "creator": "",
+    "colour": "DEFAULT",
+    "priority": 0,
+    "project": "0xaa7",
+    "sprint": "0xab2",
+    "done": false,
+    "estimate": "-",
+    "ready": true,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": true,
+    "id": 7812,
+    "itemName": "Tasks without a Story",
+    "serializableTags": []
+  },
+  "0xaea": {
+    "year": 2015,
+    "month": 9,
+    "day": 7
+  },
+  "0xaeb": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xaec": {
+    "shortName": "Tasks without a Story",
+    "longName": "Tasks without a Story",
+    "description": "A collection of tasks that do not belong to a story",
+    "creator": "",
+    "colour": "DEFAULT",
+    "priority": 0,
+    "project": "0xaa7",
+    "sprint": "0xab3",
+    "done": false,
+    "estimate": "-",
+    "ready": true,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": true,
+    "id": 7700,
+    "itemName": "Tasks without a Story",
+    "serializableTags": []
+  },
+  "0xaed": {
+    "year": 2015,
+    "month": 3,
+    "day": 10
+  },
+  "0xaee": {
+    "year": 2015,
+    "month": 3,
+    "day": 24
+  },
+  "0xaef": {
+    "shortName": "Tasks without a Story",
+    "longName": "Tasks without a Story",
+    "description": "A collection of tasks that do not belong to a story",
+    "creator": "",
+    "colour": "DEFAULT",
+    "priority": 0,
+    "project": "0xaa7",
+    "sprint": "0xab4",
+    "done": false,
+    "estimate": "-",
+    "ready": true,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": true,
+    "id": 7721,
+    "itemName": "Tasks without a Story",
+    "serializableTags": []
+  },
+  "0xaf0": {
+    "year": 2015,
+    "month": 7,
+    "day": 24
+  },
+  "0xaf1": {
+    "year": 2015,
+    "month": 9,
+    "day": 9
+  },
+  "0xaf2": {
+    "shortName": "Tasks without a Story",
+    "longName": "Tasks without a Story",
+    "description": "A collection of tasks that do not belong to a story",
+    "creator": "",
+    "colour": "DEFAULT",
+    "priority": 0,
+    "project": "0xaa7",
+    "sprint": "0xab5",
+    "done": false,
+    "estimate": "-",
+    "ready": true,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": true,
+    "id": 7819,
+    "itemName": "Tasks without a Story",
+    "serializableTags": []
+  },
+  "0xaf3": {
+    "year": 2015,
+    "month": 3,
+    "day": 25
+  },
+  "0xaf4": {
+    "year": 2015,
+    "month": 5,
+    "day": 5
+  },
+  "0xaf5": {
+    "shortName": "Tasks without a Story",
+    "longName": "Tasks without a Story",
+    "description": "A collection of tasks that do not belong to a story",
+    "creator": "",
+    "colour": "DEFAULT",
+    "priority": 0,
+    "project": "0xaa7",
+    "sprint": "0xab6",
+    "done": false,
+    "estimate": "-",
+    "ready": true,
+    "serializableAcceptanceCriteria": [],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": true,
     "id": 7744,
     "itemName": "Tasks without a Story",
     "serializableTags": []
   },
-  "0xad5": {
+  "0xaf6": {
     "description": "Stand-alone application; can be started from the desktop level",
     "state": "UNACCEPTED",
-    "story": "0xab5",
+    "story": "0xabb",
     "id": 7666,
     "itemName": "",
     "serializableTags": []
   },
-  "0xad6": {
+  "0xaf7": {
     "description": "Simple Swing JFrame",
     "state": "UNACCEPTED",
-    "story": "0xab5",
+    "story": "0xabb",
     "id": 7665,
     "itemName": "",
     "serializableTags": []
   },
-  "0xad7": {
+  "0xaf8": {
     "description": "Sample text display and editing",
     "state": "UNACCEPTED",
-    "story": "0xab5",
+    "story": "0xabb",
     "id": 7670,
     "itemName": "",
     "serializableTags": []
   },
-  "0xad8": {
+  "0xaf9": {
     "description": "MenuBar with File menu and working Quit item",
     "state": "UNACCEPTED",
-    "story": "0xab5",
+    "story": "0xabb",
     "id": 7668,
     "itemName": "",
     "serializableTags": []
   },
-  "0xad9": {
+  "0xafa": {
     "description": "Display menu with item for toggling list display. When application is started,\ninitial toggle state doesn\u0027t matter. The list will sit at the left hand side of the\nmain app window and will display various kinds of information as described in\nsubsequent stories. A title (e.g. “Teams”) will appear at the top of the list to\nindicate what the contents are.",
     "state": "UNACCEPTED",
-    "story": "0xab5",
+    "story": "0xabb",
     "id": 7669,
     "itemName": "",
     "serializableTags": []
   },
-  "0xada": {
+  "0xafb": {
     "description": "Close box works",
     "state": "UNACCEPTED",
-    "story": "0xab5",
+    "story": "0xabb",
     "id": 7667,
     "itemName": "",
     "serializableTags": []
   },
-  "0xadb": {
+  "0xafc": {
     "description": "File menu has New... item with submenu",
     "state": "UNACCEPTED",
-    "story": "0xab6",
+    "story": "0xabc",
     "id": 7673,
     "itemName": "",
     "serializableTags": []
   },
-  "0xadc": {
+  "0xafd": {
     "description": "Submenu includes “New Project …” item (and will eventually include others such\nas new story)",
     "state": "UNACCEPTED",
-    "story": "0xab6",
+    "story": "0xabc",
     "id": 7674,
     "itemName": "",
     "serializableTags": []
   },
-  "0xadd": {
+  "0xafe": {
     "description": "Each project has a (non-null, unique) short name, plus a longer name and\ndescription etc",
     "state": "UNACCEPTED",
-    "story": "0xab6",
+    "story": "0xabc",
     "id": 7675,
     "itemName": "",
     "serializableTags": []
   },
-  "0xade": {
+  "0xaff": {
     "description": "Project properties (name etc) may be edited",
     "state": "UNACCEPTED",
-    "story": "0xab6",
+    "story": "0xabc",
     "id": 7676,
     "itemName": "",
     "serializableTags": []
   },
-  "0xadf": {
+  "0xb00": {
     "description": "File \u003e Open/Save refer to the whole project",
     "state": "UNACCEPTED",
-    "story": "0xab6",
+    "story": "0xabc",
     "id": 7677,
     "itemName": "",
     "serializableTags": []
   },
-  "0xae0": {
+  "0xb01": {
     "description": "New Project item prompts for project name",
     "state": "UNACCEPTED",
-    "story": "0xab6",
+    "story": "0xabc",
     "id": 7678,
     "itemName": "",
     "serializableTags": []
   },
-  "0xae1": {
+  "0xb02": {
     "description": "User can choose location to save project",
     "state": "UNACCEPTED",
-    "story": "0xab6",
+    "story": "0xabc",
     "id": 7679,
     "itemName": "",
     "serializableTags": []
   },
-  "0xae2": {
+  "0xb03": {
     "description": "Only one project will be open at a time",
     "state": "UNACCEPTED",
-    "story": "0xab6",
+    "story": "0xabc",
     "id": 7680,
     "itemName": "",
     "serializableTags": []
   },
-  "0xae3": {
+  "0xb04": {
     "description": "Tag management facilities are available via appropriate GUI elements",
     "state": "UNACCEPTED",
-    "story": "0xac6",
+    "story": "0xade",
     "id": 7704,
     "itemName": "",
     "serializableTags": []
   },
-  "0xae4": {
+  "0xb05": {
     "description": "Tags may be entered via an appropriate dialog. Each tag has a label (a short name that\nwill appear on tool tips etc) and an optional (probably longer) description.",
     "state": "UNACCEPTED",
-    "story": "0xac6",
+    "story": "0xade",
     "id": 7705,
     "itemName": "",
     "serializableTags": []
   },
-  "0xae5": {
+  "0xb06": {
     "description": "A colour is associated with each tag. This may be used to highlight the applicable tags\nin other application views",
     "state": "UNACCEPTED",
-    "story": "0xac6",
+    "story": "0xade",
     "id": 7706,
     "itemName": "",
     "serializableTags": []
   },
-  "0xae6": {
+  "0xb07": {
     "description": "Some tags might apply to any model element (team, story, release, skill) but in general\neach tag will be meaningfully associated with a subset (e.g. {story, AC, task}).",
     "state": "UNACCEPTED",
-    "story": "0xac6",
+    "story": "0xade",
     "id": 7707,
     "itemName": "",
     "serializableTags": []
   },
-  "0xae7": {
+  "0xb08": {
     "description": "The tag label and description may be edited",
     "state": "UNACCEPTED",
-    "story": "0xac6",
+    "story": "0xade",
     "id": 7708,
     "itemName": "",
     "serializableTags": []
   },
-  "0xae8": {
+  "0xb09": {
     "description": "Tags may be deleted. However, if the tags are allocated to any items then we’ll need to\nconfirm the deletion semantics.",
     "state": "UNACCEPTED",
-    "story": "0xac6",
+    "story": "0xade",
     "id": 7709,
     "itemName": "",
     "serializableTags": []

@@ -126,10 +126,8 @@ public abstract class SearchableTab extends Tab {
 
     /**
      * Selects a tab based on a tab
-     * @return did cameron write this???
      */
-    public boolean select() {
+    public void select() {
         getTabPane().getSelectionModel().select(this);
-        return true;
     }
 }
