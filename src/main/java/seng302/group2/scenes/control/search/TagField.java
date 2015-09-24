@@ -81,10 +81,14 @@ public class TagField extends CustomTextField implements SearchableControl {
         this.textProperty().addListener((observable, oldValue, newValue) -> {
 
             // If > 20, copy Dave tag listener
-
+            if (!this.getText().endsWith(",") && !this.getText().endsWith(" ") && this.getText().length() > 20) {
+                this.setText(this.getText().substring(0, 20));
+            }
             // Check for a new tag separator (either ',' or ' ', a comma or a space)
-            if (!this.getText().isEmpty() && this.getText().length() >= 2
+            else if (!this.getText().isEmpty() && this.getText().length() >= 2
                     && (this.getText().endsWith(",") || this.getText().endsWith(" "))) {
+
+
 
                 String tagString = this.getText().substring(0, this.getText().length() - 1);
                 Tag selectedTag = null;
