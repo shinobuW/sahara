@@ -38,21 +38,6 @@ public class StoryAcTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
     Story story;
-    
-    ObservableList<Tag> newTags = observableArrayList();
-    ListProperty<Tag> tags = new SimpleListProperty<>(FXCollections.observableList(new ArrayList<Tag>()));
-
-    public ListProperty<Tag> tagsProperty() {
-        return tags;
-    }
-
-    public ObservableList<Tag> getEmails() {
-        return tagsProperty().get();
-    }
-
-    public void setTags(ObservableList<Tag> tags) {
-        tagsProperty().set(tags);
-    }
 
     /**
      * Constructor for the Story Acceptance Criteria Tab.
@@ -100,6 +85,8 @@ public class StoryAcTab extends SearchableTab {
         SearchableText noAcLabel = new SearchableText("This project has no acceptance criteria");
         acTable.setPlaceholder(noAcLabel);
         acTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        Button tagButton = new Button("View Tags");
 
 
         HBox buttons = new HBox(10);
@@ -152,47 +139,8 @@ public class StoryAcTab extends SearchableTab {
                 }
         );
 
-        TableColumn tagCol = new TableColumn("Tags");
-
-        tagCol.setCellValueFactory(new PropertyValueFactory<AcceptanceCriteria, ObservableList<Tag>>("tags"));
-
-        Callback<TableColumn, TableCell> tagCellFactory = col -> new TagsTableCell(story);
-        tagCol.setCellFactory(tagCellFactory);
-
-        tagCol.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<AcceptanceCriteria, ObservableList<Tag>>>() {
-                    @Override
-                    public void handle(TableColumn.CellEditEvent<AcceptanceCriteria, ObservableList<Tag>> event) {
-                        if (!event.getNewValue().isEmpty()) {
-
-                            AcceptanceCriteria currentAc = acTable.getSelectionModel().getSelectedItem();
-
-                            newTags.clear();
-                            newTags.addAll(event.getNewValue());
-                            System.out.println("AC Tags = " + currentAc.getTags());
-                            System.out.println("Event Tags = " + newTags);
-                            //currentAc.getTags().clear();
-                            
-//                            currentAc.getTags().add(event.getNewValue().get(0));
-//                            currentAc.editAcTags(newTags);
-                            System.out.println(currentAc);
-                            //Wny the **** does current ac's get tags have the new tags WITHOUT any edit? @JESUS
-                            System.out.println("actual tags = " + currentAc.getTags());
-                        }
-                    }
-                }
-        );
-
-        wrapper.setOnMouseClicked(event -> {
-            System.out.println("Out of edit tags" + newTags);
-            if (!newTags.isEmpty()) {
-                ((AcceptanceCriteria) acTable.getSelectionModel().getSelectedItem()).editAcTags(newTags);
-            }
-            System.out.println(((AcceptanceCriteria) acTable.getSelectionModel().getSelectedItem()).getTags());
-        });
-
         acTable.setItems(data);
-        TableColumn[] columns = {descriptionCol, stateCol, tagCol};
+        TableColumn[] columns = {descriptionCol, stateCol};
         acTable.getColumns().setAll(columns);
 
         acTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -231,6 +179,8 @@ public class StoryAcTab extends SearchableTab {
             }
         });
 
+
+
         deleteButton.setOnAction((event) -> {
             AcceptanceCriteria selectedAc = acTable.getSelectionModel().getSelectedItem();
             if (selectedAc != null) {
@@ -259,7 +209,7 @@ public class StoryAcTab extends SearchableTab {
             }
         });
 
-        acPane.getChildren().addAll(title, acTable, descriptionTextArea, buttons);
+        acPane.getChildren().addAll(title, acTable, tagButton, descriptionTextArea, buttons);
         Collections.addAll(searchControls, acTable, title, descriptionTextArea, noAcLabel);
     }
 
