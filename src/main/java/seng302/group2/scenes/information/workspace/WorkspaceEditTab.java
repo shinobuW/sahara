@@ -116,10 +116,9 @@ public class WorkspaceEditTab extends SearchableTab {
 
         boolean correctShortName = ShortNameValidator.validateShortName(shortNameCustomField,
                 currentWorkspace.getShortName());
-        boolean correctLongName = ShortNameValidator.validateShortName(longNameCustomField,
-                currentWorkspace.getLongName());
 
-        if (correctShortName && correctLongName) {
+
+        if (correctShortName) {
             ArrayList<Tag> tags = new ArrayList<>(tagField.getTags());
             currentWorkspace.edit(shortNameCustomField.getText(), longNameCustomField.getText(),
                     descriptionTextArea.getText(), tags);

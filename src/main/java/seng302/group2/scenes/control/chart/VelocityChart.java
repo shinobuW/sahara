@@ -42,9 +42,11 @@ public class VelocityChart extends BarChart {
         this.setTitle(currentTeam.getShortName() + " Velocity");
 
         List<Sprint> sprintList = new ArrayList<>();
-        for (Sprint sprint : currentTeam.getProject().getSprints()) {
-            if (sprint.getTeam() == currentTeam) {
-                sprintList.add(sprint);
+        if (currentTeam != null && currentTeam.getProject() != null) {
+            for (Sprint sprint : currentTeam.getProject().getSprints()) {
+                if (sprint.getTeam() == currentTeam) {
+                    sprintList.add(sprint);
+                }
             }
         }
 
