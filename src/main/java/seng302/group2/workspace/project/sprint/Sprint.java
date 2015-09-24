@@ -350,6 +350,11 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             }
         }
         double duration = getDuration();
+        System.out.println(duration);
+        System.out.println(totalPoints);
+        if (totalPoints == 0) {
+            return 0;
+        }
         double pointsPerDay = totalPoints / duration;
         return pointsPerDay;
     }
@@ -366,18 +371,6 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
         String sprint2ShortName = compareSprint.getGoal();
         return sprint1ShortName.compareTo(sprint2ShortName);
     }
-
-    /**
-     * Adds listeners to the Sprint tasks for sorting
-     */
-    /*public void addListeners() {
-        unallocatedTasks.addListener((ListChangeListener<Task>) change ->
-            {
-                if (change.next() && !change.wasPermutated()) {
-                    Collections.sort(unallocatedTasks, Task.TaskNameComparator);
-                }
-            });
-    }*/
 
     /**
      * Prepares the backlog to be serialized.
