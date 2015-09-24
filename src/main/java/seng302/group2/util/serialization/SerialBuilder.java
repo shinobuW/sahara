@@ -9,6 +9,7 @@ import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.categories.*;
 import seng302.group2.workspace.categories.subCategory.SubCategory;
+import seng302.group2.workspace.categories.subCategory.project.SprintCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.backlog.Backlog;
@@ -73,6 +74,8 @@ public class SerialBuilder {
                 .addType(RolesCategory.class)
                 .addType(SkillsCategory.class)
                 .addType(TeamsCategory.class)
+                .addType(RoadMapCategory.class)
+                .addType(SprintCategory.class)
 
                 .registerOn(gsonBuilder);
 

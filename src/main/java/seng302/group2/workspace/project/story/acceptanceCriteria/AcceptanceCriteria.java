@@ -20,7 +20,7 @@ import java.util.Set;
  * A model class for acceptance criteria items inside of stories
  * Created by Shinobu on 30/05/2015.
  */
-public class AcceptanceCriteria extends SaharaItem implements Serializable, Comparable<AcceptanceCriteria> {
+public class AcceptanceCriteria extends SaharaItem implements Serializable {
     private String description;
     private AcState state;
     private Story story;
@@ -168,16 +168,6 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
         acceptanceElement.appendChild(state);
 
         return acceptanceElement;
-    }
-
-    /**
-     * Compares the Acceptance Criteria to another AC (Yet to be fully implemented)
-     * @param ac The AC to compare to
-     * @return An integer representing the result of the comparison
-     */
-    @Override
-    public int compareTo(AcceptanceCriteria ac) {
-        return 0; //TODO
     }
 
     /**

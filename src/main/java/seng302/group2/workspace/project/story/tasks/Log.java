@@ -655,13 +655,11 @@ public class Log extends SaharaItem implements Serializable {
         @Override
         public void execute() {
             log.startTime = newDate;
-            //TODO:Cameron
         }
 
         @Override
         public void undo() {
             log.startTime = oldDate;
-            //TODO:Cameron
         }
 
         @Override

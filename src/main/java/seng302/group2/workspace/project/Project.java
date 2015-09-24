@@ -380,7 +380,6 @@ public class Project extends SaharaItem implements Serializable, Comparable<Proj
      *
      * @return the serializable Sprints
      */
-    //TODO add this to test methods
     public List<Sprint> getSerializableSprints() {
         return serializableSprints;
     }
