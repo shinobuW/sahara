@@ -22,8 +22,6 @@ public class TeamScene extends TrackedTabPane {
 
     TeamInfoTab informationTab;
     TeamEditTab editTab;
-    TeamVelocityTab velocityTab;
-
 
     /**
      * Constructor for the Team scene. Creates an instance of the TeamInfoTab and displays it. If the team is not
@@ -39,16 +37,19 @@ public class TeamScene extends TrackedTabPane {
         // Define and add the tabs
         informationTab = new TeamInfoTab(currentTeam);
         editTab = new TeamEditTab(currentTeam);
-        velocityTab = new TeamVelocityTab(currentTeam);
         updateAllTabs();
 
-        Collections.addAll(searchableTabs, informationTab, velocityTab);
+        Collections.addAll(searchableTabs, informationTab);
         this.getTabs().addAll(searchableTabs);
 
         if (!currentTeam.isUnassignedTeam()) {
             SearchableTab historyTab = new TeamHistoryTab(currentTeam);
-            this.getTabs().addAll(historyTab);  // Add the tabs to the pane
+            SearchableTab velocityTab = new TeamVelocityTab(currentTeam);
+
+            this.getTabs().addAll(velocityTab, historyTab);  // Add the tabs to the pane
             searchableTabs.add(historyTab);
+            searchableTabs.add(velocityTab);
+
         }
     }
 
