@@ -88,6 +88,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
     public RoadMapNode(RoadMap currentRoadMap) {
         roadMap = currentRoadMap;
+        Insets insetsNode = new Insets(0, 5, 0, 0);
+        this.setPadding(insetsNode);
         HBox roadMapContent = new HBox();
 
 
@@ -199,7 +201,6 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 if (event.getClickCount() == 2 && !(((SaharaItem) Global.selectedTreeItem.getValue())
                         .equals(currentRoadMap))) {
                     App.mainPane.selectItem(currentRoadMap);
-//                    currentRoadMap.switchToInfoScene();
                 }
                 event.consume();
             });

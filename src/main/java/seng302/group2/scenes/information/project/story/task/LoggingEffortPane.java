@@ -8,7 +8,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
@@ -19,8 +18,11 @@ import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.*;
+import seng302.group2.scenes.control.search.SearchType;
+import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTable;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.information.tag.TaggingPane;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.conversion.DurationConverter;
 import seng302.group2.util.validation.DateValidator;
@@ -35,6 +37,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -44,7 +47,8 @@ import static javafx.collections.FXCollections.observableArrayList;
  * Pane for logging on a given Task.
  * Created by jml168 on 25/08/15.
  */
-public class LoggingEffortPane extends Pane {
+public class LoggingEffortPane extends Pane implements SearchableControl {
+    List<SearchableControl> searchControls = new ArrayList<>();
 
     private PopOver popOver = null;
     private Boolean correctEffortLeft = Boolean.FALSE;
@@ -53,8 +57,13 @@ public class LoggingEffortPane extends Pane {
     private TableView table = null;
     private Person nullPerson = new Person("", "", "", "", "", null);
     private ObservableList<Person> availablePeople = FXCollections.observableArrayList();
+    ObservableList<Person> availablePartners = observableArrayList(availablePeople);
+    ObservableList<Person> availableLoggers = observableArrayList(availablePeople);
 
-
+    /**
+     * Constructor for the logging effort pane.
+     * @param task The parent task
+     */
     public LoggingEffortPane(Task task) {
         try {
             String css = this.getClass().getResource("/styles/tableHeader.css").toExternalForm();
@@ -66,7 +75,11 @@ public class LoggingEffortPane extends Pane {
         construct(task);
     }
 
-
+    /**
+     * Constructor for the logging effort pane
+     * @param task The parent task
+     * @param popOver The popover to place the pane into
+     */
     public LoggingEffortPane(Task task, PopOver popOver) {
         this.popOver = popOver;
         try {
@@ -79,6 +92,13 @@ public class LoggingEffortPane extends Pane {
         construct(task);
     }
 
+
+    /**
+     * Constructor for the logging effort pane
+     * @param task The parent task
+     * @param popOver The popover to place the pane into
+     * @param table The table the logs are held in
+     */
     public LoggingEffortPane(Task task, PopOver popOver, TableView table) {
         this.popOver = popOver;
         this.table = table;
@@ -93,11 +113,12 @@ public class LoggingEffortPane extends Pane {
     }
 
 
-    void construct(Task task) {
+    private void construct(Task task) {
         VBox content = new VBox(8);
         content.setPadding(new Insets(8));
 
         SearchableTable<Log> logTable = new SearchableTable<>();
+        searchControls.add(logTable);
         logTable.setEditable(true);
         logTable.setPrefWidth(400);
         logTable.setPrefHeight(200);
@@ -118,30 +139,8 @@ public class LoggingEffortPane extends Pane {
         }
 
 
-        ObservableList<Person> availableLoggers = observableArrayList(availablePeople);
-        System.out.println("al" + availableLoggers);
-        ObservableList<Person> availablePartners = observableArrayList(availablePeople);
-        System.out.println("a part" + availablePartners);
-
-
-        loggerCol.setCellFactory(ComboBoxTableCell.forTableColumn(
-                availableLoggers
-        ));
-
-
-//        ComboBoxTableCell comboBoxEditCell = new ComboBoxTableCell<>(availableLoggers);
-//        comboBoxEditCell.focusedProperty().addListener(new ChangeListener<Boolean>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-//                System.out.println("hello");
-//            }
-//        });
-//        loggerCol.setCellFactory(comboBoxEditCell.);
-
-//        System.out.println(loggerCol.getCellFactory());
-
-//        ComboBoxTableCell loggerEditCell = new ComboBoxTableCell(availableLoggers);
-//        loggerCol.setCellFactory(loggerEditCell);
+        Callback<TableColumn, TableCell> loggerCellFactory = col -> new LogPersonEditTableCell(availableLoggers, this);
+        loggerCol.setCellFactory(loggerCellFactory);
 
         loggerCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Log, String>,
@@ -157,34 +156,34 @@ public class LoggingEffortPane extends Pane {
 
 
         loggerCol.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<Log, Person>>() {
+                new EventHandler<TableColumn.CellEditEvent<Log, String>>() {
                     @Override
                     public void handle(TableColumn.CellEditEvent<Log,
-                            Person> event) {
+                            String> event) {
                         Log currentLog = event.getTableView().getItems().get(
                                 event.getTablePosition().getRow());
                         ArrayList<Tag> tags = new ArrayList<>();
-                        currentLog.editLogger(event.getNewValue());
-                        updateObservablePeopleList(availablePartners, event.getNewValue(), true);
+                        Person newPerson = null;
+                        for (Person person : availablePeople) {
+                            if (person.getShortName() == event.getNewValue()) {
+                                newPerson = person;
+                            }
+                        }
+                        currentLog.editLogger(newPerson);
                     }
                 }
         );
 
-//        logTable.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
-//                Boolean isPartnerList = true;
-//                if (logTable.getSelectionModel().getSelectedItem() != null) {
-//                    updateObservablePeopleList(availablePartners, newSelection.getLogger(), isPartnerList);
-//                    updateObservablePeopleList(availableLoggers, newSelection.getLogger(), !isPartnerList);
-//                }
-//            });
+
+        Callback<TableColumn, TableCell> partnerCellFactory = col -> new LogPersonEditTableCell(availablePartners,
+                this);
 
         TableColumn partnerCol = new TableColumn("Partner");
         partnerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("partner"));
         partnerCol.setEditable(true);
 
-        partnerCol.setCellFactory(ComboBoxTableCell.forTableColumn(
-                availablePartners
-        ));
+        partnerCol.setCellFactory(partnerCellFactory);
+
 
         partnerCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Log, String>,
@@ -202,30 +201,26 @@ public class LoggingEffortPane extends Pane {
 
 
         partnerCol.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<Log, Person>>() {
+                new EventHandler<TableColumn.CellEditEvent<Log, String>>() {
                     @Override
                     public void handle(TableColumn.CellEditEvent<Log,
-                            Person> event) {
+                            String> event) {
                         Log currentLog = event.getTableView().getItems().get(
                                 event.getTablePosition().getRow());
-                        currentLog.editPartner(event.getNewValue());
-                        updateObservablePeopleList(availableLoggers, event.getNewValue(), false);
+
+                        Person newPerson = null;
+                        for (Person person : availablePeople) {
+                            if (person.getShortName() == event.getNewValue()) {
+                                newPerson = person;
+                            }
+                        }
+                        currentLog.editPartner(newPerson);
                     }
                 }
         );
 
         partnerCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
-
-
-//        logTable.setOnMouseClicked(event -> {
-//            if (logTable.getSelectionModel().getSelectedItem() != null) {
-//                updateObservablePeopleList(availableLoggers, logTable.getSelectionModel().getSelectedItem().
-//                                getPartner(), false);
-//                updateObservablePeopleList(availablePartners, logTable.getSelectionModel().getSelectedItem().
-//                                getLogger(), true);
-//            }
-//        });
 
         Callback<TableColumn, TableCell> cellFactory = col -> new DatePickerEditCell();
         Callback<TableColumn, TableCell> startTimeCellFactory = col -> new TimeTextFieldEditCell();
@@ -386,6 +381,7 @@ public class LoggingEffortPane extends Pane {
         buttons.setAlignment(Pos.BOTTOM_RIGHT);
         Button addButton = new Button("Add");
         Button deleteButton = new Button("Delete");
+        Button tagButton = new Button("View Tags");
         buttons.getChildren().addAll(addButton, deleteButton);
 
         HBox newLogFields = new HBox(10);
@@ -573,6 +569,30 @@ public class LoggingEffortPane extends Pane {
             personComboBox.setDisable(true);
         }
 
+        tagButton.setOnAction((event) -> {
+            PopOver tagPopover = new PopOver();
+            VBox popoverContent = new VBox();
+            popoverContent.setMinWidth(600);
+            popoverContent.setPadding(new Insets(8, 8, 8, 8));
+            if (logTable.getSelectionModel().getSelectedItem() == null) {
+                SearchableText noTaskLabel = new SearchableText("No tasks selected.", searchControls);
+                popoverContent.getChildren().add(noTaskLabel);
+            }
+            else {
+                Log currLog = logTable.getSelectionModel().getSelectedItem();
+                tagPopover.setDetachedTitle(task.toString());
+
+                TaggingPane taggingPane = new TaggingPane(currLog);
+                taggingPane.setStyle(null);
+                searchControls.add(taggingPane);
+
+                popoverContent.getChildren().add(taggingPane);
+            }
+
+            tagPopover.setContentNode(popoverContent);
+            tagPopover.show(tagButton);
+        });
+
         addButton.setOnAction((event) -> {
                 ValidationStyle.borderGlowNone(startDatePicker.getDatePicker());
 
@@ -648,6 +668,8 @@ public class LoggingEffortPane extends Pane {
             });
 
         content.getChildren().add(logTable);
+        content.getChildren().add(tagButton);
+        content.getChildren().add(new Separator());
         content.getChildren().add(newLogFields);
         content.getChildren().add(buttons);
 
@@ -660,7 +682,7 @@ public class LoggingEffortPane extends Pane {
      * @param removePerson the person to remove
      * @param isPartnerList whether the list is the one bound to the partner combo box
      */
-    private void updateObservablePeopleList(ObservableList<Person> peopleList, Person removePerson,
+    public void updateObservablePeopleList(ObservableList<Person> peopleList, Person removePerson,
                                             Boolean isPartnerList) {
         peopleList.clear();
         if (isPartnerList) {
@@ -668,5 +690,36 @@ public class LoggingEffortPane extends Pane {
         }
         peopleList.addAll(availablePeople);
         peopleList.remove(removePerson);
+    }
+
+    /**
+     * Gets the list of available loggers. Available loggers is the list of loggers minus
+     * any currently set person in the partner combo box.
+     * @return
+     */
+    public ObservableList<Person> getAvailableLoggerList() {
+        return this.availableLoggers;
+    }
+
+    /**
+     * Gets the list of available partners. Available partners is the list of loggers minus
+     * any currently set person in the logger combo box.
+     * @return List of partners
+     */
+    public ObservableList<Person> getAvailablePartnerList() {
+        return this.availablePartners;
+    }
+
+
+    @Override
+    public boolean query(String query) {
+        // TODO @Bronson
+        return false;
+    }
+
+    @Override
+    public int advancedQuery(String query, SearchType searchType) {
+        // TODO @Jordane
+        return 0;
     }
 }

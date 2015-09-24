@@ -83,24 +83,43 @@ public class EstimationScalesDictionaryTest {
         Global.currentWorkspace = new Workspace();
         ArrayList<String> alphabetList = new ArrayList<>(Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H"));
 
+        /*System.out.println("\nindex");
+        int i = 0;
+        while (i < alphabetList.size()) {
+            System.out.println(alphabetList.get(i) + " to " + Global.currentWorkspace.getEstimationScales().getFibScaleEquivalent(alphabetList, i+1));
+            i++;
+        }*/
+
         Assert.assertEquals(0, Global.currentWorkspace.getEstimationScales().getFibScaleEquivalent(alphabetList, 0));
         Assert.assertEquals(100, Global.currentWorkspace.getEstimationScales().
-                getFibScaleEquivalent(alphabetList, alphabetList.size() + 1));  // Include the 0 that gets added
-        Assert.assertEquals(10, Global.currentWorkspace.getEstimationScales().
-                getFibScaleEquivalent(alphabetList, 4 + 1));  // Include the 0 that gets added
+                getFibScaleEquivalent(alphabetList, alphabetList.size()));
+        Assert.assertEquals(7, Global.currentWorkspace.getEstimationScales().
+                getFibScaleEquivalent(alphabetList, 4));
+
+
     }
 
 
     @Test
     public void testGetFibScaleEquivalentValue() {
+
+
         Global.currentWorkspace = new Workspace();
         ArrayList<String> alphabetList = new ArrayList<>(Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H"));
 
+        /*System.out.println("\nalpha");
+        int i = 0;
+        while (i < alphabetList.size()) {
+            System.out.println(alphabetList.get(i) + " to " + Global.currentWorkspace.getEstimationScales().getFibScaleEquivalent(alphabetList, alphabetList.get(i)));
+            i++;
+        }*/
+
         Assert.assertEquals(1, Global.currentWorkspace.getEstimationScales().getFibScaleEquivalent(alphabetList, "A"));
-        //TODO Jordane recheck what I have done.
-//        Assert.assertEquals(100, Global.currentWorkspace.getEstimationScales().
-//                getFibScaleEquivalent(alphabetList, "H"));  // Include the 0 that gets added
-//        Assert.assertEquals(10, Global.currentWorkspace.getEstimationScales().
-//                getFibScaleEquivalent(alphabetList, "D"));  // Include the 0 that gets added
+        Assert.assertEquals(100, Global.currentWorkspace.getEstimationScales().
+                getFibScaleEquivalent(alphabetList, "H"));
+        Assert.assertEquals(7, Global.currentWorkspace.getEstimationScales().
+                getFibScaleEquivalent(alphabetList, "D"));
+
+
     }
 }

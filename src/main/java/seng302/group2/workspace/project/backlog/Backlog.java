@@ -589,7 +589,7 @@ public class Backlog extends SaharaItem implements Serializable, Comparable<Back
          * Gets the String value of the Command for editting backlogs.
          */
         public String getString() {
-            return "the edit of Backlog \"" + shortName + "\"";
+            return "the edit of Backlog \"" + backlog.getShortName() + "\"";
         }
 
         /**

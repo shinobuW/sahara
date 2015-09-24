@@ -393,7 +393,7 @@ public class Release extends SaharaItem implements Comparable<Release> {
          * Gets the String value of the Command for editting releases.
          */
         public String getString() {
-            return "the edit of Release \"" + shortName + "\"";
+            return "the edit of Release \"" + release.getShortName() + "\"";
         }
 
         /**

@@ -86,7 +86,6 @@ public class TagListCell extends ListCell<Tag> {
                 showDeleteDialog(tag);
             }
         });
-
         return deletionImage;
     }
 

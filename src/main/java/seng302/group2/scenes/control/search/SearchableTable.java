@@ -94,12 +94,14 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
             for (T aData : this.getItems()) {
 
                 for (TableColumn<T, ?> col : cols) {
-                    String cellValue = col.getCellData(aData).toString();
-
-                    cellValue = cellValue.toLowerCase();
-                    if (cellValue.contains(query.trim().toLowerCase())) {
-                        matchingItems.add(aData);
+                    if (col.getCellData(aData) != null) {
+                        String cellValue = col.getCellData(aData).toString();
+                        cellValue = cellValue.toLowerCase();
+                        if (cellValue.contains(query.trim().toLowerCase())) {
+                            matchingItems.add(aData);
+                        }
                     }
+
                 }
             }
         }
@@ -108,7 +110,12 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
         return !matchingItems.isEmpty();
     }
 
-
+    /**
+     * Refreshes the table
+     * @param table The table to refresh
+     * @param tableList The items of the table
+     * @param <T> Anonymous type
+     */
     public static <T> void refresh(final TableView<T> table, final List<T> tableList) {
         //Wierd JavaFX bug
         table.setItems(null);
@@ -153,6 +160,9 @@ public class SearchableTable<T> extends TableView<T> implements SearchableContro
         this.setRowFactory(tv -> new SearchableTableRow<>(this));
     }
 
+    /**
+     * Searches the table and finds any matching items.
+     */
     @Override
     public int advancedQuery(String query, SearchType searchType) {
         matchingItems.clear();

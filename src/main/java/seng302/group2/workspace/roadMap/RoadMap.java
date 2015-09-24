@@ -365,7 +365,7 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
          * Gets the String value of the Command for editting releases.
          */
         public String getString() {
-            return "the edit of Road Map \"" + oldShortName + "\"";
+            return "the edit of Road Map \"" + roadMap.getShortName() + "\"";
         }
 
         /**
