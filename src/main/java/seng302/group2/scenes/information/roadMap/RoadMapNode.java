@@ -88,6 +88,8 @@ public class RoadMapNode extends VBox implements SearchableControl {
 
     public RoadMapNode(RoadMap currentRoadMap) {
         roadMap = currentRoadMap;
+        Insets insetsNode = new Insets(0, 5, 0, 0);
+        this.setPadding(insetsNode);
         HBox roadMapContent = new HBox();
 
 
