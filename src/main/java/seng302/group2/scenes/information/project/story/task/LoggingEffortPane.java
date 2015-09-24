@@ -388,6 +388,7 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
         final CustomComboBox<Person> personComboBox = new CustomComboBox<>("Logger:", true);
 
         CustomComboBox<Person> partnerComboBox = new CustomComboBox<>("Partner");
+        partnerComboBox.getComboBox().getItems().add(nullPerson);
 
         addButton.setDisable(true);
 
@@ -608,6 +609,7 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
                     double effortLeftDifference = task.getEffortLeft() - effortLeft;
 
                     Person partner = partnerComboBox.getComboBox().getSelectionModel().getSelectedItem();
+                    partner = partner == nullPerson ? null : partner;
                     Log newLog = new Log(task, descriptionTextArea.getText(),
                             selectedPerson, partner, duration, dateTime, effortLeftDifference);
 
