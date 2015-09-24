@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -40,7 +41,9 @@ import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 /**
  * Class to create a popup dialog for advanced search
@@ -102,6 +105,9 @@ public class CreateSearchPopOver extends PopOver {
         CheckBox workspaceSearchCheck = new CheckBox("Search entire workspace");
         workspaceSearchCheck.setSelected(true);
 
+        CheckBox tagsSearchCheck = new CheckBox("Search tags");
+
+
         SearchableText onlySearchLabel = new SearchableText("Only Search:");
         GridPane checkBoxPane = new GridPane();
         checkBoxPane.setHgap(10);
@@ -111,6 +117,7 @@ public class CreateSearchPopOver extends PopOver {
 
         CheckBox projectSearchCheck = new CheckBox("Projects");
         checkBoxPane.add(projectSearchCheck, 0, 0);
+
         modelCheckBoxes.add(projectSearchCheck);
 
         CheckBox releaseSearchCheck = new CheckBox("Releases");
@@ -145,8 +152,8 @@ public class CreateSearchPopOver extends PopOver {
         checkBoxPane.add(skillSearchCheck, 2, 2);
         modelCheckBoxes.add(skillSearchCheck);
 
-        grid.getChildren().addAll(searchField, searchByBox, new Separator(), workspaceSearchCheck, onlySearchLabel,
-                checkBoxPane, new Separator(), sortByString, sortByBox, buttons);
+        grid.getChildren().addAll(searchField, searchByBox, new Separator(), workspaceSearchCheck, tagsSearchCheck,
+                onlySearchLabel, checkBoxPane, new Separator(), sortByString, sortByBox, buttons);
 
         //Add grid of controls to dialog
         this.setContentNode(grid);
