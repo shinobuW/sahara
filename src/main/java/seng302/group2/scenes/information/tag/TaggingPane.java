@@ -26,7 +26,8 @@ public class TaggingPane extends Pane implements SearchableControl {
 
 
     /**
-     * @param item
+     * Constructor for tagging pane. Tagging pan eis used to display and edit the tags on any SaharaItem.
+     * @param item The Sahara item being edited.
      */
     public TaggingPane(SaharaItem item) {
         this.item = item;
@@ -47,9 +48,8 @@ public class TaggingPane extends Pane implements SearchableControl {
         searchControls.add(tagLabel);
 
         btnEdit.setOnAction((event) -> constructEdit());
-
-
     }
+
 
     private void constructEdit() {
         content.getChildren().clear();
@@ -70,14 +70,15 @@ public class TaggingPane extends Pane implements SearchableControl {
             item.editTags(tagField.getTags());
             constructInfo();
         });
-
     }
+
 
     @Override
     public boolean query(String query) {
         // TODO #Bronson
         return false;
     }
+
 
     @Override
     public int advancedQuery(String query, SearchType searchType) {
