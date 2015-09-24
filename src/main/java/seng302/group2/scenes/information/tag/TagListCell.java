@@ -89,4 +89,5 @@ public class TagListCell extends ListCell<Tag> {
 
         return deletionImage;
     }
+
 }
