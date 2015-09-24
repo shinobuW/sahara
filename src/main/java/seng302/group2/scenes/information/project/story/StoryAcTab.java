@@ -183,6 +183,7 @@ public class StoryAcTab extends SearchableTab {
 
                 TaggingPane taggingPane = new TaggingPane(currentAc);
                 taggingPane.setStyle(null);
+                searchControls.add(taggingPane);
 
                 content.getChildren().add(taggingPane);
             }
