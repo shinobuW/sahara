@@ -341,8 +341,8 @@ public class TagManagementPane extends SplitPane {
         cancelButton.setOnAction(event -> constructInfo());
 
 
-        //Commented as delete button no longer exists. Have kept the code for the popover logic involved,
-        //incase we need to reuse somewhere else in the project.
+        // Commented as delete button no longer exists. Have kept the code for the popover logic involved,
+        // in case we need to reuse somewhere else in the project.
 //        deleteButton.setOnAction(event -> {
 //            if (popOver != null) {
 //                Node parent = popOver.getOwnerNode();

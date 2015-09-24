@@ -275,7 +275,7 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
      * Edits the tags of the SaharaItem.
      * @param newTags the new tags of the sahara item
      */
-    public void editTags(ObservableList<Tag> newTags) {
+    public void editTags(ArrayList<Tag> newTags) {
         Command editSaharaItem = new SaharaItemEditTagsCommand(this, newTags);
         Global.commandManager.executeCommand(editSaharaItem);
     }
@@ -297,11 +297,11 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
          * @param item The SaharaItem to be edited
          * @param newTags The item's new tags.
          */
-        private SaharaItemEditTagsCommand(SaharaItem item, ObservableList<Tag> newTags) {
+        private SaharaItemEditTagsCommand(SaharaItem item, ArrayList<Tag> newTags) {
             this.item = item;
 
             if (newTags == null) {
-                newTags = FXCollections.observableArrayList();
+                newTags = new ArrayList<>();
             }
 
             this.acTags.addAll(newTags);
@@ -322,9 +322,6 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
             //Add the tags a AC has to their list of tags
             item.getTags().clear();
             item.getTags().addAll(acTags);
-
-            System.out.println("executed:" + item.getTags());
-
         }
 
         /**

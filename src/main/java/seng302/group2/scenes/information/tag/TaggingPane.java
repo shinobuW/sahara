@@ -10,6 +10,7 @@ import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.TagField;
 import seng302.group2.scenes.control.search.TagLabel;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.tag.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +68,7 @@ public class TaggingPane extends Pane implements SearchableControl {
         btnCancel.setOnAction((event) -> constructInfo());
 
         btnDone.setOnAction((event) -> {
-            item.editTags(tagField.getTags());
+            item.editTags((ArrayList<Tag>) tagField.getTags());
             constructInfo();
         });
     }
