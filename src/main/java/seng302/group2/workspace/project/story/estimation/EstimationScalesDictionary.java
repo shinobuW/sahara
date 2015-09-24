@@ -1,7 +1,5 @@
 package seng302.group2.workspace.project.story.estimation;
 
-import javafx.scene.transform.Scale;
-
 import java.util.*;
 
 /**

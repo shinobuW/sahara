@@ -15,7 +15,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
@@ -341,8 +340,8 @@ public class TagManagementPane extends SplitPane {
         cancelButton.setOnAction(event -> constructInfo());
 
 
-        //Commented as delete button no longer exists. Have kept the code for the popover logic involved,
-        //incase we need to reuse somewhere else in the project.
+        // Commented as delete button no longer exists. Have kept the code for the popover logic involved,
+        // in case we need to reuse somewhere else in the project.
 //        deleteButton.setOnAction(event -> {
 //            if (popOver != null) {
 //                Node parent = popOver.getOwnerNode();

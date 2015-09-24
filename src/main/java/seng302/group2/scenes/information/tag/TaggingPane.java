@@ -5,22 +5,30 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import seng302.group2.scenes.control.search.SearchType;
+import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.TagField;
 import seng302.group2.scenes.control.search.TagLabel;
 import seng302.group2.workspace.SaharaItem;
+import seng302.group2.workspace.tag.Tag;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * A pane used to display the tabs on items without a tree view.
  * Created by btm38 on 24/09/15.
  */
-public class TaggingPane extends Pane {
+public class TaggingPane extends Pane implements SearchableControl {
+    List<SearchableControl> searchControls = new ArrayList<>();
     VBox content = new VBox(8);
     SaharaItem item = null;
 
 
     /**
-     * @param item
+     * Constructor for tagging pane. Tagging pan eis used to display and edit the tags on any SaharaItem.
+     * @param item The Sahara item being edited.
      */
     public TaggingPane(SaharaItem item) {
         this.item = item;
@@ -37,10 +45,12 @@ public class TaggingPane extends Pane {
         content.getChildren().add(tagLabel);
         content.getChildren().add(btnEdit);
 
+        searchControls.clear();
+        searchControls.add(tagLabel);
+
         btnEdit.setOnAction((event) -> constructEdit());
-
-
     }
+
 
     private void constructEdit() {
         content.getChildren().clear();
@@ -58,9 +68,22 @@ public class TaggingPane extends Pane {
         btnCancel.setOnAction((event) -> constructInfo());
 
         btnDone.setOnAction((event) -> {
-            item.editTags(tagField.getTags());
+            item.editTags((ArrayList<Tag>) tagField.getTags());
             constructInfo();
         });
+    }
 
+
+    @Override
+    public boolean query(String query) {
+        // TODO #Bronson
+        return false;
+    }
+
+
+    @Override
+    public int advancedQuery(String query, SearchType searchType) {
+        // TODO @Jordane
+        return 0;
     }
 }

@@ -1,8 +1,5 @@
 package seng302.group2.scenes.information.project.story;
 
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -14,22 +11,18 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
-import seng302.group2.scenes.TagsTableCell;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.information.tag.TaggingPane;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcEnumStringConverter;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
-import seng302.group2.workspace.tag.Tag;
 
 import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
-import seng302.group2.Global;
 
 
 /**
@@ -183,6 +176,7 @@ public class StoryAcTab extends SearchableTab {
 
                 TaggingPane taggingPane = new TaggingPane(currentAc);
                 taggingPane.setStyle(null);
+                searchControls.add(taggingPane);
 
                 content.getChildren().add(taggingPane);
             }

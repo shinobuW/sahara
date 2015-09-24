@@ -24,6 +24,7 @@ import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.information.project.story.task.AssigneeTableCell;
 import seng302.group2.scenes.information.project.story.task.ImpedimentsTableCell;
 import seng302.group2.scenes.information.project.story.task.LoggingEffortPane;
+import seng302.group2.scenes.information.tag.TaggingPane;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.conversion.DurationConverter;
 import seng302.group2.util.validation.DateValidator;
@@ -309,10 +310,11 @@ public class StoryTaskTab extends SearchableTab {
 
         Button btnView = new Button("Task View");
         Button btnDelete = new Button("Delete Task");
+        Button tagButton = new Button("View Tags");
 
         HBox buttons = new HBox();
         buttons.spacingProperty().setValue(10);
-        buttons.getChildren().addAll(btnView, btnDelete);
+        buttons.getChildren().addAll(btnView, btnDelete, tagButton);
         buttons.setAlignment(Pos.TOP_LEFT);
 
         btnView.setOnAction((event) -> {
@@ -331,6 +333,7 @@ public class StoryTaskTab extends SearchableTab {
                 LoggingEffortPane loggingPane = new LoggingEffortPane(currentTask,
                         taskPopover, taskTable);
                 loggingPane.setStyle(null);
+                searchControls.add(loggingPane);
 
                 taskWrapper.setContent(loggingPane);
 
@@ -343,6 +346,30 @@ public class StoryTaskTab extends SearchableTab {
 
             taskPopover.setContentNode(taskContent);
             taskPopover.show(btnView);
+        });
+
+        tagButton.setOnAction((event) -> {
+            PopOver tagPopover = new PopOver();
+            VBox content = new VBox();
+            content.setMinWidth(600);
+            content.setPadding(new Insets(8, 8, 8, 8));
+            if (taskTable.getSelectionModel().getSelectedItem() == null) {
+                SearchableText noTaskLabel = new SearchableText("No tasks selected.", searchControls);
+                content.getChildren().add(noTaskLabel);
+            }
+            else {
+                Task task = taskTable.getSelectionModel().getSelectedItem();
+                tagPopover.setDetachedTitle(task.toString());
+
+                TaggingPane taggingPane = new TaggingPane(task);
+                taggingPane.setStyle(null);
+                searchControls.add(taggingPane);
+
+                content.getChildren().add(taggingPane);
+            }
+
+            tagPopover.setContentNode(content);
+            tagPopover.show(tagButton);
         });
 
         btnDelete.setOnAction((event) -> {

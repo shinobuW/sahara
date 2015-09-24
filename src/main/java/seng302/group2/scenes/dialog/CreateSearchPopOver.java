@@ -7,7 +7,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -41,9 +40,7 @@ import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.team.Team;
 
-import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 /**
  * Class to create a popup dialog for advanced search
