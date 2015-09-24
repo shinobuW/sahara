@@ -1,5 +1,6 @@
 package seng302.group2.scenes.control.chart;
 
+import javafx.application.Platform;
 import javafx.scene.chart.*;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.team.Team;
@@ -13,8 +14,14 @@ import java.util.*;
  */
 public class VelocityChart extends BarChart {
 
+    private NumberAxis yAxis = new NumberAxis();
+    private CategoryAxis xAxis = new CategoryAxis();
+
     public VelocityChart(CategoryAxis axis, NumberAxis axis2) {
         super(axis, axis2);
+        xAxis = axis;
+        yAxis = axis2;
+
         try {
             String css = this.getClass().getResource("/styles/chart.css").toExternalForm();
             this.getStylesheets().add(css);
@@ -61,8 +68,36 @@ public class VelocityChart extends BarChart {
         for (Sprint sprint : sprintList) {
             series.getData().add(new XYChart.Data<>(sprint.getGoal(), sprint.getPointsPerDay() * 7));
         }
+
         this.getData().add(series);
+
+        setMaxBarWidth(40, 10);
+        this.widthProperty().addListener((obs, bar, bar1) -> {
+            Platform.runLater(()->setMaxBarWidth(40, 10));
+        });
     }
+
+    private void setMaxBarWidth(double maxBarWidth, double minCategoryGap) {
+        double barWidth = 0;
+        do {
+            double catSpace = xAxis.getCategorySpacing();
+            double availableBarSpace = catSpace - (this.getCategoryGap() + this.getBarGap());
+            barWidth = (availableBarSpace / this.getData().size()) - this.getBarGap();
+            if (barWidth > maxBarWidth) {
+                availableBarSpace = (maxBarWidth + this.getBarGap()) * this.getData().size();
+                this.setCategoryGap(catSpace - availableBarSpace - this.getBarGap());
+            }
+        } while (barWidth > maxBarWidth);
+
+        do {
+            double catSpace = xAxis.getCategorySpacing();
+            double availableBarSpace = catSpace - (minCategoryGap + this.getBarGap());
+            barWidth = Math.min(maxBarWidth, (availableBarSpace / this.getData().size()) - this.getBarGap());
+            availableBarSpace = (barWidth + this.getBarGap()) * this.getData().size();
+            this.setCategoryGap(catSpace - availableBarSpace - this.getBarGap());
+        } while (barWidth < maxBarWidth && this.getCategoryGap() > minCategoryGap);
+    }
+
 }
 
 
