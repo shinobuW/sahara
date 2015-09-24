@@ -16,7 +16,6 @@ import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;

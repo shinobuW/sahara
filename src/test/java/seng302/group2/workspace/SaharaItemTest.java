@@ -1,10 +1,7 @@
 package seng302.group2.workspace;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.junit.Assert;
 import org.junit.Test;
-import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.workspace.categories.PeopleCategory;
 import seng302.group2.workspace.person.Person;

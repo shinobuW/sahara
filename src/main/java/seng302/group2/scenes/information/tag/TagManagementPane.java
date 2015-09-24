@@ -15,7 +15,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.CustomInfoLabel;
 import seng302.group2.scenes.control.FilteredListView;
 import seng302.group2.scenes.control.RequiredField;
 import seng302.group2.scenes.control.search.SearchableControl;
