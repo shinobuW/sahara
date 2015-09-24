@@ -10,9 +10,12 @@ import org.junit.Test;
 import org.w3c.dom.Element;
 import seng302.group2.Global;
 import seng302.group2.util.reporting.ReportGenerator;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.allocation.Allocation;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.Project;
+import seng302.group2.workspace.project.release.Release;
+import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.workspace.Workspace;
@@ -209,18 +212,44 @@ public class TeamTest {
         Global.currentWorkspace = new Workspace();
         Team team = new Team();
         Person p1 = new Person();
+        Project project = new Project();
+        Release release = new Release();
+        Sprint sprint = new Sprint("goal", "longname", "desc", LocalDate.now(), LocalDate.now().plusDays(1), project,
+                team, release);
+        Allocation allocation = new Allocation(project, team, LocalDate.now().minusDays(1), LocalDate.now().plusDays(5));
+
+        project.getSprints().add(sprint);
+        project.getTeamAllocations().add(allocation);
         team.getPeople().add(p1);
+        p1.setTeam(team);
+
+        Global.currentWorkspace.add(project);
         Global.currentWorkspace.add(p1);
         Global.currentWorkspace.add(team);
+
         Assert.assertTrue(Global.currentWorkspace.getTeams().contains(team));
+        Assert.assertTrue(Global.currentWorkspace.getPeople().contains(p1));
+        Assert.assertEquals(team, p1.getTeam());
+        Assert.assertEquals(1, project.getTeamAllocations().size());
+        Assert.assertEquals(1, project.getSprints().size());
+
         team.deleteTeam();
+
         Assert.assertFalse(Global.currentWorkspace.getTeams().contains(team));
-        Assert.assertEquals(null, p1.getTeam());
+        Assert.assertTrue(Global.currentWorkspace.getPeople().contains(p1));
+        Assert.assertEquals(Global.getUnassignedTeam(), p1.getTeam());
+        Assert.assertEquals(0, project.getTeamAllocations().size());
+        Assert.assertEquals(0, project.getSprints().size());
 
         Assert.assertEquals("the deletion of Team \"" + team.getShortName() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
         Global.commandManager.undo();
+
         Assert.assertTrue(Global.currentWorkspace.getTeams().contains(team));
+        Assert.assertTrue(Global.currentWorkspace.getPeople().contains(p1));
+        Assert.assertEquals(team, p1.getTeam());
+        Assert.assertEquals(1, project.getTeamAllocations().size());
+        Assert.assertEquals(1, project.getSprints().size());
     }
 
 
@@ -229,8 +258,17 @@ public class TeamTest {
         Team team = new Team();
         Person p1 = new Person();
         Person p2 = new Person();
+        Project project = new Project();
+        Release release = new Release();
+        Sprint sprint = new Sprint("goal", "longname", "desc", LocalDate.now(), LocalDate.now().plusDays(1), project,
+                team, release);
+        Allocation allocation = new Allocation(project, team, LocalDate.now().minusDays(1),
+                LocalDate.now().plusDays(5));
         team.getPeople().addAll(p1, p2);
+        project.getSprints().add(sprint);
+        project.getTeamAllocations().add(allocation);
 
+        Global.currentWorkspace.add(project);
         Global.currentWorkspace.add(team);
         Global.currentWorkspace.add(p1);
         Global.currentWorkspace.add(p2);
@@ -238,12 +276,16 @@ public class TeamTest {
         Assert.assertTrue(Global.currentWorkspace.getTeams().contains(team));
         Assert.assertTrue(Global.currentWorkspace.getPeople().contains(p1));
         Assert.assertTrue(Global.currentWorkspace.getPeople().contains(p2));
+        Assert.assertEquals(1, project.getTeamAllocations().size());
+        Assert.assertEquals(1, project.getSprints().size());
 
         team.deleteTeamCascading();
 
         Assert.assertFalse(Global.currentWorkspace.getTeams().contains(team));
         Assert.assertFalse(Global.currentWorkspace.getPeople().contains(p1));
         Assert.assertFalse(Global.currentWorkspace.getPeople().contains(p2));
+        Assert.assertEquals(0, project.getTeamAllocations().size());
+        Assert.assertEquals(0, project.getSprints().size());
 
         Assert.assertEquals("the cascading deletion of Team \"" + team.getShortName() + "\"",
                 Global.commandManager.getUndoCloneStack().peek().getString());
@@ -252,6 +294,8 @@ public class TeamTest {
         Assert.assertTrue(Global.currentWorkspace.getTeams().contains(team));
         Assert.assertTrue(Global.currentWorkspace.getPeople().contains(p1));
         Assert.assertTrue(Global.currentWorkspace.getPeople().contains(p2));
+        Assert.assertEquals(1, project.getTeamAllocations().size());
+        Assert.assertEquals(1, project.getSprints().size());
     }
 
 
