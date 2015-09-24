@@ -100,7 +100,7 @@ public class StoryTaskTab extends SearchableTab {
         acContent.setPadding(new Insets(8, 8, 8, 8));
 
         FilteredListView<AcceptanceCriteria> acceptanceCriteriaFilteredListView = new
-                FilteredListView<AcceptanceCriteria>(currentStory.getAcceptanceCriteria(),
+                FilteredListView<>(currentStory.getAcceptanceCriteria(),
                 "acceptance criteria");
         SearchableListView<AcceptanceCriteria> acListView = acceptanceCriteriaFilteredListView.getListView();
         ScrollPane acWrapper = new ScrollPane();
@@ -596,7 +596,7 @@ public class StoryTaskTab extends SearchableTab {
         effortLeftField.setText(Double.toString(currentTask.getEffortLeft()));
 
 
-        CustomComboBox<Person> taskAssigneesList = new CustomComboBox<Person>("Assignee: ");
+        CustomComboBox<Person> taskAssigneesList = new CustomComboBox<>("Assignee: ");
         taskAssigneesList.addToComboBox(null);
         if (currentTask.getStory() != null && currentTask.getStory().getSprint() != null) {
             taskAssigneesList.getComboBox().setItems(currentTask.getStory().getSprint().getTeam().getPeople());

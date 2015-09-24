@@ -67,7 +67,7 @@ public class TeamCategoryTab extends SearchableTab {
 
         // Create Controls
         SearchableText title = new SearchableTitle("Teams in " + currentWorkspace.getShortName());
-        FilteredListView<Team> teamFilteredListView = new FilteredListView<Team>(currentWorkspace.getTeams(), "teams");
+        FilteredListView<Team> teamFilteredListView = new FilteredListView<>(currentWorkspace.getTeams(), "teams");
         SearchableListView<Team> teamBox = teamFilteredListView.getListView();
         teamBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         teamBox.setMaxWidth(275);

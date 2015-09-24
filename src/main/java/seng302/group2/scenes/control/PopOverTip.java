@@ -15,7 +15,7 @@ import org.controlsfx.control.PopOver;
  */
 public class PopOverTip extends PopOver {
 
-    Node parent = null;
+    private Node parent = null;
 
     /**
      * Creates a PopOverTip on the given parent/owner

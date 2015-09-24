@@ -213,10 +213,10 @@ public class SprintEditTab extends SearchableTab {
 
         // Story list view setup
         ObservableList<Story> availableStories = FXCollections.observableArrayList();
-        FilteredListView<Story> storiesInSprintFilteredList = new FilteredListView<Story>(storiesInSprint,
+        FilteredListView<Story> storiesInSprintFilteredList = new FilteredListView<>(storiesInSprint,
                 "stories in the sprint");
         SearchableListView<Story> storiesInSprintView = storiesInSprintFilteredList.getListView();
-        FilteredListView<Story> availableStoriesFilteredList = new FilteredListView<Story>(availableStories,
+        FilteredListView<Story> availableStoriesFilteredList = new FilteredListView<>(availableStories,
                 "available stories");
         SearchableListView<Story> availableStoriesView = availableStoriesFilteredList.getListView();
 

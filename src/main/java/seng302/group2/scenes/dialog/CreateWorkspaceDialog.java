@@ -27,8 +27,8 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
 @SuppressWarnings("deprecation")
 public class CreateWorkspaceDialog extends Dialog<Map<String, String>> {
 
-    Boolean correctShortName = Boolean.FALSE;
-    Boolean correctLongName = Boolean.FALSE;
+    private Boolean correctShortName = Boolean.FALSE;
+    private Boolean correctLongName = Boolean.FALSE;
 
     /**
      * Displays the Dialog box for creating a workspace.

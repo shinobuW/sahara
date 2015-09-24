@@ -575,10 +575,9 @@ public class RoadMapNode extends VBox implements SearchableControl {
                 LocalDate sprintEndDate = sprintEndDatePicker.getValue();
                 Project sprintProject = release.getProject();
                 Team sprintTeam = teamComboBox.getValue();
-                Release sprintRelease = release;
 
                 Sprint sprint = new Sprint(goal, longName, description, sprintStartDate,
-                        sprintEndDate, sprintProject, sprintTeam, sprintRelease);
+                        sprintEndDate, sprintProject, sprintTeam, release);
                 sprintProject.add(sprint);
                 App.mainPane.refreshTree();
 

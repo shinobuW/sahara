@@ -20,13 +20,13 @@ import java.util.Collections;
  */
 public class ReleaseScene extends TrackedTabPane {
 
-    Collection<SearchableTab> searchableTabs = new ArrayList<>();
+    private Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
-    Release currentRelease;
+    private Release currentRelease;
     boolean editScene = false;
 
-    ReleaseInfoTab informationTab;
-    ReleaseEditTab editTab;
+    private ReleaseInfoTab informationTab;
+    private ReleaseEditTab editTab;
     
     /**
      * Constructor for the Release Scene. Creates an instance of the ReleaseInfoTab class and displays it.

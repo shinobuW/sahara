@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableCell;
+import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.tasks.Log;
 
 
@@ -18,7 +19,7 @@ public class LogPersonEditTableCell extends TableCell<Object, String> {
      * *A subclass of TableCell to bind combo box to the cell
      * to allow for editing
      */
-    private ComboBox<Object> comboBox;
+    private ComboBox<Person> comboBox;
     private ObservableList items;
     private LoggingEffortPane pane;
 
@@ -42,7 +43,7 @@ public class LogPersonEditTableCell extends TableCell<Object, String> {
             setGraphic(comboBox);
 
             if (getText() != null && !getText().isEmpty()) {
-                comboBox.setValue(getType());
+                comboBox.setValue((Person)getType());
             }
             else {
                 comboBox.setValue(null);
@@ -67,6 +68,32 @@ public class LogPersonEditTableCell extends TableCell<Object, String> {
      * @param item the item to update to
      * @param empty if the cell is empty
      */
+//    @Override
+//    public void updateItem(String item, boolean empty) {
+//        super.updateItem(item, empty);
+//
+//        if (empty) {
+//            setText(null);
+//            setGraphic(null);
+//        }
+//        else {
+//            if (isEditing()) {
+//                if (!getItem().isEmpty()) {
+//                    comboBox.setValue(getItem());
+//                }
+//
+////                setText(getItem());
+//                setGraphic(comboBox);
+//            }
+//            else {
+//                if (comboBox == null) {
+//                    setText(getItem());
+//                }
+//
+//                setGraphic(null);
+//            }
+//        }
+//    }
     @Override
     public void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
@@ -78,7 +105,7 @@ public class LogPersonEditTableCell extends TableCell<Object, String> {
         else {
             if (isEditing()) {
                 if (comboBox != null) {
-                    comboBox.setValue(getType());
+                    comboBox.setValue((Person)getType());
                 }
                 setText(getItem());
                 setGraphic(comboBox);
@@ -89,6 +116,7 @@ public class LogPersonEditTableCell extends TableCell<Object, String> {
             }
         }
     }
+
 
     /**
      * Gets the selected item
@@ -108,8 +136,43 @@ public class LogPersonEditTableCell extends TableCell<Object, String> {
      * Creates the combo box and populates it with the itemList. Updates the value in the cell.
      */
     private void createCombo() {
-        comboBox = new ComboBox<Object>(this.items);
+        comboBox = new ComboBox<Person>(this.items);
         comboBox.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+        Log selectedLog = (Log) getTableRow().getItem();
+        Boolean isPartnerList = true;
+        pane.updateObservablePeopleList(pane.getAvailableLoggerList(), selectedLog.getPartner(),
+                !isPartnerList);
+        pane.updateObservablePeopleList(pane.getAvailablePartnerList(), selectedLog.getLogger(),
+                isPartnerList);
+//        comboBox.focusedProperty().addListener(new ChangeListener<Boolean>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Boolean> observable,
+//                                Boolean oldValue, Boolean newValue) {
+//                System.out.println("new Value" + newValue);
+//                System.out.println("oldValue" + oldValue);
+//                if (!newValue) {
+//                    System.out.println("out");
+//                    if (comboBox.getValue() != null) {
+//                        System.out.println(comboBox.getValue().toString());
+//                        commitEdit(comboBox.getValue().toString());
+//                    }
+//                    else {
+//                        commitEdit("");
+//                        System.out.println("committing");
+//                    }
+//                }
+//                else {
+//                    System.out.println("in");
+//                    updateItem(getItem(), false);
+//                    Log selectedLog = (Log) getTableRow().getItem();
+//                    Boolean isPartnerList = true;
+//                    pane.updateObservablePeopleList(pane.getAvailableLoggerList(), selectedLog.getPartner(),
+//                            !isPartnerList);
+//                    pane.updateObservablePeopleList(pane.getAvailablePartnerList(), selectedLog.getLogger(),
+//                            isPartnerList);
+//                }
+//            }
+//        });
         comboBox.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable,
@@ -117,30 +180,45 @@ public class LogPersonEditTableCell extends TableCell<Object, String> {
                 if (!newValue) {
                     if (comboBox.getValue() != null) {
                         commitEdit(comboBox.getValue().toString());
+                        System.out.println("out");
+//                        Log selectedLog = (Log) getTableRow().getItem();
+//                        Boolean isPartnerList = true;
+//                        pane.updateObservablePeopleList(pane.getAvailableLoggerList(), selectedLog.getPartner(),
+//                                !isPartnerList);
+//                        pane.updateObservablePeopleList(pane.getAvailablePartnerList(), selectedLog.getLogger(),
+//                                isPartnerList);
                     }
                     else {
                         commitEdit("");
                     }
                 }
                 else {
+                    System.out.println("in");
+//                    comboBox.setValue((Person)getType());
                     updateItem(getItem(), false);
                 }
             }
         });
 
-        comboBox.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue) {
-                    Log selectedLog = (Log)getTableRow().getItem();
-                    Boolean isPartnerList = true;
-                    pane.updateObservablePeopleList(pane.getAvailableLoggerList(), selectedLog.getPartner(),
-                            !isPartnerList);
-                    pane.updateObservablePeopleList(pane.getAvailablePartnerList(), selectedLog.getLogger(),
-                            isPartnerList);
-                }
-            }
-        });
-    }
 
+
+//        comboBox.valueProperty().addListener(new ChangeListener<Object>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Object> observable, Object oldValue, Object newValue) {
+//                if (newValue != oldValue) {
+//                    System.out.println("in");
+//                    if (newValue != null) {
+//                        commitEdit(newValue.toString());
+//                    }
+//                    updateItem(getItem(), false);
+//                    Log selectedLog = (Log) getTableRow().getItem();
+//                    Boolean isPartnerList = true;
+//                    pane.updateObservablePeopleList(pane.getAvailableLoggerList(), selectedLog.getPartner(),
+//                            !isPartnerList);
+//                    pane.updateObservablePeopleList(pane.getAvailablePartnerList(), selectedLog.getLogger(),
+//                            isPartnerList);
+//                }
+//            }
+//        });
+    }
 }

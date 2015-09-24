@@ -33,8 +33,8 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
  */
 public class BacklogCategoryTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
-    BacklogCategory selectedCategory;
+    private List<SearchableControl> searchControls = new ArrayList<>();
+    private BacklogCategory selectedCategory;
 
     /**
      * Constructor for BacklogCategoryTab class.
@@ -78,7 +78,7 @@ public class BacklogCategoryTab extends SearchableTab {
         selectionButtons.getChildren().addAll(btnView, btnDelete, btnCreate);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
-        FilteredListView<Backlog> backlogFilteredListView = new FilteredListView<Backlog>(
+        FilteredListView<Backlog> backlogFilteredListView = new FilteredListView<>(
                 selectedCategory.getProject().getBacklogs(), "backlogs");
         SearchableListView backlogListView = backlogFilteredListView.getListView();
         backlogListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);

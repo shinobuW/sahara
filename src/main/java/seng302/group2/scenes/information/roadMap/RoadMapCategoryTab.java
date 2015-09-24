@@ -36,15 +36,14 @@ import java.util.List;
  */
 public class RoadMapCategoryTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
-    Workspace currentWorkspace;
-    RoadMapNode interactiveRoadMap;
-//    RoadMap
-    Release draggedRelease;
-    Sprint interactiveSprint;
-    Story interactiveStory;
+    private List<SearchableControl> searchControls = new ArrayList<>();
+    private Workspace currentWorkspace;
+    private RoadMapNode interactiveRoadMap;
+    private Release draggedRelease;
+    private Sprint interactiveSprint;
+    private Story interactiveStory;
     Boolean dragging = false;
-    Integer viewportWidth = 0;
+    private Integer viewportWidth = 0;
 
     /**
      * Constructor for RoadMapCategoryTab class.
@@ -178,24 +177,19 @@ public class RoadMapCategoryTab extends SearchableTab {
 
 
         categoryPane.setOnDragOver(event -> {
-                System.out.println((event.getSceneX() - App.mainPane.getTree().getWidth()) + " "
-                        + wrapper.getViewportBounds().getMinX() + " " + wrapper.getViewportBounds().getWidth());
                 if (wrapper.getViewportBounds().getWidth() - event.getSceneX()
                         + App.mainPane.getTree().getWidth() <= 100) {
                     wrapper.setHvalue(wrapper.getHvalue() + 0.01);
-                    System.out.println("2 " + wrapper.getViewportBounds().getWidth());
                     viewportWidth = new Integer((int) wrapper.getHvalue());
                 }
                 else if (event.getSceneX() - App.mainPane.getTree().getWidth() <= 100) {
                     wrapper.setHvalue(wrapper.getHvalue() - 0.01);
-                    System.out.println("2 " + wrapper.getViewportBounds().getWidth());
                     viewportWidth = new Integer((int) wrapper.getHvalue());
                 }
             });
 
 
         categoryPane.setOnDragDropped(event -> {
-            System.out.println(viewportWidth);
             wrapper.setHvalue(viewportWidth);
         });
 /*
@@ -283,7 +277,6 @@ public class RoadMapCategoryTab extends SearchableTab {
                     }
                 }
                 if (confirm) {
-                    System.out.println(roadMapNode.getRoadmap().getShortName() + " Drag dropped");
                     interactiveRoadMap.getRoadmap().addRemove(currentRoadMap,
                             interactiveRoadMap.getRoadmap(), draggedRelease);
                 }

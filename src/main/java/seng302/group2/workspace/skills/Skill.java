@@ -135,7 +135,6 @@ public class Skill extends SaharaItem implements Serializable, Comparable<Skill>
      */
     public void deleteSkill() {
         if (this.shortName.equals("Scrum Master") || this.shortName.equals("Product Owner")) {
-            System.out.println("Can't delete this skill");
             return;
         }
         Command deleteSkill = new DeleteSkillCommand(this);

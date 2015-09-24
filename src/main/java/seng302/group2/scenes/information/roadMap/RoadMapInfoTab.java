@@ -27,8 +27,8 @@ import java.util.List;
  * Created by cvs20 on 11/09/15.
  */
 public class RoadMapInfoTab extends SearchableTab {
-    List<SearchableControl> searchControls = new ArrayList<>();
-    RoadMap currentRoadMap;
+    private List<SearchableControl> searchControls = new ArrayList<>();
+    private RoadMap currentRoadMap;
     int viewportWidth = 0;
 
     /**
@@ -130,17 +130,13 @@ public class RoadMapInfoTab extends SearchableTab {
         });
 
         basicInfoPane.setOnDragOver(event -> {
-                System.out.println((event.getSceneX() - App.mainPane.getTree().getWidth()) + " "
-                        + wrapper.getViewportBounds().getMinX() + " " + wrapper.getViewportBounds().getWidth());
                 if (wrapper.getViewportBounds().getWidth() - event.getSceneX()
                         + App.mainPane.getTree().getWidth() <= 100) {
                     wrapper.setHvalue(wrapper.getHvalue() + 0.01);
-                    System.out.println("2 " + wrapper.getViewportBounds().getWidth());
                     viewportWidth = new Integer((int) wrapper.getHvalue());
                 }
                 else if (event.getSceneX() - App.mainPane.getTree().getWidth() <= 100) {
                     wrapper.setHvalue(wrapper.getHvalue() - 0.01);
-                    System.out.println("2 " + wrapper.getViewportBounds().getWidth());
                     viewportWidth = new Integer((int) wrapper.getHvalue());
                 }
             });

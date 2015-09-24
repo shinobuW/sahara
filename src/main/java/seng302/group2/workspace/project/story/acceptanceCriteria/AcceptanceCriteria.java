@@ -34,13 +34,6 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable {
     }
 
     /**
-     * Blank Constructor
-     */
-    private AcceptanceCriteria() {
-        super();
-    }
-
-    /**
      * Basic constructor
      *
      * @param description the description of the AC

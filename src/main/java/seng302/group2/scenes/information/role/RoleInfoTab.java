@@ -60,7 +60,7 @@ public class RoleInfoTab extends SearchableTab {
         CustomInfoLabel desc = new CustomInfoLabel("Role Description: ", currentRole.getDescription());
         CustomInfoLabel required = new CustomInfoLabel("Required Skills: ", "");
 
-        FilteredListView<Skill> skillFilteredListView = new FilteredListView<Skill>(currentRole.getRequiredSkills(),
+        FilteredListView<Skill> skillFilteredListView = new FilteredListView<>(currentRole.getRequiredSkills(),
                 "skills");
         SearchableListView skillsBox = skillFilteredListView.getListView();
         skillsBox.setPrefHeight(192);

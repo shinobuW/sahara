@@ -29,8 +29,8 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
  */
 public class ProjectCategoryTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
-    Workspace currentWorkspace;
+    private List<SearchableControl> searchControls = new ArrayList<>();
+    private Workspace currentWorkspace;
 
     /**
      * Constructor for ProjectCategoryTab class.

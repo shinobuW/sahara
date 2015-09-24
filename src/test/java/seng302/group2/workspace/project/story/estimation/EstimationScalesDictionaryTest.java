@@ -11,9 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EstimationScalesDictionaryTest {
-    EstimationScalesDictionary testDict = EstimationScalesDictionary.getEstimationScale();
-    EstimationScalesDictionary testDict2 = EstimationScalesDictionary.getEstimationScale();
-    Map<String, ArrayList<String>> estimationScaleDict = testDict.getEstimationScaleDict();
+    private EstimationScalesDictionary testDict = EstimationScalesDictionary.getEstimationScale();
+    private EstimationScalesDictionary testDict2 = EstimationScalesDictionary.getEstimationScale();
+    private Map<String, ArrayList<String>> estimationScaleDict = testDict.getEstimationScaleDict();
 
     @Test
     /**

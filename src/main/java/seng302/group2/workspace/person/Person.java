@@ -14,7 +14,6 @@ import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.project.Project;
 import seng302.group2.workspace.project.story.tasks.Log;
-import seng302.group2.workspace.project.story.tasks.PairLog;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
 import seng302.group2.workspace.tag.Tag;
@@ -244,7 +243,7 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
             if (log.getLogger() == this) {
                 personLogs.add(log);
             }
-            else if (log instanceof PairLog && ((PairLog) log).getPartner() == this) {
+            else if (log.getPartner() == this) {
                 personLogs.add(log);
             }
         }
@@ -388,7 +387,6 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
                 //return Global.datePattern.format(this.getBirthDate());
             }
             catch (Exception e) {
-                System.out.println("Error parsing date");
                 return "";
             }
         }

@@ -41,20 +41,20 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  */
 public class PersonEditTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
-    Person currentPerson;
+    private List<SearchableControl> searchControls = new ArrayList<>();
+    private Person currentPerson;
 
-    Person tempPerson = new Person();
-    RequiredField shortNameCustomField = new RequiredField("Short Name:");
-    RequiredField firstNameCustomField = new RequiredField("First Name:");
-    RequiredField lastNameCustomField = new RequiredField("Last Name:");
-    CustomTextField emailTextField = new CustomTextField("Email:");
-    CustomDatePicker birthDatePicker = new CustomDatePicker("Birth Date:", false);
-    CustomComboBox<Team> teamBox = new CustomComboBox<>("Team: ");
-    CustomTextArea descriptionTextArea = new CustomTextArea("Person Description:", 300);
-    FilteredListView personSkillsBox = new FilteredListView<>(tempPerson.getSkills(), "skills");
-    SearchableListView personSkillsList = personSkillsBox.getListView();
-    TagField tagField;
+    private Person tempPerson = new Person();
+    private RequiredField shortNameCustomField = new RequiredField("Short Name:");
+    private RequiredField firstNameCustomField = new RequiredField("First Name:");
+    private RequiredField lastNameCustomField = new RequiredField("Last Name:");
+    private CustomTextField emailTextField = new CustomTextField("Email:");
+    private CustomDatePicker birthDatePicker = new CustomDatePicker("Birth Date:", false);
+    private CustomComboBox<Team> teamBox = new CustomComboBox<>("Team: ");
+    private CustomTextArea descriptionTextArea = new CustomTextArea("Person Description:", 300);
+    private FilteredListView personSkillsBox = new FilteredListView<>(tempPerson.getSkills(), "skills");
+    private SearchableListView personSkillsList = personSkillsBox.getListView();
+    private TagField tagField;
 
     /**
      * Constructor for the PersonEditTab class. This constructor creates a JavaFX ScrollPane
@@ -335,9 +335,6 @@ public class PersonEditTab extends SearchableTab {
         boolean descriptionUnchanged = descriptionTextArea.getText().equals(
                 currentPerson.getDescription());
         boolean birthdayUnchanged = birthDatePicker.getValue() == currentPerson.getBirthDate();
-        System.out.println(birthDatePicker.getValue());
-        System.out.println(currentPerson.getBirthDate());
-        System.out.println(birthdayUnchanged);
         boolean emailUnchanged = emailTextField.getText().equals(
                 currentPerson.getEmail());
         boolean teamUnchanged = selectedTeam.getShortName().equals(

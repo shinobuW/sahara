@@ -18,7 +18,6 @@ import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.tasks.Log;
-import seng302.group2.workspace.project.story.tasks.PairLog;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.team.Team;
 
@@ -67,11 +66,9 @@ public class SprintLogTab extends SearchableTab {
             }
 
             if (selectedPartner != null && selectedPartner != nullPerson) {
-                if (!(log instanceof PairLog)) {
-                    data.remove(log);
-                }
-                else if (log instanceof PairLog && ((PairLog)log).getPartner() != null) {
-                    if (selectedPartner == log.getLogger() && ((PairLog) log).getPartner() != selectedPartner) {
+
+                if (log.getPartner() != null) {
+                    if (selectedPartner == log.getLogger() && log.getPartner() != selectedPartner) {
                         data.remove(log);
                     }
                 }
@@ -100,8 +97,8 @@ public class SprintLogTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(loggingPane);
         this.setContent(wrapper);
 
-        loggerComboBox = new CustomComboBox<Person>("Logger");
-        partnerComboBox = new CustomComboBox<Person>("Partner");
+        loggerComboBox = new CustomComboBox<>("Logger");
+        partnerComboBox = new CustomComboBox<>("Partner");
 
         ObservableList<Team> allocatedTeams = FXCollections.observableArrayList();
         ObservableList<Person> allPeople = FXCollections.observableArrayList();

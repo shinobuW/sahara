@@ -264,7 +264,7 @@ public class CreateSearchPopOver extends PopOver {
      * @param modelCheckBoxes      List of check boxes in the search dialog
      * @return a list of checked items
      */
-    protected static List<String> getCheckedItems(CheckBox workspaceSearchCheck,
+    private static List<String> getCheckedItems(CheckBox workspaceSearchCheck,
                                                   List<CheckBox> modelCheckBoxes) {
         List<String> checkedItems = new ArrayList<>();
 
@@ -460,7 +460,6 @@ public class CreateSearchPopOver extends PopOver {
 
         }
         else {
-            System.out.println("Sorting");
             Map<SearchResultCellNode, Integer> searchResults = sortByValue(results);
             returnedList = new ArrayList<>();
             returnedList.addAll(searchResults.keySet());

@@ -177,7 +177,6 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
                 return this.getStartDate().format(Global.dateFormatter);
             }
             catch (Exception e) {
-                System.out.println("Error parsing date");
                 return "";
             }
         }
@@ -205,7 +204,6 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
                 return this.getEndDate().format(Global.dateFormatter);
             }
             catch (Exception e) {
-                System.out.println("Error parsing date");
                 return "";
             }
         }
@@ -350,13 +348,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             }
         }
         double duration = getDuration();
-        System.out.println(duration);
-        System.out.println(totalPoints);
-        if (totalPoints == 0) {
-            return 0;
-        }
-        double pointsPerDay = totalPoints / duration;
-        return pointsPerDay;
+        return totalPoints / duration;
     }
 
     /**
@@ -371,6 +363,18 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
         String sprint2ShortName = compareSprint.getGoal();
         return sprint1ShortName.compareTo(sprint2ShortName);
     }
+
+    /**
+     * Adds listeners to the Sprint tasks for sorting
+     */
+    /*public void addListeners() {
+        unallocatedTasks.addListener((ListChangeListener<Task>) change ->
+            {
+                if (change.next() && !change.wasPermutated()) {
+                    Collections.sort(unallocatedTasks, Task.TaskNameComparator);
+                }
+            });
+    }*/
 
     /**
      * Prepares the backlog to be serialized.
@@ -608,8 +612,6 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             this.globalTags.addAll(newTags);
             this.globalTags.addAll(Global.currentWorkspace.getAllTags());
 
-            System.out.println(this.stories);
-            System.out.println(this.oldStories);
 
             this.oldGoal = sprint.goal;
             this.oldLongName = sprint.longName;
