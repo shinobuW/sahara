@@ -26,6 +26,7 @@ public class LogPersonEditTableCell extends TableCell<Object, String> {
     /**
      * Constructor
      * @param itemList items to populate the combo box with
+     * @param pane The pane the table cell is on
      */
     public LogPersonEditTableCell(ObservableList itemList, LoggingEffortPane pane) {
         this.items = itemList;

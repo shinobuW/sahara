@@ -73,6 +73,7 @@ public class CumulativeCommand implements Command {
 
     /**
      * sets the String value of the Command for cumulative commands.
+     * @param string The new status bar string
      */
     public void setString(String string) {
         statusBarString = string;

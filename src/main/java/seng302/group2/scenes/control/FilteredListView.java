@@ -34,7 +34,7 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
 
     /**
      * Constructor for the VBox for Filtered Listviews
-     * @param data
+     * @param data The data to be displayed in the filtered list view
      */
     public FilteredListView(ObservableList<T> data) {
         this.setMaxWidth(275);
@@ -75,14 +75,15 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
 
     /**
      * Constructor for the VBox for Filtered Listviews
-     * @param data
+     * @param data The data to be displayed in the filtered list view
+     * @param promptText Default text in search box
      */
     public FilteredListView(ObservableList<T> data, String promptText) {
         this.setMaxWidth(275);
         this.setPrefWidth(275);
         originalData = data;
         inputText.setPromptText("Filter " + promptText + "...");
-        listView = new SearchableListView(data);
+        listView = new SearchableListView<>(data);
         inputText.setOnKeyReleased(event -> {
             sortedData.clear();
             for (T item : originalData) {
@@ -92,7 +93,6 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
             }
             listView.setItems(sortedData);
         });
-
 
 
         this.getChildren().addAll(
@@ -112,6 +112,7 @@ public class FilteredListView<T> extends VBox implements SearchableControl {
             }
             event.consume();
         });
+
         Collections.addAll(searchControls, listView);
     }
 

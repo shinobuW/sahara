@@ -694,7 +694,7 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
     /**
      * Gets the list of available loggers. Available loggers is the list of loggers minus
      * any currently set person in the partner combo box.
-     * @return
+     * @return List of available loggers
      */
     public ObservableList<Person> getAvailableLoggerList() {
         return this.availableLoggers;
@@ -703,7 +703,7 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
     /**
      * Gets the list of available partners. Available partners is the list of loggers minus
      * any currently set person in the logger combo box.
-     * @return List of partners
+     * @return List of available partners
      */
     public ObservableList<Person> getAvailablePartnerList() {
         return this.availablePartners;

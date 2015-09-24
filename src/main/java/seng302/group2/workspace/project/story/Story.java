@@ -227,6 +227,7 @@ public class Story extends SaharaItem implements Serializable {
 
     /**
      * Sets the end date of the story
+     * @param date The stories new end date
      */
     public void setEndDate(LocalDate date) {
         this.endDate = date;
@@ -234,8 +235,7 @@ public class Story extends SaharaItem implements Serializable {
 
     /**
      * Sets the start date of the story
-     *
-     * @return start date
+     * @param date The new LocalStart date of the story
      */
     public void setStartDate(LocalDate date) {
         this.startDate = date;

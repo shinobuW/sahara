@@ -115,6 +115,7 @@ public class MainToolbar extends ToolBar {
 
     /**
      * Sets the ToolTip string for the Undo button.
+     * @param string the Redo tooltip
      */
     public void setUndoToolTip(String string) {
         toolUndo = new Tooltip(string);
@@ -123,6 +124,7 @@ public class MainToolbar extends ToolBar {
 
     /**
      * Sets the ToolTip string for the Redo button.
+     * @param string the Redo tool tip
      */
     public void setRedoToolTip(String string) {
         toolRedo = new Tooltip(string);

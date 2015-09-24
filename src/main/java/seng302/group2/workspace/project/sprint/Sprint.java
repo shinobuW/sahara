@@ -446,9 +446,12 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
         Global.commandManager.executeCommand(addStory);
     }
 
+
     /**
      * Adds a story to the sprints list of stories and Removes from another sprint.
-     *
+
+     * @param newSprint The new sprint for the story to be placed into
+     * @param oldSprint The old sprint to remove the story from
      * @param story Story to add
      */
     public void addRemove(Sprint newSprint, Sprint oldSprint, Story story) {

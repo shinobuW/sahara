@@ -21,6 +21,7 @@ public interface Command {
 
     /**
      * Gets the string value of the Command.
+     * return The commands string
      */
     public String getString();
 

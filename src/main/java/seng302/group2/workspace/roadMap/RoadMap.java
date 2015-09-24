@@ -48,6 +48,7 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
      * Basic RoadMap constructor
      *
      * @param shortName The short name of the road map
+     * @param priority The priority of the road map
      */
     public RoadMap(String shortName, Integer priority) {
         super(shortName);
@@ -97,6 +98,14 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
     /**
      * Adds a Release to the RoadMaps's list of Releases.
      *
+     * @param release The release to add
+     */
+
+    /**
+     * Adds a Release to the RoadMaps's list of Releases.
+     *
+     * @param newRoadMap The new roadmap to add the release to
+     * @param oldRoadMap The old roadmap to delete the release from
      * @param release The release to add
      */
     public void addRemove(RoadMap newRoadMap, RoadMap oldRoadMap, Release release) {
@@ -294,6 +303,7 @@ public class RoadMap extends SaharaItem implements Serializable, Comparable<Road
          * Constructor for the release addition command.
          * @param roadMap The roadMap to which the release is being added.
          * @param shortName The new short name
+         * @param priority The new priority
          * @param releases The release to be added.
          * @param newTags   The new tags of the roadmap
          */

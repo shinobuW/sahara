@@ -39,6 +39,7 @@ public class TagCellNode extends VBox implements SearchableControl {
     /**
      * Constructor for a tag cell node.
      * @param tag The tag to display.
+     * @param removable if the cell node displays the x icon
      */
     public TagCellNode(Tag tag, boolean removable) {
         this.tag = tag;
@@ -52,6 +53,8 @@ public class TagCellNode extends VBox implements SearchableControl {
     /**
      * Constructor for a tag cell node. Adds to the given list of searchable controls
      * @param tag The tag to display.
+     * @param removable if the cell node displays the x icon
+     * @param searchableControls Collection of searchable controls
      */
     public TagCellNode(Tag tag, boolean removable, Collection<SearchableControl> searchableControls) {
         this.tag = tag;
@@ -64,9 +67,15 @@ public class TagCellNode extends VBox implements SearchableControl {
         construct();
     }
 
+
+
     /**
      * Constructor for a tag cell node. Adds to the given list of searchable controls
+     *
      * @param tag The tag to display.
+     * @param removable if the cell node displays the x icon
+     * @param tagField A containing tag field
+     * @param searchableControls Collection of searchable controls
      */
     public TagCellNode(Tag tag, boolean removable,
                        TagField tagField, Collection<SearchableControl> searchableControls) {

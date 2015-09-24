@@ -50,8 +50,9 @@ public class TagListCell extends ListCell<Tag> {
     }
 
     /**
-     * Creates a deletion node
+     * Creates a deletion node, which is used to delete a tag.
      * @param tag The tag to be deleted
+     * return A deletion node
      */
     public Node createDeletionNode(Tag tag) {
         ImageView deletionImage = new ImageView("icons/trashcan.png");
