@@ -6,6 +6,7 @@
 package seng302.group2.scenes.dialog;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import seng302.group2.App;
 import seng302.group2.Global;
@@ -68,66 +69,92 @@ public class DeleteDialog {
         ArrayList<String> dialogText;
         dialogText = getDeleteDialogText(element);
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(dialogText.get(0));
-        alert.setHeaderText("Delete " + "'" + element.toString() + "'?");
-        alert.setContentText(dialogText.get(1));
-        alert.getDialogPane().setStyle(" -fx-max-width:650px; -fx-max-height: 170px; -fx-pref-width: 650px; "
-                + "-fx-pref-height: 170px;");
-        Optional<ButtonType> result = alert.showAndWait();
+        if (element.getClass() == Team.class) {
 
-        if (result.get() == ButtonType.OK) {
-            if (element.getClass() == Person.class) {
-                Person deletedPerson = (Person) element;
-                deletedPerson.deletePerson();
+            Team deletedTeam = (Team) element;
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle(dialogText.get(0));
+            alert.setHeaderText("Delete " + "'" + element.toString() + "'?");
+            alert.setContentText(dialogText.get(1));
+            alert.getDialogPane().setStyle(" -fx-max-width:750px; -fx-max-height: 200px; -fx-pref-width: 750px; "
+                    + "-fx-pref-height: 200px;");
+
+            ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            ButtonType deleteWithPeople = new ButtonType("Delete Team & Members", ButtonBar.ButtonData.OK_DONE);
+            ButtonType deleteWithoutPeople = new ButtonType("Delete Team", ButtonBar.ButtonData.OK_DONE);
+
+
+            alert.getButtonTypes().setAll(buttonTypeCancel, deleteWithoutPeople, deleteWithPeople);
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.get() == deleteWithoutPeople) {
+                deletedTeam.deleteTeam();
             }
-            else if (element.getClass() == Project.class) {
-                Project deletedProject = (Project) element;
-                deletedProject.deleteProject();
-                //Project.deleteProject(deletedProject);
-                App.refreshMainScene();
-            }
-            else if (element.getClass() == Team.class) {
-                Team deletedTeam = (Team) element;
+            else if (result.get() == deleteWithPeople) {
                 deletedTeam.deleteTeamCascading();
             }
-            else if (element.getClass() == Skill.class) {
-                Skill deletedSkill = (Skill) element;
-                deletedSkill.deleteSkill();
-            }
-            else if (element.getClass() == RoadMap.class) {
-                RoadMap deletedRoadMap = (RoadMap) element;
-                deletedRoadMap.deleteRoadMap();
-            }
-            else if (element.getClass() == Release.class) {
-                Release deletedRelease = (Release) element;
-                deletedRelease.deleteRelease();
-            }
-            else if (element.getClass() == Story.class) {
-                Story deletedStory = (Story) element;
-                deletedStory.deleteStory();
-                App.refreshMainScene();
-            }
-            else if (element.getClass() == Backlog.class) {
-                Backlog deletedBacklog = (Backlog) element;
-                deletedBacklog.deleteBacklog();
-            }
-            else if (element.getClass() == Sprint.class) {
-                Sprint deletedSprint = (Sprint) element;
-                deletedSprint.deleteSprint();
-            }
-            else if (element.getClass() == Tag.class) {
-                Tag deletedTag = (Tag) element;
-                deletedTag.deleteGlobalTag();
-            }
-            else {
-                System.out.printf("Deletion dialog for that element has not been deleted");
-                return false;
-            }
-        }
-        return false;
-    }
 
+            return false;
+        }
+        else {
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle(dialogText.get(0));
+            alert.setHeaderText("Delete " + "'" + element.toString() + "'?");
+            alert.setContentText(dialogText.get(1));
+            alert.getDialogPane().setStyle(" -fx-max-width:650px; -fx-max-height: 170px; -fx-pref-width: 650px; "
+                    + "-fx-pref-height: 170px;");
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.get() == ButtonType.OK) {
+                if (element.getClass() == Person.class) {
+                    Person deletedPerson = (Person) element;
+                    deletedPerson.deletePerson();
+                }
+                else if (element.getClass() == Project.class) {
+                    Project deletedProject = (Project) element;
+                    deletedProject.deleteProject();
+                    //Project.deleteProject(deletedProject);
+                    App.refreshMainScene();
+                }
+                else if (element.getClass() == Skill.class) {
+                    Skill deletedSkill = (Skill) element;
+                    deletedSkill.deleteSkill();
+                }
+                else if (element.getClass() == RoadMap.class) {
+                    RoadMap deletedRoadMap = (RoadMap) element;
+                    deletedRoadMap.deleteRoadMap();
+                }
+                else if (element.getClass() == Release.class) {
+                    Release deletedRelease = (Release) element;
+                    deletedRelease.deleteRelease();
+                }
+                else if (element.getClass() == Story.class) {
+                    Story deletedStory = (Story) element;
+                    deletedStory.deleteStory();
+                    App.refreshMainScene();
+                }
+                else if (element.getClass() == Backlog.class) {
+                    Backlog deletedBacklog = (Backlog) element;
+                    deletedBacklog.deleteBacklog();
+                }
+                else if (element.getClass() == Sprint.class) {
+                    Sprint deletedSprint = (Sprint) element;
+                    deletedSprint.deleteSprint();
+                }
+                else if (element.getClass() == Tag.class) {
+                    Tag deletedTag = (Tag) element;
+                    deletedTag.deleteGlobalTag();
+                }
+                else {
+                    System.out.printf("Deletion dialog for that element has not been deleted");
+                    return false;
+                }
+            }
+            return false;
+        }
+    }
 
     /**
      * Returns different titles and deletion messages depending on the category passed into the
@@ -222,10 +249,10 @@ public class DeleteDialog {
         else if (element.getClass() == Team.class) {
             title = "Delete Team";
             Team deletedTeam = (Team) element;
-            message = MessageFormat.format("Are you sure you want to delete the team \"{0}",
-                    deletedTeam.toString() + "\"? \nWARNING: All people"
-                            + ", sprints and allocations associated with the"
-                            + " team will also be deleted.");
+            message = MessageFormat.format("Would you like to delete all members of the team \"{0}",
+                    deletedTeam.toString() + "\" also?"
+                            + " \nWARNING: All sprints and allocations associated with this team will be deleted"
+                            + " in both cases.");
         }
         else if (element.getClass() == Project.class) {
             title = "Delete Project";

@@ -1,16 +1,19 @@
 package seng302.group2.scenes.information.team;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import seng302.group2.scenes.control.CustomInfoLabel;
-import seng302.group2.scenes.control.search.SearchableControl;
-import seng302.group2.scenes.control.search.SearchableTab;
-import seng302.group2.scenes.control.search.SearchableTitle;
-import seng302.group2.scenes.control.search.TagLabel;
+import seng302.group2.scenes.control.chart.VelocityChart;
+import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.team.Team;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,8 +25,9 @@ import java.util.List;
 public class TeamVelocityTab extends SearchableTab {
 
     List<SearchableControl> searchControls = new ArrayList<>();
-
-    Team currentTeam;
+    private CategoryAxis xAxis = new CategoryAxis();
+    private  NumberAxis yAxis = new NumberAxis();
+    private Team currentTeam;
 
     /**
      * Constructor for team basic information tab
@@ -33,6 +37,15 @@ public class TeamVelocityTab extends SearchableTab {
     public TeamVelocityTab(Team currentTeam) {
         this.currentTeam = currentTeam;
         construct();
+    }
+
+    /**
+     * Sets the axis configuration.
+     */
+    private void configureAxis() {
+        ObservableList<String> xLabels = FXCollections.observableArrayList();
+        xAxis.setLabel("Sprint's");
+        yAxis.setLabel("Average Points Per Week");
     }
 
     /**
@@ -55,10 +68,18 @@ public class TeamVelocityTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        basicInfoPane.getChildren().addAll();
-        Collections.addAll(searchControls);
+        SearchableText title = new SearchableTitle(currentTeam.getShortName() + " Velocity");
+
+        configureAxis();
+        VelocityChart velocityChart = new VelocityChart(xAxis, yAxis);
+        //velocityChart.setPrefSize(800, 600);
+        //velocityChart.setMaxSize(800, 600);
+        velocityChart.populateGraph(currentTeam);
+        basicInfoPane.getChildren().addAll(title, velocityChart);
+        Collections.addAll(searchControls, title);
 
     }
+
 
     /**
      * Gets the string representation of the current Tab

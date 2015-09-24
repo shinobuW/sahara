@@ -18,8 +18,11 @@ import javafx.util.Callback;
 import org.controlsfx.control.PopOver;
 import seng302.group2.Global;
 import seng302.group2.scenes.control.*;
+import seng302.group2.scenes.control.search.SearchType;
+import seng302.group2.scenes.control.search.SearchableControl;
 import seng302.group2.scenes.control.search.SearchableTable;
 import seng302.group2.scenes.control.search.SearchableText;
+import seng302.group2.scenes.information.tag.TaggingPane;
 import seng302.group2.scenes.validation.ValidationStyle;
 import seng302.group2.util.conversion.DurationConverter;
 import seng302.group2.util.validation.DateValidator;
@@ -34,6 +37,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -43,7 +47,8 @@ import static javafx.collections.FXCollections.observableArrayList;
  * Pane for logging on a given Task.
  * Created by jml168 on 25/08/15.
  */
-public class LoggingEffortPane extends Pane {
+public class LoggingEffortPane extends Pane implements SearchableControl {
+    List<SearchableControl> searchControls = new ArrayList<>();
 
     private PopOver popOver = null;
     private Boolean correctEffortLeft = Boolean.FALSE;
@@ -55,7 +60,10 @@ public class LoggingEffortPane extends Pane {
     ObservableList<Person> availablePartners = observableArrayList(availablePeople);
     ObservableList<Person> availableLoggers = observableArrayList(availablePeople);
 
-
+    /**
+     * Constructor for the logging effort pane.
+     * @param task The parent task
+     */
     public LoggingEffortPane(Task task) {
         try {
             String css = this.getClass().getResource("/styles/tableHeader.css").toExternalForm();
@@ -67,7 +75,11 @@ public class LoggingEffortPane extends Pane {
         construct(task);
     }
 
-
+    /**
+     * Constructor for the logging effort pane
+     * @param task The parent task
+     * @param popOver The popover to place the pane into
+     */
     public LoggingEffortPane(Task task, PopOver popOver) {
         this.popOver = popOver;
         try {
@@ -80,6 +92,13 @@ public class LoggingEffortPane extends Pane {
         construct(task);
     }
 
+
+    /**
+     * Constructor for the logging effort pane
+     * @param task The parent task
+     * @param popOver The popover to place the pane into
+     * @param table The table the logs are held in
+     */
     public LoggingEffortPane(Task task, PopOver popOver, TableView table) {
         this.popOver = popOver;
         this.table = table;
@@ -94,11 +113,12 @@ public class LoggingEffortPane extends Pane {
     }
 
 
-    void construct(Task task) {
+    private void construct(Task task) {
         VBox content = new VBox(8);
         content.setPadding(new Insets(8));
 
         SearchableTable<Log> logTable = new SearchableTable<>();
+        searchControls.add(logTable);
         logTable.setEditable(true);
         logTable.setPrefWidth(400);
         logTable.setPrefHeight(200);
@@ -361,6 +381,7 @@ public class LoggingEffortPane extends Pane {
         buttons.setAlignment(Pos.BOTTOM_RIGHT);
         Button addButton = new Button("Add");
         Button deleteButton = new Button("Delete");
+        Button tagButton = new Button("View Tags");
         buttons.getChildren().addAll(addButton, deleteButton);
 
         HBox newLogFields = new HBox(10);
@@ -548,6 +569,30 @@ public class LoggingEffortPane extends Pane {
             personComboBox.setDisable(true);
         }
 
+        tagButton.setOnAction((event) -> {
+            PopOver tagPopover = new PopOver();
+            VBox popoverContent = new VBox();
+            popoverContent.setMinWidth(600);
+            popoverContent.setPadding(new Insets(8, 8, 8, 8));
+            if (logTable.getSelectionModel().getSelectedItem() == null) {
+                SearchableText noTaskLabel = new SearchableText("No tasks selected.", searchControls);
+                popoverContent.getChildren().add(noTaskLabel);
+            }
+            else {
+                Log currLog = logTable.getSelectionModel().getSelectedItem();
+                tagPopover.setDetachedTitle(task.toString());
+
+                TaggingPane taggingPane = new TaggingPane(currLog);
+                taggingPane.setStyle(null);
+                searchControls.add(taggingPane);
+
+                popoverContent.getChildren().add(taggingPane);
+            }
+
+            tagPopover.setContentNode(popoverContent);
+            tagPopover.show(tagButton);
+        });
+
         addButton.setOnAction((event) -> {
                 ValidationStyle.borderGlowNone(startDatePicker.getDatePicker());
 
@@ -623,6 +668,8 @@ public class LoggingEffortPane extends Pane {
             });
 
         content.getChildren().add(logTable);
+        content.getChildren().add(tagButton);
+        content.getChildren().add(new Separator());
         content.getChildren().add(newLogFields);
         content.getChildren().add(buttons);
 
@@ -645,19 +692,34 @@ public class LoggingEffortPane extends Pane {
         peopleList.remove(removePerson);
     }
 
-    public ObservableList<Person> getAvaiablePeopleList() {
-        return this.availablePeople;
-    }
-
+    /**
+     * Gets the list of available loggers. Available loggers is the list of loggers minus
+     * any currently set person in the partner combo box.
+     * @return
+     */
     public ObservableList<Person> getAvailableLoggerList() {
         return this.availableLoggers;
     }
 
+    /**
+     * Gets the list of available partners. Available partners is the list of loggers minus
+     * any currently set person in the logger combo box.
+     * @return List of partners
+     */
     public ObservableList<Person> getAvailablePartnerList() {
         return this.availablePartners;
     }
 
-    public Person getNullPerson() {
-        return this.nullPerson;
+
+    @Override
+    public boolean query(String query) {
+        // TODO @Bronson
+        return false;
+    }
+
+    @Override
+    public int advancedQuery(String query, SearchType searchType) {
+        // TODO @Jordane
+        return 0;
     }
 }

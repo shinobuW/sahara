@@ -2,9 +2,12 @@ package seng302.group2.workspace;
 
 import org.junit.Assert;
 import org.junit.Test;
+import seng302.group2.Global;
 import seng302.group2.workspace.categories.PeopleCategory;
 import seng302.group2.workspace.person.Person;
+import seng302.group2.workspace.tag.Tag;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -62,5 +65,50 @@ public class SaharaItemTest {
         Assert.assertFalse(person1.equivalentTo(person2));
 
         Assert.assertFalse(person1.equivalentTo(peopleCategory1));
+    }
+
+    @Test
+    public void testEditTags() {
+        SaharaItem person1 = new Person();
+
+        Global.currentWorkspace.getAllTags().clear();
+
+        Assert.assertEquals(0, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals(0, person1.getTags().size());
+
+        Tag tag = new Tag("Hey");
+        Tag tag2 = new Tag("Ya!");
+
+        ArrayList<Tag> tags = new ArrayList<>();
+
+        tags.add(tag);
+        tags.add(tag2);
+        person1.editTags(tags);
+
+        Assert.assertEquals(2, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals(2, person1.getTags().size());
+
+        tags.remove(tag2);
+        person1.editTags(tags);
+
+        Assert.assertEquals(2, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals(1, person1.getTags().size());
+        Assert.assertEquals("Hey", person1.getTags().get(0).toString());
+
+        Global.commandManager.undo();
+
+        Assert.assertEquals(2, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals(2, person1.getTags().size());
+
+        Global.commandManager.redo();
+
+        Assert.assertEquals(2, Global.currentWorkspace.getAllTags().size());
+        Assert.assertEquals(1, person1.getTags().size());
+        Assert.assertEquals("Hey", person1.getTags().get(0).toString());
+
+
+
+
+
     }
 }

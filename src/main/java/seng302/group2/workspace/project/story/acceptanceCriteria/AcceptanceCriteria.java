@@ -297,7 +297,7 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
         }
 
         /**
-         * Executes/Redoes the changes of the person edit
+         * Executes/Redoes the changes of the ac tags edit
          */
         public void execute() {
             //Add any created tags to the global collection
@@ -306,9 +306,6 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
             //Add the tags a AC has to their list of tags
             ac.getTags().clear();
             ac.getTags().addAll(acTags);
-
-            System.out.println("executed:" + ac.getTags());
-
         }
 
         /**
@@ -514,10 +511,6 @@ public class AcceptanceCriteria extends SaharaItem implements Serializable, Comp
             }
             return mapped;
         }
-
-
-
-
     }
 
     @Override
