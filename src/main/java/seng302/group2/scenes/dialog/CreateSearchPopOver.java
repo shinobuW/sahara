@@ -152,8 +152,8 @@ public class CreateSearchPopOver extends PopOver {
         checkBoxPane.add(skillSearchCheck, 2, 2);
         modelCheckBoxes.add(skillSearchCheck);
 
-        grid.getChildren().addAll(searchField, searchByBox, new Separator(), workspaceSearchCheck, tagsSearchCheck, onlySearchLabel,
-                checkBoxPane, new Separator(), sortByString, sortByBox, buttons);
+        grid.getChildren().addAll(searchField, searchByBox, new Separator(), workspaceSearchCheck, tagsSearchCheck,
+                onlySearchLabel, checkBoxPane, new Separator(), sortByString, sortByBox, buttons);
 
         //Add grid of controls to dialog
         this.setContentNode(grid);
