@@ -178,24 +178,19 @@ public class RoadMapCategoryTab extends SearchableTab {
 
 
         categoryPane.setOnDragOver(event -> {
-                System.out.println((event.getSceneX() - App.mainPane.getTree().getWidth()) + " "
-                        + wrapper.getViewportBounds().getMinX() + " " + wrapper.getViewportBounds().getWidth());
                 if (wrapper.getViewportBounds().getWidth() - event.getSceneX()
                         + App.mainPane.getTree().getWidth() <= 100) {
                     wrapper.setHvalue(wrapper.getHvalue() + 0.01);
-                    System.out.println("2 " + wrapper.getViewportBounds().getWidth());
                     viewportWidth = new Integer((int) wrapper.getHvalue());
                 }
                 else if (event.getSceneX() - App.mainPane.getTree().getWidth() <= 100) {
                     wrapper.setHvalue(wrapper.getHvalue() - 0.01);
-                    System.out.println("2 " + wrapper.getViewportBounds().getWidth());
                     viewportWidth = new Integer((int) wrapper.getHvalue());
                 }
             });
 
 
         categoryPane.setOnDragDropped(event -> {
-            System.out.println(viewportWidth);
             wrapper.setHvalue(viewportWidth);
         });
 /*
@@ -283,7 +278,6 @@ public class RoadMapCategoryTab extends SearchableTab {
                     }
                 }
                 if (confirm) {
-                    System.out.println(roadMapNode.getRoadmap().getShortName() + " Drag dropped");
                     interactiveRoadMap.getRoadmap().addRemove(currentRoadMap,
                             interactiveRoadMap.getRoadmap(), draggedRelease);
                 }

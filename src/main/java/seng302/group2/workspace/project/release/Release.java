@@ -188,7 +188,6 @@ public class Release extends SaharaItem implements Comparable<Release> {
                 return this.getEstimatedDate().format(Global.dateFormatter);
             }
             catch (Exception e) {
-                System.out.println("Error parsing date");
                 return "";
             }
         }

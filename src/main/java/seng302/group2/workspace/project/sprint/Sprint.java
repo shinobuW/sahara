@@ -177,7 +177,6 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
                 return this.getStartDate().format(Global.dateFormatter);
             }
             catch (Exception e) {
-                System.out.println("Error parsing date");
                 return "";
             }
         }
@@ -205,7 +204,6 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
                 return this.getEndDate().format(Global.dateFormatter);
             }
             catch (Exception e) {
-                System.out.println("Error parsing date");
                 return "";
             }
         }
@@ -615,8 +613,6 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             this.globalTags.addAll(newTags);
             this.globalTags.addAll(Global.currentWorkspace.getAllTags());
 
-            System.out.println(this.stories);
-            System.out.println(this.oldStories);
 
             this.oldGoal = sprint.goal;
             this.oldLongName = sprint.longName;
@@ -695,7 +691,6 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
                 story.setSprint(sprint);
             }
 
-            System.out.println(oldStories);
             sprint.stories.addAll(oldStories);
 
             //Adds the old global tags to the overall collection

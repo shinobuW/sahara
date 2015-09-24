@@ -335,9 +335,6 @@ public class PersonEditTab extends SearchableTab {
         boolean descriptionUnchanged = descriptionTextArea.getText().equals(
                 currentPerson.getDescription());
         boolean birthdayUnchanged = birthDatePicker.getValue() == currentPerson.getBirthDate();
-        System.out.println(birthDatePicker.getValue());
-        System.out.println(currentPerson.getBirthDate());
-        System.out.println(birthdayUnchanged);
         boolean emailUnchanged = emailTextField.getText().equals(
                 currentPerson.getEmail());
         boolean teamUnchanged = selectedTeam.getShortName().equals(

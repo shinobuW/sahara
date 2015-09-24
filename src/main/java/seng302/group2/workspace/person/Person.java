@@ -388,7 +388,6 @@ public class Person extends SaharaItem implements Serializable, Comparable<Perso
                 //return Global.datePattern.format(this.getBirthDate());
             }
             catch (Exception e) {
-                System.out.println("Error parsing date");
                 return "";
             }
         }

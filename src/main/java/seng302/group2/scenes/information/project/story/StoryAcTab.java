@@ -58,10 +58,6 @@ public class StoryAcTab extends SearchableTab {
         // Tab settings
         this.setText("Acceptance Criteria");
 
-        for (AcceptanceCriteria ac : story.getAcceptanceCriteria()) {
-            System.out.println(ac.getDescription() + " " + ac.getTags());
-        }
-
         Pane acPane = new VBox(10);  // The pane that holds the basic info
         acPane.setBorder(null);
         acPane.setPadding(new Insets(25, 25, 25, 25));

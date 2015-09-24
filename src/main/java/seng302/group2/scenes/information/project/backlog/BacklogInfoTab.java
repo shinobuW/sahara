@@ -323,7 +323,6 @@ public class BacklogInfoTab extends SearchableTab {
      * Switches to the edit scene
      */
     public void edit() {
-        System.out.println("edit");
         currentBacklog.switchToInfoScene(true);
     }
 

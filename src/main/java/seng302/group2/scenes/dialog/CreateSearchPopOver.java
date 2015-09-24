@@ -460,7 +460,6 @@ public class CreateSearchPopOver extends PopOver {
 
         }
         else {
-            System.out.println("Sorting");
             Map<SearchResultCellNode, Integer> searchResults = sortByValue(results);
             returnedList = new ArrayList<>();
             returnedList.addAll(searchResults.keySet());

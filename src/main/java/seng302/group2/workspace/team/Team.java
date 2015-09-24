@@ -283,7 +283,6 @@ public class Team extends SaharaItem implements Serializable, Comparable<Team> {
     @Deprecated
     public void add(Allocation allocation) {
         if (!this.equals(allocation.getTeam())) {
-            System.out.println("Called on wrong team, not happening");
             return;
         }
 

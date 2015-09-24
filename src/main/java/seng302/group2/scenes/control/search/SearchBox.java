@@ -41,7 +41,6 @@ public class SearchBox extends TextField {
      * @param query the string to query
      */
     public void search(String query) {
-        System.out.println("High");
         Collection<SearchableTab> tabs =
                 ((SearchableScene) App.mainPane.getContent()).query(this.getText());
     }

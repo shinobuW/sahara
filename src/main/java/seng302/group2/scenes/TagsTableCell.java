@@ -81,11 +81,6 @@ public class TagsTableCell extends TableCell<AcceptanceCriteria, ObservableList<
         else {
             cell.getChildren().clear();
             if (isEditing()) {
-                System.out.println("editing");
-                if (getItem() != null && !getItem().isEmpty()) {
-                    System.out.println("we are inside the loop");
-                    //tagField.setTags(getItem());
-                }
 
                 tagField.setTags(getTableView().getSelectionModel().getSelectedItem().getTags());
                 cell.getChildren().addAll(tagField);

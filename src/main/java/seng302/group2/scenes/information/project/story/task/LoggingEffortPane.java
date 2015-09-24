@@ -342,7 +342,6 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
                                 && !event.getNewValue().isEmpty()) {
                             double duration = DurationConverter.readDurationToMinutes(event.getNewValue());
                             selectedLog.editDuration(duration);
-                            System.out.println(selectedLog.getTask().getEffortSpent());
                             //TODO:Shinobu figure out how to display error
                         }
                         logTable.refresh(logTable, logTable.getItems());
