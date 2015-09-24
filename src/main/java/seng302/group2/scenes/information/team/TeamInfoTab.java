@@ -128,15 +128,6 @@ public class TeamInfoTab extends SearchableTab {
         CustomInfoLabel desc = new CustomInfoLabel("Team Description: ", currentTeam.getDescription());
         CustomInfoLabel listViewLabel = new CustomInfoLabel("", "");
 
-        for (Sprint sprint : currentTeam.getProject().getSprints()) {
-            if (sprint.getTeam() == currentTeam) {
-                Double velocity = sprint.getPointsPerDay();
-                velocity.toString();
-                System.out.println(sprint.getPointsPerDay());
-            }
-        }
-        //CustomInfoLabel velocity = new CustomInfoLabel("Velocy", currentTeam.getProject().getSprints(). )
-
         ObservableList<Person> personList = currentTeam.getPeople();
         FilteredListView teamsPeopleBox = new FilteredListView<>(personList, "people");
         SearchableListView<Person> teamsPeoplelist = teamsPeopleBox.getListView();
@@ -145,7 +136,6 @@ public class TeamInfoTab extends SearchableTab {
         teamsPeopleBox.setMaxWidth(275);
 
         Separator separator = new Separator();
-
 
         basicInfoPane.getChildren().addAll(
                 title,
@@ -159,6 +149,22 @@ public class TeamInfoTab extends SearchableTab {
                 teamTags,
                 desc
         );
+
+
+        if (!currentTeam.isUnassignedTeam()) {
+            CustomInfoLabel sprintText = new CustomInfoLabel("Sprint Velocity: ", "");
+            basicInfoPane.getChildren().add(sprintText);
+            for (Sprint sprint : currentTeam.getProject().getSprints()) {
+                Double velocity = sprint.getPointsPerDay();
+                String velocity_ = velocity.toString();
+                CustomInfoLabel sprintLabel = new CustomInfoLabel(
+                        "   " + sprint.getGoal() + ": ", velocity_);
+                basicInfoPane.getChildren().add(sprintLabel);
+                Collections.addAll(searchControls, sprintLabel, sprintText);
+            }
+        }
+
+
 
         if (currentTeam.isUnassignedTeam()) {
             for (SaharaItem person : Global.currentWorkspace.getPeople()) {
