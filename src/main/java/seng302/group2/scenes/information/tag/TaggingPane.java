@@ -29,7 +29,7 @@ public class TaggingPane extends Pane {
         this.getChildren().add(content);
     }
 
-    private void constructInfo () {
+    private void constructInfo() {
         content.getChildren().clear();
         TagLabel tagLabel = new TagLabel(item.getTags());
         Button btnEdit = new Button("Edit");
@@ -42,7 +42,7 @@ public class TaggingPane extends Pane {
 
     }
 
-    private void constructEdit () {
+    private void constructEdit() {
         content.getChildren().clear();
 
         TagField tagField = new TagField(item.getTags());
