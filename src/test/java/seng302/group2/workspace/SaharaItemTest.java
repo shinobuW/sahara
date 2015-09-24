@@ -71,6 +71,8 @@ public class SaharaItemTest {
     public void testEditTags() {
         SaharaItem person1 = new Person();
 
+        Global.currentWorkspace.getAllTags().clear();
+
         Assert.assertEquals(0, Global.currentWorkspace.getAllTags().size());
         Assert.assertEquals(0, person1.getTags().size());
 
