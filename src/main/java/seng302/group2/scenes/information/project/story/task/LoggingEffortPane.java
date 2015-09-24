@@ -50,7 +50,6 @@ import static javafx.collections.FXCollections.observableArrayList;
 public class LoggingEffortPane extends Pane implements SearchableControl {
     List<SearchableControl> searchControls = new ArrayList<>();
 
-
     private PopOver popOver = null;
     private Boolean correctEffortLeft = Boolean.FALSE;
     private Boolean correctDuration = Boolean.FALSE;
@@ -61,7 +60,10 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
     ObservableList<Person> availablePartners = observableArrayList(availablePeople);
     ObservableList<Person> availableLoggers = observableArrayList(availablePeople);
 
-
+    /**
+     * Constructor for the logging effort pane.
+     * @param task The parent task
+     */
     public LoggingEffortPane(Task task) {
         try {
             String css = this.getClass().getResource("/styles/tableHeader.css").toExternalForm();
@@ -73,7 +75,11 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
         construct(task);
     }
 
-
+    /**
+     * Constructor for the logging effort pane
+     * @param task The parent task
+     * @param popOver The popover to place the pane into
+     */
     public LoggingEffortPane(Task task, PopOver popOver) {
         this.popOver = popOver;
         try {
@@ -86,6 +92,13 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
         construct(task);
     }
 
+
+    /**
+     * Constructor for the logging effort pane
+     * @param task The parent task
+     * @param popOver The popover to place the pane into
+     * @param table The table the logs are held in
+     */
     public LoggingEffortPane(Task task, PopOver popOver, TableView table) {
         this.popOver = popOver;
         this.table = table;
@@ -100,7 +113,7 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
     }
 
 
-    void construct(Task task) {
+    private void construct(Task task) {
         VBox content = new VBox(8);
         content.setPadding(new Insets(8));
 
@@ -679,25 +692,28 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
         peopleList.remove(removePerson);
     }
 
-    public ObservableList<Person> getAvaiablePeopleList() {
-        return this.availablePeople;
-    }
-
+    /**
+     * Gets the list of available loggers. Available loggers is the list of loggers minus
+     * any currently set person in the partner combo box.
+     * @return
+     */
     public ObservableList<Person> getAvailableLoggerList() {
         return this.availableLoggers;
     }
 
+    /**
+     * Gets the list of available partners. Available partners is the list of loggers minus
+     * any currently set person in the logger combo box.
+     * @return List of partners
+     */
     public ObservableList<Person> getAvailablePartnerList() {
         return this.availablePartners;
     }
 
-    public Person getNullPerson() {
-        return this.nullPerson;
-    }
 
     @Override
     public boolean query(String query) {
-        // TODO #Bronson
+        // TODO @Bronson
         return false;
     }
 
