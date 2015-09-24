@@ -24,6 +24,7 @@ import java.util.Set;
  * The content of a Tag cell as shown on the Tag management pane.
  * Created by drm127 on 14/09/15.
  */
+@Deprecated
 public class TagCellNode extends VBox implements SearchableControl {
 
     private Tag tag = null;

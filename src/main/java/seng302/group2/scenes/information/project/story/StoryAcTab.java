@@ -15,10 +15,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.scenes.TagsTableCell;
 import seng302.group2.scenes.control.CustomTextArea;
 import seng302.group2.scenes.control.search.*;
+import seng302.group2.scenes.information.tag.TaggingPane;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcEnumStringConverter;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
@@ -164,6 +166,29 @@ public class StoryAcTab extends SearchableTab {
             else {
                 addButton.setDisable(false);
             }
+        });
+
+        tagButton.setOnAction((event) -> {
+            PopOver tagPopover = new PopOver();
+            VBox content = new VBox();
+            content.setMinWidth(600);
+            content.setPadding(new Insets(8, 8, 8, 8));
+            if (acTable.getSelectionModel().getSelectedItem() == null) {
+                SearchableText noTaskLabel = new SearchableText("No tasks selected.", searchControls);
+                content.getChildren().add(noTaskLabel);
+            }
+            else {
+                AcceptanceCriteria currentAc = acTable.getSelectionModel().getSelectedItem();
+                tagPopover.setDetachedTitle(currentAc.toString());
+
+                TaggingPane taggingPane = new TaggingPane(currentAc);
+                taggingPane.setStyle(null);
+
+                content.getChildren().add(taggingPane);
+            }
+
+            tagPopover.setContentNode(content);
+            tagPopover.show(tagButton);
         });
 
 

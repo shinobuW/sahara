@@ -1,10 +1,13 @@
 package seng302.group2.workspace;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Element;
+import seng302.group2.Global;
 import seng302.group2.scenes.sceneswitch.switchStrategies.CategorySwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.InformationSwitchStrategy;
 import seng302.group2.scenes.sceneswitch.switchStrategies.SubCategorySwitchStrategy;
+import seng302.group2.util.undoredo.Command;
 import seng302.group2.workspace.categories.Category;
 import seng302.group2.workspace.tag.Tag;
 
@@ -266,6 +269,142 @@ public abstract class SaharaItem implements HierarchyData<SaharaItem> {
     public boolean semiEquivalentTo(Object object) {
         return this.getClass().equals(object.getClass())
                 && ((SaharaItem) object).itemName.equals(this.itemName);
+    }
+
+    /**
+     * Edits the tags of the SaharaItem.
+     * @param newTags the new tags of the sahara item
+     */
+    public void editTags(ObservableList<Tag> newTags) {
+        Command editSaharaItem = new SaharaItemEditTagsCommand(this, newTags);
+        Global.commandManager.executeCommand(editSaharaItem);
+    }
+
+    /**
+     * SaharaItem edit tags command
+     */
+    private class SaharaItemEditTagsCommand implements Command {
+        private SaharaItem item;
+
+        private Set<Tag> acTags = new HashSet<>();
+        private Set<Tag> globalTags = new HashSet<>();
+
+        private Set<Tag> oldAcTags = new HashSet<>();
+        private Set<Tag> oldGlobalTags = new HashSet<>();
+
+        /**
+         * Constructor for the sahara item editing tags command.
+         * @param item The SaharaItem to be edited
+         * @param newTags The item's new tags.
+         */
+        private SaharaItemEditTagsCommand(SaharaItem item, ObservableList<Tag> newTags) {
+            this.item = item;
+
+            if (newTags == null) {
+                newTags = FXCollections.observableArrayList();
+            }
+
+            this.acTags.addAll(newTags);
+            this.globalTags.addAll(newTags);
+            this.globalTags.addAll(Global.currentWorkspace.getAllTags());
+
+            this.oldAcTags.addAll(item.getTags());
+            this.oldGlobalTags.addAll(Global.currentWorkspace.getAllTags());
+        }
+
+        /**
+         * Executes/Redoes the changes of the item tags  edit
+         */
+        public void execute() {
+            //Add any created tags to the global collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(globalTags);
+            //Add the tags a AC has to their list of tags
+            item.getTags().clear();
+            item.getTags().addAll(acTags);
+
+            System.out.println("executed:" + item.getTags());
+
+        }
+
+        /**
+         * Undoes the changes of the item tags edit
+         */
+        public void undo() {
+            //Adds the old global tags to the overall collection
+            Global.currentWorkspace.getAllTags().clear();
+            Global.currentWorkspace.getAllTags().addAll(oldGlobalTags);
+
+            //Changes the AC list of tags to what they used to be
+            item.getTags().clear();
+            item.getTags().addAll(oldAcTags);
+        }
+
+        /**
+         * Gets the String value of the Command for editting acceptance criteria tags.
+         */
+        public String getString() {
+            return "the edit of Tags on Acceptance Criteria \"" + item.toString() + "\"";
+        }
+
+        /**
+         * Searches the stateObjects to find an equal model class to map to
+         * @param stateObjects A set of objects to search through
+         * @return If the item was successfully mapped
+         */
+        @Override
+        public boolean map(Set<SaharaItem> stateObjects) {
+            boolean mapped = false;
+            for (SaharaItem item : stateObjects) {
+                if (item.equivalentTo(item)) {
+                    this.item = (SaharaItem) item;
+                    mapped = true;
+                }
+            }
+
+            //Tag collections
+            for (Tag tag : acTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        acTags.remove(tag);
+                        acTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Tag tag : oldAcTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        oldAcTags.remove(tag);
+                        oldAcTags.add((Tag) item);
+                        break;
+                    }
+                }
+            }
+
+            for (Tag tag : globalTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        globalTags.remove(tag);
+                        globalTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
+            for (Tag tag : oldGlobalTags) {
+                for (SaharaItem item : stateObjects) {
+                    if (item.equivalentTo(tag)) {
+                        oldGlobalTags.remove(tag);
+                        oldGlobalTags.add((Tag)item);
+                        break;
+                    }
+                }
+            }
+
+            return mapped;
+        }
     }
 
 }
