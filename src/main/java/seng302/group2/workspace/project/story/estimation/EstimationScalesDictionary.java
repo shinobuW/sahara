@@ -126,7 +126,7 @@ public class EstimationScalesDictionary {
         values.addAll(scale);
         values.removeAll(defaultValuesDict.values());
         values.add(0, defaultValuesDict.get(DefaultValues.ZERO));
-        return modifiedFibEquivalent(seqNo, values.size());
+        return modifiedFibEquivalent(seqNo, values.size() - 1);
     }
 
 
@@ -142,13 +142,18 @@ public class EstimationScalesDictionary {
             return getFibScaleEquivalent(scale, 1);
         }
 
+        List<String> values = new ArrayList<>();
+        values.addAll(scale);
+        values.removeAll(defaultValuesDict.values());
+        values.add(0, defaultValuesDict.get(DefaultValues.ZERO));
+
         int i = 0;
-        while (i < scale.size() && !value.equals(scale.get(i))) {
+        while (i < values.size() && !value.equals(values.get(i))) {
             i++;
         }
-        i++;
 
-        return getFibScaleEquivalent(scale, i - 1);  // Account for added first '0'
+
+        return getFibScaleEquivalent(scale, i);  // Account for added first '0'
     }
 
 
