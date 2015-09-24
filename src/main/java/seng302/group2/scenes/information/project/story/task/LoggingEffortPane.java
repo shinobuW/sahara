@@ -113,21 +113,24 @@ public class LoggingEffortPane extends Pane {
         loggerCol.prefWidthProperty().bind(logTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
-        ObservableList<Person> availableLoggers = observableArrayList();
-
         Set<Team> availableTeams = ((task.getStory().getBacklog() == null)
                 ? new HashSet<Team>() :
                 task.getStory().getBacklog().getProject().getCurrentTeams());
         for (Team team : availableTeams) {
             availablePeople.addAll(team.getPeople());
+            System.out.println("ap" + availablePeople);
         }
 
-
+        ObservableList<Person> availableLoggers = observableArrayList(availablePeople);
+        System.out.println("al" + availableLoggers);
+        ObservableList<Person> availablePartners = observableArrayList(availablePeople);
+        System.out.println("a part" + availablePartners);
 
 
         loggerCol.setCellFactory(ComboBoxTableCell.forTableColumn(
                 availableLoggers
         ));
+
 
 //        ComboBoxTableCell comboBoxEditCell = new ComboBoxTableCell<>(availableLoggers);
 //        comboBoxEditCell.focusedProperty().addListener(new ChangeListener<Boolean>() {
@@ -165,19 +168,18 @@ public class LoggingEffortPane extends Pane {
                                 event.getTablePosition().getRow());
                         ArrayList<Tag> tags = new ArrayList<>();
                         currentLog.editLogger(event.getNewValue());
+                        updateObservablePeopleList(availablePartners, event.getNewValue(), true);
                     }
                 }
         );
 
-        ObservableList<Person> availablePartners = observableArrayList();
-
-        logTable.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
-                Boolean isPartnerList = true;
-                if (logTable.getSelectionModel().getSelectedItem() != null) {
-                    updateObservablePeopleList(availablePartners, newSelection.getLogger(), isPartnerList);
-                    updateObservablePeopleList(availableLoggers, newSelection.getLogger(), !isPartnerList);
-                }
-            });
+//        logTable.getSelectionModel().selectedItemProperty().addListener((observable, oldSelection, newSelection) -> {
+//                Boolean isPartnerList = true;
+//                if (logTable.getSelectionModel().getSelectedItem() != null) {
+//                    updateObservablePeopleList(availablePartners, newSelection.getLogger(), isPartnerList);
+//                    updateObservablePeopleList(availableLoggers, newSelection.getLogger(), !isPartnerList);
+//                }
+//            });
 
         TableColumn partnerCol = new TableColumn("Partner");
         partnerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("partner"));
@@ -209,8 +211,8 @@ public class LoggingEffortPane extends Pane {
                             Person> event) {
                         Log currentLog = event.getTableView().getItems().get(
                                 event.getTablePosition().getRow());
-                        ArrayList<Tag> tags = new ArrayList<>();
                         currentLog.editPartner(event.getNewValue());
+                        updateObservablePeopleList(availableLoggers, event.getNewValue(), false);
                     }
                 }
         );
@@ -219,15 +221,14 @@ public class LoggingEffortPane extends Pane {
                 .subtract(2).divide(100).multiply(60));
 
 
-        logTable.setOnMouseClicked(event -> {
-            if (logTable.getSelectionModel().getSelectedItem() != null) {
-                updateObservablePeopleList(availableLoggers, logTable.getSelectionModel().getSelectedItem().
-                                getPartner(), false);
-                updateObservablePeopleList(availablePartners, logTable.getSelectionModel().getSelectedItem().
-                                getLogger(), true);
-            }
-
-        });
+//        logTable.setOnMouseClicked(event -> {
+//            if (logTable.getSelectionModel().getSelectedItem() != null) {
+//                updateObservablePeopleList(availableLoggers, logTable.getSelectionModel().getSelectedItem().
+//                                getPartner(), false);
+//                updateObservablePeopleList(availablePartners, logTable.getSelectionModel().getSelectedItem().
+//                                getLogger(), true);
+//            }
+//        });
 
         Callback<TableColumn, TableCell> cellFactory = col -> new DatePickerEditCell();
         Callback<TableColumn, TableCell> startTimeCellFactory = col -> new TimeTextFieldEditCell();
