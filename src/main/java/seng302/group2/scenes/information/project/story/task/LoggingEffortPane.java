@@ -48,7 +48,7 @@ import static javafx.collections.FXCollections.observableArrayList;
  * Created by jml168 on 25/08/15.
  */
 public class LoggingEffortPane extends Pane implements SearchableControl {
-    List<SearchableControl> searchControls = new ArrayList<>();
+    private List<SearchableControl> searchControls = new ArrayList<>();
 
     private PopOver popOver = null;
     private Boolean correctEffortLeft = Boolean.FALSE;
@@ -57,8 +57,8 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
     private TableView table = null;
     private Person nullPerson = new Person("", "", "", "", "", null);
     private ObservableList<Person> availablePeople = FXCollections.observableArrayList();
-    ObservableList<Person> availablePartners = observableArrayList(availablePeople);
-    ObservableList<Person> availableLoggers = observableArrayList(availablePeople);
+    private ObservableList<Person> availablePartners = observableArrayList(availablePeople);
+    private ObservableList<Person> availableLoggers = observableArrayList(availablePeople);
 
     /**
      * Constructor for the logging effort pane.
@@ -387,7 +387,7 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
         VBox newLogFieldFirstRow = new VBox(10);
         final CustomComboBox<Person> personComboBox = new CustomComboBox<>("Logger:", true);
 
-        CustomComboBox<Person> partnerComboBox = new CustomComboBox<Person>("Partner");
+        CustomComboBox<Person> partnerComboBox = new CustomComboBox<>("Partner");
 
         addButton.setDisable(true);
 

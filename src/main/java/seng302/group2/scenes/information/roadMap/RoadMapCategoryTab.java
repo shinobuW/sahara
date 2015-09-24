@@ -36,15 +36,14 @@ import java.util.List;
  */
 public class RoadMapCategoryTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
-    Workspace currentWorkspace;
-    RoadMapNode interactiveRoadMap;
-//    RoadMap
-    Release draggedRelease;
-    Sprint interactiveSprint;
-    Story interactiveStory;
+    private List<SearchableControl> searchControls = new ArrayList<>();
+    private Workspace currentWorkspace;
+    private RoadMapNode interactiveRoadMap;
+    private Release draggedRelease;
+    private Sprint interactiveSprint;
+    private Story interactiveStory;
     Boolean dragging = false;
-    Integer viewportWidth = 0;
+    private Integer viewportWidth = 0;
 
     /**
      * Constructor for RoadMapCategoryTab class.

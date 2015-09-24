@@ -15,14 +15,14 @@ import java.util.Collections;
  */
 public class PersonScene extends TrackedTabPane {
 
-    Collection<SearchableTab> searchableTabs = new ArrayList<>();
+    private Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
     Person currentPerson;
     boolean editScene = false;
 
-    PersonInfoTab informationTab;
-    PersonLoggingTab loggingTab;
-    PersonEditTab editTab;
+    private PersonInfoTab informationTab;
+    private PersonLoggingTab loggingTab;
+    private PersonEditTab editTab;
 
 
     /**

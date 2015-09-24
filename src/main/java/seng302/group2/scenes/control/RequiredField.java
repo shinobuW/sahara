@@ -21,8 +21,8 @@ import java.util.Set;
  * Created by Jordane on 24/03/2015.
  */
 public class RequiredField extends VBox implements SearchableControl {
-    TextField inputText = new TextField();
-    Set<SearchableControl> searchControls = new HashSet<>();
+    private TextField inputText = new TextField();
+    private Set<SearchableControl> searchControls = new HashSet<>();
 
     /**
      * Creates a required label HBox inside of the VBox containing a Label with an appended red

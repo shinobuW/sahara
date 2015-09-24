@@ -27,11 +27,11 @@ import static javafx.collections.FXCollections.observableArrayList;
  * Created by swi67 on 10/05/15.
  */
 public class ProjectInfoTab extends SearchableTab {
-    ObservableList<Team> currentTeams = observableArrayList();
+    private ObservableList<Team> currentTeams = observableArrayList();
 
-    List<SearchableControl> searchControls = new ArrayList<>();
+    private List<SearchableControl> searchControls = new ArrayList<>();
 
-    Project currentProject;
+    private Project currentProject;
 
     /**
      * Constructor for Project info tab

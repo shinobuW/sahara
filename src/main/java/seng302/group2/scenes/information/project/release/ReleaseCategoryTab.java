@@ -29,8 +29,8 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
  */
 public class ReleaseCategoryTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
-    ReleaseCategory selectedCategory;
+    private List<SearchableControl> searchControls = new ArrayList<>();
+    private ReleaseCategory selectedCategory;
 
     /**
      * Constructor for ReleaseCategoryTab class.
@@ -63,7 +63,7 @@ public class ReleaseCategoryTab extends SearchableTab {
 
         // Create controls
         SearchableText title = new SearchableTitle("Releases in " + selectedCategory.getProject().toString());
-        FilteredListView<Release> releaseFilteredListView = new FilteredListView<Release>(
+        FilteredListView<Release> releaseFilteredListView = new FilteredListView<>(
                 selectedCategory.getProject().getReleases(), "releases");
         SearchableListView releaseBox = releaseFilteredListView.getListView();
         releaseBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);

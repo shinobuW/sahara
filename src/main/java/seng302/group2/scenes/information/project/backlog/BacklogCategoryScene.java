@@ -14,9 +14,9 @@ import java.util.Collections;
  */
 public class BacklogCategoryScene extends TrackedTabPane {
 
-    BacklogCategory selectedCategory;
-    SearchableTab categoryTab;
-    SearchableTab scaleInfoTab;
+    private BacklogCategory selectedCategory;
+    private SearchableTab categoryTab;
+    private SearchableTab scaleInfoTab;
 
     /**
      * Constructor for the BacklogCategoryScene class. Creates a tab

@@ -21,11 +21,11 @@ public class MainToolbar extends ToolBar {
     private Tooltip toolRedo;
     static Button undoButton = new Button();
     static Button redoButton = new Button();
-    Button newButton = new Button();
-    Button openButton = new Button();
-    Button saveButton = new Button();
-    Button generateButton = new Button();
-    Button taggingButton = new Button();
+    private Button newButton = new Button();
+    private Button openButton = new Button();
+    private Button saveButton = new Button();
+    private Button generateButton = new Button();
+    private Button taggingButton = new Button();
 
     SearchBox searchBox = new SearchBox();
 

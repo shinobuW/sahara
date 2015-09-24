@@ -108,7 +108,7 @@ public class LogPersonEditTableCell extends TableCell<Object, String> {
      * Creates the combo box and populates it with the itemList. Updates the value in the cell.
      */
     private void createCombo() {
-        comboBox = new ComboBox<Object>(this.items);
+        comboBox = new ComboBox<>(this.items);
         comboBox.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
         comboBox.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override

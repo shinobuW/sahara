@@ -100,7 +100,7 @@ public class TagManagementPane extends SplitPane {
         listPane.setPadding(new Insets(8));
         listPane.setMaxWidth(292);
 
-        FilteredListView<Tag> tagFilteredListView = new FilteredListView<Tag>(tagList, "tags");
+        FilteredListView<Tag> tagFilteredListView = new FilteredListView<>(tagList, "tags");
         tagListView = tagFilteredListView.getListView();
         tagListView.setPrefHeight(584);
 

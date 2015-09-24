@@ -33,14 +33,14 @@ import static javafx.collections.FXCollections.observableArrayList;
  * Created by btm38 on 30/07/15.
  */
 public class BacklogEditTab extends SearchableTab {
-    List<SearchableControl> searchControls = new ArrayList<>();
+    private List<SearchableControl> searchControls = new ArrayList<>();
     private Backlog currentBacklog;
     private RequiredField shortNameField = new RequiredField("Short Name:", searchControls);
     private CustomComboBox<String> scaleComboBox = new CustomComboBox<>("Scale", true, searchControls);
-    CustomTextField longNameField = new CustomTextField("Long Name:");
-    CustomTextArea descriptionField = new CustomTextArea("Backlog Description:", 300);
-    ObservableList<Story> backlogStoryList = observableArrayList();
-    TagField tagField;
+    private CustomTextField longNameField = new CustomTextField("Long Name:");
+    private CustomTextArea descriptionField = new CustomTextArea("Backlog Description:", 300);
+    private ObservableList<Story> backlogStoryList = observableArrayList();
+    private TagField tagField;
 
     /**
      * Constructor for the BacklogEditTab class. This constructor creates a JavaFX ScrollPane
@@ -112,7 +112,7 @@ public class BacklogEditTab extends SearchableTab {
         HBox tagBox = new HBox();
         tagBox.getChildren().addAll(tagLabel, tagField);
 
-        scaleComboBox = new CustomComboBox<String>("Estimation Scale:", true);
+        scaleComboBox = new CustomComboBox<>("Estimation Scale:", true);
 
         for (String scaleName : Global.currentWorkspace.getEstimationScales().getEstimationScaleDict().keySet()) {
             scaleComboBox.addToComboBox(scaleName);
@@ -145,12 +145,12 @@ public class BacklogEditTab extends SearchableTab {
 
 
         // List views
-        FilteredListView<Story> backlogStoryListBox = new FilteredListView<Story>(backlogStoryList, "stories");
+        FilteredListView<Story> backlogStoryListBox = new FilteredListView<>(backlogStoryList, "stories");
         SearchableListView<Story> backlogStoryListView = backlogStoryListBox.getListView();
         backlogStoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         backlogStoryListView.getSelectionModel().select(0);
 
-        FilteredListView<Story> availableStoryListBox = new FilteredListView<Story>(availableStoryList, "stories");
+        FilteredListView<Story> availableStoryListBox = new FilteredListView<>(availableStoryList, "stories");
         SearchableListView<Story> availableStoryListView = availableStoryListBox.getListView();
         availableStoryListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         availableStoryListView.getSelectionModel().select(0);

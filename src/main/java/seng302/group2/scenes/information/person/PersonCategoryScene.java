@@ -17,8 +17,8 @@ import java.util.Set;
  */
 public class PersonCategoryScene extends TrackedTabPane {
 
-    SearchableTab categoryTab;
-    Workspace currentWorkspace;
+    private SearchableTab categoryTab;
+    private Workspace currentWorkspace;
 
     /**
      * Constructor for the PersonCategoryScene class. Creates a tab

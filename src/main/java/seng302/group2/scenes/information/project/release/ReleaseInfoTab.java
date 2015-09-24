@@ -24,8 +24,8 @@ import java.util.List;
  */
 public class ReleaseInfoTab extends SearchableTab {
 
-    Release currentRelease;
-    List<SearchableControl> searchControls = new ArrayList<>();
+    private Release currentRelease;
+    private List<SearchableControl> searchControls = new ArrayList<>();
     
     /**
      * Constructor for the Release Info Tab
