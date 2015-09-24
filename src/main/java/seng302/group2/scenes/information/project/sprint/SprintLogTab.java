@@ -97,8 +97,8 @@ public class SprintLogTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(loggingPane);
         this.setContent(wrapper);
 
-        loggerComboBox = new CustomComboBox<Person>("Logger");
-        partnerComboBox = new CustomComboBox<Person>("Partner");
+        loggerComboBox = new CustomComboBox<>("Logger");
+        partnerComboBox = new CustomComboBox<>("Partner");
 
         ObservableList<Team> allocatedTeams = FXCollections.observableArrayList();
         ObservableList<Person> allPeople = FXCollections.observableArrayList();

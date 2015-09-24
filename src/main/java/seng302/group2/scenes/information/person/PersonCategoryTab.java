@@ -29,8 +29,8 @@ import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
  */
 public class PersonCategoryTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
-    Workspace currentWorkspace;
+    private List<SearchableControl> searchControls = new ArrayList<>();
+    private Workspace currentWorkspace;
 
     /**
      * Constructor for PersonCategoryTab class.
@@ -74,7 +74,7 @@ public class PersonCategoryTab extends SearchableTab {
         selectionButtons.getChildren().addAll(btnView, btnDelete, btnCreate);
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
-        FilteredListView<Person> personBox = new FilteredListView(currentWorkspace.getPeople(), "people");
+        FilteredListView<Person> personBox = new FilteredListView<>(currentWorkspace.getPeople(), "people");
         SearchableListView personList = personBox.getListView();
         personList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         personBox.setMaxWidth(275);

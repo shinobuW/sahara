@@ -15,12 +15,12 @@ import java.util.Collections;
  */
 public class ProjectScene extends TrackedTabPane {
 
-    Collection<SearchableTab> searchableTabs = new ArrayList<>();
+    private Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
-    ProjectInfoTab informationTab;
-    ProjectHistoryTab allocation;
-    ProjectLoggingTab projectLogs;
-    ProjectEditTab editTab;
+    private ProjectInfoTab informationTab;
+    private ProjectHistoryTab allocation;
+    private ProjectLoggingTab projectLogs;
+    private ProjectEditTab editTab;
 
     Project currentProject;
     boolean editScene = false;

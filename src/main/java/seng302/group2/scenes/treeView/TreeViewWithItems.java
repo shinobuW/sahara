@@ -156,8 +156,8 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
                             setContextMenu(new CategoryTreeContextMenu(PoExists));
                         }
                         if (selected instanceof SprintCategory) {
-                            boolean releasesExists = ((((Project) Global.selectedTreeItem.getParent().getValue())
-                                    .getReleases().isEmpty()) ? false : true);
+                            boolean releasesExists = (!((Project) Global.selectedTreeItem.getParent().getValue())
+                                    .getReleases().isEmpty());
 
                             setContextMenu(new CategoryTreeContextMenu(releasesExists));
                         }

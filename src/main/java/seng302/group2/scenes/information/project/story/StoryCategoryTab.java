@@ -71,7 +71,7 @@ public class StoryCategoryTab extends SearchableTab {
         selectionButtons.setAlignment(Pos.TOP_LEFT);
 
 
-        FilteredListView<Story> storyFilteredListView = new FilteredListView<Story>(
+        FilteredListView<Story> storyFilteredListView = new FilteredListView<>(
                 selectedCategory.getProject().getUnallocatedStories(), "stories");
         SearchableListView storyBox = storyFilteredListView.getListView();
         storyBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);

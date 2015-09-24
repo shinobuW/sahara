@@ -19,8 +19,8 @@ import seng302.group2.workspace.project.story.tasks.Task;
  */
 public class AssigneeTableCell extends TableCell<Task, String> {
 
-    public Node assigneeHBox;
-    public Story story;
+    private Node assigneeHBox;
+    private Story story;
     private ComboBox<Person> comboBox;
     private ObservableList<Person> items;
     private HBox cell = new HBox();

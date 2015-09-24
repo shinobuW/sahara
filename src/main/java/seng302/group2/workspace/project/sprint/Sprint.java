@@ -348,8 +348,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
             }
         }
         double duration = getDuration();
-        double pointsPerDay = totalPoints / duration;
-        return pointsPerDay;
+        return totalPoints / duration;
     }
 
     /**
@@ -691,6 +690,7 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
                 story.setSprint(sprint);
             }
 
+            System.out.println(oldStories);
             sprint.stories.addAll(oldStories);
 
             //Adds the old global tags to the overall collection

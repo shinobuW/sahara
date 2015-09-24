@@ -30,9 +30,9 @@ import java.util.List;
  */
 public class BacklogInfoTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
-    static Boolean highlightMode = Boolean.FALSE;
-    Backlog currentBacklog;
+    private List<SearchableControl> searchControls = new ArrayList<>();
+    private Boolean highlightMode = Boolean.FALSE;
+    private Backlog currentBacklog;
 
     /**
      * Constructor for the Backlog Info tab

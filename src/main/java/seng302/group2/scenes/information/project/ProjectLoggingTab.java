@@ -35,11 +35,11 @@ import static javafx.collections.FXCollections.observableArrayList;
  * Created by crw73 on 14/08/15.
  */
 public class ProjectLoggingTab extends SearchableTab {
-    List<SearchableControl> searchControls = new ArrayList<>();
-    LocalDate startDate;
-    LocalDate endDate;
-    ObservableList<Log> data = observableArrayList();
-    Project currentProject;
+    private List<SearchableControl> searchControls = new ArrayList<>();
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private ObservableList<Log> data = observableArrayList();
+    private Project currentProject;
 
     /**
      * Constructor for the Project Logging Tab

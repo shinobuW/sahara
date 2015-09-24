@@ -70,7 +70,7 @@ public class SkillInfoTab extends SearchableTab {
                 peopleWithSkill.add(p);
             }
         }
-        FilteredListView<Person> personFilteredListView = new FilteredListView<Person>(peopleWithSkill, "people");
+        FilteredListView<Person> personFilteredListView = new FilteredListView<>(peopleWithSkill, "people");
 
         // Add items to pane & search collection
         basicInfoPane.getChildren().addAll(title, desc, skillTags, listViewLabel, personFilteredListView);
