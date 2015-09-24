@@ -209,4 +209,14 @@ public class SprintLogTab extends SearchableTab {
                 partnerComboBox
         );
     }
+
+    /**
+     * Gets the string representation of the current Tab
+     * @return The String value
+     */
+    @Override
+    public String toString() {
+        return "Sprint Logging Tab(.";
+    }
+
 }

@@ -85,9 +85,20 @@ public abstract class SearchableTab extends Tab {
         }
         else {
             for (SearchableControl control : getSearchableControls()) {
-                if (control.advancedQuery(query, searchType) > 0) {
-                    if (count < control.advancedQuery(query, searchType)) {
-                        count = control.advancedQuery(query, searchType);
+                if (searchType == SearchType.TAGS) {
+                    if (control instanceof TagLabel || control instanceof TagField) {
+                        if (control.advancedQuery(query, searchType) > 0) {
+                            if (count < control.advancedQuery(query, searchType)) {
+                                count = control.advancedQuery(query, searchType);
+                            }
+                        }
+                    }
+                }
+                else {
+                    if (control.advancedQuery(query, searchType) > 0) {
+                        if (count < control.advancedQuery(query, searchType)) {
+                            count = control.advancedQuery(query, searchType);
+                        }
                     }
                 }
             }

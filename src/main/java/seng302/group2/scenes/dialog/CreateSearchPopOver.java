@@ -76,13 +76,15 @@ public class CreateSearchPopOver extends PopOver {
         RadioButton normalBtn = new RadioButton("Normal");
         normalBtn.setToggleGroup(searchGroup);
         normalBtn.setSelected(true);
+        RadioButton tagBtn = new RadioButton("Tags");
+        tagBtn.setToggleGroup(searchGroup);
         RadioButton regexBtn = new RadioButton("Regular Expression");
         regexBtn.setToggleGroup(searchGroup);
         RadioButton complexBtn = new RadioButton("Complex Expression");
         complexBtn.setToggleGroup(searchGroup);
 
 
-        searchByBox.getChildren().addAll(normalBtn, regexBtn, complexBtn);
+        searchByBox.getChildren().addAll(normalBtn, tagBtn, regexBtn, complexBtn);
 
         HBox sortByBox = new HBox();
         SearchableText sortByString = new SearchableText("Sort By: ");
@@ -104,9 +106,6 @@ public class CreateSearchPopOver extends PopOver {
 
         CheckBox workspaceSearchCheck = new CheckBox("Search entire workspace");
         workspaceSearchCheck.setSelected(true);
-
-        CheckBox tagsSearchCheck = new CheckBox("Search tags");
-
 
         SearchableText onlySearchLabel = new SearchableText("Only Search:");
         GridPane checkBoxPane = new GridPane();
@@ -152,7 +151,7 @@ public class CreateSearchPopOver extends PopOver {
         checkBoxPane.add(skillSearchCheck, 2, 2);
         modelCheckBoxes.add(skillSearchCheck);
 
-        grid.getChildren().addAll(searchField, searchByBox, new Separator(), workspaceSearchCheck, tagsSearchCheck, onlySearchLabel,
+        grid.getChildren().addAll(searchField, searchByBox, new Separator(), workspaceSearchCheck, onlySearchLabel,
                 checkBoxPane, new Separator(), sortByString, sortByBox, buttons);
 
         //Add grid of controls to dialog
@@ -233,6 +232,16 @@ public class CreateSearchPopOver extends PopOver {
                 PopOver resultsPopOver = new SearchResultPane(runSearch(checkedItems, searchText,
                         SearchType.COMPLEX, treeViewButton.isSelected()), searchText, SearchType.COMPLEX);
                 resultsPopOver.show(App.mainStage);
+            }
+            else if (tagBtn.isSelected()) {
+                this.hide();
+                String searchText = searchField.getText();
+                List<String> checkedItems = getCheckedItems(workspaceSearchCheck,
+                        modelCheckBoxes);
+                PopOver resultsPopOver = new SearchResultPane(runSearch(checkedItems, searchText,
+                        SearchType.TAGS, treeViewButton.isSelected()), searchText, SearchType.TAGS);
+                resultsPopOver.show(App.mainStage);
+
             }
 
         });

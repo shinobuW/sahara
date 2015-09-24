@@ -119,9 +119,9 @@ public class LoggingEffortPane extends Pane {
 
 
         ObservableList<Person> availableLoggers = observableArrayList(availablePeople);
-        System.out.println("al" + availableLoggers);
+        //System.out.println("al" + availableLoggers);
         ObservableList<Person> availablePartners = observableArrayList(availablePeople);
-        System.out.println("a part" + availablePartners);
+        //System.out.println("a part" + availablePartners);
 
 
         loggerCol.setCellFactory(ComboBoxTableCell.forTableColumn(
