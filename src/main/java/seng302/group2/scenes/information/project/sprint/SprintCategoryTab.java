@@ -74,7 +74,7 @@ public class SprintCategoryTab extends SearchableTab {
 
 
         FilteredListView<Sprint> sprintFilteredListView = new
-                FilteredListView<Sprint>(selectedCategory.getProject().getSprints(), "sprints");
+                FilteredListView<>(selectedCategory.getProject().getSprints(), "sprints");
         SearchableListView sprintBox = sprintFilteredListView.getListView();
         sprintBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         sprintBox.setMaxWidth(275);

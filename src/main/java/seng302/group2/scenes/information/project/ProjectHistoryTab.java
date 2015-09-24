@@ -37,11 +37,11 @@ import static seng302.group2.util.validation.DateValidator.validateAllocation;
  */
 public class ProjectHistoryTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
+    private List<SearchableControl> searchControls = new ArrayList<>();
 
     private boolean isValidEdit = false;
 
-    Project currentProject;
+    private Project currentProject;
 
     /**
      * Constructor for project allocation tab

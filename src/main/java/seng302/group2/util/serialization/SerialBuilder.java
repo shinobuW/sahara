@@ -18,7 +18,6 @@ import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.acceptanceCriteria.AcceptanceCriteria;
 import seng302.group2.workspace.project.story.tasks.Log;
-import seng302.group2.workspace.project.story.tasks.PairLog;
 import seng302.group2.workspace.project.story.tasks.Task;
 import seng302.group2.workspace.roadMap.RoadMap;
 import seng302.group2.workspace.role.Role;
@@ -61,7 +60,6 @@ public class SerialBuilder {
                 .addType(Paint.class)
 
                 .addType(RoadMap.class)
-                .addType(PairLog.class)
 
 
                         // TODO REMINDER: Add any new classes. Do not delete this todo.

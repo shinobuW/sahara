@@ -31,12 +31,12 @@ import java.util.List;
  */
 public class ProjectEditTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
-    Project currentProject;
-    RequiredField shortNameCustomField = new RequiredField("Short Name:");
-    RequiredField longNameCustomField = new RequiredField("Long Name:");
-    CustomTextArea descriptionTextArea = new CustomTextArea("Project Description:", 300);
-    TagField tagField;
+    private List<SearchableControl> searchControls = new ArrayList<>();
+    private Project currentProject;
+    private RequiredField shortNameCustomField = new RequiredField("Short Name:");
+    private RequiredField longNameCustomField = new RequiredField("Long Name:");
+    private CustomTextArea descriptionTextArea = new CustomTextArea("Project Description:", 300);
+    private TagField tagField;
 
     /**
      * Gets the workspace edit information scene.

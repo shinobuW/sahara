@@ -12,8 +12,8 @@ import java.util.Set;
  */
 public class CumulativeCommand implements Command {
 
-    Collection<Command> commands = new LinkedList<>();
-    String statusBarString = null;
+    private Collection<Command> commands = new LinkedList<>();
+    private String statusBarString = null;
 
     /**
      * The default constructor for CumulativeCommands, has no initial sub-commands

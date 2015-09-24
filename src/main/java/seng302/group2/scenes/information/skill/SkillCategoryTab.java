@@ -61,7 +61,7 @@ public class SkillCategoryTab extends SearchableTab {
 
         // Create Controls
         SearchableText title = new SearchableTitle("Skills in " + currentWorkspace.getShortName());
-        FilteredListView<Skill> skillFilteredListView = new FilteredListView<Skill>(currentWorkspace.getSkills(),
+        FilteredListView<Skill> skillFilteredListView = new FilteredListView<>(currentWorkspace.getSkills(),
                 "skills");
         SearchableListView<Skill> skillBox = skillFilteredListView.getListView();
         skillBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);

@@ -28,8 +28,8 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  */
 public class CreateRoadMapDialog extends Dialog<Map<String, String>> {
 
-    Boolean correctShortName = Boolean.FALSE;
-    Boolean correctPriority = Boolean.FALSE;
+    private Boolean correctShortName = Boolean.FALSE;
+    private Boolean correctPriority = Boolean.FALSE;
 
     /**
      * Displays the Dialog box for creating a workspace.

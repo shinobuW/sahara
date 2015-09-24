@@ -15,8 +15,8 @@ import java.util.regex.Pattern;
  * Created by btm38 on 1/09/15.
  */
 public class CustomInfoLabel extends HBox implements SearchableControl {
-    SearchableText label;
-    SearchableText value;
+    private SearchableText label;
+    private SearchableText value;
     private Set<SearchableControl> searchControls = new HashSet<>();
 
     /**

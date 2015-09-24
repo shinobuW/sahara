@@ -27,8 +27,8 @@ import java.util.List;
  * Created by cvs20 on 11/09/15.
  */
 public class RoadMapInfoTab extends SearchableTab {
-    List<SearchableControl> searchControls = new ArrayList<>();
-    RoadMap currentRoadMap;
+    private List<SearchableControl> searchControls = new ArrayList<>();
+    private RoadMap currentRoadMap;
     int viewportWidth = 0;
 
     /**

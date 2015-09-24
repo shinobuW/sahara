@@ -35,14 +35,14 @@ import java.util.List;
  */
 public class ReleaseEditTab extends SearchableTab {
 
-    Release currentRelease;
-    List<SearchableControl> searchControls = new ArrayList<>();
+    private Release currentRelease;
+    private List<SearchableControl> searchControls = new ArrayList<>();
 
     // Create controls
-    RequiredField shortNameCustomField = new RequiredField("Short Name:");
-    CustomTextArea descriptionTextArea = new CustomTextArea("Release Description:", 300);
-    CustomDatePicker releaseDatePicker = new CustomDatePicker("Estimated Release Date:", false);
-    TagField tagField;
+    private RequiredField shortNameCustomField = new RequiredField("Short Name:");
+    private CustomTextArea descriptionTextArea = new CustomTextArea("Release Description:", 300);
+    private CustomDatePicker releaseDatePicker = new CustomDatePicker("Estimated Release Date:", false);
+    private TagField tagField;
 
     /**
      * Constructor for the ReleaseEditTab class. This constructor creates a JavaFX ScrollPane

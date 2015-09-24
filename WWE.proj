@@ -3,7 +3,7 @@
     "shortName": "WWE",
     "longName": "WWE",
     "description": "",
-    "lastSaveLocation": "/home/cosc/student/crw73/Sahara/WWE.proj",
+    "lastSaveLocation": "/home/cosc/student/swi67/Documents/SENG302/project-2/WWE.proj",
     "estimationScales": {
       "estimationScaleDict": {
         "T-Shirt Sizes": [
@@ -755,9 +755,9 @@
     "team": "0x3",
     "release": "0x2c",
     "serializableStories": [
+      "0x61",
       "0x62",
-      "0x63",
-      "0x61"
+      "0x63"
     ],
     "goal": "Goats Galore",
     "longName": "Goats Galore",
@@ -976,7 +976,7 @@
     },
     "duration": 30.0,
     "effortLeftDifference": 30.0,
-    "logger": "0xe",
+    "logger": "0x5",
     "task": "0x73",
     "description": "",
     "ghostLog": false,
@@ -1116,7 +1116,7 @@
     },
     "duration": 240.0,
     "effortLeftDifference": 240.0,
-    "logger": "0x11",
+    "partner": "0xe",
     "task": "0x73",
     "description": "",
     "ghostLog": false,
@@ -1219,8 +1219,8 @@
     "team": "0x2",
     "release": "0x44",
     "serializableStories": [
-      "0x46",
-      "0x45"
+      "0x45",
+      "0x46"
     ],
     "goal": "Getting Softer",
     "longName": "Getting Softer",
@@ -1639,8 +1639,7 @@
     "dependentOn": [],
     "serializableTasks": [
       "0x6d",
-      "0x6b",
-      "0x73"
+      "0x6b"
     ],
     "tasksWithoutStory": false,
     "id": 3890,

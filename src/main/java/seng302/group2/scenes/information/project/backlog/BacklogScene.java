@@ -15,13 +15,13 @@ import java.util.Collections;
  */
 public class BacklogScene extends TrackedTabPane {
 
-    Collection<SearchableTab> searchableTabs = new ArrayList<>();
+    private Collection<SearchableTab> searchableTabs = new ArrayList<>();
 
-    Backlog currentBacklog;
-    boolean editScene = false;
+    private Backlog currentBacklog;
+    private boolean editScene = false;
 
-    BacklogInfoTab informationTab;
-    BacklogEditTab editTab;
+    private BacklogInfoTab informationTab;
+    private BacklogEditTab editTab;
     
     /**
      * Constructor for the Backlog scene

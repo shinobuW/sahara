@@ -31,12 +31,12 @@ import static seng302.group2.util.validation.ShortNameValidator.validateShortNam
  * Created by cvs20 on 19/05/15.
  */
 public class CreateBacklogDialog extends Dialog<Map<String, String>> {
-    Boolean correctShortName = Boolean.FALSE;
-    Boolean correctLongName = Boolean.FALSE;
-    Boolean required = true;
-    CustomComboBox<Project> projComboBox = new CustomComboBox<>("Project: ", required);
-    CustomComboBox<Person> productOwnerComboBox = new CustomComboBox<>("Product Owner: ", required);
-    CustomComboBox<String> scaleComboBox = new CustomComboBox<>("Scale: ", required);
+    private Boolean correctShortName = Boolean.FALSE;
+    private Boolean correctLongName = Boolean.FALSE;
+    private Boolean required = true;
+    private CustomComboBox<Project> projComboBox = new CustomComboBox<>("Project: ", required);
+    private CustomComboBox<Person> productOwnerComboBox = new CustomComboBox<>("Product Owner: ", required);
+    private CustomComboBox<String> scaleComboBox = new CustomComboBox<>("Scale: ", required);
 
     /**
      * Shows a backlog creation dialog. A default project is selected in the project combo box.

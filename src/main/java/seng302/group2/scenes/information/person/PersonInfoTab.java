@@ -18,6 +18,7 @@ import seng302.group2.scenes.control.search.*;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.story.Story;
 import seng302.group2.workspace.project.story.tasks.Task;
+import seng302.group2.workspace.skills.Skill;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,8 +34,8 @@ import static javafx.collections.FXCollections.observableArrayList;
  */
 public class PersonInfoTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
-    Person currentPerson;
+    private List<SearchableControl> searchControls = new ArrayList<>();
+    private Person currentPerson;
 
     /**
      * A tab to display information on a selected tasks.
@@ -71,7 +72,7 @@ public class PersonInfoTab extends SearchableTab {
 
         VBox skillVBox = new VBox(20);
         CustomInfoLabel skill  = new CustomInfoLabel("Skills: ", "");
-        FilteredListView<Person> personFilteredListView = new FilteredListView(currentPerson.getSkills(), "skills");
+        FilteredListView<Skill> personFilteredListView = new FilteredListView<>(currentPerson.getSkills(), "skills");
         SearchableListView personSkillsBox = personFilteredListView.getListView();
         personFilteredListView.setPrefHeight(192);
         personSkillsBox.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);

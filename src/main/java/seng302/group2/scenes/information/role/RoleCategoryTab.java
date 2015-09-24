@@ -60,7 +60,7 @@ public class RoleCategoryTab extends SearchableTab {
 
         // Create controls
         SearchableText title = new SearchableTitle("Roles in " + currentWorkspace.getShortName(), searchControls);
-        FilteredListView<Role> roleFilteredListView = new FilteredListView<Role>(currentWorkspace.getRoles(), "roles");
+        FilteredListView<Role> roleFilteredListView = new FilteredListView<>(currentWorkspace.getRoles(), "roles");
         SearchableListView roleBox = roleFilteredListView.getListView();
         roleBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
         roleBox.setMaxWidth(450);

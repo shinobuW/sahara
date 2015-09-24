@@ -36,14 +36,14 @@ import static seng302.group2.util.validation.PriorityFieldValidator.validatePrio
  */
 public class RoadMapEditTab extends SearchableTab {
 
-    List<SearchableControl> searchControls = new ArrayList<>();
+    private List<SearchableControl> searchControls = new ArrayList<>();
     private RequiredField shortNameField;
     private CustomComboBox<String> scaleComboBox;
 
-    RoadMap currentRoadMap;
-    RequiredField priorityNumberField = new RequiredField("Story Priority:");
-    ObservableList<Release> roadMapList = observableArrayList();
-    TagField tagField;
+    private RoadMap currentRoadMap;
+    private RequiredField priorityNumberField = new RequiredField("Story Priority:");
+    private ObservableList<Release> roadMapList = observableArrayList();
+    private TagField tagField;
 
     /**
      * Constructor for the RoadMapEditTab class. This constructor creates a JavaFX ScrollPane
@@ -113,7 +113,7 @@ public class RoadMapEditTab extends SearchableTab {
 
 
         // List views
-        FilteredListView<Release> roadMapReleaseFiltered = new FilteredListView<Release>(roadMapList,
+        FilteredListView<Release> roadMapReleaseFiltered = new FilteredListView<>(roadMapList,
                 "road map releases");
         SearchableListView<Release> roadMapReleaseListView = roadMapReleaseFiltered.getListView();
         roadMapReleaseListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
