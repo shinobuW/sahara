@@ -324,6 +324,7 @@ public class PersonEditTab extends SearchableTab {
      * Changes the values depending on what the user edits
      */
     public void done() {
+        System.out.println("yeah yolo");
         Team selectedTeam = teamBox.getValue();
 
         boolean shortNameUnchanged = shortNameCustomField.getText().equals(
@@ -340,8 +341,18 @@ public class PersonEditTab extends SearchableTab {
         boolean teamUnchanged = selectedTeam.getShortName().equals(
                 currentPerson.getTeamName());
         boolean skillsUnchanged = true;
+
         for (Object skill : personSkillsList.getItems()) {
+            System.out.println(skill);
             if (!currentPerson.getSkills().contains(skill)) {
+                skillsUnchanged = false;
+                break;
+            }
+        }
+
+        for (Object skill : currentPerson.getSkills()) {
+            System.out.println(skill);
+            if (!personSkillsList.getItems().contains(skill)) {
                 skillsUnchanged = false;
                 break;
             }
