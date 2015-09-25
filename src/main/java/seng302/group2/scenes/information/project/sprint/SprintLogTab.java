@@ -1,6 +1,7 @@
 package seng302.group2.scenes.information.project.sprint;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,12 +35,13 @@ import java.util.List;
 public class SprintLogTab extends SearchableTab {
     List<SearchableControl> searchControls = new ArrayList<>();
     ObservableList<Log> data = FXCollections.observableArrayList();
-    Person logger = null;
-    Person partner = null;
     CustomComboBox<Person> loggerComboBox;
     CustomComboBox<Person> partnerComboBox;
     Person nullPerson = new Person("", "", "", "", "", null);
     Sprint currentSprint;
+    ObservableList<Person> loggerList = FXCollections.observableArrayList();
+    ObservableList<Person> partnerList = FXCollections.observableArrayList();
+
 
     /**
      * Constructor for the sprint logging tab
@@ -47,29 +49,44 @@ public class SprintLogTab extends SearchableTab {
      */
     public SprintLogTab(Sprint currentSprint) {
         this.currentSprint = currentSprint;
+        this.data.addAll(currentSprint.getAllLogsWithInitialLogs());
         construct();
     }
+
 
     /**
      * Updates the data in the log table view according to the filter combo boxes.
      */
     private void updateFilteredLogs() {
         data.clear();
-        data.addAll(currentSprint.getAllLogsWithInitialLogs());
         Person selectedLogger = loggerComboBox.getComboBox().getValue();
         Person selectedPartner = partnerComboBox.getComboBox().getValue();
-        for (Log log : currentSprint.getAllLogsWithInitialLogs()) {
-            if (selectedLogger != null) {
-                if (selectedLogger != nullPerson && log.getLogger() != selectedLogger) {
-                    data.remove(log);
+
+        if ((selectedLogger == null && selectedPartner == null)
+                || (selectedLogger == nullPerson && selectedPartner == nullPerson)) {
+            data.addAll(currentSprint.getAllLogs());
+        }
+        else {
+            if (selectedLogger != nullPerson && selectedPartner != nullPerson) {
+                for (Log log : currentSprint.getAllLogs()) {
+                    if (log.getLogger() == selectedLogger && log.getPartner() == selectedPartner) {
+                        data.add(log);
+                    }
                 }
             }
-
-            if (selectedPartner != null && selectedPartner != nullPerson) {
-
-                if (log.getPartner() != null) {
-                    if (selectedPartner == log.getLogger() && log.getPartner() != selectedPartner) {
-                        data.remove(log);
+            else {
+                if (selectedLogger != nullPerson) {
+                    for (Log log : currentSprint.getAllLogs()) {
+                        if (log.getLogger() == selectedLogger) {
+                            data.add(log);
+                        }
+                    }
+                }
+                else if (selectedPartner != nullPerson) {
+                    for (Log log : currentSprint.getAllLogs()) {
+                        if (log.getPartner() == selectedPartner) {
+                            data.add(log);
+                        }
                     }
                 }
             }
@@ -104,24 +121,29 @@ public class SprintLogTab extends SearchableTab {
         ObservableList<Person> allPeople = FXCollections.observableArrayList();
         allocatedTeams.addAll(currentSprint.getProject().getCurrentTeams());
 
+        allPeople.add(nullPerson);
         for (Team team : allocatedTeams) {
             allPeople.addAll(team.getPeople());
         }
 
-        loggerComboBox.getComboBox().getItems().add(nullPerson);
-        loggerComboBox.getComboBox().getItems().addAll(allPeople);
 
-        partnerComboBox.getComboBox().getItems().add(nullPerson);
-        partnerComboBox.getComboBox().getItems().addAll(allPeople);
+        loggerList.addAll(allPeople);
+        partnerList.addAll(allPeople);
 
-        loggerComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
-            partnerComboBox.clear();
-            partnerComboBox.getComboBox().getItems().add(nullPerson);
-            partnerComboBox.getComboBox().getItems().addAll(allPeople);
-            if (newValue != nullPerson) {
-                partnerComboBox.getComboBox().getItems().remove(newValue);
+        loggerComboBox.getComboBox().setItems(loggerList);
+        partnerComboBox.getComboBox().setItems(partnerList);
+
+        loggerComboBox.getComboBox().valueProperty().addListener(new ChangeListener<Person>() {
+            @Override
+            public void changed(ObservableValue<? extends Person> observable, Person oldValue, Person newValue) {
+                if (newValue != nullPerson && newValue != null) {
+                    partnerList.clear();
+                    partnerList.addAll(allPeople);
+                    partnerList.remove(newValue);
+                    partnerComboBox.setValue(nullPerson);
+                }
+                updateFilteredLogs();
             }
-            updateFilteredLogs();
         });
 
         partnerComboBox.getComboBox().valueProperty().addListener((observable, oldValue, newValue) -> {
