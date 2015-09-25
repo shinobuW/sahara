@@ -183,5 +183,8 @@ public class App extends Application {
         // Show the stage/window
         App.refreshWindowTitle();
         mainStage.show();
+
+        App.mainPane.getTree().selectItem(Global.currentWorkspace);
+        Global.selectedTreeItem.setExpanded(true);
     }
 }
