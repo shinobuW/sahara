@@ -3,7 +3,7 @@
     "shortName": "Demo",
     "longName": "The One and Only Demo",
     "description": "A non-blank workspace.",
-    "lastSaveLocation": "C:\\Users\\Bronson Laptop\\IdeaProjects\\project-2\\Demo.proj",
+    "lastSaveLocation": "/home/cosc/student/crw73/Sahara/Demo.proj",
     "estimationScales": {
       "estimationScaleDict": {
         "T-Shirt Sizes": [
@@ -46938,18 +46938,21 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab1",
-    "done": false,
+    "endDate": "0xbc2",
+    "done": true,
     "estimate": "13",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xbc2",
       "0xbc3",
       "0xbc4",
       "0xbc5",
-      "0xbc6"
+      "0xbc6",
+      "0xbc7"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xbc8"
+    ],
     "tasksWithoutStory": false,
     "id": 7688,
     "itemName": "Alloc Maintenance",
@@ -46965,20 +46968,23 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab1",
-    "done": false,
+    "endDate": "0xbc9",
+    "done": true,
     "estimate": "13",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xbc7",
-      "0xbc8",
-      "0xbc9",
       "0xbca",
       "0xbcb",
       "0xbcc",
-      "0xbcd"
+      "0xbcd",
+      "0xbce",
+      "0xbcf",
+      "0xbd0"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xbd1"
+    ],
     "tasksWithoutStory": false,
     "id": 7689,
     "itemName": "Status reports",
@@ -46994,19 +47000,22 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab1",
-    "done": false,
+    "endDate": "0xbd2",
+    "done": true,
     "estimate": "5",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xbce",
-      "0xbcf",
-      "0xbd0",
-      "0xbd1",
-      "0xbd2",
-      "0xbd3"
+      "0xbd3",
+      "0xbd4",
+      "0xbd5",
+      "0xbd6",
+      "0xbd7",
+      "0xbd8"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xbd9"
+    ],
     "tasksWithoutStory": false,
     "id": 7690,
     "itemName": "UX I",
@@ -47022,18 +47031,21 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab1",
-    "done": false,
+    "endDate": "0xbda",
+    "done": true,
     "estimate": "5",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xbd4",
-      "0xbd5",
-      "0xbd6",
-      "0xbd7",
-      "0xbd8"
+      "0xbdb",
+      "0xbdc",
+      "0xbdd",
+      "0xbde",
+      "0xbdf"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xbe0"
+    ],
     "tasksWithoutStory": false,
     "id": 7692,
     "itemName": "Story maintenance",
@@ -47049,17 +47061,20 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab1",
-    "done": false,
+    "endDate": "0xbe1",
+    "done": true,
     "estimate": "3",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xbd9",
-      "0xbda",
-      "0xbdb",
-      "0xbdc"
+      "0xbe2",
+      "0xbe3",
+      "0xbe4",
+      "0xbe5"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xbe6"
+    ],
     "tasksWithoutStory": false,
     "id": 7691,
     "itemName": "Revert",
@@ -47075,15 +47090,18 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab1",
-    "done": false,
+    "endDate": "0xbe7",
+    "done": true,
     "estimate": "2",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xbdd",
-      "0xbde"
+      "0xbe8",
+      "0xbe9"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xbea"
+    ],
     "tasksWithoutStory": false,
     "id": 7693,
     "itemName": "Display list order I",
@@ -47092,28 +47110,31 @@
   "0xb1f": {
     "shortName": "Backlog maintenance",
     "longName": "Backlog maintenance",
-    "description": "So that I can order uncompleted work items by their value to the customer, as a PO, I need to\nbe able to maintain stories in a backlog. These are what we could call “product backlogs�? or\njust “products�?.",
+    "description": "So that I can order uncompleted work items by their value to the customer, as a PO, I need to\nbe able to maintain stories in a backlog. These are what we could call “product backlogs�? or\njust “products�?.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 36,
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab1",
-    "done": false,
+    "endDate": "0xbeb",
+    "done": true,
     "estimate": "5",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xbdf",
-      "0xbe0",
-      "0xbe1",
-      "0xbe2",
-      "0xbe3",
-      "0xbe4",
-      "0xbe5",
-      "0xbe6"
+      "0xbec",
+      "0xbed",
+      "0xbee",
+      "0xbef",
+      "0xbf0",
+      "0xbf1",
+      "0xbf2",
+      "0xbf3"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xbf4"
+    ],
     "tasksWithoutStory": false,
     "id": 7694,
     "itemName": "Backlog maintenance",
@@ -47129,19 +47150,22 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab2",
-    "done": false,
+    "endDate": "0xbf5",
+    "done": true,
     "estimate": "8",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xbe7",
-      "0xbe8",
-      "0xbe9",
-      "0xbea"
+      "0xbf6",
+      "0xbf7",
+      "0xbf8",
+      "0xbf9"
     ],
     "dependentOn": [
       "0xb1a"
     ],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xbfa"
+    ],
     "tasksWithoutStory": false,
     "id": 7695,
     "itemName": "Report Generation",
@@ -47157,16 +47181,19 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab2",
-    "done": false,
+    "endDate": "0xbfb",
+    "done": true,
     "estimate": "1",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xbeb",
-      "0xbec",
-      "0xbed"
+      "0xbfc",
+      "0xbfd",
+      "0xbfe"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xbff"
+    ],
     "tasksWithoutStory": false,
     "id": 7775,
     "itemName": "Backlog priority",
@@ -47182,21 +47209,24 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab2",
-    "done": false,
+    "endDate": "0xc00",
+    "done": true,
     "estimate": "2",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xbee",
-      "0xbef",
-      "0xbf0",
-      "0xbf1",
-      "0xbf2"
+      "0xc01",
+      "0xc02",
+      "0xc03",
+      "0xc04",
+      "0xc05"
     ],
     "dependentOn": [
       "0xb20",
       "0xb1a"
     ],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc06"
+    ],
     "tasksWithoutStory": false,
     "id": 7776,
     "itemName": "Backlog report",
@@ -47212,19 +47242,22 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab2",
-    "done": false,
+    "endDate": "0xc07",
+    "done": true,
     "estimate": "5",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xbf3",
-      "0xbf4",
-      "0xbf5",
-      "0xbf6",
-      "0xbf7",
-      "0xbf8"
+      "0xc08",
+      "0xc09",
+      "0xc0a",
+      "0xc0b",
+      "0xc0c",
+      "0xc0d"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc0e"
+    ],
     "tasksWithoutStory": false,
     "id": 7777,
     "itemName": "AC maintenance",
@@ -47240,21 +47273,24 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab2",
-    "done": false,
+    "endDate": "0xc0f",
+    "done": true,
     "estimate": "5",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xbf9",
-      "0xbfa",
-      "0xbfb",
-      "0xbfc",
-      "0xbfd",
-      "0xbfe",
-      "0xbff",
-      "0xc00"
+      "0xc10",
+      "0xc11",
+      "0xc12",
+      "0xc13",
+      "0xc14",
+      "0xc15",
+      "0xc16",
+      "0xc17"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc18"
+    ],
     "tasksWithoutStory": false,
     "id": 7778,
     "itemName": "Story estimation",
@@ -47270,18 +47306,21 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab2",
-    "done": false,
+    "endDate": "0xc19",
+    "done": true,
     "estimate": "3",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc01",
-      "0xc02",
-      "0xc03",
-      "0xc04",
-      "0xc05"
+      "0xc1a",
+      "0xc1b",
+      "0xc1c",
+      "0xc1d",
+      "0xc1e"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc1f"
+    ],
     "tasksWithoutStory": false,
     "id": 7779,
     "itemName": "Readiness",
@@ -47297,18 +47336,21 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab2",
-    "done": false,
+    "endDate": "0xc20",
+    "done": true,
     "estimate": "8",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc06",
-      "0xc07",
-      "0xc08",
-      "0xc09",
-      "0xc0a"
+      "0xc21",
+      "0xc22",
+      "0xc23",
+      "0xc24",
+      "0xc25"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc26"
+    ],
     "tasksWithoutStory": false,
     "id": 7780,
     "itemName": "Dependencies",
@@ -47324,18 +47366,21 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab5",
-    "done": false,
+    "endDate": "0xc27",
+    "done": true,
     "estimate": "8",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc0b",
-      "0xc0c",
-      "0xc0d",
-      "0xc0e",
-      "0xc0f"
+      "0xc28",
+      "0xc29",
+      "0xc2a",
+      "0xc2b",
+      "0xc2c"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc2d"
+    ],
     "tasksWithoutStory": false,
     "id": 7782,
     "itemName": "Tool Bar",
@@ -47351,19 +47396,22 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab2",
-    "done": false,
+    "endDate": "0xc2e",
+    "done": true,
     "estimate": "5",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc10",
-      "0xc11",
-      "0xc12",
-      "0xc13",
-      "0xc14",
-      "0xc15"
+      "0xc2f",
+      "0xc30",
+      "0xc31",
+      "0xc32",
+      "0xc33",
+      "0xc34"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc35"
+    ],
     "tasksWithoutStory": false,
     "id": 7781,
     "itemName": "Highlighting story",
@@ -47379,20 +47427,23 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab5",
-    "done": false,
+    "endDate": "0xc36",
+    "done": true,
     "estimate": "8",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc16",
-      "0xc17",
-      "0xc18",
-      "0xc19",
-      "0xc1a",
-      "0xc1b",
-      "0xc1c"
+      "0xc37",
+      "0xc38",
+      "0xc39",
+      "0xc3a",
+      "0xc3b",
+      "0xc3c",
+      "0xc3d"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc3e"
+    ],
     "tasksWithoutStory": false,
     "id": 7783,
     "itemName": "Sprint maintenance",
@@ -47401,27 +47452,30 @@
   "0xb2a": {
     "shortName": "Basic Search",
     "longName": "Basic Search",
-    "description": "So that I can conveniently access information as the size of my system grows, as a user, I need\nto be able to search for occurrences of strings.\nIt is envisaged that this search will be used where a short name/label is known (e.g. “Dave�?) or a\nkeyword (e.g. “task�?) that might occur in longer names or descriptions etc is known. See also\nLess Basic Search for description of a more sophisticated search feature.",
+    "description": "So that I can conveniently access information as the size of my system grows, as a user, I need\nto be able to search for occurrences of strings.\nIt is envisaged that this search will be used where a short name/label is known (e.g. “Dave\") or a\nkeyword (e.g. “task\") that might occur in longer names or descriptions etc is known. See also\nLess Basic Search for description of a more sophisticated search feature.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 26,
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab5",
-    "done": false,
+    "endDate": "0xc3f",
+    "done": true,
     "estimate": "20",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc1d",
-      "0xc1e",
-      "0xc1f",
-      "0xc20",
-      "0xc21",
-      "0xc22",
-      "0xc23"
+      "0xc40",
+      "0xc41",
+      "0xc42",
+      "0xc43",
+      "0xc44",
+      "0xc45",
+      "0xc46"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc47"
+    ],
     "tasksWithoutStory": false,
     "id": 7784,
     "itemName": "Basic Search",
@@ -47437,19 +47491,22 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab5",
-    "done": false,
+    "endDate": "0xc48",
+    "done": true,
     "estimate": "5",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc24",
-      "0xc25",
-      "0xc26",
-      "0xc27",
-      "0xc28",
-      "0xc29"
+      "0xc49",
+      "0xc4a",
+      "0xc4b",
+      "0xc4c",
+      "0xc4d",
+      "0xc4e"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc4f"
+    ],
     "tasksWithoutStory": false,
     "id": 7785,
     "itemName": "Task maintenance",
@@ -47465,20 +47522,23 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab5",
-    "done": false,
+    "endDate": "0xc50",
+    "done": true,
     "estimate": "8",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc2a",
-      "0xc2b",
-      "0xc2c",
-      "0xc2d",
-      "0xc2e",
-      "0xc2f",
-      "0xc30"
+      "0xc51",
+      "0xc52",
+      "0xc53",
+      "0xc54",
+      "0xc55",
+      "0xc56",
+      "0xc57"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc58"
+    ],
     "tasksWithoutStory": false,
     "id": 7786,
     "itemName": "Scrum board support",
@@ -47494,17 +47554,20 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab5",
-    "done": false,
+    "endDate": "0xc59",
+    "done": true,
     "estimate": "3",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc31",
-      "0xc32",
-      "0xc33",
-      "0xc34"
+      "0xc5a",
+      "0xc5b",
+      "0xc5c",
+      "0xc5d"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc5e"
+    ],
     "tasksWithoutStory": false,
     "id": 7787,
     "itemName": "UX 2",
@@ -47520,17 +47583,20 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab5",
-    "done": false,
+    "endDate": "0xc5f",
+    "done": true,
     "estimate": "8",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc35",
-      "0xc36",
-      "0xc37",
-      "0xc38"
+      "0xc60",
+      "0xc61",
+      "0xc62",
+      "0xc63"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc64"
+    ],
     "tasksWithoutStory": false,
     "id": 7788,
     "itemName": "Burndown chart",
@@ -47546,18 +47612,21 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab5",
-    "done": false,
+    "endDate": "0xc65",
+    "done": true,
     "estimate": "5",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc39",
-      "0xc3a",
-      "0xc3b",
-      "0xc3c",
-      "0xc3d"
+      "0xc66",
+      "0xc67",
+      "0xc68",
+      "0xc69",
+      "0xc6a"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc6b"
+    ],
     "tasksWithoutStory": false,
     "id": 7789,
     "itemName": "Task status",
@@ -47573,19 +47642,22 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab5",
-    "done": false,
+    "endDate": "0xc6c",
+    "done": true,
     "estimate": "8",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc3e",
-      "0xc3f",
-      "0xc40",
-      "0xc41",
-      "0xc42",
-      "0xc43"
+      "0xc6d",
+      "0xc6e",
+      "0xc6f",
+      "0xc70",
+      "0xc71",
+      "0xc72"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc73"
+    ],
     "tasksWithoutStory": false,
     "id": 7790,
     "itemName": "Logging Effort",
@@ -47601,16 +47673,19 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab5",
-    "done": false,
+    "endDate": "0xc74",
+    "done": true,
     "estimate": "8",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc44",
-      "0xc45",
-      "0xc46"
+      "0xc75",
+      "0xc76",
+      "0xc77"
     ],
     "dependentOn": [],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc78"
+    ],
     "tasksWithoutStory": false,
     "id": 7791,
     "itemName": "Story completeness",
@@ -47630,9 +47705,9 @@
     "estimate": "3",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc47",
-      "0xc48",
-      "0xc49"
+      "0xc79",
+      "0xc7a",
+      "0xc7b"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -47651,19 +47726,22 @@
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab5",
-    "done": false,
+    "endDate": "0xc7c",
+    "done": true,
     "estimate": "13",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc4a",
-      "0xc4b",
-      "0xc4c",
-      "0xc4d"
+      "0xc7d",
+      "0xc7e",
+      "0xc7f",
+      "0xc80"
     ],
     "dependentOn": [
       "0xb2a"
     ],
-    "serializableTasks": [],
+    "serializableTasks": [
+      "0xc81"
+    ],
     "tasksWithoutStory": false,
     "id": 8041,
     "itemName": "Less Basic Search",
@@ -47682,11 +47760,11 @@
     "estimate": "13",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc4e",
-      "0xc4f",
-      "0xc50",
-      "0xc51",
-      "0xc52"
+      "0xc82",
+      "0xc83",
+      "0xc84",
+      "0xc85",
+      "0xc86"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -47698,7 +47776,7 @@
   "0xb35": {
     "shortName": "Story similarity",
     "longName": "Story similarity detector",
-    "description": "So that nearly­identical or duplicate stories can be avoided, as a user, I need to be able to\ndetect and manage sufficiently similar stories.\nNotes:\n�? When many people are adding and modifying backlog items, it is possible to get\nduplicate or very similar stories. When this happens, they need to be identified and\nperhaps combined.\n�? Similar facilities are common in information retrieval systems or document collections\nsuch as man pages (e.g. see `man ­k’). Some work by constructing vectors whose\ncomponents indicate the presence/frequency of keywords/search terms. The similarity\nof two “documents�? may then be measured by computing the scalar (dot) product of the\ncorresponding document vectors.\n�? Apache’s Lucene project provides powerful features for text search and analysis.\n�? Stop lists are lists of common words (`and,’ `the,’ `when,’ …) that are removed or\nignored in the analysis.\n�? Stemming involves removing/ignoring variations from the base `stem’ form of a word.\nThus we would treat `fish,’ `fishing,’ `fisher,’ `fished’ and `fishy’ as `fish.’",
+    "description": "So that nearly­identical or duplicate stories can be avoided, as a user, I need to be able to\ndetect and manage sufficiently similar stories.\nNotes:\n�? When many people are adding and modifying backlog items, it is possible to get\nduplicate or very similar stories. When this happens, they need to be identified and\nperhaps combined.\n�? Similar facilities are common in information retrieval systems or document collections\nsuch as man pages (e.g. see `man ­k’). Some work by constructing vectors whose\ncomponents indicate the presence/frequency of keywords/search terms. The similarity\nof two “documents�? may then be measured by computing the scalar (dot) product of the\ncorresponding document vectors.\n�? Apache’s Lucene project provides powerful features for text search and analysis.\n�? Stop lists are lists of common words (`and,’ `the,’ `when,’ …) that are removed or\nignored in the analysis.\n�? Stemming involves removing/ignoring variations from the base `stem’ form of a word.\nThus we would treat `fish,’ `fishing,’ `fisher,’ `fished’ and `fishy’ as `fish.’",
     "creator": "Moffat",
     "colour": "ORANGE",
     "priority": 15,
@@ -47708,11 +47786,11 @@
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc53",
-      "0xc54",
-      "0xc55",
-      "0xc56",
-      "0xc57"
+      "0xc87",
+      "0xc88",
+      "0xc89",
+      "0xc8a",
+      "0xc8b"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -47724,7 +47802,7 @@
   "0xb36": {
     "shortName": "Grooming workspace",
     "longName": "Estimation/Grooming workspace",
-    "description": "So that I can effectively understand and specify the relative sizes of stories, as a user, I need to\nbe able to select and manipulate groups of stories.\nNote:\n�? The idea here is to mimic the way we would use physical story cards on a table:\nselecting some, grouping those of similar size, and placing them in order.",
+    "description": "So that I can effectively understand and specify the relative sizes of stories, as a user, I need to\nbe able to select and manipulate groups of stories.\nNote:\n�? The idea here is to mimic the way we would use physical story cards on a table:\nselecting some, grouping those of similar size, and placing them in order.",
     "creator": "Moffat",
     "colour": "ORANGE",
     "priority": 15,
@@ -47734,13 +47812,13 @@
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc58",
-      "0xc59",
-      "0xc5a",
-      "0xc5b",
-      "0xc5c",
-      "0xc5d",
-      "0xc5e"
+      "0xc8c",
+      "0xc8d",
+      "0xc8e",
+      "0xc8f",
+      "0xc90",
+      "0xc91",
+      "0xc92"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -47752,7 +47830,7 @@
   "0xb37": {
     "shortName": "User Accounts",
     "longName": "User Accounts",
-    "description": "So that I can be provided with controlled access to personal or sensitive information, as a user, I\nneed to create and manage a personal user account.\nNote:\n�? Our kiosk­style application has thus far not required any form of access control other\nthan physical access to the space where it is located.\n�? Our scrum teams are an open community and place a high value on trust. Social\nprotocols determine whether the SM enters data for the team or whether people can\nenter data on behalf of others.\n�? The overhead of logging in \u0026 out in order to enter relatively small amounts of data (e.g.\nlogging an hour’s work on a task) will be sufficiently inconvenient that it will discourage\npeople for musing the application frequently as they should — risking loss of data\nintegrity.\n�? Nevertheless, there may be some features (such as preparing a record of contributions\nto be used in promotion applications) will be limited to specific individuals. Only these\nwill be limited to logged in users: all other features are available to all.",
+    "description": "So that I can be provided with controlled access to personal or sensitive information, as a user, I\nneed to create and manage a personal user account.\nNote:\n�? Our kiosk­style application has thus far not required any form of access control other\nthan physical access to the space where it is located.\n�? Our scrum teams are an open community and place a high value on trust. Social\nprotocols determine whether the SM enters data for the team or whether people can\nenter data on behalf of others.\n�? The overhead of logging in \u0026 out in order to enter relatively small amounts of data (e.g.\nlogging an hour’s work on a task) will be sufficiently inconvenient that it will discourage\npeople for musing the application frequently as they should — risking loss of data\nintegrity.\n�? Nevertheless, there may be some features (such as preparing a record of contributions\nto be used in promotion applications) will be limited to specific individuals. Only these\nwill be limited to logged in users: all other features are available to all.",
     "creator": "Moffat",
     "colour": "ORANGE",
     "priority": 14,
@@ -47762,16 +47840,16 @@
     "estimate": "-",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc5f",
-      "0xc60",
-      "0xc61",
-      "0xc62",
-      "0xc63",
-      "0xc64",
-      "0xc65",
-      "0xc66",
-      "0xc67",
-      "0xc68"
+      "0xc93",
+      "0xc94",
+      "0xc95",
+      "0xc96",
+      "0xc97",
+      "0xc98",
+      "0xc99",
+      "0xc9a",
+      "0xc9b",
+      "0xc9c"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -47793,7 +47871,7 @@
     "estimate": "3",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc69"
+      "0xc9d"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -47805,7 +47883,7 @@
   "0xb39": {
     "shortName": "Tag maintenance",
     "longName": "Tag maintenance",
-    "description": "So that I can associate specific information with elements in the system, as a user, I need to be\nable to maintain a set of categories that can be used as tags.\n\nNote:\n�? Tags are simple indicators of a specific category of information (e.g. “needs PO\nclarification�? or “high risk�?) rather than a note tailored to the specific context.\n�? We may be interested in the ability to locate occurrences of specific tags or tracking their\nrelative numbers over time.",
+    "description": "So that I can associate specific information with elements in the system, as a user, I need to be\nable to maintain a set of categories that can be used as tags.\n\nNote:\n�? Tags are simple indicators of a specific category of information (e.g. “needs PO\nclarification�? or “high risk�?) rather than a note tailored to the specific context.\n�? We may be interested in the ability to locate occurrences of specific tags or tracking their\nrelative numbers over time.",
     "creator": "Moffat",
     "colour": "RED",
     "priority": 70,
@@ -47816,12 +47894,12 @@
     "estimate": "5",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc6a",
-      "0xc6b",
-      "0xc6c",
-      "0xc6d",
-      "0xc6e",
-      "0xc6f"
+      "0xc9e",
+      "0xc9f",
+      "0xca0",
+      "0xca1",
+      "0xca2",
+      "0xca3"
     ],
     "dependentOn": [
       "0xb3a"
@@ -47846,13 +47924,13 @@
     "estimate": "8",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc70",
-      "0xc71",
-      "0xc72",
-      "0xc73",
-      "0xc74",
-      "0xc75",
-      "0xc76"
+      "0xca4",
+      "0xca5",
+      "0xca6",
+      "0xca7",
+      "0xca8",
+      "0xca9",
+      "0xcaa"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -47864,7 +47942,7 @@
   "0xb3b": {
     "shortName": "Story mapping view",
     "longName": "Story mapping view",
-    "description": "So that release planning can be managed effectively, as a PO, I need to be able to perform\nstory mapping in the application\n\nNote:\n�? Story mapping encompasses a range of things but the basic idea is to show the way\nhigh level goals (e.g. road map items (RMIs), epics, ...) correspond to smaller, more\nconcrete activities (e.g. releases, sprints, stories) where delivery of features occurs.\n�? The rough sketch below shows time progressing left to right. The RMIs at the top level\nare then ordered so that we’ll tackle the highest priority ones first. The next `row’ shows\nthe release plan: one or more releases is associated with delivery of an RMI. Each\nrelease consists of one or more sprints, each of which has a sprint backlog containing\nstories from our product backlog.\n�? Note the snowplough effect — we know less about future details.\n�? There are other similar ways to present maps. For example, one might have a `row’ for\neach sprint in order to build a matrix of story/release relationships.",
+    "description": "So that release planning can be managed effectively, as a PO, I need to be able to perform\nstory mapping in the application\n\nNote:\n�? Story mapping encompasses a range of things but the basic idea is to show the way\nhigh level goals (e.g. road map items (RMIs), epics, ...) correspond to smaller, more\nconcrete activities (e.g. releases, sprints, stories) where delivery of features occurs.\n�? The rough sketch below shows time progressing left to right. The RMIs at the top level\nare then ordered so that we’ll tackle the highest priority ones first. The next `row’ shows\nthe release plan: one or more releases is associated with delivery of an RMI. Each\nrelease consists of one or more sprints, each of which has a sprint backlog containing\nstories from our product backlog.\n�? Note the snowplough effect — we know less about future details.\n�? There are other similar ways to present maps. For example, one might have a `row’ for\neach sprint in order to build a matrix of story/release relationships.",
     "creator": "Moffat",
     "colour": "DEFAULT",
     "priority": 68,
@@ -47875,11 +47953,11 @@
     "estimate": "13",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc77",
-      "0xc78",
-      "0xc79",
-      "0xc7a",
-      "0xc7b"
+      "0xcab",
+      "0xcac",
+      "0xcad",
+      "0xcae",
+      "0xcaf"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -47902,12 +47980,12 @@
     "estimate": "8",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc7c",
-      "0xc7d",
-      "0xc7e",
-      "0xc7f",
-      "0xc80",
-      "0xc81"
+      "0xcb0",
+      "0xcb1",
+      "0xcb2",
+      "0xcb3",
+      "0xcb4",
+      "0xcb5"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -47930,11 +48008,11 @@
     "estimate": "5",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc82",
-      "0xc83",
-      "0xc84",
-      "0xc85",
-      "0xc86"
+      "0xcb6",
+      "0xcb7",
+      "0xcb8",
+      "0xcb9",
+      "0xcba"
     ],
     "dependentOn": [
       "0xb3b"
@@ -47959,10 +48037,10 @@
     "estimate": "8",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xc87",
-      "0xc88",
-      "0xc89",
-      "0xc8a"
+      "0xcbb",
+      "0xcbc",
+      "0xcbd",
+      "0xcbe"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -48080,8 +48158,8 @@
     "priority": 0,
     "project": "0xaa7",
     "sprint": "0xab4",
-    "startDate": "0xc8b",
-    "endDate": "0xc8c",
+    "startDate": "0xcbf",
+    "endDate": "0xcc0",
     "done": true,
     "estimate": "-",
     "ready": true,
@@ -48174,7 +48252,7 @@
     "story": "0xb10",
     "effortLeft": 0.0,
     "effortSpent": 360.0,
-    "initialLog": "0xc8d",
+    "initialLog": "0xcc1",
     "id": 8098,
     "itemName": "Design Meeting",
     "serializableTags": []
@@ -48193,7 +48271,7 @@
     "story": "0xb4a",
     "effortLeft": 0.0,
     "effortSpent": 720.0,
-    "initialLog": "0xc8e",
+    "initialLog": "0xcc2",
     "id": 8127,
     "itemName": "Sprint Planning 1",
     "serializableTags": []
@@ -48212,7 +48290,7 @@
     "story": "0xb4a",
     "effortLeft": 0.0,
     "effortSpent": 360.0,
-    "initialLog": "0xc8f",
+    "initialLog": "0xcc3",
     "id": 8130,
     "itemName": "Sprint Planning 2",
     "serializableTags": []
@@ -48231,7 +48309,7 @@
     "story": "0xb11",
     "effortLeft": 0.0,
     "effortSpent": 300.0,
-    "initialLog": "0xc90",
+    "initialLog": "0xcc4",
     "id": 8102,
     "itemName": "Create Class",
     "serializableTags": []
@@ -48251,7 +48329,7 @@
     "assignee": "0x765",
     "effortLeft": 0.0,
     "effortSpent": 60.0,
-    "initialLog": "0xc91",
+    "initialLog": "0xcc5",
     "id": 8108,
     "itemName": "Project class creation",
     "serializableTags": []
@@ -48275,7 +48353,7 @@
     "story": "0xb10",
     "effortLeft": 0.0,
     "effortSpent": 360.0,
-    "initialLog": "0xc92",
+    "initialLog": "0xcc6",
     "id": 8094,
     "itemName": "JavaFX Research",
     "serializableTags": []
@@ -48295,7 +48373,7 @@
     "assignee": "0x133",
     "effortLeft": 0.0,
     "effortSpent": 120.0,
-    "initialLog": "0xc93",
+    "initialLog": "0xcc7",
     "id": 8096,
     "itemName": "Implement Executables",
     "serializableTags": []
@@ -48314,7 +48392,7 @@
     "story": "0xb10",
     "effortLeft": 0.0,
     "effortSpent": 360.0,
-    "initialLog": "0xc94",
+    "initialLog": "0xcc8",
     "id": 8100,
     "itemName": "Implement Menu Items",
     "serializableTags": []
@@ -48333,7 +48411,7 @@
     "story": "0xb11",
     "effortLeft": 0.0,
     "effortSpent": 480.0,
-    "initialLog": "0xc95",
+    "initialLog": "0xcc9",
     "id": 8106,
     "itemName": "Saving, Opening \u0026 Creating people",
     "serializableTags": []
@@ -48352,7 +48430,7 @@
     "story": "0xb4a",
     "effortLeft": 0.0,
     "effortSpent": 270.0,
-    "initialLog": "0xc96",
+    "initialLog": "0xcca",
     "id": 8133,
     "itemName": "Standups",
     "serializableTags": []
@@ -48391,7 +48469,7 @@
     "story": "0xb11",
     "effortLeft": 0.0,
     "effortSpent": 15.0,
-    "initialLog": "0xc97",
+    "initialLog": "0xccb",
     "id": 8104,
     "itemName": "MenuBar Item for Creating",
     "serializableTags": []
@@ -48411,7 +48489,7 @@
     "assignee": "0x3d2",
     "effortLeft": 0.0,
     "effortSpent": 300.0,
-    "initialLog": "0xc98",
+    "initialLog": "0xccc",
     "id": 8110,
     "itemName": "Dialogs to save current project",
     "serializableTags": []
@@ -48431,7 +48509,7 @@
     "assignee": "0x1b8",
     "effortLeft": 0.0,
     "effortSpent": 190.0,
-    "initialLog": "0xc99",
+    "initialLog": "0xccd",
     "id": 8112,
     "itemName": "Loading projects",
     "serializableTags": []
@@ -48451,7 +48529,7 @@
     "assignee": "0xa",
     "effortLeft": 0.0,
     "effortSpent": 300.0,
-    "initialLog": "0xc9a",
+    "initialLog": "0xcce",
     "id": 8116,
     "itemName": "Saving projects",
     "serializableTags": []
@@ -48480,7 +48558,7 @@
     "story": "0xb4a",
     "effortLeft": 0.0,
     "effortSpent": 720.0,
-    "initialLog": "0xc9b",
+    "initialLog": "0xccf",
     "id": 8142,
     "itemName": "302 Lectures",
     "serializableTags": []
@@ -48499,7 +48577,7 @@
     "story": "0xb13",
     "effortLeft": 0.0,
     "effortSpent": 780.0,
-    "initialLog": "0xc9c",
+    "initialLog": "0xcd0",
     "id": 8119,
     "itemName": "Create Tree View",
     "serializableTags": []
@@ -48528,7 +48606,7 @@
     "story": "0xb13",
     "effortLeft": 0.0,
     "effortSpent": 240.0,
-    "initialLog": "0xc9d",
+    "initialLog": "0xcd1",
     "id": 8123,
     "itemName": "Clicking an element displays information",
     "serializableTags": []
@@ -48552,7 +48630,7 @@
     "story": "0xb13",
     "effortLeft": 0.0,
     "effortSpent": 10.0,
-    "initialLog": "0xc9e",
+    "initialLog": "0xcd2",
     "id": 8121,
     "itemName": "Loading saved elements into tree view",
     "serializableTags": []
@@ -48571,7 +48649,7 @@
     "story": "0xb13",
     "effortLeft": 0.0,
     "effortSpent": 10.0,
-    "initialLog": "0xc9f",
+    "initialLog": "0xcd3",
     "id": 8125,
     "itemName": "Unit testing",
     "serializableTags": []
@@ -48595,7 +48673,7 @@
     "story": "0xb4a",
     "effortLeft": 0.0,
     "effortSpent": 360.0,
-    "initialLog": "0xca0",
+    "initialLog": "0xcd4",
     "id": 8136,
     "itemName": "Review",
     "serializableTags": []
@@ -48614,7 +48692,7 @@
     "story": "0xb4a",
     "effortLeft": 0.0,
     "effortSpent": 360.0,
-    "initialLog": "0xca1",
+    "initialLog": "0xcd5",
     "id": 8139,
     "itemName": "Retrospective",
     "serializableTags": []
@@ -48662,7 +48740,7 @@
     "serializableTags": []
   },
   "0xb8c": {
-    "description": "Display menu with item for toggling list display. When application is started,\ninitial toggle state doesn\u0027t matter. The list will sit at the left hand side of the\nmain app window and will display various kinds of information as described in\nsubsequent stories. A title (e.g. “Teams�?) will appear at the top of the list to\nindicate what the contents are.",
+    "description": "Display menu with item for toggling list display. When application is started,\ninitial toggle state doesn\u0027t matter. The list will sit at the left hand side of the\nmain app window and will display various kinds of information as described in\nsubsequent stories. A title (e.g. “Teams�?) will appear at the top of the list to\nindicate what the contents are.",
     "state": "UNACCEPTED",
     "story": "0xb10",
     "id": 7669,
@@ -48696,7 +48774,7 @@
     "serializableTags": []
   },
   "0xb91": {
-    "description": "Submenu includes “New Project …�? item (and will eventually include others such\nas new story)",
+    "description": "Submenu includes “New Project …�? item (and will eventually include others such\nas new story)",
     "state": "UNACCEPTED",
     "story": "0xb11",
     "id": 7674,
@@ -48810,7 +48888,7 @@
     "serializableTags": []
   },
   "0xba0": {
-    "description": "Display menu has item for displaying people’s info in list. The list title is\n“People�?.",
+    "description": "Display menu has item for displaying people’s info in list. The list title is\n“People�?.",
     "state": "UNACCEPTED",
     "story": "0xb12",
     "id": 7841,
@@ -49044,7 +49122,7 @@
     "serializableTags": []
   },
   "0xbbe": {
-    "description": "When a release is created, it is associated with an existing project. “Orphan�? releases\nare not permitted.",
+    "description": "When a release is created, it is associated with an existing project. “Orphan�? releases\nare not permitted.",
     "state": "UNACCEPTED",
     "story": "0xb18",
     "id": 7874,
@@ -49076,6 +49154,11 @@
     "serializableTags": []
   },
   "0xbc2": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xbc3": {
     "description": "One or more teams may be allocated to the current project",
     "state": "UNACCEPTED",
     "story": "0xb19",
@@ -49083,7 +49166,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbc3": {
+  "0xbc4": {
     "description": "Each team may be allocated to at most one project",
     "state": "UNACCEPTED",
     "story": "0xb19",
@@ -49091,15 +49174,15 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbc4": {
-    "description": "A team may be de-allocated from a project. No other information should be deleted\nat this point (we’ll consider the case of “live�? projects later)",
+  "0xbc5": {
+    "description": "A team may be de-allocated from a project. No other information should be deleted\nat this point (we’ll consider the case of “live�? projects later)",
     "state": "UNACCEPTED",
     "story": "0xb19",
     "id": 7880,
     "itemName": "",
     "serializableTags": []
   },
-  "0xbc5": {
+  "0xbc6": {
     "description": "The beginning and end dates of the team’s allocation to the project are recorded and\ndisplayed via the Listbar",
     "state": "UNACCEPTED",
     "story": "0xb19",
@@ -49107,7 +49190,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbc6": {
+  "0xbc7": {
     "description": "A team may be allocated to a project more than once, but the intervals must be\nnon-overlapping (strictly before or after)",
     "state": "UNACCEPTED",
     "story": "0xb19",
@@ -49115,7 +49198,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbc7": {
+  "0xbc8": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb19",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xcd6",
+    "id": 30919,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xbc9": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xbca": {
     "description": "The status report is initiated by selecting an appropriate menu item.",
     "state": "UNACCEPTED",
     "story": "0xb1a",
@@ -49123,7 +49225,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbc8": {
+  "0xbcb": {
     "description": "The user can select the location where the report file will be stored. A default is\nprovided (probably in the current directory)",
     "state": "UNACCEPTED",
     "story": "0xb1a",
@@ -49131,7 +49233,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbc9": {
+  "0xbcc": {
     "description": "The report data is assembled and saved in the specified location in an appropriate\nhuman-readable format (XML?).",
     "state": "UNACCEPTED",
     "story": "0xb1a",
@@ -49139,7 +49241,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbca": {
+  "0xbcd": {
     "description": "The report will have an appropriate header (title, date, organisation unit, …) and the\nbody will contain sections (separated by appropriate whitespace or formatting)\nbeginning with the details of each project.",
     "state": "UNACCEPTED",
     "story": "0xb1a",
@@ -49147,7 +49249,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbcb": {
+  "0xbce": {
     "description": "The basic structure is hierarchical: Project \u003e Team \u003e Person. Tags (and possibly\nindentation or whitespace) are used to emphasise the structure",
     "state": "UNACCEPTED",
     "story": "0xb1a",
@@ -49155,7 +49257,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbcc": {
+  "0xbcf": {
     "description": "Any teams not currently allocated to a project appear after the last project",
     "state": "UNACCEPTED",
     "story": "0xb1a",
@@ -49163,7 +49265,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbcd": {
+  "0xbd0": {
     "description": "Any people not currently members of a team appear after the last team",
     "state": "UNACCEPTED",
     "story": "0xb1a",
@@ -49171,7 +49273,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbce": {
+  "0xbd1": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb1a",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xcd7",
+    "id": 30921,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xbd2": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xbd3": {
     "description": "The project name appears in the window title",
     "state": "UNACCEPTED",
     "story": "0xb1b",
@@ -49179,7 +49300,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbcf": {
+  "0xbd4": {
     "description": "Unsaved changes indicator. When there are unsaved changes, an asterisk appears\nat the beginning of the window title. Additional indicators may be provided (such\nas enabling/disabling Save item). Undo/redo actions may require this to be\nupdated.",
     "state": "UNACCEPTED",
     "story": "0xb1b",
@@ -49187,7 +49308,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbd0": {
+  "0xbd5": {
     "description": "Menu items have short-cut keys. Details by negotiation but there should be no\nsurprises i.e. \u003cctrl\u003e-O for Open rather than \u003cctrl\u003e-E because O has already been\nused.",
     "state": "UNACCEPTED",
     "story": "0xb1b",
@@ -49195,7 +49316,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbd1": {
+  "0xbd6": {
     "description": "Dialogs should have default option (for speed) and this should be highlighted",
     "state": "UNACCEPTED",
     "story": "0xb1b",
@@ -49203,7 +49324,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbd2": {
+  "0xbd7": {
     "description": "Dialogs should have consistent button placement. Details by negotiation but for\nexample 2-button dialogs might have OK on the right \u0026 Cancel on the left with OK\nas the default.",
     "state": "UNACCEPTED",
     "story": "0xb1b",
@@ -49211,7 +49332,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbd3": {
+  "0xbd8": {
     "description": "When the main application window is resized/reshaped, scroll bars appear when\nneeded. There is a minimum size, and all panes are visible when this is reached.",
     "state": "UNACCEPTED",
     "story": "0xb1b",
@@ -49219,7 +49340,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbd4": {
+  "0xbd9": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb1b",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xcd8",
+    "id": 30923,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xbda": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xbdb": {
     "description": "A New Story… function is available via an appropriate menu item",
     "state": "UNACCEPTED",
     "story": "0xb1c",
@@ -49227,7 +49367,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbd5": {
+  "0xbdc": {
     "description": "A mandatory (unique, non-null) identifier, full name and description may be entered.\nThe person who created the story is also recorded (this won’t usually be the userid the\nprogram is running under)",
     "state": "UNACCEPTED",
     "story": "0xb1c",
@@ -49235,7 +49375,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbd6": {
+  "0xbdd": {
     "description": "The Display menu allows stories to be selected for display. As for other elements, the\nshort name appears in the displayed list and the selected item’s details appear in the\nmain panel.",
     "state": "UNACCEPTED",
     "story": "0xb1c",
@@ -49243,7 +49383,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbd7": {
+  "0xbde": {
     "description": "The newly-created story appears in the List",
     "state": "UNACCEPTED",
     "story": "0xb1c",
@@ -49251,7 +49391,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbd8": {
+  "0xbdf": {
     "description": "A story may be edited, but the creator may not be changed. If the story is edited by\nsomebody other than the creator then we’ll ignore that for now",
     "state": "UNACCEPTED",
     "story": "0xb1c",
@@ -49259,7 +49399,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbd9": {
+  "0xbe0": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb1c",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xcd9",
+    "id": 30927,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xbe1": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xbe2": {
     "description": "A \u0027Revert\" item is available on the File menu",
     "state": "UNACCEPTED",
     "story": "0xb1d",
@@ -49267,7 +49426,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbda": {
+  "0xbe3": {
     "description": "If there are no unsaved changes then nothing is done (Revert item may be disabled\nin this case)",
     "state": "UNACCEPTED",
     "story": "0xb1d",
@@ -49275,7 +49434,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbdb": {
+  "0xbe4": {
     "description": "If there are unsaved changes then the user is warned that these will not be\nrecoverable. If help is available then this should mention the use of \u0027Save As ...\u0027\nbefore reverting if unsure.",
     "state": "UNACCEPTED",
     "story": "0xb1d",
@@ -49283,7 +49442,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbdc": {
+  "0xbe5": {
     "description": "The Project reverts to the state where it was last opened. If it has been saved\nsince it was last opened then Revert takes the state back to that of the last Save\noperation.",
     "state": "UNACCEPTED",
     "story": "0xb1d",
@@ -49291,7 +49450,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbdd": {
+  "0xbe6": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb1d",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xcda",
+    "id": 30925,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xbe7": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xbe8": {
     "description": "When elements are created, they appear in the corresponding list ordered by their\nlabel (short name) when the list is displayed.",
     "state": "UNACCEPTED",
     "story": "0xb1e",
@@ -49299,7 +49477,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbde": {
+  "0xbe9": {
     "description": "When the label is changed, the list items are re-ordered if necessary to preserve\nalphabetical order.",
     "state": "UNACCEPTED",
     "story": "0xb1e",
@@ -49307,7 +49485,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbdf": {
+  "0xbea": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb1e",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xcdb",
+    "id": 30929,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xbeb": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xbec": {
     "description": "A backlog can be created via a suitable menu item",
     "state": "UNACCEPTED",
     "story": "0xb1f",
@@ -49315,7 +49512,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbe0": {
+  "0xbed": {
     "description": "As for other element types, a short name will appear in the display list and the details\nof a selected item will appear in the main pane",
     "state": "UNACCEPTED",
     "story": "0xb1f",
@@ -49323,7 +49520,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbe1": {
+  "0xbee": {
     "description": "Each backlog has a full name, description and PO",
     "state": "UNACCEPTED",
     "story": "0xb1f",
@@ -49331,7 +49528,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbe2": {
+  "0xbef": {
     "description": "Zero or more stories may be added to the selected backlog via appropriate GUI\nelements",
     "state": "UNACCEPTED",
     "story": "0xb1f",
@@ -49339,7 +49536,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbe3": {
+  "0xbf0": {
     "description": "A story may appear on zero or one backlog. A story appears at most once in the\nbacklog.",
     "state": "UNACCEPTED",
     "story": "0xb1f",
@@ -49347,7 +49544,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbe4": {
+  "0xbf1": {
     "description": "When a new story is created, it can (and usually will) be assigned to an existing\nbacklog.",
     "state": "UNACCEPTED",
     "story": "0xb1f",
@@ -49355,7 +49552,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbe5": {
+  "0xbf2": {
     "description": "The backlog’s stories are in (total) order: the highest priority story has the most value\nto the customer at the current time. The order of each story is specified when it is\nadded to the backlog.",
     "state": "UNACCEPTED",
     "story": "0xb1f",
@@ -49363,7 +49560,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbe6": {
+  "0xbf3": {
     "description": "The priority of each story can be changed and this will be likely to happen several\ntimes while the story is in the backlog.",
     "state": "UNACCEPTED",
     "story": "0xb1f",
@@ -49371,7 +49568,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbe7": {
+  "0xbf4": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb1f",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xcdc",
+    "id": 30931,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xbf5": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xbf6": {
     "description": "See also Story 11 (Status reports)",
     "state": "UNACCEPTED",
     "story": "0xb20",
@@ -49379,7 +49595,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbe8": {
+  "0xbf7": {
     "description": "When the report function is activated, the user can select the level (project, team,\nperson) required (e.g. from a submenu). The default level is project.",
     "state": "UNACCEPTED",
     "story": "0xb20",
@@ -49387,7 +49603,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbe9": {
+  "0xbf8": {
     "description": "When the level has been chosen, the user can select one or more elements from the\ncorresponding level.",
     "state": "UNACCEPTED",
     "story": "0xb20",
@@ -49395,15 +49611,34 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbea": {
-    "description": "The report content contains only detail from the selected elements and their\n“children.�?",
+  "0xbf9": {
+    "description": "The report content contains only detail from the selected elements and their\n“children.�?",
     "state": "UNACCEPTED",
     "story": "0xb20",
     "id": 7931,
     "itemName": "",
     "serializableTags": []
   },
-  "0xbeb": {
+  "0xbfa": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb20",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xcdd",
+    "id": 31328,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xbfb": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xbfc": {
     "description": "When a backlog is selected for display, its stories appear in descending order of\npriority",
     "state": "UNACCEPTED",
     "story": "0xb21",
@@ -49411,7 +49646,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbec": {
+  "0xbfd": {
     "description": "The user can elect, via an appropriate GUI control, to display the stories in the default\n(alphabetical) order to make it easier to find a particular story",
     "state": "UNACCEPTED",
     "story": "0xb21",
@@ -49419,7 +49654,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbed": {
+  "0xbfe": {
     "description": "The user can toggle between the two orders. Some visual indication of which order is\ncurrently selected is available",
     "state": "UNACCEPTED",
     "story": "0xb21",
@@ -49427,7 +49662,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbee": {
+  "0xbff": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb21",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xcde",
+    "id": 31330,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc00": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc01": {
     "description": "See also Story 11 (Status reports) and Story 16 (parameterised reports)",
     "state": "UNACCEPTED",
     "story": "0xb22",
@@ -49435,7 +49689,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbef": {
+  "0xc02": {
     "description": "When the report function is activated, the user can select the backlog level (e.g. from\na submenu).",
     "state": "UNACCEPTED",
     "story": "0xb22",
@@ -49443,7 +49697,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbf0": {
+  "0xc03": {
     "description": "When the level has been chosen, the user can select one or more backlogs from the\ncorresponding list.",
     "state": "UNACCEPTED",
     "story": "0xb22",
@@ -49451,15 +49705,15 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbf1": {
-    "description": "The report content contains only detail from the selected elements and their\n“children.�?",
+  "0xc04": {
+    "description": "The report content contains only detail from the selected elements and their\n“children.�?",
     "state": "UNACCEPTED",
     "story": "0xb22",
     "id": 7938,
     "itemName": "",
     "serializableTags": []
   },
-  "0xbf2": {
+  "0xc05": {
     "description": "The items are in descending priority order",
     "state": "UNACCEPTED",
     "story": "0xb22",
@@ -49467,7 +49721,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbf3": {
+  "0xc06": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb22",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xcdf",
+    "id": 31332,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc07": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc08": {
     "description": "When a story is selected, the editing options include updating acceptance criteria.",
     "state": "UNACCEPTED",
     "story": "0xb23",
@@ -49475,7 +49748,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbf4": {
+  "0xc09": {
     "description": "A story may have zero or more ACs. For now, they are just text: we don’t need to\nknow whether they have been satisfied or not etc.",
     "state": "UNACCEPTED",
     "story": "0xb23",
@@ -49483,7 +49756,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbf5": {
+  "0xc0a": {
     "description": "ACs may be added, re-ordered or removed.",
     "state": "UNACCEPTED",
     "story": "0xb23",
@@ -49491,7 +49764,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbf6": {
+  "0xc0b": {
     "description": "The text of an AC may be edited",
     "state": "UNACCEPTED",
     "story": "0xb23",
@@ -49499,7 +49772,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbf7": {
+  "0xc0c": {
     "description": "We don’t have to worry about checking for duplicates etc --- we rely on the PO for\nthat",
     "state": "UNACCEPTED",
     "story": "0xb23",
@@ -49507,7 +49780,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbf8": {
+  "0xc0d": {
     "description": "ACs appear in any reports that include stories",
     "state": "UNACCEPTED",
     "story": "0xb23",
@@ -49515,15 +49788,34 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbf9": {
-    "description": "Every story has an “estimate�? property.",
+  "0xc0e": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb23",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xce0",
+    "id": 31334,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc0f": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc10": {
+    "description": "Every story has an “estimate�? property.",
     "state": "UNACCEPTED",
     "story": "0xb24",
     "id": 7946,
     "itemName": "",
     "serializableTags": []
   },
-  "0xbfa": {
+  "0xc11": {
     "description": "Story points are values of an ordinal scale such as the (pseudo-) Fibonacci series,\nT-shirt sizes or dog breeds.",
     "state": "UNACCEPTED",
     "story": "0xb24",
@@ -49531,7 +49823,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbfb": {
+  "0xc12": {
     "description": "One or more story point scales is available. Only one scale is used for stories in a\nparticular backlog. If more than one scale is available then one must be chosen when\nthe backlog is created.",
     "state": "UNACCEPTED",
     "story": "0xb24",
@@ -49539,7 +49831,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbfc": {
+  "0xc13": {
     "description": "Only scale values may appear. Ideally, values will be selected from a list of valid\noptions (e.g. via a JComboBox).",
     "state": "UNACCEPTED",
     "story": "0xb24",
@@ -49547,7 +49839,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbfd": {
+  "0xc14": {
     "description": "An appropriate value for null estimates is included. If (as is likely) an estimate is not\navailable when the story is created, then the null value is used. The null (unknown)\nvalue is not the same thing as the zero (known to be zero --- perhaps because it has\nalready been done) value.",
     "state": "UNACCEPTED",
     "story": "0xb24",
@@ -49555,7 +49847,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbfe": {
+  "0xc15": {
     "description": "The estimate can (and probably will) be changed several times. At this stage we don’t\nneed to record the values of previous estimates.",
     "state": "UNACCEPTED",
     "story": "0xb24",
@@ -49563,7 +49855,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xbff": {
+  "0xc16": {
     "description": "A story cannot be estimated if it has no ACs.",
     "state": "UNACCEPTED",
     "story": "0xb24",
@@ -49571,7 +49863,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc00": {
+  "0xc17": {
     "description": "Estimates appear on any reports involving the corresponding stories.",
     "state": "UNACCEPTED",
     "story": "0xb24",
@@ -49579,7 +49871,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc01": {
+  "0xc18": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb24",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xce1",
+    "id": 31336,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc19": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc1a": {
     "description": "Each story has a property indicating its readiness",
     "state": "UNACCEPTED",
     "story": "0xb25",
@@ -49587,7 +49898,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc02": {
+  "0xc1b": {
     "description": "A newly-created story is initially not ready.",
     "state": "UNACCEPTED",
     "story": "0xb25",
@@ -49595,7 +49906,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc03": {
+  "0xc1c": {
     "description": "Available editing operations include changing the readiness state from not ready to\nready (or from ready to not ready).",
     "state": "UNACCEPTED",
     "story": "0xb25",
@@ -49603,7 +49914,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc04": {
+  "0xc1d": {
     "description": "A story’s readiness state cannot be changed to ready if any of these apply:\n○ The story is not in a backlog\n○ The story does not have a non-null estimate\n○ The story has no acceptance criteria",
     "state": "UNACCEPTED",
     "story": "0xb25",
@@ -49611,7 +49922,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc05": {
+  "0xc1e": {
     "description": "Readiness state appears on any reports involving the corresponding story.",
     "state": "UNACCEPTED",
     "story": "0xb25",
@@ -49619,7 +49930,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc06": {
+  "0xc1f": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb25",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xce2",
+    "id": 31338,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc20": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc21": {
     "description": "Each story has a (possibly empty) list of stories on which it depends",
     "state": "UNACCEPTED",
     "story": "0xb26",
@@ -49627,7 +49957,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc07": {
+  "0xc22": {
     "description": "A story may depend on zero or more other stories",
     "state": "UNACCEPTED",
     "story": "0xb26",
@@ -49635,7 +49965,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc08": {
+  "0xc23": {
     "description": "Transitive chains of dependencies are fine, but cyclic dependency chains are not\npermitted (it should not be possible to create them).",
     "state": "UNACCEPTED",
     "story": "0xb26",
@@ -49643,7 +49973,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc09": {
+  "0xc24": {
     "description": "It is possible to check for, and be shown, conflicts where a higher priority story\ndepends on a story of lower priority.",
     "state": "UNACCEPTED",
     "story": "0xb26",
@@ -49651,7 +49981,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc0a": {
+  "0xc25": {
     "description": "Dependencies (if any) appear on any reports involving the corresponding story",
     "state": "UNACCEPTED",
     "story": "0xb26",
@@ -49659,7 +49989,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc0b": {
+  "0xc26": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb26",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xce3",
+    "id": 31340,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc27": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc28": {
     "description": "A toolbar (JToolBar or similar) is provided immediately below the application\u0027s\nmenubar (or elsewhere by negotiation).",
     "state": "UNACCEPTED",
     "story": "0xb27",
@@ -49667,7 +50016,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc0c": {
+  "0xc29": {
     "description": "Items on the toolbar have appropriate icons and tooltips.",
     "state": "UNACCEPTED",
     "story": "0xb27",
@@ -49675,7 +50024,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc0d": {
+  "0xc2a": {
     "description": "Items on the toolbar are grouped as appropriate (JToolBar.Separator or similar)",
     "state": "UNACCEPTED",
     "story": "0xb27",
@@ -49683,7 +50032,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc0e": {
+  "0xc2b": {
     "description": "The toolbar contents (details by negotiation) will probably include element\ncreation/edit/delete and linking operations",
     "state": "UNACCEPTED",
     "story": "0xb27",
@@ -49691,7 +50040,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc0f": {
+  "0xc2c": {
     "description": "As application functionality grows and evolves, reorganisation of toolbar content may\nbe required. Major changes should only be made after consultation with SM/PO as\nappropriate.",
     "state": "UNACCEPTED",
     "story": "0xb27",
@@ -49699,7 +50048,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc10": {
+  "0xc2d": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb27",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xce4",
+    "id": 31929,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc2e": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc2f": {
     "description": "When the display list shows the stories in a backlog, the user can choose (via an\nappropriate GUI control) to display it in highlight mode.",
     "state": "UNACCEPTED",
     "story": "0xb28",
@@ -49707,7 +50075,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc11": {
+  "0xc30": {
     "description": "When this is selected, each item is highlighted in an appropriate way (maybe\nbackground colour, a colour chip at the beginning/end, …). Only one highlight\ncategory (currently) applies to any given story.",
     "state": "UNACCEPTED",
     "story": "0xb28",
@@ -49715,7 +50083,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc12": {
+  "0xc31": {
     "description": "Stories that are ready have green highlighting",
     "state": "UNACCEPTED",
     "story": "0xb28",
@@ -49723,7 +50091,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc13": {
+  "0xc32": {
     "description": "Orange highlighting is used for stories that have not yet been estimated but which\ncould be (i.e. they have one or more ACs)",
     "state": "UNACCEPTED",
     "story": "0xb28",
@@ -49731,7 +50099,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc14": {
+  "0xc33": {
     "description": "Red highlighting is used for stories which depend on one or more stories which have\nlower​ priority. This overrides any other applicable highlighting.",
     "state": "UNACCEPTED",
     "story": "0xb28",
@@ -49739,7 +50107,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc15": {
+  "0xc34": {
     "description": "All other stories have no highlighting.",
     "state": "UNACCEPTED",
     "story": "0xb28",
@@ -49747,7 +50115,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc16": {
+  "0xc35": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb28",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xce5",
+    "id": 31385,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc36": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc37": {
     "description": "Sprint creation/edit features are accessible from an appropriate GUI element.",
     "state": "UNACCEPTED",
     "story": "0xb29",
@@ -49755,7 +50142,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc17": {
+  "0xc38": {
     "description": "Each sprint involves a project (indirectly via backlog), team, and backlog",
     "state": "UNACCEPTED",
     "story": "0xb29",
@@ -49763,7 +50150,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc18": {
+  "0xc39": {
     "description": "Each sprint has a start and end date.",
     "state": "UNACCEPTED",
     "story": "0xb29",
@@ -49771,7 +50158,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc19": {
+  "0xc3a": {
     "description": "Each sprint is associated with a release (and should end before the corresponding\nrelease date).",
     "state": "UNACCEPTED",
     "story": "0xb29",
@@ -49779,7 +50166,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc1a": {
+  "0xc3b": {
     "description": "Each sprint has a sprint goal: this functions as the display name/label. A sprint also has\na full name and description.",
     "state": "UNACCEPTED",
     "story": "0xb29",
@@ -49787,7 +50174,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc1b": {
+  "0xc3c": {
     "description": "Each sprint has zero or more user stories. These (at least implicitly) represent a section\nof the backlog beginning with the highest priority uncompleted story. However, in\nanticipation of complications such as shared backlogs, each sprint will maintain an\nexplicit collection of its stories.",
     "state": "UNACCEPTED",
     "story": "0xb29",
@@ -49795,7 +50182,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc1c": {
+  "0xc3d": {
     "description": "Stories must be ready (see user story 21) before they can be included in a sprint.",
     "state": "UNACCEPTED",
     "story": "0xb29",
@@ -49803,7 +50190,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc1d": {
+  "0xc3e": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb29",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xce6",
+    "id": 31931,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc3f": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc40": {
     "description": "A basic search function is available via an appropriate menu item or toolbar",
     "state": "UNACCEPTED",
     "story": "0xb2a",
@@ -49811,7 +50217,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc1e": {
+  "0xc41": {
     "description": "A search string can be entered in an appropriate dialog or other component.",
     "state": "UNACCEPTED",
     "story": "0xb2a",
@@ -49819,7 +50225,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc1f": {
+  "0xc42": {
     "description": "There is an option to limit the search to the current List or the current Project (including\nany unsaved changes)",
     "state": "UNACCEPTED",
     "story": "0xb2a",
@@ -49827,7 +50233,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc20": {
+  "0xc43": {
     "description": "There is an option to limit the search to display labels. Otherwise all occurrences are\nreported.",
     "state": "UNACCEPTED",
     "story": "0xb2a",
@@ -49835,7 +50241,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc21": {
+  "0xc44": {
     "description": "Only fixed search strings are required at this stage (later we may want regular\nexpressions or richer dialogs)",
     "state": "UNACCEPTED",
     "story": "0xb2a",
@@ -49843,7 +50249,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc22": {
+  "0xc45": {
     "description": "When the search is complete the results are presented to the user. If the search is\nlimited to the current List then matches are highlighted",
     "state": "UNACCEPTED",
     "story": "0xb2a",
@@ -49851,7 +50257,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc23": {
+  "0xc46": {
     "description": "If the search is over the entire project/system then results are presented in a separate\nwindow. The user may select a result and this switches the current display list (if\nnecessary) and displays the match with highlighting as in the previous AC",
     "state": "UNACCEPTED",
     "story": "0xb2a",
@@ -49859,7 +50265,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc24": {
+  "0xc47": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb2a",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xce7",
+    "id": 31933,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc48": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc49": {
     "description": "Tasks may be created via at least one appropriate GUI facility. It is likely that selecting\nthe story first and then adding the tasks will be convenient.",
     "state": "UNACCEPTED",
     "story": "0xb2b",
@@ -49867,7 +50292,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc25": {
+  "0xc4a": {
     "description": "Each task is associated with one story. Tasks cannot be created outside a story (unless\nagreed policy allows).",
     "state": "UNACCEPTED",
     "story": "0xb2b",
@@ -49875,7 +50300,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc26": {
+  "0xc4b": {
     "description": "Tasks have the usual short name/label, and description. These may be edited after\ncreation",
     "state": "UNACCEPTED",
     "story": "0xb2b",
@@ -49883,7 +50308,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc27": {
+  "0xc4c": {
     "description": "Tasks have an estimate (generally in hours)",
     "state": "UNACCEPTED",
     "story": "0xb2b",
@@ -49891,7 +50316,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc28": {
+  "0xc4d": {
     "description": "Tasks have a status (values are likely to include completed, in progress, ready, etc)",
     "state": "UNACCEPTED",
     "story": "0xb2b",
@@ -49899,7 +50324,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc29": {
+  "0xc4e": {
     "description": "Task status may be changed. This will normally be done via the GUI developed in the\nStandup/Scrum board support story.",
     "state": "UNACCEPTED",
     "story": "0xb2b",
@@ -49907,7 +50332,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc2a": {
+  "0xc4f": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb2b",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xce8",
+    "id": 31935,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc50": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc51": {
     "description": "The display provides access to the stories in a sprint, together with their associated\ntasks",
     "state": "UNACCEPTED",
     "story": "0xb2c",
@@ -49915,7 +50359,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc2b": {
+  "0xc52": {
     "description": "Task status may be changed (e.g. to completed). Not all changes may be semantically\nmeaningful.",
     "state": "UNACCEPTED",
     "story": "0xb2c",
@@ -49923,7 +50367,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc2c": {
+  "0xc53": {
     "description": "Task estimates (e.g. time required) may be updated.",
     "state": "UNACCEPTED",
     "story": "0xb2c",
@@ -49931,7 +50375,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc2d": {
+  "0xc54": {
     "description": "Allocation of people to tasks may be made. Only team members may be allocated.",
     "state": "UNACCEPTED",
     "story": "0xb2c",
@@ -49939,7 +50383,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc2e": {
+  "0xc55": {
     "description": "Effort spent on tasks by people may be updated. In the future, we may compute some of\nthis directly from logged sessions but for now we can just do this manually.",
     "state": "UNACCEPTED",
     "story": "0xb2c",
@@ -49947,7 +50391,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc2f": {
+  "0xc56": {
     "description": "If all tasks for a story are complete then the story may be marked as done. This should\nrequire explicit action rather than be automatic.",
     "state": "UNACCEPTED",
     "story": "0xb2c",
@@ -49955,7 +50399,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc30": {
+  "0xc57": {
     "description": "Impediments may be noted at task or story level.",
     "state": "UNACCEPTED",
     "story": "0xb2c",
@@ -49963,7 +50407,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc31": {
+  "0xc58": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb2c",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xce9",
+    "id": 31980,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc59": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc5a": {
     "description": "The main application area is now a set of tabbed panes",
     "state": "UNACCEPTED",
     "story": "0xb2d",
@@ -49971,15 +50434,15 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc32": {
-    "description": "The current display list actions continue to work as previously, but now write into the\n“model�? pane.",
+  "0xc5b": {
+    "description": "The current display list actions continue to work as previously, but now write into the\n“model�? pane.",
     "state": "UNACCEPTED",
     "story": "0xb2d",
     "id": 8025,
     "itemName": "",
     "serializableTags": []
   },
-  "0xc33": {
+  "0xc5c": {
     "description": "Other panes are used to display graphical views such as burndown charts.",
     "state": "UNACCEPTED",
     "story": "0xb2d",
@@ -49987,7 +50450,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc34": {
+  "0xc5d": {
     "description": "Currently, we only need one model pane and the list can remain as before. However, it\nis anticipated that other panes will eventually incorporate their own lists or other controls.\nAt this point the original list display will be incorporated in the model pane and we may\neven need to consider supporting multiple model panes.",
     "state": "UNACCEPTED",
     "story": "0xb2d",
@@ -49995,7 +50458,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc35": {
+  "0xc5e": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb2d",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xcea",
+    "id": 32025,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc5f": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc60": {
     "description": "The chart axes are time (x) and work remaining (y). The time axis units are days and the\nwork remaining units are hours",
     "state": "UNACCEPTED",
     "story": "0xb2e",
@@ -50003,7 +50485,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc36": {
+  "0xc61": {
     "description": "A target line is drawn from the (day zero, all tasks remaining) point on the y axis to the\n(last day of sprint, zero tasks remaining) point on the x axis. This should be in a colour\n(e.g. red or gray) that is easily distinguishable from the colour(s) that will be used\nelsewhere on the chart",
     "state": "UNACCEPTED",
     "story": "0xb2e",
@@ -50011,7 +50493,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc37": {
+  "0xc62": {
     "description": "A point (or bar etc.) is drawn for each day in the sprint. Its height is the hours remaining.\nIdeally, this is calculated from the current tasks associated with the sprint. If this is not\ncurrently practicable to determine then the PO might be willing to negotiate a manual\nentry/override feature",
     "state": "UNACCEPTED",
     "story": "0xb2e",
@@ -50019,7 +50501,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc38": {
+  "0xc63": {
     "description": "If the data is available, then it should be possible to select a completed sprint and\ndisplay the corresponding burndown chart.",
     "state": "UNACCEPTED",
     "story": "0xb2e",
@@ -50027,7 +50509,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc39": {
+  "0xc64": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb2e",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xceb",
+    "id": 32070,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc65": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc66": {
     "description": "All unallocated tasks can be displayed",
     "state": "UNACCEPTED",
     "story": "0xb2f",
@@ -50035,7 +50536,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc3a": {
+  "0xc67": {
     "description": "The display order is the priority order of the corresponding stories. Within that the order\nof tasks can be either alphabetical or in increasing estimated size",
     "state": "UNACCEPTED",
     "story": "0xb2f",
@@ -50043,7 +50544,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc3b": {
+  "0xc68": {
     "description": "All tasks can be displayed, grouped by stories in priority order",
     "state": "UNACCEPTED",
     "story": "0xb2f",
@@ -50051,15 +50552,15 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc3c": {
-    "description": "In the “All tasks�? view, unallocated tasks are highlighted (e.g. in red)",
+  "0xc69": {
+    "description": "In the “All tasks�? view, unallocated tasks are highlighted (e.g. in red)",
     "state": "UNACCEPTED",
     "story": "0xb2f",
     "id": 8013,
     "itemName": "",
     "serializableTags": []
   },
-  "0xc3d": {
+  "0xc6a": {
     "description": "Active tasks are highlighted differently (e.g. in orange) and completed tasks are\ndistinguished (e.g. in green or black). Details will depend on how many status options\nare available.",
     "state": "UNACCEPTED",
     "story": "0xb2f",
@@ -50067,7 +50568,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc3e": {
+  "0xc6b": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb2f",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xcec",
+    "id": 32115,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc6c": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc6d": {
     "description": "Effort logging can be accessed via appropriate GUI controls",
     "state": "UNACCEPTED",
     "story": "0xb30",
@@ -50075,7 +50595,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc3f": {
+  "0xc6e": {
     "description": "A task can be selected. Effort (time) for a person can be recorded against the task,\ntogether with a brief (but mandatory) comment.",
     "state": "UNACCEPTED",
     "story": "0xb30",
@@ -50083,7 +50603,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc40": {
+  "0xc6f": {
     "description": "Only people in the team to which the corresponding story is assigned may log effort on\nits tasks. The person must be specified when effort is logged.",
     "state": "UNACCEPTED",
     "story": "0xb30",
@@ -50091,7 +50611,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc41": {
+  "0xc70": {
     "description": "Time will be recorded (at least internally) at the granularity of minutes. However, it is\nlikely that the actual data will be provided in 10­minute or quarter­hour granularity.",
     "state": "UNACCEPTED",
     "story": "0xb30",
@@ -50099,15 +50619,15 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc42": {
-    "description": "Effort may be entered as an interval (i.e. by specifying start and end times) or as an\namount (hours and/or minutes). If an amount is provided then the corresponding day is\nalso required. In the Standup/Scrum board support story it was implicitly assumed that\nthe date was “yesterday.�?",
+  "0xc71": {
+    "description": "Effort may be entered as an interval (i.e. by specifying start and end times) or as an\namount (hours and/or minutes). If an amount is provided then the corresponding day is\nalso required. In the Standup/Scrum board support story it was implicitly assumed that\nthe date was “yesterday.�?",
     "state": "UNACCEPTED",
     "story": "0xb30",
     "id": 8019,
     "itemName": "",
     "serializableTags": []
   },
-  "0xc43": {
+  "0xc72": {
     "description": "Normally, effort should only be logged against tasks which are part of a story in the\ncurrent sprint. Negotiated policy will apply.",
     "state": "UNACCEPTED",
     "story": "0xb30",
@@ -50115,7 +50635,26 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc44": {
+  "0xc73": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb30",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xced",
+    "id": 32160,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc74": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc75": {
     "description": "Displaying stories in a sprint in one or more forms",
     "state": "UNACCEPTED",
     "story": "0xb31",
@@ -50123,7 +50662,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc45": {
+  "0xc76": {
     "description": "Displaying stories in a sprint in one or more orders (priority, completeness, lexical, …)",
     "state": "UNACCEPTED",
     "story": "0xb31",
@@ -50131,7 +50670,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc46": {
+  "0xc77": {
     "description": "Indicating story size and completeness in appropriate visual ways",
     "state": "UNACCEPTED",
     "story": "0xb31",
@@ -50139,7 +50678,21 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc47": {
+  "0xc78": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb31",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xcee",
+    "id": 32205,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc79": {
     "description": "An appropriate icon is associated with the application. This can be a simple place­holder\nfor now and it is not appropriate to spend a lot of time designing it.",
     "state": "UNACCEPTED",
     "story": "0xb32",
@@ -50147,7 +50700,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc48": {
+  "0xc7a": {
     "description": "Double­clicking the application icon begins execution",
     "state": "UNACCEPTED",
     "story": "0xb32",
@@ -50155,7 +50708,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc49": {
+  "0xc7b": {
     "description": "If the icon is associated with a JAR file then double­clicking it begins execution and does\nnot open an archive manager.",
     "state": "UNACCEPTED",
     "story": "0xb32",
@@ -50163,7 +50716,12 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc4a": {
+  "0xc7c": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xc7d": {
     "description": "Search expressions may be entered via an appropriate dialog.",
     "state": "UNACCEPTED",
     "story": "0xb33",
@@ -50171,7 +50729,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc4b": {
+  "0xc7e": {
     "description": "Wildcards and regular expressions should be available",
     "state": "UNACCEPTED",
     "story": "0xb33",
@@ -50179,7 +50737,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc4c": {
+  "0xc7f": {
     "description": "Complex expressions (e.g. involving operators such as or and and ) may be entered as\nregular expressions or each clause could be a separate line in a dialog etc.",
     "state": "UNACCEPTED",
     "story": "0xb33",
@@ -50187,7 +50745,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc4d": {
+  "0xc80": {
     "description": "Results are presented in a separate window. Selecting a particular result navigates to\nthe appropriate context. This will possibly involve switching the current display list type",
     "state": "UNACCEPTED",
     "story": "0xb33",
@@ -50195,15 +50753,29 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc4e": {
-    "description": "The locale can be set when a new system is created. Here we mean the “biggest�?\nhigh­level concept: we’ve referred to this as system, enterprise, model, project etc",
+  "0xc81": {
+    "shortName": "Finish Story",
+    "description": " ",
+    "impediments": "",
+    "state": "DONE",
+    "lane": "DONE",
+    "story": "0xb33",
+    "effortLeft": 0.0,
+    "effortSpent": 0.0,
+    "initialLog": "0xcef",
+    "id": 32250,
+    "itemName": "Finish Story",
+    "serializableTags": []
+  },
+  "0xc82": {
+    "description": "The locale can be set when a new system is created. Here we mean the “biggest�?\nhigh­level concept: we’ve referred to this as system, enterprise, model, project etc",
     "state": "UNACCEPTED",
     "story": "0xb34",
     "id": 8094,
     "itemName": "",
     "serializableTags": []
   },
-  "0xc4f": {
+  "0xc83": {
     "description": "We can assume that the locale remains fixed.",
     "state": "UNACCEPTED",
     "story": "0xb34",
@@ -50211,7 +50783,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc50": {
+  "0xc84": {
     "description": "Dates and times are entered and displayed in formats appropriate for the locale",
     "state": "UNACCEPTED",
     "story": "0xb34",
@@ -50219,7 +50791,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc51": {
+  "0xc85": {
     "description": "The text for major GUI elements (including buttons, menus, menu items, dialogs, …)\nmay be customised as appropriate for the locale. Some locales have more than one\npotential natural language option (Maori or English in NZ; French or English in Canada;\nFrench or Flemish in Belgium) but only one need be supported unless the PO requires it",
     "state": "UNACCEPTED",
     "story": "0xb34",
@@ -50227,7 +50799,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc52": {
+  "0xc86": {
     "description": "For now, we can assume we are dealing with languages where the Roman character set\nand left­to­right text entry are used. Later stories may extend this.",
     "state": "UNACCEPTED",
     "story": "0xb34",
@@ -50235,7 +50807,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc53": {
+  "0xc87": {
     "description": "The similarity detector can be accessed via suitable GUI controls",
     "state": "UNACCEPTED",
     "story": "0xb35",
@@ -50243,7 +50815,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc54": {
+  "0xc88": {
     "description": "A stop list of common words is provided.",
     "state": "UNACCEPTED",
     "story": "0xb35",
@@ -50251,7 +50823,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc55": {
+  "0xc89": {
     "description": "Stemming is provide",
     "state": "UNACCEPTED",
     "story": "0xb35",
@@ -50259,7 +50831,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc56": {
+  "0xc8a": {
     "description": "The user can add/remove terms from the stop list.",
     "state": "UNACCEPTED",
     "story": "0xb35",
@@ -50267,7 +50839,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc57": {
+  "0xc8b": {
     "description": "When the similarity detector is run, the most similar pairs/groups of stories are\ndisplayed., together with an indication of the degree of similarity.",
     "state": "UNACCEPTED",
     "story": "0xb35",
@@ -50275,7 +50847,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc58": {
+  "0xc8c": {
     "description": "A workspace is provided, details by negotiation but probably as a tab pane or separate\nwindow. Scrolling is supported.",
     "state": "UNACCEPTED",
     "story": "0xb36",
@@ -50283,7 +50855,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc59": {
+  "0xc8d": {
     "description": "Stories may be selected from the backlog (though not necessarily directly) and appear\nas visual elements (e.g. rectangles or icons) on the surface.",
     "state": "UNACCEPTED",
     "story": "0xb36",
@@ -50291,7 +50863,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc5a": {
+  "0xc8e": {
     "description": "No story may appear more than once.",
     "state": "UNACCEPTED",
     "story": "0xb36",
@@ -50299,7 +50871,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc5b": {
+  "0xc8f": {
     "description": "The label and current estimate (if any) are displayed.",
     "state": "UNACCEPTED",
     "story": "0xb36",
@@ -50307,7 +50879,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc5c": {
+  "0xc90": {
     "description": "Stories may be dragged around the surface. Stories may overlap but no story should\ncompletely obscure another",
     "state": "UNACCEPTED",
     "story": "0xb36",
@@ -50315,7 +50887,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc5d": {
+  "0xc91": {
     "description": "Double­clicking (or other suitable action) opens the corresponding story detail dialog.\nEstimates may be updated via this.",
     "state": "UNACCEPTED",
     "story": "0xb36",
@@ -50323,7 +50895,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc5e": {
+  "0xc92": {
     "description": "Stories may be removed from the display so it doesn’t get too cluttered but this does not\ndelete them.",
     "state": "UNACCEPTED",
     "story": "0xb36",
@@ -50331,7 +50903,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc5f": {
+  "0xc93": {
     "description": "A login dialog is available via appropriate GUI elements.",
     "state": "UNACCEPTED",
     "story": "0xb37",
@@ -50339,7 +50911,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc60": {
+  "0xc94": {
     "description": "The user is prompted to enter their login credentials and login succeeds only if these are\nconfirmed.",
     "state": "UNACCEPTED",
     "story": "0xb37",
@@ -50347,7 +50919,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc61": {
+  "0xc95": {
     "description": "Only one user may be logged in at a time",
     "state": "UNACCEPTED",
     "story": "0xb37",
@@ -50355,7 +50927,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc62": {
+  "0xc96": {
     "description": "It also supports creation of a new account (for first­time users). A password may be\nprovided for a new user and is stored in an appropriate way. High security is not a major\nconcern at this point so implementations involving hard coding these into the\napplication/person elements, or storing in a file, are OK for now.",
     "state": "UNACCEPTED",
     "story": "0xb37",
@@ -50363,7 +50935,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc63": {
+  "0xc97": {
     "description": "Passwords are never visible via the application GUI.",
     "state": "UNACCEPTED",
     "story": "0xb37",
@@ -50371,15 +50943,15 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc64": {
-    "description": "An email address may also be provided. A “lost password�? operation will email relevant\ndetails to this address.",
+  "0xc98": {
+    "description": "An email address may also be provided. A “lost password�? operation will email relevant\ndetails to this address.",
     "state": "UNACCEPTED",
     "story": "0xb37",
     "id": 8116,
     "itemName": "",
     "serializableTags": []
   },
-  "0xc65": {
+  "0xc99": {
     "description": "The feature also supports changing passwords. This requires the current password to\nbe entered and the new password must be entered twice before being recorded. The\nuser is warned if the two attempts are not the same.",
     "state": "UNACCEPTED",
     "story": "0xb37",
@@ -50387,7 +50959,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc66": {
+  "0xc9a": {
     "description": "The currently logged in account name (probably a person label or userid) is prominently\ndisplayed, possibly in the menu bar or toolbar (the login/logout controls could be located\nin a menu tied to this display).",
     "state": "UNACCEPTED",
     "story": "0xb37",
@@ -50395,15 +50967,15 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc67": {
-    "description": "When logging effort (see story 32 “logging effort�?) the currently logged in user is used as\nthe default target.",
+  "0xc9b": {
+    "description": "When logging effort (see story 32 “logging effort�?) the currently logged in user is used as\nthe default target.",
     "state": "UNACCEPTED",
     "story": "0xb37",
     "id": 8119,
     "itemName": "",
     "serializableTags": []
   },
-  "0xc68": {
+  "0xc9c": {
     "description": "There is a logout button in the menu bar. Pressing it returns the application to the state\nit was in before the user logged in (it may be appropriate to prompt the user to save\nunsaved changes in activities which require login to access).",
     "state": "UNACCEPTED",
     "story": "0xb37",
@@ -50411,7 +50983,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc69": {
+  "0xc9d": {
     "description": "Stories which depend on one or more lower­priority stories (coloured red in\ndependencies story) are similarly identified in the backlog view.",
     "state": "UNACCEPTED",
     "story": "0xb38",
@@ -50419,7 +50991,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc6a": {
+  "0xc9e": {
     "description": "Tag management facilities are available via appropriate GUI elements",
     "state": "ACCEPTED",
     "story": "0xb39",
@@ -50427,7 +50999,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc6b": {
+  "0xc9f": {
     "description": "Tags may be entered via an appropriate dialog. Each tag has a label (a short name that\nwill appear on tool tips etc) and an optional (probably longer) description.",
     "state": "ACCEPTED",
     "story": "0xb39",
@@ -50435,7 +51007,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc6c": {
+  "0xca0": {
     "description": "A colour is associated with each tag. This may be used to highlight the applicable tags\nin other application views",
     "state": "ACCEPTED",
     "story": "0xb39",
@@ -50443,7 +51015,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc6d": {
+  "0xca1": {
     "description": "Some tags might apply to any model element (team, story, release, skill) but in general\neach tag will be meaningfully associated with a subset (e.g. {story, AC, task}).",
     "state": "ACCEPTED",
     "story": "0xb39",
@@ -50451,7 +51023,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc6e": {
+  "0xca2": {
     "description": "The tag label and description may be edited",
     "state": "UNACCEPTED",
     "story": "0xb39",
@@ -50459,7 +51031,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc6f": {
+  "0xca3": {
     "description": "Tags may be deleted. However, if the tags are allocated to any items then we’ll need to\nconfirm the deletion semantics.",
     "state": "UNACCEPTED",
     "story": "0xb39",
@@ -50467,7 +51039,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc70": {
+  "0xca4": {
     "description": "A facility is available to add/remove tags from system elements. Details by negotiation,\nbut this might be achieved via the corresponding edit dialogs.",
     "state": "UNACCEPTED",
     "story": "0xb3a",
@@ -50475,7 +51047,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc71": {
+  "0xca5": {
     "description": "If any tags are currently associated, then the corresponding tags are indicated in asuitable way. This might be implemented via small colour chips, a drop­down list, etc.",
     "state": "UNACCEPTED",
     "story": "0xb3a",
@@ -50483,7 +51055,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc72": {
+  "0xca6": {
     "description": "Zero or more tags may be associated with an element.",
     "state": "UNACCEPTED",
     "story": "0xb3a",
@@ -50491,15 +51063,15 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc73": {
-    "description": "We can assume for now that the number of tags associated with a given element will be\n“reasonably small�? (e.g. 0 .. 7+/­2).",
+  "0xca7": {
+    "description": "We can assume for now that the number of tags associated with a given element will be\n“reasonably small�? (e.g. 0 .. 7+/­2).",
     "state": "UNACCEPTED",
     "story": "0xb3a",
     "id": 7831,
     "itemName": "",
     "serializableTags": []
   },
-  "0xc74": {
+  "0xca8": {
     "description": "A tagged element may be deleted.",
     "state": "UNACCEPTED",
     "story": "0xb3a",
@@ -50507,7 +51079,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc75": {
+  "0xca9": {
     "description": "If a tag is deleted the user is warned if any current associations exist and is given the\noption of cancelling the delete.",
     "state": "UNACCEPTED",
     "story": "0xb3a",
@@ -50515,7 +51087,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc76": {
+  "0xcaa": {
     "description": "It is possible to search for specific tags. A list of elements with the corresponding tag is\ndisplayed. At this stage it is not necessary to support search expressions involving more\nthan one tag.",
     "state": "UNACCEPTED",
     "story": "0xb3a",
@@ -50523,7 +51095,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc77": {
+  "0xcab": {
     "description": "A story map display area is accessible via appropriate GUI elements",
     "state": "UNACCEPTED",
     "story": "0xb3b",
@@ -50531,7 +51103,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc78": {
+  "0xcac": {
     "description": "It may be a tabbed pane, separate window or other (by negotiation) view. Scrolling\nshould be supported to allow large story maps to be catered for.",
     "state": "UNACCEPTED",
     "story": "0xb3b",
@@ -50539,7 +51111,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc79": {
+  "0xcad": {
     "description": "The top level shows the release plan for the current system.",
     "state": "UNACCEPTED",
     "story": "0xb3b",
@@ -50547,7 +51119,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc7a": {
+  "0xcae": {
     "description": "The next level shows sprints. The label should be displayed and perhaps the sprint goal\ncould be provided as a tool tip.",
     "state": "UNACCEPTED",
     "story": "0xb3b",
@@ -50555,7 +51127,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc7b": {
+  "0xcaf": {
     "description": "Individual stories in the sprint appear at the lowest level.",
     "state": "UNACCEPTED",
     "story": "0xb3b",
@@ -50563,7 +51135,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc7c": {
+  "0xcb0": {
     "description": "When effort is logged on a task, the user may indicate that it is a pair activity and the\npartner is identified (e.g. by short name).",
     "state": "UNACCEPTED",
     "story": "0xb3c",
@@ -50571,7 +51143,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc7d": {
+  "0xcb1": {
     "description": "When the data entry is confirmed, the same amount of effort is recorded for the partner.",
     "state": "UNACCEPTED",
     "story": "0xb3c",
@@ -50579,7 +51151,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc7e": {
+  "0xcb2": {
     "description": "Only pair programming is supported. At this point we are not interested in group activity",
     "state": "UNACCEPTED",
     "story": "0xb3c",
@@ -50587,7 +51159,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc7f": {
+  "0xcb3": {
     "description": "A facility is provided to allow reporting of pair programming data (e.g. for use in retro by\nthe corresponding team). It is accessed via an appropriate GUI element. The\ninformation presentation format is negotiable but specific numerical values and labels\nmust be available either directly or indirectly.",
     "state": "UNACCEPTED",
     "story": "0xb3c",
@@ -50595,7 +51167,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc80": {
+  "0xcb4": {
     "description": "It is possible to report the amount of pair programming (absolute and proportion) each\nteam member has done at an appropriate number of levels: (story, sprint, release, ...)\nand the details of each potential partnership in the team.",
     "state": "UNACCEPTED",
     "story": "0xb3c",
@@ -50603,7 +51175,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc81": {
+  "0xcb5": {
     "description": "It is possible to report the amount of pair programming (absolute and prop",
     "state": "UNACCEPTED",
     "story": "0xb3c",
@@ -50611,7 +51183,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc82": {
+  "0xcb6": {
     "description": "Double­clicking (or other appropriate action) on an element (release, sprint or story) in\nthe story map view opens the corresponding edit/view dialog.",
     "state": "UNACCEPTED",
     "story": "0xb3d",
@@ -50619,7 +51191,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc83": {
+  "0xcb7": {
     "description": "If modifications are made via an edit dialog (e.g. removing a story from a sprint) then the\nstory map is updated to reflect the change.",
     "state": "UNACCEPTED",
     "story": "0xb3d",
@@ -50627,7 +51199,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc84": {
+  "0xcb8": {
     "description": "A shortcut action is provided (e.g. via a toolbar or menu) to remove a story from a sprint,\nor a sprint from a release plan",
     "state": "UNACCEPTED",
     "story": "0xb3d",
@@ -50635,7 +51207,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc85": {
+  "0xcb9": {
     "description": "A similar shortcut operation is provided to add a sprint to a release plan or a story to a\nsprint.",
     "state": "UNACCEPTED",
     "story": "0xb3d",
@@ -50643,7 +51215,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc86": {
+  "0xcba": {
     "description": "A story may be dragged for mone sprint to another. Similarly, a sprint may be dragged\nfrom one release to another.",
     "state": "UNACCEPTED",
     "story": "0xb3d",
@@ -50651,7 +51223,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc87": {
+  "0xcbb": {
     "description": "A team’s velocity for each sprint is calculated and recorded. The units will vary\naccording to the ordinal scale in use, but will be some size measure per time measure\nsuch as story points per week.",
     "state": "UNACCEPTED",
     "story": "0xb3e",
@@ -50659,15 +51231,15 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc88": {
-    "description": "The velocities for completed sprints can be retrieved and displayed. A `numeric’\nrepresentation must be provided (e.g. 14 story points / week) If you are using scales\nsuch as T­Shirt sizes then you’ll need to be able to convert “3 XS, 1 M and 2 XL�? into\nsomething appropriate. If practicable, a graphical representation should also be\nprovided (details by negotiation).",
+  "0xcbc": {
+    "description": "The velocities for completed sprints can be retrieved and displayed. A `numeric’\nrepresentation must be provided (e.g. 14 story points / week) If you are using scales\nsuch as T­Shirt sizes then you’ll need to be able to convert “3 XS, 1 M and 2 XL�? into\nsomething appropriate. If practicable, a graphical representation should also be\nprovided (details by negotiation).",
     "state": "UNACCEPTED",
     "story": "0xb3e",
     "id": 7852,
     "itemName": "",
     "serializableTags": []
   },
-  "0xc89": {
+  "0xcbd": {
     "description": "If current, partially completed sprints are included then that’s OK but the value should be\nindicated as provisional until the end of the sprint.",
     "state": "UNACCEPTED",
     "story": "0xb3e",
@@ -50675,7 +51247,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc8a": {
+  "0xcbe": {
     "description": "The long­term velocity is also of interest and some measure of this should be provided.\nSince story points are ordinal, it isn’t really meaningful to record average velocities,\nrunning means etc. for teams. However, non­parametric statistics (such as medians)\ncan be used",
     "state": "UNACCEPTED",
     "story": "0xb3e",
@@ -50683,19 +51255,19 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xc8b": {
+  "0xcbf": {
     "year": 2015,
     "month": 3,
     "day": 11
   },
-  "0xc8c": {
+  "0xcc0": {
     "year": 2015,
     "month": 3,
     "day": 24
   },
-  "0xc8d": {
+  "0xcc1": {
     "startTime": {
-      "date": "0xca2",
+      "date": "0xcf0",
       "time": {
         "hour": 14,
         "minute": 31,
@@ -50712,9 +51284,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc8e": {
+  "0xcc2": {
     "startTime": {
-      "date": "0xca3",
+      "date": "0xcf1",
       "time": {
         "hour": 14,
         "minute": 54,
@@ -50731,9 +51303,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc8f": {
+  "0xcc3": {
     "startTime": {
-      "date": "0xca4",
+      "date": "0xcf2",
       "time": {
         "hour": 14,
         "minute": 54,
@@ -50750,9 +51322,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc90": {
+  "0xcc4": {
     "startTime": {
-      "date": "0xca5",
+      "date": "0xcf3",
       "time": {
         "hour": 14,
         "minute": 40,
@@ -50769,9 +51341,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc91": {
+  "0xcc5": {
     "startTime": {
-      "date": "0xca6",
+      "date": "0xcf4",
       "time": {
         "hour": 14,
         "minute": 45,
@@ -50788,9 +51360,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc92": {
+  "0xcc6": {
     "startTime": {
-      "date": "0xca7",
+      "date": "0xcf5",
       "time": {
         "hour": 14,
         "minute": 31,
@@ -50807,9 +51379,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc93": {
+  "0xcc7": {
     "startTime": {
-      "date": "0xca8",
+      "date": "0xcf6",
       "time": {
         "hour": 14,
         "minute": 31,
@@ -50826,9 +51398,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc94": {
+  "0xcc8": {
     "startTime": {
-      "date": "0xca9",
+      "date": "0xcf7",
       "time": {
         "hour": 14,
         "minute": 39,
@@ -50845,9 +51417,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc95": {
+  "0xcc9": {
     "startTime": {
-      "date": "0xcaa",
+      "date": "0xcf8",
       "time": {
         "hour": 14,
         "minute": 44,
@@ -50864,9 +51436,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc96": {
+  "0xcca": {
     "startTime": {
-      "date": "0xcab",
+      "date": "0xcf9",
       "time": {
         "hour": 14,
         "minute": 54,
@@ -50883,9 +51455,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc97": {
+  "0xccb": {
     "startTime": {
-      "date": "0xcac",
+      "date": "0xcfa",
       "time": {
         "hour": 14,
         "minute": 40,
@@ -50902,9 +51474,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc98": {
+  "0xccc": {
     "startTime": {
-      "date": "0xcad",
+      "date": "0xcfb",
       "time": {
         "hour": 14,
         "minute": 45,
@@ -50921,9 +51493,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc99": {
+  "0xccd": {
     "startTime": {
-      "date": "0xcae",
+      "date": "0xcfc",
       "time": {
         "hour": 14,
         "minute": 45,
@@ -50940,9 +51512,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc9a": {
+  "0xcce": {
     "startTime": {
-      "date": "0xcaf",
+      "date": "0xcfd",
       "time": {
         "hour": 14,
         "minute": 46,
@@ -50959,9 +51531,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc9b": {
+  "0xccf": {
     "startTime": {
-      "date": "0xcb0",
+      "date": "0xcfe",
       "time": {
         "hour": 14,
         "minute": 57,
@@ -50978,9 +51550,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc9c": {
+  "0xcd0": {
     "startTime": {
-      "date": "0xcb1",
+      "date": "0xcff",
       "time": {
         "hour": 14,
         "minute": 52,
@@ -50997,9 +51569,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc9d": {
+  "0xcd1": {
     "startTime": {
-      "date": "0xcb2",
+      "date": "0xd00",
       "time": {
         "hour": 14,
         "minute": 53,
@@ -51016,9 +51588,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc9e": {
+  "0xcd2": {
     "startTime": {
-      "date": "0xcb3",
+      "date": "0xd01",
       "time": {
         "hour": 14,
         "minute": 52,
@@ -51035,9 +51607,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xc9f": {
+  "0xcd3": {
     "startTime": {
-      "date": "0xcb4",
+      "date": "0xd02",
       "time": {
         "hour": 14,
         "minute": 54,
@@ -51054,9 +51626,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xca0": {
+  "0xcd4": {
     "startTime": {
-      "date": "0xcb5",
+      "date": "0xd03",
       "time": {
         "hour": 14,
         "minute": 57,
@@ -51073,9 +51645,9 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xca1": {
+  "0xcd5": {
     "startTime": {
-      "date": "0xcb6",
+      "date": "0xd04",
       "time": {
         "hour": 14,
         "minute": 57,
@@ -51092,109 +51664,733 @@
     "itemName": "Untitled Log",
     "serializableTags": []
   },
-  "0xca2": {
+  "0xcd6": {
+    "startTime": {
+      "date": "0xd05",
+      "time": {
+        "hour": 15,
+        "minute": 44,
+        "second": 58,
+        "nano": 211000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xbc8",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 30920,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xcd7": {
+    "startTime": {
+      "date": "0xd06",
+      "time": {
+        "hour": 15,
+        "minute": 45,
+        "second": 11,
+        "nano": 920000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xbd1",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 30922,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xcd8": {
+    "startTime": {
+      "date": "0xd07",
+      "time": {
+        "hour": 15,
+        "minute": 45,
+        "second": 20,
+        "nano": 208000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xbd9",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 30924,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xcd9": {
+    "startTime": {
+      "date": "0xd08",
+      "time": {
+        "hour": 15,
+        "minute": 45,
+        "second": 37,
+        "nano": 800000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xbe0",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 30928,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xcda": {
+    "startTime": {
+      "date": "0xd09",
+      "time": {
+        "hour": 15,
+        "minute": 45,
+        "second": 27,
+        "nano": 288000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xbe6",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 30926,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xcdb": {
+    "startTime": {
+      "date": "0xd0a",
+      "time": {
+        "hour": 15,
+        "minute": 45,
+        "second": 45,
+        "nano": 319000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xbea",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 30930,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xcdc": {
+    "startTime": {
+      "date": "0xd0b",
+      "time": {
+        "hour": 15,
+        "minute": 45,
+        "second": 52,
+        "nano": 223000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xbf4",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 30932,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xcdd": {
+    "startTime": {
+      "date": "0xd0c",
+      "time": {
+        "hour": 15,
+        "minute": 47,
+        "second": 10,
+        "nano": 670000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xbfa",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 31329,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xcde": {
+    "startTime": {
+      "date": "0xd0d",
+      "time": {
+        "hour": 15,
+        "minute": 47,
+        "second": 14,
+        "nano": 757000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xbff",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 31331,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xcdf": {
+    "startTime": {
+      "date": "0xd0e",
+      "time": {
+        "hour": 15,
+        "minute": 47,
+        "second": 19,
+        "nano": 813000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc06",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 31333,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xce0": {
+    "startTime": {
+      "date": "0xd0f",
+      "time": {
+        "hour": 15,
+        "minute": 47,
+        "second": 25,
+        "nano": 709000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc0e",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 31335,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xce1": {
+    "startTime": {
+      "date": "0xd10",
+      "time": {
+        "hour": 15,
+        "minute": 47,
+        "second": 31,
+        "nano": 93000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc18",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 31337,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xce2": {
+    "startTime": {
+      "date": "0xd11",
+      "time": {
+        "hour": 15,
+        "minute": 47,
+        "second": 36,
+        "nano": 469000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc1f",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 31339,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xce3": {
+    "startTime": {
+      "date": "0xd12",
+      "time": {
+        "hour": 15,
+        "minute": 47,
+        "second": 40,
+        "nano": 628000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc26",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 31341,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xce4": {
+    "startTime": {
+      "date": "0xd13",
+      "time": {
+        "hour": 15,
+        "minute": 48,
+        "second": 39,
+        "nano": 107000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc2d",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 31930,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xce5": {
+    "startTime": {
+      "date": "0xd14",
+      "time": {
+        "hour": 15,
+        "minute": 47,
+        "second": 46,
+        "nano": 653000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc35",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 31386,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xce6": {
+    "startTime": {
+      "date": "0xd15",
+      "time": {
+        "hour": 15,
+        "minute": 48,
+        "second": 43,
+        "nano": 707000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc3e",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 31932,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xce7": {
+    "startTime": {
+      "date": "0xd16",
+      "time": {
+        "hour": 15,
+        "minute": 48,
+        "second": 48,
+        "nano": 395000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc47",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 31934,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xce8": {
+    "startTime": {
+      "date": "0xd17",
+      "time": {
+        "hour": 15,
+        "minute": 49,
+        "second": 20,
+        "nano": 674000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc4f",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 31936,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xce9": {
+    "startTime": {
+      "date": "0xd18",
+      "time": {
+        "hour": 15,
+        "minute": 49,
+        "second": 25,
+        "nano": 210000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc58",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 31981,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xcea": {
+    "startTime": {
+      "date": "0xd19",
+      "time": {
+        "hour": 15,
+        "minute": 49,
+        "second": 29,
+        "nano": 586000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc5e",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 32026,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xceb": {
+    "startTime": {
+      "date": "0xd1a",
+      "time": {
+        "hour": 15,
+        "minute": 49,
+        "second": 33,
+        "nano": 762000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc64",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 32071,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xcec": {
+    "startTime": {
+      "date": "0xd1b",
+      "time": {
+        "hour": 15,
+        "minute": 49,
+        "second": 37,
+        "nano": 577000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc6b",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 32116,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xced": {
+    "startTime": {
+      "date": "0xd1c",
+      "time": {
+        "hour": 15,
+        "minute": 49,
+        "second": 41,
+        "nano": 434000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc73",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 32161,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xcee": {
+    "startTime": {
+      "date": "0xd1d",
+      "time": {
+        "hour": 15,
+        "minute": 49,
+        "second": 45,
+        "nano": 633000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc78",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 32206,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xcef": {
+    "startTime": {
+      "date": "0xd1e",
+      "time": {
+        "hour": 15,
+        "minute": 49,
+        "second": 49,
+        "nano": 473000000
+      }
+    },
+    "duration": 0.0,
+    "effortLeftDifference": 0.0,
+    "task": "0xc81",
+    "description": "initial log (this should be hidden)",
+    "ghostLog": false,
+    "id": 32251,
+    "itemName": "Untitled Log",
+    "serializableTags": []
+  },
+  "0xcf0": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xca3": {
+  "0xcf1": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xca4": {
+  "0xcf2": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xca5": {
+  "0xcf3": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xca6": {
+  "0xcf4": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xca7": {
+  "0xcf5": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xca8": {
+  "0xcf6": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xca9": {
+  "0xcf7": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xcaa": {
+  "0xcf8": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xcab": {
+  "0xcf9": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xcac": {
+  "0xcfa": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xcad": {
+  "0xcfb": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xcae": {
+  "0xcfc": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xcaf": {
+  "0xcfd": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xcb0": {
+  "0xcfe": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xcb1": {
+  "0xcff": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xcb2": {
+  "0xd00": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xcb3": {
+  "0xd01": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xcb4": {
+  "0xd02": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xcb5": {
+  "0xd03": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xcb6": {
+  "0xd04": {
     "year": 2015,
     "month": 3,
     "day": 10
+  },
+  "0xd05": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd06": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd07": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd08": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd09": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd0a": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd0b": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd0c": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd0d": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd0e": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd0f": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd10": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd11": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd12": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd13": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd14": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd15": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd16": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd17": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd18": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd19": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd1a": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd1b": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd1c": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd1d": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
+  },
+  "0xd1e": {
+    "year": 2015,
+    "month": 9,
+    "day": 25
   }
 }
