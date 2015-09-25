@@ -106,7 +106,8 @@ public class TagCellNode extends VBox implements SearchableControl {
         textContent.setAlignment(Pos.CENTER_LEFT);
 
         titleLabel = new SearchableText(" " + tagName, "-fx-font-weight: bold;", searchControls);
-        Text titleLabelShadow = new Text(" " + tagName + " ");  // A transparent text to keep the width of the tag equal to the text
+        // A transparent text to keep the width of the tag equal to the text
+        Text titleLabelShadow = new Text(" " + tagName + " ");
         titleLabelShadow.setFill(Color.TRANSPARENT);
         titleLabelShadow.setStyle("-fx-font-weight: bold;");
         GridPane titleGrid = new GridPane();
