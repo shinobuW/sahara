@@ -44665,7 +44665,13 @@
       "0xada",
       "0xadb",
       "0xadc",
-      "0xadd"
+      "0xadd",
+      "0xade",
+      "0xadf",
+      "0xae0",
+      "0xae1",
+      "0xae2",
+      "0xae3"
     ],
     "project": "0xaa7",
     "scale": "Fibonacci",
@@ -44679,12 +44685,12 @@
     "description": "",
     "productOwner": "0xa",
     "serializableStories": [
-      "0xade",
-      "0xadf",
-      "0xae0",
-      "0xae1",
-      "0xae2",
-      "0xae3"
+      "0xae4",
+      "0xae5",
+      "0xae6",
+      "0xae7",
+      "0xae8",
+      "0xae9"
     ],
     "project": "0xaa7",
     "scale": "Fibonacci",
@@ -44700,17 +44706,17 @@
       "0xac4",
       "0xac5",
       "0xac6",
-      "0xac7",
       "0xac8",
+      "0xac7",
       "0xac9",
       "0xaca"
     ],
     "goal": "Dat Burndown",
     "longName": "Check out dat burndown",
     "description": "",
-    "startDate": "0xae4",
-    "endDate": "0xae5",
-    "tasksWithoutStory": "0xae6",
+    "startDate": "0xaea",
+    "endDate": "0xaeb",
+    "tasksWithoutStory": "0xaec",
     "id": 7803,
     "itemName": "",
     "serializableTags": []
@@ -44727,14 +44733,14 @@
       "0xacf",
       "0xad0",
       "0xad1",
-      "0xad2"
+      "0xad3"
     ],
     "goal": "Just wanted to dance",
     "longName": "I just wanted to dance",
     "description": "",
-    "startDate": "0xae7",
-    "endDate": "0xae8",
-    "tasksWithoutStory": "0xae9",
+    "startDate": "0xaed",
+    "endDate": "0xaee",
+    "tasksWithoutStory": "0xaef",
     "id": 7810,
     "itemName": "",
     "serializableTags": []
@@ -44744,19 +44750,20 @@
     "team": "0x5",
     "release": "0xaad",
     "serializableStories": [
-      "0xae0",
-      "0xae2",
-      "0xae1",
-      "0xadf",
-      "0xae3",
-      "0xade"
+      "0xae4",
+      "0xae5",
+      "0xae6",
+      "0xae7",
+      "0xae8",
+      "0xae9",
+      "0xadd"
     ],
     "goal": "No Bean No",
     "longName": "Sprint 6",
     "description": "",
-    "startDate": "0xaea",
-    "endDate": "0xaeb",
-    "tasksWithoutStory": "0xaec",
+    "startDate": "0xaf0",
+    "endDate": "0xaf1",
+    "tasksWithoutStory": "0xaf2",
     "id": 7698,
     "itemName": "",
     "serializableTags": []
@@ -44774,9 +44781,9 @@
     "goal": "Sa-ha-ra",
     "longName": "Sprint 1",
     "description": "",
-    "startDate": "0xaed",
-    "endDate": "0xaee",
-    "tasksWithoutStory": "0xaef",
+    "startDate": "0xaf3",
+    "endDate": "0xaf4",
+    "tasksWithoutStory": "0xaf5",
     "id": 7719,
     "itemName": "",
     "serializableTags": []
@@ -44786,23 +44793,24 @@
     "team": "0x5",
     "release": "0xaad",
     "serializableStories": [
-      "0xad4",
-      "0xad5",
       "0xad6",
       "0xad7",
-      "0xad8",
-      "0xad9",
-      "0xadb",
+      "0xad2",
+      "0xad5",
       "0xada",
       "0xadc",
-      "0xadd"
+      "0xad8",
+      "0xadb",
+      "0xade",
+      "0xad4",
+      "0xad9"
     ],
     "goal": "Take a break",
     "longName": "It\u0027s Friday night, take a break. OMG",
     "description": "",
-    "startDate": "0xaf0",
-    "endDate": "0xaf1",
-    "tasksWithoutStory": "0xaf2",
+    "startDate": "0xaf6",
+    "endDate": "0xaf7",
+    "tasksWithoutStory": "0xaf8",
     "id": 7817,
     "itemName": "",
     "serializableTags": []
@@ -44821,9 +44829,9 @@
     "goal": "Uncomfortable",
     "longName": "Sprint 2",
     "description": "",
-    "startDate": "0xaf3",
-    "endDate": "0xaf4",
-    "tasksWithoutStory": "0xaf5",
+    "startDate": "0xaf9",
+    "endDate": "0xafa",
+    "tasksWithoutStory": "0xafb",
     "id": 7742,
     "itemName": "",
     "serializableTags": []
@@ -44853,21 +44861,21 @@
     "longName": "Basic App",
     "description": "In order to be able to see my information and perform actions, as a user, I need a simple\napplication with a text area, menu bar and other basic features. The main application pane\nwill have a list on the left side (which can be hidden/displayed using a menu item) and the\nremainder will be an area for text display and editing. At some point we’ll need a more\nsophisticated interface, but we don’t yet know exactly what we’ll need)",
     "creator": "Moffat",
-    "colour": "ORANGE",
+    "colour": "DEFAULT",
     "priority": 50,
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab4",
     "done": false,
-    "estimate": "-",
+    "estimate": "3",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xaf6",
-      "0xaf7",
-      "0xaf8",
-      "0xaf9",
-      "0xafa",
-      "0xafb"
+      "0xafc",
+      "0xafd",
+      "0xafe",
+      "0xaff",
+      "0xb00",
+      "0xb01"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -44881,23 +44889,23 @@
     "longName": "Project structure",
     "description": "So that I can keep track of all the information about projects, as a manager, I need to be able\nto keep it all together. Initially, there will just be basic information, such as name, but later\non we’ll need to keep track of collections of associated information about stories etc.\nI’d like to keep these in some sort of project so I don’t have to remember too many file\nnames",
     "creator": "Moffat",
-    "colour": "ORANGE",
+    "colour": "DEFAULT",
     "priority": 49,
     "backlog": "0xaaf",
     "project": "0xaa7",
     "sprint": "0xab4",
     "done": false,
-    "estimate": "-",
+    "estimate": "8",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xafc",
-      "0xafd",
-      "0xafe",
-      "0xaff",
-      "0xb00",
-      "0xb01",
       "0xb02",
-      "0xb03"
+      "0xb03",
+      "0xb04",
+      "0xb05",
+      "0xb06",
+      "0xb07",
+      "0xb08",
+      "0xb09"
     ],
     "dependentOn": [],
     "serializableTasks": [],
@@ -44917,9 +44925,17 @@
     "project": "0xaa7",
     "sprint": "0xab4",
     "done": false,
-    "estimate": "-",
+    "estimate": "8",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb0a",
+      "0xb0b",
+      "0xb0c",
+      "0xb0d",
+      "0xb0e",
+      "0xb0f",
+      "0xb10"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -44938,9 +44954,14 @@
     "project": "0xaa7",
     "sprint": "0xab4",
     "done": false,
-    "estimate": "-",
+    "estimate": "8",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb11",
+      "0xb12",
+      "0xb13",
+      "0xb14"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -44959,9 +44980,16 @@
     "project": "0xaa7",
     "sprint": "0xab6",
     "done": false,
-    "estimate": "-",
+    "estimate": "5",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb15",
+      "0xb16",
+      "0xb17",
+      "0xb18",
+      "0xb19",
+      "0xb1a"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -44980,9 +45008,15 @@
     "project": "0xaa7",
     "sprint": "0xab6",
     "done": false,
-    "estimate": "-",
+    "estimate": "5",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb1b",
+      "0xb1c",
+      "0xb1d",
+      "0xb1e",
+      "0xb1f"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45001,9 +45035,16 @@
     "project": "0xaa7",
     "sprint": "0xab6",
     "done": false,
-    "estimate": "-",
+    "estimate": "8",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb20",
+      "0xb21",
+      "0xb22",
+      "0xb23",
+      "0xb24",
+      "0xb25"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45022,9 +45063,15 @@
     "project": "0xaa7",
     "sprint": "0xab6",
     "done": false,
-    "estimate": "-",
+    "estimate": "13",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb26",
+      "0xb27",
+      "0xb28",
+      "0xb29",
+      "0xb2a"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45043,9 +45090,15 @@
     "project": "0xaa7",
     "sprint": "0xab6",
     "done": false,
-    "estimate": "-",
+    "estimate": "5",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb2b",
+      "0xb2c",
+      "0xb2d",
+      "0xb2e",
+      "0xb2f"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45064,9 +45117,15 @@
     "project": "0xaa7",
     "sprint": "0xab1",
     "done": false,
-    "estimate": "-",
+    "estimate": "13",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb30",
+      "0xb31",
+      "0xb32",
+      "0xb33",
+      "0xb34"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45085,9 +45144,17 @@
     "project": "0xaa7",
     "sprint": "0xab1",
     "done": false,
-    "estimate": "-",
+    "estimate": "13",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb35",
+      "0xb36",
+      "0xb37",
+      "0xb38",
+      "0xb39",
+      "0xb3a",
+      "0xb3b"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45106,9 +45173,16 @@
     "project": "0xaa7",
     "sprint": "0xab1",
     "done": false,
-    "estimate": "-",
+    "estimate": "5",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb3c",
+      "0xb3d",
+      "0xb3e",
+      "0xb3f",
+      "0xb40",
+      "0xb41"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45117,27 +45191,6 @@
     "serializableTags": []
   },
   "0xac7": {
-    "shortName": "Revert",
-    "longName": "Revert",
-    "description": "If I decide that I don\u0027t want to keep the work I\u0027ve done and there\u0027s too many things to be\nbothered with using \u0027Undo,\u0027 as a user, I need a way to be able to discard all the changes and\ngo back to the way my project was when I last opened it.",
-    "creator": "Moffat",
-    "colour": "DEFAULT",
-    "priority": 38,
-    "backlog": "0xaaf",
-    "project": "0xaa7",
-    "sprint": "0xab1",
-    "done": false,
-    "estimate": "-",
-    "ready": false,
-    "serializableAcceptanceCriteria": [],
-    "dependentOn": [],
-    "serializableTasks": [],
-    "tasksWithoutStory": false,
-    "id": 7691,
-    "itemName": "Revert",
-    "serializableTags": []
-  },
-  "0xac8": {
     "shortName": "Story maintenance",
     "longName": "Basic Story maintenance",
     "description": "So that I can keep track of the things we need to do, as a manager, I need a way to record\nwork items as user stories. For now, we just need the most basic detail but we’ll add more in\nsubsequent stories.",
@@ -45148,14 +45201,46 @@
     "project": "0xaa7",
     "sprint": "0xab1",
     "done": false,
-    "estimate": "-",
+    "estimate": "5",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb42",
+      "0xb43",
+      "0xb44",
+      "0xb45",
+      "0xb46"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
     "id": 7692,
     "itemName": "Story maintenance",
+    "serializableTags": []
+  },
+  "0xac8": {
+    "shortName": "Revert",
+    "longName": "Revert",
+    "description": "If I decide that I don\u0027t want to keep the work I\u0027ve done and there\u0027s too many things to be\nbothered with using \u0027Undo,\u0027 as a user, I need a way to be able to discard all the changes and\ngo back to the way my project was when I last opened it.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 38,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab1",
+    "done": false,
+    "estimate": "3",
+    "ready": false,
+    "serializableAcceptanceCriteria": [
+      "0xb47",
+      "0xb48",
+      "0xb49",
+      "0xb4a"
+    ],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7691,
+    "itemName": "Revert",
     "serializableTags": []
   },
   "0xac9": {
@@ -45169,9 +45254,12 @@
     "project": "0xaa7",
     "sprint": "0xab1",
     "done": false,
-    "estimate": "-",
+    "estimate": "2",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb4b",
+      "0xb4c"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45190,9 +45278,18 @@
     "project": "0xaa7",
     "sprint": "0xab1",
     "done": false,
-    "estimate": "-",
+    "estimate": "5",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb4d",
+      "0xb4e",
+      "0xb4f",
+      "0xb50",
+      "0xb51",
+      "0xb52",
+      "0xb53",
+      "0xb54"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45211,10 +45308,17 @@
     "project": "0xaa7",
     "sprint": "0xab2",
     "done": false,
-    "estimate": "-",
+    "estimate": "8",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
-    "dependentOn": [],
+    "serializableAcceptanceCriteria": [
+      "0xb55",
+      "0xb56",
+      "0xb57",
+      "0xb58"
+    ],
+    "dependentOn": [
+      "0xac5"
+    ],
     "serializableTasks": [],
     "tasksWithoutStory": false,
     "id": 7695,
@@ -45232,9 +45336,13 @@
     "project": "0xaa7",
     "sprint": "0xab2",
     "done": false,
-    "estimate": "-",
+    "estimate": "1",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb59",
+      "0xb5a",
+      "0xb5b"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45253,10 +45361,19 @@
     "project": "0xaa7",
     "sprint": "0xab2",
     "done": false,
-    "estimate": "-",
+    "estimate": "2",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
-    "dependentOn": [],
+    "serializableAcceptanceCriteria": [
+      "0xb5c",
+      "0xb5d",
+      "0xb5e",
+      "0xb5f",
+      "0xb60"
+    ],
+    "dependentOn": [
+      "0xacb",
+      "0xac5"
+    ],
     "serializableTasks": [],
     "tasksWithoutStory": false,
     "id": 7776,
@@ -45274,9 +45391,16 @@
     "project": "0xaa7",
     "sprint": "0xab2",
     "done": false,
-    "estimate": "-",
+    "estimate": "5",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb61",
+      "0xb62",
+      "0xb63",
+      "0xb64",
+      "0xb65",
+      "0xb66"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45295,9 +45419,18 @@
     "project": "0xaa7",
     "sprint": "0xab2",
     "done": false,
-    "estimate": "-",
+    "estimate": "5",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb67",
+      "0xb68",
+      "0xb69",
+      "0xb6a",
+      "0xb6b",
+      "0xb6c",
+      "0xb6d",
+      "0xb6e"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45316,9 +45449,15 @@
     "project": "0xaa7",
     "sprint": "0xab2",
     "done": false,
-    "estimate": "-",
+    "estimate": "3",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb6f",
+      "0xb70",
+      "0xb71",
+      "0xb72",
+      "0xb73"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45337,9 +45476,15 @@
     "project": "0xaa7",
     "sprint": "0xab2",
     "done": false,
-    "estimate": "-",
+    "estimate": "8",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb74",
+      "0xb75",
+      "0xb76",
+      "0xb77",
+      "0xb78"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45348,6 +45493,33 @@
     "serializableTags": []
   },
   "0xad2": {
+    "shortName": "Tool Bar",
+    "longName": "Tool Bar",
+    "description": "So that I can work efficiently, as a user, I want to be able to access the main features of the\nprogram from a toolbar.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 28,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab5",
+    "done": false,
+    "estimate": "8",
+    "ready": false,
+    "serializableAcceptanceCriteria": [
+      "0xb79",
+      "0xb7a",
+      "0xb7b",
+      "0xb7c",
+      "0xb7d"
+    ],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7782,
+    "itemName": "Tool Bar",
+    "serializableTags": []
+  },
+  "0xad3": {
     "shortName": "Highlighting story",
     "longName": "Highlighting story state",
     "description": "So that everybody can see the current nature of our entire backlog, as a Scrum team member,\nI need to be able to see a simple visualisation of the backlog.",
@@ -45358,34 +45530,21 @@
     "project": "0xaa7",
     "sprint": "0xab2",
     "done": false,
-    "estimate": "-",
+    "estimate": "5",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb7e",
+      "0xb7f",
+      "0xb80",
+      "0xb81",
+      "0xb82",
+      "0xb83"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
     "id": 7781,
     "itemName": "Highlighting story",
-    "serializableTags": []
-  },
-  "0xad3": {
-    "shortName": "Tool Bar",
-    "longName": "Tool Bar",
-    "description": "So that I can work efficiently, as a user, I want to be able to access the main features of the\nprogram from a toolbar.",
-    "creator": "Moffat",
-    "colour": "DEFAULT",
-    "priority": 28,
-    "backlog": "0xaaf",
-    "project": "0xaa7",
-    "done": false,
-    "estimate": "-",
-    "ready": false,
-    "serializableAcceptanceCriteria": [],
-    "dependentOn": [],
-    "serializableTasks": [],
-    "tasksWithoutStory": false,
-    "id": 7782,
-    "itemName": "Tool Bar",
     "serializableTags": []
   },
   "0xad4": {
@@ -45399,9 +45558,17 @@
     "project": "0xaa7",
     "sprint": "0xab5",
     "done": false,
-    "estimate": "-",
+    "estimate": "8",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb84",
+      "0xb85",
+      "0xb86",
+      "0xb87",
+      "0xb88",
+      "0xb89",
+      "0xb8a"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45420,9 +45587,17 @@
     "project": "0xaa7",
     "sprint": "0xab5",
     "done": false,
-    "estimate": "-",
+    "estimate": "20",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb8b",
+      "0xb8c",
+      "0xb8d",
+      "0xb8e",
+      "0xb8f",
+      "0xb90",
+      "0xb91"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45441,9 +45616,16 @@
     "project": "0xaa7",
     "sprint": "0xab5",
     "done": false,
-    "estimate": "-",
+    "estimate": "5",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb92",
+      "0xb93",
+      "0xb94",
+      "0xb95",
+      "0xb96",
+      "0xb97"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45462,9 +45644,17 @@
     "project": "0xaa7",
     "sprint": "0xab5",
     "done": false,
-    "estimate": "-",
+    "estimate": "8",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb98",
+      "0xb99",
+      "0xb9a",
+      "0xb9b",
+      "0xb9c",
+      "0xb9d",
+      "0xb9e"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45483,9 +45673,14 @@
     "project": "0xaa7",
     "sprint": "0xab5",
     "done": false,
-    "estimate": "-",
+    "estimate": "3",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xb9f",
+      "0xba0",
+      "0xba1",
+      "0xba2"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45504,9 +45699,14 @@
     "project": "0xaa7",
     "sprint": "0xab5",
     "done": false,
-    "estimate": "-",
+    "estimate": "8",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xba3",
+      "0xba4",
+      "0xba5",
+      "0xba6"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45515,27 +45715,6 @@
     "serializableTags": []
   },
   "0xada": {
-    "shortName": "Logging Effort",
-    "longName": "Logging Effort",
-    "description": "So that I can help the team track progress, as a team member, I need to be able to record the\neffort I spend on tasks.\nA clear policy for other activity must be developed. For example, activities such as grooming\ncould be handled by not including them in the available hours for a sprint. However, it might be\nfelt that there is sufficient value in recording them that this will be supported. Similarly, if tasks\nwithout a corresponding story emerge during a sprint these cannot currently be included.",
-    "creator": "Moffat",
-    "colour": "DEFAULT",
-    "priority": 20,
-    "backlog": "0xaaf",
-    "project": "0xaa7",
-    "sprint": "0xab5",
-    "done": false,
-    "estimate": "-",
-    "ready": false,
-    "serializableAcceptanceCriteria": [],
-    "dependentOn": [],
-    "serializableTasks": [],
-    "tasksWithoutStory": false,
-    "id": 7790,
-    "itemName": "Logging Effort",
-    "serializableTags": []
-  },
-  "0xadb": {
     "shortName": "Task status",
     "longName": "Task status visualisation",
     "description": "So that I can conveniently see where to commit my efforts next, as a development team\nmember, I need to be able to access information about unallocated (and maybe also\nuncompleted) tasks.",
@@ -45546,14 +45725,48 @@
     "project": "0xaa7",
     "sprint": "0xab5",
     "done": false,
-    "estimate": "-",
+    "estimate": "5",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xba7",
+      "0xba8",
+      "0xba9",
+      "0xbaa",
+      "0xbab"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
     "id": 7789,
     "itemName": "Task status",
+    "serializableTags": []
+  },
+  "0xadb": {
+    "shortName": "Logging Effort",
+    "longName": "Logging Effort",
+    "description": "So that I can help the team track progress, as a team member, I need to be able to record the\neffort I spend on tasks.\nA clear policy for other activity must be developed. For example, activities such as grooming\ncould be handled by not including them in the available hours for a sprint. However, it might be\nfelt that there is sufficient value in recording them that this will be supported. Similarly, if tasks\nwithout a corresponding story emerge during a sprint these cannot currently be included.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 20,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab5",
+    "done": false,
+    "estimate": "8",
+    "ready": false,
+    "serializableAcceptanceCriteria": [
+      "0xbac",
+      "0xbad",
+      "0xbae",
+      "0xbaf",
+      "0xbb0",
+      "0xbb1"
+    ],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 7790,
+    "itemName": "Logging Effort",
     "serializableTags": []
   },
   "0xadc": {
@@ -45567,9 +45780,13 @@
     "project": "0xaa7",
     "sprint": "0xab5",
     "done": false,
-    "estimate": "-",
+    "estimate": "8",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xbb2",
+      "0xbb3",
+      "0xbb4"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45586,11 +45803,15 @@
     "priority": 18,
     "backlog": "0xaaf",
     "project": "0xaa7",
-    "sprint": "0xab5",
+    "sprint": "0xab3",
     "done": false,
-    "estimate": "-",
+    "estimate": "3",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xbb5",
+      "0xbb6",
+      "0xbb7"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45599,6 +45820,167 @@
     "serializableTags": []
   },
   "0xade": {
+    "shortName": "Less Basic Search",
+    "longName": "Less Basic Search",
+    "description": "So that I can navigate effectively around my data, as a user, I need to be able to search for\ninformation and see the results in context. At this stage a full query/reporting facility is not\nrequired but this may be the subject of a subsequent story.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 17,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "sprint": "0xab5",
+    "done": false,
+    "estimate": "13",
+    "ready": false,
+    "serializableAcceptanceCriteria": [
+      "0xbb8",
+      "0xbb9",
+      "0xbba",
+      "0xbbb"
+    ],
+    "dependentOn": [
+      "0xad5"
+    ],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 8041,
+    "itemName": "Less Basic Search",
+    "serializableTags": []
+  },
+  "0xadf": {
+    "shortName": "Internationalisation",
+    "longName": "Internationalisation",
+    "description": "So that we can sell our product in a wider range of markets, as a manager, I need to be able to\nhave the product work in other countries.\nInitially, we only require that it support one country at a time. i.e. we aren’t trying to support\nconcurrent users in multiple time zones.",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 16,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "done": false,
+    "estimate": "13",
+    "ready": false,
+    "serializableAcceptanceCriteria": [
+      "0xbbc",
+      "0xbbd",
+      "0xbbe",
+      "0xbbf",
+      "0xbc0"
+    ],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 8088,
+    "itemName": "Internationalisation",
+    "serializableTags": []
+  },
+  "0xae0": {
+    "shortName": "Story similarity",
+    "longName": "Story similarity detector",
+    "description": "So that nearly­identical or duplicate stories can be avoided, as a user, I need to be able to\ndetect and manage sufficiently similar stories.\nNotes:\n● When many people are adding and modifying backlog items, it is possible to get\nduplicate or very similar stories. When this happens, they need to be identified and\nperhaps combined.\n● Similar facilities are common in information retrieval systems or document collections\nsuch as man pages (e.g. see `man ­k’). Some work by constructing vectors whose\ncomponents indicate the presence/frequency of keywords/search terms. The similarity\nof two “documents” may then be measured by computing the scalar (dot) product of the\ncorresponding document vectors.\n● Apache’s Lucene project provides powerful features for text search and analysis.\n● Stop lists are lists of common words (`and,’ `the,’ `when,’ …) that are removed or\nignored in the analysis.\n● Stemming involves removing/ignoring variations from the base `stem’ form of a word.\nThus we would treat `fish,’ `fishing,’ `fisher,’ `fished’ and `fishy’ as `fish.’",
+    "creator": "Moffat",
+    "colour": "ORANGE",
+    "priority": 15,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [
+      "0xbc1",
+      "0xbc2",
+      "0xbc3",
+      "0xbc4",
+      "0xbc5"
+    ],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 8090,
+    "itemName": "Story similarity",
+    "serializableTags": []
+  },
+  "0xae1": {
+    "shortName": "Grooming workspace",
+    "longName": "Estimation/Grooming workspace",
+    "description": "So that I can effectively understand and specify the relative sizes of stories, as a user, I need to\nbe able to select and manipulate groups of stories.\nNote:\n● The idea here is to mimic the way we would use physical story cards on a table:\nselecting some, grouping those of similar size, and placing them in order.",
+    "creator": "Moffat",
+    "colour": "ORANGE",
+    "priority": 15,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [
+      "0xbc6",
+      "0xbc7",
+      "0xbc8",
+      "0xbc9",
+      "0xbca",
+      "0xbcb",
+      "0xbcc"
+    ],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 8089,
+    "itemName": "Grooming workspace",
+    "serializableTags": []
+  },
+  "0xae2": {
+    "shortName": "User Accounts",
+    "longName": "User Accounts",
+    "description": "So that I can be provided with controlled access to personal or sensitive information, as a user, I\nneed to create and manage a personal user account.\nNote:\n● Our kiosk­style application has thus far not required any form of access control other\nthan physical access to the space where it is located.\n● Our scrum teams are an open community and place a high value on trust. Social\nprotocols determine whether the SM enters data for the team or whether people can\nenter data on behalf of others.\n● The overhead of logging in \u0026 out in order to enter relatively small amounts of data (e.g.\nlogging an hour’s work on a task) will be sufficiently inconvenient that it will discourage\npeople for musing the application frequently as they should — risking loss of data\nintegrity.\n● Nevertheless, there may be some features (such as preparing a record of contributions\nto be used in promotion applications) will be limited to specific individuals. Only these\nwill be limited to logged in users: all other features are available to all.",
+    "creator": "Moffat",
+    "colour": "ORANGE",
+    "priority": 14,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "done": false,
+    "estimate": "-",
+    "ready": false,
+    "serializableAcceptanceCriteria": [
+      "0xbcd",
+      "0xbce",
+      "0xbcf",
+      "0xbd0",
+      "0xbd1",
+      "0xbd2",
+      "0xbd3",
+      "0xbd4",
+      "0xbd5",
+      "0xbd6"
+    ],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 8091,
+    "itemName": "User Accounts",
+    "serializableTags": []
+  },
+  "0xae3": {
+    "shortName": "Backlog dependency",
+    "longName": "Backlog dependency visualisation",
+    "description": "So that I can identify and resolve potential problems, as a PO, I want to be able to see which\nbacklog items are involved in dependency conflicts",
+    "creator": "Moffat",
+    "colour": "DEFAULT",
+    "priority": 13,
+    "backlog": "0xaaf",
+    "project": "0xaa7",
+    "done": false,
+    "estimate": "3",
+    "ready": false,
+    "serializableAcceptanceCriteria": [
+      "0xbd7"
+    ],
+    "dependentOn": [],
+    "serializableTasks": [],
+    "tasksWithoutStory": false,
+    "id": 8092,
+    "itemName": "Backlog dependency",
+    "serializableTags": []
+  },
+  "0xae4": {
     "shortName": "Tag maintenance",
     "longName": "Tag maintenance",
     "description": "So that I can associate specific information with elements in the system, as a user, I need to be\nable to maintain a set of categories that can be used as tags.\n\nNote:\n● Tags are simple indicators of a specific category of information (e.g. “needs PO\nclarification” or “high risk”) rather than a note tailored to the specific context.\n● We may be interested in the ability to locate occurrences of specific tags or tracking their\nrelative numbers over time.",
@@ -45609,18 +45991,18 @@
     "project": "0xaa7",
     "sprint": "0xab3",
     "done": false,
-    "estimate": "-",
+    "estimate": "5",
     "ready": false,
     "serializableAcceptanceCriteria": [
-      "0xb04",
-      "0xb05",
-      "0xb06",
-      "0xb07",
-      "0xb08",
-      "0xb09"
+      "0xbd8",
+      "0xbd9",
+      "0xbda",
+      "0xbdb",
+      "0xbdc",
+      "0xbdd"
     ],
     "dependentOn": [
-      "0xadf"
+      "0xae5"
     ],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45628,7 +46010,7 @@
     "itemName": "Tag maintenance",
     "serializableTags": []
   },
-  "0xadf": {
+  "0xae5": {
     "shortName": "Tagging",
     "longName": "Tagging",
     "description": "So that I can identify tags applicable to system elements, as a user, I need to be able to\nmanage the association of tags.",
@@ -45639,9 +46021,17 @@
     "project": "0xaa7",
     "sprint": "0xab3",
     "done": false,
-    "estimate": "-",
+    "estimate": "8",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xbde",
+      "0xbdf",
+      "0xbe0",
+      "0xbe1",
+      "0xbe2",
+      "0xbe3",
+      "0xbe4"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45649,7 +46039,7 @@
     "itemName": "Tagging",
     "serializableTags": []
   },
-  "0xae0": {
+  "0xae6": {
     "shortName": "Story mapping view",
     "longName": "Story mapping view",
     "description": "So that release planning can be managed effectively, as a PO, I need to be able to perform\nstory mapping in the application\n\nNote:\n● Story mapping encompasses a range of things but the basic idea is to show the way\nhigh level goals (e.g. road map items (RMIs), epics, ...) correspond to smaller, more\nconcrete activities (e.g. releases, sprints, stories) where delivery of features occurs.\n● The rough sketch below shows time progressing left to right. The RMIs at the top level\nare then ordered so that we’ll tackle the highest priority ones first. The next `row’ shows\nthe release plan: one or more releases is associated with delivery of an RMI. Each\nrelease consists of one or more sprints, each of which has a sprint backlog containing\nstories from our product backlog.\n● Note the snowplough effect — we know less about future details.\n● There are other similar ways to present maps. For example, one might have a `row’ for\neach sprint in order to build a matrix of story/release relationships.",
@@ -45660,9 +46050,15 @@
     "project": "0xaa7",
     "sprint": "0xab3",
     "done": false,
-    "estimate": "-",
+    "estimate": "13",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xbe5",
+      "0xbe6",
+      "0xbe7",
+      "0xbe8",
+      "0xbe9"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45670,7 +46066,7 @@
     "itemName": "Story mapping view",
     "serializableTags": []
   },
-  "0xae1": {
+  "0xae7": {
     "shortName": "Pair programming",
     "longName": "Pair programming",
     "description": "So that I can determine the extent and effectiveness of pair programming, as a team member, I\nneed to be able to record pair programming activity.",
@@ -45681,9 +46077,16 @@
     "project": "0xaa7",
     "sprint": "0xab3",
     "done": false,
-    "estimate": "-",
+    "estimate": "8",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xbea",
+      "0xbeb",
+      "0xbec",
+      "0xbed",
+      "0xbee",
+      "0xbef"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45691,7 +46094,7 @@
     "itemName": "Pair programming",
     "serializableTags": []
   },
-  "0xae2": {
+  "0xae8": {
     "shortName": "Story mapping editor",
     "longName": "Story mapping editor",
     "description": "So that I can conveniently update my planning without the distraction of navigation, as a PO, I\nneed to be able to update my system plans directly from the story map view.\nSee also: Story mapping view",
@@ -45702,11 +46105,17 @@
     "project": "0xaa7",
     "sprint": "0xab3",
     "done": false,
-    "estimate": "-",
+    "estimate": "5",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xbf0",
+      "0xbf1",
+      "0xbf2",
+      "0xbf3",
+      "0xbf4"
+    ],
     "dependentOn": [
-      "0xae0"
+      "0xae6"
     ],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45714,7 +46123,7 @@
     "itemName": "Story mapping editor",
     "serializableTags": []
   },
-  "0xae3": {
+  "0xae9": {
     "shortName": "Velocity tracking",
     "longName": "Velocity tracking",
     "description": "So that I can help understand, manage and improve my team’s productivity, as a team member,\nI need to be able to track velocity.",
@@ -45725,9 +46134,14 @@
     "project": "0xaa7",
     "sprint": "0xab3",
     "done": false,
-    "estimate": "-",
+    "estimate": "8",
     "ready": false,
-    "serializableAcceptanceCriteria": [],
+    "serializableAcceptanceCriteria": [
+      "0xbf5",
+      "0xbf6",
+      "0xbf7",
+      "0xbf8"
+    ],
     "dependentOn": [],
     "serializableTasks": [],
     "tasksWithoutStory": false,
@@ -45735,17 +46149,17 @@
     "itemName": "Velocity tracking",
     "serializableTags": []
   },
-  "0xae4": {
+  "0xaea": {
     "year": 2015,
     "month": 5,
     "day": 6
   },
-  "0xae5": {
+  "0xaeb": {
     "year": 2015,
     "month": 5,
     "day": 26
   },
-  "0xae6": {
+  "0xaec": {
     "shortName": "Tasks without a Story",
     "longName": "Tasks without a Story",
     "description": "A collection of tasks that do not belong to a story",
@@ -45765,17 +46179,17 @@
     "itemName": "Tasks without a Story",
     "serializableTags": []
   },
-  "0xae7": {
+  "0xaed": {
     "year": 2015,
     "month": 5,
     "day": 27
   },
-  "0xae8": {
+  "0xaee": {
     "year": 2015,
     "month": 7,
     "day": 22
   },
-  "0xae9": {
+  "0xaef": {
     "shortName": "Tasks without a Story",
     "longName": "Tasks without a Story",
     "description": "A collection of tasks that do not belong to a story",
@@ -45795,17 +46209,17 @@
     "itemName": "Tasks without a Story",
     "serializableTags": []
   },
-  "0xaea": {
+  "0xaf0": {
     "year": 2015,
     "month": 9,
     "day": 7
   },
-  "0xaeb": {
+  "0xaf1": {
     "year": 2015,
     "month": 9,
     "day": 25
   },
-  "0xaec": {
+  "0xaf2": {
     "shortName": "Tasks without a Story",
     "longName": "Tasks without a Story",
     "description": "A collection of tasks that do not belong to a story",
@@ -45825,17 +46239,17 @@
     "itemName": "Tasks without a Story",
     "serializableTags": []
   },
-  "0xaed": {
+  "0xaf3": {
     "year": 2015,
     "month": 3,
     "day": 10
   },
-  "0xaee": {
+  "0xaf4": {
     "year": 2015,
     "month": 3,
     "day": 24
   },
-  "0xaef": {
+  "0xaf5": {
     "shortName": "Tasks without a Story",
     "longName": "Tasks without a Story",
     "description": "A collection of tasks that do not belong to a story",
@@ -45855,17 +46269,17 @@
     "itemName": "Tasks without a Story",
     "serializableTags": []
   },
-  "0xaf0": {
+  "0xaf6": {
     "year": 2015,
     "month": 7,
     "day": 24
   },
-  "0xaf1": {
+  "0xaf7": {
     "year": 2015,
     "month": 9,
     "day": 9
   },
-  "0xaf2": {
+  "0xaf8": {
     "shortName": "Tasks without a Story",
     "longName": "Tasks without a Story",
     "description": "A collection of tasks that do not belong to a story",
@@ -45885,17 +46299,17 @@
     "itemName": "Tasks without a Story",
     "serializableTags": []
   },
-  "0xaf3": {
+  "0xaf9": {
     "year": 2015,
     "month": 3,
     "day": 25
   },
-  "0xaf4": {
+  "0xafa": {
     "year": 2015,
     "month": 5,
     "day": 5
   },
-  "0xaf5": {
+  "0xafb": {
     "shortName": "Tasks without a Story",
     "longName": "Tasks without a Story",
     "description": "A collection of tasks that do not belong to a story",
@@ -45915,7 +46329,7 @@
     "itemName": "Tasks without a Story",
     "serializableTags": []
   },
-  "0xaf6": {
+  "0xafc": {
     "description": "Stand-alone application; can be started from the desktop level",
     "state": "UNACCEPTED",
     "story": "0xabb",
@@ -45923,7 +46337,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xaf7": {
+  "0xafd": {
     "description": "Simple Swing JFrame",
     "state": "UNACCEPTED",
     "story": "0xabb",
@@ -45931,7 +46345,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xaf8": {
+  "0xafe": {
     "description": "Sample text display and editing",
     "state": "UNACCEPTED",
     "story": "0xabb",
@@ -45939,7 +46353,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xaf9": {
+  "0xaff": {
     "description": "MenuBar with File menu and working Quit item",
     "state": "UNACCEPTED",
     "story": "0xabb",
@@ -45947,7 +46361,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xafa": {
+  "0xb00": {
     "description": "Display menu with item for toggling list display. When application is started,\ninitial toggle state doesn\u0027t matter. The list will sit at the left hand side of the\nmain app window and will display various kinds of information as described in\nsubsequent stories. A title (e.g. “Teams”) will appear at the top of the list to\nindicate what the contents are.",
     "state": "UNACCEPTED",
     "story": "0xabb",
@@ -45955,7 +46369,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xafb": {
+  "0xb01": {
     "description": "Close box works",
     "state": "UNACCEPTED",
     "story": "0xabb",
@@ -45963,7 +46377,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xafc": {
+  "0xb02": {
     "description": "File menu has New... item with submenu",
     "state": "UNACCEPTED",
     "story": "0xabc",
@@ -45971,7 +46385,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xafd": {
+  "0xb03": {
     "description": "Submenu includes “New Project …” item (and will eventually include others such\nas new story)",
     "state": "UNACCEPTED",
     "story": "0xabc",
@@ -45979,7 +46393,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xafe": {
+  "0xb04": {
     "description": "Each project has a (non-null, unique) short name, plus a longer name and\ndescription etc",
     "state": "UNACCEPTED",
     "story": "0xabc",
@@ -45987,7 +46401,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xaff": {
+  "0xb05": {
     "description": "Project properties (name etc) may be edited",
     "state": "UNACCEPTED",
     "story": "0xabc",
@@ -45995,7 +46409,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xb00": {
+  "0xb06": {
     "description": "File \u003e Open/Save refer to the whole project",
     "state": "UNACCEPTED",
     "story": "0xabc",
@@ -46003,7 +46417,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xb01": {
+  "0xb07": {
     "description": "New Project item prompts for project name",
     "state": "UNACCEPTED",
     "story": "0xabc",
@@ -46011,7 +46425,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xb02": {
+  "0xb08": {
     "description": "User can choose location to save project",
     "state": "UNACCEPTED",
     "story": "0xabc",
@@ -46019,7 +46433,7 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xb03": {
+  "0xb09": {
     "description": "Only one project will be open at a time",
     "state": "UNACCEPTED",
     "story": "0xabc",
@@ -46027,51 +46441,1915 @@
     "itemName": "",
     "serializableTags": []
   },
-  "0xb04": {
-    "description": "Tag management facilities are available via appropriate GUI elements",
+  "0xb0a": {
+    "description": "Each person will have a short name (which will appear in list displays etc). The\nremaining data may be entered in any suitable text format. This will include full\nname, userid (and possibly others by negotiation)",
+    "state": "UNACCEPTED",
+    "story": "0xabd",
+    "id": 7835,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb0b": {
+    "description": "Short name must be non-null",
+    "state": "UNACCEPTED",
+    "story": "0xabd",
+    "id": 7836,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb0c": {
+    "description": "Short names must be unique (within project)",
+    "state": "UNACCEPTED",
+    "story": "0xabd",
+    "id": 7837,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb0d": {
+    "description": "Short (display) name can be edited provided it remains unique and non-null",
+    "state": "UNACCEPTED",
+    "story": "0xabd",
+    "id": 7838,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb0e": {
+    "description": "Menu has a Save item which saves people information with project data",
+    "state": "UNACCEPTED",
+    "story": "0xabd",
+    "id": 7839,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb0f": {
+    "description": "Menu bar has Open item which loads previously stored people information with\nproject data",
+    "state": "UNACCEPTED",
+    "story": "0xabd",
+    "id": 7840,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb10": {
+    "description": "Display menu has item for displaying people’s info in list. The list title is\n“People”.",
+    "state": "UNACCEPTED",
+    "story": "0xabd",
+    "id": 7841,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb11": {
+    "description": "Display menu has items which allow selection of individual people (and soon will\nbe extended to other element types)",
+    "state": "UNACCEPTED",
+    "story": "0xabe",
+    "id": 7842,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb12": {
+    "description": "Each element type has (non-null, unique) display names short enough to fit in a list\nconveniently",
+    "state": "UNACCEPTED",
+    "story": "0xabe",
+    "id": 7843,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb13": {
+    "description": "The List GUI component is populated, according to the selected element type,\nwith short names or corresponding identifiers.",
+    "state": "UNACCEPTED",
+    "story": "0xabe",
+    "id": 7844,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb14": {
+    "description": "The main application pane contains the complete detail of the currently selected\nelement.",
+    "state": "UNACCEPTED",
+    "story": "0xabe",
+    "id": 7845,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb15": {
+    "description": "Each skill has a short (display) name (e.g. BA, C#) and a description",
+    "state": "UNACCEPTED",
+    "story": "0xabf",
+    "id": 7851,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb16": {
+    "description": "Short names are non-null and unique",
+    "state": "UNACCEPTED",
+    "story": "0xabf",
+    "id": 7852,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb17": {
+    "description": "Zero or more skills may be associated with a person, via the person create/edit dialog",
+    "state": "UNACCEPTED",
+    "story": "0xabf",
+    "id": 7853,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb18": {
+    "description": "We don’t have to worry about recording skill levels though this may be a future story",
+    "state": "UNACCEPTED",
+    "story": "0xabf",
+    "id": 7854,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb19": {
+    "description": "When a person is displayed (via the List) then the corresponding skills are also listed",
+    "state": "UNACCEPTED",
+    "story": "0xabf",
+    "id": 7855,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb1a": {
+    "description": "The display list can (via the Display menu) show the list of skills. The details of the\nselected skill are displayed in the main pane",
+    "state": "UNACCEPTED",
+    "story": "0xabf",
+    "id": 7856,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb1b": {
+    "description": "Each team has a unique, non-null short name, plus a description and any other\nrelevant data",
+    "state": "UNACCEPTED",
+    "story": "0xac0",
+    "id": 7857,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb1c": {
+    "description": "When a team is created, individual people may be added provided that they have\npreviously been added to the organisation.",
+    "state": "UNACCEPTED",
+    "story": "0xac0",
+    "id": 7858,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb1d": {
+    "description": "No person may be in more than one team at a time.",
+    "state": "UNACCEPTED",
+    "story": "0xac0",
+    "id": 7859,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb1e": {
+    "description": "When a team is edited, people may be added or removed.",
+    "state": "UNACCEPTED",
+    "story": "0xac0",
+    "id": 7860,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb1f": {
+    "description": "The display list can (via the Display menu) show the list of teams. The details of the\nselected team are displayed in the main pane, together with those of its members",
+    "state": "UNACCEPTED",
+    "story": "0xac0",
+    "id": 7861,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb20": {
+    "description": "For now, the only roles we need to consider are Product Owner (PO), Scrum Master\n(SM) and Development Team Member",
+    "state": "UNACCEPTED",
+    "story": "0xac1",
+    "id": 7862,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb21": {
+    "description": "Each team can have at most 1 PO and at most 1 SM.",
+    "state": "UNACCEPTED",
+    "story": "0xac1",
+    "id": 7863,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb22": {
+    "description": "In order to be allocated a PO/SM role, a person must have the corresponding PO/SM\nskill.",
+    "state": "UNACCEPTED",
+    "story": "0xac1",
+    "id": 7864,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb23": {
+    "description": "A person can have only one role in the team (i.e. for now we’re assuming that the SM\nis not also a developer and that the PO \u0026 SM are only responsible for a single team)",
+    "state": "UNACCEPTED",
+    "story": "0xac1",
+    "id": 7865,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb24": {
+    "description": "Roles may be allocated when people are added to a team. Roles may be changed\nsubsequently.",
+    "state": "UNACCEPTED",
+    "story": "0xac1",
+    "id": 7866,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb25": {
+    "description": "Roles are included in the team display list information",
+    "state": "UNACCEPTED",
+    "story": "0xac1",
+    "id": 7867,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb26": {
+    "description": "Teams, people and skills may be deleted via appropriate dialogs",
+    "state": "UNACCEPTED",
+    "story": "0xac2",
+    "id": 7868,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb27": {
+    "description": "A skill may not be deleted if there is one or more person with it in their skill set. If\nthe user attempts to delete a skill which one or more people currently has the an\nappropriate alert is displayed. The user can cancel the operation or go ahead, in\nwhich case the deleted skill is removed from any such people.",
+    "state": "UNACCEPTED",
+    "story": "0xac2",
+    "id": 7869,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb28": {
+    "description": "Similarly, if the user tries to delete a person who is currently in a team then an\nappropriate warning is displayed. The user may cancel the operation or continue, in\nwhich case the person is removed from the team before deletion.",
+    "state": "UNACCEPTED",
+    "story": "0xac2",
+    "id": 7870,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb29": {
+    "description": "If the user attempts to delete a team which has one or more members then an\nappropriate alert is displayed. The user may cancel (e.g. to reallocate people to new\nteams) or continue, in which case a cascading delete occurs: the team and all its\nmembers are deleted.",
+    "state": "UNACCEPTED",
+    "story": "0xac2",
+    "id": 7871,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb2a": {
+    "description": "Deletion may be undone.",
+    "state": "UNACCEPTED",
+    "story": "0xac2",
+    "id": 7872,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb2b": {
+    "description": "Each release has a unique, non-null short name/ID, plus a description, estimated\nrelease date and any other relevant data",
+    "state": "UNACCEPTED",
+    "story": "0xac3",
+    "id": 7873,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb2c": {
+    "description": "When a release is created, it is associated with an existing project. “Orphan” releases\nare not permitted.",
+    "state": "UNACCEPTED",
+    "story": "0xac3",
+    "id": 7874,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb2d": {
+    "description": "When a release is edited, any property may be updated",
+    "state": "UNACCEPTED",
+    "story": "0xac3",
+    "id": 7875,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb2e": {
+    "description": "The display list can (via the Display menu) show the list of releases for a project. The\ndetails of the selected release are displayed in the main pane",
+    "state": "UNACCEPTED",
+    "story": "0xac3",
+    "id": 7876,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb2f": {
+    "description": "For now, a release may only be deleted if it has no associated sprints",
+    "state": "UNACCEPTED",
+    "story": "0xac3",
+    "id": 7877,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb30": {
+    "description": "One or more teams may be allocated to the current project",
+    "state": "UNACCEPTED",
+    "story": "0xac4",
+    "id": 7878,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb31": {
+    "description": "Each team may be allocated to at most one project",
+    "state": "UNACCEPTED",
+    "story": "0xac4",
+    "id": 7879,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb32": {
+    "description": "A team may be de-allocated from a project. No other information should be deleted\nat this point (we’ll consider the case of “live” projects later)",
+    "state": "UNACCEPTED",
+    "story": "0xac4",
+    "id": 7880,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb33": {
+    "description": "The beginning and end dates of the team’s allocation to the project are recorded and\ndisplayed via the Listbar",
+    "state": "UNACCEPTED",
+    "story": "0xac4",
+    "id": 7881,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb34": {
+    "description": "A team may be allocated to a project more than once, but the intervals must be\nnon-overlapping (strictly before or after)",
+    "state": "UNACCEPTED",
+    "story": "0xac4",
+    "id": 7882,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb35": {
+    "description": "The status report is initiated by selecting an appropriate menu item.",
+    "state": "UNACCEPTED",
+    "story": "0xac5",
+    "id": 7883,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb36": {
+    "description": "The user can select the location where the report file will be stored. A default is\nprovided (probably in the current directory)",
+    "state": "UNACCEPTED",
+    "story": "0xac5",
+    "id": 7884,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb37": {
+    "description": "The report data is assembled and saved in the specified location in an appropriate\nhuman-readable format (XML?).",
+    "state": "UNACCEPTED",
+    "story": "0xac5",
+    "id": 7885,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb38": {
+    "description": "The report will have an appropriate header (title, date, organisation unit, …) and the\nbody will contain sections (separated by appropriate whitespace or formatting)\nbeginning with the details of each project.",
+    "state": "UNACCEPTED",
+    "story": "0xac5",
+    "id": 7886,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb39": {
+    "description": "The basic structure is hierarchical: Project \u003e Team \u003e Person. Tags (and possibly\nindentation or whitespace) are used to emphasise the structure",
+    "state": "UNACCEPTED",
+    "story": "0xac5",
+    "id": 7887,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb3a": {
+    "description": "Any teams not currently allocated to a project appear after the last project",
+    "state": "UNACCEPTED",
+    "story": "0xac5",
+    "id": 7888,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb3b": {
+    "description": "Any people not currently members of a team appear after the last team",
+    "state": "UNACCEPTED",
+    "story": "0xac5",
+    "id": 7889,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb3c": {
+    "description": "The project name appears in the window title",
+    "state": "UNACCEPTED",
+    "story": "0xac6",
+    "id": 7890,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb3d": {
+    "description": "Unsaved changes indicator. When there are unsaved changes, an asterisk appears\nat the beginning of the window title. Additional indicators may be provided (such\nas enabling/disabling Save item). Undo/redo actions may require this to be\nupdated.",
+    "state": "UNACCEPTED",
+    "story": "0xac6",
+    "id": 7891,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb3e": {
+    "description": "Menu items have short-cut keys. Details by negotiation but there should be no\nsurprises i.e. \u003cctrl\u003e-O for Open rather than \u003cctrl\u003e-E because O has already been\nused.",
+    "state": "UNACCEPTED",
+    "story": "0xac6",
+    "id": 7892,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb3f": {
+    "description": "Dialogs should have default option (for speed) and this should be highlighted",
+    "state": "UNACCEPTED",
+    "story": "0xac6",
+    "id": 7893,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb40": {
+    "description": "Dialogs should have consistent button placement. Details by negotiation but for\nexample 2-button dialogs might have OK on the right \u0026 Cancel on the left with OK\nas the default.",
+    "state": "UNACCEPTED",
+    "story": "0xac6",
+    "id": 7894,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb41": {
+    "description": "When the main application window is resized/reshaped, scroll bars appear when\nneeded. There is a minimum size, and all panes are visible when this is reached.",
+    "state": "UNACCEPTED",
+    "story": "0xac6",
+    "id": 7895,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb42": {
+    "description": "A New Story… function is available via an appropriate menu item",
+    "state": "UNACCEPTED",
+    "story": "0xac7",
+    "id": 7900,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb43": {
+    "description": "A mandatory (unique, non-null) identifier, full name and description may be entered.\nThe person who created the story is also recorded (this won’t usually be the userid the\nprogram is running under)",
+    "state": "UNACCEPTED",
+    "story": "0xac7",
+    "id": 7901,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb44": {
+    "description": "The Display menu allows stories to be selected for display. As for other elements, the\nshort name appears in the displayed list and the selected item’s details appear in the\nmain panel.",
+    "state": "UNACCEPTED",
+    "story": "0xac7",
+    "id": 7902,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb45": {
+    "description": "The newly-created story appears in the List",
+    "state": "UNACCEPTED",
+    "story": "0xac7",
+    "id": 7903,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb46": {
+    "description": "A story may be edited, but the creator may not be changed. If the story is edited by\nsomebody other than the creator then we’ll ignore that for now",
+    "state": "UNACCEPTED",
+    "story": "0xac7",
+    "id": 7904,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb47": {
+    "description": "A \u0027Revert\" item is available on the File menu",
+    "state": "UNACCEPTED",
+    "story": "0xac8",
+    "id": 7896,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb48": {
+    "description": "If there are no unsaved changes then nothing is done (Revert item may be disabled\nin this case)",
+    "state": "UNACCEPTED",
+    "story": "0xac8",
+    "id": 7897,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb49": {
+    "description": "If there are unsaved changes then the user is warned that these will not be\nrecoverable. If help is available then this should mention the use of \u0027Save As ...\u0027\nbefore reverting if unsure.",
+    "state": "UNACCEPTED",
+    "story": "0xac8",
+    "id": 7898,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb4a": {
+    "description": "The Project reverts to the state where it was last opened. If it has been saved\nsince it was last opened then Revert takes the state back to that of the last Save\noperation.",
+    "state": "UNACCEPTED",
+    "story": "0xac8",
+    "id": 7899,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb4b": {
+    "description": "When elements are created, they appear in the corresponding list ordered by their\nlabel (short name) when the list is displayed.",
+    "state": "UNACCEPTED",
+    "story": "0xac9",
+    "id": 7905,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb4c": {
+    "description": "When the label is changed, the list items are re-ordered if necessary to preserve\nalphabetical order.",
+    "state": "UNACCEPTED",
+    "story": "0xac9",
+    "id": 7906,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb4d": {
+    "description": "A backlog can be created via a suitable menu item",
+    "state": "UNACCEPTED",
+    "story": "0xaca",
+    "id": 7907,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb4e": {
+    "description": "As for other element types, a short name will appear in the display list and the details\nof a selected item will appear in the main pane",
+    "state": "UNACCEPTED",
+    "story": "0xaca",
+    "id": 7908,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb4f": {
+    "description": "Each backlog has a full name, description and PO",
+    "state": "UNACCEPTED",
+    "story": "0xaca",
+    "id": 7909,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb50": {
+    "description": "Zero or more stories may be added to the selected backlog via appropriate GUI\nelements",
+    "state": "UNACCEPTED",
+    "story": "0xaca",
+    "id": 7910,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb51": {
+    "description": "A story may appear on zero or one backlog. A story appears at most once in the\nbacklog.",
+    "state": "UNACCEPTED",
+    "story": "0xaca",
+    "id": 7911,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb52": {
+    "description": "When a new story is created, it can (and usually will) be assigned to an existing\nbacklog.",
+    "state": "UNACCEPTED",
+    "story": "0xaca",
+    "id": 7912,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb53": {
+    "description": "The backlog’s stories are in (total) order: the highest priority story has the most value\nto the customer at the current time. The order of each story is specified when it is\nadded to the backlog.",
+    "state": "UNACCEPTED",
+    "story": "0xaca",
+    "id": 7913,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb54": {
+    "description": "The priority of each story can be changed and this will be likely to happen several\ntimes while the story is in the backlog.",
+    "state": "UNACCEPTED",
+    "story": "0xaca",
+    "id": 7914,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb55": {
+    "description": "See also Story 11 (Status reports)",
+    "state": "UNACCEPTED",
+    "story": "0xacb",
+    "id": 7928,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb56": {
+    "description": "When the report function is activated, the user can select the level (project, team,\nperson) required (e.g. from a submenu). The default level is project.",
+    "state": "UNACCEPTED",
+    "story": "0xacb",
+    "id": 7929,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb57": {
+    "description": "When the level has been chosen, the user can select one or more elements from the\ncorresponding level.",
+    "state": "UNACCEPTED",
+    "story": "0xacb",
+    "id": 7930,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb58": {
+    "description": "The report content contains only detail from the selected elements and their\n“children.”",
+    "state": "UNACCEPTED",
+    "story": "0xacb",
+    "id": 7931,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb59": {
+    "description": "When a backlog is selected for display, its stories appear in descending order of\npriority",
+    "state": "UNACCEPTED",
+    "story": "0xacc",
+    "id": 7932,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb5a": {
+    "description": "The user can elect, via an appropriate GUI control, to display the stories in the default\n(alphabetical) order to make it easier to find a particular story",
+    "state": "UNACCEPTED",
+    "story": "0xacc",
+    "id": 7933,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb5b": {
+    "description": "The user can toggle between the two orders. Some visual indication of which order is\ncurrently selected is available",
+    "state": "UNACCEPTED",
+    "story": "0xacc",
+    "id": 7934,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb5c": {
+    "description": "See also Story 11 (Status reports) and Story 16 (parameterised reports)",
+    "state": "UNACCEPTED",
+    "story": "0xacd",
+    "id": 7935,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb5d": {
+    "description": "When the report function is activated, the user can select the backlog level (e.g. from\na submenu).",
+    "state": "UNACCEPTED",
+    "story": "0xacd",
+    "id": 7936,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb5e": {
+    "description": "When the level has been chosen, the user can select one or more backlogs from the\ncorresponding list.",
+    "state": "UNACCEPTED",
+    "story": "0xacd",
+    "id": 7937,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb5f": {
+    "description": "The report content contains only detail from the selected elements and their\n“children.”",
+    "state": "UNACCEPTED",
+    "story": "0xacd",
+    "id": 7938,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb60": {
+    "description": "The items are in descending priority order",
+    "state": "UNACCEPTED",
+    "story": "0xacd",
+    "id": 7939,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb61": {
+    "description": "When a story is selected, the editing options include updating acceptance criteria.",
+    "state": "UNACCEPTED",
+    "story": "0xace",
+    "id": 7940,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb62": {
+    "description": "A story may have zero or more ACs. For now, they are just text: we don’t need to\nknow whether they have been satisfied or not etc.",
+    "state": "UNACCEPTED",
+    "story": "0xace",
+    "id": 7941,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb63": {
+    "description": "ACs may be added, re-ordered or removed.",
+    "state": "UNACCEPTED",
+    "story": "0xace",
+    "id": 7942,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb64": {
+    "description": "The text of an AC may be edited",
+    "state": "UNACCEPTED",
+    "story": "0xace",
+    "id": 7943,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb65": {
+    "description": "We don’t have to worry about checking for duplicates etc --- we rely on the PO for\nthat",
+    "state": "UNACCEPTED",
+    "story": "0xace",
+    "id": 7944,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb66": {
+    "description": "ACs appear in any reports that include stories",
+    "state": "UNACCEPTED",
+    "story": "0xace",
+    "id": 7945,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb67": {
+    "description": "Every story has an “estimate” property.",
+    "state": "UNACCEPTED",
+    "story": "0xacf",
+    "id": 7946,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb68": {
+    "description": "Story points are values of an ordinal scale such as the (pseudo-) Fibonacci series,\nT-shirt sizes or dog breeds.",
+    "state": "UNACCEPTED",
+    "story": "0xacf",
+    "id": 7947,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb69": {
+    "description": "One or more story point scales is available. Only one scale is used for stories in a\nparticular backlog. If more than one scale is available then one must be chosen when\nthe backlog is created.",
+    "state": "UNACCEPTED",
+    "story": "0xacf",
+    "id": 7948,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb6a": {
+    "description": "Only scale values may appear. Ideally, values will be selected from a list of valid\noptions (e.g. via a JComboBox).",
+    "state": "UNACCEPTED",
+    "story": "0xacf",
+    "id": 7949,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb6b": {
+    "description": "An appropriate value for null estimates is included. If (as is likely) an estimate is not\navailable when the story is created, then the null value is used. The null (unknown)\nvalue is not the same thing as the zero (known to be zero --- perhaps because it has\nalready been done) value.",
+    "state": "UNACCEPTED",
+    "story": "0xacf",
+    "id": 7950,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb6c": {
+    "description": "The estimate can (and probably will) be changed several times. At this stage we don’t\nneed to record the values of previous estimates.",
+    "state": "UNACCEPTED",
+    "story": "0xacf",
+    "id": 7951,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb6d": {
+    "description": "A story cannot be estimated if it has no ACs.",
+    "state": "UNACCEPTED",
+    "story": "0xacf",
+    "id": 7952,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb6e": {
+    "description": "Estimates appear on any reports involving the corresponding stories.",
+    "state": "UNACCEPTED",
+    "story": "0xacf",
+    "id": 7953,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb6f": {
+    "description": "Each story has a property indicating its readiness",
+    "state": "UNACCEPTED",
+    "story": "0xad0",
+    "id": 7954,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb70": {
+    "description": "A newly-created story is initially not ready.",
+    "state": "UNACCEPTED",
+    "story": "0xad0",
+    "id": 7955,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb71": {
+    "description": "Available editing operations include changing the readiness state from not ready to\nready (or from ready to not ready).",
+    "state": "UNACCEPTED",
+    "story": "0xad0",
+    "id": 7956,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb72": {
+    "description": "A story’s readiness state cannot be changed to ready if any of these apply:\n○ The story is not in a backlog\n○ The story does not have a non-null estimate\n○ The story has no acceptance criteria",
+    "state": "UNACCEPTED",
+    "story": "0xad0",
+    "id": 7957,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb73": {
+    "description": "Readiness state appears on any reports involving the corresponding story.",
+    "state": "UNACCEPTED",
+    "story": "0xad0",
+    "id": 7958,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb74": {
+    "description": "Each story has a (possibly empty) list of stories on which it depends",
+    "state": "UNACCEPTED",
+    "story": "0xad1",
+    "id": 7959,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb75": {
+    "description": "A story may depend on zero or more other stories",
+    "state": "UNACCEPTED",
+    "story": "0xad1",
+    "id": 7960,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb76": {
+    "description": "Transitive chains of dependencies are fine, but cyclic dependency chains are not\npermitted (it should not be possible to create them).",
+    "state": "UNACCEPTED",
+    "story": "0xad1",
+    "id": 7961,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb77": {
+    "description": "It is possible to check for, and be shown, conflicts where a higher priority story\ndepends on a story of lower priority.",
+    "state": "UNACCEPTED",
+    "story": "0xad1",
+    "id": 7962,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb78": {
+    "description": "Dependencies (if any) appear on any reports involving the corresponding story",
+    "state": "UNACCEPTED",
+    "story": "0xad1",
+    "id": 7963,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb79": {
+    "description": "A toolbar (JToolBar or similar) is provided immediately below the application\u0027s\nmenubar (or elsewhere by negotiation).",
+    "state": "UNACCEPTED",
+    "story": "0xad2",
+    "id": 7970,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb7a": {
+    "description": "Items on the toolbar have appropriate icons and tooltips.",
+    "state": "UNACCEPTED",
+    "story": "0xad2",
+    "id": 7971,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb7b": {
+    "description": "Items on the toolbar are grouped as appropriate (JToolBar.Separator or similar)",
+    "state": "UNACCEPTED",
+    "story": "0xad2",
+    "id": 7972,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb7c": {
+    "description": "The toolbar contents (details by negotiation) will probably include element\ncreation/edit/delete and linking operations",
+    "state": "UNACCEPTED",
+    "story": "0xad2",
+    "id": 7973,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb7d": {
+    "description": "As application functionality grows and evolves, reorganisation of toolbar content may\nbe required. Major changes should only be made after consultation with SM/PO as\nappropriate.",
+    "state": "UNACCEPTED",
+    "story": "0xad2",
+    "id": 7974,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb7e": {
+    "description": "When the display list shows the stories in a backlog, the user can choose (via an\nappropriate GUI control) to display it in highlight mode.",
+    "state": "UNACCEPTED",
+    "story": "0xad3",
+    "id": 7964,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb7f": {
+    "description": "When this is selected, each item is highlighted in an appropriate way (maybe\nbackground colour, a colour chip at the beginning/end, …). Only one highlight\ncategory (currently) applies to any given story.",
+    "state": "UNACCEPTED",
+    "story": "0xad3",
+    "id": 7965,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb80": {
+    "description": "Stories that are ready have green highlighting",
+    "state": "UNACCEPTED",
+    "story": "0xad3",
+    "id": 7966,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb81": {
+    "description": "Orange highlighting is used for stories that have not yet been estimated but which\ncould be (i.e. they have one or more ACs)",
+    "state": "UNACCEPTED",
+    "story": "0xad3",
+    "id": 7967,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb82": {
+    "description": "Red highlighting is used for stories which depend on one or more stories which have\nlower​ priority. This overrides any other applicable highlighting.",
+    "state": "UNACCEPTED",
+    "story": "0xad3",
+    "id": 7968,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb83": {
+    "description": "All other stories have no highlighting.",
+    "state": "UNACCEPTED",
+    "story": "0xad3",
+    "id": 7969,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb84": {
+    "description": "Sprint creation/edit features are accessible from an appropriate GUI element.",
+    "state": "UNACCEPTED",
+    "story": "0xad4",
+    "id": 7975,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb85": {
+    "description": "Each sprint involves a project (indirectly via backlog), team, and backlog",
+    "state": "UNACCEPTED",
+    "story": "0xad4",
+    "id": 7976,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb86": {
+    "description": "Each sprint has a start and end date.",
+    "state": "UNACCEPTED",
+    "story": "0xad4",
+    "id": 7977,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb87": {
+    "description": "Each sprint is associated with a release (and should end before the corresponding\nrelease date).",
+    "state": "UNACCEPTED",
+    "story": "0xad4",
+    "id": 7978,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb88": {
+    "description": "Each sprint has a sprint goal: this functions as the display name/label. A sprint also has\na full name and description.",
+    "state": "UNACCEPTED",
+    "story": "0xad4",
+    "id": 7979,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb89": {
+    "description": "Each sprint has zero or more user stories. These (at least implicitly) represent a section\nof the backlog beginning with the highest priority uncompleted story. However, in\nanticipation of complications such as shared backlogs, each sprint will maintain an\nexplicit collection of its stories.",
+    "state": "UNACCEPTED",
+    "story": "0xad4",
+    "id": 7980,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb8a": {
+    "description": "Stories must be ready (see user story 21) before they can be included in a sprint.",
+    "state": "UNACCEPTED",
+    "story": "0xad4",
+    "id": 7981,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb8b": {
+    "description": "A basic search function is available via an appropriate menu item or toolbar",
+    "state": "UNACCEPTED",
+    "story": "0xad5",
+    "id": 7982,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb8c": {
+    "description": "A search string can be entered in an appropriate dialog or other component.",
+    "state": "UNACCEPTED",
+    "story": "0xad5",
+    "id": 7983,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb8d": {
+    "description": "There is an option to limit the search to the current List or the current Project (including\nany unsaved changes)",
+    "state": "UNACCEPTED",
+    "story": "0xad5",
+    "id": 7984,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb8e": {
+    "description": "There is an option to limit the search to display labels. Otherwise all occurrences are\nreported.",
+    "state": "UNACCEPTED",
+    "story": "0xad5",
+    "id": 7985,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb8f": {
+    "description": "Only fixed search strings are required at this stage (later we may want regular\nexpressions or richer dialogs)",
+    "state": "UNACCEPTED",
+    "story": "0xad5",
+    "id": 7986,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb90": {
+    "description": "When the search is complete the results are presented to the user. If the search is\nlimited to the current List then matches are highlighted",
+    "state": "UNACCEPTED",
+    "story": "0xad5",
+    "id": 7987,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb91": {
+    "description": "If the search is over the entire project/system then results are presented in a separate\nwindow. The user may select a result and this switches the current display list (if\nnecessary) and displays the match with highlighting as in the previous AC",
+    "state": "UNACCEPTED",
+    "story": "0xad5",
+    "id": 7988,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb92": {
+    "description": "Tasks may be created via at least one appropriate GUI facility. It is likely that selecting\nthe story first and then adding the tasks will be convenient.",
+    "state": "UNACCEPTED",
+    "story": "0xad6",
+    "id": 7989,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb93": {
+    "description": "Each task is associated with one story. Tasks cannot be created outside a story (unless\nagreed policy allows).",
+    "state": "UNACCEPTED",
+    "story": "0xad6",
+    "id": 7990,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb94": {
+    "description": "Tasks have the usual short name/label, and description. These may be edited after\ncreation",
+    "state": "UNACCEPTED",
+    "story": "0xad6",
+    "id": 7991,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb95": {
+    "description": "Tasks have an estimate (generally in hours)",
+    "state": "UNACCEPTED",
+    "story": "0xad6",
+    "id": 7992,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb96": {
+    "description": "Tasks have a status (values are likely to include completed, in progress, ready, etc)",
+    "state": "UNACCEPTED",
+    "story": "0xad6",
+    "id": 7993,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb97": {
+    "description": "Task status may be changed. This will normally be done via the GUI developed in the\nStandup/Scrum board support story.",
+    "state": "UNACCEPTED",
+    "story": "0xad6",
+    "id": 7994,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb98": {
+    "description": "The display provides access to the stories in a sprint, together with their associated\ntasks",
+    "state": "UNACCEPTED",
+    "story": "0xad7",
+    "id": 7995,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb99": {
+    "description": "Task status may be changed (e.g. to completed). Not all changes may be semantically\nmeaningful.",
+    "state": "UNACCEPTED",
+    "story": "0xad7",
+    "id": 7996,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb9a": {
+    "description": "Task estimates (e.g. time required) may be updated.",
+    "state": "UNACCEPTED",
+    "story": "0xad7",
+    "id": 7997,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb9b": {
+    "description": "Allocation of people to tasks may be made. Only team members may be allocated.",
+    "state": "UNACCEPTED",
+    "story": "0xad7",
+    "id": 7998,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb9c": {
+    "description": "Effort spent on tasks by people may be updated. In the future, we may compute some of\nthis directly from logged sessions but for now we can just do this manually.",
+    "state": "UNACCEPTED",
+    "story": "0xad7",
+    "id": 7999,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb9d": {
+    "description": "If all tasks for a story are complete then the story may be marked as done. This should\nrequire explicit action rather than be automatic.",
+    "state": "UNACCEPTED",
+    "story": "0xad7",
+    "id": 8000,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb9e": {
+    "description": "Impediments may be noted at task or story level.",
+    "state": "UNACCEPTED",
+    "story": "0xad7",
+    "id": 8001,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xb9f": {
+    "description": "The main application area is now a set of tabbed panes",
+    "state": "UNACCEPTED",
+    "story": "0xad8",
+    "id": 8024,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xba0": {
+    "description": "The current display list actions continue to work as previously, but now write into the\n“model” pane.",
+    "state": "UNACCEPTED",
+    "story": "0xad8",
+    "id": 8025,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xba1": {
+    "description": "Other panes are used to display graphical views such as burndown charts.",
+    "state": "UNACCEPTED",
+    "story": "0xad8",
+    "id": 8026,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xba2": {
+    "description": "Currently, we only need one model pane and the list can remain as before. However, it\nis anticipated that other panes will eventually incorporate their own lists or other controls.\nAt this point the original list display will be incorporated in the model pane and we may\neven need to consider supporting multiple model panes.",
+    "state": "UNACCEPTED",
+    "story": "0xad8",
+    "id": 8027,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xba3": {
+    "description": "The chart axes are time (x) and work remaining (y). The time axis units are days and the\nwork remaining units are hours",
+    "state": "UNACCEPTED",
+    "story": "0xad9",
+    "id": 8006,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xba4": {
+    "description": "A target line is drawn from the (day zero, all tasks remaining) point on the y axis to the\n(last day of sprint, zero tasks remaining) point on the x axis. This should be in a colour\n(e.g. red or gray) that is easily distinguishable from the colour(s) that will be used\nelsewhere on the chart",
+    "state": "UNACCEPTED",
+    "story": "0xad9",
+    "id": 8007,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xba5": {
+    "description": "A point (or bar etc.) is drawn for each day in the sprint. Its height is the hours remaining.\nIdeally, this is calculated from the current tasks associated with the sprint. If this is not\ncurrently practicable to determine then the PO might be willing to negotiate a manual\nentry/override feature",
+    "state": "UNACCEPTED",
+    "story": "0xad9",
+    "id": 8008,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xba6": {
+    "description": "If the data is available, then it should be possible to select a completed sprint and\ndisplay the corresponding burndown chart.",
+    "state": "UNACCEPTED",
+    "story": "0xad9",
+    "id": 8009,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xba7": {
+    "description": "All unallocated tasks can be displayed",
+    "state": "UNACCEPTED",
+    "story": "0xada",
+    "id": 8010,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xba8": {
+    "description": "The display order is the priority order of the corresponding stories. Within that the order\nof tasks can be either alphabetical or in increasing estimated size",
+    "state": "UNACCEPTED",
+    "story": "0xada",
+    "id": 8011,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xba9": {
+    "description": "All tasks can be displayed, grouped by stories in priority order",
+    "state": "UNACCEPTED",
+    "story": "0xada",
+    "id": 8012,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbaa": {
+    "description": "In the “All tasks” view, unallocated tasks are highlighted (e.g. in red)",
+    "state": "UNACCEPTED",
+    "story": "0xada",
+    "id": 8013,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbab": {
+    "description": "Active tasks are highlighted differently (e.g. in orange) and completed tasks are\ndistinguished (e.g. in green or black). Details will depend on how many status options\nare available.",
+    "state": "UNACCEPTED",
+    "story": "0xada",
+    "id": 8014,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbac": {
+    "description": "Effort logging can be accessed via appropriate GUI controls",
+    "state": "UNACCEPTED",
+    "story": "0xadb",
+    "id": 8015,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbad": {
+    "description": "A task can be selected. Effort (time) for a person can be recorded against the task,\ntogether with a brief (but mandatory) comment.",
+    "state": "UNACCEPTED",
+    "story": "0xadb",
+    "id": 8016,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbae": {
+    "description": "Only people in the team to which the corresponding story is assigned may log effort on\nits tasks. The person must be specified when effort is logged.",
+    "state": "UNACCEPTED",
+    "story": "0xadb",
+    "id": 8017,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbaf": {
+    "description": "Time will be recorded (at least internally) at the granularity of minutes. However, it is\nlikely that the actual data will be provided in 10­minute or quarter­hour granularity.",
+    "state": "UNACCEPTED",
+    "story": "0xadb",
+    "id": 8018,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbb0": {
+    "description": "Effort may be entered as an interval (i.e. by specifying start and end times) or as an\namount (hours and/or minutes). If an amount is provided then the corresponding day is\nalso required. In the Standup/Scrum board support story it was implicitly assumed that\nthe date was “yesterday.”",
+    "state": "UNACCEPTED",
+    "story": "0xadb",
+    "id": 8019,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbb1": {
+    "description": "Normally, effort should only be logged against tasks which are part of a story in the\ncurrent sprint. Negotiated policy will apply.",
+    "state": "UNACCEPTED",
+    "story": "0xadb",
+    "id": 8020,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbb2": {
+    "description": "Displaying stories in a sprint in one or more forms",
+    "state": "UNACCEPTED",
+    "story": "0xadc",
+    "id": 8021,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbb3": {
+    "description": "Displaying stories in a sprint in one or more orders (priority, completeness, lexical, …)",
+    "state": "UNACCEPTED",
+    "story": "0xadc",
+    "id": 8022,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbb4": {
+    "description": "Indicating story size and completeness in appropriate visual ways",
+    "state": "UNACCEPTED",
+    "story": "0xadc",
+    "id": 8023,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbb5": {
+    "description": "An appropriate icon is associated with the application. This can be a simple place­holder\nfor now and it is not appropriate to spend a lot of time designing it.",
+    "state": "UNACCEPTED",
+    "story": "0xadd",
+    "id": 7870,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbb6": {
+    "description": "Double­clicking the application icon begins execution",
+    "state": "UNACCEPTED",
+    "story": "0xadd",
+    "id": 7871,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbb7": {
+    "description": "If the icon is associated with a JAR file then double­clicking it begins execution and does\nnot open an archive manager.",
+    "state": "UNACCEPTED",
+    "story": "0xadd",
+    "id": 7872,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbb8": {
+    "description": "Search expressions may be entered via an appropriate dialog.",
     "state": "UNACCEPTED",
     "story": "0xade",
+    "id": 8042,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbb9": {
+    "description": "Wildcards and regular expressions should be available",
+    "state": "UNACCEPTED",
+    "story": "0xade",
+    "id": 8043,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbba": {
+    "description": "Complex expressions (e.g. involving operators such as or and and ) may be entered as\nregular expressions or each clause could be a separate line in a dialog etc.",
+    "state": "UNACCEPTED",
+    "story": "0xade",
+    "id": 8044,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbbb": {
+    "description": "Results are presented in a separate window. Selecting a particular result navigates to\nthe appropriate context. This will possibly involve switching the current display list type",
+    "state": "UNACCEPTED",
+    "story": "0xade",
+    "id": 8045,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbbc": {
+    "description": "The locale can be set when a new system is created. Here we mean the “biggest”\nhigh­level concept: we’ve referred to this as system, enterprise, model, project etc",
+    "state": "UNACCEPTED",
+    "story": "0xadf",
+    "id": 8094,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbbd": {
+    "description": "We can assume that the locale remains fixed.",
+    "state": "UNACCEPTED",
+    "story": "0xadf",
+    "id": 8095,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbbe": {
+    "description": "Dates and times are entered and displayed in formats appropriate for the locale",
+    "state": "UNACCEPTED",
+    "story": "0xadf",
+    "id": 8096,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbbf": {
+    "description": "The text for major GUI elements (including buttons, menus, menu items, dialogs, …)\nmay be customised as appropriate for the locale. Some locales have more than one\npotential natural language option (Maori or English in NZ; French or English in Canada;\nFrench or Flemish in Belgium) but only one need be supported unless the PO requires it",
+    "state": "UNACCEPTED",
+    "story": "0xadf",
+    "id": 8097,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbc0": {
+    "description": "For now, we can assume we are dealing with languages where the Roman character set\nand left­to­right text entry are used. Later stories may extend this.",
+    "state": "UNACCEPTED",
+    "story": "0xadf",
+    "id": 8098,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbc1": {
+    "description": "The similarity detector can be accessed via suitable GUI controls",
+    "state": "UNACCEPTED",
+    "story": "0xae0",
+    "id": 8106,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbc2": {
+    "description": "A stop list of common words is provided.",
+    "state": "UNACCEPTED",
+    "story": "0xae0",
+    "id": 8107,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbc3": {
+    "description": "Stemming is provide",
+    "state": "UNACCEPTED",
+    "story": "0xae0",
+    "id": 8108,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbc4": {
+    "description": "The user can add/remove terms from the stop list.",
+    "state": "UNACCEPTED",
+    "story": "0xae0",
+    "id": 8109,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbc5": {
+    "description": "When the similarity detector is run, the most similar pairs/groups of stories are\ndisplayed., together with an indication of the degree of similarity.",
+    "state": "UNACCEPTED",
+    "story": "0xae0",
+    "id": 8110,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbc6": {
+    "description": "A workspace is provided, details by negotiation but probably as a tab pane or separate\nwindow. Scrolling is supported.",
+    "state": "UNACCEPTED",
+    "story": "0xae1",
+    "id": 8099,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbc7": {
+    "description": "Stories may be selected from the backlog (though not necessarily directly) and appear\nas visual elements (e.g. rectangles or icons) on the surface.",
+    "state": "UNACCEPTED",
+    "story": "0xae1",
+    "id": 8100,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbc8": {
+    "description": "No story may appear more than once.",
+    "state": "UNACCEPTED",
+    "story": "0xae1",
+    "id": 8101,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbc9": {
+    "description": "The label and current estimate (if any) are displayed.",
+    "state": "UNACCEPTED",
+    "story": "0xae1",
+    "id": 8102,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbca": {
+    "description": "Stories may be dragged around the surface. Stories may overlap but no story should\ncompletely obscure another",
+    "state": "UNACCEPTED",
+    "story": "0xae1",
+    "id": 8103,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbcb": {
+    "description": "Double­clicking (or other suitable action) opens the corresponding story detail dialog.\nEstimates may be updated via this.",
+    "state": "UNACCEPTED",
+    "story": "0xae1",
+    "id": 8104,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbcc": {
+    "description": "Stories may be removed from the display so it doesn’t get too cluttered but this does not\ndelete them.",
+    "state": "UNACCEPTED",
+    "story": "0xae1",
+    "id": 8105,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbcd": {
+    "description": "A login dialog is available via appropriate GUI elements.",
+    "state": "UNACCEPTED",
+    "story": "0xae2",
+    "id": 8111,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbce": {
+    "description": "The user is prompted to enter their login credentials and login succeeds only if these are\nconfirmed.",
+    "state": "UNACCEPTED",
+    "story": "0xae2",
+    "id": 8112,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbcf": {
+    "description": "Only one user may be logged in at a time",
+    "state": "UNACCEPTED",
+    "story": "0xae2",
+    "id": 8113,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbd0": {
+    "description": "It also supports creation of a new account (for first­time users). A password may be\nprovided for a new user and is stored in an appropriate way. High security is not a major\nconcern at this point so implementations involving hard coding these into the\napplication/person elements, or storing in a file, are OK for now.",
+    "state": "UNACCEPTED",
+    "story": "0xae2",
+    "id": 8114,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbd1": {
+    "description": "Passwords are never visible via the application GUI.",
+    "state": "UNACCEPTED",
+    "story": "0xae2",
+    "id": 8115,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbd2": {
+    "description": "An email address may also be provided. A “lost password” operation will email relevant\ndetails to this address.",
+    "state": "UNACCEPTED",
+    "story": "0xae2",
+    "id": 8116,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbd3": {
+    "description": "The feature also supports changing passwords. This requires the current password to\nbe entered and the new password must be entered twice before being recorded. The\nuser is warned if the two attempts are not the same.",
+    "state": "UNACCEPTED",
+    "story": "0xae2",
+    "id": 8117,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbd4": {
+    "description": "The currently logged in account name (probably a person label or userid) is prominently\ndisplayed, possibly in the menu bar or toolbar (the login/logout controls could be located\nin a menu tied to this display).",
+    "state": "UNACCEPTED",
+    "story": "0xae2",
+    "id": 8118,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbd5": {
+    "description": "When logging effort (see story 32 “logging effort”) the currently logged in user is used as\nthe default target.",
+    "state": "UNACCEPTED",
+    "story": "0xae2",
+    "id": 8119,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbd6": {
+    "description": "There is a logout button in the menu bar. Pressing it returns the application to the state\nit was in before the user logged in (it may be appropriate to prompt the user to save\nunsaved changes in activities which require login to access).",
+    "state": "UNACCEPTED",
+    "story": "0xae2",
+    "id": 8120,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbd7": {
+    "description": "Stories which depend on one or more lower­priority stories (coloured red in\ndependencies story) are similarly identified in the backlog view.",
+    "state": "UNACCEPTED",
+    "story": "0xae3",
+    "id": 8093,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbd8": {
+    "description": "Tag management facilities are available via appropriate GUI elements",
+    "state": "UNACCEPTED",
+    "story": "0xae4",
     "id": 7704,
     "itemName": "",
     "serializableTags": []
   },
-  "0xb05": {
+  "0xbd9": {
     "description": "Tags may be entered via an appropriate dialog. Each tag has a label (a short name that\nwill appear on tool tips etc) and an optional (probably longer) description.",
     "state": "UNACCEPTED",
-    "story": "0xade",
+    "story": "0xae4",
     "id": 7705,
     "itemName": "",
     "serializableTags": []
   },
-  "0xb06": {
+  "0xbda": {
     "description": "A colour is associated with each tag. This may be used to highlight the applicable tags\nin other application views",
     "state": "UNACCEPTED",
-    "story": "0xade",
+    "story": "0xae4",
     "id": 7706,
     "itemName": "",
     "serializableTags": []
   },
-  "0xb07": {
+  "0xbdb": {
     "description": "Some tags might apply to any model element (team, story, release, skill) but in general\neach tag will be meaningfully associated with a subset (e.g. {story, AC, task}).",
     "state": "UNACCEPTED",
-    "story": "0xade",
+    "story": "0xae4",
     "id": 7707,
     "itemName": "",
     "serializableTags": []
   },
-  "0xb08": {
+  "0xbdc": {
     "description": "The tag label and description may be edited",
     "state": "UNACCEPTED",
-    "story": "0xade",
+    "story": "0xae4",
     "id": 7708,
     "itemName": "",
     "serializableTags": []
   },
-  "0xb09": {
+  "0xbdd": {
     "description": "Tags may be deleted. However, if the tags are allocated to any items then we’ll need to\nconfirm the deletion semantics.",
     "state": "UNACCEPTED",
-    "story": "0xade",
+    "story": "0xae4",
     "id": 7709,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbde": {
+    "description": "A facility is available to add/remove tags from system elements. Details by negotiation,\nbut this might be achieved via the corresponding edit dialogs.",
+    "state": "UNACCEPTED",
+    "story": "0xae5",
+    "id": 7828,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbdf": {
+    "description": "If any tags are currently associated, then the corresponding tags are indicated in asuitable way. This might be implemented via small colour chips, a drop­down list, etc.",
+    "state": "UNACCEPTED",
+    "story": "0xae5",
+    "id": 7830,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbe0": {
+    "description": "Zero or more tags may be associated with an element.",
+    "state": "UNACCEPTED",
+    "story": "0xae5",
+    "id": 7829,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbe1": {
+    "description": "We can assume for now that the number of tags associated with a given element will be\n“reasonably small” (e.g. 0 .. 7+/­2).",
+    "state": "UNACCEPTED",
+    "story": "0xae5",
+    "id": 7831,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbe2": {
+    "description": "A tagged element may be deleted.",
+    "state": "UNACCEPTED",
+    "story": "0xae5",
+    "id": 7832,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbe3": {
+    "description": "If a tag is deleted the user is warned if any current associations exist and is given the\noption of cancelling the delete.",
+    "state": "UNACCEPTED",
+    "story": "0xae5",
+    "id": 7833,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbe4": {
+    "description": "It is possible to search for specific tags. A list of elements with the corresponding tag is\ndisplayed. At this stage it is not necessary to support search expressions involving more\nthan one tag.",
+    "state": "UNACCEPTED",
+    "story": "0xae5",
+    "id": 7834,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbe5": {
+    "description": "A story map display area is accessible via appropriate GUI elements",
+    "state": "UNACCEPTED",
+    "story": "0xae6",
+    "id": 7835,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbe6": {
+    "description": "It may be a tabbed pane, separate window or other (by negotiation) view. Scrolling\nshould be supported to allow large story maps to be catered for.",
+    "state": "UNACCEPTED",
+    "story": "0xae6",
+    "id": 7836,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbe7": {
+    "description": "The top level shows the release plan for the current system.",
+    "state": "UNACCEPTED",
+    "story": "0xae6",
+    "id": 7837,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbe8": {
+    "description": "The next level shows sprints. The label should be displayed and perhaps the sprint goal\ncould be provided as a tool tip.",
+    "state": "UNACCEPTED",
+    "story": "0xae6",
+    "id": 7838,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbe9": {
+    "description": "Individual stories in the sprint appear at the lowest level.",
+    "state": "UNACCEPTED",
+    "story": "0xae6",
+    "id": 7839,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbea": {
+    "description": "When effort is logged on a task, the user may indicate that it is a pair activity and the\npartner is identified (e.g. by short name).",
+    "state": "UNACCEPTED",
+    "story": "0xae7",
+    "id": 7840,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbeb": {
+    "description": "When the data entry is confirmed, the same amount of effort is recorded for the partner.",
+    "state": "UNACCEPTED",
+    "story": "0xae7",
+    "id": 7841,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbec": {
+    "description": "Only pair programming is supported. At this point we are not interested in group activity",
+    "state": "UNACCEPTED",
+    "story": "0xae7",
+    "id": 7842,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbed": {
+    "description": "A facility is provided to allow reporting of pair programming data (e.g. for use in retro by\nthe corresponding team). It is accessed via an appropriate GUI element. The\ninformation presentation format is negotiable but specific numerical values and labels\nmust be available either directly or indirectly.",
+    "state": "UNACCEPTED",
+    "story": "0xae7",
+    "id": 7843,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbee": {
+    "description": "It is possible to report the amount of pair programming (absolute and proportion) each\nteam member has done at an appropriate number of levels: (story, sprint, release, ...)\nand the details of each potential partnership in the team.",
+    "state": "UNACCEPTED",
+    "story": "0xae7",
+    "id": 7844,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbef": {
+    "description": "It is possible to report the amount of pair programming (absolute and prop",
+    "state": "UNACCEPTED",
+    "story": "0xae7",
+    "id": 7845,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbf0": {
+    "description": "Double­clicking (or other appropriate action) on an element (release, sprint or story) in\nthe story map view opens the corresponding edit/view dialog.",
+    "state": "UNACCEPTED",
+    "story": "0xae8",
+    "id": 7846,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbf1": {
+    "description": "If modifications are made via an edit dialog (e.g. removing a story from a sprint) then the\nstory map is updated to reflect the change.",
+    "state": "UNACCEPTED",
+    "story": "0xae8",
+    "id": 7847,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbf2": {
+    "description": "A shortcut action is provided (e.g. via a toolbar or menu) to remove a story from a sprint,\nor a sprint from a release plan",
+    "state": "UNACCEPTED",
+    "story": "0xae8",
+    "id": 7848,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbf3": {
+    "description": "A similar shortcut operation is provided to add a sprint to a release plan or a story to a\nsprint.",
+    "state": "UNACCEPTED",
+    "story": "0xae8",
+    "id": 7849,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbf4": {
+    "description": "A story may be dragged for mone sprint to another. Similarly, a sprint may be dragged\nfrom one release to another.",
+    "state": "UNACCEPTED",
+    "story": "0xae8",
+    "id": 7850,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbf5": {
+    "description": "A team’s velocity for each sprint is calculated and recorded. The units will vary\naccording to the ordinal scale in use, but will be some size measure per time measure\nsuch as story points per week.",
+    "state": "UNACCEPTED",
+    "story": "0xae9",
+    "id": 7851,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbf6": {
+    "description": "The velocities for completed sprints can be retrieved and displayed. A `numeric’\nrepresentation must be provided (e.g. 14 story points / week) If you are using scales\nsuch as T­Shirt sizes then you’ll need to be able to convert “3 XS, 1 M and 2 XL” into\nsomething appropriate. If practicable, a graphical representation should also be\nprovided (details by negotiation).",
+    "state": "UNACCEPTED",
+    "story": "0xae9",
+    "id": 7852,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbf7": {
+    "description": "If current, partially completed sprints are included then that’s OK but the value should be\nindicated as provisional until the end of the sprint.",
+    "state": "UNACCEPTED",
+    "story": "0xae9",
+    "id": 7853,
+    "itemName": "",
+    "serializableTags": []
+  },
+  "0xbf8": {
+    "description": "The long­term velocity is also of interest and some measure of this should be provided.\nSince story points are ordinal, it isn’t really meaningful to record average velocities,\nrunning means etc. for teams. However, non­parametric statistics (such as medians)\ncan be used",
+    "state": "UNACCEPTED",
+    "story": "0xae9",
+    "id": 7854,
     "itemName": "",
     "serializableTags": []
   }
