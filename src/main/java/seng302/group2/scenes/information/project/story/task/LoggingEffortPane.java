@@ -404,6 +404,9 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
                     ValidationStyle.showMessage("Logger required", personComboBox.getComboBox());
                 }
                 else {
+                    if (newValue == partnerComboBox.getValue()) {
+                        partnerComboBox.setValue(nullPerson);
+                    }
                     partnerComboBox.getComboBox().getItems().remove(newValue);
                     if (oldValue != null) {
                         partnerComboBox.getComboBox().getItems().add(oldValue);
@@ -419,6 +422,8 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
                 else {
                     partnerComboBox.getComboBox().setDisable(false);
                 }
+
+
                 addButton.setDisable(!(loggerSelected && correctDuration && correctEffortLeft));
             });
 
