@@ -95,66 +95,66 @@ public class SprintInfoTab extends SearchableTab {
         ScrollPane wrapper = new ScrollPane(basicInfoPane);
         this.setContent(wrapper);
 
-        Platform.runLater(() -> {
-            SearchableText title = new SearchableTitle(currentSprint.getLongName());
+//        Platform.runLater(() -> {
+        SearchableText title = new SearchableTitle(currentSprint.getLongName());
 
-            /*//SUBJECT TO CHANGE BASED ON FUTURE STORIES
-            ObservableList<Story> data = observableArrayList();
-            data.addAll(currentSprint.getStories());
-            ListView sprintStoryBox = new ListView(data);
-            sprintStoryBox.setPrefHeight(192);
-            sprintStoryBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);*/
+        /*//SUBJECT TO CHANGE BASED ON FUTURE STORIES
+        ObservableList<Story> data = observableArrayList();
+        data.addAll(currentSprint.getStories());
+        ListView sprintStoryBox = new ListView(data);
+        sprintStoryBox.setPrefHeight(192);
+        sprintStoryBox.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);*/
 
 
 
-            final Separator separator = new Separator();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        final Separator separator = new Separator();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-            CustomInfoLabel sprintName = new CustomInfoLabel("Sprint Name: ", currentSprint.getLongName());
-            TagLabel sprintTags = new TagLabel(currentSprint.getTags());
-            CustomInfoLabel sprintGoal = new CustomInfoLabel("Sprint Goal: ", currentSprint.getGoal());
-            String startDateString = currentSprint.getStartDate().format(formatter);
-            CustomInfoLabel sprintStart = new CustomInfoLabel("Start Date: ", startDateString);
-            String endDateString = currentSprint.getEndDate().format(formatter);
-            CustomInfoLabel sprintEnd = new CustomInfoLabel("End Date: ", endDateString);
-            CustomInfoLabel desc = new CustomInfoLabel("Description: ", currentSprint.getDescription());
-            CustomInfoLabel team = new CustomInfoLabel("Team: ", currentSprint.getTeam().toString());
-            CustomInfoLabel project = new CustomInfoLabel("Project: ", currentSprint.getProject().toString());
-            CustomInfoLabel release = new CustomInfoLabel("Release: ", currentSprint.getRelease().toString());
-            CustomInfoLabel stories = new CustomInfoLabel("Stories: ", "");
+        CustomInfoLabel sprintName = new CustomInfoLabel("Sprint Name: ", currentSprint.getLongName());
+        TagLabel sprintTags = new TagLabel(currentSprint.getTags());
+        CustomInfoLabel sprintGoal = new CustomInfoLabel("Sprint Goal: ", currentSprint.getGoal());
+        String startDateString = currentSprint.getStartDate().format(formatter);
+        CustomInfoLabel sprintStart = new CustomInfoLabel("Start Date: ", startDateString);
+        String endDateString = currentSprint.getEndDate().format(formatter);
+        CustomInfoLabel sprintEnd = new CustomInfoLabel("End Date: ", endDateString);
+        CustomInfoLabel desc = new CustomInfoLabel("Description: ", currentSprint.getDescription());
+        CustomInfoLabel team = new CustomInfoLabel("Team: ", currentSprint.getTeam().toString());
+        CustomInfoLabel project = new CustomInfoLabel("Project: ", currentSprint.getProject().toString());
+        CustomInfoLabel release = new CustomInfoLabel("Release: ", currentSprint.getRelease().toString());
+        CustomInfoLabel stories = new CustomInfoLabel("Stories: ", "");
 
-            basicInfoPane.getChildren().addAll(
-                    title,
-                    sprintName,
-                    sprintGoal,
-                    sprintTags,
-                    sprintStart,
-                    sprintEnd,
-                    desc,
-                    separator,
-                    team,
-                    project,
-                    release,
-                    stories
+        basicInfoPane.getChildren().addAll(
+                title,
+                sprintName,
+                sprintGoal,
+                sprintTags,
+                sprintStart,
+                sprintEnd,
+                desc,
+                separator,
+                team,
+                project,
+                release,
+                stories
 
-            );
+        );
 
-            Collections.addAll(searchControls,
-                    title,
-                    sprintName,
-                    sprintGoal,
-                    sprintTags,
-                    sprintStart,
-                    sprintEnd,
-                    desc,
-                    team,
-                    project,
-                    release,
-                    stories
-            );
+        Collections.addAll(searchControls,
+                title,
+                sprintName,
+                sprintGoal,
+                sprintTags,
+                sprintStart,
+                sprintEnd,
+                desc,
+                team,
+                project,
+                release,
+                stories
+        );
 
-            basicInfoPane.getChildren().addAll(createStoryTitlePanes(currentSprint));
-        });
+        basicInfoPane.getChildren().addAll(createStoryTitlePanes(currentSprint));
+//        });
     }
 
     /**
