@@ -172,35 +172,38 @@ public class TaskTest {
         Assert.assertEquals(Task.TASKSTATE.NOT_STARTED, task.getLane());
     }
     //TODO: shnob
-//    /**
-//     * Tests the effort left edit method of tasks
-//     */
-//    @Test
-//    public void testEditEffortLeft() {
-//        Person person = new Person();
-//        Story story = new Story();
-//
-//        Task task = new Task("test task", "a task for testing", story, person, 600);
-//        Assert.assertEquals(600, task.getEffortLeft(), 0);
-//        Assert.assertEquals(0, task.getLogs().size());
-//        Assert.assertEquals(0, task.getLogsWithoutGhostLogs().size());
-//
-//        task.editEffortLeft(540);
-//        Assert.assertEquals(540, task.getEffortLeft(), 0);
-//        Assert.assertEquals(1, task.getLogs().size());
-//        Assert.assertEquals(0, task.getLogsWithoutGhostLogs().size());
-//
-//        Global.commandManager.undo();
-//        Assert.assertEquals(600, task.getEffortLeft(), 0);
-//        Assert.assertEquals(0, task.getLogs().size());
-//        Assert.assertEquals(0, task.getLogsWithoutGhostLogs().size());
-//
-//        Global.commandManager.redo();
-//        Assert.assertEquals(540, task.getEffortLeft(), 0);
-//        Assert.assertEquals(1, task.getLogs().size());
-//        Assert.assertEquals(0, task.getLogsWithoutGhostLogs().size());
-//
-//    }
+    /**
+     * Tests the effort left edit method of tasks
+     */
+    @Test
+    public void testEditEffortLeft() {
+        Person person = new Person();
+        Story story = new Story();
+        Project proj = new Project();
+        proj.add(story);
+        story.add(task);
+        Log log = new Log(task, "", new Person(), new Person(), 60, LocalDateTime.now(), 0);
+
+        Task task = new Task("test task", "a task for testing", story, person, 600);
+        Assert.assertEquals(600, task.getEffortLeft(), 0);
+        Assert.assertEquals(0, task.getLogs().size());
+        Assert.assertEquals(0, task.getLogsWithoutGhostLogs().size());
+
+        proj.add(log);
+        task.editEffortLeft(540);
+        Assert.assertEquals(540, task.getEffortLeft(), 0);
+        Assert.assertEquals(0, task.getLogsWithoutGhostLogs().size());
+
+        Global.commandManager.undo();
+        Assert.assertEquals(600, task.getEffortLeft(), 0);
+        Assert.assertEquals(0, task.getLogs().size());
+        Assert.assertEquals(0, task.getLogsWithoutGhostLogs().size());
+
+        Global.commandManager.redo();
+        Assert.assertEquals(540, task.getEffortLeft(), 0);
+        Assert.assertEquals(0, task.getLogsWithoutGhostLogs().size());
+
+    }
 
     /**
      * Test the impediment state edit method of tasks
