@@ -16,6 +16,7 @@ import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.project.sprint.Sprint;
 import seng302.group2.workspace.team.Team;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -159,7 +160,8 @@ public class TeamInfoTab extends SearchableTab {
                 for (Sprint sprint : currentTeam.getProject().getSprints()) {
                     if (sprint.getTeam() == currentTeam) {
                         Double velocity = sprint.getPointsPerDay() * 7;
-                        String velocity_ = velocity.toString();
+                        DecimalFormat df = new DecimalFormat("#.##");
+                        String velocity_ = df.format(velocity);
                         CustomInfoLabel sprintLabel = new CustomInfoLabel(
                                 "   " + sprint.getGoal() + ": ", velocity_);
                         basicInfoPane.getChildren().add(sprintLabel);
