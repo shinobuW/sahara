@@ -213,7 +213,7 @@ public class SprintLogTab extends SearchableTab {
      */
     @Override
     public String toString() {
-        return "Sprint Logging Tab(.";
+        return "Sprint Logging Tab.";
     }
 
 }
