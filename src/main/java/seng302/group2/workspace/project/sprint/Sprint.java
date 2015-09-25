@@ -17,7 +17,7 @@ import seng302.group2.workspace.team.Team;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -327,10 +327,10 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
      */
     public double getDuration() {
         if (endDate.isBefore(LocalDate.now())) {
-            return Period.between(startDate, endDate).getDays();
+            return ChronoUnit.DAYS.between(startDate, endDate);
         }
         else {
-            return Period.between(startDate, LocalDate.now()).getDays();
+            return ChronoUnit.DAYS.between(startDate, LocalDate.now());
         }
 
     }

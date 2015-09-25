@@ -34,6 +34,7 @@ public class TagLabel extends HBox implements SearchableControl {
         this.getChildren().add(label);
         for (Tag tag : this.tags) {
             TagCellNode node = new TagCellNode(tag, false, searchControls);
+            searchControls.add(node);
             this.getChildren().add(node);
         }
     }
@@ -64,8 +65,9 @@ public class TagLabel extends HBox implements SearchableControl {
     public int advancedQuery(String query, SearchType searchType) {
         int found = 0;
         for (SearchableControl control : searchControls) {
-            if (control.advancedQuery(query, searchType) > 0) {
-                return control.advancedQuery(query, searchType);
+            found = control.advancedQuery(query, searchType);
+            if (found > 0) {
+                return found;
             }
         }
         return found;
