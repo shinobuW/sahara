@@ -214,7 +214,9 @@ public class TagCellNode extends VBox implements SearchableControl {
 
     @Override
     public int advancedQuery(String query, SearchType searchType) {
-        tagName.trim().toLowerCase().contains(query.trim().toLowerCase());
-        return 1;
+        if (tagName.trim().toLowerCase().contains(query.trim().toLowerCase())) {
+            return 1;
+        }
+        return 0;
     }
 }
