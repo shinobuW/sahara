@@ -18,6 +18,7 @@ import seng302.group2.workspace.categories.subCategory.SubCategory;
 import seng302.group2.workspace.person.Person;
 import seng302.group2.workspace.role.Role;
 import seng302.group2.workspace.skills.Skill;
+import seng302.group2.workspace.tag.Tag;
 import seng302.group2.workspace.team.Team;
 import seng302.group2.workspace.workspace.Workspace;
 import seng302.group2.workspace.workspace.Workspace.SaveLoadResult;
@@ -297,13 +298,29 @@ public class MainMenuBar extends MenuBar {
             taggingPopOver = new PopOver();
             taggingPopOver.setDetachedTitle("Tag Management");
             taggingPopOver.setDetached(true);
-            taggingPopOver.setContentNode(new TagManagementPane(taggingPopOver));
-            Platform.runLater(() -> taggingPopOver.show(App.content, App.mainStage.getX()
-                            + App.mainStage.getWidth() / 2 - 300,
-                    App.mainStage.getY() + App.mainStage.getHeight() / 2 - 200));
+            TagManagementPane tagManagementPane = new TagManagementPane(taggingPopOver);
+            taggingPopOver.setContentNode(tagManagementPane);
+            Platform.runLater(() -> {
+                taggingPopOver.show(App.content, App.mainStage.getX()
+                                + App.mainStage.getWidth() / 2 - 300,
+                        App.mainStage.getY() + App.mainStage.getHeight() / 2 - 200);
+                tagManagementPane.newTagField.requestFocus();
+            });
         }
         else {
             taggingPopOver.requestFocus();
+        }
+    }
+
+    public static void showTaggingPopOver(Tag tag) {
+        showTaggingPopOver();
+        try {
+            TagManagementPane managementPane = ((TagManagementPane) taggingPopOver.getContentNode());
+            managementPane.tagListView.getSelectionModel().select(tag);
+            Platform.runLater(managementPane.tagListView::requestFocus);
+        }
+        catch (Exception ex) {
+
         }
     }
 

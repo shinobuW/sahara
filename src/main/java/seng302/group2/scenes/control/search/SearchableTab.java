@@ -1,6 +1,9 @@
 package seng302.group2.scenes.control.search;
 
 import javafx.scene.control.Tab;
+import org.controlsfx.control.PopOver;
+import seng302.group2.scenes.information.project.story.task.LoggingEffortPane;
+import seng302.group2.scenes.information.tag.TaggingPane;
 
 import java.util.Collection;
 
@@ -86,7 +89,8 @@ public abstract class SearchableTab extends Tab {
         else {
             for (SearchableControl control : getSearchableControls()) {
                 if (searchType == SearchType.TAGS) {
-                    if (control instanceof TagLabel || control instanceof TagField) {
+                    if (control instanceof TagLabel || control instanceof TagField
+                            || control instanceof TaggingPane || control instanceof LoggingEffortPane) {
                         if (control.advancedQuery(query, searchType) > 0) {
                             if (count < control.advancedQuery(query, searchType)) {
                                 count = control.advancedQuery(query, searchType);

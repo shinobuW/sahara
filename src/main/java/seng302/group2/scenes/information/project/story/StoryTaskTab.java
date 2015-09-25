@@ -49,6 +49,9 @@ public class StoryTaskTab extends SearchableTab {
     List<SearchableControl> searchControls = new ArrayList<>();
     static Boolean correctShortName = Boolean.FALSE;
     static Boolean correctEffortLeft = Boolean.FALSE;
+    Map<Task, PopOver> tagPopOvers = new HashMap<>();
+    Map<Task, PopOver> taskPopOvers = new HashMap<>();
+
 
     Story currentStory;
 
@@ -171,6 +174,8 @@ public class StoryTaskTab extends SearchableTab {
                     }
                 }
         );
+
+
 
 
         TableColumn assigneesCol = new TableColumn("Assignee");
@@ -318,59 +323,80 @@ public class StoryTaskTab extends SearchableTab {
         buttons.setAlignment(Pos.TOP_LEFT);
 
         btnView.setOnAction((event) -> {
-            PopOver taskPopover = new PopOver();
-            VBox taskContent = new VBox();
-            taskContent.setPadding(new Insets(8, 8, 8, 8));
             if (taskTable.getSelectionModel().getSelectedItem() == null) {
+                PopOver taskPopover = new PopOver();
+                VBox content = new VBox();
+                content.setMinWidth(200);
+                content.setPadding(new Insets(8, 8, 8, 8));
                 SearchableText noTaskLabel = new SearchableText("No tasks selected.", searchControls);
-                taskContent.getChildren().add(noTaskLabel);
+                content.getChildren().add(noTaskLabel);
+                taskPopover.setContentNode(content);
+                taskPopover.show(btnView);
             }
             else {
-                Task currentTask = taskTable.getSelectionModel().getSelectedItem();
-                taskPopover.setDetachedTitle(currentTask.toString());
-
-                ScrollPane taskWrapper = new ScrollPane();
-                LoggingEffortPane loggingPane = new LoggingEffortPane(currentTask,
-                        taskPopover, taskTable);
-                loggingPane.setStyle(null);
-                searchControls.add(loggingPane);
-
-                taskWrapper.setContent(loggingPane);
-
-                TitledPane collapsableLoggingPane = new TitledPane("Task Logging", taskWrapper);
-                collapsableLoggingPane.setExpanded(true);
-                collapsableLoggingPane.setAnimated(true);
-
-                taskContent.getChildren().addAll(collapsableLoggingPane);
+                PopOver taskPopover = taskPopOvers.get(taskTable.getSelectionModel().getSelectedItem());
+                taskPopover.show(btnView);
             }
-
-            taskPopover.setContentNode(taskContent);
-            taskPopover.show(btnView);
         });
 
         tagButton.setOnAction((event) -> {
+            if (taskTable.getSelectionModel().getSelectedItem() == null) {
+                PopOver tagPopover = new PopOver();
+                VBox content = new VBox();
+                content.setMinWidth(200);
+                content.setPadding(new Insets(8, 8, 8, 8));
+                SearchableText noTaskLabel = new SearchableText("No tasks selected.", searchControls);
+                content.getChildren().add(noTaskLabel);
+                tagPopover.setContentNode(content);
+                tagPopover.show(tagButton);
+            }
+            else {
+                PopOver tagPopover = tagPopOvers.get(taskTable.getSelectionModel().getSelectedItem());
+                tagPopover.show(tagButton);
+            }
+        });
+
+
+        for (Task task : currentStory.getTasks()) {
             PopOver tagPopover = new PopOver();
             VBox content = new VBox();
             content.setMinWidth(600);
             content.setPadding(new Insets(8, 8, 8, 8));
-            if (taskTable.getSelectionModel().getSelectedItem() == null) {
-                SearchableText noTaskLabel = new SearchableText("No tasks selected.", searchControls);
-                content.getChildren().add(noTaskLabel);
-            }
-            else {
-                Task task = taskTable.getSelectionModel().getSelectedItem();
-                tagPopover.setDetachedTitle(task.toString());
+            tagPopover.setDetachedTitle(task.toString());
 
-                TaggingPane taggingPane = new TaggingPane(task);
-                taggingPane.setStyle(null);
-                searchControls.add(taggingPane);
+            TaggingPane taggingPane = new TaggingPane(task);
+            taggingPane.setStyle(null);
+            searchControls.add(taggingPane);
 
-                content.getChildren().add(taggingPane);
-            }
-
+            content.getChildren().add(taggingPane);
             tagPopover.setContentNode(content);
-            tagPopover.show(tagButton);
-        });
+            tagPopOvers.put(task, tagPopover);
+
+
+
+            PopOver taskPopover = new PopOver();
+            VBox taskContent = new VBox();
+            taskContent.setPadding(new Insets(8, 8, 8, 8));
+
+            taskPopover.setDetachedTitle(task.toString());
+
+            ScrollPane taskWrapper = new ScrollPane();
+            LoggingEffortPane loggingPane = new LoggingEffortPane(task,
+                    taskPopover, taskTable);
+            loggingPane.setStyle(null);
+            searchControls.add(loggingPane);
+
+            taskWrapper.setContent(loggingPane);
+
+            TitledPane collapsableLoggingPane = new TitledPane("Task Logging", taskWrapper);
+            collapsableLoggingPane.setExpanded(true);
+            collapsableLoggingPane.setAnimated(true);
+
+            taskContent.getChildren().addAll(collapsableLoggingPane);
+
+            taskPopover.setContentNode(taskContent);
+            taskPopOvers.put(task, taskPopover);
+        }
 
         btnDelete.setOnAction((event) -> {
             if (taskTable.getSelectionModel().getSelectedItem() != null) {

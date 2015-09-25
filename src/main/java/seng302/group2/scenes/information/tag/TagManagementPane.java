@@ -35,11 +35,13 @@ public class TagManagementPane extends SplitPane {
     private PopOver popOver;
     Set<SearchableControl> searchControls = new HashSet<>();
 
-    ListView<Tag> tagListView;
+    public ListView<Tag> tagListView;
     ObservableList<Tag> tagList = Global.currentWorkspace.getAllTags();
 
     VBox detailsPane = new VBox(8);
     VBox listPane = new VBox(8);
+
+    public TextField newTagField = new TextField();
 
 
     /**
@@ -51,6 +53,7 @@ public class TagManagementPane extends SplitPane {
         this.setDividerPositions(0.5);
         this.popOver = po;
         construct();
+        Platform.runLater(newTagField::requestFocus);
     }
 
     /**
@@ -127,9 +130,9 @@ public class TagManagementPane extends SplitPane {
         labelBox.setAlignment(Pos.CENTER_LEFT);
         labelBox.getChildren().add(new Text("New Tag"));
 
-        TextField newTagField = new TextField();
+        newTagField = new TextField();
 
-        newTagField.setPromptText("Buggy");
+        newTagField.setPromptText("eg. Buggy");
         Button addNewTagButton = new Button("Create");
         addNewTagButton.setMinWidth(64);
         addNewTagButton.setPrefWidth(64);
@@ -182,9 +185,7 @@ public class TagManagementPane extends SplitPane {
 
         this.getItems().add(0, listPane);
 
-        Platform.runLater(() -> {
-            newTagField.requestFocus();
-        });
+        Platform.runLater(newTagField::requestFocus);
 
     }
 
@@ -236,6 +237,8 @@ public class TagManagementPane extends SplitPane {
 
 
     }
+
+
     /**
      * Creates the detail pane for editing tags in the workspace. Contains controls for editing the text and colour
      * of a tag, and deleting the tag.
