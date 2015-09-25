@@ -2,8 +2,10 @@ package seng302.group2.scenes.control.search;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -114,9 +116,8 @@ public class TagField extends CustomTextField implements SearchableControl {
             tags.add(selectedTag);
 
             Platform.runLater(this::clear);
-
-            update();
         }
+        update();
     }
 
     /**
@@ -152,8 +153,9 @@ public class TagField extends CustomTextField implements SearchableControl {
                     tags.remove(tag);
                     setText(tag.getName());
 
-                    update();
+
                 }
+                update();
             }
         });
     }
@@ -165,7 +167,6 @@ public class TagField extends CustomTextField implements SearchableControl {
     public void update() {
 
         tagStack.getChildren().clear();
-
         for (Tag tag : tags) {
             TagCellNode node = new TagCellNode(tag, true, this, searchControls);
             tagStack.getChildren().add(node);
@@ -175,8 +176,9 @@ public class TagField extends CustomTextField implements SearchableControl {
 
         positionCaret(getLength());
 
-        System.out.println("width: " + tagStack.getWidth());
-        setPrefWidth(tagStack.getWidth() + tagStack.getChildren().size() * tagStack.getSpacing() + 140);
+        Platform.runLater(() -> {
+            setPrefWidth(tagStack.getWidth() + 240);
+        });
     }
 
 
@@ -213,6 +215,7 @@ public class TagField extends CustomTextField implements SearchableControl {
             newTags = FXCollections.observableArrayList();
         }
         this.tags = newTags;
+        update();
     }
 
     /**
