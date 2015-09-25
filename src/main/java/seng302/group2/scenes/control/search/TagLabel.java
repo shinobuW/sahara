@@ -24,7 +24,6 @@ public class TagLabel extends HBox implements SearchableControl {
 
     public TagLabel(ObservableList<Tag> tags) {
         construct(tags);
-
     }
 
     public void construct(ObservableList<Tag> newTags) {

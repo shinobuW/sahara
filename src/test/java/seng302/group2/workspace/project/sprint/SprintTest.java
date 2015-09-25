@@ -18,6 +18,7 @@ import seng302.group2.workspace.workspace.Workspace;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -112,6 +113,18 @@ public class SprintTest {
 
         Global.commandManager.redo();
         Assert.assertTrue(sprint.getStories().contains(story));
+    }
+
+    /**
+     * Test for the Sprint's get duration method
+     */
+    @Test
+    public void testGetDuration() {
+        Sprint sprint = new Sprint("", "", "", LocalDate.of(2015, 9, 1), LocalDate.of(2015, 9, 10), null, null, null);
+        Assert.assertEquals(10, sprint.getDuration(), 0.01);
+        Sprint sprint2 = new Sprint("", "", "", LocalDate.of(2015, 9, 1), null, null, null, null);
+        long duration = ChronoUnit.DAYS.between(LocalDate.of(2015, 9, 1), LocalDate.now()) + 1;
+        Assert.assertEquals(duration, sprint2.getDuration(), 0.05);
     }
 
 
@@ -284,8 +297,6 @@ public class SprintTest {
         Story story = new Story();
         Story story2 = new Story();
 
-        System.out.println(sprint.getStartDate());
-        System.out.println(sprint.getEndDate());
         backlog.add(story);
         backlog.add(story2);
         story.setBacklog(backlog);
@@ -301,7 +312,15 @@ public class SprintTest {
         sprint.add(story);
         sprint.add(story2);
 
-        Assert.assertEquals(7.357142857142857, sprint.getPointsPerDay(), 0);
+        int storyPoint = Global.currentWorkspace.getEstimationScales().getFibScaleEquivalent(
+                Global.currentWorkspace.getEstimationScales().getEstimationScaleDict().get("T-Shirt Sizes"),
+                story.getEstimate());
+        int storyPoint2 = Global.currentWorkspace.getEstimationScales().getFibScaleEquivalent(
+                Global.currentWorkspace.getEstimationScales().getEstimationScaleDict().get("T-Shirt Sizes"),
+                story2.getEstimate());
+        double expectedEstimate = (storyPoint + storyPoint2) / sprint.getDuration();
+
+        Assert.assertEquals(expectedEstimate, sprint.getPointsPerDay(), 0.005);
     }
 
 }
