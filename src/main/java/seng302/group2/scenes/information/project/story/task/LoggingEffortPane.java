@@ -57,6 +57,7 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
     private ObservableList<Person> availablePartners = observableArrayList(availablePeople);
     private ObservableList<Person> availableLoggers = observableArrayList(availablePeople);
     private  ObservableList<Log> data = FXCollections.observableArrayList();
+    Map<Log, PopOver> tagPopOvers = new HashMap<>();
 
     /**
      * Constructor for the logging effort pane.
@@ -575,28 +576,40 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
         }
 
         tagButton.setOnAction((event) -> {
+            if (logTable.getSelectionModel().getSelectedItem() == null) {
+                PopOver tagPopover = new PopOver();
+                VBox popoverContent = new VBox();
+                popoverContent.setMinWidth(200);
+                popoverContent.setPadding(new Insets(8, 8, 8, 8));
+                SearchableText noTaskLabel = new SearchableText("No tasks selected.", searchControls);
+                popoverContent.getChildren().add(noTaskLabel);
+                tagPopover.setContentNode(popoverContent);
+                tagPopover.show(tagButton);
+            }
+            else {
+                PopOver tagPopover = tagPopOvers.get(logTable.getSelectionModel().getSelectedItem());
+                tagPopover.show(tagButton);
+            }
+
+
+        });
+
+        for (Log log : task.getLogs()) {
             PopOver tagPopover = new PopOver();
             VBox popoverContent = new VBox();
             popoverContent.setMinWidth(600);
             popoverContent.setPadding(new Insets(8, 8, 8, 8));
-            if (logTable.getSelectionModel().getSelectedItem() == null) {
-                SearchableText noTaskLabel = new SearchableText("No tasks selected.", searchControls);
-                popoverContent.getChildren().add(noTaskLabel);
-            }
-            else {
-                Log currLog = logTable.getSelectionModel().getSelectedItem();
-                tagPopover.setDetachedTitle(task.toString());
+            tagPopover.setDetachedTitle(task.toString());
 
-                TaggingPane taggingPane = new TaggingPane(currLog);
-                taggingPane.setStyle(null);
-                searchControls.add(taggingPane);
+            TaggingPane taggingPane = new TaggingPane(log);
+            taggingPane.setStyle(null);
+            searchControls.add(taggingPane);
 
-                popoverContent.getChildren().add(taggingPane);
-            }
+            popoverContent.getChildren().add(taggingPane);
 
             tagPopover.setContentNode(popoverContent);
-            tagPopover.show(tagButton);
-        });
+            tagPopOvers.put(log, tagPopover);
+        }
 
         addButton.setOnAction((event) -> {
                 ValidationStyle.borderGlowNone(startDatePicker.getDatePicker());
