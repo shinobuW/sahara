@@ -31,7 +31,7 @@ public class TagCellNode extends VBox implements SearchableControl {
     private Color tagColor = Color.ROYALBLUE;
     private boolean removable;
     private TagField tagField = null;
-    private SearchableText titleLabel;
+    SearchableText titleLabel;
 
     private Set<SearchableControl> searchControls = new HashSet<>();
 
@@ -68,7 +68,6 @@ public class TagCellNode extends VBox implements SearchableControl {
     }
 
 
-
     /**
      * Constructor for a tag cell node. Adds to the given list of searchable controls
      *
@@ -90,6 +89,7 @@ public class TagCellNode extends VBox implements SearchableControl {
         construct();
     }
 
+
     /**
      * Creates the cell node, including text, size and background colour.
      */
@@ -101,15 +101,13 @@ public class TagCellNode extends VBox implements SearchableControl {
         content.setPadding(insetsContent);
         content.setBackground(new Background(new BackgroundFill(tagColor, new CornerRadii(4), Insets.EMPTY)));
 
-        setPrefWidth(20);
-        setMaxWidth(100);
-
         VBox textContent = new VBox();
         textContent.setPadding(new Insets(2, 4, 2, 4));
         textContent.setAlignment(Pos.CENTER_LEFT);
 
-        titleLabel = new SearchableText(tagName, "-fx-font-weight: bold;", searchControls);
-        Text titleLabelShadow = new Text(tagName);  // A transparent text to keep the width of the tag equal to the text
+        titleLabel = new SearchableText(" " + tagName, "-fx-font-weight: bold;", searchControls);
+        // A transparent text to keep the width of the tag equal to the text
+        Text titleLabelShadow = new Text(" " + tagName + " ");
         titleLabelShadow.setFill(Color.TRANSPARENT);
         titleLabelShadow.setStyle("-fx-font-weight: bold;");
         GridPane titleGrid = new GridPane();
@@ -200,7 +198,6 @@ public class TagCellNode extends VBox implements SearchableControl {
         deletionNode.setAlignment(Pos.CENTER);
 
         return deletionNode;
-
     }
 
     @Override
@@ -209,12 +206,23 @@ public class TagCellNode extends VBox implements SearchableControl {
         for (SearchableControl control : searchControls) {
             found = control.query(query) || found;
         }
+
+        if (titleLabel != null) {
+            if (tagColor.getBrightness() < 0.9) {
+                for (Text text : titleLabel.getTexts()) {
+                    text.setFill(Color.WHITE);
+                }
+            }
+        }
+
         return found;
     }
 
     @Override
     public int advancedQuery(String query, SearchType searchType) {
-        tagName.trim().toLowerCase().contains(query.trim().toLowerCase());
-        return 1;
+        if (tagName.trim().toLowerCase().contains(query.trim().toLowerCase())) {
+            return 1;
+        }
+        return 0;
     }
 }
