@@ -15,10 +15,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import seng302.group2.App;
 import seng302.group2.Global;
-import seng302.group2.scenes.control.CustomComboBox;
-import seng302.group2.scenes.control.CustomTextArea;
-import seng302.group2.scenes.control.FilteredListView;
-import seng302.group2.scenes.control.RequiredField;
+import seng302.group2.scenes.control.*;
 import seng302.group2.scenes.control.search.*;
 import seng302.group2.scenes.dialog.CustomDialog;
 import seng302.group2.scenes.information.person.PersonScene;
@@ -140,23 +137,23 @@ public class TeamEditTab extends SearchableTab {
     @Override
     public void construct() {
         allocatedDevelopers.addAll(currentTeam.getDevs());
-        SearchableText poText;
-        SearchableText smText;
+        CustomInfoLabel poText;
+        CustomInfoLabel smText;
 
         if (currentTeam.getProductOwner() != null) {
             allocatedProductOwner = currentTeam.getProductOwner();
-            poText = new SearchableText("Product Owner: " + allocatedProductOwner);
+            poText = new CustomInfoLabel("Product Owner: ", allocatedProductOwner.toString());
         }
         else {
-            poText = new SearchableText("Product Owner: " + poPlaceholder);
+            poText = new CustomInfoLabel("Product Owner: ", poPlaceholder.toString());
         }
 
         if (currentTeam.getScrumMaster() != null) {
             allocatedScrumMaster = currentTeam.getScrumMaster();
-            smText = new SearchableText("Scrum Master: " + allocatedScrumMaster);
+            smText = new CustomInfoLabel("Scrum Master: ", allocatedScrumMaster.toString());
         }
         else {
-            smText = new SearchableText("Scrum Master: " + smPlaceholder);
+            smText = new CustomInfoLabel("Scrum Master: ", smPlaceholder.toString());
         }
 
 
@@ -323,20 +320,34 @@ public class TeamEditTab extends SearchableTab {
             Collection<Person> selectedPeople = new ArrayList<>();
             selectedPeople.addAll(teamMembersListView.getSelectionModel().
                     getSelectedItems());
-            availablePeopleList.addAll(selectedPeople);
-            teamMembersList.removeAll(selectedPeople);
 
             for (Person person : selectedPeople) {
                 if (allocatedProductOwner == person) {
-                    allocatedProductOwner = null;
+                    String errorMessage = "Cannot move " + person.toString() + " out of the team, as they are currently"
+                            + " the teams Product Owner.";
+                    CustomDialog.showDialog("Cannot Remove Team Member", errorMessage,
+                            Alert.AlertType.WARNING);
+                    return;
                 }
                 if (allocatedScrumMaster == person) {
-                    allocatedProductOwner = null;
+                    String errorMessage = "Cannot move " + person.toString() + " out of the team, as they are currently"
+                            + " the teams Scrum Master.";
+                    CustomDialog.showDialog("Cannot Remove Team Member", errorMessage,
+                            Alert.AlertType.WARNING);
+                    return;
                 }
                 if (allocatedDevelopers.contains(person)) {
                     allocatedDevelopers.remove(person);
                 }
+                devList.clear();
+                for (Person pers : allocatedDevelopers) {
+                    devList.add(pers);
+                }
             }
+
+            availablePeopleList.addAll(selectedPeople);
+            teamMembersList.removeAll(selectedPeople);
+
             teamMembersListBox.resetInputText();
             availablePeopleListBox.resetInputText();
         });
@@ -350,20 +361,44 @@ public class TeamEditTab extends SearchableTab {
             }
             switch (selectedRole.getType()) {
                 case PRODUCT_OWNER:
-                    if (allocatedProductOwner != null) {
-                        allocatedProductOwner.setRole(Role.getRoleFromType(Role.RoleType.NONE));
+                    if (selectedPerson == allocatedScrumMaster) {
+                        String errorMessage = "Cannot have the same person assigned to Product Owner and Scrum Master.";
+                        CustomDialog.showDialog("Invalid Role Assignment", errorMessage,
+                                Alert.AlertType.WARNING);
                     }
-                    allocatedProductOwner = selectedPerson;
-                    poText.setText("Product Owner: " + allocatedProductOwner);
-                    selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER));
+                    else {
+                        if (allocatedProductOwner != null) {
+                            allocatedProductOwner.setRole(Role.getRoleFromType(Role.RoleType.NONE));
+                        }
+                        allocatedProductOwner = selectedPerson;
+                        allocatedDevelopers.remove(selectedPerson);
+                        devList.clear();
+                        for (Person pers : allocatedDevelopers) {
+                            devList.add(pers);
+                        }
+                        poText.setValue(allocatedProductOwner.toString());
+                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.PRODUCT_OWNER));
+                    }
                     break;
                 case SCRUM_MASTER:
-                    if (allocatedScrumMaster != null) {
-                        allocatedScrumMaster.setRole(Role.getRoleFromType(Role.RoleType.NONE));
+                    if (selectedPerson == allocatedProductOwner) {
+                        String errorMessage = "Cannot have the same person assigned to Product Owner and Scrum Master.";
+                        CustomDialog.showDialog("Invalid Role Assignment", errorMessage,
+                                Alert.AlertType.WARNING);
                     }
-                    allocatedScrumMaster = selectedPerson;
-                    smText.setText("Scrum Master: " + allocatedScrumMaster);
-                    selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.SCRUM_MASTER));
+                    else {
+                        if (allocatedScrumMaster != null) {
+                            allocatedScrumMaster.setRole(Role.getRoleFromType(Role.RoleType.NONE));
+                        }
+                        allocatedScrumMaster = selectedPerson;
+                        allocatedDevelopers.remove(selectedPerson);
+                        devList.clear();
+                        for (Person pers : allocatedDevelopers) {
+                            devList.add(pers);
+                        }
+                        smText.setValue(allocatedScrumMaster.toString());
+                        selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.SCRUM_MASTER));
+                    }
                     break;
                 case DEVELOPMENT_TEAM_MEMBER:
                     if (selectedPerson == allocatedProductOwner) {
@@ -383,10 +418,18 @@ public class TeamEditTab extends SearchableTab {
                     break;
                 case NONE:
                     if (allocatedProductOwner == selectedPerson) {
-                        allocatedProductOwner = null;
+                        String errorMessage = "Someone else must be moved into the Product Owner role before"
+                                + " this person can be removed from a role.";
+                        CustomDialog.showDialog("Invalid Role Assignment", errorMessage,
+                                Alert.AlertType.WARNING);
+                        return;
                     }
                     if (allocatedScrumMaster == selectedPerson) {
-                        allocatedScrumMaster = null;
+                        String errorMessage = "Someone else must be moved into the Scrum Master role before"
+                                + " this person can be removed from a role.";
+                        CustomDialog.showDialog("Invalid Role Assignment", errorMessage,
+                                Alert.AlertType.WARNING);
+                        return;
                     }
                     allocatedDevelopers.remove(selectedPerson);
                     selectedPerson.setRole(Role.getRoleFromType(Role.RoleType.NONE));
