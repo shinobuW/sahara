@@ -24,11 +24,9 @@ public class TagLabel extends HBox implements SearchableControl {
 
     public TagLabel(ObservableList<Tag> tags) {
         construct(tags);
-
     }
 
     public void construct(ObservableList<Tag> newTags) {
-        this.tags.clear();
         this.tags = newTags;
         this.getChildren().clear();
         this.setSpacing(5);
@@ -41,7 +39,6 @@ public class TagLabel extends HBox implements SearchableControl {
     }
 
     public void constructAC(AcceptanceCriteria ac) {
-        this.tags.clear();
         this.tags = ac.getTags();
         this.getChildren().clear();
         this.setSpacing(5);
