@@ -22,31 +22,24 @@ public class TagLabel extends HBox implements SearchableControl {
 
     public TagLabel() {}
 
-    public TagLabel(ObservableList<Tag> tags) {
-        construct(tags);
+    public TagLabel(ObservableList<Tag> newTags) {
+        this.tags = newTags;
+        construct();
     }
 
-    public void construct(ObservableList<Tag> newTags) {
-        this.tags = newTags;
+    public void construct() {
         this.getChildren().clear();
         this.setSpacing(5);
         CustomInfoLabel label = new CustomInfoLabel("Tags: ", "", searchControls);
         this.getChildren().add(label);
+
+        if (this.tags == null) {
+            this.tags = FXCollections.observableArrayList();
+        }
+
         for (Tag tag : this.tags) {
             TagCellNode node = new TagCellNode(tag, false, searchControls);
             searchControls.add(node);
-            this.getChildren().add(node);
-        }
-    }
-
-    public void constructAC(AcceptanceCriteria ac) {
-        this.tags = ac.getTags();
-        this.getChildren().clear();
-        this.setSpacing(5);
-        CustomInfoLabel label = new CustomInfoLabel("Tags: ", "", searchControls);
-        this.getChildren().add(label);
-        for (Tag tag : this.tags) {
-            TagCellNode node = new TagCellNode(tag, false, searchControls);
             this.getChildren().add(node);
         }
     }
