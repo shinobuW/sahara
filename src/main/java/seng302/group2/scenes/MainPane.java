@@ -112,10 +112,11 @@ public class MainPane extends BorderPane {
 
         HierarchyTracker.refreshMap(treeView);
 
-        SaharaItem selectedItem = null;
+        /*SaharaItem selectedItem = null;
         if (treeView.getSelectionModel().getSelectedItem() != null) {
             selectedItem = treeView.getSelectionModel().getSelectedItem().getValue();
-        }
+        }*/
+        TreeItem<SaharaItem> selectedItem = treeView.getSelectionModel().getSelectedItem();
 
         treeView.setItems(FXCollections.observableArrayList(Global.currentWorkspace));
 
@@ -125,8 +126,8 @@ public class MainPane extends BorderPane {
         if (selectedItem != null) {
             treeView.selectItem(selectedItem);
         }
-        else if (Global.selectedTreeItem != null && Global.selectedTreeItem.getValue() != null) {
-            treeView.selectItem((SaharaItem) Global.selectedTreeItem.getValue());
+        else if (Global.selectedTreeItem != null) {
+            treeView.selectItem(Global.selectedTreeItem);
         }
         else {
             Platform.runLater(() -> {

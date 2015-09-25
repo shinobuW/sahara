@@ -67,7 +67,7 @@ public abstract class Category extends SaharaItem {
      */
     @Override
     public boolean equals(Object obj) {
-        return obj.getClass().equals(this.getClass())
+        return obj != null && obj.getClass().equals(this.getClass())
                 && ((Category) obj).getChildren() == this.getChildren()
                 && ((Category) obj).name.equals(this.name);
     }

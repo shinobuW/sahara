@@ -337,11 +337,23 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
 
     /**
      * Scans the entire tree from the root and selects the item if it is found.
-     *
      * @param item The (SaharaItem) item to select
      */
     public void selectItem(T item) {
         selectItem(item, this.getRoot());
+    }
+
+    /**
+     * Scans the entire tree from the root and selects the item if it is found.
+     * @param item The (SaharaItem) item to select
+     */
+    public void selectItem(TreeItem<T> item) {
+        if (item.getParent() == null) {
+            selectItem(item.getValue(), null, this.getRoot());
+        }
+        else {
+            selectItem(item.getValue(), item.getParent().getValue(), this.getRoot());
+        }
     }
 
 
@@ -363,6 +375,34 @@ public class TreeViewWithItems<T extends HierarchyData<T>> extends TreeView<T> {
             }
         }
     }
+
+
+    /**
+     * Scans the tree and compares the item to the root TreeItem, if they match, select the TreeItem
+     * If not, recursively check the children of the TreeItem. If the item exists in the tree, it
+     * will eventually be selected through the depth-first search.
+     *
+     * @param item The tree item to select
+     * @param root The root node to start checking, usually this.getRoot()
+     */
+    public void selectItem(T item, T parent, TreeItem<T> root) {
+        if (item == root) {
+            getSelectionModel().select(root);
+        }
+        for (TreeItem<T> treeItem : root.getChildren()) {
+            if (treeItem.getParent() == null && parent == null) {
+                getSelectionModel().select(treeItem);
+            }
+            else if (treeItem.getValue().equals(item) && treeItem.getParent() != null
+                    && treeItem.getParent().getValue() != null && treeItem.getParent().getValue().equals(parent)) {
+                getSelectionModel().select(treeItem);
+            }
+            else {
+                selectItem(item, parent, treeItem);
+            }
+        }
+    }
+
 
     /**
      * Returns a set of all treeItems inside of the tree.

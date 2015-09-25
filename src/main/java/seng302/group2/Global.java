@@ -2,6 +2,7 @@ package seng302.group2;
 
 import javafx.scene.control.TreeItem;
 import seng302.group2.util.undoredo.CommandManager;
+import seng302.group2.workspace.SaharaItem;
 import seng302.group2.workspace.team.Team;
 import seng302.group2.workspace.workspace.Workspace;
 
