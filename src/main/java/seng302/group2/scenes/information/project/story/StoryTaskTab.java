@@ -308,7 +308,7 @@ public class StoryTaskTab extends SearchableTab {
             }
         });
 
-        Button btnView = new Button("Task View");
+        Button btnView = new Button("View");
         Button btnDelete = new Button("Delete Task");
         Button tagButton = new Button("View Tags");
 
