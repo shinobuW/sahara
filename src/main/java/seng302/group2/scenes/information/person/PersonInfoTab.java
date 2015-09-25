@@ -161,6 +161,7 @@ public class PersonInfoTab extends SearchableTab {
 
         Collections.addAll(searchControls,
                 title,
+                personTags,
                 shortName,
                 emailAddress,
                 birthDate,

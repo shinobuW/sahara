@@ -70,6 +70,55 @@ public class TagField extends CustomTextField implements SearchableControl {
     }
 
 
+    void checkTag(boolean checkSeparator) {
+        // If > 20, copy Dave tag listener
+        if (!this.getText().endsWith(",") && !this.getText().endsWith(" ") && this.getText().length() > 20) {
+            this.setText(this.getText().substring(0, 20));
+        }
+        // Check for a new tag separator (either ',' or ' ', a comma or a space)
+        else if (!this.getText().isEmpty() && this.getText().length() >= 2
+                && (!checkSeparator || (this.getText().endsWith(",") || this.getText().endsWith(" ")))) {
+
+            String tagString = "";
+            if (checkSeparator) {
+                tagString = this.getText().substring(0, this.getText().length() - 1);
+            }
+            else {
+                tagString = this.getText().substring(0, this.getText().length());
+            }
+
+            Tag selectedTag = null;
+
+            // Find the tag in the global workspace
+            selectedTag = Tag.getNewTag(tagString);
+            //                for (Tag tag : Global.currentWorkspace.getAllTags()) {
+            //                    if (tagString.equals(tag.getName())) {
+            //                        selectedTag = tag;
+            //                    }
+            //                }
+
+            // Or maybe it's in the list we have already typed out?
+            for (Tag tag : tags) {
+                if (tagString.equals(tag.getName())) {
+                    Platform.runLater(this::clear);
+                    return;
+                }
+            }
+
+
+            //                // Or create it if not found
+            //                if (selectedTag == null) {
+            //                    selectedTag = new Tag(tagString);
+            //                }
+
+            tags.add(selectedTag);
+
+            Platform.runLater(this::clear);
+
+            update();
+        }
+    }
+
     /**
      * Adds listeners to the field to add and remove tags on entry as necessary
      */
@@ -79,48 +128,7 @@ public class TagField extends CustomTextField implements SearchableControl {
          * The text listener for the adding of values
          */
         this.textProperty().addListener((observable, oldValue, newValue) -> {
-
-            // If > 20, copy Dave tag listener
-            if (!this.getText().endsWith(",") && !this.getText().endsWith(" ") && this.getText().length() > 20) {
-                this.setText(this.getText().substring(0, 20));
-            }
-            // Check for a new tag separator (either ',' or ' ', a comma or a space)
-            else if (!this.getText().isEmpty() && this.getText().length() >= 2
-                    && (this.getText().endsWith(",") || this.getText().endsWith(" "))) {
-
-
-
-                String tagString = this.getText().substring(0, this.getText().length() - 1);
-                Tag selectedTag = null;
-
-                // Find the tag in the global workspace
-                selectedTag = Tag.getNewTag(tagString);
-//                for (Tag tag : Global.currentWorkspace.getAllTags()) {
-//                    if (tagString.equals(tag.getName())) {
-//                        selectedTag = tag;
-//                    }
-//                }
-
-                // Or maybe it's in the list we have already typed out?
-                for (Tag tag : tags) {
-                    if (tagString.equals(tag.getName())) {
-                        Platform.runLater(this::clear);
-                        return;
-                    }
-                }
-
-
-//                // Or create it if not found
-//                if (selectedTag == null) {
-//                    selectedTag = new Tag(tagString);
-//                }
-
-                tags.add(selectedTag);
-
-                Platform.runLater(this::clear);
-
-                update();
-            }
+            checkTag(true);
         });
 
 
@@ -129,7 +137,11 @@ public class TagField extends CustomTextField implements SearchableControl {
          */
         this.setOnKeyPressed(new EventHandler<KeyEvent>() {
             public void handle(KeyEvent key) {
-                if (key.getCode().equals(KeyCode.BACK_SPACE) && getText().isEmpty()
+                if (key.getCode().equals(KeyCode.ENTER)) {
+                    key.consume();
+                    checkTag(false);
+                }
+                else if (key.getCode().equals(KeyCode.BACK_SPACE) && getText().isEmpty()
                         && tagStack.getChildren().size() > 0) {
 
                     key.consume();
@@ -163,6 +175,7 @@ public class TagField extends CustomTextField implements SearchableControl {
 
         positionCaret(getLength());
 
+        System.out.println("width: " + tagStack.getWidth());
         setPrefWidth(tagStack.getWidth() + tagStack.getChildren().size() * tagStack.getSpacing() + 140);
     }
 

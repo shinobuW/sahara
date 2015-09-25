@@ -21,10 +21,7 @@ import seng302.group2.workspace.project.story.tasks.Task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -60,7 +57,7 @@ public class PersonLoggingTab extends SearchableTab {
                 data.add(log);
             }
         }
-
+        sortLogTableData();
     }
 
 
@@ -119,7 +116,6 @@ public class PersonLoggingTab extends SearchableTab {
                 ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<Log, Person> log) {
                 // p.getValue() returns the Person instance for a particular TableView row
-                // TODO @SHINOBU CHECK
                 SimpleStringProperty prop = new SimpleStringProperty();
                 if (log.getValue().getLogger() != null && log.getValue().getPartner() != null) {
                     if (log.getValue().getLogger() == currentPerson) {
@@ -149,8 +145,26 @@ public class PersonLoggingTab extends SearchableTab {
         descriptionCol.prefWidthProperty().bind(taskTable.widthProperty()
                 .subtract(2).divide(100).multiply(60));
 
-        TableColumn startTimeCol = new TableColumn("Start Time");
+
+
+        TableColumn startDateTimeCol = new TableColumn("Start Time");
+
+        TableColumn startTimeCol = new TableColumn("Time");
         startTimeCol.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Log, String>,
+                        ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(TableColumn.CellDataFeatures<Log,
+                            String> log) {
+                        SimpleStringProperty property = new SimpleStringProperty();
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+                        property.setValue(log.getValue().getStartDate().format(formatter));
+                        return property;
+                    }
+                });
+
+        TableColumn startDateCol = new TableColumn("Date");
+        startDateCol.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<Log, String>,
                         ObservableValue<String>>() {
                     @Override
@@ -162,9 +176,9 @@ public class PersonLoggingTab extends SearchableTab {
                         return property;
                     }
                 });
-        startTimeCol.prefWidthProperty().bind(taskTable.widthProperty()
-                .subtract(2).divide(100).multiply(60));
-        startTimeCol.setSortType(TableColumn.SortType.ASCENDING);
+
+
+        startDateTimeCol.getColumns().addAll(startDateCol, startTimeCol);
 
         TableColumn durationCol = new TableColumn("Duration");
         durationCol.setCellValueFactory(new PropertyValueFactory<Log, Long>("durationString"));
@@ -173,7 +187,7 @@ public class PersonLoggingTab extends SearchableTab {
 
 
         taskTable.setItems(data);
-        TableColumn[] columns = {partnerCol, taskCol, descriptionCol, startTimeCol, durationCol};
+        TableColumn[] columns = {partnerCol, taskCol, descriptionCol, startDateTimeCol, durationCol};
         taskTable.getColumns().setAll(columns);
 
         final Callback<DatePicker, DateCell> endDateCellFactory =
@@ -273,5 +287,26 @@ public class PersonLoggingTab extends SearchableTab {
     @Override
     public String toString() {
         return "Person Logs Tab";
+    }
+
+
+    /**
+     * Sorts the list of logs by its start date and time
+     */
+    private void sortLogTableData() {
+        Collections.sort(this.data, new Comparator<Log>() {
+            @Override
+            public int compare(Log log1, Log log2) {
+                if (log1.getStartDate().isBefore(log2.getStartDate())) {
+                    return 1;
+                }
+                else if (log1.getStartDate() == log2.getStartDate()) {
+                    return 0;
+                }
+                else {
+                    return -1;
+                }
+            }
+        });
     }
 }

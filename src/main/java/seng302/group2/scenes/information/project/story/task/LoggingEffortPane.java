@@ -36,10 +36,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static javafx.collections.FXCollections.observableArrayList;
 
@@ -59,6 +56,7 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
     private ObservableList<Person> availablePeople = FXCollections.observableArrayList();
     private ObservableList<Person> availablePartners = observableArrayList(availablePeople);
     private ObservableList<Person> availableLoggers = observableArrayList(availablePeople);
+    private  ObservableList<Log> data = FXCollections.observableArrayList();
 
     /**
      * Constructor for the logging effort pane.
@@ -125,7 +123,8 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
         logTable.setPlaceholder(new SearchableText("There are currently no logs in this task."));
         logTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        ObservableList<Log> data = task.getLogsWithoutGhostLogs();
+        data = task.getLogsWithoutGhostLogs();
+        sortLogTableData();
 
         TableColumn loggerCol = new TableColumn("Logger");
         loggerCol.setCellValueFactory(new PropertyValueFactory<Log, Person>("logger"));
@@ -259,6 +258,7 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
 
                             LocalDateTime newStartDateTime = LocalDateTime.of(year, month, day, hour, min);
                             currentLog.editStartTime(newStartDateTime);
+                            sortLogTableData();
                         }
                     }
                 });
@@ -304,6 +304,11 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
         startTimeCol.setCellFactory(startTimeCellFactory);
 
         startDateTimeCol.getColumns().addAll(startDateCol, startTimeCol);
+
+        startTimeCol.setSortType(TableColumn.SortType.DESCENDING);
+        startDateCol.setSortType(TableColumn.SortType.DESCENDING);
+
+
 
         TableColumn descriptionCol = new TableColumn("Description");
         descriptionCol.setCellValueFactory(new PropertyValueFactory<Log, String>("description"));
@@ -388,6 +393,7 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
         final CustomComboBox<Person> personComboBox = new CustomComboBox<>("Logger:", true);
 
         CustomComboBox<Person> partnerComboBox = new CustomComboBox<>("Partner");
+        partnerComboBox.getComboBox().getItems().add(nullPerson);
 
         addButton.setDisable(true);
 
@@ -608,6 +614,7 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
                     double effortLeftDifference = task.getEffortLeft() - effortLeft;
 
                     Person partner = partnerComboBox.getComboBox().getSelectionModel().getSelectedItem();
+                    partner = partner == nullPerson ? null : partner;
                     Log newLog = new Log(task, descriptionTextArea.getText(),
                             selectedPerson, partner, duration, dateTime, effortLeftDifference);
 
@@ -634,7 +641,7 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
                     if (table != null) {
                         SearchableTable.refresh(table, table.getItems());
                     }
-
+                    sortLogTableData();
                     event.consume();
                 }
                 else {
@@ -740,4 +747,26 @@ public class LoggingEffortPane extends Pane implements SearchableControl {
         }
         return found;
     }
+
+
+    /**
+     * Sorts the list of logs by its start date and time
+     */
+    private void sortLogTableData() {
+        Collections.sort(this.data, new Comparator<Log>() {
+            @Override
+            public int compare(Log log1, Log log2) {
+                if (log1.getStartDate().isBefore(log2.getStartDate())) {
+                    return 1;
+                }
+                else if (log1.getStartDate() == log2.getStartDate()) {
+                    return 0;
+                }
+                else {
+                    return -1;
+                }
+            }
+        });
+    }
+
 }
