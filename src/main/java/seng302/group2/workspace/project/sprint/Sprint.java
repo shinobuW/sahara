@@ -326,11 +326,11 @@ public class Sprint extends SaharaItem implements Serializable, Comparable<Sprin
      * @return the duration
      */
     public double getDuration() {
-        if (endDate.isBefore(LocalDate.now())) {
-            return ChronoUnit.DAYS.between(startDate, endDate);
+        if (endDate != null && endDate.isBefore(LocalDate.now())) {
+            return ChronoUnit.DAYS.between(startDate, endDate) + 1;
         }
         else {
-            return ChronoUnit.DAYS.between(startDate, LocalDate.now());
+            return ChronoUnit.DAYS.between(startDate, LocalDate.now()) + 1;
         }
 
     }
