@@ -13,6 +13,7 @@ import javafx.scene.layout.Priority;
 import org.controlsfx.control.PopOver;
 import seng302.group2.App;
 import seng302.group2.scenes.control.Tooltip;
+import seng302.group2.scenes.menu.MainMenuBar;
 import seng302.group2.workspace.tag.Tag;
 
 import static seng302.group2.scenes.dialog.DeleteDialog.showDeleteDialog;
@@ -67,20 +68,23 @@ public class TagListCell extends ListCell<Tag> {
 
         deletionImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             if (popOver != null) {
-                Node parent = popOver.getOwnerNode();
-                double x = popOver.getX();
-                double y = popOver.getY();
                 popOver.hide();
                 showDeleteDialog(tag);
                 popOver.setDetached(true);
                 Platform.runLater(() -> {
-                    PopOver taggingPopOver = new PopOver();
+                    MainMenuBar.showTaggingPopOver(tag);
+                    /*PopOver taggingPopOver = new PopOver();
                     taggingPopOver.setDetachedTitle("Tag Management");
                     taggingPopOver.setDetached(true);
-                    taggingPopOver.setContentNode(new TagManagementPane(taggingPopOver));
+                    TagManagementPane tagManagementPane = new TagManagementPane(taggingPopOver);
+                    taggingPopOver.setContentNode(tagManagementPane);
                     Platform.runLater(() -> taggingPopOver.show(App.content, App.mainStage.getX()
                                     + App.mainStage.getWidth() / 2 - 300,
                             App.mainStage.getY() + App.mainStage.getHeight() / 2 - 200));
+                        tagManagementPane.newTagField.requestFocus();
+                        if (tag != null) {
+                            tagManagementPane.tagListView.getSelectionModel().select(tag);
+                        }*/
                     });
             }
             else {
